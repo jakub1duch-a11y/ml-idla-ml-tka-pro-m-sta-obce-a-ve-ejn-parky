@@ -7,6 +7,7 @@ const categories = ['Vše', 'Rezidenční', 'Komerční', 'Art instalace', 'Outd
 
 const products = [
   {
+    slug: 'mrak',
     name: 'MRAK',
     category: 'Art instalace',
     tagline: 'Organické křivky. Nebeský dotek.',
@@ -15,6 +16,7 @@ const products = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
   },
   {
+    slug: null,
     name: 'LINEA EL70',
     category: 'Komerční',
     tagline: 'Minimalistická čistota. Maximální efekt.',
@@ -23,7 +25,8 @@ const products = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c90bbf42d_C-MltkoLINEA_CE70_single-1.png',
   },
   {
-    name: 'GATE_60',
+    slug: 'gate60',
+    name: 'GATE 60',
     category: 'Komerční',
     tagline: 'Vstupní portál z mlhy.',
     desc: 'Třímetrová mlžná brána z trubek TR60×3 z oceli 1.4301 s 5 tryskami. Šíře 3 m, výška 2,1 m.',
@@ -31,6 +34,7 @@ const products = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
   },
   {
+    slug: 'kids',
     name: 'Kids Edition',
     category: 'Outdoor',
     tagline: 'Hravý tvar. Bezpečná mlha.',
@@ -39,6 +43,7 @@ const products = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
   },
   {
+    slug: 'volavka',
     name: 'Volavka',
     category: 'Rezidenční',
     tagline: 'Elegance pro soukromé zahrady.',
@@ -47,6 +52,7 @@ const products = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1035553df_FB_IMG_1782148329157.jpg',
   },
   {
+    slug: null,
     name: 'Smart Control',
     category: 'Příslušenství',
     tagline: 'Mlha pod kontrolou odkudkoli.',
@@ -87,7 +93,7 @@ export default function Kolekce() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((p, i) => (
             <motion.div key={p.name} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }}>
-              <Link to="/kontakt" className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300">
+              <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'} className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>

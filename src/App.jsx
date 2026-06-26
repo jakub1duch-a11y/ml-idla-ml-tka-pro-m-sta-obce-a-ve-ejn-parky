@@ -13,6 +13,7 @@ import Kolekce from '@/pages/Kolekce';
 import Mlhoviste from '@/pages/Mlhoviste';
 import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
+import ProduktDetail from '@/pages/ProduktDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -38,6 +39,7 @@ const AuthenticatedApp = () => {
         <Route path="/mlhoviste" element={<Mlhoviste />} />
         <Route path="/jak-to-funguje" element={<JakToFunguje />} />
         <Route path="/kontakt" element={<Kontakt />} />
+        <Route path="/produkt/:slug" element={<ProduktDetail />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

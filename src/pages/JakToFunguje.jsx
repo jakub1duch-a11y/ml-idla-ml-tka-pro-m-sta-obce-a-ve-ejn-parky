@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 const steps = [
   {
@@ -43,154 +43,150 @@ const steps = [
 
 const faqs = [
   { q: 'Kolik mlžítko stojí?', a: 'Cena závisí na modelu a velikosti instalace. Mlhoviště START začíná od 48 000 Kč, individuální mlžné sochy od 15 000 Kč. Kontaktujte nás pro přesnou nabídku.' },
-  { q: 'Jaká je spotřeba vody?', a: 'Při provozu 5 trysek je spotřeba méně než 10 l/h. Pro srovnání — standardní zahradní hadice spotřebuje 600–1000 l/h. Mlžítko je extrémně úsporné.' },
-  { q: 'Funguje i bez elektřiny?', a: 'Základní varianta funguje pouze na vodovodní tlak bez elektřiny. Smart Control modul vyžaduje 230V nebo bateriové napájení pro WiFi řízení.' },
-  { q: 'Co potřebuji k instalaci?', a: 'Přípojka vody G3/4" s tlakem 2–6 bar a možnost kotvení (trávník = zemní vrut, beton = chemické kotvy). To je vše. Vše ostatní zajistíme my.' },
-  { q: 'Kam se mlžítko hodí?', a: 'Parky, zahrady, náměstí, dětská hřiště, zoo, koupaliště, terasy restaurací, festivaly. Kdekoliv, kde lidé tráví čas v horkém počasí.' },
+  { q: 'Kolik spotřebuje vody?', a: 'Průměrná spotřeba je 6–10 litrů za hodinu pro standardní mlžné sochy a 8–20 litrů pro mlhoviště. To je přibližně 8–15× méně než klimatizace.' },
+  { q: 'Potřebuji stavební povolení?', a: 'Pro dočasné instalace (zemní vrut) zpravidla není potřeba. Pro trvalé instalace do betonového základu doporučujeme konzultaci s místním stavebním úřadem.' },
+  { q: 'Jak funguje Smart ovládání?', a: 'WiFi modul se připojí k vaší domácí síti. Přes aplikaci HolmTec (iOS/Android) nastavíte automatické spouštění podle teploty, časovače nebo manuálně odkudkoli.' },
+  { q: 'Jaká je záruka?', a: 'Na konstrukci z nerezové oceli poskytujeme 5letou záruku. Na trysky, hadice a elektroniku 2 roky. Servis a náhradní díly zajišťujeme dlouhodobě.' },
 ];
 
 export default function JakToFunguje() {
   const [openFaq, setOpenFaq] = useState(null);
 
   return (
-    <div className="pt-20">
-      {/* Header */}
-      <div className="relative bg-ink py-20 lg:py-32 overflow-hidden">
-        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30">
-        <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
-      </video>
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-          <p className="font-mono text-[9px] tracking-widest uppercase text-white/30 mb-3">Technologie mlžení</p>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight leading-tight">
-            Jak jemné trysky<br />tvoří mlhovinu
-          </h1>
-          <p className="mt-5 text-white/40 max-w-xl">
-            Nerezové mlžítko v provozu — mikrotrysky vytvářejí souvislou vodní tříšť a chladivou mlhovinu.
-          </p>
-        </div>
-      </div>
-
-      {/* Physics */}
-      <div className="bg-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="font-mono text-[9px] tracking-widest uppercase text-ink/30 mb-3">Fyzika mlžení</p>
-              <h2 className="font-heading font-light text-3xl lg:text-5xl text-ink tracking-tight">
-                Evaporace — přirozené chlazení
-              </h2>
-              <p className="mt-6 text-ink/50 text-base leading-relaxed">
-                Mikrotrysky produkují kapky 10–50 μm. Tak malé kapky se odpařují okamžitě ve vzduchu — absorbují teplo z okolí a ochlazují prostor až o 10 °C.
-              </p>
-              <div className="mt-10 space-y-5">
-                {[
-                  { title: 'Kapky 10–50 μm', desc: 'Odpařují se dříve, než dopadnou na zem. Žádný mokrý povrch.' },
-                  { title: 'Ochlazení –10 °C', desc: 'Evaporace absorbuje teplo z okolního vzduchu.' },
-                  { title: 'Čistší vzduch', desc: 'Snižuje prach a pylové částice v okolí.' },
-                ].map(f => (
-                  <div key={f.title} className="border-l-2 border-hydro pl-5">
-                    <p className="font-heading text-ink font-medium">{f.title}</p>
-                    <p className="text-sm text-ink/50 mt-0.5">{f.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png"
-                alt="Detail mikrotrysky" className="w-full aspect-square object-cover" />
-              <p className="font-mono text-[9px] text-ink/30 tracking-widest uppercase mt-2">
-                Detail mikrotrysky · Nízkotlaká tryska · kapky 10–50 μm · průtok 0,05 l/min
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Process steps */}
-      <div className="bg-fog py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <p className="font-mono text-[9px] tracking-widest uppercase text-ink/30 mb-3">Proces</p>
-          <h2 className="font-heading font-light text-3xl lg:text-5xl text-ink mb-14">Od nápadu k instalaci</h2>
-
-          <div className="space-y-1">
-            {steps.map((step, i) => (
-              <motion.div key={step.num} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="grid grid-cols-1 md:grid-cols-5 gap-0 bg-white border border-steel/30">
-                <div className="md:col-span-1 p-8 border-b md:border-b-0 md:border-r border-steel/30 flex items-start">
-                  <span className="font-mono text-5xl text-ink/10 font-bold">{step.num}</span>
-                </div>
-                <div className="md:col-span-2 p-8">
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-ink/30 mb-2">{step.subtitle}</p>
-                  <h3 className="font-heading text-xl text-ink font-light">{step.title}</h3>
-                  <p className="text-sm text-ink/50 mt-3 leading-relaxed">{step.desc}</p>
-                </div>
-                <div className="md:col-span-2 overflow-hidden">
-                  <img src={step.image} alt={step.title} className="w-full h-48 md:h-full object-cover" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Smart app */}
-      <div className="bg-ink text-white py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="font-mono text-[9px] tracking-widest uppercase text-white/30 mb-3">Smart řízení</p>
-            <h2 className="font-heading font-light text-4xl lg:text-5xl tracking-tight leading-tight">
-              Inteligentní řízení<br />podle teploty.
-            </h2>
-            <p className="mt-5 text-white/40 text-sm leading-relaxed">
-              Mobilní aplikace HolmTec (iOS & Android). Automatické scénáře — mlha se spustí sama, když je nejpotřebnější. Sdílení přístupu pro správce areálu.
+    <div className="min-h-screen bg-ink pt-28">
+      {/* Hero */}
+      <div className="relative overflow-hidden">
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-25">
+          <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-ink" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Technologie mlžení</p>
+            <h1 className="font-heading font-black text-4xl lg:text-6xl text-white tracking-tight mb-4">
+              Jak to funguje
+            </h1>
+            <p className="text-white/50 max-w-xl mx-auto text-lg">
+              Věda za mlhou. Fyzika evaporace v praxi — nejpřirozenější chlazení na světě.
             </p>
-            <div className="mt-8 grid grid-cols-2 gap-5">
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Physics section */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Fyzika za mlhou</p>
+            <h2 className="font-heading font-black text-3xl lg:text-4xl text-white tracking-tight mb-6">
+              Mikromlha.<br />Maximální efekt.
+            </h2>
+            <p className="text-white/50 leading-relaxed mb-6">
+              Tlaková mlha bez mokrého povrchu. Mikrotrysky produkují kapky 10–50 μm, které se odpařují okamžitě ve vzduchu — absorbují teplo z okolí a ochlazují prostor až o 9 °C.
+            </p>
+            <div className="space-y-4">
               {[
-                { val: 'WiFi + BT', label: 'Připojení' },
-                { val: 'Automaticky', label: 'Spouštění' },
-                { val: 'iOS & Android', label: 'Aplikace' },
-                { val: 'Teplota / Vlhkost', label: 'Snímače' },
-              ].map(s => (
-                <div key={s.val} className="border-l border-white/10 pl-4">
-                  <p className="font-heading text-white text-lg font-light">{s.val}</p>
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-white/30 mt-0.5">{s.label}</p>
+                { title: 'Evaporace', desc: 'Kapky 10–50 μm se odpařují dříve, než dopadnou na zem. Žádný mokrý povrch.' },
+                { title: 'Inteligentní řízení', desc: 'Automatické scénáře — mlha se spustí sama při 28 °C. Aplikace iOS & Android.' },
+                { title: 'Tichý provoz', desc: 'Nízkotlaké trysky. Průtok 0,05 l/min na trysku. Provoz je přirozený a nenásilný.' },
+                { title: 'Čistší vzduch', desc: 'Mlha snižuje prach a pylové částice v okolí. Zdravé prostředí.' },
+              ].map((f, i) => (
+                <div key={i} className="flex gap-4 p-4 rounded-xl bg-card_bg border border-white/10">
+                  <div className="w-0.5 bg-cyan flex-shrink-0 rounded-full" />
+                  <div>
+                    <p className="font-bold text-white">{f.title}</p>
+                    <p className="text-sm text-white/50 mt-0.5">{f.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png"
+              alt="Detail mikrotrysky" className="w-full aspect-square object-cover rounded-2xl" />
+            <div className="mt-3 p-6 rounded-2xl bg-card_bg border border-white/10 grid grid-cols-2 gap-6">
+              {[
+                { val: '93%', label: 'Provozní efektivita' },
+                { val: '100%', label: 'Spokojení klienti' },
+                { val: '< 10 l/h', label: 'Spotřeba vody' },
+                { val: '10+ let', label: 'Životnost oceli' },
+              ].map(s => (
+                <div key={s.val}>
+                  <p className="font-black text-2xl text-cyan">{s.val}</p>
+                  <p className="text-xs font-mono text-white/40 tracking-widest uppercase mt-1">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Steps */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <h2 className="font-heading font-black text-3xl text-white mb-12">Od návrhu k instalaci</h2>
+        <div className="space-y-5">
+          {steps.map((step, i) => (
+            <motion.div key={step.num} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center p-6 rounded-2xl bg-card_bg border border-white/10 hover:border-cyan/30 transition-all">
+                <div className="lg:col-span-1 flex items-center gap-4">
+                  <span className="font-black text-4xl text-cyan/30 font-mono">{step.num}</span>
+                </div>
+                <div className="lg:col-span-2">
+                  <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-1">{step.subtitle}</p>
+                  <h3 className="font-bold text-xl text-white mb-2">{step.title}</h3>
+                  <p className="text-sm text-white/50 leading-relaxed">{step.desc}</p>
+                </div>
+                <div className="lg:col-span-2">
+                  <img src={step.image} alt={step.title} className="w-full aspect-[16/9] object-cover rounded-xl" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Smart App */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center p-10 rounded-2xl bg-gradient-to-r from-cyan/10 to-card_bg border border-cyan/20">
+          <div>
+            <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-3">Smart aplikace</p>
+            <h2 className="font-heading font-black text-3xl text-white mb-4">Mlžení z mobilu</h2>
+            <p className="text-white/50 mb-6">WiFi + Bluetooth ovládání mlžení přes aplikaci HolmTec. Automatická aktivace dle teploty, skupinové scény, vodní monitoring.</p>
+            <Link to="/kontakt"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+              Zjistit více <ArrowRight size={16} />
+            </Link>
           </div>
           <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3aa6b0337_51da7b088_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ1.png"
-            alt="HolmTec Smart App" className="w-full aspect-[4/3] object-cover" />
+            alt="HolmTec Smart App" className="w-full aspect-[4/3] object-cover rounded-2xl" />
         </div>
       </div>
 
       {/* FAQ */}
-      <div className="py-16 lg:py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
-          <p className="font-mono text-[9px] tracking-widest uppercase text-ink/30 mb-3">Časté otázky</p>
-          <h2 className="font-heading font-light text-3xl text-ink mb-10">FAQ</h2>
-          <div className="divide-y divide-steel/40">
-            {faqs.map((faq, i) => (
-              <div key={i} className="py-5">
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between text-left gap-4">
-                  <span className="font-heading text-ink font-light">{faq.q}</span>
-                  {openFaq === i ? <ChevronUp size={16} className="text-ink/30 flex-shrink-0" /> : <ChevronDown size={16} className="text-ink/30 flex-shrink-0" />}
-                </button>
-                {openFaq === i && (
-                  <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
-                    className="text-sm text-ink/50 mt-3 leading-relaxed">
-                    {faq.a}
-                  </motion.p>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link to="/kontakt" className="inline-block px-10 py-4 bg-ink text-white text-xs font-mono tracking-widest uppercase hover:bg-ink/80 transition-all">
-              Napište nám
-            </Link>
-          </div>
+      <div className="max-w-3xl mx-auto px-6 lg:px-8 py-16">
+        <h2 className="font-heading font-black text-3xl text-white mb-8 text-center">Časté dotazy</h2>
+        <div className="space-y-3">
+          {faqs.map((faq, i) => (
+            <div key={i} className="rounded-2xl bg-card_bg border border-white/10 overflow-hidden">
+              <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-white/5 transition-all">
+                <span className="font-bold text-white">{faq.q}</span>
+                <ChevronDown size={18} className={`text-cyan flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+              </button>
+              {openFaq === i && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="px-6 pb-6">
+                  <p className="text-white/60 leading-relaxed">{faq.a}</p>
+                </motion.div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link to="/kontakt"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+            Napsat nám <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </div>

@@ -1,71 +1,102 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart, ChevronDown, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const navLinks = [
-  { label: 'Kolekce', path: '/kolekce' },
+const catalogLinks = [
+  { label: 'Mlžné sochy', path: '/kolekce' },
   { label: 'Mlhoviště', path: '/mlhoviste' },
   { label: 'Jak to funguje', path: '/jak-to-funguje' },
-  { label: 'Realizace', path: '/#realizace' },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [catalogOpen, setCatalogOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => setMobileOpen(false), [location]);
-
-  const handleAnchor = (path) => {
-    if (!path.startsWith('/#')) return;
-    const id = path.slice(2);
-    if (location.pathname === '/') {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = path;
-    }
-  };
-
-  const isLight = !scrolled && location.pathname === '/';
+  useEffect(() => { setMobileOpen(false); setCatalogOpen(false); }, [location]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${scrolled ? 'bg-white/90 backdrop-blur-lg border-b border-steel/30 shadow-sm' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-18 py-5">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-ink/95 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-black/30' : 'bg-transparent'}`}>
+      {/* Ticker bar */}
+      <div className="bg-cyan/10 border-b border-cyan/20 py-1.5 overflow-hidden">
+        <div className="flex animate-ticker whitespace-nowrap">
+          {[...Array(4)].map((_, i) => (
+            <span key={i} className="flex items-center gap-8 px-4 text-[11px] font-mono text-cyan/80 tracking-widest uppercase">
+              <span>☀️ LÉTO 2026</span>
+              <span>·</span>
+              <span>LÉTO2026 — 10 %</span>
+              <span>·</span>
+              <span>MRAK2026 — 15 %</span>
+              <span>·</span>
+              <span>ZAHRADA26 — doprava zdarma</span>
+              <span>·</span>
+              <Link to="/kontakt" className="text-white hover:text-cyan transition-colors">Soutěž o sochu →</Link>
+              <span>·</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link to="/" className="flex flex-col leading-none">
-          <span className={`font-heading text-base font-medium tracking-widest uppercase transition-colors ${isLight ? 'text-white' : 'text-ink'}`}>HolmTec</span>
-          <span className={`font-mono text-[10px] tracking-widest uppercase transition-colors ${isLight ? 'text-white/50' : 'text-ink/40'}`}>· Mlžné sochy ·</span>
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 bg-cyan/20 rounded-lg flex items-center justify-center border border-cyan/30">
+            <span className="text-cyan text-xs font-bold">M</span>
+          </div>
+          <div className="leading-none">
+            <span className="text-white font-bold text-sm tracking-tight">mlžné</span>
+            <span className="text-cyan font-bold text-sm tracking-tight ml-1">sochy</span>
+          </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map(link =>
-            link.path.startsWith('/#') ? (
-              <button key={link.path} onClick={() => handleAnchor(link.path)}
-                className={`text-xs font-mono tracking-widest uppercase transition-colors hover:text-hydro ${isLight ? 'text-white/70' : 'text-ink/60'}`}>
-                {link.label}
-              </button>
-            ) : (
-              <Link key={link.path} to={link.path}
-                className={`text-xs font-mono tracking-widest uppercase transition-colors hover:text-hydro ${isLight ? 'text-white/70' : 'text-ink/60'}`}>
-                {link.label}
-              </Link>
-            )
-          )}
-          <Link to="/kontakt"
-            className={`ml-4 px-6 py-2.5 text-xs font-mono tracking-widest uppercase border transition-all ${isLight ? 'border-white/40 text-white hover:bg-white hover:text-ink' : 'border-ink text-ink hover:bg-ink hover:text-white'}`}>
-            Poptávka
+        <nav className="hidden md:flex items-center gap-1">
+          {/* Katalog dropdown */}
+          <div className="relative" onMouseEnter={() => setCatalogOpen(true)} onMouseLeave={() => setCatalogOpen(false)}>
+            <button className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">
+              Katalog <ChevronDown size={14} className={`transition-transform ${catalogOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <AnimatePresence>
+              {catalogOpen && (
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+                  className="absolute top-full left-0 mt-1 w-52 bg-card_bg border border-white/10 rounded-xl shadow-xl shadow-black/40 overflow-hidden">
+                  {catalogLinks.map(l => (
+                    <Link key={l.path} to={l.path} className="block px-4 py-3 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all">
+                      {l.label}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <Link to="/jak-to-funguje" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Instalace</Link>
+          <Link to="/kontakt" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Blog</Link>
+          <Link to="/kontakt" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">
+            <MapPin size={13} /> Instalace
           </Link>
         </nav>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className={`md:hidden ${isLight ? 'text-white' : 'text-ink'}`}>
+        {/* CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          <button className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all">
+            <ShoppingCart size={18} />
+          </button>
+          <Link to="/kontakt"
+            className="flex items-center gap-2 px-5 py-2 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+            ✦ Poptávka
+          </Link>
+        </div>
+
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-white p-2">
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
@@ -73,23 +104,16 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-steel/30 overflow-hidden">
-            <div className="px-6 py-6 flex flex-col gap-5">
-              {navLinks.map(link =>
-                link.path.startsWith('/#') ? (
-                  <button key={link.path} onClick={() => handleAnchor(link.path)}
-                    className="text-left text-xs font-mono tracking-widest uppercase text-ink/70 hover:text-hydro transition-colors">
-                    {link.label}
-                  </button>
-                ) : (
-                  <Link key={link.path} to={link.path}
-                    className="text-xs font-mono tracking-widest uppercase text-ink/70 hover:text-hydro transition-colors">
-                    {link.label}
-                  </Link>
-                )
-              )}
-              <Link to="/kontakt" className="mt-2 px-6 py-3 bg-ink text-white text-xs font-mono tracking-widest uppercase text-center">
-                Poptávka
+            className="md:hidden bg-ink/98 border-t border-white/10 overflow-hidden">
+            <div className="px-6 py-6 flex flex-col gap-4">
+              {catalogLinks.map(link => (
+                <Link key={link.path} to={link.path} className="text-sm text-white/70 hover:text-white transition-colors py-1">
+                  {link.label}
+                </Link>
+              ))}
+              <Link to="/jak-to-funguje" className="text-sm text-white/70 hover:text-white transition-colors py-1">Instalace</Link>
+              <Link to="/kontakt" className="mt-2 px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full text-center">
+                ✦ Poptávka
               </Link>
             </div>
           </motion.div>

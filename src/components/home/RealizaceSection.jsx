@@ -1,54 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { MapPin } from 'lucide-react';
 
-const imgs = [
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1035553df_FB_IMG_1782148329157.jpg',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
+const photos = [
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/e508e04b9_img-4513.jpeg',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/af3c01f8d_3695-fullsizerender-1.jpeg',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/a01ebd4e8_volnytvar-motorkar-apli.png',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/6bcee1127_kontinent-mlzitko.png',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.jpg',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/0b7f23005_3734-fullsizerender.jpg',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/c9de9fd45_img-3558.jpeg',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/f8370e628_573bb0e8-cd2d-4509-9b8f-738084ea3b2b.webp',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/f01bc8d2c_img-4587.jpeg',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/9e50cca6a_573bb0e8-cd2d-4509-9b8f-738084ea3b2b1.webp',
+  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/38d5a8482_Mlzitko-do-zahrady-tvar-mrak-VDMA.webp',
 ];
 
 export default function RealizaceSection() {
   return (
-    <section id="realizace" className="py-24 lg:py-32 bg-ink text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <p className="font-mono text-[9px] tracking-widest uppercase text-white/30 mb-3">Realizace · ZOO Praha</p>
-            <h2 className="font-heading font-light text-4xl lg:text-6xl leading-tight tracking-tight">
-              Šest soch.<br /><span className="text-white/40">Jedna atmosféra.</span>
-            </h2>
-            <div className="mt-8 space-y-4 text-white/50 text-sm leading-relaxed">
-              <p>Mlha, která oživuje areál. Design, který respektuje přírodu. Technologie, která slouží návštěvníkům.</p>
-              <p>Výroba a instalace šesti nerezových mlžících soch v ZOO Praha.</p>
-            </div>
-            <div className="mt-8 grid grid-cols-3 gap-4">
-              {[
-                { val: 'AISI 304', label: 'Nerezová ocel' },
-                { val: 'Smart', label: 'Automatický provoz' },
-                { val: '6 soch', label: 'Instalace 2024' },
-              ].map(s => (
-                <div key={s.val} className="border-l border-white/10 pl-4">
-                  <p className="font-heading text-white text-xl font-light">{s.val}</p>
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-white/30 mt-1">{s.label}</p>
-                </div>
-              ))}
-            </div>
-            <Link to="/kontakt" className="mt-10 inline-block px-8 py-4 border border-white/30 text-white text-xs font-mono tracking-widest uppercase hover:bg-white hover:text-ink transition-all">
-              Nezávazná poptávka
-            </Link>
-          </motion.div>
+    <section className="py-24 bg-surface">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Naše realizace</p>
+          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight">
+            Fotografie z terénu
+          </h2>
+        </motion.div>
 
-          <div className="grid grid-cols-2 gap-1">
-            {imgs.map((img, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}>
-                <img src={img} alt={`ZOO Praha realizace ${i + 1}`} className="w-full aspect-square object-cover" />
-              </motion.div>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {photos.map((src, i) => (
+            <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
+              className="aspect-square overflow-hidden rounded-xl bg-card_bg group">
+              <img src={src} alt={`Realizace ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link to="/kontakt"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-white/5 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/10 hover:border-cyan/40 transition-all">
+            <MapPin size={15} /> Mapa naších instalací
+          </Link>
         </div>
       </div>
     </section>

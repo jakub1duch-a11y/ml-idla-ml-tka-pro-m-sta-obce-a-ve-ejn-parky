@@ -1,62 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/772ce921e_video_20260622_153105.mp4';
+const stats = [
+  { val: '120+', label: 'Realizací v ČR a SR' },
+  { val: '−9 °C', label: 'Max. ochlazení vzduchu' },
+  { val: '100%', label: 'Bez chemie' },
+  { val: '5 let', label: 'Záruka na konstrukci' },
+];
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-ink">
-      <div className="absolute inset-0">
-        <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-70">
-          <source src={HERO_VIDEO} type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-transparent" />
-      </div>
+    <section className="relative min-h-screen flex flex-col overflow-hidden bg-ink">
+      {/* Background video */}
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-40">
+        <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-transparent" />
 
-      {/* Top eyebrow */}
-      <div className="absolute top-24 left-0 right-0 flex justify-center">
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          className="font-mono text-[10px] tracking-widest uppercase text-white/40">
-          HOLMTEC · MLŽNÉ SOCHY · NEREZOVÁ OCEL
-        </motion.p>
-      </div>
+      {/* Content */}
+      <div className="relative flex-1 flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-mono text-cyan tracking-widest uppercase mb-6">
+            ARCHITEKTURA ATMOSFÉRY
+          </div>
 
-      {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pb-20 pt-40 w-full">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-          <h1 className="text-white font-heading font-light text-5xl sm:text-6xl lg:text-8xl leading-none tracking-tight">
-            Mlha jako zážitek.
-            <br />
-            <em className="not-italic text-white/40">Ocel jako socha.</em>
+          <h1 className="font-heading font-black text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
+            OSTEV
           </h1>
-          <p className="mt-6 text-white/50 text-base lg:text-lg max-w-lg">
-            Zakázkové mlžné sochy z nerezové oceli AISI 304. Umění, které ochlazuje.
+          <h2 className="font-heading font-black text-5xl lg:text-7xl text-white/80 italic leading-[1.05] tracking-tight mb-6">
+            Mlžný strom.
+          </h2>
+          <p className="text-white/60 text-lg leading-relaxed mb-8 max-w-lg">
+            Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba.
           </p>
-          <div className="mt-10 flex flex-wrap gap-4">
+
+          <div className="flex flex-wrap gap-3 mb-6">
             <Link to="/kolekce"
-              className="px-8 py-4 bg-white text-ink text-xs font-mono tracking-widest uppercase hover:bg-white/90 transition-all">
-              Prohlédnout kolekci
+              className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+              Prozkoumat OSTEV <ArrowRight size={16} />
             </Link>
-            <Link to="/jak-to-funguje"
-              className="px-8 py-4 border border-white/30 text-white text-xs font-mono tracking-widest uppercase hover:border-white/60 transition-all">
-              Jak to funguje
-            </Link>
+            <button className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
+              <Play size={14} className="fill-current" /> Sledovat video
+            </button>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-500/30 text-xs font-mono text-green-400 tracking-widest uppercase">
+            🌳 NOVÝ PRODUKT
           </div>
         </motion.div>
 
-        {/* Stats row */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-white/10 pt-10">
-          {[
-            { val: '–10 °C', label: 'Ochlazení okolí' },
-            { val: '5 μm', label: 'Velikost kapky' },
-            { val: '< 10 l/h', label: 'Spotřeba vody' },
-            { val: 'AISI 304', label: 'Nerezová ocel' },
-          ].map(s => (
-            <div key={s.val}>
-              <p className="font-heading text-white text-2xl lg:text-3xl font-light">{s.val}</p>
-              <p className="font-mono text-[10px] tracking-widest uppercase text-white/30 mt-1">{s.label}</p>
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
+          className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
+          {stats.map((s) => (
+            <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+              <p className="font-heading font-black text-2xl text-cyan leading-none mb-1">{s.val}</p>
+              <p className="text-xs text-white/40 font-mono">{s.label}</p>
             </div>
           ))}
         </motion.div>

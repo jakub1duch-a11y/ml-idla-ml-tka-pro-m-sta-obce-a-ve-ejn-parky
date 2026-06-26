@@ -1,0 +1,30 @@
+{
+  "name": "ProductCategory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Category name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug"
+    },
+    "description": {
+      "type": "string",
+      "description": "Category description"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Category image URL"
+    },
+    "order": {
+      "type": "number",
+      "description": "Display order"
+    }
+  },
+  "required": [
+    "name",
+    "slug"
+  ]
+}

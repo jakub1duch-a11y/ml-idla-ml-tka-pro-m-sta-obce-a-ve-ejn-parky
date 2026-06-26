@@ -1,0 +1,71 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Reference to ProductCategory"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Brief product summary"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full product description"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Main product image"
+    },
+    "gallery_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional images"
+    },
+    "micron_size": {
+      "type": "string",
+      "description": "Droplet micron size specification"
+    },
+    "water_consumption": {
+      "type": "string",
+      "description": "Water consumption rate"
+    },
+    "material": {
+      "type": "string",
+      "description": "Material grade"
+    },
+    "pressure": {
+      "type": "string",
+      "description": "Operating pressure"
+    },
+    "coverage_area": {
+      "type": "string",
+      "description": "Coverage area in m\u00b2"
+    },
+    "power_supply": {
+      "type": "string",
+      "description": "Power requirements"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Whether product is featured",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "category_id"
+  ]
+}

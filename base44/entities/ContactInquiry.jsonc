@@ -1,0 +1,48 @@
+{
+  "name": "ContactInquiry",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Contact name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email"
+    },
+    "project_scope": {
+      "type": "string",
+      "enum": [
+        "urban",
+        "event",
+        "private",
+        "industrial"
+      ],
+      "description": "Type of project"
+    },
+    "message": {
+      "type": "string",
+      "description": "Project description"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Related product if from product page"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "in_progress",
+        "closed"
+      ],
+      "default": "new",
+      "description": "Inquiry status"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "message"
+  ]
+}

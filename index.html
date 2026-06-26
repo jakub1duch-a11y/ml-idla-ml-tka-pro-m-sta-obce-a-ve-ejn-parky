@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="cs">
   <head>
+    <!-- Google tag (gtag.js) – HolmTec GA4 G-0J3NKLWM2Q -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0J3NKLWM2Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0J3NKLWM2Q', {
+        'anonymize_ip': true,
+        'cookie_flags': 'SameSite=None;Secure'
+      });
+
+      // Custom event helpers
+      window.trackHolmTec = function(eventName, params) {
+        gtag('event', eventName, params || {});
+      };
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -64,27 +64,42 @@ Deno.serve(async (req) => {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
 
-    const results = await Promise.all(RECIPIENTS.map(async (to) => {
-      const raw = buildMimeMessage({
-        from: 'HolmTec Notifikace <me>',
-        to,
-        subject,
-        body: htmlBody,
-      });
-
+    const sendEmail = async (to, emailSubject, emailBody) => {
+      const raw = buildMimeMessage({ from: 'HolmTec Notifikace <me>', to, subject: emailSubject, body: emailBody });
       const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ raw }),
       });
-
       return { to, status: res.status, ok: res.ok };
-    }));
+    };
 
-    return Response.json({ ok: true, results });
+    // Notifikace internímu týmu
+    const teamResults = await Promise.all(RECIPIENTS.map(to => sendEmail(to, subject, htmlBody)));
+
+    // Potvrzovací email klientovi
+    const clientSubject = `Vaši poptávku jsme přijali — HolmTec`;
+    const clientBody = `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#e2e8f0;padding:32px;border-radius:12px;">
+  <div style="border-bottom:1px solid #1e2a3a;padding-bottom:20px;margin-bottom:24px;">
+    <h1 style="color:#22d3ee;font-size:22px;margin:0;">Děkujeme za vaši poptávku</h1>
+    <p style="color:#64748b;font-size:13px;margin:6px 0 0;">HolmTec — Mlžné sochy a instalace</p>
+  </div>
+  <p style="line-height:1.7;">Dobrý den, <strong>${name}</strong>,</p>
+  <p style="line-height:1.7;color:#cbd5e1;">obdrželi jsme vaši poptávku a děkujeme za váš zájem o naše mlžné systémy. Náš tým ji nyní zpracovává a brzy se vám ozveme — obvykle do 1–2 pracovních dnů.</p>
+  <div style="margin:24px 0;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;">
+    <p style="color:#64748b;font-size:11px;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px;">Vaše zpráva</p>
+    <p style="margin:0;line-height:1.7;color:#94a3b8;">${message.replace(/\n/g, '<br>')}</p>
+  </div>
+  <p style="line-height:1.7;color:#cbd5e1;">V případě dotazů nás můžete kontaktovat přímo na <a href="mailto:obchod1@holmtec.cz" style="color:#22d3ee;">obchod1@holmtec.cz</a> nebo na tel. <a href="tel:+420123456789" style="color:#22d3ee;">+420 777 880 099</a>.</p>
+  <div style="margin-top:28px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">
+    <p style="margin:0;">HolmTec s.r.o. &nbsp;|&nbsp; Mlžné sochy &amp; instalace &nbsp;|&nbsp; <a href="https://www.holmtec.cz" style="color:#22d3ee;">holmtec.cz</a></p>
+  </div>
+</div>`;
+
+    const clientResult = await sendEmail(email, clientSubject, clientBody);
+
+    return Response.json({ ok: true, teamResults, clientResult });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

@@ -9,35 +9,35 @@ import ScrollToTop from './components/ScrollToTop';
 
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
-import Catalog from '@/pages/Catalog';
-import ProductDetail from '@/pages/ProductDetail';
+import Kolekce from '@/pages/Kolekce';
+import Mlhoviste from '@/pages/Mlhoviste';
+import JakToFunguje from '@/pages/JakToFunguje';
+import Kontakt from '@/pages/Kontakt';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-mist-light">
-        <div className="w-8 h-8 border-2 border-steel border-t-hydro rounded-full animate-spin"></div>
+      <div className="fixed inset-0 flex items-center justify-center bg-fog">
+        <div className="w-6 h-6 border border-steel border-t-ink rounded-full animate-spin" />
       </div>
     );
   }
 
   if (authError) {
-    if (authError.type === 'user_not_registered') {
-      return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      navigateToLogin();
-      return null;
-    }
+    if (authError.type === 'user_not_registered') return <UserNotRegisteredError />;
+    if (authError.type === 'auth_required') { navigateToLogin(); return null; }
   }
 
   return (
     <Routes>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/katalog" element={<Catalog />} />
-        <Route path="/produkt/:slug" element={<ProductDetail />} />
+        <Route path="/kolekce" element={<Kolekce />} />
+        <Route path="/mlhoviste" element={<Mlhoviste />} />
+        <Route path="/jak-to-funguje" element={<JakToFunguje />} />
+        <Route path="/kontakt" element={<Kontakt />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

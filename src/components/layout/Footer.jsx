@@ -1,57 +1,51 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LOGO_URL = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c8de7824_generated_8389a653.png";
-
 export default function Footer() {
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <footer className="bg-tectonic text-white/70">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Brand */}
+    <footer className="bg-ink text-white/50 text-sm">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
-            <img src={LOGO_URL} alt="mlziste.cz" className="h-8 w-auto brightness-200 mb-4" />
-            <p className="text-sm leading-relaxed max-w-md">
-              Profesionální mlžné systémy a mlžítka pro ochlazování městských prostorů. 
-              Návrh, realizace a servis high-pressure mist technologií.
+            <div className="mb-4">
+              <p className="font-heading text-white text-base tracking-widest uppercase font-medium">HolmTec</p>
+              <p className="font-mono text-[10px] tracking-widest text-white/30 uppercase">· Mlžné sochy · Nerezová ocel</p>
+            </div>
+            <p className="text-sm leading-relaxed max-w-sm">
+              Zakázkové mlžné sochy z nerezové oceli AISI 304. Od návrhu přes výrobu až po instalaci. Trutnov, Česká republika.
             </p>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h4 className="text-white text-sm font-medium uppercase tracking-wider mb-4">Navigace</h4>
-            <div className="flex flex-col gap-2.5">
-              <Link to="/katalog" className="text-sm hover:text-hydro transition-colors">Katalog produktů</Link>
-              <button onClick={() => scrollTo('sluzby')} className="text-left text-sm hover:text-hydro transition-colors">Služby</button>
-              <button onClick={() => scrollTo('o-nas')} className="text-left text-sm hover:text-hydro transition-colors">O nás</button>
-              <button onClick={() => scrollTo('kontakt')} className="text-left text-sm hover:text-hydro transition-colors">Kontakt</button>
+            <div className="mt-6 flex gap-4">
+              <a href="https://www.instagram.com/mlzne_sochy" target="_blank" rel="noopener noreferrer"
+                className="text-xs font-mono tracking-widest uppercase hover:text-white transition-colors">Instagram</a>
+              <a href="https://www.facebook.com/Mlznesochy" target="_blank" rel="noopener noreferrer"
+                className="text-xs font-mono tracking-widest uppercase hover:text-white transition-colors">Facebook</a>
             </div>
           </div>
 
-          {/* Contact */}
           <div>
-            <h4 className="text-white text-sm font-medium uppercase tracking-wider mb-4">Kontakt</h4>
-            <div className="flex flex-col gap-2.5 text-sm">
-              <a href="mailto:info@mlziste.cz" className="hover:text-hydro transition-colors">info@mlziste.cz</a>
-              <a href="tel:+420123456789" className="hover:text-hydro transition-colors">+420 123 456 789</a>
-              <p>Praha, Česká republika</p>
+            <p className="text-white text-xs font-mono tracking-widest uppercase mb-4">Produkty</p>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/kolekce" className="hover:text-white transition-colors">Mlžné sochy</Link>
+              <Link to="/mlhoviste" className="hover:text-white transition-colors">Mlhoviště</Link>
+              <Link to="/jak-to-funguje" className="hover:text-white transition-colors">Jak to funguje</Link>
+              <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF" className="hover:text-white transition-colors">Katalog 2026 PDF</a>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-white text-xs font-mono tracking-widest uppercase mb-4">Kontakt</p>
+            <div className="flex flex-col gap-2.5">
+              <p className="text-white/70">Ing. Radek Meduna</p>
+              <a href="tel:+420774700390" className="hover:text-white transition-colors">+420 774 700 390</a>
+              <a href="mailto:obchod1@holmtec.cz" className="hover:text-white transition-colors">obchod1@holmtec.cz</a>
+              <p>Trutnov, Česká republika</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} mlziste.cz. Všechna práva vyhrazena.
-          </p>
-          <div className="flex gap-6 text-xs text-white/40">
-            <Link to="/ochrana-udaju" className="hover:text-white/70 transition-colors">Ochrana osobních údajů</Link>
-            <Link to="/obchodni-podminky" className="hover:text-white/70 transition-colors">Obchodní podmínky</Link>
-          </div>
+        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-3">
+          <p className="text-xs text-white/30">© {new Date().getFullYear()} HolmTec s.r.o. Všechna práva vyhrazena.</p>
+          <p className="text-xs text-white/20 font-mono">HOLMTEC · MLŽNÉ SOCHY · NEREZOVÁ OCEL</p>
         </div>
       </div>
     </footer>

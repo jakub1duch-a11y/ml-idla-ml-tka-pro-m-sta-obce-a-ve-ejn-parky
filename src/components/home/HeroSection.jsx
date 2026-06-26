@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const HERO_IMG = 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/0416623ee_img-3501.jpg';
+const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/772ce921e_video_20260622_153105.mp4';
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-ink">
       <div className="absolute inset-0">
-        <img src={HERO_IMG} alt="Mlžná socha v provozu" className="w-full h-full object-cover opacity-60" />
+        <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-70">
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-transparent" />
       </div>
 

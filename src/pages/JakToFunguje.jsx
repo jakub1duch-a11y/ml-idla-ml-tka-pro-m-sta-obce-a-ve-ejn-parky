@@ -9,35 +9,35 @@ const steps = [
     title: 'Jak se stavíme k dílu',
     subtitle: 'Každá socha je originál',
     desc: 'Vycházíme z vašeho prostoru a vaší představy. Navrhujeme tvar, výšku, rozmístění trysek. Kresba na papíře se mění v přesný technický výkres. Spolupracujeme s architekty, urbanisty i soukromými zákazníky.',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/cd4514b7c_kontura-mlzitko.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d738bb441_holmtec_DPSvizualizace-1.jpg',
   },
   {
     num: '02',
     title: 'Kvalita materiálů',
     subtitle: 'Nerezová ocel AISI 304',
     desc: 'Broušený saténový povrch. Odolné vůči korozí, UV záření a mrazu. Materiál třídy AISI 304, standardně používaný v potravinářském průmyslu — maximální hygienická bezpečnost.',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/f617f917e_img-3531.jpeg',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/39c506f5b_891c5179a_Social_Media_Video_Ads_A_curved_metallic_pipe_speckled_with_glistening_1_-N3ABn.png',
   },
   {
     num: '03',
     title: 'Zaručená spokojenost',
     subtitle: 'Testování a kontrola',
     desc: 'Každá socha je testována před dodáním. Tlakový test, vizuální kontrola, nastavení trysek. 100 % spokojených klientů — kladné hodnocení všech dokončených instalací.',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/9408bab1c_img-3558.jpeg',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/078e25764_3a4d19965_Food_Brand_System_Style_Guide_In_a_photographic_style_a_circular_mister_sprays_QKFDjh9F1.jpg',
   },
   {
     num: '04',
     title: 'Instalace & zprovoznění',
     subtitle: 'Montáž za jeden den',
     desc: 'Standardní instalace trvá jeden den. Zemní vrut nebo chemické kotvy, přivedení vody, nastavení tlaku a trysek. Předáme vás s plně funkčním systémem.',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/99b1a09ec_img-5153.jpeg',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
   },
   {
     num: '05',
     title: 'Zábava a osvěžení',
     subtitle: 'Výsledek, který přitahuje lidi',
     desc: 'Mlžná socha přitahuje lidi. Děti, rodiny, návštěvníci — všichni hledají osvěžení v horkých dnech. Váš prostor se stane místem, kam se lidé vrací.',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/92361308a_img-3531.jpeg',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
   },
 ];
 
@@ -56,8 +56,9 @@ export default function JakToFunguje() {
     <div className="pt-20">
       {/* Header */}
       <div className="relative bg-ink py-20 lg:py-32 overflow-hidden">
-        <img src="https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/2f6b1e705_videoframe_7589.png"
-          alt="Mlžná socha" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30">
+        <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
+      </video>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
           <p className="font-mono text-[9px] tracking-widest uppercase text-white/30 mb-3">Technologie mlžení</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight leading-tight">
@@ -95,7 +96,7 @@ export default function JakToFunguje() {
               </div>
             </div>
             <div>
-              <img src="https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/a94dc72e7_img-4513.jpeg"
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png"
                 alt="Detail mikrotrysky" className="w-full aspect-square object-cover" />
               <p className="font-mono text-[9px] text-ink/30 tracking-widest uppercase mt-2">
                 Detail mikrotrysky · Nízkotlaká tryska · kapky 10–50 μm · průtok 0,05 l/min
@@ -158,7 +159,7 @@ export default function JakToFunguje() {
               ))}
             </div>
           </div>
-          <img src="https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/35fb7e76f_ht-display2.jpg"
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3aa6b0337_51da7b088_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ1.png"
             alt="HolmTec Smart App" className="w-full aspect-[4/3] object-cover" />
         </div>
       </div>

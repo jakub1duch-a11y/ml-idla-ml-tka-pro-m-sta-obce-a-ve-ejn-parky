@@ -34,8 +34,8 @@ export default function TechSection() {
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <img
-              src="https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/a94dc72e7_img-4513.jpeg"
-              alt="Detail mikrotrysky mlžné sochy"
+              src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/39c506f5b_891c5179a_Social_Media_Video_Ads_A_curved_metallic_pipe_speckled_with_glistening_1_-N3ABn.png"
+              alt="Detail mlžné sochy"
               className="w-full aspect-[4/5] object-cover"
             />
             <div className="mt-1 bg-ink text-white p-6 grid grid-cols-2 gap-6">

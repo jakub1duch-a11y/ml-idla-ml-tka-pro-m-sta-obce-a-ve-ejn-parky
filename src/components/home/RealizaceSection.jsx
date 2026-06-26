@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const imgs = [
-  'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/6913bcfef_mlitko-mlzne-mlhoviste.jpg',
-  'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/d790e0633_img-4513.jpeg',
-  'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/92361308a_img-3531.jpeg',
-  'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/a8b2afb44_fullsizerender.jpeg',
+  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
+  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
+  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1035553df_FB_IMG_1782148329157.jpg',
+  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
 ];
 
 export default function RealizaceSection() {

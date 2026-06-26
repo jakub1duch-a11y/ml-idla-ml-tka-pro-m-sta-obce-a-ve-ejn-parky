@@ -12,7 +12,7 @@ const products = [
     desc: 'Jedinečné mlžítko ve tvaru stilizovaného mraku. Organické křivky z nerezové trubky TR40×3 mm s 5 kvalitními trysky. Broušený saténový povrch.',
     spec: 'AISI 304',
     material: 'TR40×3 mm · 5 trysek',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/2a4a97b54_Social_Media_Video_Ads_A_metallic_abstract_sculpture_sprays_mist_JyR_T8pt.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
   },
   {
     name: 'LINEA EL70',
@@ -21,7 +21,7 @@ const products = [
     desc: 'Designové mlžítko z čtvercového profilu 70×70×3 mm. Minimalistický design pro moderní architekturu.',
     spec: 'AISI 304',
     material: '70×70×3 mm · Čtvercový profil',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/c100890c0_Social_Media_Video_Ads_In_a_stark_monochromatic_style_a_metal_pipe_VmFBiVkY.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c90bbf42d_C-MltkoLINEA_CE70_single-1.png',
   },
   {
     name: 'GATE_60',
@@ -30,7 +30,7 @@ const products = [
     desc: 'Třímetrová mlžná brána z trubek TR60×3 z oceli 1.4301 s 5 tryskami. Šíře 3 m, výška 2,1 m.',
     spec: 'AISI 304',
     material: 'TR60×3 · šíře 3 m · výška 2,1 m',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/450804ee4_Social_Media_Video_Ads_In_a_minimalist_abstract_style_a_metallic_7pWGCuLQ.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
   },
   {
     name: 'Kids Edition',
@@ -39,7 +39,7 @@ const products = [
     desc: 'Mlžítka pro dětská hřiště a mateřské školy. Bez ostrých hran, hladké svary, potravinářská nerez.',
     spec: 'AISI 304',
     material: 'Potravinářská nerez · Hladké svary',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/f3cc7e7b8_mlhoviste-t-3.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
   },
   {
     name: 'Volavka',
@@ -48,7 +48,7 @@ const products = [
     desc: 'Subtilní mlžítko s elegantně zahnutým ramenem TR60. Minimalistický oblouk 120°. Mobilní varianta se zemním vrutem.',
     spec: 'AISI 304',
     material: 'TR60 · Oblouk 120° · Zemní vrut',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/d6c2932cf_Social_Media_Video_Ads_In_a_minimalist_abstract_style_a_modern_metal_9yZ29dM6.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1035553df_FB_IMG_1782148329157.jpg',
   },
   {
     name: 'Smart Control',
@@ -57,7 +57,7 @@ const products = [
     desc: 'WiFi a Bluetooth ovládání mlžítek přes mobilní aplikaci HolmTec (iOS & Android). Automatické scénáře — mlha se spustí sama, když je nejpotřebnější.',
     spec: 'AISI 304',
     material: 'WiFi + BT · iOS & Android',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/6a6b4eb5a_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3aa6b0337_51da7b088_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ1.png',
   },
 ];
 

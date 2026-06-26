@@ -9,7 +9,7 @@ const variants = [
     size: '3 × 3 m',
     desc: '1 mlžná socha Kids + dopadová plocha 9 m². Ideální pro školky a zahrady.',
     price: 'od 48 000 Kč',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/65ac64fd3_mlhoviste-t-3.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
   },
   {
     name: 'Mlhoviště PARK',
@@ -17,7 +17,7 @@ const variants = [
     size: '6 × 6 m',
     desc: '3 mlžné sochy + dopadové plochy 36 m². Smart ventil a aplikace.',
     price: 'od 128 000 Kč',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/acb98f1a6_img-4513.jpeg',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
   },
   {
     name: 'Mlhoviště ARENA',
@@ -25,7 +25,7 @@ const variants = [
     size: '12 × 8 m',
     desc: '6–10 mlžných soch + dopadové plochy 96 m². Smart systém s čidlem.',
     price: 'od 290 000 Kč',
-    image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/82e33688f_img-3531.jpeg',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
   },
 ];
 
@@ -111,12 +111,19 @@ export default function Mlhoviste() {
         </div>
       </div>
 
-      {/* ZOO Praha reference */}
+      {/* Video section */}
       <div className="bg-fog py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-          <p className="font-mono text-[9px] tracking-widest uppercase text-ink/30 mb-3">Reference</p>
-          <p className="font-heading text-2xl text-ink font-light">ZOO Praha · 6 mlžných soch · 2024</p>
-          <p className="text-sm text-ink/40 mt-2 max-w-md mx-auto">Bezpečné pro děti. Přirozené pro zvířata. Nerezová ocel AISI 304.</p>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <p className="font-mono text-[9px] tracking-widest uppercase text-ink/30 mb-3 text-center">Živý pohled</p>
+          <p className="font-heading text-2xl text-ink font-light text-center mb-10">Mlhoviště v provozu</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+            <video controls playsInline className="w-full aspect-video object-cover">
+              <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
+            </video>
+            <video controls playsInline className="w-full aspect-video object-cover">
+              <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c7c9d3e68_video_20260619_164025.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </div>

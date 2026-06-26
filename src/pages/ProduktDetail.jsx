@@ -152,6 +152,55 @@ const PRODUCTS = {
     related: ['mrak', 'gate60', 'volavka'],
   },
 
+  aura: {
+    slug: 'aura',
+    name: 'AURA',
+    category: 'Veřejné prostory · Parky · Hřiště',
+    tagline: 'Kruh z mlhy. Centrum každého prostoru.',
+    lead: 'AURA je mlžná skulptura ve tvaru kruhu — nerezový prsten s integrovanými tryskami vytváří dokonalý mlhový halo. Pro parky, náměstí, dětská hřiště i firemní areály.',
+    description: 'Jednoduchý tvar, který okamžitě upoutá pozornost. Nerezový kruh průměru 80 cm nasazený na štíhlém sloupu — každý ví, co to je, každý se chce přiblížit. 8 trysek rovnoměrně rozmístěných po obvodu kruhu vytváří symetrický mlhový disk viditelný ze stovek metrů. AURA je dostupná ve třech velikostech — Standard (∅80 cm), Large (∅120 cm) a XL (∅160 cm pro veřejné instalace). Povrch je broušen do saténového lesku AISI 304. Instalace trvá jeden den.',
+    hero: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
+    gallery: [
+      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
+      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ad09f28ad_4ba76226-4e57-4242-bf1d-b9add4e0da7b.jpg',
+      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9897413c3_MlzitkoLizatko.png',
+      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9b46f2f7b_tepelnyostrov.png',
+    ],
+    nozzleImage: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/078e25764_3a4d19965_Food_Brand_System_Style_Guide_In_a_photographic_style_a_circular_mister_sprays_QKFDjh9F1.jpg',
+    mistImage: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+    specs: [
+      { label: 'Materiál', value: 'Nerezová ocel AISI 304' },
+      { label: 'Průměr kruhu', value: '∅80 / 120 / 160 cm' },
+      { label: 'Sloup', value: 'TR40×3 mm, výška 180–250 cm' },
+      { label: 'Počet trysek', value: '8 ks (rovnoměrně po obvodu)' },
+      { label: 'Tlak vody', value: '2–6 bar' },
+      { label: 'Spotřeba vody', value: '8–12 l/h' },
+      { label: 'Ochlazení', value: 'až −9 °C' },
+      { label: 'Kapky', value: '10–50 μm' },
+      { label: 'Povrch', value: 'Saténový brus, Ra 0.8' },
+      { label: 'Kotvení', value: 'Zemní vrut nebo betonová patka' },
+      { label: 'Smart ovládání', value: 'WiFi + BT (volitelně)' },
+      { label: 'Záruka', value: '5 let na konstrukci' },
+    ],
+    features: [
+      { icon: Droplets, title: 'Symetrický mlhový halo', desc: '8 trysek po obvodu kruhu vytváří dokonalý symetrický mlhový disk.' },
+      { icon: Thermometer, title: 'Ochlazení −9 °C', desc: 'Evaporační efekt snižuje teplotu okolního vzduchu až o 9 stupňů Celsia.' },
+      { icon: Shield, title: 'Pro všechny věkové skupiny', desc: 'Hladké svary, bez ostrých hran. Bezpečné pro děti i veřejné prostory.' },
+      { icon: Zap, title: 'Ikonický tvar', desc: 'Okamžitě rozpoznatelný vizuální prvek — dominanta každého prostoru.' },
+    ],
+    modules: [
+      { name: 'Zemní vrut ∅60', desc: 'Mobilní instalace bez betonu', image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/8fd8247c3_Copilot_20260506_023304.png' },
+      { name: 'Smart WiFi modul', desc: 'Ovládání z mobilu odkudkoli', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3aa6b0337_51da7b088_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ1.png' },
+      { name: 'Noční LED podsvícení', desc: 'Ambientní osvětlení po setmění', image: 'https://media.base44.com/images/public/69e1b467582d85dada1b0fe9/304a79acc_Copilot_20260506_022439.png' },
+    ],
+    projects: [
+      { name: 'Veřejný park — osvěžení ve městě', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png' },
+      { name: 'Dětské hřiště — mateřská škola', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9897413c3_MlzitkoLizatko.png' },
+      { name: 'Tepelný ostrov — řešení pro město', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9b46f2f7b_tepelnyostrov.png' },
+    ],
+    related: ['mrak', 'gate60', 'kids'],
+  },
+
   volavka: {
     slug: 'volavka',
     name: 'Volavka',
@@ -203,6 +252,7 @@ const PRODUCTS = {
 };
 
 const RELATED_META = {
+  aura: { name: 'AURA', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png' },
   mrak: { name: 'MRAK', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png' },
   gate60: { name: 'GATE 60', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg' },
   kids: { name: 'Kids Edition', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg' },

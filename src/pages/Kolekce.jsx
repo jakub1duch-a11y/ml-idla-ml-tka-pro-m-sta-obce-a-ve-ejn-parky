@@ -7,6 +7,15 @@ const categories = ['Vše', 'Rezidenční', 'Komerční', 'Art instalace', 'Outd
 
 const products = [
   {
+    slug: 'aura',
+    name: 'AURA',
+    category: 'Komerční',
+    tagline: 'Kruh z mlhy. Centrum každého prostoru.',
+    desc: 'Nerezový prsten ∅80–160 cm s 8 tryskami po obvodu. Symetrický mlhový halo pro parky, náměstí a dětská hřiště.',
+    spec: 'AISI 304',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
+  },
+  {
     slug: 'mrak',
     name: 'MRAK',
     category: 'Art instalace',

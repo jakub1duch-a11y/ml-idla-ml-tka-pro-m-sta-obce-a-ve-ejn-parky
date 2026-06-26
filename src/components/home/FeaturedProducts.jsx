@@ -42,7 +42,7 @@ export default function FeaturedProducts() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">NAŠE PRODUKTY</p>
-          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight">
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
             Oblíbené instalace
           </h2>
         </motion.div>
@@ -55,7 +55,7 @@ export default function FeaturedProducts() {
                   <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-bold text-white mb-1 group-hover:text-cyan transition-colors">{p.name}</h3>
+                  <h3 className="font-normal text-white mb-1 group-hover:text-cyan transition-colors">{p.name}</h3>
                   <p className="text-sm text-white/50">{p.desc}</p>
                 </div>
               </Link>

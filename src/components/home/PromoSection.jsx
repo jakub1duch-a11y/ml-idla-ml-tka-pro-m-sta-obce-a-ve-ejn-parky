@@ -24,7 +24,7 @@ export default function PromoSection() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan/10 border border-cyan/20 text-xs font-mono text-cyan tracking-widest uppercase mb-4">
             ☀️ Limitovaná nabídka · Léto 2026
           </div>
-          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight mb-3">
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-3">
             Slevové kódy<br /><span className="text-cyan">+ soutěž o sochu</span>
           </h2>
           <p className="text-white/50 max-w-xl">

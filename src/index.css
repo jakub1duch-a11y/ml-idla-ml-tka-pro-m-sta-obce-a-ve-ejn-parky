@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,200;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,28 +7,28 @@
 @layer base {
   :root {
     --background: 220 20% 6%;
-    --foreground: 0 0% 96%;
-    --card: 220 18% 10%;
-    --card-foreground: 0 0% 96%;
-    --popover: 220 18% 10%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 185 80% 48%;
+    --foreground: 0 0% 94%;
+    --card: 220 18% 9%;
+    --card-foreground: 0 0% 94%;
+    --popover: 220 18% 9%;
+    --popover-foreground: 0 0% 94%;
+    --primary: 185 75% 46%;
     --primary-foreground: 220 20% 6%;
-    --secondary: 220 15% 16%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 220 15% 14%;
-    --muted-foreground: 220 10% 55%;
-    --accent: 185 80% 48%;
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 0 0% 94%;
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 8% 50%;
+    --accent: 185 75% 46%;
     --accent-foreground: 220 20% 6%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 20%;
-    --input: 220 15% 16%;
-    --ring: 185 80% 48%;
-    --radius: 12px;
-    --font-heading: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-mono: 'Space Mono', ui-monospace, monospace;
+    --border: 220 12% 16%;
+    --input: 220 15% 14%;
+    --ring: 185 75% 46%;
+    --radius: 14px;
+    --font-heading: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'DM Mono', ui-monospace, monospace;
   }
 }
 
@@ -40,15 +40,20 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     font-size: 1rem;
-    line-height: 1.65;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+  }
+  p {
+    font-weight: 300;
   }
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0d1117; }
-::-webkit-scrollbar-thumb { background: #1e2a3a; border-radius: 2px; }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0a0e14; }
+::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 2px; }

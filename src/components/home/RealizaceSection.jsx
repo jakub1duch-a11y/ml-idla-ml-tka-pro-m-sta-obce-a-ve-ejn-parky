@@ -24,7 +24,7 @@ export default function RealizaceSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Naše realizace</p>
-          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight">
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
             Fotografie z terénu
           </h2>
         </motion.div>

@@ -15,7 +15,7 @@ export default function TechSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Jak to funguje</p>
-          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight mb-4">
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
             Technologie mlžení
           </h2>
           <p className="text-white/50 max-w-xl mx-auto">
@@ -30,7 +30,7 @@ export default function TechSection() {
               <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4 group-hover:bg-cyan/20 transition-all">
                 <f.icon size={20} className="text-cyan" />
               </div>
-              <h3 className="font-bold text-white mb-2">{f.title}</h3>
+              <h3 className="font-normal text-white mb-2">{f.title}</h3>
               <p className="text-sm text-white/50 leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}

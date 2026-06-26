@@ -33,7 +33,7 @@ export default function ProductsSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Naše produkty</p>
-          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight">
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
             Co umíme vytvořit
           </h2>
           <p className="mt-3 text-white/50 max-w-lg">
@@ -50,7 +50,7 @@ export default function ProductsSection() {
                 </div>
                 <div className="p-6">
                   <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">{p.category}</p>
-                  <h3 className="text-xl font-bold text-white mb-2">{p.name}</h3>
+                  <h3 className="text-xl font-normal text-white mb-2">{p.name}</h3>
                   <p className="text-sm text-white/50 leading-relaxed mb-4">{p.desc}</p>
                   <div className="flex items-center gap-2 text-sm text-cyan font-medium">
                     Více <ArrowRight size={14} />

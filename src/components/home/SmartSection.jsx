@@ -19,7 +19,7 @@ export default function SmartSection() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan/10 border border-cyan/20 text-xs font-mono text-cyan tracking-widest uppercase mb-6">
               Smart ovládání
             </div>
-            <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight mb-6">
+            <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-6">
               Mlžení z mobilu.<br /><span className="text-cyan">Kdykoli. Odkudkoli.</span>
             </h2>
             <p className="text-white/50 text-lg leading-relaxed mb-8">

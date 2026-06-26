@@ -81,7 +81,7 @@ export default function Kolekce() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-12">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">NAŠE PRODUKTY</p>
-          <h1 className="font-heading font-black text-4xl lg:text-6xl text-white tracking-tight">Mlžné systémy</h1>
+          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight">Mlžné systémy</h1>
         </motion.div>
       </div>
 
@@ -108,7 +108,7 @@ export default function Kolekce() {
                 </div>
                 <div className="p-6">
                   <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">{p.category}</p>
-                  <h3 className="text-xl font-bold text-white mb-1">{p.name}</h3>
+                  <h3 className="text-xl font-normal text-white mb-1">{p.name}</h3>
                   <p className="text-sm text-white/50 mb-3">{p.tagline}</p>
                   <p className="text-xs text-white/30 leading-relaxed mb-4">{p.desc}</p>
                   <div className="flex items-center justify-between">
@@ -127,7 +127,7 @@ export default function Kolekce() {
         <div className="mt-16 p-10 rounded-2xl bg-gradient-to-r from-cyan/10 to-cyan/5 border border-cyan/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
             <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Nový katalog 2026</p>
-            <h3 className="font-heading font-black text-2xl text-white">Celá kolekce v jednom PDF.</h3>
+            <h3 className="font-heading font-light text-2xl text-white">Celá kolekce v jednom PDF.</h3>
             <p className="text-sm text-white/40 mt-1">Technické listy, výkresy, ceníky a referenční fotografie všech modelů.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">

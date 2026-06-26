@@ -27,10 +27,10 @@ export default function HeroSection() {
             ARCHITEKTURA ATMOSFÉRY
           </div>
 
-          <h1 className="font-heading font-black text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
+          <h1 className="font-heading font-extralight text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
             OSTEV
           </h1>
-          <h2 className="font-heading font-black text-5xl lg:text-7xl text-white/80 italic leading-[1.05] tracking-tight mb-6">
+          <h2 className="font-heading font-extralight text-5xl lg:text-7xl text-white/70 italic leading-[1.05] tracking-tight mb-6">
             Mlžný strom.
           </h2>
           <p className="text-white/60 text-lg leading-relaxed mb-8 max-w-lg">
@@ -58,7 +58,7 @@ export default function HeroSection() {
           className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
           {stats.map((s) => (
             <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-              <p className="font-heading font-black text-2xl text-cyan leading-none mb-1">{s.val}</p>
+              <p className="font-heading font-light text-2xl text-cyan leading-none mb-1">{s.val}</p>
               <p className="text-xs text-white/40 font-mono">{s.label}</p>
             </div>
           ))}

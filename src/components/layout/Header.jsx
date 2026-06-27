@@ -79,7 +79,7 @@ export default function Header() {
           </div>
 
           <Link to="/jak-to-funguje" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Instalace</Link>
-          <Link to="/kontakt" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Blog</Link>
+          <Link to="/poradce" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">AI Poradce</Link>
           <Link to="/kontakt" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">
             <MapPin size={13} /> Instalace
           </Link>

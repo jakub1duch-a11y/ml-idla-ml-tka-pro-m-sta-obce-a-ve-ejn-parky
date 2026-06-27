@@ -25,6 +25,7 @@ import AdminContentful from '@/pages/admin/AdminContentful';
 import AdminDriveSync from '@/pages/admin/AdminDriveSync';
 import AdminProjects from '@/pages/admin/AdminProjects';
 import ProjectStatus from '@/pages/ProjectStatus';
+import CustomerPortal from '@/pages/CustomerPortal';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -53,6 +54,7 @@ const AuthenticatedApp = () => {
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/project/:token" element={<ProjectStatus />} />
+        <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminAnalytika />} />
           <Route path="produkty" element={<AdminProdukty />} />

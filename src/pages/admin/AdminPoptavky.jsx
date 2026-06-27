@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { FileText, Download, Sparkles, ChevronDown, ChevronUp, X, Plus, Trash2, Loader, Package, Tag, Layers } from 'lucide-react';
+import { FileText, Download, Sparkles, ChevronDown, ChevronUp, X, Plus, Trash2, Loader, Package, Tag, Layers, CheckCircle, Share2 } from 'lucide-react';
 
 const STATUS_LABELS = { new: 'Nová', contacted: 'Kontaktováno', in_progress: 'V řešení', closed: 'Uzavřeno' };
 const STATUS_COLORS = { new: 'bg-cyan/10 text-cyan', contacted: 'bg-yellow-500/10 text-yellow-400', in_progress: 'bg-blue-500/10 text-blue-400', closed: 'bg-white/5 text-white/30' };
@@ -35,6 +35,9 @@ export default function AdminPoptavky() {
   const [exporting, setExporting] = useState(false);
   const [exportResult, setExportResult] = useState(null);
   const [dbProducts, setDbProducts] = useState([]);
+  const [quoteNumber, setQuoteNumber] = useState('');
+  const [savingToDrive, setSavingToDrive] = useState(false);
+  const [driveResult, setDriveResult] = useState(null);
 
   useEffect(() => {
     base44.entities.Product.list().then(setDbProducts);
@@ -137,6 +140,12 @@ Navrhni položky nabídky jako JSON: items (pole: name, qty, price, spec — spe
   const discountAmt = Math.round(baseTotal * volumeDiscount / 100);
   const totalAfterDiscount = baseTotal - discountAmt;
 
+  const generateQuoteNumber = () => {
+    const year = new Date().getFullYear();
+    const random = String(Math.floor(Math.random() * 10000)).padStart(5, '0');
+    return `HT-${year}-${random}`;
+  };
+
   const downloadQuote = async () => {
     setGenerating(true);
     try {
@@ -149,16 +158,81 @@ Navrhni položky nabídky jako JSON: items (pole: name, qty, price, spec — spe
         volumeDiscount,
         discountAmt,
         totalAfterDiscount,
+        quoteNumber: quoteNumber || generateQuoteNumber(),
       });
       const blob = new Blob([res.data], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `nabidka-holmtec.pdf`;
+      a.download = `nabidka-${quoteNumber || 'holmtec'}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
     } finally {
       setGenerating(false);
+    }
+  };
+
+  const saveQuoteToDriveAndCreateProject = async () => {
+    setSavingToDrive(true);
+    setDriveResult(null);
+    try {
+      const collab = COLLAB_TYPES.find(c => c.value === collabType);
+      const qNumber = quoteNumber || generateQuoteNumber();
+      
+      // Generate PDF
+      const pdfRes = await base44.functions.invoke('generateQuotePDF', {
+        inquiry: quoteInquiry,
+        items: quoteItems.filter(i => i.name),
+        notes: quoteNotes,
+        collabType: collab?.label,
+        volumeDiscount,
+        discountAmt,
+        totalAfterDiscount,
+        quoteNumber: qNumber,
+      });
+
+      const pdfBytes = pdfRes.data;
+
+      // Upload to Drive and save project
+      const filename = `nabidka-${qNumber}-${quoteInquiry.name.replace(/\s+/g, '_')}.pdf`;
+      const driveRes = await base44.functions.invoke('saveQuoteToDriveAuto', {
+        pdfBytes: Array.from(new Uint8Array(pdfBytes)),
+        filename,
+        quoteNumber: qNumber,
+        inquiryEmail: quoteInquiry.email,
+        inquiryName: quoteInquiry.name,
+      });
+
+      if (driveRes.data.success) {
+        // Create ProjectOrder
+        const token = Math.random().toString(36).substr(2, 12);
+        await base44.entities.ProjectOrder.create({
+          inquiry_id: quoteInquiry.id,
+          project_name: quoteInquiry.message.slice(0, 100),
+          client_name: quoteInquiry.name,
+          client_email: quoteInquiry.email,
+          quote_number: qNumber,
+          quote_pdf_url: driveRes.data.drive_url,
+          status: 'sent',
+          total_price: totalAfterDiscount,
+          special_requirements: quoteInquiry.message,
+          shared_token: token,
+        });
+
+        setDriveResult({
+          success: true,
+          driveUrl: driveRes.data.drive_url,
+          folderName: driveRes.data.folder_name,
+          shareToken: token,
+        });
+
+        // Update inquiry status
+        await base44.entities.ContactInquiry.update(quoteInquiry.id, { status: 'contacted' });
+      }
+    } catch (e) {
+      setDriveResult({ success: false, error: e.message });
+    } finally {
+      setSavingToDrive(false);
     }
   };
 
@@ -252,6 +326,36 @@ Navrhni položky nabídky jako JSON: items (pole: name, qty, price, spec — spe
               <button onClick={() => setQuoteInquiry(null)} className="text-white/40 hover:text-white"><X size={18} /></button>
             </div>
             <p className="text-xs text-white/30 mb-6">{quoteInquiry.name} · {quoteInquiry.email}</p>
+
+            {driveResult && (
+              <div className={`p-4 rounded-xl mb-6 border ${driveResult.success ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
+                {driveResult.success ? (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                      <CheckCircle size={16} /> Nabídka uložena na Drive
+                    </div>
+                    <p className="text-xs text-emerald-300/70">Složka: {driveResult.folderName}</p>
+                    <a href={driveResult.driveUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-400 hover:text-emerald-300 underline">
+                      Otevřít na Drive →
+                    </a>
+                    <p className="text-xs text-emerald-300/70 mt-1">Token pro zákazníka: {driveResult.shareToken}</p>
+                  </div>
+                ) : (
+                  <div className="text-red-400 text-sm">{driveResult.error}</div>
+                )}
+              </div>
+            )}
+
+            {/* Číslo nabídky */}
+            <div className="mb-5">
+              <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1">Číslo nabídky</label>
+              <input
+                value={quoteNumber}
+                onChange={e => setQuoteNumber(e.target.value)}
+                placeholder={`HT-${new Date().getFullYear()}-XXXXX`}
+                className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:border-cyan/40 focus:outline-none"
+              />
+            </div>
 
             {/* Typ spolupráce */}
             <div className="mb-5">
@@ -385,11 +489,15 @@ Navrhni položky nabídky jako JSON: items (pole: name, qty, price, spec — spe
                 className="flex items-center gap-2 px-5 py-2.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 disabled:opacity-50 transition-all">
                 {generating ? <><Loader size={14} className="animate-spin" /> Generuji PDF...</> : <><Download size={14} /> Stáhnout PDF</>}
               </button>
+              <button onClick={saveQuoteToDriveAndCreateProject} disabled={savingToDrive}
+                className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-sm rounded-full hover:bg-emerald-500/30 disabled:opacity-50 transition-all">
+                {savingToDrive ? <><Loader size={14} className="animate-spin" /> Ukládám...</> : <><Share2 size={14} /> Uložit na Drive + Projekt</>}
+              </button>
               <a href={`mailto:${quoteInquiry.email}?subject=Cenová nabídka HolmTec&body=Dobrý den, zasíláme Vám cenovou nabídku dle Vaší poptávky.`}
                 className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white text-sm rounded-full hover:bg-white/15 transition-all">
                 Odeslat e-mailem →
               </a>
-              <button onClick={() => setQuoteInquiry(null)} className="px-5 py-2.5 bg-white/5 text-white/60 text-sm rounded-full hover:bg-white/10">Zrušit</button>
+              <button onClick={() => { setQuoteInquiry(null); setDriveResult(null); setQuoteNumber(''); }} className="px-5 py-2.5 bg-white/5 text-white/60 text-sm rounded-full hover:bg-white/10">Zrušit</button>
             </div>
           </div>
         </div>

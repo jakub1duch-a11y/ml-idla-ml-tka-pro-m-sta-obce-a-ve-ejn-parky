@@ -90,6 +90,10 @@ export default function Header() {
           <button className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all">
             <ShoppingCart size={18} />
           </button>
+          <Link to="/muj-projekt"
+            className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">
+            Můj projekt
+          </Link>
           <Link to="/kontakt"
             className="flex items-center gap-2 px-5 py-2 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
             ✦ Poptávka
@@ -112,6 +116,7 @@ export default function Header() {
                 </Link>
               ))}
               <Link to="/jak-to-funguje" className="text-sm text-white/70 hover:text-white transition-colors py-1">Instalace</Link>
+              <Link to="/muj-projekt" className="text-sm text-cyan hover:text-cyan/80 transition-colors py-1 font-medium">Můj projekt</Link>
               <Link to="/kontakt" className="mt-2 px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full text-center">
                 ✦ Poptávka
               </Link>

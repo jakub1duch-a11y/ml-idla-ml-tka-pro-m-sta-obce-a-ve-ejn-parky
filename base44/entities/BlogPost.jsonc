@@ -1,0 +1,56 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Post title"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "inspirace",
+        "realizace",
+        "technika",
+        "novinky"
+      ],
+      "description": "Category"
+    },
+    "perex": {
+      "type": "string",
+      "description": "Short excerpt"
+    },
+    "content": {
+      "type": "string",
+      "description": "Full HTML/markdown content"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Cover image URL"
+    },
+    "published": {
+      "type": "boolean",
+      "default": false,
+      "description": "Published state"
+    },
+    "published_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Publish date"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

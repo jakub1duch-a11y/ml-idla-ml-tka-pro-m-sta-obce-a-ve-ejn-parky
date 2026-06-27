@@ -1,0 +1,63 @@
+{
+  "name": "Realizace",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "client": {
+      "type": "string",
+      "description": "Client name"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location"
+    },
+    "year": {
+      "type": "number",
+      "description": "Year of realization"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "mestsky",
+        "event",
+        "soukromy",
+        "prumyslovy"
+      ],
+      "description": "Category"
+    },
+    "description": {
+      "type": "string",
+      "description": "Project description"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Main image URL"
+    },
+    "gallery_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Gallery images"
+    },
+    "product_used": {
+      "type": "string",
+      "description": "Product model used"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show on homepage"
+    },
+    "published": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

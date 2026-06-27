@@ -15,6 +15,12 @@ import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
 import SearchAnalytics from '@/pages/SearchAnalytics';
+import AdminLayout from '@/pages/admin/AdminLayout';
+import AdminAnalytika from '@/pages/admin/AdminAnalytika';
+import AdminProdukty from '@/pages/admin/AdminProdukty';
+import AdminRealizace from '@/pages/admin/AdminRealizace';
+import AdminBlog from '@/pages/admin/AdminBlog';
+import AdminPoptavky from '@/pages/admin/AdminPoptavky';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -42,6 +48,13 @@ const AuthenticatedApp = () => {
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminAnalytika />} />
+          <Route path="produkty" element={<AdminProdukty />} />
+          <Route path="realizace" element={<AdminRealizace />} />
+          <Route path="blog" element={<AdminBlog />} />
+          <Route path="poptavky" element={<AdminPoptavky />} />
+        </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

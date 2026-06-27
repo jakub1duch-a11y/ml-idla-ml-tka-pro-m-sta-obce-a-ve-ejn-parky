@@ -79,7 +79,8 @@ export default function AdminDriveSync() {
           </a>
         </div>
         <p className="text-xs text-white/30 mb-3">
-          Zkopírujte URL složky z Drive nebo jen ID (část za <span className="font-mono text-white/50">/folders/</span>)
+          Zkopírujte URL složky z Drive nebo jen ID (část za <span className="font-mono text-white/50">/folders/</span>).
+          Funguje i pro <span className="text-white/50">Sdílené disky</span> (Shared Drives).
         </p>
         <input
           value={folderId}

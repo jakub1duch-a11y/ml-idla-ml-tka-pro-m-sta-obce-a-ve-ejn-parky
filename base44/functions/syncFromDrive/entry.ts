@@ -13,7 +13,10 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 //   micron_size, water_consumption, coverage_area, power_supply, featured
 
 async function driveGet(url, accessToken) {
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
+  // Always add Shared Drive support params
+  const sep = url.includes('?') ? '&' : '?';
+  const fullUrl = url + sep + 'supportsAllDrives=true&includeItemsFromAllDrives=true';
+  const res = await fetch(fullUrl, { headers: { Authorization: `Bearer ${accessToken}` } });
   if (!res.ok) {
     const err = await res.text();
     throw new Error(`Drive API error ${res.status}: ${err}`);
@@ -53,7 +56,7 @@ Deno.serve(async (req) => {
     // 1. List subfolders (each subfolder = one product)
     const foldersUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(
       `'${folderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`
-    )}&fields=files(id,name)&pageSize=100`;
+    )}&fields=files(id,name)&pageSize=100&supportsAllDrives=true&includeItemsFromAllDrives=true`;
 
     const foldersData = await driveGet(foldersUrl, accessToken);
     const productFolders = foldersData.files || [];
@@ -76,7 +79,7 @@ Deno.serve(async (req) => {
       // List all files in this product subfolder
       const filesUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(
         `'${folder.id}' in parents and trashed=false`
-      )}&fields=files(id,name,mimeType)&pageSize=100`;
+      )}&fields=files(id,name,mimeType)&pageSize=100&supportsAllDrives=true&includeItemsFromAllDrives=true`;
 
       const filesData = await driveGet(filesUrl, accessToken);
       const files = filesData.files || [];
@@ -92,7 +95,7 @@ Deno.serve(async (req) => {
       let parsedInfo = {};
       if (infoFile) {
         const textRes = await fetch(
-          `https://www.googleapis.com/drive/v3/files/${infoFile.id}?alt=media`,
+          `https://www.googleapis.com/drive/v3/files/${infoFile.id}?alt=media&supportsAllDrives=true`,
           { headers: { Authorization: `Bearer ${accessToken}` } }
         );
         if (textRes.ok) {

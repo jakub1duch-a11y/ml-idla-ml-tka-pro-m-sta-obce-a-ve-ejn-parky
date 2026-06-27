@@ -1,0 +1,7 @@
+{
+  "type": "typeform",
+  "scopes": [
+    "accounts:read",
+    "offline"
+  ]
+}

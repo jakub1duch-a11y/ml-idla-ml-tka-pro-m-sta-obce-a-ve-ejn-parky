@@ -1,0 +1,7 @@
+{
+  "type": "googletasks",
+  "scopes": [
+    "https://www.googleapis.com/auth/tasks",
+    "email"
+  ]
+}

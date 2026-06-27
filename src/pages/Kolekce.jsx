@@ -110,16 +110,19 @@ export default function Kolekce() {
 
   useEffect(() => {
     Promise.all([
-      base44.entities.Product.list(),
-      base44.entities.ProductCategory.list(),
+      base44.entities.Product.list().catch(() => []),
+      base44.entities.ProductCategory.list().catch(() => []),
     ]).then(([prods, cats]) => {
       // Enrich products with category name
-      const enriched = prods.map(p => ({
+      const enriched = (prods || []).map(p => ({
         ...p,
-        _categoryName: cats.find(c => c.id === p.category_id)?.name || '',
+        _categoryName: (cats || []).find(c => c.id === p.category_id)?.name || '',
       }));
       setProducts(enriched);
-      setCategories(cats);
+      setCategories(cats || []);
+    }).catch(() => {
+      setProducts([]);
+      setCategories([]);
     }).finally(() => setLoading(false));
   }, []);
 

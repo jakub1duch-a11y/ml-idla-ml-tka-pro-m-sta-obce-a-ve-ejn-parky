@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { MapPin, Loader } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import GalleryLightbox from '../GalleryLightbox';
 
-const photos = [
+const fallbackPhotos = [
   'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/e508e04b9_img-4513.jpeg',
   'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png',
   'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/af3c01f8d_3695-fullsizerender-1.jpeg',
@@ -19,6 +21,20 @@ const photos = [
 ];
 
 export default function RealizaceSection() {
+  const [realizace, setRealizace] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [lightbox, setLightbox] = useState(null);
+
+  useEffect(() => {
+    base44.entities.Realizace.list().catch(() => []).then(items => {
+      setRealizace((items || []).filter(r => r.published));
+      setLoading(false);
+    });
+  }, []);
+
+  const allPhotos = realizace.flatMap(r => r.gallery_urls || []).filter(Boolean);
+  const photosToShow = allPhotos.length > 0 ? allPhotos : fallbackPhotos;
+
   return (
     <section className="py-24 bg-surface">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -29,14 +45,46 @@ export default function RealizaceSection() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {photos.map((src, i) => (
-            <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
-              className="aspect-square overflow-hidden rounded-xl bg-card_bg group">
-              <img src={src} alt={`Realizace ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            </motion.div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <Loader size={24} className="animate-spin text-cyan/40" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {photosToShow.map((src, i) => {
+              // Find which realizace this photo belongs to
+              const sourceProject = realizace.find(r => r.gallery_urls?.includes(src));
+              return (
+                <motion.button
+                  key={i}
+                  onClick={() => setLightbox({
+                    images: photosToShow,
+                    initialIndex: i,
+                    location: sourceProject?.location,
+                    productUsed: sourceProject?.product_used,
+                  })}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04 }}
+                  className="aspect-square overflow-hidden rounded-xl bg-card_bg group cursor-pointer"
+                >
+                  <img src={src} alt={`Realizace ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </motion.button>
+              );
+            })}
+          </div>
+        )}
+
+        {lightbox && (
+          <GalleryLightbox
+            images={lightbox.images}
+            initialIndex={lightbox.initialIndex}
+            location={lightbox.location}
+            productUsed={lightbox.productUsed}
+            onClose={() => setLightbox(null)}
+          />
+        )}
 
         <div className="mt-8 text-center">
           <Link to="/kontakt"

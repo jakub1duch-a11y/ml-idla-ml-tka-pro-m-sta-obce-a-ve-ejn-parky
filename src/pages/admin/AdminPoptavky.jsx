@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { FileText, Download, Sparkles, ChevronDown, ChevronUp, X, Plus, Trash2, Loader } from 'lucide-react';
+import { FileText, Download, Sparkles, ChevronDown, ChevronUp, X, Plus, Trash2, Loader, Sheet } from 'lucide-react';
 
 const STATUS_LABELS = { new: 'Nová', contacted: 'Kontaktováno', in_progress: 'V řešení', closed: 'Uzavřeno' };
 const STATUS_COLORS = { new: 'bg-cyan/10 text-cyan', contacted: 'bg-yellow-500/10 text-yellow-400', in_progress: 'bg-blue-500/10 text-blue-400', closed: 'bg-white/5 text-white/30' };
@@ -16,6 +16,8 @@ export default function AdminPoptavky() {
   const [quoteNotes, setQuoteNotes] = useState('');
   const [generating, setGenerating] = useState(false);
   const [aiGenerating, setAiGenerating] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportResult, setExportResult] = useState(null);
 
   const load = () => {
     setLoading(true);
@@ -90,9 +92,32 @@ Vrať JSON s items (pole objektů: name, qty, price) a notes (poznámka k nabíd
 
   return (
     <div className="p-6 lg:p-8">
-      <div className="mb-8">
-        <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-1">SPRÁVA</p>
-        <h1 className="text-2xl font-light text-white">Poptávky</h1>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-1">SPRÁVA</p>
+          <h1 className="text-2xl font-light text-white">Poptávky</h1>
+        </div>
+        <div className="flex items-center gap-3">
+          {exportResult && (
+            <a href={exportResult.sheetUrl} target="_blank" rel="noopener noreferrer"
+              className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">
+              ✓ Otevřít Sheet →
+            </a>
+          )}
+          <button onClick={async () => {
+            setExporting(true);
+            setExportResult(null);
+            try {
+              const res = await base44.functions.invoke('exportProjectAnalytics', {});
+              setExportResult(res.data);
+            } finally {
+              setExporting(false);
+            }
+          }} disabled={exporting}
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-sm font-medium rounded-full hover:bg-emerald-500/30 disabled:opacity-50 transition-all">
+            {exporting ? <><Loader size={14} className="animate-spin" /> Exportuji...</> : <><Download size={14} /> Export do Sheets</>}
+          </button>
+        </div>
       </div>
 
       {loading && <div className="flex justify-center py-16"><div className="w-6 h-6 border border-cyan border-t-transparent rounded-full animate-spin" /></div>}

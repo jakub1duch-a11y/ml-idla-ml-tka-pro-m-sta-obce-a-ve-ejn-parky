@@ -19,22 +19,14 @@
       };
     </script>
 
-    <!-- Google Ads Remarketing Tag -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+    <!-- Google Ads tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18276263329"></script>
     <script>
-      // Google Ads Remarketing – HolmTec
-      // Replace AW-CONVERSION_ID with actual Google Ads Conversion ID
-      gtag('config', 'AW-CONVERSION_ID');
+      gtag('config', 'AW-18276263329');
 
-      // Remarketing audience signals – fire on relevant product pages
-      gtag('event', 'page_view', {
-        'send_to': 'AW-CONVERSION_ID'
-      });
-
-      // Cooperation form conversion – fire this when cooperation form is submitted
       window.trackAdsConversion = function() {
         gtag('event', 'conversion', {
-          'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+          'send_to': 'AW-18276263329',
           'value': 1000.0,
           'currency': 'CZK'
         });

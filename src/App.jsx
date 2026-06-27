@@ -26,6 +26,7 @@ import AdminDriveSync from '@/pages/admin/AdminDriveSync';
 import AdminProjects from '@/pages/admin/AdminProjects';
 import ProjectStatus from '@/pages/ProjectStatus';
 import CustomerPortal from '@/pages/CustomerPortal';
+import AdminCityCoolingAnalytics from '@/pages/admin/AdminCityCoolingAnalytics';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -62,6 +63,7 @@ const AuthenticatedApp = () => {
           <Route path="blog" element={<AdminBlog />} />
           <Route path="poptavky" element={<AdminPoptavky />} />
           <Route path="projekty" element={<AdminProjects />} />
+          <Route path="city-cooling" element={<AdminCityCoolingAnalytics />} />
           <Route path="contentful" element={<AdminContentful />} />
           <Route path="drive-sync" element={<AdminDriveSync />} />
         </Route>

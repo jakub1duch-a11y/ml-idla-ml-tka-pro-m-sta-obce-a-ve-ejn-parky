@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
-  BarChart2, Package, Image, BookOpen, MessageSquare, Home, Menu, X, ChevronRight, Layers, HardDriveDownload, Briefcase, TrendingUp
+  BarChart2, Package, Image, BookOpen, MessageSquare, Home, Menu, X, ChevronRight, Layers, HardDriveDownload, Briefcase, TrendingUp, Star
 } from 'lucide-react';
 
 const navItems = [
   { path: '/admin', label: 'Analytika', icon: BarChart2, exact: true },
   { path: '/admin/city-cooling', label: 'City Cooling SEO', icon: TrendingUp },
+  { path: '/admin/feedback', label: 'Feedback zákazníků', icon: Star },
   { path: '/admin/produkty', label: 'Produkty', icon: Package },
   { path: '/admin/realizace', label: 'Realizace', icon: Image },
   { path: '/admin/blog', label: 'Blog & Inspirace', icon: BookOpen },

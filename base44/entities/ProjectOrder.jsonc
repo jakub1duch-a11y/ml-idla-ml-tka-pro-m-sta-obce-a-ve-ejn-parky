@@ -1,0 +1,92 @@
+{
+  "name": "ProjectOrder",
+  "type": "object",
+  "properties": {
+    "inquiry_id": {
+      "type": "string",
+      "description": "Odkaz na ContactInquiry"
+    },
+    "project_name": {
+      "type": "string",
+      "description": "N\u00e1zev projektu"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Jm\u00e9no klienta"
+    },
+    "client_email": {
+      "type": "string",
+      "description": "Email klienta"
+    },
+    "quote_number": {
+      "type": "string",
+      "description": "\u010c\u00edslo nab\u00eddky (HT-YYYY-XXXXX)"
+    },
+    "quote_pdf_url": {
+      "type": "string",
+      "description": "URL na PDF nab\u00eddku na Google Drive"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "approved",
+        "in_production",
+        "ready",
+        "delivered"
+      ],
+      "default": "draft",
+      "description": "Stav projektu"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Kdy byla nab\u00eddka odsouhlasena"
+    },
+    "production_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Za\u010d\u00e1tek v\u00fdroby"
+    },
+    "completion_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Pl\u00e1novan\u00fd term\u00edn hotovosti"
+    },
+    "delivery_method": {
+      "type": "string",
+      "enum": [
+        "pickup",
+        "delivery",
+        "installation"
+      ],
+      "description": "Zp\u016fsob p\u0159ed\u00e1n\u00ed"
+    },
+    "delivery_location": {
+      "type": "string",
+      "description": "M\u00edsto vyzvednut\u00ed/doru\u010den\u00ed/instalace"
+    },
+    "total_price": {
+      "type": "number",
+      "description": "Celkov\u00e1 cena (bez DPH)"
+    },
+    "production_notes": {
+      "type": "string",
+      "description": "Pozn\u00e1mky k pr\u016fb\u011bhu v\u00fdroby"
+    },
+    "special_requirements": {
+      "type": "string",
+      "description": "Speci\u00e1ln\u00ed po\u017eadavky klienta"
+    },
+    "shared_token": {
+      "type": "string",
+      "description": "Unik\u00e1tn\u00ed token pro ve\u0159ejn\u00fd p\u0159\u00edstup k projektu"
+    }
+  },
+  "required": [
+    "project_name",
+    "client_name",
+    "client_email"
+  ]
+}

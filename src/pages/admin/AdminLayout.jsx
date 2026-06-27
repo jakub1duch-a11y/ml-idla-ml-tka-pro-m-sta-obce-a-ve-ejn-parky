@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
-  BarChart2, Package, Image, BookOpen, MessageSquare, Home, Menu, X, ChevronRight, Layers, HardDriveDownload
+  BarChart2, Package, Image, BookOpen, MessageSquare, Home, Menu, X, ChevronRight, Layers, HardDriveDownload, Briefcase
 } from 'lucide-react';
 
 const navItems = [
@@ -10,6 +10,7 @@ const navItems = [
   { path: '/admin/realizace', label: 'Realizace', icon: Image },
   { path: '/admin/blog', label: 'Blog & Inspirace', icon: BookOpen },
   { path: '/admin/poptavky', label: 'Poptávky', icon: MessageSquare },
+  { path: '/admin/projekty', label: 'Projekty & Výroba', icon: Briefcase },
   { path: '/admin/contentful', label: 'Contentful Sync', icon: Layers },
   { path: '/admin/drive-sync', label: 'Drive Sync', icon: HardDriveDownload },
 ];

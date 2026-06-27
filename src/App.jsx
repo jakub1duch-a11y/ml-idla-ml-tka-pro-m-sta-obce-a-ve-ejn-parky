@@ -23,6 +23,8 @@ import AdminBlog from '@/pages/admin/AdminBlog';
 import AdminPoptavky from '@/pages/admin/AdminPoptavky';
 import AdminContentful from '@/pages/admin/AdminContentful';
 import AdminDriveSync from '@/pages/admin/AdminDriveSync';
+import AdminProjects from '@/pages/admin/AdminProjects';
+import ProjectStatus from '@/pages/ProjectStatus';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -50,12 +52,14 @@ const AuthenticatedApp = () => {
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
+        <Route path="/project/:token" element={<ProjectStatus />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminAnalytika />} />
           <Route path="produkty" element={<AdminProdukty />} />
           <Route path="realizace" element={<AdminRealizace />} />
           <Route path="blog" element={<AdminBlog />} />
           <Route path="poptavky" element={<AdminPoptavky />} />
+          <Route path="projekty" element={<AdminProjects />} />
           <Route path="contentful" element={<AdminContentful />} />
           <Route path="drive-sync" element={<AdminDriveSync />} />
         </Route>

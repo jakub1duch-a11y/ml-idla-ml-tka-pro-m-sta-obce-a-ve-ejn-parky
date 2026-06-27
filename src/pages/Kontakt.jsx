@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
+import { trackCooperationFormSubmit } from '@/lib/ga4';
 
 const contactInfo = [
   { icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
@@ -24,6 +25,8 @@ export default function Kontakt() {
         message: `[Zájem o produkt: ${form.product_interest}] [Firma: ${form.company}] [Tel: ${form.phone}] ${form.message}`,
         status: 'new',
       });
+      trackCooperationFormSubmit();
+      if (typeof window.trackAdsConversion === 'function') window.trackAdsConversion();
       setSent(true);
     } finally {
       setSending(false);

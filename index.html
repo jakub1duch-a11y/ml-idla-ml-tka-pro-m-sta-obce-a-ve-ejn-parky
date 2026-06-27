@@ -18,6 +18,36 @@
         gtag('event', eventName, params || {});
       };
     </script>
+
+    <!-- Google Ads Remarketing Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+    <script>
+      // Google Ads Remarketing – HolmTec
+      // Replace AW-CONVERSION_ID with actual Google Ads Conversion ID
+      gtag('config', 'AW-CONVERSION_ID');
+
+      // Remarketing audience signals – fire on relevant product pages
+      gtag('event', 'page_view', {
+        'send_to': 'AW-CONVERSION_ID'
+      });
+
+      // Cooperation form conversion – fire this when cooperation form is submitted
+      window.trackAdsConversion = function() {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+          'value': 1000.0,
+          'currency': 'CZK'
+        });
+      };
+    </script>
+
+    <!-- Google Ads Conversion Linker -->
+    <script>
+      gtag('set', 'linker', {
+        'domains': ['mlziste.cz', 'precious-pure-mist-flow.base44.app']
+      });
+    </script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

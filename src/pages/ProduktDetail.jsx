@@ -332,7 +332,7 @@ export default function ProduktDetail() {
 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="lg:sticky lg:top-32">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">{product.category}</p>
-            <h1 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight mb-3">{product.name}</h1>
+            <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-3">{product.name}</h1>
             <p className="text-lg text-white/60 italic mb-6">{product.tagline}</p>
             <p className="text-white/60 leading-relaxed mb-8">{product.lead}</p>
 
@@ -362,11 +362,11 @@ export default function ProduktDetail() {
 
       {/* Description */}
       <div className="bg-surface py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">O produktu</p>
-              <h2 className="font-heading font-black text-3xl text-white mb-6">Každý detail záleží</h2>
+       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+           <div className="lg:col-span-2">
+             <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">O produktu</p>
+             <h2 className="font-heading font-light text-3xl text-white mb-6">Každý detail záleží</h2>
               <p className="text-white/60 leading-relaxed text-lg">{product.description}</p>
             </div>
             <div className="space-y-3">
@@ -388,9 +388,9 @@ export default function ProduktDetail() {
 
       {/* Full specs table */}
       <div className="py-20 bg-ink">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Technická data</p>
-          <h2 className="font-heading font-black text-3xl text-white mb-10">Technické parametry</h2>
+       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+         <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Technická data</p>
+         <h2 className="font-heading font-light text-3xl text-white mb-10">Technické parametry</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 rounded-2xl overflow-hidden">
             {product.specs.map((s, i) => (
               <div key={s.label} className={`flex items-center justify-between gap-6 px-6 py-4 bg-card_bg ${i === product.specs.length - 1 && product.specs.length % 2 !== 0 ? 'md:col-span-2' : ''}`}>
@@ -404,9 +404,9 @@ export default function ProduktDetail() {
 
       {/* Nozzle + Mist detail */}
       <div className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Detail technologie</p>
-          <h2 className="font-heading font-black text-3xl text-white mb-10">Tryska & mlhovina zblízka</h2>
+       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+         <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Detail technologie</p>
+         <h2 className="font-heading font-light text-3xl text-white mb-10">Tryska & mlhovina zblízka</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="relative rounded-2xl overflow-hidden bg-card_bg border border-white/10">
@@ -450,9 +450,9 @@ export default function ProduktDetail() {
 
       {/* Modules & accessories */}
       <div className="py-20 bg-ink">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Rozšíření & příslušenství</p>
-          <h2 className="font-heading font-black text-3xl text-white mb-10">Doporučené moduly</h2>
+       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+         <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Rozšíření & příslušenství</p>
+         <h2 className="font-heading font-light text-3xl text-white mb-10">Doporučené moduly</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {product.modules.map((m, i) => (
               <motion.div key={m.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -477,9 +477,9 @@ export default function ProduktDetail() {
 
       {/* Realized projects */}
       <div className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Realizace</p>
-          <h2 className="font-heading font-black text-3xl text-white mb-10">Podobné realizované projekty</h2>
+       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+         <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Realizace</p>
+         <h2 className="font-heading font-light text-3xl text-white mb-10">Podobné realizované projekty</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {product.projects.map((p, i) => (
               <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -497,9 +497,9 @@ export default function ProduktDetail() {
 
       {/* Related products */}
       <div className="py-20 bg-ink">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Mohlo by vás zajímat</p>
-          <h2 className="font-heading font-black text-3xl text-white mb-10">Podobné produkty</h2>
+       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+         <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Mohlo by vás zajímat</p>
+         <h2 className="font-heading font-light text-3xl text-white mb-10">Podobné produkty</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {product.related.map((rSlug, i) => {
               const r = RELATED_META[rSlug];
@@ -524,10 +524,10 @@ export default function ProduktDetail() {
 
       {/* CTA */}
       <div className="py-20 bg-surface">
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-heading font-black text-3xl lg:text-4xl text-white mb-4">
-            Chcete {product.name} pro váš prostor?
-          </h2>
+       <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+         <h2 className="font-heading font-light text-3xl lg:text-4xl text-white mb-4">
+           Chcete {product.name} pro váš prostor?
+         </h2>
           <p className="text-white/50 mb-8">Nezávazná poptávka, 3D vizualizace do 48 h, montáž za jeden den.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/kontakt"

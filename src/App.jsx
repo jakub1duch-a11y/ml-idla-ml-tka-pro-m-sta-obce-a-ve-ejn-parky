@@ -14,6 +14,7 @@ import Mlhoviste from '@/pages/Mlhoviste';
 import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
+import SearchAnalytics from '@/pages/SearchAnalytics';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -40,6 +41,7 @@ const AuthenticatedApp = () => {
         <Route path="/jak-to-funguje" element={<JakToFunguje />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
+        <Route path="/search-analytics" element={<SearchAnalytics />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

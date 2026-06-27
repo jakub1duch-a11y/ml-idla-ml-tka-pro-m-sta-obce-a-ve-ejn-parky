@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 // ─── KATEGORIE ─────────────────────────────────────────────────────────────
 
@@ -11,128 +12,44 @@ const categoryGroups = [
     label: 'Mlžné sochy',
     icon: Trees,
     tagline: 'Přírodní tvary. Živá atmosféra.',
-    description:
-      'Mlžné sochy jsou skulpturální instalace inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
+    description: 'Mlžné sochy jsou skulpturální instalace inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
     audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
     usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
     accentColor: 'from-emerald-500/20 to-cyan/10',
     borderColor: 'border-emerald-500/30',
     textColor: 'text-emerald-400',
-    products: ['ostev', 'mrak', 'volavka', 'kids'],
+    dbCategories: ['NATURE'],
+    slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik'],
   },
   {
     id: 'brany',
     label: 'Mlžné brány a portály',
     icon: Landmark,
     tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-    description:
-      'Brány a portály z mlhy vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
+    description: 'Brány a portály z mlhy vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
     audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
     usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
     accentColor: 'from-cyan/20 to-blue-500/10',
     borderColor: 'border-cyan/30',
     textColor: 'text-cyan',
-    products: ['gate60', 'aura'],
+    dbCategories: ['URBAN ART'],
+    slugKeywords: ['portal', 'vertigo', 'helix', 'aura', 'linear', 'lomene', 'silueta', 'krystal'],
   },
   {
     id: 'mlhoviste',
     label: 'Mlhoviště a chladicí zóny',
     icon: Flame,
     tagline: 'Až −9 °C. Komfort bez kompromisů.',
-    description:
-      'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
+    description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
     audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
     usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
     accentColor: 'from-orange-500/20 to-yellow-500/10',
     borderColor: 'border-orange-500/30',
     textColor: 'text-orange-400',
-    products: ['aura', 'linea'],
+    dbCategories: ['GEOMETRY'],
+    slugKeywords: ['lavicka', 'bench', 'filtracni', 'trysky', 'holmapp'],
   },
 ];
-
-// ─── PRODUKTY ───────────────────────────────────────────────────────────────
-
-const products = [
-  {
-    slug: 'ostev',
-    id: 'ostev',
-    name: 'OSTEV',
-    type: 'Mlžná socha',
-    tagline: 'Strom z mlhy. Dominanta náměstí.',
-    desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Výška 2,5–4 m. Zakázková výroba dle projektu.',
-    spec: 'AISI 316L',
-    new: true,
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
-  },
-  {
-    slug: 'mrak',
-    id: 'mrak',
-    name: 'MRAK',
-    type: 'Mlžná socha',
-    tagline: 'Organické křivky. Nebeský dotek.',
-    desc: 'Stilizovaný mrak z nerezové trubky TR40×3 mm s 5 tryskami. Zavěšení nebo stojanová varianta.',
-    spec: 'AISI 304',
-    new: false,
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
-  },
-  {
-    slug: 'volavka',
-    id: 'volavka',
-    name: 'VOLAVKA',
-    type: 'Mlžná socha',
-    tagline: 'Elegance pro soukromé zahrady.',
-    desc: 'Subtilní mlžítko s elegantně zahnutým ramenem TR60. Oblouk 120°. Mobilní varianta se zemním vrutem.',
-    spec: 'AISI 304',
-    new: false,
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1035553df_FB_IMG_1782148329157.jpg',
-  },
-  {
-    slug: 'kids',
-    id: 'kids',
-    name: 'KIDS',
-    type: 'Mlžná socha',
-    tagline: 'Hravý tvar. Bezpečná mlha.',
-    desc: 'Mlžné sochy pro dětská hřiště. Bez ostrých hran, hladké svary, potravinářská nerez AISI 316L.',
-    spec: 'AISI 316L',
-    new: false,
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-  },
-  {
-    slug: 'gate60',
-    id: 'gate60',
-    name: 'GATE 60',
-    type: 'Mlžná brána',
-    tagline: 'Vstupní portál z mlhy.',
-    desc: 'Třímetrová mlžná brána z trubek TR60×3. Šíře 3 m, výška 2,1 m. 5 trysky, tlak 70 bar.',
-    spec: 'AISI 304',
-    new: false,
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
-  },
-  {
-    slug: 'aura',
-    id: 'aura',
-    name: 'AURA',
-    type: 'Mlžný kruh / portál',
-    tagline: 'Kruh z mlhy. Centrum každého prostoru.',
-    desc: 'Nerezový prsten ∅80–160 cm s 8 tryskami po obvodu. Symetrický halo efekt pro parky a náměstí.',
-    spec: 'AISI 304',
-    new: false,
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
-  },
-  {
-    slug: null,
-    id: 'linea',
-    name: 'LINEA EL70',
-    type: 'Chladicí systém',
-    tagline: 'Minimalistická čistota. Maximální efekt.',
-    desc: 'Systém mlžení z čtvercového profilu 70×70×3 mm. Pro terasy, haly a průmyslové ochlazení.',
-    spec: 'AISI 304',
-    new: false,
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c90bbf42d_C-MltkoLINEA_CE70_single-1.png',
-  },
-];
-
-// ─── AUDIENCE CARDS ─────────────────────────────────────────────────────────
 
 const audienceSegments = [
   { icon: Building2, label: 'Města a obce', desc: 'Ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
@@ -142,28 +59,39 @@ const audienceSegments = [
   { icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžení pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' },
 ];
 
-// ─── PRODUCT CARD ────────────────────────────────────────────────────────────
+// Fallback images by category
+const FALLBACK_IMAGES = {
+  NATURE: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
+  'URBAN ART': 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&q=80',
+  GEOMETRY: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
+  DEFAULT: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+};
 
-function ProductCard({ p, i }) {
+function ProductCard({ product, i }) {
+  const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
-      <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'}
+      <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'}
         className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300 h-full">
-        <div className="aspect-[4/3] overflow-hidden relative">
-          <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          {p.new && (
-            <span className="absolute top-3 left-3 bg-emerald-500 text-white text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
-              Novinka
+        <div className="aspect-[4/3] overflow-hidden relative bg-white/5">
+          <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          {product.featured && (
+            <span className="absolute top-3 left-3 bg-cyan text-ink text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
+              Výběr
             </span>
           )}
+          {/* Mist overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         <div className="p-6">
-          <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">{p.type}</p>
-          <h3 className="text-xl font-normal text-white mb-1">{p.name}</h3>
-          <p className="text-sm text-white/50 mb-3">{p.tagline}</p>
-          <p className="text-xs text-white/30 leading-relaxed mb-4">{p.desc}</p>
+          <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">{product._categoryName || 'Mlžný systém'}</p>
+          <h3 className="text-xl font-normal text-white mb-1">{product.name}</h3>
+          <p className="text-sm text-white/50 mb-3 line-clamp-2">{product.short_description}</p>
+          {product.material && (
+            <p className="text-xs text-white/30 leading-relaxed mb-4 line-clamp-2">{product.material}</p>
+          )}
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-white/30 bg-white/5 px-2 py-1 rounded-lg">{p.spec}</span>
+            <span className="text-xs font-mono text-white/30 bg-white/5 px-2 py-1 rounded-lg">{product.material || 'AISI 316L'}</span>
             <div className="flex items-center gap-1 text-xs text-cyan font-medium">
               Detail <ArrowRight size={12} />
             </div>
@@ -174,15 +102,34 @@ function ProductCard({ p, i }) {
   );
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
-
 export default function Kolekce() {
   const [activeCategory, setActiveCategory] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      base44.entities.Product.list(),
+      base44.entities.ProductCategory.list(),
+    ]).then(([prods, cats]) => {
+      // Enrich products with category name
+      const enriched = prods.map(p => ({
+        ...p,
+        _categoryName: cats.find(c => c.id === p.category_id)?.name || '',
+      }));
+      setProducts(enriched);
+      setCategories(cats);
+    }).finally(() => setLoading(false));
+  }, []);
 
   const activeGroup = categoryGroups.find(g => g.id === activeCategory);
   const displayedProducts = activeGroup
-    ? products.filter(p => activeGroup.products.includes(p.id))
-    : products;
+    ? products.filter(p =>
+        activeGroup.dbCategories.includes(p._categoryName) ||
+        activeGroup.slugKeywords.some(kw => (p.slug || '').includes(kw))
+      )
+    : products.filter(p => !['HolmApp Control', 'Filtrační Moduly', 'Trysky HT-LT', 'AI Design Studio'].includes(p.name));
 
   return (
     <div className="min-h-screen bg-ink pt-28">
@@ -200,7 +147,7 @@ export default function Kolekce() {
         </motion.div>
       </div>
 
-      {/* ── KATEGORIE — tři velké bloky ── */}
+      {/* ── KATEGORIE ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
         <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-6">Vyberte kategorii</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -208,26 +155,17 @@ export default function Kolekce() {
             const Icon = g.icon;
             const isActive = activeCategory === g.id;
             return (
-              <motion.button
-                key={g.id}
-                onClick={() => setActiveCategory(isActive ? null : g.id)}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
+              <motion.button key={g.id} onClick={() => setActiveCategory(isActive ? null : g.id)}
+                initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
                 className={`text-left p-6 rounded-2xl border transition-all duration-300 ${
-                  isActive
-                    ? `bg-gradient-to-br ${g.accentColor} ${g.borderColor}`
-                    : 'bg-card_bg border-white/10 hover:border-white/25'
-                }`}
-              >
+                  isActive ? `bg-gradient-to-br ${g.accentColor} ${g.borderColor}` : 'bg-card_bg border-white/10 hover:border-white/25'
+                }`}>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${isActive ? 'bg-white/10' : 'bg-white/5'}`}>
                   <Icon size={20} className={isActive ? g.textColor : 'text-white/40'} />
                 </div>
-                <p className={`text-xs font-mono tracking-widest uppercase mb-2 ${isActive ? g.textColor : 'text-white/30'}`}>
-                  {g.label}
-                </p>
+                <p className={`text-xs font-mono tracking-widest uppercase mb-2 ${isActive ? g.textColor : 'text-white/30'}`}>{g.label}</p>
                 <h3 className="text-lg font-light text-white mb-2">{g.tagline}</h3>
                 <p className="text-xs text-white/40 leading-relaxed">{g.description}</p>
-
                 {isActive && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-5 pt-5 border-t border-white/10">
                     <div className="grid grid-cols-1 gap-4">
@@ -265,6 +203,7 @@ export default function Kolekce() {
         <div className="flex items-center justify-between mb-8">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30">
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny produkty'}
+            {!loading && <span className="ml-2 text-white/20">({displayedProducts.length})</span>}
           </p>
           {activeCategory && (
             <button onClick={() => setActiveCategory(null)} className="text-xs text-white/40 hover:text-white transition-colors font-mono">
@@ -272,19 +211,26 @@ export default function Kolekce() {
             </button>
           )}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {displayedProducts.map((p, i) => <ProductCard key={p.id} p={p} i={i} />)}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-24">
+            <Loader size={24} className="animate-spin text-cyan/40" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
+            {displayedProducts.length === 0 && (
+              <p className="col-span-3 text-center text-white/30 py-16 text-sm">Žádné produkty v této kategorii.</p>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* ── PRO KOHO — segmenty publika ── */}
+      {/* ── PRO KOHO ── */}
       <div className="border-t border-white/10 bg-surface">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
             <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Pro koho jsou systémy určeny</p>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight">
-              Řešení pro každé publikum.
-            </h2>
+            <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight">Řešení pro každé publikum.</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {audienceSegments.map((seg, i) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Edit2, Save, X, Trash2, Sparkles, Loader, Wand2, ChevronDown, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit2, Save, X, Trash2, Sparkles, Loader, Wand2, Eye, EyeOff, Shuffle, Image } from 'lucide-react';
 
 const CATS = { inspirace: 'Inspirace', realizace: 'Realizace', technika: 'Technika', novinky: 'Novinky' };
 
@@ -11,12 +11,25 @@ const EMPTY = {
 
 // Quick-start AI templates
 const AI_TEMPLATES = [
-  { label: '🌿 Mlžná socha v parku', prompt: 'Mlžné sochy jako dominanta veřejných parků a náměstí — estetika, funkce a atmosféra', category: 'inspirace' },
-  { label: '🏙️ Ochlazení města', prompt: 'Jak mlžné systémy pomáhají ochladit přehřátá města a zlepšují kvalitu života v letních vedrech', category: 'technika' },
-  { label: '🎪 Event & festival', prompt: 'Mlžné brány a portály na festivalech — WOW efekt pro návštěvníky a nezapomenutelný vstup', category: 'inspirace' },
-  { label: '🏡 Soukromá zahrada', prompt: 'Mlžení pro soukromé zahrady a terasy — luxus, komfort a elegance bez kompromisů', category: 'inspirace' },
-  { label: '🔬 Jak mlha funguje', prompt: 'Fyzika mlžení — jak mikro-kapičky 5–10 µm ochlazují vzduch bez pocitu mokra, technické vysvětlení', category: 'technika' },
-  { label: '🏗️ Nová realizace', prompt: 'Úspěšná instalace mlžného systému HolmTec — případová studie projektu pro veřejný prostor', category: 'realizace' },
+  { label: '🌿 Mlžná socha v parku', prompt: 'Mlžné sochy jako dominanta veřejných parků a náměstí — různé tvary: spirála, mrak, strom, kruh. Estetika, funkce a atmosféra jemné mlhy rozptylující se do okolí.', category: 'inspirace' },
+  { label: '🏙️ Mlžná odpočinková zóna', prompt: 'Návrh mlžné odpočinkové zóny v přehřátém městě — mlžítka jemně rozptylující vodní mlhu do okolí, přinášející příjemné ochlazení v horkých dnech. Různé tvary a rozmístění.', category: 'inspirace' },
+  { label: '🎪 Event & festival', prompt: 'Mlžné brány a portály na festivalech — WOW efekt pro návštěvníky a nezapomenutelný vstup skrze mlhu', category: 'inspirace' },
+  { label: '🏡 Soukromá zahrada', prompt: 'Mlžení pro soukromé zahrady a terasy — mlžítka různých tvarů, luxus, komfort a elegance bez kompromisů', category: 'inspirace' },
+  { label: '🔬 Jak mlha funguje', prompt: 'Fyzika mlžení — jak mikro-kapičky 5–10 µm ochlazují vzduch bez pocitu mokra. Různé produkty mlžítek a jejich technické parametry.', category: 'technika' },
+  { label: '💡 Inventivní tvary mlžítek', prompt: 'Inspirace pro mlžná mlžítka netradiční tvarů — geometrické formy, abstraktní sochy, vlny, hvězdice. Jak jemná mlha přináší ochlazení a atmosféru.', category: 'inspirace' },
+  { label: '🌊 Mlha a mikroklima', prompt: 'Jak mlžné instalace různých tvarů mění mikroklima veřejných prostranství. Vědecké a vizuální vysvětlení ochlazení pomocí jemně rozptýlené vodní mlhy.', category: 'technika' },
+  { label: '🏗️ Nová realizace', prompt: 'Úspěšná instalace mlžného systému HolmTec — případová studie projektu pro veřejný prostor s mlžnými sochami', category: 'realizace' },
+];
+
+const RANDOM_TOPICS = [
+  'Mlžná odpočinková zóna na náměstí — spirálové a kruhové mlžné sochy přinášející jemnou mlhu a ochlazení v horkých dnech',
+  'Inventivní tvary mlžítek pro zahrady: vlnité linie, abstraktní formy, minimalistické pruty — jak mlha rozptýlená do okolí mění atmosféru',
+  'Mlžítka pro dětská hřiště — bezpečné, hravé tvary z nerezové oceli s jemnou mlhou pro příjemné ochlazení',
+  'Mlžné portály a brány jako dominanta vstupu na festival nebo do hotelu — efekt procházení mlhou',
+  'Jak kombinovat různé mlžné sochy v jednom prostoru — strom, mrak, linea, aura — pro maximální ochlazení a vizuální dojem',
+  'Mlžné instalace na terasách restaurací a kaváren — diskrétní systémy pro příjemné ochlazení hostů',
+  'Geometrické mlžné sochy: krystal, duna, silueta — jak abstraktní tvary z nerezové oceli přinášejí mlhu a chlad',
+  'Mlžení jako součást smart city — automaticky řízené mlžné zóny reagující na teplotu a počasí',
 ];
 
 const TONES = [
@@ -45,9 +58,28 @@ export default function AdminBlog() {
   const [aiTone, setAiTone] = useState('inspirativni');
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiPreview, setAiPreview] = useState(null);
+  const [aiImageGenerating, setAiImageGenerating] = useState(false);
 
   // Content preview in modal
   const [showPreview, setShowPreview] = useState(false);
+
+  const pickRandomTopic = () => {
+    const topic = RANDOM_TOPICS[Math.floor(Math.random() * RANDOM_TOPICS.length)];
+    setAiPrompt(topic);
+    setAiCategory('inspirace');
+  };
+
+  const generateImage = async (titleHint) => {
+    setAiImageGenerating(true);
+    try {
+      const result = await base44.integrations.Core.GenerateImage({
+        prompt: `Futuristic stainless steel misting sculpture, ${titleHint || 'urban plaza'}, soft water mist floating in air, industrial minimalist aesthetic, photorealistic, dramatic dark background, cyan mist glow effect, architectural art installation, high-end design photography`,
+      });
+      setAiPreview(prev => prev ? { ...prev, image_url: result.url } : prev);
+    } finally {
+      setAiImageGenerating(false);
+    }
+  };
 
   const load = () => {
     setLoading(true);
@@ -105,7 +137,15 @@ Výstup jako JSON: title (poutavý název), perex (2 věty max, láká ke čten�
           }
         }
       });
-      setAiPreview({ ...result, category: aiCategory, slug: slugify(result.title || '') });
+      const preview = { ...result, category: aiCategory, slug: slugify(result.title || ''), image_url: '' };
+      setAiPreview(preview);
+      // Auto-generate image in background
+      setAiImageGenerating(true);
+      base44.integrations.Core.GenerateImage({
+        prompt: `Futuristic stainless steel misting sculpture, ${result.title || 'urban plaza'}, soft water mist floating in air, industrial minimalist aesthetic, photorealistic, dramatic dark background, cyan mist glow, architectural art installation`,
+      }).then(img => {
+        setAiPreview(prev => prev ? { ...prev, image_url: img.url } : prev);
+      }).finally(() => setAiImageGenerating(false));
     } finally {
       setAiGenerating(false);
     }
@@ -173,7 +213,13 @@ Výstup jako JSON: title (poutavý název), perex (2 věty max, láká ke čten�
 
             {/* Quick templates */}
             <div className="mb-4">
-              <p className="text-xs text-white/30 font-mono tracking-widest uppercase mb-2">Rychlé šablony</p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs text-white/30 font-mono tracking-widest uppercase">Rychlé šablony</p>
+                <button onClick={() => { pickRandomTopic(); }} disabled={aiGenerating}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs hover:bg-purple-500/30 disabled:opacity-40 transition-all">
+                  <Shuffle size={11} /> Náhodné téma
+                </button>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {AI_TEMPLATES.map(t => (
                   <button key={t.label} onClick={() => { setAiPrompt(t.prompt); setAiCategory(t.category); generateWithAI(t.prompt); }}
@@ -242,12 +288,29 @@ Výstup jako JSON: title (poutavý název), perex (2 věty max, láká ke čten�
                 </button>
               </div>
               <div className="bg-black/30 rounded-xl p-4 mb-4">
-                <p className="text-white font-medium text-sm mb-1">{aiPreview.title}</p>
-                <p className="text-white/50 text-xs mb-2">{aiPreview.perex}</p>
-                <div className="flex gap-1.5 flex-wrap">
-                  {(aiPreview.tags || []).map(tag => (
-                    <span key={tag} className="text-[10px] font-mono bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded-full">{tag}</span>
-                  ))}
+                <div className="flex gap-4">
+                  {/* AI Generated Image */}
+                  <div className="w-28 h-20 rounded-lg overflow-hidden bg-white/5 flex-shrink-0 flex items-center justify-center border border-white/10">
+                    {aiImageGenerating ? (
+                      <div className="flex flex-col items-center gap-1">
+                        <Loader size={14} className="animate-spin text-indigo-400" />
+                        <span className="text-[9px] text-white/30">Generuji...</span>
+                      </div>
+                    ) : aiPreview.image_url ? (
+                      <img src={aiPreview.image_url} alt="AI" className="w-full h-full object-cover" />
+                    ) : (
+                      <Image size={18} className="text-white/20" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-medium text-sm mb-1">{aiPreview.title}</p>
+                    <p className="text-white/50 text-xs mb-2">{aiPreview.perex}</p>
+                    <div className="flex gap-1.5 flex-wrap">
+                      {(aiPreview.tags || []).map(tag => (
+                        <span key={tag} className="text-[10px] font-mono bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded-full">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 {showPreview && (
                   <div className="mt-3 pt-3 border-t border-white/10 text-xs text-white/40 whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">

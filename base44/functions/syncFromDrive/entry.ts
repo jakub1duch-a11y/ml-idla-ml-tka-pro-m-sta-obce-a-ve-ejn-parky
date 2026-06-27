@@ -53,6 +53,16 @@ Deno.serve(async (req) => {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
 
+    // Action: list shared drives
+    if (folderId === 'listDrives') {
+      const res = await fetch(
+        'https://www.googleapis.com/drive/v3/drives?pageSize=20',
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const data = await res.json();
+      return Response.json({ drives: data.drives || [], error: data.error });
+    }
+
     // 1. List subfolders (each subfolder = one product)
     const foldersUrl = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(
       `'${folderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`

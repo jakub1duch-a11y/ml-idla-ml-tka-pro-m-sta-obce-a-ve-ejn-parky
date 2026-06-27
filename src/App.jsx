@@ -21,6 +21,7 @@ import AdminProdukty from '@/pages/admin/AdminProdukty';
 import AdminRealizace from '@/pages/admin/AdminRealizace';
 import AdminBlog from '@/pages/admin/AdminBlog';
 import AdminPoptavky from '@/pages/admin/AdminPoptavky';
+import AdminContentful from '@/pages/admin/AdminContentful';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -54,6 +55,7 @@ const AuthenticatedApp = () => {
           <Route path="realizace" element={<AdminRealizace />} />
           <Route path="blog" element={<AdminBlog />} />
           <Route path="poptavky" element={<AdminPoptavky />} />
+          <Route path="contentful" element={<AdminContentful />} />
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />

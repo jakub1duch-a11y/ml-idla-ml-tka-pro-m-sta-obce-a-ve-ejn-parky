@@ -264,31 +264,55 @@ function Gallery({ images }) {
   const [active, setActive] = useState(0);
   const prev = () => setActive(i => (i - 1 + images.length) % images.length);
   const next = () => setActive(i => (i + 1) % images.length);
+  const validImages = images.filter(Boolean);
 
   return (
     <div className="space-y-3">
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-card_bg">
-        <motion.img key={active} src={images[active]} alt="" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}
-          className="w-full h-full object-cover" />
-        <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all backdrop-blur-sm">
-          <ChevronLeft size={18} />
-        </button>
-        <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all backdrop-blur-sm">
-          <ChevronRight size={18} />
-        </button>
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-          {images.map((_, i) => (
-            <button key={i} onClick={() => setActive(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === active ? 'bg-cyan w-4' : 'bg-white/40'}`} />
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-card_bg">
+        <motion.img
+          key={active}
+          src={validImages[active]}
+          alt=""
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+          className="w-full h-full object-cover"
+        />
+        {validImages.length > 1 && (
+          <>
+            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all backdrop-blur-sm">
+              <ChevronLeft size={18} />
+            </button>
+            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all backdrop-blur-sm">
+              <ChevronRight size={18} />
+            </button>
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+              {validImages.map((_, i) => (
+                <button key={i} onClick={() => setActive(i)} className={`h-1.5 rounded-full transition-all ${i === active ? 'bg-cyan w-4' : 'w-1.5 bg-white/40'}`} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      {validImages.length > 1 && (
+        <div className="grid grid-cols-4 gap-2">
+          {validImages.map((src, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${i === active ? 'border-cyan' : 'border-white/10 hover:border-white/30'}`}
+            >
+              <img
+                src={src}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            </button>
           ))}
         </div>
-      </div>
-      <div className="grid grid-cols-4 gap-2">
-        {images.map((src, i) => (
-          <button key={i} onClick={() => setActive(i)} className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${i === active ? 'border-cyan' : 'border-white/10 hover:border-white/30'}`}>
-            <img src={src} alt="" className="w-full h-full object-cover" />
-          </button>
-        ))}
-      </div>
+      )}
     </div>
   );
 }
@@ -310,38 +334,48 @@ export default function ProduktDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-ink">
 
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-8">
-        <div className="flex items-center gap-2 text-xs font-mono text-white/30">
-          <Link to="/" className="hover:text-cyan transition-colors">Domů</Link>
-          <span>/</span>
-          <Link to="/kolekce" className="hover:text-cyan transition-colors">Kolekce</Link>
-          <span>/</span>
-          <span className="text-white/60">{product.name}</span>
+      {/* Fullscreen hero with product image */}
+      <div className="relative h-[70vh] min-h-[500px] overflow-hidden">
+        <img src={product.hero} alt={product.name} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-8 pb-12">
+          <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white mb-6 transition-colors">
+            <ArrowLeft size={14} /> Zpět na produkty
+          </Link>
+          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-2">HOLMTEC · {product.category.toUpperCase()}</p>
+          <h1 className="font-heading font-extralight text-6xl lg:text-8xl text-white tracking-tight leading-none mb-4">{product.name}</h1>
+          <p className="text-white/60 text-xl max-w-lg">{product.tagline}</p>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <Link to="/kontakt" className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+              Nezávazná poptávka <ArrowRight size={16} />
+            </Link>
+            <a href="mailto:obchod1@holmtec.cz?subject=Katalog — žádost o PDF"
+              className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
+              Katalog PDF
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Hero — Gallery + Info */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-20">
+      {/* Gallery + Info */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Gallery images={product.gallery} />
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="lg:sticky lg:top-32">
-            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">{product.category}</p>
-            <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-3">{product.name}</h1>
-            <p className="text-lg text-white/60 italic mb-6">{product.tagline}</p>
-            <p className="text-white/60 leading-relaxed mb-8">{product.lead}</p>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="lg:sticky lg:top-24">
+            <p className="text-white/60 leading-relaxed mb-8 text-lg">{product.lead}</p>
 
             {/* Quick specs */}
             <div className="grid grid-cols-2 gap-2 mb-8">
               {product.specs.slice(0, 4).map(s => (
-                <div key={s.label} className="p-3 rounded-xl bg-card_bg border border-white/10">
-                  <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-0.5">{s.label}</p>
-                  <p className="text-sm font-bold text-white">{s.value}</p>
+                <div key={s.label} className="p-4 rounded-xl bg-card_bg border border-white/10">
+                  <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-1">{s.label}</p>
+                  <p className="text-sm font-semibold text-white">{s.value}</p>
                 </div>
               ))}
             </div>

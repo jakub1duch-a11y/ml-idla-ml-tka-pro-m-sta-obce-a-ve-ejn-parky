@@ -14,30 +14,28 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-ink">
       {/* Background video */}
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-40">
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
         <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" />
 
       {/* Content */}
-      <div className="relative flex-1 flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-16">
+      <div className="relative flex-1 flex flex-col justify-end max-w-7xl mx-auto px-6 lg:px-8 pb-24 pt-32 w-full">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-mono text-cyan tracking-widest uppercase mb-6">
-            ARCHITEKTURA ATMOSFÉRY
-          </div>
+          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-5">ARCHITEKTURA ATMOSFÉRY</p>
 
-          <h1 className="font-heading font-extralight text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
+          <h1 className="font-heading font-extralight text-6xl lg:text-8xl text-white leading-[0.95] tracking-tight mb-3">
             OSTEV
           </h1>
-          <h2 className="font-heading font-extralight text-5xl lg:text-7xl text-white/70 italic leading-[1.05] tracking-tight mb-6">
+          <h2 className="font-heading font-extralight text-5xl lg:text-7xl text-white/60 italic leading-[1.0] tracking-tight mb-6">
             Mlžný strom.
           </h2>
-          <p className="text-white/60 text-lg leading-relaxed mb-8 max-w-lg">
+          <p className="text-white/55 text-lg leading-relaxed mb-8 max-w-lg">
             Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba.
           </p>
 
-          <div className="flex flex-wrap gap-3 mb-6">
+          <div className="flex flex-wrap gap-3 mb-8">
             <Link to="/kolekce"
               className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
               Prozkoumat OSTEV <ArrowRight size={16} />
@@ -55,11 +53,11 @@ export default function HeroSection() {
         {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
-          className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
+          className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-2xl">
           {stats.map((s) => (
             <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
               <p className="font-heading font-light text-2xl text-cyan leading-none mb-1">{s.val}</p>
-              <p className="text-xs text-white/40 font-mono">{s.label}</p>
+              <p className="text-xs text-white/40 font-mono leading-tight">{s.label}</p>
             </div>
           ))}
         </motion.div>

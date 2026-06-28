@@ -29,7 +29,7 @@ export default function ContactSection() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-xs font-mono text-yellow-400 tracking-widest uppercase mb-4">
             <Trophy size={12} /> Výhry 25 000 Kč
           </div>
-          <h2 className="font-heading font-black text-4xl lg:text-5xl text-white tracking-tight mb-3">
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-3">
             Chcete mlhoviště<br />ve vašem prostoru?
           </h2>
           <p className="text-white/50 max-w-xl mx-auto">

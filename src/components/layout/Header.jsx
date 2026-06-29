@@ -25,25 +25,6 @@ export default function Header() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-ink/95 backdrop-blur-lg border-b border-white/10 shadow-lg shadow-black/30' : 'bg-transparent'}`}>
-      {/* Ticker bar */}
-      <div className="bg-cyan/10 border-b border-cyan/20 py-1.5 overflow-hidden">
-        <div className="flex animate-ticker whitespace-nowrap">
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="flex items-center gap-8 px-4 text-[11px] font-mono text-cyan/80 tracking-widest uppercase">
-              <span>☀️ LÉTO 2026</span>
-              <span>·</span>
-              <span>LÉTO2026 — 10 %</span>
-              <span>·</span>
-              <span>MRAK2026 — 15 %</span>
-              <span>·</span>
-              <span>ZAHRADA26 — doprava zdarma</span>
-              <span>·</span>
-              <Link to="/kontakt" className="text-white hover:text-cyan transition-colors">Soutěž o sochu →</Link>
-              <span>·</span>
-            </span>
-          ))}
-        </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}

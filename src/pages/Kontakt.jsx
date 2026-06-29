@@ -177,7 +177,7 @@ export default function Kontakt() {
                       {PRODUCTS.map((p) => <option key={p} value={p} />)}
                     </datalist>
                   </div>
-                  <div>
+                  <div className="hidden">
                     <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1 hidden">
                       {form.request_type === 'volume_price' ? 'Počet kusů / kombinace' : 'Počet / rozsah'}
                     </label>

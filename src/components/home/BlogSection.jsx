@@ -51,7 +51,7 @@ export default function BlogSection() {
             <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
               O mlžení do hloubky
             </h2>
-            <Link to="/kontakt" className="inline-flex items-center gap-2 text-sm text-cyan font-light hover:gap-3 transition-all">
+            <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-cyan font-light hover:gap-3 transition-all">
               Všechny články <ArrowRight size={14} />
             </Link>
           </div>

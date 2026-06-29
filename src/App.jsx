@@ -29,6 +29,7 @@ import CustomerPortal from '@/pages/CustomerPortal';
 import AdminCityCoolingAnalytics from '@/pages/admin/AdminCityCoolingAnalytics';
 import AdminFeedback from '@/pages/admin/AdminFeedback';
 import Poradce from '@/pages/Poradce';
+import ONas from '@/pages/ONas';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -59,6 +60,7 @@ const AuthenticatedApp = () => {
         <Route path="/project/:token" element={<ProjectStatus />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
+        <Route path="/o-nas" element={<ONas />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminAnalytika />} />
           <Route path="produkty" element={<AdminProdukty />} />

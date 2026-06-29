@@ -18,6 +18,11 @@
       "type": "string",
       "description": "Email klienta"
     },
+    "description": {
+      "type": "string",
+      "description": "Popis projektu (max. 1000 znak\u016f)",
+      "maxLength": 1000
+    },
     "quote_number": {
       "type": "string",
       "description": "\u010c\u00edslo nab\u00eddky (HT-YYYY-XXXXX)"

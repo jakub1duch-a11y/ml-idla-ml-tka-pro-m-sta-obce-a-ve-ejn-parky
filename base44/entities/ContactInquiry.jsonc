@@ -24,6 +24,11 @@
       "type": "string",
       "description": "Project description"
     },
+    "description": {
+      "type": "string",
+      "description": "Additional details (up to 1000 characters)",
+      "maxLength": 1000
+    },
     "product_id": {
       "type": "string",
       "description": "Related product if from product page"

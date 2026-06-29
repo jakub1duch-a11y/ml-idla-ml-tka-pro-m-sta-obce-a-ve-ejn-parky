@@ -10,7 +10,7 @@ const slides = [
     name: 'OSTEV',
     subtitle: 'Mlžný strom.',
     desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg',
     badge: '🌳 NOVÝ PRODUKT',
     cta: '/produkt/ostev',
   },

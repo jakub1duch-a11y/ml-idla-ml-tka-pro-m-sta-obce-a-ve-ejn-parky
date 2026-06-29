@@ -407,7 +407,47 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          6. VIDEO SECTION
+          6. TECH PARAMS — "Preciznost v každém detailu"
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Technické parametry</p>
+              <h2 className="text-white mb-10" style={{ lineHeight: 1.0 }}>
+                <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Preciznost</span>
+                <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>v každém detailu.</span>
+              </h2>
+              <div className="rounded-2xl overflow-hidden border border-white/10">
+                {techRows.map((row, i) => (
+                  <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-card_bg' : 'bg-surface'}`}>
+                    <span className="text-xs font-mono text-white/35 tracking-widest uppercase">{row.label}</span>
+                    <span className="text-sm text-white font-medium text-right">{row.value}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-white/20 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
+              <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
+                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-cyan/40 text-cyan text-xs font-mono tracking-widest uppercase rounded-full hover:bg-cyan/10 transition-all">
+                ↓ Vyžádat PDF technický list
+              </a>
+            </motion.div>
+
+            {img(3) && (
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
+                <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
+                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+                <blockquote className="text-center px-6">
+                  <p className="text-white/40 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
+                </blockquote>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          7. VIDEO SECTION
       ═══════════════════════════════════════════════════════ */}
       <section id="videa" className="bg-surface border-y border-white/8 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -459,7 +499,7 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          8. REALIZACE gallery: "OSTEV v reálném světě"
+          9. REALIZACE gallery: "OSTEV v reálném světě"
       ═══════════════════════════════════════════════════════ */}
       {allImages.length >= 4 && (
         <section className="bg-surface border-y border-white/8 py-20">
@@ -502,52 +542,12 @@ export default function ProduktDetail() {
       )}
 
       {/* ═══════════════════════════════════════════════════════
-          9. TECH PARAMS — "Preciznost v každém detailu"
-      ═══════════════════════════════════════════════════════ */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Technické parametry</p>
-              <h2 className="text-white mb-10" style={{ lineHeight: 1.0 }}>
-                <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Preciznost</span>
-                <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>v každém detailu.</span>
-              </h2>
-              <div className="rounded-2xl overflow-hidden border border-white/10">
-                {techRows.map((row, i) => (
-                  <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-card_bg' : 'bg-surface'}`}>
-                    <span className="text-xs font-mono text-white/35 tracking-widest uppercase">{row.label}</span>
-                    <span className="text-sm text-white font-medium text-right">{row.value}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-white/20 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
-              <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-cyan/40 text-cyan text-xs font-mono tracking-widest uppercase rounded-full hover:bg-cyan/10 transition-all">
-                ↓ Vyžádat PDF technický list
-              </a>
-            </motion.div>
-
-            {img(3) && (
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
-                <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
-                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
-                <blockquote className="text-center px-6">
-                  <p className="text-white/40 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
-                </blockquote>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-          10. COMPARISON TABLE
+          8. COMPARISON TABLE
       ═══════════════════════════════════════════════════════ */}
       <ProductComparisonTable currentProductId={product.id} />
 
       {/* ═══════════════════════════════════════════════════════
-          11. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
+          10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
       ═══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-t border-white/8 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
@@ -572,7 +572,7 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          12. RELATED + BACK
+          11. RELATED + BACK
       ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 && (
         <section className="py-20 bg-ink border-t border-white/8">

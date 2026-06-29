@@ -117,6 +117,21 @@ export function trackCategoryFilter(categoryName) {
   });
 }
 
+export function trackInquirySubmitted(requestType, productInterest) {
+  safeGtag('event', 'inquiry_submitted', {
+    event_category: 'conversion',
+    event_label: requestType || 'poptávka',
+    request_type: requestType,
+    product_interest: productInterest || 'bez produktu',
+    value: 1,
+    send_to: 'G-0J3NKLWM2Q',
+  });
+  safeGtag('event', 'generate_lead', {
+    currency: 'CZK',
+    value: 1000,
+  });
+}
+
 // Expose on window for external use
 if (typeof window !== 'undefined') {
   window.trackGateInterest = trackGateInterest;
@@ -130,4 +145,5 @@ if (typeof window !== 'undefined') {
   window.trackContactFormSubmit = trackContactFormSubmit;
   window.trackHeroInteraction = trackHeroInteraction;
   window.trackCategoryFilter = trackCategoryFilter;
+  window.trackInquirySubmitted = trackInquirySubmitted;
 }

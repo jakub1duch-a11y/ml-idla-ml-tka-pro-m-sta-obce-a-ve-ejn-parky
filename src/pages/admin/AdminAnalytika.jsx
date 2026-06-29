@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   BarChart, Bar, PieChart, Pie, Cell, Legend
 } from 'recharts';
-import { Users, Eye, MousePointer, TrendingUp } from 'lucide-react';
+import { Users, Eye, MousePointer, TrendingUp, Send, Package } from 'lucide-react';
 
 const PERIOD_OPTIONS = [{ label: '7 dní', value: 7 }, { label: '28 dní', value: 28 }, { label: '90 dní', value: 90 }];
 const COLORS = ['#22d3ee', '#6366f1', '#f59e0b', '#10b981', '#f43f5e', '#a78bfa', '#fb923c', '#34d399'];
@@ -61,10 +61,12 @@ export default function AdminAnalytika() {
 
       {data && (
         <>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <StatCard icon={Users} label="Uživatelé" value={data.totals.users.toLocaleString('cs-CZ')} />
+          <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+            <StatCard icon={Users} label="Návštěvníci" value={data.totals.users.toLocaleString('cs-CZ')} />
+            <StatCard icon={Eye} label="Nový uživatelé" value={data.newUsers.toLocaleString('cs-CZ')} sub="prvních návštěvníků" />
             <StatCard icon={MousePointer} label="Relace" value={data.totals.sessions.toLocaleString('cs-CZ')} />
-            <StatCard icon={Eye} label="Zobrazení" value={data.totals.pageviews.toLocaleString('cs-CZ')} />
+            <StatCard icon={Package} label="Klikly na produkty" value={data.productClicks.reduce((acc, p) => acc + p.views, 0).toLocaleString('cs-CZ')} />
+            <StatCard icon={Send} label="Poptávky" value={data.inquiries.toLocaleString('cs-CZ')} sub="odeslané formuláře" />
             <StatCard icon={TrendingUp} label="Stránky/relace" value={data.totals.sessions ? (data.totals.pageviews / data.totals.sessions).toFixed(1) : '—'} />
           </div>
 
@@ -83,7 +85,7 @@ export default function AdminAnalytika() {
             </ResponsiveContainer>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Top pages */}
             <div className="bg-card_bg border border-white/10 rounded-2xl p-6">
               <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-5">Top stránky</p>
@@ -92,6 +94,20 @@ export default function AdminAnalytika() {
                   <div key={i} className="flex items-center gap-3">
                     <span className="text-xs font-mono text-white/20 w-4">{i + 1}</span>
                     <span className="text-xs text-white/60 flex-1 truncate">{p.path}</span>
+                    <span className="text-xs font-mono text-cyan">{p.views}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Top products */}
+            <div className="bg-card_bg border border-white/10 rounded-2xl p-6">
+              <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-5">Top produkty</p>
+              <div className="space-y-2">
+                {data.productClicks.slice(0, 8).map((p, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-white/20 w-4">{i + 1}</span>
+                    <span className="text-xs text-white/60 flex-1 truncate">{p.path.replace('/produkt/', '')}</span>
                     <span className="text-xs font-mono text-cyan">{p.views}</span>
                   </div>
                 ))}

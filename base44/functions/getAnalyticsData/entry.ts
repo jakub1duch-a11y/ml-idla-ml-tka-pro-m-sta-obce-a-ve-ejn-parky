@@ -72,6 +72,43 @@ Deno.serve(async (req) => {
     );
     const sourcesData = await sourcesRes.json();
 
+    // New users (first-time visitors)
+    const newUsersRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          metrics: [{ name: 'newUsers' }],
+        }),
+      }
+    );
+    const newUsersData = await newUsersRes.json();
+
+    // Product clicks (pageviews na /produkt/:slug)
+    const productClicksRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'pagePath' }],
+          metrics: [{ name: 'screenPageViews' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'pagePath',
+              stringFilter: { matchType: 'BEGINS_WITH', value: '/produkt/' }
+            }
+          },
+          orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+          limit: 10,
+        }),
+      }
+    );
+    const productClicksData = await productClicksRes.json();
+
     const parseRows = (data, dimCount, metricCount) => {
       if (!data.rows) return [];
       return data.rows.map(row => ({
@@ -99,13 +136,36 @@ Deno.serve(async (req) => {
       sessions: r.metrics[0],
     }));
 
+    const newUsers = newUsersData.rows?.[0]?.metricValues?.[0]?.value ? parseFloat(newUsersData.rows[0].metricValues[0].value) : 0;
+
+    const productClicks = parseRows(productClicksData, 1, 1).map(r => ({
+      path: r.dims[0],
+      views: r.metrics[0],
+    }));
+
     const totals = daily.reduce((acc, d) => ({
       sessions: acc.sessions + d.sessions,
       users: acc.users + d.users,
       pageviews: acc.pageviews + d.pageviews,
     }), { sessions: 0, users: 0, pageviews: 0 });
 
-    return Response.json({ daily, pages, sources, totals });
+    // Get form submissions count from database
+    let inquiries = 0;
+    try {
+      const inqList = await base44.asServiceRole.entities.ContactInquiry.filter({});
+      if (Array.isArray(inqList)) {
+        const inqDate = new Date();
+        inqDate.setDate(inqDate.getDate() - days);
+        inquiries = inqList.filter(i => {
+          const createdDate = new Date(i.created_date);
+          return createdDate >= inqDate;
+        }).length;
+      }
+    } catch (e) {
+      console.log('Could not fetch inquiries:', e);
+    }
+
+    return Response.json({ daily, pages, sources, productClicks, totals, newUsers, inquiries });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

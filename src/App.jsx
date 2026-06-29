@@ -31,6 +31,7 @@ import AdminFeedback from '@/pages/admin/AdminFeedback';
 import Poradce from '@/pages/Poradce';
 import ONas from '@/pages/ONas';
 import Reference from '@/pages/Reference';
+import ReferenceDetail from '@/pages/ReferenceDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -63,6 +64,7 @@ const AuthenticatedApp = () => {
         <Route path="/poradce" element={<Poradce />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
+        <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminAnalytika />} />
           <Route path="produkty" element={<AdminProdukty />} />

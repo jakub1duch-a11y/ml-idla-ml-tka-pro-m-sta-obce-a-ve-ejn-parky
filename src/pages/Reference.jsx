@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, ZoomIn, ChevronLeft, ChevronRight, X, Loader } from 'lucide-react';
+import { MapPin, ZoomIn, ChevronLeft, ChevronRight, X, Loader, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
@@ -139,11 +139,14 @@ function ProjectCard({ project, onOpen }) {
         {project.description && (
           <p className="text-sm text-white/45 leading-relaxed line-clamp-3 font-light">{project.description}</p>
         )}
-        {project.product_used && (
-          <div className="mt-4 pt-4 border-t border-white/8">
+        <div className="mt-4 pt-4 border-t border-white/8 flex items-center justify-between">
+          {project.product_used && (
             <span className="text-[10px] font-mono text-cyan/60 tracking-widest uppercase">Produkt: {project.product_used}</span>
-          </div>
-        )}
+          )}
+          <Link to={`/reference/${project.id}`} className="flex items-center gap-1 text-xs text-white/40 hover:text-cyan transition-colors font-mono ml-auto">
+            Detail <ArrowRight size={11} />
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

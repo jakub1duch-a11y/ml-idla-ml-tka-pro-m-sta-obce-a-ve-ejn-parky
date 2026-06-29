@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <div className="mb-4">
-              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1684cef95_generated_image.png" alt="mlzidla.cz" className="h-8 w-auto" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7b9fbf920_generated_image.png" alt="mlzidla.cz" className="h-8 w-auto" />
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs mb-6">
               Zakázkové mlžné sochy z nerezové oceli AISI 304. Od návrhu přes výrobu až po instalaci. Trutnov, Česká republika.

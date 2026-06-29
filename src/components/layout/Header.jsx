@@ -48,7 +48,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1684cef95_generated_image.png" alt="mlzidla.cz" className="h-8 w-auto" />
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7b9fbf920_generated_image.png" alt="mlzidla.cz" className="h-8 w-auto" />
         </Link>
 
         {/* Desktop nav */}

@@ -30,6 +30,9 @@ function buildMimeMessage({ from, to, subject, body }) {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+
     const body = await req.json();
     const { data } = body;
 
@@ -37,6 +40,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'No data provided' }, { status: 400 });
     }
 
+    // Only send email to the address provided in the inquiry (not arbitrary addresses)
     const name = data.name || 'Neznámý';
     const email = data.email || '—';
     const message = data.message || '—';

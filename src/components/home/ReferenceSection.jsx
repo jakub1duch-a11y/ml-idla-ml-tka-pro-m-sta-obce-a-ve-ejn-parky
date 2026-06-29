@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ChevronLeft, ChevronRight, X, ZoomIn, Loader } from 'lucide-react';
+import { MapPin, ChevronLeft, ChevronRight, X, ZoomIn, Loader, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
@@ -83,20 +83,20 @@ function Lightbox({ images, initialIndex, onClose }) {
   );
 }
 
-function ProjectCard({ project, onClick }) {
+function ProjectCard({ project }) {
   const allImages = [project.image_url, ...(project.gallery_urls || [])].filter(Boolean);
   const [hovered, setHovered] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="group rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={() => allImages.length > 0 && onClick(allImages, 0)}
-    >
+    <Link to={`/reference/${project.id}`} className="group block">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
       {/* Thumbnail */}
       <div className="relative aspect-[4/3] overflow-hidden bg-white/5">
         {project.image_url ? (
@@ -147,7 +147,8 @@ function ProjectCard({ project, onClick }) {
           </div>
         )}
       </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 
@@ -176,8 +177,8 @@ export default function ReferenceSection() {
             <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
               Kde naše sochy stojí
             </h2>
-            <Link to="/kontakt" className="inline-flex items-center gap-2 text-sm text-cyan font-light hover:gap-3 transition-all">
-              Konzultace zdarma <ChevronRight size={14} />
+            <Link to="/reference" className="inline-flex items-center gap-2 text-sm text-cyan font-light hover:gap-3 transition-all">
+              Všechny reference <ArrowRight size={14} />
             </Link>
           </div>
         </motion.div>
@@ -189,11 +190,7 @@ export default function ReferenceSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onClick={(images, idx) => setLightbox({ images, idx })}
-              />
+              <ProjectCard key={project.id} project={project} />
             ))}
           </div>
         )}

@@ -1,66 +1,236 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const slides = [
+  {
+    slug: 'ostev',
+    tag: 'Mlžná socha',
+    name: 'OSTEV',
+    subtitle: 'Mlžný strom.',
+    desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
+    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80',
+    badge: '🌳 NOVÝ PRODUKT',
+    cta: '/produkt/ostev',
+  },
+  {
+    slug: 'gate',
+    tag: 'Mlžná brána',
+    name: 'GATE 60',
+    subtitle: 'Průchod mlhou.',
+    desc: 'Průchozí mlžná brána pro náměstí, parky a vstupy. Ochlazení až −9 °C v průchozí zóně. Dramatický vstupní zážitek.',
+    image: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1600&q=80',
+    badge: '🏙️ URBAN ART',
+    cta: '/kolekce',
+  },
+  {
+    slug: 'mrak',
+    tag: 'Mlžná socha',
+    name: 'MRAK',
+    subtitle: 'Nebe na zemi.',
+    desc: 'Abstraktní oblak z nerezové oceli s hustým mlžením. Stává se dominantou každého prostoru — parku, terasy, foyer hotelu.',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80',
+    badge: '⭐ BESTSELLER',
+    cta: '/kolekce',
+  },
+  {
+    slug: 'steblo',
+    tag: 'Zahradní socha',
+    name: 'STÉBLO',
+    subtitle: 'Minimalismus v pohybu.',
+    desc: 'Minimalistický nerezový prut s integrovanou mlžící tryskou. Výška 80–160 cm. Bez viditelných hadic, bez kompromisů.',
+    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
+    badge: '🌿 ZAHRADA',
+    cta: '/kolekce',
+  },
+  {
+    slug: 'mlhoviste-deti',
+    tag: 'Hřiště & parky',
+    name: 'MLŽIŠTĚ',
+    subtitle: 'Radost pro děti.',
+    desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
+    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
+    badge: '👧 KIDS',
+    cta: '/mlhoviste',
+  },
+];
 
 const stats = [
   { val: '120+', label: 'Realizací v ČR a SR' },
-  { val: '−9 °C', label: 'Max. ochlazení vzduchu' },
+  { val: '−9 °C', label: 'Max. ochlazení' },
   { val: '100%', label: 'Bez chemie' },
-  { val: '5 let', label: 'Záruka na konstrukci' },
+  { val: '5 let', label: 'Záruka' },
 ];
 
 export default function HeroSection() {
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  const goTo = useCallback((idx) => {
+    setDirection(idx > current ? 1 : -1);
+    setCurrent(idx);
+  }, [current]);
+
+  const next = useCallback(() => {
+    setDirection(1);
+    setCurrent(i => (i + 1) % slides.length);
+  }, []);
+
+  const prev = useCallback(() => {
+    setDirection(-1);
+    setCurrent(i => (i - 1 + slides.length) % slides.length);
+  }, []);
+
+  // Auto-advance every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(next, 6000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  const slide = slides[current];
+
+  const variants = {
+    enter: (dir) => ({ opacity: 0, x: dir > 0 ? 80 : -80 }),
+    center: { opacity: 1, x: 0 },
+    exit: (dir) => ({ opacity: 0, x: dir > 0 ? -80 : 80 }),
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-ink">
-      {/* Background video */}
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
-        <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" />
 
-      {/* Content */}
-      <div className="relative flex-1 flex flex-col justify-end max-w-7xl mx-auto px-6 lg:px-8 pb-24 pt-32 w-full">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-5">ARCHITEKTURA ATMOSFÉRY</p>
+      {/* Background image with crossfade */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={current + '-bg'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={slide.image}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/30 to-transparent" />
+        </motion.div>
+      </AnimatePresence>
 
-          <h1 className="font-heading font-extralight text-6xl lg:text-8xl text-white leading-[0.95] tracking-tight mb-3">
-            OSTEV
-          </h1>
-          <h2 className="font-heading font-extralight text-5xl lg:text-7xl text-white/60 italic leading-[1.0] tracking-tight mb-6">
-            Mlžný strom.
-          </h2>
-          <p className="text-white/55 text-lg leading-relaxed mb-8 max-w-lg">
-            Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba.
-          </p>
+      {/* Slide counter bar */}
+      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-24">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className="relative h-0.5 flex-1 bg-white/15 overflow-hidden rounded-full"
+          >
+            {i === current && (
+              <motion.div
+                key={current + '-bar'}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 6, ease: 'linear' }}
+                className="absolute inset-0 bg-cyan origin-left rounded-full"
+              />
+            )}
+            {i < current && <div className="absolute inset-0 bg-white/40 rounded-full" />}
+          </button>
+        ))}
+      </div>
 
-          <div className="flex flex-wrap gap-3 mb-8">
-            <Link to="/kolekce"
-              className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
-              Prozkoumat OSTEV <ArrowRight size={16} />
-            </Link>
-            <button className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
-              <Play size={14} className="fill-current" /> Sledovat video
+      {/* Main content */}
+      <div className="relative z-10 flex-1 flex flex-col justify-end max-w-7xl mx-auto px-6 lg:px-8 pb-12 pt-36 w-full">
+
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="max-w-2xl"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-mono tracking-widest uppercase text-cyan">{slide.tag}</span>
+              <span className="px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-mono tracking-widest text-white/70">
+                {slide.badge}
+              </span>
+            </div>
+
+            <h1 className="font-heading font-extralight text-7xl lg:text-9xl text-white leading-[0.9] tracking-tight mb-2">
+              {slide.name}
+            </h1>
+            <h2 className="font-heading font-extralight text-4xl lg:text-5xl text-white/50 italic leading-tight tracking-tight mb-5">
+              {slide.subtitle}
+            </h2>
+            <p className="text-white/55 text-lg leading-relaxed mb-8 max-w-lg">
+              {slide.desc}
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <Link to={slide.cta}
+                className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+                Prozkoumat {slide.name} <ArrowRight size={16} />
+              </Link>
+              <Link to="/kontakt"
+                className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
+                Nezávazná poptávka
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Bottom row: nav arrows + thumbnails + stats */}
+        <div className="mt-10 flex flex-col lg:flex-row lg:items-end gap-6">
+
+          {/* Thumbnail strip */}
+          <div className="flex gap-2 flex-1">
+            {slides.map((s, i) => (
+              <button
+                key={s.slug}
+                onClick={() => goTo(i)}
+                className={`relative group overflow-hidden rounded-xl flex-1 transition-all duration-300 ${
+                  i === current ? 'ring-2 ring-cyan ring-offset-1 ring-offset-ink' : 'opacity-50 hover:opacity-80'
+                }`}
+                style={{ aspectRatio: '3/2', maxWidth: 120 }}
+              >
+                <img src={s.image} alt={s.name} className="w-full h-full object-cover" loading="lazy" />
+                <div className="absolute inset-0 bg-ink/50" />
+                <p className="absolute bottom-1.5 left-0 right-0 text-center text-[9px] font-mono text-white/80 tracking-widest uppercase px-1 truncate">
+                  {s.name}
+                </p>
+              </button>
+            ))}
+          </div>
+
+          {/* Prev/Next */}
+          <div className="flex items-center gap-2">
+            <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+              <ChevronLeft size={18} />
+            </button>
+            <span className="text-xs font-mono text-white/30 w-12 text-center">
+              {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+            </span>
+            <button onClick={next} className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+              <ChevronRight size={18} />
             </button>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 border border-green-500/30 text-xs font-mono text-green-400 tracking-widest uppercase">
-            🌳 NOVÝ PRODUKT
+          {/* Stats */}
+          <div className="grid grid-cols-4 gap-2 lg:w-auto">
+            {stats.map((s) => (
+              <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-3 py-3 text-center">
+                <p className="font-heading font-light text-xl text-cyan leading-none mb-1">{s.val}</p>
+                <p className="text-[10px] text-white/40 font-mono leading-tight">{s.label}</p>
+              </div>
+            ))}
           </div>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
-          className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-2xl">
-          {stats.map((s) => (
-            <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-              <p className="font-heading font-light text-2xl text-cyan leading-none mb-1">{s.val}</p>
-              <p className="text-xs text-white/40 font-mono leading-tight">{s.label}</p>
-            </div>
-          ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

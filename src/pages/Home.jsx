@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
+import CategoriesSection from '@/components/home/CategoriesSection';
 import ProductsSection from '@/components/home/ProductsSection';
 import SmartSection from '@/components/home/SmartSection';
 import VideoSection from '@/components/home/VideoSection';
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <CategoriesSection />
       <ProductsSection />
       <SmartSection />
       <VideoSection />

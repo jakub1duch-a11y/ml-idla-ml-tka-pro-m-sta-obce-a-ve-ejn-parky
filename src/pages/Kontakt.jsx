@@ -5,23 +5,23 @@ import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } 
 import { trackCooperationFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
 
 const contactInfo = [
-  { icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
-  { icon: Mail, label: 'Email', value: 'obchod1@holmtec.cz', href: 'mailto:obchod1@holmtec.cz' },
-  { icon: MapPin, label: 'Adresa', value: 'Trutnov, Česká republika', href: null },
-];
+{ icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
+{ icon: Mail, label: 'Email', value: 'obchod1@holmtec.cz', href: 'mailto:obchod1@holmtec.cz' },
+{ icon: MapPin, label: 'Adresa', value: 'Trutnov, Česká republika', href: null }];
+
 
 const REQUEST_TYPES = [
-  { value: 'product_price', label: 'Cena produktu', icon: Package, desc: 'Jednotná cena vybraného produktu' },
-  { value: 'volume_price', label: 'Množstevní nabídka', icon: Tag, desc: 'Kombinace produktů, množstevní sleva' },
-  { value: 'cooperation', label: 'Projektová spolupráce', icon: Layers, desc: 'Návrh, realizace, servis projektu' },
-  { value: 'documentation', label: 'Projektová dokumentace', icon: FileText, desc: 'Technické výkresy, certifikáty, podklady' },
-  { value: '3d_model', label: '3D vizualizace & render', icon: Box, desc: 'Model produktu pro architektonické rendery' },
-];
+{ value: 'product_price', label: 'Cena produktu', icon: Package, desc: 'Jednotná cena vybraného produktu' },
+{ value: 'volume_price', label: 'Množstevní nabídka', icon: Tag, desc: 'Kombinace produktů, množstevní sleva' },
+{ value: 'cooperation', label: 'Projektová spolupráce', icon: Layers, desc: 'Návrh, realizace, servis projektu' },
+{ value: 'documentation', label: 'Projektová dokumentace', icon: FileText, desc: 'Technické výkresy, certifikáty, podklady' },
+{ value: '3d_model', label: '3D vizualizace & render', icon: Box, desc: 'Model produktu pro architektonické rendery' }];
+
 
 const PRODUCTS = [
-  'OSTEV (strom)', 'MRAK', 'VOLAVKA', 'KIDS', 'GATE 60 (brána)', 'AURA (kruh)',
-  'LINEA EL70', 'START (terasa)', 'PARK', 'ARENA',
-];
+'OSTEV (strom)', 'MRAK', 'VOLAVKA', 'KIDS', 'GATE 60 (brána)', 'AURA (kruh)',
+'LINEA EL70', 'START (terasa)', 'PARK', 'ARENA'];
+
 
 export default function Kontakt() {
   const [form, setForm] = useState({
@@ -35,21 +35,21 @@ export default function Kontakt() {
     e.preventDefault();
     setSending(true);
     try {
-      const reqLabel = REQUEST_TYPES.find(r => r.value === form.request_type)?.label || '';
+      const reqLabel = REQUEST_TYPES.find((r) => r.value === form.request_type)?.label || '';
       const msg = [
-        form.request_type ? `[Typ poptávky: ${reqLabel}]` : '',
-        form.product_interest ? `[Produkt: ${form.product_interest}]` : '',
-        form.qty ? `[Počet/kombinace: ${form.qty}]` : '',
-        form.company ? `[Firma: ${form.company}]` : '',
-        form.phone ? `[Tel: ${form.phone}]` : '',
-        form.message,
-      ].filter(Boolean).join(' ');
+      form.request_type ? `[Typ poptávky: ${reqLabel}]` : '',
+      form.product_interest ? `[Produkt: ${form.product_interest}]` : '',
+      form.qty ? `[Počet/kombinace: ${form.qty}]` : '',
+      form.company ? `[Firma: ${form.company}]` : '',
+      form.phone ? `[Tel: ${form.phone}]` : '',
+      form.message].
+      filter(Boolean).join(' ');
 
       await base44.entities.ContactInquiry.create({
         name: form.name,
         email: form.email,
         message: msg,
-        status: 'new',
+        status: 'new'
       });
       trackCooperationFormSubmit();
       trackInquirySubmitted(form.request_type, form.product_interest);
@@ -81,22 +81,22 @@ export default function Kontakt() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact info */}
           <div className="lg:col-span-2 space-y-4">
-            {contactInfo.map((item) => (
-              <motion.div key={item.label} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-                className="p-6 rounded-2xl bg-card_bg border border-white/10 flex items-center gap-4">
+            {contactInfo.map((item) =>
+            <motion.div key={item.label} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+            className="p-6 rounded-2xl bg-card_bg border border-white/10 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center flex-shrink-0 border border-cyan/20">
                   <item.icon size={20} className="text-cyan" />
                 </div>
                 <div>
                   <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-1">{item.label}</p>
-                  {item.href ? (
-                    <a href={item.href} className="text-white font-medium hover:text-cyan transition-colors">{item.value}</a>
-                  ) : (
-                    <p className="text-white font-medium">{item.value}</p>
-                  )}
+                  {item.href ?
+                <a href={item.href} className="text-white font-medium hover:text-cyan transition-colors">{item.value}</a> :
+
+                <p className="text-white font-medium">{item.value}</p>
+                }
                 </div>
               </motion.div>
-            ))}
+            )}
 
             {/* Info box */}
             <div className="p-5 rounded-2xl bg-cyan/5 border border-cyan/20">
@@ -113,8 +113,8 @@ export default function Kontakt() {
 
           {/* Form */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="lg:col-span-3">
-            {sent ? (
-              <div className="h-full flex items-center justify-center p-12 rounded-2xl bg-card_bg border border-cyan/30 text-center">
+            {sent ?
+            <div className="h-full flex items-center justify-center p-12 rounded-2xl bg-card_bg border border-cyan/30 text-center">
                 <div>
                   <div className="w-16 h-16 rounded-full bg-cyan/10 flex items-center justify-center mx-auto mb-4 border border-cyan/20">
                     <span className="text-3xl">✓</span>
@@ -122,46 +122,46 @@ export default function Kontakt() {
                   <h3 className="text-xl font-bold text-white mb-2">Poptávka odeslána!</h3>
                   <p className="text-white/50">Ozveme se vám do 24 hodin.</p>
                 </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card_bg border border-white/10 space-y-5">
+              </div> :
+
+            <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card_bg border border-white/10 space-y-5">
 
                 {/* Kontaktní údaje */}
                 <div className="grid grid-cols-2 gap-4">
                   <input type="text" required placeholder="Jméno a příjmení *"
-                    value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                    className={inputCls} />
+                value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className={inputCls} />
                   <input type="email" required placeholder="Email *"
-                    value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-                    className={inputCls} />
+                value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className={inputCls} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <input type="tel" placeholder="Telefon"
-                    value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-                    className={inputCls} />
+                value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className={inputCls} />
                   <input type="text" placeholder="Firma / organizace"
-                    value={form.company} onChange={e => setForm({ ...form, company: e.target.value })}
-                    className={inputCls} />
+                value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })}
+                className={inputCls} />
                 </div>
 
                 {/* Typ poptávky */}
-                <div>
+                <div className="hidden">
                   <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Typ poptávky</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {REQUEST_TYPES.map(rt => {
-                      const Icon = rt.icon;
-                      const active = form.request_type === rt.value;
-                      return (
-                        <button type="button" key={rt.value} onClick={() => setForm({ ...form, request_type: rt.value })}
-                          className={`text-left p-3 rounded-xl border transition-all ${active ? 'bg-cyan/10 border-cyan/40 text-cyan' : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20'}`}>
+                    {REQUEST_TYPES.map((rt) => {
+                    const Icon = rt.icon;
+                    const active = form.request_type === rt.value;
+                    return (
+                      <button type="button" key={rt.value} onClick={() => setForm({ ...form, request_type: rt.value })}
+                      className={`text-left p-3 rounded-xl border transition-all ${active ? 'bg-cyan/10 border-cyan/40 text-cyan' : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20'}`}>
                           <div className="flex items-center gap-2 mb-1">
                             <Icon size={13} className={active ? 'text-cyan' : 'text-white/30'} />
                             <p className="text-xs font-medium">{rt.label}</p>
                           </div>
                           <p className="text-[10px] opacity-50 leading-tight">{rt.desc}</p>
-                        </button>
-                      );
-                    })}
+                        </button>);
+
+                  })}
                   </div>
                 </div>
 
@@ -170,11 +170,11 @@ export default function Kontakt() {
                   <div>
                     <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1">Produkt / systém</label>
                     <input list="products-contact" type="text"
-                      placeholder="Vyberte nebo napište produkt"
-                      value={form.product_interest} onChange={e => setForm({ ...form, product_interest: e.target.value })}
-                      className={inputCls} />
+                  placeholder="Vyberte nebo napište produkt"
+                  value={form.product_interest} onChange={(e) => setForm({ ...form, product_interest: e.target.value })}
+                  className={inputCls} />
                     <datalist id="products-contact">
-                      {PRODUCTS.map(p => <option key={p} value={p} />)}
+                      {PRODUCTS.map((p) => <option key={p} value={p} />)}
                     </datalist>
                   </div>
                   <div>
@@ -182,26 +182,26 @@ export default function Kontakt() {
                       {form.request_type === 'volume_price' ? 'Počet kusů / kombinace' : 'Počet / rozsah'}
                     </label>
                     <input type="text"
-                      placeholder={form.request_type === 'volume_price' ? 'např. 3× MRAK + 1× OSTEV' : 'např. 2 ks'}
-                      value={form.qty} onChange={e => setForm({ ...form, qty: e.target.value })}
-                      className={inputCls} />
+                  placeholder={form.request_type === 'volume_price' ? 'např. 3× MRAK + 1× OSTEV' : 'např. 2 ks'}
+                  value={form.qty} onChange={(e) => setForm({ ...form, qty: e.target.value })}
+                  className={inputCls} />
                   </div>
                 </div>
 
                 {/* Zpráva */}
                 <textarea required rows={4} placeholder="Popište váš projekt nebo dotaz... *"
-                  value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                  className={inputCls + ' resize-none'} />
+              value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+              className={inputCls + ' resize-none'} />
 
                 <button type="submit" disabled={sending}
-                  className="w-full py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-cyan/25">
+              className="w-full py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-cyan/25">
                   {sending ? 'Odesílám...' : <>Odeslat poptávku <ArrowRight size={16} /></>}
                 </button>
               </form>
-            )}
+            }
           </motion.div>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

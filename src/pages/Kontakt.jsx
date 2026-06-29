@@ -177,15 +177,15 @@ export default function Kontakt() {
                       {PRODUCTS.map((p) => <option key={p} value={p} />)}
                     </datalist>
                   </div>
-                  <div className="hidden">
-                    <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1 hidden">
-                      {form.request_type === 'volume_price' ? 'Počet kusů / kombinace' : 'Počet / rozsah'}
-                    </label>
-                    <input type="text"
-                  placeholder={form.request_type === 'volume_price' ? 'např. 3× MRAK + 1× OSTEV' : 'např. 2 ks'}
-                  value={form.qty} onChange={(e) => setForm({ ...form, qty: e.target.value })}
-                  className={inputCls} />
-                  </div>
+                  
+
+
+
+
+
+
+
+                
                 </div>
 
                 {/* Zpráva */}

@@ -6,64 +6,64 @@ import { base44 } from '@/api/base44Client';
 import { trackHeroInteraction } from '@/lib/ga4';
 
 const defaultSlides = [
-  {
-    slug: 'ostev-mlzny-strom',
-    tag: 'Mlžná socha',
-    name: 'OSTEV',
-    subtitle: 'Mlžný strom.',
-    desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
-    badge: '🌳 NOVÝ PRODUKT',
-    cta: '/produkt/ostev-mlzny-strom',
-  },
-  {
-    slug: 'aura',
-    tag: 'Mlžná socha',
-    name: 'AURA',
-    subtitle: 'Kruh z mlhy.',
-    desc: 'Kruhová skulptura z leštěné nerezové oceli s husté mlžením po celém obvodu. Dominanta náměstí, foyer hotelu nebo eventového prostoru.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
-    badge: '⭐ BESTSELLER',
-    cta: '/produkt/aura',
-  },
-  {
-    slug: 'mrak',
-    tag: 'Mlžná socha',
-    name: 'MRAK',
-    subtitle: 'Nebe na zemi.',
-    desc: 'Abstraktní oblak z nerezové oceli s hustým mlžením. Stává se dominantou každého prostoru — parku, terasy, foyer hotelu.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
-    badge: '☁️ URBAN',
-    cta: '/produkt/mrak',
-  },
-  {
-    slug: 'ostev-detail',
-    tag: 'Detail trysky',
-    name: 'OSTEV',
-    subtitle: 'Precizní mlžení.',
-    desc: 'Trysky z AISI 316L rozprašují kapičky 10–50 μm, které se okamžitě odpaří. Žádné mokré chodníky, jen příjemný chlad.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg',
-    badge: '🔬 TECHNOLOGIE',
-    cta: '/produkt/ostev-mlzny-strom',
-  },
-  {
-    slug: 'mlhoviste-deti',
-    tag: 'Hřiště & parky',
-    name: 'MLŽIŠTĚ',
-    subtitle: 'Radost pro děti.',
-    desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
-    badge: '👧 KIDS',
-    cta: '/mlhoviste',
-  },
-];
+{
+  slug: 'ostev-mlzny-strom',
+  tag: 'Mlžná socha',
+  name: 'OSTEV',
+  subtitle: 'Mlžný strom.',
+  desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+  badge: '🌳 NOVÝ PRODUKT',
+  cta: '/produkt/ostev-mlzny-strom'
+},
+{
+  slug: 'aura',
+  tag: 'Mlžná socha',
+  name: 'AURA',
+  subtitle: 'Kruh z mlhy.',
+  desc: 'Kruhová skulptura z leštěné nerezové oceli s husté mlžením po celém obvodu. Dominanta náměstí, foyer hotelu nebo eventového prostoru.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
+  badge: '⭐ BESTSELLER',
+  cta: '/produkt/aura'
+},
+{
+  slug: 'mrak',
+  tag: 'Mlžná socha',
+  name: 'MRAK',
+  subtitle: 'Nebe na zemi.',
+  desc: 'Abstraktní oblak z nerezové oceli s hustým mlžením. Stává se dominantou každého prostoru — parku, terasy, foyer hotelu.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
+  badge: '☁️ URBAN',
+  cta: '/produkt/mrak'
+},
+{
+  slug: 'ostev-detail',
+  tag: 'Detail trysky',
+  name: 'OSTEV',
+  subtitle: 'Precizní mlžení.',
+  desc: 'Trysky z AISI 316L rozprašují kapičky 10–50 μm, které se okamžitě odpaří. Žádné mokré chodníky, jen příjemný chlad.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg',
+  badge: '🔬 TECHNOLOGIE',
+  cta: '/produkt/ostev-mlzny-strom'
+},
+{
+  slug: 'mlhoviste-deti',
+  tag: 'Hřiště & parky',
+  name: 'MLŽIŠTĚ',
+  subtitle: 'Radost pro děti.',
+  desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
+  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
+  badge: '👧 KIDS',
+  cta: '/mlhoviste'
+}];
+
 
 const stats = [
-  { val: '120+', label: 'Realizací v ČR a SR' },
-  { val: '−9 °C', label: 'Max. ochlazení' },
-  { val: '100%', label: 'Bez chemie' },
-  { val: '5 let', label: 'Záruka' },
-];
+{ val: '120+', label: 'Realizací v ČR a SR' },
+{ val: '−9 °C', label: 'Max. ochlazení' },
+{ val: '100%', label: 'Bez chemie' },
+{ val: '5 let', label: 'Záruka' }];
+
 
 export default function HeroSection() {
   const [slides, setSlides] = useState(defaultSlides);
@@ -71,9 +71,9 @@ export default function HeroSection() {
   const [direction, setDirection] = useState(1);
 
   useEffect(() => {
-    base44.entities.Product.list('-updated_date', 10).then(products => {
+    base44.entities.Product.list('-updated_date', 10).then((products) => {
       if (products && products.length > 0) {
-        const dbSlides = products.map(p => ({
+        const dbSlides = products.map((p) => ({
           slug: p.slug,
           tag: 'Produkt HolmTec',
           name: p.name,
@@ -81,7 +81,7 @@ export default function HeroSection() {
           desc: p.description || p.short_description || 'Mlžný systém na míru',
           image: p.image_url || defaultSlides[0].image,
           badge: p.featured ? '⭐ FEATURED' : '✨ NOVÝ',
-          cta: `/produkt/${p.slug}`,
+          cta: `/produkt/${p.slug}`
         }));
         setSlides(dbSlides);
       }
@@ -119,7 +119,7 @@ export default function HeroSection() {
   const variants = {
     enter: (dir) => ({ opacity: 0, x: dir > 0 ? 80 : -80 }),
     center: { opacity: 1, x: 0 },
-    exit: (dir) => ({ opacity: 0, x: dir > 0 ? -80 : 80 }),
+    exit: (dir) => ({ opacity: 0, x: dir > 0 ? -80 : 80 })
   };
 
   return (
@@ -133,13 +133,13 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2 }}
-          className="absolute inset-0"
-        >
+          className="absolute inset-0">
+          
           <img
             src={slide.image}
             alt=""
-            className="w-full h-full object-cover"
-          />
+            className="w-full h-full object-cover" />
+          
           <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/30 to-transparent" />
         </motion.div>
@@ -147,24 +147,24 @@ export default function HeroSection() {
 
       {/* Slide counter bar */}
       <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-24">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            className="relative h-0.5 flex-1 bg-white/15 overflow-hidden rounded-full"
-          >
-            {i === current && (
-              <motion.div
-                key={current + '-bar'}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 6, ease: 'linear' }}
-                className="absolute inset-0 bg-cyan origin-left rounded-full"
-              />
-            )}
+        {slides.map((_, i) =>
+        <button
+          key={i}
+          onClick={() => goTo(i)}
+          className="relative h-0.5 flex-1 bg-white/15 overflow-hidden rounded-full">
+          
+            {i === current &&
+          <motion.div
+            key={current + '-bar'}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 6, ease: 'linear' }}
+            className="absolute inset-0 bg-cyan origin-left rounded-full" />
+
+          }
             {i < current && <div className="absolute inset-0 bg-white/40 rounded-full" />}
           </button>
-        ))}
+        )}
       </div>
 
       {/* Main content */}
@@ -179,8 +179,8 @@ export default function HeroSection() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="max-w-xl"
-          >
+            className="max-w-xl">
+            
             <div className="flex items-center gap-3 mb-3">
               <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-cyan">{slide.tag}</span>
               <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[9px] font-mono tracking-widest text-white/50">
@@ -200,11 +200,11 @@ export default function HeroSection() {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Link to={slide.cta} onClick={() => trackHeroInteraction(slide.name, slide.name)}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan text-ink text-xs font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/20">
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan text-ink text-xs font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/20">
                 Prozkoumat <ArrowRight size={14} />
               </Link>
               <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-white/20 text-white text-xs font-medium rounded-full hover:bg-white/10 transition-all">
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-white/20 text-white text-xs font-medium rounded-full hover:bg-white/10 transition-all">
                 Nezávazná poptávka
               </Link>
             </div>
@@ -215,7 +215,7 @@ export default function HeroSection() {
         <div className="mt-10 flex items-end gap-6">
 
           {/* Prev/Next */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 hidden">
             <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
               <ChevronLeft size={18} />
             </button>
@@ -229,15 +229,15 @@ export default function HeroSection() {
 
           {/* Stats */}
           <div className="grid grid-cols-4 gap-2 lg:w-auto ml-auto">
-            {stats.map((s) => (
-              <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-3 py-3 text-center">
+            {stats.map((s) =>
+            <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-3 py-3 text-center">
                 <p className="font-heading font-light text-xl text-cyan leading-none mb-1">{s.val}</p>
                 <p className="text-[10px] text-white/40 font-mono leading-tight">{s.label}</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

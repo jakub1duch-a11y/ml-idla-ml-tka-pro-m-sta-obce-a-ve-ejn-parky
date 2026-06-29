@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2 } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Droplet, Zap, Gauge } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import ProductComparisonTable from '@/components/products/ProductComparisonTable';
@@ -204,37 +204,65 @@ export default function ProduktDetail() {
           </Link>
         </div>
 
-        {/* Hero text — product name BOLD + tagline ITALIC like reference */}
+        {/* Hero text — product name + short description + specs icons + CTA */}
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-cyan mb-3">HolmTec · Mlžné skulptury</p>
             {/* Bold product name */}
             <h1 style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 0.9 }}
-              className="text-7xl lg:text-[10rem] text-white uppercase mb-2">
+              className="text-7xl lg:text-[10rem] text-white uppercase mb-6">
               {product.name}
             </h1>
-            {/* Italic tagline */}
+            
+            {/* Short description */}
             {product.short_description && (
-              <p style={{ fontStyle: 'italic', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 0.95 }}
-                className="text-5xl lg:text-8xl text-white mb-6 max-w-4xl">
+              <p className="text-white/60 text-lg max-w-lg mb-8 leading-relaxed font-light">
                 {product.short_description}
               </p>
             )}
-            {product.description && (
-              <p className="text-white/60 text-base max-w-md mb-8 leading-relaxed font-light">
-                {product.description}
-              </p>
-            )}
-            <div className="flex flex-wrap gap-3">
-              <Link to="/kontakt"
-                className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
-                Nezávazná poptávka <ArrowRight size={16} />
-              </Link>
-              <a href="#videa"
-                className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
-                Videa z instalací
-              </a>
+
+            {/* Specs icons row */}
+            <div className="flex flex-wrap gap-8 mb-10">
+              {product.water_consumption && (
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center border border-cyan/20">
+                    <Droplet size={18} className="text-cyan" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba</p>
+                    <p className="text-sm text-white font-medium">{product.water_consumption}</p>
+                  </div>
+                </div>
+              )}
+              {product.micron_size && (
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center border border-cyan/20">
+                    <Zap size={18} className="text-cyan" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Trysky</p>
+                    <p className="text-sm text-white font-medium">{product.micron_size}</p>
+                  </div>
+                </div>
+              )}
+              {product.pressure && (
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center border border-cyan/20">
+                    <Gauge size={18} className="text-cyan" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Tlak</p>
+                    <p className="text-sm text-white font-medium">{product.pressure}</p>
+                  </div>
+                </div>
+              )}
             </div>
+
+            {/* CTA button */}
+            <Link to="/kontakt"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+              Poptat produkt <ArrowRight size={16} />
+            </Link>
           </motion.div>
         </div>
 

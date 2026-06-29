@@ -8,8 +8,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
-            <div className="mb-4">
-              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7b9fbf920_generated_image.png" alt="mlzidla.cz" className="h-8 w-auto" />
+            <div className="mb-4 flex items-center gap-2">
+              <svg width="20" height="26" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#22d3ee" fillOpacity="0.9"/>
+                <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.6"/>
+              </svg>
+              <span style={{fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.03em'}} className="text-white text-lg leading-none">
+                mlzidla<span className="text-cyan">.cz</span>
+              </span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs mb-6">
               Zakázkové mlžné sochy z nerezové oceli AISI 304. Od návrhu přes výrobu až po instalaci. Trutnov, Česká republika.

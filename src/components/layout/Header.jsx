@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const catalogLinks = [
@@ -59,20 +59,13 @@ export default function Header() {
             </AnimatePresence>
           </div>
 
-          <Link to="/jak-to-funguje" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Instalace</Link>
-          <Link to="/poradce" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">AI Poradce</Link>
+          <Link to="/kolekce" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Reference</Link>
+          <Link to="/o-nas" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">O nás</Link>
           <Link to="/kontakt" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Kontakt</Link>
         </nav>
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <button className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all">
-            <ShoppingCart size={18} />
-          </button>
-          <Link to="/muj-projekt"
-            className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">
-            Můj projekt
-          </Link>
           <Link to="/kontakt"
             className="flex items-center gap-2 px-5 py-2 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
             ✦ Poptávka
@@ -94,8 +87,9 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
-              <Link to="/jak-to-funguje" className="text-sm text-white/70 hover:text-white transition-colors py-1">Instalace</Link>
-              <Link to="/muj-projekt" className="text-sm text-cyan hover:text-cyan/80 transition-colors py-1 font-medium">Můj projekt</Link>
+              <Link to="/kolekce" className="text-sm text-white/70 hover:text-white transition-colors py-1">Reference</Link>
+              <Link to="/o-nas" className="text-sm text-white/70 hover:text-white transition-colors py-1">O nás</Link>
+              <Link to="/kontakt" className="text-sm text-white/70 hover:text-white transition-colors py-1">Kontakt</Link>
               <Link to="/kontakt" className="mt-2 px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full text-center">
                 ✦ Poptávka
               </Link>

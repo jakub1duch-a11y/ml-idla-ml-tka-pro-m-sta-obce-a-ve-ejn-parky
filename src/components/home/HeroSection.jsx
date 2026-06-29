@@ -194,8 +194,8 @@ export default function HeroSection() {
             <h2 className="font-heading font-extralight text-4xl lg:text-5xl text-white/50 italic leading-tight tracking-tight mb-5">
               {slide.subtitle}
             </h2>
-            <p className="text-white/55 text-lg leading-relaxed mb-8 max-w-lg">
-              {slide.desc}
+            <p className="text-white/55 text-base leading-relaxed mb-8 max-w-lg">
+              {slide.desc ? slide.desc.substring(0, 100) + '...' : ''}
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -211,28 +211,8 @@ export default function HeroSection() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Bottom row: nav arrows + thumbnails + stats */}
-        <div className="mt-10 flex flex-col lg:flex-row lg:items-end gap-6">
-
-          {/* Thumbnail strip */}
-          <div className="flex gap-2 flex-1">
-            {slides.map((s, i) => (
-              <button
-                key={s.slug}
-                onClick={() => goTo(i)}
-                className={`relative group overflow-hidden rounded-xl flex-1 transition-all duration-300 ${
-                  i === current ? 'ring-2 ring-cyan ring-offset-1 ring-offset-ink' : 'opacity-50 hover:opacity-80'
-                }`}
-                style={{ aspectRatio: '3/2', maxWidth: 120 }}
-              >
-                <img src={s.image} alt={s.name} className="w-full h-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 bg-ink/50" />
-                <p className="absolute bottom-1.5 left-0 right-0 text-center text-[9px] font-mono text-white/80 tracking-widest uppercase px-1 truncate">
-                  {s.name}
-                </p>
-              </button>
-            ))}
-          </div>
+        {/* Bottom row: nav arrows + stats */}
+        <div className="mt-10 flex items-end gap-6">
 
           {/* Prev/Next */}
           <div className="flex items-center gap-2">
@@ -248,7 +228,7 @@ export default function HeroSection() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-4 gap-2 lg:w-auto">
+          <div className="grid grid-cols-4 gap-2 lg:w-auto ml-auto">
             {stats.map((s) => (
               <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-3 py-3 text-center">
                 <p className="font-heading font-light text-xl text-cyan leading-none mb-1">{s.val}</p>

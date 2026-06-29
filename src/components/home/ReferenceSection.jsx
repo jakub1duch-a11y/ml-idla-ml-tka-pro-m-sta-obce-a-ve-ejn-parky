@@ -157,8 +157,11 @@ export default function ReferenceSection() {
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
-    base44.entities.Realizace.filter({ published: true })
-      .then(items => setProjects(items && items.length > 0 ? items : FALLBACK))
+    base44.entities.Realizace.list()
+      .then(items => {
+        const published = (items || []).filter(i => i.published);
+        setProjects(published.length > 0 ? published : FALLBACK);
+      })
       .catch(() => setProjects(FALLBACK))
       .finally(() => setLoading(false));
   }, []);

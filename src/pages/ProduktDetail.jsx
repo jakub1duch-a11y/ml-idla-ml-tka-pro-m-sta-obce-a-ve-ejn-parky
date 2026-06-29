@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Droplets, Thermometer, Shield, Zap, Maximize2 } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductComparisonTable from '@/components/products/ProductComparisonTable';
 
@@ -9,13 +9,17 @@ import ProductComparisonTable from '@/components/products/ProductComparisonTable
 function Lightbox({ images, initialIndex, onClose }) {
   const [idx, setIdx] = useState(initialIndex);
   useEffect(() => {
-    const h = (e) => { if (e.key === 'Escape') onClose(); if (e.key === 'ArrowRight') setIdx(i => (i+1)%images.length); if (e.key === 'ArrowLeft') setIdx(i => (i-1+images.length)%images.length); };
+    const h = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') setIdx(i => (i + 1) % images.length);
+      if (e.key === 'ArrowLeft') setIdx(i => (i - 1 + images.length) % images.length);
+    };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
   }, [images.length, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[200] bg-ink/97 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
+    <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
       <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
         <X size={18} />
       </button>
@@ -23,13 +27,13 @@ function Lightbox({ images, initialIndex, onClose }) {
         <img src={images[idx]} alt="" className="w-full max-h-[85vh] object-contain" />
         {images.length > 1 && (
           <>
-            <button onClick={() => setIdx(i => (i-1+images.length)%images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all">
+            <button onClick={() => setIdx(i => (i - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
               <ChevronLeft size={18} />
             </button>
-            <button onClick={() => setIdx(i => (i+1)%images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all">
+            <button onClick={() => setIdx(i => (i + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
               <ChevronRight size={18} />
             </button>
-            <p className="text-center text-xs font-mono text-white/30 mt-3 tracking-widest">{idx + 1} / {images.length}</p>
+            <p className="text-center text-xs font-mono text-white/30 mt-4 tracking-widest">{idx + 1} / {images.length}</p>
           </>
         )}
       </div>
@@ -37,29 +41,82 @@ function Lightbox({ images, initialIndex, onClose }) {
   );
 }
 
-// ─── Section image (clickable, opens lightbox) ────────────────────────────────
-function SectionImage({ src, alt, onClick, className = '' }) {
+// ─── Clickable image ──────────────────────────────────────────────────────────
+function Photo({ src, alt, onClick, className = '' }) {
   return (
-    <div className={`relative overflow-hidden rounded-2xl group cursor-pointer ${className}`} onClick={onClick}>
+    <div className={`relative overflow-hidden group cursor-pointer ${className}`} onClick={onClick}>
       <img src={src} alt={alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-      <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-all duration-300" />
-      <button className="absolute top-4 right-4 w-8 h-8 rounded-full bg-ink/50 border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm">
-        <Maximize2 size={13} />
-      </button>
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-all duration-300" />
+      <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all">
+        <Maximize2 size={12} />
+      </div>
     </div>
   );
 }
 
-// ─── Specs ─────────────────────────────────────────────────────────────────────
-function buildSpecs(product) {
-  const specs = [];
-  if (product.material) specs.push({ label: 'Materiál', value: product.material, icon: Shield });
-  if (product.pressure) specs.push({ label: 'Tlak vody', value: product.pressure, icon: Zap });
-  if (product.micron_size) specs.push({ label: 'Kapky', value: product.micron_size + ' μm', icon: Droplets });
-  if (product.water_consumption) specs.push({ label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets });
-  if (product.coverage_area) specs.push({ label: 'Pokrytí / dosah', value: product.coverage_area, icon: Thermometer });
-  if (product.power_supply) specs.push({ label: 'Napájení & řízení', value: product.power_supply, icon: Zap });
-  return specs;
+// ─── Inline contact form ──────────────────────────────────────────────────────
+function ContactForm({ productName }) {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    await base44.entities.ContactInquiry.create({
+      name: form.name,
+      email: form.email,
+      message: `[${productName}] ${form.message || 'Zájem o produkt'}`,
+      description: form.phone ? `Tel: ${form.phone}` : '',
+    }).catch(() => {});
+    setSent(true);
+    setSending(false);
+  };
+
+  if (sent) return (
+    <div className="text-center py-8">
+      <div className="w-12 h-12 rounded-full bg-cyan/20 border border-cyan/40 flex items-center justify-center mx-auto mb-4">
+        <span className="text-cyan text-xl">✓</span>
+      </div>
+      <p className="text-white font-light text-lg">Poptávka odeslána.</p>
+      <p className="text-white/40 text-sm mt-1">Odpovídáme do 24 h.</p>
+    </div>
+  );
+
+  return (
+    <form onSubmit={submit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
+          <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors"
+            placeholder="Jan Novák" />
+        </div>
+        <div>
+          <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Email *</label>
+          <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors"
+            placeholder="jan@firma.cz" />
+        </div>
+      </div>
+      <div>
+        <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Telefon</label>
+        <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+          className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors"
+          placeholder="+420 000 000 000" />
+      </div>
+      <div>
+        <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Popište váš projekt</label>
+        <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} rows={4}
+          className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors resize-none"
+          placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
+      </div>
+      <button type="submit" disabled={sending}
+        className="w-full py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 disabled:opacity-60 flex items-center justify-center gap-2">
+        {sending ? <Loader size={16} className="animate-spin" /> : <>Odeslat poptávku na {productName} <ArrowRight size={16} /></>}
+      </button>
+    </form>
+  );
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -104,282 +161,391 @@ export default function ProduktDetail() {
   );
 
   const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
-  const specs = buildSpecs(product);
+  const img = (i) => allImages[i] || null;
 
-  // Split gallery into sections: hero, then pairs for alternating sections
-  const galleryImages = allImages;
-  // Build content sections from gallery images after first 2
-  const sectionImages = galleryImages.slice(2);
-
-  // Feature highlights derived from specs or product description
-  const highlights = [
-    { icon: Droplets, label: 'Mikro-kapičky 5–15 µm', desc: 'Okamžitě se odpaří — vzduch je chladný, ne mokrý.' },
-    { icon: Thermometer, label: 'Ochlazení až −9 °C', desc: 'Průmyslové čerpadlo 70 bar, efektivní i při 40 °C.' },
-    { icon: Shield, label: 'AISI 304/316L', desc: 'Potravinářská nerez, bez chemie, certifikováno pro veřejné prostory.' },
-    { icon: Zap, label: 'Smart řízení', desc: 'WiFi, teplotní čidlo, automatika — app z telefonu.' },
-  ];
+  // Tech specs rows
+  const techRows = [
+    product.coverage_area && { label: 'Výška', value: product.coverage_area },
+    { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L' },
+    product.pressure && { label: 'Tlak', value: product.pressure },
+    product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
+    product.material && { label: 'Materiál', value: product.material },
+    { label: 'Povrch', value: 'Broušený / kartáčovaný' },
+    { label: 'Instalace', value: 'Zemní patka nebo příruba' },
+    product.power_supply && { label: 'Napájení & řízení', value: product.power_supply },
+    { label: 'Výroba', value: 'Zakázková, 6–8 týdnů' },
+  ].filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen bg-ink" style={{ fontFamily: "'DM Sans', sans-serif" }}>
 
-      {/* ── FULLSCREEN HERO ── */}
+      {/* ═══════════════════════════════════════════════════════
+          1. FULLSCREEN HERO
+      ═══════════════════════════════════════════════════════ */}
       <div className="relative h-screen min-h-[600px] overflow-hidden">
-        {galleryImages[0] ? (
-          <img src={galleryImages[0]} alt={product.name} className="w-full h-full object-cover" />
+        {img(0) ? (
+          <img src={img(0)} alt={product.name} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-surface" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/30 to-transparent" />
+        {/* Dark overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" />
 
-        {/* Back link */}
-        <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-8">
-          <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
-            <ArrowLeft size={14} /> Zpět na produkty
+        {/* Back */}
+        <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
+          <Link to="/kolekce" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
+            <ArrowLeft size={12} /> Zpět na produkty
           </Link>
         </div>
 
-        {/* Hero text */}
-        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-8 pb-16 lg:pb-24">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-cyan mb-4">HolmTec · Mlžné sochy</p>
-            <h1 className="font-heading font-extralight text-7xl lg:text-[9rem] text-white tracking-tight leading-none mb-3">
+        {/* Hero text — product name BOLD + tagline ITALIC like reference */}
+        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
+          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-cyan mb-3">HolmTec · Mlžné skulptury</p>
+            {/* Bold product name */}
+            <h1 style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 0.9 }}
+              className="text-7xl lg:text-[10rem] text-white uppercase mb-2">
               {product.name}
             </h1>
+            {/* Italic tagline */}
             {product.short_description && (
-              <p className="font-heading font-light text-3xl lg:text-4xl text-white/50 italic mb-8 max-w-2xl leading-tight">
+              <p style={{ fontStyle: 'italic', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 0.95 }}
+                className="text-5xl lg:text-8xl text-white mb-6 max-w-4xl">
                 {product.short_description}
               </p>
             )}
+            {product.description && (
+              <p className="text-white/60 text-base max-w-md mb-8 leading-relaxed font-light">
+                {product.description}
+              </p>
+            )}
             <div className="flex flex-wrap gap-3">
-              <Link to="/kontakt" className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+              <Link to="/kontakt"
+                className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
                 Nezávazná poptávka <ArrowRight size={16} />
               </Link>
-              <a href="mailto:obchod1@holmtec.cz?subject=Video z instalací — žádost"
+              <a href="#videa"
                 className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
-                Video z instalací
+                Videa z instalací
               </a>
             </div>
           </motion.div>
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-8 right-8 lg:right-12 flex flex-col items-center gap-2 text-white/25">
-          <div className="w-px h-12 bg-gradient-to-b from-transparent to-white/25" />
-          <span className="text-[9px] font-mono tracking-widest uppercase rotate-90 origin-center">scroll</span>
+        <div className="absolute bottom-8 right-8 flex flex-col items-center gap-2 text-white/20">
+          <div className="w-px h-10 bg-gradient-to-b from-transparent to-white/30" />
+          <span className="text-[9px] font-mono tracking-[0.3em] uppercase">Scroll</span>
         </div>
       </div>
 
-      {/* ── INTRO SECTION: text left, image right ── */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-6">O produktu</p>
-            {product.description ? (
-              <p className="text-white/70 text-lg lg:text-xl leading-relaxed font-light">{product.description}</p>
-            ) : (
-              <p className="text-white/70 text-lg leading-relaxed font-light">
-                {product.name} je prémiová mlžná socha vyrobená z potravinářské nerezové oceli. Kombinuje estetickou dominantu prostoru s funkčním ochlazením okolí až o 9 °C. Zakázková výroba, montáž za 1 den.
-              </p>
-            )}
-            {specs.length > 0 && (
-              <div className="mt-10 grid grid-cols-2 gap-3">
-                {specs.slice(0, 4).map(s => {
-                  const Icon = s.icon;
-                  return (
-                    <div key={s.label} className="p-4 rounded-xl bg-card_bg border border-white/10">
-                      <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1 flex items-center gap-1.5"><Icon size={10} className="text-cyan" />{s.label}</p>
-                      <p className="text-sm font-medium text-white leading-snug">{s.value}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </motion.div>
-
-          {galleryImages[1] && (
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <SectionImage
-                src={galleryImages[1]}
-                alt={product.name}
-                className="aspect-[3/4]"
-                onClick={() => setLightbox({ images: galleryImages, idx: 1 })}
-              />
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* ── HIGHLIGHTS: 4 icons ── */}
-      <section className="bg-surface border-y border-white/8">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {highlights.map((h, i) => {
-              const Icon = h.icon;
-              return (
-                <motion.div key={h.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                  className="flex flex-col gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
-                    <Icon size={18} className="text-cyan" />
-                  </div>
-                  <p className="text-sm font-medium text-white">{h.label}</p>
-                  <p className="text-xs text-white/40 leading-relaxed">{h.desc}</p>
-                </motion.div>
-              );
-            })}
+      {/* ═══════════════════════════════════════════════════════
+          2. THUMBNAIL STRIP + TAG
+      ═══════════════════════════════════════════════════════ */}
+      {allImages.length > 1 && (
+        <div className="bg-surface border-b border-white/8">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center gap-4 overflow-x-auto scrollbar-none">
+            <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-white/25 mr-2">Zakázková výroba</span>
+            {allImages.slice(0, 5).map((src, i) => (
+              <button key={i} onClick={() => setLightbox({ images: allImages, idx: i })}
+                className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-white/10 hover:border-cyan/40 transition-all">
+                <img src={src} alt="" className="w-full h-full object-cover" />
+              </button>
+            ))}
           </div>
         </div>
-      </section>
+      )}
 
-      {/* ── ALTERNATING IMAGE SECTIONS (from gallery) ── */}
-      {sectionImages.length >= 2 && (
-        <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32 space-y-24 lg:space-y-40">
-          {/* Section A: image left, text right */}
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <SectionImage
-              src={sectionImages[0]}
-              alt={product.name}
-              className="aspect-[4/3]"
-              onClick={() => setLightbox({ images: galleryImages, idx: galleryImages.indexOf(sectionImages[0]) })}
-            />
-            <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">Instalace & provoz</p>
-              <h2 className="font-heading font-light text-3xl lg:text-4xl text-white mb-6 leading-tight">
-                Montáž za jeden den.<br />Provoz bez starostí.
-              </h2>
-              <p className="text-white/50 text-base leading-relaxed">
-                Přívod vody ½″, napájení 230 V — to je vše, co potřebujete. Socha je dodávána předmontovaná a připravená k zapojení. Naši technici provedou instalaci, kalibraci tlaku a prvotní spuštění přímo na místě.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {['Předmontovaná konstrukce z výroby', 'Čerpadlo 70 bar v základně nebo externě', 'Smart řízení přes mobilní app nebo časovač', 'Servis a náhradní díly vždy skladem'].map(item => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-white/60">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan mt-1.5 shrink-0" />{item}
-                  </li>
-                ))}
-              </ul>
+      {/* ═══════════════════════════════════════════════════════
+          3. SECTION: "Strom, který chladí vzduch" — text + image
+      ═══════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Architektura přírody</p>
+            {/* Two-line headline: normal + italic */}
+            <h2 className="text-white mb-8" style={{ lineHeight: 1.0 }}>
+              <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em' }}>
+                {product.name === 'OSTEV' ? 'Strom, který' : product.name + ','}
+              </span>
+              <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em' }}>
+                {product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}
+              </span>
+            </h2>
+            <p className="text-white/60 text-base lg:text-lg leading-relaxed font-light mb-8">
+              {product.name === 'OSTEV'
+                ? 'OSTEV není pouhé mlžítko — je to skulptura s duší stromu. Mohutný nerezový kmen se větví do elegantních ramen, z jejichž konců tryskají jemné mlžné clony. Ochlazení až o 9 °C, bez kapek na zemi, bez hluku.'
+                : `${product.name} kombinuje estetiku s funkcí. Průmyslové mlžení, prémiová nerezová ocel a smart řízení v jednom produktu.`}
+            </p>
+            <ul className="space-y-3 mb-10">
+              {[
+                product.coverage_area && `Výška ${product.coverage_area.split(',')[0]}`,
+                product.material && `Materiál ${product.material.split(',')[0]}`,
+                'Volitelné orientační panely = rozcestník',
+                'Smart senzory, ovládání z mobilu',
+                'Záruka 5 let na konstrukci',
+              ].filter(Boolean).map(item => (
+                <li key={item} className="flex items-center gap-3 text-sm text-white/60 font-light">
+                  <span className="w-1 h-1 rounded-full bg-cyan shrink-0" />{item}
+                </li>
+              ))}
+            </ul>
+            {/* Stat pills */}
+            <div className="flex flex-wrap gap-4">
+              {[
+                { val: '−9 °C', label: 'Ochlazení' },
+                { val: product.pressure ? product.pressure.split('(')[0].trim().split(' ').pop() : '70 bar', label: 'Tlak mlžení' },
+                { val: '5 let', label: 'Záruka' },
+              ].map(s => (
+                <div key={s.label} className="text-center">
+                  <p style={{ fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.04em', lineHeight: 1 }} className="text-white">{s.val}</p>
+                  <p className="text-[10px] font-mono text-white/35 tracking-widest uppercase mt-1">{s.label}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Section B: text left, image right */}
-          {sectionImages[1] && (
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <div className="lg:order-2">
-                <SectionImage
-                  src={sectionImages[1]}
-                  alt={product.name}
-                  className="aspect-[4/3]"
-                  onClick={() => setLightbox({ images: galleryImages, idx: galleryImages.indexOf(sectionImages[1]) })}
-                />
-              </div>
-              <div className="lg:order-1">
-                <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">Zakázková výroba</p>
-                <h2 className="font-heading font-light text-3xl lg:text-4xl text-white mb-6 leading-tight">
-                  Navrženo přesně<br />pro váš prostor.
-                </h2>
-                <p className="text-white/50 text-base leading-relaxed">
-                  Každý {product.name} je vyráběn na zakázku dle konkrétního projektu. Výška, průměr koruny, počet trysek, povrchová úprava — vše navrhujeme společně s architektem nebo projektantem.
-                </p>
-                <ul className="mt-6 space-y-3">
-                  {['3D vizualizace do 48 h zdarma', 'Přizpůsobení výšky, tvaru a povrchu', 'Koordinace s architektem nebo projektantem', 'Referenční instalace k návštěvě'].map(item => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-white/60">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan mt-1.5 shrink-0" />{item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {img(2) && (
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+              <Photo src={img(2)} alt={product.name} className="aspect-[3/4] rounded-2xl"
+                onClick={() => setLightbox({ images: allImages, idx: 2 })} />
             </motion.div>
           )}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          4. SECTION: "Každá kapka nespadne na zem" — image left, text right
+      ═══════════════════════════════════════════════════════ */}
+      {img(3) && (
+        <section className="bg-surface border-y border-white/8">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
+                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+              </motion.div>
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Materiál a detail</p>
+                <h2 className="text-white mb-8" style={{ lineHeight: 1.0 }}>
+                  <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Každá kapka</span>
+                  <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>nespadne na zem.</span>
+                </h2>
+                <p className="text-white/60 text-base leading-relaxed font-light mb-8">
+                  Trysky {product.micron_size ? product.micron_size : '10–50'} μm vytvářejí kapičky tak drobné, že se okamžitě odpařují ve vzduchu. Žádné mokré chodníky. Žádné louže. Jen příjemný chlad, který visí ve vzduchu jako ranní mlha.
+                </p>
+                <blockquote className="border-l-2 border-cyan/50 pl-6">
+                  <p className="text-white/50 italic text-base font-light">"Vzduch se ochladí dřív, než si uvědomíte, co se děje."</p>
+                </blockquote>
+              </motion.div>
+            </div>
+          </div>
         </section>
       )}
 
-      {/* ── GALLERY GRID (remaining images) ── */}
-      {sectionImages.length >= 3 && (
+      {/* ═══════════════════════════════════════════════════════
+          5. FEATURES GRID: "Víc než mlžítko"
+      ═══════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Vlastnosti</p>
+          <h2 className="text-white" style={{ lineHeight: 1.0 }}>
+            <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Víc než mlžítko.</span>
+            <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Prvek prostoru.</span>
+          </h2>
+        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/8 rounded-2xl overflow-hidden border border-white/10">
+          {[
+            { title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
+            { title: 'Forma stromu', desc: 'Organická architektura, která přirozeně zapadá do parků, náměstí i moderních ploch.' },
+            { title: 'Rozcestník', desc: 'Volitelné orientační panely na větvích. Naviguje i osvěžuje zároveň.' },
+            { title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
+            { title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
+            { title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` },
+          ].map((f, i) => (
+            <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+              className="bg-card_bg p-7">
+              <h3 style={{ fontWeight: 600, fontSize: '1.05rem', letterSpacing: '-0.02em' }} className="text-white mb-3">{f.title}</h3>
+              <p className="text-sm text-white/45 leading-relaxed font-light">{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          6. VIDEO SECTION
+      ═══════════════════════════════════════════════════════ */}
+      <section id="videa" className="bg-surface border-y border-white/8 py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Videa z terénu</p>
+          <h2 className="text-white mb-12" style={{ lineHeight: 1.0 }}>
+            <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>{product.name}</span>
+            <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>v akci.</span>
+          </h2>
+          {/* Gallery of images shown as video previews if no video */}
+          {allImages.length >= 2 && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {allImages.slice(0, 2).map((src, i) => (
+                <Photo key={i} src={src} alt={`${product.name} instalace ${i+1}`} className="aspect-video rounded-2xl"
+                  onClick={() => setLightbox({ images: allImages, idx: i })} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          7. USE CASES: "Každý prostor má svůj ..."
+      ═══════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Kde {product.name} roste</p>
+          <h2 className="text-white" style={{ lineHeight: 1.0 }}>
+            <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Každý prostor</span>
+            <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>má svůj {product.name}.</span>
+          </h2>
+        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { emoji: '🏛️', title: 'Náměstí & piazzy', desc: 'Dominantní prvek veřejného prostoru, který chladí stovky lidí a stává se fotografovanou ikonou města.' },
+            { emoji: '🎪', title: 'Festivaly & eventy', desc: 'Mobilní varianta s přírubou. Rychlá instalace, nezaměnitelná silueta, dokonalý chill-out prostor.' },
+            { emoji: '🌳', title: 'Parky & promenády', desc: 'Přirozená forma stromu se harmonicky začlení mezi zeleň a zvýší atraktivitu procházky.' },
+            { emoji: '🏨', title: 'Hotely & restaurace', desc: 'Exkluzivní detail terasy nebo vstupního prostoru, který hosty překvapí a přivítá chladivou mlhou.' },
+            { emoji: '🏫', title: 'Školy & univerzity', desc: 'Bezpečný materiál, zábrany nezbytné není — mlha se odpaří dřív, než dosáhne na zem.' },
+            { emoji: '🗺️', title: 'Orientační systém', desc: 'Větve nesou informační panely — slouží jako chladivý rozcestník bez nutnosti dalšího mobiliáře.' },
+          ].map((u, i) => (
+            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+              className="p-6 rounded-2xl bg-card_bg border border-white/10 hover:border-white/20 transition-all">
+              <span className="text-2xl mb-4 block">{u.emoji}</span>
+              <h3 style={{ fontWeight: 600, letterSpacing: '-0.02em' }} className="text-white text-base mb-2">{u.title}</h3>
+              <p className="text-sm text-white/45 leading-relaxed font-light">{u.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          8. REALIZACE gallery: "OSTEV v reálném světě"
+      ═══════════════════════════════════════════════════════ */}
+      {allImages.length >= 4 && (
         <section className="bg-surface border-y border-white/8 py-20">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Galerie</p>
-            <h2 className="font-heading font-light text-3xl text-white mb-10">Fotografie z realizací</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-              {sectionImages.slice(2, 11).map((src, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
-                  className={i === 0 ? 'col-span-2 lg:col-span-1 row-span-2' : ''}>
-                  <SectionImage
-                    src={src}
-                    alt={`${product.name} ${i+3}`}
-                    className={i === 0 ? 'h-full min-h-[320px]' : 'aspect-[4/3]'}
-                    onClick={() => setLightbox({ images: galleryImages, idx: galleryImages.indexOf(src) })}
-                  />
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Realizace</p>
+            <h2 className="text-white mb-12" style={{ lineHeight: 1.0 }}>
+              <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>{product.name}</span>
+              <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>v reálném světě.</span>
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {[
+                { idx: 2, caption: 'Promenáda', sub: 'Nábřežní esplanáda', desc: 'Mlžení pro stovky procházejících' },
+                { idx: 3, caption: 'Festival', sub: 'Letní food festival', desc: 'Chladivá oáza uprostřed davu' },
+              ].filter(r => img(r.idx)).map(r => (
+                <motion.div key={r.idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                  <div className="relative rounded-2xl overflow-hidden group cursor-pointer"
+                    onClick={() => setLightbox({ images: allImages, idx: r.idx })}>
+                    <img src={img(r.idx)} alt={r.caption} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{r.caption}</p>
+                      <p className="text-white font-medium text-base mt-1">{r.sub}</p>
+                      <p className="text-white/50 text-sm">{r.desc}</p>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
-            {allImages.length > 13 && (
-              <p className="text-xs text-white/25 font-mono text-center mt-6">+ {allImages.length - 13} dalších fotografií k dispozici na vyžádání</p>
+            {/* Extra gallery grid */}
+            {allImages.length > 4 && (
+              <div className="grid grid-cols-3 gap-3 mt-5">
+                {allImages.slice(4, 10).map((src, i) => (
+                  <Photo key={i} src={src} alt={`${product.name} ${i+5}`} className="aspect-[4/3] rounded-xl"
+                    onClick={() => setLightbox({ images: allImages, idx: i + 4 })} />
+                ))}
+              </div>
             )}
           </div>
         </section>
       )}
 
-      {/* ── TECHNICAL DATASHEET ── */}
-      {specs.length > 0 && (
-        <section className="py-24 bg-ink">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-              <div>
-                <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">Technický list</p>
-                <h2 className="font-heading font-light text-3xl lg:text-4xl text-white mb-4 leading-tight">
-                  Parametry pro<br />projektanty a architekty.
-                </h2>
-                <p className="text-white/40 text-sm mb-8">Všechny hodnoty jsou orientační — finální specifikace dle zakázkové konfigurace.</p>
-                <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 border border-cyan/40 text-cyan text-xs font-mono tracking-widest uppercase rounded-full hover:bg-cyan/10 transition-all">
-                  ↓ Vyžádat PDF technický list
-                </a>
+      {/* ═══════════════════════════════════════════════════════
+          9. TECH PARAMS — "Preciznost v každém detailu"
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Technické parametry</p>
+              <h2 className="text-white mb-10" style={{ lineHeight: 1.0 }}>
+                <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Preciznost</span>
+                <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>v každém detailu.</span>
+              </h2>
+              <div className="rounded-2xl overflow-hidden border border-white/10">
+                {techRows.map((row, i) => (
+                  <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-card_bg' : 'bg-surface'}`}>
+                    <span className="text-xs font-mono text-white/35 tracking-widest uppercase">{row.label}</span>
+                    <span className="text-sm text-white font-medium text-right">{row.value}</span>
+                  </div>
+                ))}
               </div>
+              <p className="text-xs text-white/20 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
+              <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
+                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-cyan/40 text-cyan text-xs font-mono tracking-widest uppercase rounded-full hover:bg-cyan/10 transition-all">
+                ↓ Vyžádat PDF technický list
+              </a>
+            </motion.div>
 
-              <div className="space-y-3">
-                {specs.map((s) => {
-                  const Icon = s.icon;
-                  return (
-                    <div key={s.label} className="flex items-start justify-between gap-6 px-5 py-4 rounded-xl bg-card_bg border border-white/8">
-                      <div className="flex items-center gap-3">
-                        <Icon size={14} className="text-cyan/60 shrink-0 mt-0.5" />
-                        <span className="text-xs font-mono text-white/35 tracking-widest uppercase">{s.label}</span>
-                      </div>
-                      <span className="text-sm font-medium text-white text-right">{s.value}</span>
-                    </div>
-                  );
-                })}
-
-                <div className="grid grid-cols-3 gap-3 pt-3">
-                  <div className="p-4 rounded-xl bg-cyan/5 border border-cyan/20">
-                    <p className="text-[10px] font-mono text-cyan tracking-widest uppercase mb-2">Instalace</p>
-                    <p className="text-xs text-white/55 leading-relaxed">Montáž 1 den, přívod ½″, 230V</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-white/3 border border-white/10">
-                    <p className="text-[10px] font-mono text-white/30 tracking-widest uppercase mb-2">Certifikace</p>
-                    <p className="text-xs text-white/55 leading-relaxed">AISI 304/316L, bez chemie</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-white/3 border border-white/10">
-                    <p className="text-[10px] font-mono text-white/30 tracking-widest uppercase mb-2">Záruka</p>
-                    <p className="text-xs text-white/55 leading-relaxed">5 let konstrukce, 2 roky trysky</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {img(3) && (
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
+                <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
+                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+                <blockquote className="text-center px-6">
+                  <p className="text-white/40 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
+                </blockquote>
+              </motion.div>
+            )}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* ── COMPARISON TABLE ── */}
+      {/* ═══════════════════════════════════════════════════════
+          10. COMPARISON TABLE
+      ═══════════════════════════════════════════════════════ */}
       <ProductComparisonTable currentProductId={product.id} />
 
-      {/* ── RELATED ── */}
+      {/* ═══════════════════════════════════════════════════════
+          11. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
+      ═══════════════════════════════════════════════════════ */}
+      <section className="bg-surface border-t border-white/8 py-24">
+        <div className="max-w-5xl mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Zakázková výroba</p>
+              <h2 className="text-white mb-4" style={{ lineHeight: 1.0 }}>
+                <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3rem)', letterSpacing: '-0.04em' }}>Váš prostor si zaslouží</span>
+                <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2rem, 3.5vw, 3rem)', letterSpacing: '-0.04em' }}>vlastní {product.name}.</span>
+              </h2>
+              <p className="text-white/40 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+              <div className="space-y-3 text-sm text-white/40 font-mono">
+                <a href="tel:+420800123456" className="flex items-center gap-2 hover:text-cyan transition-colors">+420 800 123 456</a>
+                <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-cyan transition-colors">obchod1@holmtec.cz</a>
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
+              <ContactForm productName={product.name} />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          12. RELATED + BACK
+      ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 && (
-        <section className="py-20 bg-ink">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Mohlo by vás zajímat</p>
-            <h2 className="font-heading font-light text-3xl text-white mb-10">Podobné produkty</h2>
+        <section className="py-20 bg-ink border-t border-white/8">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Mohlo by vás zajímat</p>
+            <h2 style={{ fontWeight: 700, fontSize: '2rem', letterSpacing: '-0.04em' }} className="text-white mb-10">Podobné produkty</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {relatedProducts.map((r, i) => (
                 <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
@@ -389,8 +555,8 @@ export default function ProduktDetail() {
                     </div>
                     <div className="p-5 flex items-center justify-between">
                       <div>
-                        <span className="font-normal text-white group-hover:text-cyan transition-colors">{r.name}</span>
-                        {r.short_description && <p className="text-xs text-white/35 mt-0.5">{r.short_description}</p>}
+                        <span style={{ fontWeight: 600 }} className="text-white group-hover:text-cyan transition-colors">{r.name}</span>
+                        {r.short_description && <p className="text-xs text-white/35 mt-0.5 font-light">{r.short_description}</p>}
                       </div>
                       <ArrowRight size={16} className="text-white/30 group-hover:text-cyan transition-colors shrink-0 ml-4" />
                     </div>
@@ -398,30 +564,14 @@ export default function ProduktDetail() {
                 </motion.div>
               ))}
             </div>
+            <div className="mt-10 flex justify-center">
+              <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors font-mono">
+                <ArrowLeft size={14} /> Zpět na celou kolekci
+              </Link>
+            </div>
           </div>
         </section>
       )}
-
-      {/* ── CTA ── */}
-      <section className="py-24 bg-surface border-t border-white/8">
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">Zaujalo vás to?</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white mb-4 leading-tight">
-            Chcete {product.name}<br />pro váš prostor?
-          </h2>
-          <p className="text-white/40 mb-10">Nezávazná konzultace, 3D vizualizace do 48 h, montáž za jeden den.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/kontakt"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
-              ✦ Nezávazná poptávka <ArrowRight size={16} />
-            </Link>
-            <Link to="/kolekce"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/10 transition-all">
-              <ArrowLeft size={16} /> Zpět na kolekci
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Lightbox */}
       {lightbox && (

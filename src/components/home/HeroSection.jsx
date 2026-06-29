@@ -179,32 +179,32 @@ export default function HeroSection() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="max-w-2xl"
+            className="max-w-xl"
           >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-mono tracking-widest uppercase text-cyan">{slide.tag}</span>
-              <span className="px-2.5 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-mono tracking-widest text-white/70">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-cyan">{slide.tag}</span>
+              <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[9px] font-mono tracking-widest text-white/50">
                 {slide.badge}
               </span>
             </div>
 
-            <h1 className="font-heading font-extralight text-7xl lg:text-9xl text-white leading-[0.9] tracking-tight mb-2">
+            <h1 className="font-heading font-bold text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
               {slide.name}
             </h1>
-            <h2 className="font-heading font-extralight text-4xl lg:text-5xl text-white/50 italic leading-tight tracking-tight mb-5">
+            <h2 className="font-heading font-medium text-2xl lg:text-3xl text-white/70 italic leading-tight tracking-tight mb-6">
               {slide.subtitle}
             </h2>
-            <p className="text-white/55 text-base leading-relaxed mb-8 max-w-lg">
-              {slide.desc ? slide.desc.substring(0, 100) + '...' : ''}
+            <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-8 max-w-md font-light">
+              {slide.desc ? slide.desc.substring(0, 90) + '...' : ''}
             </p>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Link to={slide.cta} onClick={() => trackHeroInteraction(slide.name, slide.name)}
-                className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
-                Prozkoumat {slide.name} <ArrowRight size={16} />
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan text-ink text-xs font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/20">
+                Prozkoumat <ArrowRight size={14} />
               </Link>
               <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-                className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-white/20 text-white text-xs font-medium rounded-full hover:bg-white/10 transition-all">
                 Nezávazná poptávka
               </Link>
             </div>

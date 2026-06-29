@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Droplet, Zap, Gauge } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
-import ProductComparisonTable from '@/components/products/ProductComparisonTable';
+
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 function Lightbox({ images, initialIndex, onClose }) {
@@ -540,11 +540,6 @@ export default function ProduktDetail() {
           </div>
         </section>
       )}
-
-      {/* ═══════════════════════════════════════════════════════
-          8. COMPARISON TABLE
-      ═══════════════════════════════════════════════════════ */}
-      <ProductComparisonTable currentProductId={product.id} />
 
       {/* ═══════════════════════════════════════════════════════
           10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."

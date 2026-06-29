@@ -205,19 +205,48 @@ export default function ProduktDetail() {
         </div>
       </div>
 
-      {/* Full specs table */}
+      {/* Technical datasheet for architects */}
       {specs.length > 0 && (
         <div className="py-20 bg-surface">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Technická data</p>
-            <h2 className="font-heading font-light text-3xl text-white mb-10">Technické parametry</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 rounded-2xl overflow-hidden">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+              <div>
+                <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Technický list</p>
+                <h2 className="font-heading font-light text-3xl text-white">Parametry pro projektanty</h2>
+                <p className="text-white/40 text-sm mt-2">Všechny hodnoty jsou orientační — finální specifikace dle zakázkové konfigurace.</p>
+              </div>
+              <a
+                href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
+                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 border border-cyan/40 text-cyan text-xs font-mono tracking-widest uppercase rounded-full hover:bg-cyan/10 transition-all"
+              >
+                ↓ Vyžádat PDF technický list
+              </a>
+            </div>
+
+            {/* Main specs grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/8 rounded-2xl overflow-hidden border border-white/10">
               {specs.map((s, i) => (
-                <div key={s.label} className={`flex items-center justify-between gap-6 px-6 py-4 bg-card_bg ${i === specs.length - 1 && specs.length % 2 !== 0 ? 'md:col-span-2' : ''}`}>
-                  <span className="text-xs font-mono text-white/40 tracking-widest uppercase whitespace-nowrap">{s.label}</span>
-                  <span className="text-sm font-semibold text-white text-right">{s.value}</span>
+                <div key={s.label} className={`flex items-center justify-between gap-6 px-6 py-5 bg-card_bg ${i === specs.length - 1 && specs.length % 2 !== 0 ? 'md:col-span-2' : ''}`}>
+                  <span className="text-xs font-mono text-white/35 tracking-widest uppercase whitespace-nowrap">{s.label}</span>
+                  <span className="text-sm font-medium text-white text-right">{s.value}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Architect info boxes */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+              <div className="p-5 rounded-xl bg-cyan/5 border border-cyan/20">
+                <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Instalace</p>
+                <p className="text-sm text-white/60">Montáž za 1 den, přívod vody ½″, tlaková přípojka nebo samostatná pumpa. Rozměry základy na vyžádání.</p>
+              </div>
+              <div className="p-5 rounded-xl bg-white/3 border border-white/10">
+                <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-2">Certifikace</p>
+                <p className="text-sm text-white/60">Potravinářská nerez AISI 304/316L, bez chemie, bez biocidů. Vhodné pro veřejné prostory a dětská hřiště.</p>
+              </div>
+              <div className="p-5 rounded-xl bg-white/3 border border-white/10">
+                <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-2">Záruka & servis</p>
+                <p className="text-sm text-white/60">5 let záruka na konstrukci, 2 roky na trysky a čerpadlo. Servisní smlouva a náhradní díly skladem.</p>
+              </div>
             </div>
           </div>
         </div>

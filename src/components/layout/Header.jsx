@@ -59,7 +59,7 @@ export default function Header() {
             </AnimatePresence>
           </div>
 
-          <Link to="/kolekce" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Reference</Link>
+          <Link to="/reference" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Reference</Link>
           <Link to="/o-nas" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">O nás</Link>
           <Link to="/kontakt" className="px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all">Kontakt</Link>
         </nav>
@@ -87,7 +87,7 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
-              <Link to="/kolekce" className="text-sm text-white/70 hover:text-white transition-colors py-1">Reference</Link>
+              <Link to="/reference" className="text-sm text-white/70 hover:text-white transition-colors py-1">Reference</Link>
               <Link to="/o-nas" className="text-sm text-white/70 hover:text-white transition-colors py-1">O nás</Link>
               <Link to="/kontakt" className="text-sm text-white/70 hover:text-white transition-colors py-1">Kontakt</Link>
               <Link to="/kontakt" className="mt-2 px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full text-center">

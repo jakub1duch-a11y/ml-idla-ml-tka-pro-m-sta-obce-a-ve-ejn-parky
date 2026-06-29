@@ -10,6 +10,7 @@ import TechSection from '@/components/home/TechSection';
 import BlogSection from '@/components/home/BlogSection';
 import PromoSection from '@/components/home/PromoSection';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
+import HowItWorksSection from '@/components/home/HowItWorksSection';
 import ContactSection from '@/components/home/ContactSection';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <CategoriesSection />
       <FeaturedProductsSection />
       <ProductsSection />
+      <HowItWorksSection />
       <SmartSection />
       <VideoSection />
       <ProjectsSection />

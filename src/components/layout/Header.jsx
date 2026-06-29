@@ -47,14 +47,8 @@ export default function Header() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-cyan/20 rounded-lg flex items-center justify-center border border-cyan/30">
-            <span className="text-cyan text-xs font-bold">M</span>
-          </div>
-          <div className="leading-none">
-            <span className="text-white font-bold text-sm tracking-tight">mlžné</span>
-            <span className="text-cyan font-bold text-sm tracking-tight ml-1">sochy</span>
-          </div>
+        <Link to="/" className="flex items-center">
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1684cef95_generated_image.png" alt="mlzidla.cz" className="h-8 w-auto" />
         </Link>
 
         {/* Desktop nav */}

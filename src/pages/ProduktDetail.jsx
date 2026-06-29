@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, Droplets, Thermometer, Zap, Shield, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import ProductComparisonTable from '@/components/products/ProductComparisonTable';
 
 // ─── Gallery ───────────────────────────────────────────────────────────────────
 function Gallery({ images }) {
@@ -251,6 +252,9 @@ export default function ProduktDetail() {
           </div>
         </div>
       )}
+
+      {/* Comparison table */}
+      <ProductComparisonTable currentProductId={product.id} />
 
       {/* Related products */}
       {relatedProducts.length > 0 && (

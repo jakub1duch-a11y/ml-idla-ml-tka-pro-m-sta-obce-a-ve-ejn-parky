@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackReferenceView } from '@/lib/ga4';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -70,7 +71,14 @@ export default function ReferenceDetail() {
 
   useEffect(() => {
     base44.entities.Realizace.get(id)
-      .then(p => { if (p) setProject(p); else setNotFound(true); })
+      .then(p => {
+        if (p) {
+          setProject(p);
+          trackReferenceView(p.name, p.location, p.category);
+        } else {
+          setNotFound(true);
+        }
+      })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
   }, [id]);

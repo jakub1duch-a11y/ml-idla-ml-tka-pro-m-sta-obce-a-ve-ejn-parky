@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackProductView } from '@/lib/ga4';
 import ProductComparisonTable from '@/components/products/ProductComparisonTable';
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
@@ -71,6 +72,9 @@ function ContactForm({ productName }) {
     }).catch(() => {});
     setSent(true);
     setSending(false);
+    if (typeof window !== 'undefined' && window.trackHolmTec) {
+      window.trackHolmTec('contact_form_submit', { product_name: productName, form_type: 'produkt' });
+    }
   };
 
   if (sent) return (
@@ -136,6 +140,7 @@ export default function ProduktDetail() {
         if (!results || results.length === 0) { setNotFound(true); return; }
         const p = results[0];
         setProduct(p);
+        trackProductView(p.name, p.slug, p.category_id);
         if (p.category_id) {
           const related = await base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []);
           setRelatedProducts((related || []).filter(r => r.id !== p.id).slice(0, 3));

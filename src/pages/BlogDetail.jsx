@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Clock, Loader } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
+import { trackBlogPostView } from '@/lib/ga4';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -61,6 +62,7 @@ export default function BlogDetail() {
       if (!found) { setNotFound(true); return; }
 
       setPost(found);
+      trackBlogPostView(found.title, found.slug || found.id, found.category);
       document.title = `${found.title} | Blog HolmTec`;
 
       // Related: same category, not self

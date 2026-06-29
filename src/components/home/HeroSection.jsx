@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackHeroInteraction } from '@/lib/ga4';
 
 const slides = [
   {
@@ -70,17 +71,22 @@ export default function HeroSection() {
   const goTo = useCallback((idx) => {
     setDirection(idx > current ? 1 : -1);
     setCurrent(idx);
+    trackHeroInteraction(slides[idx].name, false);
   }, [current]);
 
   const next = useCallback(() => {
     setDirection(1);
-    setCurrent(i => (i + 1) % slides.length);
-  }, []);
+    const nextIdx = (current + 1) % slides.length;
+    setCurrent(nextIdx);
+    trackHeroInteraction(slides[nextIdx].name, false);
+  }, [current]);
 
   const prev = useCallback(() => {
     setDirection(-1);
-    setCurrent(i => (i - 1 + slides.length) % slides.length);
-  }, []);
+    const prevIdx = (current - 1 + slides.length) % slides.length;
+    setCurrent(prevIdx);
+    trackHeroInteraction(slides[prevIdx].name, false);
+  }, [current]);
 
   // Auto-advance every 6 seconds
   useEffect(() => {
@@ -173,11 +179,11 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <Link to={slide.cta}
+              <Link to={slide.cta} onClick={() => trackHeroInteraction(slide.name, slide.name)}
                 className="flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
                 Prozkoumat {slide.name} <ArrowRight size={16} />
               </Link>
-              <Link to="/kontakt"
+              <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
                 className="flex items-center gap-2 px-7 py-3.5 bg-white/10 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
                 Nezávazná poptávka
               </Link>

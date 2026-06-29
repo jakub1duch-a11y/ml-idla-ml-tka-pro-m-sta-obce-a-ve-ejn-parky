@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Mail, Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare } from 'lucide-react';
+import { Mail, Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-500/10 text-slate-400', icon: '📝' },
@@ -12,8 +13,12 @@ const STATUS_MAP = {
 };
 
 export default function CustomerPortal() {
-  const [step, setStep] = useState('login'); // login | dashboard
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [inquiries, setInquiries] = useState([]);
@@ -21,15 +26,19 @@ export default function CustomerPortal() {
   const [approving, setApproving] = useState(null);
   const [shareUrl, setShareUrl] = useState(null);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  // Check if already verified via token link
+  useEffect(() => {
+    if (location.state?.verified) {
+      setEmail(location.state.email);
+      setStep('dashboard');
+      loadData(location.state.email);
+    }
+  }, [location.state]);
+
+  const loadData = async (userEmail) => {
     try {
-      // Fetch inquiries for this email
-      const inqs = await base44.entities.ContactInquiry.filter({ email });
-      // Fetch projects for this email
-      const projs = await base44.entities.ProjectOrder.filter({ client_email: email });
+      const inqs = await base44.entities.ContactInquiry.filter({ email: userEmail });
+      const projs = await base44.entities.ProjectOrder.filter({ client_email: userEmail });
       
       if (inqs.length === 0 && projs.length === 0) {
         setError('Žádné poptávky ani projekty nenalezeny pro tento email.');
@@ -38,9 +47,88 @@ export default function CustomerPortal() {
 
       setInquiries(inqs);
       setProjects(projs);
-      setStep('dashboard');
     } catch (e) {
       setError('Chyba při načítání dat. Zkuste později.');
+    }
+  };
+
+  const requestOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      // Check if email exists in system
+      const inqs = await base44.entities.ContactInquiry.filter({ email });
+      const projs = await base44.entities.ProjectOrder.filter({ client_email: email });
+      
+      if (inqs.length === 0 && projs.length === 0) {
+        setError('Žádné poptávky ani projekty nenalezeny pro tento email.');
+        return;
+      }
+
+      // Send OTP via email using backend function
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      sessionStorage.setItem('pending_otp', otpCode);
+      sessionStorage.setItem('pending_email', email);
+      sessionStorage.setItem('otp_expires', Date.now() + 10 * 60 * 1000); // 10 min
+
+      await base44.integrations.Core.SendEmail({
+        to: email,
+        subject: 'Ověřovací kód - HolmTec Můj Projekt',
+        body: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#e2e8f0;padding:32px;border-radius:12px;">
+            <h1 style="color:#22d3ee;font-size:22px;margin:0;">Ověřovací kód</h1>
+            <p style="color:#64748b;font-size:13px;margin:6px 0 24px;">HolmTec — Můj Projekt</p>
+            <p style="line-height:1.7;">Váš ověřovací kód pro přístup k projektům:</p>
+            <div style="margin:24px 0;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;text-align:center;">
+              <p style="font-size:32px;font-weight:bold;letter-spacing:4px;color:#22d3ee;margin:0;">${otpCode}</p>
+            </div>
+            <p style="line-height:1.7;color:#cbd5e1;">Kód platí 10 minut. Nezadávejte jej nikomu jinému.</p>
+            <p style="margin-top:24px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">
+              HolmTec s.r.o. | Mlžné sochy & instalace | holmtec.cz
+            </p>
+          </div>
+        `,
+      });
+
+      setOtpSent(true);
+    } catch (e) {
+      setError('Chyba při odesílání kódu. Zkuste to znovu.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const storedOtp = sessionStorage.getItem('pending_otp');
+      const storedEmail = sessionStorage.getItem('pending_email');
+      const expires = sessionStorage.getItem('otp_expires');
+
+      if (!storedOtp || !storedEmail || Date.now() > parseInt(expires)) {
+        setError('Kód vypršel. Zkuste to znovu.');
+        setOtpSent(false);
+        return;
+      }
+
+      if (otp !== storedOtp) {
+        setError('Nesprávný ověřovací kód.');
+        return;
+      }
+
+      // OTP verified - load data
+      setEmail(storedEmail);
+      sessionStorage.removeItem('pending_otp');
+      sessionStorage.removeItem('pending_email');
+      sessionStorage.removeItem('otp_expires');
+      
+      await loadData(storedEmail);
+      setStep('dashboard');
+    } catch (e) {
+      setError('Chyba při ověřování. Zkuste to znovu.');
     } finally {
       setLoading(false);
     }
@@ -70,12 +158,12 @@ export default function CustomerPortal() {
       <div className="min-h-screen bg-ink pt-28 flex items-center justify-center px-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Přihlášení</p>
+            <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Ověření přístupu</p>
             <h1 className="text-3xl font-light text-white">Můj projekt</h1>
-            <p className="text-white/50 text-sm mt-2">Zadejte email pro přístup k vašim poptávkám a projektům</p>
+            <p className="text-white/50 text-sm mt-2">{otpSent ? 'Zadejte ověřovací kód z emailu' : 'Zadejte email pro přístup k vašim poptávkám a projektům'}</p>
           </div>
 
-          <form onSubmit={handleLogin} className="bg-card_bg border border-white/10 rounded-2xl p-8 space-y-4">
+          <form onSubmit={otpSent ? verifyOtp : requestOtp} className="bg-card_bg border border-white/10 rounded-2xl p-8 space-y-4">
             {error && (
               <div className="flex gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
                 <AlertCircle size={18} className="text-red-400 flex-shrink-0 mt-0.5" />
@@ -83,24 +171,42 @@ export default function CustomerPortal() {
               </div>
             )}
 
-            <div>
-              <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-2">Email *</label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="vas@email.cz"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none"
-              />
-            </div>
+            {!otpSent ? (
+              <div>
+                <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-2">Email *</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="vas@email.cz"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none"
+                />
+              </div>
+            ) : (
+              <div>
+                <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-2">Ověřovací kód *</label>
+                <input
+                  type="text"
+                  required
+                  value={otp}
+                  onChange={e => setOtp(e.target.value)}
+                  placeholder="000000"
+                  maxLength={6}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none text-center text-2xl tracking-[0.5em] font-mono"
+                />
+                <button type="button" onClick={() => { setOtpSent(false); setError(''); }} className="mt-3 text-xs text-white/40 hover:text-white transition-colors flex items-center gap-1 mx-auto">
+                  <X size={12} /> Změnit email
+                </button>
+              </div>
+            )}
 
             <button
               type="submit"
               disabled={loading}
               className="w-full py-3 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
             >
-              {loading ? <><Loader size={16} className="animate-spin" /> Načítám...</> : <>Přístup</>}
+              {loading ? <><Loader size={16} className="animate-spin" /> {otpSent ? 'Ověřuji...' : 'Odesílám kód...'}</> : otpSent ? 'Ověřit' : 'Poslat kód'}
             </button>
           </form>
 

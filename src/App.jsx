@@ -6,6 +6,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import AdminRoute from '@/components/AdminRoute';
 
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
@@ -69,17 +70,21 @@ const AuthenticatedApp = () => {
         <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminAnalytika />} />
-          <Route path="produkty" element={<AdminProdukty />} />
-          <Route path="realizace" element={<AdminRealizace />} />
-          <Route path="blog" element={<AdminBlog />} />
-          <Route path="poptavky" element={<AdminPoptavky />} />
-          <Route path="projekty" element={<AdminProjects />} />
-          <Route path="city-cooling" element={<AdminCityCoolingAnalytics />} />
-          <Route path="feedback" element={<AdminFeedback />} />
-          <Route path="contentful" element={<AdminContentful />} />
-          <Route path="drive-sync" element={<AdminDriveSync />} />
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminAnalytika />} />
+              <Route path="produkty" element={<AdminProdukty />} />
+              <Route path="realizace" element={<AdminRealizace />} />
+              <Route path="blog" element={<AdminBlog />} />
+              <Route path="poptavky" element={<AdminPoptavky />} />
+              <Route path="projekty" element={<AdminProjects />} />
+              <Route path="city-cooling" element={<AdminCityCoolingAnalytics />} />
+              <Route path="feedback" element={<AdminFeedback />} />
+              <Route path="contentful" element={<AdminContentful />} />
+              <Route path="drive-sync" element={<AdminDriveSync />} />
+            </Route>
+          </Route>
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />

@@ -145,25 +145,25 @@ export default function Kontakt() {
                 </div>
 
                 {/* Typ poptávky */}
-                <div className="hidden">
-                  <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Typ poptávky</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {REQUEST_TYPES.map((rt) => {
-                    const Icon = rt.icon;
-                    const active = form.request_type === rt.value;
-                    return (
-                      <button type="button" key={rt.value} onClick={() => setForm({ ...form, request_type: rt.value })}
-                      className={`text-left p-3 rounded-xl border transition-all ${active ? 'bg-cyan/10 border-cyan/40 text-cyan' : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20'}`}>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Icon size={13} className={active ? 'text-cyan' : 'text-white/30'} />
-                            <p className="text-xs font-medium">{rt.label}</p>
-                          </div>
-                          <p className="text-[10px] opacity-50 leading-tight">{rt.desc}</p>
-                        </button>);
+                
 
-                  })}
-                  </div>
-                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
 
                 {/* Produkt + množství */}
                 <div className="grid grid-cols-2 gap-4">

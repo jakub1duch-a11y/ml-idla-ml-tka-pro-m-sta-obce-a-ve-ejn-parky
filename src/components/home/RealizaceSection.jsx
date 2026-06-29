@@ -26,10 +26,14 @@ export default function RealizaceSection() {
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
-    base44.entities.Realizace.list().catch(() => []).then(items => {
-      setRealizace((items || []).filter(r => r.published));
-      setLoading(false);
-    });
+    base44.entities.Realizace.list()
+      .then(items => {
+        setRealizace((items || []).filter(r => r.published));
+      })
+      .catch(() => {
+        // fallback photos are shown when realizace is empty
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const allPhotos = realizace.flatMap(r => r.gallery_urls || []).filter(Boolean);

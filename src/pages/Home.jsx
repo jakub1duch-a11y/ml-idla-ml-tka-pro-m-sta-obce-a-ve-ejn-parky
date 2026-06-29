@@ -9,6 +9,7 @@ import ReferenceSection from '@/components/home/ReferenceSection';
 import TechSection from '@/components/home/TechSection';
 import BlogSection from '@/components/home/BlogSection';
 import PromoSection from '@/components/home/PromoSection';
+import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import ContactSection from '@/components/home/ContactSection';
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
     <>
       <HeroSection />
       <CategoriesSection />
+      <FeaturedProductsSection />
       <ProductsSection />
       <SmartSection />
       <VideoSection />

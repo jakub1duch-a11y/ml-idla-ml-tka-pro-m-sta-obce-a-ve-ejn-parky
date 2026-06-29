@@ -71,7 +71,7 @@ export default function Kontakt() {
           <h1 className="font-heading font-black text-4xl lg:text-6xl text-white tracking-tight mb-3">
             Jak vám<br /><span className="text-cyan">můžeme pomoci?</span>
           </h1>
-          <p className="text-white/50 max-w-lg mx-auto">Mlžné pevky, software, Smart WiFi, Záruka — vše na jednom místě.
+          <p className="text-white/50 max-w-lg mx-auto">Mlžné prvky, software, Smart WiFi, Záruka — vše na jednom místě.
 
           </p>
         </motion.div>

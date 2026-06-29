@@ -215,17 +215,17 @@ export default function HeroSection() {
         <div className="mt-10 flex items-end gap-6">
 
           {/* Prev/Next */}
-          <div className="flex items-center gap-2 hidden">
-            <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
-              <ChevronLeft size={18} />
-            </button>
-            <span className="text-xs font-mono text-white/30 w-12 text-center">
-              {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-            </span>
-            <button onClick={next} className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
-              <ChevronRight size={18} />
-            </button>
-          </div>
+          
+
+
+
+
+
+
+
+
+
+          
 
           {/* Stats */}
           <div className="grid grid-cols-4 gap-2 lg:w-auto ml-auto">

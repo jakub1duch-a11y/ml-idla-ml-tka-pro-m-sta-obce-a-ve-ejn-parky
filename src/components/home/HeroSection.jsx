@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
 import { trackHeroInteraction } from '@/lib/ga4';
 
 const defaultSlides = [
@@ -76,27 +75,9 @@ const stats = [
 
 
 export default function HeroSection() {
-  const [slides, setSlides] = useState(defaultSlides);
+  const [slides] = useState(defaultSlides);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
-
-  useEffect(() => {
-    base44.entities.Product.list('-updated_date', 10).then((products) => {
-      if (products && products.length > 0) {
-        const dbSlides = products.map((p) => ({
-          slug: p.slug,
-          tag: 'Produkt HolmTec',
-          name: p.name,
-          subtitle: p.short_description || 'Inovativní řešení',
-          desc: p.description || p.short_description || 'Mlžný systém na míru',
-          image: p.image_url || defaultSlides[0].image,
-          badge: p.featured ? '⭐ FEATURED' : '✨ NOVÝ',
-          cta: `/produkt/${p.slug}`
-        }));
-        setSlides(dbSlides);
-      }
-    }).catch(() => setSlides(defaultSlides));
-  }, []);
 
   const goTo = useCallback((idx) => {
     setDirection(idx > current ? 1 : -1);
@@ -148,7 +129,9 @@ export default function HeroSection() {
           <img
             src={slide.image}
             alt=""
-            className="w-full h-full object-cover" />
+            className="w-full h-full object-cover"
+            fetchpriority={current === 0 ? 'high' : 'low'}
+            decoding="async" />
           
           <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/30 to-transparent" />

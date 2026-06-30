@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://mlzidla.cz/sitemap.xml
+
+# Block admin area
+Disallow: /admin
+Disallow: /muj-projekt
+Disallow: /project/
+
+# Block utility/auth pages
+Disallow: /login
+Disallow: /register
+Disallow: /reset-password
+Disallow: /forgot-password
+Disallow: /search-analytics
+Disallow: /poradce
+
+# Crawl-delay for bots
+Crawl-delay: 2

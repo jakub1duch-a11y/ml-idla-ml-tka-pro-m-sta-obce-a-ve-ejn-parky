@@ -108,7 +108,7 @@ function ProductCard({ product, i }) {
       <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'}
       className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300 h-full">
         <div className="aspect-[4/3] overflow-hidden relative bg-white/5">
-          <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
           {product.featured &&
           <span className="absolute top-3 left-3 bg-cyan text-ink text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
               Výběr

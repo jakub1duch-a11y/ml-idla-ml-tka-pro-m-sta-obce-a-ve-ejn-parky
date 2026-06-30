@@ -25,6 +25,7 @@ import ReferenceDetail from '@/pages/ReferenceDetail';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
 import Poptavka from '@/pages/Poptavka';
+import Podpora from '@/pages/Podpora';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +62,7 @@ const AuthenticatedApp = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
+        <Route path="/podpora" element={<Podpora />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

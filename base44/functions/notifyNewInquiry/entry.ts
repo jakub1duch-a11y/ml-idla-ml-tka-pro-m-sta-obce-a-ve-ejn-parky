@@ -82,7 +82,7 @@ Deno.serve(async (req) => {
     const teamResults = await Promise.all(RECIPIENTS.map(to => sendEmail(to, subject, htmlBody)));
 
     // Potvrzovací email klientovi
-    const clientSubject = `Vaši poptávku jsme přijali — HolmTec`;
+    const clientSubject = `Vaši poptávku jsme přijali — Mlžidla.cz`;
     const clientBody = `
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#e2e8f0;padding:32px;border-radius:12px;">
   <div style="border-bottom:1px solid #1e2a3a;padding-bottom:20px;margin-bottom:24px;">
@@ -97,7 +97,7 @@ Deno.serve(async (req) => {
   </div>
   <p style="line-height:1.7;color:#cbd5e1;">V případě dotazů nás můžete kontaktovat přímo na <a href="mailto:obchod1@holmtec.cz" style="color:#22d3ee;">obchod1@holmtec.cz</a> nebo na tel. <a href="tel:+420774700390" style="color:#22d3ee;">+420 777 880 099</a>.</p>
   <div style="margin-top:28px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">
-    <p style="margin:0;">HolmTec s.r.o. &nbsp;|&nbsp; Mlžné sochy &amp; instalace &nbsp;|&nbsp; <a href="https://www.holmtec.cz" style="color:#22d3ee;">mlzidla.cz</a></p>
+    <p style="margin:0;">Mlžidla.cz - HolmTec s.r.o. &nbsp;|&nbsp; Mlžné sochy &amp; instalace &nbsp;|&nbsp; <a href="https://www.holmtec.cz" style="color:#22d3ee;">mlzidla.cz</a></p>
   </div>
 </div>`;
 

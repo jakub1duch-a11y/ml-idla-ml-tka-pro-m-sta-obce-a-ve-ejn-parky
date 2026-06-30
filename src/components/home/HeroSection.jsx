@@ -32,7 +32,7 @@ const defaultSlides = [
   name: 'MRAK',
   subtitle: 'Nebe na zemi.',
   desc: 'Abstraktní oblak z nerezové oceli s hustým mlžením. Stává se dominantou každého prostoru — parku, terasy, foyer hotelu.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60a14cfc6_43d83e0c0_unnamed-9.png',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/72a6bb588_mlnprvek-mrak-mlzidla02.png',
   badge: '☁️ URBAN',
   cta: '/produkt/mrak'
 },
@@ -45,6 +45,16 @@ const defaultSlides = [
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg',
   badge: '🔬 TECHNOLOGIE',
   cta: '/produkt/ostev-mlzny-strom'
+},
+{
+  slug: 'bendy-60',
+  tag: 'Zahradní mlžítko',
+  name: 'BENDY 60',
+  subtitle: 'Elegantní chlad pro zahradu.',
+  desc: 'Stylové zahradní mlžítko s elegantním ohnutým designem. Chladivá mlha pro terasy, zahrady a venkovní odpočívárny.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png',
+  badge: '🌿 ZAHRADA',
+  cta: '/produkt/bendy-60'
 },
 {
   slug: 'mlhoviste-deti',

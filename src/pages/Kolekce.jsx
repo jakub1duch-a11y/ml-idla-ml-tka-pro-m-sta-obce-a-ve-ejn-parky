@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X } from 'lucide-react';
@@ -181,13 +182,15 @@ export default function Kolekce() {
     });
 
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-ink pt-20">
 
-      {/* ── HERO ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
+      {/* ── HERO SLIDER ── */}
+      <KolekceHero />
+
+      {/* ── HERO TEXT ── */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">KATALOG SYSTÉMŮ</p>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-4">
+          <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
             Mlžné systémy<br /><span className="text-white/40">pro každý prostor.</span>
           </h1>
           <p className="text-white/50 max-w-xl text-lg leading-relaxed">

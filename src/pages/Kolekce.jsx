@@ -200,55 +200,55 @@ export default function Kolekce() {
       </div>
 
       {/* ── KATEGORIE ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16 hidden">
-        <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-6">Vyberte kategorii</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {categoryGroups.map((g) => {
-            const Icon = g.icon;
-            const isActive = activeCategory === g.id;
-            return (
-              <motion.button key={g.id} onClick={() => setActiveCategory(isActive ? null : g.id)}
-              initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
-              className={`text-left p-6 rounded-2xl border transition-all duration-300 ${
-              isActive ? `bg-gradient-to-br ${g.accentColor} ${g.borderColor}` : 'bg-card_bg border-white/10 hover:border-white/25'}`
-              }>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${isActive ? 'bg-white/10' : 'bg-white/5'}`}>
-                  <Icon size={20} className={isActive ? g.textColor : 'text-white/40'} />
-                </div>
-                <p className={`text-xs font-mono tracking-widest uppercase mb-2 ${isActive ? g.textColor : 'text-white/30'}`}>{g.label}</p>
-                <h3 className="text-lg font-light text-white mb-2">{g.tagline}</h3>
-                <p className="text-xs text-white/40 leading-relaxed">{g.description}</p>
-                {isActive &&
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-5 pt-5 border-t border-white/10">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <p className={`text-[10px] font-mono tracking-widest uppercase mb-2 ${g.textColor}`}>Pro koho</p>
-                        <ul className="space-y-1">
-                          {g.audience.map((a) =>
-                        <li key={a} className="text-xs text-white/60 flex items-center gap-2">
-                              <span className={`w-1 h-1 rounded-full ${g.textColor} bg-current`} />{a}
-                            </li>
-                        )}
-                        </ul>
-                      </div>
-                      <div>
-                        <p className={`text-[10px] font-mono tracking-widest uppercase mb-2 ${g.textColor}`}>Použití</p>
-                        <ul className="space-y-1">
-                          {g.usecases.map((u) =>
-                        <li key={u} className="text-xs text-white/60 flex items-center gap-2">
-                              <span className={`w-1 h-1 rounded-full ${g.textColor} bg-current`} />{u}
-                            </li>
-                        )}
-                        </ul>
-                      </div>
-                    </div>
-                  </motion.div>
-                }
-              </motion.button>);
+      
 
-          })}
-        </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       {/* ── POKROČILÉ FILTRY ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-8">

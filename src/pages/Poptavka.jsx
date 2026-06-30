@@ -39,6 +39,7 @@ export default function Poptavka() {
     setSending(true);
     try {
       await base44.entities.Poptavka.create({ ...form, status: 'nova' });
+      await base44.functions.invoke('sendPoptavkaNotification', form).catch(() => {});
       setSent(true);
     } finally {
       setSending(false);

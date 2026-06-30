@@ -117,8 +117,12 @@ export default function Poptavka() {
                   <div className="w-16 h-16 rounded-full bg-cyan/10 flex items-center justify-center mx-auto mb-4 border border-cyan/20">
                     <span className="text-3xl text-cyan">✓</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Poptávka odeslána!</h3>
-                  <p className="text-white/50">Ozveme se vám do 24 hodin.</p>
+                  <h3 className="text-xl font-bold text-white mb-2">Děkujeme za poptávku!</h3>
+                  <p className="text-white/50 mb-4">Ozveme se Vám co nejdříve.</p>
+                  <p className="text-white/35 text-xs font-mono leading-relaxed">
+                    tel. +420 774 700 390<br />
+                    <a href="https://www.mlzidla.cz" target="_blank" rel="noopener noreferrer" className="hover:text-cyan transition-colors">www.mlzidla.cz</a>
+                  </p>
                 </div>
               </div>
             ) : (

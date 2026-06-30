@@ -1,0 +1,99 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowRight, Waves, Loader } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+
+const USE_CASES = [
+  { emoji: '🏊', title: 'Koupaliště a aquaparky', desc: 'Ochlazení relaxačních zón, stínových koutů a vstupních prostor.' },
+  { emoji: '🏖️', title: 'Přírodní pláže', desc: 'Přenosné mlžné prvky pro letní sezónu. Rychlá instalace, bez stavebního povolení.' },
+  { emoji: '🏕️', title: 'Kempy a rekreační střediska', desc: 'Komfort pro hosty v létě bez nutnosti klimatizace.' },
+  { emoji: '🌊', title: 'Okolí bazénů', desc: 'Dekorativní mlžné sloupy, které osvěží posezení u vody.' },
+];
+
+export default function Koupaliste() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    base44.entities.Product.list().catch(() => []).then(p => {
+      setProducts((p || []).slice(0, 6));
+    }).finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-ink pt-28">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center">
+              <Waves size={18} className="text-blue-400" />
+            </div>
+            <p className="text-xs font-mono tracking-widest uppercase text-blue-400">Koupaliště, aquaparky & kempy</p>
+          </div>
+          <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+            Chlad i tam,<br /><span style={{ fontStyle: 'italic' }}>kde je voda všude.</span>
+          </h1>
+          <p className="text-white/60 text-lg max-w-2xl leading-relaxed font-light mb-8">
+            I u vody může být horko. Naše mlžítka vytvářejí příjemné mikroklima v relaxačních zónách koupališť, aquaparků a kempů. Oceníte je jako dekorativní i funkční prvky — bez nutnosti vodního zdroje u každého kusu, jen přívod z vodovodního řadu.
+          </p>
+          <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+            Nezávazná konzultace <ArrowRight size={15} />
+          </Link>
+        </motion.div>
+      </div>
+
+      <section className="bg-surface border-y border-white/8 py-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {USE_CASES.map((u, i) => (
+              <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                className="p-6 rounded-2xl bg-card_bg border border-white/10">
+                <span className="text-2xl mb-3 block">{u.emoji}</span>
+                <h3 className="text-white font-medium text-sm mb-2">{u.title}</h3>
+                <p className="text-xs text-white/45 leading-relaxed font-light">{u.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Produkty</p>
+        <h2 className="text-white text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>
+        {loading ? (
+          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-cyan/40" /></div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {products.map((p, i) => (
+              <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+                <Link to={`/produkt/${p.slug}`} className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-blue-400/40 transition-all">
+                  <div className="aspect-[4/3] overflow-hidden bg-white/5">
+                    {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
+                  </div>
+                  <div className="p-5 flex items-center justify-between">
+                    <div>
+                      <p className="text-white font-medium">{p.name}</p>
+                      {p.short_description && <p className="text-xs text-white/40 mt-0.5 line-clamp-1">{p.short_description}</p>}
+                    </div>
+                    <ArrowRight size={15} className="text-white/30 group-hover:text-blue-400 transition-colors shrink-0" />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
+        <div className="p-10 rounded-2xl bg-cyan/5 border border-cyan/20 text-center">
+          <h3 className="text-white text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro váš areál.</h3>
+          <p className="text-white/50 text-sm mb-6">Konzultace zdarma · Odpovídáme do 24 h</p>
+          <Link to="/poptavka" className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+            Nezávazná poptávka <ArrowRight size={15} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}

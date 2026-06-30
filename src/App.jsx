@@ -26,6 +26,12 @@ import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
 import Poptavka from '@/pages/Poptavka';
 import Podpora from '@/pages/Podpora';
+import MestaObce from '@/pages/kategorie/MestaObce';
+import ParkyHriste from '@/pages/kategorie/ParkyHriste';
+import Koupaliste from '@/pages/kategorie/Koupaliste';
+import Architekti from '@/pages/kategorie/Architekti';
+import Komercni from '@/pages/kategorie/Komercni';
+import Eventy from '@/pages/kategorie/Eventy';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -63,6 +69,12 @@ const AuthenticatedApp = () => {
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
         <Route path="/podpora" element={<Podpora />} />
+        <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
+        <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
+        <Route path="/kategorie/koupaliste" element={<Koupaliste />} />
+        <Route path="/kategorie/architekti" element={<Architekti />} />
+        <Route path="/kategorie/komercni" element={<Komercni />} />
+        <Route path="/kategorie/eventy" element={<Eventy />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

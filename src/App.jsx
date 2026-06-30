@@ -24,6 +24,7 @@ import Reference from '@/pages/Reference';
 import ReferenceDetail from '@/pages/ReferenceDetail';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
+import Poptavka from '@/pages/Poptavka';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -59,6 +60,7 @@ const AuthenticatedApp = () => {
         <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/poptavka" element={<Poptavka />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

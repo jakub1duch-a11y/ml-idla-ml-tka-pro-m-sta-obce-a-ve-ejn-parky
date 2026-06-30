@@ -1,0 +1,63 @@
+{
+  "name": "Poptavka",
+  "type": "object",
+  "properties": {
+    "jmeno": {
+      "type": "string",
+      "description": "Jm\u00e9no a p\u0159\u00edjmen\u00ed"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email"
+    },
+    "telefon": {
+      "type": "string",
+      "description": "Telefon"
+    },
+    "firma": {
+      "type": "string",
+      "description": "Firma / organizace"
+    },
+    "produkt": {
+      "type": "string",
+      "description": "Z\u00e1jem o produkt"
+    },
+    "zprava": {
+      "type": "string",
+      "description": "Zpr\u00e1va / popt\u00e1vka"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "nova",
+        "v_reseni",
+        "uzavrena"
+      ],
+      "default": "nova",
+      "description": "Stav popt\u00e1vky"
+    }
+  },
+  "required": [
+    "jmeno",
+    "email",
+    "zprava"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

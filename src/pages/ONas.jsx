@@ -164,7 +164,7 @@ export default function ONas() {
               Místo, kde se<br />
               <span style={{ fontStyle: 'italic' }}>lidé potkávají</span>
             </h2>
-            <p className="text-white/60 text-base leading-relaxed font-light mb-6">Od počátku nám bylo jasné, že do veřejného prostoru nechceme dodávat jen strohé technické trubky. Naše mlžítka působí nenásilně, avšak plní přidaný estetický účel — fungují jako moderní sochařská díla, která citlivě doplňují architekturu a krajinu.
+            <p className="text-white/60 text-base leading-relaxed font-light mb-6">Od počátku nám bylo jasné, že do veřejného prostoru nechceme dodávat jen strohé technické trubky. Naše mlžítka působí nenásilně, avšak plní přidaný estetický účel — fungují jako moderní díla, která citlivě doplňují architekturu daného a krajinu.
 
             </p>
             <p className="text-white/60 text-base leading-relaxed font-light mb-6">Díky našim výrobním technologiím, bohatým zkušenostem a velkému množství tvářecích nástrojů dokážeme nerez tvarovat podle specifických přání zákazníků do organických i abstraktních linií — ať už jde o stylizované zvířecí motivy, stromy či mraky.

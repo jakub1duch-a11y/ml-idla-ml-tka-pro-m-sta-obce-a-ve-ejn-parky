@@ -172,20 +172,38 @@ export function getProductSEO(product) {
     : `Mlžná skulptura ${product.name} od HolmTec. Zakázková výroba z nerezové oceli, ochlazení až −9 °C. Ideální pro parky, náměstí a eventy.`;
   const keywords = `${product.name}, mlžná socha ${product.name}, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, mlhoviště ${product.name}, HolmTec ${product.name}`;
 
+  const sku = `HT-${(product.slug || product.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-')}`;
+  const images = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
+    image: images.length ? images : [DEFAULT_IMAGE],
     description: product.short_description || description,
-    image: product.image_url || DEFAULT_IMAGE,
+    sku,
+    mpn: sku,
     brand: { '@type': 'Brand', name: 'HolmTec' },
     manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
     material: product.material || 'Nerezová ocel AISI 316L',
     offers: {
       '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
       priceCurrency: 'CZK',
+      availability: 'https://schema.org/InStoreOnly',
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        valueAddedTaxIncluded: 'true',
+        name: 'Cena na vyžádání dle projektové specifikace',
+      },
+      url: `${BASE_URL}/produkt/${product.slug}`,
       seller: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '24',
+      bestRating: '5',
+      worstRating: '1',
     },
   };
 

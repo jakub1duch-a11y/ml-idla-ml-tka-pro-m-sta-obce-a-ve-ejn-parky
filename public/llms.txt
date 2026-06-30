@@ -1,0 +1,29 @@
+# HolmTec — mlzidla.cz
+
+> HolmTec je český výrobce zakázkových mlžných soch, mlhovišť a chladicích systémů z nerezové oceli AISI 304/316L. Naše produkty ochlazují veřejné prostory, parky, náměstí, festivaly, zahrady a komerční prostory až o 9 °C pomocí jemné vodní mlhy (10–50 μm), aniž by zanechávaly vlhký povrch.
+
+## Klíčové stránky
+
+- [Domů](https://www.mlzidla.cz/): Přehled značky HolmTec a hlavní produktové řady.
+- [Kolekce](https://www.mlzidla.cz/kolekce): Celý katalog mlžných soch a systémů.
+- [Mlžiště](https://www.mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
+- [Jak to funguje](https://www.mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
+- [Poradce](https://www.mlzidla.cz/poradce): Interaktivní AI poradce a kalkulátor spotřeby vody a nákladů.
+- [Reference](https://www.mlzidla.cz/reference): Realizované projekty po celé ČR a zahraničí.
+- [Blog](https://www.mlzidla.cz/blog): Články o technologii mlžení, inspiraci a realizacích.
+- [O nás](https://www.mlzidla.cz/o-nas): Informace o firmě HolmTec.
+- [Kontakt](https://www.mlzidla.cz/kontakt) / [Poptávka](https://www.mlzidla.cz/poptavka): Nezávazná poptávka a kontaktní údaje.
+
+## Produkty
+
+Mlžné skulptury HolmTec zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody a tlakem.
+
+## Kontakt
+
+- Telefon: +420 774 700 390
+- Email: obchod1@holmtec.cz
+- Sídlo: Trutnov, Česká republika
+
+## Pravidla pro AI / LLM crawlery
+
+Obsah této stránky lze citovat a odkazovat s uvedením zdroje "HolmTec — mlzidla.cz". Pro aktuální ceny a dostupnost vždy odkazujte na konkrétní produktovou stránku.

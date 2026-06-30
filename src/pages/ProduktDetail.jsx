@@ -317,9 +317,7 @@ export default function ProduktDetail() {
               {[
                 product.coverage_area && `Výška ${product.coverage_area.split(',')[0]}`,
                 product.material && `Materiál ${product.material.split(',')[0]}`,
-                'Volitelné orientační panely = rozcestník',
                 'Smart senzory, ovládání z mobilu',
-                'Záruka 5 let na konstrukci',
               ].filter(Boolean).map(item => (
                 <li key={item} className="flex items-center gap-3 text-sm text-white/60 font-light">
                   <span className="w-1 h-1 rounded-full bg-cyan shrink-0" />{item}
@@ -330,7 +328,7 @@ export default function ProduktDetail() {
             <div className="flex flex-wrap gap-6">
               {[
                 { val: '−9 °C', label: 'Ochlazení' },
-                { val: product.pressure ? product.pressure.split('(')[0].trim().split(' ').pop() : '70 bar', label: 'Tlak mlžení' },
+                { val: product.pressure || '70 bar', label: 'Tlak mlžení' },
               ].map(s => (
                 <div key={s.label} className="text-center">
                   <p style={{ fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.04em', lineHeight: 1 }} className="text-white">{s.val}</p>
@@ -339,7 +337,6 @@ export default function ProduktDetail() {
               ))}
               <div className="flex flex-col gap-1 ml-2 justify-center">
                 <span className="text-[11px] font-mono text-cyan/70 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
-                <span className="text-[11px] font-mono text-white/40 flex items-center gap-1.5">🔧 Možnost mobilní instalace</span>
               </div>
             </div>
           </motion.div>

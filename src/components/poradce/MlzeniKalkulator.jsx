@@ -60,10 +60,18 @@ const WATER_PRICE_PER_M3 = 85; // Kč / m³ (ČR průměr 2025)
 const ELECTRICITY_PRICE_PER_KWH = 5.5; // Kč / kWh
 
 // ─── Mist Canvas Animace ────────────────────────────────────────────────────
-function MistCanvas({ intensity = 1 }) {
+// intensity: 0.3–1.5 (počet trysek / max)
+// flowRate: l/h — ovlivňuje rychlost stoupání a průměr kapek
+function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   const particles = useRef([]);
+  const intensityRef = useRef(intensity);
+  const flowRef = useRef(flowRate);
+
+  // Aktualizace refs bez restartu animace
+  useEffect(() => { intensityRef.current = intensity; }, [intensity]);
+  useEffect(() => { flowRef.current = flowRate; }, [flowRate]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -72,65 +80,98 @@ function MistCanvas({ intensity = 1 }) {
     const W = canvas.width;
     const H = canvas.height;
 
-    const COUNT = Math.round(60 * intensity);
+    const makeParticle = () => {
+      const int = intensityRef.current;
+      const flow = flowRef.current;
+      // Větší flow → rychlejší stoupání, větší kapky
+      const speedMult = Math.min(2.2, 0.7 + (flow / 80));
+      const sizeMult  = Math.min(1.8, 0.8 + (flow / 120));
+      return {
+        x: W * 0.2 + Math.random() * W * 0.6,
+        y: H * 0.62 + Math.random() * H * 0.38,
+        r: (1.5 + Math.random() * 3.5) * sizeMult,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: -(0.25 + Math.random() * 0.65) * speedMult,
+        alpha: (0.04 + Math.random() * 0.22) * Math.min(1, int),
+        life: 0,
+        maxLife: 55 + Math.random() * 90,
+      };
+    };
 
-    // init particles
-    particles.current = Array.from({ length: COUNT }, () => ({
-      x: Math.random() * W,
-      y: H * 0.6 + Math.random() * H * 0.4,
-      r: 1.5 + Math.random() * 3.5,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -(0.3 + Math.random() * 0.7),
-      alpha: 0.05 + Math.random() * 0.25,
-      life: 0,
-      maxLife: 60 + Math.random() * 100,
-    }));
+    const COUNT = Math.round(55 * intensity);
+    particles.current = Array.from({ length: COUNT }, makeParticle);
 
+    let frame = 0;
     const draw = () => {
+      frame++;
       ctx.clearRect(0, 0, W, H);
+
+      // Jemný tmavý gradient jako podklad pro hloubku
+      const bg = ctx.createLinearGradient(0, H, 0, 0);
+      bg.addColorStop(0, 'rgba(13,17,23,0.18)');
+      bg.addColorStop(1, 'rgba(13,17,23,0)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      const int = intensityRef.current;
+      const flow = flowRef.current;
+      const speedMult = Math.min(2.2, 0.7 + (flow / 80));
+      const sizeMult  = Math.min(1.8, 0.8 + (flow / 120));
+
       particles.current.forEach((p) => {
         p.life++;
-        p.x += p.vx;
+        // Jemný horizontální drift jako vzdušný proud
+        p.x += p.vx + Math.sin(p.life * 0.04 + p.y * 0.01) * 0.12;
         p.y += p.vy;
+
         const progress = p.life / p.maxLife;
-        const fade = progress < 0.2
-          ? progress / 0.2
-          : progress > 0.7
-          ? 1 - (progress - 0.7) / 0.3
+        // Plynulý fade-in / fade-out
+        const fade = progress < 0.15
+          ? progress / 0.15
+          : progress > 0.65
+          ? 1 - (progress - 0.65) / 0.35
           : 1;
 
-        ctx.beginPath();
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 2.5);
-        grd.addColorStop(0, `rgba(34,211,238,${p.alpha * fade})`);
+        // Kapky se zvětšují jak stoupají (odpařování)
+        const rNow = p.r * (1 + progress * 1.4);
+
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rNow * 2.8);
+        grd.addColorStop(0, `rgba(180,240,255,${p.alpha * fade * 0.55})`);
+        grd.addColorStop(0.4, `rgba(34,211,238,${p.alpha * fade})`);
         grd.addColorStop(1, `rgba(34,211,238,0)`);
         ctx.fillStyle = grd;
-        ctx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, rNow * 2.8, 0, Math.PI * 2);
         ctx.fill();
 
         if (p.life >= p.maxLife) {
-          p.x = Math.random() * W;
-          p.y = H * 0.65 + Math.random() * H * 0.35;
-          p.life = 0;
-          p.maxLife = 60 + Math.random() * 100;
-          p.r = 1.5 + Math.random() * 3.5;
-          p.vx = (Math.random() - 0.5) * 0.4;
-          p.vy = -(0.3 + Math.random() * 0.7);
-          p.alpha = 0.05 + Math.random() * 0.25;
+          // Dynamicky respawn s aktuálními hodnotami
+          const np = makeParticle();
+          Object.assign(p, np);
         }
       });
+
+      // Dynamicky přidej/odeber částice při změně intensity
+      const targetCount = Math.round(55 * intensityRef.current);
+      if (particles.current.length < targetCount && frame % 4 === 0) {
+        particles.current.push(makeParticle());
+      } else if (particles.current.length > targetCount + 5 && frame % 8 === 0) {
+        particles.current.splice(0, 1);
+      }
+
       animRef.current = requestAnimationFrame(draw);
     };
 
     draw();
     return () => cancelAnimationFrame(animRef.current);
-  }, [intensity]);
+  }, []); // Animace běží jednou, hodnoty čte z refs
 
   return (
     <canvas
       ref={canvasRef}
       width={340}
       height={180}
-      className="w-full h-full opacity-90"
+      className="w-full h-full"
       style={{ display: 'block' }}
     />
   );
@@ -293,7 +334,7 @@ export default function MlzeniKalkulator() {
                 <div key={i} className="w-0.5 h-0.5 rounded-full bg-cyan/80 shadow-[0_0_6px_2px_rgba(34,211,238,0.6)]" />
               ))}
             </div>
-            <MistCanvas intensity={mistIntensity} />
+            <MistCanvas intensity={mistIntensity} flowRate={flowPerHour} />
             <div className="absolute bottom-3 left-0 right-0 text-center">
               <span className="text-[9px] font-mono text-white/20 tracking-widest uppercase">
                 {sys.nozzles} trysek · {flowPerHour.toFixed(1)} l/h

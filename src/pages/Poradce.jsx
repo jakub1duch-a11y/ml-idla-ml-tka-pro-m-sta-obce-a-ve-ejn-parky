@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Send, ArrowRight, Droplets, Loader } from 'lucide-react';
+import { Send, ArrowRight, Droplets, Loader, Calculator } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ReactMarkdown from 'react-markdown';
+import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
 
 const SUGGESTED_QUESTIONS = [
   'Hledám ochlazení pro veřejný park',
@@ -172,6 +173,15 @@ export default function Poradce() {
             </button>
           </div>
         </div>
+
+        {/* Kalkulátor */}
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">
+          <div className="flex items-center gap-3 mb-4">
+            <Calculator size={16} className="text-cyan" />
+            <h2 className="text-white text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů</h2>
+          </div>
+          <MlzeniKalkulator />
+        </motion.div>
 
         {/* CTA */}
         <div className="mt-6 text-center">

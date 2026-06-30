@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Loader, Phone, Mail, MapPin } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackContactFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
 
 const PRODUKTY = [
   'OSTEV (mlžný strom)',
@@ -40,6 +41,8 @@ export default function Poptavka() {
     try {
       await base44.entities.Poptavka.create({ ...form, status: 'nova' });
       await base44.functions.invoke('sendPoptavkaNotification', form).catch(() => {});
+      trackContactFormSubmit('poptavka', form.produkt);
+      trackInquirySubmitted('poptavka', form.produkt);
       setSent(true);
     } finally {
       setSending(false);

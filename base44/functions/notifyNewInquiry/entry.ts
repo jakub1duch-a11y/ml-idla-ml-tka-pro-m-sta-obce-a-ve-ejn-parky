@@ -62,14 +62,14 @@ Deno.serve(async (req) => {
     <p style="margin:0;line-height:1.7;">${message.replace(/\n/g, '<br>')}</p>
   </div>
   <div style="margin-top:24px;">
-    <a href="mailto:${email}?subject=Re: Poptávka mlžného systému HolmTec" style="display:inline-block;background:#22d3ee;color:#0d1117;padding:12px 24px;border-radius:99px;text-decoration:none;font-weight:700;font-size:14px;">Odpovědět zájemci</a>
+    <a href="mailto:${email}?subject=Re: Poptávka mlžného systému Mlzidla.cz" style="display:inline-block;background:#22d3ee;color:#0d1117;padding:12px 24px;border-radius:99px;text-decoration:none;font-weight:700;font-size:14px;">Odpovědět zájemci</a>
   </div>
 </div>`;
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
 
     const sendEmail = async (to, emailSubject, emailBody) => {
-      const raw = buildMimeMessage({ from: 'HolmTec Notifikace <me>', to, subject: emailSubject, body: emailBody });
+      const raw = buildMimeMessage({ from: 'Mlzidla.cz Notifikace <me>', to, subject: emailSubject, body: emailBody });
       const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -95,9 +95,9 @@ Deno.serve(async (req) => {
     <p style="color:#64748b;font-size:11px;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px;">Vaše zpráva</p>
     <p style="margin:0;line-height:1.7;color:#94a3b8;">${message.replace(/\n/g, '<br>')}</p>
   </div>
-  <p style="line-height:1.7;color:#cbd5e1;">V případě dotazů nás můžete kontaktovat přímo na <a href="mailto:obchod1@holmtec.cz" style="color:#22d3ee;">obchod1@holmtec.cz</a> nebo na tel. <a href="tel:+420123456789" style="color:#22d3ee;">+420 777 880 099</a>.</p>
+  <p style="line-height:1.7;color:#cbd5e1;">V případě dotazů nás můžete kontaktovat přímo na <a href="mailto:obchod1@holmtec.cz" style="color:#22d3ee;">obchod1@holmtec.cz</a> nebo na tel. <a href="tel:+420774700390" style="color:#22d3ee;">+420 777 880 099</a>.</p>
   <div style="margin-top:28px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">
-    <p style="margin:0;">HolmTec s.r.o. &nbsp;|&nbsp; Mlžné sochy &amp; instalace &nbsp;|&nbsp; <a href="https://www.holmtec.cz" style="color:#22d3ee;">holmtec.cz</a></p>
+    <p style="margin:0;">HolmTec s.r.o. &nbsp;|&nbsp; Mlžné sochy &amp; instalace &nbsp;|&nbsp; <a href="https://www.holmtec.cz" style="color:#22d3ee;">mlzidla.cz</a></p>
   </div>
 </div>`;
 

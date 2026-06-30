@@ -167,7 +167,7 @@ export default function ONas() {
             <p className="text-white/60 text-base leading-relaxed font-light mb-6">
               Od počátku nám bylo jasné, že do veřejného prostoru nechceme dodávat jen strohé technické trubky. Naše mlžítka plní velký estetický účel — fungují jako moderní sochařská díla, která citlivě doplňují architekturu a krajinu.
             </p>
-            <p className="text-white/60 text-base leading-relaxed font-light mb-6">Díky našim výrobním technologiím a velkému množství tvářecíc dokážeme nerez tvarovat přesně podle přání zákazníka do organických i abstraktních linií — ať už jde o stylizované zvířecí motivy, stromy či mraky.
+            <p className="text-white/60 text-base leading-relaxed font-light mb-6">Díky našim výrobním technologiím a velkému množství tvářecích  dokážeme nerez tvarovat přesně podle přání zákazníka do organických i abstraktních linií — ať už jde o stylizované zvířecí motivy, stromy či mraky.
 
             </p>
             <blockquote className="border-l-2 border-cyan/40 pl-5">

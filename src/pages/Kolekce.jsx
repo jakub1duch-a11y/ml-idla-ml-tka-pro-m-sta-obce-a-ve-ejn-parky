@@ -6,18 +6,18 @@ import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, 
 import { base44 } from '@/api/base44Client';
 
 const HEIGHT_OPTIONS = [
-  { value: 'all', label: 'Všechny výšky' },
-  { value: 'low', label: 'Do 1 m' },
-  { value: 'medium', label: '1–3 m' },
-  { value: 'tall', label: '3 m a více' },
-];
+{ value: 'all', label: 'Všechny výšky' },
+{ value: 'low', label: 'Do 1 m' },
+{ value: 'medium', label: '1–3 m' },
+{ value: 'tall', label: '3 m a více' }];
+
 
 const INSTALL_OPTIONS = [
-  { value: 'all', label: 'Jakákoliv instalace' },
-  { value: 'easy', label: 'Snadná (plug & play)' },
-  { value: 'medium', label: 'Střední (odborník)' },
-  { value: 'complex', label: 'Komplexní (projekt)' },
-];
+{ value: 'all', label: 'Jakákoliv instalace' },
+{ value: 'easy', label: 'Snadná (plug & play)' },
+{ value: 'medium', label: 'Střední (odborník)' },
+{ value: 'complex', label: 'Komplexní (projekt)' }];
+
 
 function getHeightRange(product) {
   const h = (product.coverage_area || '').toLowerCase();
@@ -40,64 +40,64 @@ function getInstallComplexity(product) {
 // ─── KATEGORIE ─────────────────────────────────────────────────────────────
 
 const categoryGroups = [
-  {
-    id: 'sochy',
-    label: 'Mlžné sochy',
-    icon: Trees,
-    tagline: 'Přírodní tvary. Živá atmosféra.',
-    description: 'Mlžné sochy jsou skulpturální instalace inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
-    audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
-    usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
-    accentColor: 'from-emerald-500/20 to-cyan/10',
-    borderColor: 'border-emerald-500/30',
-    textColor: 'text-emerald-400',
-    dbCategories: ['NATURE'],
-    slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik'],
-  },
-  {
-    id: 'brany',
-    label: 'Mlžné brány a portály',
-    icon: Landmark,
-    tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-    description: 'Brány a portály z mlhy vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
-    audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
-    usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
-    accentColor: 'from-cyan/20 to-blue-500/10',
-    borderColor: 'border-cyan/30',
-    textColor: 'text-cyan',
-    dbCategories: ['URBAN ART'],
-    slugKeywords: ['portal', 'vertigo', 'helix', 'aura', 'linear', 'lomene', 'silueta', 'krystal'],
-  },
-  {
-    id: 'mlhoviste',
-    label: 'Mlhoviště a chladicí zóny',
-    icon: Flame,
-    tagline: 'Až −9 °C. Komfort bez kompromisů.',
-    description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
-    audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
-    usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
-    accentColor: 'from-orange-500/20 to-yellow-500/10',
-    borderColor: 'border-orange-500/30',
-    textColor: 'text-orange-400',
-    dbCategories: ['GEOMETRY'],
-    slugKeywords: ['lavicka', 'bench', 'filtracni', 'trysky', 'holmapp'],
-  },
-];
+{
+  id: 'sochy',
+  label: 'Mlžné sochy',
+  icon: Trees,
+  tagline: 'Přírodní tvary. Živá atmosféra.',
+  description: 'Mlžné sochy jsou skulpturální instalace inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
+  audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
+  usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
+  accentColor: 'from-emerald-500/20 to-cyan/10',
+  borderColor: 'border-emerald-500/30',
+  textColor: 'text-emerald-400',
+  dbCategories: ['NATURE'],
+  slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik']
+},
+{
+  id: 'brany',
+  label: 'Mlžné brány a portály',
+  icon: Landmark,
+  tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
+  description: 'Brány a portály z mlhy vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
+  audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
+  usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
+  accentColor: 'from-cyan/20 to-blue-500/10',
+  borderColor: 'border-cyan/30',
+  textColor: 'text-cyan',
+  dbCategories: ['URBAN ART'],
+  slugKeywords: ['portal', 'vertigo', 'helix', 'aura', 'linear', 'lomene', 'silueta', 'krystal']
+},
+{
+  id: 'mlhoviste',
+  label: 'Mlhoviště a chladicí zóny',
+  icon: Flame,
+  tagline: 'Až −9 °C. Komfort bez kompromisů.',
+  description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
+  audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
+  usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
+  accentColor: 'from-orange-500/20 to-yellow-500/10',
+  borderColor: 'border-orange-500/30',
+  textColor: 'text-orange-400',
+  dbCategories: ['GEOMETRY'],
+  slugKeywords: ['lavicka', 'bench', 'filtracni', 'trysky', 'holmapp']
+}];
+
 
 const audienceSegments = [
-  { icon: Building2, label: 'Města a obce', desc: 'Ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
-  { icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžných instalací. Rychlá montáž a přenosnost.' },
-  { icon: Home, label: 'Rezidenční', desc: 'Soukromé zahrady, terasy a wellness. Individuální návrh a diskrétní instalace.' },
-  { icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
-  { icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžení pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' },
-];
+{ icon: Building2, label: 'Města a obce', desc: 'Ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
+{ icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžných instalací. Rychlá montáž a přenosnost.' },
+{ icon: Home, label: 'Rezidenční', desc: 'Soukromé zahrady, terasy a wellness. Individuální návrh a diskrétní instalace.' },
+{ icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
+{ icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžení pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
+
 
 // Fallback images by category
 const FALLBACK_IMAGES = {
   NATURE: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
   'URBAN ART': 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&q=80',
   GEOMETRY: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
-  DEFAULT: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+  DEFAULT: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'
 };
 
 function ProductCard({ product, i }) {
@@ -105,14 +105,14 @@ function ProductCard({ product, i }) {
   return (
     <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
       <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'}
-        className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300 h-full">
+      className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300 h-full">
         <div className="aspect-[4/3] overflow-hidden relative bg-white/5">
           <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-          {product.featured && (
-            <span className="absolute top-3 left-3 bg-cyan text-ink text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
+          {product.featured &&
+          <span className="absolute top-3 left-3 bg-cyan text-ink text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
               Výběr
             </span>
-          )}
+          }
           {/* Mist overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
@@ -120,9 +120,9 @@ function ProductCard({ product, i }) {
           <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">{product._categoryName || 'Mlžný systém'}</p>
           <h3 className="text-xl font-normal text-white mb-1">{product.name}</h3>
           <p className="text-sm text-white/50 mb-3 line-clamp-2">{product.short_description}</p>
-          {product.material && (
-            <p className="text-xs text-white/30 leading-relaxed mb-4 line-clamp-2">{product.material}</p>
-          )}
+          {product.material &&
+          <p className="text-xs text-white/30 leading-relaxed mb-4 line-clamp-2">{product.material}</p>
+          }
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-white/30 bg-white/5 px-2 py-1 rounded-lg">{product.material || 'AISI 316L'}</span>
             <div className="flex items-center gap-1 text-xs text-cyan font-medium">
@@ -131,8 +131,8 @@ function ProductCard({ product, i }) {
           </div>
         </div>
       </Link>
-    </motion.div>
-  );
+    </motion.div>);
+
 }
 
 export default function Kolekce() {
@@ -147,39 +147,39 @@ export default function Kolekce() {
 
   useEffect(() => {
     Promise.all([
-      base44.entities.Product.list().catch(() => []),
-      base44.entities.ProductCategory.list().catch(() => []),
-    ]).then(([prods, cats]) => {
-      const enriched = (prods || []).map(p => ({
+    base44.entities.Product.list().catch(() => []),
+    base44.entities.ProductCategory.list().catch(() => [])]
+    ).then(([prods, cats]) => {
+      const enriched = (prods || []).map((p) => ({
         ...p,
-        _categoryName: (cats || []).find(c => c.id === p.category_id)?.name || '',
+        _categoryName: (cats || []).find((c) => c.id === p.category_id)?.name || ''
       }));
       setProducts(enriched);
       setCategories(cats || []);
     }).finally(() => setLoading(false));
   }, []);
 
-  const activeGroup = categoryGroups.find(g => g.id === activeCategory);
+  const activeGroup = categoryGroups.find((g) => g.id === activeCategory);
   const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
 
-  const displayedProducts = products
-    .filter(p => !['HolmApp Control', 'Filtrační Moduly', 'Trysky HT-LT', 'AI Design Studio'].includes(p.name))
-    .filter(p => {
-      if (activeGroup) {
-        return activeGroup.dbCategories.includes(p._categoryName) ||
-          activeGroup.slugKeywords.some(kw => (p.slug || '').includes(kw));
-      }
-      return true;
-    })
-    .filter(p => heightFilter === 'all' || getHeightRange(p) === heightFilter)
-    .filter(p => installFilter === 'all' || getInstallComplexity(p) === installFilter)
-    .filter(p => {
-      if (!search.trim()) return true;
-      const q = search.toLowerCase();
-      return (p.name || '').toLowerCase().includes(q) ||
-        (p.short_description || '').toLowerCase().includes(q) ||
-        (p.description || '').toLowerCase().includes(q);
-    });
+  const displayedProducts = products.
+  filter((p) => !['HolmApp Control', 'Filtrační Moduly', 'Trysky HT-LT', 'AI Design Studio'].includes(p.name)).
+  filter((p) => {
+    if (activeGroup) {
+      return activeGroup.dbCategories.includes(p._categoryName) ||
+      activeGroup.slugKeywords.some((kw) => (p.slug || '').includes(kw));
+    }
+    return true;
+  }).
+  filter((p) => heightFilter === 'all' || getHeightRange(p) === heightFilter).
+  filter((p) => installFilter === 'all' || getInstallComplexity(p) === installFilter).
+  filter((p) => {
+    if (!search.trim()) return true;
+    const q = search.toLowerCase();
+    return (p.name || '').toLowerCase().includes(q) ||
+    (p.short_description || '').toLowerCase().includes(q) ||
+    (p.description || '').toLowerCase().includes(q);
+  });
 
   return (
     <div className="min-h-screen bg-ink pt-20">
@@ -200,7 +200,7 @@ export default function Kolekce() {
       </div>
 
       {/* ── KATEGORIE ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16 hidden">
         <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-6">Vyberte kategorii</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {categoryGroups.map((g) => {
@@ -208,44 +208,44 @@ export default function Kolekce() {
             const isActive = activeCategory === g.id;
             return (
               <motion.button key={g.id} onClick={() => setActiveCategory(isActive ? null : g.id)}
-                initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
-                className={`text-left p-6 rounded-2xl border transition-all duration-300 ${
-                  isActive ? `bg-gradient-to-br ${g.accentColor} ${g.borderColor}` : 'bg-card_bg border-white/10 hover:border-white/25'
-                }`}>
+              initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
+              className={`text-left p-6 rounded-2xl border transition-all duration-300 ${
+              isActive ? `bg-gradient-to-br ${g.accentColor} ${g.borderColor}` : 'bg-card_bg border-white/10 hover:border-white/25'}`
+              }>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${isActive ? 'bg-white/10' : 'bg-white/5'}`}>
                   <Icon size={20} className={isActive ? g.textColor : 'text-white/40'} />
                 </div>
                 <p className={`text-xs font-mono tracking-widest uppercase mb-2 ${isActive ? g.textColor : 'text-white/30'}`}>{g.label}</p>
                 <h3 className="text-lg font-light text-white mb-2">{g.tagline}</h3>
                 <p className="text-xs text-white/40 leading-relaxed">{g.description}</p>
-                {isActive && (
-                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-5 pt-5 border-t border-white/10">
+                {isActive &&
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-5 pt-5 border-t border-white/10">
                     <div className="grid grid-cols-1 gap-4">
                       <div>
                         <p className={`text-[10px] font-mono tracking-widest uppercase mb-2 ${g.textColor}`}>Pro koho</p>
                         <ul className="space-y-1">
-                          {g.audience.map(a => (
-                            <li key={a} className="text-xs text-white/60 flex items-center gap-2">
+                          {g.audience.map((a) =>
+                        <li key={a} className="text-xs text-white/60 flex items-center gap-2">
                               <span className={`w-1 h-1 rounded-full ${g.textColor} bg-current`} />{a}
                             </li>
-                          ))}
+                        )}
                         </ul>
                       </div>
                       <div>
                         <p className={`text-[10px] font-mono tracking-widest uppercase mb-2 ${g.textColor}`}>Použití</p>
                         <ul className="space-y-1">
-                          {g.usecases.map(u => (
-                            <li key={u} className="text-xs text-white/60 flex items-center gap-2">
+                          {g.usecases.map((u) =>
+                        <li key={u} className="text-xs text-white/60 flex items-center gap-2">
                               <span className={`w-1 h-1 rounded-full ${g.textColor} bg-current`} />{u}
                             </li>
-                          ))}
+                        )}
                         </ul>
                       </div>
                     </div>
                   </motion.div>
-                )}
-              </motion.button>
-            );
+                }
+              </motion.button>);
+
           })}
         </div>
       </div>
@@ -258,49 +258,49 @@ export default function Kolekce() {
             type="text"
             placeholder="Hledat produkt..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all"
-          />
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all" />
+          
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-mono tracking-widest uppercase transition-all ${showAdvanced || hasAdvancedFilter ? 'bg-cyan/10 border-cyan/40 text-cyan' : 'border-white/10 text-white/40 hover:border-white/30 hover:text-white/70'}`}
-          >
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-mono tracking-widest uppercase transition-all ${showAdvanced || hasAdvancedFilter ? 'bg-cyan/10 border-cyan/40 text-cyan' : 'border-white/10 text-white/40 hover:border-white/30 hover:text-white/70'}`}>
+            
             <SlidersHorizontal size={14} /> Filtry {hasAdvancedFilter && '●'}
           </button>
-          {hasAdvancedFilter && (
-            <button onClick={() => { setHeightFilter('all'); setInstallFilter('all'); setSearch(''); }}
-              className="text-xs text-white/40 hover:text-white font-mono flex items-center gap-1">
+          {hasAdvancedFilter &&
+          <button onClick={() => {setHeightFilter('all');setInstallFilter('all');setSearch('');}}
+          className="text-xs text-white/40 hover:text-white font-mono flex items-center gap-1">
               <X size={12} /> Reset
             </button>
-          )}
+          }
         </div>
 
-        {showAdvanced && (
-          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {showAdvanced &&
+        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <p className="text-[10px] font-mono text-white/30 tracking-widest uppercase mb-2">Výška systému</p>
               <div className="flex flex-wrap gap-2">
-                {HEIGHT_OPTIONS.map(o => (
-                  <button key={o.value} onClick={() => setHeightFilter(o.value)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${heightFilter === o.value ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
+                {HEIGHT_OPTIONS.map((o) =>
+              <button key={o.value} onClick={() => setHeightFilter(o.value)}
+              className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${heightFilter === o.value ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
                     {o.label}
                   </button>
-                ))}
+              )}
               </div>
             </div>
             <div>
               <p className="text-[10px] font-mono text-white/30 tracking-widest uppercase mb-2">Náročnost instalace</p>
               <div className="flex flex-wrap gap-2">
-                {INSTALL_OPTIONS.map(o => (
-                  <button key={o.value} onClick={() => setInstallFilter(o.value)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${installFilter === o.value ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
+                {INSTALL_OPTIONS.map((o) =>
+              <button key={o.value} onClick={() => setInstallFilter(o.value)}
+              className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${installFilter === o.value ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
                     {o.label}
                   </button>
-                ))}
+              )}
               </div>
             </div>
           </motion.div>
-        )}
+        }
       </div>
 
       {/* ── PRODUKTY ── */}
@@ -310,24 +310,24 @@ export default function Kolekce() {
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny produkty'}
             {!loading && <span className="ml-2 text-white/20">({displayedProducts.length})</span>}
           </p>
-          {activeCategory && (
-            <button onClick={() => setActiveCategory(null)} className="text-xs text-white/40 hover:text-white transition-colors font-mono">
+          {activeCategory &&
+          <button onClick={() => setActiveCategory(null)} className="text-xs text-white/40 hover:text-white transition-colors font-mono">
               × Zobrazit vše
             </button>
-          )}
+          }
         </div>
-        {loading ? (
-          <div className="flex justify-center py-24">
+        {loading ?
+        <div className="flex justify-center py-24">
             <Loader size={24} className="animate-spin text-cyan/40" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          </div> :
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
-            {displayedProducts.length === 0 && (
-              <p className="col-span-3 text-center text-white/30 py-16 text-sm">Žádné produkty v této kategorii.</p>
-            )}
+            {displayedProducts.length === 0 &&
+          <p className="col-span-3 text-center text-white/30 py-16 text-sm">Žádné produkty v této kategorii.</p>
+          }
           </div>
-        )}
+        }
       </div>
 
       {/* ── PRO KOHO ── */}
@@ -342,14 +342,14 @@ export default function Kolekce() {
               const Icon = seg.icon;
               return (
                 <motion.div key={seg.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                  className="p-5 rounded-2xl bg-card_bg border border-white/10 hover:border-cyan/25 transition-all">
+                className="p-5 rounded-2xl bg-card_bg border border-white/10 hover:border-cyan/25 transition-all">
                   <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center mb-3">
                     <Icon size={16} className="text-cyan" />
                   </div>
                   <h4 className="text-sm font-normal text-white mb-2">{seg.label}</h4>
                   <p className="text-xs text-white/40 leading-relaxed">{seg.desc}</p>
-                </motion.div>
-              );
+                </motion.div>);
+
             })}
           </div>
         </div>
@@ -365,16 +365,16 @@ export default function Kolekce() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF"
-              className="px-7 py-3.5 border border-white/20 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-all whitespace-nowrap">
+            className="px-7 py-3.5 border border-white/20 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-all whitespace-nowrap">
               Zaslat katalog na e-mail
             </a>
             <Link to="/kontakt"
-              className="px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 whitespace-nowrap">
+            className="px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 whitespace-nowrap">
               Nezávazná poptávka
             </Link>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

@@ -144,7 +144,7 @@ function ProjectCard({ project, onOpen }) {
           {project.product_used && (
             <span className="text-[10px] font-mono text-cyan/60 tracking-widest uppercase">Produkt: {project.product_used}</span>
           )}
-          <Link to={`/reference/${project.id}`} className="flex items-center gap-1 text-xs text-white/40 hover:text-cyan transition-colors font-mono ml-auto">
+          <Link to={`/reference/${project.id}`} className="flex items-center gap-1.5 text-xs font-bold text-cyan hover:text-white transition-colors font-mono ml-auto border border-cyan/30 hover:border-cyan px-3 py-1.5 rounded-full hover:bg-cyan/10">
             Detail <ArrowRight size={11} />
           </Link>
         </div>

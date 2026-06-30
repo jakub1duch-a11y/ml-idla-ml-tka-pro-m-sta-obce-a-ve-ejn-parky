@@ -231,7 +231,7 @@ export default function ProduktDetail() {
                     <Droplet size={18} className="text-cyan" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba</p>
+                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Průměrná spotřeba l/h</p>
                     <p className="text-sm text-white font-medium">{product.water_consumption}</p>
                   </div>
                 </div>
@@ -242,7 +242,7 @@ export default function ProduktDetail() {
                     <Zap size={18} className="text-cyan" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Trysky</p>
+                    <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Trysky (počet ks)</p>
                     <p className="text-sm text-white font-medium">{product.micron_size}</p>
                   </div>
                 </div>
@@ -281,7 +281,7 @@ export default function ProduktDetail() {
       {allImages.length > 1 && (
         <div className="bg-surface border-b border-white/8">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center gap-4 overflow-x-auto scrollbar-none">
-            <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-white/25 mr-2">Zakázková výroba</span>
+            <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-white/25 mr-2">Galerie produktu</span>
             {allImages.slice(0, 5).map((src, i) => (
               <button key={i} onClick={() => setLightbox({ images: allImages, idx: i })}
                 className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-white/10 hover:border-cyan/40 transition-all">
@@ -327,17 +327,20 @@ export default function ProduktDetail() {
               ))}
             </ul>
             {/* Stat pills */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-6">
               {[
                 { val: '−9 °C', label: 'Ochlazení' },
                 { val: product.pressure ? product.pressure.split('(')[0].trim().split(' ').pop() : '70 bar', label: 'Tlak mlžení' },
-                { val: '5 let', label: 'Záruka' },
               ].map(s => (
                 <div key={s.label} className="text-center">
                   <p style={{ fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.04em', lineHeight: 1 }} className="text-white">{s.val}</p>
                   <p className="text-[10px] font-mono text-white/35 tracking-widest uppercase mt-1">{s.label}</p>
                 </div>
               ))}
+              <div className="flex flex-col gap-1 ml-2 justify-center">
+                <span className="text-[11px] font-mono text-cyan/70 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
+                <span className="text-[11px] font-mono text-white/40 flex items-center gap-1.5">🔧 Možnost mobilní instalace</span>
+              </div>
             </div>
           </motion.div>
 
@@ -390,17 +393,16 @@ export default function ProduktDetail() {
             <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Prvek prostoru.</span>
           </h2>
         </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/8 rounded-2xl overflow-hidden border border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/8 rounded-2xl overflow-hidden border border-white/10">
           {[
-            { title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
-            { title: 'Forma stromu', desc: 'Organická architektura, která přirozeně zapadá do parků, náměstí i moderních ploch.' },
-            { title: 'Rozcestník', desc: 'Volitelné orientační panely na větvích. Naviguje i osvěžuje zároveň.' },
-            { title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
-            { title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
-            { title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` },
+            { icon: '💧', title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
+            { icon: '🔩', title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
+            { icon: '📱', title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
+            { icon: '🛠️', title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` },
           ].map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
               className="bg-card_bg p-7">
+              <span className="text-2xl mb-3 block">{f.icon}</span>
               <h3 style={{ fontWeight: 600, fontSize: '1.05rem', letterSpacing: '-0.02em' }} className="text-white mb-3">{f.title}</h3>
               <p className="text-sm text-white/45 leading-relaxed font-light">{f.desc}</p>
             </motion.div>

@@ -102,7 +102,7 @@ export default function Header() {
             <Link to="/mlhoviste" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Instalace</Link>
             <Link to="/kategorie/eventy" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Pronájem</Link>
             <Link to="/reference" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Reference</Link>
-            <Link to="/blog" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Blog</Link>
+            <Link to="/blog" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Blog & novinky</Link>
             <Link to="/podpora" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Podpora</Link>
           </nav>
 
@@ -206,10 +206,8 @@ export default function Header() {
                 </div>
             }
               {[
-            { label: 'Instalace', path: '/mlhoviste' },
-            { label: 'Pronájem', path: '/kategorie/eventy' },
             { label: 'Reference', path: '/reference' },
-            { label: 'Blog', path: '/blog' },
+            { label: 'Blog & novinky', path: '/blog' },
             { label: 'Podpora', path: '/podpora' },
             { label: 'O nás', path: '/o-nas' },
             { label: 'Kontakt', path: '/kontakt' }].

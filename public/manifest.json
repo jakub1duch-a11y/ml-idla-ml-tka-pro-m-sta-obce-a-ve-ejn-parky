@@ -1,20 +1,46 @@
 {
-  "name": "mlzidla.cz — Mlžné sochy HolmTec",
+  "name": "HolmTec — Mlžné sochy a mlžení",
   "short_name": "mlzidla.cz",
-  "description": "Zakázkové mlžné sochy a chladicí systémy z nerezové oceli. Ochlazení až −9 °C.",
+  "description": "Zakázkové mlžné sochy a chladicí systémy z nerezové oceli. Ochlazení až −9 °C pro veřejné prostory.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0D1117",
   "theme_color": "#22d3ee",
   "orientation": "portrait-primary",
+  "lang": "cs",
   "icons": [
     {
-      "src": "/vite.svg",
+      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["business", "shopping"],
-  "lang": "cs"
+  "screenshots": [
+    {
+      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": ["shopping", "business"],
+  "shortcuts": [
+    {
+      "name": "Kolekce",
+      "url": "/kolekce",
+      "description": "Prohlédnout mlžné systémy"
+    },
+    {
+      "name": "Poptávka",
+      "url": "/poptavka",
+      "description": "Odeslat nezávaznou poptávku"
+    }
+  ]
 }

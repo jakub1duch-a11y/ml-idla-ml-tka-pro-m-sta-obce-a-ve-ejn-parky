@@ -85,7 +85,7 @@ export default function Header() {
               <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
             </svg>
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.04em' }} className="text-white text-[17px] leading-none">
-              mlžné <span className="text-cyan font-medium">.cz</span>
+              mlzidla<span className="text-cyan font-medium">.cz</span>
             </span>
           </Link>
 

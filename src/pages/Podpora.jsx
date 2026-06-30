@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail } from 'lucide-react';
@@ -131,6 +132,7 @@ function FaqItem({ item, isOpen, onToggle }) {
 
 export default function Podpora() {
   const [openItems, setOpenItems] = useState({});
+  useEffect(() => { setSEO(SEO_PAGES.podpora); }, []);
 
   const toggle = (sectionId, idx) => {
     const key = `${sectionId}-${idx}`;

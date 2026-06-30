@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Tent, CheckCircle, Loader, Phone, Mail } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
@@ -24,6 +25,7 @@ export default function Eventy() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setSEO(SEO_PAGES.eventy);
     base44.entities.Product.list().catch(() => []).then(p => {
       setProducts((p || []).slice(0, 3));
     }).finally(() => setLoading(false));

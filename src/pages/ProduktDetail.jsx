@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Droplet, Zap, Gauge } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
+import { setSEO, getProductSEO } from '@/lib/seo';
 
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
@@ -141,6 +142,7 @@ export default function ProduktDetail() {
         const p = results[0];
         setProduct(p);
         trackProductView(p.name, p.slug, p.category_id);
+        setSEO(getProductSEO(p));
         if (p.category_id) {
           const related = await base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []);
           setRelatedProducts((related || []).filter(r => r.id !== p.id).slice(0, 3));

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
 import HeroSection from '@/components/home/HeroSection';
 import CategoriesSection from '@/components/home/CategoriesSection';
 import ProductsSection from '@/components/home/ProductsSection';
@@ -14,6 +15,10 @@ import HowItWorksSection from '@/components/home/HowItWorksSection';
 import ContactSection from '@/components/home/ContactSection';
 
 export default function Home() {
+  useEffect(() => {
+    setSEO(SEO_PAGES.home);
+    injectOrgJsonLd();
+  }, []);
   return (
     <>
       <HeroSection />

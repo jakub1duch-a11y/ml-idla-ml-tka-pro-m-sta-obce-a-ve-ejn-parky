@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trees, CheckCircle, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const USE_CASES = [
   { emoji: '🏰', title: 'Zámecké parky', desc: 'Decentní estetika, organické tvary z nerezu — zapadnou do historické zeleně.' },
@@ -16,6 +17,7 @@ export default function ParkyHriste() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setSEO(SEO_PAGES.parkyHriste);
     base44.entities.Product.list().catch(() => []).then(p => {
       setProducts((p || []).slice(0, 6));
     }).finally(() => setLoading(false));

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Clock, Loader } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
+import { setSEO, getBlogPostSEO } from '@/lib/seo';
 import { trackBlogPostView } from '@/lib/ga4';
 
 const CATEGORY_LABELS = {
@@ -63,7 +64,7 @@ export default function BlogDetail() {
 
       setPost(found);
       trackBlogPostView(found.title, found.slug || found.id, found.category);
-      document.title = `${found.title} | Blog HolmTec`;
+      setSEO(getBlogPostSEO(found));
 
       // Related: same category, not self
       const rel = (all || []).filter(p => p.published && p.category === found.category && p.id !== found.id).slice(0, 3);

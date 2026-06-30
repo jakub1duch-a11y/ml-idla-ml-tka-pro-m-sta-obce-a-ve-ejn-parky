@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Mail, Phone, Shield, Zap, Award, Factory, Droplets, Palette } from 'lucide-react';
+import { useEffect } from 'react';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const IMAGES = {
   sprcha: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7f4a5f5e4_mlznsloup-sprh.png',
@@ -14,6 +16,7 @@ const IMAGES = {
 };
 
 export default function ONas() {
+  useEffect(() => { setSEO(SEO_PAGES.oNas); }, []);
   return (
     <div className="min-h-screen bg-ink">
 

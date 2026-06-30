@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock, Loader, Tag } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -56,7 +57,7 @@ export default function Blog() {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    document.title = 'Blog & Novinky — Mlžné sochy, technologie mlžení | HolmTec';
+    setSEO(SEO_PAGES.blog);
     base44.entities.BlogPost.list()
       .then(items => {
         const published = (items || []).filter(p => p.published);

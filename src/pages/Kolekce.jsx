@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const HEIGHT_OPTIONS = [
 { value: 'all', label: 'Všechny výšky' },
@@ -144,6 +145,10 @@ export default function Kolekce() {
   const [installFilter, setInstallFilter] = useState('all');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    setSEO(SEO_PAGES.kolekce);
+  }, []);
 
   useEffect(() => {
     Promise.all([

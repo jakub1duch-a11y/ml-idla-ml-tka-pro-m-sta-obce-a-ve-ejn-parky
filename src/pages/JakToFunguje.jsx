@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
@@ -51,6 +52,7 @@ const faqs = [
 
 export default function JakToFunguje() {
   const [openFaq, setOpenFaq] = useState(null);
+  useEffect(() => { setSEO(SEO_PAGES.jakToFunguje); }, []);
 
   return (
     <div className="min-h-screen bg-ink pt-28">

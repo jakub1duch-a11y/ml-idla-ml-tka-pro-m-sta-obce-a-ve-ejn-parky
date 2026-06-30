@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Building2, CheckCircle, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const BENEFITS = [
   'Ochlazení okolního vzduchu až o 9 °C',
@@ -25,6 +26,7 @@ export default function MestaObce() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setSEO(SEO_PAGES.mestOobce);
     base44.entities.Product.list().catch(() => []).then(p => {
       setProducts((p || []).slice(0, 6));
     }).finally(() => setLoading(false));

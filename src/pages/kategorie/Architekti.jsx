@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucide-react';
@@ -17,6 +18,7 @@ const PROCESS = [
 ];
 
 export default function Architekti() {
+  useEffect(() => { setSEO(SEO_PAGES.architekti); }, []);
   return (
     <div className="min-h-screen bg-ink pt-28">
 

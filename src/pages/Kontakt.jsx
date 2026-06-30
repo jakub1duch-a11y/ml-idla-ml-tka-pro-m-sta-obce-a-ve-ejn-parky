@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } from 'lucide-react';
 import { trackCooperationFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const contactInfo = [
 { icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
@@ -30,6 +31,8 @@ export default function Kontakt() {
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+
+  useEffect(() => { setSEO(SEO_PAGES.kontakt); }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

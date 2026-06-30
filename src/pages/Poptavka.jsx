@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Loader, Phone, Mail, MapPin } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackContactFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const PRODUKTY = [
   'OSTEV (mlžný strom)',
@@ -32,6 +33,8 @@ export default function Poptavka() {
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+
+  useEffect(() => { setSEO(SEO_PAGES.poptavka); }, []);
 
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 

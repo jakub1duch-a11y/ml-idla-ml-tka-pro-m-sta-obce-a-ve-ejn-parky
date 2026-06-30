@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { MapPin, ZoomIn, ChevronLeft, ChevronRight, X, Loader, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -167,6 +168,7 @@ export default function Reference() {
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
+    setSEO(SEO_PAGES.reference);
     base44.entities.Realizace.list()
       .then(items => {
         const published = (items || []).filter(i => i.published);

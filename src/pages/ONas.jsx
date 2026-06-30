@@ -1,80 +1,228 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, MapPin, Mail, Phone, Shield, Zap, Award } from 'lucide-react';
+import { ArrowRight, MapPin, Mail, Phone, Shield, Zap, Award, Factory, Droplets, Palette } from 'lucide-react';
+
+const IMAGES = {
+  sprcha: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7f4a5f5e4_mlznsloup-sprh.png',
+  sdileny: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9e7f44e1b_zdilnymlzitek.png',
+  vyroba: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a246fd133_zvyrobymlzitek.png',
+  hriste: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d0e6e1a1a_mlzitka-mlzicizonyhriste.jpg',
+  playground: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8860437ac_bc30fe8d-c09c-49a2-9023-0795b982f456.png',
+  mrak: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22ead7299_Mrak-oblak-mlzitko.jpeg',
+  hvezda: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3e92a8289_mlzitkovetvruhvezdy.jpg',
+};
 
 export default function ONas() {
   return (
-    <div className="min-h-screen bg-ink pt-28">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 py-16">
+    <div className="min-h-screen bg-ink">
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">O NÁS</p>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-6">
-            HolmTec — výrobce mlžných soch a chladicích systémů
-          </h1>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="prose prose-invert max-w-none">
-
-          <p className="text-white/70 text-lg leading-relaxed mb-6">
-            HolmTec s.r.o. je česká společnost se sídlem v Trutnově, specializující se na návrh, výrobu a instalaci mlžných soch, mlhových portálů a venkovních chladicích systémů. Naše produkty kombinují estetiku průmyslového designu s pokročilou technologií vysokotlakého mlžení — výsledkem jsou instalace, které chladí, fascinují a stávají se dominantou každého prostoru.
-          </p>
-
-          <p className="text-white/70 text-lg leading-relaxed mb-6">
-            Zaměřujeme se na architekty, krajinné designéry, správce měst a obce, organizátory eventů i soukromé investory. Naše mlžné sochy najdete na městských náměstích, v hotelových vstupních prostorách, na festivalech i v soukromých zahradách po celé České republice a Slovensku. Za více než 120 realizacemi stojí tým zkušených konstruktérů, designérů a instalatérů, kteří každý projekt berou jako jedinečnou výzvu.
-          </p>
-
-          <p className="text-white/70 text-lg leading-relaxed mb-6">
-            Veškeré konstrukce vyrábíme z potravinářské nerezové oceli AISI 304 a 316L — bez chemie, bez biocidů, s pětiletou zárukou na konstrukci. Naše systémy pracují s tlakem 70 bar a rozptylují mikrokapičky o velikosti 5–10 μm, které se okamžitě odpaří a ochlazují okolní vzduch až o 9 °C. Každý projekt řešíme na míru: od prvního skici přes 3D vizualizaci až po montáž a servisní smlouvu.
-          </p>
-
-          <p className="text-white/70 text-lg leading-relaxed mb-10">
-            Věříme, že venkovní prostory mohou být nejen funkční, ale i působivé. Spojte se s námi a proměňte svůj prostor v místo, kde se lidé rádi zdržují — i v letních vedrech.
-          </p>
-        </motion.div>
-
-        {/* Hodnoty */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
-          {[
-            { icon: Shield, title: 'Certifikované materiály', desc: 'Nerez AISI 304/316L, vhodné pro veřejné prostory a dětská hřiště.' },
-            { icon: Award, title: '120+ realizací', desc: 'Více než dekáda zkušeností s projekty v ČR a SR.' },
-            { icon: Zap, title: 'Montáž za 1 den', desc: 'Rychlá instalace, minimální zásah do provozu místa.' },
-          ].map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="p-6 rounded-2xl bg-card_bg border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4">
-                <Icon size={18} className="text-cyan" />
-              </div>
-              <h3 className="text-white font-normal mb-2">{title}</h3>
-              <p className="text-sm text-white/50 leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Kontakt */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-          className="p-8 rounded-2xl bg-cyan/5 border border-cyan/20">
-          <h2 className="font-heading font-light text-2xl text-white mb-4">Kde nás najdete</h2>
-          <div className="flex flex-col gap-3 mb-6">
-            <div className="flex items-center gap-3 text-white/60 text-sm">
-              <MapPin size={15} className="text-cyan shrink-0" /> Trutnov, Česká republika
-            </div>
-            <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-3 text-white/60 text-sm hover:text-cyan transition-colors">
-              <Mail size={15} className="text-cyan shrink-0" /> obchod1@holmtec.cz
-            </a>
-            <a href="tel:+420774700390" className="flex items-center gap-3 text-white/60 text-sm hover:text-cyan transition-colors">
-              <Phone size={15} className="text-cyan shrink-0" /> +420 774 700 390
-            </a>
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
+        <img src={IMAGES.sprcha} alt="HolmTec mlžení" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/20" />
+        <div className="absolute inset-0 flex items-end">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">O NÁS</p>
+              <h1 className="font-heading text-4xl lg:text-6xl text-white leading-tight mb-0" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>
+                Příběh HolmTec
+              </h1>
+              <p className="text-white/60 text-lg mt-3 max-w-xl font-light">
+                Od precizní výroby pro automotive k umění, které osvěží města.
+              </p>
+            </motion.div>
           </div>
-          <Link to="/kontakt"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all">
+        </div>
+      </div>
+
+      {/* ── SEKCE 1: KOŘENY ──────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
+                <Factory size={18} className="text-cyan" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/40">Naše kořeny</p>
+            </div>
+            <h2 className="text-white mb-6" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+              Průmyslová přesnost<br />
+              <span style={{ fontStyle: 'italic' }}>a automotive</span>
+            </h2>
+            <p className="text-white/60 text-base leading-relaxed font-light mb-6">
+              Začátky naší společnosti jsou pevně spjaty s náročnou strojírenskou výrobou. Již více než 22 let se věnujeme preciznímu zpracování a 3D CNC ohýbání nerezových trubek. Naše technologie a hluboké know-how původně sloužily především automobilovému průmyslu.
+            </p>
+            <p className="text-white/60 text-base leading-relaxed font-light">
+              Vyráběli jsme množství specializovaných nástrojů pro automobilové hadice a přesně tvarované nerezové trubky pro klimatizační a chladicí systémy vozidel. Během těchto let jsme se naučili pracovat s naprostou přesností a klást maximální důraz na kvalitu, odolnost a dlouhou životnost materiálů.
+            </p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <img src={IMAGES.vyroba} alt="Výroba HolmTec" className="w-full aspect-[3/4] object-cover rounded-2xl" />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SEKCE 2: ZROZENÍ MYŠLENKY ────────────────────── */}
+      <section className="bg-surface border-y border-white/8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <img src={IMAGES.sdileny} alt="Sdílené mlžítko" className="w-full aspect-[4/3] object-cover rounded-2xl" />
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
+                  <Droplets size={18} className="text-cyan" />
+                </div>
+                <p className="text-xs font-mono tracking-widest uppercase text-white/40">Zrození myšlenky</p>
+              </div>
+              <h2 className="text-white mb-6" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+                Know-how ve službách<br />
+                <span style={{ fontStyle: 'italic' }}>veřejného prostoru</span>
+              </h2>
+              <p className="text-white/60 text-base leading-relaxed font-light mb-6">
+                S postupným nárůstem letních teplot a přehříváním městských aglomerací jsme si položili klíčovou otázku: Jak bychom mohli naši technologii ohýbání špičkového nerezu využít k tomu, abychom pomohli lidem a oživili rozpálené ulice?
+              </p>
+              <p className="text-white/60 text-base leading-relaxed font-light">
+                Rozhodli jsme se naše bohaté zkušenosti s chladicími systémy z automotive přetavit do zcela nového a užitečného konceptu. Tak vznikla naše funkční nerezová mlžítka — „mlžné sochy".
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SEKCE 3: STATS ───────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { val: '22+', label: 'let zkušeností' },
+            { val: '120+', label: 'realizací v ČR a SR' },
+            { val: '−9 °C', label: 'max. ochlazení' },
+            { val: '5 let', label: 'záruka na konstrukci' },
+          ].map((s) => (
+            <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              className="p-6 rounded-2xl bg-card_bg border border-white/10 text-center">
+              <p className="font-heading text-3xl text-cyan mb-1" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>{s.val}</p>
+              <p className="text-xs font-mono text-white/40 tracking-widest uppercase">{s.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── SEKCE 4: AKTIVNÍ OCHLAZENÍ ───────────────────── */}
+      <section className="bg-surface border-y border-white/8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
+                  <Zap size={18} className="text-cyan" />
+                </div>
+                <p className="text-xs font-mono tracking-widest uppercase text-white/40">Aktivní ochlazení</p>
+              </div>
+              <h2 className="text-white mb-6" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+                Pro města, provozy<br />
+                <span style={{ fontStyle: 'italic' }}>i školní zahrady</span>
+              </h2>
+              <p className="text-white/60 text-base leading-relaxed font-light mb-6">
+                Dnes naše mlžítka aktivně bojují proti městským tepelným ostrovům a ochlazují rozpálená náměstí, parky, školní a školkové zahrady, nemocniční areály, domovy seniorů či průmyslové a zemědělské provozy.
+              </p>
+              <p className="text-white/60 text-base leading-relaxed font-light">
+                Díky integrovaným mikrotryskám a fyzikálnímu principu evaporativního chlazení dokáží tyto prvky snížit lokální teplotu okolí o 5 až 10 °C — s minimální spotřebou vody a úsporným provozem.
+              </p>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-4">
+              <img src={IMAGES.hriste} alt="Mlžítka na hřišti" className="w-full aspect-video object-cover rounded-2xl" />
+              <div className="grid grid-cols-2 gap-4">
+                <img src={IMAGES.playground} alt="Děti u mlžítka" className="w-full aspect-[4/3] object-cover rounded-xl" />
+                <img src={IMAGES.mrak} alt="Mrak mlžítko" className="w-full aspect-[4/3] object-cover rounded-xl" />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SEKCE 5: ESTETIKA ────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-4">
+            <img src={IMAGES.hvezda} alt="Mlžítko hvězda" className="w-full aspect-[3/4] object-cover rounded-2xl" />
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
+                <Palette size={18} className="text-cyan" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/40">Estetika a identita</p>
+            </div>
+            <h2 className="text-white mb-6" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+              Místo, kde se<br />
+              <span style={{ fontStyle: 'italic' }}>lidé potkávají</span>
+            </h2>
+            <p className="text-white/60 text-base leading-relaxed font-light mb-6">
+              Od počátku nám bylo jasné, že do veřejného prostoru nechceme dodávat jen strohé technické trubky. Naše mlžítka plní velký estetický účel — fungují jako moderní sochařská díla, která citlivě doplňují architekturu a krajinu.
+            </p>
+            <p className="text-white/60 text-base leading-relaxed font-light mb-6">
+              Díky našim výrobním technologiím dokážeme nerez tvarovat přesně podle přání zákazníka do organických i abstraktních linií — ať už jde o stylizované zvířecí motivy, stromy či mraky.
+            </p>
+            <blockquote className="border-l-2 border-cyan/40 pl-5">
+              <p className="text-white/50 italic text-base font-light">"Setkáme se u mrkve." — Naše realizace se stávají přirozenými orientačními body a místy k setkávání.</p>
+            </blockquote>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SEKCE 6: HODNOTY ─────────────────────────────── */}
+      <section className="bg-surface border-y border-white/8">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Proč HolmTec</p>
+            <h2 className="text-white" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
+              Průmyslová preciznost<br /><span style={{ fontStyle: 'italic' }}>ve funkčním designu</span>
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { icon: Shield, title: 'Certifikované materiály', desc: 'Nerez AISI 304/316L — potravinářská kvalita, vhodné pro veřejné prostory a dětská hřiště. Bez chemie, bez biocidů.' },
+              { icon: Award, title: '120+ realizací', desc: 'Více než dvě dekády zkušeností s projekty po celé České republice a Slovensku.' },
+              { icon: Zap, title: 'Instalace na klíč', desc: 'Od prvního skici přes 3D vizualizaci po montáž a servisní smlouvu — vše pod jednou střechou.' },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="p-7 rounded-2xl bg-card_bg border border-white/10">
+                <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4 border border-cyan/20">
+                  <Icon size={18} className="text-cyan" />
+                </div>
+                <h3 className="text-white font-medium mb-2">{title}</h3>
+                <p className="text-sm text-white/50 leading-relaxed font-light">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── KONTAKT CTA ──────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="p-10 rounded-2xl bg-cyan/5 border border-cyan/20 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div>
+            <h2 className="text-white text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>V HolmTec jsme hrdí na to, co děláme.</h2>
+            <div className="flex flex-col sm:flex-row gap-4 mt-4 text-sm text-white/50 font-mono">
+              <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-cyan transition-colors"><Phone size={13} className="text-cyan" /> +420 774 700 390</a>
+              <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-cyan transition-colors"><Mail size={13} className="text-cyan" /> obchod1@holmtec.cz</a>
+              <span className="flex items-center gap-2"><MapPin size={13} className="text-cyan" /> Trutnov, ČR</span>
+            </div>
+          </div>
+          <Link to="/poptavka"
+            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 whitespace-nowrap">
             Nezávazná poptávka <ArrowRight size={15} />
           </Link>
         </motion.div>
+      </section>
 
-      </div>
     </div>
   );
 }

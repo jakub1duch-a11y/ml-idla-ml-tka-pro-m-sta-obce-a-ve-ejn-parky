@@ -1,8 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+
+const HEIGHT_OPTIONS = [
+  { value: 'all', label: 'Všechny výšky' },
+  { value: 'low', label: 'Do 1 m' },
+  { value: 'medium', label: '1–3 m' },
+  { value: 'tall', label: '3 m a více' },
+];
+
+const INSTALL_OPTIONS = [
+  { value: 'all', label: 'Jakákoliv instalace' },
+  { value: 'easy', label: 'Snadná (plug & play)' },
+  { value: 'medium', label: 'Střední (odborník)' },
+  { value: 'complex', label: 'Komplexní (projekt)' },
+];
+
+function getHeightRange(product) {
+  const h = (product.coverage_area || '').toLowerCase();
+  if (!h) return 'all';
+  const match = h.match(/(\d+)/);
+  if (!match) return 'all';
+  const val = parseInt(match[1]);
+  if (val < 100) return 'low';
+  if (val < 300) return 'medium';
+  return 'tall';
+}
+
+function getInstallComplexity(product) {
+  const desc = ((product.description || '') + (product.short_description || '')).toLowerCase();
+  if (desc.includes('plug') || desc.includes('snadná') || desc.includes('terasa') || desc.includes('zahrada')) return 'easy';
+  if (desc.includes('projekt') || desc.includes('zakázk') || desc.includes('instalace')) return 'complex';
+  return 'medium';
+}
 
 // ─── KATEGORIE ─────────────────────────────────────────────────────────────
 
@@ -107,6 +139,10 @@ export default function Kolekce() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [heightFilter, setHeightFilter] = useState('all');
+  const [installFilter, setInstallFilter] = useState('all');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     Promise.all([
@@ -123,12 +159,26 @@ export default function Kolekce() {
   }, []);
 
   const activeGroup = categoryGroups.find(g => g.id === activeCategory);
-  const displayedProducts = activeGroup
-    ? products.filter(p =>
-        activeGroup.dbCategories.includes(p._categoryName) ||
-        activeGroup.slugKeywords.some(kw => (p.slug || '').includes(kw))
-      )
-    : products.filter(p => !['HolmApp Control', 'Filtrační Moduly', 'Trysky HT-LT', 'AI Design Studio'].includes(p.name));
+  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
+
+  const displayedProducts = products
+    .filter(p => !['HolmApp Control', 'Filtrační Moduly', 'Trysky HT-LT', 'AI Design Studio'].includes(p.name))
+    .filter(p => {
+      if (activeGroup) {
+        return activeGroup.dbCategories.includes(p._categoryName) ||
+          activeGroup.slugKeywords.some(kw => (p.slug || '').includes(kw));
+      }
+      return true;
+    })
+    .filter(p => heightFilter === 'all' || getHeightRange(p) === heightFilter)
+    .filter(p => installFilter === 'all' || getInstallComplexity(p) === installFilter)
+    .filter(p => {
+      if (!search.trim()) return true;
+      const q = search.toLowerCase();
+      return (p.name || '').toLowerCase().includes(q) ||
+        (p.short_description || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q);
+    });
 
   return (
     <div className="min-h-screen bg-ink pt-28">
@@ -195,6 +245,59 @@ export default function Kolekce() {
             );
           })}
         </div>
+      </div>
+
+      {/* ── POKROČILÉ FILTRY ── */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-8">
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+          {/* Search */}
+          <input
+            type="text"
+            placeholder="Hledat produkt..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all"
+          />
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-mono tracking-widest uppercase transition-all ${showAdvanced || hasAdvancedFilter ? 'bg-cyan/10 border-cyan/40 text-cyan' : 'border-white/10 text-white/40 hover:border-white/30 hover:text-white/70'}`}
+          >
+            <SlidersHorizontal size={14} /> Filtry {hasAdvancedFilter && '●'}
+          </button>
+          {hasAdvancedFilter && (
+            <button onClick={() => { setHeightFilter('all'); setInstallFilter('all'); setSearch(''); }}
+              className="text-xs text-white/40 hover:text-white font-mono flex items-center gap-1">
+              <X size={12} /> Reset
+            </button>
+          )}
+        </div>
+
+        {showAdvanced && (
+          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <p className="text-[10px] font-mono text-white/30 tracking-widest uppercase mb-2">Výška systému</p>
+              <div className="flex flex-wrap gap-2">
+                {HEIGHT_OPTIONS.map(o => (
+                  <button key={o.value} onClick={() => setHeightFilter(o.value)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${heightFilter === o.value ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] font-mono text-white/30 tracking-widest uppercase mb-2">Náročnost instalace</p>
+              <div className="flex flex-wrap gap-2">
+                {INSTALL_OPTIONS.map(o => (
+                  <button key={o.value} onClick={() => setInstallFilter(o.value)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${installFilter === o.value ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* ── PRODUKTY ── */}

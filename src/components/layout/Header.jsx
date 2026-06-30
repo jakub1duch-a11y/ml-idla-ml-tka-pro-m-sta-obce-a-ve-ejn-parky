@@ -99,7 +99,7 @@ export default function Header() {
                 Katalog <ChevronDown size={13} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/mlhoviste" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Instalace</Link>
+            <Link to="/mlhoviste" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Mlžiště</Link>
             <Link to="/kategorie/eventy" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Pronájem</Link>
             <Link to="/reference" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Reference</Link>
             <Link to="/blog" className="px-4 py-1.5 rounded-full text-[13px] font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all">Blog & novinky</Link>
@@ -206,6 +206,7 @@ export default function Header() {
                 </div>
             }
               {[
+            { label: 'Mlžiště', path: '/mlhoviste' },
             { label: 'Reference', path: '/reference' },
             { label: 'Blog & novinky', path: '/blog' },
             { label: 'Podpora', path: '/podpora' },

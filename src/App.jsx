@@ -32,6 +32,7 @@ import Koupaliste from '@/pages/kategorie/Koupaliste';
 import Architekti from '@/pages/kategorie/Architekti';
 import Komercni from '@/pages/kategorie/Komercni';
 import Eventy from '@/pages/kategorie/Eventy';
+import Gdpr from '@/pages/Gdpr';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -75,6 +76,7 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/architekti" element={<Architekti />} />
         <Route path="/kategorie/komercni" element={<Komercni />} />
         <Route path="/kategorie/eventy" element={<Eventy />} />
+        <Route path="/gdpr" element={<Gdpr />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

@@ -60,9 +60,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-3">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-3 items-center">
           <p className="text-xs text-white/30">© {new Date().getFullYear()} HolmTec s.r.o. Všechna práva vyhrazena.</p>
-          <p className="text-xs text-white/20 font-mono">HOLMTEC · MLŽNÉ SOCHY · NEREZOVÁ OCEL</p>
+          <div className="flex items-center gap-4">
+            <Link to="/gdpr" className="text-xs text-white/30 hover:text-cyan transition-colors">Ochrana osobních údajů (GDPR)</Link>
+            <span className="text-white/15">·</span>
+            <Link to="/gdpr" className="text-xs text-white/30 hover:text-cyan transition-colors">Cookies</Link>
+            <span className="text-white/15">·</span>
+            <Link to="/podpora" className="text-xs text-white/30 hover:text-cyan transition-colors">Podpora</Link>
+          </div>
         </div>
       </div>
     </footer>

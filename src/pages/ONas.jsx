@@ -10,7 +10,7 @@ const IMAGES = {
   hriste: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d0e6e1a1a_mlzitka-mlzicizonyhriste.jpg',
   playground: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8860437ac_bc30fe8d-c09c-49a2-9023-0795b982f456.png',
   mrak: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22ead7299_Mrak-oblak-mlzitko.jpeg',
-  hvezda: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3e92a8289_mlzitkovetvruhvezdy.jpg',
+  hvezda: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3e92a8289_mlzitkovetvruhvezdy.jpg'
 };
 
 export default function ONas() {
@@ -98,17 +98,17 @@ export default function ONas() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { val: '22+', label: 'let zkušeností' },
-            { val: '120+', label: 'realizací v ČR a SR' },
-            { val: '−9 °C', label: 'max. ochlazení' },
-            { val: '5 let', label: 'záruka na konstrukci' },
-          ].map((s) => (
-            <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="p-6 rounded-2xl bg-card_bg border border-white/10 text-center">
+          { val: '22+', label: 'let zkušeností' },
+          { val: '120+', label: 'realizací v ČR a SR' },
+          { val: '−9 °C', label: 'max. ochlazení' },
+          { val: '5 let', label: 'záruka na konstrukci' }].
+          map((s) =>
+          <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="p-6 rounded-2xl bg-card_bg border border-white/10 text-center">
               <p className="font-heading text-3xl text-cyan mb-1" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>{s.val}</p>
               <p className="text-xs font-mono text-white/40 tracking-widest uppercase">{s.label}</p>
             </motion.div>
-          ))}
+          )}
         </div>
       </section>
 
@@ -167,8 +167,8 @@ export default function ONas() {
             <p className="text-white/60 text-base leading-relaxed font-light mb-6">
               Od počátku nám bylo jasné, že do veřejného prostoru nechceme dodávat jen strohé technické trubky. Naše mlžítka plní velký estetický účel — fungují jako moderní sochařská díla, která citlivě doplňují architekturu a krajinu.
             </p>
-            <p className="text-white/60 text-base leading-relaxed font-light mb-6">
-              Díky našim výrobním technologiím dokážeme nerez tvarovat přesně podle přání zákazníka do organických i abstraktních linií — ať už jde o stylizované zvířecí motivy, stromy či mraky.
+            <p className="text-white/60 text-base leading-relaxed font-light mb-6">Díky našim výrobním technologiím a velkému množství tv dokážeme nerez tvarovat přesně podle přání zákazníka do organických i abstraktních linií — ať už jde o stylizované zvířecí motivy, stromy či mraky.
+
             </p>
             <blockquote className="border-l-2 border-cyan/40 pl-5">
               <p className="text-white/50 italic text-base font-light">"Setkáme se u mrkve." — Naše realizace se stávají přirozenými orientačními body a místy k setkávání.</p>
@@ -188,18 +188,18 @@ export default function ONas() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { icon: Shield, title: 'Certifikované materiály', desc: 'Nerez AISI 304/316L — potravinářská kvalita, vhodné pro veřejné prostory a dětská hřiště. Bez chemie, bez biocidů.' },
-              { icon: Award, title: '120+ realizací', desc: 'Více než dvě dekády zkušeností s projekty po celé České republice a Slovensku.' },
-              { icon: Zap, title: 'Instalace na klíč', desc: 'Od prvního skici přes 3D vizualizaci po montáž a servisní smlouvu — vše pod jednou střechou.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="p-7 rounded-2xl bg-card_bg border border-white/10">
+            { icon: Shield, title: 'Certifikované materiály', desc: 'Nerez AISI 304/316L — potravinářská kvalita, vhodné pro veřejné prostory a dětská hřiště. Bez chemie, bez biocidů.' },
+            { icon: Award, title: '120+ realizací', desc: 'Více než dvě dekády zkušeností s projekty po celé České republice a Slovensku.' },
+            { icon: Zap, title: 'Instalace na klíč', desc: 'Od prvního skici přes 3D vizualizaci po montáž a servisní smlouvu — vše pod jednou střechou.' }].
+            map(({ icon: Icon, title, desc }) =>
+            <div key={title} className="p-7 rounded-2xl bg-card_bg border border-white/10">
                 <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4 border border-cyan/20">
                   <Icon size={18} className="text-cyan" />
                 </div>
                 <h3 className="text-white font-medium mb-2">{title}</h3>
                 <p className="text-sm text-white/50 leading-relaxed font-light">{desc}</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -207,7 +207,7 @@ export default function ONas() {
       {/* ── KONTAKT CTA ──────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="p-10 rounded-2xl bg-cyan/5 border border-cyan/20 flex flex-col lg:flex-row items-center justify-between gap-8">
+        className="p-10 rounded-2xl bg-cyan/5 border border-cyan/20 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
             <h2 className="text-white text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>V HolmTec jsme hrdí na to, co děláme.</h2>
             <div className="flex flex-col sm:flex-row gap-4 mt-4 text-sm text-white/50 font-mono">
@@ -217,12 +217,12 @@ export default function ONas() {
             </div>
           </div>
           <Link to="/poptavka"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 whitespace-nowrap">
+          className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 whitespace-nowrap">
             Nezávazná poptávka <ArrowRight size={15} />
           </Link>
         </motion.div>
       </section>
 
-    </div>
-  );
+    </div>);
+
 }

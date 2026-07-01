@@ -3,6 +3,7 @@ import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
 import CategorySlider from '@/components/home/CategorySlider';
 import HeroSection from '@/components/home/HeroSection';
 import CategoriesSection from '@/components/home/CategoriesSection';
+import ProductsSlider from '@/components/home/ProductsSlider';
 import SmartSection from '@/components/home/SmartSection';
 import VideoSection from '@/components/home/VideoSection';
 import ProjectsSection from '@/components/home/ProjectsSection';
@@ -23,6 +24,7 @@ export default function Home() {
       <CategorySlider />
       <HeroSection />
       <CategoriesSection />
+      <ProductsSlider />
       <FeaturedProductsSection />
       <HowItWorksSection />
       <SmartSection />

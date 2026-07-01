@@ -159,7 +159,7 @@ export default function HeroSection() {
         </div>
 
         {/* Feature icons strip */}
-        <div className="relative border-t border-white/50 backdrop-blur-xl bg-/45">
+        <div className="relative border-t border-white/50 backdrop-blur-xl bg-b/45">
           <div className="mx-auto lg:px-8 max-w-7xl px-8 py-3">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-white/10">
               {features.map((f) =>

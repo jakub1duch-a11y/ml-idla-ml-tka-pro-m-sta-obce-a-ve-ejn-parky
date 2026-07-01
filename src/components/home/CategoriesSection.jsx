@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 const categories = [
 {
   id: 'sochy',
-  label: 'Mlžné sochy',
+  label: 'Mlžidla, mlžítka a mlžné brány',
   tagline: 'Přírodní tvary. Živá atmosféra.',
   desc: 'Skulpturální instalace inspirované přírodou — stromy, mraky, listy. Dominanta každého prostoru.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
@@ -43,15 +43,15 @@ export default function CategoriesSection() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-          
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3 hidden">Kategorie produktů</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
               Řešení pro každý<br /><span className="text-slate-400">typ prostoru.</span>
             </motion.h2>
-            
-
-            
+            <Link to="/kolekce" className="flex items-center gap-2 text-sm text-slate-900 hover:text-slate-600 transition-colors font-medium whitespace-nowrap hidden">
+              Celá kolekce <ArrowRight size={14} />
+            </Link>
           </div>
         </motion.div>
 

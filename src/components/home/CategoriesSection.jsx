@@ -63,7 +63,7 @@ export default function CategoriesSection() {
             initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             
             <Link to={categories[0].link} className="group relative block rounded-2xl overflow-hidden h-full min-h-[400px]">
-              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG" alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 duration-800" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6b2d05df_mlidlo-mlzitkoAURA.png" alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 duration-800" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
               <div className="absolute flex flex-col justify-between inset-0 p-8">

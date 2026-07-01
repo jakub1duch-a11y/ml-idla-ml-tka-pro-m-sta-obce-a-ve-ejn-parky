@@ -1,0 +1,45 @@
+{
+  "name": "PushSubscription",
+  "type": "object",
+  "properties": {
+    "endpoint": {
+      "type": "string",
+      "description": "Push service endpoint URL"
+    },
+    "p256dh": {
+      "type": "string",
+      "description": "Subscription encryption key"
+    },
+    "auth": {
+      "type": "string",
+      "description": "Subscription auth secret"
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "Browser/device user agent"
+    }
+  },
+  "required": [
+    "endpoint",
+    "p256dh",
+    "auth"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

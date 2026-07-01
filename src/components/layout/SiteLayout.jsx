@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import NotificationPrompt from '@/components/common/NotificationPrompt';
 
 export default function SiteLayout() {
   return (
@@ -11,6 +12,7 @@ export default function SiteLayout() {
         <Outlet />
       </main>
       <Footer />
+      <NotificationPrompt />
     </div>
   );
 }

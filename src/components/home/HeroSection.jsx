@@ -130,18 +130,18 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative h-full flex flex-col justify-end">
-        <div className="max-w-7xl mx-auto px-6 w-full lg:px-8 pb-14">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 w-full lg:px-8 pb-10 sm:pb-14">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div key={current} custom={direction} variants={textVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.5, ease: 'easeOut' }}
             className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-mono tracking-widest uppercase text-white/80 mb-6">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-[10px] sm:text-xs font-mono tracking-widest uppercase text-white/80 mb-5 sm:mb-6 flex-wrap">
                 {slide.badge} · {slide.tag}
               </span>
-              <h1 className="text-white tracking-tight mb-2 [font-family:'Manrope',_sans-serif] font-semibold text-5xl lg:text-5xl normal-case" style={{ letterSpacing: '-0.03em' }}>
+              <h1 className="text-white tracking-tight mb-2 [font-family:'Manrope',_sans-serif] font-semibold text-4xl sm:text-5xl lg:text-6xl normal-case" style={{ letterSpacing: '-0.03em' }}>
                 {slide.name}
               </h1>
-              <p className="text-2xl lg:text-3xl text-white/60 font-light mb-5 not-italic text-left no-underline normal-case">{slide.subtitle}</p>
-              <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-lg mb-8 font-light">{slide.desc}</p>
+              <p className="text-xl sm:text-2xl lg:text-3xl text-white/60 font-light mb-4 sm:mb-5 not-italic text-left no-underline normal-case">{slide.subtitle}</p>
+              <p className="text-white/70 text-sm sm:text-base lg:text-lg leading-relaxed max-w-lg mb-6 sm:mb-8 font-light">{slide.desc}</p>
               <Link to={slide.cta}
               className="btn-pulse inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold">
                 Zobrazit produkt <ArrowRight size={16} />
@@ -160,14 +160,14 @@ export default function HeroSection() {
 
         {/* Feature icons strip */}
         <div className="relative border-t backdrop-blur-xl border-white/20 bg-black/0">
-          <div className="mx-auto max-w-7xl py-3 lg:px-8 px-28">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-white/10">
+          <div className="mx-auto max-w-7xl py-2 sm:py-3 px-5 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x lg:divide-y-0 divide-white/10">
               {features.map((f) =>
-              <div key={f.label} className="flex items-center gap-3 py-5 px-4">
+              <div key={f.label} className="flex items-center gap-3 py-3.5 sm:py-5 px-2 sm:px-4">
                   <f.icon size={20} className="shrink-0 text-white/80" />
                   <div className="min-w-0">
-                    <p className="leading-tight truncate text-sm text-[#8c8c8c]">{f.label}</p>
-                    <p className="font-medium leading-tight truncate uppercase text-lg text-[#4776b8]">{f.value}</p>
+                    <p className="leading-tight truncate text-xs sm:text-sm text-[#8c8c8c]">{f.label}</p>
+                    <p className="font-medium leading-tight truncate uppercase text-base sm:text-lg text-[#4776b8]">{f.value}</p>
                   </div>
                 </div>
               )}
@@ -178,11 +178,11 @@ export default function HeroSection() {
 
       {/* Arrows */}
       <button onClick={prev} aria-label="Předchozí"
-      className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+      className="hidden sm:flex absolute left-3 lg:left-8 top-1/2 -translate-y-1/2 w-9 h-9 lg:w-11 lg:h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 items-center justify-center text-white hover:bg-white/20 transition-all">
         <ChevronLeft size={18} />
       </button>
       <button onClick={next} aria-label="Další"
-      className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+      className="hidden sm:flex absolute right-3 lg:right-8 top-1/2 -translate-y-1/2 w-9 h-9 lg:w-11 lg:h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 items-center justify-center text-white hover:bg-white/20 transition-all">
         <ChevronRight size={18} />
       </button>
     </section>);

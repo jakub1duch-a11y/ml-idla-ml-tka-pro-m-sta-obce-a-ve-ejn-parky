@@ -61,15 +61,15 @@
 /* Fade-in & Slide-up on scroll (GSAP ScrollTrigger) */
 .reveal-element {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(40px) scale(0.98);
   transition-property: opacity, transform;
-  transition-duration: 0.8s;
+  transition-duration: 0.9s;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   will-change: opacity, transform;
 }
 .reveal-element.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Poptávka button hover effect */

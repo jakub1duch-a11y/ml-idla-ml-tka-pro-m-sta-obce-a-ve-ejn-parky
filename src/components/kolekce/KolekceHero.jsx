@@ -101,32 +101,42 @@ export default function KolekceHero() {
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-20 bg-gradient-to-b from-ink/50 via-ink/20 to-ink/80 pointer-events-none" />
-      <div className="absolute inset-0 z-20 bg-gradient-to-r from-ink/60 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-20 bg-gradient-to-t from-ink/60 via-ink/5 to-transparent pointer-events-none" />
 
       {/* Content */}
-      <div className="absolute inset-0 z-30 flex flex-col justify-end px-6 lg:px-16 pb-14">
-        <p className="text-xs font-mono tracking-[0.22em] uppercase text-cyan mb-4">Mlžítka a mlžidla Holmtec</p>
+      <div className="absolute inset-0 z-30 flex flex-col justify-end px-8 lg:px-16 pb-12">
         <AnimatePresence mode="wait">
           <motion.h2
-            key={taglineIdx}
-            initial={{ opacity: 0, y: 18 }}
+            key={`title-${taglineIdx}`}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="font-heading font-light text-3xl lg:text-5xl text-white max-w-2xl leading-tight tracking-tight">
+            className="font-heading font-extralight text-3xl lg:text-5xl text-white max-w-2xl leading-tight tracking-tight">
             
-            {TAGLINES[taglineIdx]}
+            Mlžítka a mlžidla Holmtec
           </motion.h2>
         </AnimatePresence>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={`tag-${taglineIdx}`}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.05 }}
+            className="text-xs font-medium tracking-[0.18em] uppercase text-white/60 mt-3">
+            
+            {TAGLINES[taglineIdx]}
+          </motion.p>
+        </AnimatePresence>
 
-        {/* Dot nav */}
-        <div className="flex gap-1.5 mt-8">
+        {/* Dash nav */}
+        <div className="flex gap-1.5 mt-6">
           {SLIDES.map((_, i) =>
           <button
             key={i}
             onClick={() => goTo(i)}
-            className={`h-0.5 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-cyan' : 'w-3 bg-white/25 hover:bg-white/50'}`} />
+            className={`h-px rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-white' : 'w-4 bg-white/30 hover:bg-white/60'}`} />
 
           )}
         </div>

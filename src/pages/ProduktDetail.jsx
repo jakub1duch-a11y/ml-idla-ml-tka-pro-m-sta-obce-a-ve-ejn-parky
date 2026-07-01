@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Droplet, Zap, Gauge } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -128,6 +128,7 @@ function ContactForm({ productName }) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ProduktDetail() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -139,6 +140,7 @@ export default function ProduktDetail() {
   };
 
   useEffect(() => {
+    if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
     setLoading(true);
     setNotFound(false);
     base44.entities.Product.filter({ slug })

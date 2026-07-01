@@ -154,18 +154,16 @@ export default function Gate70() {
                 1. HERO — dvě varianty s přepínačem
              ══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen overflow-hidden">
-        <AnimatePresence mode="sync">
-          <motion.img
-            key={variant.id}
-            src={variant.image}
-            alt={variant.label}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
-            className="absolute inset-0 w-full h-full object-cover" />
-          
-        </AnimatePresence>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={variant.image}
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={VIDEOS[0].url} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/50 to-ink/20" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" />
 
@@ -197,6 +195,10 @@ export default function Gate70() {
               className="text-white/50 text-xs font-mono tracking-widest uppercase mb-4">{variant.tag}
               </motion.p>
             </AnimatePresence>
+
+            <p className="text-white/60 text-base lg:text-lg max-w-xl mb-8 leading-relaxed font-light">
+              Designová mlžná brána z nerezové oceli AISI 316L. Pět trysek vytváří jemnou mlhovou clonu, která ochladí procházející o až 9 °C — bez kapek na zemi, bez hluku, s plně integrovaným Wi-Fi Smart řízením.
+            </p>
 
             {/* Stats row */}
             <div className="flex flex-wrap gap-8 mb-10">

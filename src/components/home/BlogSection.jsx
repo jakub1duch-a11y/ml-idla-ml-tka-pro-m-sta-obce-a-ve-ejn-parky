@@ -66,25 +66,25 @@ export default function BlogSection() {
 
   if (loading) {
     return (
-      <section className="py-24 bg-surface">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-center py-20">
-          <Loader size={24} className="animate-spin text-cyan/40" />
+          <Loader size={24} className="animate-spin text-slate-300" />
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-24 bg-surface">
+    <section className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Blog & znalosti</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Blog & znalosti</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-            <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
+            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
               O mlžení do hloubky
             </h2>
-            <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-cyan font-light hover:gap-3 transition-all">
+            <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-slate-900 font-light hover:gap-3 transition-all">
               Všechny články <ArrowRight size={14} />
             </Link>
           </div>
@@ -96,7 +96,7 @@ export default function BlogSection() {
           {featured && (
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="lg:col-span-3">
-              <Link to={`/blog/${featured.slug || featured.id}`} className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all h-full flex flex-col bg-card_bg">
+              <Link to={`/blog/${featured.slug || featured.id}`} className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all h-full flex flex-col bg-white shadow-sm">
                 {featured.image_url && (
                   <div className="aspect-[16/9] overflow-hidden">
                     <img src={featured.image_url} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -104,12 +104,12 @@ export default function BlogSection() {
                 )}
                 <div className="p-8 flex flex-col flex-1">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-xs font-mono text-cyan tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
-                    {featured.published_date && <><span className="w-1 h-1 rounded-full bg-white/20" /><span className="text-xs font-mono text-white/30">{formatDate(featured.published_date)}</span></>}
+                    <span className="text-xs font-mono text-slate-500 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
+                    {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-300" /><span className="text-xs font-mono text-slate-400">{formatDate(featured.published_date)}</span></>}
                   </div>
-                  <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3 leading-snug group-hover:text-cyan/90 transition-colors">{featured.title}</h3>
-                  <p className="text-sm text-white/50 font-light leading-relaxed flex-1">{featured.perex}</p>
-                  <div className="mt-6 flex items-center gap-2 text-xs text-cyan font-light group-hover:gap-3 transition-all">
+                  <h3 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h3>
+                  <p className="text-sm text-slate-500 font-light leading-relaxed flex-1">{featured.perex}</p>
+                  <div className="mt-6 flex items-center gap-2 text-xs text-slate-900 font-light group-hover:gap-3 transition-all">
                     Číst článek <ArrowRight size={12} />
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function BlogSection() {
             <div className="lg:col-span-2 flex flex-col gap-5">
               {rest.map((post, i) => (
                 <motion.div key={post.id} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                  <Link to={`/blog/${post.slug || post.id}`} className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all flex gap-0 bg-card_bg h-full">
+                  <Link to={`/blog/${post.slug || post.id}`} className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all flex gap-0 bg-white shadow-sm h-full">
                     {post.image_url && (
                       <div className="w-28 flex-shrink-0 overflow-hidden">
                         <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -131,11 +131,11 @@ export default function BlogSection() {
                     <div className="p-5 flex flex-col justify-between flex-1 min-w-0">
                       <div>
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs font-mono text-cyan tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
+                          <span className="text-xs font-mono text-slate-500 tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
                         </div>
-                        <h4 className="font-light text-white text-sm leading-snug group-hover:text-cyan/90 transition-colors line-clamp-2">{post.title}</h4>
+                        <h4 className="font-light text-slate-900 text-sm leading-snug group-hover:text-slate-600 transition-colors line-clamp-2">{post.title}</h4>
                       </div>
-                      {post.published_date && <p className="text-xs font-mono text-white/30 mt-2">{formatDate(post.published_date)}</p>}
+                      {post.published_date && <p className="text-xs font-mono text-slate-400 mt-2">{formatDate(post.published_date)}</p>}
                     </div>
                   </Link>
                 </motion.div>

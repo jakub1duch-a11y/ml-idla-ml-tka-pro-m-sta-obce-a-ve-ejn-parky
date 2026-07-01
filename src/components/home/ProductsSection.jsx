@@ -29,14 +29,14 @@ const products = [
 
 export default function ProductsSection() {
   return (
-    <section className="py-24 bg-surface">
+    <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Naše produkty</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Naše produkty</p>
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
             Co umíme vytvořit
           </h2>
-          <p className="mt-3 text-white/50 max-w-lg">
+          <p className="mt-3 text-slate-500 max-w-lg">
             Od zahradní skulptury po průmyslovou mlžnou bránu — každý produkt je navržen jako dílo.
           </p>
         </motion.div>
@@ -44,15 +44,15 @@ export default function ProductsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {products.map((p, i) => (
             <motion.div key={p.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-              <Link to="/kolekce" className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300">
+              <Link to="/kolekce" className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-6">
-                  <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">{p.category}</p>
-                  <h3 className="text-xl font-normal text-white mb-2">{p.name}</h3>
-                  <p className="text-sm text-white/50 leading-relaxed mb-4">{p.desc}</p>
-                  <div className="flex items-center gap-2 text-sm text-cyan font-medium">
+                  <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">{p.category}</p>
+                  <h3 className="text-xl font-normal text-slate-900 mb-2">{p.name}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-4">{p.desc}</p>
+                  <div className="flex items-center gap-2 text-sm text-slate-900 font-medium">
                     Více <ArrowRight size={14} />
                   </div>
                 </div>

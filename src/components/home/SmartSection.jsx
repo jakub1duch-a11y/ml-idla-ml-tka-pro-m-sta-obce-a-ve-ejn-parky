@@ -12,34 +12,34 @@ const features = [
 
 export default function SmartSection() {
   return (
-    <section className="py-24 bg-ink overflow-hidden">
+    <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan/10 border border-cyan/20 text-xs font-mono text-cyan tracking-widest uppercase mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono text-slate-600 tracking-widest uppercase mb-6">
               Smart ovládání
             </div>
-            <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-6">
-              Mlžení z mobilu.<br /><span className="text-cyan">Kdykoli. Odkudkoli.</span>
+            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6">
+              Mlžení z mobilu.<br /><span className="italic">Kdykoli. Odkudkoli.</span>
             </h2>
-            <p className="text-white/50 text-lg leading-relaxed mb-8">
+            <p className="text-slate-500 text-lg leading-relaxed mb-8">
               Aplikace HolmTec zobrazuje teplotu, vlhkost, spotřebu vody a stav systému v reálném čase. Automatické plány, scény, skupinové ovládání.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
               {features.map((f) => (
-                <div key={f.label} className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
-                  <f.icon size={18} className="text-cyan mt-0.5 flex-shrink-0" />
+                <div key={f.label} className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-semibold text-white">{f.label}</p>
-                    <p className="text-xs text-white/40">{f.sub}</p>
+                    <p className="text-sm font-semibold text-slate-900">{f.label}</p>
+                    <p className="text-xs text-slate-400">{f.sub}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <Link to="/kontakt"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-all">
               Spočítat náklady
             </Link>
           </motion.div>
@@ -47,9 +47,9 @@ export default function SmartSection() {
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
             <div className="grid grid-cols-2 gap-4">
               <img src="https://media.base44.com/images/public/69f87b0204346ce73cee73b1/ae189a9d2_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ.png"
-                alt="Smart app" className="w-full rounded-2xl border border-white/10" />
+                alt="Smart app" className="w-full rounded-2xl border border-slate-200" />
               <img src="https://media.base44.com/images/public/69f87b0204346ce73cee73b1/4d63dd88b_videoframe_7589.png"
-                alt="Smart app 2" className="w-full rounded-2xl border border-white/10 mt-8" />
+                alt="Smart app 2" className="w-full rounded-2xl border border-slate-200 mt-8" />
             </div>
           </motion.div>
         </div>

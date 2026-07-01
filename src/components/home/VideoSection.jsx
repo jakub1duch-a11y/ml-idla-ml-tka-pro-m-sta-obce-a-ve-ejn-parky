@@ -28,7 +28,7 @@ export default function VideoSection() {
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-5">Technologie v praxi</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-5">Technologie v praxi</p>
           <h2 className="font-heading font-extralight text-5xl lg:text-7xl text-white tracking-tight leading-[1.05] mb-6">
             Mlha, která<br />mění prostor
           </h2>
@@ -37,7 +37,7 @@ export default function VideoSection() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/kolekce"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-medium rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-medium rounded-full hover:bg-white/90 transition-all">
               Prohlédnout kolekci <ArrowRight size={16} />
             </Link>
             <Link to="/kontakt"

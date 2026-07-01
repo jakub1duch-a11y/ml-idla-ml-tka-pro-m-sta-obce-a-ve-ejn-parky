@@ -77,7 +77,7 @@ const TECH_ROWS = [
 { label: 'Napájení', value: "12V / Wi-Fi Smart \u0159\xEDzen\xED" },
 { label: 'Dodací lhůta', value: '1–5 týdnů dle výroby' },
 { label: 'Záruka', value: "1 ROK na konstrukci" },
-{ label: 'Cena od', value: '48 450 Kč bez DPH*' }];
+{ label: "", value: "" }];
 
 
 const SMART_FEATURES = [
@@ -151,8 +151,8 @@ export default function Gate70() {
     <div className="min-h-screen bg-ink">
 
       {/* ══════════════════════════════════════════════════════
-                          1. HERO — dvě varianty s přepínačem
-                       ══════════════════════════════════════════════════════ */}
+                           1. HERO — dvě varianty s přepínačem
+                        ══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen overflow-hidden">
         <video
           autoPlay
@@ -230,8 +230,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          2. DVĚ VARIANTY — porovnání vedle sebe
-                       ══════════════════════════════════════════════════════ */}
+                           2. DVĚ VARIANTY — porovnání vedle sebe
+                        ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Dvě tvarové varianty</p>
@@ -266,15 +266,15 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          3. LANDING INFO — o bráně
-                       ══════════════════════════════════════════════════════ */}
+                           3. LANDING INFO — o bráně
+                        ══════════════════════════════════════════════════════ */}
       <section className="bg-ink py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="relative rounded-3xl overflow-hidden cursor-pointer group min-h-[600px] flex items-center"
-            onClick={() => setLightbox({ images: ALL_GALLERY, idx: 0 })}>
+          className="relative rounded-3xl overflow-hidden cursor-pointer group min-h-[600px] flex items-center"
+          onClick={() => setLightbox({ images: ALL_GALLERY, idx: 0 })}>
             <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aa26eeb6a_Mltko_GATE_70U.png"
-              alt="GATE70 v parku" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            alt="GATE70 v parku" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/10 to-black/70" />
 
             <div className="relative ml-auto mr-8 lg:mr-14 w-full max-w-md p-8 lg:p-10 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 shadow-2xl" onClick={(e) => e.stopPropagation()}>
@@ -288,11 +288,11 @@ export default function Gate70() {
               <p className="text-white/70 text-sm leading-relaxed font-light mb-6">
                 Pět mlžných trysek z nerezové oceli AISI 316L vytváří jemnou mlhovou clonu…
               </p>
-              <p className="text-white/60 text-sm leading-relaxed font-light mb-8">
-                Rozměry upravitelné dle projektové dokumentace&nbsp;/&nbsp;Kotvení skrytou patkou pod úrovní terénu&nbsp;/&nbsp;Není herní prvek — designový architektonický prvek&nbsp;/&nbsp;Cena od 48 450 Kč bez DPH, dodání 1–5 týdnů
+              <p className="text-white/60 text-sm leading-relaxed font-light mb-8">Rozměry upravitelné dle projektové dokumentace / Kotvení skrytou patkou pod úrovní terénu / Není herní prvek — designový architektonický prvek 
+
               </p>
               <Link to="/poptavka"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-ink text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-ink text-sm font-bold rounded-full hover:bg-white/90 transition-all">
                 Nezávazná poptávka
               </Link>
             </div>
@@ -301,8 +301,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          4. TECHNICKÉ SPECIFIKACE
-                       ══════════════════════════════════════════════════════ */}
+                           4. TECHNICKÉ SPECIFIKACE
+                        ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -345,8 +345,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          5. SMART ŘÍZENÍ
-                       ══════════════════════════════════════════════════════ */}
+                           5. SMART ŘÍZENÍ
+                        ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-y border-white/8 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
@@ -377,8 +377,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          6. FOTOGALERIE + DETAIL FOTO
-                       ══════════════════════════════════════════════════════ */}
+                           6. FOTOGALERIE + DETAIL FOTO
+                        ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Fotogalerie</p>
@@ -410,8 +410,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          7. VIDEA V AKCI
-                       ══════════════════════════════════════════════════════ */}
+                           7. VIDEA V AKCI
+                        ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-y border-white/8 py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
@@ -451,8 +451,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          8. REALIZACE
-                       ══════════════════════════════════════════════════════ */}
+                           8. REALIZACE
+                        ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Realizace</p>
@@ -478,8 +478,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                          9. CTA — Poptávka
-                       ══════════════════════════════════════════════════════ */}
+                           9. CTA — Poptávka
+                        ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-t border-white/8 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

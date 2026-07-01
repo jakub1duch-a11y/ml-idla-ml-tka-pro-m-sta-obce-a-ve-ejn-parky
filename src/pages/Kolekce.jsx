@@ -268,7 +268,7 @@ export default function Kolekce() {
       </div>
 
       {/* ── PRODUKTY ── */}
-      <div className="max-w-7xl px-6 lg:px-8 pb-16 mt-10 mb-10">
+      <div className="max-w-7xl lg:px-8 my-10 mx-auto">
         <div className="flex items-center justify-between mb-8">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400">
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny produkty'}

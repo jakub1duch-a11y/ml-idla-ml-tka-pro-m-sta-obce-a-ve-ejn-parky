@@ -190,7 +190,7 @@ export default function Kolekce() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-4">
-            Mlžné systémy<br /><span className="text-slate-400">pro každý prostor.</span>
+            Mlžítka<br /><span className="text-slate-400">a mlžiště.</span>
           </h1>
           <p className="text-slate-500 max-w-xl text-lg leading-relaxed">
             Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.

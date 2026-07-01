@@ -25,9 +25,9 @@ const MEGA_COLUMNS = [
   heading: 'Příslušenství & Moduly',
   icon: Package,
   items: [
-  { label: 'Trysky HolmTec', sub: 'AISI 316L, 10–50 μm', path: '/kolekce' },
+  { label: 'Trysky HolmTec', sub: 'AISI 316L, 10–50 μm', path: '/prislusenstvi' },
   { label: 'Smart moduly', sub: 'Řízení a automatizace', path: '/jak-to-funguje' },
-  { label: 'Komponenty', sub: 'Čerpadla, filtry, hadice', path: '/kolekce' }]
+  { label: 'Komponenty', sub: 'Čerpadla, filtry, hadice', path: '/prislusenstvi' }]
 
 }];
 

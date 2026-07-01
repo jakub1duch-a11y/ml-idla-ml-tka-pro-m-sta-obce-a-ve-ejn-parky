@@ -113,6 +113,25 @@ export default function MestaObce() {
         </div>
       </section>
 
+      {/* Video - Smart řízení */}
+      <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
+            <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Smart řízení pro obce</p>
+            <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+              Automatický start/stop<br /><span style={{ fontStyle: 'italic' }}>dle teploty a vlhkosti.</span>
+            </h2>
+            <p className="text-white/70 leading-relaxed font-light max-w-xl">
+              Monitoring přes webový dashboard pro správce města. Bezúdržbový provoz, 100% česká výroba a dodávka do 8 týdnů.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Produkty */}
       <section className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">

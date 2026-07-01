@@ -61,6 +61,41 @@ export default function Outdoor() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-16">
+          <div>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Chytrá zahrada</p>
+            <h2 className="text-slate-900 text-3xl mb-5" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+              Ovládejte mlhu<br /><span style={{ fontStyle: 'italic' }}>z telefonu.</span>
+            </h2>
+            <p className="text-slate-500 leading-relaxed font-light mb-6">
+              Smart aplikace sleduje teplotu a vlhkost v reálném čase. Nastavte automatický start při 25 °C nebo spusťte mlžení jedním klepnutím — odkudkoliv.
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { val: 'WiFi + BT', label: 'Dálkové ovládání' },
+                { val: '0,1–0,3 l/min', label: 'Spotřeba vody' },
+                { val: 'Auto', label: 'Start při 25 °C' },
+              ].map(s => (
+                <div key={s.label} className="text-center p-4 rounded-xl bg-white border border-slate-200">
+                  <p className="text-slate-900 font-medium text-sm">{s.val}</p>
+                  <p className="text-slate-400 text-xs mt-1">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b04eeb68d_MLZitko-oblsknazahradu.jpg',
+              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/cd64b3bdb_mrak-oblaknazahradu-mlzitka.png',
+              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/658e4144d_steblo-mlzitko.jpeg',
+              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/a982a794f_mlzitkosteblo.jpg',
+            ].map((src, i) => (
+              <div key={src} className="aspect-square rounded-2xl overflow-hidden">
+                <img src={src} alt="Mlžítko v zahradě" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty pro zahradu</p>
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>
         {loading ? (

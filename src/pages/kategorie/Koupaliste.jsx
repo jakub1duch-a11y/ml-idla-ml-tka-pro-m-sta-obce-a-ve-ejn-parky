@@ -61,6 +61,23 @@ export default function Koupaliste() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Tematický design</p>
+        <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+          Zážitek, kvůli kterému<br /><span style={{ fontStyle: 'italic' }}>se návštěvníci vrátí.</span>
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+          {[
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/284079174_mlzitk-hvezdaauzovka.jpeg',
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/503ff73d9_mlznehriste-kopie.jpeg',
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/910eb2c63_bendymlzitko-steblo.jpeg',
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/d851d598c_mlznehriste-mlzitkohvezda.jpg',
+          ].map((src, i) => (
+            <motion.div key={src} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+              className="aspect-square rounded-2xl overflow-hidden group">
+              <img src={src} alt="Mlžítko v ZOO / koupališti" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </motion.div>
+          ))}
+        </div>
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty</p>
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>
         {loading ? (

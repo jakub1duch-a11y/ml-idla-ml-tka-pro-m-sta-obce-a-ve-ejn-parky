@@ -60,6 +60,40 @@ export default function Komercni() {
         </div>
       </section>
 
+      <section className="bg-slate-50 border-y border-slate-200 py-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-2 md:grid-cols-3 gap-4">
+          {[
+            { val: '+34 %', label: 'Nárůst tržeb terasy' },
+            { val: '+2,4 h', label: 'Delší pobyt hosta' },
+            { val: '4–6 týdnů', label: 'Prodloužení sezóny' },
+          ].map(s => (
+            <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
+              <p className="font-heading text-2xl text-slate-900 mb-1" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
+              <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Video */}
+      <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/a155bfef6_mlzisteprokomercniprostory.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
+            <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Mlžiště pro komerční prostory</p>
+            <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+              Terasa, kde<br /><span style={{ fontStyle: 'italic' }}>hosté zůstávají.</span>
+            </h2>
+            <p className="text-white/70 leading-relaxed font-light max-w-xl">
+              Mlžný systém na terase prodlouží sezónu o týdny a udrží příjemné mikroklima i v největším horku.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty</p>
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>

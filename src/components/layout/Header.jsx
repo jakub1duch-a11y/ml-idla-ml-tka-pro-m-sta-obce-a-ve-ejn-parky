@@ -80,7 +80,7 @@ export default function Header() {
               <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
             </svg>
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.04em' }} className="text-slate-900 leading-none text-3xl [font-family:'Geist',_sans-serif] font-medium">
-              mlzidla<span className="font-medium text-[#1c82ab]">.cz</span>
+              mlzidla<span className="font-medium text-[#214999]">.cz</span>
             </span>
           </Link>
 

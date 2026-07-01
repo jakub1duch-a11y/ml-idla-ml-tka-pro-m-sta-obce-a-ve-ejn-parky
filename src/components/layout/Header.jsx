@@ -85,7 +85,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
+          <nav className="flex items-center gap-0.5 flex-1 justify-center">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -101,7 +101,7 @@ export default function Header() {
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-all">O nás</Link>
               <Link to="/poptavka"
               className="flex items-center gap-1.5 px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">

@@ -137,7 +137,7 @@ export default function HeroSection() {
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-[10px] sm:text-xs font-mono tracking-widest uppercase text-white/80 mb-5 sm:mb-6 flex-wrap">
                 {slide.badge} · {slide.tag}
               </span>
-              <h1 className="text-white tracking-tight mb-2 lg:text-6xl normal-case [font-family:'Space_Grotesk',_sans-serif] font-normal text-left text-4xl sm:text-2xl" style={{ letterSpacing: '-0.03em' }}>
+              <h1 className="text-white tracking-tight mb-2 lg:text-6xl normal-case [font-family:'Space_Grotesk',_sans-serif] font-normal text-left text-4xl sm:text-xl" style={{ letterSpacing: '-0.03em' }}>
                 {slide.name}
               </h1>
               <p className="text-xl sm:text-2xl lg:text-3xl text-white/60 font-light mb-4 sm:mb-5 not-italic text-left no-underline normal-case">{slide.subtitle}</p>

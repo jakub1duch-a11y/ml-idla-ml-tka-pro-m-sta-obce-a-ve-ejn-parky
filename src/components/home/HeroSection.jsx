@@ -139,7 +139,7 @@ export default function HeroSection() {
       </AnimatePresence>
 
       {/* Slide counter bar */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-24">
+      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-2">
         {slides.map((_, i) =>
         <button
           key={i}

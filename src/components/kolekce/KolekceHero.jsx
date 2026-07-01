@@ -17,10 +17,6 @@ const TAGLINES = [
 
 
 const SLIDES = [
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ce06fecd0_mlzitko1.mp4' },
-{ type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18e8dd52b_mlnprvek-mrak-mlzidla.png' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/3866b5e67_2Nemo_slow_OK.mp4' },
-{ type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6def598fd_mlnprvek-mrak-mlzidla03.png' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/74a4e8604_mlzidla-mlzitkaproparkyamesta01.MP4' },
 { type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9aa2c2600_mlzitka-mlzicizonyhriste.jpg' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eb7e87313_mlzidla-mlzitkaproparkyamesta03.MOV' },

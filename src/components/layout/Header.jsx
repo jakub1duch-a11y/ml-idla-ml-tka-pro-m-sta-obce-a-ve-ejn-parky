@@ -68,7 +68,7 @@ export default function Header() {
 
       
 
-      <header className={`fixed top-0 left-0 right-0 backdrop-blur-xl transition-all duration-300 z-40 bg-white/0 ${
+      <header className={`fixed top-0 left-0 right-0 backdrop-blur-xl transition-all duration-300 z-40 bg-white/10 ${
       scrolled ? 'border-b border-slate-200 shadow-sm' : 'border-b border-transparent'}`
       }>
         <div className="flex items-center justify-between max-w-7xl h-16 px-6 lg:px-8 mx-auto gap-4 lg:gap-8">
@@ -100,7 +100,7 @@ export default function Header() {
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Reference</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--foreground))]">Reference</Link>
             <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Blog & novinky</Link>
             <Link to="/podpora" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Podpora</Link>
           </nav>

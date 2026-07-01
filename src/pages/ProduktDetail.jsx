@@ -191,7 +191,7 @@ export default function ProduktDetail() {
   ].filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen bg-white">
 
       {/* ═══════════════════════════════════════════════════════
           1. FULLSCREEN HERO
@@ -217,9 +217,8 @@ export default function ProduktDetail() {
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">HolmTec · Mlžné skulptury</p>
-            {/* Bold product name */}
-            <h1 style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 0.9 }}
-              className="text-7xl lg:text-[10rem] text-white uppercase mb-6">
+            {/* Product name */}
+            <h1 className="font-heading font-light tracking-tight leading-[0.95] text-6xl lg:text-8xl text-white mb-6">
               {product.name}
             </h1>
             
@@ -306,14 +305,9 @@ export default function ProduktDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Architektura přírody</p>
-            {/* Two-line headline: normal + italic */}
-            <h2 className="text-slate-900 mb-8" style={{ lineHeight: 1.0 }}>
-              <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em' }}>
-                {product.name === 'OSTEV' ? 'Strom, který' : product.name + ','}
-              </span>
-              <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em' }}>
-                {product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}
-              </span>
+            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-8">
+              {product.name === 'OSTEV' ? 'Strom, který' : product.name + ','}<br />
+              <span className="text-slate-400">{product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}</span>
             </h2>
             <p className="text-slate-500 text-base lg:text-lg leading-relaxed font-light mb-8">
               {product.name === 'OSTEV'
@@ -338,7 +332,7 @@ export default function ProduktDetail() {
                 { val: product.pressure || '70 bar', label: 'Tlak mlžení' },
               ].map(s => (
                 <div key={s.label} className="text-center">
-                  <p style={{ fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.04em', lineHeight: 1 }} className="text-slate-900">{s.val}</p>
+                  <p className="font-heading font-bold text-2xl tracking-tight leading-none text-slate-900">{s.val}</p>
                   <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mt-1">{s.label}</p>
                 </div>
               ))}
@@ -370,9 +364,8 @@ export default function ProduktDetail() {
               </motion.div>
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Materiál a detail</p>
-                <h2 className="text-slate-900 mb-8" style={{ lineHeight: 1.0 }}>
-                  <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Každá kapka</span>
-                  <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>nespadne na zem.</span>
+                <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-8">
+                  Každá kapka<br /><span className="text-slate-400">nespadne na zem.</span>
                 </h2>
                 <p className="text-slate-500 text-base leading-relaxed font-light mb-8">
                   Trysky {product.micron_size ? product.micron_size : '10–50'} μm vytvářejí kapičky tak drobné, že se okamžitě odpařují ve vzduchu. Žádné mokré chodníky. Žádné louže. Jen příjemný chlad, který visí ve vzduchu jako ranní mlha.
@@ -392,9 +385,8 @@ export default function ProduktDetail() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vlastnosti</p>
-          <h2 className="text-slate-900" style={{ lineHeight: 1.0 }}>
-            <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Víc než mlžítko.</span>
-            <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Prvek prostoru.</span>
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+            Víc než mlžítko.<br /><span className="text-slate-400">Prvek prostoru.</span>
           </h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
@@ -407,7 +399,7 @@ export default function ProduktDetail() {
             <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
               className="bg-white p-7">
               <span className="text-2xl mb-3 block">{f.icon}</span>
-              <h3 style={{ fontWeight: 600, fontSize: '1.05rem', letterSpacing: '-0.02em' }} className="text-slate-900 mb-3">{f.title}</h3>
+              <h3 className="text-slate-900 text-base font-medium tracking-tight mb-3">{f.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed font-light">{f.desc}</p>
             </motion.div>
           ))}
@@ -422,9 +414,8 @@ export default function ProduktDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Technické parametry</p>
-              <h2 className="text-slate-900 mb-10" style={{ lineHeight: 1.0 }}>
-                <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Preciznost</span>
-                <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>v každém detailu.</span>
+              <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
+                Preciznost<br /><span className="text-slate-400">v každém detailu.</span>
               </h2>
               <div className="rounded-2xl overflow-hidden border border-slate-200">
                 {techRows.map((row, i) => (
@@ -460,9 +451,8 @@ export default function ProduktDetail() {
       <section id="videa" className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Videa z terénu</p>
-          <h2 className="text-slate-900 mb-12" style={{ lineHeight: 1.0 }}>
-            <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>{product.name}</span>
-            <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>v akci.</span>
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
+            {product.name}<br /><span className="text-slate-400">v akci.</span>
           </h2>
           {/* Gallery of images shown as video previews if no video */}
           {allImages.length >= 2 && (
@@ -482,9 +472,8 @@ export default function ProduktDetail() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde {product.name} roste</p>
-          <h2 className="text-slate-900" style={{ lineHeight: 1.0 }}>
-            <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Každý prostor</span>
-            <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>má svůj {product.name}.</span>
+          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+            Každý prostor<br /><span className="text-slate-400">má svůj {product.name}.</span>
           </h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -499,7 +488,7 @@ export default function ProduktDetail() {
             <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
               className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
               <span className="text-2xl mb-4 block">{u.emoji}</span>
-              <h3 style={{ fontWeight: 600, letterSpacing: '-0.02em' }} className="text-slate-900 text-base mb-2">{u.title}</h3>
+              <h3 className="text-slate-900 text-base font-medium tracking-tight mb-2">{u.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed font-light">{u.desc}</p>
             </motion.div>
           ))}
@@ -513,9 +502,8 @@ export default function ProduktDetail() {
         <section className="bg-slate-50 border-y border-slate-200 py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Realizace</p>
-            <h2 className="text-slate-900 mb-12" style={{ lineHeight: 1.0 }}>
-              <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>{product.name}</span>
-              <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>v reálném světě.</span>
+            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
+              {product.name}<br /><span className="text-slate-400">v reálném světě.</span>
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               {[
@@ -562,9 +550,8 @@ export default function ProduktDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Zakázková výroba</p>
-              <h2 className="text-slate-900 mb-4" style={{ lineHeight: 1.0 }}>
-                <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3rem)', letterSpacing: '-0.04em' }}>Váš prostor si zaslouží</span>
-                <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2rem, 3.5vw, 3rem)', letterSpacing: '-0.04em' }}>vlastní {product.name}.</span>
+              <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
+                Váš prostor si zaslouží<br /><span className="text-slate-400">vlastní {product.name}.</span>
               </h2>
               <p className="text-slate-400 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               <div className="space-y-3 text-sm text-slate-500 font-mono">
@@ -586,7 +573,7 @@ export default function ProduktDetail() {
         <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mohlo by vás zajímat</p>
-            <h2 style={{ fontWeight: 700, fontSize: '2rem', letterSpacing: '-0.04em' }} className="text-slate-900 mb-10">Podobné produkty</h2>
+            <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {relatedProducts.map((r, i) => (
                 <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
@@ -596,7 +583,7 @@ export default function ProduktDetail() {
                     </div>
                     <div className="p-5 flex items-center justify-between">
                       <div>
-                        <span style={{ fontWeight: 600 }} className="text-slate-900 group-hover:text-slate-600 transition-colors">{r.name}</span>
+                        <span className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors">{r.name}</span>
                         {r.short_description && <p className="text-xs text-slate-400 mt-0.5 font-light">{r.short_description}</p>}
                       </div>
                       <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0 ml-4" />

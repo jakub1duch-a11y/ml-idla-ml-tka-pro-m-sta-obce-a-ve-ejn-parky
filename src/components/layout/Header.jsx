@@ -68,7 +68,7 @@ export default function Header() {
 
       
 
-      <header className={`fixed top-0 left-0 right-0 backdrop-blur-xl transition-all duration-300 z-40 bg-white/10 ${
+      <header className={`fixed top-0 left-0 right-0 transition-all duration-300 z-40 bg-white/10 backdrop-blur-l ${
       scrolled ? 'border-b border-slate-200 shadow-sm' : 'border-b border-transparent'}`
       }>
         <div className="flex items-center justify-between max-w-7xl h-16 px-6 lg:px-8 mx-auto gap-4 lg:gap-8">
@@ -79,7 +79,7 @@ export default function Header() {
               initial={{ opacity: 0, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 1.8, ease: 'easeOut' }}
-              className="flex items-center gap-2 bg-[hsl(var(--background))]">
+              className="flex items-center gap-2 text-[hsl(var(--card-foreground))]">
               <svg width="20" height="25" viewBox="0 0 22 28" fill="none">
                 <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.92" />
                 <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />

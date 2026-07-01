@@ -32,26 +32,26 @@ export default function Eventy() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-white pt-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-rose-400/10 border border-rose-400/20 flex items-center justify-center">
-              <Tent size={18} className="text-rose-400" />
+            <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center">
+              <Tent size={18} className="text-rose-700" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-rose-400">Eventy & festivaly</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-rose-700">Eventy & festivaly</p>
           </div>
-          <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+          <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Mlžítko, které se<br /><span style={{ fontStyle: 'italic' }}>stane hvězdou akce.</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-2xl leading-relaxed font-light mb-8">
+          <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
             Pronajměte si nebo kupte mobilní mlžné prvky pro festivaly, letní terasy a krátkodobé akce. Rychlá instalace, nezaměnitelná vizuální identita a ochlazení návštěvníků — v jednom balíčku.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
               Poptávka pronájmu <ArrowRight size={15} />
             </Link>
-            <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+            <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               <Phone size={14} /> +420 774 700 390
             </a>
           </div>
@@ -59,18 +59,18 @@ export default function Eventy() {
       </div>
 
       {/* Pronájem výhody */}
-      <section className="bg-surface border-y border-white/8 py-16">
+      <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-rose-400 mb-4">Pronájem na akci</p>
-              <h2 className="text-white text-3xl mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-rose-700 mb-4">Pronájem na akci</p>
+              <h2 className="text-slate-900 text-3xl mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
                 Stará se o vás<br /><span style={{ fontStyle: 'italic' }}>náš tým.</span>
               </h2>
               <ul className="space-y-3">
                 {RENTAL_BENEFITS.map(b => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-white/60 font-light">
-                    <CheckCircle size={15} className="text-rose-400 shrink-0 mt-0.5" />{b}
+                  <li key={b} className="flex items-start gap-3 text-sm text-slate-600 font-light">
+                    <CheckCircle size={15} className="text-rose-600 shrink-0 mt-0.5" />{b}
                   </li>
                 ))}
               </ul>
@@ -82,9 +82,9 @@ export default function Eventy() {
                 { val: '−9 °C', label: 'Ochlazení' },
                 { val: '24/7', label: 'Podpora na akci' },
               ].map(s => (
-                <div key={s.label} className="p-6 rounded-2xl bg-card_bg border border-white/10 text-center">
-                  <p className="font-heading text-2xl text-cyan mb-1" style={{ fontWeight: 800 }}>{s.val}</p>
-                  <p className="text-xs font-mono text-white/35 tracking-widest uppercase">{s.label}</p>
+                <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
+                  <p className="font-heading text-2xl text-slate-900 mb-1" style={{ fontWeight: 700 }}>{s.val}</p>
+                  <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -97,32 +97,32 @@ export default function Eventy() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
           {USE_CASES.map((u, i) => (
             <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-              className="p-6 rounded-2xl bg-card_bg border border-white/10">
+              className="p-6 rounded-2xl bg-white border border-slate-200">
               <span className="text-2xl mb-3 block">{u.emoji}</span>
-              <h3 className="text-white font-medium text-sm mb-2">{u.title}</h3>
-              <p className="text-xs text-white/45 leading-relaxed font-light">{u.desc}</p>
+              <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
             </motion.div>
           ))}
         </div>
 
-        <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Vhodné modely k pronájmu / zakoupení</p>
-        <h2 className="text-white text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Mobilní kolekce.</h2>
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Vhodné modely k pronájmu / zakoupení</p>
+        <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Mobilní kolekce.</h2>
         {loading ? (
-          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-cyan/40" /></div>
+          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                <Link to={`/produkt/${p.slug}`} className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-rose-400/40 transition-all">
-                  <div className="aspect-[4/3] overflow-hidden bg-white/5">
+                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-rose-300 shadow-sm transition-all">
+                  <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                     {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                   </div>
                   <div className="p-5 flex items-center justify-between">
                     <div>
-                      <p className="text-white font-medium">{p.name}</p>
-                      {p.short_description && <p className="text-xs text-white/40 mt-0.5 line-clamp-1">{p.short_description}</p>}
+                      <p className="text-slate-900 font-medium">{p.name}</p>
+                      {p.short_description && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{p.short_description}</p>}
                     </div>
-                    <ArrowRight size={15} className="text-white/30 group-hover:text-rose-400 transition-colors shrink-0" />
+                    <ArrowRight size={15} className="text-slate-300 group-hover:text-rose-600 transition-colors shrink-0" />
                   </div>
                 </Link>
               </motion.div>
@@ -132,15 +132,15 @@ export default function Eventy() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-rose-400/5 border border-rose-400/20 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-10 rounded-2xl bg-rose-50 border border-rose-200 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-white text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Termín se blíží? Napište nám hned.</h3>
-            <div className="flex flex-col sm:flex-row gap-4 mt-3 text-sm font-mono text-white/50">
-              <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-cyan transition-colors"><Phone size={13} className="text-cyan" /> +420 774 700 390</a>
-              <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-cyan transition-colors"><Mail size={13} className="text-cyan" /> obchod1@holmtec.cz</a>
+            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Termín se blíží? Napište nám hned.</h3>
+            <div className="flex flex-col sm:flex-row gap-4 mt-3 text-sm font-mono text-slate-500">
+              <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-rose-700 transition-colors"><Phone size={13} className="text-rose-600" /> +420 774 700 390</a>
+              <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-rose-700 transition-colors"><Mail size={13} className="text-rose-600" /> obchod1@holmtec.cz</a>
             </div>
           </div>
-          <Link to="/poptavka" className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-rose-400 text-ink text-sm font-bold rounded-full hover:bg-rose-300 transition-all whitespace-nowrap">
+          <Link to="/poptavka" className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-rose-700 text-white text-sm font-bold rounded-full hover:bg-rose-800 transition-all whitespace-nowrap">
             Poptávka pronájmu <ArrowRight size={15} />
           </Link>
         </div>

@@ -81,7 +81,7 @@ export default function KolekceHero() {
   const slide = SLIDES[current];
 
   return (
-    <div className="relative w-full h-[70vh] min-h-[480px] overflow-hidden bg-ink">
+    <div className="relative w-full h-[70vh] min-h-[480px] overflow-hidden bg-slate-900">
       {/* Slides */}
       {SLIDES.map((s, i) =>
       <div
@@ -97,7 +97,7 @@ export default function KolekceHero() {
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-20 bg-gradient-to-t from-ink/60 via-ink/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
 
       {/* Content */}
       <div className="absolute inset-0 z-30 flex flex-col justify-end px-8 lg:px-16 pb-12">

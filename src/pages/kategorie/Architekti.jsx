@@ -20,29 +20,29 @@ const PROCESS = [
 export default function Architekti() {
   useEffect(() => { setSEO(SEO_PAGES.architekti); }, []);
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-white pt-28">
 
       {/* Hero */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-violet-400/10 border border-violet-400/20 flex items-center justify-center">
-              <Palette size={18} className="text-violet-400" />
+            <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center">
+              <Palette size={18} className="text-violet-700" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-violet-400">Pro architekty a designéry</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-violet-700">Pro architekty a designéry</p>
           </div>
-          <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+          <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Nerez tvarovaný<br /><span style={{ fontStyle: 'italic' }}>podle vašich nápadů.</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-2xl leading-relaxed font-light mb-8">
+          <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
             Spolupracujeme s architekty, krajinnými architekty a průmyslovými designéry na zcela zakázkových mlžných prvcích. Váš návrh — naše technologie. Dodáváme kompletní BIM podklady, technické listy a výkresy pro projektovou dokumentaci.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
               Vyžádat podklady <Download size={15} />
             </a>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Konzultace projektu
             </Link>
           </div>
@@ -50,24 +50,24 @@ export default function Architekti() {
       </div>
 
       {/* Ke stažení */}
-      <section className="bg-surface border-y border-white/8 py-16">
+      <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-4">Podklady pro projektanty</p>
-          <h2 className="text-white text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Podklady pro projektanty</p>
+          <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
             Ke stažení zdarma<br /><span style={{ fontStyle: 'italic' }}>na vyžádání.</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {DOWNLOADS.map((d, i) => (
               <motion.div key={d.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="p-7 rounded-2xl bg-card_bg border border-white/10 hover:border-violet-400/30 transition-all group">
-                <div className="w-11 h-11 rounded-xl bg-violet-400/10 border border-violet-400/20 flex items-center justify-center mb-4">
-                  <d.icon size={20} className="text-violet-400" />
+                className="p-7 rounded-2xl bg-white border border-slate-200 hover:border-violet-300 transition-all group">
+                <div className="w-11 h-11 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center mb-4">
+                  <d.icon size={20} className="text-violet-700" />
                 </div>
-                <span className="text-[10px] font-mono text-violet-400/70 tracking-widest uppercase">{d.tag}</span>
-                <h3 className="text-white font-medium mt-2 mb-2">{d.title}</h3>
-                <p className="text-sm text-white/45 leading-relaxed font-light mb-5">{d.desc}</p>
+                <span className="text-[10px] font-mono text-violet-600 tracking-widest uppercase">{d.tag}</span>
+                <h3 className="text-slate-900 font-medium mt-2 mb-2">{d.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed font-light mb-5">{d.desc}</p>
                 <a href="mailto:obchod1@holmtec.cz?subject=Žádost o podklady ke stažení"
-                  className="inline-flex items-center gap-2 text-xs font-mono text-violet-400 hover:text-white transition-colors">
+                  className="inline-flex items-center gap-2 text-xs font-mono text-violet-700 hover:text-slate-900 transition-colors">
                   <Mail size={12} /> Vyžádat e-mailem
                 </a>
               </motion.div>
@@ -78,17 +78,17 @@ export default function Architekti() {
 
       {/* Proces */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-4">Jak spolupráce probíhá</p>
-        <h2 className="text-white text-3xl mb-12" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Jak spolupráce probíhá</p>
+        <h2 className="text-slate-900 text-3xl mb-12" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
           Od skici<br /><span style={{ fontStyle: 'italic' }}>k hotovému prvku.</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {PROCESS.map((s, i) => (
             <motion.div key={s.num} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="p-6 rounded-2xl bg-card_bg border border-white/10">
-              <p className="font-heading text-4xl text-white/10 mb-3" style={{ fontWeight: 800 }}>{s.num}</p>
-              <h3 className="text-white font-medium mb-2 text-sm">{s.title}</h3>
-              <p className="text-xs text-white/45 leading-relaxed font-light">{s.desc}</p>
+              className="p-6 rounded-2xl bg-white border border-slate-200">
+              <p className="font-heading text-4xl text-slate-200 mb-3" style={{ fontWeight: 700 }}>{s.num}</p>
+              <h3 className="text-slate-900 font-medium mb-2 text-sm">{s.title}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-light">{s.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -96,13 +96,13 @@ export default function Architekti() {
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-violet-400/5 border border-violet-400/20 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-10 rounded-2xl bg-violet-50 border border-violet-200 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-white text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Máte projekt, kde by se mlžný prvek hodil?</h3>
-            <p className="text-white/50 text-sm">Rádi se zapojíme již ve fázi konceptu. Podklady pro DPS dodáme zdarma.</p>
+            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Máte projekt, kde by se mlžný prvek hodil?</h3>
+            <p className="text-slate-500 text-sm">Rádi se zapojíme již ve fázi konceptu. Podklady pro DPS dodáme zdarma.</p>
           </div>
           <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-violet-400 text-ink text-sm font-bold rounded-full hover:bg-violet-300 transition-all shadow-lg shadow-violet-400/25 whitespace-nowrap">
+            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-violet-700 text-white text-sm font-bold rounded-full hover:bg-violet-800 transition-all whitespace-nowrap">
             Napsat obchodnímu týmu <ArrowRight size={15} />
           </a>
         </div>

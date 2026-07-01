@@ -101,7 +101,7 @@ export default function KolekceHero() {
 
       {/* Content */}
       <div className="absolute z-30 flex flex-col justify-end px-8 lg:px-16 pb-12 inset-0">
-        <div className="absolute bottom-12 left-0 px-8 lg:px-16">
+        <div className="absolute bottom-12 left-0 lg:px-16 mx-auto">
           <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
             Mlžítka<br /><span className="text-slate-400">a mlžiště.</span>
           </h1>

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
+import { setSEO, getReferenceSEO } from '@/lib/seo';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -75,6 +76,7 @@ export default function ReferenceDetail() {
         if (p) {
           setProject(p);
           trackReferenceView(p.name, p.location, p.category);
+          setSEO(getReferenceSEO(p));
         } else {
           setNotFound(true);
         }

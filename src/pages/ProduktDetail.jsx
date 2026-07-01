@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2,
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
+import ProductReviews from '@/components/reviews/ProductReviews';
 
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
@@ -132,6 +133,10 @@ export default function ProduktDetail() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [lightbox, setLightbox] = useState(null);
+
+  const handleReviewStats = (stats) => {
+    if (product) setSEO(getProductSEO(product, stats));
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -541,6 +546,11 @@ export default function ProduktDetail() {
           </div>
         </section>
       )}
+
+      {/* ═══════════════════════════════════════════════════════
+          9.5 REVIEWS — Hodnocení zákazníků
+      ═══════════════════════════════════════════════════════ */}
+      <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════════════════════════════════════════════════════
           10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."

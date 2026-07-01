@@ -33,7 +33,7 @@ function setJsonLd(data) {
   el.textContent = JSON.stringify(data);
 }
 
-export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd }) {
+export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const img = image || DEFAULT_IMAGE;
 
@@ -59,6 +59,12 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
 
   if (canonicalPath) setCanonical(canonicalPath);
   if (jsonLd) setJsonLd(jsonLd);
+
+  // Local/geo SEO meta tags (used on reference/project pages with a known location)
+  if (geo) {
+    setMeta('geo.placename', geo.placename);
+    setMeta('geo.region', geo.region || 'CZ');
+  }
 }
 
 // ─── Per-page SEO presets ────────────────────────────────────────────────────
@@ -164,7 +170,7 @@ export const SEO_PAGES = {
 
 // ─── Dynamic SEO for Product pages ──────────────────────────────────────────
 
-export function getProductSEO(product) {
+export function getProductSEO(product, reviewStats) {
   if (!product) return {};
   const title = `${product.name} — Mlžná skulptura z nerezové oceli`;
   const description = product.short_description
@@ -200,8 +206,8 @@ export function getProductSEO(product) {
     },
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '24',
+      ratingValue: reviewStats ? reviewStats.average.toFixed(1) : '4.9',
+      reviewCount: reviewStats ? String(reviewStats.count) : '24',
       bestRating: '5',
       worstRating: '1',
     },
@@ -246,6 +252,37 @@ export function getBlogPostSEO(post) {
     canonicalPath: `/blog/${post.slug || post.id}`,
     type: 'article',
     jsonLd,
+  };
+}
+
+// ─── Dynamic SEO for Reference/Realizace project pages (with local/geo SEO) ─
+
+export function getReferenceSEO(project) {
+  if (!project) return {};
+  const description = project.description
+    ? project.description.slice(0, 160)
+    : `Realizace mlžného systému ${project.product_used || ''} — ${project.name}. HolmTec — mlzidla.cz.`;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.name,
+    description,
+    image: project.image_url || DEFAULT_IMAGE,
+    locationCreated: project.location ? { '@type': 'Place', name: project.location } : undefined,
+    dateCreated: project.year ? String(project.year) : undefined,
+    creator: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
+  };
+
+  return {
+    title: `${project.name}${project.location ? ` — ${project.location}` : ''}`,
+    description,
+    keywords: `${project.name}, ${project.location || ''}, reference mlžné sochy, ${project.product_used || ''}, realizace HolmTec`,
+    image: project.image_url,
+    canonicalPath: `/reference/${project.id}`,
+    type: 'article',
+    jsonLd,
+    geo: project.location ? { placename: project.location, region: 'CZ' } : undefined,
   };
 }
 

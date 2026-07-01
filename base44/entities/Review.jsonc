@@ -1,0 +1,58 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "Reference to Product (leave empty for general/company review)"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Jm\u00e9no z\u00e1kazn\u00edka"
+    },
+    "company": {
+      "type": "string",
+      "description": "Firma / organizace z\u00e1kazn\u00edka"
+    },
+    "location": {
+      "type": "string",
+      "description": "M\u011bsto / lokalita z\u00e1kazn\u00edka"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Hodnocen\u00ed 1-5"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Text recenze"
+    },
+    "published": {
+      "type": "boolean",
+      "default": true,
+      "description": "Zobrazit na webu"
+    }
+  },
+  "required": [
+    "customer_name",
+    "rating",
+    "comment"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

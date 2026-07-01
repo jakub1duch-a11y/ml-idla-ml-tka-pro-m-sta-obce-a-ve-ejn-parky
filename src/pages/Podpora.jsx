@@ -3,6 +3,7 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail } from 'lucide-react';
+import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 const FAQ_SECTIONS = [
   {
@@ -132,7 +133,18 @@ function FaqItem({ item, isOpen, onToggle }) {
 
 export default function Podpora() {
   const [openItems, setOpenItems] = useState({});
-  useEffect(() => { setSEO(SEO_PAGES.podpora); }, []);
+  useEffect(() => {
+    const faqJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: FAQ_SECTIONS.flatMap((s) => s.items).map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    };
+    setSEO({ ...SEO_PAGES.podpora, jsonLd: faqJsonLd });
+  }, []);
 
   const toggle = (sectionId, idx) => {
     const key = `${sectionId}-${idx}`;
@@ -204,6 +216,8 @@ export default function Podpora() {
             </div>
           </motion.section>
         ))}
+
+        <ReviewsSection />
 
         {/* CTA */}
         <motion.div

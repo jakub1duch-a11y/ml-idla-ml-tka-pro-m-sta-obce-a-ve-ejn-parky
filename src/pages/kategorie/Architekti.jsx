@@ -48,10 +48,10 @@ export default function Architekti() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center">
-              <Palette size={18} className="text-violet-700" />
+            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+              <Palette size={18} className="text-slate-900" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-violet-700">Architekti · Zahradní designéři · Krajináři · Ateliéry</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Architekti · Zahradní designéři · Krajináři · Ateliéry</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Navrhněte prostor,<br />který dýchá. <span style={{ fontStyle: 'italic' }}>My dodáme mlhu.</span>
@@ -75,7 +75,7 @@ export default function Architekti() {
       <section className="bg-slate-900 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-violet-400 mb-4">Mlha jako materiál</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Mlha jako materiál</p>
             <h2 className="text-white text-3xl mb-5" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Pátý živel<br /><span style={{ fontStyle: 'italic' }}>vašeho návrhu.</span>
             </h2>
@@ -99,15 +99,15 @@ export default function Architekti() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {DOWNLOADS.map((d, i) => (
               <motion.div key={d.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="p-7 rounded-2xl bg-white border border-slate-200 hover:border-violet-300 transition-all group">
-                <div className="w-11 h-11 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center mb-4">
-                  <d.icon size={20} className="text-violet-700" />
+                className="p-7 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all group">
+                <div className="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center mb-4">
+                  <d.icon size={20} className="text-slate-900" />
                 </div>
-                <span className="text-[10px] font-mono text-violet-600 tracking-widest uppercase">{d.tag}</span>
+                <span className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">{d.tag}</span>
                 <h3 className="text-slate-900 font-medium mt-2 mb-2">{d.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed font-light mb-5">{d.desc}</p>
                 <a href="mailto:obchod1@holmtec.cz?subject=Žádost o podklady ke stažení"
-                  className="inline-flex items-center gap-2 text-xs font-mono text-violet-700 hover:text-slate-900 transition-colors">
+                  className="inline-flex items-center gap-2 text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
                   <Mail size={12} /> Vyžádat e-mailem
                 </a>
               </motion.div>
@@ -116,7 +116,7 @@ export default function Architekti() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {REASONS.map((r) => (
               <div key={r} className="flex items-center gap-3 p-4 rounded-xl bg-white border border-slate-200">
-                <div className="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0" />
                 <p className="text-sm text-slate-600 font-light">{r}</p>
               </div>
             ))}
@@ -187,13 +187,13 @@ export default function Architekti() {
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-violet-50 border border-violet-200 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Pojďme tvořit společně.</h3>
             <p className="text-slate-500 text-sm">Získejte přístup k BIM modelům, technickým listům a prioritní podpoře. Připojte se k partnerskému programu Holmtec.</p>
           </div>
           <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-violet-700 text-white text-sm font-bold rounded-full hover:bg-violet-800 transition-all whitespace-nowrap">
+            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
             Partnerský program <ArrowRight size={15} />
           </a>
         </div>

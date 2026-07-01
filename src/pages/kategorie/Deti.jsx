@@ -35,10 +35,10 @@ export default function Deti() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center">
-              <Baby size={18} className="text-sky-700" />
+            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+              <Baby size={18} className="text-slate-900" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-sky-700">Školy, školky a děti</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Školy, školky a děti</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Bezpečný chlad<br /><span style={{ fontStyle: 'italic' }}>pro dětskou radost.</span>
@@ -56,14 +56,14 @@ export default function Deti() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-sky-700 mb-4">Bezpečnost na prvním místě</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-4">Bezpečnost na prvním místě</p>
               <h2 className="text-slate-900 text-3xl mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
                 Navrženo pro<br /><span style={{ fontStyle: 'italic' }}>ty nejmenší.</span>
               </h2>
               <ul className="space-y-3">
                 {SAFETY.map(s => (
                   <li key={s} className="flex items-start gap-3 text-sm text-slate-600 font-light">
-                    <ShieldCheck size={15} className="text-sky-600 shrink-0 mt-0.5" />{s}
+                    <ShieldCheck size={15} className="text-slate-900 shrink-0 mt-0.5" />{s}
                   </li>
                 ))}
               </ul>
@@ -91,7 +91,7 @@ export default function Deti() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-sky-300 shadow-sm transition-all">
+                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                     {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                   </div>
@@ -100,7 +100,7 @@ export default function Deti() {
                       <p className="text-slate-900 font-medium">{p.name}</p>
                       {p.short_description && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{p.short_description}</p>}
                     </div>
-                    <ArrowRight size={15} className="text-slate-300 group-hover:text-sky-600 transition-colors shrink-0" />
+                    <ArrowRight size={15} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
                   </div>
                 </Link>
               </motion.div>
@@ -110,7 +110,7 @@ export default function Deti() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-sky-50 border border-sky-200 text-center">
+        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 text-center">
           <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme řešení pro vaši školu či hřiště.</h3>
           <p className="text-slate-500 text-sm mb-6">Konzultace a návrh zdarma · Odpovídáme do 24 h</p>
           <Link to="/poptavka" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">

@@ -28,10 +28,10 @@ export default function Art() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-fuchsia-50 border border-fuchsia-200 flex items-center justify-center">
-              <Sparkles size={18} className="text-fuchsia-700" />
+            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+              <Sparkles size={18} className="text-slate-900" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-fuchsia-700">Art instalace na míru</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Art instalace na míru</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Mlha jako<br /><span style={{ fontStyle: 'italic' }}>umělecké médium.</span>
@@ -69,7 +69,7 @@ export default function Art() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-fuchsia-300 shadow-sm transition-all">
+                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                     {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                   </div>
@@ -78,7 +78,7 @@ export default function Art() {
                       <p className="text-slate-900 font-medium">{p.name}</p>
                       {p.short_description && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{p.short_description}</p>}
                     </div>
-                    <ArrowRight size={15} className="text-slate-300 group-hover:text-fuchsia-600 transition-colors shrink-0" />
+                    <ArrowRight size={15} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
                   </div>
                 </Link>
               </motion.div>
@@ -88,7 +88,7 @@ export default function Art() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-fuchsia-50 border border-fuchsia-200 text-center">
+        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 text-center">
           <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Máte umělecký záměr pro mlžnou instalaci?</h3>
           <p className="text-slate-500 text-sm mb-6">Konzultace konceptu zdarma · Odpovídáme do 24 h</p>
           <Link to="/poptavka" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">

@@ -28,10 +28,10 @@ export default function ParkyHriste() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center">
-              <Trees size={18} className="text-emerald-700" />
+            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+              <Trees size={18} className="text-slate-900" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-emerald-700">Parky a hřiště</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Parky a hřiště</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Příroda v nerezu.<br /><span style={{ fontStyle: 'italic' }}>Chlad v parku.</span>
@@ -61,8 +61,8 @@ export default function ParkyHriste() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="mb-8 p-6 rounded-2xl bg-emerald-50 border border-emerald-200">
-          <p className="text-emerald-700 font-medium text-sm mb-2">✓ Bezpečnost pro děti</p>
+        <div className="mb-8 p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <p className="text-slate-900 font-medium text-sm mb-2">✓ Bezpečnost pro děti</p>
           <p className="text-slate-600 text-sm leading-relaxed">Veškeré naše produkty pro dětská hřiště jsou vyrobeny z potravinářské nerezové oceli AISI 304/316L bez chemických přísad. Mikrotrysky rozptylují kapičky 10–50 μm, které se okamžitě odpařují — žádné mokré povrchy ani louže. Splňujeme normy pro dětská hřiště.</p>
         </div>
 
@@ -74,7 +74,7 @@ export default function ParkyHriste() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-300 shadow-sm transition-all">
+                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                     {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                   </div>
@@ -83,7 +83,7 @@ export default function ParkyHriste() {
                       <p className="text-slate-900 font-medium">{p.name}</p>
                       {p.short_description && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{p.short_description}</p>}
                     </div>
-                    <ArrowRight size={15} className="text-slate-300 group-hover:text-emerald-600 transition-colors shrink-0" />
+                    <ArrowRight size={15} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
                   </div>
                 </Link>
               </motion.div>

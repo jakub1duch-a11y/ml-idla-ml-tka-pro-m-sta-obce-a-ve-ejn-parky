@@ -197,7 +197,7 @@ export default function HeroSection() {
                 Prozkoumat <ArrowRight size={14} />
               </Link>
               <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium rounded-2xl shadow-lg hover:bg-white/20 transition-all">
+              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/10 backdrop-blur-md border text-white text-sm font-medium rounded-2xl shadow-lg transition-all border-white/20 hover:bg-white/10">
                 Nezávazná poptávka
               </Link>
             </div>

@@ -106,7 +106,7 @@ export default function KolekceHero() {
 
       {/* Content */}
       <div className="absolute inset-0 z-30 flex flex-col justify-end px-6 lg:px-16 pb-14">
-        <p className="text-xs font-mono tracking-[0.22em] uppercase text-cyan mb-4">Mlžítka a mlžidla </p>
+        <p className="text-xs font-mono tracking-[0.22em] uppercase text-cyan mb-4">Mlžítka a mlžidla Holmtec</p>
         <AnimatePresence mode="wait">
           <motion.h2
             key={taglineIdx}

@@ -10,7 +10,7 @@ const categories = [
   tagline: 'Přírodní tvary. Živá atmosféra.',
   desc: 'Skulpturální instalace inspirované přírodou — stromy, mraky, listy. Dominanta každého prostoru.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
-  link: '/kolekce',
+  link: '/mlzidla-mlzitka',
   count: '12 produktů',
   tag: 'NATURE'
 },

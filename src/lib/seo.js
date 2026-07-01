@@ -80,7 +80,7 @@ export const SEO_PAGES = {
     title: 'Mlžítka a mlžiště — Celý katalog 2026',
     description: 'Prohlédněte si celou kolekci mlžítek a mlžišť HolmTec: OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60 a další. Zakázková výroba z nerezové oceli, navržená pro každý veřejný prostor.',
     keywords: 'mlžítka, mlžiště, katalog mlžných soch, mlžné skulptury, mlžné systémy katalog, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, mlhoviště pro parky, mlhoviště pro náměstí',
-    canonicalPath: '/kolekce',
+    canonicalPath: '/mlzidla-mlzitka',
   },
   mlhoviste: {
     title: 'Mlhoviště pro dětská hřiště, terasy a veřejné prostory',

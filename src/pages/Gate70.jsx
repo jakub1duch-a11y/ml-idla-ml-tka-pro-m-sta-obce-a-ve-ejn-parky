@@ -169,7 +169,7 @@ export default function Gate70() {
 
         {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
-          <Link to="/kolekce" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
+          <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
             ← Zpět na kolekci
           </Link>
         </div>

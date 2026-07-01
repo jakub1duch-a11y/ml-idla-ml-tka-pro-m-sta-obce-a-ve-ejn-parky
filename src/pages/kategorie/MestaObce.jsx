@@ -141,7 +141,7 @@ export default function MestaObce() {
             </div>
           )}
           <div className="mt-8 text-center">
-            <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
+            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
               Zobrazit celý katalog <ArrowRight size={14} />
             </Link>
           </div>

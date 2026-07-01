@@ -8,9 +8,9 @@ const MEGA_COLUMNS = [
   heading: 'Typy a modely',
   icon: Layers,
   items: [
-  { label: 'Mlžící brány & portály', sub: 'Vstupní mlžné prvky', path: '/kolekce' },
-  { label: 'Sloupy a stojany', sub: 'Samostatné mlžné prvky', path: '/kolekce' },
-  { label: 'Mlžné sochy', sub: 'Skulpturální instalace', path: '/kolekce' }]
+  { label: 'Mlžící brány & portály', sub: 'Vstupní mlžné prvky', path: '/mlzidla-mlzitka' },
+  { label: 'Sloupy a stojany', sub: 'Samostatné mlžné prvky', path: '/mlzidla-mlzitka' },
+  { label: 'Mlžné sochy', sub: 'Skulpturální instalace', path: '/mlzidla-mlzitka' }]
 
 },
 {
@@ -194,7 +194,7 @@ export default function Header() {
               {mobileCatalogOpen &&
             <div className="pl-4 flex flex-col gap-1 py-3 border-b border-slate-100">
                   <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-1 mb-2">Modely</p>
-                  <Link to="/kolekce" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžné sochy & brány</Link>
+                  <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžné sochy & brány</Link>
                   <Link to="/mlhoviste" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžiště</Link>
                   <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Smart moduly</Link>
                   <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-3 mb-2">Podle využití</p>

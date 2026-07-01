@@ -169,7 +169,7 @@ export default function ProduktDetail() {
     <div className="min-h-screen bg-white flex items-center justify-center pt-28">
       <div className="text-center">
         <p className="text-slate-400 mb-4 text-lg">Produkt nenalezen.</p>
-        <Link to="/kolekce" className="text-slate-900 hover:underline">← Zpět na kolekci</Link>
+        <Link to="/mlzidla-mlzitka" className="text-slate-900 hover:underline">← Zpět na kolekci</Link>
       </div>
     </div>
   );
@@ -208,7 +208,7 @@ export default function ProduktDetail() {
 
         {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
-          <Link to="/kolekce" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
+          <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
             <ArrowLeft size={12} /> Zpět na produkty
           </Link>
         </div>
@@ -593,7 +593,7 @@ export default function ProduktDetail() {
               ))}
             </div>
             <div className="mt-10 flex justify-center">
-              <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
+              <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
                 <ArrowLeft size={14} /> Zpět na celou kolekci
               </Link>
             </div>

@@ -223,7 +223,7 @@ export default function Kolekce() {
             placeholder="Hledat produkt..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none transition-all" />
+            className="flex-1 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none transition-all hidden" />
           
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}

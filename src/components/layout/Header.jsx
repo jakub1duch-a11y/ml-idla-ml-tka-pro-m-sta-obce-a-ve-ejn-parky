@@ -74,7 +74,7 @@ export default function Header() {
       <header className={`fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl transition-all duration-300 ${
       scrolled ? 'border-b border-slate-200 shadow-sm' : 'border-b border-transparent'}`
       }>
-        <div className="flex items-center max-w-7xl mx-auto pr-5 pl-5 h-16 lg:px-8 justify-between">
+        <div className="flex items-center max-w-7xl pr-5 pl-5 h-16 lg:px-8 justify-between">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">

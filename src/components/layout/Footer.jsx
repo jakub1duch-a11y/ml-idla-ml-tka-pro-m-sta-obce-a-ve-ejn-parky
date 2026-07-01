@@ -38,9 +38,9 @@ export default function Footer() {
               <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlžné sochy</Link>
               <Link to="/mlhoviste" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlhoviště</Link>
               <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Jak to funguje</Link>
-              <Link to="/kontakt" className="text-sm text-slate-500 hover:text-slate-900 transition-colors hidden">Pronájem</Link>
+              
               <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
-              <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026" className="text-sm text-slate-500 hover:text-slate-900 transition-colors hidden">Katalog 2026 PDF</a>
+              
             </div>
           </div>
 

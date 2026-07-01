@@ -19,7 +19,7 @@ const categories = [
   label: 'Mlhoviště & chladicí zóny',
   tagline: 'Až −9 °C. Komfort bez mokra.',
   desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Průmyslové čerpadlo 70 bar.',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
+  image: 'https://lh3.googleusercontent.com/d/1JTKWVGMNje7h4Tq0IVdwlaVJOlDuAoOk',
   link: '/mlhoviste',
   count: '4 produkty',
   tag: 'COOLING'

@@ -1,9 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
-// Set SHEETS_INQUIRY_SPREADSHEET_ID in environment variables (Settings → Environment Variables)
-// The sheet must be shared with the Google account connected as "Google sheets" connector.
-const SPREADSHEET_ID = Deno.env.get('SHEETS_INQUIRY_SPREADSHEET_ID') || '';
+// "Poptávky a dotazy z webu Mlžidla.cz" spreadsheet, shared with the team.
+const SPREADSHEET_ID = '1IcI8zsltInagTR8u5VntZEFOuUAbm5Dy-tjPbcfZbnU';
 const SHEET_NAME = 'Poptávky';
 
 const HEADERS = [

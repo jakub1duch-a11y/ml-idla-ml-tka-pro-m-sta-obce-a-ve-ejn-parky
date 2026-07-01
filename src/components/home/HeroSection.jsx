@@ -160,7 +160,7 @@ export default function HeroSection() {
 
         {/* Feature icons strip */}
         <div className="relative border-t border-white/10 bg-black/25 backdrop-blur-md">
-          <div className="mx-auto lg:px-8 max-w-7xl px-">
+          <div className="mx-auto lg:px-8 max-w-7xl px-8 py-8">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-white/10">
               {features.map((f) =>
               <div key={f.label} className="flex items-center gap-3 py-5 px-4">

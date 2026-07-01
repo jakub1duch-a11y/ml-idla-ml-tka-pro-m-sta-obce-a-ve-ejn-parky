@@ -20,6 +20,7 @@ import SearchAnalytics from '@/pages/SearchAnalytics';
 import ProjectStatus from '@/pages/ProjectStatus';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Poradce from '@/pages/Poradce';
+import Kalkulacka from '@/pages/Kalkulacka';
 import ONas from '@/pages/ONas';
 import Reference from '@/pages/Reference';
 import ReferenceDetail from '@/pages/ReferenceDetail';
@@ -67,6 +68,7 @@ const AuthenticatedApp = () => {
         <Route path="/project/:token" element={<ProjectStatus />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
+        <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
         <Route path="/reference/:id" element={<ReferenceDetail />} />

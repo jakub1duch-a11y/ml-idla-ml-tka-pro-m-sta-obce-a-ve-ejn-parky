@@ -134,7 +134,7 @@ export default function HeroSection() {
             decoding="async" />
           
           <div className="absolute inset-0 bg-gradient-to-b via-ink/30 to-ink from-ink/0" />
-          <div className="absolute via-ink/30 to-transparent inset-0 bg-gradient-to-d from-ink/20" />
+          <div className="absolute inset-0 bg-gradient-to-d via-ink/60 to-blue from-ink/50" />
         </motion.div>
       </AnimatePresence>
 

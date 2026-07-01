@@ -140,7 +140,7 @@ export default function HeroSection() {
               <h1 className="text-white tracking-tight mb-2 [font-family:'Manrope',_sans-serif] font-semibold text-5xl lg:text-5xl normal-case" style={{ letterSpacing: '-0.03em' }}>
                 {slide.name}
               </h1>
-              <p className="text-2xl lg:text-3xl text-white/60 font-light mb-5 no-underline not-italic lowercase">{slide.subtitle}</p>
+              <p className="text-2xl lg:text-3xl text-white/60 font-light mb-5 not-italic lowercase text-left line-through">{slide.subtitle}</p>
               <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-lg mb-8 font-light">{slide.desc}</p>
               <Link to={slide.cta}
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">

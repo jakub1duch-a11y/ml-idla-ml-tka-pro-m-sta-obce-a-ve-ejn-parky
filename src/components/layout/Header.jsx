@@ -14,13 +14,13 @@ const MEGA_COLUMNS = [
   heading: 'Mlžiště, kombinovaná mlžidla na míru',
   icon: Settings2,
   path: '/mlhoviste',
-  image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq'
+  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg'
 },
 {
   heading: 'Příslušenství a moduly',
   icon: Package,
   path: '/prislusenstvi',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg'
+  image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq'
 }];
 
 
@@ -89,8 +89,6 @@ export default function Header() {
                 Katalog <ChevronDown size={13} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/mlhoviste" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Mlžiště</Link>
-            <Link to="/kategorie/eventy" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Pronájem</Link>
             <Link to="/reference" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Reference</Link>
             <Link to="/blog" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Blog & novinky</Link>
             <Link to="/podpora" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Podpora</Link>

@@ -85,26 +85,26 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="flex items-center gap-1 justify-self-center">
+          <nav className="flex items-center gap-0.5 justify-self-center">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
-              megaOpen ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`
+              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+              megaOpen ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'}`
               }>
-                Katalog <ChevronDown size={13} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
+                Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Reference</Link>
-            <Link to="/blog" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Blog & novinky</Link>
-            <Link to="/podpora" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Podpora</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Reference</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Blog & novinky</Link>
+            <Link to="/podpora" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Podpora</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}
-          <div className="flex items-center gap-2 justify-self-end">
+          <div className="flex items-center gap-3 justify-self-end">
             <div className="flex items-center gap-2">
-              <Link to="/o-nas" className="px-4 py-2 text-[13px] text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
+              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-all">O nás</Link>
               <Link to="/poptavka"
-              className="flex items-center gap-1.5 px-5 py-2.5 bg-slate-900 text-white text-[13px] font-medium rounded-full hover:bg-slate-800 transition-all">
+              className="flex items-center gap-1.5 px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
                 Poptávka
               </Link>
             </div>
@@ -128,15 +128,15 @@ export default function Header() {
             
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
                 {/* Top: 3 columns */}
-                <div className="grid grid-cols-3 gap-8 pb-8 border-b border-slate-100">
+                <div className="grid grid-cols-3 gap-6 pb-8 border-b border-slate-100">
                   {MEGA_COLUMNS.map((col) =>
-                <Link key={col.heading} to={col.path} className="group block" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center gap-2 mb-4">
-                        <col.icon size={13} className="text-slate-500" />
-                        <p className="font-heading text-[15px] text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{col.heading}</p>
-                        <ArrowRight size={12} className="text-slate-400 group-hover:text-slate-950 transition-colors opacity-0 group-hover:opacity-100 ml-auto" />
+                <Link key={col.heading} to={col.path} className="group block p-2 rounded-lg hover:bg-slate-50 transition-colors" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center gap-2.5 mb-4">
+                        <col.icon size={14} className="text-slate-600 group-hover:text-slate-900 transition-colors" />
+                        <p className="font-heading text-base text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{col.heading}</p>
+                        <ArrowRight size={14} className="text-slate-400 group-hover:text-slate-950 transition-colors opacity-0 group-hover:opacity-100 ml-auto" />
                       </div>
-                      <div className="rounded-xl overflow-hidden aspect-[16/10] bg-white shadow-sm">
+                      <div className="rounded-xl overflow-hidden aspect-[16/10] bg-white shadow-sm group-hover:shadow-md transition-shadow">
                         <img src={col.image} alt={col.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       </div>
                     </Link>
@@ -144,16 +144,16 @@ export default function Header() {
                 </div>
 
                 {/* Bottom: Využití */}
-                <div className="pt-6">
-                  <p className="text-[11px] font-light text-slate-500 tracking-[0.2em] uppercase mb-4">Mlžítka podle využití</p>
-                  <div className="grid grid-cols-6 gap-2">
+                <div className="pt-8">
+                  <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-5">Podle využití</p>
+                  <div className="grid grid-cols-6 gap-3">
                     {USAGE_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
-                  className="group flex flex-col items-start gap-2 px-3 py-3 rounded-xl hover:bg-white/50 transition-colors border border-transparent hover:border-white/40">
-                        <link.icon size={18} className={`${link.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
+                  className="group flex flex-col items-start gap-3 px-4 py-4 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200">
+                        <link.icon size={20} className={`${link.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
                         <div>
-                          <p className="font-heading text-[13px] text-slate-800 group-hover:text-slate-950 transition-colors font-light leading-tight">{link.label}</p>
-                          <p className="text-[11px] text-slate-500 mt-0.5 leading-tight">{link.sub}</p>
+                          <p className="font-heading text-sm text-slate-800 group-hover:text-slate-950 transition-colors font-light leading-tight">{link.label}</p>
+                          <p className="text-xs text-slate-500 mt-1 leading-tight">{link.sub}</p>
                         </div>
                       </Link>
                   )}

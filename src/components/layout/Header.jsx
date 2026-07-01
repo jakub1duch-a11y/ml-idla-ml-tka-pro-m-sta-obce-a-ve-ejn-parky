@@ -5,30 +5,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const MEGA_COLUMNS = [
 {
-  heading: 'Typy a modely',
+  heading: 'Mlžítka a typy mlžidel',
   icon: Layers,
-  items: [
-  { label: 'Mlžící brány & portály', sub: 'Vstupní mlžné prvky', path: '/mlzidla-mlzitka' },
-  { label: 'Sloupy a stojany', sub: 'Samostatné mlžné prvky', path: '/mlzidla-mlzitka' },
-  { label: 'Mlžné sochy', sub: 'Skulpturální instalace', path: '/mlzidla-mlzitka' }]
-
+  path: '/mlzidla-mlzitka',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG'
 },
 {
-  heading: 'Zakázková výroba',
+  heading: 'Mlžiště, kombinovaná mlžidla na míru',
   icon: Settings2,
-  items: [
-  { label: 'Mlžiště a mlžné zóny', sub: 'Plošné ochlazení prostoru', path: '/mlhoviste' },
-  { label: 'Interaktivní prvky', sub: 'Kombinované mlžné instalace', path: '/mlhoviste' }]
-
+  path: '/mlhoviste',
+  image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq'
 },
 {
-  heading: 'Příslušenství & Moduly',
+  heading: 'Příslušenství a moduly',
   icon: Package,
-  items: [
-  { label: 'Trysky HolmTec', sub: 'AISI 316L, 10–50 μm', path: '/prislusenstvi' },
-  { label: 'Smart moduly', sub: 'Řízení a automatizace', path: '/jak-to-funguje' },
-  { label: 'Komponenty', sub: 'Čerpadla, filtry, hadice', path: '/prislusenstvi' }]
-
+  path: '/prislusenstvi',
+  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg'
 }];
 
 
@@ -135,24 +127,16 @@ export default function Header() {
                 {/* Top: 3 columns */}
                 <div className="grid grid-cols-3 gap-8 pb-8 border-b border-slate-100">
                   {MEGA_COLUMNS.map((col) =>
-                <div key={col.heading}>
-                      <div className="flex items-center gap-2 mb-5">
+                <Link key={col.heading} to={col.path} className="group block">
+                      <div className="flex items-center gap-2 mb-4">
                         <col.icon size={13} className="text-slate-400" />
-                        <p className="text-[10px] font-medium text-slate-400 tracking-[0.2em] uppercase">{col.heading}</p>
+                        <p className="text-[13px] text-slate-700 group-hover:text-slate-900 transition-colors font-medium leading-snug">{col.heading}</p>
+                        <ArrowRight size={12} className="text-slate-300 group-hover:text-slate-900 transition-colors opacity-0 group-hover:opacity-100 ml-auto" />
                       </div>
-                      <div className="space-y-0.5">
-                        {col.items.map((item) =>
-                    <Link key={item.label} to={item.path}
-                    className="group flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors">
-                            <div>
-                              <span className="text-[13px] text-slate-700 group-hover:text-slate-900 transition-colors font-medium leading-snug block">{item.label}</span>
-                              <span className="text-[11px] text-slate-400 mt-0.5 block">{item.sub}</span>
-                            </div>
-                            <ArrowRight size={12} className="text-slate-300 group-hover:text-slate-900 transition-colors opacity-0 group-hover:opacity-100" />
-                          </Link>
-                    )}
+                      <div className="rounded-xl overflow-hidden aspect-[16/10] bg-slate-100">
+                        <img src={col.image} alt={col.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       </div>
-                    </div>
+                    </Link>
                 )}
                 </div>
 

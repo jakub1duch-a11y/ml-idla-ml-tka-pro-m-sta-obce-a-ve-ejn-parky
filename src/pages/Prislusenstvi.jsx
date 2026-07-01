@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import KolekceHero from '@/components/kolekce/KolekceHero';
+import PrislusenstviHero from '@/components/prislusenstvi/PrislusenstviHero';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Loader, Building2, Users, Home, Warehouse, Baby } from 'lucide-react';
@@ -81,7 +81,7 @@ export default function Prislusenstvi() {
   return (
     <div className="min-h-screen bg-white pt-16">
 
-      <KolekceHero />
+      <PrislusenstviHero />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

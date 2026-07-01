@@ -166,7 +166,7 @@ export default function HeroSection() {
               <div key={f.label} className="flex items-center gap-3 py-5 px-4">
                   <f.icon size={20} className="shrink-0 text-white/80" />
                   <div className="min-w-0">
-                    <p className="leading-tight truncate text-[hsl(var(--destructive-foreground))] text-sm">{f.label}</p>
+                    <p className="leading-tight truncate text-sm text-[#8c8c8c]">{f.label}</p>
                     <p className="font-medium leading-tight truncate uppercase text-lg text-[#4776b8]">{f.value}</p>
                   </div>
                 </div>

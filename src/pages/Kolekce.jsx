@@ -190,7 +190,7 @@ export default function Kolekce() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-4">
-            Mlžítka<br /><span className="text-slate-400">a mlžiště.</span>
+            Mlžítka<br /><span className="text-slate-400">a mlžné brány</span>
           </h1>
           <p className="text-slate-500 max-w-xl text-lg leading-relaxed">
             Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
@@ -203,7 +203,7 @@ export default function Kolekce() {
         <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-3">Vyberte kategorii</p>
         <div className="flex flex-wrap gap-2.5">
           <button onClick={() => setActiveCategory(null)}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${!activeCategory ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900'}`}>
+          className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${!activeCategory ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900'}`}>
             Vše
           </button>
           {categoryGroups.map((g) => {
@@ -211,7 +211,7 @@ export default function Kolekce() {
             const active = activeCategory === g.id;
             return (
               <button key={g.id} onClick={() => setActiveCategory(active ? null : g.id)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all ${active ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900'}`}>
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all ${active ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900'}`}>
                 <Icon size={14} /> {g.label}
               </button>);
 

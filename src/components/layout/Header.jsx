@@ -6,7 +6,7 @@ import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
 
 const MEGA_COLUMNS = [
 {
-  heading: 'Mlžítka a typy mlžidel',
+  heading: 'Mlžítka a mlžné brány',
   icon: Layers,
   path: '/mlzidla-mlzitka',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG'
@@ -195,7 +195,7 @@ export default function Header() {
               transition={{ duration: 0.15 }}
               className="pl-0 flex flex-col gap-0 py-4 bg-slate-50 rounded-lg mt-2">
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-2 mb-3 px-6">Modely</p>
-                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Mlžné sochy & brány</Link>
+                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Mlžítka a mlžné brány</Link>
                  <Link to="/prislusenstvi" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Příslušenství</Link>
                  <Link to="/jak-to-funguje" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Smart moduly</Link>
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-5 mb-3 px-6">Podle využití</p>

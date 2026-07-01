@@ -164,9 +164,9 @@ export default function HeroSection() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-white/10">
               {features.map((f) =>
               <div key={f.label} className="flex items-center gap-3 py-5 px-4">
-                  <f.icon size={20} className="text-white/70 shrink-0" />
+                  <f.icon size={20} className="text-white/70 shrink-10" />
                   <div className="min-w-0">
-                    <p className="text-xs text-white/50 leading-tight truncate">{f.label}</p>
+                    <p className="leading-tight truncate text-[hsl(var(--destructive-foreground))] text-xs">{f.label}</p>
                     <p className="text-sm text-white font-medium leading-tight truncate">{f.value}</p>
                   </div>
                 </div>

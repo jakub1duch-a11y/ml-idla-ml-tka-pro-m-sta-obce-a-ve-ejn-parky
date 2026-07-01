@@ -347,29 +347,26 @@ export default function Gate70() {
       {/* ══════════════════════════════════════════════════════
                            5. SMART ŘÍZENÍ
                         ══════════════════════════════════════════════════════ */}
-      <section className="bg-surface border-y border-white/8 py-24 lg:py-32">
+      <section className="bg-white py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
-            <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">Wi-Fi Smart systém</p>
-              <h2 style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-white">
-                Inteligentní<br /><span className="italic">brána.</span>
-              </h2>
-            </div>
-            <p className="text-white/50 leading-relaxed font-light">
-              GATE70 je vybavena plně integrovaným Wi-Fi Smart systémem. Ovládání, senzory, osvětlení a časovače — vše v jednom zařízení.
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+            <p className="text-sm text-slate-500 mb-3">Wi-Fi Smart systém</p>
+            <h2 style={{ lineHeight: 1.1, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 mb-4">
+              Inteligentní brána.
+            </h2>
+            <p className="text-slate-500 leading-relaxed max-w-2xl">
+              GATE70 je vybavena plně integrovaným Wi-Fi Smart systémem. Ovládání, senzory, osvětlení a časovače — <span className="font-semibold text-slate-800">vše v jednom zařízení.</span>
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {SMART_FEATURES.map((f, i) =>
             <motion.div key={f.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-            className="p-6 rounded-2xl bg-card_bg border border-white/10 hover:border-cyan/30 transition-all">
-                <div className="w-11 h-11 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center mb-4">
-                  <f.icon size={20} className="text-cyan" />
+            className="p-6 rounded-2xl bg-slate-100 shadow-sm">
+                <div className="w-11 h-11 flex items-center justify-center mb-6">
+                  <f.icon size={28} className="text-cyan" strokeWidth={1.75} />
                 </div>
-                <h3 style={{ fontWeight: 600, letterSpacing: '-0.02em' }} className="text-white text-base mb-2">{f.title}</h3>
-                <p className="text-sm text-white/45 leading-relaxed font-light">{f.desc}</p>
+                <h3 className="text-slate-800 text-base font-medium">{f.title}</h3>
               </motion.div>
             )}
           </div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
+import CategorySlider from '@/components/home/CategorySlider';
 import HeroSection from '@/components/home/HeroSection';
 import CategoriesSection from '@/components/home/CategoriesSection';
 import SmartSection from '@/components/home/SmartSection';
@@ -19,6 +20,7 @@ export default function Home() {
   }, []);
   return (
     <>
+      <CategorySlider />
       <HeroSection />
       <CategoriesSection />
       <FeaturedProductsSection />

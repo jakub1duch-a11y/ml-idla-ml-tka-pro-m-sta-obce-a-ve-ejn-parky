@@ -13,6 +13,7 @@ import BlogSection from '@/components/home/BlogSection';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import ContactSection from '@/components/home/ContactSection';
+import FadeIn from '@/components/common/FadeIn';
 
 export default function Home() {
   useEffect(() => {
@@ -23,17 +24,17 @@ export default function Home() {
     <>
       <CategorySlider />
       <HeroSection />
-      <CategoriesSection />
-      <ProductsSlider />
-      <FeaturedProductsSection />
-      <HowItWorksSection />
-      <SmartSection />
-      <VideoSection />
-      <ProjectsSection />
-      <ReferenceSection />
-      <TechSection />
-      <BlogSection />
-      <ContactSection />
+      <FadeIn><CategoriesSection /></FadeIn>
+      <FadeIn><ProductsSlider /></FadeIn>
+      <FadeIn><FeaturedProductsSection /></FadeIn>
+      <FadeIn><HowItWorksSection /></FadeIn>
+      <FadeIn><SmartSection /></FadeIn>
+      <FadeIn><VideoSection /></FadeIn>
+      <FadeIn><ProjectsSection /></FadeIn>
+      <FadeIn><ReferenceSection /></FadeIn>
+      <FadeIn><TechSection /></FadeIn>
+      <FadeIn><BlogSection /></FadeIn>
+      <FadeIn><ContactSection /></FadeIn>
     </>
   );
 }

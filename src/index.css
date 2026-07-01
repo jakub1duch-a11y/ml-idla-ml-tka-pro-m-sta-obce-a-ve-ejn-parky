@@ -57,3 +57,15 @@
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: #0a0e14; }
 ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 2px; }
+
+/* Fade-in & Slide-up on scroll (GSAP ScrollTrigger) */
+.fade-in-element {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+.fade-in-element.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

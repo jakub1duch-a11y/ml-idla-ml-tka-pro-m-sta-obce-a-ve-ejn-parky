@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
       <div style="background:#0d1117;padding:40px 20px;font-family:'DM Sans',sans-serif;min-height:100vh;">
         <div style="max-width:560px;margin:0 auto;background:#131c27;border-radius:16px;overflow:hidden;border:1px solid #1e293b;">
           <div style="background:#0891b2;padding:28px 32px;">
-            <h1 style="margin:0;color:#ffffff;font-size:20px;font-weight:700;letter-spacing:-0.03em;">Nová poptávka — HolmTec</h1>
+            <h1 style="margin:0;color:#ffffff;font-size:20px;font-weight:700;letter-spacing:-0.03em;">Nová poptávka — MLŽIDLA.CZ/h1>
             <p style="margin:4px 0 0;color:rgba(255,255,255,0.7);font-size:13px;">Právě přišla nová nezávazná poptávka z webu.</p>
           </div>
           <div style="padding:24px 32px;">
@@ -63,8 +63,7 @@ Deno.serve(async (req) => {
       to: 'obchod1@holmtec.cz',
       subject: `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`,
       body: html,
-      from_name: 'HolmTec Web',
-    });
+      from_name: 'HWeb MLŽIDLA    });
 
     return Response.json({ ok: true });
   } catch (error) {

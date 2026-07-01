@@ -79,12 +79,12 @@ export default function Header() {
               initial={{ opacity: 0, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 1.8, ease: 'easeOut' }}
-              className="flex items-center gap-2">
+              className="flex items-center gap-2 bg-[hsl(var(--background))]">
               <svg width="20" height="25" viewBox="0 0 22 28" fill="none">
                 <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.92" />
                 <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
               </svg>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.04em' }} className="no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-non normal-case text-2xl text-slate-900 font-bold">
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.04em' }} className="no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-non normal-case text-2xl font-bold text-[hsl(var(--foreground))]">
                 mlzidla<span className="text-[#214999] [font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium">.cz</span>
               </span>
             </motion.div>

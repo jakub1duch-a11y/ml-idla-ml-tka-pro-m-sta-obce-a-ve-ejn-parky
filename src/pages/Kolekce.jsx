@@ -189,7 +189,7 @@ export default function Kolekce() {
 
 
       {/* ── KATEGORIE ── */}
-      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10">
+      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10 hidden">
         <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-3">Vyberte kategorii</p>
         <div className="flex flex-wrap gap-2.5">
           <button onClick={() => setActiveCategory(null)}
@@ -215,7 +215,7 @@ export default function Kolekce() {
       </div>
 
       {/* ── POKROČILÉ FILTRY ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-8">
+      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10">
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
           {/* Search */}
           <input

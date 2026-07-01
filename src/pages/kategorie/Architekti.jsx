@@ -5,16 +5,38 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucide-react';
 
 const DOWNLOADS = [
-  { icon: Box, title: 'CAD / BIM modely', desc: '3D soubory ve formátu DWG, IFC, Revit family pro integraci do projektové dokumentace.', tag: 'DWG · IFC · RFA' },
-  { icon: FileText, title: 'Technické listy', desc: 'Kompletní technické parametry, rozměry, materiálové specifikace a zatížení základů.', tag: 'PDF' },
-  { icon: Ruler, title: 'Výkresová dokumentace', desc: 'Výkresy půdorysu, řezy a detaily pro každý standardní model kolekce.', tag: 'PDF · DWG' },
+  { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
+  { icon: Ruler, title: 'Zakázkové rozměry', desc: 'Každou mlžnou sochu vyrobíme na míru vašemu projektu. Výška, šířka, povrchová úprava — přesně dle specifikace.', tag: 'Na míru' },
+  { icon: FileText, title: 'Technická podpora', desc: 'Inženýr Holmtec je vám k dispozici od studie po realizaci. Konzultace zdarma, revize výkresů, dozor při montáži.', tag: 'Konzultace zdarma' },
 ];
 
-const PROCESS = [
-  { num: '01', title: 'Brief & inspirace', desc: 'Sdílíte záměr projektu, kontext místa a inspirační reference. My se přizpůsobíme vašemu workflow.' },
-  { num: '02', title: '3D návrh na míru', desc: 'Naši designéři zpracují varianty v 3D — organické tvary, abstraktní linie, lokální motivy. Do 48 h.' },
-  { num: '03', title: 'Iterace a finalizace', desc: 'Společně upřesníme rozměry, povrchovou úpravu a způsob kotvení. Dodáme podklady pro DPS.' },
-  { num: '04', title: 'Výroba a instalace', desc: 'Zakázková výroba z AISI 316L, montáž naším týmem, zprovoznění a servisní smlouva.' },
+const REASONS = [
+  '3D BIM modely pro Revit, ArchiCAD, SketchUp',
+  'Technické listy: zatížení, kotvení, přípojky',
+  'Vzorník povrchových úprav: Polished, Brushed, PVD',
+  'Konzultace s inženýrem — od studie po realizaci',
+  'Projektová dokumentace pro stavební povolení',
+];
+
+const GALLERY = [
+  { title: 'Veřejná prostranství', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/df243f3f7_mlzitkapromesta.jpeg' },
+  { title: 'Mlžící zóny', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/75ba202be_mlzicizony.jpeg' },
+  { title: 'Mlhoviště', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/c7880a54f_mlhoviste.jpg' },
+  { title: 'AURA série', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b023d9933_mlzitkoaura-vysic.jpg' },
+  { title: 'Bendy Stéblo', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/910eb2c63_bendymlzitko-steblo.jpeg' },
+];
+
+const PRODUCTS = [
+  { title: 'Mlžné brány', desc: 'Portály Oblouk, Hranatý, Hexagon — monumentální vstupy pro náměstí, parky a veřejné budovy.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b7a9a40cb_export-1775419649292.jpg' },
+  { title: 'AURA série', desc: 'Výškově dominantní skulptury (120–220 cm) pro atria, lobby a reprezentativní prostory.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b023d9933_mlzitkoaura-vysic.jpg' },
+  { title: 'Bendy Stéblo', desc: 'Flexibilní organické tvary — ideální pro zahradní architekturu a krajinářské projekty.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/910eb2c63_bendymlzitko-steblo.jpeg' },
+];
+
+const FINISHES = [
+  { title: 'Polished', desc: 'Vysoký lesk, zrcadlový efekt — pro moderní minimalistickou architekturu.' },
+  { title: 'Brushed', desc: 'Jemně broušený nerez — univerzální, ladí s přírodními materiály.' },
+  { title: 'PVD Graphite', desc: 'Tmavá grafitová úprava — industriální a sofistikovaný vzhled.' },
+  { title: 'PVD Champagne', desc: 'Teplý zlatavý nádech — luxusní akcent pro reprezentativní prostory.' },
 ];
 
 export default function Architekti() {
@@ -29,34 +51,52 @@ export default function Architekti() {
             <div className="w-10 h-10 rounded-xl bg-violet-50 border border-violet-200 flex items-center justify-center">
               <Palette size={18} className="text-violet-700" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-violet-700">Pro architekty a designéry</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-violet-700">Architekti · Zahradní designéři · Krajináři · Ateliéry</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-            Nerez tvarovaný<br /><span style={{ fontStyle: 'italic' }}>podle vašich nápadů.</span>
+            Navrhněte prostor,<br />který dýchá. <span style={{ fontStyle: 'italic' }}>My dodáme mlhu.</span>
           </h1>
           <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Spolupracujeme s architekty, krajinnými architekty a průmyslovými designéry na zcela zakázkových mlžných prvcích. Váš návrh — naše technologie. Dodáváme kompletní BIM podklady, technické listy a výkresy pro projektovou dokumentaci.
+            Holmtec je partner architektů a designérů. Poskytujeme BIM modely, technické listy, konzultace a exkluzivní podmínky pro vaše projekty.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-              Vyžádat podklady <Download size={15} />
+              Partnerský program <Download size={15} />
             </a>
             <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
-              Konzultace projektu
+              BIM modely k dispozici
             </Link>
           </div>
         </motion.div>
       </div>
 
+      {/* Mlha jako materiál */}
+      <section className="bg-slate-900 py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <p className="text-xs font-mono tracking-widest uppercase text-violet-400 mb-4">Mlha jako materiál</p>
+            <h2 className="text-white text-3xl mb-5" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+              Pátý živel<br /><span style={{ fontStyle: 'italic' }}>vašeho návrhu.</span>
+            </h2>
+            <p className="text-slate-400 leading-relaxed font-light">
+              Mlha není jen chlazení — je to prostorový materiál. Pracuje se světlem, mění atmosféru, definuje hranice bez zdí. Nový nástroj v rukou architekta.
+            </p>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="rounded-2xl overflow-hidden aspect-[4/3]">
+            <img src="https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/78bed1fd3_Mlzitko-mlzna-brana-oblouk-VDMA.webp" alt="Mlžná brána oblouk" className="w-full h-full object-cover" />
+          </motion.div>
+        </div>
+      </section>
+
       {/* Ke stažení */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Podklady pro projektanty</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč architekti volí Holmtec</p>
           <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-            Ke stažení zdarma<br /><span style={{ fontStyle: 'italic' }}>na vyžádání.</span>
+            Od první skici<br /><span style={{ fontStyle: 'italic' }}>po finální realizaci.</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {DOWNLOADS.map((d, i) => (
               <motion.div key={d.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 className="p-7 rounded-2xl bg-white border border-slate-200 hover:border-violet-300 transition-all group">
@@ -73,22 +113,73 @@ export default function Architekti() {
               </motion.div>
             ))}
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {REASONS.map((r) => (
+              <div key={r} className="flex items-center gap-3 p-4 rounded-xl bg-white border border-slate-200">
+                <div className="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0" />
+                <p className="text-sm text-slate-600 font-light">{r}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Proces */}
+      {/* Vizuální inspirace */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Jak spolupráce probíhá</p>
-        <h2 className="text-slate-900 text-3xl mb-12" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-          Od skici<br /><span style={{ fontStyle: 'italic' }}>k hotovému prvku.</span>
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vizuální inspirace</p>
+        <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+          Mlha v kontextu<br /><span style={{ fontStyle: 'italic' }}>prostoru.</span>
         </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {GALLERY.map((g, i) => (
+            <motion.div key={g.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+              className="rounded-2xl overflow-hidden group">
+              <div className="aspect-[3/4] overflow-hidden">
+                <img src={g.image} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <p className="text-sm text-slate-700 font-medium mt-2">{g.title}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Co nabízíme */}
+      <section className="bg-slate-50 border-y border-slate-200 py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Co nabízíme</p>
+          <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+            Produkty pro<br /><span style={{ fontStyle: 'italic' }}>každý kontext.</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {PRODUCTS.map((p, i) => (
+              <motion.div key={p.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                className="rounded-2xl overflow-hidden bg-white border border-slate-200">
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-slate-900 font-medium mb-2">{p.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed font-light">{p.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Materiály a povrchy */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Materiály a povrchy</p>
+        <h2 className="text-slate-900 text-3xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
+          Nerez AISI 316<br /><span style={{ fontStyle: 'italic' }}>ve čtyřech úpravách.</span>
+        </h2>
+        <p className="text-slate-500 max-w-2xl font-light mb-10">Vyberte povrchovou úpravu, která ladí s materiálovým konceptem vašeho projektu. Vzorník zašleme na vyžádání zdarma.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {PROCESS.map((s, i) => (
-            <motion.div key={s.num} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+          {FINISHES.map((f, i) => (
+            <motion.div key={f.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               className="p-6 rounded-2xl bg-white border border-slate-200">
-              <p className="font-heading text-4xl text-slate-200 mb-3" style={{ fontWeight: 700 }}>{s.num}</p>
-              <h3 className="text-slate-900 font-medium mb-2 text-sm">{s.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-light">{s.desc}</p>
+              <h3 className="text-slate-900 font-medium mb-2 text-sm">{f.title}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-light">{f.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -98,12 +189,12 @@ export default function Architekti() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
         <div className="p-10 rounded-2xl bg-violet-50 border border-violet-200 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Máte projekt, kde by se mlžný prvek hodil?</h3>
-            <p className="text-slate-500 text-sm">Rádi se zapojíme již ve fázi konceptu. Podklady pro DPS dodáme zdarma.</p>
+            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Pojďme tvořit společně.</h3>
+            <p className="text-slate-500 text-sm">Získejte přístup k BIM modelům, technickým listům a prioritní podpoře. Připojte se k partnerskému programu Holmtec.</p>
           </div>
           <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
             className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-violet-700 text-white text-sm font-bold rounded-full hover:bg-violet-800 transition-all whitespace-nowrap">
-            Napsat obchodnímu týmu <ArrowRight size={15} />
+            Partnerský program <ArrowRight size={15} />
           </a>
         </div>
       </section>

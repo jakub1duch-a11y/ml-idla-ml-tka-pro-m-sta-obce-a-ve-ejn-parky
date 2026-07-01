@@ -116,7 +116,7 @@ function ProductCard({ product, i }) {
           <h3 className="text-xl font-normal text-slate-900 mb-1">{product.name}</h3>
           <p className="text-sm text-slate-500 mb-3 line-clamp-2">{product.short_description}</p>
           {product.material &&
-          <p className="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-2">{product.material}</p>
+          <p className="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-2 hidden">{product.material}</p>
           }
           <div className="flex items-center justify-between">
             

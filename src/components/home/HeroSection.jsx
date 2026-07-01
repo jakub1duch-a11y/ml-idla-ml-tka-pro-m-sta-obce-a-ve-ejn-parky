@@ -174,30 +174,30 @@ export default function HeroSection() {
             transition={{ duration: 0.5, ease: 'easeOut' }}
             className="max-w-xl">
             
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/70">{slide.tag}</span>
-              <span className="px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[9px] font-medium tracking-widest text-white/60">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-sm font-medium text-white/90">{slide.tag}</span>
+              <span className="px-4 py-2 rounded-full bg-emerald-400/10 backdrop-blur-md border border-emerald-300/40 shadow-[0_0_20px_rgba(52,211,153,0.35)] text-sm font-medium tracking-wide text-emerald-300">
                 {slide.badge}
               </span>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3 font-semibold [font-family:'Urbanist',_sans-serif]">
+            <h1 className="text-6xl lg:text-8xl text-white leading-[1.05] tracking-tight mb-4 font-bold [font-family:'Urbanist',_sans-serif] [text-shadow:0_8px_30px_rgba(0,0,0,0.45)]">
               {slide.name}
             </h1>
-            <h2 className="font-heading font-light text-2xl lg:text-3xl text-white/70 italic leading-tight tracking-tight mb-6">
+            <h2 className="font-heading font-light text-3xl lg:text-4xl text-white/70 italic leading-tight tracking-tight mb-6">
               {slide.subtitle}
             </h2>
-            <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-8 max-w-md font-light">
+            <p className="text-white text-base lg:text-lg leading-relaxed mb-8 max-w-md font-normal bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl px-6 py-5 shadow-lg">
               {slide.desc ? slide.desc.substring(0, 90) + '...' : ''}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link to={slide.cta} onClick={() => trackHeroInteraction(slide.name, slide.name)}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-900 text-xs font-medium rounded-full hover:bg-white/90 transition-all">
+              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/20 backdrop-blur-md border border-white/25 text-white text-sm font-medium rounded-2xl shadow-lg hover:bg-white/30 transition-all">
                 Prozkoumat <ArrowRight size={14} />
               </Link>
               <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-white/25 text-white text-xs font-medium rounded-full hover:bg-white/10 transition-all">
+              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium rounded-2xl shadow-lg hover:bg-white/20 transition-all">
                 Nezávazná poptávka
               </Link>
             </div>

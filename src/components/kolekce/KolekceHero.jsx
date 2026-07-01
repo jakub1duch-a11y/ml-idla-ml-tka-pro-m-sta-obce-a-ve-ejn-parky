@@ -135,7 +135,7 @@ export default function KolekceHero() {
         </AnimatePresence>
 
         {/* Dash nav */}
-        <div className="flex gap-1.5 mt-6">
+        <div className="flex gap-1.5 mt-6 hidden">
           {SLIDES.map((_, i) =>
           <button
             key={i}

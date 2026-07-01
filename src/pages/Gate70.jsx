@@ -347,14 +347,19 @@ export default function Gate70() {
                          ══════════════════════════════════════════════════════ */}
       <section className="bg-white py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-            <p className="text-sm text-slate-500 mb-3">Wi-Fi Smart systém</p>
-            <h2 style={{ lineHeight: 1.1, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 mb-4">
-              Inteligentní brána.
-            </h2>
-            <p className="text-slate-500 leading-relaxed max-w-2xl">GATE70 je možnost vybavit plně integrovaným Wi-Fi Smart systémem. Ovládání, senzory, osvětlení a časovače — vše v jednom zařízení.
-
-            </p>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 flex items-start justify-between gap-8">
+            <div>
+              <p className="text-sm text-slate-500 mb-3">Wi-Fi Smart systém</p>
+              <h2 style={{ lineHeight: 1.1, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 mb-4">
+                Inteligentní brána.
+              </h2>
+              <p className="text-slate-500 leading-relaxed max-w-2xl">GATE70 je možnost vybavit plně integrovaným Wi-Fi Smart systémem. Ovládání, senzory, osvětlení a časovače — vše v jednom zařízení.
+              </p>
+            </div>
+            <img
+              src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1cd4da24f_generated_image.png"
+              alt="Smart aplikace pro ovládání GATE70"
+              className="hidden lg:block w-40 shrink-0" />
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

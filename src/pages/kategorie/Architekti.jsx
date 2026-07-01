@@ -3,6 +3,7 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucide-react';
+import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const DOWNLOADS = [
   { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
@@ -198,20 +199,21 @@ export default function Architekti() {
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Pojďme tvořit společně.</h3>
-            <p className="text-slate-500 text-sm">Získejte přístup k BIM modelům, technickým listům a prioritní podpoře. Připojte se k partnerskému programu Holmtec.</p>
+            <p className="text-slate-500 text-sm mb-6">Získejte přístup k BIM modelům, technickým listům a prioritní podpoře. Připojte se k partnerskému programu Holmtec.</p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">
+                Reference realizací
+              </Link>
+              <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
+                Partnerský program <ArrowRight size={14} />
+              </a>
+            </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <Link to="/reference" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">
-              Reference realizací
-            </Link>
-            <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
-              Partnerský program <ArrowRight size={15} />
-            </a>
-          </div>
+          <CategoryInquiryForm category="Architekti" projectScope="private" />
         </div>
       </section>
     </div>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Tent, CheckCircle, Loader, Phone, Mail } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
@@ -33,30 +34,35 @@ export default function Eventy() {
 
   return (
     <div className="min-h-screen bg-white pt-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
-              <Tent size={18} className="text-slate-900" />
+      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f0ba17112_generated_video.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                <Tent size={18} className="text-white" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Eventy & festivaly</p>
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Eventy & festivaly</p>
-          </div>
-          <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-            Mlžítko, které se<br /><span style={{ fontStyle: 'italic' }}>stane hvězdou akce.</span>
-          </h1>
-          <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Pronajměte si nebo kupte mobilní mlžné prvky pro festivaly, letní terasy a krátkodobé akce. Rychlá instalace, nezaměnitelná vizuální identita a ochlazení návštěvníků — v jednom balíčku.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-              Poptávka pronájmu <ArrowRight size={15} />
-            </Link>
-            <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
-              <Phone size={14} /> +420 774 700 390
-            </a>
-          </div>
-        </motion.div>
-      </div>
+            <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+              Mlžítko, které se<br /><span style={{ fontStyle: 'italic' }}>stane hvězdou akce.</span>
+            </h1>
+            <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
+              Pronajměte si nebo kupte mobilní mlžné prvky pro festivaly, letní terasy a krátkodobé akce. Rychlá instalace, nezaměnitelná vizuální identita a ochlazení návštěvníků — v jednom balíčku.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+                Poptávka pronájmu <ArrowRight size={15} />
+              </Link>
+              <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+                <Phone size={14} /> +420 774 700 390
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Pronájem výhody */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
@@ -132,22 +138,18 @@ export default function Eventy() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Termín se blíží? Napište nám hned.</h3>
-            <div className="flex flex-col sm:flex-row gap-4 mt-3 text-sm font-mono text-slate-500">
+            <div className="flex flex-col sm:flex-row gap-4 mt-3 mb-6 text-sm font-mono text-slate-500">
               <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-slate-900 transition-colors"><Phone size={13} className="text-slate-900" /> +420 774 700 390</a>
               <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors"><Mail size={13} className="text-slate-900" /> obchod1@holmtec.cz</a>
             </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <Link to="/reference" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">
-              Reference
-            </Link>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
-              Poptávka pronájmu <ArrowRight size={15} />
+            <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
+              Reference <ArrowRight size={14} />
             </Link>
           </div>
+          <CategoryInquiryForm category="Eventy & festivaly" projectScope="event" />
         </div>
       </section>
     </div>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Baby, Loader, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const USE_CASES = [
   { emoji: '🏫', title: 'Základní školy', desc: 'Ochlazení školních dvorů a venkovních areálů během horkých dnů, bezpečné pro provoz o přestávkách.' },
@@ -128,17 +129,15 @@ export default function Deti() {
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-          <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme řešení pro vaši školu či hřiště.</h3>
-          <p className="text-slate-500 text-sm mb-6">Konzultace a návrh zdarma · Odpovídáme do 24 h</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/reference" className="inline-flex items-center gap-2 px-8 py-4 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
-              Reference realizací
-            </Link>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-              Nezávazná poptávka <ArrowRight size={15} />
+        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div>
+            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme řešení pro vaši školu či hřiště.</h3>
+            <p className="text-slate-500 text-sm mb-6">Konzultace a návrh zdarma · Odpovídáme do 24 h</p>
+            <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
+              Reference realizací <ArrowRight size={14} />
             </Link>
           </div>
+          <CategoryInquiryForm category="Školy, školky a děti" projectScope="urban" />
         </div>
       </section>
     </div>

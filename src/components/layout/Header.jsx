@@ -85,7 +85,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
+          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${

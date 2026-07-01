@@ -69,3 +69,21 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Poptávka button hover effect */
+.btn-poptavka {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-poptavka:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+.btn-poptavka svg {
+  transition: transform 0.2s ease;
+}
+.btn-poptavka:hover svg {
+  transform: translateX(4px);
+}

@@ -46,7 +46,7 @@ export default function CategoriesSection() {
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3 hidden">Kategorie produktů</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+            className="font-heading font-light text-4xl text-slate-900 tracking-tight lg:text-xl">
               Řešení pro každý<br /><span className="text-slate-400 text-2xl">typ prostoru.</span>
             </motion.h2>
             <Link to="/kolekce" className="flex items-center gap-2 text-sm text-slate-900 hover:text-slate-600 transition-colors font-medium whitespace-nowrap hidden">

@@ -181,7 +181,7 @@ export default function Kolekce() {
   });
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen bg-white pt-16">
 
       {/* ── HERO SLIDER ── */}
       <KolekceHero />

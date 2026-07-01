@@ -1,27 +1,28 @@
 import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Wraps children in a div that fades in & slides up when scrolled into view (GSAP ScrollTrigger)
+// Wraps children in a div that reveals (fade + slide up) when scrolled into view (Intersection Observer API)
 export default function FadeIn({ children, className = '', as: Tag = 'div' }) {
   const ref = useRef(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const trigger = ScrollTrigger.create({
-      trigger: el,
-      start: 'top 85%',
-      once: true,
-      onEnter: () => el.classList.add('visible')
-    });
-    return () => trigger.kill();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { root: null, rootMargin: '0px', threshold: 0.15 });
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <Tag ref={ref} className={`fade-in-element ${className}`}>
+    <Tag ref={ref} className={`reveal-element ${className}`}>
       {children}
     </Tag>
   );

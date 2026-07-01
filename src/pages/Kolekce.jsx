@@ -215,57 +215,57 @@ export default function Kolekce() {
       
 
       {/* ── POKROČILÉ FILTRY ── */}
-      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10 hidden">
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-          {/* Search */}
-          <input
-            type="text"
-            placeholder="Hledat produkt..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none transition-all hidden" />
-          
-          <button
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-mono tracking-widest uppercase transition-all ${showAdvanced || hasAdvancedFilter ? 'bg-slate-100 border-slate-300 text-slate-900' : 'border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-700'}`}>
-            
-            <SlidersHorizontal size={14} /> Filtry {hasAdvancedFilter && '●'}
-          </button>
-          {hasAdvancedFilter &&
-          <button onClick={() => {setHeightFilter('all');setInstallFilter('all');setSearch('');}}
-          className="text-xs text-slate-400 hover:text-slate-900 font-mono flex items-center gap-1">
-              <X size={12} /> Reset
-            </button>
-          }
-        </div>
+      
 
-        {showAdvanced &&
-        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-2">Výška systému</p>
-              <div className="flex flex-wrap gap-2">
-                {HEIGHT_OPTIONS.map((o) =>
-              <button key={o.value} onClick={() => setHeightFilter(o.value)}
-              className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${heightFilter === o.value ? 'bg-slate-900 text-white' : 'border border-slate-200 text-slate-500 hover:text-slate-900'}`}>
-                    {o.label}
-                  </button>
-              )}
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-2">Náročnost instalace</p>
-              <div className="flex flex-wrap gap-2">
-                {INSTALL_OPTIONS.map((o) =>
-              <button key={o.value} onClick={() => setInstallFilter(o.value)}
-              className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${installFilter === o.value ? 'bg-slate-900 text-white' : 'border border-slate-200 text-slate-500 hover:text-slate-900'}`}>
-                    {o.label}
-                  </button>
-              )}
-              </div>
-            </div>
-          </motion.div>
-        }
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       {/* ── PRODUKTY ── */}
       <div className="max-w-7xl lg:px-8 my-10 mx-auto">

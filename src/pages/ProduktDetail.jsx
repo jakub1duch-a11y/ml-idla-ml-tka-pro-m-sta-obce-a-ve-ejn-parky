@@ -14,8 +14,8 @@ function Lightbox({ images, initialIndex, onClose }) {
   useEffect(() => {
     const h = (e) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') setIdx(i => (i + 1) % images.length);
-      if (e.key === 'ArrowLeft') setIdx(i => (i - 1 + images.length) % images.length);
+      if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % images.length);
+      if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + images.length) % images.length);
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
@@ -26,22 +26,22 @@ function Lightbox({ images, initialIndex, onClose }) {
       <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
         <X size={18} />
       </button>
-      <div className="relative max-w-5xl w-full mx-6" onClick={e => e.stopPropagation()}>
+      <div className="relative max-w-5xl w-full mx-6" onClick={(e) => e.stopPropagation()}>
         <img src={images[idx]} alt="" className="w-full max-h-[85vh] object-contain" />
-        {images.length > 1 && (
-          <>
-            <button onClick={() => setIdx(i => (i - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
+        {images.length > 1 &&
+        <>
+            <button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
               <ChevronLeft size={18} />
             </button>
-            <button onClick={() => setIdx(i => (i + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
+            <button onClick={() => setIdx((i) => (i + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
               <ChevronRight size={18} />
             </button>
             <p className="text-center text-xs font-mono text-white/30 mt-4 tracking-widest">{idx + 1} / {images.length}</p>
           </>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 // ─── Clickable image ──────────────────────────────────────────────────────────
@@ -53,8 +53,8 @@ function Photo({ src, alt, onClick, className = '' }) {
       <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all">
         <Maximize2 size={12} />
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 // ─── Inline contact form ──────────────────────────────────────────────────────
@@ -70,7 +70,7 @@ function ContactForm({ productName }) {
       name: form.name,
       email: form.email,
       message: `[${productName}] ${form.message || 'Zájem o produkt'}`,
-      description: form.phone ? `Tel: ${form.phone}` : '',
+      description: form.phone ? `Tel: ${form.phone}` : ''
     }).catch(() => {});
     setSent(true);
     setSending(false);
@@ -86,43 +86,43 @@ function ContactForm({ productName }) {
       </div>
       <p className="text-slate-900 font-light text-lg">Poptávka odeslána.</p>
       <p className="text-slate-400 text-sm mt-1">Odpovídáme do 24 h.</p>
-    </div>
-  );
+    </div>);
+
 
   return (
     <form onSubmit={submit} className="space-y-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
-          <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
-            placeholder="Jan Novák" />
+          <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
+          placeholder="Jan Novák" />
         </div>
         <div>
           <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Email *</label>
-          <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
-            placeholder="jan@firma.cz" />
+          <input required type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
+          placeholder="jan@firma.cz" />
         </div>
       </div>
       <div>
         <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Telefon</label>
-        <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
-          placeholder="+420 000 000 000" />
+        <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
+        placeholder="+420 000 000 000" />
       </div>
       <div>
         <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Popište váš projekt</label>
-        <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} rows={4}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors resize-none"
-          placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
+        <textarea value={form.message} onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))} rows={4}
+        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors resize-none"
+        placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
       </div>
       <button type="submit" disabled={sending}
-        className="w-full py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+      className="w-full py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2">
         {sending ? <Loader size={16} className="animate-spin" /> : <>Odeslat poptávku na {productName} <ArrowRight size={16} /></>}
       </button>
-    </form>
-  );
+    </form>);
+
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -140,30 +140,30 @@ export default function ProduktDetail() {
   };
 
   useEffect(() => {
-    if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
+    if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
-    base44.entities.Product.filter({ slug })
-      .then(async results => {
-        if (!results || results.length === 0) { setNotFound(true); return; }
-        const p = results[0];
-        setProduct(p);
-        trackProductView(p.name, p.slug, p.category_id);
-        setSEO(getProductSEO(p));
-        if (p.category_id) {
-          const related = await base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []);
-          setRelatedProducts((related || []).filter(r => r.id !== p.id).slice(0, 3));
-        }
-      })
-      .catch(() => setNotFound(true))
-      .finally(() => setLoading(false));
+    base44.entities.Product.filter({ slug }).
+    then(async (results) => {
+      if (!results || results.length === 0) {setNotFound(true);return;}
+      const p = results[0];
+      setProduct(p);
+      trackProductView(p.name, p.slug, p.category_id);
+      setSEO(getProductSEO(p));
+      if (p.category_id) {
+        const related = await base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []);
+        setRelatedProducts((related || []).filter((r) => r.id !== p.id).slice(0, 3));
+      }
+    }).
+    catch(() => setNotFound(true)).
+    finally(() => setLoading(false));
   }, [slug]);
 
   if (loading) return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <Loader size={28} className="animate-spin text-slate-300" />
-    </div>
-  );
+    </div>);
+
 
   if (notFound || !product) return (
     <div className="min-h-screen bg-white flex items-center justify-center pt-28">
@@ -171,40 +171,40 @@ export default function ProduktDetail() {
         <p className="text-slate-400 mb-4 text-lg">Produkt nenalezen.</p>
         <Link to="/mlzidla-mlzitka" className="text-slate-900 hover:underline">← Zpět na kolekci</Link>
       </div>
-    </div>
-  );
+    </div>);
+
 
   const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
   const img = (i) => allImages[i] || null;
 
   // Tech specs rows
   const techRows = [
-    product.coverage_area && { label: 'Výška', value: product.coverage_area },
-    { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L' },
-    product.pressure && { label: 'Tlak', value: product.pressure },
-    product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
-    product.material && { label: 'Materiál', value: product.material },
-    { label: 'Povrch', value: 'Broušený / kartáčovaný' },
-    { label: 'Instalace', value: 'Zemní patka nebo příruba' },
-    product.power_supply && { label: 'Napájení & řízení', value: product.power_supply },
-    { label: 'Výroba', value: 'Zakázková, 6–8 týdnů' },
-  ].filter(Boolean);
+  product.coverage_area && { label: 'Výška', value: product.coverage_area },
+  { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L' },
+  product.pressure && { label: 'Tlak', value: product.pressure },
+  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
+  product.material && { label: 'Materiál', value: product.material },
+  { label: 'Povrch', value: 'Broušený / kartáčovaný' },
+  { label: 'Instalace', value: 'Zemní patka nebo příruba' },
+  product.power_supply && { label: 'Napájení & řízení', value: product.power_supply },
+  { label: 'Výroba', value: 'Zakázková, 6–8 týdnů' }].
+  filter(Boolean);
 
   return (
     <div className="min-h-screen bg-white">
 
       {/* ═══════════════════════════════════════════════════════
-          1. FULLSCREEN HERO
-      ═══════════════════════════════════════════════════════ */}
+           1. FULLSCREEN HERO
+        ═══════════════════════════════════════════════════════ */}
       <div className="relative h-screen min-h-[600px] overflow-hidden">
-        {img(0) ? (
-          <img src={img(0)} alt={product.name} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full bg-slate-100" />
-        )}
+        {img(0) ?
+        <img src={img(0)} alt={product.name} className="w-full h-full object-cover" /> :
+
+        <div className="w-full h-full bg-slate-100" />
+        }
         {/* Dark overlays for legibility over photo */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r to-transparent from-black/00 via-black/0" />
 
         {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
@@ -223,16 +223,16 @@ export default function ProduktDetail() {
             </h1>
             
             {/* Short description */}
-            {product.short_description && (
-              <p className="text-white/60 text-lg max-w-lg mb-8 leading-relaxed font-light">
+            {product.short_description &&
+            <p className="text-white/60 text-lg max-w-lg mb-8 leading-relaxed font-light">
                 {product.short_description}
               </p>
-            )}
+            }
 
             {/* Specs icons row */}
             <div className="flex flex-wrap gap-8 mb-10">
-              {product.water_consumption && (
-                <div className="flex items-center gap-3">
+              {product.water_consumption &&
+              <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
                     <Droplet size={18} className="text-white" />
                   </div>
@@ -241,9 +241,9 @@ export default function ProduktDetail() {
                     <p className="text-sm text-white font-medium">{product.water_consumption}</p>
                   </div>
                 </div>
-              )}
-              {product.micron_size && (
-                <div className="flex items-center gap-3">
+              }
+              {product.micron_size &&
+              <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
                     <Zap size={18} className="text-white" />
                   </div>
@@ -252,9 +252,9 @@ export default function ProduktDetail() {
                     <p className="text-sm text-white font-medium">{product.micron_size}</p>
                   </div>
                 </div>
-              )}
-              {product.pressure && (
-                <div className="flex items-center gap-3">
+              }
+              {product.pressure &&
+              <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
                     <Gauge size={18} className="text-white" />
                   </div>
@@ -263,12 +263,12 @@ export default function ProduktDetail() {
                     <p className="text-sm text-white font-medium">{product.pressure}</p>
                   </div>
                 </div>
-              )}
+              }
             </div>
 
             {/* CTA button */}
             <Link to="/kontakt"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
               Poptat produkt <ArrowRight size={16} />
             </Link>
           </motion.div>
@@ -282,25 +282,25 @@ export default function ProduktDetail() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════
-          2. THUMBNAIL STRIP + TAG
-      ═══════════════════════════════════════════════════════ */}
-      {allImages.length > 1 && (
-        <div className="bg-slate-50 border-b border-slate-200">
+           2. THUMBNAIL STRIP + TAG
+        ═══════════════════════════════════════════════════════ */}
+      {allImages.length > 1 &&
+      <div className="bg-slate-50 border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center gap-4 overflow-x-auto scrollbar-none">
             <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-slate-400 mr-2">Galerie produktu</span>
-            {allImages.slice(0, 5).map((src, i) => (
-              <button key={i} onClick={() => setLightbox({ images: allImages, idx: i })}
-                className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-400 transition-all">
+            {allImages.slice(0, 5).map((src, i) =>
+          <button key={i} onClick={() => setLightbox({ images: allImages, idx: i })}
+          className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-400 transition-all">
                 <img src={src} alt="" className="w-full h-full object-cover" />
               </button>
-            ))}
+          )}
           </div>
         </div>
-      )}
+      }
 
       {/* ═══════════════════════════════════════════════════════
-          3. SECTION: "Strom, který chladí vzduch" — text + image
-      ═══════════════════════════════════════════════════════ */}
+           3. SECTION: "Strom, který chladí vzduch" — text + image
+        ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
@@ -310,57 +310,57 @@ export default function ProduktDetail() {
               <span className="text-slate-400">{product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}</span>
             </h2>
             <p className="text-slate-500 text-base lg:text-lg leading-relaxed font-light mb-8">
-              {product.name === 'OSTEV'
-                ? 'OSTEV není pouhé mlžítko — je to skulptura s duší stromu. Mohutný nerezový kmen se větví do elegantních ramen, z jejichž konců tryskají jemné mlžné clony. Ochlazení až o 9 °C, bez kapek na zemi, bez hluku.'
-                : `${product.name} kombinuje estetiku s funkcí. Průmyslové mlžení, prémiová nerezová ocel a smart řízení v jednom produktu.`}
+              {product.name === 'OSTEV' ?
+              'OSTEV není pouhé mlžítko — je to skulptura s duší stromu. Mohutný nerezový kmen se větví do elegantních ramen, z jejichž konců tryskají jemné mlžné clony. Ochlazení až o 9 °C, bez kapek na zemi, bez hluku.' :
+              `${product.name} kombinuje estetiku s funkcí. Průmyslové mlžení, prémiová nerezová ocel a smart řízení v jednom produktu.`}
             </p>
             <ul className="space-y-3 mb-10">
               {[
-                product.coverage_area && `Výška ${product.coverage_area.split(',')[0]}`,
-                product.material && `Materiál ${product.material.split(',')[0]}`,
-                'Smart senzory, ovládání z mobilu',
-              ].filter(Boolean).map(item => (
-                <li key={item} className="flex items-center gap-3 text-sm text-slate-500 font-light">
+              product.coverage_area && `Výška ${product.coverage_area.split(',')[0]}`,
+              product.material && `Materiál ${product.material.split(',')[0]}`,
+              'Smart senzory, ovládání z mobilu'].
+              filter(Boolean).map((item) =>
+              <li key={item} className="flex items-center gap-3 text-sm text-slate-500 font-light">
                   <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />{item}
                 </li>
-              ))}
+              )}
             </ul>
             {/* Stat pills */}
             <div className="flex flex-wrap gap-6">
               {[
-                { val: '−9 °C', label: 'Ochlazení' },
-                { val: product.pressure || '70 bar', label: 'Tlak mlžení' },
-              ].map(s => (
-                <div key={s.label} className="text-center">
+              { val: '−9 °C', label: 'Ochlazení' },
+              { val: product.pressure || '70 bar', label: 'Tlak mlžení' }].
+              map((s) =>
+              <div key={s.label} className="text-center">
                   <p className="font-heading font-bold text-2xl tracking-tight leading-none text-slate-900">{s.val}</p>
                   <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mt-1">{s.label}</p>
                 </div>
-              ))}
+              )}
               <div className="flex flex-col gap-1 ml-2 justify-center">
                 <span className="text-[11px] font-mono text-slate-500 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
               </div>
             </div>
           </motion.div>
 
-          {img(2) && (
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+          {img(2) &&
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
               <Photo src={img(2)} alt={product.name} className="aspect-[3/4] rounded-2xl"
-                onClick={() => setLightbox({ images: allImages, idx: 2 })} />
+            onClick={() => setLightbox({ images: allImages, idx: 2 })} />
             </motion.div>
-          )}
+          }
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          4. SECTION: "Každá kapka nespadne na zem" — image left, text right
-      ═══════════════════════════════════════════════════════ */}
-      {img(3) && (
-        <section className="bg-slate-50 border-y border-slate-200">
+           4. SECTION: "Každá kapka nespadne na zem" — image left, text right
+        ═══════════════════════════════════════════════════════ */}
+      {img(3) &&
+      <section className="bg-slate-50 border-y border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
                 <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
-                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+              onClick={() => setLightbox({ images: allImages, idx: 3 })} />
               </motion.div>
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Materiál a detail</p>
@@ -377,11 +377,11 @@ export default function ProduktDetail() {
             </div>
           </div>
         </section>
-      )}
+      }
 
       {/* ═══════════════════════════════════════════════════════
-          5. FEATURES GRID: "Víc než mlžítko"
-      ═══════════════════════════════════════════════════════ */}
+           5. FEATURES GRID: "Víc než mlžítko"
+        ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vlastnosti</p>
@@ -391,24 +391,24 @@ export default function ProduktDetail() {
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
           {[
-            { icon: '💧', title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
-            { icon: '🔩', title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
-            { icon: '📱', title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
-            { icon: '🛠️', title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` },
-          ].map((f, i) => (
-            <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-              className="bg-white p-7">
+          { icon: '💧', title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
+          { icon: '🔩', title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
+          { icon: '📱', title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
+          { icon: '🛠️', title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` }].
+          map((f, i) =>
+          <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+          className="bg-white p-7">
               <span className="text-2xl mb-3 block">{f.icon}</span>
               <h3 className="text-slate-900 text-base font-medium tracking-tight mb-3">{f.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed font-light">{f.desc}</p>
             </motion.div>
-          ))}
+          )}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          6. TECH PARAMS — "Preciznost v každém detailu"
-      ═══════════════════════════════════════════════════════ */}
+           6. TECH PARAMS — "Preciznost v každém detailu"
+        ═══════════════════════════════════════════════════════ */}
       <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -418,36 +418,36 @@ export default function ProduktDetail() {
                 Preciznost<br /><span className="text-slate-400">v každém detailu.</span>
               </h2>
               <div className="rounded-2xl overflow-hidden border border-slate-200">
-                {techRows.map((row, i) => (
-                  <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                {techRows.map((row, i) =>
+                <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
                     <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
                     <span className="text-sm text-slate-900 font-medium text-right">{row.value}</span>
                   </div>
-                ))}
+                )}
               </div>
               <p className="text-xs text-slate-300 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
               <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-900 text-xs font-mono tracking-widest uppercase rounded-full hover:bg-slate-100 transition-all">
+              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-900 text-xs font-mono tracking-widest uppercase rounded-full hover:bg-slate-100 transition-all">
                 ↓ Vyžádat PDF technický list
               </a>
             </motion.div>
 
-            {img(3) && (
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
+            {img(3) &&
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
                 <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
-                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+              onClick={() => setLightbox({ images: allImages, idx: 3 })} />
                 <blockquote className="text-center px-6">
                   <p className="text-slate-400 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
                 </blockquote>
               </motion.div>
-            )}
+            }
           </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          6.5 INSTALLATION OPTIONS — Možnosti kotvení
-      ═══════════════════════════════════════════════════════ */}
+           6.5 INSTALLATION OPTIONS — Možnosti kotvení
+        ═══════════════════════════════════════════════════════ */}
       <section className="bg-white border-b border-slate-200 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
@@ -518,8 +518,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          7. VIDEO SECTION
-      ═══════════════════════════════════════════════════════ */}
+           7. VIDEO SECTION
+        ═══════════════════════════════════════════════════════ */}
       <section id="videa" className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Videa z terénu</p>
@@ -527,20 +527,20 @@ export default function ProduktDetail() {
             {product.name}<br /><span className="text-slate-400">v akci.</span>
           </h2>
           {/* Gallery of images shown as video previews if no video */}
-          {allImages.length >= 2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {allImages.slice(0, 2).map((src, i) => (
-                <Photo key={i} src={src} alt={`${product.name} instalace ${i+1}`} className="aspect-video rounded-2xl"
-                  onClick={() => setLightbox({ images: allImages, idx: i })} />
-              ))}
+          {allImages.length >= 2 &&
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {allImages.slice(0, 2).map((src, i) =>
+            <Photo key={i} src={src} alt={`${product.name} instalace ${i + 1}`} className="aspect-video rounded-2xl"
+            onClick={() => setLightbox({ images: allImages, idx: i })} />
+            )}
             </div>
-          )}
+          }
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          7. USE CASES: "Každý prostor má svůj ..."
-      ═══════════════════════════════════════════════════════ */}
+           7. USE CASES: "Každý prostor má svůj ..."
+        ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde {product.name} roste</p>
@@ -550,28 +550,28 @@ export default function ProduktDetail() {
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { emoji: '🏛️', title: 'Náměstí & piazzy', desc: 'Dominantní prvek veřejného prostoru, který chladí stovky lidí a stává se fotografovanou ikonou města.' },
-            { emoji: '🎪', title: 'Festivaly & eventy', desc: 'Mobilní varianta s přírubou. Rychlá instalace, nezaměnitelná silueta, dokonalý chill-out prostor.' },
-            { emoji: '🌳', title: 'Parky & promenády', desc: 'Přirozená forma stromu se harmonicky začlení mezi zeleň a zvýší atraktivitu procházky.' },
-            { emoji: '🏨', title: 'Hotely & restaurace', desc: 'Exkluzivní detail terasy nebo vstupního prostoru, který hosty překvapí a přivítá chladivou mlhou.' },
-            { emoji: '🏫', title: 'Školy & univerzity', desc: 'Bezpečný materiál, zábrany nezbytné není — mlha se odpaří dřív, než dosáhne na zem.' },
-            { emoji: '🗺️', title: 'Orientační systém', desc: 'Větve nesou informační panely — slouží jako chladivý rozcestník bez nutnosti dalšího mobiliáře.' },
-          ].map((u, i) => (
-            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
+          { emoji: '🏛️', title: 'Náměstí & piazzy', desc: 'Dominantní prvek veřejného prostoru, který chladí stovky lidí a stává se fotografovanou ikonou města.' },
+          { emoji: '🎪', title: 'Festivaly & eventy', desc: 'Mobilní varianta s přírubou. Rychlá instalace, nezaměnitelná silueta, dokonalý chill-out prostor.' },
+          { emoji: '🌳', title: 'Parky & promenády', desc: 'Přirozená forma stromu se harmonicky začlení mezi zeleň a zvýší atraktivitu procházky.' },
+          { emoji: '🏨', title: 'Hotely & restaurace', desc: 'Exkluzivní detail terasy nebo vstupního prostoru, který hosty překvapí a přivítá chladivou mlhou.' },
+          { emoji: '🏫', title: 'Školy & univerzity', desc: 'Bezpečný materiál, zábrany nezbytné není — mlha se odpaří dřív, než dosáhne na zem.' },
+          { emoji: '🗺️', title: 'Orientační systém', desc: 'Větve nesou informační panely — slouží jako chladivý rozcestník bez nutnosti dalšího mobiliáře.' }].
+          map((u, i) =>
+          <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+          className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
               <span className="text-2xl mb-4 block">{u.emoji}</span>
               <h3 className="text-slate-900 text-base font-medium tracking-tight mb-2">{u.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed font-light">{u.desc}</p>
             </motion.div>
-          ))}
+          )}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          9. REALIZACE gallery: "OSTEV v reálném světě"
-      ═══════════════════════════════════════════════════════ */}
-      {allImages.length >= 4 && (
-        <section className="bg-slate-50 border-y border-slate-200 py-20">
+           9. REALIZACE gallery: "OSTEV v reálném světě"
+        ═══════════════════════════════════════════════════════ */}
+      {allImages.length >= 4 &&
+      <section className="bg-slate-50 border-y border-slate-200 py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Realizace</p>
             <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
@@ -579,12 +579,12 @@ export default function ProduktDetail() {
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               {[
-                { idx: 2, caption: 'Promenáda', sub: 'Nábřežní esplanáda', desc: 'Mlžení pro stovky procházejících' },
-                { idx: 3, caption: 'Festival', sub: 'Letní food festival', desc: 'Chladivá oáza uprostřed davu' },
-              ].filter(r => img(r.idx)).map(r => (
-                <motion.div key={r.idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            { idx: 2, caption: 'Promenáda', sub: 'Nábřežní esplanáda', desc: 'Mlžení pro stovky procházejících' },
+            { idx: 3, caption: 'Festival', sub: 'Letní food festival', desc: 'Chladivá oáza uprostřed davu' }].
+            filter((r) => img(r.idx)).map((r) =>
+            <motion.div key={r.idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                   <div className="relative rounded-2xl overflow-hidden group cursor-pointer"
-                    onClick={() => setLightbox({ images: allImages, idx: r.idx })}>
+              onClick={() => setLightbox({ images: allImages, idx: r.idx })}>
                     <img src={img(r.idx)} alt={r.caption} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -594,29 +594,29 @@ export default function ProduktDetail() {
                     </div>
                   </div>
                 </motion.div>
-              ))}
+            )}
             </div>
             {/* Extra gallery grid */}
-            {allImages.length > 4 && (
-              <div className="grid grid-cols-3 gap-3 mt-5">
-                {allImages.slice(4, 10).map((src, i) => (
-                  <Photo key={i} src={src} alt={`${product.name} ${i+5}`} className="aspect-[4/3] rounded-xl"
-                    onClick={() => setLightbox({ images: allImages, idx: i + 4 })} />
-                ))}
-              </div>
+            {allImages.length > 4 &&
+          <div className="grid grid-cols-3 gap-3 mt-5">
+                {allImages.slice(4, 10).map((src, i) =>
+            <Photo key={i} src={src} alt={`${product.name} ${i + 5}`} className="aspect-[4/3] rounded-xl"
+            onClick={() => setLightbox({ images: allImages, idx: i + 4 })} />
             )}
+              </div>
+          }
           </div>
         </section>
-      )}
+      }
 
       {/* ═══════════════════════════════════════════════════════
-          9.5 REVIEWS — Hodnocení zákazníků
-      ═══════════════════════════════════════════════════════ */}
+           9.5 REVIEWS — Hodnocení zákazníků
+        ═══════════════════════════════════════════════════════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════════════════════════════════════════════════════
-          10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
-      ═══════════════════════════════════════════════════════ */}
+           10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
+        ═══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -639,16 +639,16 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          11. RELATED + BACK
-      ═══════════════════════════════════════════════════════ */}
-      {relatedProducts.length > 0 && (
-        <section className="py-20 bg-white border-t border-slate-200">
+           11. RELATED + BACK
+        ═══════════════════════════════════════════════════════ */}
+      {relatedProducts.length > 0 &&
+      <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mohlo by vás zajímat</p>
             <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {relatedProducts.map((r, i) => (
-                <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+              {relatedProducts.map((r, i) =>
+            <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                   <Link to={`/produkt/${r.slug}`} className="group block rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 transition-all">
                     <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                       {r.image_url && <img src={r.image_url} alt={r.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
@@ -662,7 +662,7 @@ export default function ProduktDetail() {
                     </div>
                   </Link>
                 </motion.div>
-              ))}
+            )}
             </div>
             <div className="mt-10 flex justify-center">
               <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
@@ -671,12 +671,12 @@ export default function ProduktDetail() {
             </div>
           </div>
         </section>
-      )}
+      }
 
       {/* Lightbox */}
-      {lightbox && (
-        <Lightbox images={lightbox.images} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} />
-      )}
-    </div>
-  );
+      {lightbox &&
+      <Lightbox images={lightbox.images} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} />
+      }
+    </div>);
+
 }

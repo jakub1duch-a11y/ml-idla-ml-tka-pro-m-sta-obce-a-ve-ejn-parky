@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Droplet, Zap, Gauge } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Droplet, Zap, Gauge, Download, Smartphone, FileText } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
@@ -125,6 +125,16 @@ function ContactForm({ productName }) {
 
 }
 
+// ─── Tabs config ───────────────────────────────────────────────────────────────
+const TABS = [
+{ id: 'popis', label: 'Popis produktu' },
+{ id: 'galerie', label: 'Foto galerie' },
+{ id: 'mlha', label: 'Animace mlhy' },
+{ id: 'ar', label: 'AR náhled' },
+{ id: 'stazeni', label: 'Ke stažení' },
+{ id: 'parametry', label: 'Parametry' }];
+
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -134,6 +144,7 @@ export default function ProduktDetail() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [lightbox, setLightbox] = useState(null);
+  const [activeTab, setActiveTab] = useState('popis');
 
   const handleReviewStats = (stats) => {
     if (product) setSEO(getProductSEO(product, stats));
@@ -143,6 +154,7 @@ export default function ProduktDetail() {
     if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
+    setActiveTab('popis');
     base44.entities.Product.filter({ slug }).
     then(async (results) => {
       if (!results || results.length === 0) {setNotFound(true);return;}
@@ -202,34 +214,28 @@ export default function ProduktDetail() {
 
         <div className="w-full h-full bg-slate-100" />
         }
-        {/* Dark overlays for legibility over photo */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-r to-transparent via-black/0 from-black/80" />
 
-        {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
             <ArrowLeft size={12} /> Zpět na produkty
           </Link>
         </div>
 
-        {/* Hero text — product name + short description + specs icons + CTA */}
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">HolmTec · Mlžné skulptury</p>
-            {/* Product name */}
             <h1 className="font-heading font-light tracking-tight leading-[0.95] text-6xl lg:text-8xl text-white mb-6">
               {product.name}
             </h1>
-            
-            {/* Short description */}
+
             {product.short_description &&
             <p className="text-white/60 text-lg max-w-lg mb-8 leading-relaxed font-light">
                 {product.short_description}
               </p>
             }
 
-            {/* Specs icons row */}
             <div className="flex flex-wrap gap-8 mb-10">
               {product.water_consumption &&
               <div className="flex items-center gap-3">
@@ -266,7 +272,6 @@ export default function ProduktDetail() {
               }
             </div>
 
-            {/* CTA button */}
             <Link to="/kontakt"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
               Poptat produkt <ArrowRight size={16} />
@@ -274,7 +279,6 @@ export default function ProduktDetail() {
           </motion.div>
         </div>
 
-        {/* Scroll hint */}
         <div className="absolute bottom-8 right-8 flex flex-col items-center gap-2 text-white/20">
           <div className="w-px h-10 bg-gradient-to-b from-transparent to-white/30" />
           <span className="text-[9px] font-mono tracking-[0.3em] uppercase">Scroll</span>
@@ -282,340 +286,340 @@ export default function ProduktDetail() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════
-              2. THUMBNAIL STRIP + TAG
+              2. STICKY TABS NAV
            ═══════════════════════════════════════════════════════ */}
-      {allImages.length > 1 &&
-      <div className="bg-slate-50 border-b border-slate-200">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center gap-4 overflow-x-auto scrollbar-none">
-            <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-slate-400 mr-2">Galerie produktu</span>
-            {allImages.slice(0, 5).map((src, i) =>
-          <button key={i} onClick={() => setLightbox({ images: allImages, idx: i })}
-          className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-400 transition-all">
-                <img src={src} alt="" className="w-full h-full object-cover" />
-              </button>
-          )}
-          </div>
-        </div>
-      }
-
-      {/* ═══════════════════════════════════════════════════════
-              3. SECTION: "Strom, který chladí vzduch" — text + image
-           ═══════════════════════════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Architektura přírody</p>
-            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-8">
-              {product.name === 'OSTEV' ? 'Strom, který' : product.name + ','}<br />
-              <span className="text-slate-400">{product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}</span>
-            </h2>
-            <p className="text-slate-500 text-base lg:text-lg leading-relaxed font-light mb-8">
-              {product.name === 'OSTEV' ?
-              'OSTEV není pouhé mlžítko — je to skulptura s duší stromu. Mohutný nerezový kmen se větví do elegantních ramen, z jejichž konců tryskají jemné mlžné clony. Ochlazení až o 9 °C, bez kapek na zemi, bez hluku.' :
-              `${product.name} kombinuje estetiku s funkcí. Průmyslové mlžení, prémiová nerezová ocel a smart řízení v jednom produktu.`}
-            </p>
-            <ul className="space-y-3 mb-10">
-              {[
-              product.coverage_area && `Výška ${product.coverage_area.split(',')[0]}`,
-              product.material && `Materiál ${product.material.split(',')[0]}`,
-              'Smart senzory, ovládání z mobilu'].
-              filter(Boolean).map((item) =>
-              <li key={item} className="flex items-center gap-3 text-sm text-slate-500 font-light">
-                  <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />{item}
-                </li>
-              )}
-            </ul>
-            {/* Stat pills */}
-            <div className="flex flex-wrap gap-6">
-              {[
-              { val: '−9 °C', label: 'Ochlazení' },
-              { val: product.pressure || '70 bar', label: 'Tlak mlžení' }].
-              map((s) =>
-              <div key={s.label} className="text-center">
-                  <p className="font-heading font-bold text-2xl tracking-tight leading-none text-slate-900">{s.val}</p>
-                  <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mt-1">{s.label}</p>
-                </div>
-              )}
-              <div className="flex flex-col gap-1 ml-2 justify-center">
-                <span className="text-[11px] font-mono text-slate-500 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {img(2) &&
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <Photo src={img(2)} alt={product.name} className="aspect-[3/4] rounded-2xl"
-            onClick={() => setLightbox({ images: allImages, idx: 2 })} />
-            </motion.div>
-          }
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-              4. SECTION: "Každá kapka nespadne na zem" — image left, text right
-           ═══════════════════════════════════════════════════════ */}
-      {img(3) &&
-      <section className="bg-slate-50 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-                <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
-              onClick={() => setLightbox({ images: allImages, idx: 3 })} />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-                <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Materiál a detail</p>
-                <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-8">
-                  Každá kapka<br /><span className="text-slate-400">nespadne na zem.</span>
-                </h2>
-                <p className="text-slate-500 text-base leading-relaxed font-light mb-8">
-                  Trysky {product.micron_size ? product.micron_size : '10–50'} μm vytvářejí kapičky tak drobné, že se okamžitě odpařují ve vzduchu. Žádné mokré chodníky. Žádné louže. Jen příjemný chlad, který visí ve vzduchu jako ranní mlha.
-                </p>
-                <blockquote className="border-l-2 border-slate-300 pl-6">
-                  <p className="text-slate-400 italic text-base font-light">"Vzduch se ochladí dřív, než si uvědomíte, co se děje."</p>
-                </blockquote>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-      }
-
-      {/* ═══════════════════════════════════════════════════════
-              5. FEATURES GRID: "Víc než mlžítko"
-           ═══════════════════════════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vlastnosti</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
-            Víc než mlžítko.<br /><span className="text-slate-400">Prvek prostoru.</span>
-          </h2>
-        </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
-          {[
-          { icon: '💧', title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
-          { icon: '🔩', title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
-          { icon: '📱', title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
-          { icon: '🛠️', title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` }].
-          map((f, i) =>
-          <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-          className="bg-white p-7">
-              <span className="text-2xl mb-3 block">{f.icon}</span>
-              <h3 className="text-slate-900 text-base font-medium tracking-tight mb-3">{f.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed font-light">{f.desc}</p>
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-              6. TECH PARAMS — "Preciznost v každém detailu"
-           ═══════════════════════════════════════════════════════ */}
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Technické parametry</p>
-              <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
-                Preciznost<br /><span className="text-slate-400">v každém detailu.</span>
-              </h2>
-              <div className="rounded-2xl overflow-hidden border border-slate-200">
-                {techRows.map((row, i) =>
-                <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                    <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
-                    <span className="text-sm text-slate-900 font-medium text-right">{row.value}</span>
-                  </div>
-                )}
-              </div>
-              <p className="text-xs text-slate-300 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
-              <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
-              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-900 text-xs font-mono tracking-widest uppercase rounded-full hover:bg-slate-100 transition-all">
-                ↓ Vyžádat PDF technický list
-              </a>
-            </motion.div>
-
-            {img(3) &&
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
-                <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
-              onClick={() => setLightbox({ images: allImages, idx: 3 })} />
-                <blockquote className="text-center px-6">
-                  <p className="text-slate-400 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
-                </blockquote>
-              </motion.div>
+      <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          {TABS.map((t) =>
+          <button key={t.id} onClick={() => setActiveTab(t.id)}
+          className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors ${activeTab === t.id ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
+              {t.label}
+              {activeTab === t.id &&
+            <motion.div layoutId="produkt-tab-underline" className="absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
             }
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-              6.5 INSTALLATION OPTIONS — Možnosti kotvení
-           ═══════════════════════════════════════════════════════ */}
-      <section className="bg-white border-b border-slate-200 py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Možnosti kotvení</p>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
-              Flexibilní instalace<br /><span className="text-slate-400">pro každý projekt.</span>
-            </h2>
-            <p className="text-slate-500 text-base font-light max-w-2xl">Volte mezi mobilní variantou pro dočasné instalace nebo stálým kotvením do betonu pro permanentní řešení.</p>
-          </motion.div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-            {/* Zemní vrut — mobilní */}
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
-              <div className="mb-6">
-                <span className="inline-block px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono tracking-widest uppercase rounded-full">Mobilní</span>
-              </div>
-              <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut</h3>
-              <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">Spirálový vrut z nerezové oceli pro rychlou instalaci bez speciálního vybavení. Ideální pro pronájem, festivaly a dočasné instalace.</p>
-              <div className="space-y-3 mb-8 text-sm text-slate-600 font-light">
-                <div className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
-                  <span>Instalace za 15–30 minut</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
-                  <span>Žádné vrtání ani betony</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
-                  <span>Snadné přemístění na nový spot</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
-                  <span>Bez poškozování půdy</span>
-                </div>
-              </div>
-              <p className="text-xs text-slate-400 font-mono">Vhodné pro: eventy, pronájem, terasy, mobilní expozice</p>
-            </motion.div>
-
-            {/* Kotvící patka — stálá instalace */}
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
-              <div className="mb-6">
-                <span className="inline-block px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono tracking-widest uppercase rounded-full">Stálá instalace</span>
-              </div>
-              <h3 className="text-2xl font-light text-slate-900 mb-3">Kotvící patka do betonu</h3>
-              <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">Pevná kovová patka s čtyřmi kotvícími závity pro permanentní instalaci. Určena pro veřejné prostory, náměstí a dlouhodobé projekty.</p>
-              <div className="space-y-3 mb-8 text-sm text-slate-600 font-light">
-                <div className="flex items-start gap-3">
-                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
-                  <span>Maximální stabilita a bezpečnost</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
-                  <span>Vhodná pro vysoké větrné zatížení</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
-                  <span>Profesionální vzhled bez viditelného kotvení</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
-                  <span>Dlouhodobá ochrana proti korozi</span>
-                </div>
-              </div>
-              <p className="text-xs text-slate-400 font-mono">Vhodné pro: náměstí, parky, restaurace, hotely, permanentní instalace</p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-              7. VIDEO SECTION
-           ═══════════════════════════════════════════════════════ */}
-      <section id="videa" className="bg-slate-50 border-y border-slate-200 py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Videa z terénu</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
-            {product.name}<br /><span className="text-slate-400">v akci.</span>
-          </h2>
-          {/* Gallery of images shown as video previews if no video */}
-          {allImages.length >= 2 &&
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {allImages.slice(0, 2).map((src, i) =>
-            <Photo key={i} src={src} alt={`${product.name} instalace ${i + 1}`} className="aspect-video rounded-2xl"
-            onClick={() => setLightbox({ images: allImages, idx: i })} />
-            )}
-            </div>
-          }
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════
-              7. USE CASES: "Každý prostor má svůj ..."
-           ═══════════════════════════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde {product.name} roste</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
-            Každý prostor<br /><span className="text-slate-400">má svůj {product.name}.</span>
-          </h2>
-        </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-          { emoji: '🏛️', title: 'Náměstí & piazzy', desc: 'Dominantní prvek veřejného prostoru, který chladí stovky lidí a stává se fotografovanou ikonou města.' },
-          { emoji: '🎪', title: 'Festivaly & eventy', desc: 'Mobilní varianta s přírubou. Rychlá instalace, nezaměnitelná silueta, dokonalý chill-out prostor.' },
-          { emoji: '🌳', title: 'Parky & promenády', desc: 'Přirozená forma stromu se harmonicky začlení mezi zeleň a zvýší atraktivitu procházky.' },
-          { emoji: '🏨', title: 'Hotely & restaurace', desc: 'Exkluzivní detail terasy nebo vstupního prostoru, který hosty překvapí a přivítá chladivou mlhou.' },
-          { emoji: '🏫', title: 'Školy & univerzity', desc: 'Bezpečný materiál, zábrany nezbytné není — mlha se odpaří dřív, než dosáhne na zem.' },
-          { emoji: '🗺️', title: 'Orientační systém', desc: 'Větve nesou informační panely — slouží jako chladivý rozcestník bez nutnosti dalšího mobiliáře.' }].
-          map((u, i) =>
-          <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-          className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
-              <span className="text-2xl mb-4 block">{u.emoji}</span>
-              <h3 className="text-slate-900 text-base font-medium tracking-tight mb-2">{u.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed font-light">{u.desc}</p>
-            </motion.div>
+            </button>
           )}
         </div>
-      </section>
+      </div>
 
-      {/* ═══════════════════════════════════════════════════════
-              9. REALIZACE gallery: "OSTEV v reálném světě"
-           ═══════════════════════════════════════════════════════ */}
-      {allImages.length >= 4 &&
-      <section className="bg-slate-50 border-y border-slate-200 py-20">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Realizace</p>
-            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
-              {product.name}<br /><span className="text-slate-400">v reálném světě.</span>
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {[
-            { idx: 2, caption: 'Promenáda', sub: 'Nábřežní esplanáda', desc: 'Mlžení pro stovky procházejících' },
-            { idx: 3, caption: 'Festival', sub: 'Letní food festival', desc: 'Chladivá oáza uprostřed davu' }].
-            filter((r) => img(r.idx)).map((r) =>
-            <motion.div key={r.idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                  <div className="relative rounded-2xl overflow-hidden group cursor-pointer"
-              onClick={() => setLightbox({ images: allImages, idx: r.idx })}>
-                    <img src={img(r.idx)} alt={r.caption} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{r.caption}</p>
-                      <p className="text-white font-medium text-base mt-1">{r.sub}</p>
-                      <p className="text-white/50 text-sm">{r.desc}</p>
+      <AnimatePresence mode="wait">
+        <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+
+          {/* ═══════ TAB: POPIS PRODUKTU ═══════ */}
+          {activeTab === 'popis' &&
+          <>
+              <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                  <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                    <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Architektura přírody</p>
+                    <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-8">
+                      {product.name === 'OSTEV' ? 'Strom, který' : product.name + ','}<br />
+                      <span className="text-slate-400">{product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}</span>
+                    </h2>
+                    <p className="text-slate-500 text-base lg:text-lg leading-relaxed font-light mb-8">
+                      {product.name === 'OSTEV' ?
+                    'OSTEV není pouhé mlžítko — je to skulptura s duší stromu. Mohutný nerezový kmen se větví do elegantních ramen, z jejichž konců tryskají jemné mlžné clony. Ochlazení až o 9 °C, bez kapek na zemi, bez hluku.' :
+                    `${product.name} kombinuje estetiku s funkcí. Průmyslové mlžení, prémiová nerezová ocel a smart řízení v jednom produktu.`}
+                    </p>
+                    <ul className="space-y-3 mb-10">
+                      {[
+                    product.coverage_area && `Výška ${product.coverage_area.split(',')[0]}`,
+                    product.material && `Materiál ${product.material.split(',')[0]}`,
+                    'Smart senzory, ovládání z mobilu'].
+                    filter(Boolean).map((item) =>
+                    <li key={item} className="flex items-center gap-3 text-sm text-slate-500 font-light">
+                          <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />{item}
+                        </li>
+                    )}
+                    </ul>
+                    <div className="flex flex-wrap gap-6">
+                      {[
+                    { val: '−9 °C', label: 'Ochlazení' },
+                    { val: product.pressure || '70 bar', label: 'Tlak mlžení' }].
+                    map((s) =>
+                    <div key={s.label} className="text-center">
+                          <p className="font-heading font-bold text-2xl tracking-tight leading-none text-slate-900">{s.val}</p>
+                          <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mt-1">{s.label}</p>
+                        </div>
+                    )}
+                      <div className="flex flex-col gap-1 ml-2 justify-center">
+                        <span className="text-[11px] font-mono text-slate-500 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {img(2) &&
+                <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                      <Photo src={img(2)} alt={product.name} className="aspect-[3/4] rounded-2xl"
+                    onClick={() => setLightbox({ images: allImages, idx: 2 })} />
+                    </motion.div>
+                }
+                </div>
+              </section>
+
+              {img(3) &&
+            <section className="bg-slate-50 border-y border-slate-200">
+                  <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                      <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                        <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
+                    onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+                      </motion.div>
+                      <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+                        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Materiál a detail</p>
+                        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-8">
+                          Každá kapka<br /><span className="text-slate-400">nespadne na zem.</span>
+                        </h2>
+                        <p className="text-slate-500 text-base leading-relaxed font-light mb-8">
+                          Trysky {product.micron_size ? product.micron_size : '10–50'} μm vytvářejí kapičky tak drobné, že se okamžitě odpařují ve vzduchu. Žádné mokré chodníky. Žádné louže. Jen příjemný chlad, který visí ve vzduchu jako ranní mlha.
+                        </p>
+                        <blockquote className="border-l-2 border-slate-300 pl-6">
+                          <p className="text-slate-400 italic text-base font-light">"Vzduch se ochladí dřív, než si uvědomíte, co se děje."</p>
+                        </blockquote>
+                      </motion.div>
                     </div>
                   </div>
+                </section>
+            }
+
+              <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+                  <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vlastnosti</p>
+                  <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+                    Víc než mlžítko.<br /><span className="text-slate-400">Prvek prostoru.</span>
+                  </h2>
                 </motion.div>
-            )}
-            </div>
-            {/* Extra gallery grid */}
-            {allImages.length > 4 &&
-          <div className="grid grid-cols-3 gap-3 mt-5">
-                {allImages.slice(4, 10).map((src, i) =>
-            <Photo key={i} src={src} alt={`${product.name} ${i + 5}`} className="aspect-[4/3] rounded-xl"
-            onClick={() => setLightbox({ images: allImages, idx: i + 4 })} />
-            )}
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
+                  {[
+                { icon: '💧', title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
+                { icon: '🔩', title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
+                { icon: '📱', title: 'Smart řízení', desc: 'Senzory teploty a pohybu automaticky aktivují mlžení. Ovládání z mobilu.' },
+                { icon: '🛠️', title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` }].
+                map((f, i) =>
+                <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                className="bg-white p-7">
+                      <span className="text-2xl mb-3 block">{f.icon}</span>
+                      <h3 className="text-slate-900 text-base font-medium tracking-tight mb-3">{f.title}</h3>
+                      <p className="text-sm text-slate-500 leading-relaxed font-light">{f.desc}</p>
+                    </motion.div>
+                )}
+                </div>
+              </section>
+
+              <section className="bg-white border-y border-slate-200 py-24 lg:py-32">
+                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+                    <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Možnosti kotvení</p>
+                    <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
+                      Flexibilní instalace<br /><span className="text-slate-400">pro každý projekt.</span>
+                    </h2>
+                    <p className="text-slate-500 text-base font-light max-w-2xl">Volte mezi mobilní variantou pro dočasné instalace nebo stálým kotvením do betonu pro permanentní řešení.</p>
+                  </motion.div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+                    <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
+                      <div className="mb-6">
+                        <span className="inline-block px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono tracking-widest uppercase rounded-full">Mobilní</span>
+                      </div>
+                      <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut</h3>
+                      <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">Spirálový vrut z nerezové oceli pro rychlou instalaci bez speciálního vybavení. Ideální pro pronájem, festivaly a dočasné instalace.</p>
+                      <div className="space-y-3 mb-8 text-sm text-slate-600 font-light">
+                        <div className="flex items-start gap-3"><span className="text-emerald-600 font-bold mt-0.5">✓</span><span>Instalace za 15–30 minut</span></div>
+                        <div className="flex items-start gap-3"><span className="text-emerald-600 font-bold mt-0.5">✓</span><span>Žádné vrtání ani betony</span></div>
+                        <div className="flex items-start gap-3"><span className="text-emerald-600 font-bold mt-0.5">✓</span><span>Snadné přemístění na nový spot</span></div>
+                        <div className="flex items-start gap-3"><span className="text-emerald-600 font-bold mt-0.5">✓</span><span>Bez poškozování půdy</span></div>
+                      </div>
+                      <p className="text-xs text-slate-400 font-mono">Vhodné pro: eventy, pronájem, terasy, mobilní expozice</p>
+                    </motion.div>
+
+                    <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
+                      <div className="mb-6">
+                        <span className="inline-block px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono tracking-widest uppercase rounded-full">Stálá instalace</span>
+                      </div>
+                      <h3 className="text-2xl font-light text-slate-900 mb-3">Kotvící patka do betonu</h3>
+                      <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">Pevná kovová patka s čtyřmi kotvícími závity pro permanentní instalaci. Určena pro veřejné prostory, náměstí a dlouhodobé projekty.</p>
+                      <div className="space-y-3 mb-8 text-sm text-slate-600 font-light">
+                        <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Maximální stabilita a bezpečnost</span></div>
+                        <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Vhodná pro vysoké větrné zatížení</span></div>
+                        <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Profesionální vzhled bez viditelného kotvení</span></div>
+                        <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Dlouhodobá ochrana proti korozi</span></div>
+                      </div>
+                      <p className="text-xs text-slate-400 font-mono">Vhodné pro: náměstí, parky, restaurace, hotely, permanentní instalace</p>
+                    </motion.div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+                  <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde {product.name} roste</p>
+                  <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+                    Každý prostor<br /><span className="text-slate-400">má svůj {product.name}.</span>
+                  </h2>
+                </motion.div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[
+                { emoji: '🏛️', title: 'Náměstí & piazzy', desc: 'Dominantní prvek veřejného prostoru, který chladí stovky lidí a stává se fotografovanou ikonou města.' },
+                { emoji: '🎪', title: 'Festivaly & eventy', desc: 'Mobilní varianta s přírubou. Rychlá instalace, nezaměnitelná silueta, dokonalý chill-out prostor.' },
+                { emoji: '🌳', title: 'Parky & promenády', desc: 'Přirozená forma stromu se harmonicky začlení mezi zeleň a zvýší atraktivitu procházky.' },
+                { emoji: '🏨', title: 'Hotely & restaurace', desc: 'Exkluzivní detail terasy nebo vstupního prostoru, který hosty překvapí a přivítá chladivou mlhou.' },
+                { emoji: '🏫', title: 'Školy & univerzity', desc: 'Bezpečný materiál, zábrany nezbytné není — mlha se odpaří dřív, než dosáhne na zem.' },
+                { emoji: '🗺️', title: 'Orientační systém', desc: 'Větve nesou informační panely — slouží jako chladivý rozcestník bez nutnosti dalšího mobiliáře.' }].
+                map((u, i) =>
+                <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
+                      <span className="text-2xl mb-4 block">{u.emoji}</span>
+                      <h3 className="text-slate-900 text-base font-medium tracking-tight mb-2">{u.title}</h3>
+                      <p className="text-sm text-slate-500 leading-relaxed font-light">{u.desc}</p>
+                    </motion.div>
+                )}
+                </div>
+              </section>
+            </>
           }
-          </div>
-        </section>
-      }
+
+          {/* ═══════ TAB: FOTO GALERIE ═══════ */}
+          {activeTab === 'galerie' &&
+          <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Foto galerie</p>
+              <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
+                {product.name}<br /><span className="text-slate-400">ve fotografiích.</span>
+              </h2>
+              {allImages.length > 0 ?
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {allImages.map((src, i) =>
+              <Photo key={i} src={src} alt={`${product.name} ${i + 1}`} className="aspect-square rounded-xl"
+              onClick={() => setLightbox({ images: allImages, idx: i })} />
+              )}
+                </div> :
+
+            <p className="text-slate-400 font-light">Galerie zatím není k dispozici.</p>
+            }
+            </section>
+          }
+
+          {/* ═══════ TAB: ANIMACE MLHY ═══════ */}
+          {activeTab === 'mlha' &&
+          <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Videa z terénu</p>
+              <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-12">
+                {product.name}<br /><span className="text-slate-400">v akci.</span>
+              </h2>
+              {allImages.length >= 2 ?
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {allImages.slice(0, 2).map((src, i) =>
+              <Photo key={i} src={src} alt={`${product.name} instalace ${i + 1}`} className="aspect-video rounded-2xl"
+              onClick={() => setLightbox({ images: allImages, idx: i })} />
+              )}
+                </div> :
+
+            <p className="text-slate-400 font-light">Ukázka mlžení bude brzy k dispozici.</p>
+            }
+            </section>
+          }
+
+          {/* ═══════ TAB: AR NÁHLED ═══════ */}
+          {activeTab === 'ar' &&
+          <section className="max-w-3xl mx-auto px-6 lg:px-10 py-28 text-center">
+              <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-6">
+                <Smartphone size={24} className="text-slate-700" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">AR náhled</p>
+              <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
+                Vyzkoušejte {product.name}<br /><span className="text-slate-400">přímo ve vašem prostoru.</span>
+              </h2>
+              <p className="text-slate-500 font-light leading-relaxed mb-8">
+                AR náhled pro mobilní zařízení právě připravujeme. Napište nám a rádi pro vás obratem připravíme 3D vizualizaci na míru přímo do vašeho prostoru.
+              </p>
+              <Link to="/kontakt" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+                Vyžádat vizualizaci <ArrowRight size={16} />
+              </Link>
+            </section>
+          }
+
+          {/* ═══════ TAB: KE STAŽENÍ ═══════ */}
+          {activeTab === 'stazeni' &&
+          <section className="max-w-3xl mx-auto px-6 lg:px-10 py-28">
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Ke stažení</p>
+              <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
+                Podklady k produktu<br /><span className="text-slate-400">{product.name}.</span>
+              </h2>
+              <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
+            className="flex items-center justify-between gap-6 p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all mb-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center">
+                    <FileText size={20} className="text-slate-700" />
+                  </div>
+                  <div>
+                    <p className="text-slate-900 font-medium">Technický list (PDF)</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Kompletní parametry a výkresy k instalaci</p>
+                  </div>
+                </div>
+                <Download size={18} className="text-slate-400 shrink-0" />
+              </a>
+              <a href={`mailto:obchod1@holmtec.cz?subject=Cenová nabídka — ${product.name}`}
+            className="flex items-center justify-between gap-6 p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all">
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center">
+                    <FileText size={20} className="text-slate-700" />
+                  </div>
+                  <div>
+                    <p className="text-slate-900 font-medium">Cenová nabídka</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Individuální nabídka na míru vašemu projektu</p>
+                  </div>
+                </div>
+                <Download size={18} className="text-slate-400 shrink-0" />
+              </a>
+            </section>
+          }
+
+          {/* ═══════ TAB: PARAMETRY ═══════ */}
+          {activeTab === 'parametry' &&
+          <section className="py-20">
+              <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                    <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Technické parametry</p>
+                    <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
+                      Preciznost<br /><span className="text-slate-400">v každém detailu.</span>
+                    </h2>
+                    <div className="rounded-2xl overflow-hidden border border-slate-200">
+                      {techRows.map((row, i) =>
+                    <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                          <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
+                          <span className="text-sm text-slate-900 font-medium text-right">{row.value}</span>
+                        </div>
+                    )}
+                    </div>
+                    <p className="text-xs text-slate-300 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
+                    <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
+                  className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-900 text-xs font-mono tracking-widest uppercase rounded-full hover:bg-slate-100 transition-all">
+                      ↓ Vyžádat PDF technický list
+                    </a>
+                  </motion.div>
+
+                  {img(3) &&
+                <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
+                      <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
+                  onClick={() => setLightbox({ images: allImages, idx: 3 })} />
+                      <blockquote className="text-center px-6">
+                        <p className="text-slate-400 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
+                      </blockquote>
+                    </motion.div>
+                }
+                </div>
+              </div>
+            </section>
+          }
+        </motion.div>
+      </AnimatePresence>
 
       {/* ═══════════════════════════════════════════════════════
-              9.5 REVIEWS — Hodnocení zákazníků
+              REVIEWS
            ═══════════════════════════════════════════════════════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════════════════════════════════════════════════════
-              10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
+              INLINE CONTACT FORM
            ═══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
@@ -639,7 +643,7 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-              11. RELATED + BACK
+              RELATED + BACK
            ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 &&
       <section className="py-20 bg-white border-t border-slate-200">

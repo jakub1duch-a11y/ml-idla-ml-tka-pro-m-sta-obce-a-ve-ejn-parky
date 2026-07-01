@@ -94,15 +94,15 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              megaOpen ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'}`
+              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all text-[hsl(var(--foreground))] ${
+              megaOpen ? 'bg-slate-100 text-slate-900' : "hover:text-slate-900 hover:bg-slate-50"}`
               }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--foreground))]">Reference</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Blog & novinky</Link>
-            <Link to="/podpora" className="px-5 py-2.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all">Podpora</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--foreground))]">Blog & novinky</Link>
+            <Link to="/podpora" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--card-foreground))]">Podpora</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}

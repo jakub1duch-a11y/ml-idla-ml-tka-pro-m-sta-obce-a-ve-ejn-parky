@@ -134,7 +134,7 @@ export default function HeroSection() {
             decoding="async" />
           
           <div className="absolute inset-0 bg-gradient-to-b via-ink/30 to-ink from-ink/0" />
-          <div className="absolute inset-0 bg-gradient-to-d via-ink/60 to-blue from-ink/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -197,7 +197,7 @@ export default function HeroSection() {
                 Prozkoumat <ArrowRight size={14} />
               </Link>
               <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/10 backdrop-blur-md border text-white text-sm font-medium rounded-2xl shadow-lg transition-all border-white/20 hover:bg-white/10">
+              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium rounded-2xl shadow-lg hover:bg-white/20 transition-all">
                 Nezávazná poptávka
               </Link>
             </div>
@@ -221,11 +221,11 @@ export default function HeroSection() {
           
 
           {/* Stats */}
-          <div className="flex divide-x lg:w-auto ml-auto overflow-hidden backdrop-blur-xl rounded-2xl divide-slate-10/10 bg-white/5">
+          <div className="flex divide-x divide-slate-900/10 bg-white/60 backdrop-blur-xl rounded-2xl lg:w-auto ml-auto overflow-hidden">
             {stats.map((s) =>
-            <div key={s.val} className="opacity-100 text-left pr-7 pt-7 pl-7 pb-5">
-                <p className="leading-none mb-2 text-4xl [font-family:'Urbanist',_sans-serif] font-normal text-[hsl(var(--popover-foreground))]">{s.val}</p>
-                <p className="leading-tight text-sm text-[hsl(var(--secondary-foreground))]">{s.label}</p>
+            <div key={s.val} className="text-left py-6 px-8">
+                <p className="text-slate-900 leading-none mb-2 text-4xl [font-family:'Urbanist',_sans-serif] font-normal">{s.val}</p>
+                <p className="text-slate-600 leading-tight text-sm">{s.label}</p>
               </div>
             )}
           </div>

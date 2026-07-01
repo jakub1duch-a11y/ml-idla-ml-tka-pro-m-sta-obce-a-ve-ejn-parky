@@ -62,79 +62,79 @@ export default function CategorySlider() {
 
   const cat = categories[current];
 
-  return (
-    <section className="relative h-[70vh] min-h-[520px] flex flex-col overflow-hidden bg-ink hidden">
+  return null;
 
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={current + '-bg'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0">
-          
-          <img
-            src={cat.image}
-            alt={cat.title}
-            className="w-full h-full object-cover"
-            loading="eager"
-            decoding="async" />
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10 hidden" />
-        </motion.div>
-      </AnimatePresence>
 
-      {/* Progress bar */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-6">
-        {categories.map((c, i) =>
-        <button
-          key={c.tag}
-          onClick={() => goTo(i)}
-          className="relative h-0.5 flex-1 bg-white/15 overflow-hidden rounded-full">
-          
-            {i === current &&
-          <motion.div
-            key={current + '-bar'}
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 5, ease: 'linear' }}
-            className="absolute inset-0 bg-white origin-left rounded-full" />
 
-          }
-            {i < current && <div className="absolute inset-0 bg-white/40 rounded-full" />}
-          </button>
-        )}
-      </div>
 
-      <div className="relative flex flex-col justify-end w-full max-w-7xl lg:px-8 mx-auto px-6 z-5 pb-14 flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="max-w-xl">
-            
-            <span className="inline-block px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-sm font-medium text-white/90 mb-5">
-              {cat.tag}
-            </span>
 
-            <h2 className="text-white leading-[1.1] tracking-tight mb-4 [font-family:'Albert_Sans',_sans-serif] font-light text-xl lg:text-xl">
-              {cat.title}
-            </h2>
-            <p className="text-white/85 text-base leading-relaxed mb-7 max-w-lg font-normal">
-              {cat.desc}
-            </p>
 
-            <Link to={cat.path}
-            className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white text-slate-900 text-sm font-bold rounded-2xl shadow-lg hover:bg-white/90 transition-all">
-              Zobrazit řešení <ArrowRight size={14} />
-            </Link>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </section>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

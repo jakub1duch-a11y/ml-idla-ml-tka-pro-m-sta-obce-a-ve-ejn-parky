@@ -113,102 +113,7 @@ export default function HeroSection() {
     exit: (dir) => ({ opacity: 0, x: dir > 0 ? -80 : 80 })
   };
 
-  return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden bg-ink hidden">
-
-      {/* Background image with crossfade */}
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={current + '-bg'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
-          className="absolute inset-0">
-          
-          <img
-            src={slide.image}
-            alt=""
-            className="w-full h-full object-cover"
-            fetchpriority={current === 0 ? 'high' : 'low'}
-            decoding="async" />
-          
-          <div className="absolute inset-0 bg-gradient-to-b via-ink/30 to-ink from-ink/0 hidden" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent hidden" />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Slide counter bar */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-16 hidden">
-        {slides.map((_, i) =>
-        <button
-          key={i}
-          onClick={() => goTo(i)}
-          className="relative h-0.5 flex-1 bg-white/15 overflow-hidden rounded-full">
-          
-            {i === current &&
-          <motion.div
-            key={current + '-bar'}
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 6, ease: 'linear' }}
-            className="absolute inset-0 bg-white origin-left rounded-full" />
-
-          }
-            {i < current && <div className="absolute inset-0 bg-white/40 rounded-full" />}
-          </button>
-        )}
-      </div>
-
-      {/* Main content */}
-      <div className="relative flex flex-col justify-end w-full max-w-7xl lg:px-8 mx-auto px-6 z-5 pt-30 pb-10">
-
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={current}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="max-w-xl">
-            
-            <div className="flex items-center gap-3 mb-5">
-              <span className="px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-sm font-medium text-white/90">{slide.tag}</span>
-              <span className="px-4 py-2 rounded-full bg-emerald-400/10 backdrop-blur-md border border-emerald-300/40 shadow-[0_0_20px_rgba(52,211,153,0.35)] text-sm font-medium tracking-wide text-emerald-300">
-                {slide.badge}
-              </span>
-            </div>
-
-            <h1 className="text-6xl lg:text-8xl text-white leading-[1.05] tracking-tight mb-4 font-bold [font-family:'Urbanist',_sans-serif] [text-shadow:0_8px_30px_rgba(0,0,0,0.45)]">
-              {slide.name}
-            </h1>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl text-white/70 italic leading-tight tracking-tight mb-6">
-              {slide.subtitle}
-            </h2>
-            <p className="text-white text-base lg:text-lg leading-relaxed mb-8 max-w-md font-normal bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl px-6 py-5 shadow-lg">
-              {slide.desc ? slide.desc.substring(0, 90) + '...' : ''}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to={slide.cta} onClick={() => trackHeroInteraction(slide.name, slide.name)}
-              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/20 backdrop-blur-md border border-white/25 text-white text-sm font-medium rounded-2xl shadow-lg hover:bg-white/30 transition-all">
-                Prozkoumat <ArrowRight size={14} />
-              </Link>
-              <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-              className="flex items-center justify-center gap-2 px-7 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium rounded-2xl shadow-lg hover:bg-white/20 transition-all">
-                Nezávazná poptávka
-              </Link>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Bottom row: nav arrows + stats */}
-        <div className="items-end flex gap-6">
-
-          {/* Prev/Next */}
-          
+  return null;
 
 
 
@@ -218,19 +123,114 @@ export default function HeroSection() {
 
 
 
-          
 
-          {/* Stats */}
-          <div className="flex divide-x divide-slate-900/10 bg-white/60 backdrop-blur-xl rounded-2xl lg:w-auto ml-auto overflow-hidden">
-            {stats.map((s) =>
-            <div key={s.val} className="text-left py-6 px-8">
-                <p className="text-slate-900 leading-none mb-2 text-4xl [font-family:'Urbanist',_sans-serif] font-normal">{s.val}</p>
-                <p className="text-slate-600 leading-tight text-sm">{s.label}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -205,7 +205,7 @@ export default function HeroSection() {
         </AnimatePresence>
 
         {/* Bottom row: nav arrows + stats */}
-        <div className="flex items-end gap-5">
+        <div className="items-end gap-5 absoluute top flex">
 
           {/* Prev/Next */}
           
@@ -223,7 +223,7 @@ export default function HeroSection() {
           {/* Stats */}
           <div className="flex divide-x lg:w-auto ml-auto overflow-hidden backdrop-blur-xl rounded-2xl divide-slate-10/10 bg-white/5">
             {stats.map((s) =>
-            <div key={s.val} className="text-left opacity-100 pt-6 pr-8 pl-8 pb-4 mb-20">
+            <div key={s.val} className="text-left opacity-100 pt-6 pr-8 pl-8 pb-4">
                 <p className="leading-none mb-2 text-4xl [font-family:'Urbanist',_sans-serif] font-normal text-[hsl(var(--popover-foreground))]">{s.val}</p>
                 <p className="leading-tight text-sm text-[hsl(var(--secondary-foreground))]">{s.label}</p>
               </div>

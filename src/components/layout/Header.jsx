@@ -71,10 +71,10 @@ export default function Header() {
       <header className={`fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-xl transition-all duration-300 z-40 ${
       scrolled ? 'border-b border-slate-200 shadow-sm' : 'border-b border-transparent'}`
       }>
-        <div className="grid grid-cols-2 lg:grid-cols-3 items-center max-w-7xl pr-5 pl-5 h-16 lg:px-8 mx-auto">
+        <div className="flex items-center justify-between max-w-7xl h-16 px-6 lg:px-8 mx-auto gap-4 lg:gap-8">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0 justify-self-start">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
             <svg width="20" height="25" viewBox="0 0 22 28" fill="none">
               <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.92" />
               <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
@@ -85,7 +85,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="flex items-center gap-0.5 justify-self-center">
+          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -100,8 +100,8 @@ export default function Header() {
           </nav>
 
           {/* CTA right + mobile toggle */}
-          <div className="flex items-center gap-3 justify-self-end">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 lg:gap-3 ml-auto">
+            <div className="hidden lg:flex items-center gap-2">
               <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-all">O nás</Link>
               <Link to="/poptavka"
               className="flex items-center gap-1.5 px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">

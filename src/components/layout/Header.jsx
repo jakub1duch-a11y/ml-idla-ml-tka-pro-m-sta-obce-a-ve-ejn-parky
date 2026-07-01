@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ArrowRight, Settings2, Layers, Package, Building2, Trees, Waves, Palette, Tent, Factory, Zap, Flower2, Sparkles, Baby } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
 
 const MEGA_COLUMNS = [
 {
@@ -71,24 +72,21 @@ export default function Header() {
 
       
 
-      <header className={`fixed top-0 left-0 right-0 transition-all z-40 bg-black/40 duration-1200 ${
-      scrolled ? "border-slate-200 shadow-sm" : ""}`
+      <header className={`fixed top-0 left-0 right-0 transition-all z-40 duration-1200 ${
+      scrolled ? "bg-white/80 backdrop-blur-xl border-slate-200 shadow-sm" : "bg-black/30 backdrop-blur-sm"}`
       }>
         <div className="flex items-center justify-between max-w-7xl h-16 px-6 lg:px-8 mx-auto gap-4 lg:gap-8">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center opacity-100 gap-2 shrink-2">
+          <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2">
             <motion.div
               initial={{ opacity: 0, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 1.8, ease: 'easeOut' }}
-              className="flex items-center gap-2 text-[hsl(var(--card-foreground))]">
-              <svg width="20" height="25" viewBox="0 0 22 28" fill="none">
-                <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.92" />
-                <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
-              </svg>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.04em' }} className="no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-non normal-case text-2xl font-bold text-[hsl(var(--foreground))]">
-                mlzidla<span className="[font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium text-[#40a2d4]">.cz</span>
+              className="flex items-center gap-2.5">
+              <MistNozzleIcon color={scrolled ? '#0f172a' : '#ffffff'} accent="#40a2d4" />
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '0.06em' }} className={`no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-none normal-case text-2xl font-bold transition-colors duration-500 ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+                mlzidla<span className="[font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium text-[#40a2d4]" style={{ letterSpacing: '0.06em' }}>.cz</span>
               </span>
             </motion.div>
           </Link>
@@ -97,27 +95,27 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all text-[hsl(var(--foreground))] ${
-              megaOpen ? 'bg-slate-100 text-slate-900' : "hover:text-slate-900 hover:bg-slate-50"}`
+              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+              megaOpen ? 'bg-slate-100 text-slate-900' : scrolled ? "text-slate-700 hover:text-slate-900 hover:bg-slate-100" : "text-white/90 hover:text-white hover:bg-white/10"}`
               }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--foreground))]">Reference</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--foreground))]">Blog & novinky</Link>
-            <Link to="/podpora" className="px-5 py-2.5 rounded-full text-sm font-medium hover:text-slate-900 hover:bg-slate-50 transition-all text-[hsl(var(--card-foreground))]">Podpora</Link>
+            <Link to="/reference" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Reference</Link>
+            <Link to="/blog" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Blog & novinky</Link>
+            <Link to="/podpora" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Podpora</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-all">O nás</Link>
+              <Link to="/o-nas" className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all ${scrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/10'}`}>O nás</Link>
               <Link to="/poptavka"
               className="flex items-center gap-1.5 px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
                 Poptávka
               </Link>
             </div>
-            <button onClick={toggleMobileMenu} className="lg:hidden text-slate-900 p-2 -mr-2">
+            <button onClick={toggleMobileMenu} className={`lg:hidden p-2 -mr-2 transition-colors ${scrolled ? 'text-slate-900' : 'text-white'}`}>
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>

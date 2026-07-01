@@ -57,6 +57,10 @@
       "type": "string",
       "description": "Power requirements"
     },
+    "price_from": {
+      "type": "number",
+      "description": "Orienta\u010dn\u00ed cena od (K\u010d) \u2014 pou\u017eije se ve structured data (Offer/price)"
+    },
     "featured": {
       "type": "boolean",
       "description": "Whether product is featured",

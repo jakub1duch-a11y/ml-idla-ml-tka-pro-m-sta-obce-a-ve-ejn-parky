@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Loader, Image } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', featured: false };
+const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
 
 function slugify(str) {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -113,6 +113,10 @@ export default function AdminProducts() {
               <input value={form[field] || ''} onChange={set(field)} className={inputCls} />
             </div>
           ))}
+          <div>
+            <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Cena od (Kč)</label>
+            <input type="number" value={form.price_from || ''} onChange={set('price_from')} placeholder="např. 89000" className={inputCls} />
+          </div>
         </div>
         <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer">
           <input type="checkbox" checked={!!form.featured} onChange={set('featured')} className="rounded" />

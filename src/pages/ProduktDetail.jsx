@@ -194,8 +194,8 @@ export default function ProduktDetail() {
     <div className="min-h-screen bg-white">
 
       {/* ═══════════════════════════════════════════════════════
-             1. FULLSCREEN HERO
-          ═══════════════════════════════════════════════════════ */}
+              1. FULLSCREEN HERO
+           ═══════════════════════════════════════════════════════ */}
       <div className="relative h-screen min-h-[600px] overflow-hidden">
         {img(0) ?
         <img src={img(0)} alt={product.name} className="w-full h-full object-cover" /> :
@@ -204,7 +204,7 @@ export default function ProduktDetail() {
         }
         {/* Dark overlays for legibility over photo */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-r to-transparent via-black/0 from-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r to-transparent via-black/0 from-black/80" />
 
         {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
@@ -282,8 +282,8 @@ export default function ProduktDetail() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════
-             2. THUMBNAIL STRIP + TAG
-          ═══════════════════════════════════════════════════════ */}
+              2. THUMBNAIL STRIP + TAG
+           ═══════════════════════════════════════════════════════ */}
       {allImages.length > 1 &&
       <div className="bg-slate-50 border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center gap-4 overflow-x-auto scrollbar-none">
@@ -299,8 +299,8 @@ export default function ProduktDetail() {
       }
 
       {/* ═══════════════════════════════════════════════════════
-             3. SECTION: "Strom, který chladí vzduch" — text + image
-          ═══════════════════════════════════════════════════════ */}
+              3. SECTION: "Strom, který chladí vzduch" — text + image
+           ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
@@ -352,8 +352,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             4. SECTION: "Každá kapka nespadne na zem" — image left, text right
-          ═══════════════════════════════════════════════════════ */}
+              4. SECTION: "Každá kapka nespadne na zem" — image left, text right
+           ═══════════════════════════════════════════════════════ */}
       {img(3) &&
       <section className="bg-slate-50 border-y border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
@@ -380,8 +380,8 @@ export default function ProduktDetail() {
       }
 
       {/* ═══════════════════════════════════════════════════════
-             5. FEATURES GRID: "Víc než mlžítko"
-          ═══════════════════════════════════════════════════════ */}
+              5. FEATURES GRID: "Víc než mlžítko"
+           ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vlastnosti</p>
@@ -407,8 +407,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             6. TECH PARAMS — "Preciznost v každém detailu"
-          ═══════════════════════════════════════════════════════ */}
+              6. TECH PARAMS — "Preciznost v každém detailu"
+           ═══════════════════════════════════════════════════════ */}
       <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -446,8 +446,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             6.5 INSTALLATION OPTIONS — Možnosti kotvení
-          ═══════════════════════════════════════════════════════ */}
+              6.5 INSTALLATION OPTIONS — Možnosti kotvení
+           ═══════════════════════════════════════════════════════ */}
       <section className="bg-white border-b border-slate-200 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
@@ -518,8 +518,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             7. VIDEO SECTION
-          ═══════════════════════════════════════════════════════ */}
+              7. VIDEO SECTION
+           ═══════════════════════════════════════════════════════ */}
       <section id="videa" className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Videa z terénu</p>
@@ -539,8 +539,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             7. USE CASES: "Každý prostor má svůj ..."
-          ═══════════════════════════════════════════════════════ */}
+              7. USE CASES: "Každý prostor má svůj ..."
+           ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde {product.name} roste</p>
@@ -568,8 +568,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             9. REALIZACE gallery: "OSTEV v reálném světě"
-          ═══════════════════════════════════════════════════════ */}
+              9. REALIZACE gallery: "OSTEV v reálném světě"
+           ═══════════════════════════════════════════════════════ */}
       {allImages.length >= 4 &&
       <section className="bg-slate-50 border-y border-slate-200 py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -610,13 +610,13 @@ export default function ProduktDetail() {
       }
 
       {/* ═══════════════════════════════════════════════════════
-             9.5 REVIEWS — Hodnocení zákazníků
-          ═══════════════════════════════════════════════════════ */}
+              9.5 REVIEWS — Hodnocení zákazníků
+           ═══════════════════════════════════════════════════════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════════════════════════════════════════════════════
-             10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
-          ═══════════════════════════════════════════════════════ */}
+              10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
+           ═══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -639,8 +639,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-             11. RELATED + BACK
-          ═══════════════════════════════════════════════════════ */}
+              11. RELATED + BACK
+           ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 &&
       <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">

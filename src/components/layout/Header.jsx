@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Settings2, Layers, Package, Building2, Trees, Waves, Palette, Tent, Factory, Zap } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Settings2, Layers, Package, Building2, Trees, Waves, Palette, Tent, Factory, Zap, Flower2, Sparkles, Baby } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MEGA_COLUMNS = [
@@ -28,6 +28,9 @@ const USAGE_LINKS = [
 { icon: Building2, label: 'Města a obce', sub: 'Náměstí, pěší zóny, MHD', path: '/kategorie/mesta-obce', color: 'text-cyan' },
 { icon: Trees, label: 'Parky a hřiště', sub: 'Parky, dětská hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-400' },
 { icon: Waves, label: 'Koupaliště & aquaparky', sub: 'Rekreační oblasti, pláže', path: '/kategorie/koupaliste', color: 'text-blue-400' },
+{ icon: Flower2, label: 'Outdoor a zahrady', sub: 'Soukromé zahrady, terasy', path: '/kategorie/outdoor-zahrady', color: 'text-green-400' },
+{ icon: Sparkles, label: 'Art instalace na míru', sub: 'Umělecké mlžné projekty', path: '/kategorie/art-instalace', color: 'text-fuchsia-400' },
+{ icon: Baby, label: 'Školy, školky a děti', sub: 'Bezpečné mlžení pro děti', path: '/kategorie/skoly-skolky-deti', color: 'text-sky-400' },
 { icon: Palette, label: 'Pro architekty', sub: 'CAD/BIM, zakázkový design', path: '/kategorie/architekti', color: 'text-violet-400' },
 { icon: Factory, label: 'Komerční prostory', sub: 'Restaurace, OC, výrobní haly', path: '/kategorie/komercni', color: 'text-amber-400' },
 { icon: Tent, label: 'Eventy & festivaly', sub: 'Mobilní mlžítka, pronájem', path: '/kategorie/eventy', color: 'text-rose-400' }];
@@ -152,7 +155,7 @@ export default function Header() {
                 {/* Bottom: Využití */}
                 <div className="pt-8">
                   <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-5">Podle využití</p>
-                  <div className="grid grid-cols-6 gap-3">
+                  <div className="grid grid-cols-3 gap-3">
                     {USAGE_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col items-start gap-3 px-4 py-4 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200">

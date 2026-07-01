@@ -34,6 +34,9 @@ import Koupaliste from '@/pages/kategorie/Koupaliste';
 import Architekti from '@/pages/kategorie/Architekti';
 import Komercni from '@/pages/kategorie/Komercni';
 import Eventy from '@/pages/kategorie/Eventy';
+import Outdoor from '@/pages/kategorie/Outdoor';
+import Art from '@/pages/kategorie/Art';
+import Deti from '@/pages/kategorie/Deti';
 import Gdpr from '@/pages/Gdpr';
 import Admin from '@/pages/admin/Admin';
 import Gate70 from '@/pages/Gate70';
@@ -82,6 +85,9 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/architekti" element={<Architekti />} />
         <Route path="/kategorie/komercni" element={<Komercni />} />
         <Route path="/kategorie/eventy" element={<Eventy />} />
+        <Route path="/kategorie/outdoor-zahrady" element={<Outdoor />} />
+        <Route path="/kategorie/art-instalace" element={<Art />} />
+        <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
       </Route>

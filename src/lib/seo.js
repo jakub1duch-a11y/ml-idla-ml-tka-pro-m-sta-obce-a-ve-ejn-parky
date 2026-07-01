@@ -166,6 +166,24 @@ export const SEO_PAGES = {
     keywords: 'mlžení festival, mlžné efekty event, pronájem mlžné sochy, mlžná brána festival, mobilní mlhoviště event',
     canonicalPath: '/kategorie/eventy',
   },
+  outdoor: {
+    title: 'Mlžné prvky pro zahrady, terasy a rezidenční projekty',
+    description: 'Mlžné skulptury pro soukromé zahrady, terasy a rezidenční projekty. Elegantní chlazení venkovních prostorů z nerezové oceli AISI 316L.',
+    keywords: 'mlžení zahrada, mlžný prvek terasa, mlhoviště rezidenční projekt, mlžná socha zahrada, ochlazení terasy',
+    canonicalPath: '/kategorie/outdoor-zahrady',
+  },
+  art: {
+    title: 'Art instalace na míru — mlžné skulptury jako umělecké dílo',
+    description: 'Zakázkové umělecké mlžné instalace pro galerie, veřejný prostor a site-specific projekty. Mlha jako médium — návrh, výroba a realizace HolmTec.',
+    keywords: 'art instalace mlžení, umělecká mlžná socha, site-specific mlha, mlžné dílo na míru, galerie mlžná instalace',
+    canonicalPath: '/kategorie/art-instalace',
+  },
+  deti: {
+    title: 'Mlžné systémy pro školy, školky a dětská hřiště',
+    description: 'Bezpečné mlžné systémy pro školy, mateřské školky a dětská hřiště. Potravinářská nerez, bez chemie, ochlazení až o 9 °C.',
+    keywords: 'mlžení škola, mlhoviště školka, mlžný systém dětské hřiště, bezpečné mlžení pro děti, ochlazení školní dvůr',
+    canonicalPath: '/kategorie/skoly-skolky-deti',
+  },
 };
 
 // ─── Dynamic SEO for Product pages ──────────────────────────────────────────

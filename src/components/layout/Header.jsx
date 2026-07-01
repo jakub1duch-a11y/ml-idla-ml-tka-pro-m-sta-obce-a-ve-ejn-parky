@@ -74,10 +74,10 @@ export default function Header() {
       <header className={`fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-xl transition-all duration-300 z-40 ${
       scrolled ? 'border-b border-slate-200 shadow-sm' : 'border-b border-transparent'}`
       }>
-        <div className="flex items-center max-w-7xl pr-5 pl-5 h-16 lg:px-8 justify-between">
+        <div className="grid grid-cols-2 lg:grid-cols-3 items-center max-w-7xl pr-5 pl-5 h-16 lg:px-8 mx-auto">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0">
+          <Link to="/" className="flex items-center gap-2 shrink-0 justify-self-start">
             <svg width="20" height="25" viewBox="0 0 22 28" fill="none">
               <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.92" />
               <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
@@ -88,7 +88,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1 justify-self-center">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
@@ -104,18 +104,19 @@ export default function Header() {
             <Link to="/podpora" className="px-4 py-2 rounded-full text-[13px] font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all">Podpora</Link>
           </nav>
 
-          {/* CTA right */}
-          <div className="hidden lg:flex items-center gap-2">
-            <Link to="/o-nas" className="px-4 py-2 text-[13px] text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
-            <Link to="/poptavka"
-            className="flex items-center gap-1.5 px-5 py-2.5 bg-slate-900 text-white text-[13px] font-medium rounded-full hover:bg-slate-800 transition-all">
-              Poptávka
-            </Link>
+          {/* CTA right + mobile toggle */}
+          <div className="flex items-center gap-2 justify-self-end">
+            <div className="hidden lg:flex items-center gap-2">
+              <Link to="/o-nas" className="px-4 py-2 text-[13px] text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
+              <Link to="/poptavka"
+              className="flex items-center gap-1.5 px-5 py-2.5 bg-slate-900 text-white text-[13px] font-medium rounded-full hover:bg-slate-800 transition-all">
+                Poptávka
+              </Link>
+            </div>
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-slate-900 p-2">
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
-
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-slate-900 p-2">
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
         </div>
 
         {/* Mega menu panel */}

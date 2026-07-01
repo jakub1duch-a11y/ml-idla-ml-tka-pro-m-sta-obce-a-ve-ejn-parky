@@ -11,7 +11,7 @@ export default function MlzisteHero() {
 
   return (
     <div className="relative h-[88vh] min-h-[560px] overflow-hidden">
-      <img src={HERO_IMAGE} alt="Mlžiště pro rodiny na zahradě" className="w-full h-full object-cover" />
+      <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/72a6bb588_mlnprvek-mrak-mlzidla02.png" alt="Mlžiště pro rodiny na zahradě" className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/55 to-ink/25" />
       <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/10 to-transparent" />
 
@@ -25,11 +25,11 @@ export default function MlzisteHero() {
             Zkombinujte různé mlžicí moduly a vytvořte ideální mlhovací hřiště pro vaši zahradu. Jedinečný zážitek pro děti i dospělé, přizpůsobený přesně vašim potřebám.
           </p>
           <button onClick={scrollToConfig}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+          className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
             Vytvořit vlastní poptávku <ArrowRight size={16} />
           </button>
         </motion.div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

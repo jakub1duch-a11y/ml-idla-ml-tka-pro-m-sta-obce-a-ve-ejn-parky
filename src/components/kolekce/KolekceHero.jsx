@@ -100,7 +100,7 @@ export default function KolekceHero() {
       <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
 
       {/* Content */}
-      <div className="absolute z-30 flex flex-col justify-end px-8 lg:px-16 pb-12 inset-">
+      <div className="absolute z-30 flex flex-col justify-end px-8 lg:px-16 pb-12 inset-0">
         <AnimatePresence mode="wait">
           <motion.h2
             key={`title-${taglineIdx}`}

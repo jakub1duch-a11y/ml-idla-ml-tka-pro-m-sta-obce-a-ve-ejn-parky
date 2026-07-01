@@ -58,7 +58,7 @@ export default function Prislusenstvi() {
       title: 'Mlžné příslušenství a moduly — Trysky, čerpadla, Smart moduly',
       description: 'Příslušenství pro mlžné systémy HolmTec: trysky AISI 316L, čerpadla, filtry a Smart moduly pro řízení a automatizaci. Náhradní díly a rozšíření.',
       keywords: 'mlžné příslušenství, trysky HolmTec, čerpadlo mlžení, filtr mlžný systém, Smart modul mlžení',
-      canonicalPath: '/prislusenstvi',
+      canonicalPath: '/prislusenstvi'
     });
   }, []);
 
@@ -83,7 +83,7 @@ export default function Prislusenstvi() {
 
       <PrislusenstviHero />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10 hidden">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-4">
             Mlžné příslušenství<br /><span className="text-slate-400">a moduly.</span>
@@ -100,7 +100,7 @@ export default function Prislusenstvi() {
           placeholder="Hledat příslušenství..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full sm:w-96 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none transition-all" />
+          className="w-full sm:w-96 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none transition-all hidden" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">

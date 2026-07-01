@@ -63,7 +63,7 @@ Deno.serve(async (req) => {
       to: 'obchod1@holmtec.cz',
       subject: `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`,
       body: html,
-      from_name: 'mlzidla-Cz
+      from_name: 'HIDLA.CZWeb',
     });
 
     return Response.json({ ok: true });

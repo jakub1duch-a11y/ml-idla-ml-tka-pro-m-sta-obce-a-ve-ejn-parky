@@ -4,37 +4,37 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 const categories = [
-  {
-    id: 'sochy',
-    label: 'Mlžné sochy',
-    tagline: 'Přírodní tvary. Živá atmosféra.',
-    desc: 'Skulpturální instalace inspirované přírodou — stromy, mraky, listy. Dominanta každého prostoru.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
-    link: '/kolekce',
-    count: '12 produktů',
-    tag: 'NATURE',
-  },
-  {
-    id: 'mlhoviste',
-    label: 'Mlhoviště & chladicí zóny',
-    tagline: 'Až −9 °C. Komfort bez mokra.',
-    desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Průmyslové čerpadlo 70 bar.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
-    link: '/mlhoviste',
-    count: '4 produkty',
-    tag: 'COOLING',
-  },
-  {
-    id: 'prislusenstvi',
-    label: 'Mlžné příslušenství a moduly',
-    tagline: 'Doplňky pro každou instalaci.',
-    desc: 'Trysky, čerpadla, filtry, Smart moduly a další komponenty pro rozšíření a údržbu vašeho mlžného systému.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-    link: '/kolekce',
-    count: '5 produktů',
-    tag: 'PŘÍSLUŠENSTVÍ',
-  },
-];
+{
+  id: 'sochy',
+  label: 'Mlžné sochy',
+  tagline: 'Přírodní tvary. Živá atmosféra.',
+  desc: 'Skulpturální instalace inspirované přírodou — stromy, mraky, listy. Dominanta každého prostoru.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+  link: '/kolekce',
+  count: '12 produktů',
+  tag: 'NATURE'
+},
+{
+  id: 'mlhoviste',
+  label: 'Mlhoviště & chladicí zóny',
+  tagline: 'Až −9 °C. Komfort bez mokra.',
+  desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Průmyslové čerpadlo 70 bar.',
+  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
+  link: '/mlhoviste',
+  count: '4 produkty',
+  tag: 'COOLING'
+},
+{
+  id: 'prislusenstvi',
+  label: 'Mlžné příslušenství a moduly',
+  tagline: 'Doplňky pro každou instalaci.',
+  desc: 'Trysky, čerpadla, filtry, Smart moduly a další komponenty pro rozšíření a údržbu vašeho mlžného systému.',
+  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
+  link: '/kolekce',
+  count: '5 produktů',
+  tag: 'PŘÍSLUŠENSTVÍ'
+}];
+
 
 export default function CategoriesSection() {
   return (
@@ -46,7 +46,7 @@ export default function CategoriesSection() {
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Kategorie produktů</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-              className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
               Řešení pro každý<br /><span className="text-slate-400">typ prostoru.</span>
             </motion.h2>
             <Link to="/kolekce" className="flex items-center gap-2 text-sm text-slate-900 hover:text-slate-600 transition-colors font-medium whitespace-nowrap">
@@ -60,10 +60,10 @@ export default function CategoriesSection() {
 
           {/* Featured (first) */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          >
+            initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            
             <Link to={categories[0].link} className="group relative block rounded-2xl overflow-hidden h-full min-h-[400px]">
-              <img src={categories[0].image} alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG" alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
@@ -87,12 +87,12 @@ export default function CategoriesSection() {
 
           {/* Right column: 3 smaller */}
           <div className="flex flex-col gap-4">
-            {categories.slice(1).map((cat, i) => (
-              <motion.div
-                key={cat.id}
-                initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
+            {categories.slice(1).map((cat, i) =>
+            <motion.div
+              key={cat.id}
+              initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}>
+              
                 <Link to={cat.link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
                   {/* Image */}
                   <div className="relative w-48 shrink-0 overflow-hidden">
@@ -114,10 +114,10 @@ export default function CategoriesSection() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

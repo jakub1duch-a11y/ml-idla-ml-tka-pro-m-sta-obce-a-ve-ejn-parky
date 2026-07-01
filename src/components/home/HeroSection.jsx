@@ -67,12 +67,12 @@ const defaultSlides = [
 }];
 
 const features = [
-  { icon: Droplets, label: 'Spotřeba vody', value: '6–10 l/h' },
-  { icon: Banknote, label: 'Provozní náklady', value: 'od 15 Kč / 8 hod' },
-  { icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až o −9 °C' },
-  { icon: CloudFog, label: 'Nízkotlaká mlha', value: 'kapky 10–50 μm' },
-  { icon: Gauge, label: 'Napojení na vodovodní řád', value: 'min. tlak 2 bar' },
-];
+{ icon: Droplets, label: 'Spotřeba vody', value: '6–10 l/h' },
+{ icon: Banknote, label: 'Provozní náklady', value: 'od 15 Kč / 8 hod' },
+{ icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až o −9 °C' },
+{ icon: CloudFog, label: 'Nízkotlaká mlha', value: 'kapky 10–50 μm' },
+{ icon: Gauge, label: 'Napojení na vodovodní řád', value: 'min. tlak 2 bar' }];
+
 
 export default function HeroSection() {
   const [slides] = useState(defaultSlides);
@@ -117,11 +117,11 @@ export default function HeroSection() {
       {/* Full-bleed photo */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div key={slide.image} custom={direction}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.02 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-          className="absolute inset-0">
+        initial={{ opacity: 0, scale: 1.08 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 1.02 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        className="absolute inset-0">
           <img src={slide.image} alt={slide.name} className="w-full h-full object-cover" />
         </motion.div>
       </AnimatePresence>
@@ -133,7 +133,7 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full pb-12">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div key={current} custom={direction} variants={textVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="max-w-2xl">
+            className="max-w-2xl">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-mono tracking-widest uppercase text-white/80 mb-6">
                 {slide.badge} · {slide.tag}
               </span>
@@ -143,7 +143,7 @@ export default function HeroSection() {
               <p className="italic text-2xl lg:text-3xl text-white/60 font-light mb-5">{slide.subtitle}</p>
               <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-lg mb-8 font-light">{slide.desc}</p>
               <Link to={slide.cta}
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
                 Zobrazit produkt <ArrowRight size={16} />
               </Link>
             </motion.div>
@@ -151,26 +151,26 @@ export default function HeroSection() {
 
           {/* Dots */}
           <div className="flex gap-2 mt-10">
-            {slides.map((s, i) => (
-              <button key={s.slug} onClick={() => goTo(i)} aria-label={s.name}
-                className={`h-1.5 rounded-full transition-all ${i === current ? 'w-8 bg-white' : 'w-1.5 bg-white/30 hover:bg-white/50'}`} />
-            ))}
+            {slides.map((s, i) =>
+            <button key={s.slug} onClick={() => goTo(i)} aria-label={s.name}
+            className={`h-1.5 rounded-full transition-all ${i === current ? 'w-8 bg-white' : 'w-1.5 bg-white/30 hover:bg-white/50'}`} />
+            )}
           </div>
         </div>
 
         {/* Feature icons strip */}
         <div className="relative border-t border-white/10 bg-black/25 backdrop-blur-md">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="mx-auto px-6 lg:px-8 max-w-xl">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-white/10">
-              {features.map((f) => (
-                <div key={f.label} className="flex items-center gap-3 py-5 px-4">
+              {features.map((f) =>
+              <div key={f.label} className="flex items-center gap-3 py-5 px-4">
                   <f.icon size={20} className="text-white/70 shrink-0" />
                   <div className="min-w-0">
                     <p className="text-xs text-white/50 leading-tight truncate">{f.label}</p>
                     <p className="text-sm text-white font-medium leading-tight truncate">{f.value}</p>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -178,13 +178,13 @@ export default function HeroSection() {
 
       {/* Arrows */}
       <button onClick={prev} aria-label="Předchozí"
-        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+      className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
         <ChevronLeft size={18} />
       </button>
       <button onClick={next} aria-label="Další"
-        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+      className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
         <ChevronRight size={18} />
       </button>
-    </section>
-  );
+    </section>);
+
 }

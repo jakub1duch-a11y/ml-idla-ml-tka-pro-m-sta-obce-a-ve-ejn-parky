@@ -16,17 +16,6 @@ const categories = [
     tag: 'NATURE',
   },
   {
-    id: 'brany',
-    label: 'Mlžné brány & portály',
-    tagline: 'Vstup skrze mlhu.',
-    desc: 'Dramatický vstupní zážitek — zákazník prochází zdí mlhy. Architektonicky čisté linie z nerezové oceli.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
-    link: '/kolekce',
-    count: '6 produktů',
-    accent: 'from-cyan/30 to-cyan/0',
-    tag: 'URBAN ART',
-  },
-  {
     id: 'mlhoviste',
     label: 'Mlhoviště & chladicí zóny',
     tagline: 'Až −9 °C. Komfort bez mokra.',
@@ -38,15 +27,15 @@ const categories = [
     tag: 'COOLING',
   },
   {
-    id: 'zahrada',
-    label: 'Zahradní instalace',
-    tagline: 'Minimalismus v designu.',
-    desc: 'Soukromé zahrady, terasy a wellness. Diskrétní instalace, individuální návrh, trvalé materiály.',
+    id: 'prislusenstvi',
+    label: 'Mlžné příslušenství a moduly',
+    tagline: 'Doplňky pro každou instalaci.',
+    desc: 'Trysky, čerpadla, filtry, Smart moduly a další komponenty pro rozšíření a údržbu vašeho mlžného systému.',
     image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
     link: '/kolekce',
     count: '5 produktů',
     accent: 'from-lime-500/30 to-lime-500/0',
-    tag: 'GARDEN',
+    tag: 'PŘÍSLUŠENSTVÍ',
   },
 ];
 

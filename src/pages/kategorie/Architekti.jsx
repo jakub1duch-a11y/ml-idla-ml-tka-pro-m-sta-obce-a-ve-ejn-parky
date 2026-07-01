@@ -27,9 +27,9 @@ const GALLERY = [
 ];
 
 const PRODUCTS = [
-  { title: 'Mlžné brány', desc: 'Portály Oblouk, Hranatý, Hexagon — monumentální vstupy pro náměstí, parky a veřejné budovy.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b7a9a40cb_export-1775419649292.jpg' },
-  { title: 'AURA série', desc: 'Výškově dominantní skulptury (120–220 cm) pro atria, lobby a reprezentativní prostory.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b023d9933_mlzitkoaura-vysic.jpg' },
-  { title: 'Bendy Stéblo', desc: 'Flexibilní organické tvary — ideální pro zahradní architekturu a krajinářské projekty.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/910eb2c63_bendymlzitko-steblo.jpeg' },
+  { title: 'GATE70', slug: 'gate70', desc: 'Monumentální mlžná brána — vstupní portál pro náměstí, parky a veřejné budovy.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b7a9a40cb_export-1775419649292.jpg' },
+  { title: 'AURA', slug: 'aura', desc: 'Výškově dominantní skulptura (120–220 cm) pro atria, lobby a reprezentativní prostory.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b023d9933_mlzitkoaura-vysic.jpg' },
+  { title: 'BENDY 60', slug: 'bendy-60', desc: 'Flexibilní organický tvar — ideální pro zahradní architekturu a krajinářské projekty.', image: 'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/910eb2c63_bendymlzitko-steblo.jpeg' },
 ];
 
 const FINISHES = [
@@ -159,15 +159,19 @@ export default function Architekti() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {PRODUCTS.map((p, i) => (
-              <motion.div key={p.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="rounded-2xl overflow-hidden bg-white border border-slate-200">
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-slate-900 font-medium mb-2">{p.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed font-light">{p.desc}</p>
-                </div>
+              <motion.div key={p.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                <Link to={`/produkt/${p.slug}`} className="group block rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 transition-all">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-slate-900 font-medium">{p.title}</h3>
+                      <ArrowRight size={15} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
+                    </div>
+                    <p className="text-sm text-slate-500 leading-relaxed font-light">{p.desc}</p>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -199,10 +203,15 @@ export default function Architekti() {
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Pojďme tvořit společně.</h3>
             <p className="text-slate-500 text-sm">Získejte přístup k BIM modelům, technickým listům a prioritní podpoře. Připojte se k partnerskému programu Holmtec.</p>
           </div>
-          <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
-            Partnerský program <ArrowRight size={15} />
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <Link to="/reference" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">
+              Reference realizací
+            </Link>
+            <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
+              Partnerský program <ArrowRight size={15} />
+            </a>
+          </div>
         </div>
       </section>
     </div>

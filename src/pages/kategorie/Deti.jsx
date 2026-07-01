@@ -131,9 +131,14 @@ export default function Deti() {
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 text-center">
           <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme řešení pro vaši školu či hřiště.</h3>
           <p className="text-slate-500 text-sm mb-6">Konzultace a návrh zdarma · Odpovídáme do 24 h</p>
-          <Link to="/poptavka" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-            Nezávazná poptávka <ArrowRight size={15} />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/reference" className="inline-flex items-center gap-2 px-8 py-4 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
+              Reference realizací
+            </Link>
+            <Link to="/poptavka" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+              Nezávazná poptávka <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
       </section>
     </div>

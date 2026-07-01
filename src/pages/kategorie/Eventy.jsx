@@ -140,9 +140,14 @@ export default function Eventy() {
               <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors"><Mail size={13} className="text-slate-900" /> obchod1@holmtec.cz</a>
             </div>
           </div>
-          <Link to="/poptavka" className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
-            Poptávka pronájmu <ArrowRight size={15} />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <Link to="/reference" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">
+              Reference
+            </Link>
+            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
+              Poptávka pronájmu <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
       </section>
     </div>

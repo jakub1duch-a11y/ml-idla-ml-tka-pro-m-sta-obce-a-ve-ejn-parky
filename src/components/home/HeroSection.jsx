@@ -221,7 +221,7 @@ export default function HeroSection() {
           
 
           {/* Stats */}
-          <div className="flex divide-x lg:w-auto ml-auto overflow-hidden rounded-2xl divide-slate-400/50 bg-white/75 backdrop-blur-l">
+          <div className="flex divide-x lg:w-auto ml-auto overflow-hidden divide-slate-400/50 bg-white/75 backdrop-blur-xl rounded-1xl">
             {stats.map((s) =>
             <div key={s.val} className="text-left px-8 py-6 opacity-100">
                 <p className="text-slate-900 leading-none mb-2 text-4xl [font-family:'Urbanist',_sans-serif] font-normal">{s.val}</p>

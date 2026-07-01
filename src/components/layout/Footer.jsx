@@ -10,10 +10,10 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="mb-5 flex items-center gap-2">
               <svg width="20" height="26" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.9"/>
-                <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.6"/>
+                <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.9" />
+                <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
               </svg>
-              <span style={{fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.03em'}} className="text-slate-900 text-lg leading-none">
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.03em' }} className="text-slate-900 text-lg leading-none">
                 mlzidla<span className="text-slate-400">.cz</span>
               </span>
             </div>
@@ -22,11 +22,11 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a href="https://www.instagram.com/mlzne_sochy" target="_blank" rel="noopener noreferrer"
-                className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
+              className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
                 <Instagram size={16} />
               </a>
               <a href="https://www.facebook.com/Mlznesochy" target="_blank" rel="noopener noreferrer"
-                className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
+              className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
                 <Facebook size={16} />
               </a>
             </div>
@@ -38,9 +38,9 @@ export default function Footer() {
               <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlžné sochy</Link>
               <Link to="/mlhoviste" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlhoviště</Link>
               <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Jak to funguje</Link>
-              <Link to="/kontakt" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Pronájem</Link>
+              <Link to="/kontakt" className="text-sm text-slate-500 hover:text-slate-900 transition-colors hidden">Pronájem</Link>
               <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
-              <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Katalog 2026 PDF</a>
+              <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026" className="text-sm text-slate-500 hover:text-slate-900 transition-colors hidden">Katalog 2026 PDF</a>
             </div>
           </div>
 
@@ -71,6 +71,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }

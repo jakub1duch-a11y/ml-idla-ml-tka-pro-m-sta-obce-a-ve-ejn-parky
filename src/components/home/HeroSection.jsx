@@ -224,8 +224,8 @@ export default function HeroSection() {
           <div className="grid grid-cols-4 gap-2 lg:w-auto ml-auto">
             {stats.map((s) =>
             <div key={s.val} className="bg-white/8 backdrop-blur-sm border text-center border-white/30 rounded-1xl py-5 px-10">
-                <p className="font-heading font-light text-xl text-white leading-none mb-1">{s.val}</p>
-                <p className="text-[10px] text-white/50 leading-tight">{s.label}</p>
+                <p className="text-white leading-none mb-1 text-2xl [font-family:'Urbanist',_sans-serif] font-normal">{s.val}</p>
+                <p className="text-white/50 leading-tight text-base">{s.label}</p>
               </div>
             )}
           </div>

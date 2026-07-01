@@ -113,7 +113,7 @@ export default function CategoriesSection() {
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 1 * 0.08 }}>
               <Link to={categories[2].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
                 <div className="relative w-48 shrink-0 overflow-hidden">
-                  <img src={categories[2].image} alt={categories[2].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0f64f6136_mlzne_trysky.jpg" alt={categories[2].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">
                   <div className="flex items-start justify-between gap-2">

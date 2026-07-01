@@ -19,7 +19,7 @@ const categories = [
   label: 'Mlhoviště & chladicí zóny',
   tagline: 'Až −9 °C. Komfort bez mokra.',
   desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Průmyslové čerpadlo 70 bar.',
-  image: 'https://lh3.googleusercontent.com/d/1JTKWVGMNje7h4Tq0IVdwlaVJOlDuAoOk',
+  image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq',
   link: '/mlhoviste',
   count: '4 produkty',
   tag: 'COOLING'
@@ -96,7 +96,7 @@ export default function CategoriesSection() {
                 <Link to={cat.link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
                   {/* Image */}
                   <div className="relative w-48 shrink-0 overflow-hidden">
-                    <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0f64f6136_mlzne_trysky.jpg" alt={cat.label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={cat.image} alt={cat.label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   {/* Text */}
                   <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">

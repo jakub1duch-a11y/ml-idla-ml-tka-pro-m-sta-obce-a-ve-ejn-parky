@@ -81,44 +81,44 @@ function ContactForm({ productName }) {
 
   if (sent) return (
     <div className="text-center py-8">
-      <div className="w-12 h-12 rounded-full bg-cyan/20 border border-cyan/40 flex items-center justify-center mx-auto mb-4">
-        <span className="text-cyan text-xl">✓</span>
+      <div className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center mx-auto mb-4">
+        <span className="text-slate-900 text-xl">✓</span>
       </div>
-      <p className="text-white font-light text-lg">Poptávka odeslána.</p>
-      <p className="text-white/40 text-sm mt-1">Odpovídáme do 24 h.</p>
+      <p className="text-slate-900 font-light text-lg">Poptávka odeslána.</p>
+      <p className="text-slate-400 text-sm mt-1">Odpovídáme do 24 h.</p>
     </div>
   );
 
   return (
-    <form onSubmit={submit} className="space-y-4">
+    <form onSubmit={submit} className="space-y-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
+          <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
           <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors"
+            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
             placeholder="Jan Novák" />
         </div>
         <div>
-          <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Email *</label>
+          <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Email *</label>
           <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors"
+            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
             placeholder="jan@firma.cz" />
         </div>
       </div>
       <div>
-        <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Telefon</label>
+        <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Telefon</label>
         <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-          className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors"
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
           placeholder="+420 000 000 000" />
       </div>
       <div>
-        <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Popište váš projekt</label>
+        <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Popište váš projekt</label>
         <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} rows={4}
-          className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan/50 transition-colors resize-none"
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors resize-none"
           placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
       </div>
       <button type="submit" disabled={sending}
-        className="w-full py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 disabled:opacity-60 flex items-center justify-center gap-2">
+        className="w-full py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2">
         {sending ? <Loader size={16} className="animate-spin" /> : <>Odeslat poptávku na {productName} <ArrowRight size={16} /></>}
       </button>
     </form>
@@ -160,16 +160,16 @@ export default function ProduktDetail() {
   }, [slug]);
 
   if (loading) return (
-    <div className="min-h-screen bg-ink flex items-center justify-center">
-      <Loader size={28} className="animate-spin text-cyan/50" />
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <Loader size={28} className="animate-spin text-slate-300" />
     </div>
   );
 
   if (notFound || !product) return (
-    <div className="min-h-screen bg-ink flex items-center justify-center pt-28">
+    <div className="min-h-screen bg-white flex items-center justify-center pt-28">
       <div className="text-center">
-        <p className="text-white/40 mb-4 text-lg">Produkt nenalezen.</p>
-        <Link to="/kolekce" className="text-cyan hover:underline">← Zpět na kolekci</Link>
+        <p className="text-slate-400 mb-4 text-lg">Produkt nenalezen.</p>
+        <Link to="/kolekce" className="text-slate-900 hover:underline">← Zpět na kolekci</Link>
       </div>
     </div>
   );
@@ -191,7 +191,7 @@ export default function ProduktDetail() {
   ].filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-ink" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
 
       {/* ═══════════════════════════════════════════════════════
           1. FULLSCREEN HERO
@@ -200,11 +200,11 @@ export default function ProduktDetail() {
         {img(0) ? (
           <img src={img(0)} alt={product.name} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full bg-surface" />
+          <div className="w-full h-full bg-slate-100" />
         )}
-        {/* Dark overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" />
+        {/* Dark overlays for legibility over photo */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
 
         {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
@@ -216,7 +216,7 @@ export default function ProduktDetail() {
         {/* Hero text — product name + short description + specs icons + CTA */}
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-cyan mb-3">HolmTec · Mlžné skulptury</p>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">HolmTec · Mlžné skulptury</p>
             {/* Bold product name */}
             <h1 style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 0.9 }}
               className="text-7xl lg:text-[10rem] text-white uppercase mb-6">
@@ -234,8 +234,8 @@ export default function ProduktDetail() {
             <div className="flex flex-wrap gap-8 mb-10">
               {product.water_consumption && (
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center border border-cyan/20">
-                    <Droplet size={18} className="text-cyan" />
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
+                    <Droplet size={18} className="text-white" />
                   </div>
                   <div>
                     <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Průměrná spotřeba l/h</p>
@@ -245,8 +245,8 @@ export default function ProduktDetail() {
               )}
               {product.micron_size && (
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center border border-cyan/20">
-                    <Zap size={18} className="text-cyan" />
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
+                    <Zap size={18} className="text-white" />
                   </div>
                   <div>
                     <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Trysky (počet ks)</p>
@@ -256,8 +256,8 @@ export default function ProduktDetail() {
               )}
               {product.pressure && (
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center border border-cyan/20">
-                    <Gauge size={18} className="text-cyan" />
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
+                    <Gauge size={18} className="text-white" />
                   </div>
                   <div>
                     <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Tlak</p>
@@ -269,7 +269,7 @@ export default function ProduktDetail() {
 
             {/* CTA button */}
             <Link to="/kontakt"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
               Poptat produkt <ArrowRight size={16} />
             </Link>
           </motion.div>
@@ -286,12 +286,12 @@ export default function ProduktDetail() {
           2. THUMBNAIL STRIP + TAG
       ═══════════════════════════════════════════════════════ */}
       {allImages.length > 1 && (
-        <div className="bg-surface border-b border-white/8">
+        <div className="bg-slate-50 border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center gap-4 overflow-x-auto scrollbar-none">
-            <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-white/25 mr-2">Galerie produktu</span>
+            <span className="shrink-0 text-[10px] font-mono tracking-widest uppercase text-slate-400 mr-2">Galerie produktu</span>
             {allImages.slice(0, 5).map((src, i) => (
               <button key={i} onClick={() => setLightbox({ images: allImages, idx: i })}
-                className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-white/10 hover:border-cyan/40 transition-all">
+                className="shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-slate-200 hover:border-slate-400 transition-all">
                 <img src={src} alt="" className="w-full h-full object-cover" />
               </button>
             ))}
@@ -305,9 +305,9 @@ export default function ProduktDetail() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Architektura přírody</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Architektura přírody</p>
             {/* Two-line headline: normal + italic */}
-            <h2 className="text-white mb-8" style={{ lineHeight: 1.0 }}>
+            <h2 className="text-slate-900 mb-8" style={{ lineHeight: 1.0 }}>
               <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em' }}>
                 {product.name === 'OSTEV' ? 'Strom, který' : product.name + ','}
               </span>
@@ -315,7 +315,7 @@ export default function ProduktDetail() {
                 {product.name === 'OSTEV' ? 'chladí vzduch.' : 'který osvěžuje.'}
               </span>
             </h2>
-            <p className="text-white/60 text-base lg:text-lg leading-relaxed font-light mb-8">
+            <p className="text-slate-500 text-base lg:text-lg leading-relaxed font-light mb-8">
               {product.name === 'OSTEV'
                 ? 'OSTEV není pouhé mlžítko — je to skulptura s duší stromu. Mohutný nerezový kmen se větví do elegantních ramen, z jejichž konců tryskají jemné mlžné clony. Ochlazení až o 9 °C, bez kapek na zemi, bez hluku.'
                 : `${product.name} kombinuje estetiku s funkcí. Průmyslové mlžení, prémiová nerezová ocel a smart řízení v jednom produktu.`}
@@ -326,8 +326,8 @@ export default function ProduktDetail() {
                 product.material && `Materiál ${product.material.split(',')[0]}`,
                 'Smart senzory, ovládání z mobilu',
               ].filter(Boolean).map(item => (
-                <li key={item} className="flex items-center gap-3 text-sm text-white/60 font-light">
-                  <span className="w-1 h-1 rounded-full bg-cyan shrink-0" />{item}
+                <li key={item} className="flex items-center gap-3 text-sm text-slate-500 font-light">
+                  <span className="w-1 h-1 rounded-full bg-slate-400 shrink-0" />{item}
                 </li>
               ))}
             </ul>
@@ -338,12 +338,12 @@ export default function ProduktDetail() {
                 { val: product.pressure || '70 bar', label: 'Tlak mlžení' },
               ].map(s => (
                 <div key={s.label} className="text-center">
-                  <p style={{ fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.04em', lineHeight: 1 }} className="text-white">{s.val}</p>
-                  <p className="text-[10px] font-mono text-white/35 tracking-widest uppercase mt-1">{s.label}</p>
+                  <p style={{ fontWeight: 800, fontSize: '1.75rem', letterSpacing: '-0.04em', lineHeight: 1 }} className="text-slate-900">{s.val}</p>
+                  <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mt-1">{s.label}</p>
                 </div>
               ))}
               <div className="flex flex-col gap-1 ml-2 justify-center">
-                <span className="text-[11px] font-mono text-cyan/70 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
+                <span className="text-[11px] font-mono text-slate-500 flex items-center gap-1.5">📱 Wi-Fi Smart App řízení</span>
               </div>
             </div>
           </motion.div>
@@ -361,7 +361,7 @@ export default function ProduktDetail() {
           4. SECTION: "Každá kapka nespadne na zem" — image left, text right
       ═══════════════════════════════════════════════════════ */}
       {img(3) && (
-        <section className="bg-surface border-y border-white/8">
+        <section className="bg-slate-50 border-y border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
@@ -369,16 +369,16 @@ export default function ProduktDetail() {
                   onClick={() => setLightbox({ images: allImages, idx: 3 })} />
               </motion.div>
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-                <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Materiál a detail</p>
-                <h2 className="text-white mb-8" style={{ lineHeight: 1.0 }}>
+                <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Materiál a detail</p>
+                <h2 className="text-slate-900 mb-8" style={{ lineHeight: 1.0 }}>
                   <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Každá kapka</span>
                   <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>nespadne na zem.</span>
                 </h2>
-                <p className="text-white/60 text-base leading-relaxed font-light mb-8">
+                <p className="text-slate-500 text-base leading-relaxed font-light mb-8">
                   Trysky {product.micron_size ? product.micron_size : '10–50'} μm vytvářejí kapičky tak drobné, že se okamžitě odpařují ve vzduchu. Žádné mokré chodníky. Žádné louže. Jen příjemný chlad, který visí ve vzduchu jako ranní mlha.
                 </p>
-                <blockquote className="border-l-2 border-cyan/50 pl-6">
-                  <p className="text-white/50 italic text-base font-light">"Vzduch se ochladí dřív, než si uvědomíte, co se děje."</p>
+                <blockquote className="border-l-2 border-slate-300 pl-6">
+                  <p className="text-slate-400 italic text-base font-light">"Vzduch se ochladí dřív, než si uvědomíte, co se děje."</p>
                 </blockquote>
               </motion.div>
             </div>
@@ -391,13 +391,13 @@ export default function ProduktDetail() {
       ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Vlastnosti</p>
-          <h2 className="text-white" style={{ lineHeight: 1.0 }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Vlastnosti</p>
+          <h2 className="text-slate-900" style={{ lineHeight: 1.0 }}>
             <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Víc než mlžítko.</span>
             <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Prvek prostoru.</span>
           </h2>
         </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/8 rounded-2xl overflow-hidden border border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
           {[
             { icon: '💧', title: 'Mlžení 360°', desc: 'Každé rameno tryská jemnou mlhovou clonu. Ochlazení okolí až o 9 °C v okruhu 4 metrů.' },
             { icon: '🔩', title: 'AISI 316L Nerez', desc: 'Námořní nerez odolná UV záření, vandalismu i zimním teplotám. Záruka 5 let.' },
@@ -405,10 +405,10 @@ export default function ProduktDetail() {
             { icon: '🛠️', title: 'Zakázková výroba', desc: `Výška 3–5 m, 4–8 ramen, povrchová úprava, příruba nebo zemní patka dle PD.` },
           ].map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-              className="bg-card_bg p-7">
+              className="bg-white p-7">
               <span className="text-2xl mb-3 block">{f.icon}</span>
-              <h3 style={{ fontWeight: 600, fontSize: '1.05rem', letterSpacing: '-0.02em' }} className="text-white mb-3">{f.title}</h3>
-              <p className="text-sm text-white/45 leading-relaxed font-light">{f.desc}</p>
+              <h3 style={{ fontWeight: 600, fontSize: '1.05rem', letterSpacing: '-0.02em' }} className="text-slate-900 mb-3">{f.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed font-light">{f.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -421,22 +421,22 @@ export default function ProduktDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Technické parametry</p>
-              <h2 className="text-white mb-10" style={{ lineHeight: 1.0 }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Technické parametry</p>
+              <h2 className="text-slate-900 mb-10" style={{ lineHeight: 1.0 }}>
                 <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>Preciznost</span>
                 <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }}>v každém detailu.</span>
               </h2>
-              <div className="rounded-2xl overflow-hidden border border-white/10">
+              <div className="rounded-2xl overflow-hidden border border-slate-200">
                 {techRows.map((row, i) => (
-                  <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-card_bg' : 'bg-surface'}`}>
-                    <span className="text-xs font-mono text-white/35 tracking-widest uppercase">{row.label}</span>
-                    <span className="text-sm text-white font-medium text-right">{row.value}</span>
+                  <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                    <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
+                    <span className="text-sm text-slate-900 font-medium text-right">{row.value}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-white/20 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
+              <p className="text-xs text-slate-300 mt-4 font-mono leading-relaxed">* Všechny parametry jsou orientační. Finální specifikace vznikají v rámci zakázkového procesu dle konkrétního místa instalace.</p>
               <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
-                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-cyan/40 text-cyan text-xs font-mono tracking-widest uppercase rounded-full hover:bg-cyan/10 transition-all">
+                className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-slate-300 text-slate-900 text-xs font-mono tracking-widest uppercase rounded-full hover:bg-slate-100 transition-all">
                 ↓ Vyžádat PDF technický list
               </a>
             </motion.div>
@@ -446,7 +446,7 @@ export default function ProduktDetail() {
                 <Photo src={img(3)} alt={product.name} className="aspect-[4/3] rounded-2xl"
                   onClick={() => setLightbox({ images: allImages, idx: 3 })} />
                 <blockquote className="text-center px-6">
-                  <p className="text-white/40 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
+                  <p className="text-slate-400 italic text-sm font-light">"Přirozená forma stromu v nerezové dokonalosti."</p>
                 </blockquote>
               </motion.div>
             )}
@@ -457,10 +457,10 @@ export default function ProduktDetail() {
       {/* ═══════════════════════════════════════════════════════
           7. VIDEO SECTION
       ═══════════════════════════════════════════════════════ */}
-      <section id="videa" className="bg-surface border-y border-white/8 py-20">
+      <section id="videa" className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Videa z terénu</p>
-          <h2 className="text-white mb-12" style={{ lineHeight: 1.0 }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Videa z terénu</p>
+          <h2 className="text-slate-900 mb-12" style={{ lineHeight: 1.0 }}>
             <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>{product.name}</span>
             <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>v akci.</span>
           </h2>
@@ -481,8 +481,8 @@ export default function ProduktDetail() {
       ═══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Kde {product.name} roste</p>
-          <h2 className="text-white" style={{ lineHeight: 1.0 }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde {product.name} roste</p>
+          <h2 className="text-slate-900" style={{ lineHeight: 1.0 }}>
             <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>Každý prostor</span>
             <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>má svůj {product.name}.</span>
           </h2>
@@ -497,10 +497,10 @@ export default function ProduktDetail() {
             { emoji: '🗺️', title: 'Orientační systém', desc: 'Větve nesou informační panely — slouží jako chladivý rozcestník bez nutnosti dalšího mobiliáře.' },
           ].map((u, i) => (
             <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-              className="p-6 rounded-2xl bg-card_bg border border-white/10 hover:border-white/20 transition-all">
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
               <span className="text-2xl mb-4 block">{u.emoji}</span>
-              <h3 style={{ fontWeight: 600, letterSpacing: '-0.02em' }} className="text-white text-base mb-2">{u.title}</h3>
-              <p className="text-sm text-white/45 leading-relaxed font-light">{u.desc}</p>
+              <h3 style={{ fontWeight: 600, letterSpacing: '-0.02em' }} className="text-slate-900 text-base mb-2">{u.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed font-light">{u.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -510,10 +510,10 @@ export default function ProduktDetail() {
           9. REALIZACE gallery: "OSTEV v reálném světě"
       ═══════════════════════════════════════════════════════ */}
       {allImages.length >= 4 && (
-        <section className="bg-surface border-y border-white/8 py-20">
+        <section className="bg-slate-50 border-y border-slate-200 py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Realizace</p>
-            <h2 className="text-white mb-12" style={{ lineHeight: 1.0 }}>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Realizace</p>
+            <h2 className="text-slate-900 mb-12" style={{ lineHeight: 1.0 }}>
               <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>{product.name}</span>
               <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }}>v reálném světě.</span>
             </h2>
@@ -557,19 +557,19 @@ export default function ProduktDetail() {
       {/* ═══════════════════════════════════════════════════════
           10. INLINE CONTACT FORM — "Váš prostor si zaslouží..."
       ═══════════════════════════════════════════════════════ */}
-      <section className="bg-surface border-t border-white/8 py-24">
+      <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Zakázková výroba</p>
-              <h2 className="text-white mb-4" style={{ lineHeight: 1.0 }}>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Zakázková výroba</p>
+              <h2 className="text-slate-900 mb-4" style={{ lineHeight: 1.0 }}>
                 <span style={{ display: 'block', fontWeight: 700, fontSize: 'clamp(2rem, 3.5vw, 3rem)', letterSpacing: '-0.04em' }}>Váš prostor si zaslouží</span>
                 <span style={{ display: 'block', fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(2rem, 3.5vw, 3rem)', letterSpacing: '-0.04em' }}>vlastní {product.name}.</span>
               </h2>
-              <p className="text-white/40 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
-              <div className="space-y-3 text-sm text-white/40 font-mono">
-                <a href="tel:+420800123456" className="flex items-center gap-2 hover:text-cyan transition-colors">+420 800 123 456</a>
-                <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-cyan transition-colors">obchod1@holmtec.cz</a>
+              <p className="text-slate-400 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+              <div className="space-y-3 text-sm text-slate-500 font-mono">
+                <a href="tel:+420800123456" className="flex items-center gap-2 hover:text-slate-900 transition-colors">+420 800 123 456</a>
+                <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors">obchod1@holmtec.cz</a>
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
@@ -583,30 +583,30 @@ export default function ProduktDetail() {
           11. RELATED + BACK
       ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 && (
-        <section className="py-20 bg-ink border-t border-white/8">
+        <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Mohlo by vás zajímat</p>
-            <h2 style={{ fontWeight: 700, fontSize: '2rem', letterSpacing: '-0.04em' }} className="text-white mb-10">Podobné produkty</h2>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mohlo by vás zajímat</p>
+            <h2 style={{ fontWeight: 700, fontSize: '2rem', letterSpacing: '-0.04em' }} className="text-slate-900 mb-10">Podobné produkty</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {relatedProducts.map((r, i) => (
                 <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <Link to={`/produkt/${r.slug}`} className="group block rounded-2xl overflow-hidden bg-card_bg border border-white/10 hover:border-cyan/40 transition-all">
-                    <div className="aspect-[4/3] overflow-hidden bg-white/5">
+                  <Link to={`/produkt/${r.slug}`} className="group block rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 transition-all">
+                    <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                       {r.image_url && <img src={r.image_url} alt={r.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                     </div>
                     <div className="p-5 flex items-center justify-between">
                       <div>
-                        <span style={{ fontWeight: 600 }} className="text-white group-hover:text-cyan transition-colors">{r.name}</span>
-                        {r.short_description && <p className="text-xs text-white/35 mt-0.5 font-light">{r.short_description}</p>}
+                        <span style={{ fontWeight: 600 }} className="text-slate-900 group-hover:text-slate-600 transition-colors">{r.name}</span>
+                        {r.short_description && <p className="text-xs text-slate-400 mt-0.5 font-light">{r.short_description}</p>}
                       </div>
-                      <ArrowRight size={16} className="text-white/30 group-hover:text-cyan transition-colors shrink-0 ml-4" />
+                      <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0 ml-4" />
                     </div>
                   </Link>
                 </motion.div>
               ))}
             </div>
             <div className="mt-10 flex justify-center">
-              <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors font-mono">
+              <Link to="/kolekce" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
                 <ArrowLeft size={14} /> Zpět na celou kolekci
               </Link>
             </div>

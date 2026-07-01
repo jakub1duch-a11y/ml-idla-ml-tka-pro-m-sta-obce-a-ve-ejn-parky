@@ -27,32 +27,32 @@ export default function ProductReviews({ productId, onStatsLoaded }) {
   const avg = reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length;
 
   return (
-    <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20 border-t border-white/8">
+    <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20 border-t border-slate-200">
       <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
         <div>
-          <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Hodnocení zákazníků</p>
-          <h2 className="text-white" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Hodnocení zákazníků</p>
+          <h2 className="text-slate-900" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
             Co říkají naši klienti
           </h2>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-3xl text-white" style={{ fontWeight: 800 }}>{avg.toFixed(1)}</span>
+          <span className="text-3xl text-slate-900" style={{ fontWeight: 800 }}>{avg.toFixed(1)}</span>
           <div>
             <StarRow rating={avg} size={16} />
-            <p className="text-xs text-white/35 font-mono mt-1">{reviews.length} {reviews.length === 1 ? 'recenze' : 'recenzí'}</p>
+            <p className="text-xs text-slate-400 font-mono mt-1">{reviews.length} {reviews.length === 1 ? 'recenze' : 'recenzí'}</p>
           </div>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {reviews.slice(0, 6).map((r, i) => (
           <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-            className="p-6 rounded-2xl bg-card_bg border border-white/10">
+            className="p-6 rounded-2xl bg-white border border-slate-200">
             <StarRow rating={r.rating} />
-            <p className="text-sm text-white/65 leading-relaxed font-light mt-4 mb-5">"{r.comment}"</p>
+            <p className="text-sm text-slate-600 leading-relaxed font-light mt-4 mb-5">"{r.comment}"</p>
             <div>
-              <p className="text-sm text-white font-medium">{r.customer_name}</p>
+              <p className="text-sm text-slate-900 font-medium">{r.customer_name}</p>
               {(r.company || r.location) && (
-                <p className="text-xs text-white/30 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
+                <p className="text-xs text-slate-400 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
               )}
             </div>
           </motion.div>

@@ -114,7 +114,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden bg-ink">
+    <section className="relative min-h-screen flex flex-col overflow-hidden bg-ink hidden">
 
       {/* Background image with crossfade */}
       <AnimatePresence initial={false}>
@@ -133,13 +133,13 @@ export default function HeroSection() {
             fetchpriority={current === 0 ? 'high' : 'low'}
             decoding="async" />
           
-          <div className="absolute inset-0 bg-gradient-to-b via-ink/30 to-ink from-ink/0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b via-ink/30 to-ink from-ink/0 hidden" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent hidden" />
         </motion.div>
       </AnimatePresence>
 
       {/* Slide counter bar */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-16">
+      <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-6 lg:px-8 pt-16 hidden">
         {slides.map((_, i) =>
         <button
           key={i}

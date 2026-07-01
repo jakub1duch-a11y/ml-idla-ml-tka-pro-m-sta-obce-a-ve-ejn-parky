@@ -119,7 +119,7 @@ function ProductCard({ product, i }) {
           <p className="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-2">{product.material}</p>
           }
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono text-slate-500 bg-slate-100 px-2 py-1 rounded-lg hidden">{product.material || 'AISI 316L'}</span>
+            
             <div className="flex items-center gap-1 text-xs text-slate-900 font-medium">
               Detail <ArrowRight size={12} />
             </div>

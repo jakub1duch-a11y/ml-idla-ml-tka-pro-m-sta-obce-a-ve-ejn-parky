@@ -121,7 +121,7 @@ export default function Header() {
             transition={{ duration: 0.15 }}
             onMouseEnter={openMega}
             onMouseLeave={closeMega}
-            className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/5">
+            className="absolute top-full left-0 right-0 bg-white/40 backdrop-blur-2xl border-b border-white/30 shadow-xl shadow-slate-900/10">
             
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
                 {/* Top: 3 columns */}
@@ -129,9 +129,9 @@ export default function Header() {
                   {MEGA_COLUMNS.map((col) =>
                 <Link key={col.heading} to={col.path} className="group block">
                       <div className="flex items-center gap-2 mb-4">
-                        <col.icon size={13} className="text-slate-400" />
-                        <p className="text-[13px] text-slate-700 group-hover:text-slate-900 transition-colors font-medium leading-snug">{col.heading}</p>
-                        <ArrowRight size={12} className="text-slate-300 group-hover:text-slate-900 transition-colors opacity-0 group-hover:opacity-100 ml-auto" />
+                        <col.icon size={13} className="text-slate-500" />
+                        <p className="font-heading text-[15px] text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{col.heading}</p>
+                        <ArrowRight size={12} className="text-slate-400 group-hover:text-slate-950 transition-colors opacity-0 group-hover:opacity-100 ml-auto" />
                       </div>
                       <div className="rounded-xl overflow-hidden aspect-[16/10] bg-slate-100">
                         <img src={col.image} alt={col.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -142,15 +142,15 @@ export default function Header() {
 
                 {/* Bottom: Využití */}
                 <div className="pt-6">
-                  <p className="text-[10px] font-medium text-slate-400 tracking-[0.2em] uppercase mb-4">Mlžítka podle využití</p>
+                  <p className="text-[11px] font-light text-slate-500 tracking-[0.2em] uppercase mb-4">Mlžítka podle využití</p>
                   <div className="grid grid-cols-6 gap-2">
                     {USAGE_LINKS.map((link) =>
                   <Link key={link.label} to={link.path}
-                  className="group flex flex-col items-start gap-2 px-3 py-3 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">
+                  className="group flex flex-col items-start gap-2 px-3 py-3 rounded-xl hover:bg-white/50 transition-colors border border-transparent hover:border-white/40">
                         <link.icon size={18} className={`${link.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
                         <div>
-                          <p className="text-[12px] text-slate-700 group-hover:text-slate-900 transition-colors font-medium leading-tight">{link.label}</p>
-                          <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">{link.sub}</p>
+                          <p className="font-heading text-[13px] text-slate-800 group-hover:text-slate-950 transition-colors font-light leading-tight">{link.label}</p>
+                          <p className="text-[11px] text-slate-500 mt-0.5 leading-tight">{link.sub}</p>
                         </div>
                       </Link>
                   )}

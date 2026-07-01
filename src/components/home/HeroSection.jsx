@@ -152,7 +152,7 @@ export default function HeroSection() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 6, ease: 'linear' }}
-            className="absolute inset-0 bg-cyan origin-left rounded-full" />
+            className="absolute inset-0 bg-white origin-left rounded-full" />
 
           }
             {i < current && <div className="absolute inset-0 bg-white/40 rounded-full" />}
@@ -175,16 +175,16 @@ export default function HeroSection() {
             className="max-w-xl">
             
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-cyan">{slide.tag}</span>
-              <span className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[9px] font-mono tracking-widest text-white/50">
+              <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/70">{slide.tag}</span>
+              <span className="px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-[9px] font-medium tracking-widest text-white/60">
                 {slide.badge}
               </span>
             </div>
 
-            <h1 className="font-heading font-bold text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
+            <h1 className="font-heading font-light text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
               {slide.name}
             </h1>
-            <h2 className="font-heading font-medium text-2xl lg:text-3xl text-white/70 italic leading-tight tracking-tight mb-6">
+            <h2 className="font-heading font-light text-2xl lg:text-3xl text-white/70 italic leading-tight tracking-tight mb-6">
               {slide.subtitle}
             </h2>
             <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-8 max-w-md font-light">
@@ -193,11 +193,11 @@ export default function HeroSection() {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Link to={slide.cta} onClick={() => trackHeroInteraction(slide.name, slide.name)}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan text-ink text-xs font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/20">
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-900 text-xs font-medium rounded-full hover:bg-white/90 transition-all">
                 Prozkoumat <ArrowRight size={14} />
               </Link>
               <Link to="/kontakt" onClick={() => trackHeroInteraction(slide.name, 'kontakt')}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-white/20 text-white text-xs font-medium rounded-full hover:bg-white/10 transition-all">
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-white/25 text-white text-xs font-medium rounded-full hover:bg-white/10 transition-all">
                 Nezávazná poptávka
               </Link>
             </div>
@@ -223,9 +223,9 @@ export default function HeroSection() {
           {/* Stats */}
           <div className="grid grid-cols-4 gap-2 lg:w-auto ml-auto">
             {stats.map((s) =>
-            <div key={s.val} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-3 py-3 text-center">
-                <p className="font-heading font-light text-xl text-cyan leading-none mb-1">{s.val}</p>
-                <p className="text-[10px] text-white/40 font-mono leading-tight">{s.label}</p>
+            <div key={s.val} className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl px-3 py-3 text-center">
+                <p className="font-heading font-light text-xl text-white leading-none mb-1">{s.val}</p>
+                <p className="text-[10px] text-white/50 leading-tight">{s.label}</p>
               </div>
             )}
           </div>

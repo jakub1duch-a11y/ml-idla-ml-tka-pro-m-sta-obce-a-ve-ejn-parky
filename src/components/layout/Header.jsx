@@ -63,7 +63,7 @@ export default function Header() {
   return (
     <>
       {/* Announcement bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-cyan text-ink text-[11px] font-mono font-medium tracking-widest flex items-center justify-center gap-6 px-4 h-8">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-cyan text-ink text-[11px] font-mono font-medium tracking-widest flex items-center justify-center gap-6 px-4 h-8 hidden">
         <span className="flex items-center gap-1.5">☀️ LÉTO 2026</span>
         <span className="hidden sm:inline text-ink/60">·</span>
         <Link to="/poptavka" className="hidden sm:inline text-ink hover:text-ink/70 transition-colors">

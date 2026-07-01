@@ -172,24 +172,30 @@ export default function Header() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.15 }}
           className="fixed inset-0 z-50 bg-white pt-20 overflow-y-auto hidden">
           
-            <div className="px-6 py-6 flex flex-col gap-1">
+            <div className="px-4 py-4 flex flex-col gap-0">
               <button onClick={() => setMobileCatalogOpen(!mobileCatalogOpen)}
-            className="flex items-center justify-between text-sm text-slate-700 hover:text-slate-900 transition-colors py-3 border-b border-slate-100">
-                Katalog <ChevronDown size={14} className={`transition-transform ${mobileCatalogOpen ? 'rotate-180' : ''}`} />
+            className="flex items-center justify-between text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-4 px-4 rounded-lg border-b border-slate-100">
+                Katalog <ChevronDown size={16} className={`transition-transform duration-150 ${mobileCatalogOpen ? 'rotate-180' : ''}`} />
               </button>
               {mobileCatalogOpen &&
-              <div className="pl-4 flex flex-col gap-1 py-3 border-b border-slate-100">
-                 <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-1 mb-2">Modely</p>
-                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžné sochy & brány</Link>
-                 <Link to="/prislusenstvi" onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Příslušenství</Link>
-                 <Link to="/jak-to-funguje" onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Smart moduly</Link>
-                 <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-3 mb-2">Podle využití</p>
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.15 }}
+                className="pl-2 flex flex-col gap-0 py-3 bg-slate-50 rounded-lg">
+                 <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-3 mb-3 px-4">Modely</p>
+                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-base text-slate-700 hover:text-slate-900 hover:bg-white py-3.5 px-4 rounded-lg transition-colors">Mlžné sochy & brány</Link>
+                 <Link to="/prislusenstvi" onClick={() => setMobileOpen(false)} className="text-base text-slate-700 hover:text-slate-900 hover:bg-white py-3.5 px-4 rounded-lg transition-colors">Příslušenství</Link>
+                 <Link to="/jak-to-funguje" onClick={() => setMobileOpen(false)} className="text-base text-slate-700 hover:text-slate-900 hover:bg-white py-3.5 px-4 rounded-lg transition-colors">Smart moduly</Link>
+                 <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-4 mb-3 px-4">Podle využití</p>
                  {USAGE_LINKS.map((l) =>
-              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">{l.label}</Link>
+              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base text-slate-700 hover:text-slate-900 hover:bg-white py-3.5 px-4 rounded-lg transition-colors">{l.label}</Link>
               )}
-               </div>
+               </motion.div>
               }
               {[
             { label: 'Reference', path: '/reference' },
@@ -198,9 +204,9 @@ export default function Header() {
             { label: 'O nás', path: '/o-nas' },
             { label: 'Kontakt', path: '/kontakt' }].
             map((l) =>
-            <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-sm text-slate-700 hover:text-slate-900 transition-colors py-3 border-b border-slate-100">{l.label}</Link>
+            <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-4 px-4 rounded-lg border-b border-slate-100">{l.label}</Link>
             )}
-              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="mt-4 px-6 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full text-center">
+              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="mt-6 mb-4 px-6 py-4 bg-slate-900 text-white text-base font-bold rounded-full text-center hover:bg-slate-800 transition-colors">
                 Poptávka
               </Link>
             </div>

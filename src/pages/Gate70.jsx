@@ -151,8 +151,8 @@ export default function Gate70() {
     <div className="min-h-screen bg-ink">
 
       {/* ══════════════════════════════════════════════════════
-                         1. HERO — dvě varianty s přepínačem
-                      ══════════════════════════════════════════════════════ */}
+                          1. HERO — dvě varianty s přepínačem
+                       ══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen overflow-hidden">
         <video
           autoPlay
@@ -230,8 +230,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         2. DVĚ VARIANTY — porovnání vedle sebe
-                      ══════════════════════════════════════════════════════ */}
+                          2. DVĚ VARIANTY — porovnání vedle sebe
+                       ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Dvě tvarové varianty</p>
@@ -266,8 +266,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         3. LANDING INFO — o bráně
-                      ══════════════════════════════════════════════════════ */}
+                          3. LANDING INFO — o bráně
+                       ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-y border-white/8">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -317,8 +317,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         4. TECHNICKÉ SPECIFIKACE
-                      ══════════════════════════════════════════════════════ */}
+                          4. TECHNICKÉ SPECIFIKACE
+                       ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -354,15 +354,15 @@ export default function Gate70() {
               onClick={() => setLightbox({ images: ALL_GALLERY, idx: 10 })}>
               <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22b4e3038_L-Mltko_GATE_60_3R.png"
               alt="GATE60 trojice" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-all hidden" />
+              
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         5. SMART ŘÍZENÍ
-                      ══════════════════════════════════════════════════════ */}
+                          5. SMART ŘÍZENÍ
+                       ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-y border-white/8 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
@@ -393,8 +393,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         6. FOTOGALERIE + DETAIL FOTO
-                      ══════════════════════════════════════════════════════ */}
+                          6. FOTOGALERIE + DETAIL FOTO
+                       ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Fotogalerie</p>
@@ -426,8 +426,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         7. VIDEA V AKCI
-                      ══════════════════════════════════════════════════════ */}
+                          7. VIDEA V AKCI
+                       ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-y border-white/8 py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
@@ -467,8 +467,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         8. REALIZACE
-                      ══════════════════════════════════════════════════════ */}
+                          8. REALIZACE
+                       ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-3">Realizace</p>
@@ -494,8 +494,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                         9. CTA — Poptávka
-                      ══════════════════════════════════════════════════════ */}
+                          9. CTA — Poptávka
+                       ══════════════════════════════════════════════════════ */}
       <section className="bg-surface border-t border-white/8 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

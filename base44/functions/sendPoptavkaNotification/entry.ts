@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
       subject: `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`,
       body: html,
       from_name: 'mlzidla
-    });
+,    });
 
     return Response.json({ ok: true });
   } catch (error) {

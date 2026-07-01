@@ -34,6 +34,7 @@ import Komercni from '@/pages/kategorie/Komercni';
 import Eventy from '@/pages/kategorie/Eventy';
 import Gdpr from '@/pages/Gdpr';
 import Admin from '@/pages/admin/Admin';
+import Gate70 from '@/pages/Gate70';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -78,6 +79,7 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/komercni" element={<Komercni />} />
         <Route path="/kategorie/eventy" element={<Eventy />} />
         <Route path="/gdpr" element={<Gdpr />} />
+        <Route path="/gate70" element={<Gate70 />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<PageNotFound />} />

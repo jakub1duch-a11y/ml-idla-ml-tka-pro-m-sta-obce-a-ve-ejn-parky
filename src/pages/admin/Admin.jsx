@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminProducts from './AdminProducts';
 import AdminReferences from './AdminReferences';
 import AdminPoptavky from './AdminPoptavky';
 import AdminAnalytics from './AdminAnalytics';
+import AdminBlog from './AdminBlog';
 
 const TABS = [
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'references', label: 'Reference', icon: ImageIcon },
+  { id: 'blog', label: 'Blog', icon: Newspaper },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
 ];
@@ -46,6 +48,7 @@ export default function Admin() {
   const ActiveComponent = {
     products: AdminProducts,
     references: AdminReferences,
+    blog: AdminBlog,
     poptavky: AdminPoptavky,
     analytics: AdminAnalytics,
   }[activeTab];

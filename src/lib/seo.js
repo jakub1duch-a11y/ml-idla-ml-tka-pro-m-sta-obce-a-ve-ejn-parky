@@ -250,18 +250,25 @@ export function getProductSEO(product, reviewStats) {
 
 // ─── Dynamic SEO for Blog post pages ────────────────────────────────────────
 
+function extractFirstContentImage(html) {
+  if (!html) return null;
+  const match = html.match(/<img[^>]+src="([^"]+)"/i);
+  return match ? match[1] : null;
+}
+
 export function getBlogPostSEO(post) {
   if (!post) return {};
   const description = post.perex
     ? post.perex.slice(0, 160)
     : `Přečtěte si článek "${post.title}" na blogu HolmTec — mlzidla.cz.`;
+  const previewImage = post.image_url || extractFirstContentImage(post.content) || DEFAULT_IMAGE;
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description,
-    image: post.image_url || DEFAULT_IMAGE,
+    image: previewImage,
     datePublished: post.published_date || post.created_date,
     dateModified: post.updated_date || post.published_date || post.created_date,
     author: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
@@ -272,7 +279,7 @@ export function getBlogPostSEO(post) {
     title: post.title,
     description,
     keywords: `${post.title}, mlžné sochy blog, ${post.category || ''}, HolmTec novinky`,
-    image: post.image_url,
+    image: previewImage,
     canonicalPath: `/blog/${post.slug || post.id}`,
     type: 'article',
     jsonLd,

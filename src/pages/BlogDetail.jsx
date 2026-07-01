@@ -134,8 +134,13 @@ export default function BlogDetail() {
               prose-strong:text-white prose-strong:font-medium
               prose-blockquote:border-cyan/40 prose-blockquote:text-white/40 prose-blockquote:italic
               prose-code:text-cyan prose-code:bg-white/5 prose-code:px-1.5 prose-code:rounded
-              prose-a:text-cyan prose-a:no-underline hover:prose-a:underline">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+              prose-a:text-cyan prose-a:no-underline hover:prose-a:underline
+              [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:object-cover [&_h2]:mt-10 [&_h3]:mt-8">
+            {/<\/?[a-z][\s\S]*>/i.test(post.content) ? (
+              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            ) : (
+              <ReactMarkdown>{post.content}</ReactMarkdown>
+            )}
           </motion.div>
         ) : (
           <div className="pb-16 text-white/40 font-light italic">Obsah článku brzy.</div>

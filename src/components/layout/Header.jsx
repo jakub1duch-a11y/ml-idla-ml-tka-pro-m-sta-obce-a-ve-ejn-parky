@@ -49,6 +49,11 @@ export default function Header() {
 
   useEffect(() => {setMobileOpen(false);setMegaOpen(false);}, [location]);
 
+  const toggleMobileMenu = () => {
+    setMobileOpen(!mobileOpen);
+    setMegaOpen(false);
+  };
+
   const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);};
   const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
 
@@ -103,7 +108,7 @@ export default function Header() {
                 Poptávka
               </Link>
             </div>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-slate-900 p-2">
+            <button onClick={toggleMobileMenu} className="lg:hidden text-slate-900 p-2">
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
@@ -119,7 +124,7 @@ export default function Header() {
             transition={{ duration: 0.15 }}
             onMouseEnter={openMega}
             onMouseLeave={closeMega}
-            className="absolute top-full left-0 right-0 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10">
+            className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10">
             
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
                 {/* Top: 3 columns */}
@@ -167,7 +172,7 @@ export default function Header() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="fixed inset-0 z-30 bg-white pt-20 overflow-y-auto lg:hidden">
+          className="fixed inset-0 z-50 bg-white pt-20 overflow-y-auto lg:hidden">
           
             <div className="px-6 py-6 flex flex-col gap-1">
               <button onClick={() => setMobileCatalogOpen(!mobileCatalogOpen)}

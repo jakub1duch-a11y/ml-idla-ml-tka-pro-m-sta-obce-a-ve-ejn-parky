@@ -68,7 +68,7 @@ export default function Header() {
 
       
 
-      <header className={`fixed top-0 left-0 right-0 transition-all duration-300 z-40 bg-white/10 backdrop-blur-l ${
+      <header className={`fixed top-0 left-0 right-0 transition-all duration-300 z-40 bg-white/10 backdrop-blur-s ${
       scrolled ? 'border-b border-slate-200 shadow-sm' : 'border-b border-transparent'}`
       }>
         <div className="flex items-center justify-between max-w-7xl h-16 px-6 lg:px-8 mx-auto gap-4 lg:gap-8">

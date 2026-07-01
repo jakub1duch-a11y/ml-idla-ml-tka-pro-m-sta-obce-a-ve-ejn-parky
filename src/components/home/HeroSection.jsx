@@ -71,7 +71,7 @@ const stats = [
 { val: '120+', label: 'Realizací v ČR a SR' },
 { val: '−9 °C', label: 'Max. ochlazení' },
 { val: '100%', label: 'Bez chemie' },
-{ val: '5 let', label: 'Záruka' }];
+{ val: "1 Rok", label: 'Záruka' }];
 
 
 export default function HeroSection() {

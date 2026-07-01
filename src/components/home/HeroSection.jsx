@@ -181,7 +181,7 @@ export default function HeroSection() {
               </span>
             </div>
 
-            <h1 className="font-heading font-light text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3">
+            <h1 className="text-5xl lg:text-7xl text-white leading-[1.05] tracking-tight mb-3 font-semibold [font-family:'Urbanist',_sans-serif]">
               {slide.name}
             </h1>
             <h2 className="font-heading font-light text-2xl lg:text-3xl text-white/70 italic leading-tight tracking-tight mb-6">

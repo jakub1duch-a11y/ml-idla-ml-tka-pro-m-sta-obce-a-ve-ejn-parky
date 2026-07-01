@@ -66,7 +66,7 @@ export default function CategoriesSection() {
               <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG" alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
-              <div className="absolute inset-0 p-8 flex flex-col justify-between">
+              <div className="absolute flex flex-col justify-between inset-0 p-8">
                 <div className="flex justify-between items-start">
                   <span className="px-3 py-1.5 rounded-full border border-white/20 text-xs font-mono tracking-widest backdrop-blur-sm text-[hsl(var(--background))] bg-[#f2f2f2]">
                     {categories[0].tag}

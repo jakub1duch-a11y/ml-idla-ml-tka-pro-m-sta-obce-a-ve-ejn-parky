@@ -63,7 +63,7 @@ export default function CategorySlider() {
   const cat = categories[current];
 
   return (
-    <section className="relative h-[70vh] min-h-[520px] flex flex-col overflow-hidden bg-ink">
+    <section className="relative h-[70vh] min-h-[520px] flex flex-col overflow-hidden bg-ink hidden">
 
       <AnimatePresence initial={false}>
         <motion.div
@@ -81,7 +81,7 @@ export default function CategorySlider() {
             loading="eager"
             decoding="async" />
           
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10 hidden" />
         </motion.div>
       </AnimatePresence>
 

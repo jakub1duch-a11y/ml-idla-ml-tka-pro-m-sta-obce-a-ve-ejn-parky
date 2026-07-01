@@ -83,24 +83,24 @@ export default function Prislusenstvi() {
 
       <PrislusenstviHero />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10 hidden">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-4">
-            Mlžné příslušenství<br /><span className="text-slate-400">a moduly.</span>
-          </h1>
-          <p className="text-slate-500 max-w-xl text-lg leading-relaxed">
-            Trysky, čerpadla, filtry a Smart moduly pro řízení a automatizaci. Náhradní díly a rozšíření pro každý mlžný systém HolmTec.
-          </p>
-        </motion.div>
-      </div>
+      
+
+
+
+
+
+
+
+
+      
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-8">
-        <input
-          type="text"
-          placeholder="Hledat příslušenství..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full sm:w-96 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none transition-all hidden" />
+        
+
+
+
+
+        
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">

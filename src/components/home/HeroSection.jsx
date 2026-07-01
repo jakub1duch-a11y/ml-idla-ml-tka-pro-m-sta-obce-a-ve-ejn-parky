@@ -161,7 +161,7 @@ export default function HeroSection() {
       </div>
 
       {/* Main content */}
-      <div className="relative flex flex-col justify-end w-full max-w-7xl lg:px-8 mx-auto pb-10 pt-26 px-6 z-5">
+      <div className="relative flex flex-col justify-end w-full max-w-7xl lg:px-8 mx-auto pb-10 px-6 z-5 pt-30">
 
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div

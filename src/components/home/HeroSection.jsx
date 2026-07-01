@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { ArrowRight, ChevronLeft, ChevronRight, Droplets, Banknote, ThermometerSnowflake, CloudFog, Gauge } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { trackHeroInteraction } from '@/lib/ga4';
 
 const defaultSlides = [
@@ -66,34 +66,18 @@ const defaultSlides = [
   cta: '/mlhoviste'
 }];
 
-const stats = [
-{ val: "25+", label: 'Realizací v ČR a SR' },
-{ val: '−9 °C', label: 'Max. ochlazení' },
-{ val: '100%', label: 'Bez chemie' },
-{ val: "1 Rok", label: "Záruka na konstrukci" }];
+const features = [
+  { icon: Droplets, label: 'Spotřeba vody', value: '6–10 l/h' },
+  { icon: Banknote, label: 'Provozní náklady', value: 'od 15 Kč / 8 hod' },
+  { icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až o −9 °C' },
+  { icon: CloudFog, label: 'Nízkotlaká mlha', value: 'kapky 10–50 μm' },
+  { icon: Gauge, label: 'Napojení na vodovodní řád', value: 'min. tlak 2 bar' },
+];
 
 export default function HeroSection() {
   const [slides] = useState(defaultSlides);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
-
-  // 2.5D parallax tilt for the product photo
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 150, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 150, damping: 20 });
-  const shiftX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-16, 16]), { stiffness: 150, damping: 20 });
-  const shiftY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-16, 16]), { stiffness: 150, damping: 20 });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
 
   const goTo = useCallback((idx) => {
     setDirection(idx > current ? 1 : -1);
@@ -122,30 +106,44 @@ export default function HeroSection() {
 
   const slide = slides[current];
 
-  const variants = {
-    enter: (dir) => ({ opacity: 0, x: dir > 0 ? 40 : -40 }),
-    center: { opacity: 1, x: 0 },
-    exit: (dir) => ({ opacity: 0, x: dir > 0 ? -40 : 40 })
+  const textVariants = {
+    enter: (dir) => ({ opacity: 0, y: dir > 0 ? 24 : -24 }),
+    center: { opacity: 1, y: 0 },
+    exit: (dir) => ({ opacity: 0, y: dir > 0 ? -24 : 24 })
   };
 
   return (
-    <section className="relative bg-white pt-28 pb-14 lg:pt-40 lg:pb-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-center">
+    <section className="relative h-[92vh] min-h-[620px] w-full overflow-hidden bg-slate-900">
+      {/* Full-bleed photo */}
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.div key={slide.image} custom={direction}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.02 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+          className="absolute inset-0">
+          <img src={slide.image} alt={slide.name} className="w-full h-full object-cover" />
+        </motion.div>
+      </AnimatePresence>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
 
-        {/* Text */}
-        <div className="relative min-h-[300px] flex flex-col justify-center order-2 lg:order-1">
+      {/* Content */}
+      <div className="relative h-full flex flex-col justify-end">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full pb-12">
           <AnimatePresence mode="wait" custom={direction}>
-            <motion.div key={current} custom={direction} variants={variants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.5, ease: 'easeOut' }}>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono tracking-widest uppercase mb-6">
+            <motion.div key={current} custom={direction} variants={textVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="max-w-2xl">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-mono tracking-widest uppercase text-white/80 mb-6">
                 {slide.badge} · {slide.tag}
               </span>
-              <h1 className="font-heading font-light text-5xl lg:text-6xl text-slate-900 tracking-tight mb-2" style={{ letterSpacing: '-0.03em' }}>
+              <h1 className="font-heading font-light text-5xl lg:text-7xl text-white tracking-tight mb-2" style={{ letterSpacing: '-0.03em' }}>
                 {slide.name}
               </h1>
-              <p className="italic text-2xl lg:text-3xl text-slate-400 font-light mb-5">{slide.subtitle}</p>
-              <p className="text-slate-500 text-base lg:text-lg leading-relaxed max-w-md mb-8 font-light">{slide.desc}</p>
+              <p className="italic text-2xl lg:text-3xl text-white/60 font-light mb-5">{slide.subtitle}</p>
+              <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-lg mb-8 font-light">{slide.desc}</p>
               <Link to={slide.cta}
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
                 Zobrazit produkt <ArrowRight size={16} />
               </Link>
             </motion.div>
@@ -155,51 +153,38 @@ export default function HeroSection() {
           <div className="flex gap-2 mt-10">
             {slides.map((s, i) => (
               <button key={s.slug} onClick={() => goTo(i)} aria-label={s.name}
-                className={`h-1.5 rounded-full transition-all ${i === current ? 'w-8 bg-slate-900' : 'w-1.5 bg-slate-200 hover:bg-slate-300'}`} />
+                className={`h-1.5 rounded-full transition-all ${i === current ? 'w-8 bg-white' : 'w-1.5 bg-white/30 hover:bg-white/50'}`} />
             ))}
           </div>
         </div>
 
-        {/* 2.5D product photo */}
-        <div className="relative order-1 lg:order-2" style={{ perspective: 1200 }} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-          <motion.div style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-            className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl shadow-slate-900/10 bg-slate-100">
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div key={slide.image} custom={direction}
-                initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-                className="absolute inset-0">
-                <motion.img src={slide.image} alt={slide.name} style={{ x: shiftX, y: shiftY, scale: 1.12 }}
-                  className="w-full h-full object-cover" />
-              </motion.div>
-            </AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent pointer-events-none" />
-          </motion.div>
-
-          <button onClick={prev} aria-label="Předchozí"
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 backdrop-blur border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-white shadow-md transition-all">
-            <ChevronLeft size={18} />
-          </button>
-          <button onClick={next} aria-label="Další"
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 backdrop-blur border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-white shadow-md transition-all">
-            <ChevronRight size={18} />
-          </button>
-        </div>
-      </div>
-
-      {/* Stats — glass minimal strip */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-14 lg:mt-20">
-        <div className="grid grid-cols-2 lg:grid-cols-4 rounded-2xl border border-slate-200 divide-x divide-y lg:divide-y-0 divide-slate-200 overflow-hidden bg-slate-50/60 backdrop-blur">
-          {stats.map((s) => (
-            <div key={s.label} className="px-6 py-6 text-center">
-              <p className="font-heading font-light text-2xl lg:text-3xl text-slate-900">{s.val}</p>
-              <p className="text-xs text-slate-500 mt-1.5">{s.label}</p>
+        {/* Feature icons strip */}
+        <div className="relative border-t border-white/10 bg-black/25 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-white/10">
+              {features.map((f) => (
+                <div key={f.label} className="flex items-center gap-3 py-5 px-4">
+                  <f.icon size={20} className="text-white/70 shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs text-white/50 leading-tight truncate">{f.label}</p>
+                    <p className="text-sm text-white font-medium leading-tight truncate">{f.value}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
+
+      {/* Arrows */}
+      <button onClick={prev} aria-label="Předchozí"
+        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+        <ChevronLeft size={18} />
+      </button>
+      <button onClick={next} aria-label="Další"
+        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+        <ChevronRight size={18} />
+      </button>
     </section>
   );
 }

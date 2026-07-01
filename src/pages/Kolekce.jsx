@@ -189,30 +189,30 @@ export default function Kolekce() {
 
 
       {/* ── KATEGORIE ── */}
-      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10 hidden">
-        <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-3">Vyberte kategorii</p>
-        <div className="flex flex-wrap gap-2.5">
-          <button onClick={() => setActiveCategory(null)}
-          className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${!activeCategory ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900'}`}>
-            Vše
-          </button>
-          {categoryGroups.map((g) => {
-            const Icon = g.icon;
-            const active = activeCategory === g.id;
-            return (
-              <button key={g.id} onClick={() => setActiveCategory(active ? null : g.id)}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all ${active ? 'bg-slate-900 text-white border-slate-900' : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900'}`}>
-                <Icon size={14} /> {g.label}
-              </button>);
+      
 
-          })}
-        </div>
-        {activeGroup &&
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-sm text-slate-500 max-w-2xl">
-            {activeGroup.description}
-          </motion.p>
-        }
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       {/* ── POKROČILÉ FILTRY ── */}
       <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10">

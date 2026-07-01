@@ -20,6 +20,13 @@ export default function PrislusenstviHero() {
           className="font-heading font-extralight text-3xl lg:text-5xl text-white max-w-2xl leading-tight tracking-tight">
           Mlžné příslušenství<br />a moduly.
         </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+          className="text-white/60 text-sm lg:text-base max-w-xl mt-4 leading-relaxed">
+          Trysky, čerpadla, filtry a Smart moduly pro řízení a automatizaci. Náhradní díly a rozšíření pro každý mlžný systém HolmTec.
+        </motion.p>
       </div>
     </div>
   );

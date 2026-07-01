@@ -33,25 +33,30 @@ export default function Deti() {
 
   return (
     <div className="min-h-screen bg-white pt-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
-              <Baby size={18} className="text-slate-900" />
+      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/e557b652c_generated_video.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                <Baby size={18} className="text-white" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Školy, školky a děti</p>
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Školy, školky a děti</p>
-          </div>
-          <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-            Bezpečný chlad<br /><span style={{ fontStyle: 'italic' }}>pro dětskou radost.</span>
-          </h1>
-          <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Pro školy, školky a dětská hřiště navrhujeme mlžné systémy, které jsou bezpečné, jemné a bez chemie. Ochlazení až o 9 °C bez rizika uklouznutí — děti si mlhu užijí, rodiče i pedagogové budou mít klid.
-          </p>
-          <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-            Nezávazná konzultace <ArrowRight size={15} />
-          </Link>
-        </motion.div>
-      </div>
+            <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+              Bezpečný chlad<br /><span style={{ fontStyle: 'italic' }}>pro dětskou radost.</span>
+            </h1>
+            <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
+              Pro školy, školky a dětská hřiště navrhujeme mlžné systémy, které jsou bezpečné, jemné a bez chemie. Ochlazení až o 9 °C bez rizika uklouznutí — děti si mlhu užijí, rodiče i pedagogové budou mít klid.
+            </p>
+            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+              Nezávazná konzultace <ArrowRight size={15} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
 
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">

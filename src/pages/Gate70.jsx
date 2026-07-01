@@ -268,51 +268,35 @@ export default function Gate70() {
       {/* ══════════════════════════════════════════════════════
                           3. LANDING INFO — o bráně
                        ══════════════════════════════════════════════════════ */}
-      <section className="bg-surface border-y border-white/8">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div
-                className="relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer group"
-                onClick={() => setLightbox({ images: ALL_GALLERY, idx: 0 })}>
-                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aa26eeb6a_Mltko_GATE_70U.png"
-                alt="GATE70 v parku" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-all" />
-                <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                  <Maximize2 size={13} className="text-white" />
-                </div>
-              </div>
-            </motion.div>
+      <section className="bg-ink py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="relative rounded-3xl overflow-hidden cursor-pointer group min-h-[600px] flex items-center"
+            onClick={() => setLightbox({ images: ALL_GALLERY, idx: 0 })}>
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aa26eeb6a_Mltko_GATE_70U.png"
+              alt="GATE70 v parku" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/10 to-black/70" />
 
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-4">Brána, která osvěžuje</p>
-              <h2 style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }} className="text-white mb-8">
-                Minimalistická.<br /><span className="italic">Funkční. Krásná.</span>
+            <div className="relative ml-auto mr-8 lg:mr-14 w-full max-w-md p-8 lg:p-10 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              <span className="inline-block px-4 py-1.5 rounded-full border border-white/25 text-white/80 text-sm mb-6">Brána, která osvěžuje</span>
+              <h2 style={{ lineHeight: 1.15, fontWeight: 700, fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)', letterSpacing: '-0.02em' }} className="text-white mb-6">
+                Minimalistická. Funkční. Krásná.
               </h2>
-              <p className="text-white/60 text-base leading-relaxed font-light mb-6">
-                GATE70 je víc než mlžné zařízení — je to architektonický prvek, který definuje vstup do prostoru. Svým minimalistickým designem eliminuje zbytečné vizuální prvky a s lehkostí se začleňuje do jakéhokoliv veřejného či přírodního prostředí.
+              <p className="text-white/70 text-sm leading-relaxed font-light mb-4">
+                GATE70 je víc než mlžné zařízení — je to architektonický prvek, který definuje vstup do prostoru…
               </p>
-              <p className="text-white/60 text-base leading-relaxed font-light mb-8">
-                Pět mlžných trysek z nerezové oceli AISI 316L vytváří jemnou mlhovou clonu, jejíž kapičky 10–50 μm se okamžitě odpařují ve vzduchu. Žádné louže. Žádné mokré povrchy. Pouze příjemné ochlazení až o 9 °C v okruhu průchodu.
+              <p className="text-white/70 text-sm leading-relaxed font-light mb-6">
+                Pět mlžných trysek z nerezové oceli AISI 316L vytváří jemnou mlhovou clonu…
               </p>
-              <ul className="space-y-3 mb-10">
-                {[
-                'Rozměry upravitelné dle projektové dokumentace',
-                'Kotvení skrytou patkou pod úrovní terénu',
-                'Není herní prvek — designový architektonický prvek',
-                'Cena od 48 450 Kč bez DPH, dodání 1–5 týdnů'].
-                map((item) =>
-                <li key={item} className="flex items-start gap-3 text-sm text-white/60 font-light">
-                    <span className="w-1 h-1 rounded-full bg-cyan shrink-0 mt-2" />{item}
-                  </li>
-                )}
-              </ul>
+              <p className="text-white/60 text-sm leading-relaxed font-light mb-8">
+                Rozměry upravitelné dle projektové dokumentace&nbsp;/&nbsp;Kotvení skrytou patkou pod úrovní terénu&nbsp;/&nbsp;Není herní prvek — designový architektonický prvek&nbsp;/&nbsp;Cena od 48 450 Kč bez DPH, dodání 1–5 týdnů
+              </p>
               <Link to="/poptavka"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
-                Nezávazná poptávka <ArrowRight size={16} />
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-ink text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+                Nezávazná poptávka
               </Link>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 

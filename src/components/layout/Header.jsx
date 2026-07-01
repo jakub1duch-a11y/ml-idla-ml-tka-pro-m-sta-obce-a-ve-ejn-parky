@@ -85,7 +85,7 @@ export default function Header() {
                 <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.3" strokeLinecap="round" opacity="0.6" />
               </svg>
               <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.04em' }} className="no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-non normal-case text-2xl text-slate-900 font-l">
-                mlzidla<span className="text-[#214999] [font-family:'Urbanist',_sans-serif] text-xl font-light px-1 normal-case">.cz</span>
+                mlzidla<span className="text-[#214999] [font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium">.cz</span>
               </span>
             </motion.div>
           </Link>

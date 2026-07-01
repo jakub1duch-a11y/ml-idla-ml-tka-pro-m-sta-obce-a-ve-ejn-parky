@@ -102,28 +102,28 @@ export default function KolekceHero() {
       {/* Content */}
       <div className="absolute z-30 flex flex-col justify-end px-8 lg:px-16 pb-12 inset-0">
         <AnimatePresence mode="wait">
-          <motion.h2
-            key={`title-${taglineIdx}`}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="font-heading font-extralight text-3xl lg:text-5xl text-white max-w-2xl leading-tight tracking-tight hidden">
-            
-            Mlžítka a mlžidla Holmtec
-          </motion.h2>
+          
+
+
+
+
+
+
+
+
+          
         </AnimatePresence>
         <AnimatePresence mode="wait">
-          <motion.p
-            key={`tag-${taglineIdx}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.05 }}
-            className="text-xs font-medium tracking-[0.18em] uppercase text-white/60 mt-3 hidden">
-            
-            {TAGLINES[taglineIdx]}
-          </motion.p>
+          
+
+
+
+
+
+
+
+
+          
         </AnimatePresence>
 
         {/* Dash nav */}

@@ -76,7 +76,7 @@ export default function Header() {
       'bg-[#0a0c0f]/95 backdrop-blur-xl border-b border-white/8 shadow-2xl shadow-black/50' :
       'bg-transparent'}`
       }>
-        <div className="max-w-7xl px-5 flex items-center justify-between lg:px-8 h-14">
+        <div className="px-5 flex items-center justify-between lg:px-8 h-14 max-w-7xl">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">

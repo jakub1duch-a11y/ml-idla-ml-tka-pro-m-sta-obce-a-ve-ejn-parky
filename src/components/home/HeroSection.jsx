@@ -223,7 +223,7 @@ export default function HeroSection() {
           {/* Stats */}
           <div className="grid grid-cols-4 gap-2 lg:w-auto ml-auto">
             {stats.map((s) =>
-            <div key={s.val} className="bg-white/8 backdrop-blur-sm border border-white/15 py-3 text-center rounded-2xl px-">
+            <div key={s.val} className="bg-white/8 backdrop-blur-sm border border-white/15 py-3 text-center rounded-2xl px-1">
                 <p className="font-heading font-light text-xl text-white leading-none mb-1">{s.val}</p>
                 <p className="text-[10px] text-white/50 leading-tight">{s.label}</p>
               </div>

@@ -87,34 +87,49 @@ export default function CategoriesSection() {
 
           {/* Right column: 3 smaller */}
           <div className="flex flex-col gap-4">
-            {categories.slice(1).map((cat, i) =>
-            <motion.div
-              key={cat.id}
-              initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}>
-              
-                <Link to={cat.link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
-                  {/* Image */}
-                  <div className="relative w-48 shrink-0 overflow-hidden">
-                    <img src={cat.image} alt={cat.label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  </div>
-                  {/* Text */}
-                  <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400 block mb-1">{cat.tag}</span>
-                        <h3 className="font-normal text-slate-900 text-base group-hover:text-slate-600 transition-colors leading-tight">{cat.label}</h3>
-                      </div>
-                      <span className="text-[10px] font-mono text-slate-400 shrink-0">{cat.count}</span>
+            {/* Mlhoviště & chladicí zóny */}
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0 * 0.08 }}>
+              <Link to={categories[1].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
+                <div className="relative w-48 shrink-0 overflow-hidden">
+                  <img src={categories[1].image} alt={categories[1].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400 block mb-1">{categories[1].tag}</span>
+                      <h3 className="font-normal text-slate-900 text-base group-hover:text-slate-600 transition-colors leading-tight">{categories[1].label}</h3>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs text-slate-400 italic">{cat.tagline}</p>
-                      <ArrowRight size={14} className="text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
-                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0">{categories[1].count}</span>
                   </div>
-                </Link>
-              </motion.div>
-            )}
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs text-slate-400 italic">{categories[1].tagline}</p>
+                    <ArrowRight size={14} className="text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Mlžné příslušenství a moduly */}
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 1 * 0.08 }}>
+              <Link to={categories[2].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
+                <div className="relative w-48 shrink-0 overflow-hidden">
+                  <img src={categories[2].image} alt={categories[2].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400 block mb-1">{categories[2].tag}</span>
+                      <h3 className="font-normal text-slate-900 text-base group-hover:text-slate-600 transition-colors leading-tight">{categories[2].label}</h3>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0">{categories[2].count}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs text-slate-400 italic">{categories[2].tagline}</p>
+                    <ArrowRight size={14} className="text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>

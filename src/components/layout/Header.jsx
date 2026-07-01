@@ -85,7 +85,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="hidden lg:flex items-center gap-1 justify-self-center">
+          <nav className="flex items-center gap-1 justify-self-center">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
@@ -101,14 +101,14 @@ export default function Header() {
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 justify-self-end">
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Link to="/o-nas" className="px-4 py-2 text-[13px] text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
               <Link to="/poptavka"
               className="flex items-center gap-1.5 px-5 py-2.5 bg-slate-900 text-white text-[13px] font-medium rounded-full hover:bg-slate-800 transition-all">
                 Poptávka
               </Link>
             </div>
-            <button onClick={toggleMobileMenu} className="lg:hidden text-slate-900 p-2">
+            <button onClick={toggleMobileMenu} className="hidden text-slate-900 p-2">
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
@@ -172,7 +172,7 @@ export default function Header() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="fixed inset-0 z-50 bg-white pt-20 overflow-y-auto lg:hidden">
+          className="fixed inset-0 z-50 bg-white pt-20 overflow-y-auto hidden">
           
             <div className="px-6 py-6 flex flex-col gap-1">
               <button onClick={() => setMobileCatalogOpen(!mobileCatalogOpen)}

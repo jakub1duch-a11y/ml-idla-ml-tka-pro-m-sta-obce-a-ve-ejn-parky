@@ -100,8 +100,8 @@ export default function KolekceHero() {
       <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
 
       {/* Content */}
-      <div className="absolute z-30 flex flex-col justify-end px-8 lg:px-16 pb-12 inset-0">
-        <div className="absolute bottom-12 left-0 mx-auto lg:px-0">
+      <div className="absolute z-30 flex flex-col justify-end pb-12 inset-0">
+        <div className="absolute bottom-12 left-0 right-0 px-6 lg:px-8 max-w-7xl mx-auto">
           <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
             Mlžítka<br /><span className="text-slate-400">a mlžiště.</span>
           </h1>

@@ -206,8 +206,8 @@ export default function ProduktDetail() {
     <div className="min-h-screen bg-white">
 
       {/* ═══════════════════════════════════════════════════════
-               1. FULLSCREEN HERO
-            ═══════════════════════════════════════════════════════ */}
+                1. FULLSCREEN HERO
+             ═══════════════════════════════════════════════════════ */}
       <div className="relative h-screen min-h-[600px] overflow-hidden">
         {img(0) ?
         <img src={img(0)} alt={product.name} className="w-full h-full object-cover" /> :
@@ -286,8 +286,8 @@ export default function ProduktDetail() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════
-               2. STICKY TABS NAV
-            ═══════════════════════════════════════════════════════ */}
+                2. STICKY TABS NAV
+             ═══════════════════════════════════════════════════════ */}
       <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {TABS.map((t) =>
@@ -614,13 +614,13 @@ export default function ProduktDetail() {
       </AnimatePresence>
 
       {/* ═══════════════════════════════════════════════════════
-               REVIEWS
-            ═══════════════════════════════════════════════════════ */}
+                REVIEWS
+             ═══════════════════════════════════════════════════════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════════════════════════════════════════════════════
-               INLINE CONTACT FORM
-            ═══════════════════════════════════════════════════════ */}
+                INLINE CONTACT FORM
+             ═══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -631,7 +631,7 @@ export default function ProduktDetail() {
               </h2>
               <p className="text-slate-400 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               <div className="space-y-3 text-sm text-slate-500 font-mono">
-                <a href="tel:+420800123456" className="flex items-center gap-2 hover:text-slate-900 transition-colors">+420 774  </a>
+                <a href="tel:+420800123456" className="flex items-center gap-2 hover:text-slate-900 transition-colors">+420 774700390 </a>
                 <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors">obchod1@holmtec.cz</a>
               </div>
             </motion.div>
@@ -643,8 +643,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-               RELATED + BACK
-            ═══════════════════════════════════════════════════════ */}
+                RELATED + BACK
+             ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 &&
       <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">

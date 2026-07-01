@@ -17,7 +17,7 @@ export default function Mlhoviste() {
   useEffect(() => { setSEO(SEO_PAGES.mlhoviste || SEO_PAGES.kolekce); }, []);
 
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen bg-white">
       <MlzisteHero />
 
       {/* Features */}
@@ -25,12 +25,12 @@ export default function Mlhoviste() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {features.map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="p-6 rounded-2xl bg-card_bg border border-white/10 hover:border-cyan/30 transition-all group">
-              <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4 group-hover:bg-cyan/20 transition-all border border-cyan/20">
-                <f.icon size={20} className="text-cyan" />
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all group">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-slate-900 transition-all">
+                <f.icon size={20} className="text-slate-700 group-hover:text-white transition-colors" />
               </div>
-              <h3 className="font-bold text-white mb-2">{f.title}</h3>
-              <p className="text-sm text-white/50">{f.desc}</p>
+              <h3 className="font-medium text-slate-900 mb-2">{f.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -40,12 +40,12 @@ export default function Mlhoviste() {
 
       {/* Videos */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
-        <h2 className="font-heading font-light text-3xl text-white mb-8">Mlžiště v provozu</h2>
+        <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-8">Mlžiště v provozu</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <video controls playsInline className="w-full aspect-video object-cover rounded-2xl bg-card_bg">
+          <video controls playsInline className="w-full aspect-video object-cover rounded-2xl bg-slate-100">
             <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
           </video>
-          <video controls playsInline className="w-full aspect-video object-cover rounded-2xl bg-card_bg">
+          <video controls playsInline className="w-full aspect-video object-cover rounded-2xl bg-slate-100">
             <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c7c9d3e68_video_20260619_164025.mp4" type="video/mp4" />
           </video>
         </div>
@@ -53,11 +53,11 @@ export default function Mlhoviste() {
 
       {/* CTA */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
-        <div className="p-12 rounded-2xl bg-gradient-to-r from-cyan/10 to-card_bg border border-cyan/20 text-center">
-          <h2 className="font-heading font-light text-3xl text-white mb-3">Navrhněme mlžiště pro váš prostor</h2>
-          <p className="text-white/50 mb-8">Konzultace zdarma. 3D vizualizace do 48 h. Montáž za jeden den.</p>
+        <div className="p-12 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+          <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-3">Navrhněme mlžiště pro váš prostor</h2>
+          <p className="text-slate-500 mb-8">Konzultace zdarma. 3D vizualizace do 48 h. Montáž za jeden den.</p>
           <Link to="/kontakt"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
+            className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
             Nezávazná poptávka <ArrowRight size={16} />
           </Link>
         </div>

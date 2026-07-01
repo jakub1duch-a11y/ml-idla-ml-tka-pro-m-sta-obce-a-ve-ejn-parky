@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, Loader, Tag } from 'lucide-react';
+import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 
@@ -71,15 +71,15 @@ export default function Blog() {
   const [featured, ...rest] = visible;
 
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-white pt-28">
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-14">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">Blog & Novinky</p>
-          <h1 className="font-heading font-extralight text-5xl lg:text-7xl text-white tracking-tight mb-4">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog & Novinky</p>
+          <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
             O mlžení do hloubky
           </h1>
-          <p className="text-white/50 max-w-xl text-lg">
+          <p className="text-slate-500 max-w-xl text-lg font-light">
             Technologie, inspirace, realizace a novinky ze světa mlžných soch a chladicích systémů.
           </p>
         </motion.div>
@@ -90,7 +90,7 @@ export default function Blog() {
         <div className="flex gap-2 flex-wrap">
           {FILTERS.map(f => (
             <button key={f.value} onClick={() => setFilter(f.value)}
-              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${filter === f.value ? 'bg-cyan text-ink' : 'text-white/40 border border-white/10 hover:border-white/30 hover:text-white/70'}`}>
+              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${filter === f.value ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
               {f.label}
             </button>
           ))}
@@ -99,15 +99,15 @@ export default function Blog() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         {loading ? (
-          <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div>
+          <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : visible.length === 0 ? (
-          <p className="text-center text-white/30 py-20 font-mono text-sm">Žádné články v této kategorii.</p>
+          <p className="text-center text-slate-400 py-20 font-mono text-sm">Žádné články v této kategorii.</p>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
             {/* Featured */}
             {featured && (
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-3">
-                <Link to={`/blog/${featured.slug || featured.id}`} className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg h-full">
+                <Link to={`/blog/${featured.slug || featured.id}`} className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
                   {featured.image_url && (
                     <div className="aspect-[16/9] overflow-hidden">
                       <img src={featured.image_url} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -115,12 +115,12 @@ export default function Blog() {
                   )}
                   <div className="p-8 flex flex-col">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-xs font-mono text-cyan tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
-                      {featured.published_date && <><span className="w-1 h-1 rounded-full bg-white/20" /><span className="text-xs font-mono text-white/30">{formatDate(featured.published_date)}</span></>}
+                      <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
+                      {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs font-mono text-slate-300">{formatDate(featured.published_date)}</span></>}
                     </div>
-                    <h2 className="font-heading font-light text-2xl text-white tracking-tight mb-3 leading-snug group-hover:text-cyan/90 transition-colors">{featured.title}</h2>
-                    <p className="text-sm text-white/50 font-light leading-relaxed">{featured.perex}</p>
-                    <div className="mt-6 flex items-center gap-2 text-xs text-cyan font-light group-hover:gap-3 transition-all">
+                    <h2 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
+                    <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
+                    <div className="mt-6 flex items-center gap-2 text-xs text-slate-900 font-medium group-hover:gap-3 transition-all">
                       Číst článek <ArrowRight size={12} />
                     </div>
                   </div>
@@ -133,7 +133,7 @@ export default function Blog() {
               <div className="lg:col-span-2 flex flex-col gap-5">
                 {rest.map((post, i) => (
                   <motion.div key={post.id} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                    <Link to={`/blog/${post.slug || post.id}`} className="group flex rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg h-full">
+                    <Link to={`/blog/${post.slug || post.id}`} className="group flex rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
                       {post.image_url && (
                         <div className="w-28 flex-shrink-0 overflow-hidden">
                           <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -142,11 +142,11 @@ export default function Blog() {
                       <div className="p-5 flex flex-col justify-between flex-1 min-w-0">
                         <div>
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="text-xs font-mono text-cyan tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
+                            <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
                           </div>
-                          <h3 className="font-light text-white text-sm leading-snug group-hover:text-cyan/90 transition-colors line-clamp-2">{post.title}</h3>
+                          <h3 className="font-light text-slate-900 text-sm leading-snug group-hover:text-slate-600 transition-colors line-clamp-2">{post.title}</h3>
                         </div>
-                        {post.published_date && <p className="text-xs font-mono text-white/30 mt-2">{formatDate(post.published_date)}</p>}
+                        {post.published_date && <p className="text-xs font-mono text-slate-300 mt-2">{formatDate(post.published_date)}</p>}
                       </div>
                     </Link>
                   </motion.div>
@@ -161,16 +161,16 @@ export default function Blog() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
             {visible.slice(4).map((post, i) => (
               <motion.div key={post.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
-                <Link to={`/blog/${post.slug || post.id}`} className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg h-full">
+                <Link to={`/blog/${post.slug || post.id}`} className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
                   {post.image_url && (
                     <div className="aspect-[4/3] overflow-hidden">
                       <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                   )}
                   <div className="p-6">
-                    <span className="text-xs font-mono text-cyan tracking-widest uppercase block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
-                    <h3 className="font-light text-white text-base leading-snug group-hover:text-cyan/90 transition-colors line-clamp-2 mb-2">{post.title}</h3>
-                    {post.published_date && <p className="text-xs font-mono text-white/30">{formatDate(post.published_date)}</p>}
+                    <span className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
+                    <h3 className="font-light text-slate-900 text-base leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2">{post.title}</h3>
+                    {post.published_date && <p className="text-xs font-mono text-slate-300">{formatDate(post.published_date)}</p>}
                   </div>
                 </Link>
               </motion.div>

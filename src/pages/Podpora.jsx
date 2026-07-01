@@ -10,9 +10,6 @@ const FAQ_SECTIONS = [
     id: 'instalace',
     icon: Package,
     title: 'Instalace',
-    color: 'text-cyan',
-    bg: 'bg-cyan/10',
-    border: 'border-cyan/20',
     items: [
       {
         q: 'Jak dlouho trvá instalace mlžítka?',
@@ -40,9 +37,6 @@ const FAQ_SECTIONS = [
     id: 'udrzba',
     icon: Wrench,
     title: 'Údržba a servis',
-    color: 'text-amber-400',
-    bg: 'bg-amber-400/10',
-    border: 'border-amber-400/20',
     items: [
       {
         q: 'Jak často je potřeba mlžítko servisovat?',
@@ -70,9 +64,6 @@ const FAQ_SECTIONS = [
     id: 'spotrebaVody',
     icon: Droplets,
     title: 'Spotřeba vody a provoz',
-    color: 'text-blue-400',
-    bg: 'bg-blue-400/10',
-    border: 'border-blue-400/20',
     items: [
       {
         q: 'Jaká je spotřeba vody mlžítka za hodinu?',
@@ -100,17 +91,17 @@ const FAQ_SECTIONS = [
 
 function FaqItem({ item, isOpen, onToggle }) {
   return (
-    <div className={`border border-white/10 rounded-xl overflow-hidden transition-colors ${isOpen ? 'bg-card_bg border-white/20' : 'bg-white/[0.02] hover:bg-white/[0.04]'}`}>
+    <div className={`border rounded-xl overflow-hidden transition-colors ${isOpen ? 'bg-white border-slate-300' : 'bg-slate-50 border-slate-200 hover:bg-slate-100/60'}`}>
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
       >
-        <span className={`text-sm font-medium leading-snug transition-colors ${isOpen ? 'text-white' : 'text-white/70'}`}>
+        <span className={`text-sm font-medium leading-snug transition-colors ${isOpen ? 'text-slate-900' : 'text-slate-600'}`}>
           {item.q}
         </span>
         <ChevronDown
           size={18}
-          className={`shrink-0 text-white/30 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan' : ''}`}
+          className={`shrink-0 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-slate-900' : ''}`}
         />
       </button>
       <AnimatePresence initial={false}>
@@ -121,7 +112,7 @@ function FaqItem({ item, isOpen, onToggle }) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
           >
-            <div className="px-6 pb-5 text-sm text-white/55 leading-relaxed font-light border-t border-white/8 pt-4">
+            <div className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-light border-t border-slate-200 pt-4">
               {item.a}
             </div>
           </motion.div>
@@ -152,16 +143,16 @@ export default function Podpora() {
   };
 
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-white pt-28">
 
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">PODPORA</p>
-          <h1 className="font-heading text-4xl lg:text-6xl text-white tracking-tight mb-4" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Podpora</p>
+          <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4" style={{ letterSpacing: '-0.03em' }}>
             Nejčastější dotazy
           </h1>
-          <p className="text-white/50 max-w-xl leading-relaxed">
+          <p className="text-slate-500 max-w-xl leading-relaxed font-light">
             Odpovědi na nejčastější otázky ohledně instalace, údržby a provozu mlžných systémů HolmTec. Nenašli jste odpověď? Kontaktujte nás.
           </p>
         </motion.div>
@@ -172,7 +163,7 @@ export default function Podpora() {
             <a
               key={s.id}
               href={`#${s.id}`}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-mono tracking-widest uppercase transition-all hover:bg-white/5 ${s.border} ${s.color}`}
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 text-xs font-mono tracking-widest uppercase text-slate-600 transition-all hover:bg-slate-50 hover:border-slate-300"
             >
               <s.icon size={13} />
               {s.title}
@@ -194,12 +185,12 @@ export default function Podpora() {
           >
             {/* Section header */}
             <div className="flex items-center gap-4 mb-6">
-              <div className={`w-11 h-11 rounded-xl ${section.bg} border ${section.border} flex items-center justify-center`}>
-                <section.icon size={20} className={section.color} />
+              <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center">
+                <section.icon size={20} className="text-slate-700" />
               </div>
               <div>
-                <h2 className="text-white text-xl" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>{section.title}</h2>
-                <p className="text-xs font-mono text-white/30 mt-0.5">{section.items.length} otázek</p>
+                <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight">{section.title}</h2>
+                <p className="text-xs font-mono text-slate-400 mt-0.5">{section.items.length} otázek</p>
               </div>
             </div>
 
@@ -224,23 +215,23 @@ export default function Podpora() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="p-10 rounded-2xl bg-cyan/5 border border-cyan/20 flex flex-col lg:flex-row items-center justify-between gap-8"
+          className="p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-8"
         >
           <div>
-            <h3 className="text-white text-xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Nenašli jste odpověď?</h3>
-            <p className="text-white/50 text-sm leading-relaxed mb-4">Obraťte se přímo na náš tým — rádi zodpovíme jakýkoliv dotaz.</p>
-            <div className="flex flex-col sm:flex-row gap-4 text-sm font-mono text-white/50">
-              <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-cyan transition-colors">
-                <Phone size={13} className="text-cyan" /> +420 774 700 390
+            <h3 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2">Nenašli jste odpověď?</h3>
+            <p className="text-slate-500 text-sm leading-relaxed mb-4">Obraťte se přímo na náš tým — rádi zodpovíme jakýkoliv dotaz.</p>
+            <div className="flex flex-col sm:flex-row gap-4 text-sm font-mono text-slate-500">
+              <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                <Phone size={13} /> +420 774 700 390
               </a>
-              <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-cyan transition-colors">
-                <Mail size={13} className="text-cyan" /> obchod1@holmtec.cz
+              <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                <Mail size={13} /> obchod1@holmtec.cz
               </a>
             </div>
           </div>
           <Link
             to="/poptavka"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25 whitespace-nowrap"
+            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap"
           >
             Nezávazná poptávka <ArrowRight size={15} />
           </Link>

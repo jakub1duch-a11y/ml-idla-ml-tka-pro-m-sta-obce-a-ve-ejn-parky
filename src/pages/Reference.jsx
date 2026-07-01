@@ -61,7 +61,7 @@ function Lightbox({ images, initialIndex, onClose }) {
   const next = () => setIdx(i => (i + 1) % images.length);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-ink/96 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
+    <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
       <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all z-10">
         <X size={18} />
       </button>
@@ -69,13 +69,13 @@ function Lightbox({ images, initialIndex, onClose }) {
         <img src={images[idx]} alt="" className="w-full max-h-[80vh] object-contain rounded-2xl" />
         {images.length > 1 && (
           <>
-            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all">
+            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-all">
               <ChevronLeft size={18} />
             </button>
-            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-ink/70 border border-white/20 flex items-center justify-center text-white hover:bg-ink transition-all">
+            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center text-white hover:bg-black/70 transition-all">
               <ChevronRight size={18} />
             </button>
-            <p className="text-center text-xs font-mono text-white/40 mt-3 tracking-widest">{idx + 1} / {images.length}</p>
+            <p className="text-center text-xs font-mono text-white/60 mt-3 tracking-widest">{idx + 1} / {images.length}</p>
           </>
         )}
       </div>
@@ -91,29 +91,29 @@ function ProjectCard({ project, onOpen }) {
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg"
+      className="group rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white"
     >
       {/* Thumbnail */}
       <div
-        className="relative aspect-[4/3] overflow-hidden bg-white/5 cursor-pointer"
+        className="relative aspect-[4/3] overflow-hidden bg-slate-100 cursor-pointer"
         onClick={() => allImages.length > 0 && onOpen(allImages, 0)}
       >
         {project.image_url ? (
           <img src={project.image_url} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-white/10 text-4xl">📷</div>
+          <div className="w-full h-full flex items-center justify-center text-slate-300 text-4xl">📷</div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
           {project.category && (
-            <span className="px-2.5 py-1 bg-ink/70 backdrop-blur-sm border border-white/10 rounded-full text-[10px] font-mono text-white/60 tracking-widest uppercase">
+            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-mono text-slate-700 tracking-widest uppercase">
               {CATEGORY_LABELS[project.category] || project.category}
             </span>
           )}
           {project.year && (
-            <span className="px-2.5 py-1 bg-cyan/20 backdrop-blur-sm border border-cyan/20 rounded-full text-[10px] font-mono text-cyan tracking-widest uppercase">
+            <span className="px-2.5 py-1 bg-slate-900/85 backdrop-blur-sm rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
               {project.year}
             </span>
           )}
@@ -121,7 +121,7 @@ function ProjectCard({ project, onOpen }) {
 
         {/* Gallery indicator */}
         {allImages.length > 1 && (
-          <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-ink/70 backdrop-blur-sm border border-white/10 rounded-full text-[10px] font-mono text-white/50">
+          <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-black/50 backdrop-blur-sm rounded-full text-[10px] font-mono text-white/80">
             <ZoomIn size={10} /> {allImages.length} fotek
           </div>
         )}
@@ -130,21 +130,21 @@ function ProjectCard({ project, onOpen }) {
       {/* Content */}
       <div className="p-6">
         {project.location && (
-          <div className="flex items-center gap-1.5 text-white/30 text-xs font-mono mb-3">
+          <div className="flex items-center gap-1.5 text-slate-400 text-xs font-mono mb-3">
             <MapPin size={11} /> {project.location}
           </div>
         )}
-        <h3 className="font-heading font-light text-lg text-white tracking-tight mb-2 leading-snug group-hover:text-cyan/90 transition-colors">
+        <h3 className="font-heading font-light text-lg text-slate-900 tracking-tight mb-2 leading-snug group-hover:text-slate-600 transition-colors">
           {project.name}
         </h3>
         {project.description && (
-          <p className="text-sm text-white/45 leading-relaxed line-clamp-3 font-light">{project.description}</p>
+          <p className="text-sm text-slate-500 leading-relaxed line-clamp-3 font-light">{project.description}</p>
         )}
-        <div className="mt-4 pt-4 border-t border-white/8 flex items-center justify-between">
+        <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
           {project.product_used && (
-            <span className="text-[10px] font-mono text-cyan/60 tracking-widest uppercase">Produkt: {project.product_used}</span>
+            <span className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">Produkt: {project.product_used}</span>
           )}
-          <Link to={`/reference/${project.id}`} className="flex items-center gap-1.5 text-xs font-bold text-cyan hover:text-white transition-colors font-mono ml-auto border border-cyan/30 hover:border-cyan px-3 py-1.5 rounded-full hover:bg-cyan/10">
+          <Link to={`/reference/${project.id}`} className="flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors font-mono ml-auto border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-full hover:bg-slate-50">
             Detail <ArrowRight size={11} />
           </Link>
         </div>
@@ -181,15 +181,15 @@ export default function Reference() {
   const visible = filter === 'all' ? projects : projects.filter(p => p.category === filter);
 
   return (
-    <div className="min-h-screen bg-ink pt-28">
+    <div className="min-h-screen bg-white pt-28">
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-4">Reference</p>
-          <h1 className="font-heading font-extralight text-5xl lg:text-7xl text-white tracking-tight mb-4">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Reference</p>
+          <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
             Realizované projekty
           </h1>
-          <p className="text-white/50 max-w-xl text-lg">
+          <p className="text-slate-500 max-w-xl text-lg font-light">
             Více než 120 instalací mlžných soch a chladicích systémů po celé České republice i zahraničí.
           </p>
         </motion.div>
@@ -200,7 +200,7 @@ export default function Reference() {
         <div className="flex gap-2 flex-wrap">
           {FILTERS.map(f => (
             <button key={f.value} onClick={() => setFilter(f.value)}
-              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${filter === f.value ? 'bg-cyan text-ink' : 'text-white/40 border border-white/10 hover:border-white/30 hover:text-white/70'}`}>
+              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${filter === f.value ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
               {f.label}
             </button>
           ))}
@@ -211,10 +211,10 @@ export default function Reference() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         {loading ? (
           <div className="flex justify-center py-20">
-            <Loader size={24} className="animate-spin text-cyan/40" />
+            <Loader size={24} className="animate-spin text-slate-300" />
           </div>
         ) : visible.length === 0 ? (
-          <div className="py-20 text-center text-white/30 text-sm font-mono">Žádné projekty v této kategorii.</div>
+          <div className="py-20 text-center text-slate-400 text-sm font-mono">Žádné projekty v této kategorii.</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {visible.map(project => (
@@ -225,13 +225,13 @@ export default function Reference() {
       </div>
 
       {/* CTA */}
-      <div className="py-20 bg-surface">
+      <div className="py-20 bg-slate-50 border-t border-slate-200">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="font-heading font-light text-3xl text-white mb-4">Chcete váš projekt zde?</h2>
-          <p className="text-white/50 mb-8">Konzultace zdarma, 3D vizualizace do 48 h, montáž za jeden den.</p>
+          <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-4">Chcete váš projekt zde?</h2>
+          <p className="text-slate-500 mb-8">Konzultace zdarma, 3D vizualizace do 48 h, montáž za jeden den.</p>
           <Link to="/kontakt"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-xl shadow-cyan/30">
-            ✦ Nezávazná poptávka
+            className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+            Nezávazná poptávka <ArrowRight size={16} />
           </Link>
         </div>
       </div>

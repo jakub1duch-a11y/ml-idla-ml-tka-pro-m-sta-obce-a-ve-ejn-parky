@@ -446,6 +446,78 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
+          6.5 INSTALLATION OPTIONS — Možnosti kotvení
+      ═══════════════════════════════════════════════════════ */}
+      <section className="bg-white border-b border-slate-200 py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Možnosti kotvení</p>
+            <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
+              Flexibilní instalace<br /><span className="text-slate-400">pro každý projekt.</span>
+            </h2>
+            <p className="text-slate-500 text-base font-light max-w-2xl">Volte mezi mobilní variantou pro dočasné instalace nebo stálým kotvením do betonu pro permanentní řešení.</p>
+          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+            {/* Zemní vrut — mobilní */}
+            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
+              <div className="mb-6">
+                <span className="inline-block px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono tracking-widest uppercase rounded-full">Mobilní</span>
+              </div>
+              <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut</h3>
+              <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">Spirálový vrut z nerezové oceli pro rychlou instalaci bez speciálního vybavení. Ideální pro pronájem, festivaly a dočasné instalace.</p>
+              <div className="space-y-3 mb-8 text-sm text-slate-600 font-light">
+                <div className="flex items-start gap-3">
+                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                  <span>Instalace za 15–30 minut</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                  <span>Žádné vrtání ani betony</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                  <span>Snadné přemístění na nový spot</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                  <span>Bez poškozování půdy</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 font-mono">Vhodné pro: eventy, pronájem, terasy, mobilní expozice</p>
+            </motion.div>
+
+            {/* Kotvící patka — stálá instalace */}
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all">
+              <div className="mb-6">
+                <span className="inline-block px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono tracking-widest uppercase rounded-full">Stálá instalace</span>
+              </div>
+              <h3 className="text-2xl font-light text-slate-900 mb-3">Kotvící patka do betonu</h3>
+              <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">Pevná kovová patka s čtyřmi kotvícími závity pro permanentní instalaci. Určena pro veřejné prostory, náměstí a dlouhodobé projekty.</p>
+              <div className="space-y-3 mb-8 text-sm text-slate-600 font-light">
+                <div className="flex items-start gap-3">
+                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
+                  <span>Maximální stabilita a bezpečnost</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
+                  <span>Vhodná pro vysoké větrné zatížení</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
+                  <span>Profesionální vzhled bez viditelného kotvení</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-blue-600 font-bold mt-0.5">✓</span>
+                  <span>Dlouhodobá ochrana proti korozi</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 font-mono">Vhodné pro: náměstí, parky, restaurace, hotely, permanentní instalace</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
           7. VIDEO SECTION
       ═══════════════════════════════════════════════════════ */}
       <section id="videa" className="bg-slate-50 border-y border-slate-200 py-20">

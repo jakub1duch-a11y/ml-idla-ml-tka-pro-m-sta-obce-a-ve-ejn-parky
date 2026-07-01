@@ -1,0 +1,46 @@
+{
+  "name": "PortalOtp",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Email adresa, pro kterou byl k\u00f3d vygenerov\u00e1n"
+    },
+    "otp_code": {
+      "type": "string",
+      "description": "6m\u00edstn\u00fd ov\u011b\u0159ovac\u00ed k\u00f3d"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Kdy k\u00f3d vypr\u0161\u00ed"
+    }
+  },
+  "required": [
+    "email",
+    "otp_code",
+    "expires_at"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

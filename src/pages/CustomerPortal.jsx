@@ -62,43 +62,14 @@ export default function CustomerPortal() {
     setLoading(true);
     setError('');
     try {
-      // Check if email exists in system
-      const inqs = await base44.entities.ContactInquiry.filter({ email });
-      const projs = await base44.entities.ProjectOrder.filter({ client_email: email });
-      
-      if (inqs.length === 0 && projs.length === 0) {
-        setError('Žádné poptávky ani projekty nenalezeny pro tento email.');
-        return;
-      }
-
-      // Send OTP via email using backend function
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-      sessionStorage.setItem('pending_otp', otpCode);
-      sessionStorage.setItem('pending_email', email);
-      sessionStorage.setItem('otp_expires', Date.now() + 10 * 60 * 1000); // 10 min
-
-      await base44.integrations.Core.SendEmail({
-        to: email,
-        subject: 'Ověřovací kód - HolmTec Můj Projekt',
-        body: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#e2e8f0;padding:32px;border-radius:12px;">
-            <h1 style="color:#22d3ee;font-size:22px;margin:0;">Ověřovací kód</h1>
-            <p style="color:#64748b;font-size:13px;margin:6px 0 24px;">HolmTec — Můj Projekt</p>
-            <p style="line-height:1.7;">Váš ověřovací kód pro přístup k projektům:</p>
-            <div style="margin:24px 0;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;text-align:center;">
-              <p style="font-size:32px;font-weight:bold;letter-spacing:4px;color:#22d3ee;margin:0;">${otpCode}</p>
-            </div>
-            <p style="line-height:1.7;color:#cbd5e1;">Kód platí 10 minut. Nezadávejte jej nikomu jinému.</p>
-            <p style="margin-top:24px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">
-              HolmTec s.r.o. | Mlžné sochy & instalace | holmtec.cz
-            </p>
-          </div>
-        `,
-      });
-
+      await base44.functions.invoke('requestPortalOtp', { email });
       setOtpSent(true);
     } catch (e) {
-      setError('Chyba při odesílání kódu. Zkuste to znovu.');
+      if (e?.response?.status === 404) {
+        setError('Žádné poptávky ani projekty nenalezeny pro tento email.');
+      } else {
+        setError('Chyba při odesílání kódu. Zkuste to znovu.');
+      }
     } finally {
       setLoading(false);
     }
@@ -109,31 +80,13 @@ export default function CustomerPortal() {
     setLoading(true);
     setError('');
     try {
-      const storedOtp = sessionStorage.getItem('pending_otp');
-      const storedEmail = sessionStorage.getItem('pending_email');
-      const expires = sessionStorage.getItem('otp_expires');
-
-      if (!storedOtp || !storedEmail || Date.now() > parseInt(expires)) {
-        setError('Kód vypršel. Zkuste to znovu.');
-        setOtpSent(false);
-        return;
-      }
-
-      if (otp !== storedOtp) {
-        setError('Nesprávný ověřovací kód.');
-        return;
-      }
-
-      // OTP verified - load data
-      setEmail(storedEmail);
-      sessionStorage.removeItem('pending_otp');
-      sessionStorage.removeItem('pending_email');
-      sessionStorage.removeItem('otp_expires');
-      
-      await loadData(storedEmail);
+      const res = await base44.functions.invoke('verifyPortalOtp', { email, otp });
+      const { inquiries, projects } = res.data;
+      setInquiries(inquiries || []);
+      setProjects(projects || []);
       setStep('dashboard');
     } catch (e) {
-      setError('Chyba při ověřování. Zkuste to znovu.');
+      setError('Nesprávný nebo vypršelý ověřovací kód.');
     } finally {
       setLoading(false);
     }

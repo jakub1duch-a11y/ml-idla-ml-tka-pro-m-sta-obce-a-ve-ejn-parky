@@ -6,6 +6,15 @@ const RECIPIENTS = [
   'jakub1duch@gmail.com',
 ];
 
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function encodeRFC2047(str) {
   const encoded = btoa(unescape(encodeURIComponent(str)));
   return `=?UTF-8?B?${encoded}?=`;
@@ -41,9 +50,10 @@ Deno.serve(async (req) => {
     }
 
     // Only send email to the address provided in the inquiry (not arbitrary addresses)
-    const name = data.name || 'Neznámý';
-    const email = data.email || '—';
-    const message = data.message || '—';
+    const name = escapeHtml(data.name || 'Neznámý');
+    const email = escapeHtml(data.email || '—');
+    const message = escapeHtml(data.message || '—');
+    const rawEmail = data.email || '';
     const createdAt = new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' });
 
     const subject = `Nová poptávka HolmTec — ${name}`;
@@ -55,14 +65,14 @@ Deno.serve(async (req) => {
   </div>
   <table style="width:100%;border-collapse:collapse;">
     <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;width:100px;">Jméno</td><td style="padding:8px 0;font-weight:600;">${name}</td></tr>
-    <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Email</td><td style="padding:8px 0;"><a href="mailto:${email}" style="color:#22d3ee;">${email}</a></td></tr>
+    <tr><td style="padding:8px 0;color:#94a3b8;font-size:13px;">Email</td><td style="padding:8px 0;"><a href="mailto:${encodeURIComponent(rawEmail)}" style="color:#22d3ee;">${email}</a></td></tr>
   </table>
   <div style="margin-top:20px;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;">
     <p style="color:#64748b;font-size:11px;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px;">Zpráva</p>
     <p style="margin:0;line-height:1.7;">${message.replace(/\n/g, '<br>')}</p>
   </div>
   <div style="margin-top:24px;">
-    <a href="mailto:${email}?subject=Re: Poptávka mlžného systému Mlzidla.cz" style="display:inline-block;background:#22d3ee;color:#0d1117;padding:12px 24px;border-radius:99px;text-decoration:none;font-weight:700;font-size:14px;">Odpovědět zájemci</a>
+    <a href="mailto:${encodeURIComponent(rawEmail)}?subject=Re: Poptávka mlžného systému Mlzidla.cz" style="display:inline-block;background:#22d3ee;color:#0d1117;padding:12px 24px;border-radius:99px;text-decoration:none;font-weight:700;font-size:14px;">Odpovědět zájemci</a>
   </div>
 </div>`;
 
@@ -101,7 +111,7 @@ Deno.serve(async (req) => {
   </div>
 </div>`;
 
-    const clientResult = await sendEmail(email, clientSubject, clientBody);
+    const clientResult = rawEmail ? await sendEmail(rawEmail, clientSubject, clientBody) : { skipped: true };
 
     return Response.json({ ok: true, teamResults, clientResult });
   } catch (error) {

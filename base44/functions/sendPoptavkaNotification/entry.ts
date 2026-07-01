@@ -6,6 +6,21 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const { jmeno, email, telefon, firma, produkt, zprava } = body;
 
+    if (!jmeno || !email || !zprava) {
+      return Response.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    // Validate this notification corresponds to a real inquiry that was actually submitted
+    // via the public form (prevents blind spam calls directly to this function).
+    const recentMatches = await base44.asServiceRole.entities.Poptavka.filter({ email }, '-created_date', 5);
+    const matchesRecent = (recentMatches || []).some((r) => {
+      const ageMs = Date.now() - new Date(r.created_date).getTime();
+      return r.jmeno === jmeno && r.zprava === zprava && ageMs >= 0 && ageMs < 10 * 60 * 1000;
+    });
+    if (!matchesRecent) {
+      return Response.json({ error: 'No matching inquiry found' }, { status: 403 });
+    }
+
     const rows = [
       ['Jméno', jmeno || '—'],
       ['Email', email || '—'],

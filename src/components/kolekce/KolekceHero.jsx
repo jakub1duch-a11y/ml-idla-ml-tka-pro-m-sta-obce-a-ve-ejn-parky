@@ -81,7 +81,7 @@ export default function KolekceHero() {
   const slide = SLIDES[current];
 
   return (
-    <div className="relative w-full h-[70vh] min-h-[480px] overflow-hidden bg-slate-900">
+    <div className="relative w-full overflow-hidden bg-slate-900 h-[70vh] min-h-[480px]">
       {/* Slides */}
       {SLIDES.map((s, i) =>
       <div

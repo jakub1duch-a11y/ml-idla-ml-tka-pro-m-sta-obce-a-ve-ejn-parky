@@ -205,7 +205,7 @@ export default function HeroSection() {
         </AnimatePresence>
 
         {/* Bottom row: nav arrows + stats */}
-        <div className="flex mt-5 items-end gap-">
+        <div className="flex mt-5 items-end gap-5">
 
           {/* Prev/Next */}
           

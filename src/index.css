@@ -87,3 +87,22 @@
 .btn-poptavka:hover svg {
   transform: translateX(4px);
 }
+
+.btn-pulse {
+  background: #00bcd4;
+  color: #fff;
+  border: 2px solid #00bcd4;
+  border-radius: 30px;
+  animation: border-glow 2s infinite;
+}
+@keyframes border-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 188, 212, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 188, 212, 0);
+  }
+}

@@ -40,7 +40,7 @@ export default function ContactSection() {
 
         <div className="flex flex-wrap justify-center gap-4">
           <Link to="/kontakt"
-          className="btn-poptavka px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800">
+          className="btn-pulse inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold">
             Nezávazná poptávka <ArrowRight size={16} />
           </Link>
           <Link to="/jak-to-funguje"

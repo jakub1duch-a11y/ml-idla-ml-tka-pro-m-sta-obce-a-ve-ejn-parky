@@ -130,7 +130,7 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative h-full flex flex-col justify-end">
-        <div className="max-w-7xl mx-auto px-6 w-full lg:px-8 pb-3">
+        <div className="max-w-7xl mx-auto px-6 w-full lg:px-8 pb-7">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div key={current} custom={direction} variants={textVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.5, ease: 'easeOut' }}
             className="max-w-2xl">

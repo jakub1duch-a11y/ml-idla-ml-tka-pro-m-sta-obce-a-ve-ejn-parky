@@ -33,14 +33,14 @@ function setJsonLd(data) {
   el.textContent = JSON.stringify(data);
 }
 
-export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo }) {
+export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const img = image || DEFAULT_IMAGE;
 
   document.title = fullTitle;
   setMeta('description', description);
   if (keywords) setMeta('keywords', keywords);
-  setMeta('robots', 'index, follow');
+  setMeta('robots', robots || 'index, follow');
 
   // Open Graph
   setOg('og:title', fullTitle);

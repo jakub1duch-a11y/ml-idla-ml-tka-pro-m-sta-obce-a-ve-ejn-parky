@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { CheckCircle, Clock, AlertCircle, Share2, Download, Loader, FileText, Calendar, MapPin } from 'lucide-react';
+import { setSEO } from '@/lib/seo';
 
 const STATUS_MAP = {
   draft: { label: 'Koncept nabídky', color: 'from-slate-500/20 to-slate-500/5', icon: '📝', desc: 'Nabídka se připravuje' },
@@ -24,6 +25,10 @@ export default function ProjectStatus() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setSEO({ title: 'Stav projektu', description: 'Sledování stavu vašeho projektu HolmTec.', robots: 'noindex, nofollow' });
+  }, []);
 
   useEffect(() => {
     setLoading(true);

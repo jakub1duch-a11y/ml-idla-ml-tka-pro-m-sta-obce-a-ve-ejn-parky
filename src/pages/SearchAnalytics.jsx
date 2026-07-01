@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { TrendingUp, Search, MousePointer, Eye, ArrowUpDown } from 'lucide-react';
+import { setSEO } from '@/lib/seo';
 
 const PERIOD_OPTIONS = [
   { label: '7 dní', value: 7 },
@@ -43,6 +44,10 @@ export default function SearchAnalytics() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setSEO({ title: 'Analýza vyhledávání', robots: 'noindex, nofollow' });
+  }, []);
 
   useEffect(() => { fetchData(days); }, [days]);
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Mail, Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
+import { setSEO } from '@/lib/seo';
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-500/10 text-slate-400', icon: '📝' },
@@ -25,6 +26,10 @@ export default function CustomerPortal() {
   const [projects, setProjects] = useState([]);
   const [approving, setApproving] = useState(null);
   const [shareUrl, setShareUrl] = useState(null);
+
+  useEffect(() => {
+    setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
+  }, []);
 
   // Check if already verified via token link
   useEffect(() => {

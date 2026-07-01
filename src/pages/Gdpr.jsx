@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, ChevronDown } from 'lucide-react';
+import { setSEO } from '@/lib/seo';
 
 const SECTIONS = [
   {
@@ -130,6 +131,13 @@ function GdprSection({ section }) {
 }
 
 export default function Gdpr() {
+  useEffect(() => {
+    setSEO({
+      title: 'GDPR a zásady ochrany osobních údajů',
+      description: 'Zásady ochrany osobních údajů HolmTec s.r.o. — jaké údaje zpracováváme, k jakému účelu a jaká máte práva dle nařízení GDPR.',
+      canonicalPath: '/gdpr',
+    });
+  }, []);
   return (
     <div className="min-h-screen bg-ink pt-28">
 

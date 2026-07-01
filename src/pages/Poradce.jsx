@@ -5,6 +5,7 @@ import { Send, ArrowRight, Droplets, Loader, Calculator } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ReactMarkdown from 'react-markdown';
 import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
+import { setSEO } from '@/lib/seo';
 
 const SUGGESTED_QUESTIONS = [
   'Hledám ochlazení pro veřejný park',
@@ -29,6 +30,14 @@ export default function Poradce() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    setSEO({
+      title: 'AI Poradce — Vyberte si ideální mlžný systém',
+      description: 'Popište svůj prostor a potřeby a náš AI poradce vám doporučí vhodný mlžný systém či mlžnou sochu HolmTec. Zdarma, konzultace ihned.',
+      canonicalPath: '/poradce',
+    });
+  }, []);
 
   const startConversation = async (firstMessage) => {
     setStarting(true);

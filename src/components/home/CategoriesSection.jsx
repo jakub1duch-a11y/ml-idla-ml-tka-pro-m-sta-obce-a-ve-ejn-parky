@@ -124,7 +124,7 @@ export default function CategoriesSection() {
                     
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-slate-400 italic text-base">{categories[2].tagline}</p>
+                    <p className="text-slate-400 text-sm no-underline not-italic">{categories[2].tagline}</p>
                     <ArrowRight size={14} className="text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>

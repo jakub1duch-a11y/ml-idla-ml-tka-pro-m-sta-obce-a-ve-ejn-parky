@@ -125,7 +125,7 @@ export default function Header() {
                 {/* Top: 3 columns */}
                 <div className="grid grid-cols-3 gap-8 pb-8 border-b border-slate-100">
                   {MEGA_COLUMNS.map((col) =>
-                <Link key={col.heading} to={col.path} className="group block">
+                <Link key={col.heading} to={col.path} className="group block" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center gap-2 mb-4">
                         <col.icon size={13} className="text-slate-500" />
                         <p className="font-heading text-[15px] text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{col.heading}</p>
@@ -143,7 +143,7 @@ export default function Header() {
                   <p className="text-[11px] font-light text-slate-500 tracking-[0.2em] uppercase mb-4">Mlžítka podle využití</p>
                   <div className="grid grid-cols-6 gap-2">
                     {USAGE_LINKS.map((link) =>
-                  <Link key={link.label} to={link.path}
+                  <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col items-start gap-2 px-3 py-3 rounded-xl hover:bg-white/50 transition-colors border border-transparent hover:border-white/40">
                         <link.icon size={18} className={`${link.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
                         <div>
@@ -175,28 +175,27 @@ export default function Header() {
                 Katalog <ChevronDown size={14} className={`transition-transform ${mobileCatalogOpen ? 'rotate-180' : ''}`} />
               </button>
               {mobileCatalogOpen &&
-            <div className="pl-4 flex flex-col gap-1 py-3 border-b border-slate-100">
-                  <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-1 mb-2">Modely</p>
-                  <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžné sochy & brány</Link>
-                  <Link to="/mlhoviste" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžiště</Link>
-                  <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Smart moduly</Link>
-                  <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-3 mb-2">Podle využití</p>
-                  {USAGE_LINKS.map((l) =>
-              <Link key={l.path} to={l.path} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">{l.label}</Link>
+              <div className="pl-4 flex flex-col gap-1 py-3 border-b border-slate-100">
+                 <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-1 mb-2">Modely</p>
+                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Mlžné sochy & brány</Link>
+                 <Link to="/prislusenstvi" onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Příslušenství</Link>
+                 <Link to="/jak-to-funguje" onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">Smart moduly</Link>
+                 <p className="text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-3 mb-2">Podle využití</p>
+                 {USAGE_LINKS.map((l) =>
+              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-sm text-slate-500 hover:text-slate-900 py-1.5">{l.label}</Link>
               )}
-                </div>
-            }
+               </div>
+              }
               {[
-            { label: 'Mlžiště', path: '/mlhoviste' },
             { label: 'Reference', path: '/reference' },
             { label: 'Blog & novinky', path: '/blog' },
             { label: 'Podpora', path: '/podpora' },
             { label: 'O nás', path: '/o-nas' },
             { label: 'Kontakt', path: '/kontakt' }].
             map((l) =>
-            <Link key={l.path} to={l.path} className="text-sm text-slate-700 hover:text-slate-900 transition-colors py-3 border-b border-slate-100">{l.label}</Link>
+            <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-sm text-slate-700 hover:text-slate-900 transition-colors py-3 border-b border-slate-100">{l.label}</Link>
             )}
-              <Link to="/poptavka" className="mt-4 px-6 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full text-center">
+              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="mt-4 px-6 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full text-center">
                 Poptávka
               </Link>
             </div>

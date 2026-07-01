@@ -206,8 +206,8 @@ export default function ProduktDetail() {
     <div className="min-h-screen bg-white">
 
       {/* ═══════════════════════════════════════════════════════
-                   1. FULLSCREEN HERO
-                ═══════════════════════════════════════════════════════ */}
+                    1. FULLSCREEN HERO
+                 ═══════════════════════════════════════════════════════ */}
       <div className="relative h-screen min-h-[600px] overflow-hidden">
         {img(0) ?
         <img src={img(0)} alt={product.name} className="w-full h-full object-cover" /> :
@@ -215,7 +215,7 @@ export default function ProduktDetail() {
         <div className="w-full h-full bg-slate-100" />
         }
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-white via-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-r to-white from-black/50 via-black/" />
 
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
@@ -286,8 +286,8 @@ export default function ProduktDetail() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════
-                   2. STICKY TABS NAV
-                ═══════════════════════════════════════════════════════ */}
+                    2. STICKY TABS NAV
+                 ═══════════════════════════════════════════════════════ */}
       <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {TABS.map((t) =>
@@ -614,13 +614,13 @@ export default function ProduktDetail() {
       </AnimatePresence>
 
       {/* ═══════════════════════════════════════════════════════
-                   REVIEWS
-                ═══════════════════════════════════════════════════════ */}
+                    REVIEWS
+                 ═══════════════════════════════════════════════════════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════════════════════════════════════════════════════
-                   INLINE CONTACT FORM
-                ═══════════════════════════════════════════════════════ */}
+                    INLINE CONTACT FORM
+                 ═══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -643,8 +643,8 @@ export default function ProduktDetail() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-                   RELATED + BACK
-                ═══════════════════════════════════════════════════════ */}
+                    RELATED + BACK
+                 ═══════════════════════════════════════════════════════ */}
       {relatedProducts.length > 0 &&
       <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">

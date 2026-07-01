@@ -19,9 +19,10 @@ export default function SmartSection() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono text-slate-600 tracking-widest uppercase mb-6">
               Smart ovládání
             </div>
-            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6">
+            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+              className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6">
               Mlžení z mobilu.<br /><span className="italic">Kdykoli. Odkudkoli.</span>
-            </h2>
+            </motion.h2>
             <p className="text-slate-500 text-lg leading-relaxed mb-8">
               Aplikace HolmTec zobrazuje teplotu, vlhkost, spotřebu vody a stav systému v reálném čase. Automatické plány, scény, skupinové ovládání.
             </p>

@@ -24,9 +24,10 @@ export default function PromoSection() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono text-slate-600 tracking-widest uppercase mb-4">
             ☀️ Limitovaná nabídka · Léto 2026
           </div>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-3">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-3">
             Slevové kódy<br /><span className="italic">+ soutěž o sochu</span>
-          </h2>
+          </motion.h2>
           <p className="text-slate-500 max-w-xl">
             Tři exkluzivní slevy až 15 %, soutěž o mlžnou sochu a výzva pro Instagram. Platí do 31. 8. 2026.
           </p>

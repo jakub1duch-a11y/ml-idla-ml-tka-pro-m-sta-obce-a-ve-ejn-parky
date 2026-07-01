@@ -33,9 +33,10 @@ export default function ProductsSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Naše produkty</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
             Co umíme vytvořit
-          </h2>
+          </motion.h2>
           <p className="mt-3 text-slate-500 max-w-lg">
             Od zahradní skulptury po průmyslovou mlžnou bránu — každý produkt je navržen jako dílo.
           </p>

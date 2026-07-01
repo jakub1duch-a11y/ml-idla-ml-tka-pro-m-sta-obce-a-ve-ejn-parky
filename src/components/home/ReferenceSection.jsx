@@ -174,9 +174,10 @@ export default function ReferenceSection() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Reference</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-            <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+              className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
               Kde naše sochy stojí
-            </h2>
+            </motion.h2>
             <Link to="/reference" className="inline-flex items-center gap-2 text-sm text-slate-900 font-light hover:gap-3 transition-all">
               Všechny reference <ArrowRight size={14} />
             </Link>

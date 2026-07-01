@@ -15,9 +15,10 @@ export default function TechSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Jak to funguje</p>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-4">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-4">
             Technologie mlžení
-          </h2>
+          </motion.h2>
           <p className="text-slate-500 max-w-xl mx-auto">
             Technologie evaporace — nejpřirozenější chlazení na světě, dostupné pro každý prostor.
           </p>

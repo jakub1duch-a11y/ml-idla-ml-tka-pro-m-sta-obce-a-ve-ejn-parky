@@ -101,9 +101,14 @@ export default function KolekceHero() {
 
       {/* Content */}
       <div className="absolute z-30 flex flex-col justify-end px-8 lg:px-16 pb-12 inset-0">
-        <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4 absolute top-20">
-          Mlžítka<br /><span className="text-slate-400">a mlžiště.</span>
-        </h1>
+        <div className="absolute top-20">
+          <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
+            Mlžítka<br /><span className="text-slate-400">a mlžiště.</span>
+          </h1>
+          <p className="text-white/70 max-w-xl text-base leading-relaxed font-light">
+            Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
+          </p>
+        </div>
         <AnimatePresence mode="wait">
           <motion.h2
             key={`title-${taglineIdx}`}

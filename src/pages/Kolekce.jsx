@@ -186,14 +186,7 @@ export default function Kolekce() {
       {/* ── HERO SLIDER ── */}
       <KolekceHero />
 
-      {/* ── HERO TEXT ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-slate-500 max-w-xl text-lg leading-relaxed">
-            Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
-          </p>
-        </motion.div>
-      </div>
+
 
       {/* ── KATEGORIE ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-8">

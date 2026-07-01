@@ -50,7 +50,7 @@ export default function HowItWorksSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="group bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all rounded-2xl p-">
+            className="group bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all rounded-2xl p-4">
             
               {/* Icon */}
               <div className="w-14 h-14 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">

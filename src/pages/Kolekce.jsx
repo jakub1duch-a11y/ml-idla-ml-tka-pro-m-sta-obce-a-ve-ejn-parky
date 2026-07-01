@@ -189,7 +189,7 @@ export default function Kolekce() {
 
 
       {/* ── KATEGORIE ── */}
-      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-24">
+      <div className="max-w-7xl px-6 lg:px-8 pb-8 mt-10">
         <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-3">Vyberte kategorii</p>
         <div className="flex flex-wrap gap-2.5">
           <button onClick={() => setActiveCategory(null)}

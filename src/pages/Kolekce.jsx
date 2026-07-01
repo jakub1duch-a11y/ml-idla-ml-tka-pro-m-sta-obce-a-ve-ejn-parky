@@ -268,8 +268,8 @@ export default function Kolekce() {
       
 
       {/* ── PRODUKTY ── */}
-      <div className="max-w-7xl lg:px-8 my-10 mx-auto">
-        <div className="flex items-center justify-between mb-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
+        <div className="flex items-center justify-between mb-10 lg:mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400">
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny produkty'}
             {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
@@ -285,7 +285,7 @@ export default function Kolekce() {
             <Loader size={24} className="animate-spin text-slate-300" />
           </div> :
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-5">
             {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
             {displayedProducts.length === 0 &&
           <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
@@ -296,7 +296,7 @@ export default function Kolekce() {
 
       {/* ── PRO KOHO ── */}
       <div className="border-t border-slate-200 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou systémy určeny</p>
             <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení pro každé publikum.</h2>
@@ -320,8 +320,8 @@ export default function Kolekce() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+        <div className="p-6 md:p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
             <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Nový katalog 2026</p>
             <h3 className="font-heading font-light text-2xl text-slate-900">Celá kolekce v jednom PDF.</h3>

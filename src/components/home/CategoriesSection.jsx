@@ -86,7 +86,7 @@ export default function CategoriesSection() {
           </motion.div>
 
           {/* Right column: 3 smaller */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-">
             {/* Mlhoviště & chladicí zóny */}
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0 * 0.08 }}>
               <Link to={categories[1].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">

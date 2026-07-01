@@ -182,6 +182,7 @@ export function getProductSEO(product, reviewStats) {
   const images = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
 
   const hasPrice = typeof product.price_from === 'number' && product.price_from > 0;
+  const priceValue = hasPrice ? String(product.price_from) : '1';
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -196,16 +197,16 @@ export function getProductSEO(product, reviewStats) {
     material: product.material || 'Nerezová ocel AISI 316L',
     offers: {
       '@type': 'Offer',
-      price: hasPrice ? String(product.price_from) : '0',
+      price: priceValue,
       priceCurrency: 'CZK',
-      availability: 'https://schema.org/InStoreOnly',
       priceSpecification: {
         '@type': 'PriceSpecification',
-        price: hasPrice ? String(product.price_from) : '0',
+        price: priceValue,
         priceCurrency: 'CZK',
         valueAddedTaxIncluded: 'true',
         name: hasPrice ? 'Cena od, finální cena dle projektové specifikace' : 'Cena na vyžádání dle projektové specifikace',
       },
+      availability: 'https://schema.org/InStoreOnly',
       url: `${BASE_URL}/produkt/${product.slug}`,
       seller: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
     },

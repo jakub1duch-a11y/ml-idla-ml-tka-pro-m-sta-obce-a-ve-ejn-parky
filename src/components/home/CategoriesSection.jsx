@@ -86,7 +86,7 @@ export default function CategoriesSection() {
           </motion.div>
 
           {/* Right column: 3 smaller */}
-          <div className="flex flex-col gap-">
+          <div className="flex flex-col gap-4">
             {/* Mlhoviště & chladicí zóny */}
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0 * 0.08 }}>
               <Link to={categories[1].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
@@ -97,7 +97,7 @@ export default function CategoriesSection() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       
-                      <h3 className="font-normal text-slate-900 text-base group-hover:text-slate-600 transition-colors leading-tight">{categories[1].label}</h3>
+                      <h3 className="font-normal text-slate-900 group-hover:text-slate-600 transition-colors leading-tight text-2xl">{categories[1].label}</h3>
                     </div>
                     
                   </div>
@@ -119,7 +119,7 @@ export default function CategoriesSection() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       
-                      <h3 className="font-normal text-slate-900 text-base group-hover:text-slate-600 transition-colors leading-tight">{categories[2].label}</h3>
+                      <h3 className="font-normal text-slate-900 group-hover:text-slate-600 transition-colors leading-tight text-2xl">{categories[2].label}</h3>
                     </div>
                     
                   </div>

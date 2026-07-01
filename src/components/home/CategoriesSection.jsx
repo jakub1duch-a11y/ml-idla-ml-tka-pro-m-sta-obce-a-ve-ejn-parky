@@ -68,7 +68,7 @@ export default function CategoriesSection() {
 
               <div className="absolute inset-0 p-8 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
-                  <span className="px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-mono tracking-widest text-white/70 backdrop-blur-sm">
+                  <span className="px-3 py-1.5 rounded-full border border-white/20 text-xs font-mono tracking-widest backdrop-blur-sm bg-[hsl(var(--popover-foreground))] text-[hsl(var(--background))]">
                     {categories[0].tag}
                   </span>
                   <span className="text-xs font-mono text-white/50">{categories[0].count}</span>

@@ -121,7 +121,7 @@ export default function CategorySlider() {
               {cat.tag}
             </span>
 
-            <h2 className="text-3xl lg:text-5xl text-white leading-[1.1] tracking-tight mb-4 [font-family:'Albert_Sans',_sans-serif] font-normal">
+            <h2 className="text-white leading-[1.1] tracking-tight mb-4 [font-family:'Albert_Sans',_sans-serif] font-light text-3xl lg:text-3xl">
               {cat.title}
             </h2>
             <p className="text-white/85 text-base leading-relaxed mb-7 max-w-lg font-normal">

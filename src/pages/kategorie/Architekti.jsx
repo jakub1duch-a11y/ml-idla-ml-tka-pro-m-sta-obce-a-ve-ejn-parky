@@ -45,46 +45,53 @@ export default function Architekti() {
     <div className="min-h-screen bg-white pt-28">
 
       {/* Hero */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
-              <Palette size={18} className="text-slate-900" />
+      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/74b224ffb_mlzitkaamlznesochy.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                <Palette size={18} className="text-white" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Architekti · Zahradní designéři · Krajináři · Ateliéry</p>
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Architekti · Zahradní designéři · Krajináři · Ateliéry</p>
-          </div>
-          <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-            Navrhněte prostor,<br />který dýchá. <span style={{ fontStyle: 'italic' }}>My dodáme mlhu.</span>
-          </h1>
-          <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Holmtec je partner architektů a designérů. Poskytujeme BIM modely, technické listy, konzultace a exkluzivní podmínky pro vaše projekty.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-              Partnerský program <Download size={15} />
-            </a>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
-              BIM modely k dispozici
-            </Link>
-          </div>
-        </motion.div>
-      </div>
+            <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+              Navrhněte prostor,<br />který dýchá. <span style={{ fontStyle: 'italic' }}>My dodáme mlhu.</span>
+            </h1>
+            <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
+              Holmtec je partner architektů a designérů. Poskytujeme BIM modely, technické listy, konzultace a exkluzivní podmínky pro vaše projekty.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+                Partnerský program <Download size={15} />
+              </a>
+              <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+                BIM modely k dispozici
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Mlha jako materiál */}
-      <section className="bg-slate-900 py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Mlha jako materiál</p>
+      <section className="relative h-[70vh] min-h-[480px] overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/7e305c760_mlzitkaholmtec.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/30" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full max-w-2xl">
+            <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Mlha jako materiál</p>
             <h2 className="text-white text-3xl mb-5" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Pátý živel<br /><span style={{ fontStyle: 'italic' }}>vašeho návrhu.</span>
             </h2>
-            <p className="text-slate-400 leading-relaxed font-light">
+            <p className="text-white/70 leading-relaxed font-light">
               Mlha není jen chlazení — je to prostorový materiál. Pracuje se světlem, mění atmosféru, definuje hranice bez zdí. Nový nástroj v rukou architekta.
             </p>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="rounded-2xl overflow-hidden aspect-[4/3]">
-            <img src="https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/78bed1fd3_Mlzitko-mlzna-brana-oblouk-VDMA.webp" alt="Mlžná brána oblouk" className="w-full h-full object-cover" />
           </motion.div>
         </div>
       </section>

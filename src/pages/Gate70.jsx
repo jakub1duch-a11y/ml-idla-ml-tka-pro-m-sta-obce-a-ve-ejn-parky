@@ -481,16 +481,16 @@ export default function Gate70() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {INSTALACE.map((item, i) =>
           <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
           className="relative rounded-2xl overflow-hidden group cursor-pointer aspect-[4/3]"
           onClick={() => setLightbox({ images: INSTALACE.map((x) => x.img), idx: i })}>
-              <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-all duration-500 group-hover:brightness-75" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
-                <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{item.location}</p>
-                <p className="text-white font-medium text-base mt-0.5">{item.title}</p>
+                <span className="inline-block px-2.5 py-1 mb-3 rounded bg-black/50 backdrop-blur-sm text-[10px] font-mono text-white/80 tracking-widest uppercase">{item.location}</span>
+                <p style={{ fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.15 }} className="text-white text-2xl">{item.title}</p>
               </div>
             </motion.div>
           )}

@@ -403,28 +403,24 @@ export default function Gate70() {
           </h2>
         </motion.div>
 
-        {/* Main 2-up + grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-          {ALL_GALLERY.slice(0, 2).map((src, i) =>
-          <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-          className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group"
-          onClick={() => setLightbox({ images: ALL_GALLERY, idx: i })}>
-              <img src={src} alt={`GATE70 ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all" />
-              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                <Maximize2 size={13} className="text-white" />
-              </div>
-            </motion.div>
-          )}
+        {/* Horizontal carousel — 2 rows, scroll-snap */}
+        <div className="overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-thin">
+          <div className="grid grid-rows-2 grid-flow-col gap-3 w-max">
+            {ALL_GALLERY.map((src, i) =>
+            <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}
+            className="relative w-52 sm:w-60 aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group snap-start"
+            onClick={() => setLightbox({ images: ALL_GALLERY, idx: i })}>
+                <img src={src} alt={`GATE70 detail ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all" />
+              </motion.div>
+            )}
+          </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {ALL_GALLERY.slice(2).map((src, i) =>
-          <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
-          className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
-          onClick={() => setLightbox({ images: ALL_GALLERY, idx: i + 2 })}>
-              <img src={src} alt={`GATE70 detail ${i + 3}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all" />
-            </motion.div>
+
+        {/* Scroll indicator dots */}
+        <div className="flex justify-center gap-1.5 mt-5">
+          {Array.from({ length: Math.ceil(ALL_GALLERY.length / 2) }).map((_, i) =>
+          <span key={i} className={`h-1.5 rounded-full transition-all ${i === 0 ? 'w-6 bg-white/60' : 'w-1.5 bg-white/15'}`} />
           )}
         </div>
       </section>

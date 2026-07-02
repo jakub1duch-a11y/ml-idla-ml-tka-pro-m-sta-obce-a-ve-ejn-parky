@@ -4,6 +4,8 @@ const RECIPIENTS = [
   'Meduna@holmtec.cz',
   'obchod1@holmtec.cz',
   'jakub1duch@gmail.com',
+  'duch@holmtec.cz',
+  'duchmatej@holmtec.cz',
 ];
 
 function escapeHtml(str) {
@@ -56,7 +58,7 @@ Deno.serve(async (req) => {
     const rawEmail = data.email || '';
     const createdAt = new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' });
 
-    const subject = `Nová poptávka HolmTec — ${name}`;
+    const subject = `Nová poptávka MLŽIDLA.CZ — ${name}`;
     const htmlBody = `
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#e2e8f0;padding:32px;border-radius:12px;">
   <div style="border-bottom:1px solid #1e2a3a;padding-bottom:20px;margin-bottom:24px;">

@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO } from '@/lib/seo';
 import { trackBlogPostView } from '@/lib/ga4';
+import { sanitizeHtml } from '@/lib/sanitizeHtml';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -137,7 +138,7 @@ export default function BlogDetail() {
               prose-a:text-cyan prose-a:no-underline hover:prose-a:underline
               [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:object-cover [&_h2]:mt-10 [&_h3]:mt-8">
             {/<\/?[a-z][\s\S]*>/i.test(post.content) ? (
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
             ) : (
               <ReactMarkdown>{post.content}</ReactMarkdown>
             )}

@@ -33,7 +33,18 @@ Deno.serve(async (req) => {
     const inquiries = await base44.asServiceRole.entities.ContactInquiry.filter({ email });
     const projects = await base44.asServiceRole.entities.ProjectOrder.filter({ client_email: email });
 
-    return Response.json({ verified: true, email, inquiries, projects });
+    // Issue a short-lived server-side session token so subsequent privileged
+    // actions (e.g. approving a quote) can be verified against the OTP-confirmed
+    // identity instead of trusting client-side state.
+    const existingSessions = await base44.asServiceRole.entities.PortalSession.filter({ email });
+    for (const s of existingSessions) {
+      await base44.asServiceRole.entities.PortalSession.delete(s.id);
+    }
+    const sessionToken = crypto.randomUUID();
+    const sessionExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+    await base44.asServiceRole.entities.PortalSession.create({ email, token: sessionToken, expires_at: sessionExpiresAt });
+
+    return Response.json({ verified: true, email, inquiries, projects, session_token: sessionToken });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

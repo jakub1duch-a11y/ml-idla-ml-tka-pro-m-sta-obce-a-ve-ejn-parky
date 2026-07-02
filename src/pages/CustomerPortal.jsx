@@ -26,6 +26,7 @@ export default function CustomerPortal() {
   const [projects, setProjects] = useState([]);
   const [approving, setApproving] = useState(null);
   const [shareUrl, setShareUrl] = useState(null);
+  const [sessionToken, setSessionToken] = useState(null);
 
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
@@ -81,9 +82,10 @@ export default function CustomerPortal() {
     setError('');
     try {
       const res = await base44.functions.invoke('verifyPortalOtp', { email, otp });
-      const { inquiries, projects } = res.data;
+      const { inquiries, projects, session_token } = res.data;
       setInquiries(inquiries || []);
       setProjects(projects || []);
+      setSessionToken(session_token);
       setStep('dashboard');
     } catch (e) {
       setError('Nesprávný nebo vypršelý ověřovací kód.');
@@ -95,11 +97,9 @@ export default function CustomerPortal() {
   const approveQuote = async (projectId) => {
     setApproving(projectId);
     try {
-      await base44.entities.ProjectOrder.update(projectId, {
-        status: 'approved',
-        approved_at: new Date().toISOString(),
-      });
-      setProjects(prev => prev.map(p => p.id === projectId ? { ...p, status: 'approved', approved_at: new Date().toISOString() } : p));
+      const res = await base44.functions.invoke('approveProjectOrder', { project_id: projectId, session_token: sessionToken });
+      const updated = res.data.project;
+      setProjects(prev => prev.map(p => p.id === projectId ? { ...p, ...updated } : p));
     } finally {
       setApproving(null);
     }
@@ -185,7 +185,7 @@ export default function CustomerPortal() {
             <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-1">Váš účet</p>
             <h1 className="text-2xl lg:text-3xl font-light text-white">{email}</h1>
           </div>
-          <button onClick={() => { setStep('login'); setEmail(''); setInquiries([]); setProjects([]); }}
+          <button onClick={() => { setStep('login'); setEmail(''); setInquiries([]); setProjects([]); setSessionToken(null); }}
             className="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-full hover:bg-white/10 transition-all">
             Odhlásit se
           </button>

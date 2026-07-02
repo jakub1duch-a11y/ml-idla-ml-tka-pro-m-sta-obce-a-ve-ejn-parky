@@ -1,5 +1,14 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -34,7 +43,7 @@ Deno.serve(async (req) => {
       ['Firma', firma || '—'],
       ['Produkt', produkt || '—'],
     ].map(([label, value]) =>
-      `<tr><td style="padding:8px 12px;color:#94a3b8;font-size:13px;width:130px;vertical-align:top;">${label}</td><td style="padding:8px 12px;color:#e2e8f0;font-size:13px;">${value}</td></tr>`
+      `<tr><td style="padding:8px 12px;color:#94a3b8;font-size:13px;width:130px;vertical-align:top;">${label}</td><td style="padding:8px 12px;color:#e2e8f0;font-size:13px;">${escapeHtml(value)}</td></tr>`
     ).join('');
 
     const html = `
@@ -50,10 +59,10 @@ Deno.serve(async (req) => {
             </table>
             <div style="margin-top:20px;padding:16px 20px;background:#0f1f2e;border-radius:12px;border-left:3px solid #22d3ee;">
               <p style="margin:0 0 6px;color:#94a3b8;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;">Zpráva</p>
-              <p style="margin:0;color:#e2e8f0;font-size:14px;line-height:1.6;">${zprava || '—'}</p>
+              <p style="margin:0;color:#e2e8f0;font-size:14px;line-height:1.6;">${escapeHtml(zprava || '—').replace(/\n/g, '<br>')}</p>
             </div>
             <div style="margin-top:24px;text-align:center;">
-              <a href="mailto:${email}" style="display:inline-block;padding:12px 28px;background:#22d3ee;color:#0d1117;font-weight:700;font-size:13px;border-radius:100px;text-decoration:none;">
+              <a href="mailto:${encodeURIComponent(email)}" style="display:inline-block;padding:12px 28px;background:#22d3ee;color:#0d1117;font-weight:700;font-size:13px;border-radius:100px;text-decoration:none;">
                 Odpovědět klientovi →
               </a>
             </div>

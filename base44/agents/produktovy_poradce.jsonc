@@ -23,14 +23,27 @@
     {
       "function_name": "syncInquiryToSheets",
       "description": "Dotazy z webu Ml\u017eidla.cz - AI poradce"
-    },
-    {
-      "function_name": "syncFromDrive",
-      "description": ""
     }
   ],
   "context_files": [],
-  "app_user_connector_configs": [],
+  "app_user_connector_configs": [
+    {
+      "connector_id": "6a3e96206a7f35b2cdad6f11",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e961339c3fc632b7a0ec6",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e95ff99997839ac850976",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e95f3b798efdb40710c8a",
+      "enabled": true
+    }
+  ],
   "selected_skill_names": [],
   "selected_workspace_skill_ids": [],
   "model": "gpt_5_5",

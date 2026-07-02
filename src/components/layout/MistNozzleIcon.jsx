@@ -9,7 +9,7 @@ export default function MistNozzleIcon({ className = '', color = '#0f172a', acce
       {puffs.map((i) =>
       <motion.span
         key={i}
-        className="absolute rounded-full text-6xl"
+        className="absolute rounded-full text-1xl"
         style={{ background: accent, width: 4 + i, height: 4 + i, bottom: 13 }}
         initial={{ opacity: 0, x: '-50%', y: 0, scale: 0.6 }}
         animate={{

@@ -19,6 +19,10 @@
       "allowed_operations": [
         "read"
       ]
+    },
+    {
+      "function_name": "syncInquiryToSheets",
+      "description": "Dotazy z webu Ml\u017eidla.cz - AI poradce"
     }
   ],
   "context_files": [],

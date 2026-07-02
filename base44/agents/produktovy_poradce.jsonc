@@ -23,6 +23,10 @@
     {
       "function_name": "syncInquiryToSheets",
       "description": "Dotazy z webu Ml\u017eidla.cz - AI poradce"
+    },
+    {
+      "function_name": "syncFromDrive",
+      "description": ""
     }
   ],
   "context_files": [],

@@ -19,10 +19,6 @@
       "allowed_operations": [
         "read"
       ]
-    },
-    {
-      "function_name": "syncInquiryToSheets",
-      "description": "Dotazy z webu Ml\u017eidla.cz - AI poradce"
     }
   ],
   "context_files": [],
@@ -42,6 +38,14 @@
     {
       "connector_id": "6a3e95f3b798efdb40710c8a",
       "enabled": true
+    },
+    {
+      "connector_id": "6a4628539a45aba9765ff8ee",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a462745781b601620db690d",
+      "enabled": true
     }
   ],
   "selected_skill_names": [],
@@ -51,7 +55,7 @@
   "telegram_greeting": "",
   "line_greeting": "",
   "memory_config": {
-    "enabled": true,
+    "enabled": false,
     "scope": "both",
     "include_other_conversation_context": false,
     "instructions": "Kdy\u017e se n\u00e1m spole\u010dn\u011b povede skv\u011bl\u00e1 odpov\u011b\u010f nebo mi vysv\u011btl\u00edte specifick\u00fd detail va\u0161eho projektu"

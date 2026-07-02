@@ -44,9 +44,7 @@
       "enabled": true
     }
   ],
-  "selected_skill_names": [
-    "eskalace-podpory"
-  ],
+  "selected_skill_names": [],
   "selected_workspace_skill_ids": [],
   "model": "gpt_5_5",
   "whatsapp_greeting": "Dobr\u00fd den! \ud83d\udc4b Jsem v\u00e1\u0161 pr\u016fvodce sv\u011btem p\u0159\u00edjemn\u00e9ho klimatu na mlzidla.cz.\n\n- A\u0165 u\u017e pl\u00e1nujete ochlazov\u00e1n\u00ed terasy restaurace, pr\u016fmyslov\u00e9 zvlh\u010dov\u00e1n\u00ed haly, nebo hled\u00e1te origin\u00e1ln\u00ed designov\u00fd prvek v podob\u011b ml\u017en\u00e9 sochy, jsem tu, abych v\u00e1m pomohl.\n\nS \u010d\u00edm v\u00e1m mohu okam\u017eit\u011b poradit:\n  - V\u00fdb\u011br spr\u00e1vn\u00e9ho syst\u00e9mu: Pomohu v\u00e1m zorientovat se v typech trysek, vysokotlak\u00fdch potrub\u00edch a technick\u00fdch parametrech pro v\u00e1\u0161 projekt.\n  - Technick\u00e9 detaily a mont\u00e1\u017e: Probereme mo\u017enosti tvarov\u00e1n\u00ed, oh\u00fdb\u00e1n\u00ed trubek na m\u00edru i integraci do st\u00e1vaj\u00edc\u00edch prostor.\n  - Nez\u00e1vazn\u00e1 popt\u00e1vka: Pomohu v\u00e1m ujasnit si zad\u00e1n\u00ed, abychom pro v\u00e1s mohli p\u0159ipravit p\u0159esnou nab\u00eddku.\n\nNapi\u0161te mi, co p\u0159esn\u011b pl\u00e1nujete ochladit nebo vytvo\u0159it \u2013 spole\u010dn\u011b navrhneme syst\u00e9m, kter\u00fd bude perfektn\u011b fungovat i skv\u011ble vypadat. Na co se chcete zeptat jako prvn\u00ed?",

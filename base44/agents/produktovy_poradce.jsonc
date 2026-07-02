@@ -44,7 +44,9 @@
       "enabled": true
     }
   ],
-  "selected_skill_names": [],
+  "selected_skill_names": [
+    "eskalace-podpory"
+  ],
   "selected_workspace_skill_ids": [],
   "model": "gpt_5_5",
   "whatsapp_greeting": "",

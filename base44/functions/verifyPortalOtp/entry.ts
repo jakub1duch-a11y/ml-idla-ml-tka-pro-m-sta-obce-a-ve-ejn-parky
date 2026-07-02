@@ -12,7 +12,19 @@ Deno.serve(async (req) => {
     const records = await base44.asServiceRole.entities.PortalOtp.filter({ email }, '-created_date', 1);
     const record = records[0];
 
-    if (!record || record.otp_code !== otp || new Date(record.expires_at).getTime() < Date.now()) {
+    if (!record || new Date(record.expires_at).getTime() < Date.now()) {
+      if (record) await base44.asServiceRole.entities.PortalOtp.delete(record.id);
+      return Response.json({ error: 'invalid_or_expired' }, { status: 401 });
+    }
+
+    // Lock out after 5 failed attempts to prevent brute-forcing the 6-digit code
+    if ((record.attempts || 0) >= 5) {
+      await base44.asServiceRole.entities.PortalOtp.delete(record.id);
+      return Response.json({ error: 'invalid_or_expired' }, { status: 401 });
+    }
+
+    if (record.otp_code !== otp) {
+      await base44.asServiceRole.entities.PortalOtp.update(record.id, { attempts: (record.attempts || 0) + 1 });
       return Response.json({ error: 'invalid_or_expired' }, { status: 401 });
     }
 

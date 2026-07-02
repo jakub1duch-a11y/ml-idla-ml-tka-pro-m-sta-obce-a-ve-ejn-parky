@@ -3,22 +3,28 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
+
     const body = await req.json().catch(() => ({}));
-    const { jmeno, email, telefon, firma, produkt, zprava } = body;
+    // Triggered by the "Poptávka create" entity automation — only trust the actual
+    // stored record fetched fresh from the DB, never attacker-supplied fields.
+    const entityId = body?.event?.entity_id || body?.data?.id;
+    if (!entityId) return Response.json({ error: 'Missing entity id' }, { status: 400 });
+
+    let record;
+    try {
+      record = await base44.asServiceRole.entities.Poptavka.get(entityId);
+    } catch (e) {
+      return Response.json({ error: 'Not found' }, { status: 404 });
+    }
+    if (!record) return Response.json({ error: 'Not found' }, { status: 404 });
+
+    const { jmeno, email, telefon, firma, produkt, zprava } = record;
 
     if (!jmeno || !email || !zprava) {
       return Response.json({ error: 'Missing required fields' }, { status: 400 });
-    }
-
-    // Validate this notification corresponds to a real inquiry that was actually submitted
-    // via the public form (prevents blind spam calls directly to this function).
-    const recentMatches = await base44.asServiceRole.entities.Poptavka.filter({ email }, '-created_date', 5);
-    const matchesRecent = (recentMatches || []).some((r) => {
-      const ageMs = Date.now() - new Date(r.created_date).getTime();
-      return r.jmeno === jmeno && r.zprava === zprava && ageMs >= 0 && ageMs < 10 * 60 * 1000;
-    });
-    if (!matchesRecent) {
-      return Response.json({ error: 'No matching inquiry found' }, { status: 403 });
     }
 
     const rows = [

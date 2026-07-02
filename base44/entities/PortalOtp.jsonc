@@ -14,6 +14,11 @@
       "type": "string",
       "format": "date-time",
       "description": "Kdy k\u00f3d vypr\u0161\u00ed"
+    },
+    "attempts": {
+      "type": "number",
+      "default": 0,
+      "description": "Po\u010det ne\u00fasp\u011b\u0161n\u00fdch pokus\u016f o ov\u011b\u0159en\u00ed"
     }
   },
   "required": [

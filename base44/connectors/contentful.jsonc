@@ -1,6 +1,0 @@
-{
-  "type": "contentful",
-  "scopes": [
-    "content_management_manage"
-  ]
-}

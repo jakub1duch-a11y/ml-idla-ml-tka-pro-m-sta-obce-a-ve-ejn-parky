@@ -56,7 +56,7 @@
     "enabled": true,
     "scope": "both",
     "include_other_conversation_context": false,
-    "instructions": null
+    "instructions": "Kdy\u017e se n\u00e1m spole\u010dn\u011b povede skv\u011bl\u00e1 odpov\u011b\u010f nebo mi vysv\u011btl\u00edte specifick\u00fd detail va\u0161eho projektu"
   },
   "allow_anonymous_access": true,
   "name": "produktovy_poradce"

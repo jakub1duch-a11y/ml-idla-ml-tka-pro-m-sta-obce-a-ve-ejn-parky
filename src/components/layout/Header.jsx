@@ -85,7 +85,7 @@ export default function Header() {
               transition={{ duration: 1.8, ease: 'easeOut' }}
               className="flex items-center gap-2.5">
               <MistNozzleIcon color={scrolled ? '#0f172a' : '#ffffff'} accent="#40a2d4" />
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '0.06em' }} className={`no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-none text-2xl font-bold transition-colors duration-500 normal-case ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '0.06em' }} className={`no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-none text-2xl font-bold transition-colors duration-500 uppercase ${scrolled ? 'text-slate-900' : 'text-white'}`}>
                 mlzidla<span className="[font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium text-[#40a2d4]" style={{ letterSpacing: '0.06em' }}>.cz</span>
               </span>
             </motion.div>

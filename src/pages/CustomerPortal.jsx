@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Mail, Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
@@ -14,8 +14,6 @@ const STATUS_MAP = {
 };
 
 export default function CustomerPortal() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
   const [otpSent, setOtpSent] = useState(false);
@@ -31,32 +29,6 @@ export default function CustomerPortal() {
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
   }, []);
-
-  // Check if already verified via token link
-  useEffect(() => {
-    if (location.state?.verified) {
-      setEmail(location.state.email);
-      setStep('dashboard');
-      loadData(location.state.email);
-    }
-  }, [location.state]);
-
-  const loadData = async (userEmail) => {
-    try {
-      const inqs = await base44.entities.ContactInquiry.filter({ email: userEmail });
-      const projs = await base44.entities.ProjectOrder.filter({ client_email: userEmail });
-      
-      if (inqs.length === 0 && projs.length === 0) {
-        setError('Žádné poptávky ani projekty nenalezeny pro tento email.');
-        return;
-      }
-
-      setInquiries(inqs);
-      setProjects(projs);
-    } catch (e) {
-      setError('Chyba při načítání dat. Zkuste později.');
-    }
-  };
 
   const requestOtp = async (e) => {
     e.preventDefault();

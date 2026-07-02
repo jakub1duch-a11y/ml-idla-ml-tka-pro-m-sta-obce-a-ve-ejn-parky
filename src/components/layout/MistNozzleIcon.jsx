@@ -21,7 +21,7 @@ export default function MistNozzleIcon({ className = '', color = '#0f172a', acce
         transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.5, ease: 'easeOut' }} />
 
       )}
-      <svg width="16" height="18" viewBox="0 0 16 18" fill="none" className="relative z-10 hidden">
+      <svg width="16" height="18" viewBox="0 0 16 18" fill="none" className="relative z-10">
         <rect x="6" y="0" width="4" height="6" rx="1" fill={accent} />
         <rect x="1" y="6.2" width="14" height="2.2" rx="1.1" fill={color} />
         <path d="M2.5 8.4 L13.5 8.4 L11 17 C11 17 9.3 18 8 18 C6.7 18 5 17 5 17 L2.5 8.4Z" fill={color} fillOpacity="0.92" />

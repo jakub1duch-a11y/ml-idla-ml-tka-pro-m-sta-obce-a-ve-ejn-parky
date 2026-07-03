@@ -75,7 +75,7 @@ Deno.serve(async (req) => {
     `;
 
     await base44.asServiceRole.integrations.Core.SendEmail({
-      to: 'obchod1@holmtec.cz',
+      to: 'obchod1@holmtec.cz''jakub1duch@gmail.com''meduna@holmtec.cz',
       subject: `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`,
       body: html,
       from_name: 'mlzidla.CZ-Web',

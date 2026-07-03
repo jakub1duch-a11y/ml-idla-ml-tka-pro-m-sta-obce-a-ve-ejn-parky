@@ -21,15 +21,15 @@ export default function AdminProducts() {
     base44.entities.Product.list().then(setProducts).finally(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {load();}, []);
 
-  const startEdit = (p) => { setEditing(p); setForm(p || EMPTY); };
-  const startNew = () => { setEditing('new'); setForm(EMPTY); };
-  const cancel = () => { setEditing(null); setForm(EMPTY); };
+  const startEdit = (p) => {setEditing(p);setForm(p || EMPTY);};
+  const startNew = () => {setEditing('new');setForm(EMPTY);};
+  const cancel = () => {setEditing(null);setForm(EMPTY);};
 
   const set = (field) => (e) => {
     const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setForm(f => {
+    setForm((f) => {
       const updated = { ...f, [field]: val };
       if (field === 'name' && (!f.slug || f.slug === slugify(f.name))) {
         updated.slug = slugify(val);
@@ -43,7 +43,7 @@ export default function AdminProducts() {
     if (!file) return;
     setUploading(true);
     const { file_url } = await base44.integrations.Core.UploadFile({ file }).catch(() => ({}));
-    if (file_url) setForm(f => ({ ...f, image_url: file_url }));
+    if (file_url) setForm((f) => ({ ...f, image_url: file_url }));
     setUploading(false);
   };
 
@@ -107,12 +107,12 @@ export default function AdminProducts() {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-4">
-          {[['coverage_area', 'Výška / rozměry'], ['water_consumption', 'Spotřeba vody'], ['pressure', 'Tlak'], ['micron_size', 'Trysky (μm)'], ['material', 'Materiál'], ['power_supply', 'Napájení']].map(([field, label]) => (
-            <div key={field}>
+          {[['coverage_area', 'Výška / rozměry'], ['water_consumption', 'Spotřeba vody'], ['pressure', 'Tlak'], ['micron_size', 'Trysky (μm)'], ['material', 'Materiál'], ['power_supply', 'Napájení']].map(([field, label]) =>
+          <div key={field}>
               <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">{label}</label>
               <input value={form[field] || ''} onChange={set(field)} className={inputCls} />
             </div>
-          ))}
+          )}
           <div>
             <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Cena od (Kč)</label>
             <input type="number" value={form.price_from || ''} onChange={set('price_from')} placeholder="např. 89000" className={inputCls} />
@@ -124,29 +124,29 @@ export default function AdminProducts() {
         </label>
         <div className="flex gap-3 pt-2">
           <button onClick={save} disabled={saving || !form.name || !form.slug}
-            className="flex items-center gap-2 px-5 py-2.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all disabled:opacity-50">
+          className="flex items-center gap-2 px-5 py-2.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all disabled:opacity-50">
             {saving ? <Loader size={14} className="animate-spin" /> : <Save size={14} />} Uložit
           </button>
           <button onClick={cancel} className="px-5 py-2.5 border border-white/10 text-white/50 text-sm rounded-full hover:text-white transition-all">Zrušit</button>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-white text-lg font-medium">Produkty ({products.length})</h2>
-        <button onClick={startNew} className="flex items-center gap-2 px-4 py-2 bg-cyan text-ink text-xs font-bold rounded-full hover:bg-cyan/90 transition-all">
+        <button onClick={startNew} className="flex items-center gap-2 px-4 py-2 bg-cyan text-ink font-bold rounded-full hover:bg-cyan/90 transition-all text-2xl">
           <Plus size={14} /> Přidat produkt
         </button>
       </div>
-      {loading ? (
-        <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div>
-      ) : (
-        <div className="space-y-2">
-          {products.map(p => (
-            <div key={p.id} className="flex items-center gap-4 p-4 rounded-xl bg-white/3 border border-white/8 hover:border-white/15 transition-all">
+      {loading ?
+      <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div> :
+
+      <div className="space-y-2">
+          {products.map((p) =>
+        <div key={p.id} className="flex items-center gap-4 p-4 rounded-xl bg-white/3 border border-white/8 hover:border-white/15 transition-all">
               {p.image_url && <img src={p.image_url} alt={p.name} className="w-14 h-10 object-cover rounded-lg border border-white/10 shrink-0" />}
               <div className="flex-1 min-w-0">
                 <p className="text-white text-sm font-medium truncate">{p.name}</p>
@@ -162,9 +162,9 @@ export default function AdminProducts() {
                 </button>
               </div>
             </div>
-          ))}
+        )}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }

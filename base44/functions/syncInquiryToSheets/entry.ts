@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
 // "Poptávky a dotazy z webu Mlžidla.cz" spreadsheet, shared with the team.
 const SPREADSHEET_ID = '1IcI8zsltInagTR8u5VntZEFOuUAbm5Dy-tjPbcfZbnU';
-const SHEET_NAME = 'Poptávky';
+const SHEET_NAME = 'Poptávky Mlžidla.cz';
 
 const HEADERS = [
   'Datum a čas',
@@ -53,7 +53,7 @@ Deno.serve(async (req) => {
     const zprava   = payload.zprava  || payload.message     || '';
     const stav     = payload.status  || 'nová';
 
-    const row = [createdAt, zdroj, jmeno, email, telefon, firma, produkt, zprava, stav];
+    const row = [createdAt, zdroj, produkt,zprava,firma, jmeno, email, telefon, stav];
 
     // Ensure header row exists
     const checkRes = await fetch(

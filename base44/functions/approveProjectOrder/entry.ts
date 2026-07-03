@@ -11,6 +11,10 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Missing project_id or session_token' }, { status: 400 });
     }
 
+    if (typeof projectId !== 'string' || typeof sessionToken !== 'string') {
+      return Response.json({ error: 'Invalid input types' }, { status: 400 });
+    }
+
     const sessions = await base44.asServiceRole.entities.PortalSession.filter({ token: sessionToken });
     const session = sessions[0];
 

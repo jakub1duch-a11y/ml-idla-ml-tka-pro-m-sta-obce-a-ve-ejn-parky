@@ -70,7 +70,7 @@ const features = [
 { icon: Droplets, label: 'Spotřeba vody', value: '6–10 l/h' },
 { icon: Banknote, label: 'Provozní náklady', value: 'od 15 Kč / 8 hod' },
 { icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až o −9 °C' },
-{ icon: CloudFog, label: 'Nízkotlaká mlha', value: "kapky 0,01 -0,005 \u03BCm" },
+{ icon: CloudFog, label: 'Nízkotlaká mlha', value: "kapky 10 - 50 \u03BCm" },
 { icon: Gauge, label: 'Napojení na vodovodní řád', value: 'min. tlak 2 bar' }];
 
 

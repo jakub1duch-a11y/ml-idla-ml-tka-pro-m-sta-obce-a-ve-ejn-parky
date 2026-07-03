@@ -67,7 +67,7 @@ const defaultSlides = [
 }];
 
 const features = [
-{ icon: Droplets, label: 'Spotřeba vody', value: '6–10 l/h' },
+{ icon: Droplets, label: 'Spotřeba vody', value: "\xA0l/h" },
 { icon: Banknote, label: 'Provozní náklady', value: 'od 15 Kč / 8 hod' },
 { icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až o −9 °C' },
 { icon: CloudFog, label: 'Nízkotlaká mlha', value: "kapky 10 - 50\xA0 \u03BCm" },

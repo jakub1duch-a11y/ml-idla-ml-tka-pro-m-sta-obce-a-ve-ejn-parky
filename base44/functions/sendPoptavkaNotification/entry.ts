@@ -9,6 +9,27 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+function encodeRFC2047(str) {
+  const encoded = btoa(unescape(encodeURIComponent(str)));
+  return `=?UTF-8?B?${encoded}?=`;
+}
+
+function buildMimeMessage({ from, to, subject, body }) {
+  const encodedSubject = encodeRFC2047(subject);
+  const message = [
+    `From: ${from}`,
+    `To: ${to}`,
+    `Subject: ${encodedSubject}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: quoted-printable',
+    '',
+    body,
+  ].join('\r\n');
+  return btoa(unescape(encodeURIComponent(message)))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -74,12 +95,23 @@ Deno.serve(async (req) => {
       </div>
     `;
 
-    await base44.asServiceRole.integrations.Core.SendEmail({
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+    const raw = buildMimeMessage({
+      from: 'Mlzidla.cz-Web <me>',
       to: 'obchod1@holmtec.cz',
       subject: `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`,
       body: html,
-      from_name: 'mlzidla.CZ-Web',
     });
+    const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ raw }),
+    });
+
+    if (!sendRes.ok) {
+      const err = await sendRes.json().catch(() => ({}));
+      return Response.json({ error: err }, { status: 500 });
+    }
 
     return Response.json({ ok: true });
   } catch (error) {

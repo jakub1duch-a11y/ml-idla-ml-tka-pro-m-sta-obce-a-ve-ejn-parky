@@ -181,7 +181,7 @@ export default function ProduktDetail() {
     <div className="min-h-screen bg-white flex items-center justify-center pt-28">
       <div className="text-center">
         <p className="text-slate-400 mb-4 text-lg">Produkt nenalezen.</p>
-        <Link to="/mlzidla-mlzitka" className="text-slate-900 hover:underline">← Zpět na kolekci</Link>
+        <Link to="/mlzidla-mlzitka" className="text-slate-900 hover:underline">← Zpět na mlžítka</Link>
       </div>
     </div>);
 
@@ -225,7 +225,7 @@ export default function ProduktDetail() {
 
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">HolmTec · Mlžné skulptury</p>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">Mlžidla.cz - Mlžítka a mlžné brány</p>
             <h1 className="font-heading font-light tracking-tight leading-[0.95] text-6xl lg:text-8xl text-white mb-6">
               {product.name}
             </h1>
@@ -631,7 +631,7 @@ export default function ProduktDetail() {
               </h2>
               <p className="text-slate-400 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               <div className="space-y-3 text-sm text-slate-500 font-mono">
-                <a href="tel:+420800123456" className="flex items-center gap-2 hover:text-slate-900 transition-colors">+420 774700390 </a>
+                <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-slate-900 transition-colors">+420 774700390 </a>
                 <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors">obchod1@holmtec.cz</a>
               </div>
             </motion.div>

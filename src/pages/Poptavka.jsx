@@ -101,11 +101,11 @@ export default function Poptavka() {
             <div className="p-5 rounded-2xl bg-cyan/5 border border-cyan/20">
               <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Proč HolmTec</p>
               <ul className="space-y-1.5 text-xs text-white/50 leading-relaxed">
-                <li>→ Zakázková výroba z AISI 304 / 316L</li>
-                <li>→ Konzultace a 3D vizualizace zdarma</li>
+                <li>→ Zakázková výroba mlžítek z nerezové oceli 304 / 316L</li>
+                <li>→ Konzultace a 3D vizualizace mlžítka zdarma</li>
                 <li>→ Odpovídáme do 24 hodin</li>
-                <li>→ Záruka 5 let na konstrukci</li>
-                <li>→ Instalace a servis po celé ČR</li>
+                <li>→ Záruka na konstrukci</li>
+                <li>→ Mlžítka vyráběné v ČR</li>
               </ul>
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function Poptavka() {
                   <p className="text-white/50 mb-4">Ozveme se Vám co nejdříve.</p>
                   <p className="text-white/35 text-xs font-mono leading-relaxed">
                     tel. +420 774 700 390<br />
-                    <a href="https://www.mlzidla.cz" target="_blank" rel="noopener noreferrer" className="hover:text-cyan transition-colors">www.mlzidla.cz</a>
+                    <a href="https://mlzidla.cz" target="_blank" rel="noopener noreferrer" className="hover:text-cyan transition-colors">Mlzidla.cz</a>
                   </p>
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function Poptavka() {
                     onChange={set('produkt')}
                     className={inputCls + ' cursor-pointer'}
                   >
-                    <option value="" className="bg-surface text-white/50">Vyberte produkt...</option>
+                    <option value="" className="bg-surface text-white/50">Vyberte produkt (mlžítko)...</option>
                     {PRODUKTY.map((p) => (
                       <option key={p} value={p} className="bg-surface text-white">{p}</option>
                     ))}
@@ -199,7 +199,7 @@ export default function Poptavka() {
                   <textarea
                     required
                     rows={5}
-                    placeholder="Popište váš projekt — místo instalace, rozměry prostoru, přibližný počet kusů..."
+                    placeholder="Popište váš mlžný projekt — místo instalace, rozměry prostoru, přibližný počet kusů mlžítek..."
                     value={form.zprava}
                     onChange={set('zprava')}
                     className={inputCls + ' resize-none'}

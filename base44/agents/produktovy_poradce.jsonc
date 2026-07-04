@@ -46,6 +46,14 @@
     {
       "connector_id": "6a462745781b601620db690d",
       "enabled": true
+    },
+    {
+      "connector_id": "6a48154c19f44e6e0269b046",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a4815d14bdad9f1dc6a1ff4",
+      "enabled": true
     }
   ],
   "selected_skill_names": [],

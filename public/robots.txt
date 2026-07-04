@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://mlzidla.cz/sitemap.xml
+Sitemap: https://mlzidla.cz/page-sitemap.xml

@@ -167,7 +167,7 @@ export default function HeroSection() {
                   <f.icon size={20} className="shrink-0 text-white/80" />
                   <div className="min-w-0">
                     <p className="leading-tight truncate text-xs sm:text-sm text-[#8c8c8c]">{f.label}</p>
-                    <p className="font-medium leading-tight truncate uppercase text-base sm:text-lg text-[#4776b8]">{f.value}</p>
+                    <p className="font-medium leading-tight truncate  text-base sm:text-lg text-[#4776b8]">{f.value}</p>
                   </div>
                 </div>
               )}

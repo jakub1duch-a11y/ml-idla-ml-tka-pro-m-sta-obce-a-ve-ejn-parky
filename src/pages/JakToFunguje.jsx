@@ -8,7 +8,7 @@ const steps = [
   {
     num: '01',
     title: 'Jak se stavíme k dílu',
-    subtitle: 'Každá socha je originál',
+    subtitle: 'Každé mlžítko je originál',
     desc: 'Vycházíme z vašeho prostoru a vaší představy. Navrhujeme tvar, výšku, rozmístění trysek. Kresba na papíře se mění v přesný technický výkres. Spolupracujeme s architekty, urbanisty i soukromými zákazníky.',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d738bb441_holmtec_DPSvizualizace-1.jpg',
   },
@@ -23,14 +23,14 @@ const steps = [
     num: '03',
     title: 'Zaručená spokojenost',
     subtitle: 'Testování a kontrola',
-    desc: 'Každá socha je testována před dodáním. Tlakový test, vizuální kontrola, nastavení trysek. 100 % spokojených klientů — kladné hodnocení všech dokončených instalací.',
+    desc: 'Každé mlžítko je testováno před dodáním. Tlakový test, vizuální kontrola, nastavení trysek. 100 % spokojených klientů — kladné hodnocení všech dokončených instalací.',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/078e25764_3a4d19965_Food_Brand_System_Style_Guide_In_a_photographic_style_a_circular_mister_sprays_QKFDjh9F1.jpg',
   },
   {
     num: '04',
     title: 'Instalace & zprovoznění',
-    subtitle: 'Montáž za jeden den',
-    desc: 'Standardní instalace trvá jeden den. Zemní vrut nebo chemické kotvy, přivedení vody, nastavení tlaku a trysek. Předáme vás s plně funkčním systémem.',
+    subtitle: 'Montáž mlžítka za jeden den',
+    desc: 'Standardní instalace trvá jeden den. Zemní vrut nebo chemické kotvy, přivedení vody, nastavení tlaku a trysek. Mlžítko předáme s plně funkčním systémem.',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
   },
   {
@@ -44,10 +44,10 @@ const steps = [
 
 const faqs = [
   { q: 'Kolik mlžítko stojí?', a: 'Cena závisí na modelu a velikosti instalace. Mlhoviště START začíná od 48 000 Kč, individuální mlžné sochy od 15 000 Kč. Kontaktujte nás pro přesnou nabídku.' },
-  { q: 'Kolik spotřebuje vody?', a: 'Průměrná spotřeba je 6–10 litrů za hodinu pro standardní mlžné sochy a 8–20 litrů pro mlhoviště. To je přibližně 8–15× méně než klimatizace.' },
-  { q: 'Potřebuji stavební povolení?', a: 'Pro dočasné instalace (zemní vrut) zpravidla není potřeba. Pro trvalé instalace do betonového základu doporučujeme konzultaci s místním stavebním úřadem.' },
-  { q: 'Jak funguje Smart ovládání?', a: 'WiFi modul se připojí k vaší domácí síti. Přes aplikaci HolmTec (iOS/Android) nastavíte automatické spouštění podle teploty, časovače nebo manuálně odkudkoli.' },
-  { q: 'Jaká je záruka?', a: 'Na konstrukci z nerezové oceli poskytujeme 5letou záruku. Na trysky, hadice a elektroniku 2 roky. Servis a náhradní díly zajišťujeme dlouhodobě.' },
+  { q: 'Kolik mlžítko spotřebuje vody?', a: 'Průměrná spotřeba je 6–10 litrů za hodinu pro standardní mlžné sochy a 8–20 litrů pro mlhoviště. To je přibližně 8–15× méně než klimatizace.' },
+  { q: 'Potřebuji stavební povolení?', a: 'Pro dočasné instalace mlžítka (zemní vrut) zpravidla není potřeba. Pro trvalé instalace do betonového základu doporučujeme konzultaci s místním stavebním úřadem.' },
+  { q: 'Jak funguje Smart ovládání mlžítek?', a: 'WiFi modul se připojí k vaší domácí síti. Přes aplikaci SUPLA (iOS/Android) nastavíte automatické spouštění podle teploty, časovače nebo manuálně odkudkoli.' },
+  { q: 'Jaká je záruka?', a: 'Na konstrukci z nerezové oceli poskytujeme záruku. Servis a náhradní díly zajišťujeme dlouhodobě.' },
 ];
 
 export default function JakToFunguje() {
@@ -153,7 +153,7 @@ export default function JakToFunguje() {
           <div>
             <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-3">Smart aplikace</p>
             <h2 className="font-heading font-black text-3xl text-white mb-4">Mlžení z mobilu</h2>
-            <p className="text-white/50 mb-6">WiFi + Bluetooth ovládání mlžení přes aplikaci HolmTec. Automatická aktivace dle teploty, skupinové scény, vodní monitoring.</p>
+            <p className="text-white/50 mb-6">WiFi+Bluetooth ovládání mlžítka dálkově přes aplikaci. Automatická aktivace mlžení dle teploty, skupinové scény, vodní monitoring.</p>
             <Link to="/kontakt"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/25">
               Zjistit více <ArrowRight size={16} />

@@ -8,20 +8,20 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 const contactInfo = [
 { icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
 { icon: Mail, label: 'Email', value: 'obchod1@holmtec.cz', href: 'mailto:obchod1@holmtec.cz' },
-{ icon: MapPin, label: 'Adresa', value: 'Trutnov, Česká republika', href: null }];
+{ icon: MapPin, label: 'Adresa', value: 'Trutnov, Horní staré město 698, Česká republika', href: null }];
 
 
 const REQUEST_TYPES = [
-{ value: 'product_price', label: 'Cena produktu', icon: Package, desc: 'Jednotná cena vybraného produktu' },
-{ value: 'volume_price', label: 'Množstevní nabídka', icon: Tag, desc: 'Kombinace produktů, množstevní sleva' },
+{ value: 'product_price', label: 'Cena produktu', icon: Package, desc: 'Jednotná cena vybraného mlžítka' },
+{ value: 'volume_price', label: 'Množstevní nabídka', icon: Tag, desc: 'Kombinace mlžítek, množstevní sleva' },
 { value: 'cooperation', label: 'Projektová spolupráce', icon: Layers, desc: 'Návrh, realizace, servis projektu' },
 { value: 'documentation', label: 'Projektová dokumentace', icon: FileText, desc: 'Technické výkresy, certifikáty, podklady' },
-{ value: '3d_model', label: '3D vizualizace & render', icon: Box, desc: 'Model produktu pro architektonické rendery' }];
+{ value: '3d_model', label: '3D vizualizace & render', icon: Box, desc: 'Modely mlžítek a mlžných produktu pro architektonické rendery' }];
 
 
 const PRODUCTS = [
-'OSTEV (strom)', 'MRAK', 'VOLAVKA', 'KIDS', 'GATE 60 (brána)', 'AURA (kruh)',
-'LINEA EL70', 'START (terasa)', 'PARK', 'ARENA'];
+'Mlžítko na mířu', 'Mlžiště - chladící zóna','Mlžítko - OSTEV', 'Mlžítko - MRAK', 'Mlžítko - AURA', 'Mlžítko - SPIRÁLA', 'Mlžná brána GATE70', 'Mlžítko - BENDY',
+'Mlžná brána - LINEA EL70', 'Mlžítko - Y-ARMIST TR60', 'Mlžítko - Y-ARMIST J70', 'Mlžítko - Linea'];
 
 
 export default function Kontakt() {
@@ -52,7 +52,7 @@ export default function Kontakt() {
         name: form.name,
         email: form.email,
         message: msg,
-        status: 'new'
+        status: 'NEW'
       });
       trackCooperationFormSubmit();
       trackInquirySubmitted(form.request_type, form.product_interest);
@@ -74,8 +74,7 @@ export default function Kontakt() {
           <h1 className="font-heading font-black text-4xl lg:text-6xl text-white tracking-tight mb-3">
             Jak vám<br /><span className="text-cyan">můžeme pomoci?</span>
           </h1>
-          <p className="text-white/50 max-w-lg mx-auto">Mlžné prvky, software, Smart WiFi, Záruka — vše na jednom místě.
-
+          <p className="text-white/50 max-w-lg mx-auto">Mlžné prvky, mlžítka, Smart WiFi ovládání, podpora — vše na jednom místě.
           </p>
         </motion.div>
       </div>
@@ -105,11 +104,11 @@ export default function Kontakt() {
             <div className="p-5 rounded-2xl bg-cyan/5 border border-cyan/20">
               <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Co nabízíme</p>
               <ul className="space-y-1.5 text-xs text-white/50 leading-relaxed">
-                <li>→ Zakázková výroba z AISI 304 / 316L</li>
+                <li>→ Zakázková výroba z nerezu 304 / 316L</li>
                 <li>→ Projektová dokumentace na míru</li>
                 <li>→ 3D modely pro architektonické rendery</li>
-                <li>→ Množstevní slevy při kombinaci produktů</li>
-                <li>→ Instalace, servis, záruční podpora</li>
+                <li>→ Množstevní slevy při kombinaci mlžítek</li>
+                <li>→ Instalace, servis, záruční podpora - Mlžidla.cz</li>
               </ul>
             </div>
           </div>
@@ -171,7 +170,7 @@ export default function Kontakt() {
                 {/* Produkt + množství */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1">Produkt / systém</label>
+                    <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1">Produkt / mlžný systém</label>
                     <input list="products-contact" type="text"
                   placeholder="Vyberte nebo napište produkt"
                   value={form.product_interest} onChange={(e) => setForm({ ...form, product_interest: e.target.value })}
@@ -192,7 +191,7 @@ export default function Kontakt() {
                 </div>
 
                 {/* Zpráva */}
-                <textarea required rows={4} placeholder="Popište váš projekt nebo dotaz... *"
+                <textarea required rows={4} placeholder="Popište váš mlžný projekt nebo dotaz... *"
               value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
               className={inputCls + ' resize-none'} />
 

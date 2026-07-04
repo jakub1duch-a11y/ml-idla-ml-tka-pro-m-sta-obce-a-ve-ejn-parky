@@ -55,7 +55,7 @@ export default function Mlhoviste() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         <div className="p-12 rounded-2xl bg-slate-50 border border-slate-200 text-center">
           <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-3">Navrhněme mlžítka, pro váš prostor</h2>
-          <p className="text-slate-500 mb-8">Konzultace zdarma. 3D vizualizace do 48 h. Montáž do 24n.</p>
+          <p className="text-slate-500 mb-8">Konzultace zdarma. 3D vizualizace mlhoviště do 48 h. Mlžítka a mlžné systémy - Mlžidla.cz</p>
           <Link to="/kontakt"
             className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
             Nezávazná poptávka <ArrowRight size={16} />

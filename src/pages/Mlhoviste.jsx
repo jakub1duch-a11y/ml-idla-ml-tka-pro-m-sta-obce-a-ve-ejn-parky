@@ -8,9 +8,9 @@ import ModuleCombinations from '@/components/mlhoviste/ModuleCombinations';
 
 const features = [
   { icon: Droplets, title: 'Bez mokrého povrchu', desc: 'Kapky 10–50 μm se odpaří dřív, než dopadnou. Děti nesklouznou.' },
-  { icon: Shield, title: 'Certifikované materiály', desc: 'Nerezová ocel AISI 304/316L, potravinářský standard. Bezpečné pro děti.' },
-  { icon: Zap, title: 'Minimální spotřeba', desc: 'Pouze 6–10 l/h. Bez chemie, bez filtrů, bez složité údržby.' },
-  { icon: Sun, title: 'Celodenní provoz', desc: 'Automatický start při 28 °C. Vypne se sám, když ochladí. Smart systém.' },
+  { icon: Shield, title: 'Certifikované materiály', desc: 'Nerezová ocel 304/316L, potravinářský standard. Bezpečné mlžítka pro děti.' },
+  { icon: Zap, title: 'Minimální spotřeba', desc: 'Pouze 6–10 l/h. Bez chemie, bez filtrů, mlžítka bez složité údržby.' },
+  { icon: Sun, title: 'Celodenní provoz mlžítek', desc: 'Automatický start při 28 °C. Vypne se sám, když se ochladí. Smart WIFI mlžný systém.' },
 ];
 
 export default function Mlhoviste() {
@@ -40,7 +40,7 @@ export default function Mlhoviste() {
 
       {/* Videos */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
-        <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-8">Mlžiště v provozu</h2>
+        <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-8">Mlžiště a mlžítka v provozu</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <video controls playsInline className="w-full aspect-video object-cover rounded-2xl bg-slate-100">
             <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f17970686_video_20260619_162927.mp4" type="video/mp4" />
@@ -54,8 +54,8 @@ export default function Mlhoviste() {
       {/* CTA */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         <div className="p-12 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-          <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-3">Navrhněme mlžiště pro váš prostor</h2>
-          <p className="text-slate-500 mb-8">Konzultace zdarma. 3D vizualizace do 48 h. Montáž za jeden den.</p>
+          <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-3">Navrhněme mlžítka, pro váš prostor</h2>
+          <p className="text-slate-500 mb-8">Konzultace zdarma. 3D vizualizace do 48 h. Montáž do 24n.</p>
           <Link to="/kontakt"
             className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
             Nezávazná poptávka <ArrowRight size={16} />

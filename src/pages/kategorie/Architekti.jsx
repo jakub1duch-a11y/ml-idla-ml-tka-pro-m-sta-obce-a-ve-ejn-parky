@@ -6,8 +6,8 @@ import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucid
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const DOWNLOADS = [
-  { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
-  { icon: Ruler, title: 'Zakázkové rozměry', desc: 'Každou mlžnou sochu vyrobíme na míru vašemu projektu. Výška, šířka, povrchová úprava — přesně dle specifikace.', tag: 'Na míru' },
+  { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech mlžných produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
+  { icon: Ruler, title: 'Zakázkové rozměry', desc: 'Každou mlžnou sochu neboli mlžítko vyrobíme na míru vašemu projektu. Výška, šířka, povrchová úprava — přesně dle specifikace.', tag: 'mlžítka na míru' },
   { icon: FileText, title: 'Technická podpora', desc: 'Inženýr Holmtec je vám k dispozici od studie po realizaci. Konzultace zdarma, revize výkresů, dozor při montáži.', tag: 'Konzultace zdarma' },
 ];
 
@@ -63,7 +63,7 @@ export default function Architekti() {
               Navrhněte prostor,<br />který dýchá. <span style={{ fontStyle: 'italic' }}>My dodáme mlhu.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Holmtec je partner architektů a designérů. Poskytujeme BIM modely, technické listy, konzultace a exkluzivní podmínky pro vaše projekty.
+              Mlžidla.cz je partner architektů a designérů. Poskytujeme BIM modely, technické listy, konzultace a exkluzivní podmínky pro vaše projekty.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
@@ -100,7 +100,7 @@ export default function Architekti() {
       {/* Ke stažení */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč architekti volí Holmtec</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč architekti volí Holmtec Mlžidla.cz</p>
           <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
             Od první skici<br /><span style={{ fontStyle: 'italic' }}>po finální realizaci.</span>
           </h2>

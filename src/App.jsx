@@ -12,7 +12,7 @@ import SplashScreen from '@/components/common/SplashScreen';
 
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
-import Kolekce from '@/pages/Kolekce';
+import Kolekce from '@/pages/Mlzitka';
 import Prislusenstvi from '@/pages/Prislusenstvi';
 import Mlhoviste from '@/pages/Mlhoviste';
 import JakToFunguje from '@/pages/JakToFunguje';

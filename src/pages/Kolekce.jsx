@@ -46,7 +46,7 @@ const categoryGroups = [
   label: 'Mlžné sochy',
   icon: Trees,
   tagline: 'Přírodní tvary. Živá atmosféra.',
-  description: 'Mlžné sochy jsou skulpturální instalace inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
+  description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
   audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
   usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
   accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
@@ -58,12 +58,12 @@ const categoryGroups = [
   label: 'Mlžné brány a portály',
   icon: Landmark,
   tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-  description: 'Brány a portály z mlhy vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
+  description: 'Mlžné brány a portály vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie mlžítka z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
   audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
   usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
   accent: 'text-sky-700 bg-sky-50 border-sky-200',
   dbCategories: ['URBAN ART'],
-  slugKeywords: ['portal', 'vertigo', 'helix', 'aura', 'linear', 'lomene', 'silueta', 'krystal']
+  slugKeywords: ['aura', 'linear', 'Y-ARMIST', 'Spirála', 'BENDY']
 },
 {
   id: 'mlhoviste',
@@ -75,16 +75,16 @@ const categoryGroups = [
   usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
   accent: 'text-orange-700 bg-orange-50 border-orange-200',
   dbCategories: ['GEOMETRY'],
-  slugKeywords: ['lavicka', 'bench', 'filtracni', 'trysky', 'holmapp']
+  slugKeywords: ['Mlžítka', 'Mlžiště', 'Mlžné systémy', 'Mlžné příslušenství', 'SMART mlžítka']
 }];
 
 
 const audienceSegments = [
-{ icon: Building2, label: 'Města a obce', desc: 'Ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
-{ icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžných instalací. Rychlá montáž a přenosnost.' },
-{ icon: Home, label: 'Rezidenční', desc: 'Soukromé zahrady, terasy a wellness. Individuální návrh a diskrétní instalace.' },
+{ icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
+{ icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžítek a mlžných instalací. Rychlá montáž a přenosnost.' },
+{ icon: Home, label: 'Rezidenční', desc: 'Mlžítka zahradní pro soukromé zahrady, terasy, wellness hotely, restaurační zahrádky... Individuální návrh a diskrétní mlžná instalace.' },
 { icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
-{ icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžení pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
+{ icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžítka - mlžná hřiště pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
 
 
 // Fallback images by category
@@ -162,7 +162,7 @@ export default function Kolekce() {
   const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
 
   const displayedProducts = products.
-  filter((p) => !['HolmApp Control', 'Filtrační Moduly', 'Trysky HT-LT', 'AI Design Studio'].includes(p.name)).
+  filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory'].includes(p.name)).
   filter((p) => {
     if (activeGroup) {
       return activeGroup.dbCategories.includes(p._categoryName) ||
@@ -190,7 +190,7 @@ export default function Kolekce() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
         <div className="flex items-center justify-between mb-10 lg:mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400">
-            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny produkty'}
+            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
             {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
           </p>
           {activeCategory &&

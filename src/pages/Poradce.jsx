@@ -33,8 +33,8 @@ export default function Poradce() {
 
   useEffect(() => {
     setSEO({
-      title: 'AI Poradce — Vyberte si ideální mlžný systém',
-      description: 'Popište svůj prostor a potřeby a náš AI poradce vám doporučí vhodný mlžný systém či mlžnou sochu HolmTec. Zdarma, konzultace ihned.',
+      title: 'AI Mlžný poradce — Vyberte si ideální mlžný systém pro mlžítko - Mlžidla.cz',
+      description: 'Popište svůj prostor, potřeby a náš AI poradce vám doporučí vhodný mlžítko neboli mlžný systém či mlžnou sochu Mlžidla.cz.',
       canonicalPath: '/poradce',
     });
   }, []);
@@ -44,7 +44,7 @@ export default function Poradce() {
     try {
       const conv = await base44.agents.createConversation({
         agent_name: 'produktovy_poradce',
-        metadata: { name: 'Výběr produktu' },
+        metadata: { name: 'Výběr mlžítka' },
       });
       setConversation(conv);
 
@@ -98,7 +98,7 @@ export default function Poradce() {
             Najdeme ideální řešení pro vás
           </h1>
           <p className="text-white/50 text-sm">
-            Popište svůj prostor a potřeby — náš poradce vám doporučí optimální mlžný systém.
+            Popište svůj prostor, potřeby — náš poradce vám doporučí optimální mlžný systém pro vaše mlžítko.
           </p>
         </motion.div>
 
@@ -187,7 +187,7 @@ export default function Poradce() {
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">
           <div className="flex items-center gap-3 mb-4">
             <Calculator size={16} className="text-cyan" />
-            <h2 className="text-white text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů</h2>
+            <h2 className="text-white text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů mlžítka</h2>
           </div>
           <MlzeniKalkulator />
         </motion.div>
@@ -197,7 +197,7 @@ export default function Poradce() {
           <p className="text-white/30 text-xs mb-3">Jste připraveni na nezávaznou poptávku?</p>
           <Link to="/kontakt"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 text-white text-sm border border-white/15 rounded-full hover:bg-white/10 hover:border-cyan/30 transition-all">
-            Kontaktovat HolmTec <ArrowRight size={14} />
+            Kontaktovat Mlžidla.cz <ArrowRight size={14} />
           </Link>
         </div>
 

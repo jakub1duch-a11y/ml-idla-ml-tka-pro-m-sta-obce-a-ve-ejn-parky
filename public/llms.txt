@@ -1,11 +1,11 @@
-# HolmTec — mlzidla.cz
+# Mlžítka, mlžné sochy a mlžné systémy — mlzidla.cz
 
-> HolmTec je český výrobce zakázkových mlžných soch, mlhovišť a chladicích systémů z nerezové oceli AISI 304/316L. Naše produkty ochlazují veřejné prostory, parky, náměstí, festivaly, zahrady a komerční prostory až o 9 °C pomocí jemné vodní mlhy (10–50 μm), aniž by zanechávaly vlhký povrch.
+> Mlžítko je český výrobce zakázkových mlžných soch, mlhovišť a chladicích systémů z nerezové oceli AISI 304/316L. Naše produkty ochlazují veřejné prostory, parky, náměstí, festivaly, zahrady a komerční prostory až o 9 °C pomocí jemné vodní mlhy (10–50 μm), aniž by zanechávaly vlhký povrch.
 
 ## Klíčové stránky
 
-- [Domů](https://www.mlzidla.cz/): Přehled značky HolmTec a hlavní produktové řady.
-- [Kolekce](https://www.mlzidla.cz/kolekce): Celý katalog mlžných soch a systémů.
+- [Domů](https://www.mlzidla.cz/): Přehled značky Mlžidla.cu a hlavní produktové řady mlžítek.
+- [Kolekce](https://www.mlzidla.cz/kolekce): Celý katalog mlžných soch mlžítek a mlžných systémů.
 - [Mlžiště](https://www.mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
 - [Jak to funguje](https://www.mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
 - [Poradce](https://www.mlzidla.cz/poradce): Interaktivní AI poradce a kalkulátor spotřeby vody a nákladů.
@@ -16,7 +16,7 @@
 
 ## Produkty
 
-Mlžné skulptury HolmTec zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody a tlakem.
+Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody a tlakem.
 
 ## Kontakt
 

@@ -160,7 +160,7 @@ export default function JakToFunguje() {
             </Link>
           </div>
           <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3aa6b0337_51da7b088_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ1.png"
-            alt="HolmTec Smart App" className="w-full aspect-[4/3] object-cover rounded-2xl" />
+            alt="Smart App - mlžítka" className="w-full aspect-[4/3] object-cover rounded-2xl" />
         </div>
       </div>
 

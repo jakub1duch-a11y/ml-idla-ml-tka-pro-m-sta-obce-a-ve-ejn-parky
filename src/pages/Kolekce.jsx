@@ -185,88 +185,7 @@ export default function Kolekce() {
 
       {/* ── HERO SLIDER ── */}
       <KolekceHero />
-
-
-
       {/* ── KATEGORIE ── */}
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-      {/* ── POKROČILÉ FILTRY ── */}
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
       {/* ── PRODUKTY ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
         <div className="flex items-center justify-between mb-10 lg:mb-12">
@@ -298,7 +217,7 @@ export default function Kolekce() {
       <div className="border-t border-slate-200 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou systémy určeny</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou mlžítka a mlžné systémy určeny</p>
             <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení pro každé publikum.</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -323,9 +242,9 @@ export default function Kolekce() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div className="p-6 md:p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Nový katalog 2026</p>
-            <h3 className="font-heading font-light text-2xl text-slate-900">Celá kolekce v jednom PDF.</h3>
-            <p className="text-sm text-slate-400 mt-1">Technické listy, výkresy, ceníky a referenční fotografie všech modelů.</p>
+            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Nový katalog - kolekce 2026</p>
+            <h3 className="font-heading font-light text-2xl text-slate-900">Celá kolekce mlžítek v jednom PDF.</h3>
+            <p className="text-sm text-slate-400 mt-1">Technické listy, výkresy, ceníky a referenční fotografie všech modelů mlžítek.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF"
@@ -334,7 +253,7 @@ export default function Kolekce() {
             </a>
             <Link to="/kontakt"
             className="px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
-              Nezávazná poptávka
+              Nezávazná rychlá poptávka
             </Link>
           </div>
         </div>

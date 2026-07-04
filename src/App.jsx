@@ -19,7 +19,6 @@ import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
 import SearchAnalytics from '@/pages/SearchAnalytics';
-import ProjectStatus from '@/pages/ProjectStatus';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Poradce from '@/pages/Poradce';
 import Kalkulacka from '@/pages/Kalkulacka';
@@ -70,7 +69,6 @@ const AuthenticatedApp = () => {
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
-        <Route path="/project/:token" element={<ProjectStatus />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
         <Route path="/kalkulacka" element={<Kalkulacka />} />

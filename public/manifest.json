@@ -1,7 +1,7 @@
 {
-  "name": "HolmTec — Mlžné sochy a mlžení",
-  "short_name": "mlzidla.cz",
-  "description": "Zakázkové mlžné sochy a chladicí systémy z nerezové oceli. Ochlazení až −9 °C pro veřejné prostory.",
+  "name": "Mlžítka, mlžné sochy - MLŽIDLA.CZ",
+  "short_name": "mlžidla.cz",
+  "description": "Zakázkové mlžné sochy, mlžítka a venkovní chladicí mlžné systémy z nerezové oceli. Ochlazení až −10 °C pro veřejné prostory.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0D1117",
@@ -33,8 +33,8 @@
   "categories": ["shopping", "business"],
   "shortcuts": [
     {
-      "name": "Kolekce",
-      "url": "/kolekce",
+      "name": "Mlžítka, mlžné sochy - MLŽIDLA.CZ",
+      "url": "/mlzitka",
       "description": "Prohlédnout mlžné systémy"
     },
     {

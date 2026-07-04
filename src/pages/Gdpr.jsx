@@ -7,12 +7,12 @@ const SECTIONS = [
   {
     id: 'spravce',
     title: 'Správce osobních údajů',
-    content: `Správcem osobních údajů je společnost HolmTec s.r.o., se sídlem Trutnov, Česká republika, IČO: [doplňte IČO], zapsaná v obchodním rejstříku vedeném u Krajského soudu.
+    content: `Správcem osobních údajů je společnost HolmTec s.r.o., se sídlem Trutnov, Česká republika, IČO: [27486893], zapsaná v obchodním rejstříku vedeném u Krajského soudu.
 
 Kontaktní údaje správce:
 • E-mail: obchod1@holmtec.cz
 • Telefon: +420 774 700 390
-• Web: www.mlzidla.cz`,
+• Web: https://mlzidla.cz`,
   },
   {
     id: 'jake-udaje',

@@ -60,7 +60,7 @@ export default function Catalog() {
             Mlžné systémy & komponenty
           </h1>
           <p className="mt-4 text-white/40 max-w-xl">
-            Kompletní portfolio high-pressure mlžných technologií pro každou aplikaci.
+            Kompletní portfolio nízkotlakých mlžných technologií pro každou aplikaci.
           </p>
         </div>
       </div>

@@ -12,7 +12,7 @@ import SplashScreen from '@/components/common/SplashScreen';
 
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
-import Kolekce from '@/pages/Mlzitka';
+import Kolekce from '@/pages/Kolekce';
 import Prislusenstvi from '@/pages/Prislusenstvi';
 import Mlhoviste from '@/pages/Mlhoviste';
 import JakToFunguje from '@/pages/JakToFunguje';
@@ -62,7 +62,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/mlzidla-mlzitka" element={<Mlzitka />} />
+        <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/prislusenstvi" element={<Prislusenstvi />} />
         <Route path="/mlhoviste" element={<Mlhoviste />} />
         <Route path="/jak-to-funguje" element={<JakToFunguje />} />
@@ -92,7 +92,7 @@ const AuthenticatedApp = () => {
         <Route path="/gate70" element={<Gate70 />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
-      <Route path="/" element={<PageNotFound />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
@@ -119,4 +119,4 @@ function App() {
   )
 }
 
-export default Appn
+export default App

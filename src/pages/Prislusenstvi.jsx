@@ -6,14 +6,14 @@ import { ArrowRight, Loader, Building2, Users, Home, Warehouse, Baby } from 'luc
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 
-const ACCESSORY_KEYWORDS = ['tryska', 'trysky', 'cerpadl', 'čerpadl', 'filtr', 'holmapp', 'modul', 'senzor', 'ovladani', 'ovládání'];
+const ACCESSORY_KEYWORDS = ['mlžítka', 'mlžný', 'mlžné', 'příslušenství', 'zahradních', 'systémy', 'mlžné trysky', 'mlžná'];
 
 const audienceSegments = [
-{ icon: Building2, label: 'Města a obce', desc: 'Náhradní díly a rozšíření pro instalované systémy ve veřejném prostoru.' },
+{ icon: Building2, label: 'Města a obce', desc: 'Náhradní mlžné díly a rozšíření pro instalované mlžítka a systémy ve veřejném prostoru.' },
 { icon: Users, label: 'Instalační firmy', desc: 'Komponenty pro montáž a servis mlžných systémů třetích stran.' },
-{ icon: Home, label: 'Rezidenční', desc: 'Doplňky pro rozšíření zahradních a terasových mlžítek.' },
-{ icon: Warehouse, label: 'Průmysl a servis', desc: 'Náhradní trysky, čerpadla a filtry pro průmyslové instalace.' },
-{ icon: Baby, label: 'Správci hřišť', desc: 'Bezpečné náhradní díly a Smart moduly pro dětská hřiště.' }];
+{ icon: Home, label: 'Rezidenční', desc: 'Doplňky pro rozšíření mlžných zahradních a terasových mlžítek.' },
+{ icon: Warehouse, label: 'Průmysl a servis', desc: 'Náhradní mlžné trysky, čerpadla a filtry pro průmyslové mlžné instalace.' },
+{ icon: Baby, label: 'Správci hřišť', desc: 'Bezpečné náhradní díly a Smart moduly pro dětská mlžná hřiště.' }];
 
 
 const FALLBACK_IMAGE = 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg';
@@ -55,9 +55,9 @@ export default function Prislusenstvi() {
 
   useEffect(() => {
     setSEO({
-      title: 'Mlžné příslušenství a moduly — Trysky, čerpadla, Smart moduly',
-      description: 'Příslušenství pro mlžné systémy HolmTec: trysky AISI 316L, čerpadla, filtry a Smart moduly pro řízení a automatizaci. Náhradní díly a rozšíření.',
-      keywords: 'mlžné příslušenství, trysky HolmTec, čerpadlo mlžení, filtr mlžný systém, Smart modul mlžení',
+      title: 'Příslušenství pro mlžné systémy a mlžítka - Mlžidla.cz',
+      description: 'Mlžné systémy a příslušenství pro mlžítka - trysky, čerpadla, filtry a Smart moduly pro řízení a automatizaci mlžítek.',
+      keywords: 'mlžné, příslušenství, mlžidla, mlžný, mlžítka, mlžítek,systémy',
       canonicalPath: '/prislusenstvi'
     });
   }, []);

@@ -9,26 +9,26 @@ const FAQ_SECTIONS = [
   {
     id: 'instalace',
     icon: Package,
-    title: 'Instalace',
+    title: 'Instalace mlžítek',
     items: [
       {
         q: 'Jak dlouho trvá instalace mlžítka?',
-        a: 'Standardní instalace trvá zpravidla jeden pracovní den. Závisí to na typu produktu, způsobu ukotvení (zemní patka nebo příruba) a přípravě místa. U větších instalací s více prvky počítejte s 2–3 dny.',
+        a: 'Standardní instalace mlžítek trvá zpravidla jeden pracovní den. Závisí to na typu mlžítka, způsobu ukotvení (zemní patka nebo příruba) a přípravě místa. U větších instalací s více prvky počítejte s 2–3 dny.',
       },
       {
-        q: 'Co je potřeba připravit před instalací?',
+        q: 'Co je potřeba připravit před instalací mlžítek?',
         a: 'Před instalací je nutné zajistit přívod vody (min. 3 bar, ideálně 4–6 bar), zdroj elektrické energie 230 V pro čerpadlo a řídící jednotku, a připravit základy dle výkresové dokumentace, kterou dodáváme.',
       },
       {
-        q: 'Mohu si mlžítko nainstalovat sám?',
+        q: 'Mohu si mlžítka nainstalovat sám?',
         a: 'Jednodušší modely (START, PARK) jsou navrženy tak, aby je zvládl instalovat zkušený řemeslník. Pro složitější mlžné sochy a systémy s vysokotlakým čerpadlem doporučujeme naši servisní instalaci — zajistíme správné nastavení tlaku, tryskového systému a řídící elektroniky.',
       },
       {
-        q: 'Na jaký typ povrchu lze mlžítko instalovat?',
+        q: 'Na jaký typ povrchu lze mlžítka instalovat?',
         a: 'Mlžítka lze kotvit do betonu, asfaltu, dlažby i přírodního povrchu. Dodáváme různé typy patek a přírub. Pro instalaci do stávající dlažby nabízíme minimálně invazivní řešení s vrtanou kotvou.',
       },
       {
-        q: 'Lze mlžítko přemístit na jiné místo?',
+        q: 'Lze mlžítka přemístit na jiné místo?',
         a: 'Ano. Produkty s přírubovým uchycením lze demontovat a přemístit relativně snadno. Zemní patky jsou trvalejší instalací, ale i ty lze s odbornou pomocí přemístit. Kontaktujte nás pro posouzení konkrétního případu.',
       },
     ],
@@ -36,14 +36,14 @@ const FAQ_SECTIONS = [
   {
     id: 'udrzba',
     icon: Wrench,
-    title: 'Údržba a servis',
+    title: 'Údržba a servis mlžidel',
     items: [
       {
-        q: 'Jak často je potřeba mlžítko servisovat?',
+        q: 'Jak často je potřeba mlžítka servisovat?',
         a: 'Doporučujeme základní servis jednou ročně — vždy na začátku nebo konci sezóny. Servis zahrnuje kontrolu a čištění trysek, kontrolu tlakového čerpadla, filtrů a elektrické části. Nabízíme roční servisní smlouvy.',
       },
       {
-        q: 'Jak čistit trysky?',
+        q: 'Jak čistit trysky mlžítek?',
         a: 'Trysky z AISI 316L jsou odolné vůči usazování vodního kamene. Při používání tvrdé vody doporučujeme instalaci změkčovacího filtru. Trysky lze ručně demontovat a propláchnout citrovým roztokem. Podrobný postup je součástí manuálu.',
       },
       {
@@ -55,7 +55,7 @@ const FAQ_SECTIONS = [
         a: 'Před zimním obdobím je nutné odvodnit celý systém — vypustit vodu z trubek, čerpadla i filtrů, aby nedošlo k poškození mrazem. Podrobný postup zimování je součástí manuálu. Nabízíme také službu zimování v rámci servisní smlouvy.',
       },
       {
-        q: 'Je nerezová konstrukce odolná vůči vandalismu?',
+        q: 'Je nerezová konstrukce mlžítek odolná vůči vandalismu?',
         a: 'Ano. Materiál AISI 316L je velmi odolný vůči mechanickému poškození, UV záření i chemikáliím. Trysky jsou zapuštěny do trubkového systému. Na konstrukci poskytujeme záruku 5 let. V případě poškození vandaly lze většinou vyměnit pouze poškozený díl.',
       },
     ],
@@ -63,18 +63,18 @@ const FAQ_SECTIONS = [
   {
     id: 'spotrebaVody',
     icon: Droplets,
-    title: 'Spotřeba vody a provoz',
+    title: 'Spotřeba vody a provoz mlžítek',
     items: [
       {
         q: 'Jaká je spotřeba vody mlžítka za hodinu?',
-        a: 'Spotřeba závisí na počtu trysek a provozním tlaku. Orientačně: malé mlžítko (2–4 trysky) spotřebuje cca 20–60 l/hod. Středně velká instalace (8–12 trysek) cca 80–150 l/hod. Velká mlžná socha s 20+ tryskami může spotřebovat 200–400 l/hod. Přesné údaje jsou v technickém listu každého produktu.',
+        a: 'Spotřeba závisí na počtu trysek mlžítka a provozním tlaku. Orientačně: malé mlžítko (2–4 trysky) spotřebuje cca 20–60 l/hod. Středně velká instalace (8–12 trysek) cca 80–150 l/hod. Velká mlžná socha s 20+ tryskami může spotřebovat 200–400 l/hod. Přesné údaje jsou v technickém listu každého produktu.',
       },
       {
         q: 'Padá voda na zem a tvoří se louže?',
         a: 'Ne. Trysky rozptylují kapičky o velikosti 10–50 μm, které se okamžitě odpaří ve vzduchu (evaporativní chlazení). Za normálních podmínek (teplota nad 20 °C, nízká vzdušná vlhkost) se voda zcela odpaří a na zemi nezůstávají louže ani mokré povrchy.',
       },
       {
-        q: 'Jaký tlak vody je potřeba?',
+        q: 'Jaký tlak vody je potřeba pro mlžítka?',
         a: 'Standardní přívod z vodovodní sítě (3–6 bar) postačí pro systémy s interním vysokotlakým čerpadlem. Čerpadlo zvýší tlak na 50–70 bar, který je potřebný pro správnou atomizaci kapének. Systémy bez vlastního čerpadla vyžadují min. 4 bar vstupního tlaku.',
       },
       {
@@ -153,7 +153,7 @@ export default function Podpora() {
             Nejčastější dotazy
           </h1>
           <p className="text-slate-500 max-w-xl leading-relaxed font-light">
-            Odpovědi na nejčastější otázky ohledně instalace, údržby a provozu mlžných systémů HolmTec. Nenašli jste odpověď? Kontaktujte nás.
+            Odpovědi na nejčastější otázky ohledně instalace, údržby a provozu mlžných systémů, mlžítek - Mlžidla.cz. Nenašli jste odpověď? Kontaktujte nás.
           </p>
         </motion.div>
 

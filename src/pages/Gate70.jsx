@@ -68,20 +68,20 @@ const VIDEOS = [
 const TECH_ROWS = [
 { label: 'Materiál', value: 'Nerezová ocel AISI 316L (1.4301)' },
 { label: 'Trubky', value: 'TR76×3 mm, svařované' },
-{ label: 'Trysky', value: '5 ks AISI 316L, 10–50 μm' },
-{ label: 'Spotřeba vody', value: '60–120 l/h' },
+{ label: 'Trysky', value: '5-8 ks AISI 316L, 10–50 μm' },
+{ label: 'Spotřeba vody', value: '40–100 l/h' },
 { label: 'Tlak mlžení', value: "3-7 bar" },
-{ label: 'Šířka × Výška', value: '2 m × 2,2 m *(upravitelné)' },
-{ label: 'Kotvení', value: 'Skrytá patka, chemické kotvy M10–M16 do betonu' },
+{ label: 'Šířka × Výška', value: '2 m × 2,2 m *(volitelná)' },
+{ label: 'Kotvení', value: 'Skryté kotvící patky, chemické kotvy M10–M16 do betonu' },
 { label: 'Povrch', value: 'Broušený / kartáčovaný' },
-{ label: 'Napájení', value: "12V / Wi-Fi Smart \u0159\xEDzen\xED" },
+{ label: 'Napájení', value: "dle zvolení - 12V / Wi-Fi Smart \u0159\xEDzen\xED" },
 { label: 'Dodací lhůta', value: '1–5 týdnů dle výroby' },
-{ label: 'Záruka', value: "1 ROK na konstrukci" },
+{ label: 'Záruka', value: "na konstrukci" },
 { label: "", value: "" }];
 
 
 const SMART_FEATURES = [
-{ icon: Wifi, title: 'Wi-Fi Smart ovládání', desc: 'Nastavte harmonogram, intenzitu mlžení a časovač přes mobilní app bez nutnosti přístupu k elektrice na místě.' },
+{ icon: Wifi, title: 'Wi-Fi Smart ovládání', desc: 'Nastavte harmonogram, intenzitu mlžení a časovač mlžné brány přes mobilní app bez nutnosti přístupu k elektrice na místě.' },
 { icon: Thermometer, title: 'Teplotní senzor', desc: 'Automatické spuštění při překročení nastavené teploty (např. 28 °C). Mlžení se samo vypne při poklesu.' },
 { icon: Radio, title: 'PIR — senzor pohybu', desc: 'Brána aktivuje mlžení jen tehdy, když v dosahu detekuje osobu. Šetří až 40 % vody.' },
 { icon: Smartphone, title: 'Mobile App', desc: 'Ovládání, statistiky spotřeby a přehled chyb přímo v telefonu (iOS / Android).' },
@@ -91,7 +91,7 @@ const SMART_FEATURES = [
 
 const INSTALACE = [
 { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg', title: "Testov\xE1n\xED ml\u017En\xE9 br\xE1ny GATE70", location: "- Testov\xE1n\xED" },
-{ img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg', title: "HolmTec s.r.o.", location: "- testov\xE1n\xED" },
+{ img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg', title: "Mlžítka - Mlžidla.cz", location: "- testov\xE1n\xED" },
 { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png', title: "Ml\u017En\xE1 br\xE1na v rekrea\u010Dn\xEDm are\xE1lu", location: "Ml\u017En\xE1 br\xE1na pro Rekrea\u010Dn\xED camp" }];
 
 
@@ -140,7 +140,7 @@ export default function Gate70() {
     setSEO({
       title: 'Mlžná brána GATE70 — -U rovná a -V lomený oblouk',
       description: 'Designová mlžná brána GATE70 z nerezové oceli AISI 316L ve dvou variantách. Ochlazení až −9 °C, Wi-Fi Smart řízení, pro náměstí, parky a vjezdy. HolmTec.',
-      keywords: 'mlžná brána GATE70, mlžná brána nerez, mlžítko brána, mlhoviště brána, GATE70-U, GATE70-V, HolmTec mlžná brána, ochlazení veřejného prostoru',
+      keywords: 'mlžná, mlžné, brána, brány, mlha, GATE, nerez, mlžítko, holmTec, ochlazení',
       image: HERO_U,
       canonicalPath: '/gate70',
       type: 'product'
@@ -170,13 +170,13 @@ export default function Gate70() {
         {/* Back */}
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
-            ← Zpět na kolekci
+            ← Zpět na kolekci mlžítek
           </Link>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-16">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">HolmTec · Mlžné brány</p>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">Mlžidla.cz · Mlžné brány a portály</p>
             <h1 style={{ fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 0.9, fontSize: 'clamp(4rem, 12vw, 9rem)' }}
             className="text-white uppercase mb-6">GATE70</h1>
 
@@ -201,9 +201,9 @@ export default function Gate70() {
             {/* Stats row */}
             <div className="flex flex-wrap gap-8 mb-10">
               {[
-              { val: '−9 °C', label: 'Ochlazení' },
-              { val: '5 trysek', label: 'AISI 316L' },
-              { val: '70 bar', label: 'Tlak' },
+              { val: '−10 °C', label: 'Ochlazení až' },
+              { val: '5-8 trysek', label: 'AISI 316L' },
+              { val: '3-7 bar', label: 'Tlak' },
               { val: '2×2,2 m', label: 'Základní rozměr' }].
               map((s) =>
               <div key={s.label}>
@@ -215,7 +215,7 @@ export default function Gate70() {
 
             <Link to="/poptavka"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
-              Poptat GATE70 <ArrowRight size={16} />
+              Poptat mlžnou bránu GATE70 <ArrowRight size={16} />
             </Link>
           </motion.div>
         </div>
@@ -285,7 +285,7 @@ export default function Gate70() {
                 GATE70 je víc než mlžné zařízení — je to architektonický prvek, který definuje vstup do prostoru…
               </p>
               <p className="text-slate-500 text-sm leading-relaxed font-light mb-6">
-                Pět mlžných trysek z nerezové oceli AISI 316L vytváří jemnou mlhovou clonu…
+                Pět až osm mlžných trysek z nerezové oceli AISI 316L vytváří jemnou mlhovou clonu…
               </p>
               <p className="text-slate-400 text-sm leading-relaxed font-light mb-8">Rozměry upravitelné dle projektové dokumentace / Kotvení skrytou patkou pod úrovní terénu / Není herní prvek — designový architektonický prvek 
 
@@ -351,17 +351,17 @@ export default function Gate70() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 flex items-start justify-between gap-8">
             <div>
-              <p className="text-sm text-slate-500 mb-3">Wi-Fi Smart systém</p>
+              <p className="text-sm text-slate-500 mb-3">Wi-Fi Smart mlžný systém</p>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
                 style={{ lineHeight: 1.1, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 mb-4">
-                Inteligentní brána.
+                Inteligentní SMART mlžná brána.
               </motion.h2>
               <p className="text-slate-500 leading-relaxed max-w-2xl">GATE70 je možnost vybavit plně integrovaným Wi-Fi Smart systémem. Ovládání, senzory, osvětlení a časovače — vše v jednom zařízení.
               </p>
             </div>
             <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d8051fd30_WIFI_SMART_mlitka.png"
 
-            alt="Smart aplikace pro ovládání GATE70"
+            alt="Smart aplikace pro ovládání mlhy GATE70"
             className="hidden lg:block shrink-0 w-80" />
           </motion.div>
 

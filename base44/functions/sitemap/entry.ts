@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const BASE_URL = 'https://www.mlzidla.cz';
+const BASE_URL = 'https://mlzidla.cz';
 
 const STATIC_PAGES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly' },

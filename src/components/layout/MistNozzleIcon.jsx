@@ -4,9 +4,7 @@ import { motion } from 'framer-motion';
 // Small animated misting-nozzle icon: sprays soft fading mist puffs upward
 export default function MistNozzleIcon({ className = '', color = '#0f172a', accent = '#40a2d4' }) {
   const puffs = [0, 1, 2];
-  return (
-    <div className={`relative flex items-end justify-center shrink-0 hidden ${className}`} style={{ width: 22, height: 26 }}>
-      {puffs.map((i) => null
+  return null;
 
 
 
@@ -20,12 +18,14 @@ export default function MistNozzleIcon({ className = '', color = '#0f172a', acce
 
 
 
-      )}
-      
 
 
 
-      
-    </div>);
+
+
+
+
+
+
 
 }

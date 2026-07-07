@@ -53,7 +53,7 @@ export default function Footer() {
                 <Mail size={13} /> obchod1@holmtec.cz
               </a>
               <div className="flex items-center gap-2 text-sm text-slate-500">
-                <MapPin size={13} /> Trutnov, 54102, Horní staré město, Česká republika
+                <MapPin size={13} /> Trutnov, 54102, Horní staré město 698, Česká republika
               </div>
             </div>
           </div>

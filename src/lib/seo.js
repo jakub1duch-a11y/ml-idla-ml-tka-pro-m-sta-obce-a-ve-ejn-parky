@@ -214,7 +214,7 @@ export function getProductSEO(product, reviewStats) {
     manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
     material: product.material || 'Nerezová ocel AISI 316L',
     offers: {
-      '@type': 'shippingDetails',
+      '@type': 'offer',
       price: priceValue,
       priceCurrency: 'CZK',
       priceSpecification: {

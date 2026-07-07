@@ -71,8 +71,8 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
 
 export const SEO_PAGES = {
   home: {
-    title: 'Mlžné sochy a mlžení veřejných prostorů — Ochlazení až −9 °C',
-    description: 'Zakázkové mlžné sochy, mlhoviště a chladicí systémy z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad. HolmTec — výroba a instalace.',
+    title: 'Mlžné sochy a mlžení veřejných prostorů',
+    description: 'Zakázkové mlžné sochy, mlhoviště a chladicí systémy z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad.',
     keywords: 'mlžné sochy, mlžení veřejných prostorů, mlhoviště, mlžný systém, ochlazení náměstí, mlžné trysky, chladicí sochy, HolmTec, mlzidla, nerezové sochy, mlžení parků',
     canonicalPath: '/',
   },

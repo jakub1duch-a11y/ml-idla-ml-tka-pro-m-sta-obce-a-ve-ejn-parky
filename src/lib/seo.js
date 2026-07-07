@@ -71,13 +71,13 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
 
 export const SEO_PAGES = {
   home: {
-    title: 'Mlžítka a mlžné brány HolmTec',
+    title: 'Mlžítka a mlžné brány',
     description: 'Zakázkové mlžítka, mlžné brány a chladicí systémy HolmTec z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad.',
     keywords: 'mlžné, sochy, mlžítka, mlzitka, mlžné, brány, HolmTec, mlzidla, nerezové sochy, mlžení',
     canonicalPath: '/',
   },
   kolekce: {
-    title: 'Mlžítka a mlžné brány — Celý katalog mlžítek 2026',
+    title: 'Celý katalog 2026 - Mlžítka a mlžné brány',
     description: 'Kolekce 2026 - Mlžítka a mlžné brány HolmTec: OSTREV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70 a další. Zakázková výroba z nerezové oceli, navržená pro každý veřejný prostor.',
     keywords: 'mlžítka, mlžné brány, katalog mlžných soch, mlžné skulptury, mlžné systémy katalog, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70, mlžná brána',
     canonicalPath: '/mlzidla-mlzitka',

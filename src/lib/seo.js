@@ -336,7 +336,7 @@ export function injectOrgJsonLd() {
     address: {
       '@type': 'PostalAddress',
       AddressLocality: 'Trutnov',
-      StreetAddress: "Horní staré město 698"
+      StreetAddress: "Horní staré město 698",
       PostalCode:"54102",
       AddressCountry: 'CZ',
     },

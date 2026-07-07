@@ -223,6 +223,19 @@ export function getProductSEO(product, reviewStats) {
         priceCurrency: 'CZK',
         valueAddedTaxIncluded: 'true',
         name: hasPrice ? 'Cena od, finální cena dle projektové specifikace' : 'Cena na vyžádání dle projektové specifikace',
+          "offers": [
+    {
+      "url": "https://example.com/product-123456",
+      "price": "100.00",
+      "currency": "USD",
+      "quantity": "1",
+      "hasMerchantReturnPolicy": {
+        "value": true
+      },
+      "shippingDetails": {
+        "type": "FreeShipping",
+        "price": "0"
+      }
       },
       availability: 'https://schema.org/InStoreOnly',
       url: `${BASE_URL}/produkt/${product.slug}`,
@@ -234,8 +247,7 @@ export function getProductSEO(product, reviewStats) {
       reviewCount: reviewStats ? String(reviewStats.count) : '24',
       bestRating: '5',
       worstRating: '1',
-    },
-  };
+    }, 
 
   return {
     title,

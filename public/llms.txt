@@ -4,15 +4,15 @@
 
 ## Klíčové stránky
 
-- [Domů](https://www.mlzidla.cz/): Přehled značky Mlžidla.cz a hlavní produktové řady mlžítek.
-- [Kolekce](https://www.mlzidla.cz/kolekce): Celý katalog mlžných soch mlžítek a mlžných systémů.
-- [Mlžiště](https://www.mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
-- [Jak to funguje](https://www.mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
-- [Poradce](https://www.mlzidla.cz/poradce): Interaktivní AI poradce a kalkulátor spotřeby vody a nákladů.
-- [Reference](https://www.mlzidla.cz/reference): Realizované projekty po celé ČR a zahraničí.
-- [Blog](https://www.mlzidla.cz/blog): Články o technologii mlžení, inspiraci a realizacích.
-- [O nás](https://www.mlzidla.cz/o-nas): Informace o firmě HolmTec.
-- [Kontakt](https://www.mlzidla.cz/kontakt) / [Poptávka](https://www.mlzidla.cz/poptavka): Nezávazná poptávka a kontaktní údaje.
+- [Domů](https://mlzidla.cz/): Přehled značky Mlžidla.cz a hlavní produktové řady mlžítek.
+- [Kolekce](https://mlzidla.cz/kolekce): Celý katalog mlžných soch mlžítek a mlžných systémů.
+- [Mlžiště](https://mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
+- [Jak to funguje](https://mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
+- [Poradce](https://mlzidla.cz/poradce): Interaktivní AI poradce a kalkulátor spotřeby vody a nákladů.
+- [Reference](https://mlzidla.cz/reference): Realizované projekty po celé ČR a zahraničí.
+- [Blog](https://mlzidla.cz/blog): Články o technologii mlžení, inspiraci a realizacích.
+- [O nás](https://mlzidla.cz/o-nas): Informace o firmě HolmTec.
+- [Kontakt](https://mlzidla.cz/kontakt) / [Poptávka](https://mlzidla.cz/poptavka): Nezávazná poptávka a kontaktní údaje.
 
 ## Produkty
 

@@ -38,11 +38,7 @@ export default function CustomerPortal() {
       await base44.functions.invoke('requestPortalOtp', { email });
       setOtpSent(true);
     } catch (e) {
-      if (e?.response?.status === 404) {
-        setError('Žádné poptávky ani projekty nenalezeny pro tento email.');
-      } else {
-        setError('Chyba při odesílání kódu. Zkuste to znovu.');
-      }
+      setError('Chyba při odesílání kódu. Zkuste to znovu.');
     } finally {
       setLoading(false);
     }

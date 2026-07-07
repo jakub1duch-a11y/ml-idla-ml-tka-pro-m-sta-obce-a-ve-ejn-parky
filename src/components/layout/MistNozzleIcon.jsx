@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export default function MistNozzleIcon({ className = '', color = '#0f172a', accent = '#40a2d4' }) {
   const puffs = [0, 1, 2];
   return (
-    <div className={`relative flex items-end justify-center shrink-0 ${className}`} style={{ width: 22, height: 26 }}>
+    <div className={`relative flex items-end justify-center shrink-0 hidden ${className}`} style={{ width: 22, height: 26 }}>
       {puffs.map((i) => null
 
 

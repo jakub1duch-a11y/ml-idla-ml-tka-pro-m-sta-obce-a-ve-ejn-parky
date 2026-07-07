@@ -74,7 +74,7 @@ export default function Poptavka() {
             {[
               { icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
               { icon: Mail, label: 'Email', value: 'obchod1@holmtec.cz', href: 'mailto:obchod1@holmtec.cz' },
-              { icon: MapPin, label: 'Adresa', value: 'Trutnov, Česká republika', href: null },
+              { icon: MapPin, label: 'Adresa', value: '541 02 Trutnov, Horní staré město 698, Česká republika', href: null },
             ].map((item) => (
               <motion.div
                 key={item.label}

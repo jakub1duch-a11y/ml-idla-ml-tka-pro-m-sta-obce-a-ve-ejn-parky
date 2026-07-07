@@ -100,7 +100,7 @@ export default function Architekti() {
       {/* Ke stažení */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč architekti volí Holmtec Mlžidla.cz</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč architekti volí Mlžidla.cz</p>
           <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
             Od první skici<br /><span style={{ fontStyle: 'italic' }}>po finální realizaci.</span>
           </h2>

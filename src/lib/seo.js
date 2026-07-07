@@ -3,7 +3,7 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
-const SITE_NAME = 'HolmTec — mlzidla.cz';
+const SITE_NAME = 'Mlžidla.cz - Mlžítka Holmtec';
 const BASE_URL = 'https://www.mlzidla.cz';
 const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg';
 
@@ -131,9 +131,9 @@ export const SEO_PAGES = {
     canonicalPath: '/podpora',
   },
   mestOobce: {
-    title: 'Mlžné systémy pro města a obce — Ochlazení veřejných prostranství',
-    description: 'Mlžné sochy a mlhoviště pro města a obce. Ochlazení náměstí, parků a zastávek. Dotační programy, certifikované materiály, zakázková výroba HolmTec.',
-    keywords: 'mlžení pro města, mlhoviště obce, ochlazení náměstí, mlžné sochy pro veřejná prostranství, dotace mlžení veřejný prostor',
+    title: 'Mlžítka pro města a obce — Ochlazení veřejných prostranství',
+    description: 'Mlžítka, mlžné sochy a mlhoviště pro města a obce. Ochlazení náměstí, parků a zastávek. Dotační programy, certifikované materiály, zakázková výroba HolmTec.',
+    keywords: 'mlžítka, mlžné sochy, pro města, mlhoviště obce, ochlazení náměstí,',
     canonicalPath: '/kategorie/mesta-obce',
   },
   parkyHriste: {
@@ -325,7 +325,7 @@ export function injectOrgJsonLd() {
     '@type': 'Organization',
     name: 'HolmTec s.r.o.',
     url: BASE_URL,
-    logo: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+    logo: 'https://drive.google.com/drive/u/1/folders/0ACRsWxU90i5aUk9PVA?hl=cs',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+420-774-700-390',
@@ -336,8 +336,10 @@ export function injectOrgJsonLd() {
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Trutnov',
+      streetAddress: "Horní staré město 698"
+      postal_code:"54102",
       addressCountry: 'CZ',
     },
-    sameAs: ['https://www.mlzidla.cz'],
+    sameAs: ['https://mlzidla.cz'],
   });
 }

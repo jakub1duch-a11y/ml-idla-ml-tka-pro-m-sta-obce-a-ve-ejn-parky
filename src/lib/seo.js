@@ -192,8 +192,8 @@ export function getProductSEO(product, reviewStats) {
   if (!product) return {};
   const title = `${product.name} — Mlžná skulptura z nerezové oceli`;
   const description = product.short_description
-    ? `${product.name}: ${product.short_description} ${product.material ? `Materiál: ${product.material}.` : ''} Zakázková výroba HolmTec — mlzidla.cz.`
-    : `Mlžná skulptura ${product.name} od HolmTec. Zakázková výroba z nerezové oceli, ochlazení až −9 °C. Ideální pro parky, náměstí a eventy.`;
+    ? `${product.name}: ${product.short_description} ${product.material ? `Materiál: ${product.material}.` : ''} Zakázková výroba Mlžidla.cz - Mlžítka HolmTec.`
+    : `Mlžná skulptura ${product.name} od Mlžidla.cz. Zakázková výroba z nerezové oceli, ochlazení až −9 °C. Ideální pro parky, náměstí a eventy.`;
   const keywords = `${product.name}, mlžná socha ${product.name}, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, mlhoviště ${product.name}, HolmTec ${product.name}`;
 
   const sku = `HT-${(product.slug || product.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-')}`;

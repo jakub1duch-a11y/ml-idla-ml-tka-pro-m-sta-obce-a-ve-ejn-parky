@@ -228,20 +228,22 @@ export function getProductSEO(product, reviewStats) {
       url: `${BASE_URL}/produkt/${product.slug}`,
       seller: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
     },
-    "shippingDetails": {
-  "type": "FreeShipping",
-  "price": "0"
-}
-"hasMerchantReturnPolicy": {
-        "value": true
-      }
+    shippingDetails: {
+      type: 'FreeShipping',
+      price: '0',
+    },
+    hasMerchantReturnPolicy: {
+      value: true,
+    },
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: reviewStats ? reviewStats.average.toFixed(1) : '4.9',
       reviewCount: reviewStats ? String(reviewStats.count) : '24',
       bestRating: '5',
       worstRating: '1',
-    }, 
+    },
+  };
+
   return {
     title,
     description,

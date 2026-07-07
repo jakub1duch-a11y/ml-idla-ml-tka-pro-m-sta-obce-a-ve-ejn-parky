@@ -335,10 +335,10 @@ export function injectOrgJsonLd() {
     },
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Trutnov',
-      streetAddress: "Horní staré město 698"
-      postal_code:"54102",
-      addressCountry: 'CZ',
+      AddressLocality: 'Trutnov',
+      StreetAddress: "Horní staré město 698"
+      PostalCode:"54102",
+      AddressCountry: 'CZ',
     },
     sameAs: ['https://mlzidla.cz'],
   });

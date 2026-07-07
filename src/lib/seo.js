@@ -272,13 +272,13 @@ export function getBlogPostSEO(post) {
     datePublished: post.published_date || post.created_date,
     dateModified: post.updated_date || post.published_date || post.created_date,
     author: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-    publisher: { '@type': 'Organization', name: 'HolmTec — mlzidla.cz', url: BASE_URL },
+    publisher: { '@type': 'Organization', name: 'Mlžidla.cz - Mlžítka HolmTec', url: BASE_URL },
   };
 
   return {
     title: post.title,
     description,
-    keywords: `${post.title}, mlžné sochy blog, ${post.category || ''}, HolmTec novinky`,
+    keywords: `${post.title}, mlžné sochy blog, ${post.category || ''}, Mlžidla.cz - novinky`,
     image: previewImage,
     canonicalPath: `/blog/${post.slug || post.id}`,
     type: 'article',

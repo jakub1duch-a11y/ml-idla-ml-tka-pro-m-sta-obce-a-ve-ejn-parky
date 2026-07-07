@@ -17,18 +17,15 @@ const TAGLINES = [
 
 
 const SLIDES = [
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/74a4e8604_mlzidla-mlzitkaproparkyamesta01.MP4' },
-{ type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9aa2c2600_mlzitka-mlzicizonyhriste.jpg' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eb7e87313_mlzidla-mlzitkaproparkyamesta03.MOV' },
 { type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9f0153e3a_ml_detailvparku_01.MOV' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.MOV' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/a4e40221e_video-mlitkospiralavakci.MOV' }];
+{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' },];
 
 
 // Duration per slide: videos ~8s, images 5s
-const SLIDE_DURATION = 6000;
+const SLIDE_DURATION = 8000;
 
 function VideoSlide({ src, active }) {
   const ref = useRef(null);

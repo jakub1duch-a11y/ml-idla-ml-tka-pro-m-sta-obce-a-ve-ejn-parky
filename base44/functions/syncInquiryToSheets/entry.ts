@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
 // "Poptávky a dotazy z webu Mlžidla.cz" spreadsheet, shared with the team.
 const SPREADSHEET_ID = '1IcI8zsltInagTR8u5VntZEFOuUAbm5Dy-tjPbcfZbnU';
-const SHEET_NAME = 'Poptávky Mlžidla';
+const SHEET_NAME = 'Poptávky';
 
 const HEADERS = [
   'Datum a čas',

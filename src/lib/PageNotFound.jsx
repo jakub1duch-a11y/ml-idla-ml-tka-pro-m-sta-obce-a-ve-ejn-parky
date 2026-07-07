@@ -18,11 +18,11 @@ export default function PageNotFound({}) {
             }
         }
     });
-    
-    return (
-         <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '0.05em' }} className={`no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-none text-2xl font-bold transition-colors duration-500 uppercase ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+             <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '0.05em' }} className={`no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-none text-2xl font-bold transition-colors duration-500 uppercase ${scrolled ? 'text-slate-900' : 'text-white'}`}>
                 mlžidla<span className="[font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium text-[#40a2d4]" style={{ letterSpacing: '0.06em' }}>.cz</span>
               </span>
+    return (
+      
         <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
             <div className="max-w-md w-full">
                 <div className="text-center space-y-6">

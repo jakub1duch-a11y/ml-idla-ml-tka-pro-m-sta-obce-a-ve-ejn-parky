@@ -71,9 +71,9 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
 
 export const SEO_PAGES = {
   home: {
-    title: 'Mlžítka a mlžné brány HolmTec',
+    title: ''Mlžítka a mlžné brány HolmTec',
     description: 'Zakázkové mlžítka, mlžné brány a chladicí systémy HolmTec z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad.',
-    keywords: 'mlžné sochy, mlžítka, mlzitka, mlžné, brány, HolmTec, mlzidla, nerezové sochy, mlžení',
+    keywords: 'mlžné, sochy, mlžítka, mlzitka, mlžné, brány, HolmTec, mlzidla, nerezové sochy, mlžení',
     canonicalPath: '/',
   },
   kolekce: {

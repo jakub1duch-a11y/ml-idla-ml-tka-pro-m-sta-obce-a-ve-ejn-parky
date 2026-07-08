@@ -47,6 +47,7 @@ import KeStazeni from '@/pages/KeStazeni';
 import OchranaZdravi from '@/pages/OchranaZdravi';
 import ServisUdrzba from '@/pages/ServisUdrzba';
 import Novinky from '@/pages/Novinky';
+import VraceniZbozi from '@/pages/VraceniZbozi';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -102,6 +103,7 @@ const AuthenticatedApp = () => {
         <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
         <Route path="/novinky" element={<Novinky />} />
+        <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<PageNotFound />} />

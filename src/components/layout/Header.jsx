@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
+import Logo from '@/components/layout/Logo';
 
 const PRODUCT_LINKS = [
 { label: 'AURA', sub: 'Zahradní mlžítko', path: '/produkt/aura', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG' },
@@ -89,16 +89,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2">
-            <motion.div
-              initial={{ opacity: 0, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 1.8, ease: 'easeOut' }}
-              className="flex items-center gap-2.5">
-              <MistNozzleIcon color={scrolled ? '#0f172a' : '#ffffff'} accent="#40a2d4" />
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '0.05em' }} className={`no-underline not-italic [font-family:'Urbanist',_sans-serif] text-left leading-none text-2xl font-bold transition-colors duration-500 uppercase ${scrolled ? 'text-slate-900' : 'text-white'}`}>
-                mlžidla<span className="[font-family:'Urbanist',_sans-serif] text-xl normal-case px-1 font-medium text-[#40a2d4]" style={{ letterSpacing: '0.06em' }}>.cz</span>
-              </span>
-            </motion.div>
+            <Logo dark={scrolled} size="sm" />
           </Link>
 
           {/* Desktop nav — centered elegant style */}
@@ -168,20 +159,20 @@ export default function Header() {
             onMouseLeave={closeMega}
             className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
             
-              <div className="max-w-5xl mx-auto px-5 lg:px-8 py-7 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-8">
-                {/* Left: B2B usage segments as compact icon chips */}
+              <div className="max-w-6xl mx-auto px-5 lg:px-8 py-7 grid grid-cols-1 lg:grid-cols-[0.7fr_1.3fr] gap-8">
+                {/* Left: B2B usage segments — compact list */}
                 <div>
-                  <p className="font-heading text-sm font-medium text-slate-800 mb-4">B2B mlžné systémy</p>
-                  <div className="grid grid-cols-3 gap-2">
+                  <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-3">B2B využití</p>
+                  <div className="flex flex-col gap-0.5">
                     {USAGE_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
-                  className="group flex flex-col items-center text-center gap-2 px-2 py-3 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200">
-                        <link.icon size={18} className={`${link.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
+                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                        <link.icon size={15} className={`${link.color} opacity-80 group-hover:opacity-100 transition-opacity shrink-0`} />
                         <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">{link.label}</p>
                       </Link>
                   )}
                   </div>
-                  <div className="flex flex-col gap-1.5 mt-5">
+                  <div className="flex flex-col gap-1.5 mt-4 pt-4 border-t border-slate-100">
                     <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
                     className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
                       Celá kolekce <ArrowRight size={14} />
@@ -193,10 +184,10 @@ export default function Header() {
                   </div>
                 </div>
 
-                {/* Right: Products — small thumbnail slider */}
+                {/* Right: Products — expanded grid */}
                 <div className="lg:border-l lg:border-slate-100 lg:pl-8">
                   <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-4">Produkty</p>
-                  <div className="grid grid-cols-3 gap-3 max-h-[280px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+                  <div className="grid grid-cols-4 gap-3 max-h-[320px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
                     {PRODUCT_LINKS.map((p) =>
                   <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col gap-2">

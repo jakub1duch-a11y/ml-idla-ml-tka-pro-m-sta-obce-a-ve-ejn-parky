@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
+import Logo from '@/components/layout/Logo';
 
 export default function Footer() {
   return (
@@ -8,14 +9,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
           <div className="sm:col-span-2 md:col-span-2">
-            <div className="mb-5 flex items-center gap-2">
-              <svg width="20" height="26" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.9" />
-                <path d="M7 19 C7 21.5 8.8 23 11 23" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
-              </svg>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, letterSpacing: '-0.03em' }} className="text-slate-900 text-lg leading-none">
-                mlzidla<span className="text-slate-400">.cz</span>
-              </span>
+            <div className="mb-5">
+              <Logo dark size="sm" />
             </div>
             <p className="text-slate-500 text-sm leading-relaxed max-w-xs mb-7 font-light">
               Zakázkové mlžné sochy z nerezové oceli AISI 304. Od návrhu přes výrobu až po instalaci. Trutnov, Česká republika.

@@ -65,11 +65,11 @@ export default function SearchAnalytics() {
 
         {/* Header */}
         <div className="mb-10">
-          <p className="font-mono tracking-widest uppercase mb-3 text-xs text-[hsl(var(--card))]">GOOGLE SEARCH CONSOLE</p>
+          <p className="font-mono tracking-widest uppercase mb-3 text-xs text-[hsl(var(--primary))]">GOOGLE SEARCH CONSOLE</p>
           <h1 className="font-heading font-light tracking-tight mb-2 text-[hsl(var(--popover))] text-2xl">Analýza vyhledávacích dotazů
 
           </h1>
-          <p className="text-white/40 text-sm">
+          <p className="text-sm text-[hsl(var(--popover))]">
             {meta.startDate && meta.endDate ? `${meta.startDate} — ${meta.endDate}` : 'holmtec.cz'}
           </p>
         </div>

@@ -5,13 +5,13 @@ import { TrendingUp, Search, MousePointer, Eye, ArrowUpDown } from 'lucide-react
 import { setSEO } from '@/lib/seo';
 
 const PERIOD_OPTIONS = [
-  { label: '7 dní', value: 7 },
-  { label: '28 dní', value: 28 },
-  { label: '90 dní', value: 90 },
-];
+{ label: '7 dní', value: 7 },
+{ label: '28 dní', value: 28 },
+{ label: '90 dní', value: 90 }];
 
-const StatCard = ({ icon: Icon, label, value, sub }) => (
-  <div className="bg-card_bg border border-white/10 rounded-2xl p-5">
+
+const StatCard = ({ icon: Icon, label, value, sub }) =>
+<div className="bg-card_bg border border-white/10 rounded-2xl p-5">
     <div className="flex items-center gap-3 mb-3">
       <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center">
         <Icon size={16} className="text-cyan" />
@@ -20,8 +20,8 @@ const StatCard = ({ icon: Icon, label, value, sub }) => (
     </div>
     <p className="text-3xl font-light text-white">{value}</p>
     {sub && <p className="text-xs text-white/30 mt-1">{sub}</p>}
-  </div>
-);
+  </div>;
+
 
 export default function SearchAnalytics() {
   const [rows, setRows] = useState([]);
@@ -49,7 +49,7 @@ export default function SearchAnalytics() {
     setSEO({ title: 'Analýza vyhledávání', robots: 'noindex, nofollow' });
   }, []);
 
-  useEffect(() => { fetchData(days); }, [days]);
+  useEffect(() => {fetchData(days);}, [days]);
 
   const sorted = [...rows].sort((a, b) => b[sortBy] - a[sortBy]);
   const top10 = sorted.slice(0, 10);
@@ -61,7 +61,7 @@ export default function SearchAnalytics() {
 
   return (
     <div className="min-h-screen bg-ink pt-28 pb-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 bg-[hsl(var(--background))] text-[hsl(var(--popover))]">
 
         {/* Header */}
         <div className="mb-10">
@@ -76,30 +76,30 @@ export default function SearchAnalytics() {
 
         {/* Period selector */}
         <div className="flex gap-2 mb-8">
-          {PERIOD_OPTIONS.map(o => (
-            <button key={o.value} onClick={() => setDays(o.value)}
-              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${
-                days === o.value ? 'bg-cyan text-ink font-bold' : 'bg-white/5 text-white/40 hover:bg-white/10'
-              }`}>
+          {PERIOD_OPTIONS.map((o) =>
+          <button key={o.value} onClick={() => setDays(o.value)}
+          className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${
+          days === o.value ? 'bg-cyan text-ink font-bold' : 'bg-white/5 text-white/40 hover:bg-white/10'}`
+          }>
               {o.label}
             </button>
-          ))}
+          )}
         </div>
 
-        {loading && (
-          <div className="flex items-center justify-center h-64">
+        {loading &&
+        <div className="flex items-center justify-center h-64">
             <div className="w-6 h-6 border border-cyan border-t-transparent rounded-full animate-spin" />
           </div>
-        )}
+        }
 
-        {error && (
-          <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+        {error &&
+        <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
             {error}
           </div>
-        )}
+        }
 
-        {!loading && !error && (
-          <>
+        {!loading && !error &&
+        <>
             {/* Stat cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
               <StatCard icon={MousePointer} label="Celkem kliků" value={totalClicks.toLocaleString('cs-CZ')} />
@@ -116,9 +116,9 @@ export default function SearchAnalytics() {
                   <XAxis type="number" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis type="category" dataKey="query" width={200} tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip
-                    contentStyle={{ background: '#131c27', border: '1px solid #1e2a3a', borderRadius: 8, color: '#e2e8f0', fontSize: 12 }}
-                    cursor={{ fill: 'rgba(34,211,238,0.05)' }}
-                  />
+                  contentStyle={{ background: '#131c27', border: '1px solid #1e2a3a', borderRadius: 8, color: '#e2e8f0', fontSize: 12 }}
+                  cursor={{ fill: 'rgba(34,211,238,0.05)' }} />
+                
                   <Bar dataKey="clicks" radius={4}>
                     {top10.map((_, i) => <Cell key={i} fill={i === 0 ? '#22d3ee' : `rgba(34,211,238,${0.6 - i * 0.05})`} />)}
                   </Bar>
@@ -131,14 +131,14 @@ export default function SearchAnalytics() {
               <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
                 <p className="text-xs font-mono text-white/40 tracking-widest uppercase">Všechny dotazy ({rows.length})</p>
                 <div className="flex gap-2">
-                  {['clicks', 'impressions', 'ctr', 'position'].map(k => (
-                    <button key={k} onClick={() => setSortBy(k)}
-                      className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase transition-all flex items-center gap-1 ${
-                        sortBy === k ? 'bg-cyan/20 text-cyan' : 'text-white/30 hover:text-white/60'
-                      }`}>
+                  {['clicks', 'impressions', 'ctr', 'position'].map((k) =>
+                <button key={k} onClick={() => setSortBy(k)}
+                className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase transition-all flex items-center gap-1 ${
+                sortBy === k ? 'bg-cyan/20 text-cyan' : 'text-white/30 hover:text-white/60'}`
+                }>
                       {k} {sortBy === k && <ArrowUpDown size={10} />}
                     </button>
-                  ))}
+                )}
                 </div>
               </div>
               <div className="overflow-x-auto">
@@ -154,8 +154,8 @@ export default function SearchAnalytics() {
                     </tr>
                   </thead>
                   <tbody>
-                    {sorted.map((r, i) => (
-                      <tr key={r.query} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    {sorted.map((r, i) =>
+                  <tr key={r.query} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                         <td className="px-6 py-3 text-white/20 font-mono text-xs">{i + 1}</td>
                         <td className="px-6 py-3 text-white font-light max-w-xs truncate">{r.query}</td>
                         <td className="px-6 py-3 text-right text-cyan font-mono">{r.clicks}</td>
@@ -165,14 +165,14 @@ export default function SearchAnalytics() {
                           {r.position}
                         </td>
                       </tr>
-                    ))}
+                  )}
                   </tbody>
                 </table>
               </div>
             </div>
           </>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 }

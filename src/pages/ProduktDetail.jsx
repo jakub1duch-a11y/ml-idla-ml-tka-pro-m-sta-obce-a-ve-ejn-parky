@@ -109,7 +109,7 @@ function ContactForm({ productName }) {
           placeholder="jan@firma.cz" />
         </div>
       </div>
-      <div>
+      <div className="opacity-100">
         <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Telefon</label>
         <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
         className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"

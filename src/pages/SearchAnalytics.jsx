@@ -60,7 +60,7 @@ export default function SearchAnalytics() {
   const avgPos = rows.length ? (rows.reduce((s, r) => s + r.position, 0) / rows.length).toFixed(1) : 0;
 
   return (
-    <div className="min-h-screen bg-ink pt-28 pb-24">
+    <div className="min-h-screen pt-28 pb-24 bg-[hsl(var(--card-foreground))]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-[hsl(var(--popover))] bg-[hsl(var(--card))]">
 
         {/* Header */}

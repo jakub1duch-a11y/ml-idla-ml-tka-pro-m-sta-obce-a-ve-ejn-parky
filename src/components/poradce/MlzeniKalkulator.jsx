@@ -199,7 +199,7 @@ function AnimNum({ value, decimals = 0, suffix = '' }) {
   }, [value]);
 
   return (
-    <span className="hidden">
+    <span>
       {display.toFixed(decimals).replace('.', ',')}
       {suffix}
     </span>);
@@ -375,7 +375,7 @@ export default function MlzeniKalkulator() {
           </div>
 
           {/* Elektřina */}
-          <div className="rounded-xl bg-surface border border-white/10 p-5 hidden">
+          <div className="rounded-xl bg-surface border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
               <Zap size={15} className="text-cyan" />
               <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba elektřiny</p>
@@ -430,8 +430,8 @@ export default function MlzeniKalkulator() {
               <div className="flex items-center gap-2 text-[10px] font-mono text-white/30">
                 <span className="w-2 h-2 rounded-full bg-cyan inline-block" />
                 <span>Voda {totalCostMonth > 0 ? Math.round(waterCostMonth / totalCostMonth * 100) : 0}%</span>
-                <span className="w-2 h-2 rounded-full bg-white/20 inline-block ml-2 hidden" />
-                <span className="hidden">Elektřina {totalCostMonth > 0 ? Math.round(electricityCostMonth / totalCostMonth * 100) : 0}%</span>
+                <span className="w-2 h-2 rounded-full bg-white/20 inline-block ml-2" />
+                <span>Elektřina {totalCostMonth > 0 ? Math.round(electricityCostMonth / totalCostMonth * 100) : 0}%</span>
               </div>
               <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                 <motion.div
@@ -451,7 +451,7 @@ export default function MlzeniKalkulator() {
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs text-white/30 font-mono">
               <span>Voda: {WATER_PRICE_PER_M3} Kč/m³</span>
-              <span className="hidden">Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
+              <span>Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
             </div>
             <p className="text-[10px] text-white/20 font-mono mt-2 leading-relaxed">
               * Průměrné ceny ČR 2025. Skutečné náklady závisí na tarifu poskytovatele.

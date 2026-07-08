@@ -28,31 +28,31 @@ export default function ProductReviews({ productId, onStatsLoaded }) {
 
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20 border-t border-slate-200">
-      <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+      <div className="flex items-start justify-between flex-wrap gap-6 mb-3">
         <div>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Hodnocení zákazníků</p>
-          <h2 style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }} className="text-[hsl(var(--ring))] [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
+          <p className="text-sm text-slate-400 mb-2">Hodnocení zákazníků</p>
+          <h2 style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
             Co říkají naši klienti
           </h2>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-3xl text-slate-900" style={{ fontWeight: 800 }}>{avg.toFixed(1)}</span>
-          <div>
-            <StarRow rating={avg} size={16} />
-            <p className="text-xs text-slate-400 font-mono mt-1">{reviews.length} {reviews.length === 1 ? 'recenze' : 'recenzí'}</p>
-          </div>
+        <div className="flex items-center gap-2.5 bg-slate-500 rounded-xl px-5 py-3">
+          <span className="text-2xl text-white" style={{ fontWeight: 800 }}>{avg.toFixed(1)}</span>
+          <StarRow rating={avg} size={18} />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <p className="text-sm text-slate-500 mb-10">
+        Průměrné hodnocení: {avg.toFixed(1)} <span className="inline-flex align-middle mx-1"><StarRow rating={avg} size={14} /></span> ({reviews.length} {reviews.length === 1 ? 'recenze' : 'recenzí'})
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {reviews.slice(0, 6).map((r, i) =>
         <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-        className="p-6 rounded-2xl bg-white border border-slate-200">
+        className="p-6 rounded-xl bg-white border border-slate-300">
             <StarRow rating={r.rating} />
-            <p className="text-sm text-slate-600 leading-relaxed font-light mt-4 mb-5">"{r.comment}"</p>
+            <p className="text-base text-slate-800 leading-relaxed mt-4 mb-8">{r.comment}</p>
             <div>
-              <p className="text-sm text-slate-900 font-medium">{r.customer_name}</p>
+              <p className="text-base text-slate-900 font-bold">{r.customer_name}</p>
               {(r.company || r.location) &&
-            <p className="text-xs text-slate-400 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
+            <p className="text-sm text-slate-500 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
             }
             </div>
           </motion.div>

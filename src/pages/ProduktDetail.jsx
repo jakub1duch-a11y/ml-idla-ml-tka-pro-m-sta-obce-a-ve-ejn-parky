@@ -301,7 +301,7 @@ export default function ProduktDetail() {
               }
 
               <div className="flex flex-wrap items-center gap-5 mb-8">
-                <p className="text-2xl font-light text-white">Cena: <span className="font-medium">na vyžádání</span></p>
+                <p className="text-2xl font-light text-white">Cena: <span className="font-medium">od {product.price_from ? `${product.price_from} Kč` : ''} (na vyžádání)</span></p>
                 <span className="flex items-center gap-1.5 text-xs font-mono tracking-widest uppercase text-emerald-300">
                   <Truck size={14} /> Doprava zdarma
                 </span>

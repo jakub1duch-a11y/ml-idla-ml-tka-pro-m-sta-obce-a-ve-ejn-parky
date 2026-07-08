@@ -9,9 +9,9 @@ import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import ProductReviews from '@/components/reviews/ProductReviews';
 import CostCalculatorWidget from '@/components/produkt/CostCalculatorWidget';
-import SmartCloudTab from '@/components/produkt/tabs/SmartCloudTab';
 import InstallationTab from '@/components/produkt/tabs/InstallationTab';
 import BenefitsTab from '@/components/produkt/tabs/BenefitsTab';
+import VideoTab from '@/components/produkt/tabs/VideoTab';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -118,9 +118,10 @@ function ContactForm({ productName }) {
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
-  { id: 'smart', label: 'Inteligentní řízení & Cloud' },
-  { id: 'instalace', label: 'Instalace, kotvení & mobilita' },
-  { id: 'benefity', label: 'Benefity a využití' },
+  { id: 'galerie', label: 'Galerie a realizované projekty' },
+  { id: 'specifikace', label: 'Technické specifikace a komponenty' },
+  { id: 'video', label: 'Videa - ukázka v akci' },
+  { id: 'poptat', label: 'Poptat produkt', action: 'scroll' },
 ];
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -132,8 +133,9 @@ export default function ProduktDetail() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [lightbox, setLightbox] = useState(null);
-  const [activeTab, setActiveTab] = useState('smart');
+  const [activeTab, setActiveTab] = useState('galerie');
   const tabsNavRef = useRef(null);
+  const contactRef = useRef(null);
 
   const handleReviewStats = (stats) => {
     if (product) setSEO(getProductSEO(product, stats));
@@ -143,7 +145,7 @@ export default function ProduktDetail() {
     if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
-    setActiveTab('smart');
+    setActiveTab('galerie');
     base44.entities.Product.filter({ slug }).
     then(async (results) => {
       if (!results || results.length === 0) {setNotFound(true);return;}
@@ -160,8 +162,18 @@ export default function ProduktDetail() {
     finally(() => setLoading(false));
   }, [slug]);
 
-  const handleTabClick = (id) => {
-    setActiveTab(id);
+  const handleTabClick = (tab) => {
+    if (tab.action === 'scroll') {
+      if (contactRef.current) {
+        gsap.to(window, {
+          duration: 0.9,
+          scrollTo: { y: contactRef.current, offsetY: 80 },
+          ease: 'power2.inOut',
+        });
+      }
+      return;
+    }
+    setActiveTab(tab.id);
     if (tabsNavRef.current) {
       gsap.to(window, {
         duration: 0.9,
@@ -259,26 +271,34 @@ export default function ProduktDetail() {
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
       <div ref={tabsNavRef} className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {TABS.map((t) =>
-          <button key={t.id} onClick={() => handleTabClick(t.id)}
-          className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors ${activeTab === t.id ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
-              {t.label}
-              {activeTab === t.id &&
-            <motion.div layoutId="produkt-tab-underline" className="absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
-            }
-            </button>
-          )}
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center gap-4 lg:gap-8">
+          <div className="flex items-center gap-3 py-4 border-r border-slate-200 pr-4 lg:pr-8 shrink-0">
+            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest uppercase text-slate-400 hover:text-slate-900 transition-colors">
+              <ArrowLeft size={12} /> Zpět do kolekce mlžidel
+            </Link>
+            <span className="hidden lg:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
+          </div>
+          <div className="flex gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            {TABS.map((t) =>
+            <button key={t.id} onClick={() => handleTabClick(t)}
+            className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors ${activeTab === t.id && t.action !== 'scroll' ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
+                {t.label}
+                {activeTab === t.id && t.action !== 'scroll' &&
+              <motion.div layoutId="produkt-tab-underline" className="absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
+              }
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-          {activeTab === 'smart' && <SmartCloudTab />}
-          {activeTab === 'instalace' && <InstallationTab product={product} techRows={techRows} />}
-          {activeTab === 'benefity' &&
+          {activeTab === 'galerie' &&
             <BenefitsTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />
           }
+          {activeTab === 'specifikace' && <InstallationTab product={product} techRows={techRows} />}
+          {activeTab === 'video' && <VideoTab product={product} />}
         </motion.div>
       </AnimatePresence>
 
@@ -286,7 +306,7 @@ export default function ProduktDetail() {
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════ INLINE CONTACT FORM ═══════ */}
-      <section className="bg-slate-50 border-t border-slate-200 py-24">
+      <section ref={contactRef} className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

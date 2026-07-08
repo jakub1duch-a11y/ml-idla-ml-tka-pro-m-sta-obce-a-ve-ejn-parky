@@ -190,11 +190,11 @@ export default function Header() {
                 {/* Right: Products — small thumbnail slider */}
                 <div className="lg:border-l lg:border-slate-100 lg:pl-8">
                   <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-4">Produkty</p>
-                  <div className="flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+                  <div className="grid grid-cols-3 gap-3 max-h-[280px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
                     {PRODUCT_LINKS.map((p) =>
                   <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
-                  className="group shrink-0 w-28 flex flex-col gap-2">
-                        <div className="w-28 h-20 rounded-lg overflow-hidden bg-slate-100">
+                  className="group flex flex-col gap-2">
+                        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
                           <img src={p.image} alt={p.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                         </div>
                         <div>
@@ -242,10 +242,10 @@ export default function Header() {
               transition={{ duration: 0.15 }}
               className="pl-0 flex flex-col gap-0 py-4 bg-slate-50 rounded-lg mt-2 px-6">
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-2 mb-3">Produkty</p>
-                 <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
+                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                    {PRODUCT_LINKS.map((p) =>
-              <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="shrink-0 w-24 flex flex-col gap-1.5">
-                     <div className="w-24 h-16 rounded-lg overflow-hidden bg-slate-100">
+              <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="flex flex-col gap-1.5">
+                     <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
                        <img src={p.image} alt={p.label} className="w-full h-full object-cover" loading="lazy" />
                      </div>
                      <p className="text-xs font-medium text-slate-700 leading-tight">{p.label}</p>

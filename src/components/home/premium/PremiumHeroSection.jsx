@@ -69,10 +69,10 @@ export default function PremiumHeroSection() {
         {/* Background video */}
         <video
           autoPlay muted loop playsInline
-          src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/faf540d21_smartmist.mp4"
-          className="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none"
+          src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/621b949b8_Terrace_Mist_Hero_Video.mp4"
+          className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
         />
-        <div className="absolute inset-0 bg-white/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-white/40 pointer-events-none" />
 
         {/* Soft parallax mist layers */}
         <motion.div style={{ y: mistLayer1Y, opacity: mistOpacity }} className="absolute -top-1/4 left-1/2 -translate-x-1/2 w-[140%] h-[70%] bg-white/60 blur-[110px] rounded-full pointer-events-none" />

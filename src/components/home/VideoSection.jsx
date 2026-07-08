@@ -16,7 +16,7 @@ export default function VideoSection() {
   return (
     <section className="relative h-[80vh] overflow-hidden flex items-center justify-center">
       {/* Video background */}
-      <video ref={videoRef} autoPlay muted loop playsInline
+      <video ref={videoRef} autoPlay muted loop
         className="absolute inset-0 w-full h-full object-cover scale-105">
         <source src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c7c9d3e68_video_20260619_164025.mp4" type="video/mp4" />
       </video>

@@ -15,8 +15,7 @@ export default function Logo({ dark = false, size = 'md' }) {
       <img src={LOGO_URL} alt="Mlžidla.cz" width={iconSize} height={iconSize} className="shrink-0" />
       <div className="flex flex-col leading-none">
         <span
-          style={{ fontFamily: "'Urbanist', sans-serif", fontWeight: 500, letterSpacing: '0.05em' }}
-          className={`text-2xl uppercase transition-colors duration-500 ${dark ? 'text-slate-900' : 'text-white'}`}
+          className={`font-heading text-2xl font-semibold tracking-wide uppercase transition-colors duration-500 ${dark ? 'text-slate-900' : 'text-white'}`}
         >
           mlžidla<span className="text-[#40a2d4] text-xl normal-case px-0.5" style={{ letterSpacing: '0.06em' }}>.cz</span>
         </span>

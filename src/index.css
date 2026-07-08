@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,200;1,9..40,300;1,9..40,700&family=Urbanist:wght@300;400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -26,9 +26,20 @@
     --input: 220 15% 14%;
     --ring: 215 55% 32%;
     --radius: 14px;
-    --font-heading: 'Urbanist', sans-serif;
-    --font-body: 'Open Sans', sans-serif;
-    --font-mono: 'Urbanist', sans-serif;
+    --font-heading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-measure {
+    max-width: 60ch;
+  }
+  @media (max-width: 640px) {
+    .text-measure {
+      max-width: 38ch;
+    }
   }
 }
 
@@ -40,17 +51,20 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.7;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: left;
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
-    font-weight: 300;
-    letter-spacing: -0.04em;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
   p {
-    font-weight: 300;
+    font-weight: 400;
+    line-height: 1.6;
   }
 }
 

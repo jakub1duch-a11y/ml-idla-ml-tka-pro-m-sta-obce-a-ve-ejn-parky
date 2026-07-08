@@ -220,7 +220,7 @@ export default function ProduktDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 items-end">
             <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
               <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">Nízkotlaké mlžení 2–7 BAR</p>
-              <h1 className="font-heading font-light tracking-tight leading-[0.95] text-6xl lg:text-8xl text-white mb-6">
+              <h1 className="font-heading font-light tracking-tight leading-[0.95] text-4xl sm:text-5xl lg:text-8xl text-white mb-6">
                 {product.name}
               </h1>
 

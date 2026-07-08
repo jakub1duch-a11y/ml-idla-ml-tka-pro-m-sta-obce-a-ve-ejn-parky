@@ -171,7 +171,7 @@ export default function Header() {
               <div className="max-w-5xl mx-auto px-5 lg:px-8 py-7 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-8">
                 {/* Left: B2B usage segments as compact icon chips */}
                 <div>
-                  <p className="font-heading text-sm font-medium text-slate-800 mb-4">B2B mlžné systémy pro komerční a veřejné využití</p>
+                  <p className="font-heading text-sm font-medium text-slate-800 mb-4">B2B mlžné systémy</p>
                   <div className="grid grid-cols-3 gap-2">
                     {USAGE_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
@@ -181,10 +181,16 @@ export default function Header() {
                       </Link>
                   )}
                   </div>
-                  <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900 mt-5">
-                    Celá kolekce <ArrowRight size={14} />
-                  </Link>
+                  <div className="flex flex-col gap-1.5 mt-5">
+                    <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
+                      Celá kolekce <ArrowRight size={14} />
+                    </Link>
+                    <Link to="/produkt/gate70" onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+                      Mlžné brány a portály <ArrowRight size={14} />
+                    </Link>
+                  </div>
                 </div>
 
                 {/* Right: Products — small thumbnail slider */}

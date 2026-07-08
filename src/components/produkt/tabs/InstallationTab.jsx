@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Wrench, Download, FileText } from 'lucide-react';
+import { ShieldCheck, Wrench } from 'lucide-react';
 
-export default function InstallationTab({ product, techRows }) {
+export default function InstallationTab({ product }) {
   return (
     <section className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -63,50 +63,6 @@ export default function InstallationTab({ product, techRows }) {
             </div>
           ))}
         </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Technické parametry</p>
-            <div className="rounded-2xl overflow-hidden border border-slate-200">
-              {techRows.map((row, i) => (
-                <div key={row.label} className={`flex items-center justify-between gap-6 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-                  <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
-                  <span className="text-sm text-slate-900 font-medium text-right">{row.value}</span>
-                </div>
-              ))}
-              <div className="flex items-center justify-between gap-6 px-6 py-4 bg-slate-50">
-                <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">Provozní tlak</span>
-                <span className="text-sm text-slate-900 font-medium text-right">2–7 BAR (nízkotlaký)</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Ke stažení</p>
-            <a href={`mailto:obchod1@holmtec.cz?subject=Technický list — ${product.name}`}
-              className="flex items-center justify-between gap-6 p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all mb-4">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center"><FileText size={20} className="text-slate-700" /></div>
-                <div>
-                  <p className="text-slate-900 font-medium">Technický list (PDF)</p>
-                  <p className="text-xs text-slate-400 mt-0.5">Kompletní parametry a výkresy k instalaci</p>
-                </div>
-              </div>
-              <Download size={18} className="text-slate-400 shrink-0" />
-            </a>
-            <a href={`mailto:obchod1@holmtec.cz?subject=Cenová nabídka — ${product.name}`}
-              className="flex items-center justify-between gap-6 p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center"><FileText size={20} className="text-slate-700" /></div>
-                <div>
-                  <p className="text-slate-900 font-medium">Cenová nabídka</p>
-                  <p className="text-xs text-slate-400 mt-0.5">Individuální nabídka na míru vašemu projektu</p>
-                </div>
-              </div>
-              <Download size={18} className="text-slate-400 shrink-0" />
-            </a>
-          </motion.div>
-        </div>
       </div>
     </section>
   );

@@ -12,6 +12,10 @@ import CostCalculatorWidget from '@/components/produkt/CostCalculatorWidget';
 import InstallationTab from '@/components/produkt/tabs/InstallationTab';
 import BenefitsTab from '@/components/produkt/tabs/BenefitsTab';
 import VideoTab from '@/components/produkt/tabs/VideoTab';
+import DetailTab from '@/components/produkt/tabs/DetailTab';
+import SpecsTab from '@/components/produkt/tabs/SpecsTab';
+import SmartModulesTab from '@/components/produkt/tabs/SmartModulesTab';
+import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -118,9 +122,13 @@ function ContactForm({ productName }) {
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
+  { id: 'detail', label: 'Detail produktu' },
   { id: 'galerie', label: 'Galerie a realizované projekty' },
-  { id: 'specifikace', label: 'Technické specifikace a komponenty' },
+  { id: 'specifikace', label: 'Technické specifikace' },
+  { id: 'smart', label: 'SMART moduly' },
+  { id: 'instalace', label: 'Instalace' },
   { id: 'video', label: 'Videa - ukázka v akci' },
+  { id: 'ke-stazeni', label: 'Ke stažení' },
   { id: 'poptat', label: 'Poptat produkt', action: 'scroll' },
 ];
 
@@ -133,7 +141,7 @@ export default function ProduktDetail() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [lightbox, setLightbox] = useState(null);
-  const [activeTab, setActiveTab] = useState('galerie');
+  const [activeTab, setActiveTab] = useState('detail');
   const tabsNavRef = useRef(null);
   const contactRef = useRef(null);
 
@@ -145,7 +153,7 @@ export default function ProduktDetail() {
     if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
-    setActiveTab('galerie');
+    setActiveTab('detail');
     base44.entities.Product.filter({ slug }).
     then(async (results) => {
       if (!results || results.length === 0) {setNotFound(true);return;}
@@ -294,11 +302,15 @@ export default function ProduktDetail() {
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+          {activeTab === 'detail' && <DetailTab product={product} />}
           {activeTab === 'galerie' &&
             <BenefitsTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />
           }
-          {activeTab === 'specifikace' && <InstallationTab product={product} techRows={techRows} />}
+          {activeTab === 'specifikace' && <SpecsTab product={product} techRows={techRows} />}
+          {activeTab === 'smart' && <SmartModulesTab product={product} />}
+          {activeTab === 'instalace' && <InstallationTab product={product} />}
           {activeTab === 'video' && <VideoTab product={product} />}
+          {activeTab === 'ke-stazeni' && <DownloadsTab product={product} />}
         </motion.div>
       </AnimatePresence>
 

@@ -1,28 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Settings2, Layers, Package, Building2, Trees, Waves, Palette, Tent, Factory, Zap, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
 
-const MEGA_COLUMNS = [
-{
+const KOLEKCE_HIGHLIGHT = {
   heading: 'Mlžítka a mlžné brány',
+  tagline: 'Celá kolekce 2026',
+  desc: 'Zakázková mlžítka a mlžné brány z nerezové oceli AISI 316L — pro města, parky, festivaly i soukromé zahrady.',
   icon: Layers,
   path: '/mlzidla-mlzitka',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG'
-},
-{
-  heading: 'Mlžiště, kombinovaná mlžidla na míru',
-  icon: Settings2,
-  path: '/mlhoviste',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg'
-},
-{
-  heading: 'Příslušenství a moduly',
-  icon: Package,
-  path: '/prislusenstvi',
-  image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq'
-}];
+};
 
 
 const USAGE_LINKS = [
@@ -144,21 +133,24 @@ export default function Header() {
             className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
             
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
-                {/* Top: product columns */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 pb-8 border-b border-slate-100">
-                  {MEGA_COLUMNS.map((col) =>
-                <Link key={col.heading} to={col.path} className="group block p-2 rounded-lg hover:bg-slate-50 transition-colors" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center gap-2.5 mb-4">
-                        <col.icon size={14} className="text-slate-600 group-hover:text-slate-900 transition-colors flex-shrink-0" />
-                        <p className="font-heading text-base text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{col.heading}</p>
-                        <ArrowRight size={14} className="text-slate-400 group-hover:text-slate-950 transition-colors opacity-0 group-hover:opacity-100 ml-auto flex-shrink-0" />
-                      </div>
-                      <div className="rounded-xl overflow-hidden aspect-[16/10] bg-white shadow-sm group-hover:shadow-md transition-shadow">
-                        <img src={col.image} alt={col.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                      </div>
-                    </Link>
-                )}
-                </div>
+                {/* Top: Kolekce showcase */}
+                <Link to={KOLEKCE_HIGHLIGHT.path} onClick={(e) => e.stopPropagation()}
+                className="group grid grid-cols-1 md:grid-cols-2 gap-6 items-center pb-8 border-b border-slate-100 rounded-xl hover:bg-slate-50 transition-colors p-2">
+                  <div className="rounded-xl overflow-hidden aspect-[16/9] bg-white shadow-sm group-hover:shadow-md transition-shadow order-2 md:order-1">
+                    <img src={KOLEKCE_HIGHLIGHT.image} alt={KOLEKCE_HIGHLIGHT.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                  <div className="order-1 md:order-2">
+                    <p className="text-xs font-bold text-cyan tracking-[0.2em] uppercase mb-3">{KOLEKCE_HIGHLIGHT.tagline}</p>
+                    <div className="flex items-center gap-2.5 mb-3">
+                      <KOLEKCE_HIGHLIGHT.icon size={18} className="text-slate-600 group-hover:text-slate-900 transition-colors flex-shrink-0" />
+                      <p className="font-heading text-2xl text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{KOLEKCE_HIGHLIGHT.heading}</p>
+                    </div>
+                    <p className="text-sm text-slate-500 leading-relaxed mb-4">{KOLEKCE_HIGHLIGHT.desc}</p>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
+                      Prohlédnout kolekci <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
+                </Link>
 
                 {/* Middle: Podle využití */}
                 <div className="pt-8 pb-8 border-b border-slate-100">
@@ -220,7 +212,6 @@ export default function Header() {
               className="pl-0 flex flex-col gap-0 py-4 bg-slate-50 rounded-lg mt-2">
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-2 mb-3 px-6">Modely</p>
                  <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Mlžítka a mlžné brány</Link>
-                 <Link to="/prislusenstvi" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Příslušenství</Link>
                  <Link to="/jak-to-funguje" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Smart moduly</Link>
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-5 mb-3 px-6">Podle využití</p>
                  {USAGE_LINKS.map((l) =>

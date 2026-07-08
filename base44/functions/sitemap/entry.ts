@@ -5,7 +5,6 @@ const BASE_URL = 'https://mlzidla.cz';
 const STATIC_PAGES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly' },
   { loc: '/mlzidla-mlzitka', priority: '0.9', changefreq: 'weekly' },
-  { loc: '/mlhoviste', priority: '0.8', changefreq: 'monthly' },
   { loc: '/jak-to-funguje', priority: '0.7', changefreq: 'monthly' },
   { loc: '/o-nas', priority: '0.7', changefreq: 'monthly' },
   { loc: '/reference', priority: '0.8', changefreq: 'weekly' },

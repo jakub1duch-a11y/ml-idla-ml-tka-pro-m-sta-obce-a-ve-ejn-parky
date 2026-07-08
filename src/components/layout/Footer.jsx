@@ -36,8 +36,6 @@ export default function Footer() {
             <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Katalog</p>
             <div className="flex flex-col gap-3">
               <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlžítka a mlžné brány</Link>
-              <Link to="/prislusenstvi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Příslušenství</Link>
-              <Link to="/mlhoviste" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlhoviště</Link>
               <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Jak to funguje</Link>
               <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
             </div>

@@ -20,13 +20,18 @@ const HEADERS = [
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
-
     const body = await req.json();
 
-    // Accept both direct call (data={}) and entity automation payload (data.data={})
+    // Accept both direct call (data={}) and entity automation payload (event + data)
+    const isAutomationEvent = !!(body.event && body.event.entity_name);
+
+    if (!isAutomationEvent) {
+      // Direct manual calls must be authenticated as admin
+      const user = await base44.auth.me();
+      if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+      if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
     const payload = body.data?.data ?? body.data ?? body;
 
     if (!payload) {
@@ -53,7 +58,7 @@ Deno.serve(async (req) => {
     const zprava   = payload.zprava  || payload.message     || '';
     const stav     = payload.status  || 'nová';
 
-    const row = [createdAt, zdroj, produkt,zprava,firma, jmeno, email, telefon, stav];
+    const row = [createdAt, zdroj, jmeno, email, telefon, firma, produkt, zprava, stav];
 
     // Ensure header row exists
     const checkRes = await fetch(

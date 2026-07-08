@@ -13,8 +13,6 @@ import SplashScreen from '@/components/common/SplashScreen';
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
 import Kolekce from '@/pages/Kolekce';
-import Prislusenstvi from '@/pages/Prislusenstvi';
-import Mlhoviste from '@/pages/Mlhoviste';
 import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
@@ -70,8 +68,6 @@ const AuthenticatedApp = () => {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
-        <Route path="/prislusenstvi" element={<Prislusenstvi />} />
-        <Route path="/mlhoviste" element={<Mlhoviste />} />
         <Route path="/jak-to-funguje" element={<JakToFunguje />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />

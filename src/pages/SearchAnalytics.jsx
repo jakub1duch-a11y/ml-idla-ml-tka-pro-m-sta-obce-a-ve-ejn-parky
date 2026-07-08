@@ -61,7 +61,7 @@ export default function SearchAnalytics() {
 
   return (
     <div className="min-h-screen bg-ink pt-28 pb-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 bg-[hsl(var(--background))] text-[hsl(var(--popover))]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-[hsl(var(--popover))] bg-[hsl(var(--card))]">
 
         {/* Header */}
         <div className="mb-10">

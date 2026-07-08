@@ -61,6 +61,11 @@ export default function Header() {
 
   useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);}, [location]);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {document.body.style.overflow = '';};
+  }, [mobileOpen]);
+
   const toggleMobileMenu = () => {
     setMobileOpen(!mobileOpen);
     setMegaOpen(false);
@@ -218,11 +223,11 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen &&
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-40 bg-white pt-20 overflow-y-auto lg:hidden">
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
+          className="fixed inset-0 z-40 bg-white pt-20 h-[100dvh] overflow-y-auto overscroll-contain lg:hidden">
           
             <div className="px-5 py-6 flex flex-col gap-0 max-w-2xl">
               <button onClick={() => setMobileCatalogOpen(!mobileCatalogOpen)}
@@ -239,7 +244,7 @@ export default function Header() {
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-2 mb-3">Produkty</p>
                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                    {PRODUCT_LINKS.map((p) =>
-              <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="flex flex-col gap-1.5">
+              <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="flex flex-col gap-1.5 py-1">
                      <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
                        <img src={p.image} alt={p.label} className="w-full h-full object-cover" loading="lazy" />
                      </div>
@@ -252,7 +257,7 @@ export default function Header() {
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-4 mb-3">B2B využití</p>
                  <div className="grid grid-cols-3 gap-2 pb-2">
                    {USAGE_LINKS.map((l) =>
-              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="flex flex-col items-center text-center gap-1.5 py-3 px-1 rounded-lg hover:bg-white transition-colors">
+              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="flex flex-col items-center justify-center text-center gap-1.5 py-4 px-1 min-h-[64px] rounded-lg hover:bg-white active:bg-white transition-colors">
                      <l.icon size={18} className={`${l.color} opacity-80`} />
                      <p className="text-[11px] font-medium text-slate-700 leading-tight">{l.label}</p>
                    </Link>

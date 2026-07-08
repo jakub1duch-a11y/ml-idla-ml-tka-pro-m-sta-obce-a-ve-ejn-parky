@@ -331,7 +331,7 @@ export default function ProduktDetail() {
       <div ref={tabsNavRef} className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center gap-4 lg:gap-8">
           <div className="flex items-center gap-3 py-4 border-r border-slate-200 pr-4 lg:pr-8 shrink-0">
-            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors text-left uppercase">ZPĚT DO KOLEKCE MLŽIDEL
+            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors text-left uppercase">ZPĚT DO KOLEKCE
 
             </Link>
             <span className="hidden lg:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>

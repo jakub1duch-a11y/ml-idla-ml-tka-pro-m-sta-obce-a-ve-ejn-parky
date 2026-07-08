@@ -12,6 +12,7 @@ import SplashScreen from '@/components/common/SplashScreen';
 
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
+import Home2 from '@/pages/Home2';
 import Kolekce from '@/pages/Kolekce';
 import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
@@ -67,6 +68,7 @@ const AuthenticatedApp = () => {
     <Routes>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/home2" element={<Home2 />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/jak-to-funguje" element={<JakToFunguje />} />
         <Route path="/kontakt" element={<Kontakt />} />

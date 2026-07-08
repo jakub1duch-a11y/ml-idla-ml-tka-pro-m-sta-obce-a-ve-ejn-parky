@@ -87,14 +87,12 @@ export default function KolekceHero() {
         
           {s.type === 'video' ?
         <VideoSlide src={s.src} active={i === current} /> :
-
-        <img src={s.src} alt="" className="absolute inset-0 w-full h-full object-cover" />
         }
         </div>
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
 
       {/* Content */}
       <div className="absolute z-30 flex flex-col justify-end pb-12 inset-0">

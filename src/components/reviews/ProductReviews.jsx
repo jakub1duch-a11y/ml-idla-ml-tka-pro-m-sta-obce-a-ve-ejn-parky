@@ -8,18 +8,18 @@ export default function ProductReviews({ productId, onStatsLoaded }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!productId) { setLoading(false); return; }
-    base44.entities.Review.filter({ product_id: productId, published: true }, '-created_date')
-      .then((items) => {
-        const list = items || [];
-        setReviews(list);
-        if (list.length > 0 && onStatsLoaded) {
-          const avg = list.reduce((s, r) => s + (r.rating || 0), 0) / list.length;
-          onStatsLoaded({ average: avg, count: list.length });
-        }
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    if (!productId) {setLoading(false);return;}
+    base44.entities.Review.filter({ product_id: productId, published: true }, '-created_date').
+    then((items) => {
+      const list = items || [];
+      setReviews(list);
+      if (list.length > 0 && onStatsLoaded) {
+        const avg = list.reduce((s, r) => s + (r.rating || 0), 0) / list.length;
+        onStatsLoaded({ average: avg, count: list.length });
+      }
+    }).
+    catch(() => {}).
+    finally(() => setLoading(false));
   }, [productId]);
 
   if (loading || reviews.length === 0) return null;
@@ -31,7 +31,7 @@ export default function ProductReviews({ productId, onStatsLoaded }) {
       <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
         <div>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Hodnocení zákazníků</p>
-          <h2 className="text-slate-900" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
+          <h2 className="font-light text-4xl lg:text-5xl tracking-tight mb-5 text-slate-900 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
             Co říkají naši klienti
           </h2>
         </div>
@@ -44,20 +44,20 @@ export default function ProductReviews({ productId, onStatsLoaded }) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {reviews.slice(0, 6).map((r, i) => (
-          <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-            className="p-6 rounded-2xl bg-white border border-slate-200">
+        {reviews.slice(0, 6).map((r, i) =>
+        <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+        className="p-6 rounded-2xl bg-white border border-slate-200">
             <StarRow rating={r.rating} />
             <p className="text-sm text-slate-600 leading-relaxed font-light mt-4 mb-5">"{r.comment}"</p>
             <div>
               <p className="text-sm text-slate-900 font-medium">{r.customer_name}</p>
-              {(r.company || r.location) && (
-                <p className="text-xs text-slate-400 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
-              )}
+              {(r.company || r.location) &&
+            <p className="text-xs text-slate-400 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
+            }
             </div>
           </motion.div>
-        ))}
+        )}
       </div>
-    </section>
-  );
+    </section>);
+
 }

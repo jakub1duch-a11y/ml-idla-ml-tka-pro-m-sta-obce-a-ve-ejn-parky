@@ -86,8 +86,7 @@ export default function KolekceHero() {
         className={`absolute inset-0 transition-opacity duration-1000 ${i === current ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
         
           {s.type === 'video' ?
-        <VideoSlide src={s.src} active={i === current} /> :
-        }
+  
         </div>
       )}
 

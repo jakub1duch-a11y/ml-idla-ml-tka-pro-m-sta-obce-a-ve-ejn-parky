@@ -5,13 +5,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
 
 const KOLEKCE_HIGHLIGHT = {
-  heading: 'Mlžítka a mlžné brány',
+  heading: 'Mlžítka a mlžné sochy',
   tagline: 'Celá kolekce 2026',
-  desc: 'Zakázková mlžítka a mlžné brány z nerezové oceli AISI 316L — pro města, parky, festivaly i soukromé zahrady.',
+  desc: 'Zakázková mlžítka a mlžné sochy z nerezové oceli AISI 316L — pro města, parky, festivaly i soukromé zahrady.',
   icon: Layers,
   path: '/mlzidla-mlzitka',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a238e2952_Mln_socha_MRKEV_-_msto_Poln.JPG'
 };
+
+const GATE_HIGHLIGHT = {
+  heading: 'Mlžné brány a portály',
+  tagline: 'GATE70',
+  desc: 'Designová mlžná brána z nerezové oceli — architektonický prvek pro náměstí, parky a vjezdy.',
+  icon: Layers,
+  path: '/produkt/gate70',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png'
+};
+
+const PRODUCT_LINKS = [
+{ label: 'AURA', sub: 'Zahradní mlžítko', path: '/produkt/aura' },
+{ label: 'BENDY 60', sub: 'Zakřivené mlžítko', path: '/produkt/bendy-60' },
+{ label: 'Y-ARMIST TR60', sub: 'Y-tvarový systém', path: '/produkt/y-armist-tr60' },
+{ label: 'GATE70', sub: 'Mlžná brána', path: '/produkt/gate70' }];
 
 
 const USAGE_LINKS = [
@@ -133,24 +148,40 @@ export default function Header() {
             className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
             
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
-                {/* Top: Kolekce showcase */}
-                <Link to={KOLEKCE_HIGHLIGHT.path} onClick={(e) => e.stopPropagation()}
-              className="group grid grid-cols-1 md:grid-cols-2 gap-6 items-center pb-8 border-b border-slate-100 rounded-xl hover:bg-slate-50 transition-colors p-2">
-                  <div className="rounded-xl overflow-hidden aspect-[16/9] bg-white shadow-sm group-hover:shadow-md transition-shadow order-2 md:order-1">
-                    <img src={KOLEKCE_HIGHLIGHT.image} alt={KOLEKCE_HIGHLIGHT.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                {/* Top: Kolekce showcase — 2 tiles */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pb-8 border-b border-slate-100">
+                  {[KOLEKCE_HIGHLIGHT, GATE_HIGHLIGHT].map((tile) =>
+                <Link key={tile.path} to={tile.path} onClick={(e) => e.stopPropagation()}
+                className="group rounded-xl hover:bg-slate-50 transition-colors p-2">
+                      <div className="rounded-xl overflow-hidden aspect-[16/9] bg-white shadow-sm group-hover:shadow-md transition-shadow mb-4">
+                        <img src={tile.image} alt={tile.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                      </div>
+                      <p className="text-xs font-bold text-cyan tracking-[0.2em] uppercase mb-2">{tile.tagline}</p>
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <tile.icon size={16} className="text-slate-600 group-hover:text-slate-900 transition-colors flex-shrink-0" />
+                        <p className="font-heading text-xl text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{tile.heading}</p>
+                      </div>
+                      <p className="text-sm text-slate-500 leading-relaxed mb-3">{tile.desc}</p>
+                      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
+                        Zobrazit <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </Link>
+                )}
+                </div>
+
+                {/* Produkty (modely) */}
+                <div className="pt-8 pb-8 border-b border-slate-100">
+                  <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-5">Populární modely</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {PRODUCT_LINKS.map((p) =>
+                  <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
+                  className="group flex flex-col gap-1 px-4 py-4 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200">
+                        <p className="font-heading text-sm text-slate-800 group-hover:text-slate-950 transition-colors font-medium leading-tight">{p.label}</p>
+                        <p className="text-xs text-slate-500 leading-tight">{p.sub}</p>
+                      </Link>
+                  )}
                   </div>
-                  <div className="order-1 md:order-2">
-                    <p className="text-xs font-bold text-cyan tracking-[0.2em] uppercase mb-3">{KOLEKCE_HIGHLIGHT.tagline}</p>
-                    <div className="flex items-center gap-2.5 mb-3">
-                      <KOLEKCE_HIGHLIGHT.icon size={18} className="text-slate-600 group-hover:text-slate-900 transition-colors flex-shrink-0" />
-                      <p className="font-heading text-2xl text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{KOLEKCE_HIGHLIGHT.heading}</p>
-                    </div>
-                    <p className="text-sm text-slate-500 leading-relaxed mb-4">{KOLEKCE_HIGHLIGHT.desc}</p>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
-                      Prohlédnout kolekci <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
-                </Link>
+                </div>
 
                 {/* Middle: Podle využití */}
                 <div className="pt-8 pb-8 border-b border-slate-100">

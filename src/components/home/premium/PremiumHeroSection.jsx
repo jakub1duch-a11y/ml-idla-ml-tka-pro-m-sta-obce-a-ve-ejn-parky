@@ -7,7 +7,7 @@ const DEVICE_VIDEO = "https://media.base44.com/videos/public/6a3ee88c10959cd3588
 function MistDrawIcon() {
   return (
     <motion.svg
-      width="52" height="52" viewBox="0 0 48 48" fill="none" className="text-sky-500 mx-auto mb-6"
+      width="52" height="52" viewBox="0 0 48 48" fill="none" className="text-white mx-auto mb-6"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
     >
       <DrawPath d="M24 6C16 16 12 22 12 28a12 12 0 0024 0c0-6-4-12-12-22z" />
@@ -72,7 +72,7 @@ export default function PremiumHeroSection() {
           src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/621b949b8_Terrace_Mist_Hero_Video.mp4"
           className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
         />
-        <div className="absolute inset-0 bg-white/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/20 pointer-events-none" />
 
         {/* Soft parallax mist layers */}
         <motion.div style={{ y: mistLayer1Y, opacity: mistOpacity }} className="absolute -top-1/4 left-1/2 -translate-x-1/2 w-[140%] h-[70%] bg-white/60 blur-[110px] rounded-full pointer-events-none" />
@@ -93,24 +93,24 @@ export default function PremiumHeroSection() {
 
         <motion.div style={{ opacity: text1Opacity }} className="absolute inset-x-0 top-[13%] text-center px-6 z-20">
           <MistDrawIcon />
-          <h1 className="font-sans font-light text-4xl md:text-6xl text-slate-900 tracking-tight">Prémiová nerezová mlžidla</h1>
+          <h1 className="font-serif font-normal text-4xl md:text-6xl text-white tracking-tight drop-shadow-md">Prémiová nerezová mlžidla</h1>
         </motion.div>
 
         <motion.div style={{ opacity: text2Opacity }} className="absolute inset-x-0 bottom-[16%] text-center px-6 max-w-xl mx-auto z-20">
-          <p className="font-sans font-light text-lg md:text-2xl text-slate-700">Spojení čistého minimalistického tvaru s vysokotlakým mikro-chlazením.</p>
+          <p className="font-serif font-light text-lg md:text-2xl text-white/90 drop-shadow">Spojení čistého minimalistického tvaru s vysokotlakým mikro-chlazením.</p>
         </motion.div>
 
         <motion.div style={{ opacity: text3Opacity }} className="absolute inset-x-0 bottom-[14%] text-center px-6 max-w-xl mx-auto z-20">
-          <p className="font-sans font-light text-lg md:text-2xl text-slate-700">Navrženo jako exkluzivní prvek pro moderní zahrady, terasy a atria.</p>
+          <p className="font-serif font-light text-lg md:text-2xl text-white/90 drop-shadow">Navrženo jako exkluzivní prvek pro moderní zahrady, terasy a atria.</p>
         </motion.div>
 
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
           style={{ opacity: text1Opacity }}
         >
-          <span className="text-[10px] font-sans tracking-[0.3em] uppercase text-slate-400">Scroll</span>
+          <span className="text-[10px] font-sans tracking-[0.3em] uppercase text-white/80">Scroll</span>
           <motion.div
-            className="w-[1px] h-8 bg-slate-300"
+            className="w-[1px] h-8 bg-white/60"
             animate={{ scaleY: [0.3, 1, 0.3] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
             style={{ transformOrigin: "top" }}

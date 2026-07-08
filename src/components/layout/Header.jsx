@@ -8,7 +8,14 @@ const PRODUCT_LINKS = [
 { label: 'AURA', sub: 'Zahradní mlžítko', path: '/produkt/aura', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG' },
 { label: 'BENDY 60', sub: 'Zakřivené mlžítko', path: '/produkt/bendy-60', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c6442bcbc_bendy60-mlitkozahradn.png' },
 { label: 'Y-ARMIST TR60', sub: 'Y-tvarový systém', path: '/produkt/y-armist-tr60', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png' },
-{ label: 'GATE70', sub: 'Mlžná brána', path: '/produkt/gate70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' }];
+{ label: 'GATE70', sub: 'Mlžná brána', path: '/produkt/gate70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
+{ label: 'LINEA CE70', sub: 'Linkové mlžítko', path: '/produkt/linea-el70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png' },
+{ label: 'Mlžný mrak', sub: 'Mlžná socha', path: '/produkt/mrak', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84805a215_mlnprvek-mrak-mlzidla02.png' },
+{ label: 'Lízátko', sub: 'Mlžná socha', path: '/produkt/Lizatko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png' },
+{ label: 'Mlžný strom — OSTREV', sub: 'Mlžná socha', path: '/produkt/ostrev-mlzitko', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/fb4164f66_ostev4.png' },
+{ label: 'Mlžná spirála', sub: 'Mlžná socha', path: '/produkt/spirala', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/df5b375c0_Mlzitko-spirala2.png' }];
+
+const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek — mlžiště na míru', path: '/poptavka' };
 
 
 const USAGE_LINKS = [
@@ -25,6 +32,7 @@ const USAGE_LINKS = [
 
 const INFO_LINKS = [
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
+{ icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
 { icon: Cpu, label: 'Technologie', path: '/technologie' },
 { icon: ShieldCheck, label: 'Výhody', path: '/vyhody' },
 { icon: HelpCircle, label: 'FAQ', path: '/faq' },
@@ -130,13 +138,13 @@ export default function Header() {
                 }
               </AnimatePresence>
             </div>
-            <Link to="/podpora" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Podpora</Link>
+            <Link to="/kontakt" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Kontakt</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all ${scrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/10'}`}>O nás</Link>
+              <Link to="/o-nas" className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all ${scrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/10'}`}>O společnosti</Link>
               <Link to="/poptavka"
               className="flex items-center gap-1.5 px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
                 Poptávka
@@ -196,6 +204,14 @@ export default function Header() {
                       </Link>
                   )}
                   </div>
+                  <Link to={CUSTOM_LINK.path} onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-3 mt-4 px-3 py-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
+                    <Sparkles size={16} className="text-slate-500 flex-shrink-0" />
+                    <div>
+                      <p className="font-heading text-xs text-slate-800 font-medium leading-tight">{CUSTOM_LINK.label}</p>
+                      <p className="text-[11px] text-slate-500 leading-tight">{CUSTOM_LINK.sub}</p>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -236,7 +252,8 @@ export default function Header() {
                    </Link>
               )}
                  </div>
-                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-4 mb-2">Celá kolekce →</Link>
+                 <Link to={CUSTOM_LINK.path} onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-3 mb-1">{CUSTOM_LINK.label} — {CUSTOM_LINK.sub}</Link>
+                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-1 mb-2">Celá kolekce →</Link>
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-4 mb-3">B2B využití</p>
                  <div className="grid grid-cols-3 gap-2 pb-2">
                    {USAGE_LINKS.map((l) =>
@@ -267,8 +284,7 @@ export default function Header() {
               {[
             { label: 'Reference', path: '/reference' },
             { label: 'Blog & novinky', path: '/blog' },
-            { label: 'Podpora', path: '/podpora' },
-            { label: 'O nás', path: '/o-nas' },
+            { label: 'O společnosti', path: '/o-nas' },
             { label: 'Kontakt', path: '/kontakt' }].
             map((l) =>
             <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-4 px-6 border-b border-slate-100">{l.label}</Link>

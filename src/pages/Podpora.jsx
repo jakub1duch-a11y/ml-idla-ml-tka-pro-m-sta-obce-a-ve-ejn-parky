@@ -148,7 +148,7 @@ export default function Podpora() {
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Podpora</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Nejčastější dotazy</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4" style={{ letterSpacing: '-0.03em' }}>
             Nejčastější dotazy
           </h1>

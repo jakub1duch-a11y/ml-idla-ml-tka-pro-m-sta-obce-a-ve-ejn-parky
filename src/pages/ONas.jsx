@@ -27,7 +27,7 @@ export default function ONas() {
         <div className="absolute inset-0 flex items-end">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">O NÁS</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3">O SPOLEČNOSTI</p>
               <h1 className="font-heading text-4xl lg:text-6xl text-white leading-tight mb-0" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>
                 Příběh HolmTec
               </h1>

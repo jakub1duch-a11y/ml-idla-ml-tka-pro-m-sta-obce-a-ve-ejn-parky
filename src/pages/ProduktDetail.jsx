@@ -157,14 +157,14 @@ function ContactForm({ productName }) {
         </div>
       </div>
 
-      <div>
+      <div className="text-[hsl(var(--popover))]">
         <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Popište váš projekt</label>
         <textarea value={form.message} onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))} rows={4}
         className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors resize-none"
         placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
       </div>
       <button type="submit" disabled={sending}
-      className="w-full py-5 bg-slate-900 text-white text-base font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg">
+      className="w-full py-5 text-white text-base font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg bg-[hsl(var(--accent))] uppercase">
         {sending ? <Loader size={18} className="animate-spin" /> : <>Poptat produkt zdarma <ArrowRight size={18} /></>}
       </button>
     </form>);

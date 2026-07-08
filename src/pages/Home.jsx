@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
 import CategorySlider from '@/components/home/CategorySlider';
+import PremiumMistExperience from '@/components/home/premium/PremiumMistExperience';
 import HeroSection from '@/components/home/HeroSection';
 import CategoriesSection from '@/components/home/CategoriesSection';
 import ProductsSlider from '@/components/home/ProductsSlider';
@@ -22,6 +23,7 @@ export default function Home() {
   }, []);
   return (
     <>
+      <PremiumMistExperience />
       <CategorySlider />
       <HeroSection />
       <FadeIn><CategoriesSection /></FadeIn>

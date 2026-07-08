@@ -190,11 +190,11 @@ export const SEO_PAGES = {
 
 export function getProductSEO(product, reviewStats) {
   if (!product) return {};
-  const title = `${product.name} — Mlžná skulptura z nerezové oceli`;
+  const title = `${product.name} — Nízkotlaké mlžítko 2–7 BAR`;
   const description = product.short_description
-    ? `${product.name}: ${product.short_description} ${product.material ? `Materiál: ${product.material}.` : ''} Zakázková výroba Mlžidla.cz - Mlžítka HolmTec.`
-    : `Mlžná skulptura ${product.name} od Mlžidla.cz. Zakázková výroba z nerezové oceli, ochlazení až −9 °C. Ideální pro parky, náměstí a eventy.`;
-  const keywords = `${product.name}, mlžná socha ${product.name}, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, mlhoviště ${product.name}, HolmTec ${product.name}`;
+    ? `${product.name}: ${product.short_description} Nízkotlaký mlžící systém 2–7 BAR, kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
+    : `Nízkotlaké mlžítko ${product.name} — provoz 2–7 BAR bez čerpadel, kotvení zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena na vyžádání.`;
+  const keywords = `${product.name}, nízkotlaký mlžící systém 2-7 BAR, kotvení zemním vrutem, rychlá instalace do 30 minut, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, HolmTec ${product.name}`;
 
   const sku = `HT-${(product.slug || product.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-')}`;
   const images = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);

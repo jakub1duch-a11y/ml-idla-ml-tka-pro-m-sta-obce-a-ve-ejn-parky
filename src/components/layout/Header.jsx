@@ -71,8 +71,8 @@ export default function Header() {
 
       
 
-      <header className={`fixed top-0 left-0 right-0 transition-all z-40 duration-1200 bg-white/10 ${
-      scrolled ? "backdrop-blur-xl border-slate-200 shadow-sm" : "bg-black/30 backdrop-blur-sm"}`
+      <header className={`fixed top-0 left-0 right-0 transition-all z-40 duration-1200 bg-black/80 bg-white/40 ${
+      scrolled ? "backdrop-blur-xl border-slate-200 shadow-sm" : "backdrop-blur-sm"}`
       }>
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
@@ -135,7 +135,7 @@ export default function Header() {
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
                 {/* Top: Kolekce showcase */}
                 <Link to={KOLEKCE_HIGHLIGHT.path} onClick={(e) => e.stopPropagation()}
-                className="group grid grid-cols-1 md:grid-cols-2 gap-6 items-center pb-8 border-b border-slate-100 rounded-xl hover:bg-slate-50 transition-colors p-2">
+              className="group grid grid-cols-1 md:grid-cols-2 gap-6 items-center pb-8 border-b border-slate-100 rounded-xl hover:bg-slate-50 transition-colors p-2">
                   <div className="rounded-xl overflow-hidden aspect-[16/9] bg-white shadow-sm group-hover:shadow-md transition-shadow order-2 md:order-1">
                     <img src={KOLEKCE_HIGHLIGHT.image} alt={KOLEKCE_HIGHLIGHT.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                   </div>

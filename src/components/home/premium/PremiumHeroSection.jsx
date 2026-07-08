@@ -63,60 +63,60 @@ export default function PremiumHeroSection() {
   { left: 92, top: 14, speed: 180, size: 2, height: 12 }];
 
 
-  return (
-    <section ref={ref} style={{ height: "400vh" }} className="relative bg-white hidden">
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center bg-[#F8F9FA] hidden">
-        {/* Background video */}
-        <video
-          autoPlay muted loop playsInline
-          src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/621b949b8_Terrace_Mist_Hero_Video.mp4"
-          className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none" />
-        
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/20 pointer-events-none" />
+  return null;
 
-        {/* Soft parallax mist layers */}
-        <motion.div style={{ y: mistLayer1Y, opacity: mistOpacity }} className="absolute -top-1/4 left-1/2 -translate-x-1/2 w-[140%] h-[70%] bg-white/60 blur-[110px] rounded-full pointer-events-none" />
-        <motion.div style={{ y: mistLayer2Y, opacity: mistOpacity }} className="absolute top-[20%] left-[10%] w-[60%] h-[50%] bg-sky-50/60 blur-[90px] rounded-full pointer-events-none" />
-        <motion.div style={{ y: mistLayer3Y, opacity: mistOpacity }} className="absolute bottom-0 right-[5%] w-[50%] h-[40%] bg-white/50 blur-[100px] rounded-full pointer-events-none" />
 
-        {/* Gentle parallax droplets */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {droplets.map((d, i) =>
-          <Droplet key={i} {...d} progress={smoothProgress} />
-          )}
-        </div>
 
-        {/* Animated device — scroll-scrubbed */}
-        <motion.div style={{ scale: deviceScale, y: deviceY }} className="relative w-[220px] md:w-[340px] aspect-square z-10">
-          <video ref={videoRef} src={DEVICE_VIDEO} muted preload="auto" className="w-full h-full object-contain drop-shadow-2xl" />
-        </motion.div>
 
-        <motion.div style={{ opacity: text1Opacity }} className="absolute inset-x-0 top-[13%] text-center px-6 z-20">
-          <MistDrawIcon />
-          <h1 className="font-serif font-normal text-4xl md:text-6xl text-white tracking-tight drop-shadow-md">Prémiová nerezová mlžidla</h1>
-        </motion.div>
 
-        <motion.div style={{ opacity: text2Opacity }} className="absolute inset-x-0 bottom-[16%] text-center px-6 max-w-xl mx-auto z-20">
-          <p className="font-serif font-light text-lg md:text-2xl text-white/90 drop-shadow">Spojení čistého minimalistického tvaru s vysokotlakým mikro-chlazením.</p>
-        </motion.div>
 
-        <motion.div style={{ opacity: text3Opacity }} className="absolute inset-x-0 bottom-[14%] text-center px-6 max-w-xl mx-auto z-20">
-          <p className="font-serif font-light text-lg md:text-2xl text-white/90 drop-shadow">Navrženo jako exkluzivní prvek pro moderní zahrady, terasy a atria.</p>
-        </motion.div>
 
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
-          style={{ opacity: text1Opacity }}>
-          
-          <span className="text-[10px] font-sans tracking-[0.3em] uppercase text-white/80">Scroll</span>
-          <motion.div
-            className="w-[1px] h-8 bg-white/60"
-            animate={{ scaleY: [0.3, 1, 0.3] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            style={{ transformOrigin: "top" }} />
-          
-        </motion.div>
-      </div>
-    </section>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -164,7 +164,7 @@ function ContactForm({ productName }) {
         placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
       </div>
       <button type="submit" disabled={sending}
-      className="w-full py-5 text-white text-base font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg bg-[hsl(var(--accent))] uppercase">
+      className="w-full py-5 text-white text-base rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg bg-[hsl(var(--accent))] normal-case font-">
         {sending ? <Loader size={18} className="animate-spin" /> : <>Poptat produkt zdarma <ArrowRight size={18} /></>}
       </button>
     </form>);

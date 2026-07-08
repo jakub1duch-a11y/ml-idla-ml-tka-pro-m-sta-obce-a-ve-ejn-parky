@@ -31,7 +31,7 @@ export default function ProductReviews({ productId, onStatsLoaded }) {
       <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
         <div>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Hodnocení zákazníků</p>
-          <h2 className="tracking-tight mb-5 text-slate-900 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-4xl uppercase" style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
+          <h2 style={{ fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.04em' }}>
             Co říkají naši klienti
           </h2>
         </div>

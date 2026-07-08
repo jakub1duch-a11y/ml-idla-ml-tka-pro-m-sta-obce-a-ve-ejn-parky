@@ -99,7 +99,7 @@ function ContactForm({ productName }) {
         <div>
           <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
           <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors bg-TRANSPARR"
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors text-[hsl(var(--popover))]"
           placeholder="Jan Novák" />
         </div>
         <div>

@@ -21,21 +21,24 @@ export default function SmartSection() {
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
               className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6">
-              Mlžení z mobilu.<br /><span className="italic">Kdykoli. Odkudkoli.</span>
+              Mlžení z mobilu.<br />Kdykoli. Odkudkoli.
             </motion.h2>
             <p className="text-slate-500 text-lg leading-relaxed mb-8">
               Aplikace HolmTec zobrazuje teplotu, vlhkost, spotřebu vody a stav systému v reálném čase. Automatické plány, scény, skupinové ovládání.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
-              {features.map((f) => (
-                <div key={f.label} className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
+              {features.map((f, i) => (
+                <motion.div key={f.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
+                  className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <motion.div initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.4, ease: 'backOut' }}>
+                    <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
+                  </motion.div>
                   <div>
                     <p className="text-sm font-semibold text-slate-900">{f.label}</p>
                     <p className="text-xs text-slate-400">{f.sub}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 

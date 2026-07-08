@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Settings2, Layers, Package, Building2, Trees, Waves, Palette, Tent, Factory, Zap, Flower2, Sparkles, Baby } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Settings2, Layers, Package, Building2, Trees, Waves, Palette, Tent, Factory, Zap, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
 
@@ -35,6 +35,16 @@ const USAGE_LINKS = [
 { icon: Palette, label: 'Pro architekty', sub: 'CAD/BIM, zakázkový design', path: '/kategorie/architekti', color: 'text-violet-400' },
 { icon: Factory, label: 'Komerční prostory', sub: 'Restaurace, OC, výrobní haly', path: '/kategorie/komercni', color: 'text-amber-400' },
 { icon: Tent, label: 'Eventy & festivaly', sub: 'Mobilní mlžítka, pronájem', path: '/kategorie/eventy', color: 'text-rose-400' }];
+
+
+const INFO_LINKS = [
+{ icon: Cpu, label: 'Technologie', path: '/technologie' },
+{ icon: ShieldCheck, label: 'Výhody', path: '/vyhody' },
+{ icon: HelpCircle, label: 'FAQ', path: '/faq' },
+{ icon: Newspaper, label: 'Novinky', path: '/novinky' },
+{ icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
+{ icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
+{ icon: Download, label: 'Ke stažení', path: '/ke-stazeni' }];
 
 
 export default function Header() {
@@ -131,29 +141,29 @@ export default function Header() {
             transition={{ duration: 0.15 }}
             onMouseEnter={openMega}
             onMouseLeave={closeMega}
-            className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10">
+            className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
             
               <div className="max-w-7xl mx-auto px-5 lg:px-8 py-8">
-                {/* Top: 3 columns */}
-                <div className="grid grid-cols-3 gap-6 pb-8 border-b border-slate-100">
+                {/* Top: product columns */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 pb-8 border-b border-slate-100">
                   {MEGA_COLUMNS.map((col) =>
                 <Link key={col.heading} to={col.path} className="group block p-2 rounded-lg hover:bg-slate-50 transition-colors" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center gap-2.5 mb-4">
-                        <col.icon size={14} className="text-slate-600 group-hover:text-slate-900 transition-colors" />
+                        <col.icon size={14} className="text-slate-600 group-hover:text-slate-900 transition-colors flex-shrink-0" />
                         <p className="font-heading text-base text-slate-800 group-hover:text-slate-950 transition-colors font-light tracking-tight leading-snug">{col.heading}</p>
-                        <ArrowRight size={14} className="text-slate-400 group-hover:text-slate-950 transition-colors opacity-0 group-hover:opacity-100 ml-auto" />
+                        <ArrowRight size={14} className="text-slate-400 group-hover:text-slate-950 transition-colors opacity-0 group-hover:opacity-100 ml-auto flex-shrink-0" />
                       </div>
                       <div className="rounded-xl overflow-hidden aspect-[16/10] bg-white shadow-sm group-hover:shadow-md transition-shadow">
-                        <img src={col.image} alt={col.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={col.image} alt={col.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                       </div>
                     </Link>
                 )}
                 </div>
 
-                {/* Bottom: Využití */}
-                <div className="pt-8">
+                {/* Middle: Podle využití */}
+                <div className="pt-8 pb-8 border-b border-slate-100">
                   <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-5">Podle využití</p>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
                     {USAGE_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col items-start gap-3 px-4 py-4 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200">
@@ -162,6 +172,20 @@ export default function Header() {
                           <p className="font-heading text-sm text-slate-800 group-hover:text-slate-950 transition-colors font-light leading-tight">{link.label}</p>
                           <p className="text-xs text-slate-500 mt-1 leading-tight">{link.sub}</p>
                         </div>
+                      </Link>
+                  )}
+                  </div>
+                </div>
+
+                {/* Bottom: Informace a podpora */}
+                <div className="pt-8">
+                  <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-5">Informace a podpora</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    {INFO_LINKS.map((link) =>
+                  <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
+                  className="group flex items-center gap-2.5 px-3 py-3 rounded-lg hover:bg-slate-50 transition-colors">
+                        <link.icon size={16} className="text-slate-400 group-hover:text-slate-900 transition-colors flex-shrink-0" />
+                        <p className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors font-light">{link.label}</p>
                       </Link>
                   )}
                   </div>
@@ -200,6 +224,10 @@ export default function Header() {
                  <Link to="/jak-to-funguje" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Smart moduly</Link>
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-5 mb-3 px-6">Podle využití</p>
                  {USAGE_LINKS.map((l) =>
+              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">{l.label}</Link>
+              )}
+                 <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-5 mb-3 px-6">Informace a podpora</p>
+                 {INFO_LINKS.map((l) =>
               <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">{l.label}</Link>
               )}
                </motion.div>

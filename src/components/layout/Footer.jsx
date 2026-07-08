@@ -6,8 +6,8 @@ export default function Footer() {
   return (
     <footer className="bg-white border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
+          <div className="sm:col-span-2 md:col-span-2">
             <div className="mb-5 flex items-center gap-2">
               <svg width="20" height="26" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 2 C11 2 2 12 2 18 C2 23.5 6 26.5 11 26.5 C16 26.5 20 23.5 20 18 C20 12 11 2 11 2Z" fill="#0f172a" fillOpacity="0.9" />
@@ -36,10 +36,23 @@ export default function Footer() {
             <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Katalog</p>
             <div className="flex flex-col gap-3">
               <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlžítka a mlžné brány</Link>
+              <Link to="/prislusenstvi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Příslušenství</Link>
               <Link to="/mlhoviste" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlhoviště</Link>
               <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Jak to funguje</Link>
               <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
-              
+            </div>
+          </div>
+
+          <div>
+            <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Informace</p>
+            <div className="flex flex-col gap-3">
+              <Link to="/technologie" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Technologie</Link>
+              <Link to="/vyhody" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Výhody</Link>
+              <Link to="/faq" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">FAQ</Link>
+              <Link to="/novinky" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Novinky</Link>
+              <Link to="/servis-udrzba" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Servis a údržba</Link>
+              <Link to="/ochrana-zdravi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ochrana zdraví</Link>
+              <Link to="/ke-stazeni" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ke stažení</Link>
             </div>
           </div>
 

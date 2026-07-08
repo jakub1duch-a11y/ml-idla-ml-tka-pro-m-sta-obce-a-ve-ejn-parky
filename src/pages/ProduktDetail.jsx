@@ -374,7 +374,7 @@ export default function ProduktDetail() {
             <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
               {nextTab ?
               <button onClick={() => handleTabClick(nextTab)}
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors uppercase">
+              className="inline-flex items-center gap-2 font-medium text-slate-600 hover:text-slate-900 transition-colors uppercase text-xs">
                   Pokračovat: {nextTab.label} <ArrowRight size={15} />
                 </button> :
               <span />

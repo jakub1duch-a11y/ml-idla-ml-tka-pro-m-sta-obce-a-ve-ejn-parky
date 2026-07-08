@@ -8,12 +8,12 @@ function MistDrawIcon() {
   return (
     <motion.svg
       width="52" height="52" viewBox="0 0 48 48" fill="none" className="text-white mx-auto mb-6"
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
-    >
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+      
       <DrawPath d="M24 6C16 16 12 22 12 28a12 12 0 0024 0c0-6-4-12-12-22z" />
       <DrawPath d="M18 34c1 2 3 3 6 3" transition={{ delay: 0.4, duration: 0.6 }} />
-    </motion.svg>
-  );
+    </motion.svg>);
+
 }
 
 function Droplet({ left, top, speed, size, height, progress }) {
@@ -23,9 +23,9 @@ function Droplet({ left, top, speed, size, height, progress }) {
   return (
     <motion.span
       style={{ left: `${left}%`, top: `${top}%`, y: smoothY, opacity, width: size, height }}
-      className="absolute rounded-full bg-gradient-to-b from-sky-100/60 to-white/0 blur-[1px]"
-    />
-  );
+      className="absolute rounded-full bg-gradient-to-b from-sky-100/60 to-white/0 blur-[1px]" />);
+
+
 }
 
 export default function PremiumHeroSection() {
@@ -54,24 +54,24 @@ export default function PremiumHeroSection() {
   const text3Opacity = useTransform(smoothProgress, [0.78, 0.9, 1], [0, 1, 1]);
 
   const droplets = [
-    { left: 8, top: 8, speed: 140, size: 2, height: 16 },
-    { left: 18, top: 4, speed: 190, size: 2, height: 20 },
-    { left: 30, top: 12, speed: 110, size: 2, height: 14 },
-    { left: 62, top: 6, speed: 170, size: 2, height: 18 },
-    { left: 74, top: 10, speed: 210, size: 2, height: 15 },
-    { left: 86, top: 5, speed: 130, size: 2, height: 22 },
-    { left: 92, top: 14, speed: 180, size: 2, height: 12 },
-  ];
+  { left: 8, top: 8, speed: 140, size: 2, height: 16 },
+  { left: 18, top: 4, speed: 190, size: 2, height: 20 },
+  { left: 30, top: 12, speed: 110, size: 2, height: 14 },
+  { left: 62, top: 6, speed: 170, size: 2, height: 18 },
+  { left: 74, top: 10, speed: 210, size: 2, height: 15 },
+  { left: 86, top: 5, speed: 130, size: 2, height: 22 },
+  { left: 92, top: 14, speed: 180, size: 2, height: 12 }];
+
 
   return (
-    <section ref={ref} style={{ height: "400vh" }} className="relative bg-white">
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center bg-[#F8F9FA]">
+    <section ref={ref} style={{ height: "400vh" }} className="relative bg-white hidden">
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center bg-[#F8F9FA] hidden">
         {/* Background video */}
         <video
           autoPlay muted loop playsInline
           src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/621b949b8_Terrace_Mist_Hero_Video.mp4"
-          className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
-        />
+          className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none" />
+        
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/20 pointer-events-none" />
 
         {/* Soft parallax mist layers */}
@@ -81,9 +81,9 @@ export default function PremiumHeroSection() {
 
         {/* Gentle parallax droplets */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {droplets.map((d, i) => (
-            <Droplet key={i} {...d} progress={smoothProgress} />
-          ))}
+          {droplets.map((d, i) =>
+          <Droplet key={i} {...d} progress={smoothProgress} />
+          )}
         </div>
 
         {/* Animated device — scroll-scrubbed */}
@@ -106,17 +106,17 @@ export default function PremiumHeroSection() {
 
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
-          style={{ opacity: text1Opacity }}
-        >
+          style={{ opacity: text1Opacity }}>
+          
           <span className="text-[10px] font-sans tracking-[0.3em] uppercase text-white/80">Scroll</span>
           <motion.div
             className="w-[1px] h-8 bg-white/60"
             animate={{ scaleY: [0.3, 1, 0.3] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            style={{ transformOrigin: "top" }}
-          />
+            style={{ transformOrigin: "top" }} />
+          
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

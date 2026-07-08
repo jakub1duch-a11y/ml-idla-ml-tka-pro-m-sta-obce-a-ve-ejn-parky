@@ -82,14 +82,12 @@ export default function Header() {
 
       
 
-      <header className={`fixed top-0 left-0 right-0 transition-all z-40 duration-1200 bg-black/80 bg-white/40 ${
-      scrolled ? "backdrop-blur-xl border-slate-200 shadow-sm" : "backdrop-blur-sm"}`
-      }>
+      <header className="fixed top-0 left-0 right-0 transition-all z-40 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
           <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2">
-            <Logo dark={scrolled} size="sm" />
+            <Logo size="sm" />
           </Link>
 
           {/* Desktop nav — centered elegant style */}
@@ -97,16 +95,16 @@ export default function Header() {
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              megaOpen ? 'bg-slate-100 text-slate-900' : scrolled ? "text-slate-700 hover:text-slate-900 hover:bg-slate-100" : "text-white/90 hover:text-white hover:bg-white/10"}`
+              megaOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
               }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Reference</Link>
-            <Link to="/blog" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Blog & novinky</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Blog & novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              infoOpen ? 'bg-slate-100 text-slate-900' : scrolled ? "text-slate-700 hover:text-slate-900 hover:bg-slate-100" : "text-white/90 hover:text-white hover:bg-white/10"}`
+              infoOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
               }>
                 Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -129,20 +127,20 @@ export default function Header() {
                 }
               </AnimatePresence>
             </div>
-            <Link to="/kontakt" className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${scrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-white/90 hover:text-white hover:bg-white/10'}`}>Kontakt</Link>
+            <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Kontakt</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all ${scrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/10'}`}>O společnosti</Link>
+              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/80 hover:text-white hover:bg-white/10">O společnosti</Link>
               <Link to="/poptavka"
-              className="flex items-center gap-1.5 px-6 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+              className="flex items-center gap-1.5 px-6 py-2.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
                 Poptávka
               </Link>
             </div>
-            <button onClick={toggleMobileMenu} className={`lg:hidden p-2 -mr-2 transition-colors ${scrolled ? 'text-slate-900' : 'text-white'}`}>
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-11 h-11 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -273,20 +271,20 @@ export default function Header() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.15 }}
               className="flex flex-col gap-0 py-2 bg-slate-50 rounded-lg mt-2">
+                 <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Blog & novinky</Link>
+                 <Link to="/o-nas" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">O společnosti</Link>
                  {INFO_LINKS.map((l) =>
-              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-3 px-6 transition-colors">{l.label}</Link>
+              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">{l.label}</Link>
               )}
                </motion.div>
             }
               {[
             { label: 'Reference', path: '/reference' },
-            { label: 'Blog & novinky', path: '/blog' },
-            { label: 'O společnosti', path: '/o-nas' },
             { label: 'Kontakt', path: '/kontakt' }].
             map((l) =>
-            <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-4 px-6 border-b border-slate-100">{l.label}</Link>
+            <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-5 px-6 border-b border-slate-100">{l.label}</Link>
             )}
-              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="mt-8 mb-6 px-6 py-4 bg-slate-900 text-white text-base font-bold rounded-full text-center hover:bg-slate-800 transition-colors">
+              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="mt-8 mb-6 px-6 py-5 bg-slate-900 text-white text-base font-bold rounded-full text-center hover:bg-slate-800 transition-colors">
                 Poptávka
               </Link>
             </div>

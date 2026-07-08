@@ -1,28 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Droplet } from 'lucide-react';
 
-const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ea354774f_generated_image.png';
-
-export default function Logo({ dark = false, size = 'md' }) {
-  const iconSize = size === 'sm' ? 18 : 22;
+export default function Logo({ size = 'md' }) {
+  const iconSize = size === 'sm' ? 20 : 24;
   return (
     <motion.div
       initial={{ opacity: 0, filter: 'blur(10px)' }}
       animate={{ opacity: 1, filter: 'blur(0px)' }}
       transition={{ duration: 1.8, ease: 'easeOut' }}
-      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md transition-colors duration-500 ${dark ? 'bg-white/70' : 'bg-black/25'}`}
+      className="inline-flex items-center gap-2"
     >
-      <img src={LOGO_URL} alt="Mlžidla.cz" width={iconSize} height={iconSize} className="shrink-0" />
-      <div className="flex flex-col leading-none">
-        <span
-          className={`font-heading text-lg font-semibold tracking-wide uppercase transition-colors duration-500 ${dark ? 'text-slate-900' : 'text-white'}`}
-        >
-          mlžidla<span className="text-[#40a2d4] text-base normal-case px-0.5" style={{ letterSpacing: '0.06em' }}>.cz</span>
-        </span>
-        <span className={`text-[8px] font-body tracking-[0.15em] uppercase transition-colors duration-500 ${dark ? 'text-slate-500' : 'text-white/70'}`}>
-          Mlžítka a mlžné brány · HolmTec
-        </span>
-      </div>
+      <Droplet size={iconSize} className="shrink-0 text-[#40a2d4] fill-[#40a2d4]/20" />
+      <span className="font-heading text-lg font-semibold tracking-wide uppercase text-white">
+        mlžidla<span className="text-[#40a2d4] text-base normal-case px-0.5" style={{ letterSpacing: '0.06em' }}>.cz</span>
+      </span>
     </motion.div>
   );
 }

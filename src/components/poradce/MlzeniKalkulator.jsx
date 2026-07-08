@@ -4,57 +4,57 @@ import { Droplets, Zap, Euro, Clock, TrendingDown, ChevronDown } from 'lucide-re
 
 // ─── Systémy ────────────────────────────────────────────────────────────────
 const SYSTEMS = [
-  {
-    id: 'bench',
-    name: 'BENDY 60 — Lavička',
-    type: 'Mlžná lavička',
-    nozzles: 4,
-    flowPerNozzle: 0.06, // l/min na trysku při 70 bar
-    pressure: 70,
-    powerW: 350,
-    desc: 'Kompaktní mlžná lavička pro terasy a veřejné prostory.',
-  },
-  {
-    id: 'ostev',
-    name: 'OSTEV — Mlžný strom',
-    type: 'Mlžná socha',
-    nozzles: 8,
-    flowPerNozzle: 0.06,
-    pressure: 70,
-    powerW: 550,
-    desc: 'Skulpturální mlžný strom pro náměstí a parky.',
-  },
-  {
-    id: 'gate60',
-    name: 'GATE 60 — Mlžná brána',
-    type: 'Mlžný portál',
-    nozzles: 12,
-    flowPerNozzle: 0.06,
-    pressure: 70,
-    powerW: 700,
-    desc: 'Vstupní mlžná brána pro eventy a veřejné prostory.',
-  },
-  {
-    id: 'arena',
-    name: 'ARENA — Mlžná zóna',
-    type: 'Chladicí zóna',
-    nozzles: 20,
-    flowPerNozzle: 0.06,
-    pressure: 70,
-    powerW: 1100,
-    desc: 'Plošné ochlazení pro velké venkovní prostory a tribuny.',
-  },
-  {
-    id: 'aura',
-    name: 'AURA — Mlžná socha',
-    type: 'Designová socha',
-    nozzles: 8,
-    flowPerNozzle: 0.06,
-    pressure: 70,
-    powerW: 550,
-    desc: 'Kruhová mlžná socha — dominanta veřejného prostoru.',
-  },
-];
+{
+  id: 'bench',
+  name: 'BENDY 60 — Lavička',
+  type: 'Mlžná lavička',
+  nozzles: 4,
+  flowPerNozzle: 0.06, // l/min na trysku při 70 bar
+  pressure: 70,
+  powerW: 350,
+  desc: 'Kompaktní mlžná lavička pro terasy a veřejné prostory.'
+},
+{
+  id: 'ostev',
+  name: 'OSTEV — Mlžný strom',
+  type: 'Mlžná socha',
+  nozzles: 8,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 550,
+  desc: 'Skulpturální mlžný strom pro náměstí a parky.'
+},
+{
+  id: 'gate60',
+  name: 'GATE 60 — Mlžná brána',
+  type: 'Mlžný portál',
+  nozzles: 12,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 700,
+  desc: 'Vstupní mlžná brána pro eventy a veřejné prostory.'
+},
+{
+  id: 'arena',
+  name: 'ARENA — Mlžná zóna',
+  type: 'Chladicí zóna',
+  nozzles: 20,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 1100,
+  desc: 'Plošné ochlazení pro velké venkovní prostory a tribuny.'
+},
+{
+  id: 'aura',
+  name: 'AURA — Mlžná socha',
+  type: 'Designová socha',
+  nozzles: 8,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 550,
+  desc: 'Kruhová mlžná socha — dominanta veřejného prostoru.'
+}];
+
 
 const WATER_PRICE_PER_M3 = 85; // Kč / m³ (ČR průměr 2025)
 const ELECTRICITY_PRICE_PER_KWH = 5.5; // Kč / kWh
@@ -70,8 +70,8 @@ function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
   const flowRef = useRef(flowRate);
 
   // Aktualizace refs bez restartu animace
-  useEffect(() => { intensityRef.current = intensity; }, [intensity]);
-  useEffect(() => { flowRef.current = flowRate; }, [flowRate]);
+  useEffect(() => {intensityRef.current = intensity;}, [intensity]);
+  useEffect(() => {flowRef.current = flowRate;}, [flowRate]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,8 +84,8 @@ function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
       const int = intensityRef.current;
       const flow = flowRef.current;
       // Větší flow → rychlejší stoupání, větší kapky
-      const speedMult = Math.min(2.2, 0.7 + (flow / 80));
-      const sizeMult  = Math.min(1.8, 0.8 + (flow / 120));
+      const speedMult = Math.min(2.2, 0.7 + flow / 80);
+      const sizeMult = Math.min(1.8, 0.8 + flow / 120);
       return {
         x: W * 0.2 + Math.random() * W * 0.6,
         y: H * 0.62 + Math.random() * H * 0.38,
@@ -94,7 +94,7 @@ function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
         vy: -(0.25 + Math.random() * 0.65) * speedMult,
         alpha: (0.04 + Math.random() * 0.22) * Math.min(1, int),
         life: 0,
-        maxLife: 55 + Math.random() * 90,
+        maxLife: 55 + Math.random() * 90
       };
     };
 
@@ -115,8 +115,8 @@ function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
 
       const int = intensityRef.current;
       const flow = flowRef.current;
-      const speedMult = Math.min(2.2, 0.7 + (flow / 80));
-      const sizeMult  = Math.min(1.8, 0.8 + (flow / 120));
+      const speedMult = Math.min(2.2, 0.7 + flow / 80);
+      const sizeMult = Math.min(1.8, 0.8 + flow / 120);
 
       particles.current.forEach((p) => {
         p.life++;
@@ -126,11 +126,11 @@ function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
 
         const progress = p.life / p.maxLife;
         // Plynulý fade-in / fade-out
-        const fade = progress < 0.15
-          ? progress / 0.15
-          : progress > 0.65
-          ? 1 - (progress - 0.65) / 0.35
-          : 1;
+        const fade = progress < 0.15 ?
+        progress / 0.15 :
+        progress > 0.65 ?
+        1 - (progress - 0.65) / 0.35 :
+        1;
 
         // Kapky se zvětšují jak stoupají (odpařování)
         const rNow = p.r * (1 + progress * 1.4);
@@ -172,9 +172,9 @@ function MistCanvas({ intensity = 1, flowRate = 28.8 }) {
       width={340}
       height={180}
       className="w-full h-full"
-      style={{ display: 'block' }}
-    />
-  );
+      style={{ display: 'block' }} />);
+
+
 }
 
 // ─── Animated Number ────────────────────────────────────────────────────────
@@ -192,18 +192,18 @@ function AnimNum({ value, decimals = 0, suffix = '' }) {
       const t = Math.min((now - startTime) / duration, 1);
       const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
       setDisplay(start + (end - start) * ease);
-      if (t < 1) requestAnimationFrame(step);
-      else prev.current = end;
+      if (t < 1) requestAnimationFrame(step);else
+      prev.current = end;
     };
     requestAnimationFrame(step);
   }, [value]);
 
   return (
-    <span>
+    <span className="hidden">
       {display.toFixed(decimals).replace('.', ',')}
       {suffix}
-    </span>
-  );
+    </span>);
+
 }
 
 // ─── Hlavní komponent ────────────────────────────────────────────────────────
@@ -219,9 +219,9 @@ export default function MlzeniKalkulator() {
   const flowPerHour = sys.nozzles * sys.flowPerNozzle * 60; // l/h
   const waterPerDay = flowPerHour * hoursPerDay; // l/day
   const waterPerMonth = waterPerDay * daysPerMonth; // l/month
-  const waterCostMonth = (waterPerMonth / 1000) * WATER_PRICE_PER_M3;
+  const waterCostMonth = waterPerMonth / 1000 * WATER_PRICE_PER_M3;
 
-  const electricityPerDay = (sys.powerW / 1000) * hoursPerDay; // kWh/day
+  const electricityPerDay = sys.powerW / 1000 * hoursPerDay; // kWh/day
   const electricityPerMonth = electricityPerDay * daysPerMonth;
   const electricityCostMonth = electricityPerMonth * ELECTRICITY_PRICE_PER_KWH;
 
@@ -229,7 +229,7 @@ export default function MlzeniKalkulator() {
   const costPerHour = totalCostMonth / (hoursPerDay * daysPerMonth);
 
   // Intensity pro animaci mlhy (0.3–1.5)
-  const mistIntensity = Math.min(1.5, 0.3 + (sys.nozzles / 20) * 1.2);
+  const mistIntensity = Math.min(1.5, 0.3 + sys.nozzles / 20 * 1.2);
 
   return (
     <div className="rounded-2xl border border-white/10 bg-card_bg overflow-hidden">
@@ -256,34 +256,34 @@ export default function MlzeniKalkulator() {
             <div className="relative">
               <button
                 onClick={() => setOpenSelect(!openSelect)}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-sm hover:border-cyan/40 focus:border-cyan/50 transition-colors text-left"
-              >
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-sm hover:border-cyan/40 focus:border-cyan/50 transition-colors text-left">
+                
                 <span>{sys.name}</span>
                 <ChevronDown size={14} className={`text-white/40 transition-transform ${openSelect ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
-                {openSelect && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className="absolute z-20 top-full mt-1 w-full rounded-xl bg-surface border border-white/15 overflow-hidden shadow-2xl shadow-black/50"
-                  >
-                    {SYSTEMS.map((s) => (
-                      <button
-                        key={s.id}
-                        onClick={() => { setSystemId(s.id); setOpenSelect(false); }}
-                        className={`w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors ${s.id === systemId ? 'bg-cyan/10' : ''}`}
-                      >
+                {openSelect &&
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="absolute z-20 top-full mt-1 w-full rounded-xl bg-surface border border-white/15 overflow-hidden shadow-2xl shadow-black/50">
+                  
+                    {SYSTEMS.map((s) =>
+                  <button
+                    key={s.id}
+                    onClick={() => {setSystemId(s.id);setOpenSelect(false);}}
+                    className={`w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors ${s.id === systemId ? 'bg-cyan/10' : ''}`}>
+                    
                         <div className="flex-1 min-w-0">
                           <p className={`text-sm font-medium truncate ${s.id === systemId ? 'text-cyan' : 'text-white'}`}>{s.name}</p>
                           <p className="text-xs text-white/35 truncate">{s.desc}</p>
                         </div>
                         <span className="text-[10px] font-mono text-white/30 shrink-0 mt-0.5">{s.nozzles} trysek</span>
                       </button>
-                    ))}
+                  )}
                   </motion.div>
-                )}
+                }
               </AnimatePresence>
             </div>
             <p className="text-xs text-white/30 mt-1.5 font-mono">{sys.type} · {sys.nozzles} trysek · {sys.powerW} W</p>
@@ -298,8 +298,8 @@ export default function MlzeniKalkulator() {
             <input
               type="range" min={1} max={16} step={1} value={hoursPerDay}
               onChange={(e) => setHoursPerDay(Number(e.target.value))}
-              className="w-full accent-cyan h-1 rounded-full"
-            />
+              className="w-full accent-cyan h-1 rounded-full" />
+            
             <div className="flex justify-between text-[10px] font-mono text-white/20 mt-1">
               <span>1 h</span><span>16 h</span>
             </div>
@@ -314,8 +314,8 @@ export default function MlzeniKalkulator() {
             <input
               type="range" min={1} max={31} step={1} value={daysPerMonth}
               onChange={(e) => setDaysPerMonth(Number(e.target.value))}
-              className="w-full accent-cyan h-1 rounded-full"
-            />
+              className="w-full accent-cyan h-1 rounded-full" />
+            
             <div className="flex justify-between text-[10px] font-mono text-white/20 mt-1">
               <span>1 den</span><span>31 dní</span>
             </div>
@@ -330,9 +330,9 @@ export default function MlzeniKalkulator() {
             </div>
             {/* Trysky */}
             <div className="absolute bottom-14 left-1/2 -translate-x-1/2 flex gap-5 z-10 pointer-events-none">
-              {Array.from({ length: Math.min(sys.nozzles, 6) }).map((_, i) => (
-                <div key={i} className="w-0.5 h-0.5 rounded-full bg-cyan/80 shadow-[0_0_6px_2px_rgba(34,211,238,0.6)]" />
-              ))}
+              {Array.from({ length: Math.min(sys.nozzles, 6) }).map((_, i) =>
+              <div key={i} className="w-0.5 h-0.5 rounded-full bg-cyan/80 shadow-[0_0_6px_2px_rgba(34,211,238,0.6)]" />
+              )}
             </div>
             <MistCanvas intensity={mistIntensity} flowRate={flowPerHour} />
             <div className="absolute bottom-3 left-0 right-0 text-center">
@@ -375,7 +375,7 @@ export default function MlzeniKalkulator() {
           </div>
 
           {/* Elektřina */}
-          <div className="rounded-xl bg-surface border border-white/10 p-5">
+          <div className="rounded-xl bg-surface border border-white/10 p-5 hidden">
             <div className="flex items-center gap-2 mb-3">
               <Zap size={15} className="text-cyan" />
               <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba elektřiny</p>
@@ -429,16 +429,16 @@ export default function MlzeniKalkulator() {
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-[10px] font-mono text-white/30">
                 <span className="w-2 h-2 rounded-full bg-cyan inline-block" />
-                <span>Voda {totalCostMonth > 0 ? Math.round((waterCostMonth / totalCostMonth) * 100) : 0}%</span>
-                <span className="w-2 h-2 rounded-full bg-white/20 inline-block ml-2" />
-                <span>Elektřina {totalCostMonth > 0 ? Math.round((electricityCostMonth / totalCostMonth) * 100) : 0}%</span>
+                <span>Voda {totalCostMonth > 0 ? Math.round(waterCostMonth / totalCostMonth * 100) : 0}%</span>
+                <span className="w-2 h-2 rounded-full bg-white/20 inline-block ml-2 hidden" />
+                <span className="hidden">Elektřina {totalCostMonth > 0 ? Math.round(electricityCostMonth / totalCostMonth * 100) : 0}%</span>
               </div>
               <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                 <motion.div
                   className="h-full bg-gradient-to-r from-cyan to-cyan/50"
-                  animate={{ width: `${totalCostMonth > 0 ? (waterCostMonth / totalCostMonth) * 100 : 0}%` }}
-                  transition={{ type: 'spring', stiffness: 120, damping: 20 }}
-                />
+                  animate={{ width: `${totalCostMonth > 0 ? waterCostMonth / totalCostMonth * 100 : 0}%` }}
+                  transition={{ type: 'spring', stiffness: 120, damping: 20 }} />
+                
               </div>
             </div>
           </div>
@@ -451,7 +451,7 @@ export default function MlzeniKalkulator() {
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs text-white/30 font-mono">
               <span>Voda: {WATER_PRICE_PER_M3} Kč/m³</span>
-              <span>Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
+              <span className="hidden">Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
             </div>
             <p className="text-[10px] text-white/20 font-mono mt-2 leading-relaxed">
               * Průměrné ceny ČR 2025. Skutečné náklady závisí na tarifu poskytovatele.
@@ -459,6 +459,6 @@ export default function MlzeniKalkulator() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

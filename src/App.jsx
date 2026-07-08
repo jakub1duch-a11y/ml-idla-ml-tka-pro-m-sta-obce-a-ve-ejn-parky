@@ -41,6 +41,13 @@ import Deti from '@/pages/kategorie/Deti';
 import Gdpr from '@/pages/Gdpr';
 import Admin from '@/pages/admin/Admin';
 import Gate70 from '@/pages/Gate70';
+import Faq from '@/pages/Faq';
+import Technologie from '@/pages/Technologie';
+import Vyhody from '@/pages/Vyhody';
+import KeStazeni from '@/pages/KeStazeni';
+import OchranaZdravi from '@/pages/OchranaZdravi';
+import ServisUdrzba from '@/pages/ServisUdrzba';
+import Novinky from '@/pages/Novinky';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -90,6 +97,13 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/technologie" element={<Technologie />} />
+        <Route path="/vyhody" element={<Vyhody />} />
+        <Route path="/ke-stazeni" element={<KeStazeni />} />
+        <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
+        <Route path="/servis-udrzba" element={<ServisUdrzba />} />
+        <Route path="/novinky" element={<Novinky />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<PageNotFound />} />

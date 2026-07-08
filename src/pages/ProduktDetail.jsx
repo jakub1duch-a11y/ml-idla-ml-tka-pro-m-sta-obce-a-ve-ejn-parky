@@ -16,6 +16,7 @@ import DetailTab from '@/components/produkt/tabs/DetailTab';
 import SpecsTab from '@/components/produkt/tabs/SpecsTab';
 import SmartModulesTab from '@/components/produkt/tabs/SmartModulesTab';
 import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
+import MistFogEffect from '@/components/produkt/MistFogEffect';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -392,19 +393,45 @@ export default function ProduktDetail() {
 
       {/* ═══════ INLINE CONTACT FORM ═══════ */}
       <section ref={contactRef} className="bg-gradient-to-b from-slate-900 to-slate-800 py-24 relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/20 text-white text-xs font-bold tracking-widest uppercase rounded-full mb-5">Nezávazná poptávka</span>
-              <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
-                Váš prostor si zaslouží<br /><span className="text-white/50">vlastní {product.name}.</span>
-              </h2>
-              <p className="text-white/60 text-sm mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
-              <div className="space-y-3 text-sm text-white/60 font-mono">
-                <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-white transition-colors">+420 774700390 </a>
-                <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-white transition-colors">obchod1@holmtec.cz</a>
-              </div>
-            </motion.div>
+        <MistFogEffect />
+        <div className="max-w-6xl mx-auto px-6 lg:px-10 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-16 items-start">
+            <div>
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/20 text-white text-xs font-bold tracking-widest uppercase rounded-full mb-5">Nezávazná poptávka</span>
+                <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
+                  Váš prostor si zaslouží<br /><span className="text-white/50">vlastní {product.name}.</span>
+                </h2>
+                <p className="text-white/60 text-sm mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+              </motion.div>
+
+              {/* FAQ o poptávce a realizaci */}
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+              className="space-y-4 mb-8">
+                {[
+                { q: 'Jak dlouho trvá zpracování poptávky?', a: 'Ozveme se vám do 24 hodin s konzultací a předběžnou nabídkou.' },
+                { q: 'Jak probíhá realizace?', a: 'Konzultace → 3D vizualizace do 48 h → zakázková výroba (6–8 týdnů) → instalace na místě.' },
+                { q: 'Je konzultace a vizualizace zdarma?', a: 'Ano, nezávazně a bez skrytých poplatků.' },
+                { q: 'Poskytujete servis po instalaci?', a: 'Ano, včetně pravidelné údržby a rychlého záručního i pozáručního servisu.' }].
+                map((item) =>
+                <div key={item.q} className="border-b border-white/10 pb-4">
+                    <p className="text-sm font-semibold text-white mb-1">{item.q}</p>
+                    <p className="text-sm text-white/50 leading-relaxed">{item.a}</p>
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Podpora 24/7 */}
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+              className="bg-white/5 border border-white/15 rounded-2xl p-6">
+                <span className="inline-block px-3 py-1 bg-emerald-400/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-bold tracking-widest uppercase rounded-full mb-3">Podpora 24/7</span>
+                <p className="text-sm font-semibold text-white mb-3">Ing. Radek Meduna</p>
+                <div className="space-y-2 text-sm text-white/60 font-mono">
+                  <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-white transition-colors">Tel.: +420 774700390</a>
+                  <a href="mailto:meduna@holmtec.cz" className="flex items-center gap-2 hover:text-white transition-colors">Email: meduna@holmtec.cz</a>
+                </div>
+              </motion.div>
+            </div>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
               <ContactForm productName={product.name} />
             </motion.div>

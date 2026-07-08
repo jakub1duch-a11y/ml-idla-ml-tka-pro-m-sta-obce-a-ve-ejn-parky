@@ -55,18 +55,25 @@ function Lightbox({ images, initialIndex, onClose }) {
 }
 
 // ─── Inline contact form ──────────────────────────────────────────────────────
+const ANCHORING_PHOTO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/44f2b5c20_moznostikotveni.webp';
+
 function ContactForm({ productName }) {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', smartModule: false, ledLighting: false, installationType: 'mobile' });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
     setSending(true);
+    const extras = [
+      form.smartModule && 'Smart modul – chytré řízení mlžítek',
+      form.ledLighting && 'LED nasvícení',
+      form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'
+    ].filter(Boolean).join(', ');
     await base44.entities.ContactInquiry.create({
       name: form.name,
       email: form.email,
-      message: `[${productName}] ${form.message || 'Zájem o produkt'}`,
+      message: `[${productName}] ${form.message || 'Zájem o produkt'} | ${extras}`,
       description: form.phone ? `Tel: ${form.phone}` : ''
     }).catch(() => {});
     setSent(true);
@@ -78,44 +85,86 @@ function ContactForm({ productName }) {
 
   if (sent) return (
     <div className="text-center py-8">
-      <div className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center mx-auto mb-4">
-        <span className="text-slate-900 text-xl">✓</span>
+      <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center mx-auto mb-4">
+        <span className="text-emerald-600 text-xl">✓</span>
       </div>
-      <p className="text-slate-900 font-light text-lg">Poptávka odeslána.</p>
+      <p className="text-slate-900 font-medium text-lg">Poptávka odeslána.</p>
       <p className="text-slate-400 text-sm mt-1">Odpovídáme do 24 h.</p>
     </div>);
 
   return (
-    <form onSubmit={submit} className="space-y-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <form onSubmit={submit} className="space-y-5 bg-white p-7 lg:p-8 rounded-3xl border-2 border-slate-900 shadow-xl">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
           <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
           placeholder="Jan Novák" />
         </div>
         <div>
           <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Email *</label>
           <input required type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
           placeholder="jan@firma.cz" />
         </div>
       </div>
       <div>
         <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Telefon</label>
         <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors"
+        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
         placeholder="+420 000 000 000" />
       </div>
+
+      {/* Doplňkové možnosti */}
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
+        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">Doplňkové možnosti</p>
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" checked={form.smartModule} onChange={(e) => setForm((f) => ({ ...f, smartModule: e.target.checked }))}
+          className="w-5 h-5 rounded border-slate-300 text-slate-900 focus:ring-slate-900" />
+          <span className="text-sm text-slate-700">Smart modul – chytré řízení mlžítek</span>
+        </label>
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" checked={form.ledLighting} onChange={(e) => setForm((f) => ({ ...f, ledLighting: e.target.checked }))}
+          className="w-5 h-5 rounded border-slate-300 text-slate-900 focus:ring-slate-900" />
+          <span className="text-sm text-slate-700">LED nasvícení</span>
+        </label>
+
+        <div>
+          <p className="text-sm text-slate-700 mb-2">Typ instalace</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <label className={`flex flex-col gap-1 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.installationType === 'mobile' ? 'border-slate-900 bg-white' : 'border-slate-200 bg-white/50'}`}>
+              <span className="flex items-center gap-2">
+                <input type="radio" name="installationType" checked={form.installationType === 'mobile'} onChange={() => setForm((f) => ({ ...f, installationType: 'mobile' }))}
+                className="w-4 h-4 text-slate-900 focus:ring-slate-900" />
+                <span className="text-sm font-medium text-slate-900">Mobilní</span>
+              </span>
+              <span className="text-xs text-slate-500 pl-6">Zemní vrut (instalace do 30 min)</span>
+            </label>
+            <label className={`flex flex-col gap-1 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.installationType === 'permanent' ? 'border-slate-900 bg-white' : 'border-slate-200 bg-white/50'}`}>
+              <span className="flex items-center gap-2">
+                <input type="radio" name="installationType" checked={form.installationType === 'permanent'} onChange={() => setForm((f) => ({ ...f, installationType: 'permanent' }))}
+                className="w-4 h-4 text-slate-900 focus:ring-slate-900" />
+                <span className="text-sm font-medium text-slate-900">Trvalé a stabilní</span>
+              </span>
+              <span className="text-xs text-slate-500 pl-6">Kotvení do betonu</span>
+            </label>
+          </div>
+          <a href={ANCHORING_PHOTO_URL} target="_blank" rel="noopener noreferrer"
+          className="inline-block text-xs text-slate-400 hover:text-slate-900 underline mt-2">
+            Zobrazit náhled možností kotvení
+          </a>
+        </div>
+      </div>
+
       <div>
         <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Popište váš projekt</label>
         <textarea value={form.message} onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))} rows={4}
-        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-400 transition-colors resize-none"
+        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors resize-none"
         placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
       </div>
       <button type="submit" disabled={sending}
-      className="w-full py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2">
-        {sending ? <Loader size={16} className="animate-spin" /> : <>Odeslat poptávku na {productName} <ArrowRight size={16} /></>}
+      className="w-full py-5 bg-slate-900 text-white text-base font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg">
+        {sending ? <Loader size={18} className="animate-spin" /> : <>Poptat produkt zdarma <ArrowRight size={18} /></>}
       </button>
     </form>);
 }
@@ -314,22 +363,46 @@ export default function ProduktDetail() {
         </motion.div>
       </AnimatePresence>
 
+      {/* ═══════ TAB FOOTER NAV ═══════ */}
+      {(() => {
+        const contentTabs = TABS.filter((t) => t.action !== 'scroll');
+        const idx = contentTabs.findIndex((t) => t.id === activeTab);
+        const nextTab = contentTabs[idx + 1];
+        return (
+          <div className="border-t border-slate-200 bg-slate-50 py-6">
+            <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              {nextTab ?
+              <button onClick={() => handleTabClick(nextTab)}
+              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+                  Pokračovat: {nextTab.label} <ArrowRight size={15} />
+                </button> :
+              <span />
+              }
+              <button onClick={() => handleTabClick({ action: 'scroll' })}
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+                Poptat produkt zdarma <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>);
+
+      })()}
+
       {/* ═══════ REVIEWS ═══════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
 
       {/* ═══════ INLINE CONTACT FORM ═══════ */}
-      <section ref={contactRef} className="bg-slate-50 border-t border-slate-200 py-24">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10">
+      <section ref={contactRef} className="bg-gradient-to-b from-slate-900 to-slate-800 py-24 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 lg:px-10 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Zakázková výroba</p>
-              <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
-                Váš prostor si zaslouží<br /><span className="text-slate-400">vlastní {product.name}.</span>
+              <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/20 text-white text-xs font-bold tracking-widest uppercase rounded-full mb-5">Nezávazná poptávka</span>
+              <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
+                Váš prostor si zaslouží<br /><span className="text-white/50">vlastní {product.name}.</span>
               </h2>
-              <p className="text-slate-400 text-sm font-light mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
-              <div className="space-y-3 text-sm text-slate-500 font-mono">
-                <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-slate-900 transition-colors">+420 774700390 </a>
-                <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors">obchod1@holmtec.cz</a>
+              <p className="text-white/60 text-sm mb-8">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+              <div className="space-y-3 text-sm text-white/60 font-mono">
+                <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-white transition-colors">+420 774700390 </a>
+                <a href="mailto:info@holmtec.cz" className="flex items-center gap-2 hover:text-white transition-colors">obchod1@holmtec.cz</a>
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>

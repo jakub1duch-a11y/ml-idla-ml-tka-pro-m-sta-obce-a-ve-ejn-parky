@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
-import PremiumHeroSection from '@/components/home/premium/PremiumHeroSection';
+import HeroSlider from '@/components/home/premium/HeroSlider';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
 import SmartSection from '@/components/home/SmartSection';
@@ -17,7 +17,7 @@ export default function Home2() {
   }, []);
   return (
     <>
-      <PremiumHeroSection />
+      <HeroSlider />
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>

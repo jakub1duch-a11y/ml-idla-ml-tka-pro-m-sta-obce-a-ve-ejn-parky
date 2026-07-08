@@ -94,7 +94,7 @@ function ContactForm({ productName }) {
     </div>);
 
   return (
-    <form onSubmit={submit} className="space-y-5 bg-white p-7 lg:p-8 rounded-3xl border-2 border-slate-900 shadow-xl">
+    <form onSubmit={submit} className="space-y-5 p-7 lg:p-8 rounded-3xl border-2 border-slate-900 shadow-xl bg-TRANSPARENT">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>

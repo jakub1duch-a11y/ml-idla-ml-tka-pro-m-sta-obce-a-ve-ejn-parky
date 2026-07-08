@@ -88,7 +88,7 @@ export default function Header() {
       
 
       <header className="fixed top-0 left-0 right-0 transition-all z-40 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
-        <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
+        <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16 bg-[hsl(var(--card))]">
 
           {/* Logo */}
           <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2">
@@ -177,11 +177,11 @@ export default function Header() {
                   </div>
                   <div className="flex flex-col gap-1.5 mt-4 pt-4 border-t border-slate-100">
                     <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
                       Celá kolekce <ArrowRight size={14} />
                     </Link>
                     <Link to="/produkt/gate70" onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
                       Mlžné brány a portály <ArrowRight size={14} />
                     </Link>
                   </div>
@@ -205,7 +205,7 @@ export default function Header() {
                   )}
                   </div>
                   <Link to={CUSTOM_LINK.path} onClick={(e) => e.stopPropagation()}
-                  className="flex items-center gap-3 mt-4 px-3 py-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
+                className="flex items-center gap-3 mt-4 px-3 py-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
                     <Sparkles size={16} className="text-slate-500 flex-shrink-0" />
                     <div>
                       <p className="font-heading text-xs text-slate-800 font-medium leading-tight">{CUSTOM_LINK.label}</p>
@@ -244,24 +244,24 @@ export default function Header() {
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-2 mb-3">Produkty</p>
                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                    {PRODUCT_LINKS.map((p) =>
-              <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="flex flex-col gap-1.5 py-1">
+                <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="flex flex-col gap-1.5 py-1">
                      <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
                        <img src={p.image} alt={p.label} className="w-full h-full object-cover" loading="lazy" />
                      </div>
                      <p className="text-xs font-medium text-slate-700 leading-tight">{p.label}</p>
                    </Link>
-              )}
+                )}
                  </div>
                  <Link to={CUSTOM_LINK.path} onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-3 mb-1">{CUSTOM_LINK.label} — {CUSTOM_LINK.sub}</Link>
                  <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-1 mb-2">Celá kolekce →</Link>
                  <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-4 mb-3">B2B využití</p>
                  <div className="grid grid-cols-3 gap-2 pb-2">
                    {USAGE_LINKS.map((l) =>
-              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="flex flex-col items-center justify-center text-center gap-1.5 py-4 px-1 min-h-[64px] rounded-lg hover:bg-white active:bg-white transition-colors">
+                <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="flex flex-col items-center justify-center text-center gap-1.5 py-4 px-1 min-h-[64px] rounded-lg hover:bg-white active:bg-white transition-colors">
                      <l.icon size={18} className={`${l.color} opacity-80`} />
                      <p className="text-[11px] font-medium text-slate-700 leading-tight">{l.label}</p>
                    </Link>
-              )}
+                )}
                  </div>
                </motion.div>
             }

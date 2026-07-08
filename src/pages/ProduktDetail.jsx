@@ -67,10 +67,10 @@ function ContactForm({ productName }) {
     e.preventDefault();
     setSending(true);
     const extras = [
-      form.smartModule && 'Smart modul – chytré řízení mlžítek',
-      form.ledLighting && 'LED nasvícení',
-      form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'
-    ].filter(Boolean).join(', ');
+    form.smartModule && 'Smart modul – chytré řízení mlžítek',
+    form.ledLighting && 'LED nasvícení',
+    form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'].
+    filter(Boolean).join(', ');
     await base44.entities.ContactInquiry.create({
       name: form.name,
       email: form.email,
@@ -172,15 +172,15 @@ function ContactForm({ productName }) {
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
-  { id: 'detail', label: 'Detail produktu' },
-  { id: 'galerie', label: 'Galerie a realizované projekty' },
-  { id: 'specifikace', label: 'Technické specifikace' },
-  { id: 'smart', label: 'SMART moduly' },
-  { id: 'instalace', label: 'Instalace' },
-  { id: 'video', label: 'Videa - ukázka v akci' },
-  { id: 'ke-stazeni', label: 'Ke stažení' },
-  { id: 'poptat', label: 'Poptat produkt', action: 'scroll' },
-];
+{ id: 'detail', label: 'Detail produktu' },
+{ id: 'galerie', label: 'Galerie a realizované projekty' },
+{ id: 'specifikace', label: 'Technické specifikace' },
+{ id: 'smart', label: 'SMART moduly' },
+{ id: 'instalace', label: 'Instalace' },
+{ id: 'video', label: 'Videa - ukázka v akci' },
+{ id: 'ke-stazeni', label: 'Ke stažení' },
+{ id: 'poptat', label: 'Poptat produkt', action: 'scroll' }];
+
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ProduktDetail() {
@@ -226,7 +226,7 @@ export default function ProduktDetail() {
         gsap.to(window, {
           duration: 0.9,
           scrollTo: { y: contactRef.current, offsetY: 80 },
-          ease: 'power2.inOut',
+          ease: 'power2.inOut'
         });
       }
       return;
@@ -236,7 +236,7 @@ export default function ProduktDetail() {
       gsap.to(window, {
         duration: 0.9,
         scrollTo: { y: tabsNavRef.current, offsetY: 64 },
-        ease: 'power2.inOut',
+        ease: 'power2.inOut'
       });
     }
   };
@@ -258,14 +258,14 @@ export default function ProduktDetail() {
   const img = (i) => allImages[i] || null;
 
   const techRows = [
-    product.coverage_area && { label: 'Výška', value: product.coverage_area },
-    { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L' },
-    product.pressure && { label: 'Tlak', value: product.pressure },
-    product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
-    product.material && { label: 'Materiál', value: product.material },
-    { label: 'Povrch', value: 'Broušený / kartáčovaný' },
-    product.power_supply && { label: 'Napájení & řízení', value: product.power_supply },
-    { label: 'Výroba', value: 'Zakázková, 6–8 týdnů' }].
+  product.coverage_area && { label: 'Výška', value: product.coverage_area },
+  { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L' },
+  product.pressure && { label: 'Tlak', value: product.pressure },
+  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
+  product.material && { label: 'Materiál', value: product.material },
+  { label: 'Povrch', value: 'Broušený / kartáčovaný' },
+  product.power_supply && { label: 'Napájení & řízení', value: product.power_supply },
+  { label: 'Výroba', value: 'Zakázková, 6–8 týdnů' }].
   filter(Boolean);
 
   return (
@@ -278,7 +278,7 @@ export default function ProduktDetail() {
         <div className="w-full h-full bg-slate-100" />
         }
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-        <div className="absolute inset-0 to-white bg-gradient-to-l via-black/5 from-black/0" />
+        <div className="absolute inset-0 to-white bg-gradient-to-l via-black/5 from-black/" />
 
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
@@ -354,7 +354,7 @@ export default function ProduktDetail() {
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
           {activeTab === 'detail' && <DetailTab product={product} />}
           {activeTab === 'galerie' &&
-            <BenefitsTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />
+          <BenefitsTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />
           }
           {activeTab === 'specifikace' && <SpecsTab product={product} techRows={techRows} />}
           {activeTab === 'smart' && <SmartModulesTab product={product} />}

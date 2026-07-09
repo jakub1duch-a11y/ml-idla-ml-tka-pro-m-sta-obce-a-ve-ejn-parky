@@ -18,7 +18,7 @@ const IMAGES = {
 export default function ONas() {
   useEffect(() => {setSEO(SEO_PAGES.oNas);}, []);
   return (
-    <div className="min-h-screen bg-ink">
+    <div className="min-h-screen bg-[hsl(var(--card-foreground))]">
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <div className="relative h-[60vh] min-h-[420px] overflow-hidden">

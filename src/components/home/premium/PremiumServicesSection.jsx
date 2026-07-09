@@ -33,7 +33,7 @@ export default function PremiumServicesSection() {
                 <div className={`relative flex ${isEven ? 'justify-end text-right' : 'justify-start text-left'}`}>
                   <div className={`max-w-xl ${isEven ? '' : 'flex items-start gap-4'}`}>
                     {!isEven &&
-                    <span className="shrink-0 rounded-lg flex items-center justify-center mt-0.5 font-normal [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] border-slate-900 border-2 w-9 h-9 text-2xl text-slate-400">
+                    <span className="shrink-0 rounded-lg flex items-center justify-center mt-0.5 font-normal [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] border-slate-900 border-2 w-9 h-9 text-2xl text-slate-900">
                         {i + 1}
                       </span>
                     }

@@ -13,38 +13,24 @@ const SERVICES = [
 
 export default function PremiumServicesSection() {
   return (
-    <section className="relative bg-white overflow-hidden1 lg:py-8 py-20">
-      <div className="mx-auto px-6 lg:px-8 max-w-6xl">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-16">
-          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#111827] text-3xl md:text-3xl">Služby a řešení pro dokonalý mlžný systém
-
+    <section className="relative bg-[#f2f3f5] py-20">
+      <div className="mx-auto px-6 lg:px-10 max-w-6xl">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-10">
+          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold text-left text-[#111827] text-3xl">
+            Služby a řešení pro dokonalý mlžný systém
           </h2>
         </motion.div>
-        <div>
-          {SERVICES.map((s, i) => {
-            const isEven = i % 2 === 1;
-            const num = String(i + 1).padStart(2, '0');
-            return (
-              <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
-              className={`relative py-8 ${i !== 0 ? 'border-t border-slate-200' : ''}`}>
-                <span className={`pointer-events-none select-none absolute top-1/2 -translate-y-1/2 text-7xl md:text-8xl font-bold text-slate-100 ${isEven ? 'right-0' : 'left-0'}`}>
-                  {num}
-                </span>
-                <div className={`relative flex ${isEven ? 'justify-end text-right' : 'justify-start text-left'}`}>
-                  <div className={`max-w-xl ${isEven ? '' : 'flex items-start gap-4'}`}>
-                    {!isEven &&
-                    <span className="shrink-0 rounded-lg flex items-center justify-center font-normal [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] w-9 h-9 text-2xl text-slate-900 mt-0.5 border-2 border-slate-600">
-                        {i + 1}
-                      </span>
-                    }
-                    <p className="font-body text-base md:text-lg text-slate-600 leading-relaxed">
-                      <span className="font-bold text-slate-900 text-2xl">{s.title}</span> — {s.desc}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>);
-
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {SERVICES.map((s, i) => (
+            <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
+              className="bg-white rounded-2xl border border-slate-200 p-6">
+              <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center mb-5">
+                <s.icon size={20} className="text-slate-700" strokeWidth={1.5} />
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg mb-2 leading-snug">{s.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>);

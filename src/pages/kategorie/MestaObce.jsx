@@ -131,8 +131,8 @@ export default function MestaObce() {
             <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Automatický start/stop<br /><span style={{ fontStyle: 'italic' }}>dle teploty a vlhkosti.</span>
             </h2>
-            <p className="text-white/70 leading-relaxed font-light max-w-xl">
-              Monitoring přes webový dashboard pro správce města. Bezúdržbový provoz, 100% česká výroba a dodávka do 8 týdnů.
+            <p className="text-white/70 leading-relaxed font-light max-w-xl">Monitoring přes webový dashboard pro správce města. Bezúdržbový provoz, 100% česká výroba a dodávka do 8 týdnů. SMART WIFI / 
+
             </p>
           </motion.div>
         </div>

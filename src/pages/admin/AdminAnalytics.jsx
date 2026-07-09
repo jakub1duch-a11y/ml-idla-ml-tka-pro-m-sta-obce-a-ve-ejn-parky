@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, TrendingUp, MousePointer, Eye, Search } from 'lucide-react';
+import { Loader, TrendingUp, MousePointer, Eye, Search, Gauge } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
@@ -41,6 +41,10 @@ export default function AdminAnalytics() {
               {label}
             </button>
           ))}
+          <a href="https://pagespeed.web.dev/analysis?url=https://mlzidla.cz" target="_blank" rel="noopener noreferrer" aria-label="Otevřít PageSpeed Insights pro mlzidla.cz"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border border-white/10 text-white/40 hover:text-white/70 transition-all">
+            <Gauge size={13} /> PageSpeed Insights
+          </a>
         </div>
       </div>
 

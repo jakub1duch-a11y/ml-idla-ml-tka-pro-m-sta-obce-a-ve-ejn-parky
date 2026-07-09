@@ -17,11 +17,11 @@ export default function Footer() {
               Zakázkové mlžné sochy z nerezové oceli AISI 304. Od návrhu přes výrobu až po instalaci. Trutnov, Česká republika.
             </p>
             <div className="flex gap-3">
-              <a href="https://www.instagram.com/mlzne_sochy" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/mlzne_sochy" target="_blank" rel="noopener noreferrer" aria-label="Instagram HolmTec"
               className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
                 <Instagram size={16} />
               </a>
-              <a href="https://www.facebook.com/Mlznesochy" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.facebook.com/Mlznesochy" target="_blank" rel="noopener noreferrer" aria-label="Facebook HolmTec"
               className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
                 <Facebook size={16} />
               </a>

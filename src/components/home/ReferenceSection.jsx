@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ChevronLeft, ChevronRight, X, ZoomIn, Loader, ArrowRight } from 'lucide-react';
+import { MapPin, ZoomIn, Loader, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
@@ -47,41 +47,6 @@ const CATEGORY_LABELS = {
   soukromy: 'Soukromý',
   prumyslovy: 'Průmyslový',
 };
-
-function Lightbox({ images, initialIndex, onClose }) {
-  const [idx, setIdx] = useState(initialIndex);
-
-  useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [onClose]);
-
-  const prev = () => setIdx(i => (i - 1 + images.length) % images.length);
-  const next = () => setIdx(i => (i + 1) % images.length);
-
-  return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center" onClick={onClose}>
-      <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
-        <X size={18} />
-      </button>
-      <div className="relative max-w-5xl w-full mx-4" onClick={e => e.stopPropagation()}>
-        <img src={images[idx]} alt="" className="w-full max-h-[80vh] object-contain rounded-2xl" />
-        {images.length > 1 && (
-          <>
-            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronLeft size={18} />
-            </button>
-            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronRight size={18} />
-            </button>
-            <p className="text-center text-xs font-mono text-white/40 mt-3">{idx + 1} / {images.length}</p>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
 
 function ProjectCard({ project }) {
   const allImages = [project.image_url, ...(project.gallery_urls || [])].filter(Boolean);
@@ -155,7 +120,6 @@ function ProjectCard({ project }) {
 export default function ReferenceSection() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
     base44.entities.Realizace.list()
@@ -196,14 +160,6 @@ export default function ReferenceSection() {
           </div>
         )}
       </div>
-
-      {lightbox && (
-        <Lightbox
-          images={lightbox.images}
-          initialIndex={lightbox.idx}
-          onClose={() => setLightbox(null)}
-        />
-      )}
     </section>
   );
 }

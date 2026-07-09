@@ -13,10 +13,11 @@ const SERVICES = [
 
 export default function PremiumServicesSection() {
   return (
-    <section className="relative bg-[#f2f3f5] py-20">
+    <section className="relative bg-slate-50 py-20">
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-10">
-          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold text-left text-[#111827] text-3xl">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Služby</p>
+          <h2 className="font-heading tracking-tight font-bold text-left text-slate-900 text-3xl">
             Služby a řešení pro dokonalý mlžný systém
           </h2>
         </motion.div>
@@ -27,7 +28,7 @@ export default function PremiumServicesSection() {
               <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center mb-5">
                 <s.icon size={20} className="text-slate-700" strokeWidth={1.5} />
               </div>
-              <h3 className="font-bold text-slate-900 text-lg mb-2 leading-snug">{s.title}</h3>
+              <h3 className="font-heading font-bold text-slate-900 text-lg mb-2 leading-snug">{s.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
             </motion.div>
           ))}

@@ -25,7 +25,7 @@ export default function ParkyHriste() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="min-h-screen bg-white">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/3c3e64d18_generated_video.mp4"
           className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />

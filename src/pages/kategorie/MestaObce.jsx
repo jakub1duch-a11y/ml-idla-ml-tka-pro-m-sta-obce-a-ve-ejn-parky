@@ -40,7 +40,7 @@ export default function MestaObce() {
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
         className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
-        <div className="absolute bg-gradient-to-t from-slate-900 via-slate-900/20 to-slate-900/60 inset-1" />
+        <div className="absolute bg-gradient-to-t from-slate-900 via-slate-900/20 to-slate-900/60 inset-0" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
             <div className="flex items-center gap-3 mb-4">

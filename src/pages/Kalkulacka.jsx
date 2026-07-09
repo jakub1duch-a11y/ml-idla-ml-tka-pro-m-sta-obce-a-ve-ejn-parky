@@ -16,11 +16,11 @@ export default function Kalkulacka() {
     <div className="min-h-screen pt-24 pb-16 bg-[hsl(var(--foreground))] text-[hsl(var(--popover))]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <div className="w-14 h-14 rounded-2xl border flex items-center justify-center mx-auto mb-5 border-black/20 bg-blck/10">
-            <Calculator size={26} className="text-cyan" />
+          <div className="w-14 h-14 rounded-2xl border flex items-center justify-center mx-auto mb-5 border-black/20 bg-black/10 hidden">
+            <Calculator size={26} className="text-black" />
           </div>
-          <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3 flex items-center justify-center gap-2">
-            <Droplets size={12} /> Kalkulátor
+          <p className="text-xs font-mono tracking-widest uppercase mb-3 flex items-center justify-center gap-2 text-[hsl(var(--popover))]">KALKULÁTOR
+
           </p>
           <h1 className="font-heading font-light text-3xl lg:text-4xl tracking-tight mb-3 text-[hsl(var(--input))]">Provozní náklady mlžítek a mlžných bran
 

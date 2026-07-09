@@ -234,7 +234,7 @@ export default function MlzeniKalkulator() {
   return (
     <div className="rounded-2xl border border-white/10 bg-card_bg overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3">
+      <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3 bg-[hsl(var(--foreground))]">
         <div className="w-9 h-9 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
           <Droplets size={18} className="text-cyan" />
         </div>

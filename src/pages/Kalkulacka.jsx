@@ -16,9 +16,9 @@ export default function Kalkulacka() {
     <div className="min-h-screen pt-24 pb-16 bg-[hsl(var(--foreground))] text-[hsl(var(--popover))]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <div className="w-14 h-14 rounded-2xl border flex items-center justify-center mx-auto mb-5 border-black/20 bg-black/10 hidden">
-            <Calculator size={26} className="text-black" />
-          </div>
+          
+
+          
           <p className="text-xs font-mono tracking-widest uppercase mb-3 flex items-center justify-center gap-2 text-[hsl(var(--popover))]">KALKULÁTOR
 
           </p>

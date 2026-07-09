@@ -27,7 +27,7 @@ export default function CostCalculatorWidget({ waterConsumption }) {
       <input
         type="range" min="1" max="16" value={hours}
         onChange={(e) => setHours(Number(e.target.value))}
-        className="w-full accent-cyan-400 mb-5" />
+        className="w-full mb-5 accent-cyan-00" />
       
       <div className="flex items-center justify-between">
         <div>

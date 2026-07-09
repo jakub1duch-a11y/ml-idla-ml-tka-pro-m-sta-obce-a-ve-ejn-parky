@@ -178,7 +178,7 @@ export default function MestaObce() {
         <div className="p-10 rounded-2xl border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10 bg-[hsl(var(--muted))]">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro vaši obec.</h3>
-            <p className="text-slate-500 text-sm mb-6">Konzultace zdarma · 3D vizualizace do 48 h · Pomoc s dotační žádostí</p>
+            <p className="text-slate-500 mb-6 text-sm">Konzultace zdarma · 3D vizualizace do 48 h · Pomoc s dotační žádostí</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all bg-[#34405b]">Reference realizací
 
             </Link>

@@ -23,7 +23,7 @@ export default function CostCalculatorWidget({ waterConsumption }) {
         <Calculator size={16} className="text-white/70" />
         <p className="font-mono tracking-widest uppercase text-white/60 text-xs">KALKULAČKA PROVOZNÍCH NÁKLADŮ</p>
       </div>
-      <label className="block text-xs text-white/50 mb-2">Provoz (hod / den): <span className="text-white font-medium">{hours} h</span></label>
+      <label className="block mb-2 text-xs text-white/60">Provoz (hod / den): <span className="text-white font-medium">{hours} h</span></label>
       <input
         type="range" min="1" max="16" value={hours}
         onChange={(e) => setHours(Number(e.target.value))}
@@ -34,7 +34,7 @@ export default function CostCalculatorWidget({ waterConsumption }) {
           <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Denní náklad</p>
           <p className="text-2xl text-white [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{dailyTotal.toFixed(1)} Kč</p>
         </div>
-        <p className="text-[11px] text-white/40 max-w-[9rem] text-right leading-snug">Nízkotlaký provoz 2–7 BAR, bez čerpadel</p>
+        <p className="text-[11px] max-w-[9rem] text-right leading-snug text-white/0">Nízkotlaký provoz 2–7 BAR, bez čerpadel</p>
       </div>
     </div>);
 

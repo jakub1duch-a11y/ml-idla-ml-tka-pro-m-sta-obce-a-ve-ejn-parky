@@ -22,11 +22,11 @@ export default function Kalkulacka() {
           <p className="text-xs font-mono tracking-widest uppercase text-cyan mb-3 flex items-center justify-center gap-2">
             <Droplets size={12} /> Kalkulátor
           </p>
-          <h1 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight mb-3">
-            Provozní náklady mlžítek a mlžných bran
+          <h1 className="font-heading font-light text-3xl lg:text-4xl tracking-tight mb-3 text-[hsl(var(--input))]">Provozní náklady mlžítek a mlžných bran
+
           </h1>
-          <p className="text-white/50 text-sm max-w-xl mx-auto">
-            Vyberte typ systému a zjistěte orientační spotřebu vody, elektřiny a měsíční provozní náklady.
+          <p className="text-sm max-w-xl mx-auto text-[hsl(var(--popover))]">Vyberte typ systému a zjistěte orientační spotřebu vody, elektřiny a měsíční provozní náklady.
+
           </p>
         </motion.div>
 

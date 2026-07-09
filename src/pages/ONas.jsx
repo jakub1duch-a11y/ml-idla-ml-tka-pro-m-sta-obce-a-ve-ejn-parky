@@ -154,7 +154,7 @@ export default function ONas() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-4">
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6bb07dfb6_Image_20260630_124518_112.webp" alt="Mlžítko . Mlžný MRAK" className="w-full aspect-[3/4] object-cover rounded-2xl" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6bb07dfb6_Image_20260630_124518_112.webp" alt="Mlžítko . Mlžný MRAK" className="w-full object-cover rounded-2xl aspect-[3/3]" />
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -197,7 +197,7 @@ export default function ONas() {
             { icon: Zap, title: 'Instalace mlžítka na klíč', desc: 'Od prvního skici přes 3D vizualizaci po montáž a servisní smlouvu mlžítka — vše pod jednou střechou.' }].
             map(({ icon: Icon, title, desc }) =>
             <div key={title} className="p-7 rounded-2xl border border-white/10 bg-[hsl(var(--border))]">
-                <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4 border border-cyan/20">
+                <div className="rounded-xl bg-cyan/10 flex items-center justify-center mb-4 border border-cyan/20 w-20 h-20">
                   <Icon size={18} className="text-cyan" />
                 </div>
                 <h3 className="text-white font-medium mb-2">{title}</h3>

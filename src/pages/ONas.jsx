@@ -23,7 +23,7 @@ export default function ONas() {
       {/* ── HERO ─────────────────────────────────────────── */}
       <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
         <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7b873e727_Hero_Video.mp4"
-          className="w-full h-full object-cover" autoPlay loop muted playsInline />
+        className="w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/20" />
         <div className="absolute inset-0 flex items-end">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full">
@@ -63,7 +63,7 @@ export default function ONas() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <img src={IMAGES.vyroba} alt="Výroba HolmTec" className="w-full aspect-[3/4] object-cover rounded-2xl" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1c96c5e64_spiralvoemlzitko-rezidencni.png" alt="Výroba HolmTec" className="w-full aspect-[3/4] object-cover rounded-2xl" />
           </motion.div>
         </div>
       </section>

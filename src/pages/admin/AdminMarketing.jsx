@@ -5,6 +5,7 @@ import ContentPlanForm from '@/components/admin/marketing/ContentPlanForm';
 import ContentPlanList from '@/components/admin/marketing/ContentPlanList';
 import BrandProfileTab from '@/components/admin/marketing/BrandProfileTab';
 import AiSuggestionsTab from '@/components/admin/marketing/AiSuggestionsTab';
+import InstagramConnectCard from '@/components/admin/marketing/InstagramConnectCard';
 
 const SUBTABS = [
   { id: 'plan', label: 'Plán obsahu', icon: CalendarClock },
@@ -42,6 +43,7 @@ export default function AdminMarketing() {
 
       {subtab === 'plan' && (
         <div className="space-y-6">
+          <InstagramConnectCard />
           <ContentPlanForm onCreated={loadPosts} />
           {loading ? (
             <div className="flex justify-center py-16"><Loader size={22} className="animate-spin text-cyan/40" /></div>

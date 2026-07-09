@@ -51,7 +51,7 @@ export default function Art() {
         </div>
       </section>
 
-      <section className="bg-slate-50 border-y border-slate-200 py-16">
+      <section className="bg-slate-50 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {USE_CASES.map((u, i) => (

@@ -21,13 +21,13 @@ export default function CostCalculatorWidget({ waterConsumption }) {
     <div className="backdrop-blur-md border border-white/20 rounded-2xl p-6 max-w-sm bg-white/10">
       <div className="flex items-center gap-2 mb-4">
         <Calculator size={16} className="text-white/70" />
-        <p className="text-[10px] font-mono tracking-widest uppercase text-white/60">Kalkulačka provozních nákladů</p>
+        <p className="font-mono tracking-widest uppercase text-white/60 text-xs">KALKULAČKA PROVOZNÍCH NÁKLADŮ</p>
       </div>
       <label className="block text-xs text-white/50 mb-2">Provoz (hod / den): <span className="text-white font-medium">{hours} h</span></label>
       <input
         type="range" min="1" max="16" value={hours}
         onChange={(e) => setHours(Number(e.target.value))}
-        className="w-full mb-5 accent-cyan-00" />
+        className="w-full mb-5 accent-cyan-400" />
       
       <div className="flex items-center justify-between">
         <div>

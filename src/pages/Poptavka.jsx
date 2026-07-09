@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Loader, Phone, Mail, MapPin } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -32,7 +33,7 @@ export default function Poptavka() {
     zprava: '',
   });
   const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => { setSEO(SEO_PAGES.poptavka); }, []);
 
@@ -45,7 +46,7 @@ export default function Poptavka() {
       await base44.entities.Poptavka.create({ ...form, status: 'nova' });
       trackContactFormSubmit('poptavka', form.produkt);
       trackInquirySubmitted('poptavka', form.produkt);
-      setSent(true);
+      navigate('/dekujeme?zdroj=poptavka');
     } finally {
       setSending(false);
     }
@@ -116,22 +117,7 @@ export default function Poptavka() {
             animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-3"
           >
-            {sent ? (
-              <div className="h-full flex items-center justify-center p-16 rounded-2xl bg-card_bg border border-cyan/30 text-center">
-                <div>
-                  <div className="w-16 h-16 rounded-full bg-cyan/10 flex items-center justify-center mx-auto mb-4 border border-cyan/20">
-                    <span className="text-3xl text-cyan">✓</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Děkujeme za poptávku!</h3>
-                  <p className="text-white/50 mb-4">Ozveme se Vám co nejdříve.</p>
-                  <p className="text-white/35 text-xs font-mono leading-relaxed">
-                    tel. +420 774 700 390<br />
-                    <a href="https://mlzidla.cz" target="_blank" rel="noopener noreferrer" className="hover:text-cyan transition-colors">Mlzidla.cz</a>
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card_bg border border-white/10 space-y-5">
+            <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card_bg border border-white/10 space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-mono text-white/40 tracking-widest uppercase mb-1.5">Jméno a příjmení *</label>
@@ -221,8 +207,7 @@ export default function Poptavka() {
                 <p className="text-xs text-white/25 text-center font-mono">
                   Odesláním souhlasíte se zpracováním osobních údajů.
                 </p>
-              </form>
-            )}
+            </form>
           </motion.div>
         </div>
       </div>

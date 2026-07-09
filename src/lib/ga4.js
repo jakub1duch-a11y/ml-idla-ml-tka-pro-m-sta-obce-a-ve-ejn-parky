@@ -29,10 +29,6 @@ export function trackCooperationFormSubmit() {
     value: 1,
     send_to: 'G-0J3NKLWM2Q',
   });
-  safeGtag('event', 'generate_lead', {
-    currency: 'CZK',
-    value: 1000,
-  });
 }
 
 export function trackProductSectionEngagement(sectionName) {
@@ -126,6 +122,17 @@ export function trackInquirySubmitted(requestType, productInterest) {
     value: 1,
     send_to: 'G-0J3NKLWM2Q',
   });
+}
+
+// Fired on the /dekujeme thank-you page — the actual conversion moment for GA4 + Google Ads.
+export function trackThankYouPageView(source) {
+  safeGtag('event', 'thank_you_view', {
+    event_category: 'conversion',
+    event_label: source || 'kontakt',
+    source,
+    value: 1,
+    send_to: 'G-0J3NKLWM2Q',
+  });
   safeGtag('event', 'generate_lead', {
     currency: 'CZK',
     value: 1000,
@@ -146,4 +153,5 @@ if (typeof window !== 'undefined') {
   window.trackHeroInteraction = trackHeroInteraction;
   window.trackCategoryFilter = trackCategoryFilter;
   window.trackInquirySubmitted = trackInquirySubmitted;
+  window.trackThankYouPageView = trackThankYouPageView;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } from 'lucide-react';
@@ -30,7 +31,7 @@ export default function Kontakt() {
     request_type: '', product_interest: '', qty: '', message: ''
   });
   const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => { setSEO(SEO_PAGES.kontakt); }, []);
 
@@ -56,8 +57,7 @@ export default function Kontakt() {
       });
       trackCooperationFormSubmit();
       trackInquirySubmitted(form.request_type, form.product_interest);
-      if (typeof window.trackAdsConversion === 'function') window.trackAdsConversion();
-      setSent(true);
+      navigate('/dekujeme?zdroj=kontakt');
     } finally {
       setSending(false);
     }
@@ -125,17 +125,6 @@ export default function Kontakt() {
 
           {/* Form */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="lg:col-span-3">
-            {sent ?
-            <div className="h-full flex items-center justify-center p-12 rounded-2xl bg-card_bg border border-cyan/30 text-center">
-                <div>
-                  <div className="w-16 h-16 rounded-full bg-cyan/10 flex items-center justify-center mx-auto mb-4 border border-cyan/20">
-                    <span className="text-3xl">✓</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Poptávka odeslána!</h3>
-                  <p className="text-white/50">Ozveme se vám do 24 hodin.</p>
-                </div>
-              </div> :
-
             <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-card_bg border border-white/10 space-y-5">
 
                 {/* Kontaktní údaje */}
@@ -210,7 +199,6 @@ export default function Kontakt() {
                   {sending ? 'Odesílám...' : <>Odeslat poptávku <ArrowRight size={16} /></>}
                 </button>
               </form>
-            }
           </motion.div>
         </div>
       </div>

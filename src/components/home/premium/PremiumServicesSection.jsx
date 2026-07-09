@@ -26,7 +26,7 @@ export default function PremiumServicesSection() {
             const num = String(i + 1).padStart(2, '0');
             return (
               <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
-              className={`relative py-8 ${i !== 0 ? 'border-t border-slate-200' : ''}`}>
+              className={`relative py-1 ${i !== 0 ? 'border-t border-slate-200' : ''}`}>
                 <span className={`pointer-events-none select-none absolute top-1/2 -translate-y-1/2 text-7xl md:text-8xl font-bold text-slate-100 ${isEven ? 'right-0' : 'left-0'}`}>
                   {num}
                 </span>

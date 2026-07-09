@@ -16,7 +16,7 @@ export default function PremiumServicesSection() {
     <section className="relative lg:py-32 py-24 bg-">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
-          <h2 className="font-heading text-4xl md:text-5xl text-slate-900 tracking-tight">Služby a řešení pro dokonalý mlžný systém</h2>
+          <h2 className="font-heading tracking-tight text-3xl md:text-3xl text-[#1d4b5e]">Služby a řešení pro dokonalý mlžný systém</h2>
         </motion.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((s, i) => {

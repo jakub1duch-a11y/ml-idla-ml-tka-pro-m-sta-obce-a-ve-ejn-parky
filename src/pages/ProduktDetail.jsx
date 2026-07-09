@@ -402,7 +402,7 @@ export default function ProduktDetail() {
                 <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
                   Váš prostor si zaslouží<br /><span className="text-white/50">vlastní {product.name}.</span>
                 </h2>
-                <p className="text-sm mb-8 normal-case text-left text-white/80">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+                <p className="text-sm mb-8 normal-case text-left text-white/100">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               </motion.div>
 
               {/* FAQ o poptávce a realizaci */}

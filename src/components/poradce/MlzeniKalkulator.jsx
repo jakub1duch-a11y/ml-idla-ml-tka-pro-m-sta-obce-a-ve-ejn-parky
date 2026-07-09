@@ -336,7 +336,7 @@ export default function MlzeniKalkulator() {
             </div>
             <MistCanvas intensity={mistIntensity} flowRate={flowPerHour} />
             <div className="absolute bottom-3 left-0 right-0 text-center">
-              <span className="text-[9px] font-mono text-white/20 tracking-widest uppercase">
+              <span className="font-mono tracking-widest uppercase text-base text-[hsl(var(--foreground))]">
                 {sys.nozzles} trysek · {flowPerHour.toFixed(1)} l/h
               </span>
             </div>

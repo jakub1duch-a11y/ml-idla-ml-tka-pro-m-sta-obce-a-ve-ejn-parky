@@ -27,7 +27,7 @@ export default function Art() {
   return (
     <div className="min-h-screen bg-white pt-28">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5552b6ddd_generated_video.mp4"
+        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/94c2b5f74_instalace-mlzitka-mrak.MOV"
           className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">

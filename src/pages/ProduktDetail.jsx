@@ -173,7 +173,7 @@ function ContactForm({ productName }) {
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
 { id: 'detail', label: 'Detail produktu' },
-{ id: 'galerie', label: 'Galerie a realizované projekty' },
+{ id: 'galerie', label: "Galerie" },
 { id: 'specifikace', label: "Specifikace" },
 { id: 'smart', label: 'SMART moduly' },
 { id: 'instalace', label: 'Instalace' },

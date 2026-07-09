@@ -13,22 +13,35 @@ const SERVICES = [
 
 export default function PremiumServicesSection() {
   return (
-    <section className="relative lg:py-32 py-24 bg-">
-      <div className="max-w-7xl mx-auto lg:px-8 px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
-          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#3d3d3d] text-4xl md:text-4xl">Služby a řešení pro dokonalý mlžný systém</h2>
+    <section className="relative lg:py-28 py-20 bg-white overflow-hidden">
+      <div className="max-w-5xl mx-auto lg:px-8 px-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-16">
+          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#111827] text-3xl md:text-4xl">
+            Služby a řešení pro <span className="font-bold">dokonalý mlžný systém</span>
+          </h2>
         </motion.div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div>
           {SERVICES.map((s, i) => {
-            const Icon = s.icon;
+            const isEven = i % 2 === 1;
+            const num = String(i + 1).padStart(2, '0');
             return (
-              <motion.div key={s.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }} className="p-8 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all bg-[#F8F9FA]">
-                <motion.div initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.5, ease: 'backOut' }}
-                className="h-14 rounded-xl bg-gradient-to-br from-sky-100 to-cyan-50 flex items-center justify-center mb-6 w-14">
-                  <Icon size={26} className="text-sky-600 font-x4" />
-                </motion.div>
-                <h3 className="font-heading text-xl text-slate-900 mb-3 text-left uppercase">{s.title}</h3>
-                <p className="font-body text-sm text-slate-500 leading-relaxed">{s.desc}</p>
+              <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
+              className={`relative py-8 ${i !== 0 ? 'border-t border-slate-200' : ''}`}>
+                <span className={`pointer-events-none select-none absolute top-1/2 -translate-y-1/2 text-7xl md:text-8xl font-bold text-slate-100 ${isEven ? 'right-0' : 'left-0'}`}>
+                  {num}
+                </span>
+                <div className={`relative flex ${isEven ? 'justify-end text-right' : 'justify-start text-left'}`}>
+                  <div className={`max-w-xl ${isEven ? '' : 'flex items-start gap-4'}`}>
+                    {!isEven &&
+                    <span className="shrink-0 w-9 h-9 rounded-lg border-2 border-slate-900 flex items-center justify-center text-sm font-bold text-slate-900 mt-0.5">
+                        {i + 1}
+                      </span>
+                    }
+                    <p className="font-body text-base md:text-lg text-slate-600 leading-relaxed">
+                      <span className="font-bold text-slate-900">{s.title}</span> — {s.desc}
+                    </p>
+                  </div>
+                </div>
               </motion.div>);
 
           })}

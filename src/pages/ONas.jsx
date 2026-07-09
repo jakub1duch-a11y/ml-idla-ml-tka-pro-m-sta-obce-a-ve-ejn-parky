@@ -73,7 +73,7 @@ export default function ONas() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <img src={IMAGES.sdileny} alt="Sdílené mlžítko" className="w-full aspect-[4/3] object-cover rounded-2xl" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/36ad60a5a_4a53fc99b_generated_image.png" alt="Sdílené mlžítko" className="w-full aspect-[4/3] object-cover rounded-2xl" />
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

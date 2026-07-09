@@ -122,7 +122,7 @@ export default function MestaObce() {
       {/* Video - Smart řízení */}
       <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
-        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}

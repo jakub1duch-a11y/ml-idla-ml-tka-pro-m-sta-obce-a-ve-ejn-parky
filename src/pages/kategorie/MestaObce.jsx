@@ -175,12 +175,12 @@ export default function MestaObce() {
 
       {/* CTA */}
       <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 py-20 scroll-mt-24">
-        <div className="p-10 rounded-2xl border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10 bg-[hsl(var(--muted))]">
+        <div className="p-10 rounded-2xl border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10 bg-[hsl(var(--card-foreground))]">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro vaši obec.</h3>
             <p className="text-slate-500 text-sm mb-6">Konzultace zdarma · 3D vizualizace do 48 h · Pomoc s dotační žádostí</p>
-            <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
-              Reference realizací <ArrowRight size={14} />
+            <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all bg-[hsl(var(--secondary))]">Reference realizací
+
             </Link>
           </div>
           <CategoryInquiryForm category="Města a obce" projectScope="urban" />

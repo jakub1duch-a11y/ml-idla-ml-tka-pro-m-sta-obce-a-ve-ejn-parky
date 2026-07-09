@@ -44,9 +44,14 @@ export default function ParkyHriste() {
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
               Mlžítka pro parky a hřiště jsou navržena tak, aby splynula s přírodním prostředím. Organické tvary inspirované stromy, mraky nebo rostlinami — z potravinářské nerezové oceli bez chemie. Ideální pro dětská hřiště, zámecké parky i městskou zeleň.
             </p>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
-              Nezávazná konzultace <ArrowRight size={15} />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a href="#poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+                Nezávazná konzultace <ArrowRight size={15} />
+              </a>
+              <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+                Zavolat (+420774700390)
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -98,7 +103,7 @@ export default function ParkyHriste() {
         )}
       </section>
 
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
+      <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Navrhneme mlžítko pro váš park.</h3>

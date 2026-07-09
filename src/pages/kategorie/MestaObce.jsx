@@ -37,30 +37,35 @@ export default function MestaObce() {
     <div className="min-h-screen bg-white pt-28">
 
       {/* Hero */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
-              <Building2 size={18} className="text-slate-900" />
+      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
+          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
+        <div className="relative h-full flex items-end">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                <Building2 size={18} className="text-white" />
+              </div>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Mlžítka pro Města a Obce</p>
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Mlžítka pro Města a Obce</p>
-          </div>
-          <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-            Bojujete v létě<br /><span style={{ fontStyle: 'italic' }}>s tepelnými ostrovy?</span>
-          </h1>
-          <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Naše mlžítka efektivně ochlazují vzduch na náměstích, v parcích a podél pěších zón až o 9 °C. Stávají se oblíbenými místy setkávání a zároveň symbolem moderní a starostlivé správy města. Bez chemie, s minimální spotřebou vody a možností dotačního financování.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-              Nezávazná konzultace <ArrowRight size={15} />
-            </Link>
-            <a href="mailto:obchod1@holmtec.cz?subject=Dotaz - Města a obce" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
-              Napsat přímo
-            </a>
-          </div>
-        </motion.div>
-      </div>
+            <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
+              Bojujete v létě<br /><span style={{ fontStyle: 'italic' }}>s tepelnými ostrovy?</span>
+            </h1>
+            <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
+              Naše mlžítka efektivně ochlazují vzduch na náměstích, v parcích a podél pěších zón až o 9 °C. Stávají se oblíbenými místy setkávání a zároveň symbolem moderní a starostlivé správy města. Bez chemie, s minimální spotřebou vody a možností dotačního financování.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a href="#poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+                Nezávazná konzultace <ArrowRight size={15} />
+              </a>
+              <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+                Zavolat (+420774700390)
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Výhody */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
@@ -169,7 +174,7 @@ export default function MestaObce() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+      <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 py-20 scroll-mt-24">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro vaši obec.</h3>

@@ -113,7 +113,7 @@ export default function MestaObce() {
           className="p-6 rounded-2xl bg-white border border-slate-200">
               <span className="mb-3 block text-4xl">{u.emoji}</span>
               <h3 className="text-slate-900 font-medium mb-2 text-base">{u.title}</h3>
-              <p className="leading-relaxed font-light text-slate-900 text-s">{u.desc}</p>
+              <p className="leading-relaxed font-light text-slate-900 text-sm">{u.desc}</p>
             </motion.div>
           )}
         </div>

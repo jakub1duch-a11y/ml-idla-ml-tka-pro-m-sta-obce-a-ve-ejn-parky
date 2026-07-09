@@ -27,7 +27,7 @@ export default function PremiumServicesSection() {
                 className="h-14 rounded-xl bg-gradient-to-br from-sky-100 to-cyan-50 flex items-center justify-center mb-6 w-14">
                   <Icon size={26} className="text-sky-600 font-x4" />
                 </motion.div>
-                <h3 className="font-heading text-xl text-slate-900 mb-3">{s.title}</h3>
+                <h3 className="font-heading text-xl text-slate-900 mb-3 text-left uppercase">{s.title}</h3>
                 <p className="font-body text-sm text-slate-500 leading-relaxed">{s.desc}</p>
               </motion.div>);
 

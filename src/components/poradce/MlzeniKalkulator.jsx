@@ -235,12 +235,12 @@ export default function MlzeniKalkulator() {
     <div className="rounded-2xl border border-white/10 bg-card_bg overflow-hidden">
       {/* Header */}
       <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3 bg-[hsl(var(--background))]">
-        <div className="w-9 h-9 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center">
+        <div className="w-9 h-9 rounded-xl border flex items-center justify-center bg-black/10 border-b/20">
           <Droplets size={18} className="text-cyan" />
         </div>
         <div>
           <p className="text-sm font-medium text-[hsl(var(--popover))]">Kalkulátor spotřeby a nákladů</p>
-          <p className="text-white/40 text-xs">Orientační výpočet pro vybraný systém</p>
+          <p className="text-xs text-[hsl(var(--popover))]">Orientační výpočet pro vybraný systém</p>
         </div>
       </div>
 

@@ -43,7 +43,7 @@ const FINISHES = [
 export default function Architekti() {
   useEffect(() => { setSEO(SEO_PAGES.architekti); }, []);
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="min-h-screen bg-white">
 
       {/* Hero */}
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">

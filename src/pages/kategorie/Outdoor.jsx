@@ -7,11 +7,11 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const USE_CASES = [
-  { emoji: '🌿', title: 'Soukromé zahrady', desc: 'Mlžný prvek jako dominanta zahrady — chladivá mlha mezi zelení, klidná atmosféra i v letních vedrech.' },
-  { emoji: '🍹', title: 'Terasy a odpočinkové zóny', desc: 'Příjemné ochlazení terasy u bazénu nebo pergoly. Elegantní design, který doplní váš exteriér.' },
-  { emoji: '🏡', title: 'Rezidenční projekty', desc: 'Developerské projekty a vily — mlžný prvek jako součást zahradní architektury od návrhu po realizaci.' },
-  { emoji: '🌸', title: 'Wellness zahrady', desc: 'Chladicí mlha pro venkovní wellness zóny, jezírka a relaxační kouty.' },
-];
+{ emoji: '🌿', title: 'Soukromé zahrady', desc: 'Mlžný prvek jako dominanta zahrady — chladivá mlha mezi zelení, klidná atmosféra i v letních vedrech.' },
+{ emoji: '🍹', title: 'Terasy a odpočinkové zóny', desc: 'Příjemné ochlazení terasy u bazénu nebo pergoly. Elegantní design, který doplní váš exteriér.' },
+{ emoji: '🏡', title: 'Rezidenční projekty', desc: 'Developerské projekty a vily — mlžný prvek jako součást zahradní architektury od návrhu po realizaci.' },
+{ emoji: '🌸', title: 'Wellness zahrady', desc: 'Chladicí mlha pro venkovní wellness zóny, jezírka a relaxační kouty.' }];
+
 
 export default function Outdoor() {
   const [products, setProducts] = useState([]);
@@ -19,16 +19,16 @@ export default function Outdoor() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.outdoor);
-    base44.entities.Product.list().catch(() => []).then(p => {
+    base44.entities.Product.list().catch(() => []).then((p) => {
       setProducts((p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="min-h-screen bg-white pt-0">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7a0cae28d_generated_video.mp4"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
@@ -59,14 +59,14 @@ export default function Outdoor() {
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {USE_CASES.map((u, i) => (
-              <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="p-6 rounded-2xl bg-white border border-slate-200">
+            {USE_CASES.map((u, i) =>
+            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+            className="p-6 rounded-2xl bg-white border border-slate-200">
                 <span className="text-2xl mb-3 block">{u.emoji}</span>
                 <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -83,38 +83,38 @@ export default function Outdoor() {
             </p>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { val: 'WiFi + BT', label: 'Dálkové ovládání' },
-                { val: '0,1–0,3 l/min', label: 'Spotřeba vody' },
-                { val: 'Auto', label: 'Start při 25 °C' },
-              ].map(s => (
-                <div key={s.label} className="text-center p-4 rounded-xl bg-white border border-slate-200">
+              { val: 'WiFi + BT', label: 'Dálkové ovládání' },
+              { val: '0,1–0,3 l/min', label: 'Spotřeba vody' },
+              { val: 'Auto', label: 'Start při 25 °C' }].
+              map((s) =>
+              <div key={s.label} className="text-center p-4 rounded-xl bg-white border border-slate-200">
                   <p className="text-slate-900 font-medium text-sm">{s.val}</p>
                   <p className="text-slate-400 text-xs mt-1">{s.label}</p>
                 </div>
-              ))}
+              )}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
-              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b04eeb68d_MLZitko-oblsknazahradu.jpg',
-              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/cd64b3bdb_mrak-oblaknazahradu-mlzitka.png',
-              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/658e4144d_steblo-mlzitko.jpeg',
-              'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/a982a794f_mlzitkosteblo.jpg',
-            ].map((src, i) => (
-              <div key={src} className="aspect-square rounded-2xl overflow-hidden">
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b04eeb68d_MLZitko-oblsknazahradu.jpg',
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/cd64b3bdb_mrak-oblaknazahradu-mlzitka.png',
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/658e4144d_steblo-mlzitko.jpeg',
+            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/a982a794f_mlzitkosteblo.jpg'].
+            map((src, i) =>
+            <div key={src} className="aspect-square rounded-2xl overflow-hidden">
                 <img src={src} alt="Mlžítko v zahradě" className="w-full h-full object-cover" />
               </div>
-            ))}
+            )}
           </div>
         </div>
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty pro zahradu</p>
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>
-        {loading ? (
-          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {products.map((p, i) => (
-              <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+        {loading ?
+        <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {products.map((p, i) =>
+          <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                     {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
@@ -128,9 +128,9 @@ export default function Outdoor() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+          )}
           </div>
-        )}
+        }
       </section>
 
       <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24">
@@ -145,6 +145,6 @@ export default function Outdoor() {
           <CategoryInquiryForm category="Outdoor a zahrady" projectScope="private" />
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }

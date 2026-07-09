@@ -194,6 +194,9 @@ export default function ProduktDetail() {
   const [activeTab, setActiveTab] = useState('detail');
   const tabsNavRef = useRef(null);
   const contactRef = useRef(null);
+  const tabsScrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   const handleReviewStats = (stats) => {
     if (product) setSEO(getProductSEO(product, stats));
@@ -219,6 +222,21 @@ export default function ProduktDetail() {
     catch(() => setNotFound(true)).
     finally(() => setLoading(false));
   }, [slug]);
+
+  const updateArrowVisibility = () => {
+    const el = tabsScrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  const scrollTabs = (amount) => {
+    tabsScrollRef.current?.scrollBy({ left: amount, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    updateArrowVisibility();
+  }, [product]);
 
   const handleTabClick = (tab) => {
     if (tab.action === 'scroll') {
@@ -328,7 +346,7 @@ export default function ProduktDetail() {
       </div>
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
-      <div ref={tabsNavRef} className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
+      <div ref={tabsNavRef} className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center gap-4 lg:gap-8">
           <div className="flex items-center gap-3 py-4 border-r border-slate-200 pr-4 lg:pr-8 shrink-0">
             <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors text-left uppercase">ZPĚT DO KOLEKCE
@@ -336,16 +354,31 @@ export default function ProduktDetail() {
             </Link>
             <span className="hidden lg:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
           </div>
-          <div className="flex gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-            {TABS.map((t) =>
-            <button key={t.id} onClick={() => handleTabClick(t)}
-            className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors ${activeTab === t.id && t.action !== 'scroll' ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
-                {t.label}
-                {activeTab === t.id && t.action !== 'scroll' &&
-              <motion.div layoutId="produkt-tab-underline" className="absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
-              }
-              </button>
-            )}
+          <div className="relative flex-1 min-w-0">
+            {canScrollLeft &&
+            <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
+              className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
+              <ChevronLeft size={16} className="text-slate-500" />
+            </button>
+            }
+            <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
+              className="flex gap-8 overflow-x-auto flex-row whitespace-nowrap [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+              {TABS.map((t) =>
+              <button key={t.id} onClick={() => handleTabClick(t)}
+              className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors shrink-0 ${activeTab === t.id && t.action !== 'scroll' ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
+                  {t.label}
+                  {activeTab === t.id && t.action !== 'scroll' &&
+                <motion.div layoutId="produkt-tab-underline" className="absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
+                }
+                </button>
+              )}
+            </div>
+            {canScrollRight &&
+            <button type="button" onClick={() => scrollTabs(160)} aria-label="Posunout záložky vpravo"
+              className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-l from-white via-white/95 to-transparent lg:hidden">
+              <ChevronRight size={16} className="text-slate-500" />
+            </button>
+            }
           </div>
         </div>
       </div>

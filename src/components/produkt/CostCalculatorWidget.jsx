@@ -13,12 +13,12 @@ export default function CostCalculatorWidget({ waterConsumption }) {
     return match ? parseFloat(match[0].replace(',', '.')) : 8;
   }, [waterConsumption]);
 
-  const dailyWaterCost = (litersPerHour * hours / 1000) * WATER_PRICE_PER_M3;
+  const dailyWaterCost = litersPerHour * hours / 1000 * WATER_PRICE_PER_M3;
   const dailyEnergyCost = LOW_PRESSURE_POWER_KW * hours * ENERGY_PRICE_PER_KWH;
   const dailyTotal = dailyWaterCost + dailyEnergyCost;
 
   return (
-    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 max-w-sm">
+    <div className="backdrop-blur-md border border-white/20 rounded-2xl p-6 max-w-sm bg-white/50">
       <div className="flex items-center gap-2 mb-4">
         <Calculator size={16} className="text-white/70" />
         <p className="text-[10px] font-mono tracking-widest uppercase text-white/60">Kalkulačka provozních nákladů</p>
@@ -27,8 +27,8 @@ export default function CostCalculatorWidget({ waterConsumption }) {
       <input
         type="range" min="1" max="16" value={hours}
         onChange={(e) => setHours(Number(e.target.value))}
-        className="w-full accent-cyan-400 mb-5"
-      />
+        className="w-full accent-cyan-400 mb-5" />
+      
       <div className="flex items-center justify-between">
         <div>
           <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Denní náklad</p>
@@ -36,6 +36,6 @@ export default function CostCalculatorWidget({ waterConsumption }) {
         </div>
         <p className="text-[11px] text-white/40 max-w-[9rem] text-right leading-snug">Nízkotlaký provoz 2–7 BAR, bez čerpadel</p>
       </div>
-    </div>
-  );
+    </div>);
+
 }

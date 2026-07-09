@@ -402,7 +402,7 @@ export default function ProduktDetail() {
                 <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
                   Váš prostor si zaslouží<br /><span className="[font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light text-[#70c1ff]">vlastní {product.name}.</span>
                 </h2>
-                <p className="text-sm normal-case text-left text-white/100 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium mb-16">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+                <p className="text-sm normal-case text-left [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium mb-16 text-[hsl(var(--card))]">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               </motion.div>
 
               {/* FAQ o poptávce a realizaci */}

@@ -14,7 +14,7 @@ const SERVICES = [
 export default function PremiumServicesSection() {
   return (
     <section className="relative lg:py-28 py-20 bg-white overflow-hidden1">
-      <div className="mx-auto lg:px-8 px-6 max-w-7xl">
+      <div className="mx-auto lg:px-8 px-6 max-w-6xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-16">
           <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#111827] text-3xl md:text-4xl">
             Služby a řešení pro <span className="font-bold">dokonalý mlžný systém</span>
@@ -33,7 +33,7 @@ export default function PremiumServicesSection() {
                 <div className={`relative flex ${isEven ? 'justify-end text-right' : 'justify-start text-left'}`}>
                   <div className={`max-w-xl ${isEven ? '' : 'flex items-start gap-4'}`}>
                     {!isEven &&
-                    <span className="shrink-0 w-9 h-9 rounded-lg border-2 border-slate-900 flex items-center justify-center text-sm font-bold text-slate-900 mt-0.5">
+                    <span className="shrink-0 w-9 h-9 rounded-lg border-2 border-slate-900 flex items-center justify-center font-bold mt-0.5 text-3xl text-slate-00">
                         {i + 1}
                       </span>
                     }

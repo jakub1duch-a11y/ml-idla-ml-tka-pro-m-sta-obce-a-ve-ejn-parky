@@ -7,11 +7,11 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const USE_CASES = [
-  { emoji: '🎨', title: 'Umělecké instalace', desc: 'Mlžná skulptura jako samostatné umělecké dílo — tvar, světlo a mlha v jednom celku.' },
-  { emoji: '🏛️', title: 'Galerie a výstavy', desc: 'Interaktivní exponát, který propojuje design, technologii a smyslový zážitek návštěvníků.' },
-  { emoji: '✨', title: 'Site-specific projekty', desc: 'Zakázkové řešení navržené přesně pro konkrétní místo, koncept a příběh.' },
-  { emoji: '🌫️', title: 'Světelné a mlžné show', desc: 'Kombinace mlhy, světla a zvuku pro výjimečné veřejné a firemní akce.' },
-];
+{ emoji: '🎨', title: 'Umělecké instalace', desc: 'Mlžná skulptura jako samostatné umělecké dílo — tvar, světlo a mlha v jednom celku.' },
+{ emoji: '🏛️', title: 'Galerie a výstavy', desc: 'Interaktivní exponát, který propojuje design, technologii a smyslový zážitek návštěvníků.' },
+{ emoji: '✨', title: 'Site-specific projekty', desc: 'Zakázkové řešení navržené přesně pro konkrétní místo, koncept a příběh.' },
+{ emoji: '🌫️', title: 'Světelné a mlžné show', desc: 'Kombinace mlhy, světla a zvuku pro výjimečné veřejné a firemní akce.' }];
+
 
 export default function Art() {
   const [products, setProducts] = useState([]);
@@ -19,16 +19,16 @@ export default function Art() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.art);
-    base44.entities.Product.list().catch(() => []).then(p => {
+    base44.entities.Product.list().catch(() => []).then((p) => {
       setProducts((p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="min-h-screen bg-white">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/94c2b5f74_instalace-mlzitka-mrak.MOV"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
@@ -54,14 +54,14 @@ export default function Art() {
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {USE_CASES.map((u, i) => (
-              <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="p-6 rounded-2xl bg-white border border-slate-200">
+            {USE_CASES.map((u, i) =>
+            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+            className="p-6 rounded-2xl bg-white border border-slate-200">
                 <span className="text-2xl mb-3 block">{u.emoji}</span>
                 <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -69,12 +69,12 @@ export default function Art() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Inspirace pro zakázkové projekty</p>
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Naše skulptury.</h2>
-        {loading ? (
-          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {products.map((p, i) => (
-              <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+        {loading ?
+        <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {products.map((p, i) =>
+          <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                     {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
@@ -88,9 +88,9 @@ export default function Art() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+          )}
           </div>
-        )}
+        }
       </section>
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
@@ -105,6 +105,6 @@ export default function Art() {
           <CategoryInquiryForm category="Art instalace" projectScope="private" />
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }

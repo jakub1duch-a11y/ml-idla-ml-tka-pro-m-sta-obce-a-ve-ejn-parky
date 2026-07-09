@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
           <div className="sm:col-span-2 md:col-span-2">
-            <div className="mb-5 inline-block bg-slate-900 rounded-full px-4 py-2">
+            <div className="mb-5 inline-block rounded-full px-4 py-2 text-[hsl(var(--popover))]">
               <Logo size="sm" />
             </div>
             <p className="text-slate-500 text-sm leading-relaxed max-w-xs mb-7 font-light">

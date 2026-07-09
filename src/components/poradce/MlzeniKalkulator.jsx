@@ -286,7 +286,7 @@ export default function MlzeniKalkulator() {
                 }
               </AnimatePresence>
             </div>
-            <p className="text-xs text-white/30 mt-1.5 font-mono">{sys.type} · {sys.nozzles} trysek · {sys.powerW} W</p>
+            <p className="text-xs mt-1.5 font-mono text-[hsl(var(--card-foreground))]">{sys.type} · {sys.nozzles} trysek · {sys.powerW} W</p>
           </div>
 
           {/* Hodiny denně */}

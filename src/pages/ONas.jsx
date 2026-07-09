@@ -41,7 +41,7 @@ export default function ONas() {
       </div>
 
       {/* ── SEKCE 1: KOŘENY ──────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 lg:py-32 py-24 lg:px-10">
+      <section className="max-w-7xl mx-auto px-6 py-24 lg:px-10 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="flex items-center gap-3 mb-6">

@@ -182,7 +182,7 @@ export default function ONas() {
       </section>
 
       {/* ── SEKCE 6: HODNOTY ─────────────────────────────── */}
-      <section className="border-y border-white/8 bg-[#c1d1dc]">
+      <section className="border-y border-white/8 bg-[hsl(var(--input))]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Proč mlžidla.cz</p>

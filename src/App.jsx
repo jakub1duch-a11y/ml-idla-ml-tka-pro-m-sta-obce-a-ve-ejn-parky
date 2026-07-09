@@ -26,6 +26,7 @@ import ReferenceDetail from '@/pages/ReferenceDetail';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
 import Poptavka from '@/pages/Poptavka';
+import CustomPageView from '@/pages/CustomPageView';
 import Podpora from '@/pages/Podpora';
 import MestaObce from '@/pages/kategorie/MestaObce';
 import ParkyHriste from '@/pages/kategorie/ParkyHriste';
@@ -82,6 +83,7 @@ const AuthenticatedApp = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
+        <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
         <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />

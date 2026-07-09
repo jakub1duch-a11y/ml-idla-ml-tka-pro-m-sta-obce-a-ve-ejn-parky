@@ -38,7 +38,7 @@ export default function PremiumServicesSection() {
                       </span>
                     }
                     <p className="font-body text-base md:text-lg text-slate-600 leading-relaxed">
-                      <span className="font-bold text-slate-900 text-xl">{s.title}</span> — {s.desc}
+                      <span className="font-bold text-slate-900 text-2xl">{s.title}</span> — {s.desc}
                     </p>
                   </div>
                 </div>

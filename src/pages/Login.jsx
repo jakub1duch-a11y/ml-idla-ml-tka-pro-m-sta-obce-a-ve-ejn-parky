@@ -35,13 +35,13 @@ export default function Login() {
   return (
     <AuthLayout
       icon={LogIn}
-      title="Welcome back"
-      subtitle="Log in to your account"
+      title="Vítejte zpět."
+      subtitle="Přihlásit k účtu Mlžidla.cz"
       footer={
         <>
-          Don't have an account?{" "}
+          Ještě nemáte účet?{" "}
           <Link to="/register" className="text-primary font-medium hover:underline">
-            Create one
+            Vytvořit účet
           </Link>
         </>
       }
@@ -90,7 +90,7 @@ export default function Login() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Heslo</Label>
             <Link to="/forgot-password" className="text-xs text-primary hover:underline">
               Forgot password?
             </Link>
@@ -113,7 +113,7 @@ export default function Login() {
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Logging in...
+              Přihlašování...
             </>
           ) : (
             "Přihlášení"

@@ -14,7 +14,7 @@ const SERVICES = [
 export default function PremiumServicesSection() {
   return (
     <section className="relative lg:py-32 py-24 bg-">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto lg:px-8 px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
           <h2 className="font-heading tracking-tight text-3xl md:text-3xl text-[#1d4a5d]">Služby a řešení pro dokonalý mlžný systém</h2>
         </motion.div>

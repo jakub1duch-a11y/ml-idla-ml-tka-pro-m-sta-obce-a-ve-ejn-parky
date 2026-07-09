@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
+import { GOOGLE_MAPS_URL } from '@/lib/seo';
 
 export default function Footer() {
   return (
@@ -25,6 +26,10 @@ export default function Footer() {
                 <Facebook size={16} />
               </a>
             </div>
+            <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-5 text-sm text-slate-500 hover:text-slate-900 transition-colors">
+              <MapPin size={14} /> Najdete nás na Google
+            </a>
           </div>
 
           <div>

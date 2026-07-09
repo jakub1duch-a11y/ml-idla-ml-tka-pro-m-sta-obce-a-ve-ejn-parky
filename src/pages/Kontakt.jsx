@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } from 'lucide-react';
 import { trackCooperationFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
-import { setSEO, SEO_PAGES } from '@/lib/seo';
+import { setSEO, SEO_PAGES, GOOGLE_MAPS_URL, GOOGLE_MAPS_EMBED_URL } from '@/lib/seo';
 
 const contactInfo = [
 { icon: Phone, label: 'Telefon', value: '+420 774 700 390', href: 'tel:+420774700390' },
@@ -99,6 +99,16 @@ export default function Kontakt() {
                 </div>
               </motion.div>
             )}
+
+            {/* Google Maps */}
+            <div className="rounded-2xl overflow-hidden border border-white/10">
+              <iframe title="Mapa — HolmTec Trutnov" src={GOOGLE_MAPS_EMBED_URL}
+                width="100%" height="220" style={{ border: 0 }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            </div>
+            <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-3 rounded-xl bg-card_bg border border-white/10 text-sm text-white/70 hover:text-cyan hover:border-cyan/30 transition-all">
+              <MapPin size={14} /> Najdete nás na Google
+            </a>
 
             {/* Info box */}
             <div className="p-5 rounded-2xl bg-cyan/5 border border-cyan/20">

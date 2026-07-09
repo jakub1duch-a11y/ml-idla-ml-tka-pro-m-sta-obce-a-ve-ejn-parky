@@ -326,13 +326,19 @@ export function getReferenceSEO(project) {
 
 // ─── Organization JSON-LD (inject on all pages) ─────────────────────────────
 
+export const GOOGLE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=HolmTec+s.r.o.+Horn%C3%AD+star%C3%A9+m%C4%9Bsto+698+Trutnov';
+export const GOOGLE_MAPS_EMBED_URL = 'https://www.google.com/maps?q=Horn%C3%AD+star%C3%A9+m%C4%9Bsto+698,+Trutnov&output=embed';
+
 export function injectOrgJsonLd() {
   setJsonLd({
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'HolmTec s.r.o.',
+    '@type': 'LocalBusiness',
+    name: 'HolmTec s.r.o. — Mlžidla.cz',
     url: BASE_URL,
     logo: 'https://drive.google.com/drive/u/1/folders/0ACRsWxU90i5aUk9PVA?hl=cs',
+    image: DEFAULT_IMAGE,
+    priceRange: 'na vyžádání',
+    telephone: '+420-774-700-390',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+420-774-700-390',
@@ -342,11 +348,17 @@ export function injectOrgJsonLd() {
     },
     address: {
       '@type': 'PostalAddress',
-      AddressLocality: 'Trutnov',
-      StreetAddress: "Horní staré město 698",
-      PostalCode:"54102",
-      AddressCountry: 'CZ',
+      addressLocality: 'Trutnov',
+      streetAddress: 'Horní staré město 698',
+      postalCode: '54102',
+      addressCountry: 'CZ',
     },
-    sameAs: ['https://mlzidla.cz'],
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 50.5605,
+      longitude: 15.9122,
+    },
+    hasMap: GOOGLE_MAPS_URL,
+    sameAs: ['https://mlzidla.cz', GOOGLE_MAPS_URL],
   });
 }

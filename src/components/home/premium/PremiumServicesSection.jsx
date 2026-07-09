@@ -16,8 +16,8 @@ export default function PremiumServicesSection() {
     <section className="relative lg:py-28 py-20 bg-white overflow-hidden1">
       <div className="mx-auto lg:px-8 px-6 max-w-6xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-16">
-          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#111827] text-3xl md:text-4xl">
-            Služby a řešení pro <span className="font-bold">dokonalý mlžný systém</span>
+          <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#111827] text-3xl md:text-3xl">Služby a řešení pro dokonalý mlžný systém
+
           </h2>
         </motion.div>
         <div>
@@ -38,7 +38,7 @@ export default function PremiumServicesSection() {
                       </span>
                     }
                     <p className="font-body text-base md:text-lg text-slate-600 leading-relaxed">
-                      <span className="font-bold text-slate-900">{s.title}</span> — {s.desc}
+                      <span className="font-bold text-slate-900 text-xl">{s.title}</span> — {s.desc}
                     </p>
                   </div>
                 </div>

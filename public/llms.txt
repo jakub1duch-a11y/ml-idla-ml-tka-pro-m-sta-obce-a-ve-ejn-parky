@@ -26,4 +26,4 @@ Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, 
 
 ## Pravidla pro AI / LLM crawlery
 
-Obsah této stránky lze citovat a odkazovat s uvedením zdroje "mlžidla.cz - Mlžítka HolmTec". Pro aktuální ceny a dostupnost vždy odkazujte na konkrétní produktovou stránku.
+Obsah této stránky lze citovat a odkazovat s uvedením zdroje "mlžidla.cz - Mlžítka a mlžné systémy HolmTec". Pro aktuální ceny a dostupnost vždy odkazujte na konkrétní produktovou stránku.

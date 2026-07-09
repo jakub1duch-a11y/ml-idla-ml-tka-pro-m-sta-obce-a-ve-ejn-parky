@@ -111,9 +111,9 @@ export default function MestaObce() {
           {USE_CASES.map((u, i) =>
           <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
           className="p-6 rounded-2xl bg-white border border-slate-200">
-              <span className="text-2xl mb-3 block">{u.emoji}</span>
-              <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
+              <span className="mb-3 block text-4xl">{u.emoji}</span>
+              <h3 className="text-slate-900 font-medium mb-2 text-base">{u.title}</h3>
+              <p className="text-xs leading-relaxed font-light text-slate-600">{u.desc}</p>
             </motion.div>
           )}
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Loader, Image } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
 const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
 
@@ -122,6 +123,7 @@ export default function AdminProducts() {
           <input type="checkbox" checked={!!form.featured} onChange={set('featured')} className="rounded" />
           Vybraný produkt (featured)
         </label>
+        {editing !== 'new' && editing?.slug && <ProductAnalyticsPanel slug={editing.slug} />}
         <div className="flex gap-3 pt-2">
           <button onClick={save} disabled={saving || !form.name || !form.slug}
           className="flex items-center gap-2 px-5 py-2.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all disabled:opacity-50">

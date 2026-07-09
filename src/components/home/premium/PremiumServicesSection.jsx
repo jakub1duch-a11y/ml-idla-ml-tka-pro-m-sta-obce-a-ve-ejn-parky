@@ -26,14 +26,14 @@ export default function PremiumServicesSection() {
             const num = String(i + 1).padStart(2, '0');
             return (
               <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
-              className={`relative py-1 ${i !== 0 ? 'border-t border-slate-200' : ''}`}>
+              className={`relative py-8 ${i !== 0 ? 'border-t border-slate-200' : ''}`}>
                 <span className={`pointer-events-none select-none absolute top-1/2 -translate-y-1/2 text-7xl md:text-8xl font-bold text-slate-100 ${isEven ? 'right-0' : 'left-0'}`}>
                   {num}
                 </span>
                 <div className={`relative flex ${isEven ? 'justify-end text-right' : 'justify-start text-left'}`}>
                   <div className={`max-w-xl ${isEven ? '' : 'flex items-start gap-4'}`}>
                     {!isEven &&
-                    <span className="shrink-0 rounded-lg flex items-center justify-center mt-0.5 font-normal [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] border-slate-900 border-2 w-9 h-9 text-2xl text-slate-900">
+                    <span className="shrink-0 rounded-lg flex items-center justify-center font-normal [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] border-slate-900 border-2 w-9 h-9 text-2xl text-slate-900 mt-0.">
                         {i + 1}
                       </span>
                     }

@@ -34,7 +34,7 @@ export default function CostCalculatorWidget({ waterConsumption }) {
           <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Denní náklad</p>
           <p className="text-2xl text-white [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{dailyTotal.toFixed(1)} Kč</p>
         </div>
-        <p className="text-[11px] max-w-[9rem] text-right leading-snug text-white/0">Nízkotlaký provoz 2–7 BAR, bez čerpadel</p>
+        <p className="text-[11px] max-w-[9rem] text-right leading-snug text-white/60">Nízkotlaký provoz 2–7 BAR, bez čerpadel</p>
       </div>
     </div>);
 

@@ -54,6 +54,8 @@ export default function AdminInstagram() {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-white text-lg font-medium flex items-center gap-2">
           <Instagram size={18} /> Instagram feed
+          <a href="https://www.instagram.com/mlzidla" target="_blank" rel="noopener noreferrer"
+            className="text-xs font-mono text-white/30 hover:text-cyan transition-colors ml-2">@mlzidla ↗</a>
         </h2>
         {connected && (
           <div className="flex gap-2">

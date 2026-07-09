@@ -400,7 +400,7 @@ export default function ProduktDetail() {
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/20 text-white text-xs font-bold tracking-widest uppercase rounded-full mb-5">Nezávazná poptávka</span>
                 <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
-                  Váš prostor si zaslouží<br /><span className="text-white/50">vlastní {product.name}.</span>
+                  Váš prostor si zaslouží<br /><span className="[font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light text-[#70c1ff]">vlastní {product.name}.</span>
                 </h2>
                 <p className="text-sm normal-case text-left text-white/100 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium mb-16">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               </motion.div>

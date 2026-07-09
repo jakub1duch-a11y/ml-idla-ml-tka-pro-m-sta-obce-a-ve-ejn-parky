@@ -24,7 +24,7 @@ export default function PremiumServicesSection() {
             return (
               <motion.div key={s.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }} className="p-8 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all bg-[#F8F9FA]">
                 <motion.div initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.5, ease: 'backOut' }}
-                className="h-14 rounded-xl bg-gradient-to-br from-sky-100 to-cyan-50 flex items-center justify-center mb-6 w-4">
+                className="h-14 rounded-xl bg-gradient-to-br from-sky-100 to-cyan-50 flex items-center justify-center mb-6 w-14">
                   <Icon size={26} className="text-sky-600 font-x4" />
                 </motion.div>
                 <h3 className="font-heading text-xl text-slate-900 mb-3">{s.title}</h3>

@@ -13,7 +13,7 @@ const SERVICES = [
 
 export default function PremiumServicesSection() {
   return (
-    <section className="relative lg:py-32 bg- py-24">
+    <section className="relative lg:py-32 py-24 bg-red">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
           <h2 className="font-heading text-4xl md:text-5xl text-slate-900 tracking-tight">Služby a řešení pro dokonalý mlžný systém</h2>

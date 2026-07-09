@@ -13,7 +13,7 @@ const SERVICES = [
 
 export default function PremiumServicesSection() {
   return (
-    <section className="relative lg:py-28 py-20 bg-white overflow-hidden">
+    <section className="relative lg:py-28 py-20 bg-white overflow-hidden1">
       <div className="max-w-5xl mx-auto lg:px-8 px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-16">
           <h2 className="tracking-tight [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-left text-[#111827] text-3xl md:text-4xl">

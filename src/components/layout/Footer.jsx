@@ -32,7 +32,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlžítka a mlžné brány</Link>
               <Link to="/jak-to-funguje" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Jak to funguje</Link>
-              <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O nás</Link>
+              <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O společnosti</Link>
             </div>
           </div>
 

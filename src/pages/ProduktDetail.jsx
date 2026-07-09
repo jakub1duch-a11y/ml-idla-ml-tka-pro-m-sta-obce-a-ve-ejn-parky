@@ -174,7 +174,7 @@ function ContactForm({ productName }) {
 const TABS = [
 { id: 'detail', label: 'Detail produktu' },
 { id: 'galerie', label: 'Galerie a realizované projekty' },
-{ id: 'specifikace', label: 'Technické specifikace' },
+{ id: 'specifikace', label: "Specifikace" },
 { id: 'smart', label: 'SMART moduly' },
 { id: 'instalace', label: 'Instalace' },
 { id: 'video', label: 'Videa - ukázka v akci' },

@@ -108,9 +108,9 @@ export default function ONas() {
           { val: '1 Rok', label: 'záruka na konstrukci' }].
           map((s) =>
           <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="p-6 rounded-2xl bg-card_bg border border-white/10 text-center">
+          className="p-6 rounded-2xl bg-card_bg border text-center border-white/40">
               <p className="font-heading text-3xl text-cyan mb-1" style={{ fontWeight: 800, letterSpacing: '-0.04em' }}>{s.val}</p>
-              <p className="text-xs font-mono text-white/40 tracking-widest uppercase">{s.label}</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-[hsl(var(--background))]">{s.label}</p>
             </motion.div>
           )}
         </div>

@@ -1,0 +1,61 @@
+{
+  "name": "InstagramPost",
+  "type": "object",
+  "properties": {
+    "instagram_id": {
+      "type": "string",
+      "description": "ID p\u0159\u00edsp\u011bvku na Instagramu"
+    },
+    "caption": {
+      "type": "string",
+      "description": "Popisek p\u0159\u00edsp\u011bvku"
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "IMAGE",
+        "VIDEO",
+        "CAROUSEL_ALBUM"
+      ],
+      "description": "Typ m\u00e9dia"
+    },
+    "media_url": {
+      "type": "string",
+      "description": "URL obr\u00e1zku/videa"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "URL n\u00e1hledu (pro video)"
+    },
+    "permalink": {
+      "type": "string",
+      "description": "Odkaz na p\u0159\u00edsp\u011bvek na Instagramu"
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum publikace na Instagramu"
+    }
+  },
+  "required": [
+    "instagram_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -7,20 +7,20 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 
 const BENEFITS = [
-  'Ochlazení okolního vzduchu až o 9 °C',
-  'Bez chemie — bezpečné pro zdraví i životní prostředí',
-  'Smart řízení dle teploty a pohybu',
-  'Dotačně podporovatelné jako zelená infrastruktura',
-  'Zakázková výroba dle identity místa',
-  'Záruka 5 let, servis po celé ČR a SR',
-];
+'Ochlazení okolního vzduchu až o 9 °C',
+'Bez chemie — bezpečné pro zdraví i životní prostředí',
+'Smart řízení dle teploty a pohybu',
+'Dotačně podporovatelné jako zelená infrastruktura',
+'Zakázková výroba dle identity místa',
+'Záruka 5 let, servis po celé ČR a SR'];
+
 
 const USE_CASES = [
-  { emoji: '🏛️', title: 'Náměstí a pěší zóny', desc: 'Dominantní mlžné prvky, které ochladí stovky procházejících a stávají se ikonou místa.' },
-  { emoji: '🚌', title: 'Zastávky MHD', desc: 'Kompaktní mlžné stojany u čekáren snižují pocit tepla při čekání na spoj.' },
-  { emoji: '🌳', title: 'Revitalizace prostranství', desc: 'Mlžné sochy jako součást nového urbanistického konceptu — funkce i estetika v jednom.' },
-  { emoji: '🏃', title: 'Sportovní areály', desc: 'Ochlazení tribun, hřišť a běžeckých zón pro komfort sportovců i diváků.' },
-];
+{ emoji: '🏛️', title: 'Náměstí a pěší zóny', desc: 'Dominantní mlžné prvky, které ochladí stovky procházejících a stávají se ikonou místa.' },
+{ emoji: '🚌', title: 'Zastávky MHD', desc: 'Kompaktní mlžné stojany u čekáren snižují pocit tepla při čekání na spoj.' },
+{ emoji: '🌳', title: 'Revitalizace prostranství', desc: 'Mlžné sochy jako součást nového urbanistického konceptu — funkce i estetika v jednom.' },
+{ emoji: '🏃', title: 'Sportovní areály', desc: 'Ochlazení tribun, hřišť a běžeckých zón pro komfort sportovců i diváků.' }];
+
 
 export default function MestaObce() {
   const [products, setProducts] = useState([]);
@@ -28,7 +28,7 @@ export default function MestaObce() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.mestOobce);
-    base44.entities.Product.list().catch(() => []).then(p => {
+    base44.entities.Product.list().catch(() => []).then((p) => {
       setProducts((p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
@@ -39,8 +39,8 @@ export default function MestaObce() {
       {/* Hero */}
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
+        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/2" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
             <div className="flex items-center gap-3 mb-4">
@@ -77,25 +77,25 @@ export default function MestaObce() {
                 Řešení, které<br /><span style={{ fontStyle: 'italic' }}>funguje a vydrží.</span>
               </h2>
               <ul className="space-y-3">
-                {BENEFITS.map(b => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-slate-600 font-light">
+                {BENEFITS.map((b) =>
+                <li key={b} className="flex items-start gap-3 text-sm text-slate-600 font-light">
                     <CheckCircle size={15} className="text-slate-900 shrink-0 mt-0.5" />{b}
                   </li>
-                ))}
+                )}
               </ul>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { val: '9 °C', label: 'Max. ochlazení' },
-                { val: '120+', label: 'Realizací' },
-                { val: '5 let', label: 'Záruka' },
-                { val: '0%', label: 'Chemie' },
-              ].map(s => (
-                <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
+              { val: '9 °C', label: 'Max. ochlazení' },
+              { val: '120+', label: 'Realizací' },
+              { val: '5 let', label: 'Záruka' },
+              { val: '0%', label: 'Chemie' }].
+              map((s) =>
+              <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
                   <p className="font-heading text-3xl text-slate-900 mb-1" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
                   <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">{s.label}</p>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -108,25 +108,25 @@ export default function MestaObce() {
           Typická místa<br /><span style={{ fontStyle: 'italic' }}>ve vaší obci.</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {USE_CASES.map((u, i) => (
-            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200">
+          {USE_CASES.map((u, i) =>
+          <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+          className="p-6 rounded-2xl bg-white border border-slate-200">
               <span className="text-2xl mb-3 block">{u.emoji}</span>
               <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
               <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
             </motion.div>
-          ))}
+          )}
         </div>
       </section>
 
       {/* Video - Smart řízení */}
       <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
+          className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
             <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Smart řízení pro obce</p>
             <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Automatický start/stop<br /><span style={{ fontStyle: 'italic' }}>dle teploty a vlhkosti.</span>
@@ -143,12 +143,12 @@ export default function MestaObce() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Doporučené produkty</p>
           <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely pro obce.</h2>
-          {loading ? (
-            <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {products.map((p, i) => (
-                <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+          {loading ?
+          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {products.map((p, i) =>
+            <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                   <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                     <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                       {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
@@ -162,9 +162,9 @@ export default function MestaObce() {
                     </div>
                   </Link>
                 </motion.div>
-              ))}
+            )}
             </div>
-          )}
+          }
           <div className="mt-8 text-center">
             <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
               Zobrazit celý katalog <ArrowRight size={14} />
@@ -186,6 +186,6 @@ export default function MestaObce() {
           <CategoryInquiryForm category="Města a obce" projectScope="urban" />
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }

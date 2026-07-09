@@ -16,7 +16,7 @@ const IMAGES = {
 };
 
 export default function ONas() {
-  useEffect(() => { setSEO(SEO_PAGES.oNas); }, []);
+  useEffect(() => {setSEO(SEO_PAGES.oNas);}, []);
   return (
     <div className="min-h-screen bg-ink">
 
@@ -139,7 +139,7 @@ export default function ONas() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-4">
-              <img src={IMAGES.hriste} alt="Mlžítka na hřišti" className="w-full aspect-video object-cover rounded-2xl" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/585985745_smartaplikacepromlzutka-nova.png" alt="Mlžítka na hřišti" className="w-full aspect-video object-cover rounded-2xl" />
               <div className="grid grid-cols-2 gap-4">
                 <img src={IMAGES.playground} alt="Děti u mlžítka" className="w-full aspect-[4/3] object-cover rounded-xl" />
                 <img src={IMAGES.mrak} alt="Mrak mlžítko" className="w-full aspect-[4/3] object-cover rounded-xl" />

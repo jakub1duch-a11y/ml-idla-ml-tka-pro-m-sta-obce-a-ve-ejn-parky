@@ -196,7 +196,7 @@ export default function ONas() {
             { icon: Award, title: '20+ mlžných realizací', desc: 'Více než dvě dekády zkušeností s projekty po celé České republice a Slovensku.' },
             { icon: Zap, title: 'Instalace mlžítka na klíč', desc: 'Od prvního skici přes 3D vizualizaci po montáž a servisní smlouvu mlžítka — vše pod jednou střechou.' }].
             map(({ icon: Icon, title, desc }) =>
-            <div key={title} className="p-7 rounded-2xl bg-card_bg border border-white/10">
+            <div key={title} className="p-7 rounded-2xl border border-white/10 bg-[hsl(var(--border))]">
                 <div className="w-10 h-10 rounded-xl bg-cyan/10 flex items-center justify-center mb-4 border border-cyan/20">
                   <Icon size={18} className="text-cyan" />
                 </div>

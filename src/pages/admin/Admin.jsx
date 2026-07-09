@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminProducts from './AdminProducts';
 import AdminReferences from './AdminReferences';
@@ -9,12 +9,18 @@ import AdminAnalytics from './AdminAnalytics';
 import AdminBlog from './AdminBlog';
 import AdminInstagram from './AdminInstagram';
 import AdminPages from './AdminPages';
+import AdminMedia from './AdminMedia';
+import AdminMarketing from './AdminMarketing';
+import AdminProductAnalytics from './AdminProductAnalytics';
 
 const TABS = [
   { id: 'products', label: 'Produkty', icon: Package },
+  { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
   { id: 'references', label: 'Reference', icon: ImageIcon },
   { id: 'blog', label: 'Blog', icon: Newspaper },
   { id: 'pages', label: 'Stránky', icon: FileStack },
+  { id: 'media', label: 'Media', icon: FolderOpen },
+  { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'instagram', label: 'Instagram', icon: Instagram },
@@ -51,9 +57,12 @@ export default function Admin() {
 
   const ActiveComponent = {
     products: AdminProducts,
+    'product-analytics': AdminProductAnalytics,
     references: AdminReferences,
     blog: AdminBlog,
     pages: AdminPages,
+    media: AdminMedia,
+    marketing: AdminMarketing,
     poptavky: AdminPoptavky,
     analytics: AdminAnalytics,
     instagram: AdminInstagram,

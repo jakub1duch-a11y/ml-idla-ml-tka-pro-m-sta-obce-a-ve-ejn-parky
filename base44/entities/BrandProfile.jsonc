@@ -1,0 +1,54 @@
+{
+  "name": "BrandProfile",
+  "type": "object",
+  "properties": {
+    "tone_of_voice": {
+      "type": "string",
+      "description": "T\u00f3n komunikace zna\u010dky"
+    },
+    "target_audience": {
+      "type": "string",
+      "description": "C\u00edlov\u00e1 skupina"
+    },
+    "key_messages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Kl\u00ed\u010dov\u00e1 sd\u011blen\u00ed zna\u010dky"
+    },
+    "primary_colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Hlavn\u00ed barvy zna\u010dky (hex)"
+    },
+    "hashtags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Doporu\u010den\u00e9 hashtagy"
+    }
+  },
+  "required": [],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

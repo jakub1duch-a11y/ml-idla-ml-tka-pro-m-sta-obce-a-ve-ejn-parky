@@ -1,0 +1,70 @@
+{
+  "name": "MarketingPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Intern\u00ed n\u00e1zev p\u0159\u00edsp\u011bvku"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "instagram",
+        "facebook",
+        "google_ads",
+        "blog"
+      ],
+      "description": "Kan\u00e1l p\u0159\u00edsp\u011bvku"
+    },
+    "caption": {
+      "type": "string",
+      "description": "Text p\u0159\u00edsp\u011bvku / popisek"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Obr\u00e1zek p\u0159\u00edsp\u011bvku"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Pl\u00e1novan\u00e9 datum publikace"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "scheduled",
+        "published"
+      ],
+      "default": "draft",
+      "description": "Stav p\u0159\u00edsp\u011bvku"
+    },
+    "ai_generated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Obsah vygenerov\u00e1n AI"
+    }
+  },
+  "required": [
+    "title",
+    "platform"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

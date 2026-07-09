@@ -1,0 +1,40 @@
+{
+  "name": "MediaFile",
+  "type": "object",
+  "properties": {
+    "file_url": {
+      "type": "string",
+      "description": "URL nahran\u00e9ho souboru"
+    },
+    "file_name": {
+      "type": "string",
+      "description": "P\u016fvodn\u00ed n\u00e1zev souboru"
+    },
+    "file_type": {
+      "type": "string",
+      "description": "MIME typ / p\u0159\u00edpona souboru"
+    }
+  },
+  "required": [
+    "file_url",
+    "file_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

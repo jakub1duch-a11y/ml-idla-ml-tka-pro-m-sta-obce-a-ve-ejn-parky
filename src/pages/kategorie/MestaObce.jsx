@@ -92,7 +92,7 @@ export default function MestaObce() {
               { val: '0%', label: 'Chemie' }].
               map((s) =>
               <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
-                  <p className="font-heading text-3xl text-slate-900 mb-1" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
+                  <p className="font-heading text-slate-900 mb-1 text-4xl" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
                   <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">{s.label}</p>
                 </div>
               )}

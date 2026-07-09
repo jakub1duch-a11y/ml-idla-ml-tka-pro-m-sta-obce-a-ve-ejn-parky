@@ -394,7 +394,7 @@ export default function ProduktDetail() {
       {/* ═══════ INLINE CONTACT FORM ═══════ */}
       <section ref={contactRef} className="bg-gradient-to-b from-slate-900 to-slate-800 py-24 relative overflow-hidden">
         <MistFogEffect />
-        <div className="max-w-6xl mx-auto px-6 lg:px-10 relative">
+        <div className="max-w-6xl mx-auto lg:px-10 relative px-5">
           <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-16 items-start">
             <div>
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

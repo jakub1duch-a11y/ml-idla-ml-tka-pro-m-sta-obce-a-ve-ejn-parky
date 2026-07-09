@@ -63,7 +63,7 @@ export default function ONas() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1c96c5e64_spiralvoemlzitko-rezidencni.png" alt="Výroba HolmTec" className="w-full object-cover rounded-2xl aspect-[]" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1c96c5e64_spiralvoemlzitko-rezidencni.png" alt="Výroba HolmTec" className="w-full object-cover aspect-[] rounded-2x3" />
           </motion.div>
         </div>
       </section>

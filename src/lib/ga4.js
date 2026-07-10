@@ -124,6 +124,16 @@ export function trackInquirySubmitted(requestType, productInterest) {
   });
 }
 
+export function trackQuickInquiryClick(productName, location) {
+  safeGtag('event', 'quick_inquiry_click', {
+    event_category: 'conversion',
+    event_label: productName || 'produkt',
+    product_name: productName,
+    location: location || 'neznámé umístění',
+    value: 1,
+  });
+}
+
 // Fired on the /dekujeme thank-you page — the actual conversion moment for GA4 + Google Ads.
 export function trackThankYouPageView(source) {
   safeGtag('event', 'thank_you_view', {
@@ -153,5 +163,6 @@ if (typeof window !== 'undefined') {
   window.trackHeroInteraction = trackHeroInteraction;
   window.trackCategoryFilter = trackCategoryFilter;
   window.trackInquirySubmitted = trackInquirySubmitted;
+  window.trackQuickInquiryClick = trackQuickInquiryClick;
   window.trackThankYouPageView = trackThankYouPageView;
 }

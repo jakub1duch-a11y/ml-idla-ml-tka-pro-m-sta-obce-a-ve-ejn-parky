@@ -5,7 +5,7 @@ import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2,
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
-import { trackProductView } from '@/lib/ga4';
+import { trackProductView, trackQuickInquiryClick } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import ProductReviews from '@/components/reviews/ProductReviews';
 import CostCalculatorWidget from '@/components/produkt/CostCalculatorWidget';
@@ -327,9 +327,10 @@ export default function ProduktDetail() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link to="/kontakt"
+                <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
+                onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
-                  Poptat individuální řešení <ArrowRight size={16} />
+                  Rychlá poptávka <ArrowRight size={16} />
                 </Link>
               </div>
             </motion.div>

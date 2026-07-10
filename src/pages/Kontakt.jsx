@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } from 'lucide-react';
 import { trackCooperationFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
+import { Flame } from 'lucide-react';
 import { setSEO, SEO_PAGES, GOOGLE_MAPS_URL, GOOGLE_MAPS_EMBED_URL } from '@/lib/seo';
 
 const contactInfo = [
@@ -33,7 +34,14 @@ export default function Kontakt() {
   const [sending, setSending] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => { setSEO(SEO_PAGES.kontakt); }, []);
+  useEffect(() => {
+    setSEO(SEO_PAGES.kontakt);
+    const params = new URLSearchParams(window.location.search);
+    const produkt = params.get('produkt');
+    if (produkt) {
+      setForm((f) => ({ ...f, product_interest: produkt, request_type: 'product_price' }));
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,6 +85,13 @@ export default function Kontakt() {
           <p className="text-white/50 max-w-lg mx-auto">Mlžné prvky, mlžítka, Smart WiFi ovládání, podpora — vše na jednom místě.
           </p>
         </motion.div>
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-cyan/10 border border-cyan/25 text-cyan text-xs font-mono tracking-wide">
+          <Flame size={14} /> Ještě to má cenu — poptávku do konce letošní sezóny stihneme zpracovat včas.
+        </motion.div>
+        {form.product_interest &&
+        <p className="mt-4 text-sm text-white/60">Poptáváte: <span className="text-white font-medium">{form.product_interest}</span></p>
+        }
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">

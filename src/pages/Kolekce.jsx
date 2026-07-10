@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import { trackQuickInquiryClick } from '@/lib/ga4';
 
 const HEIGHT_OPTIONS = [
 { value: 'all', label: 'Všechny výšky' },
@@ -98,9 +99,10 @@ const FALLBACK_IMAGES = {
 function ProductCard({ product, i }) {
   const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
+    <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+    className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col bg-white">
       <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'}
-      className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 h-full">
+      className="group block flex-1">
         <div className="aspect-[4/3] overflow-hidden relative bg-slate-100">
           <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
           {product.featured &&
@@ -115,16 +117,17 @@ function ProductCard({ product, i }) {
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">{product._categoryName || 'Mlžný systém'}</p>
           <h3 className="text-xl font-normal text-slate-900 mb-1">{product.name}</h3>
           <p className="text-sm text-slate-500 mb-3 line-clamp-2">{product.short_description}</p>
-          
-
-          
           <div className="flex items-center justify-between">
-            
             <div className="flex items-center gap-1 text-xs text-slate-900 font-medium">
               Detail <ArrowRight size={12} />
             </div>
           </div>
         </div>
+      </Link>
+      <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
+        onClick={() => trackQuickInquiryClick(product.name, 'katalog')}
+        className="flex items-center justify-center gap-1.5 py-3 text-xs font-bold text-slate-900 border-t border-slate-200 hover:bg-slate-50 transition-colors shrink-0">
+        <Zap size={13} /> Rychlá poptávka
       </Link>
     </motion.div>);
 

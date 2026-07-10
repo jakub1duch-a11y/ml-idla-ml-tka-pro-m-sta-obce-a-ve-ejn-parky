@@ -49,6 +49,7 @@ import OchranaZdravi from '@/pages/OchranaZdravi';
 import ServisUdrzba from '@/pages/ServisUdrzba';
 import Novinky from '@/pages/Novinky';
 import VraceniZbozi from '@/pages/VraceniZbozi';
+import ChytraMlzidla from '@/pages/ChytraMlzidla';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -106,6 +107,7 @@ const AuthenticatedApp = () => {
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
         <Route path="/novinky" element={<Novinky />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
+        <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<PageNotFound />} />

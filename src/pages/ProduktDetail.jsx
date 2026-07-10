@@ -5,6 +5,8 @@ import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2,
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
+import HeroMistParticles from '@/components/produkt/HeroMistParticles';
+import { useScroll, useTransform } from 'framer-motion';
 import { trackProductView, trackQuickInquiryClick } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import ProductReviews from '@/components/reviews/ProductReviews';
@@ -17,6 +19,7 @@ import SpecsTab from '@/components/produkt/tabs/SpecsTab';
 import SmartModulesTab from '@/components/produkt/tabs/SmartModulesTab';
 import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 import MistFogEffect from '@/components/produkt/MistFogEffect';
+import ProductContactForm from '@/components/produkt/ProductContactForm';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -55,121 +58,6 @@ function Lightbox({ images, initialIndex, onClose }) {
     </div>);
 }
 
-// ─── Inline contact form ──────────────────────────────────────────────────────
-const ANCHORING_PHOTO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/44f2b5c20_moznostikotveni.webp';
-
-function ContactForm({ productName }) {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', smartModule: false, ledLighting: false, installationType: 'mobile' });
-  const [sent, setSent] = useState(false);
-  const [sending, setSending] = useState(false);
-
-  const submit = async (e) => {
-    e.preventDefault();
-    setSending(true);
-    const extras = [
-    form.smartModule && 'Smart modul – chytré řízení mlžítek',
-    form.ledLighting && 'LED nasvícení',
-    form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'].
-    filter(Boolean).join(', ');
-    await base44.entities.ContactInquiry.create({
-      name: form.name,
-      email: form.email,
-      message: `[${productName}] ${form.message || 'Zájem o produkt'} | ${extras}`,
-      description: form.phone ? `Tel: ${form.phone}` : ''
-    }).catch(() => {});
-    setSent(true);
-    setSending(false);
-    if (typeof window !== 'undefined' && window.trackHolmTec) {
-      window.trackHolmTec('contact_form_submit', { product_name: productName, form_type: 'produkt' });
-    }
-  };
-
-  if (sent) return (
-    <div className="text-center py-8">
-      <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center mx-auto mb-4">
-        <span className="text-emerald-600 text-xl">✓</span>
-      </div>
-      <p className="text-slate-900 font-medium text-lg">Poptávka odeslána.</p>
-      <p className="text-slate-400 text-sm mt-1">Odpovídáme do 24 h.</p>
-    </div>);
-
-  return (
-    <form onSubmit={submit} className="space-y-5 p-7 lg:p-8 rounded-3xl border-2 border-slate-900 shadow-xl bg-TRANSPARENT">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
-          <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors text-[hsl(var(--popover))]"
-          placeholder="Jan Novák" />
-        </div>
-        <div>
-          <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Email *</label>
-          <input required type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
-          placeholder="jan@firma.cz" />
-        </div>
-      </div>
-      <div className="opacity-100">
-        <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Telefon</label>
-        <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
-        placeholder="+420 000 000 000" />
-      </div>
-
-      {/* Doplňkové možnosti */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
-        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">Doplňkové možnosti</p>
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input type="checkbox" checked={form.smartModule} onChange={(e) => setForm((f) => ({ ...f, smartModule: e.target.checked }))}
-          className="w-5 h-5 rounded border-slate-300 text-slate-900 focus:ring-slate-900" />
-          <span className="text-sm text-slate-700">Smart modul – chytré řízení mlžítek</span>
-        </label>
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input type="checkbox" checked={form.ledLighting} onChange={(e) => setForm((f) => ({ ...f, ledLighting: e.target.checked }))}
-          className="w-5 h-5 rounded border-slate-300 text-slate-900 focus:ring-slate-900" />
-          <span className="text-sm text-slate-700">LED nasvícení</span>
-        </label>
-
-        <div>
-          <p className="text-sm text-slate-700 mb-2">Typ instalace</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <label className={`flex flex-col gap-1 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.installationType === 'mobile' ? 'border-slate-900 bg-white' : 'border-slate-200 bg-white/50'}`}>
-              <span className="flex items-center gap-2">
-                <input type="radio" name="installationType" checked={form.installationType === 'mobile'} onChange={() => setForm((f) => ({ ...f, installationType: 'mobile' }))}
-                className="w-4 h-4 text-slate-900 focus:ring-slate-900" />
-                <span className="text-sm font-medium text-slate-900">Mobilní</span>
-              </span>
-              <span className="text-xs text-slate-500 pl-6">Zemní vrut (instalace do 30 min)</span>
-            </label>
-            <label className={`flex flex-col gap-1 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.installationType === 'permanent' ? 'border-slate-900 bg-white' : 'border-slate-200 bg-white/50'}`}>
-              <span className="flex items-center gap-2">
-                <input type="radio" name="installationType" checked={form.installationType === 'permanent'} onChange={() => setForm((f) => ({ ...f, installationType: 'permanent' }))}
-                className="w-4 h-4 text-slate-900 focus:ring-slate-900" />
-                <span className="text-sm font-medium text-slate-900">Trvalé a stabilní</span>
-              </span>
-              <span className="text-xs text-slate-500 pl-6">Kotvení do betonu</span>
-            </label>
-          </div>
-          <a href={ANCHORING_PHOTO_URL} target="_blank" rel="noopener noreferrer"
-          className="inline-block text-xs text-slate-400 hover:text-slate-900 underline mt-2">
-            Zobrazit náhled možností kotvení
-          </a>
-        </div>
-      </div>
-
-      <div className="text-[hsl(var(--popover))]">
-        <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Popište váš projekt</label>
-        <textarea value={form.message} onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))} rows={4}
-        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors resize-none"
-        placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
-      </div>
-      <button type="submit" disabled={sending}
-      className="w-full py-5 text-white rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg normal-case font-normal text-sm bg-[#295189]">
-        {sending ? <Loader size={18} className="animate-spin" /> : <>Poptat produkt zdarma <ArrowRight size={18} /></>}
-      </button>
-    </form>);
-}
-
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
 { id: 'detail', label: 'Detail produktu' },
@@ -197,6 +85,10 @@ export default function ProduktDetail() {
   const tabsScrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScrollProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroImageScale = useTransform(heroScrollProgress, [0, 1], [1, 1.15]);
+  const heroImageY = useTransform(heroScrollProgress, [0, 1], ['0%', '15%']);
 
   const handleReviewStats = (stats) => {
     if (product) setSEO(getProductSEO(product, stats));
@@ -291,13 +183,14 @@ export default function ProduktDetail() {
     <div className="min-h-screen bg-white">
 
       {/* ═══════ FIXNÍ ÚVODNÍ SEKCE — HERO ═══════ */}
-      <div className="relative h-screen min-h-[640px] overflow-hidden">
+      <div ref={heroRef} className="relative h-screen min-h-[640px] overflow-hidden" style={{ perspective: 1000 }}>
         {img(0) ?
-        <img src={img(0)} alt={product.name} className="w-full h-full object-cover" /> :
+        <motion.img src={img(0)} alt={product.name} className="w-full h-full object-cover" style={{ scale: heroImageScale, y: heroImageY }} /> :
         <div className="w-full h-full bg-slate-100" />
         }
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
         <div className="absolute inset-0 to-white bg-gradient-to-l via-black/5 from-black/" />
+        <HeroMistParticles />
 
         <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
@@ -364,13 +257,13 @@ export default function ProduktDetail() {
             </button>
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-              className="flex gap-8 overflow-x-auto flex-row whitespace-nowrap [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+              className="flex gap-2 sm:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
               {visibleTabs.map((t) =>
               <button key={t.id} onClick={() => handleTabClick(t)}
-              className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors shrink-0 ${activeTab === t.id && t.action !== 'scroll' ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
+              className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id && t.action !== 'scroll' ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
                   {t.label}
                   {activeTab === t.id && t.action !== 'scroll' &&
-                <motion.div layoutId="produkt-tab-underline" className="absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
+                <motion.div layoutId="produkt-tab-underline" className="hidden sm:block absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
                 }
                 </button>
               )}
@@ -468,7 +361,7 @@ export default function ProduktDetail() {
               </motion.div>
             </div>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
-              <ContactForm productName={product.name} />
+              <ProductContactForm productName={product.name} />
             </motion.div>
           </div>
         </div>

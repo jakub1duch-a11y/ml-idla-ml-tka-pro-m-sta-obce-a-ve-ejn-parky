@@ -50,6 +50,7 @@ import ServisUdrzba from '@/pages/ServisUdrzba';
 import Novinky from '@/pages/Novinky';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import ChytraMlzidla from '@/pages/ChytraMlzidla';
+import Katalog from '@/pages/Katalog';
 import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 
@@ -58,8 +59,8 @@ const AuthenticatedApp = () => {
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-fog">
-        <div className="w-6 h-6 border border-steel border-t-ink rounded-full animate-spin" />
+      <div className="fixed inset-0 flex items-center justify-center bg-white">
+        <div className="w-6 h-6 border-2 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
       </div>
     );
   }
@@ -110,6 +111,7 @@ const AuthenticatedApp = () => {
         <Route path="/novinky" element={<Novinky />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
+        <Route path="/katalog" element={<Katalog />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
       </Route>

@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 
@@ -21,7 +22,7 @@ export default function PageNotFound({}) {
     return (
       
         <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
-            <div className="max-w-md w-full">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }} className="max-w-md w-full">
                 <div className="text-center space-y-6">
                     {/* 404 Error Code */}
                     <div className="space-y-2">
@@ -69,7 +70,7 @@ export default function PageNotFound({}) {
                         </button>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     )
 }

@@ -33,6 +33,10 @@
       },
       "description": "Additional images"
     },
+    "video_url": {
+      "type": "string",
+      "description": "URL videa produktu v akci (pokud existuje, zobraz\u00ed se v z\u00e1lo\u017ece Video)"
+    },
     "micron_size": {
       "type": "string",
       "description": "Droplet micron size specification"

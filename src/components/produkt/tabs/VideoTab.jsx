@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const DEMO_VIDEO = "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/621b949b8_Terrace_Mist_Hero_Video.mp4";
-
 export default function VideoTab({ product }) {
+  if (!product.video_url) return null;
+
   return (
     <section className="py-24 lg:py-32 bg-slate-50">
       <div className="max-w-5xl mx-auto px-6 lg:px-10">
@@ -18,7 +18,7 @@ export default function VideoTab({ product }) {
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="rounded-2xl overflow-hidden border border-slate-200 bg-black">
-          <video src={DEMO_VIDEO} controls playsInline className="w-full aspect-video object-cover" />
+          <video src={product.video_url} controls playsInline className="w-full aspect-video object-cover" />
         </motion.div>
       </div>
     </section>);

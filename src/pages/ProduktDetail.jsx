@@ -274,6 +274,7 @@ export default function ProduktDetail() {
 
   const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
   const img = (i) => allImages[i] || null;
+  const visibleTabs = TABS.filter((t) => t.id !== 'video' || !!product.video_url);
 
   const techRows = [
   product.coverage_area && { label: 'Výška', value: product.coverage_area },
@@ -363,7 +364,7 @@ export default function ProduktDetail() {
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
               className="flex gap-8 overflow-x-auto flex-row whitespace-nowrap [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-              {TABS.map((t) =>
+              {visibleTabs.map((t) =>
               <button key={t.id} onClick={() => handleTabClick(t)}
               className={`relative py-5 text-sm font-medium whitespace-nowrap transition-colors shrink-0 ${activeTab === t.id && t.action !== 'scroll' ? 'text-slate-900' : 'text-slate-400 hover:text-slate-600'}`}>
                   {t.label}
@@ -385,7 +386,7 @@ export default function ProduktDetail() {
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-          {activeTab === 'detail' && <DetailTab product={product} />}
+          {activeTab === 'detail' && <DetailTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ images: customImages || allImages, idx: i })} />}
           {activeTab === 'galerie' &&
           <BenefitsTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />
           }
@@ -399,7 +400,7 @@ export default function ProduktDetail() {
 
       {/* ═══════ TAB FOOTER NAV ═══════ */}
       {(() => {
-        const contentTabs = TABS.filter((t) => t.action !== 'scroll');
+        const contentTabs = visibleTabs.filter((t) => t.action !== 'scroll');
         const idx = contentTabs.findIndex((t) => t.id === activeTab);
         const nextTab = contentTabs[idx + 1];
         return (

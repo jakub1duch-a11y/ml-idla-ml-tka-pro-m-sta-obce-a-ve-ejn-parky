@@ -87,7 +87,7 @@ export default function Header() {
 
       
 
-      <header className="fixed top-0 left-0 right-0 transition-all z-40 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
+      <header className="fixed top-0 left-0 right-0 transition-all z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
@@ -223,10 +223,10 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen &&
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25, ease: 'easeOut' }}
+          initial={{ opacity: 0, y: -24, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -24, scale: 0.98 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           className="fixed inset-0 z-40 bg-white pt-20 h-[100dvh] overflow-y-auto overscroll-contain lg:hidden">
           
             <div className="px-5 py-6 flex flex-col gap-0 max-w-2xl">
@@ -289,8 +289,8 @@ export default function Header() {
             map((l) =>
             <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-5 px-6 border-b border-slate-100">{l.label}</Link>
             )}
-              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="mt-8 mb-6 px-6 py-5 bg-slate-900 text-white text-base font-bold rounded-full text-center hover:bg-slate-800 transition-colors">
-                Poptávka
+              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="btn-pulse mt-8 mb-6 px-6 py-5 text-base font-bold rounded-full text-center transition-colors flex items-center justify-center gap-2">
+                Rychlá poptávka <ArrowRight size={18} />
               </Link>
             </div>
           </motion.div>

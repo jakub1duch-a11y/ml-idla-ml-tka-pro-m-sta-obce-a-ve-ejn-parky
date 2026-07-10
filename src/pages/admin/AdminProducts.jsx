@@ -3,7 +3,7 @@ import { Plus, Edit2, Trash2, Save, X, Loader, Image } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
-const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
+const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
 
 function slugify(str) {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -106,6 +106,10 @@ export default function AdminProducts() {
               </label>
             </div>
           </div>
+        </div>
+        <div>
+          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">URL videa (zobrazí se v záložce Video, jen pokud je vyplněno)</label>
+          <input value={form.video_url || ''} onChange={set('video_url')} placeholder="https://.../video.mp4" className={inputCls} />
         </div>
         <div className="grid grid-cols-3 gap-4">
           {[['coverage_area', 'Výška / rozměry'], ['water_consumption', 'Spotřeba vody'], ['pressure', 'Tlak'], ['micron_size', 'Trysky (μm)'], ['material', 'Materiál'], ['power_supply', 'Napájení']].map(([field, label]) =>

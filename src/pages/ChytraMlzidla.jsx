@@ -4,6 +4,7 @@ import HeroFeatureGrid from '@/components/chytra/HeroFeatureGrid';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import SmartControlPromo from '@/components/chytra/SmartControlPromo';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
+import SmartSavingsSection from '@/components/chytra/SmartSavingsSection';
 
 export default function ChytraMlzidla() {
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function ChytraMlzidla() {
       <ProductFilterGrid />
       <SmartControlPromo />
       <AccessoriesSection />
+      <SmartSavingsSection />
     </div>);
 
 }

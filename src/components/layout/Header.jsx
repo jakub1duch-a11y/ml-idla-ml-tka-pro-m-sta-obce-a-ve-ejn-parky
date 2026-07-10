@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
+import MobileMenu from '@/components/layout/MobileMenu';
 
 const PRODUCT_LINKS = [
 { label: 'AURA', sub: 'Zahradní mlžítko', path: '/produkt/aura', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG' },
@@ -47,8 +48,6 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
-  const [mobileCatalogOpen, setMobileCatalogOpen] = useState(false);
-  const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
   const location = useLocation();
   const timeoutRef = useRef(null);
   const infoTimeoutRef = useRef(null);
@@ -219,83 +218,15 @@ export default function Header() {
         </AnimatePresence>
       </header>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen &&
-        <motion.div
-          initial={{ opacity: 0, y: -24, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -24, scale: 0.98 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="fixed inset-0 z-40 bg-white pt-20 h-[100dvh] overflow-y-auto overscroll-contain lg:hidden">
-          
-            <div className="px-5 py-6 flex flex-col gap-0 max-w-2xl">
-              <button onClick={() => setMobileCatalogOpen(!mobileCatalogOpen)}
-            className="flex items-center justify-between text-base font-bold text-slate-900 hover:bg-slate-50 transition-colors py-4 px-4 rounded-lg border-b border-slate-100">
-                 Katalog <ChevronDown size={18} className={`transition-transform duration-150 ${mobileCatalogOpen ? 'rotate-180' : ''}`} />
-               </button>
-              {mobileCatalogOpen &&
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.15 }}
-              className="pl-0 flex flex-col gap-0 py-4 bg-slate-50 rounded-lg mt-2 px-6">
-                 <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-2 mb-3">Produkty</p>
-                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                   {PRODUCT_LINKS.map((p) =>
-                <Link key={p.path} to={p.path} onClick={() => setMobileOpen(false)} className="flex flex-col gap-1.5 py-1">
-                     <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
-                       <img src={p.image} alt={p.label} className="w-full h-full object-cover" loading="lazy" />
-                     </div>
-                     <p className="text-xs font-medium text-slate-700 leading-tight">{p.label}</p>
-                   </Link>
-                )}
-                 </div>
-                 <Link to={CUSTOM_LINK.path} onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-3 mb-1">{CUSTOM_LINK.label} — {CUSTOM_LINK.sub}</Link>
-                 <Link to="/mlzidla-mlzitka" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-slate-900 mt-1 mb-2">Celá kolekce →</Link>
-                 <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mt-4 mb-3">B2B využití</p>
-                 <div className="grid grid-cols-3 gap-2 pb-2">
-                   {USAGE_LINKS.map((l) =>
-                <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="flex flex-col items-center justify-center text-center gap-1.5 py-4 px-1 min-h-[64px] rounded-lg hover:bg-white active:bg-white transition-colors">
-                     <l.icon size={18} className={`${l.color} opacity-80`} />
-                     <p className="text-[11px] font-medium text-slate-700 leading-tight">{l.label}</p>
-                   </Link>
-                )}
-                 </div>
-               </motion.div>
-            }
-              <button onClick={() => setMobileInfoOpen(!mobileInfoOpen)}
-            className="flex items-center justify-between text-base font-bold text-slate-900 hover:bg-slate-50 transition-colors py-4 px-4 rounded-lg border-b border-slate-100">
-                 Informace a podpora <ChevronDown size={18} className={`transition-transform duration-150 ${mobileInfoOpen ? 'rotate-180' : ''}`} />
-               </button>
-              {mobileInfoOpen &&
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.15 }}
-              className="flex flex-col gap-0 py-2 bg-slate-50 rounded-lg mt-2">
-                 <Link to="/blog" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">Blog & novinky</Link>
-                 <Link to="/o-nas" onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">O společnosti</Link>
-                 {INFO_LINKS.map((l) =>
-              <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-white py-4 px-6 transition-colors">{l.label}</Link>
-              )}
-               </motion.div>
-            }
-              {[
-            { label: 'Reference', path: '/reference' },
-            { label: 'Kontakt', path: '/kontakt' }].
-            map((l) =>
-            <Link key={l.path} to={l.path} onClick={() => setMobileOpen(false)} className="text-base font-medium text-slate-900 hover:bg-slate-50 transition-colors py-5 px-6 border-b border-slate-100">{l.label}</Link>
-            )}
-              <Link to="/poptavka" onClick={() => setMobileOpen(false)} className="btn-pulse mt-8 mb-6 px-6 py-5 text-base font-bold rounded-full text-center transition-colors flex items-center justify-center gap-2">
-                Rychlá poptávka <ArrowRight size={18} />
-              </Link>
-            </div>
-          </motion.div>
-        }
-      </AnimatePresence>
+      {/* Mobile menu — compact floating panel, not full screen */}
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        productLinks={PRODUCT_LINKS}
+        usageLinks={USAGE_LINKS}
+        infoLinks={INFO_LINKS}
+        customLink={CUSTOM_LINK} />
+
     </>);
 
 }

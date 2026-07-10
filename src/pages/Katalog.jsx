@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Droplets, Layers, Cpu } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
 import SmartSystemPreview from '@/components/katalog/SmartSystemPreview';
 
 const TABS = [
-{ id: 'mlzitka', label: 'Mlžítka' },
-{ id: 'prislusenstvi', label: 'Příslušenství a moduly' },
-{ id: 'smart', label: 'Smart systém' }];
+{ id: 'mlzitka', label: 'Mlžítka', icon: Droplets },
+{ id: 'prislusenstvi', label: 'Příslušenství a moduly', icon: Layers },
+{ id: 'smart', label: 'Smart systém', icon: Cpu }];
 
 
 export default function Katalog() {
@@ -29,7 +30,8 @@ export default function Katalog() {
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Katalog 2026</p>
         <h1 className="font-heading font-medium text-3xl lg:text-5xl text-slate-900 tracking-tight mb-8">Mlžítka, příslušenství a Smart systém.</h1>
 
-        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+        {/* Desktop tab bar */}
+        <div className="hidden lg:flex flex-wrap gap-2 border-b border-slate-200 pb-4">
           {TABS.map((t) =>
           <button key={t.id} onClick={() => setTab(t.id)}
             className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${tab === t.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
@@ -39,11 +41,32 @@ export default function Katalog() {
         </div>
       </div>
 
-      <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+      <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-0">
         {tab === 'mlzitka' && <ProductFilterGrid />}
         {tab === 'prislusenstvi' && <AccessoriesSection />}
         {tab === 'smart' && <SmartSystemPreview />}
       </motion.div>
+
+      {/* Mobile switcher — thumb-reachable, fixed at bottom, one-handed use */}
+      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
+        <div className="flex items-center gap-1 p-1.5 rounded-full bg-white/70 backdrop-blur-xl border border-slate-200 shadow-xl shadow-slate-900/10">
+          {TABS.map((t) => {
+            const Icon = t.icon;
+            const active = tab === t.id;
+            return (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-2 rounded-full text-[11px] font-medium transition-colors ${active ? 'text-white' : 'text-slate-500'}`}>
+                {active &&
+                <motion.div layoutId="katalog-mobile-tab" className="absolute inset-0 bg-slate-900 rounded-full -z-10"
+                  transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+                }
+                <Icon size={16} />
+                <span className="leading-tight px-1 text-center">{t.label.split(' ')[0]}</span>
+              </button>);
+
+          })}
+        </div>
+      </div>
     </div>);
 
 }

@@ -72,6 +72,41 @@ Deno.serve(async (req) => {
     );
     const sourcesData = await sourcesRes.json();
 
+    // Summary totals (incl. average session duration)
+    const summaryRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          metrics: [
+            { name: 'sessions' },
+            { name: 'activeUsers' },
+            { name: 'averageSessionDuration' },
+          ],
+        }),
+      }
+    );
+    const summaryData = await summaryRes.json();
+
+    // Top cities by sessions
+    const citiesRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'city' }],
+          metrics: [{ name: 'sessions' }],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+          limit: 8,
+        }),
+      }
+    );
+    const citiesData = await citiesRes.json();
+
     // New users (first-time visitors)
     const newUsersRes = await fetch(
       `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
@@ -143,6 +178,14 @@ Deno.serve(async (req) => {
       views: r.metrics[0],
     }));
 
+    const cities = parseRows(citiesData, 1, 1).map(r => ({
+      city: r.dims[0] || 'Neznámé',
+      sessions: r.metrics[0],
+    })).filter(c => c.city && c.city !== '(not set)');
+
+    const summaryRow = summaryData.rows?.[0];
+    const avgSessionDuration = summaryRow?.metricValues?.[2]?.value ? parseFloat(summaryRow.metricValues[2].value) : 0;
+
     const totals = daily.reduce((acc, d) => ({
       sessions: acc.sessions + d.sessions,
       users: acc.users + d.users,
@@ -165,7 +208,7 @@ Deno.serve(async (req) => {
       console.log('Could not fetch inquiries:', e);
     }
 
-    return Response.json({ daily, pages, sources, productClicks, totals, newUsers, inquiries });
+    return Response.json({ daily, pages, sources, productClicks, cities, avgSessionDuration, totals, newUsers, inquiries });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

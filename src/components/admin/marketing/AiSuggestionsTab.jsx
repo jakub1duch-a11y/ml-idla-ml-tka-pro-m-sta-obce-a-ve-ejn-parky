@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Loader, Sparkles } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-export default function AiSuggestionsTab() {
+export default function AiSuggestionsTab({ onPlanCreated }) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [creatingIndex, setCreatingIndex] = useState(null);
 
   const generate = async () => {
     setLoading(true);
@@ -45,6 +46,22 @@ Na základě těchto dat navrhni 5 konkrétních, akčních marketingových dopo
 
   const priorityColor = { vysoká: 'text-red-400 border-red-400/30 bg-red-400/10', střední: 'text-amber-400 border-amber-400/30 bg-amber-400/10', nízká: 'text-white/50 border-white/15 bg-white/5' };
 
+  const planPost = async (s, i) => {
+    setCreatingIndex(i);
+    try {
+      await base44.entities.MarketingPost.create({
+        title: s.title,
+        platform: 'blog',
+        caption: s.description,
+        status: 'draft',
+        ai_generated: true,
+      });
+      onPlanCreated?.();
+    } finally {
+      setCreatingIndex(null);
+    }
+  };
+
   return (
     <div>
       <button onClick={generate} disabled={loading}
@@ -64,7 +81,12 @@ Na základě těchto dat navrhni 5 konkrétních, akčních marketingových dopo
               <p className="text-white text-sm font-medium">{s.title}</p>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border shrink-0 ${priorityColor[s.priority] || priorityColor['nízká']}`}>{s.priority}</span>
             </div>
-            <p className="text-white/50 text-xs leading-relaxed">{s.description}</p>
+            <p className="text-white/50 text-xs leading-relaxed mb-3">{s.description}</p>
+            <button onClick={() => planPost(s, i)} disabled={creatingIndex === i}
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-cyan hover:text-cyan/70 transition-colors disabled:opacity-50">
+              {creatingIndex === i ? <Loader size={11} className="animate-spin" /> : null}
+              {creatingIndex === i ? 'Vytvářím...' : '+ Naplánovat příspěvek z návrhu'}
+            </button>
           </div>
         ))}
       </div>

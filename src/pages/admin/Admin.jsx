@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
 import AdminReferences from './AdminReferences';
 import AdminPoptavky from './AdminPoptavky';
@@ -14,6 +16,7 @@ import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
 
 const TABS = [
+  { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
   { id: 'references', label: 'Reference', icon: ImageIcon },
@@ -27,16 +30,21 @@ const TABS = [
 ];
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('products');
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
     base44.auth.me().then(u => {
       setUser(u);
       setLoading(false);
-    }).catch(() => setLoading(false));
-  }, []);
+      if (!u) navigate('/login?next=/admin', { replace: true });
+    }).catch(() => {
+      setLoading(false);
+      navigate('/login?next=/admin', { replace: true });
+    });
+  }, [navigate]);
 
   if (loading) return (
     <div className="min-h-screen bg-ink flex items-center justify-center">
@@ -44,7 +52,9 @@ export default function Admin() {
     </div>
   );
 
-  if (!user || user.role !== 'admin') return (
+  if (!user) return null;
+
+  if (user.role !== 'admin') return (
     <div className="min-h-screen bg-ink flex items-center justify-center text-center px-6">
       <div>
         <p className="text-4xl mb-4">🔒</p>
@@ -56,6 +66,7 @@ export default function Admin() {
   );
 
   const ActiveComponent = {
+    dashboard: AdminDashboard,
     products: AdminProducts,
     'product-analytics': AdminProductAnalytics,
     references: AdminReferences,

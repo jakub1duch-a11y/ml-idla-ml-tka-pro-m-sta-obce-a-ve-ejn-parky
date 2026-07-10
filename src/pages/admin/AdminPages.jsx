@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Pencil, Trash2, ExternalLink, Loader } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, Loader, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import PageEditor from '@/components/admin/pages/PageEditor';
 
@@ -29,6 +29,24 @@ export default function AdminPages() {
 
   const handleDelete = async (id) => {
     await base44.entities.CustomPage.delete(id);
+    load();
+  };
+
+  const handleDuplicate = async (page) => {
+    const { id, created_date, updated_date, created_by_id, ...rest } = page;
+    await base44.entities.CustomPage.create({
+      ...rest,
+      title: `${page.title} (kopie)`,
+      slug: `${page.slug}-kopie-${Date.now().toString(36)}`,
+      published: false,
+    });
+    load();
+  };
+
+  const handleRename = async (page) => {
+    const newTitle = window.prompt('Nový název stránky', page.title);
+    if (!newTitle || newTitle === page.title) return;
+    await base44.entities.CustomPage.update(page.id, { title: newTitle });
     load();
   };
 
@@ -64,6 +82,12 @@ export default function AdminPages() {
                     <ExternalLink size={15} />
                   </a>
                 )}
+                <button onClick={() => handleRename(p)} aria-label="Přejmenovat stránku" className="text-white/30 hover:text-white transition-colors">
+                  <span className="text-xs font-mono">Aa</span>
+                </button>
+                <button onClick={() => handleDuplicate(p)} aria-label="Duplikovat stránku" className="text-white/30 hover:text-white transition-colors">
+                  <Copy size={15} />
+                </button>
                 <button onClick={() => setEditing(p)} aria-label="Upravit stránku" className="text-white/30 hover:text-white transition-colors">
                   <Pencil size={15} />
                 </button>

@@ -54,7 +54,7 @@ export default function AdminMarketing() {
       )}
 
       {subtab === 'brand' && <BrandProfileTab />}
-      {subtab === 'ai' && <AiSuggestionsTab />}
+      {subtab === 'ai' && <AiSuggestionsTab onPlanCreated={() => { setSubtab('plan'); loadPosts(); }} />}
     </div>
   );
 }

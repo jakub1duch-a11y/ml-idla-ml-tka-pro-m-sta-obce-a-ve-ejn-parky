@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { setSEO } from '@/lib/seo';
 import HeroFeatureGrid from '@/components/chytra/HeroFeatureGrid';
+import ControlVariants from '@/components/chytra/ControlVariants';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import SmartControlPromo from '@/components/chytra/SmartControlPromo';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
@@ -9,9 +10,9 @@ import SmartSavingsSection from '@/components/chytra/SmartSavingsSection';
 export default function ChytraMlzidla() {
   useEffect(() => {
     setSEO({
-      title: 'Chytrá mlžidla.cz — Katalog a nabídky 2026',
-      description: 'Chytrá mlžítka se Smart App řízením — automatika dle počasí, vlhkosti i pohybu, instalace do 30 minut. Celý katalog 2026, moduly a příslušenství.',
-      keywords: 'chytrá mlžidla, smart mlžítka, mlžení aplikace, chytré ovládání mlžení, katalog mlžítek 2026',
+      title: 'Chytré řízení mlzidla.cz — Smart/APP systém 2026',
+      description: 'Chytré řízení mlzidla.cz — vlastní Smart/APP systém ovládání mlžítek. Wi-Fi, senzory teploty, vlhkosti a pohybu, integrace s chytrým osvětlením i smart home.',
+      keywords: 'chytré řízení mlzidla, smart mlžítka, mlžení aplikace, chytré ovládání mlžení, katalog mlžítek 2026',
       canonicalPath: '/chytra-mlzidla',
     });
   }, []);
@@ -19,6 +20,7 @@ export default function ChytraMlzidla() {
   return (
     <div className="min-h-screen bg-white">
       <HeroFeatureGrid />
+      <ControlVariants />
       <ProductFilterGrid />
       <SmartControlPromo />
       <AccessoriesSection />

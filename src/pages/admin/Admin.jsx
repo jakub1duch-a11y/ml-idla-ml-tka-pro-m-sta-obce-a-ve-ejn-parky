@@ -39,10 +39,10 @@ export default function Admin() {
     base44.auth.me().then(u => {
       setUser(u);
       setLoading(false);
-      if (!u) navigate('/login?next=/admin', { replace: true });
+      if (!u) navigate('/admin-login', { replace: true });
     }).catch(() => {
       setLoading(false);
-      navigate('/login?next=/admin', { replace: true });
+      navigate('/admin-login', { replace: true });
     });
   }, [navigate]);
 
@@ -101,7 +101,7 @@ export default function Admin() {
           })}
         </nav>
         <div className="p-3 border-t border-white/8">
-          <button onClick={() => base44.auth.logout('/')}
+          <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">
             <LogOut size={16} /> Odhlásit
           </button>

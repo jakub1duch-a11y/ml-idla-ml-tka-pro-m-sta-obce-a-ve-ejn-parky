@@ -40,6 +40,9 @@ import Art from '@/pages/kategorie/Art';
 import Deti from '@/pages/kategorie/Deti';
 import Gdpr from '@/pages/Gdpr';
 import Admin from '@/pages/admin/Admin';
+import AdminLogin from '@/pages/admin/AdminLogin';
+import AdminLogout from '@/pages/admin/AdminLogout';
+import AdminForgotPassword from '@/pages/admin/AdminForgotPassword';
 import Gate70 from '@/pages/Gate70';
 import Faq from '@/pages/Faq';
 import Technologie from '@/pages/Technologie';
@@ -116,6 +119,9 @@ const AuthenticatedApp = () => {
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
+      <Route path="/admin-login" element={<AdminLogin />} />
+      <Route path="/admin-logout" element={<AdminLogout />} />
+      <Route path="/admin-forgot-password" element={<AdminForgotPassword />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

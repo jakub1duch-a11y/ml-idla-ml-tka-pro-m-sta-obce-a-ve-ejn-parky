@@ -64,7 +64,7 @@ export default function ControlVariants() {
           </div>
           <Link to="/kontakt?produkt=Chytr%C3%A9%20řízení%20mlzidla.cz"
             onClick={() => trackQuickInquiryClick('Chytré řízení mlzidla.cz', 'control_variants')}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
+            className="btn-metallic-mist px-6 py-3 text-sm font-bold whitespace-nowrap">
             Poptat variantu <ArrowRight size={15} />
           </Link>
         </motion.div>

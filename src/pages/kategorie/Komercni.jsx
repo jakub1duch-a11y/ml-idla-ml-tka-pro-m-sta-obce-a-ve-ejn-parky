@@ -41,7 +41,7 @@ export default function Komercni() {
             Na terase restaurace, ve výrobní hale i v nákupním centru — mlžná technologie HolmTec zvyšuje komfort zákazníků i pracovníků. Ochlazení až o 9 °C bez klimatizace, minimální spotřeba energie.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="#poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+            <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
               Nezávazná konzultace <ArrowRight size={15} />
             </a>
             <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">

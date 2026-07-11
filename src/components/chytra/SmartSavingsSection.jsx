@@ -38,7 +38,7 @@ export default function SmartSavingsSection() {
               )}
             </div>
             <a href="#smart-kontakt"
-              className="inline-flex items-center gap-2 mt-7 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+              className="btn-metallic-mist mt-7 px-7 py-3.5 text-sm font-bold">
               Zanechte nám kontakt <ArrowRight size={16} />
             </a>
           </motion.div>

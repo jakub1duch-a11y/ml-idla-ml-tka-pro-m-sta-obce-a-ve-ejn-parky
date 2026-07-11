@@ -53,7 +53,7 @@ export default function Eventy() {
               Pronajměte si nebo kupte mobilní mlžné prvky pro festivaly, letní terasy a krátkodobé akce. Rychlá instalace, nezaměnitelná vizuální identita a ochlazení návštěvníků — v jednom balíčku.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+              <Link to="/poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Poptávka pronájmu <ArrowRight size={15} />
               </Link>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">

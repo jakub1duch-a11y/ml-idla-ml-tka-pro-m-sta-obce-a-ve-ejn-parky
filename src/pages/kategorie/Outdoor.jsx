@@ -45,7 +45,7 @@ export default function Outdoor() {
               Soukromé zahrady, terasy a rezidenční projekty získávají s mlžným prvkem HolmTec novou dimenzi. Elegantní skulptura z nerezové oceli, chladivá mlha a atmosféra, která promění váš venkovní prostor v oázu klidu.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+              <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Nezávazná konzultace <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">

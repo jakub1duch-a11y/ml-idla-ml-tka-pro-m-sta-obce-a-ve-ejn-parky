@@ -67,7 +67,7 @@ export default function Architekti() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Partnerský program <Download size={15} />
               </a>
               <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
@@ -208,7 +208,7 @@ export default function Architekti() {
                 Reference realizací
               </Link>
               <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
+                className="btn-metallic-mist px-6 py-3 text-sm font-bold whitespace-nowrap">
                 Partnerský program <ArrowRight size={14} />
               </a>
             </div>

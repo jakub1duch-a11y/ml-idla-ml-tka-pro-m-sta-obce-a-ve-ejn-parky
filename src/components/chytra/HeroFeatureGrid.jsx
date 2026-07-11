@@ -33,7 +33,7 @@ export default function HeroFeatureGrid() {
             Náš vlastní Smart/APP systém řízení mlžítek — reaguje na počasí, vlhkost i pohyb, ovládá se z mobilu a instaluje se během chvilky na kterékoliv naše mlžítko.
           </p>
           <Link to="/kontakt?produkt=Chytr%C3%A9%20řízení%20mlzidla.cz"
-            className="inline-flex items-center gap-2 mt-7 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+            className="btn-metallic-mist mt-7 px-7 py-3.5 text-sm font-bold">
             Poptat chytré řízení <ArrowRight size={16} />
           </Link>
         </motion.div>

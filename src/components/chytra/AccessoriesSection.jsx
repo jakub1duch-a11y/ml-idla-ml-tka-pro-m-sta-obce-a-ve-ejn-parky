@@ -38,7 +38,7 @@ export default function AccessoriesSection() {
 
         <Link to="/kontakt?produkt=Příslušenství%20a%20senzory"
           onClick={() => trackQuickInquiryClick('Příslušenství a senzory', 'accessories_section')}
-          className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+          className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
           Poptat příslušenství <ArrowRight size={16} />
         </Link>
       </div>

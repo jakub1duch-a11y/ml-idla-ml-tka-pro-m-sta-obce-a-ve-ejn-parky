@@ -44,7 +44,7 @@ export default function Art() {
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
               Pro galerie, veřejné instalace a site-specific projekty navrhujeme zcela zakázková mlžná díla. Tvar, materiál i chování mlhy přizpůsobíme vaší umělecké vizi — od skici až po realizaci z nerezové oceli.
             </p>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-all">
+            <Link to="/poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
               Konzultovat záměr <ArrowRight size={15} />
             </Link>
           </motion.div>

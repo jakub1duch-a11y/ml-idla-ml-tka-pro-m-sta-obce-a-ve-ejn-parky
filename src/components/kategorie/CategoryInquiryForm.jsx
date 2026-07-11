@@ -39,7 +39,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban' }
       <textarea required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
         placeholder="Popište váš záměr..." rows={3} className="px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-slate-900 bg-white sm:col-span-2 resize-none" />
       <button type="submit" disabled={status === 'sending'}
-        className="sm:col-span-2 inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60">
+        className="btn-metallic-mist sm:col-span-2 justify-center px-8 py-4 text-sm font-bold disabled:opacity-60">
         {status === 'sending' ? <Loader size={16} className="animate-spin" /> : <>Odeslat poptávku <ArrowRight size={15} /></>}
       </button>
     </form>

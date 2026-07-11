@@ -54,7 +54,13 @@ export default function Admin() {
 
   if (!user) return null;
 
-  if (user.role !== 'admin') return (
+  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz'];
+  const emailAllowed = !!user.email && (
+    user.email.toLowerCase().endsWith('@mlzidla.cz') ||
+    ADMIN_EMAIL_EXCEPTIONS.includes(user.email.toLowerCase())
+  );
+
+  if (user.role !== 'admin' || !emailAllowed) return (
     <div className="min-h-screen bg-ink flex items-center justify-center text-center px-6">
       <div>
         <p className="text-4xl mb-4">🔒</p>

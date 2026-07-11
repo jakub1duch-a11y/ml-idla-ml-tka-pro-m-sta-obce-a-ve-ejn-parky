@@ -125,6 +125,11 @@ export default function Kontakt() {
               <MapPin size={14} /> Najdete nás na Google
             </a>
 
+            {/* Company registry info */}
+            <p className="text-xs text-white/30 text-center leading-relaxed px-2">
+              IČO: 27486893, zapsaná v obchodním rejstříku vedeném u Krajského soudu.
+            </p>
+
             {/* Info box */}
             <div className="p-5 rounded-2xl bg-cyan/5 border border-cyan/20">
               <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Co nabízíme</p>

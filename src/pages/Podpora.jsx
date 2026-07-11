@@ -231,7 +231,7 @@ export default function Podpora() {
           </div>
           <Link
             to="/poptavka"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap"
+            className="btn-metallic-mist shrink-0 px-7 py-3.5 text-sm font-bold whitespace-nowrap"
           >
             Nezávazná poptávka <ArrowRight size={15} />
           </Link>

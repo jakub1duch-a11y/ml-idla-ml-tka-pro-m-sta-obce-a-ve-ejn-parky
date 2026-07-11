@@ -21,23 +21,37 @@ export default function ProductTechGrid({ product }) {
   ];
 
   return (
-    <div className="backdrop-blur-md border border-white/20 rounded-2xl p-6 max-w-sm bg-white/10">
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.6 }}
+      className="backdrop-blur-md border border-white/20 rounded-2xl p-6 max-w-sm bg-white/10"
+    >
       <p className="font-mono tracking-widest uppercase text-white/60 text-xs mb-4">Technické parametry</p>
       <div className="grid grid-cols-3 gap-3">
         {items.map((item, i) => (
           <motion.div
             key={item.title}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ delay: i * 0.12, duration: 0.5 }}
+            whileHover={{ scale: 1.06 }}
             className="flex flex-col items-center text-center"
           >
-            <item.icon size={18} className="text-cyan mb-2" />
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+              className="mb-2"
+            >
+              <item.icon size={18} className="text-cyan" />
+            </motion.div>
             <p className="text-sm text-white font-medium leading-tight">{item.value}</p>
             <p className="text-[9px] text-white/40 uppercase tracking-widest mt-1 leading-tight">{item.desc}</p>
           </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

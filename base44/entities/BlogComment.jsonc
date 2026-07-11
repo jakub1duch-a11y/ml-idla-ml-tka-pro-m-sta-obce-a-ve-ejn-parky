@@ -1,0 +1,42 @@
+{
+  "name": "BlogComment",
+  "type": "object",
+  "properties": {
+    "blog_post_id": {
+      "type": "string",
+      "description": "Reference to BlogPost"
+    },
+    "name": {
+      "type": "string",
+      "description": "Jm\u00e9no komentuj\u00edc\u00edho"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email komentuj\u00edc\u00edho (nezve\u0159ej\u0148uje se)"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Text koment\u00e1\u0159e",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "blog_post_id",
+    "name",
+    "comment"
+  ],
+  "rls": {
+    "create": null,
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

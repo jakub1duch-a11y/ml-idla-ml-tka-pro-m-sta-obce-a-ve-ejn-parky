@@ -83,7 +83,7 @@ export default function FeaturedProductsSection() {
         {/* CTA */}
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-center">
           <Link to="/kontakt"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+            className="btn-metallic-mist px-8 py-4 text-sm font-bold">
             ✦ Nezávazná poptávka <ArrowRight size={16} />
           </Link>
         </motion.div>

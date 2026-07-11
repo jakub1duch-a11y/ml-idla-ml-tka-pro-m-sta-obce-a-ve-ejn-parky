@@ -43,7 +43,7 @@ export default function SmartSection() {
             </div>
 
             <Link to="/kontakt"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-all">
+              className="btn-metallic-mist px-7 py-3.5 text-sm font-medium">
               Spočítat náklady
             </Link>
           </motion.div>

@@ -139,7 +139,7 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-2">
               <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/80 hover:text-white hover:bg-white/10">O společnosti</Link>
               <Link to="/poptavka"
-              className="flex items-center gap-1.5 px-6 py-2.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+              className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">
                 Poptávka
               </Link>
             </div>

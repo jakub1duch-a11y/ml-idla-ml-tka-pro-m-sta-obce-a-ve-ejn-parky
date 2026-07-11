@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
-import { ArrowRight, Trophy } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -40,7 +40,7 @@ export default function ContactSection() {
 
         <div className="flex flex-wrap justify-center gap-4">
           <Link to="/kontakt"
-          className="btn-pulse inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold">
+          className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
             Nezávazná poptávka <ArrowRight size={16} />
           </Link>
           <Link to="/jak-to-funguje"

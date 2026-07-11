@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Droplet, Wind, Gauge, Thermometer } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const FEATURES = [
   { icon: Droplet, title: 'Jemnost mlhy 10–50 μm', text: 'Vysokotlaké trysky rozprašují vodu na mikroskopické kapičky, které se rychle odpaří ve vzduchu — proto zůstávají povrchy i lidé suší.' },
@@ -21,30 +22,30 @@ export default function Technologie() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-ink pt-28 pb-20">
+    <div className="min-h-screen bg-white pt-28 pb-20">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Jak to funguje</p>
-        <h1 className="text-4xl lg:text-5xl font-light text-white mb-6">Technologie mlžení</h1>
-        <p className="text-white/60 text-lg leading-relaxed mb-12 max-w-2xl">
+        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jak to funguje</p>
+        <h1 className="text-4xl lg:text-5xl font-light text-slate-900 mb-6">Technologie mlžení</h1>
+        <p className="text-slate-500 text-lg leading-relaxed mb-12 max-w-2xl">
           Naše mlžné systémy využívají princip evaporačního chlazení. Voda je pod vysokým tlakem rozprášena na
           extrémně jemné kapičky, které se odpaří dříve, než dopadnou na zem — a právě tento proces prostor efektivně ochlazuje.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {FEATURES.map((f, i) => (
-            <div key={i} className="bg-card_bg border border-white/10 rounded-2xl p-6">
-              <div className="w-11 h-11 rounded-full bg-cyan/10 flex items-center justify-center mb-4">
-                <f.icon size={20} className="text-cyan" />
+            <div key={i} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <div className="w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-4">
+                <f.icon size={20} className="text-slate-700" />
               </div>
-              <h3 className="text-white font-medium text-lg mb-2">{f.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{f.text}</p>
+              <h3 className="text-slate-900 font-medium text-lg mb-2">{f.title}</h3>
+              <p className="text-slate-500 text-sm leading-relaxed">{f.text}</p>
             </div>
           ))}
         </div>
 
-        <div className="bg-card_bg border border-white/10 rounded-2xl p-8">
-          <h2 className="text-2xl font-light text-white mb-4">Proč je jemnost mlhy důležitá</h2>
-          <p className="text-white/60 leading-relaxed">
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8">
+          <h2 className="text-2xl font-light text-slate-900 mb-4">Proč je jemnost mlhy důležitá</h2>
+          <p className="text-slate-500 leading-relaxed">
             Čím jemnější kapička, tím větší je její povrch vzhledem k objemu — a tím rychleji se odpaří. Hrubší
             kapičky naopak nestihnou odpařit a dopadají na zem jako voda, což znamená mokré plochy a plýtvání vodou
             bez odpovídajícího chladicího efektu. Proto klademe důraz na precizně vyrobené trysky a vysoký provozní tlak.
@@ -52,8 +53,8 @@ export default function Technologie() {
         </div>
 
         <div className="mt-10 text-center">
-          <Link to="/poptavka" className="inline-block px-8 py-3 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all">
-            Nezávazná poptávka
+          <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
+            Nezávazná poptávka <ArrowRight size={16} />
           </Link>
         </div>
       </div>

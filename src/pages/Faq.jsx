@@ -16,12 +16,12 @@ const FAQS = [
 
 function FaqItem({ item, isOpen, onToggle }) {
   return (
-    <div className="border-b border-white/10">
+    <div className="border-b border-slate-200">
       <button onClick={onToggle} className="w-full flex items-center justify-between gap-4 py-6 text-left">
-        <span className="text-white font-medium text-lg">{item.q}</span>
-        {isOpen ? <Minus size={20} className="text-cyan flex-shrink-0" /> : <Plus size={20} className="text-white/40 flex-shrink-0" />}
+        <span className="text-slate-900 font-medium text-lg">{item.q}</span>
+        {isOpen ? <Minus size={20} className="text-slate-900 flex-shrink-0" /> : <Plus size={20} className="text-slate-400 flex-shrink-0" />}
       </button>
-      {isOpen && <p className="text-white/60 leading-relaxed pb-6 pr-8">{item.a}</p>}
+      {isOpen && <p className="text-slate-500 leading-relaxed pb-6 pr-8">{item.a}</p>}
     </div>
   );
 }
@@ -39,11 +39,11 @@ export default function Faq() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-ink pt-28 pb-20">
+    <div className="min-h-screen bg-white pt-28 pb-20">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Podpora</p>
-        <h1 className="text-4xl lg:text-5xl font-light text-white mb-4">Časté dotazy</h1>
-        <p className="text-white/50 mb-10">Technické parametry, údržba systémů a proces objednávky vysvětlené na jednom místě.</p>
+        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Podpora</p>
+        <h1 className="text-4xl lg:text-5xl font-light text-slate-900 mb-4">Časté dotazy</h1>
+        <p className="text-slate-500 mb-10">Technické parametry, údržba systémů a proces objednávky vysvětlené na jednom místě.</p>
 
         <div>
           {FAQS.map((item, i) => (
@@ -51,9 +51,9 @@ export default function Faq() {
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-card_bg border border-white/10 rounded-2xl text-center">
-          <p className="text-white/70 mb-4">Nenašli jste odpověď na svou otázku?</p>
-          <Link to="/kontakt" className="inline-block px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all">
+        <div className="mt-12 p-6 bg-slate-50 border border-slate-200 rounded-2xl text-center">
+          <p className="text-slate-600 mb-4">Nenašli jste odpověď na svou otázku?</p>
+          <Link to="/kontakt" className="btn-metallic-mist px-6 py-3 text-sm font-bold">
             Kontaktujte nás
           </Link>
         </div>

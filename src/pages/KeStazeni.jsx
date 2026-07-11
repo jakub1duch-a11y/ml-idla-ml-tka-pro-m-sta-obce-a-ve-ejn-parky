@@ -21,35 +21,35 @@ export default function KeStazeni() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-ink pt-28 pb-20">
+    <div className="min-h-screen bg-white pt-28 pb-20">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <p className="text-xs font-mono text-cyan tracking-widest uppercase mb-2">Dokumenty</p>
-        <h1 className="text-4xl lg:text-5xl font-light text-white mb-4">Ke stažení</h1>
-        <p className="text-white/50 mb-10">Technické listy, instalační manuály a produktové katalogy v PDF formátu.</p>
+        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Dokumenty</p>
+        <h1 className="text-4xl lg:text-5xl font-light text-slate-900 mb-4">Ke stažení</h1>
+        <p className="text-slate-500 mb-10">Technické listy, instalační manuály a produktové katalogy v PDF formátu.</p>
 
         <div className="space-y-4">
           {DOCS.map((doc, i) => (
-            <div key={i} className="flex items-center justify-between gap-4 bg-card_bg border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all">
+            <div key={i} className="flex items-center justify-between gap-4 bg-slate-50 border border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-all">
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-cyan/10 flex items-center justify-center flex-shrink-0">
-                  <FileText size={20} className="text-cyan" />
+                <div className="w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
+                  <FileText size={20} className="text-slate-700" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono text-cyan uppercase tracking-widest">{doc.category}</span>
-                  <h3 className="text-white font-medium">{doc.title}</h3>
-                  <p className="text-white/40 text-sm">{doc.desc}</p>
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{doc.category}</span>
+                  <h3 className="text-slate-900 font-medium">{doc.title}</h3>
+                  <p className="text-slate-400 text-sm">{doc.desc}</p>
                 </div>
               </div>
-              <a href="mailto:obchod1@holmtec.cz?subject=Žádost o dokument" className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-white/5 text-white/70 text-xs rounded-full hover:bg-white/10 transition-all">
+              <a href="mailto:obchod1@holmtec.cz?subject=Žádost o dokument" className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-white text-slate-600 text-xs rounded-full hover:bg-slate-100 transition-all border border-slate-200">
                 <Download size={14} /> Vyžádat
               </a>
             </div>
           ))}
         </div>
 
-        <p className="text-white/40 text-sm text-center mt-10">
+        <p className="text-slate-400 text-sm text-center mt-10">
           Potřebujete konkrétní dokumentaci k projektu? Napište nám na{' '}
-          <a href="mailto:obchod1@holmtec.cz" className="text-cyan hover:text-cyan/80">obchod1@holmtec.cz</a>.
+          <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">obchod1@holmtec.cz</a>.
         </p>
       </div>
     </div>

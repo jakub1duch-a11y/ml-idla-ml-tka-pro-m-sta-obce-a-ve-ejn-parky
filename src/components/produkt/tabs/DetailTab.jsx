@@ -76,8 +76,15 @@ export default function DetailTab({ product, onOpenLightbox }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {BENEFITS.map((b, i) =>
           <motion.div key={b.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-          className="p-6 rounded-2xl border border-slate-200 bg-white">
-              <b.icon size={22} className="text-slate-500 mb-4" />
+          whileHover={{ y: -3 }}
+          className="p-6 rounded-2xl border border-slate-200 bg-white hover:shadow-md transition-shadow group">
+              <motion.div
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: i * 0.25 }}
+                className="mb-4 inline-block group-hover:scale-110 transition-transform"
+              >
+                <b.icon size={22} className="text-slate-500" />
+              </motion.div>
               <h3 className="text-slate-900 text-sm font-medium mb-1.5">{b.title}</h3>
               <p className="text-xs text-slate-500 leading-relaxed font-light">{b.desc}</p>
             </motion.div>

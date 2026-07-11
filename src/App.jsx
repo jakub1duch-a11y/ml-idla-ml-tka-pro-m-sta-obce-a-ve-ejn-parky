@@ -55,6 +55,9 @@ import ChytraMlzidla from '@/pages/ChytraMlzidla';
 import Katalog from '@/pages/Katalog';
 import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
+import Partnerstvi from '@/pages/Partnerstvi';
+import Manualy from '@/pages/Manualy';
+import ObchodniPodminky from '@/pages/ObchodniPodminky';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -115,6 +118,9 @@ const AuthenticatedApp = () => {
         <Route path="/katalog" element={<Katalog />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
+        <Route path="/partnerstvi" element={<Partnerstvi />} />
+        <Route path="/manualy" element={<Manualy />} />
+        <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin-login" element={<AdminLogin />} />

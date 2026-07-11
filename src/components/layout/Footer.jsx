@@ -50,6 +50,9 @@ export default function Footer() {
               <Link to="/servis-udrzba" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Servis a údržba</Link>
               <Link to="/ochrana-zdravi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ochrana zdraví</Link>
               <Link to="/ke-stazeni" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ke stažení</Link>
+              <Link to="/manualy" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Instalační manuály</Link>
+              <Link to="/obchodni-podminky" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Obchodní podmínky</Link>
+              <Link to="/partnerstvi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Partnerství</Link>
             </div>
           </div>
 

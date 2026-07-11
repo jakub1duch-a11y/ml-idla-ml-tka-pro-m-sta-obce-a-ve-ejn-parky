@@ -39,7 +39,8 @@ const INFO_LINKS = [
 { icon: HelpCircle, label: 'FAQ', path: '/faq' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
-{ icon: Download, label: 'Ke stažení', path: '/ke-stazeni' }];
+{ icon: Download, label: 'Ke stažení', path: '/ke-stazeni' },
+{ icon: Download, label: 'Instalační manuály', path: '/manualy' }];
 
 
 export default function Header() {

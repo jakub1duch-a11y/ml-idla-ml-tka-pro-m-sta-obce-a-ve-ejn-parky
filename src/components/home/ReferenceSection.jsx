@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ZoomIn, Loader, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import ClientReviewsStrip from '@/components/home/ClientReviewsStrip';
 
 // Fallback static projects for when DB is empty
 const FALLBACK = [
@@ -159,6 +160,7 @@ export default function ReferenceSection() {
             ))}
           </div>
         )}
+        <ClientReviewsStrip />
       </div>
     </section>
   );

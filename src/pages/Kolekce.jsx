@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import KolekceHero from '@/components/kolekce/KolekceHero';
+import CategorySelector from '@/components/kolekce/CategorySelector';
+import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
+import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { trackQuickInquiryClick } from '@/lib/ga4';
@@ -112,6 +115,19 @@ function ProductCard({ product, i }) {
           }
           {/* Mist overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* Hover quick-view icon */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            whileHover={{ opacity: 1, scale: 1 }}
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center"
+            >
+              <Eye size={18} className="text-slate-900" />
+            </motion.div>
+          </motion.div>
         </div>
         <div className="p-6">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">{product._categoryName || 'Mlžný systém'}</p>
@@ -188,7 +204,13 @@ export default function Kolekce() {
 
       {/* ── HERO SLIDER ── */}
       <KolekceHero />
-      {/* ── KATEGORIE ── */}
+
+      {/* ── KATEGORIE (hover icon cards) ── */}
+      <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
+
+      {/* ── VLASTNOSTI A VÝHODY ── */}
+      <FeaturesBenefitsSection />
+
       {/* ── PRODUKTY ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
         <div className="flex items-center justify-between mb-10 lg:mb-12">
@@ -215,6 +237,9 @@ export default function Kolekce() {
           </div>
         }
       </div>
+
+      {/* ── ŽIVÁ UKÁZKA ── */}
+      <LiveDemoSection />
 
       {/* ── PRO KOHO ── */}
       <div className="border-t border-slate-200 bg-slate-50">

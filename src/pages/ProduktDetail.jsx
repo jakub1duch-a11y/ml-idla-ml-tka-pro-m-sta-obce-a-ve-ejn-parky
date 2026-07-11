@@ -10,7 +10,7 @@ import { useScroll, useTransform } from 'framer-motion';
 import { trackProductView, trackQuickInquiryClick } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import ProductReviews from '@/components/reviews/ProductReviews';
-import CostCalculatorWidget from '@/components/produkt/CostCalculatorWidget';
+import ProductTechGrid from '@/components/produkt/ProductTechGrid';
 import InstallationTab from '@/components/produkt/tabs/InstallationTab';
 import BenefitsTab from '@/components/produkt/tabs/BenefitsTab';
 import VideoTab from '@/components/produkt/tabs/VideoTab';
@@ -229,7 +229,7 @@ export default function ProduktDetail() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.15 }}>
-              <CostCalculatorWidget waterConsumption={product.water_consumption} />
+              <ProductTechGrid product={product} />
             </motion.div>
           </div>
         </div>

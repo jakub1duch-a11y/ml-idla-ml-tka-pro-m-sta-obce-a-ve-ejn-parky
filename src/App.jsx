@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -7,7 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-import SplashScreen from '@/components/common/SplashScreen';
+import Mlzitko from '@/pages/Mlzitko';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
@@ -121,6 +121,7 @@ const AuthenticatedApp = () => {
         <Route path="/partnerstvi" element={<Partnerstvi />} />
         <Route path="/manualy" element={<Manualy />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
+        <Route path="/mlzitko" element={<Mlzitko />} />
       </Route>
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin-login" element={<AdminLogin />} />
@@ -132,16 +133,8 @@ const AuthenticatedApp = () => {
 };
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setShowSplash(false), 1700);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <AuthProvider>
-      <SplashScreen show={showSplash} />
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />

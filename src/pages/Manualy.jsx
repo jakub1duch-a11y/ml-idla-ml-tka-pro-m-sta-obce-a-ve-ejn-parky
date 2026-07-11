@@ -6,14 +6,14 @@ import { setSEO } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 
 const STATIC_DOCS = [
-  { title: 'Produktový katalog 2026', desc: 'Kompletní přehled všech mlžítek, mlžných bran a mlhovišť HolmTec.', category: 'Katalog', icon: FileText },
-  { title: 'Technický list — Mlžítka', desc: 'Rozměry, materiálové provedení, spotřeba vody a tlakové parametry.', category: 'Technický list', icon: FileText },
-  { title: 'Technický list — Mlhoviště', desc: 'Parametry systémů PARK a ARENA pro veřejné prostory.', category: 'Technický list', icon: FileText },
-  { title: 'Instalační manuál — Zemní vrut', desc: 'Postup kotvení pomocí zemního vrutu, hloubka a specifikace.', category: 'Manuál', icon: Wrench },
-  { title: 'Instalační manuál — Betonový základ', desc: 'Postup montáže na betonový základ pro trvalé instalace.', category: 'Manuál', icon: Wrench },
-  { title: 'Manuál zazimování', desc: 'Postup přípravy systému na zimní období a ochrany před mrazem.', category: 'Manuál', icon: Shield },
-  { title: 'Manuál Smart ovládání (WiFi)', desc: 'Nastavení WiFi modulu, HomeKit a Google Home integrace.', category: 'Smart', icon: BookOpen },
-  { title: 'Certifikát AISI 316L', desc: 'Materiálový certifikát pro potravinářský nerez AISI 316L.', category: 'Certifikát', icon: Shield },
+  { title: 'Produktový katalog 2026', desc: 'Kompletní přehled všech mlžítek, mlžných bran a mlhovišť HolmTec.', category: 'Katalog', icon: FileText, url: null },
+  { title: 'Přípravné práce pro instalaci mlžítka', desc: 'Stavební příprava, výkopy, betonáž, rozvod vody a elektroinstalace pro chytrý ventil.', category: 'Instalace', icon: Wrench, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/b704ccfab_Ppravnprceproinstalacimltka.pdf' },
+  { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat (DET.1–3), průřezy a šachta nášlapného ventilu. Měřítko 1:10.', category: 'Výkres', icon: FileText, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/f23bec143_DETAILY_OCELOVEHO_MLZITKA.pdf' },
+  { title: 'Manuál údržby mlžící trysky typ M', desc: '5 komponentů trysky, postup demontáže a čištění od vodního kamene. Klíč č. 14.', category: 'Manuál', icon: Wrench, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/6fcaf7525_tryska.pdf' },
+  { title: 'Chytré ovládání — produktový prospekt', desc: 'Funkce Smart App, Supla Cloud, senzory, automatizace a plánování cyklů mlžení.', category: 'Smart', icon: BookOpen, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/681f0619c_Chytreovladani.pdf' },
+  { title: 'Technický list — Mlžítka', desc: 'Rozměry, materiálové provedení, spotřeba vody a tlakové parametry.', category: 'Technický list', icon: FileText, url: null },
+  { title: 'Manuál zazimování', desc: 'Postup přípravy systému na zimní období a ochrany před mrazem.', category: 'Manuál', icon: Shield, url: null },
+  { title: 'Certifikát AISI 316L', desc: 'Materiálový certifikát pro potravinářský nerez AISI 316L.', category: 'Certifikát', icon: Shield, url: null },
 ];
 
 const CATEGORY_COLORS = {
@@ -22,6 +22,8 @@ const CATEGORY_COLORS = {
   'Manuál': 'text-amber-600 bg-amber-50 border-amber-200',
   'Smart': 'text-violet-600 bg-violet-50 border-violet-200',
   'Certifikát': 'text-emerald-600 bg-emerald-50 border-emerald-200',
+  'Instalace': 'text-orange-600 bg-orange-50 border-orange-200',
+  'Výkres': 'text-sky-600 bg-sky-50 border-sky-200',
 };
 
 function downloadBlob(base64, filename) {
@@ -110,10 +112,17 @@ export default function Manualy() {
                     <p className="text-slate-400 text-xs font-light truncate">{doc.desc}</p>
                   </div>
                 </div>
-                <a href={`mailto:obchod1@holmtec.cz?subject=Žádost o dokument: ${doc.title}`}
-                  className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-slate-50 text-slate-600 text-xs rounded-full hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200">
-                  <Download size={13} /> Vyžádat
-                </a>
+                {doc.url ? (
+                  <a href={doc.url} target="_blank" rel="noopener noreferrer"
+                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white text-xs rounded-full hover:bg-slate-800 transition-all">
+                    <Download size={13} /> Stáhnout
+                  </a>
+                ) : (
+                  <a href={`mailto:obchod1@holmtec.cz?subject=Žádost o dokument: ${doc.title}`}
+                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-slate-50 text-slate-600 text-xs rounded-full hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200">
+                    <Download size={13} /> Vyžádat
+                  </a>
+                )}
               </motion.div>
             ))}
           </div>

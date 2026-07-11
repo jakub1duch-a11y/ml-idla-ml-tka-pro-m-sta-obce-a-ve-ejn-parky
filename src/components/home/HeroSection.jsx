@@ -122,7 +122,7 @@ export default function HeroSection() {
         exit={{ opacity: 0, scale: 1.02 }}
         transition={{ duration: 1, ease: 'easeOut' }}
         className="absolute inset-0">
-          <img src={slide.image} alt={slide.name} className="w-full h-full object-cover" />
+          <img src={slide.image} alt={slide.name} className="w-full h-full object-cover" loading={current === 0 ? 'eager' : 'lazy'} decoding="async" />
         </motion.div>
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />

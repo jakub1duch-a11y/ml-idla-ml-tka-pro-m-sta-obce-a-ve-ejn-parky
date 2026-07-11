@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Clock, Loader } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO } from '@/lib/seo';
 import { trackBlogPostView } from '@/lib/ga4';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
+import ArticleQuickLinks from '@/components/blog/ArticleQuickLinks';
+import ArticleSafetyNotice from '@/components/blog/ArticleSafetyNotice';
+import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -14,25 +17,6 @@ const CATEGORY_LABELS = {
   technika: 'Technologie',
   novinky: 'Novinky',
 };
-
-const FALLBACK_POSTS = [
-  {
-    id: 'f1', slug: 'evaporace-mikroklima', category: 'technika',
-    title: 'Jak evaporace mění mikroklima veřejných prostorů',
-    perex: 'Věda za mlhou: kapky 10–50 μm se odpařují ještě ve vzduchu a absorbují teplo z okolí.',
-    content: `## Fyzika evaporace\n\nEvaporační chlazení je přirozený jev — voda přechází z kapalné fáze do plynné a přitom absorbuje tepelnou energii z okolního prostředí. Jeden litr vody při odpařování pohltí přibližně **680 Wh energie**, což odpovídá výkonu elektrického konvektoru.\n\n### Jak fungují mlžné trysky?\n\nModerní mlžné trysky HolmTec pracují s tlakem **70 bar** a rozprašují vodu na kapičky velikosti **10–50 mikrometrů**. Ty jsou tak drobné, že se zcela odpaří ještě ve vzduchu — ještě dřív, než dopadnou na zem.\n\n**Výsledek:** okolní vzduch se ochlazuje až o **9 °C** bez pocitu mokra, bez louží a bez kapek na oděvu.\n\n### Aplikace ve veřejném prostoru\n\nMlžné sochy a chladicí systémy nacházejí uplatnění zejména:\n- Na **náměstích a v parcích** — kde je lidí nejvíce\n- Na **dětských hřištích** — bezpečné materiály, potravinářská nerez\n- Na **festivalech a eventech** — rychlá instalace, vizuální dojem\n- V **průmyslových provozech** — ochrana pracovníků před tepelnou zátěží\n\n> „Vzduch se ochladí dřív, než si uvědomíte, co se děje."\n\n### Závěr\n\nEvaporační chlazení je ekologická alternativa ke klimatizaci — bez freonu, s minimální spotřebou energie a s vizuálním efektem, který přitahuje pozornost.`,
-    image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
-    published_date: '2026-06-01', published: true, tags: ['technologie', 'evaporace', 'fyzika'],
-  },
-  {
-    id: 'f2', slug: 'detske-hriste-mlhoviste', category: 'inspirace',
-    title: 'Dětské hřiště a mlhoviště: vše co potřebujete vědět',
-    perex: 'Bezpečnost, certifikace, materiály. Průvodce pro obce a správce hřišť.',
-    content: `## Mlhoviště na dětských hřištích\n\nInstalace mlžného systému na dětském hřišti vyžaduje specifický přístup. Bezpečnost je na prvním místě.\n\n### Certifikované materiály\n\nVšechny naše systémy pro dětské instalace jsou vyrobeny z **potravinářské nerezové oceli AISI 316L** — stejného materiálu, ze kterého se vyrábí chirurgické nástroje a nádoby na potraviny.\n\n### Bezpečnostní prvky\n- Žádné ostré hrany — všechny svary jsou broušeny a leštěny\n- Voda bez chemikálií — pouze filtrovaná voda\n- Automatické vypnutí při detekci závady\n- Certifikát dle EN 1176 pro herní prvky\n\n### Spotřeba vody\n\nTypické mlhoviště pro hřiště (6 trysek) spotřebuje přibližně **8–12 litrů za hodinu** — srovnatelné se zavlažováním malého záhonu.`,
-    image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-    published_date: '2026-05-01', published: true, tags: ['hřiště', 'bezpečnost', 'děti'],
-  },
-];
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -50,16 +34,9 @@ export default function BlogDetail() {
     setLoading(true);
     setNotFound(false);
 
-    // Try by slug first, then by id
     const tryLoad = async () => {
-      let found = null;
       const all = await base44.entities.BlogPost.list().catch(() => []);
-      found = (all || []).find(p => p.slug === slug || p.id === slug);
-
-      if (!found) {
-        // Check fallback
-        found = FALLBACK_POSTS.find(p => p.slug === slug || p.id === slug);
-      }
+      const found = (all || []).find((p) => p.slug === slug || p.id === slug);
 
       if (!found) { setNotFound(true); return; }
 
@@ -67,8 +44,7 @@ export default function BlogDetail() {
       trackBlogPostView(found.title, found.slug || found.id, found.category);
       setSEO(getBlogPostSEO(found));
 
-      // Related: same category, not self
-      const rel = (all || []).filter(p => p.published && p.category === found.category && p.id !== found.id).slice(0, 3);
+      const rel = (all || []).filter((p) => p.published && p.category === found.category && p.id !== found.id).slice(0, 3);
       setRelated(rel);
     };
 
@@ -90,6 +66,9 @@ export default function BlogDetail() {
     </div>
   );
 
+  const ctaLabel = post.cta_label || 'Nezávazná poptávka';
+  const ctaLink = post.cta_link || '/poptavka';
+
   return (
     <div className="min-h-screen bg-ink pt-24">
       {/* Hero image */}
@@ -110,7 +89,7 @@ export default function BlogDetail() {
             {post.published_date && (
               <span className="text-xs font-mono text-white/40">{formatDate(post.published_date)}</span>
             )}
-            {(post.tags || []).map(t => (
+            {(post.tags || []).map((t) => (
               <span key={t} className="text-xs font-mono text-white/25 border border-white/10 rounded-full px-2.5 py-1">#{t}</span>
             ))}
           </div>
@@ -119,16 +98,19 @@ export default function BlogDetail() {
             {post.title}
           </h1>
           {post.perex && (
-            <p className="text-white/55 text-lg leading-relaxed font-light mb-8 border-l-2 border-cyan/40 pl-5">
+            <p className="text-white/55 text-lg leading-relaxed font-light mb-2 border-l-2 border-cyan/40 pl-5">
               {post.perex}
             </p>
           )}
         </motion.div>
 
+        {/* Internal links to configurator / inquiry — placed right after the intro */}
+        <ArticleQuickLinks />
+
         {/* Content */}
         {post.content ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-            className="prose prose-invert prose-lg max-w-none pb-16
+            className="prose prose-invert prose-lg max-w-none pb-4
               prose-headings:font-light prose-headings:tracking-tight prose-headings:text-white
               prose-p:text-white/60 prose-p:font-light prose-p:leading-relaxed
               prose-li:text-white/60 prose-li:font-light
@@ -144,17 +126,20 @@ export default function BlogDetail() {
             )}
           </motion.div>
         ) : (
-          <div className="pb-16 text-white/40 font-light italic">Obsah článku brzy.</div>
+          <div className="pb-4 text-white/40 font-light italic">Obsah článku brzy.</div>
         )}
 
-        {/* Back + CTA */}
+        {/* Fixed safety/standard notice — appears in every article */}
+        <ArticleSafetyNotice />
+
+        {/* Back + sales CTA */}
         <div className="py-10 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors font-mono">
             <ArrowLeft size={14} /> Zpět na blog
           </Link>
-          <Link to="/kontakt"
+          <Link to={ctaLink}
             className="inline-flex items-center gap-2 px-6 py-3 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all shadow-lg shadow-cyan/20">
-            Nezávazná poptávka <ArrowRight size={14} />
+            {ctaLabel} <ArrowRight size={14} />
           </Link>
         </div>
       </div>
@@ -165,7 +150,7 @@ export default function BlogDetail() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <p className="text-xs font-mono tracking-widest uppercase text-white/30 mb-6">Mohlo by vás zajímat</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {related.map(r => (
+              {related.map((r) => (
                 <Link key={r.id} to={`/blog/${r.slug || r.id}`}
                   className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/30 transition-all bg-card_bg">
                   {r.image_url && (
@@ -183,6 +168,8 @@ export default function BlogDetail() {
           </div>
         </div>
       )}
+
+      <LeadMagnetPopup />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Loader, Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Plus, Loader, Pencil, Trash2, Eye, EyeOff, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import BlogPostForm from '@/components/admin/BlogPostForm';
 
-const EMPTY_FORM = { title: '', slug: '', category: '', perex: '', content: '', image_url: '', tags: '', published: false };
+const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', tags: '', published: false, cta_label: '', cta_link: '' };
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
@@ -24,10 +24,24 @@ export default function AdminBlog() {
   const startEdit = (post) => {
     setForm({
       title: post.title || '', slug: post.slug || '', category: post.category || '',
+      audience: post.audience || 'oboji',
       perex: post.perex || '', content: post.content || '', image_url: post.image_url || '',
       tags: (post.tags || []).join(', '), published: !!post.published,
+      cta_label: post.cta_label || '', cta_link: post.cta_link || '',
     });
     setEditing(post.id);
+  };
+
+  const handleDuplicate = async (post) => {
+    await base44.entities.BlogPost.create({
+      title: `${post.title} (kopie)`,
+      slug: `${post.slug || ''}-kopie-${Date.now()}`,
+      category: post.category, audience: post.audience || 'oboji',
+      perex: post.perex, content: post.content, image_url: post.image_url,
+      tags: post.tags || [], published: false,
+      cta_label: post.cta_label, cta_link: post.cta_link,
+    });
+    loadPosts();
   };
 
   const handleSave = async () => {
@@ -93,6 +107,9 @@ export default function AdminBlog() {
               </button>
               <button onClick={() => startEdit(post)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white/50 hover:bg-white/10 transition-all">
                 <Pencil size={15} />
+              </button>
+              <button onClick={() => handleDuplicate(post)} title="Duplikovat" className="w-8 h-8 rounded-lg flex items-center justify-center text-white/50 hover:bg-white/10 transition-all">
+                <Copy size={15} />
               </button>
               <button onClick={() => handleDelete(post)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white/50 hover:bg-red-500/20 hover:text-red-400 transition-all">
                 <Trash2 size={15} />

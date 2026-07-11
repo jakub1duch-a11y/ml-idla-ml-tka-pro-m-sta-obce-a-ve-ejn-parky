@@ -50,7 +50,6 @@ import Vyhody from '@/pages/Vyhody';
 import KeStazeni from '@/pages/KeStazeni';
 import OchranaZdravi from '@/pages/OchranaZdravi';
 import ServisUdrzba from '@/pages/ServisUdrzba';
-import Novinky from '@/pages/Novinky';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import ChytraMlzidla from '@/pages/ChytraMlzidla';
 import Katalog from '@/pages/Katalog';
@@ -111,7 +110,6 @@ const AuthenticatedApp = () => {
         <Route path="/ke-stazeni" element={<KeStazeni />} />
         <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
-        <Route path="/novinky" element={<Novinky />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
         <Route path="/katalog" element={<Katalog />} />

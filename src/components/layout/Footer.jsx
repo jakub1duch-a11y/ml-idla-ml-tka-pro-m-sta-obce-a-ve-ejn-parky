@@ -47,7 +47,6 @@ export default function Footer() {
               <Link to="/technologie" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Technologie</Link>
               <Link to="/vyhody" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Výhody</Link>
               <Link to="/faq" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">FAQ</Link>
-              <Link to="/novinky" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Novinky</Link>
               <Link to="/servis-udrzba" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Servis a údržba</Link>
               <Link to="/ochrana-zdravi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ochrana zdraví</Link>
               <Link to="/ke-stazeni" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ke stažení</Link>

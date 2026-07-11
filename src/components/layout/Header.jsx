@@ -37,7 +37,6 @@ const INFO_LINKS = [
 { icon: Cpu, label: 'Technologie', path: '/technologie' },
 { icon: ShieldCheck, label: 'Výhody', path: '/vyhody' },
 { icon: HelpCircle, label: 'FAQ', path: '/faq' },
-{ icon: Newspaper, label: 'Novinky', path: '/novinky' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
 { icon: Download, label: 'Ke stažení', path: '/ke-stazeni' }];

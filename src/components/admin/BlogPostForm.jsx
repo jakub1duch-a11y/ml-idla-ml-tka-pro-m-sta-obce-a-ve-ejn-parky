@@ -10,6 +10,12 @@ const CATEGORIES = [
   { value: 'novinky', label: 'Novinky' },
 ];
 
+const AUDIENCES = [
+  { value: 'oboji', label: 'Firmy i domácnosti' },
+  { value: 'firmy', label: 'Pro firmy a provozy' },
+  { value: 'soukrome', label: 'Pro domácnosti a zahrady' },
+];
+
 function slugify(str) {
   return (str || '').toLowerCase().trim()
     .replace(/[áàâä]/g, 'a').replace(/[éèêë]/g, 'e').replace(/[íìîï]/g, 'i')
@@ -79,6 +85,14 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
           placeholder="Štítky (oddělené čárkou)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
       </div>
 
+      <div>
+        <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Cílová skupina</p>
+        <select value={form.audience || 'oboji'} onChange={(e) => setForm(f => ({ ...f, audience: e.target.value }))}
+          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:border-cyan/40 focus:outline-none">
+          {AUDIENCES.map(a => <option key={a.value} value={a.value} className="bg-ink">{a.label}</option>)}
+        </select>
+      </div>
+
       <textarea value={form.perex} onChange={(e) => setForm(f => ({ ...f, perex: e.target.value }))} rows={2}
         placeholder="Perex — krátký úvodní text (zobrazí se i ve výsledcích vyhledávání)"
         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-none" />
@@ -109,6 +123,13 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
             onChange={(html) => setForm(f => ({ ...f, content: html }))}
             modules={modules} className="text-slate-900" />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input value={form.cta_label || ''} onChange={(e) => setForm(f => ({ ...f, cta_label: e.target.value }))}
+          placeholder="Text prodejní CTA (např. Nezávazná kalkulace realizace)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+        <input value={form.cta_link || ''} onChange={(e) => setForm(f => ({ ...f, cta_link: e.target.value }))}
+          placeholder="Odkaz CTA (např. /poptavka)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
       </div>
 
       <label className="flex items-center gap-2 text-sm text-white/60">

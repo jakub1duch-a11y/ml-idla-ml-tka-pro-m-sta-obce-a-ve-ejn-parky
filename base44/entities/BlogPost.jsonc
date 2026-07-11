@@ -20,6 +20,16 @@
       ],
       "description": "Category"
     },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "firmy",
+        "soukrome",
+        "oboji"
+      ],
+      "default": "oboji",
+      "description": "C\u00edlov\u00e1 skupina \u010dl\u00e1nku \u2014 firmy (gastro, eventy, obce) nebo soukrom\u00ed z\u00e1kazn\u00edci (zahrady)"
+    },
     "perex": {
       "type": "string",
       "description": "Short excerpt"
@@ -48,6 +58,14 @@
         "type": "string"
       },
       "description": "Tags"
+    },
+    "cta_label": {
+      "type": "string",
+      "description": "Text tla\u010d\u00edtka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku (nap\u0159. 'Nez\u00e1vazn\u00e1 kalkulace realizace')"
+    },
+    "cta_link": {
+      "type": "string",
+      "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy (nap\u0159. /poptavka nebo /kalkulacka)"
     }
   },
   "required": [

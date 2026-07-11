@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -12,35 +13,10 @@ const CATEGORY_LABELS = {
   novinky: 'Novinky',
 };
 
-const FALLBACK = [
-  {
-    id: 'f1', slug: 'evaporace-mikroklima', category: 'technika',
-    title: 'Jak evaporace mění mikroklima veřejných prostorů',
-    perex: 'Věda za mlhou: kapky 10–50 μm se odpařují ještě ve vzduchu a absorbují teplo z okolí. Vysvětlujeme fyziku, která stojí za ochlazením až 9 °C.',
-    image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
-    published_date: '2026-06-01', published: true,
-  },
-  {
-    id: 'f2', slug: 'detske-hriste-mlhoviste', category: 'inspirace',
-    title: 'Dětské hřiště a mlhoviště: vše co potřebujete vědět',
-    perex: 'Bezpečnost, certifikace, materiály. Kompletní průvodce pro obce a správce hřišť, kteří zvažují instalaci mlžného systému pro děti.',
-    image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-    published_date: '2026-05-01', published: true,
-  },
-  {
-    id: 'f3', slug: 'aura-namesti-republiky', category: 'realizace',
-    title: 'AURA: nerezový kruh, který ovládl náměstí',
-    perex: 'Příběh vzniku modelu AURA — od skici přes technický výkres po instalaci na Náměstí Republiky. Rozhovor s projektovým inženýrem.',
-    image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
-    published_date: '2026-04-01', published: true,
-  },
-  {
-    id: 'f4', slug: 'mlzeni-vs-klimatizace', category: 'technika',
-    title: 'Mlžení vs. klimatizace: srovnání spotřeby a dopadu',
-    perex: 'Porovnáváme energetickou náročnost, spotřebu vody a uhlíkovou stopu obou technologií. Výsledky překvapí.',
-    image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/39c506f5b_891c5179a_Social_Media_Video_Ads_A_curved_metallic_pipe_speckled_with_glistening_1_-N3ABn.png',
-    published_date: '2026-03-01', published: true,
-  },
+const AUDIENCE_TABS = [
+  { value: 'all', label: 'Vše' },
+  { value: 'firmy', label: 'Pro firmy a provozy' },
+  { value: 'soukrome', label: 'Pro domácnosti a zahrady' },
 ];
 
 function formatDate(dateStr) {
@@ -49,49 +25,64 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-const FILTERS = [{ value: 'all', label: 'Vše' }, ...Object.entries(CATEGORY_LABELS).map(([v, l]) => ({ value: v, label: l }))];
-
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  const [audience, setAudience] = useState('all');
+  const [category, setCategory] = useState('all');
 
   useEffect(() => {
     setSEO(SEO_PAGES.blog);
-    base44.entities.BlogPost.list()
-      .then(items => {
-        const published = (items || []).filter(p => p.published);
-        setPosts(published.length > 0 ? published : FALLBACK);
-      })
-      .catch(() => setPosts(FALLBACK))
+    base44.entities.BlogPost.list('-published_date')
+      .then((items) => setPosts((items || []).filter((p) => p.published)))
       .finally(() => setLoading(false));
   }, []);
 
-  const visible = filter === 'all' ? posts : posts.filter(p => p.category === filter);
+  const visible = posts.filter((p) => {
+    const matchesAudience = audience === 'all' || p.audience === audience || !p.audience || p.audience === 'oboji';
+    const matchesCategory = category === 'all' || p.category === category;
+    return matchesAudience && matchesCategory;
+  });
   const [featured, ...rest] = visible;
 
   return (
     <div className="min-h-screen bg-white pt-28">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-14">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog & Novinky</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog HolmTec</p>
           <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
             O mlžení do hloubky
           </h1>
           <p className="text-slate-500 max-w-xl text-lg font-light">
-            Technologie, inspirace, realizace a novinky ze světa mlžných soch a chladicích systémů.
+            Řešení pro gastro provozy a eventy, design pro zahrady a terasy — technologie, inspirace a realizace na jednom místě.
           </p>
         </motion.div>
       </div>
 
-      {/* Filters */}
+      {/* Audience segmentation */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-4">
+        <div className="flex gap-2 flex-wrap">
+          {AUDIENCE_TABS.map((t) => (
+            <button key={t.value} onClick={() => setAudience(t.value)}
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${audience === t.value ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Category filters */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
         <div className="flex gap-2 flex-wrap">
-          {FILTERS.map(f => (
-            <button key={f.value} onClick={() => setFilter(f.value)}
-              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${filter === f.value ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
-              {f.label}
+          <button onClick={() => setCategory('all')}
+            className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${category === 'all' ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
+            Všechna témata
+          </button>
+          {Object.entries(CATEGORY_LABELS).map(([v, l]) => (
+            <button key={v} onClick={() => setCategory(v)}
+              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${category === v ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
+              {l}
             </button>
           ))}
         </div>
@@ -131,7 +122,7 @@ export default function Blog() {
             {/* Side posts */}
             {rest.length > 0 && (
               <div className="lg:col-span-2 flex flex-col gap-5">
-                {rest.map((post, i) => (
+                {rest.slice(0, 3).map((post, i) => (
                   <motion.div key={post.id} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                     <Link to={`/blog/${post.slug || post.id}`} className="group flex rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
                       {post.image_url && (
@@ -178,6 +169,8 @@ export default function Blog() {
           </div>
         )}
       </div>
+
+      <LeadMagnetPopup />
     </div>
   );
 }

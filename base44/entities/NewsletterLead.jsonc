@@ -1,0 +1,35 @@
+{
+  "name": "NewsletterLead",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "E-mail z\u00e1jemce o slevu / novinky z blogu"
+    },
+    "source": {
+      "type": "string",
+      "description": "Odkud lead poch\u00e1z\u00ed, nap\u0159. blog_popup"
+    }
+  },
+  "required": [
+    "email"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

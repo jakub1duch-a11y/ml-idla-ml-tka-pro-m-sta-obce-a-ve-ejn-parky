@@ -143,7 +143,7 @@ export default function HeroSection() {
               <p className="text-xl sm:text-2xl lg:text-3xl text-white/60 font-light mb-4 sm:mb-5 not-italic text-left no-underline normal-case">{slide.subtitle}</p>
               <p className="text-white/70 text-sm sm:text-base lg:text-lg leading-relaxed max-w-lg mb-6 sm:mb-8 font-light">{slide.desc}</p>
               <Link to={slide.cta}
-              className="btn-pulse inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold">
+              className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Zobrazit produkt <ArrowRight size={16} />
               </Link>
             </motion.div>

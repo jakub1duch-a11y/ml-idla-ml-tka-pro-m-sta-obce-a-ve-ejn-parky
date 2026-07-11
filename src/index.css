@@ -129,3 +129,28 @@
     box-shadow: 0 0 0 0 rgba(0, 188, 212, 0);
   }
 }
+
+/* Light industrial "mist" metallic button — brushed steel sweep + soft droplet ring pulse */
+.btn-metallic-mist {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f4f6f8 0%, #e2e8f0 45%, #cbd5e1 55%, #f8fafc 100%);
+  background-size: 220% 220%;
+  color: #0f172a;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  border-radius: 999px;
+  overflow: hidden;
+  transition: background-position 0.6s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  animation: mist-ring-pulse 2.6s infinite;
+}
+.btn-metallic-mist:hover {
+  background-position: 100% 0%;
+  transform: translateY(-1px);
+}
+@keyframes mist-ring-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(148, 197, 219, 0.45); }
+  70% { box-shadow: 0 0 0 9px rgba(148, 197, 219, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(148, 197, 219, 0); }
+}

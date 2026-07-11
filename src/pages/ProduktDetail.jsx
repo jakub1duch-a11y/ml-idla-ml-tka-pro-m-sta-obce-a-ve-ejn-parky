@@ -222,7 +222,7 @@ export default function ProduktDetail() {
               <div className="flex flex-wrap gap-3">
                 <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
                 onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                   Rychlá poptávka <ArrowRight size={16} />
                 </Link>
               </div>

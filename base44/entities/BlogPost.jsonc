@@ -66,6 +66,11 @@
     "cta_link": {
       "type": "string",
       "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy (nap\u0159. /poptavka nebo /kalkulacka)"
+    },
+    "instagram_posted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Zda byl \u010dl\u00e1nek u\u017e automaticky sd\u00edlen na Instagram"
     }
   },
   "required": [

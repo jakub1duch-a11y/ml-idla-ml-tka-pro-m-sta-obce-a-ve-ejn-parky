@@ -42,7 +42,7 @@ const FEATURES = [
 
 export default function FeaturesSection() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 max-w-2xl">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Kvalita</p>

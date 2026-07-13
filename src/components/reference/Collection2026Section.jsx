@@ -31,8 +31,10 @@ const MODELS = [
 
 export default function Collection2026Section() {
   return (
-    <section className="py-24 bg-slate-950">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="relative py-16 sm:py-24 bg-slate-950 overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-white to-slate-950 pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-t from-white to-slate-950 pointer-events-none" />
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 max-w-2xl">
           <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Kolekce 2026</p>
           <h2 className="font-heading font-light text-3xl lg:text-5xl text-white tracking-tight leading-[1.1]">

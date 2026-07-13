@@ -9,6 +9,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
+import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
@@ -123,8 +124,9 @@ const AuthenticatedApp = () => {
         <Route path="/manualy" element={<Manualy />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
-        <Route path="/mlzidla" element={<Mlzidla />} />
       </Route>
+      <Route path="/mlzidla" element={<Mlzidla />} />
+      <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/admin-logout" element={<AdminLogout />} />

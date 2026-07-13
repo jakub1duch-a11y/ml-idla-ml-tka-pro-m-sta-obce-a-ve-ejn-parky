@@ -43,6 +43,14 @@
       },
       "description": "Gallery images"
     },
+    "video_url": {
+      "type": "string",
+      "description": "URL videa realizace (pokud existuje)"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Odkaz na to, jak realizaci sd\u00edl\u00ed klient (nap\u0159. p\u0159\u00edsp\u011bvek na Facebooku/Instagramu klienta)"
+    },
     "product_used": {
       "type": "string",
       "description": "Product model used"

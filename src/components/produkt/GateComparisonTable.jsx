@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, Circle, Square, ArrowRight, PlayCircle, Building2 } from 'lucide-react';
+import { Sparkles, Circle, Square, ArrowRight, PlayCircle, Building2, Shapes, Component, Layers, Droplets, Gauge, Ruler, Zap } from 'lucide-react';
 
 const COLUMNS = [
   {
@@ -41,14 +41,16 @@ const CONSTRUCTION = [
 ];
 
 const ROWS = [
-  { label: 'Design / tvar', gateU: 'Rovný, pravoúhlý tvar', gateV: 'Lomený organický oblouk', linea: 'Plynulý obloukový design' },
-  { label: 'Konstrukční profil', gateU: 'Kulatá trubka Ø76 mm', gateV: 'Kulatá trubka Ø76 mm', linea: 'Hranatý (jeklový) profil' },
-  { label: 'Materiál', gateU: 'AISI 316L, broušený/kartáčovaný', gateV: 'AISI 316L, broušený/kartáčovaný', linea: 'AISI 316L, leštěný nerez' },
-  { label: 'Spotřeba vody', gateU: '15–25 l/h', gateV: '15–25 l/h', linea: '≈ 30 l/h (0,5 l/min)' },
-  { label: 'Tlak mlžení', gateU: '3–7 bar', gateV: '3–7 bar', linea: '4–7 bar' },
-  { label: 'Rozměry', gateU: '2 × 2,2 m (upravitelné)', gateV: '2 × 2,2 m (upravitelné)', linea: 'Výška 0,7 m (upravitelné)' },
-  { label: 'Napájení / řízení', gateU: '12 V, Wi-Fi Smart, senzory', gateV: '12 V, Wi-Fi Smart, senzory', linea: 'Vodovodní řad, volitelně Wi-Fi + LED' },
+  { label: 'Design / tvar', icon: Shapes, gateU: 'Rovný, pravoúhlý tvar', gateV: 'Lomený organický oblouk', linea: 'Plynulý obloukový design' },
+  { label: 'Konstrukční profil', icon: Component, gateU: 'Kulatá trubka Ø76 mm', gateV: 'Kulatá trubka Ø76 mm', linea: 'Hranatý (jeklový) profil' },
+  { label: 'Materiál', icon: Layers, gateU: 'AISI 316L, broušený/kartáčovaný', gateV: 'AISI 316L, broušený/kartáčovaný', linea: 'AISI 316L, leštěný nerez' },
+  { label: 'Spotřeba vody', icon: Droplets, gateU: '15–25 l/h', gateV: '15–25 l/h', linea: '≈ 30 l/h (0,5 l/min)' },
+  { label: 'Tlak mlžení', icon: Gauge, gateU: '3–7 bar', gateV: '3–7 bar', linea: '4–7 bar' },
+  { label: 'Rozměry', icon: Ruler, gateU: '2 × 2,2 m (upravitelné)', gateV: '2 × 2,2 m (upravitelné)', linea: 'Výška 0,7 m (upravitelné)' },
+  { label: 'Napájení / řízení', icon: Zap, gateU: '12 V, Wi-Fi Smart, senzory', gateV: '12 V, Wi-Fi Smart, senzory', linea: 'Vodovodní řad, volitelně Wi-Fi + LED' },
 ];
+
+const COLUMN_KEYS = ['gateU', 'gateV', 'linea'];
 
 export default function GateComparisonTable() {
   return (
@@ -103,9 +105,9 @@ export default function GateComparisonTable() {
           ))}
         </div>
 
-        {/* Comparison table */}
+        {/* Comparison table — desktop */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm mb-10">
+          className="hidden lg:block rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm mb-10">
           <div className="grid grid-cols-4 bg-gradient-to-r from-slate-900 to-slate-700">
             <div className="px-4 py-4">
               <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Parametr</span>
@@ -119,21 +121,47 @@ export default function GateComparisonTable() {
 
           {ROWS.map((row, i) => (
             <div key={row.label} className={`grid grid-cols-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-              <div className="px-4 py-4 flex items-center">
+              <div className="px-4 py-4 flex items-center gap-2">
+                <row.icon size={14} className="text-slate-400 shrink-0" />
                 <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
               </div>
-              <div className="px-4 py-4 border-l border-slate-100 flex items-center">
-                <span className="text-sm text-slate-900 font-medium leading-snug">{row.gateU}</span>
-              </div>
-              <div className="px-4 py-4 border-l border-slate-100 flex items-center">
-                <span className="text-sm text-slate-900 font-medium leading-snug">{row.gateV}</span>
-              </div>
-              <div className="px-4 py-4 border-l border-slate-100 flex items-center">
-                <span className="text-sm text-slate-900 font-medium leading-snug">{row.linea}</span>
-              </div>
+              {COLUMN_KEYS.map((key) => {
+                const differs = row[key] !== row.gateU;
+                return (
+                  <div key={key} className={`px-4 py-4 border-l border-slate-100 flex items-center ${differs ? 'bg-sky-50/60' : ''}`}>
+                    <span className={`text-sm font-medium leading-snug ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</span>
+                  </div>
+                );
+              })}
             </div>
           ))}
         </motion.div>
+
+        {/* Comparison — mobile stacked cards */}
+        <div className="lg:hidden space-y-4 mb-10">
+          {COLUMNS.map((col, ci) => (
+            <motion.div key={col.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: ci * 0.06 }}
+              className="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+              <div className="px-4 py-3.5 bg-gradient-to-r from-slate-900 to-slate-700 flex items-baseline gap-2">
+                <span className="text-sm font-bold text-white tracking-tight">{col.name}</span>
+                <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{col.tag}</span>
+              </div>
+              {ROWS.map((row, i) => {
+                const key = COLUMN_KEYS[ci];
+                const differs = row[key] !== row.gateU;
+                return (
+                  <div key={row.label} className={`flex items-start gap-3 px-4 py-3 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'} ${differs ? 'border-l-2 border-sky-400' : ''}`}>
+                    <row.icon size={14} className="text-slate-400 shrink-0 mt-0.5" />
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-0.5">{row.label}</p>
+                      <p className={`text-sm font-medium leading-snug ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+          ))}
+        </div>
 
         {/* Urban / parks offer callout */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}

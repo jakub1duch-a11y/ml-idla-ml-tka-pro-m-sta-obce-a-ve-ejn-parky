@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { setSEO } from '@/lib/seo';
-import MlzidlaCzNav from '@/components/mlzidlacz/MlzidlaCzNav';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import MlzidlaProduktBreadcrumb from '@/components/mlzidlacz/MlzidlaProduktBreadcrumb';
 import MlzidlaProduktGallery from '@/components/mlzidlacz/MlzidlaProduktGallery';
 import MlzidlaProduktInfo from '@/components/mlzidlacz/MlzidlaProduktInfo';
@@ -24,8 +25,8 @@ export default function MlzidlaProdukt() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <MlzidlaCzNav />
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 space-y-6">
+      <Header />
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 pt-24 space-y-6">
         <MlzidlaProduktBreadcrumb product={product} />
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 items-start">
@@ -42,6 +43,7 @@ export default function MlzidlaProdukt() {
           <Link to="/mlzidla" className="text-xs text-slate-400 hover:text-slate-700 transition-colors">← Zpět na všechny produkty</Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

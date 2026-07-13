@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Loader, Droplet } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { base44 } from '@/api/base44Client';
-import MlzidlaCzNav from '@/components/mlzidlacz/MlzidlaCzNav';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import MlzidlaCzSidebar from '@/components/mlzidlacz/MlzidlaCzSidebar';
 import MlzidlaCzShowcase from '@/components/mlzidlacz/MlzidlaCzShowcase';
 import MlzidlaCzSpecsSidebar from '@/components/mlzidlacz/MlzidlaCzSpecsSidebar';
@@ -52,9 +53,9 @@ export default function Mlzidla() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <MlzidlaCzNav />
+      <Header />
 
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 space-y-6">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 pt-24 space-y-6">
         {loading ? (
           <div className="flex justify-center py-24">
             <Loader size={24} className="animate-spin text-slate-300" />
@@ -77,6 +78,7 @@ export default function Mlzidla() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

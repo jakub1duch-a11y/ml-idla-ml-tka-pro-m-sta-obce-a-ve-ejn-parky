@@ -8,6 +8,8 @@ import MlzidlaCzShowcase from '@/components/mlzidlacz/MlzidlaCzShowcase';
 import MlzidlaCzSpecsSidebar from '@/components/mlzidlacz/MlzidlaCzSpecsSidebar';
 import MlzidlaCzFeatureRow from '@/components/mlzidlacz/MlzidlaCzFeatureRow';
 import MlzidlaCzTechDetails from '@/components/mlzidlacz/MlzidlaCzTechDetails';
+import MlzidlaCzCollectionBanner from '@/components/mlzidlacz/MlzidlaCzCollectionBanner';
+import MlzidlaCzCalculatorSection from '@/components/mlzidlacz/MlzidlaCzCalculatorSection';
 
 export default function Mlzidla() {
   const [products, setProducts] = useState([]);
@@ -61,6 +63,8 @@ export default function Mlzidla() {
           <p className="text-center text-slate-400 py-24 text-sm">Žádné produkty k zobrazení.</p>
         ) : (
           <>
+            <MlzidlaCzCollectionBanner />
+
             <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr_220px] gap-6 items-stretch">
               <MlzidlaCzSidebar products={products} activeId={activeId} onSelect={setActiveId} />
               <MlzidlaCzShowcase product={activeProduct} onPrev={goPrev} onNext={goNext} />
@@ -69,6 +73,7 @@ export default function Mlzidla() {
 
             <MlzidlaCzFeatureRow />
             <MlzidlaCzTechDetails />
+            <MlzidlaCzCalculatorSection product={activeProduct} />
           </>
         )}
       </div>

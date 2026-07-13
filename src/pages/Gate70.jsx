@@ -419,7 +419,7 @@ export default function Gate70() {
       {/* ══════════════════════════════════════════════════════
                                7. VIDEA V AKCI
                             ══════════════════════════════════════════════════════ */}
-      <section className="bg-slate-50 border-y border-slate-200 py-24">
+      <section id="video" className="bg-slate-50 border-y border-slate-200 py-24 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Videa</p>

@@ -99,7 +99,9 @@ export default function ProduktDetail() {
     if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
-    setActiveTab('o-produktu');
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedTab = urlParams.get('tab');
+    setActiveTab(TABS.some((t) => t.id === requestedTab) ? requestedTab : 'o-produktu');
     base44.entities.Product.filter({ slug }).
     then(async (results) => {
       if (!results || results.length === 0) {setNotFound(true);return;}

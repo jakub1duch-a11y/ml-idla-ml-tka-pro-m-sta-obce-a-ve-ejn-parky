@@ -4,6 +4,7 @@ import { FileText, Download, Loader, ChevronRight, Mail, BookOpen, Wrench, Shiel
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import { Link } from 'react-router-dom';
+import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 
 const STATIC_DOCS = [
   { title: 'Produktový katalog 2026', desc: 'Kompletní přehled všech mlžítek, mlžných bran a mlhovišť HolmTec.', category: 'Katalog', icon: FileText, url: null },
@@ -185,6 +186,7 @@ export default function KeStazeni() {
           </div>
         </div>
       </div>
+      <MistVideoShowcase />
     </div>
   );
 }

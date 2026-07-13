@@ -13,7 +13,7 @@ export default function LiveDemoSection() {
     <div ref={ref} className="relative h-[80vh] min-h-[520px] overflow-hidden">
       <motion.video
         style={{ scale, y }}
-        src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV"
+        src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.mov"
         className="absolute inset-0 w-full h-full object-cover"
         autoPlay
         muted

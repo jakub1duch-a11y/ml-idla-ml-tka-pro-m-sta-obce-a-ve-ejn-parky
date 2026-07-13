@@ -75,6 +75,17 @@
   100% { transform: translateY(220px); opacity: 0; }
 }
 
+@keyframes mist-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.15); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.animate-mist-drift {
+  animation-name: mist-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: #0a0e14; }
 ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 2px; }

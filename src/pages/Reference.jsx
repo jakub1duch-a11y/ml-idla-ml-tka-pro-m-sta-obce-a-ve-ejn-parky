@@ -4,6 +4,8 @@ import { MapPin, ZoomIn, ChevronLeft, ChevronRight, X, Loader, ArrowRight } from
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import ReferenceHero from '@/components/reference/ReferenceHero';
+import GateLiveDemoCard from '@/components/reference/GateLiveDemoCard';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -182,21 +184,13 @@ export default function Reference() {
 
   return (
     <div className="min-h-screen bg-white pt-28">
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Reference</p>
-          <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
-            Realizované projekty
-          </h1>
-          <p className="text-slate-500 max-w-xl text-lg font-light">
-            Více než 120 instalací mlžných soch a chladicích systémů po celé České republice i zahraničí.
-          </p>
-        </motion.div>
-      </div>
+      {/* Hero */}
+      <ReferenceHero />
+
+      <GateLiveDemoCard />
 
       {/* Filters */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
+      <div id="realizace" className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
         <div className="flex gap-2 flex-wrap">
           {FILTERS.map(f => (
             <button key={f.value} onClick={() => setFilter(f.value)}

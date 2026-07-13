@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader, Image, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader, Image, Eye, EyeOff, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const EMPTY = { name: '', client: '', location: '', year: new Date().getFullYear(), category: 'mestsky', description: '', image_url: '', product_used: '', featured: false, published: false };
+const EMPTY = { name: '', client: '', location: '', year: new Date().getFullYear(), category: 'mestsky', description: '', image_url: '', video_url: '', source_url: '', product_used: '', featured: false, published: false };
 
 const CATS = [
   { value: 'mestsky', label: 'Městský prostor' },
@@ -28,6 +28,11 @@ export default function AdminReferences() {
 
   const startEdit = (p) => { setEditing(p); setForm(p); };
   const startNew = () => { setEditing('new'); setForm(EMPTY); };
+  const startDuplicate = (p) => {
+    const { id, created_date, updated_date, created_by_id, ...rest } = p;
+    setEditing('new');
+    setForm({ ...rest, name: `${p.name} (kopie)`, published: false });
+  };
   const cancel = () => { setEditing(null); };
 
   const set = (field) => (e) => {
@@ -111,6 +116,14 @@ export default function AdminReferences() {
           <input value={form.product_used || ''} onChange={set('product_used')} placeholder="OSTEV, MRAK..." className={inputCls} />
         </div>
         <div>
+          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Video z realizace (URL)</label>
+          <input value={form.video_url || ''} onChange={set('video_url')} placeholder="https://.../video.mp4" className={inputCls} />
+        </div>
+        <div>
+          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Odkaz na sdílení klientem (Facebook/Instagram)</label>
+          <input value={form.source_url || ''} onChange={set('source_url')} placeholder="https://www.facebook.com/..." className={inputCls} />
+        </div>
+        <div>
           <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Hlavní fotografie</label>
           <div className="flex gap-3 items-start">
             {form.image_url && <img src={form.image_url} alt="" className="w-20 h-14 object-cover rounded-lg border border-white/10" />}
@@ -171,6 +184,9 @@ export default function AdminReferences() {
               <div className="flex gap-2">
                 <button onClick={() => startEdit(item)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all">
                   <Edit2 size={13} />
+                </button>
+                <button onClick={() => startDuplicate(item)} title="Duplikovat" className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all">
+                  <Copy size={13} />
                 </button>
                 <button onClick={() => remove(item.id)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-red-400 hover:border-red-400/30 transition-all">
                   <Trash2 size={13} />

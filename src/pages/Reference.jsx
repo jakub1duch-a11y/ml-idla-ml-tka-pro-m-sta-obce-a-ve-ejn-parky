@@ -6,6 +6,8 @@ import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import ReferenceHero from '@/components/reference/ReferenceHero';
 import GateLiveDemoCard from '@/components/reference/GateLiveDemoCard';
+import Collection2026Section from '@/components/reference/Collection2026Section';
+import FeaturesSection from '@/components/reference/FeaturesSection';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -188,6 +190,9 @@ export default function Reference() {
       <ReferenceHero />
 
       <GateLiveDemoCard />
+
+      <Collection2026Section />
+      <FeaturesSection />
 
       {/* Filters */}
       <div id="realizace" className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">

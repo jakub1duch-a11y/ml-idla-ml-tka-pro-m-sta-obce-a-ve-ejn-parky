@@ -69,6 +69,13 @@
       "type": "boolean",
       "description": "Whether product is featured",
       "default": false
+    },
+    "documents_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Soubory ke sta\u017een\u00ed k produktu (technick\u00e9 listy, manu\u00e1ly, cen\u00edky) \u2014 URL adresy"
     }
   },
   "required": [

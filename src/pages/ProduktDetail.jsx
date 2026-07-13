@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Maximize2, Truck, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
-import HeroMistParticles from '@/components/produkt/HeroMistParticles';
-import { useScroll, useTransform } from 'framer-motion';
-import { trackProductView, trackQuickInquiryClick } from '@/lib/ga4';
+import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import ProductReviews from '@/components/reviews/ProductReviews';
-import ProductTechGrid from '@/components/produkt/ProductTechGrid';
-import InstallationTab from '@/components/produkt/tabs/InstallationTab';
-import BenefitsTab from '@/components/produkt/tabs/BenefitsTab';
-import VideoTab from '@/components/produkt/tabs/VideoTab';
-import DetailTab from '@/components/produkt/tabs/DetailTab';
+import ProductHero from '@/components/produkt/ProductHero';
+import ProductStickyFooterBar from '@/components/produkt/ProductStickyFooterBar';
+import OProduktuTab from '@/components/produkt/tabs/OProduktuTab';
 import SpecsTab from '@/components/produkt/tabs/SpecsTab';
-import SmartModulesTab from '@/components/produkt/tabs/SmartModulesTab';
+import BenefityTab from '@/components/produkt/tabs/BenefityTab';
+import InstallationTab from '@/components/produkt/tabs/InstallationTab';
+import ZivaUkazkaTab from '@/components/produkt/tabs/ZivaUkazkaTab';
 import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
@@ -60,14 +58,12 @@ function Lightbox({ images, initialIndex, onClose }) {
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
-{ id: 'detail', label: 'Detail produktu' },
-{ id: 'galerie', label: "Galerie" },
-{ id: 'specifikace', label: "Specifikace" },
-{ id: 'smart', label: 'SMART moduly' },
-{ id: 'instalace', label: 'Instalace' },
-{ id: 'video', label: 'Videa - ukázka v akci' },
-{ id: 'ke-stazeni', label: 'Ke stažení' },
-{ id: 'poptat', label: 'Poptat produkt', action: 'scroll' }];
+{ id: 'o-produktu', label: 'O produktu' },
+{ id: 'technicke', label: 'Technické informace' },
+{ id: 'benefity', label: 'Benefity a přínosy' },
+{ id: 'instalace', label: 'Kotvení a instalace' },
+{ id: 'video', label: 'Živá ukázka' },
+{ id: 'ke-stazeni', label: 'Ke stažení' }];
 
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -75,30 +71,32 @@ export default function ProduktDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [lightbox, setLightbox] = useState(null);
-  const [activeTab, setActiveTab] = useState('detail');
+  const [activeTab, setActiveTab] = useState('o-produktu');
+  const [showStickyBar, setShowStickyBar] = useState(false);
   const tabsNavRef = useRef(null);
   const contactRef = useRef(null);
   const tabsScrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const heroRef = useRef(null);
-  const { scrollYProgress: heroScrollProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroImageScale = useTransform(heroScrollProgress, [0, 1], [1, 1.15]);
-  const heroImageY = useTransform(heroScrollProgress, [0, 1], ['0%', '15%']);
 
   const handleReviewStats = (stats) => {
     if (product) setSEO(getProductSEO(product, stats));
   };
 
   useEffect(() => {
+    base44.entities.ProductCategory.list().then(setCategories).catch(() => []);
+  }, []);
+
+  useEffect(() => {
     if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
-    setActiveTab('detail');
+    setActiveTab('o-produktu');
     base44.entities.Product.filter({ slug }).
     then(async (results) => {
       if (!results || results.length === 0) {setNotFound(true);return;}
@@ -115,6 +113,12 @@ export default function ProduktDetail() {
     finally(() => setLoading(false));
   }, [slug]);
 
+  useEffect(() => {
+    const onScroll = () => setShowStickyBar(window.scrollY > 520);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const updateArrowVisibility = () => {
     const el = tabsScrollRef.current;
     if (!el) return;
@@ -130,24 +134,16 @@ export default function ProduktDetail() {
     updateArrowVisibility();
   }, [product]);
 
-  const handleTabClick = (tab) => {
-    if (tab.action === 'scroll') {
-      if (contactRef.current) {
-        gsap.to(window, {
-          duration: 0.9,
-          scrollTo: { y: contactRef.current, offsetY: 80 },
-          ease: 'power2.inOut'
-        });
-      }
-      return;
+  const scrollToContact = () => {
+    if (contactRef.current) {
+      gsap.to(window, { duration: 0.9, scrollTo: { y: contactRef.current, offsetY: 80 }, ease: 'power2.inOut' });
     }
+  };
+
+  const handleTabClick = (tab) => {
     setActiveTab(tab.id);
     if (tabsNavRef.current) {
-      gsap.to(window, {
-        duration: 0.9,
-        scrollTo: { y: tabsNavRef.current, offsetY: 64 },
-        ease: 'power2.inOut'
-      });
+      gsap.to(window, { duration: 0.9, scrollTo: { y: tabsNavRef.current, offsetY: 64 }, ease: 'power2.inOut' });
     }
   };
 
@@ -165,8 +161,7 @@ export default function ProduktDetail() {
     </div>);
 
   const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
-  const img = (i) => allImages[i] || null;
-  const visibleTabs = TABS.filter((t) => t.id !== 'video' || !!product.video_url);
+  const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [
   product.coverage_area && { label: 'Výška', value: product.coverage_area, icon: Ruler, desc: 'Celková výška konstrukce ovlivňuje dosah a pokrytí mlžného oblaku v prostoru.' },
@@ -179,77 +174,26 @@ export default function ProduktDetail() {
   { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' }].
   filter(Boolean);
 
+  const contentTabs = TABS;
+  const idx = contentTabs.findIndex((t) => t.id === activeTab);
+  const nextTab = contentTabs[idx + 1];
+
   return (
     <div className="min-h-screen bg-white">
 
-      {/* ═══════ FIXNÍ ÚVODNÍ SEKCE — HERO ═══════ */}
-      <div ref={heroRef} className="relative h-screen min-h-[640px] overflow-hidden" style={{ perspective: 1000 }}>
-        {img(0) ?
-        <motion.img src={img(0)} alt={product.name} className="w-full h-full object-cover" style={{ scale: heroImageScale, y: heroImageY }} /> :
-        <div className="w-full h-full bg-slate-100" />
-        }
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-        <div className="absolute inset-0 to-white bg-gradient-to-l via-black/5 from-black/" />
-        <HeroMistParticles />
-
-        <div className="absolute top-24 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
-          <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/40 hover:text-white transition-colors">
-            <ArrowLeft size={12} /> Zpět na produkty
-          </Link>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 items-end">
-            <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
-              <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">Nízkotlaké mlžÍTKO - 2–4 BAR</p>
-              <h1 className="font-heading font-light tracking-tight leading-[0.95] text-4xl sm:text-5xl lg:text-8xl text-white mb-6">
-                {product.name}
-              </h1>
-
-              {product.short_description &&
-              <p className="text-white/60 text-lg max-w-lg mb-6 leading-relaxed font-light">
-                  {product.short_description}
-                </p>
-              }
-
-              <div className="flex flex-wrap items-center gap-5 mb-8">
-                <p className="text-2xl font-light text-white">Cena: <span className="font-lght">od {product.price_from ? `${product.price_from} Kč` : ''} (na vyžádání)</span></p>
-                <span className="flex items-center gap-1.5 text-xs font-mono tracking-widest uppercase text-emerald-300">
-                  <Truck size={14} /> Doprava zdarma
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
-                onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
-                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                  Rychlá poptávka <ArrowRight size={16} />
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.15 }}>
-              <ProductTechGrid product={product} />
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 right-8 flex flex-col items-center gap-2 text-white/20">
-          <div className="w-px h-10 bg-gradient-to-b from-transparent to-white/30" />
-          <span className="text-[9px] font-mono tracking-[0.3em] uppercase">Scroll</span>
-        </div>
-      </div>
+      {/* ═══════ HERO ═══════ */}
+      <ProductHero
+        product={product}
+        categoryName={categoryName}
+        allImages={allImages}
+        onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
+        onShowTechnical={() => handleTabClick(TABS[1])}
+      />
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
       <div ref={tabsNavRef} className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center gap-4 lg:gap-8">
-          <div className="flex items-center gap-3 py-4 border-r border-slate-200 pr-4 lg:pr-8 shrink-0">
-            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors text-left uppercase">ZPĚT DO KOLEKCE
-
-            </Link>
-            <span className="hidden lg:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
-          </div>
-          <div className="relative flex-1 min-w-0">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row sm:items-center">
+          <div className="relative flex-1 min-w-0 order-1">
             {canScrollLeft &&
             <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
               className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
@@ -257,12 +201,12 @@ export default function ProduktDetail() {
             </button>
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-              className="flex gap-2 sm:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-              {visibleTabs.map((t) =>
+              className="flex gap-2 sm:gap-6 lg:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+              {TABS.map((t) =>
               <button key={t.id} onClick={() => handleTabClick(t)}
-              className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id && t.action !== 'scroll' ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
+              className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
                   {t.label}
-                  {activeTab === t.id && t.action !== 'scroll' &&
+                  {activeTab === t.id &&
                 <motion.div layoutId="produkt-tab-underline" className="hidden sm:block absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
                 }
                 </button>
@@ -275,46 +219,42 @@ export default function ProduktDetail() {
             </button>
             }
           </div>
+          <div className="flex items-center gap-3 py-2.5 sm:py-4 border-t sm:border-t-0 sm:border-l border-slate-200 sm:pl-6 lg:pl-8 shrink-0 order-2 sm:order-first">
+            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors uppercase">
+              <ArrowLeft size={12} /> Zpět
+            </Link>
+            <span className="hidden sm:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
+          </div>
         </div>
       </div>
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-          {activeTab === 'detail' && <DetailTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ images: customImages || allImages, idx: i })} />}
-          {activeTab === 'galerie' &&
-          <BenefitsTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />
-          }
-          {activeTab === 'specifikace' && <SpecsTab product={product} techRows={techRows} />}
-          {activeTab === 'smart' && <SmartModulesTab product={product} />}
+          {activeTab === 'o-produktu' && <OProduktuTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ images: customImages || allImages, idx: i })} />}
+          {activeTab === 'technicke' && <SpecsTab product={product} techRows={techRows} />}
+          {activeTab === 'benefity' && <BenefityTab product={product} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
-          {activeTab === 'video' && <VideoTab product={product} />}
+          {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}
           {activeTab === 'ke-stazeni' && <DownloadsTab product={product} />}
         </motion.div>
       </AnimatePresence>
 
       {/* ═══════ TAB FOOTER NAV ═══════ */}
-      {(() => {
-        const contentTabs = visibleTabs.filter((t) => t.action !== 'scroll');
-        const idx = contentTabs.findIndex((t) => t.id === activeTab);
-        const nextTab = contentTabs[idx + 1];
-        return (
-          <div className="border-t border-slate-200 bg-slate-50 py-6">
-            <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              {nextTab ?
-              <button onClick={() => handleTabClick(nextTab)}
-              className="inline-flex items-center gap-2 font-medium text-slate-600 hover:text-slate-900 transition-colors uppercase text-sm">
-                  Pokračovat: {nextTab.label} <ArrowRight size={15} />
-                </button> :
-              <span />
-              }
-              <button onClick={() => handleTabClick({ action: 'scroll' })}
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-                Poptat produkt zdarma <ArrowRight size={16} />
-              </button>
-            </div>
-          </div>);
-
-      })()}
+      <div className="border-t border-slate-200 bg-slate-50 py-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          {nextTab ?
+          <button onClick={() => handleTabClick(nextTab)}
+          className="inline-flex items-center gap-2 font-medium text-slate-600 hover:text-slate-900 transition-colors uppercase text-sm">
+              Pokračovat: {nextTab.label} <ArrowRight size={15} />
+            </button> :
+          <span />
+          }
+          <button onClick={scrollToContact}
+          className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+            Poptat produkt zdarma <ArrowRight size={16} />
+          </button>
+        </div>
+      </div>
 
       {/* ═══════ REVIEWS ═══════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
@@ -403,5 +343,7 @@ export default function ProduktDetail() {
       {lightbox &&
       <Lightbox images={lightbox.images} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} />
       }
+
+      <ProductStickyFooterBar product={product} show={showStickyBar} onPoptat={scrollToContact} />
     </div>);
 }

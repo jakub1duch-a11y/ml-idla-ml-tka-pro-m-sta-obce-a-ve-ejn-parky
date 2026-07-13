@@ -3,6 +3,7 @@ import KolekceHero from '@/components/kolekce/KolekceHero';
 import CategorySelector from '@/components/kolekce/CategorySelector';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
+import GatesSlider from '@/components/kolekce/GatesSlider';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
@@ -207,6 +208,9 @@ export default function Kolekce() {
 
       {/* ── KATEGORIE (hover icon cards) ── */}
       <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
+
+      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
+      <GatesSlider />
 
       {/* ── VLASTNOSTI A VÝHODY ── */}
       <FeaturesBenefitsSection />

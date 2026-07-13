@@ -17,7 +17,7 @@ export default function MlzidlaCzShowcase({ product, onPrev, onNext }) {
               <p className="text-slate-500 text-sm leading-relaxed mb-4">{product.description}</p>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">{product.description2}</p>
               <div className="flex flex-wrap gap-3">
-                <Link to={`/mlzidla/produkt/${product.id}`} className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-3 rounded-full transition-colors">
+                <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-3 rounded-full transition-colors">
                   Více informací <ArrowRight size={15} />
                 </Link>
                 <Link to="/ke-stazeni" className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-5 py-3 rounded-full hover:bg-slate-50 transition-colors">

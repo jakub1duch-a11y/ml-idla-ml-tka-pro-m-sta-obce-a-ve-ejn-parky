@@ -15,7 +15,6 @@ import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
 import Kolekce from '@/pages/Kolekce';
-import JakToFunguje from '@/pages/JakToFunguje';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
 import SearchAnalytics from '@/pages/SearchAnalytics';
@@ -46,7 +45,6 @@ import AdminLogin from '@/pages/admin/AdminLogin';
 import AdminLogout from '@/pages/admin/AdminLogout';
 import AdminForgotPassword from '@/pages/admin/AdminForgotPassword';
 import Gate70 from '@/pages/Gate70';
-import Faq from '@/pages/Faq';
 import Technologie from '@/pages/Technologie';
 import Vyhody from '@/pages/Vyhody';
 import KeStazeni from '@/pages/KeStazeni';
@@ -58,7 +56,6 @@ import Katalog from '@/pages/Katalog';
 import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
-import Manualy from '@/pages/Manualy';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 
 const AuthenticatedApp = () => {
@@ -82,7 +79,7 @@ const AuthenticatedApp = () => {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
-        <Route path="/jak-to-funguje" element={<JakToFunguje />} />
+        <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
@@ -109,7 +106,7 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route path="/faq" element={<Podpora />} />
         <Route path="/technologie" element={<Technologie />} />
         <Route path="/vyhody" element={<Vyhody />} />
         <Route path="/ke-stazeni" element={<KeStazeni />} />
@@ -121,7 +118,7 @@ const AuthenticatedApp = () => {
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />
-        <Route path="/manualy" element={<Manualy />} />
+        <Route path="/manualy" element={<KeStazeni />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
       </Route>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Loader } from 'lucide-react';
+import { ArrowRight, Loader, Radio, Sparkles } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const CATEGORY_LABELS = {
@@ -27,13 +27,6 @@ const FALLBACK = [
   perex: 'Věda za mlhou: kapky 10–50 μm se odpařují ještě ve vzduchu a absorbují teplo z okolí.',
   image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
   category: 'technika', published_date: '2026-06-01', published: true
-},
-{
-  id: 'f3', slug: 'detske-hriste-mlhoviste',
-  title: 'Dětské hřiště a mlhoviště: vše co potřebujete vědět',
-  perex: 'Bezpečnost, certifikace, materiály. Kompletní průvodce pro obce a správce hřišť.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-  category: 'inspirace', published_date: '2026-05-01', published: true
 }];
 
 
@@ -48,7 +41,7 @@ function PostCard({ post, i }) {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
       <Link to={`/blog/${post.slug || post.id}`}
-        className="group relative block h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all">
+        className="group relative block h-72 rounded-2xl overflow-hidden border border-white/10 shadow-sm hover:shadow-lg transition-all">
         <img src={bg} alt={post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" />
         <div className="relative h-full flex flex-col justify-end p-6">
@@ -71,6 +64,72 @@ function PostCard({ post, i }) {
   );
 }
 
+function LiveDemoCard() {
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      className="lg:col-span-2">
+      <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
+        <video
+          src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov"
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
+
+        <div className="relative h-full flex flex-col justify-between p-7 lg:p-9">
+          <div className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5 text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-red-500/90 rounded-full">
+              <Radio size={11} className="animate-pulse" /> Živě
+            </span>
+            <span className="text-[10px] font-mono text-white/70 tracking-widest uppercase px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
+              Novinka
+            </span>
+          </div>
+
+          <div>
+            <h3 className="font-heading font-light text-2xl lg:text-3xl text-white tracking-tight leading-snug mb-3">
+              Živá ukázka: mlžení naší brány GATE
+            </h3>
+            <p className="text-sm text-white/60 font-light leading-relaxed max-w-md mb-5">
+              Podívejte se, jak jemná mlhová clona GATE ochlazuje vzduch v reálném čase — bez mokrého povrchu, bez hluku, s okamžitým osvěžujícím efektem už na první nádech.
+            </p>
+            <div className="flex items-center gap-2 text-sm text-white font-medium group-hover:gap-3 transition-all">
+              Prohlédnout mlžnou bránu GATE <ArrowRight size={15} />
+            </div>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
+function GateOfferCard() {
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+      <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
+        <img
+          src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png"
+          alt="Mlžná brána GATE70"
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/0" />
+
+        <div className="relative h-full flex flex-col justify-between p-6">
+          <span className="inline-flex items-center gap-1.5 self-start text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full">
+            <Sparkles size={11} /> Nabídka produktu
+          </span>
+          <div>
+            <p className="text-xs font-mono text-white/50 tracking-widest uppercase mb-2">Mlžná brána</p>
+            <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3">GATE70</h3>
+            <p className="text-sm text-white/60 font-light leading-relaxed mb-5">Ochlazení až o 9 °C, Wi-Fi Smart řízení, dvě tvarové varianty na míru vašemu prostoru.</p>
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 text-xs font-bold rounded-full group-hover:bg-white/90 transition-all">
+              Poptat GATE70 <ArrowRight size={13} />
+            </span>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
 export default function BlogSection() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -85,39 +144,41 @@ export default function BlogSection() {
     finally(() => setLoading(false));
   }, []);
 
-  const latestThree = posts.slice(0, 3);
-
-  if (loading) {
-    return (
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-center py-20">
-          <Loader size={24} className="animate-spin text-slate-300" />
-        </div>
-      </section>);
-
-  }
+  const latestTwo = posts.slice(0, 2);
 
   return (
-    <section className="py-24 bg-slate-50">
+    <section className="py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Blog & znalosti</p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+          <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Novinky & znalosti</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
-              O mlžení do hloubky
+              className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
+              Co je nového u nás
             </motion.h2>
-            <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-slate-900 font-light hover:gap-3 transition-all">
+            <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-white/70 font-light hover:text-white hover:gap-3 transition-all">
               Všechny články <ArrowRight size={14} />
             </Link>
           </div>
         </motion.div>
 
-        {/* Latest 3 posts — photo background + gradient overlay */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {latestThree.map((post, i) => <PostCard key={post.id} post={post} i={i} />)}
+        {/* Bento: live demo + product offer */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
+          <LiveDemoCard />
+          <GateOfferCard />
         </div>
+
+        {/* Blog posts */}
+        {loading ? (
+          <div className="flex justify-center py-14">
+            <Loader size={22} className="animate-spin text-white/30" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {latestTwo.map((post, i) => <PostCard key={post.id} post={post} i={i} />)}
+          </div>
+        )}
       </div>
     </section>);
 

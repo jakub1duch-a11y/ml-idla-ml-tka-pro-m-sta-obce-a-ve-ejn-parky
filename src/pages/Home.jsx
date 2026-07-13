@@ -24,11 +24,11 @@ export default function Home() {
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
-      <FadeIn><ReferenceSection /></FadeIn>
       <FadeIn><InstagramFeedSection /></FadeIn>
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>
       <FadeIn><ConceptToRealitySection /></FadeIn>
+      <FadeIn><ReferenceSection /></FadeIn>
     </>
   );
 }

@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Thermometer, Wind, Eye, Droplet, Flame, Gauge, Sparkles, ArrowRight } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import AnatomySection from '@/components/technologie/AnatomySection';
+import SmartManagementSection from '@/components/technologie/SmartManagementSection';
+import FormFunctionSection from '@/components/technologie/FormFunctionSection';
+import IntegrationSection from '@/components/technologie/IntegrationSection';
+import ProcessSection from '@/components/technologie/ProcessSection';
+import InstallationComparisonSection from '@/components/technologie/InstallationComparisonSection';
 
 const BENEFITS = [
   { icon: Thermometer, title: 'Ochlazení', text: 'Zlepšení mikroklimatu přirozeným odpařováním.' },
@@ -101,7 +107,14 @@ export default function Technologie() {
         </motion.div>
       </div>
 
-      <div className="text-center mt-4">
+      <AnatomySection />
+      <SmartManagementSection />
+      <FormFunctionSection />
+      <IntegrationSection />
+      <ProcessSection />
+      <InstallationComparisonSection />
+
+      <div className="text-center mt-14">
         <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
           Nezávazná poptávka <ArrowRight size={16} />
         </Link>

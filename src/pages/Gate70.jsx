@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 
 // ─── Asset URLs ───────────────────────────────────────────────────────────────
 const HERO_U = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png';
@@ -343,6 +344,8 @@ export default function Gate70() {
           </motion.div>
         </div>
       </section>
+
+      <GateComparisonTable />
 
       {/* ══════════════════════════════════════════════════════
                                5. SMART ŘÍZENÍ

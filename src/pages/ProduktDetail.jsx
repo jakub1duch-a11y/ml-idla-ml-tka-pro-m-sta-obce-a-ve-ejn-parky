@@ -18,6 +18,9 @@ import ZivaUkazkaTab from '@/components/produkt/tabs/ZivaUkazkaTab';
 import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
+import GateComparisonTable from '@/components/produkt/GateComparisonTable';
+
+const GATE_SLUGS = ['gate70', 'linea-el70'];
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -231,7 +234,12 @@ export default function ProduktDetail() {
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
           {activeTab === 'o-produktu' && <OProduktuTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ images: customImages || allImages, idx: i })} />}
-          {activeTab === 'technicke' && <SpecsTab product={product} techRows={techRows} />}
+          {activeTab === 'technicke' && (
+            <>
+              <SpecsTab product={product} techRows={techRows} />
+              {GATE_SLUGS.includes(product.slug) && <GateComparisonTable />}
+            </>
+          )}
           {activeTab === 'benefity' && <BenefityTab product={product} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
           {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}

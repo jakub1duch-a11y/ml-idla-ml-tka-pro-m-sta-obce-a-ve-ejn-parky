@@ -1,32 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { setSEO } from '@/lib/seo';
-import MlzidlaHero from '@/components/mlzidla/MlzidlaHero';
-import MlzidlaInfoBoxes from '@/components/mlzidla/MlzidlaInfoBoxes';
-import MlzidlaDryMistTech from '@/components/mlzidla/MlzidlaDryMistTech';
-import MlzidlaCatalog from '@/components/mlzidla/MlzidlaCatalog';
-import MlzidlaInstallation from '@/components/mlzidla/MlzidlaInstallation';
-import MlzidlaSmartSystem from '@/components/mlzidla/MlzidlaSmartSystem';
-import MlzidlaRealizace from '@/components/mlzidla/MlzidlaRealizace';
-import MlzidlaFooter from '@/components/mlzidla/MlzidlaFooter';
+import MlzidlaCzNav from '@/components/mlzidlacz/MlzidlaCzNav';
+import MlzidlaCzSidebar from '@/components/mlzidlacz/MlzidlaCzSidebar';
+import MlzidlaCzShowcase from '@/components/mlzidlacz/MlzidlaCzShowcase';
+import MlzidlaCzSpecsSidebar from '@/components/mlzidlacz/MlzidlaCzSpecsSidebar';
+import MlzidlaCzFeatureRow from '@/components/mlzidlacz/MlzidlaCzFeatureRow';
+import MlzidlaCzTechDetails from '@/components/mlzidlacz/MlzidlaCzTechDetails';
+import { PRODUCTS } from '@/components/mlzidlacz/mlzidlaCzData';
 
 export default function Mlzidla() {
+  const [activeId, setActiveId] = useState(PRODUCTS[0].id);
+
   useEffect(() => {
     setSEO({
-      title: 'Mlžítka a mlžné sochy | HolmTec',
-      description: 'Nerezové mlžné instalace pro městské prostory — mlžné sochy, brány, linie a mobilní mlžítka. Suchá mlha, smart řízení, CNC výroba.',
+      title: 'Mlžidla.cz — Mlžné systémy',
+      description: 'Interaktivní mlžné sochy, brány, linie a mobilní mlžítka z nerezové oceli. Ochlazení veřejných prostorů, parků, hřišť a zoo.',
     });
   }, []);
 
+  const activeIndex = PRODUCTS.findIndex((p) => p.id === activeId);
+  const activeProduct = PRODUCTS[activeIndex];
+
+  const goPrev = () => setActiveId(PRODUCTS[(activeIndex - 1 + PRODUCTS.length) % PRODUCTS.length].id);
+  const goNext = () => setActiveId(PRODUCTS[(activeIndex + 1) % PRODUCTS.length].id);
+
   return (
-    <div className="min-h-screen bg-black">
-      <MlzidlaHero />
-      <MlzidlaInfoBoxes />
-      <MlzidlaDryMistTech />
-      <MlzidlaCatalog />
-      <MlzidlaInstallation />
-      <MlzidlaSmartSystem />
-      <MlzidlaRealizace />
-      <MlzidlaFooter />
+    <div className="min-h-screen bg-slate-50">
+      <MlzidlaCzNav />
+
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr_220px] gap-6 items-stretch">
+          <MlzidlaCzSidebar products={PRODUCTS} activeId={activeId} onSelect={setActiveId} />
+          <MlzidlaCzShowcase product={activeProduct} onPrev={goPrev} onNext={goNext} />
+          <MlzidlaCzSpecsSidebar />
+        </div>
+
+        <MlzidlaCzFeatureRow />
+        <MlzidlaCzTechDetails />
+      </div>
     </div>
   );
 }

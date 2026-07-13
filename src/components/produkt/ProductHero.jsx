@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
+import ProductHeroMist from './ProductHeroMist';
 
 export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
   const quickSpecs = [
@@ -14,7 +15,9 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
   ].filter(Boolean);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-10">
+    <div className="relative overflow-hidden">
+      <ProductHeroMist />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-10">
       <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-6 flex-wrap">
         <Link to="/" className="hover:text-slate-700 transition-colors">Domů</Link>
         <ChevronRight size={12} />
@@ -80,6 +83,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             </button>
           </div>
         </motion.div>
+      </div>
       </div>
     </div>
   );

@@ -23,9 +23,9 @@ export default function InstallationTab({ product }) {
               Instalace 30 min
             </div>
             <span className="inline-block px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono tracking-widest uppercase rounded-full mb-6">Mobilní</span>
-            <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut + kolečka</h3>
+            <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut do trávníku</h3>
             <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">
-              Transportní kolečka a integrované úchyty na těle konstrukce, kotvení masivním zemním vrutem se závitem. Kompletní instalace a zprovoznění za 30 minut, bez betonování.
+              Masivní zemní vrut se závitem pro rychlé a pevné ukotvení do travnatých povrchů — zahrady, parky, trávníky. Kompletní instalace a zprovoznění za 30 minut, bez betonování a bez kotevní patky.
             </p>
             <div className="space-y-3 text-sm text-slate-600 font-light">
               <div className="flex items-start gap-3"><span className="text-emerald-600 font-bold mt-0.5">✓</span><span>Zašroubování vrutu bez speciálního nářadí</span></div>
@@ -35,14 +35,18 @@ export default function InstallationTab({ product }) {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            className="p-8 rounded-2xl border border-slate-200 bg-white">
+            className="p-8 rounded-2xl border border-slate-200 bg-white relative overflow-hidden">
+            <div className="absolute top-6 right-6 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold tracking-widest uppercase rounded-full">
+              Antivandal
+            </div>
             <span className="inline-block px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono tracking-widest uppercase rounded-full mb-6">Stálá instalace</span>
             <h3 className="text-2xl font-light text-slate-900 mb-3">Skrytá kotvící patka</h3>
             <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">
-              Patka skrytá pod úrovní terénu pro fixní městské instalace — čistý vzhled bez viditelného kotvení, maximální stabilita pro veřejný prostor.
+              Patka skrytá pod úrovní terénu pro fixní městské instalace — čistý vzhled bez viditelného kotvení. Profesionální kotvení navržené na maximální pevnost a antivandal odolnost ve veřejném prostoru.
             </p>
             <div className="space-y-3 text-sm text-slate-600 font-light">
-              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Maximální stabilita a bezpečnost</span></div>
+              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Profesionální kotvení s maximální pevností</span></div>
+              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Antivandal odolnost pro veřejný prostor</span></div>
               <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Profesionální vzhled bez viditelného kotvení</span></div>
               <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Vhodné pro náměstí, parky, permanentní projekty</span></div>
             </div>

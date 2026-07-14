@@ -4,11 +4,12 @@ import CategorySelector from '@/components/kolekce/CategorySelector';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import GatesSlider from '@/components/kolekce/GatesSlider';
+import AccessoriesRow from '@/components/kolekce/AccessoriesRow';
 import CollectionMainInfoSection from '@/components/kolekce/CollectionMainInfoSection';
 import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { trackQuickInquiryClick } from '@/lib/ga4';
@@ -71,18 +72,6 @@ const categoryGroups = [
   accent: 'text-sky-700 bg-sky-50 border-sky-200',
   dbCategories: ['URBAN ART'],
   slugKeywords: ['aura', 'linear', 'Y-ARMIST', 'Spirála', 'BENDY']
-},
-{
-  id: 'mlhoviste',
-  label: 'Mlhoviště a chladicí zóny',
-  icon: Flame,
-  tagline: 'Až −9 °C. Komfort bez kompromisů.',
-  description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
-  audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
-  usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
-  accent: 'text-orange-700 bg-orange-50 border-orange-200',
-  dbCategories: ['GEOMETRY'],
-  slugKeywords: ['Mlžítka', 'Mlžiště', 'Mlžné systémy', 'Mlžné příslušenství', 'SMART mlžítka']
 }];
 
 
@@ -183,8 +172,10 @@ export default function Kolekce() {
   const activeGroup = categoryGroups.find((g) => g.id === activeCategory);
   const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
 
+  const ACCESSORY_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
+
   const displayedProducts = products.
-  filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory'].includes(p.name)).
+  filter((p) => !ACCESSORY_NAMES.includes(p.name)).
   filter((p) => {
     if (activeGroup) {
       return activeGroup.dbCategories.includes(p._categoryName) ||
@@ -200,7 +191,10 @@ export default function Kolekce() {
     return (p.name || '').toLowerCase().includes(q) ||
     (p.short_description || '').toLowerCase().includes(q) ||
     (p.description || '').toLowerCase().includes(q);
-  });
+  }).
+  sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
+  const accessoryProducts = products.filter((p) => ACCESSORY_NAMES.includes(p.name));
 
   return (
     <div className="min-h-screen bg-white">
@@ -210,9 +204,6 @@ export default function Kolekce() {
 
       {/* ── KATEGORIE (hover icon cards) ── */}
       <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
-
-      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
-      <GatesSlider />
 
       {/* ── HLAVNÍ INFORMACE ── */}
       <CollectionMainInfoSection />
@@ -249,6 +240,12 @@ export default function Kolekce() {
           </div>
         }
       </div>
+
+      {/* ── PŘÍSLUŠENSTVÍ ── */}
+      <AccessoriesRow products={accessoryProducts} />
+
+      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
+      <GatesSlider />
 
       {/* ── ŽIVÁ UKÁZKA ── */}
       <LiveDemoSection />

@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
+
+const HEADLINES = [
+'Mlžítka, která mění prostor v zážitek.',
+'Mlha, co chladí. Design, co uchvátí.',
+'Vstupte skrze mlhu. Zůstaňte v chladu.',
+'Vaše náměstí, terasa i zahrada — o pár stupňů chladnější.',
+'Architektura, která dýchá mlhou.'];
+
 
 const TAGLINES = [
-'Mlžítka – ochlazují prostor, osvěžují pocit.',
-'Když prostor chladí, pocit roste.',
-'Prostor, který dýchá a osvěžuje.',
-'Osvěžení prostoru, které cítíte.',
-'Mlžítka – chladnější vzduch, lepší zážitek.',
-'Prostor, kde se cítíte lépe.',
-'Dotek mlhy, který změní prostor.',
-'Ochlazení, které oživí místo.',
-'Vytváříme příjemnější místa k životu.',
-'Příjemnější místa k životu díky mlžítkům.',
-'Mlžítka – vytváří příjemnější místa k životu.',
-'Ochlazujeme a vytváříme příjemnější místa k životu.'];
+'Živá ukázka mlžení v akci.',
+'Mikrokapky, které se okamžitě odpaří.',
+'Nerezová ocel AISI 316L, zakázková výroba.',
+'Smart Wi-Fi řízení podle teploty a vlhkosti.',
+'Chlazení bez pocitu mokra — až −9 °C.'];
 
 
 const SLIDES = [
@@ -21,7 +23,7 @@ const SLIDES = [
 { type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9f0153e3a_ml_detailvparku_01.MOV' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.MOV' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' },];
+{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' }];
 
 
 // Duration per slide: videos ~8s, images 5s
@@ -60,13 +62,13 @@ export default function KolekceHero() {
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % SLIDES.length);
-    setTaglineIdx((t) => (t + 1) % TAGLINES.length);
+    setTaglineIdx((t) => (t + 1) % HEADLINES.length);
   }, []);
 
   const goTo = (i) => {
     clearInterval(timerRef.current);
     setCurrent(i);
-    setTaglineIdx(i % TAGLINES.length);
+    setTaglineIdx(i % HEADLINES.length);
     timerRef.current = setInterval(next, SLIDE_DURATION);
   };
 
@@ -75,10 +77,8 @@ export default function KolekceHero() {
     return () => clearInterval(timerRef.current);
   }, [next]);
 
-  const slide = SLIDES[current];
-
   return (
-    <div className="relative w-full overflow-hidden bg-slate-900 h-[70vh] min-h-[480px]">
+    <div className="relative w-full overflow-hidden bg-slate-900 h-[78vh] min-h-[560px]">
       {/* Slides */}
       {SLIDES.map((s, i) =>
       <div
@@ -92,53 +92,60 @@ export default function KolekceHero() {
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-black/35 to-black/10 pointer-events-none" />
 
       {/* Content */}
-      <div className="absolute z-30 flex flex-col justify-end pb-12 inset-0">
-        <div className="absolute bottom-12 left-0 right-0 px-6 lg:px-8 max-w-7xl mx-auto">
-          <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
-            Mlžítka<br /><span className="text-slate-400">a mlžné brány.</span>
-          </h1>
-          <p className="text-white/70 max-w-xl text-base leading-relaxed font-light">
-            Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
-          </p>
+      <div className="absolute z-30 inset-0 flex flex-col justify-end pb-16">
+        <div className="px-6 lg:px-8 max-w-7xl mx-auto w-full">
+          <motion.span initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono tracking-widest uppercase mb-5">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            Živá ukázka mlžení
+          </motion.span>
+
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={`headline-${taglineIdx}`}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight leading-[1.05] max-w-3xl mb-4">
+              
+              {HEADLINES[taglineIdx]}
+            </motion.h1>
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={`tag-${taglineIdx}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.55, ease: 'easeOut', delay: 0.08 }}
+              className="flex items-center gap-2 text-white/70 text-base font-light max-w-xl mb-8">
+              
+              <Sparkles size={15} className="text-white/50 shrink-0" /> {TAGLINES[taglineIdx]}
+            </motion.p>
+          </AnimatePresence>
+
+          {/* Slide dot navigation */}
+          <div className="flex items-center gap-2">
+            {SLIDES.map((_, i) =>
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Zobrazit ukázku ${i + 1}`}
+              className="group py-2">
+              
+                <span className={`block h-1 rounded-full transition-all duration-300 ${i === current ? 'w-8 bg-white' : 'w-3 bg-white/30 group-hover:bg-white/60'}`} />
+              </button>
+            )}
+          </div>
         </div>
-        <AnimatePresence mode="wait">
-          <motion.h2
-            key={`title-${taglineIdx}`}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="font-heading font-extralight text-3xl lg:text-5xl text-white max-w-2xl leading-tight tracking-tight hidden">
-
-            Mlžítka a mlžidla Holmtec
-          </motion.h2>
-        </AnimatePresence>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={`tag-${taglineIdx}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.05 }}
-            className="text-xs font-medium tracking-[0.18em] uppercase text-white/60 mt-3 hidden">
-            
-            {TAGLINES[taglineIdx]}
-          </motion.p>
-        </AnimatePresence>
-
-        {/* Dash nav */}
-        
-
-
-
-
-
-
-
-        
       </div>
     </div>);
 

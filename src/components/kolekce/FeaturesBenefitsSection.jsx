@@ -28,17 +28,20 @@ export default function FeaturesBenefitsSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.07 }}
               whileHover={{ y: -3 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all"
+              className="group p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all overflow-hidden"
             >
               <motion.div
                 whileHover={{ scale: 1.15, rotate: -6 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 14 }}
-                className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4"
+                className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-slate-900 transition-colors"
               >
-                <f.icon size={19} className="text-slate-900" />
+                <f.icon size={19} className="text-slate-900 group-hover:text-white transition-colors" />
               </motion.div>
               <h3 className="text-slate-900 font-medium mb-1.5">{f.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
+              <div className="max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-300 ease-out overflow-hidden">
+                <p className="text-sm text-slate-500 leading-relaxed pt-0.5">{f.desc}</p>
+              </div>
+              <p className="text-xs text-slate-300 group-hover:hidden mt-0.5 font-mono tracking-wider uppercase">Najeďte pro detail</p>
             </motion.div>
           ))}
         </div>

@@ -6,7 +6,7 @@ import MistAmbientBackground from '@/components/reference/MistAmbientBackground'
 
 export default function ReferenceHero() {
   return (
-    <div className="relative overflow-hidden mx-auto px-6 lg:px-8 pb-16 max-w-xl">
+    <div className="relative overflow-hidden mx-auto px-6 lg:px-8 pb-16 max-w-8xl">
       <MistAmbientBackground />
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         {/* Left — text + CTAs */}

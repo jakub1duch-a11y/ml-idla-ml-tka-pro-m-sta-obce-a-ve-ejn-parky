@@ -5,10 +5,10 @@ import WaterConsumptionCalculator from '@/components/produkt2/WaterConsumptionCa
 
 export default function SpecsWaterSlide({ specRows, defaultNozzles }) {
   return (
-    <section className="min-h-screen w-full flex flex-col justify-center px-8 lg:px-20 py-24 bg-[#0d141d]">
-      <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="font-mono text-xs tracking-widest uppercase text-white/40 mb-4">[Technické parametry]</motion.p>
+    <section className="min-h-screen w-full flex flex-col justify-center px-6 lg:px-20 py-24 bg-slate-50">
+      <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-sm font-semibold tracking-wide text-techblue mb-4">Technické parametry</motion.p>
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="font-mono font-bold uppercase text-white mb-10" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
+        className="font-heading font-light text-slate-900 mb-10" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
         Parametry a spotřeba vody
       </motion.h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl">

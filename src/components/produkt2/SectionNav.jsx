@@ -19,15 +19,15 @@ export default function SectionNav({ sections }) {
   const scrollTo = (ref) => ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   return (
-    <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 z-30 flex-col gap-4">
-      {sections.map((s) => (
-        <button key={s.id} onClick={() => scrollTo(s.ref)} className="group flex items-center gap-3 justify-end">
-          <span className={`font-mono text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${active === s.id ? 'text-techblue opacity-100' : 'text-white/30 opacity-0 group-hover:opacity-100'}`}>
+    <div className="fixed top-16 left-0 right-0 z-30 hidden lg:flex justify-center bg-white/80 backdrop-blur-xl border-b border-slate-200">
+      <div className="flex items-center gap-8 px-6">
+        {sections.map((s) => (
+          <button key={s.id} onClick={() => scrollTo(s.ref)}
+            className={`py-3 text-sm font-medium transition-colors border-b-2 ${active === s.id ? 'text-slate-900 border-slate-900' : 'text-slate-400 border-transparent hover:text-slate-600'}`}>
             {s.label}
-          </span>
-          <span className={`w-2 h-2 rounded-full border transition-all shrink-0 ${active === s.id ? 'bg-techblue border-techblue scale-125' : 'border-white/30 bg-transparent'}`} />
-        </button>
-      ))}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

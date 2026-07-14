@@ -17,6 +17,7 @@ import Home from '@/pages/Home';
 import Home2 from '@/pages/Home2';
 import Home3 from '@/pages/Home3';
 import Home4 from '@/pages/Home4';
+import Home5 from '@/pages/Home5';
 import Kolekce from '@/pages/Kolekce';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
@@ -86,6 +87,7 @@ const AuthenticatedApp = () => {
         <Route path="/home-2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home-3" element={<Home4 />} />
+        <Route path="/home-4" element={<Home5 />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />

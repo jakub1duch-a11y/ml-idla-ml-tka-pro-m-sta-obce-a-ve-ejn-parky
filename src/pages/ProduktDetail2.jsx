@@ -54,16 +54,16 @@ export default function ProduktDetail2() {
   }, [slug]);
 
   if (loading) return (
-    <div className="min-h-screen bg-ink flex items-center justify-center">
-      <Loader size={28} className="animate-spin text-white/30" />
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <Loader size={28} className="animate-spin text-slate-300" />
     </div>
   );
 
   if (notFound || !product) return (
-    <div className="min-h-screen bg-ink flex items-center justify-center pt-28">
+    <div className="min-h-screen bg-white flex items-center justify-center pt-28">
       <div className="text-center">
-        <p className="text-white/40 mb-4 text-lg font-mono">[Produkt nenalezen]</p>
-        <Link to="/mlzidla-mlzitka" className="text-white hover:underline font-mono text-sm">← Zpět na mlžítka</Link>
+        <p className="text-slate-400 mb-4 text-lg">Produkt nenalezen</p>
+        <Link to="/mlzidla-mlzitka" className="text-slate-900 hover:underline text-sm">← Zpět na mlžítka</Link>
       </div>
     </div>
   );
@@ -94,14 +94,14 @@ export default function ProduktDetail2() {
   ];
 
   return (
-    <div className="min-h-screen bg-ink">
-      <Link to="/mlzidla-mlzitka" className="fixed top-20 left-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 bg-black/50 border border-white/15 text-white/70 hover:text-white text-[10px] font-mono uppercase tracking-widest transition-colors">
+    <div className="min-h-screen bg-white">
+      <Link to="/mlzidla-mlzitka" className="fixed top-20 left-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 bg-white/90 backdrop-blur-md border border-slate-200 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-full shadow-sm transition-colors">
         <ArrowLeft size={12} /> Zpět
       </Link>
 
       <Link to={`/produkt/${product.slug}`} title="Zobrazit klasickou verzi stránky produktu"
-        className="fixed top-20 right-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 bg-black/50 border border-white/15 text-white/70 hover:text-white text-[10px] font-mono uppercase tracking-widest transition-colors">
-        <LayoutTemplate size={12} /> Změnit alternativní zobrazení karty
+        className="fixed top-20 right-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 bg-white/90 backdrop-blur-md border border-slate-200 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-full shadow-sm transition-colors">
+        <LayoutTemplate size={12} /> Klasické zobrazení
       </Link>
 
       <SectionNav sections={sections} />

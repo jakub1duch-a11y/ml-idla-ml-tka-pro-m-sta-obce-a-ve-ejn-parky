@@ -9,6 +9,7 @@ import FormFunctionSection from '@/components/technologie/FormFunctionSection';
 import IntegrationSection from '@/components/technologie/IntegrationSection';
 import ProcessSection from '@/components/technologie/ProcessSection';
 import InstallationComparisonSection from '@/components/technologie/InstallationComparisonSection';
+import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
 
 const BENEFITS = [
   { icon: Thermometer, title: 'Ochlazení', text: 'Zlepšení mikroklimatu přirozeným odpařováním.' },
@@ -113,6 +114,7 @@ export default function Technologie() {
       <IntegrationSection />
       <ProcessSection />
       <InstallationComparisonSection />
+      <ConceptToRealitySection />
 
       <div className="text-center mt-14">
         <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">

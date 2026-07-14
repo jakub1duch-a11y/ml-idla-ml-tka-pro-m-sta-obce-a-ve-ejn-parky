@@ -11,7 +11,6 @@ import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import BlogSection from '@/components/home/BlogSection';
 import ContactSection from '@/components/home/ContactSection';
-import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
 import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 import FadeIn from '@/components/common/FadeIn';
 
@@ -32,7 +31,6 @@ export default function Home() {
       <FadeIn><InstagramFeedSection /></FadeIn>
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>
-      <FadeIn><ConceptToRealitySection /></FadeIn>
       <FadeIn><ReferenceSection /></FadeIn>
       <FadeIn><RealizaceGallerySection /></FadeIn>
     </>

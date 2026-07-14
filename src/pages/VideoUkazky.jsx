@@ -9,6 +9,10 @@ const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4
 const DEMO_VIDEO_2 = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b173cbdc6_ukazkamlhy-zivaukazka002.mov';
 const GATE_IMAGE_1 = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b4aadf75c_mlznebrany-lineace700-2.png';
 const GATE_IMAGE_2 = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/25af17aa7_mlznebrany-lineace70.png';
+const OPERATION_VIDEOS = [
+  { title: 'Mlžítka v provozu — celkový pohled', video_url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7eadeca01_Ukazka_mltek_v_provozu_-_mlzidla_cz1.mp4', image_url: null },
+  { title: 'Mlžítka v provozu — detail mlhy', video_url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b5e93510_mlzitka_v_provozu_-_mlzidla_cz.mp4', image_url: null },
+];
 
 function VideoLightbox({ videos, index, onClose }) {
   const [idx, setIdx] = useState(index);
@@ -58,6 +62,7 @@ export default function VideoUkazky() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lightboxIdx, setLightboxIdx] = useState(null);
+  const [operationLightboxIdx, setOperationLightboxIdx] = useState(null);
 
   useEffect(() => {
     setSEO({
@@ -101,6 +106,34 @@ export default function VideoUkazky() {
           <p className="text-white/70 text-lg font-light max-w-2xl">
             Podívejte se, jak naše mlžné systémy fungují v reálném provozu — jemná mlha ochlazuje okolní vzduch v reálném čase, bez mokrého povrchu.
           </p>
+        </div>
+      </section>
+
+      {/* ═══════ MLŽÍTKA V PROVOZU — FEATURED VIDEA ═══════ */}
+      <section className="py-16 lg:py-20 border-b border-slate-200 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="max-w-2xl mb-8 lg:mb-10">
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Reálný provoz</p>
+            <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">Mlžítka v provozu.</h2>
+            <p className="text-slate-500 text-base font-light leading-relaxed">
+              Krátké ukázky mlžení přímo z instalací — jemný chladivý oblak v pohybu, bez mokrého povrchu.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+            {OPERATION_VIDEOS.map((v, i) => (
+              <motion.button key={v.title} type="button" onClick={() => setOperationLightboxIdx(i)}
+                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                className="group relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video bg-black text-left">
+                <video src={v.video_url} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+                <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/30 transition-colors flex items-center justify-center">
+                  <span className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Play size={20} className="text-slate-900 ml-0.5" fill="currentColor" />
+                  </span>
+                </div>
+                <p className="absolute bottom-0 left-0 right-0 p-4 text-white text-sm font-medium bg-gradient-to-t from-black/60 to-transparent">{v.title}</p>
+              </motion.button>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -178,6 +211,9 @@ export default function VideoUkazky() {
 
       {lightboxIdx !== null && (
         <VideoLightbox videos={videos} index={lightboxIdx} onClose={() => setLightboxIdx(null)} />
+      )}
+      {operationLightboxIdx !== null && (
+        <VideoLightbox videos={OPERATION_VIDEOS} index={operationLightboxIdx} onClose={() => setOperationLightboxIdx(null)} />
       )}
     </div>
   );

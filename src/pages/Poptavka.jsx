@@ -46,7 +46,17 @@ export default function Poptavka() {
   const [sending, setSending] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => { setSEO(SEO_PAGES.poptavka); }, []);
+  useEffect(() => {
+    setSEO(SEO_PAGES.poptavka);
+    const urlParams = new URLSearchParams(window.location.search);
+    const produkt = urlParams.get('produkt');
+    const ovladani = urlParams.get('ovladani');
+    setForm((f) => ({
+      ...f,
+      produkt: produkt && PRODUKTY.includes(produkt) ? produkt : f.produkt,
+      ovladani: ovladani && OVLADANI_OPTIONS.some((o) => o.value === ovladani) ? ovladani : f.ovladani,
+    }));
+  }, []);
 
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 

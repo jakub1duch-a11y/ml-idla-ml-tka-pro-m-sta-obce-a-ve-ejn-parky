@@ -1,13 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Wifi, Clock, Layers, Droplets } from 'lucide-react';
+import { Wifi, Clock, Layers, Droplets, Radar, Cpu, ArrowRight } from 'lucide-react';
 
 const features = [
   { icon: Wifi, label: 'WiFi + Bluetooth', sub: 'Dual konektivita' },
   { icon: Clock, label: 'Automatické plány', sub: 'Časovač i senzory' },
   { icon: Layers, label: 'Skupinové scény', sub: 'Více zón najednou' },
   { icon: Droplets, label: 'Vodní monitoring', sub: 'Spotřeba v reálu' },
+];
+
+const HOW_IT_WORKS = [
+  { icon: Radar, label: 'Senzory sbírají data', sub: 'Teplota, vlhkost, vítr, pohyb' },
+  { icon: Cpu, label: 'Aplikace vyhodnotí', sub: 'Porovná s vaším scénářem' },
+  { icon: Droplets, label: 'Mlžení se spustí samo', sub: 'Zapne, upraví, vypne' },
 ];
 
 export default function SmartSection() {
@@ -27,7 +33,7 @@ export default function SmartSection() {
               Aplikace HolmTec zobrazuje teplotu, vlhkost, spotřebu vody a stav systému v reálném čase. Automatické plány, scény, skupinové ovládání.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mb-8">
+            <div className="grid grid-cols-2 gap-3 mb-6">
               {features.map((f, i) => (
                 <motion.div key={f.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
                   className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
@@ -42,10 +48,37 @@ export default function SmartSection() {
               ))}
             </div>
 
-            <Link to="/kontakt"
-              className="btn-metallic-mist px-7 py-3.5 text-sm font-medium">
-              Spočítat náklady
-            </Link>
+            {/* Jak Smart systém funguje — mini flow */}
+            <div className="mb-8">
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Jak to funguje</p>
+              <div className="flex items-center gap-2">
+                {HOW_IT_WORKS.map((s, i) => (
+                  <React.Fragment key={s.label}>
+                    <div className="flex-1 flex items-center gap-2 min-w-0">
+                      <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0">
+                        <s.icon size={14} className="text-cyan" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold text-slate-900 truncate">{s.label}</p>
+                        <p className="text-[11px] text-slate-400 truncate">{s.sub}</p>
+                      </div>
+                    </div>
+                    {i < HOW_IT_WORKS.length - 1 && <ArrowRight size={13} className="text-slate-300 shrink-0" />}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Link to="/smart-ovladani"
+                className="btn-metallic-mist px-7 py-3.5 text-sm font-medium">
+                Zjistit více o Smart řízení
+              </Link>
+              <Link to="/kontakt"
+                className="inline-flex items-center px-7 py-3.5 text-sm font-medium text-slate-700 border border-slate-200 rounded-full hover:border-slate-400 transition-colors">
+                Spočítat náklady
+              </Link>
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">

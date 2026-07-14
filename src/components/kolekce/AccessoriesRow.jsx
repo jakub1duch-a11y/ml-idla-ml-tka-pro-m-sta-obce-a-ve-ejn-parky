@@ -9,14 +9,19 @@ export default function AccessoriesRow({ products }) {
   return (
     <div className="border-t border-slate-100 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-16">
-        <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-            <Wrench size={16} className="text-slate-900" />
+        <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
+              <Wrench size={16} className="text-slate-900" />
+            </div>
+            <div>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400">Příslušenství a smart moduly</p>
+              <h3 className="text-lg font-normal text-slate-900">Trysky, kotvení, filtrační a SMART řídicí moduly</h3>
+            </div>
           </div>
-          <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400">Příslušenství a smart moduly</p>
-            <h3 className="text-lg font-normal text-slate-900">Trysky, kotvení, filtrační a SMART řídicí moduly</h3>
-          </div>
+          <Link to="/prislusenstvi" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:gap-2.5 transition-all shrink-0">
+            Zobrazit vše <ArrowRight size={13} />
+          </Link>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {products.map((p, i) => (

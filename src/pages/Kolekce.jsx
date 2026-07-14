@@ -74,8 +74,8 @@ export default function Kolekce() {
     }).finally(() => setLoading(false));
   }, []);
 
-  const ACCESSORY_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
-  const accessoryProducts = products.filter((p) => ACCESSORY_NAMES.includes(p.name));
+  const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
+  const accessoryProducts = products.filter((p) => p.category_id === ACCESSORY_CATEGORY_ID);
 
   return (
     <div className="min-h-screen bg-white">

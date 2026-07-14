@@ -29,7 +29,11 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
         {categoryName && (
           <>
             <ChevronRight size={12} />
-            <span>{categoryName}</span>
+            {isAccessory ? (
+              <Link to="/prislusenstvi" className="hover:text-slate-700 transition-colors">{categoryName}</Link>
+            ) : (
+              <span>{categoryName}</span>
+            )}
           </>
         )}
         <ChevronRight size={12} />

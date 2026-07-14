@@ -58,6 +58,7 @@ import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import VideoUkazky from '@/pages/VideoUkazky';
+import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -123,6 +124,7 @@ const AuthenticatedApp = () => {
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
         <Route path="/video-ukazky" element={<VideoUkazky />} />
+        <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />

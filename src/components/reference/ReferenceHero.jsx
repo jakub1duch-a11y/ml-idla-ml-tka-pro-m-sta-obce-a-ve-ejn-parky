@@ -33,14 +33,14 @@ export default function ReferenceHero() {
 
         {/* Right — framed video */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="relative">
-          <span className="absolute -top-3 left-6 z-10 inline-flex items-center gap-1.5 text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-slate-900 rounded-full shadow hidden">
+          <span className="absolute -top-3 left-6 z-10 inline-flex items-center gap-1.5 text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-slate-900 rounded-full shadow">
             <PlayCircle size={11} /> Živá ukázka
           </span>
-          <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 aspect-[4/5] lg:aspect-[4/5] hidden">
+          <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 aspect-[4/5] lg:aspect-[4/5]">
             <video
               src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.mov"
               autoPlay muted loop playsInline
-              className="w-full h-full object-cover hidden" />
+              className="w-full h-full object-cover" />
           </div>
         </motion.div>
       </div>

@@ -214,35 +214,51 @@ export function getProductSEO(product, reviewStats) {
     manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
     material: product.material || 'Nerezová ocel AISI 316L',
     offers: {
-      '@type': 'offer',
+      '@type': 'Offer',
       price: priceValue,
       priceCurrency: 'CZK',
+      priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+      itemCondition: 'https://schema.org/NewCondition',
       priceSpecification: {
         '@type': 'PriceSpecification',
         price: priceValue,
         priceCurrency: 'CZK',
-        valueAddedTaxIncluded: 'true',
+        valueAddedTaxIncluded: true,
         name: hasPrice ? 'Cena od, finální cena dle projektové specifikace' : 'Cena na vyžádání dle projektové specifikace',
       },
-      availability: 'https://schema.org/InStoreOnly',
+      availability: 'https://schema.org/InStock',
       url: `${BASE_URL}/produkt/${product.slug}`,
       seller: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-    },
-    shippingDetails: {
-      type: 'FreeShipping',
-      price: '0',
-    },
-    hasMerchantReturnPolicy: {
-      value: true,
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: reviewStats ? reviewStats.average.toFixed(1) : '4.9',
-      reviewCount: reviewStats ? String(reviewStats.count) : '24',
-      bestRating: '5',
-      worstRating: '1',
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 14,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn',
+        applicableCountry: 'CZ',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'CZK' },
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CZ' },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 42, maxValue: 56, unitCode: 'DAY' },
+          transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 5, unitCode: 'DAY' },
+        },
+      },
     },
   };
+
+  if (reviewStats && reviewStats.count > 0) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: reviewStats.average.toFixed(1),
+      reviewCount: String(reviewStats.count),
+      bestRating: '5',
+      worstRating: '1',
+    };
+  }
 
   return {
     title,
@@ -335,7 +351,7 @@ export function injectOrgJsonLd() {
     '@type': 'LocalBusiness',
     name: 'HolmTec s.r.o. — Mlžidla.cz',
     url: BASE_URL,
-    logo: 'https://drive.google.com/drive/u/1/folders/0ACRsWxU90i5aUk9PVA?hl=cs',
+    logo: DEFAULT_IMAGE,
     image: DEFAULT_IMAGE,
     priceRange: 'na vyžádání',
     telephone: '+420-774-700-390',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, LayoutTemplate } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
@@ -229,6 +229,10 @@ export default function ProduktDetail() {
               <ArrowLeft size={12} /> Zpět
             </Link>
             <span className="hidden sm:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
+            <Link to={`/produkt2/${product.slug}`} title="Zobrazit alternativní verzi stránky produktu"
+              className="ml-auto inline-flex items-center justify-center w-8 h-8 rounded-full border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-400 transition-colors shrink-0">
+              <LayoutTemplate size={14} />
+            </Link>
           </div>
         </div>
       </div>
@@ -283,22 +287,6 @@ export default function ProduktDetail() {
                 <p className="text-sm normal-case text-left [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium mb-16 text-[hsl(var(--card))]">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
               </motion.div>
 
-              {/* FAQ o poptávce a realizaci */}
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              className="space-y-4 mb-8">
-                {[
-                { q: 'Jak dlouho trvá zpracování poptávky?', a: 'Ozveme se vám do 24 hodin s konzultací a předběžnou nabídkou.' },
-                { q: 'Jak probíhá realizace?', a: 'Konzultace → 3D vizualizace do 48 h → zakázková výroba (6–8 týdnů) → instalace na místě.' },
-                { q: 'Je konzultace a vizualizace zdarma?', a: 'Ano, nezávazně a bez skrytých poplatků.' },
-                { q: 'Poskytujete servis po instalaci?', a: 'Ano, včetně pravidelné údržby a rychlého záručního i pozáručního servisu.' }].
-                map((item) =>
-                <div key={item.q} className="border-b border-white/10 pb-4">
-                    <p className="text-sm font-semibold text-white mb-1">{item.q}</p>
-                    <p className="text-sm text-white/50 leading-relaxed">{item.a}</p>
-                  </div>
-                )}
-              </motion.div>
-
               {/* Podpora 24/7 */}
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
               className="bg-white/5 border border-white/15 rounded-2xl p-6">
@@ -314,6 +302,22 @@ export default function ProduktDetail() {
               <ProductContactForm productName={product.name} />
             </motion.div>
           </div>
+
+          {/* FAQ o poptávce a realizaci — pod formulářem */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+          className="mt-16 pt-12 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
+            {[
+            { q: 'Jak dlouho trvá zpracování poptávky?', a: 'Ozveme se vám do 24 hodin s konzultací a předběžnou nabídkou.' },
+            { q: 'Jak probíhá realizace?', a: 'Konzultace → 3D vizualizace do 48 h → zakázková výroba (6–8 týdnů) → instalace na místě.' },
+            { q: 'Je konzultace a vizualizace zdarma?', a: 'Ano, nezávazně a bez skrytých poplatků.' },
+            { q: 'Poskytujete servis po instalaci?', a: 'Ano, včetně pravidelné údržby a rychlého záručního i pozáručního servisu.' }].
+            map((item) =>
+            <div key={item.q} className="border-b border-white/10 pb-4">
+                <p className="text-sm font-semibold text-white mb-1">{item.q}</p>
+                <p className="text-sm text-white/50 leading-relaxed">{item.a}</p>
+              </div>
+            )}
+          </motion.div>
         </div>
       </section>
 

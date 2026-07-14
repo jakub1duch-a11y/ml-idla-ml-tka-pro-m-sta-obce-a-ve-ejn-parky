@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Droplets, Clock, ChevronDown, Sparkles } from 'lucide-react';
+import { Droplets, Clock, ChevronDown, Sparkles, Info } from 'lucide-react';
+
+const SMART_APP_SAVINGS = 0.25; // úspora vody při Smart APP řízení (senzory větru/teploty/vlhkosti)
 
 // ─── Systémy ────────────────────────────────────────────────────────────────
 const SYSTEMS = [
@@ -325,10 +327,11 @@ export default function MlzeniKalkulator() {
         <div className="space-y-4">
 
           {/* Spotřeba jedné trysky */}
-          <div className="rounded-xl bg-surface border border-white/10 p-5">
+          <div className="group relative rounded-xl bg-surface border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
               <Droplets size={15} className="text-cyan" />
               <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba jedné trysky</p>
+              <Info size={11} className="text-white/25 group-hover:text-cyan transition-colors cursor-help" />
             </div>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-light text-white tabular-nums">
@@ -339,13 +342,19 @@ export default function MlzeniKalkulator() {
                 = <AnimNum value={costPerNozzleHour} decimals={2} suffix=" Kč/h" />
               </p>
             </div>
+            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
+              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
+                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {flowPerNozzleLH.toFixed(1)} l/h × {WATER_PRICE_PER_M3} Kč/m³ ÷ 1000 = {costPerNozzleHour.toFixed(2)} Kč/h.</p>
+              </div>
+            </div>
           </div>
 
           {/* Spotřeba celého systému */}
-          <div className="rounded-xl bg-surface border border-white/10 p-5">
+          <div className="group relative rounded-xl bg-surface border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
               <Droplets size={15} className="text-cyan" />
               <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba systému ({sys.nozzles} trysek)</p>
+              <Info size={11} className="text-white/25 group-hover:text-cyan transition-colors cursor-help" />
             </div>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-light text-white tabular-nums">
@@ -356,13 +365,19 @@ export default function MlzeniKalkulator() {
                 = <AnimNum value={costTotalHour} decimals={2} suffix=" Kč/h" />
               </p>
             </div>
+            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
+              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
+                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {sys.nozzles} trysek × {flowPerNozzleLH.toFixed(1)} l/h = {flowTotalLH.toFixed(1)} l/h. × {WATER_PRICE_PER_M3} Kč/m³ ÷ 1000 = {costTotalHour.toFixed(2)} Kč/h.</p>
+              </div>
+            </div>
           </div>
 
-          {/* Za 8 hodin mlžení */}
-          <div className="rounded-xl bg-surface border border-white/10 p-5">
+          {/* Za 8 hodin mlžení (den) */}
+          <div className="group relative rounded-xl bg-surface border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
               <Clock size={15} className="text-cyan" />
-              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Za 8 hodin mlžení</p>
+              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Za den (8 hodin mlžení)</p>
+              <Info size={11} className="text-white/25 group-hover:text-cyan transition-colors cursor-help" />
             </div>
             <div className="flex items-center justify-between">
               <p className="text-2xl font-light text-white tabular-nums">
@@ -373,13 +388,19 @@ export default function MlzeniKalkulator() {
                 = <AnimNum value={cost8h} decimals={0} suffix=" Kč" />
               </p>
             </div>
+            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
+              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
+                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {flowTotalLH.toFixed(1)} l/h × 8 h = {water8h.toFixed(0)} l. × {WATER_PRICE_PER_M3} Kč/m³ ÷ 1000 = {cost8h.toFixed(0)} Kč/den.</p>
+              </div>
+            </div>
           </div>
 
           {/* Za letní sezónu — zvýrazněno */}
-          <div className="rounded-xl bg-gradient-to-br from-cyan/10 to-cyan/5 border border-cyan/25 p-5">
+          <div className="group relative rounded-xl bg-gradient-to-br from-cyan/10 to-cyan/5 border border-cyan/25 p-5">
             <div className="flex items-center gap-2 mb-4">
               <Sparkles size={15} className="text-cyan" />
               <p className="text-[10px] font-mono text-cyan/70 tracking-widest uppercase">Za letní sezónu ({seasonHours} h)</p>
+              <Info size={11} className="text-white/30 group-hover:text-cyan transition-colors cursor-help" />
             </div>
             <div className="flex items-end gap-3">
               <div>
@@ -394,6 +415,34 @@ export default function MlzeniKalkulator() {
                 <p className="text-3xl font-light text-cyan tabular-nums">
                   <AnimNum value={seasonCost} decimals={0} suffix=" Kč" />
                 </p>
+              </div>
+            </div>
+            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
+              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
+                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {flowTotalLH.toFixed(1)} l/h × {seasonHours} h = {seasonWater.toFixed(0)} l ({(seasonWater / 1000).toFixed(2)} m³). × {WATER_PRICE_PER_M3} Kč/m³ = {seasonCost.toFixed(0)} Kč.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Smart APP úspora za sezónu */}
+          <div className="group relative rounded-xl bg-emerald-500/5 border border-emerald-500/25 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Sparkles size={15} className="text-emerald-400" />
+              <p className="text-[10px] font-mono text-emerald-400/80 tracking-widest uppercase">Se Smart APP (−{SMART_APP_SAVINGS * 100}%) za sezónu</p>
+              <Info size={11} className="text-white/25 group-hover:text-emerald-400 transition-colors cursor-help" />
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-2xl font-light text-white tabular-nums">
+                <AnimNum value={seasonWater * (1 - SMART_APP_SAVINGS) / 1000} decimals={2} />
+                <span className="text-sm text-white/30 ml-1">m³</span>
+              </p>
+              <p className="text-lg font-light text-emerald-400 tabular-nums">
+                ušetříte <AnimNum value={seasonCost * SMART_APP_SAVINGS} decimals={0} suffix=" Kč" />
+              </p>
+            </div>
+            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
+              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
+                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Smart APP automaticky tlumí/vypíná mlžení dle teploty, vlhkosti a větru — orientační úspora vody {SMART_APP_SAVINGS * 100}% ze sezónní spotřeby {seasonCost.toFixed(0)} Kč = {(seasonCost * SMART_APP_SAVINGS).toFixed(0)} Kč.</p>
               </div>
             </div>
           </div>

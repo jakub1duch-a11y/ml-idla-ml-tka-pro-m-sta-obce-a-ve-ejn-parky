@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator, Users, Wifi, PlayCircle } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator, Users, Wifi, PlayCircle, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -16,9 +16,6 @@ const PRODUCT_LINKS = [
 { label: 'Mlžný strom — OSTREV', sub: 'Mlžná socha', path: '/produkt/ostrev-mlzitko', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/fb4164f66_ostev4.png' },
 { label: 'Mlžná spirála', sub: 'Mlžná socha', path: '/produkt/spirala', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/df5b375c0_Mlzitko-spirala2.png' }];
 
-const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek — mlžiště na míru', path: '/poptavka' };
-
-
 const USAGE_LINKS = [
 { icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-cyan' },
 { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-400' },
@@ -32,6 +29,7 @@ const USAGE_LINKS = [
 
 
 const INFO_LINKS = [
+{ icon: Bot, label: 'AI Poradce — poraďte se s asistentem', path: '/poradce', highlight: true },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
 { icon: Cpu, label: 'Technologie mlžení', path: '/technologie' },
@@ -121,9 +119,10 @@ export default function Header() {
                   className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-white/95 backdrop-blur-2xl border border-slate-200 shadow-xl shadow-slate-900/10 rounded-2xl p-3">
                   {INFO_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={() => setInfoOpen(false)}
-                  className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-slate-50 transition-colors">
-                      <link.icon size={16} className="text-slate-400 group-hover:text-slate-900 transition-colors flex-shrink-0" />
-                      <p className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors font-light">{link.label}</p>
+                  className={`group flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-colors ${link.highlight ? 'bg-slate-900 hover:bg-slate-800 mb-1' : 'hover:bg-slate-50'}`}>
+                      <link.icon size={16} className={`flex-shrink-0 transition-colors ${link.highlight ? 'text-cyan' : 'text-slate-400 group-hover:text-slate-900'}`} />
+                      <p className={`text-sm transition-colors ${link.highlight ? 'text-white font-medium' : 'text-slate-600 group-hover:text-slate-900 font-light'}`}>{link.label}</p>
+                      {link.highlight && <span className="ml-auto text-[9px] font-mono text-cyan tracking-widest uppercase">24/7</span>}
                     </Link>
                   )}
                   </motion.div>
@@ -193,6 +192,11 @@ export default function Header() {
                       <Wifi size={15} className="text-cyan opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
                       <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Chytré ovládání</p>
                     </Link>
+                    <Link key="video-ukazky" to="/video-ukazky" onClick={(e) => e.stopPropagation()}
+                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                      <PlayCircle size={15} className="text-slate-400 opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
+                      <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Video ukázky mlžení</p>
+                    </Link>
                     <Link key="partnerstvi" to="/partnerstvi" onClick={(e) => e.stopPropagation()}
                   className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
                       <Users size={15} className="text-slate-400 opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
@@ -218,15 +222,24 @@ export default function Header() {
                       </Link>
                   )}
                   </div>
-                  <Link to={CUSTOM_LINK.path} onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-3 mt-4 px-3 py-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
-                    <Sparkles size={16} className="text-slate-500 flex-shrink-0" />
-                    <div>
-                      <p className="font-heading text-xs text-slate-800 font-medium leading-tight">{CUSTOM_LINK.label}</p>
-                      <p className="text-[11px] text-slate-500 leading-tight">{CUSTOM_LINK.sub}</p>
-                    </div>
-                  </Link>
                 </div>
+              </div>
+
+              {/* Online pomocník — AI produktový poradce */}
+              <div className="max-w-6xl mx-auto px-5 lg:px-8 pb-7">
+                <Link to="/poradce" onClick={(e) => e.stopPropagation()}
+                  className="group flex items-center gap-4 p-5 rounded-2xl bg-slate-900 hover:bg-slate-800 transition-colors">
+                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <Bot size={20} className="text-cyan" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-heading text-sm text-white font-medium leading-tight">Online pomocník — digitální asistent pro výběr mlžítka</p>
+                    <p className="text-xs text-white/50 leading-tight mt-0.5">Okamžitá odpověď 24/7 a doporučení ideálního produktu na míru vašemu prostoru.</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 shrink-0 px-4 py-2 bg-white text-slate-900 text-xs font-bold rounded-full group-hover:bg-white/90 transition-all">
+                    Spustit poradce <ArrowRight size={13} />
+                  </span>
+                </Link>
               </div>
             </motion.div>
           }
@@ -239,8 +252,7 @@ export default function Header() {
         onClose={() => setMobileOpen(false)}
         productLinks={PRODUCT_LINKS}
         usageLinks={USAGE_LINKS}
-        infoLinks={INFO_LINKS}
-        customLink={CUSTOM_LINK} />
+        infoLinks={INFO_LINKS} />
 
     </>);
 

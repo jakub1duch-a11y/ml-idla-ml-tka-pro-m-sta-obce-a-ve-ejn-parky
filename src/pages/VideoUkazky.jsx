@@ -52,7 +52,16 @@ export default function VideoUkazky() {
               <motion.div key={v.title + i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
                 className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">
                 <div className="aspect-video bg-black">
-                  <video src={v.video_url} controls playsInline poster={v.image_url || undefined} className="w-full h-full object-cover" />
+                  <video
+                    src={v.video_url}
+                    controls
+                    playsInline
+                    poster={v.image_url || undefined}
+                    autoPlay={i === 0}
+                    muted={i === 0}
+                    loop={i === 0}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-5 flex items-center justify-between gap-3">
                   <div className="min-w-0">

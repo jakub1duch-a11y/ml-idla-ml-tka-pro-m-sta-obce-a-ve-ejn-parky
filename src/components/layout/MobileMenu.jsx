@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowRight, Sparkles, X, Wifi, Users } from 'lucide-react';
+import { ChevronDown, ArrowRight, Sparkles, X, Wifi, Users, PlayCircle, Bot } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 
-export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks, customLink }) {
+export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks }) {
   const [section, setSection] = useState('katalog');
 
   return (
@@ -66,12 +66,14 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                     </Link>
                   )}
                 </div>
-                <Link to={customLink.path} onClick={onClose}
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-3">
-                  <Sparkles size={18} className="text-slate-500 shrink-0" />
+                <Link to="/poradce" onClick={onClose}
+                  className="flex items-center gap-3 p-4 rounded-2xl bg-slate-900 mb-3">
+                  <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                    <Bot size={18} className="text-cyan" />
+                  </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-900">{customLink.label}</p>
-                    <p className="text-xs text-slate-400">{customLink.sub}</p>
+                    <p className="text-sm font-semibold text-white">Online pomocník — AI poradce</p>
+                    <p className="text-xs text-white/50">Okamžitá odpověď 24/7, výběr ideálního mlžítka</p>
                   </div>
                 </Link>
                 <div className="grid grid-cols-2 gap-3 mb-3">
@@ -80,12 +82,17 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                     <Wifi size={16} className="text-cyan shrink-0" />
                     <p className="text-sm font-semibold text-slate-900">Chytré ovládání</p>
                   </Link>
-                  <Link to="/partnerstvi" onClick={onClose}
+                  <Link to="/video-ukazky" onClick={onClose}
                     className="flex items-center gap-2.5 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                    <Users size={16} className="text-slate-400 shrink-0" />
-                    <p className="text-sm font-semibold text-slate-900">Partnerství</p>
+                    <PlayCircle size={16} className="text-slate-400 shrink-0" />
+                    <p className="text-sm font-semibold text-slate-900">Video ukázky</p>
                   </Link>
                 </div>
+                <Link to="/partnerstvi" onClick={onClose}
+                  className="flex items-center gap-2.5 p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-3">
+                  <Users size={16} className="text-slate-400 shrink-0" />
+                  <p className="text-sm font-semibold text-slate-900">Partnerství</p>
+                </Link>
                 <Link to="/katalog" onClick={onClose}
                   className="flex items-center justify-center gap-2 w-full py-3.5 mb-2 rounded-2xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors">
                   Všechny produkty a mlžítka <ArrowRight size={15} />
@@ -121,8 +128,9 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                   <Link to="/blog" onClick={onClose} className="text-sm font-semibold text-slate-800 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">Blog & novinky</Link>
                   <Link to="/o-nas" onClick={onClose} className="text-sm font-semibold text-slate-800 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">O společnosti</Link>
                   {infoLinks.map((l) =>
-                  <Link key={l.path} to={l.path} onClick={onClose} className="flex items-center gap-3 text-sm font-medium text-slate-700 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">
-                    <l.icon size={16} className="text-slate-400 shrink-0" /> {l.label}
+                  <Link key={l.path} to={l.path} onClick={onClose}
+                    className={`flex items-center gap-3 text-sm py-3.5 px-4 rounded-xl transition-colors ${l.highlight ? 'font-semibold text-white bg-slate-900 mb-1' : 'font-medium text-slate-700 hover:bg-slate-50'}`}>
+                    <l.icon size={16} className={`shrink-0 ${l.highlight ? 'text-cyan' : 'text-slate-400'}`} /> {l.label}
                   </Link>
                   )}
                 </div>

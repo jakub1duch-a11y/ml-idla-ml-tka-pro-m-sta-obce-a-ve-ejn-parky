@@ -20,7 +20,9 @@ export default function AccessoriesSection() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    base44.entities.Product.filter({ category_id: ACCESSORY_CATEGORY_ID }).then(setProducts).catch(() => setProducts([]));
+    base44.entities.Product.filter({ category_id: ACCESSORY_CATEGORY_ID })
+      .then((prods) => setProducts((prods || []).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'cs'))))
+      .catch(() => setProducts([]));
   }, []);
 
   return (

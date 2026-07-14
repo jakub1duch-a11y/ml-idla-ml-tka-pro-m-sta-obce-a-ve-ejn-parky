@@ -118,9 +118,10 @@ export default function BlogDetail() {
         {post.content ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
             className="prose prose-lg max-w-none pb-4
-              prose-headings:font-heading prose-headings:font-light prose-headings:tracking-tight prose-headings:text-slate-900
-              prose-p:text-slate-600 prose-p:font-light prose-p:leading-relaxed
-              prose-li:text-slate-600 prose-li:font-light
+              prose-headings:font-heading prose-headings:font-light prose-headings:tracking-tight prose-headings:text-slate-900 prose-headings:mt-12 prose-headings:mb-5
+              prose-p:text-slate-600 prose-p:font-light prose-p:leading-[1.9] prose-p:mb-6 prose-p:text-[1.05rem]
+              prose-li:text-slate-600 prose-li:font-light prose-li:leading-[1.8] prose-li:mb-2
+              prose-ul:my-6 prose-ol:my-6
               prose-strong:text-slate-900 prose-strong:font-medium
               prose-blockquote:border-slate-900 prose-blockquote:bg-slate-50 prose-blockquote:rounded-r-xl prose-blockquote:py-3 prose-blockquote:not-italic prose-blockquote:text-slate-700
               prose-code:text-slate-900 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:rounded

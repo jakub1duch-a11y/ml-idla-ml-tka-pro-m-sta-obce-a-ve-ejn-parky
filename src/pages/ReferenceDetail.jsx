@@ -191,7 +191,11 @@ export default function ReferenceDetail() {
             {project.description && (
               <>
                 <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">O projektu</p>
-                <p className="text-slate-600 text-lg leading-relaxed font-light whitespace-pre-line">{project.description}</p>
+                <div className="space-y-5">
+                  {project.description.split(/\n{2,}/).map((para, i) => (
+                    <p key={i} className="text-slate-600 text-lg leading-[1.8] font-light whitespace-pre-line">{para}</p>
+                  ))}
+                </div>
               </>
             )}
 

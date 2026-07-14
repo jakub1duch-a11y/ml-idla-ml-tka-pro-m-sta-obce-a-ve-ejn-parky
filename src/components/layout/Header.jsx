@@ -198,7 +198,7 @@ export default function Header() {
                 {/* Right: Products — expanded grid */}
                 <div className="lg:border-l lg:border-slate-100 lg:pl-8">
                   <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-4">Produkty</p>
-                  <div className="grid grid-cols-4 gap-3 max-h-[320px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+                  <div className="grid grid-cols-3 lg:grid-cols-5 gap-3">
                     {PRODUCT_LINKS.map((p) =>
                   <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col gap-2">

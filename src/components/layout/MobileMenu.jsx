@@ -56,8 +56,9 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {productLinks.map((p) =>
                   <Link key={p.path} to={p.path} onClick={onClose} className="group flex flex-col gap-2">
-                      <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 border border-slate-100">
+                      <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 active:border-slate-300 transition-colors">
                         <img src={p.image} alt={p.label} className="w-full h-full object-cover group-active:scale-95 transition-transform" loading="lazy" />
+                        <span className="absolute bottom-2 right-2 px-2.5 py-1 bg-white/90 backdrop-blur-sm text-slate-900 text-[10px] font-bold rounded-full shadow-sm">Detail</span>
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-slate-900 leading-tight">{p.label}</p>

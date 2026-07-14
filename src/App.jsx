@@ -22,6 +22,7 @@ import Kolekce from '@/pages/Kolekce';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
+import ProduktDetail3 from '@/pages/ProduktDetail3';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Poradce from '@/pages/Poradce';
@@ -93,6 +94,7 @@ const AuthenticatedApp = () => {
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<ProduktDetail2 />} />
+        <Route path="/produkt3/:slug" element={<ProduktDetail3 />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />

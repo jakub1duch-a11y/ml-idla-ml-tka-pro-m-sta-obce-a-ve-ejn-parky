@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search } from 'lucide-react';
+import { Loader, Users, MousePointerClick, MapPin, Package, Search, FileText } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 const PRODUCT_NAME_CACHE = {};
-
-function formatDuration(seconds) {
-  const s = Math.round(seconds || 0);
-  const m = Math.floor(s / 60);
-  const r = s % 60;
-  return `${m}m ${r}s`;
-}
 
 export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState(null);
@@ -56,11 +49,13 @@ export default function AdminDashboard() {
     return name;
   };
 
+  const topProduct = (analytics?.productClicks || [])[0];
+
   const cards = [
     { icon: Users, label: 'Návštěvy (28 dní)', value: totals.sessions.toLocaleString(), color: 'text-cyan' },
-    { icon: MousePointerClick, label: 'Konverze', value: `${inquiries} (${conversionRate} %)`, color: 'text-emerald-400' },
-    { icon: Clock, label: 'Doba na uživatele', value: formatDuration(analytics?.avgSessionDuration), color: 'text-violet-400' },
-    { icon: Search, label: 'Průměrná pozice', value: avgPosition, color: 'text-amber-400' },
+    { icon: MousePointerClick, label: 'Odeslané poptávky', value: `${inquiries} (${conversionRate} % konverze)`, color: 'text-emerald-400' },
+    { icon: Package, label: 'Nejsledovanější produkt', value: topProduct ? productName(topProduct.path) : '—', color: 'text-amber-400' },
+    { icon: Search, label: 'Průměrná pozice ve vyhledávání', value: avgPosition, color: 'text-fog' },
   ];
 
   return (
@@ -125,13 +120,33 @@ export default function AdminDashboard() {
           </div>
           <div className="divide-y divide-white/5">
             {(analytics?.productClicks || []).length === 0 && <p className="text-white/30 text-sm px-4 py-4">Žádná data.</p>}
-            {(analytics?.productClicks || []).map((p) => (
+            {(analytics?.productClicks || []).map((p, i) => (
               <div key={p.path} className="flex items-center justify-between px-4 py-2.5">
-                <span className="text-sm text-white/70 truncate">{productName(p.path)}</span>
+                <span className="text-sm text-white/70 truncate">{i === 0 && '🥇 '}{productName(p.path)}</span>
                 <span className="text-sm text-cyan font-mono">{p.views}</span>
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Top pages */}
+      <div className="rounded-xl border border-white/8 overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-3 bg-white/5">
+          <FileText size={13} className="text-cyan" />
+          <p className="text-xs font-mono text-white/30 tracking-widest uppercase">Nejnavštěvovanější stránky</p>
+        </div>
+        <div className="divide-y divide-white/5">
+          {(analytics?.pages || []).length === 0 && <p className="text-white/30 text-sm px-4 py-4">Žádná data.</p>}
+          {(analytics?.pages || []).map((p) => (
+            <div key={p.path} className="flex items-center justify-between px-4 py-2.5">
+              <span className="text-sm text-white/70 truncate font-mono">{p.path}</span>
+              <div className="flex items-center gap-4 shrink-0">
+                <span className="text-sm text-white/40">{p.users} uživ.</span>
+                <span className="text-sm text-cyan font-mono">{p.views} zobr.</span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -138,25 +138,25 @@ export default function VideoUkazky() {
       </section>
 
       {/* ═══════ GATE SHOWCASE — TEXT + IMAGES ═══════ */}
-      <section className="py-16 lg:py-20 border-b border-slate-200 hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="max-w-2xl mb-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mlžná brána LINEA CE70</p>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">Mlha v pohybu — jemný oblak nad hlavou.</h2>
-            <p className="text-slate-500 text-base font-light leading-relaxed">
-              Mlžná brána vytváří hustý, ale suchý mlžný oblak, kterým lze bez obav projít — ideální pro veřejné prostory, vstupy budov i letní terasy.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 hidden">
-              <img src={GATE_IMAGE_1} alt="Mlžná brána LINEA CE70 v provozu s duhou" className="w-full h-full object-cover hidden" loading="lazy" />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 hidden">
-              <img src={GATE_IMAGE_2} alt="Mlžná brána LINEA CE70 na náměstí" className="w-full h-full object-cover hidden" loading="lazy" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
         {loading ?

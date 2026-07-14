@@ -147,7 +147,7 @@ function ProjectCard({ project, onOpen }) {
             <MapPin size={11} /> {project.location}
           </div>
         }
-        <h3 className="font-heading font-light text-lg text-slate-900 tracking-tight mb-2 leading-snug group-hover:text-slate-600 transition-colors">
+        <h3 className="text-lg text-slate-900 tracking-tight mb-2 leading-snug group-hover:text-slate-600 transition-colors normal-case [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">
           {project.name}
         </h3>
         {project.description &&

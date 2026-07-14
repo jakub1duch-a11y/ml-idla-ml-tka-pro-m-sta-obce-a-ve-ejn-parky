@@ -102,14 +102,16 @@ export default function Header() {
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Realizace</Link>
-            <Link to="/partnerstvi" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Partnerství</Link>
-            <Link to="/chytra-mlzidla" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">SMART ovládání</Link>
+            <Link to="/mlzidla-mlzitka" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Mlžítka a mlžné brány</Link>
+            <Link to="/prislusenstvi" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Smart moduly a příslušenství</Link>
+            <Link to="/vyhody" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Proč mlzidla.cz</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
               }>
-                Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
+                Podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {infoOpen &&

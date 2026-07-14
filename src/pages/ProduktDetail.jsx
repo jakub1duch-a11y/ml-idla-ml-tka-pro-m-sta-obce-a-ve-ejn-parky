@@ -19,6 +19,7 @@ import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
+import NozzleVariantsTable from '@/components/produkt/NozzleVariantsTable';
 
 const GATE_SLUGS = ['gate70', 'linea-el70'];
 
@@ -246,6 +247,7 @@ export default function ProduktDetail() {
             <>
               <SpecsTab product={product} techRows={techRows} />
               {GATE_SLUGS.includes(product.slug) && <GateComparisonTable />}
+              <NozzleVariantsTable variants={product.nozzle_variants} />
             </>
           )}
           {activeTab === 'benefity' && <BenefityTab product={product} />}

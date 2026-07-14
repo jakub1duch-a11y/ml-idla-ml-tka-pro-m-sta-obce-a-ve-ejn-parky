@@ -121,12 +121,12 @@ function ProjectCard({ project, onOpen }) {
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
           {project.category &&
-          <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] font-mono text-slate-700 tracking-widest uppercase">
+          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700">
               {CATEGORY_LABELS[project.category] || project.category}
             </span>
           }
           {project.year &&
-          <span className="px-2.5 py-1 bg-slate-900/85 backdrop-blur-sm rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
+          <span className="px-3 py-1 bg-slate-900/85 backdrop-blur-sm rounded-full text-xs font-medium text-white">
               {project.year}
             </span>
           }
@@ -134,7 +134,7 @@ function ProjectCard({ project, onOpen }) {
 
         {/* Gallery indicator */}
         {allImages.length > 1 &&
-        <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-black/50 backdrop-blur-sm rounded-full text-[10px] font-mono text-white/80">
+        <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs text-white/80">
             <ZoomIn size={10} /> {allImages.length} fotek
           </div>
         }
@@ -143,11 +143,11 @@ function ProjectCard({ project, onOpen }) {
       {/* Content */}
       <div className="p-6">
         {project.location &&
-        <div className="flex items-center gap-1.5 text-slate-400 text-xs font-mono mb-3">
+        <div className="flex items-center gap-1.5 text-slate-400 text-xs mb-3">
             <MapPin size={11} /> {project.location}
           </div>
         }
-        <h3 className="text-lg text-slate-900 tracking-tight mb-2 leading-snug group-hover:text-slate-600 transition-colors normal-case [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">
+        <h3 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2 leading-snug group-hover:text-slate-600 transition-colors">
           {project.name}
         </h3>
         {project.description &&
@@ -155,9 +155,9 @@ function ProjectCard({ project, onOpen }) {
         }
         <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
           {project.product_used &&
-          <span className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">Produkt: {project.product_used}</span>
+          <span className="text-xs text-slate-400">Produkt: {project.product_used}</span>
           }
-          <Link to={`/reference/${project.id}-${slugify(project.name)}`} className="flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors font-mono ml-auto border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-full hover:bg-slate-50">
+          <Link to={`/reference/${project.id}-${slugify(project.name)}`} className="flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:text-slate-600 transition-colors ml-auto border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-full hover:bg-slate-50">
             Detail <ArrowRight size={11} />
           </Link>
         </div>
@@ -205,7 +205,7 @@ export default function Reference() {
         <div className="flex gap-2 flex-wrap">
           {FILTERS.map((f) =>
           <button key={f.value} onClick={() => setFilter(f.value)}
-          className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${filter === f.value ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
+          className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${filter === f.value ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
               {f.label}
             </button>
           )}
@@ -219,7 +219,7 @@ export default function Reference() {
             <Loader size={24} className="animate-spin text-slate-300" />
           </div> :
         visible.length === 0 ?
-        <div className="py-20 text-center text-slate-400 text-sm font-mono">Žádné projekty v této kategorii.</div> :
+        <div className="py-20 text-center text-slate-400 text-sm">Žádné projekty v této kategorii.</div> :
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {visible.map((project) =>

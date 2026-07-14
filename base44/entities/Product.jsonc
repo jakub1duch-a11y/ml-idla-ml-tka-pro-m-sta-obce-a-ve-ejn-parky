@@ -76,6 +76,51 @@
         "type": "string"
       },
       "description": "Soubory ke sta\u017een\u00ed k produktu (technick\u00e9 listy, manu\u00e1ly, cen\u00edky) \u2014 URL adresy"
+    },
+    "spray_angle": {
+      "type": "string",
+      "description": "\u00dahel rozst\u0159iku trysky, nap\u0159. 70\u00b0"
+    },
+    "flow_range": {
+      "type": "string",
+      "description": "Celkov\u00fd rozsah pr\u016ftoku trysky, nap\u0159. 0,032\u20131,413 l/min"
+    },
+    "nozzle_variants": {
+      "type": "array",
+      "description": "Varianty trysek dostupn\u00e9 k produktu s pr\u016ftoky dle tlaku",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Ozna\u010den\u00ed varianty, nap\u0159. 1/4-M2 nerez"
+          },
+          "material": {
+            "type": "string",
+            "description": "Materi\u00e1l varianty"
+          },
+          "is_standard": {
+            "type": "boolean",
+            "description": "Zda je tato varianta standardn\u011b pou\u017e\u00edvan\u00e1"
+          },
+          "flow_2bar": {
+            "type": "string",
+            "description": "Pr\u016ftok p\u0159i 2 bar"
+          },
+          "flow_5bar": {
+            "type": "string",
+            "description": "Pr\u016ftok p\u0159i 5 bar"
+          },
+          "flow_10bar": {
+            "type": "string",
+            "description": "Pr\u016ftok p\u0159i 10 bar"
+          },
+          "flow_15bar": {
+            "type": "string",
+            "description": "Pr\u016ftok p\u0159i 15 bar (p\u0159\u00edp. 20 bar u vy\u0161\u0161\u00edch variant)"
+          }
+        }
+      }
     }
   },
   "required": [

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail } from 'lucide-react';
+import { ArrowRight, Wrench, Droplets, Package, Phone, Mail } from 'lucide-react';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
+import FaqAccordionItem from '@/components/common/FaqAccordionItem';
 
 const FAQ_SECTIONS = [
   {
@@ -89,39 +90,6 @@ const FAQ_SECTIONS = [
   },
 ];
 
-function FaqItem({ item, isOpen, onToggle }) {
-  return (
-    <div className={`border rounded-xl overflow-hidden transition-colors ${isOpen ? 'bg-white border-slate-300' : 'bg-slate-50 border-slate-200 hover:bg-slate-100/60'}`}>
-      <button
-        onClick={onToggle}
-        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
-      >
-        <span className={`text-sm font-medium leading-snug transition-colors ${isOpen ? 'text-slate-900' : 'text-slate-600'}`}>
-          {item.q}
-        </span>
-        <ChevronDown
-          size={18}
-          className={`shrink-0 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-slate-900' : ''}`}
-        />
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-          >
-            <div className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-light border-t border-slate-200 pt-4">
-              {item.a}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 export default function Podpora() {
   const [openItems, setOpenItems] = useState({});
   useEffect(() => {
@@ -197,9 +165,10 @@ export default function Podpora() {
             {/* FAQ items */}
             <div className="space-y-2">
               {section.items.map((item, idx) => (
-                <FaqItem
+                <FaqAccordionItem
                   key={idx}
-                  item={item}
+                  question={item.q}
+                  answer={item.a}
                   isOpen={!!openItems[`${section.id}-${idx}`]}
                   onToggle={() => toggle(section.id, idx)}
                 />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator, Users, Wifi } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -35,10 +35,11 @@ const INFO_LINKS = [
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
 { icon: Cpu, label: 'Technologie', path: '/technologie' },
-{ icon: ShieldCheck, label: 'Výhody', path: '/vyhody' },
+{ icon: Wifi, label: 'Chytré ovládání', path: '/chytra-mlzidla' },
+{ icon: ShieldCheck, label: 'Přínosy mlžítek', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
-{ icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
-{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' }];
+{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
+{ icon: Users, label: 'Partnerství', path: '/partnerstvi' }];
 
 
 export default function Header() {
@@ -102,7 +103,7 @@ export default function Header() {
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Naše realizace</Link>
             <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Blog & novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${

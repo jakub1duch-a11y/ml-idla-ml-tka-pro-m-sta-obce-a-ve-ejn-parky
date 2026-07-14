@@ -38,7 +38,7 @@ export default function MistVideoShowcase() {
           {CLIPS.map((c, i) => (
             <motion.div key={c.url} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
               className="rounded-xl overflow-hidden border border-white/10 bg-black">
-              <video src={c.url} controls playsInline className="w-full aspect-video bg-black" />
+              <video src={c.url} autoPlay muted loop playsInline className="w-full aspect-video bg-black" />
               <p className="px-3 py-2.5 text-xs font-mono text-white/50 tracking-widest uppercase">{c.caption}</p>
             </motion.div>
           ))}

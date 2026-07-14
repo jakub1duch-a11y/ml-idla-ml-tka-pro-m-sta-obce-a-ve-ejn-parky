@@ -32,8 +32,8 @@ export default function LiveDemoSection() {
           <p className="text-white/60 max-w-lg font-light leading-relaxed mb-8">
             Jemná mlha, dramatický vizuální efekt a okamžité ochlazení prostoru — přesně takový je zážitek z instalací HolmTec v reálném provozu.
           </p>
-          <Link to="/poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-            Nezávazná poptávka <ArrowRight size={16} />
+          <Link to="/technologie" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+            Videa, živé ukázky a detail mlžení <ArrowRight size={16} />
           </Link>
         </motion.div>
       </div>

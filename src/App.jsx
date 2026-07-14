@@ -49,7 +49,6 @@ import Gate70 from '@/pages/Gate70';
 import Technologie from '@/pages/Technologie';
 import Vyhody from '@/pages/Vyhody';
 import KeStazeni from '@/pages/KeStazeni';
-import OchranaZdravi from '@/pages/OchranaZdravi';
 import ServisUdrzba from '@/pages/ServisUdrzba';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import ChytraMlzidla from '@/pages/ChytraMlzidla';
@@ -112,7 +111,6 @@ const AuthenticatedApp = () => {
         <Route path="/technologie" element={<Technologie />} />
         <Route path="/vyhody" element={<Vyhody />} />
         <Route path="/ke-stazeni" element={<KeStazeni />} />
-        <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />

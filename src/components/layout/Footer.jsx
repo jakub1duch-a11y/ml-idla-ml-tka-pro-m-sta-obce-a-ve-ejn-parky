@@ -45,10 +45,10 @@ export default function Footer() {
             <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Informace</p>
             <div className="flex flex-col gap-3">
               <Link to="/technologie" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Technologie</Link>
-              <Link to="/vyhody" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Výhody</Link>
+              <Link to="/chytra-mlzidla" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Chytré ovládání</Link>
+              <Link to="/vyhody" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Přínosy mlžítek</Link>
               <Link to="/podpora" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Nejčastější dotazy</Link>
               <Link to="/servis-udrzba" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Servis a údržba</Link>
-              <Link to="/ochrana-zdravi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ochrana zdraví</Link>
               <Link to="/ke-stazeni" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ke stažení a manuály</Link>
               <Link to="/obchodni-podminky" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Obchodní podmínky</Link>
               <Link to="/partnerstvi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Partnerství</Link>

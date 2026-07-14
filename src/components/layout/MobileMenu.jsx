@@ -120,7 +120,7 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
 
             <div className="flex flex-col gap-1 pt-4 mt-2 border-t border-slate-100">
               {[
-              { label: 'Reference', path: '/reference' },
+              { label: 'Naše realizace', path: '/reference' },
               { label: 'Kontakt', path: '/kontakt' }].
               map((l) =>
               <Link key={l.path} to={l.path} onClick={onClose} className="text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors py-3.5 px-4 rounded-xl">{l.label}</Link>

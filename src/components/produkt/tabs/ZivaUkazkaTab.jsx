@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Maximize2, VideoOff } from 'lucide-react';
+import { Maximize2, VideoOff, ArrowRight } from 'lucide-react';
 
 export default function ZivaUkazkaTab({ product, allImages, onOpenLightbox }) {
   return (
@@ -26,6 +27,10 @@ export default function ZivaUkazkaTab({ product, allImages, onOpenLightbox }) {
             <VideoOff size={16} /> Video zatím není k dispozici.
           </div>
         )}
+
+        <Link to="/video-ukazky" className="inline-flex items-center gap-2 text-sm font-medium text-slate-900 hover:text-slate-600 transition-colors mb-10">
+          Zobrazit všechny video ukázky mlžení <ArrowRight size={14} />
+        </Link>
 
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Fotografie z instalací</p>
         {allImages.length > 0 ? (

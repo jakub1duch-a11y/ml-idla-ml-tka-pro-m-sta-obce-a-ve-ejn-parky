@@ -25,6 +25,9 @@ export default function ReferenceHero() {
             <a href="#realizace" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:bg-slate-50 transition-all">
               Sledovat realizace
             </a>
+            <Link to="/video-ukazky" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:bg-slate-50 transition-all">
+              Video ukázky mlžení
+            </Link>
           </div>
         </motion.div>
 

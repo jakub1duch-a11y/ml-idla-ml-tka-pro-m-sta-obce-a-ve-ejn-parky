@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator, Users, Wifi } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Newspaper, Calculator, Users, Wifi, PlayCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -37,7 +37,8 @@ const INFO_LINKS = [
 { icon: Cpu, label: 'Technologie mlžení', path: '/technologie' },
 { icon: ShieldCheck, label: 'Přínosy mlžítek', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
-{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' }];
+{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
+{ icon: PlayCircle, label: 'Video — živé ukázky mlžení', path: '/video-ukazky' }];
 
 
 export default function Header() {

@@ -82,7 +82,7 @@ export default function Header() {
 
       
 
-      <header className="fixed top-0 left-0 right-0 transition-all z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm transition-all">
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
@@ -190,7 +190,7 @@ export default function Header() {
                     </Link>
                   </div>
                   <Link to="/katalog" onClick={(e) => e.stopPropagation()}
-                  className="flex items-center justify-center gap-1.5 mt-4 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold transition-colors">
+                className="flex items-center justify-center gap-1.5 mt-4 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold transition-colors">
                     Zobrazit celý katalog <ArrowRight size={14} />
                   </Link>
                 </div>
@@ -223,7 +223,7 @@ export default function Header() {
               {/* Online pomocník — AI produktový poradce */}
               <div className="max-w-6xl mx-auto px-5 lg:px-8 pb-7">
                 <Link to="/poradce" onClick={(e) => e.stopPropagation()}
-                  className="group flex items-center gap-4 p-5 rounded-2xl bg-slate-900 hover:bg-slate-800 transition-colors">
+              className="group flex items-center gap-4 p-5 rounded-2xl bg-slate-900 hover:bg-slate-800 transition-colors">
                   <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center shrink-0">
                     <Bot size={20} className="text-cyan" />
                   </div>

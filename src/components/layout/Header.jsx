@@ -34,7 +34,7 @@ const USAGE_LINKS = [
 const INFO_LINKS = [
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
-{ icon: Cpu, label: 'Technologie', path: '/technologie' },
+{ icon: Cpu, label: 'Technologie mlžení', path: '/technologie' },
 { icon: ShieldCheck, label: 'Přínosy mlžítek', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' }];

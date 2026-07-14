@@ -44,9 +44,9 @@ export default function SavingsCalculator() {
     <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 lg:p-8">
       <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Interaktivní kalkulačka úspor</p>
       <div className="mb-4">
-        <div className="flex items-center justify-between mb-3">
-          <label className="text-sm text-slate-600">Kolik hodin denně mlžení běží?</label>
-          <span className="text-sm font-bold text-slate-900">{h} h / den</span>
+        <div className="flex items-center justify-between mb-3 gap-4">
+          <label className="text-sm text-slate-600">Nastavte kolik hodin denně je mlžítko spuštěné pro měsíční výpočet a srovnání s úsporou vody (průměrně) se systémem SMART APP</label>
+          <span className="text-sm font-bold text-slate-900 whitespace-nowrap">{h} h / den</span>
         </div>
         <Slider value={hours} onValueChange={setHours} min={1} max={12} step={1} />
         <p className="text-xs font-mono text-slate-500 mt-3">
@@ -62,10 +62,11 @@ export default function SavingsCalculator() {
       </div>
 
       <div>
-        <div className="flex items-center gap-2 mb-3">
-          <Droplets size={16} className="text-cyan" />
-          <p className="text-sm font-medium text-slate-900">Spotřeba vody / měsíc</p>
+        <div className="flex items-center gap-2 mb-1">
+          <Droplets size={18} className="text-cyan" />
+          <p className="text-base font-bold text-slate-900">Spotřeba vody / měsíc</p>
         </div>
+        <p className="text-xs text-slate-400 mb-3">Výpočet měsíčních provozních nákladů na vodu</p>
         <ResponsiveContainer width="100%" height={180}>
           <BarChart data={data.water}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />

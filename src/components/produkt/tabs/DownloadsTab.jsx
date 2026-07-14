@@ -2,10 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download } from 'lucide-react';
 
+const NOZZLE_PDF = 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/96db07d39_drbatrysek.pdf';
+const NOZZLE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/af0d47654_drbatrysek.png';
+
 const SHARED_DOCS = [
   { title: 'Přípravné práce pro instalaci', desc: 'Stavební příprava, výkopy, betonáž a rozvod vody.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/b704ccfab_Ppravnprceproinstalacimltka.pdf' },
   { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat a průřezů. Měřítko 1:10.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/f23bec143_DETAILY_OCELOVEHO_MLZITKA.pdf' },
-  { title: 'Manuál údržby trysky typ M', desc: 'Postup demontáže a čištění mlžící trysky.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/6fcaf7525_tryska.pdf' },
+  { title: 'Péče o trysky — PDF návod', desc: 'Přehledný postup demontáže, čištění a údržby mlžících trysek.', url: NOZZLE_PDF },
   { title: 'Chytré ovládání — prospekt', desc: 'Smart App, Supla Cloud, senzory a automatizace.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/681f0619c_Chytreovladani.pdf' },
 ];
 
@@ -45,6 +48,17 @@ export default function DownloadsTab({ product }) {
             </motion.a>
           ))}
         </div>
+
+        <div className="max-w-2xl mb-10 p-6 rounded-2xl border border-slate-200 bg-slate-50">
+          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-3">Instruktážní foto — péče o trysky</p>
+          <img src={NOZZLE_IMG} alt="Instruktážní foto — péče a čištění mlžících trysek"
+            className="w-full rounded-2xl border border-slate-200 shadow-sm mb-4" loading="lazy" />
+          <a href={NOZZLE_PDF} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+            <Download size={15} /> Stáhnout PDF návod k tryskám
+          </a>
+        </div>
+
         <div className="max-w-2xl space-y-4">
           <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-3">Dokumenty na vyžádání</p>
           {emailFiles.map((f, i) => (

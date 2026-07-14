@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Loader, ArrowLeft } from 'lucide-react';
+import { Loader, ArrowLeft, LayoutTemplate } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import SectionNav from '@/components/produkt2/SectionNav';
@@ -91,6 +91,11 @@ export default function ProduktDetail2() {
     <div className="min-h-screen bg-ink">
       <Link to="/mlzidla-mlzitka" className="fixed top-20 left-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 bg-black/50 border border-white/15 text-white/70 hover:text-white text-[10px] font-mono uppercase tracking-widest transition-colors">
         <ArrowLeft size={12} /> Zpět
+      </Link>
+
+      <Link to={`/produkt/${product.slug}`} title="Zobrazit klasickou verzi stránky produktu"
+        className="fixed top-20 right-4 z-30 inline-flex items-center gap-1.5 px-3 py-2 bg-black/50 border border-white/15 text-white/70 hover:text-white text-[10px] font-mono uppercase tracking-widest transition-colors">
+        <LayoutTemplate size={12} /> Změnit alternativní zobrazení karty
       </Link>
 
       <SectionNav sections={sections} />

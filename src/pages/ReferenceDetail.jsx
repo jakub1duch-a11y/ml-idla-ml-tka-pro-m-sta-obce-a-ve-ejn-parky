@@ -7,6 +7,7 @@ import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';
 import ShareButtons from '@/components/blog/ShareButtons';
 import RealizaceCommentsSection from '@/components/reference/RealizaceCommentsSection';
+import ProjectTechTable from '@/components/reference/ProjectTechTable';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -193,6 +194,8 @@ export default function ReferenceDetail() {
                 <p className="text-slate-600 text-lg leading-relaxed font-light whitespace-pre-line">{project.description}</p>
               </>
             )}
+
+            <ProjectTechTable technologies={project.technologies} mistPointsCount={project.mist_points_count} />
 
             {project.source_url && (
               <a href={project.source_url} target="_blank" rel="noopener noreferrer"

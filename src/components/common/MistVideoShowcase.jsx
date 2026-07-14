@@ -15,35 +15,35 @@ const CLIPS = [
 
 
 export default function MistVideoShowcase() {
-  return (
-    <section className="bg-slate-900 py-20 lg:py-24 hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-5">
-            <Play size={11} /> Ukázky mlhy
-          </span>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight">
-            Mlha, výroba a instalace — v reálném provozu.
-          </h2>
-        </motion.div>
+  return null;
 
-        {/* Hero clip */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="rounded-2xl overflow-hidden border border-white/10 mb-5">
-          <video src={HERO_VIDEO} autoPlay muted loop playsInline className="w-full aspect-video object-cover bg-black" />
-        </motion.div>
 
-        {/* Grid of clips */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {CLIPS.map((c, i) =>
-          <motion.div key={c.url} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-          className="rounded-xl overflow-hidden border border-white/10 bg-black">
-              <video src={c.url} autoPlay muted loop playsInline className="w-full aspect-video bg-black" />
-              <p className="px-3 py-2.5 text-xs font-mono text-white/50 tracking-widest uppercase">{c.caption}</p>
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </section>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Radio, Thermometer, Droplets, Smartphone, CloudSun, Move } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
+import { base44 } from '@/api/base44Client';
+
+const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
 
 const ACCESSORIES = [
 { icon: Radio, label: 'Spouštěcí senzory', desc: 'Automaticky zapnou mlžení, jakmile je v okolí zaznamenán pohyb nebo přítomnost osob.' },
@@ -14,6 +17,12 @@ const ACCESSORIES = [
 
 
 export default function AccessoriesSection() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    base44.entities.Product.filter({ category_id: ACCESSORY_CATEGORY_ID }).then(setProducts).catch(() => setProducts([]));
+  }, []);
+
   return (
     <section className="bg-slate-50 border-t border-slate-200 py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -22,6 +31,28 @@ export default function AccessoriesSection() {
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">Senzory a chytré doplňky ke každému mlžítku.</h2>
           <p className="text-slate-500 leading-relaxed">Rychlé nastavení, mobilní aplikace a plně programovatelné scénáře — přizpůsobte mlžení počasí, vlhkosti, času i pohybu.</p>
         </div>
+
+        {products.length > 0 &&
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          {products.map((p, i) =>
+          <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
+              <Link to={`/produkt/${p.slug}`}
+                className="group flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all">
+                {p.image_url &&
+                <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-100 shrink-0">
+                  <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                </div>
+                }
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-slate-900 font-medium mb-1">{p.name}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed line-clamp-2">{p.short_description}</p>
+                </div>
+                <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-600 transition-colors shrink-0" />
+              </Link>
+            </motion.div>
+          )}
+        </div>
+        }
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
           {ACCESSORIES.map((a, i) =>

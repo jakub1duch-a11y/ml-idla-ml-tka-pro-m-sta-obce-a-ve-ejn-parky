@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap, Truck } from 'lucide-react';
@@ -6,13 +6,16 @@ import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
 
-export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
+export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical, isAccessory }) {
+  const [selectedVariant, setSelectedVariant] = useState(
+    product.nozzle_variants?.find((v) => v.is_standard)?.code || product.nozzle_variants?.[0]?.code
+  );
+  const deliveryText = isAccessory ? 'Do 7 prac. dnů (Ověřit - Zavolat)' : '1–3 pracovní týdny (Ověřit - Zavolat)';
   const quickSpecs = [
     product.coverage_area && { icon: Thermometer, label: 'Ochlazení', value: product.coverage_area },
     product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
     product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
     product.power_supply && { icon: Zap, label: 'Napájení', value: product.power_supply },
-    product.delivery_time && { icon: Truck, label: 'Dodání', value: product.delivery_time },
   ].filter(Boolean);
 
   return (
@@ -48,9 +51,26 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
           )}
 
           {product.price_from ? (
-            <p className="text-xl font-light text-slate-900 mb-6">od {product.price_from} Kč <span className="text-sm text-slate-400">(orientační cena)</span></p>
+            <p className="text-xl font-light text-slate-900 mb-2">od {product.price_from} Kč <span className="text-sm text-slate-400">(orientační cena)</span></p>
           ) : (
-            <p className="text-xl font-light text-slate-900 mb-6">Cena: <span className="font-medium">na vyžádání</span></p>
+            <p className="text-xl font-light text-slate-900 mb-2">Cena: <span className="font-medium">na vyžádání</span></p>
+          )}
+          <p className="flex items-center gap-1.5 text-sm text-slate-500 mb-6">
+            <Truck size={14} className="text-slate-400 shrink-0" /> Možný termín dodání: <span className="font-medium text-slate-900">{deliveryText}</span>
+          </p>
+
+          {product.nozzle_variants?.length > 0 && (
+            <div className="mb-6">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-2">Varianta trysky</p>
+              <div className="flex flex-wrap gap-2">
+                {product.nozzle_variants.map((v) => (
+                  <button key={v.code} type="button" onClick={() => setSelectedVariant(v.code)}
+                    className={`px-4 py-2 rounded-full text-xs font-semibold border transition-colors ${selectedVariant === v.code ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'}`}>
+                    {v.code}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
 
           {quickSpecs.length > 0 && (

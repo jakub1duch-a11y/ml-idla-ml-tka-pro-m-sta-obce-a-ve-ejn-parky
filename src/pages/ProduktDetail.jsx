@@ -188,7 +188,7 @@ export default function ProduktDetail() {
   { label: 'Povrch', value: 'Broušený / kartáčovaný', icon: Sparkles, desc: 'Ruční broušený povrch potlačuje odlesky a otisky prstů, zachovává prémiový vzhled.' },
   product.power_supply && { label: 'Napájení & řízení', value: product.power_supply, icon: Zap, desc: 'Elektronické řízení mlžení, kompatibilní se SMART moduly a časovači.' },
   !isAccessory && { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' },
-  isAccessory && product.delivery_time && { label: 'Dodání', value: product.delivery_time, icon: Truck, desc: 'Skladová položka — pro upřesnění termínu kontaktujte podporu.' },
+  isAccessory && { label: 'Dodání', value: 'Do 7 prac. dnů (Ověřit - Zavolat)', icon: Truck, desc: 'Skladová položka — pro upřesnění termínu kontaktujte podporu.' },
   isAccessory && !product.price_from && { label: 'Cena', value: 'Na vyžádání', icon: Tag, desc: 'Kontaktujte nás pro individuální cenovou nabídku dle množství a varianty.' }].
   filter(Boolean);
 
@@ -206,6 +206,7 @@ export default function ProduktDetail() {
         allImages={allImages}
         onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])}
+        isAccessory={isAccessory}
       />
 
       {/* ═══════ STICKY TABS NAV ═══════ */}

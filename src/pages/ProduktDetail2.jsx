@@ -11,6 +11,8 @@ import BenefitsSlide from '@/components/produkt2/BenefitsSlide';
 import VideoMistCtaSlide from '@/components/produkt2/VideoMistCtaSlide';
 import RelatedBackSlide from '@/components/produkt2/RelatedBackSlide';
 
+const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
+
 function guessNozzleCount(product) {
   const text = `${product.short_description || ''} ${product.description || ''}`;
   const match = text.match(/(\d+)\s*trys/i);
@@ -68,6 +70,9 @@ export default function ProduktDetail2() {
 
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
+  const isAccessory = product.category_id === ACCESSORY_CATEGORY_ID;
+  const deliveryText = isAccessory ? 'Do 7 prac. dnů (Ověřit - Zavolat)' : '1–3 pracovní týdny (Ověřit - Zavolat)';
+
   const specRows = [
     product.material && { label: 'Materiál', value: product.material },
     product.micron_size && { label: 'Trysky', value: `${product.micron_size} μm` },
@@ -75,7 +80,8 @@ export default function ProduktDetail2() {
     product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
     product.coverage_area && { label: 'Výška / pokrytí', value: product.coverage_area },
     product.power_supply && { label: 'Napájení', value: product.power_supply },
-    product.price_from && { label: 'Cena od', value: `${product.price_from.toLocaleString('cs-CZ')} Kč` },
+    { label: 'Cena od', value: product.price_from ? `${product.price_from.toLocaleString('cs-CZ')} Kč` : 'Na vyžádání' },
+    { label: 'Dodání', value: deliveryText },
   ].filter(Boolean);
 
   const sections = [

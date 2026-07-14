@@ -38,10 +38,7 @@ export default function FeaturesBenefitsSection() {
                 <f.icon size={19} className="text-slate-900 group-hover:text-white transition-colors" />
               </motion.div>
               <h3 className="text-slate-900 font-medium mb-1.5">{f.title}</h3>
-              <div className="max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-300 ease-out overflow-hidden">
-                <p className="text-sm text-slate-500 leading-relaxed pt-0.5">{f.desc}</p>
-              </div>
-              <p className="text-xs text-slate-300 group-hover:hidden mt-0.5 font-mono tracking-wider uppercase">Najeďte pro detail</p>
+              <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}
         </div>

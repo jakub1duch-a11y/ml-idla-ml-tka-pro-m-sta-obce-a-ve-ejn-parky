@@ -74,6 +74,10 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                     <p className="text-xs text-slate-400">{customLink.sub}</p>
                   </div>
                 </Link>
+                <Link to="/katalog" onClick={onClose}
+                  className="flex items-center justify-center gap-2 w-full py-3.5 mb-2 rounded-2xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors">
+                  Všechny produkty a mlžítka <ArrowRight size={15} />
+                </Link>
                 <Link to="/mlzidla-mlzitka" onClick={onClose}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl border border-slate-900 text-slate-900 text-sm font-bold hover:bg-slate-900 hover:text-white transition-colors">
                   Prohlédnout celou kolekci <ArrowRight size={15} />

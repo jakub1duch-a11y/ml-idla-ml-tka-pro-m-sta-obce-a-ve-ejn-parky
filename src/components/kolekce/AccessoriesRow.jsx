@@ -14,8 +14,8 @@ export default function AccessoriesRow({ products }) {
             <Wrench size={16} className="text-slate-900" />
           </div>
           <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400">Příslušenství k mlžítkům</p>
-            <h3 className="text-lg font-normal text-slate-900">Trysky a kotvení pro váš model</h3>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400">Příslušenství a smart moduly</p>
+            <h3 className="text-lg font-normal text-slate-900">Trysky, kotvení, filtrační a SMART řídicí moduly</h3>
           </div>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

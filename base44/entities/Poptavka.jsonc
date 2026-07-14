@@ -22,6 +22,23 @@
       "type": "string",
       "description": "Z\u00e1jem o produkt"
     },
+    "ovladani": {
+      "type": "string",
+      "enum": [
+        "wifi_smart_app",
+        "manualni_ventil",
+        "casovy_spinac",
+        "doporucit"
+      ],
+      "description": "Preferovan\u00fd typ ovl\u00e1d\u00e1n\u00ed / \u0159\u00edzen\u00ed ml\u017e\u00edtka pro cenovou nab\u00eddku"
+    },
+    "soubory_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URL nahran\u00fdch soubor\u016f/obr\u00e1zk\u016f k projektu pro p\u0159esn\u00e9 ur\u010den\u00ed ceny"
+    },
     "zprava": {
       "type": "string",
       "description": "Zpr\u00e1va / popt\u00e1vka"

@@ -173,6 +173,10 @@ export default function Header() {
                   )}
                   </div>
                   <div className="flex flex-col gap-1.5 mt-4 pt-4 border-t border-slate-100">
+                    <Link to="/katalog" onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-900">
+                      Všechny produkty a mlžítka <ArrowRight size={14} />
+                    </Link>
                     <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
                       Celá kolekce <ArrowRight size={14} />

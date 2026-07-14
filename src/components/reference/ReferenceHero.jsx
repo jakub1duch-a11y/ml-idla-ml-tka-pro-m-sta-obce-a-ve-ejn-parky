@@ -16,8 +16,8 @@ export default function ReferenceHero() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative px-6 py-16 max-w-3xl mx-auto">
           <p className="text-sm font-medium tracking-wide text-slate-300 mb-4">Reference</p>
-          <h1 className="font-heading font-bold text-4xl lg:text-5xl text-white tracking-tight mb-6 leading-[1.15]">
-            Osvěžující mlžné sochy<br />pro moderní prostory
+          <h1 className="text-4xl lg:text-5xl text-white tracking-tight mb-6 leading-[1.15] [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">Osvěžující mlžné sochy
+pro moderní prostory
           </h1>
           <p className="text-slate-300 max-w-xl mx-auto text-base lg:text-lg font-normal mb-10 leading-relaxed">
             Luxusní design z nerezové oceli AISI 316L, jemná <span className="font-semibold text-slate-100">mlhová clona a ochlazení okolního vzduchu</span> až o 9 °C — bez kapek na zemi, bez hluku.
@@ -35,6 +35,6 @@ export default function ReferenceHero() {
           </div>
         </motion.div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

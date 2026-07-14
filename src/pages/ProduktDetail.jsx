@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, LayoutTemplate } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, LayoutTemplate, Truck, Tag } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
@@ -20,8 +20,10 @@ import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import NozzleVariantsTable from '@/components/produkt/NozzleVariantsTable';
+import NozzleMaintenanceTab from '@/components/produkt/tabs/NozzleMaintenanceTab';
 
 const GATE_SLUGS = ['gate70', 'linea-el70'];
+const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -66,6 +68,13 @@ const TABS = [
 { id: 'technicke', label: 'Technické informace' },
 { id: 'benefity', label: 'Benefity a přínosy' },
 { id: 'instalace', label: 'Kotvení a instalace' },
+{ id: 'video', label: 'Živá ukázka' },
+{ id: 'ke-stazeni', label: 'Ke stažení' }];
+
+const ACCESSORY_TABS = [
+{ id: 'o-produktu', label: 'O produktu' },
+{ id: 'varianty', label: 'Varianty a průtoky' },
+{ id: 'udrzba', label: 'Údržba trysek' },
 { id: 'video', label: 'Živá ukázka' },
 { id: 'ke-stazeni', label: 'Ke stažení' }];
 
@@ -168,6 +177,7 @@ export default function ProduktDetail() {
 
   const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
+  const isAccessory = product.category_id === ACCESSORY_CATEGORY_ID;
 
   const techRows = [
   product.coverage_area && { label: 'Výška', value: product.coverage_area, icon: Ruler, desc: 'Celková výška konstrukce ovlivňuje dosah a pokrytí mlžného oblaku v prostoru.' },
@@ -177,10 +187,12 @@ export default function ProduktDetail() {
   product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Potravinářská nerez odolná korozi, vhodná pro celoroční venkovní provoz.' },
   { label: 'Povrch', value: 'Broušený / kartáčovaný', icon: Sparkles, desc: 'Ruční broušený povrch potlačuje odlesky a otisky prstů, zachovává prémiový vzhled.' },
   product.power_supply && { label: 'Napájení & řízení', value: product.power_supply, icon: Zap, desc: 'Elektronické řízení mlžení, kompatibilní se SMART moduly a časovači.' },
-  { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' }].
+  !isAccessory && { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' },
+  isAccessory && product.delivery_time && { label: 'Dodání', value: product.delivery_time, icon: Truck, desc: 'Skladová položka — pro upřesnění termínu kontaktujte podporu.' },
+  isAccessory && !product.price_from && { label: 'Cena', value: 'Na vyžádání', icon: Tag, desc: 'Kontaktujte nás pro individuální cenovou nabídku dle množství a varianty.' }].
   filter(Boolean);
 
-  const contentTabs = TABS;
+  const contentTabs = isAccessory ? ACCESSORY_TABS : TABS;
   const idx = contentTabs.findIndex((t) => t.id === activeTab);
   const nextTab = contentTabs[idx + 1];
 
@@ -214,7 +226,7 @@ export default function ProduktDetail() {
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
               className="flex gap-2 sm:gap-6 lg:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-              {TABS.map((t) =>
+              {contentTabs.map((t) =>
               <button key={t.id} onClick={() => handleTabClick(t)}
               className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
                   {t.label}
@@ -247,9 +259,15 @@ export default function ProduktDetail() {
             <>
               <SpecsTab product={product} techRows={techRows} />
               {GATE_SLUGS.includes(product.slug) && <GateComparisonTable />}
+            </>
+          )}
+          {activeTab === 'varianty' && (
+            <>
+              <SpecsTab product={product} techRows={techRows} />
               <NozzleVariantsTable variants={product.nozzle_variants} />
             </>
           )}
+          {activeTab === 'udrzba' && <NozzleMaintenanceTab product={product} />}
           {activeTab === 'benefity' && <BenefityTab product={product} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
           {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}

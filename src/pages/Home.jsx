@@ -7,6 +7,7 @@ import SmartSection from '@/components/home/SmartSection';
 import MobileQuickNav from '@/components/home/MobileQuickNav';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import ReferenceSection from '@/components/home/ReferenceSection';
+import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import BlogSection from '@/components/home/BlogSection';
 import ContactSection from '@/components/home/ContactSection';
@@ -33,6 +34,7 @@ export default function Home() {
       <FadeIn><ContactSection /></FadeIn>
       <FadeIn><ConceptToRealitySection /></FadeIn>
       <FadeIn><ReferenceSection /></FadeIn>
+      <FadeIn><RealizaceGallerySection /></FadeIn>
     </>
   );
 }

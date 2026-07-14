@@ -43,8 +43,8 @@ export default function SmartSection() {
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-8 border-t border-white/10">
           <p className="text-sm text-white/50 max-w-md">Podrobný přehled senzorů, automatizačních scénářů a nabídky Smart Wi-Fi systémů najdete na detailní stránce.</p>
-          <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all whitespace-nowrap">
-            Zjistit více o Smart řízení <ArrowRight size={15} />
+          <Link to="/chytra-mlzidla" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all whitespace-nowrap">
+            Chytré ovládání <ArrowRight size={15} />
           </Link>
         </motion.div>
       </div>

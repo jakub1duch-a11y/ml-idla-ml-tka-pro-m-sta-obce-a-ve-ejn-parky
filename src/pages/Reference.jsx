@@ -8,6 +8,7 @@ import ReferenceHero from '@/components/reference/ReferenceHero';
 import GateLiveDemoCard from '@/components/reference/GateLiveDemoCard';
 import Collection2026Section from '@/components/reference/Collection2026Section';
 import FeaturesSection from '@/components/reference/FeaturesSection';
+import RealizaceCategoryGrid from '@/components/reference/RealizaceCategoryGrid';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -191,9 +192,6 @@ export default function Reference() {
 
       <GateLiveDemoCard />
 
-      <Collection2026Section />
-      <FeaturesSection />
-
       {/* Filters */}
       <div id="realizace" className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
         <div className="flex gap-2 flex-wrap">
@@ -207,7 +205,7 @@ export default function Reference() {
       </div>
 
       {/* Grid */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
         {loading ? (
           <div className="flex justify-center py-20">
             <Loader size={24} className="animate-spin text-slate-300" />
@@ -222,6 +220,10 @@ export default function Reference() {
           </div>
         )}
       </div>
+
+      <RealizaceCategoryGrid />
+      <Collection2026Section />
+      <FeaturesSection />
 
       {/* CTA */}
       <div className="py-20 bg-slate-50 border-t border-slate-200">

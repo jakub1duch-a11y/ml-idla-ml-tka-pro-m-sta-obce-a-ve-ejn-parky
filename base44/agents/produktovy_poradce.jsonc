@@ -54,6 +54,10 @@
     {
       "connector_id": "6a4815d14bdad9f1dc6a1ff4",
       "enabled": true
+    },
+    {
+      "connector_id": "6a4d51c9f28c6e0b0efd8e6f",
+      "enabled": true
     }
   ],
   "selected_skill_names": [
@@ -65,7 +69,7 @@
   "telegram_greeting": "",
   "line_greeting": "",
   "memory_config": {
-    "enabled": false,
+    "enabled": true,
     "scope": "both",
     "include_other_conversation_context": false,
     "instructions": "Kdy\u017e se n\u00e1m spole\u010dn\u011b povede skv\u011bl\u00e1 odpov\u011b\u010f nebo mi vysv\u011btl\u00edte specifick\u00fd detail va\u0161eho projektu"

@@ -1,60 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Droplets, Clock, ChevronDown, Sparkles, Info } from 'lucide-react';
+import { Droplets, Clock, ChevronDown, Sparkles, Info, Loader } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 const SMART_APP_SAVINGS = 0.25; // úspora vody při Smart APP řízení (senzory větru/teploty/vlhkosti)
 
-// ─── Systémy ────────────────────────────────────────────────────────────────
-const SYSTEMS = [
-{
-  id: 'bench',
-  name: 'BENDY 60 — Lavička',
-  type: 'Mlžná lavička',
-  nozzles: 4,
-  flowPerNozzle: 0.06, // l/min na trysku při 70 bar
-  pressure: 70,
-  desc: 'Kompaktní mlžná lavička pro terasy a veřejné prostory.'
-},
-{
-  id: 'ostev',
-  name: 'OSTEV — Mlžný strom',
-  type: 'Mlžná socha',
-  nozzles: 8,
-  flowPerNozzle: 0.06,
-  pressure: 70,
-  desc: 'Skulpturální mlžný strom pro náměstí a parky.'
-},
-{
-  id: 'gate60',
-  name: 'GATE 60 — Mlžná brána',
-  type: 'Mlžný portál',
-  nozzles: 12,
-  flowPerNozzle: 0.06,
-  pressure: 70,
-  desc: 'Vstupní mlžná brána pro eventy a veřejné prostory.'
-},
-{
-  id: 'arena',
-  name: 'ARENA — Mlžná zóna',
-  type: 'Chladicí zóna',
-  nozzles: 20,
-  flowPerNozzle: 0.06,
-  pressure: 70,
-  desc: 'Plošné ochlazení pro velké venkovní prostory a tribuny.'
-},
-{
-  id: 'aura',
-  name: 'AURA — Mlžná socha',
-  type: 'Designová socha',
-  nozzles: 8,
-  flowPerNozzle: 0.06,
-  pressure: 70,
-  desc: 'Kruhová mlžná socha — dominanta veřejného prostoru.'
-}];
-
+// Produkty, které nejsou samostatná mlžítka/brány (příslušenství), do kalkulačky nepatří
+const ACCESSORY_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
 
 const WATER_PRICE_PER_M3 = 85; // Kč / m³ (ČR průměr 2025)
 const NOZZLE_PRICE_KC = 390; // Kč za 1 ks nerezové trysky AISI 316L
+
+// ─── Parsování reálných dat produktu ───────────────────────────────────────
+function parseFlowLH(str) {
+  if (!str) return 10; // rozumný odhad, když produkt spotřebu neuvádí
+  const nums = (str.match(/[\d.,]+/g) || []).map((n) => parseFloat(n.replace(',', '.'))).filter((n) => !isNaN(n));
+  if (nums.length === 0) return 10;
+  const avg = nums.reduce((a, b) => a + b, 0) / nums.length;
+  return /l\/min/i.test(str) ? avg * 60 : avg;
+}
+
+function parseNozzles(str) {
+  const m = str && str.match(/(\d+)\s*trys/i);
+  return m ? parseInt(m[1], 10) : 1;
+}
+
+function buildSystems(products, categories) {
+  const catName = (id) => categories.find((c) => c.id === id)?.name || id || 'Mlžítko';
+  return products.
+  filter((p) => !ACCESSORY_NAMES.includes(p.name)).
+  map((p) => {
+    const totalFlowLH = parseFlowLH(p.water_consumption);
+    const nozzles = parseNozzles(p.micron_size) || parseNozzles(p.water_consumption) || 1;
+    return {
+      id: p.id,
+      name: p.name,
+      type: catName(p.category_id),
+      nozzles,
+      flowPerNozzle: totalFlowLH / nozzles / 60, // l/min na trysku
+      pressure: p.pressure || '2–7 bar',
+      desc: p.short_description || ''
+    };
+  });
+}
 
 // ─── Mist Canvas Animace ────────────────────────────────────────────────────
 // intensity: 0.3–1.5 (počet trysek / max)
@@ -205,11 +193,40 @@ function AnimNum({ value, decimals = 0, suffix = '' }) {
 
 // ─── Hlavní komponent ────────────────────────────────────────────────────────
 export default function MlzeniKalkulator() {
-  const [systemId, setSystemId] = useState('ostev');
+  const [systems, setSystems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [systemId, setSystemId] = useState(null);
   const [seasonHours, setSeasonHours] = useState(300);
   const [openSelect, setOpenSelect] = useState(false);
 
-  const sys = SYSTEMS.find((s) => s.id === systemId);
+  useEffect(() => {
+    Promise.all([
+    base44.entities.Product.list().catch(() => []),
+    base44.entities.ProductCategory.list().catch(() => [])]
+    ).then(([products, categories]) => {
+      const built = buildSystems(products || [], categories || []);
+      setSystems(built);
+      if (built.length > 0) setSystemId(built[0].id);
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const sys = systems.find((s) => s.id === systemId);
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl border border-white/10 bg-card_bg flex items-center justify-center py-24">
+        <Loader size={22} className="animate-spin text-cyan" />
+      </div>);
+
+  }
+
+  if (!sys) {
+    return (
+      <div className="rounded-2xl border border-white/10 bg-card_bg flex items-center justify-center py-24 px-6 text-center">
+        <p className="text-sm text-white/50">Zatím nejsou k dispozici žádné produkty pro výpočet.</p>
+      </div>);
+
+  }
 
   // Výpočty — pouze spotřeba a náklady na vodu
   const flowPerNozzleLH = sys.flowPerNozzle * 60; // l/h na 1 trysku
@@ -236,7 +253,7 @@ export default function MlzeniKalkulator() {
         </div>
         <div>
           <p className="text-sm font-medium text-[hsl(var(--popover))]">Kalkulátor spotřeby vody</p>
-          <p className="text-xs text-[hsl(var(--popover))]">Orientační výpočet pro vybraný systém</p>
+          <p className="text-xs text-[hsl(var(--popover))]">Orientační výpočet pro vybraný produkt z katalogu</p>
         </div>
       </div>
 
@@ -247,7 +264,7 @@ export default function MlzeniKalkulator() {
           {/* Výběr systému */}
           <div>
             <label className="block text-[10px] font-mono text-white/40 tracking-widest uppercase mb-2">
-              Mlžný systém
+              Mlžítko / mlžná brána
             </label>
             <div className="relative">
               <button
@@ -263,9 +280,9 @@ export default function MlzeniKalkulator() {
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  className="absolute z-20 top-full mt-1 w-full rounded-xl bg-surface border border-white/15 overflow-hidden shadow-2xl shadow-black/50">
+                  className="absolute z-20 top-full mt-1 w-full max-h-72 overflow-y-auto rounded-xl bg-surface border border-white/15 shadow-2xl shadow-black/50">
                   
-                    {SYSTEMS.map((s) =>
+                    {systems.map((s) =>
                   <button
                     key={s.id}
                     onClick={() => {setSystemId(s.id);setOpenSelect(false);}}
@@ -275,14 +292,14 @@ export default function MlzeniKalkulator() {
                           <p className={`text-sm font-medium truncate ${s.id === systemId ? 'text-cyan' : 'text-white'}`}>{s.name}</p>
                           <p className="text-xs text-white/35 truncate">{s.desc}</p>
                         </div>
-                        <span className="text-[10px] font-mono text-white/30 shrink-0 mt-0.5">{s.nozzles} trysek</span>
+                        <span className="text-[10px] font-mono text-white/30 shrink-0 mt-0.5">{s.type}</span>
                       </button>
                   )}
                   </motion.div>
                 }
               </AnimatePresence>
             </div>
-            <p className="text-xs mt-1.5 font-mono text-[hsl(var(--card-foreground))]">{sys.type} · {sys.nozzles} trysek · {sys.pressure} bar</p>
+            <p className="text-xs mt-1.5 font-mono text-[hsl(var(--card-foreground))]">{sys.type} · {sys.nozzles} trysek · {sys.pressure}</p>
           </div>
 
           {/* Hodin za letní sezónu */}

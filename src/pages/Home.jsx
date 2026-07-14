@@ -4,6 +4,7 @@ import HeroSlider from '@/components/home/premium/HeroSlider';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
 import SmartSection from '@/components/home/SmartSection';
+import MobileQuickNav from '@/components/home/MobileQuickNav';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import ReferenceSection from '@/components/home/ReferenceSection';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
@@ -21,6 +22,7 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
+      <MobileQuickNav />
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>

@@ -26,12 +26,20 @@ export default function AccessoriesSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
           {ACCESSORIES.map((a, i) =>
           <motion.div key={a.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-            className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
+            className="group relative p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all overflow-hidden">
               <div className="w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center mb-4">
                 <a.icon size={18} className="text-slate-900" />
               </div>
               <h3 className="text-slate-900 font-medium mb-1.5">{a.label}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{a.desc}</p>
+
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <Link to={`/kontakt?produkt=${encodeURIComponent(a.label)}`}
+                  onClick={() => trackQuickInquiryClick(a.label, 'accessories_hover')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-slate-100 transition-colors">
+                  Poptat {a.label.toLowerCase()} <ArrowRight size={14} />
+                </Link>
+              </div>
             </motion.div>
           )}
         </div>

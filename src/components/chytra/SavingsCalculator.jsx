@@ -19,13 +19,23 @@ export default function SavingsCalculator() {
   const data = useMemo(() => {
     const standardWater = h * WATER_L_PER_HOUR * DAYS_PER_MONTH;
     const smartWater = standardWater * (1 - WATER_SAVINGS);
+    const standardCost = costFor(standardWater);
+    const smartCost = costFor(smartWater);
     return {
       water: [
       { name: 'Běžný systém', hodnota: Math.round(standardWater) },
       { name: 'Smart systém', hodnota: Math.round(smartWater) }],
-      waterSaved: Math.round(standardWater - smartWater)
+      waterSaved: Math.round(standardWater - smartWater),
+      standardCost,
+      smartCost,
+      costSaved: standardCost - smartCost
     };
   }, [h]);
+
+  const dailyWater = Math.round(h * WATER_L_PER_HOUR);
+  const dailyCost = costFor(dailyWater);
+  const dailySmartCost = costFor(dailyWater * (1 - WATER_SAVINGS));
+  const dailySaved = dailyCost - dailySmartCost;
 
   const refWaterLiters = Math.round(REFERENCE_HOURS * WATER_L_PER_HOUR);
   const refCost = costFor(refWaterLiters);
@@ -33,12 +43,15 @@ export default function SavingsCalculator() {
   return (
     <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 lg:p-8">
       <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Interaktivní kalkulačka úspor</p>
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="flex items-center justify-between mb-3">
           <label className="text-sm text-slate-600">Kolik hodin denně mlžení běží?</label>
           <span className="text-sm font-bold text-slate-900">{h} h / den</span>
         </div>
         <Slider value={hours} onValueChange={setHours} min={1} max={12} step={1} />
+        <p className="text-xs font-mono text-slate-500 mt-3">
+          {h} h/d = {dailyWater} l / {dailyCost} Kč = úspora se smart řízením <span className="text-emerald-600 font-bold">-{dailySaved} Kč</span>
+        </p>
       </div>
 
       <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-8">
@@ -63,7 +76,10 @@ export default function SavingsCalculator() {
           </BarChart>
         </ResponsiveContainer>
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-sm text-emerald-600 font-medium mt-2">
-          Úspora {data.waterSaved.toLocaleString('cs-CZ')} l / měsíc
+          Úspora {data.waterSaved.toLocaleString('cs-CZ')} l / měsíc &middot; {data.costSaved.toLocaleString('cs-CZ')} Kč / měsíc
+          <span className="block text-xs text-slate-400 font-normal mt-0.5">
+            ({data.standardCost.toLocaleString('cs-CZ')} Kč časovačem → {data.smartCost.toLocaleString('cs-CZ')} Kč se smart řízením)
+          </span>
         </motion.p>
       </div>
     </div>);

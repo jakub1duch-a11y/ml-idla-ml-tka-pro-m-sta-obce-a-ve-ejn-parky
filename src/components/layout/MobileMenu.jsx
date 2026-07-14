@@ -126,8 +126,6 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                 <p className="text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-1">Poznejte firmu</p>
                 <h2 className="font-heading font-semibold text-xl text-slate-900 mb-5">Informace a podpora</h2>
                 <div className="flex flex-col gap-1 mb-6">
-                  <Link to="/blog" onClick={onClose} className="text-sm font-semibold text-slate-800 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">Blog & novinky</Link>
-                  <Link to="/o-nas" onClick={onClose} className="text-sm font-semibold text-slate-800 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">O společnosti</Link>
                   {infoLinks.map((l) =>
                   <Link key={l.path} to={l.path} onClick={onClose}
                     className={`flex items-center gap-3 text-sm py-3.5 px-4 rounded-xl transition-colors ${l.highlight ? 'font-semibold text-white bg-slate-900 mb-1' : 'font-medium text-slate-700 hover:bg-slate-50'}`}>
@@ -141,7 +139,7 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
 
             <div className="flex flex-col gap-1 pt-4 mt-2 border-t border-slate-100">
               {[
-              { label: 'Naše realizace', path: '/reference' },
+              { label: 'Realizace', path: '/reference' },
               { label: 'Partnerství', path: '/partnerstvi' },
               { label: 'Kontakt', path: '/kontakt' }].
               map((l) =>

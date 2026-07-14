@@ -30,13 +30,15 @@ const USAGE_LINKS = [
 
 const INFO_LINKS = [
 { icon: Bot, label: 'AI Poradce — poraďte se s asistentem', path: '/poradce', highlight: true },
+{ icon: Building2, label: 'O společnosti', path: '/o-nas' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
 { icon: Cpu, label: 'Technologie mlžení', path: '/technologie' },
 { icon: ShieldCheck, label: 'Přínosy mlžítek', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
-{ icon: PlayCircle, label: 'Video — živé ukázky mlžení', path: '/video-ukazky' }];
+{ icon: PlayCircle, label: 'Video — živé ukázky mlžení', path: '/video-ukazky' },
+{ icon: Newspaper, label: 'Blog & novinky', path: '/blog' }];
 
 
 export default function Header() {
@@ -100,9 +102,9 @@ export default function Header() {
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Naše realizace</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Blog & novinky</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Realizace</Link>
             <Link to="/partnerstvi" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Partnerství</Link>
+            <Link to="/chytra-mlzidla" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">SMART ovládání</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
@@ -135,7 +137,6 @@ export default function Header() {
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/80 hover:text-white hover:bg-white/10">O společnosti</Link>
               <Link to="/poptavka"
               className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">
                 Poptávka

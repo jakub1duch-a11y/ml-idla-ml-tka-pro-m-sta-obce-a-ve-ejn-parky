@@ -194,7 +194,7 @@ export default function Reference() {
   const visible = filter === 'all' ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <div className="min-h-screen bg-white pt-2">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
       <ReferenceHero />
 

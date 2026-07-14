@@ -35,11 +35,9 @@ const INFO_LINKS = [
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
 { icon: Cpu, label: 'Technologie', path: '/technologie' },
-{ icon: Wifi, label: 'Chytré ovládání', path: '/chytra-mlzidla' },
 { icon: ShieldCheck, label: 'Přínosy mlžítek', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
-{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
-{ icon: Users, label: 'Partnerství', path: '/partnerstvi' }];
+{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' }];
 
 
 export default function Header() {
@@ -105,6 +103,7 @@ export default function Header() {
             </div>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Naše realizace</Link>
             <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Blog & novinky</Link>
+            <Link to="/partnerstvi" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Partnerství</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
@@ -185,6 +184,18 @@ export default function Header() {
                     <Link to="/produkt/gate70" onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
                       Mlžné brány a portály <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                  <div className="flex flex-col gap-0.5 mt-4 pt-4 border-t border-slate-100">
+                    <Link key="chytre-ovladani" to="/chytra-mlzidla" onClick={(e) => e.stopPropagation()}
+                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                      <Wifi size={15} className="text-cyan opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
+                      <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Chytré ovládání</p>
+                    </Link>
+                    <Link key="partnerstvi" to="/partnerstvi" onClick={(e) => e.stopPropagation()}
+                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                      <Users size={15} className="text-slate-400 opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
+                      <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Partnerství</p>
                     </Link>
                   </div>
                 </div>

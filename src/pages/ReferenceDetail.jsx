@@ -5,6 +5,8 @@ import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, Zo
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';
+import ShareButtons from '@/components/blog/ShareButtons';
+import RealizaceCommentsSection from '@/components/reference/RealizaceCommentsSection';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -188,6 +190,9 @@ export default function ReferenceDetail() {
                 Podívejte se, jak realizaci sdílí klient <ExternalLink size={13} />
               </a>
             )}
+
+            <ShareButtons title={project.name} />
+            <RealizaceCommentsSection realizaceId={project.id} />
           </div>
 
           <div className="space-y-6">

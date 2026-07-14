@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowRight, Sparkles, X } from 'lucide-react';
+import { ChevronDown, ArrowRight, Sparkles, X, Wifi, Users } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 
 export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks, customLink }) {
@@ -74,6 +74,18 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                     <p className="text-xs text-slate-400">{customLink.sub}</p>
                   </div>
                 </Link>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <Link to="/chytra-mlzidla" onClick={onClose}
+                    className="flex items-center gap-2.5 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                    <Wifi size={16} className="text-cyan shrink-0" />
+                    <p className="text-sm font-semibold text-slate-900">Chytré ovládání</p>
+                  </Link>
+                  <Link to="/partnerstvi" onClick={onClose}
+                    className="flex items-center gap-2.5 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                    <Users size={16} className="text-slate-400 shrink-0" />
+                    <p className="text-sm font-semibold text-slate-900">Partnerství</p>
+                  </Link>
+                </div>
                 <Link to="/katalog" onClick={onClose}
                   className="flex items-center justify-center gap-2 w-full py-3.5 mb-2 rounded-2xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition-colors">
                   Všechny produkty a mlžítka <ArrowRight size={15} />
@@ -121,6 +133,7 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
             <div className="flex flex-col gap-1 pt-4 mt-2 border-t border-slate-100">
               {[
               { label: 'Naše realizace', path: '/reference' },
+              { label: 'Partnerství', path: '/partnerstvi' },
               { label: 'Kontakt', path: '/kontakt' }].
               map((l) =>
               <Link key={l.path} to={l.path} onClick={onClose} className="text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors py-3.5 px-4 rounded-xl">{l.label}</Link>

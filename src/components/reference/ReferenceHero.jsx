@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, PlayCircle } from 'lucide-react';
 import MistAmbientBackground from '@/components/reference/MistAmbientBackground';
-import WaterCostWidget from '@/components/reference/WaterCostWidget';
 
 export default function ReferenceHero() {
   return (
@@ -27,7 +26,6 @@ export default function ReferenceHero() {
               Sledovat realizace
             </a>
           </div>
-          <WaterCostWidget />
         </motion.div>
 
         {/* Right — framed video */}

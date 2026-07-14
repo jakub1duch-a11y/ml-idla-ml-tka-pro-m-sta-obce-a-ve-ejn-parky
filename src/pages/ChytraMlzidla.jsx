@@ -21,10 +21,10 @@ export default function ChytraMlzidla() {
     <div className="min-h-screen bg-white">
       <HeroFeatureGrid />
       <ControlVariants />
-      <ProductFilterGrid />
       <SmartControlPromo />
       <AccessoriesSection />
       <SmartSavingsSection />
+      <ProductFilterGrid />
     </div>);
 
 }

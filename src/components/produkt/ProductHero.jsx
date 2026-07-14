@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap, Truck } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
@@ -12,6 +12,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
     product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
     product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
     product.power_supply && { icon: Zap, label: 'Napájení', value: product.power_supply },
+    product.delivery_time && { icon: Truck, label: 'Dodání', value: product.delivery_time },
   ].filter(Boolean);
 
   return (
@@ -48,7 +49,9 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
 
           {product.price_from ? (
             <p className="text-xl font-light text-slate-900 mb-6">od {product.price_from} Kč <span className="text-sm text-slate-400">(orientační cena)</span></p>
-          ) : null}
+          ) : (
+            <p className="text-xl font-light text-slate-900 mb-6">Cena: <span className="font-medium">na vyžádání</span></p>
+          )}
 
           {quickSpecs.length > 0 && (
             <div className="grid grid-cols-2 gap-3 mb-8">

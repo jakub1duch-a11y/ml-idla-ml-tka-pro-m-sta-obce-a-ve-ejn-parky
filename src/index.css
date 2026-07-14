@@ -100,17 +100,19 @@
     color: hsl(var(--foreground));
   }
 
-  h1 { font-size: var(--fs-h1); margin-top: 0; margin-bottom: 1.25rem; }
-  h2 { font-size: var(--fs-h2); margin-top: 2.5rem; margin-bottom: 1.125rem; }
-  h3 { font-size: var(--fs-h3); margin-top: 2rem; margin-bottom: 1rem; }
-  h4 { font-size: var(--fs-h4); margin-top: 1.75rem; margin-bottom: 0.875rem; }
-  h5 { font-size: var(--fs-h5); margin-top: 1.5rem; margin-bottom: 0.75rem; }
-  h6 { font-size: var(--fs-h6); margin-top: 1.25rem; margin-bottom: 0.625rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  /* !important enforces the same heading size/spacing everywhere, regardless of
+     one-off Tailwind text-size utilities left on individual page sections. */
+  h1 { font-size: var(--fs-h1) !important; margin-top: 0 !important; margin-bottom: 1.25rem !important; }
+  h2 { font-size: var(--fs-h2) !important; margin-top: 2.5rem !important; margin-bottom: 1.125rem !important; }
+  h3 { font-size: var(--fs-h3) !important; margin-top: 2rem !important; margin-bottom: 1rem !important; }
+  h4 { font-size: var(--fs-h4) !important; margin-top: 1.75rem !important; margin-bottom: 0.875rem !important; }
+  h5 { font-size: var(--fs-h5) !important; margin-top: 1.5rem !important; margin-bottom: 0.75rem !important; }
+  h6 { font-size: var(--fs-h6) !important; margin-top: 1.25rem !important; margin-bottom: 0.625rem !important; text-transform: uppercase; letter-spacing: 0.04em; }
 
   @media (max-width: 640px) {
-    h2 { margin-top: 2rem; margin-bottom: 1rem; }
-    h3 { margin-top: 1.5rem; margin-bottom: 0.875rem; }
-    h4 { margin-top: 1.25rem; margin-bottom: 0.75rem; }
+    h2 { margin-top: 2rem !important; margin-bottom: 1rem !important; }
+    h3 { margin-top: 1.5rem !important; margin-bottom: 0.875rem !important; }
+    h4 { margin-top: 1.25rem !important; margin-bottom: 0.75rem !important; }
   }
 
   p {

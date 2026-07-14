@@ -10,9 +10,9 @@ const DEMO_VIDEO_2 = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588
 const GATE_IMAGE_1 = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b4aadf75c_mlznebrany-lineace700-2.png';
 const GATE_IMAGE_2 = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/25af17aa7_mlznebrany-lineace70.png';
 const OPERATION_VIDEOS = [
-  { title: 'Mlžítka v provozu — celkový pohled', video_url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7eadeca01_Ukazka_mltek_v_provozu_-_mlzidla_cz1.mp4', image_url: null },
-  { title: 'Mlžítka v provozu — detail mlhy', video_url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b5e93510_mlzitka_v_provozu_-_mlzidla_cz.mp4', image_url: null },
-];
+{ title: 'Mlžítka v provozu — celkový pohled', video_url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7eadeca01_Ukazka_mltek_v_provozu_-_mlzidla_cz1.mp4', image_url: null },
+{ title: 'Mlžítka v provozu — detail mlhy', video_url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b5e93510_mlzitka_v_provozu_-_mlzidla_cz.mp4', image_url: null }];
+
 
 function VideoLightbox({ videos, index, onClose }) {
   const [idx, setIdx] = useState(index);
@@ -36,26 +36,26 @@ function VideoLightbox({ videos, index, onClose }) {
       <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
         <AnimatePresence mode="wait">
           <motion.div key={idx} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
-            className="rounded-2xl overflow-hidden bg-black">
+          className="rounded-2xl overflow-hidden bg-black">
             <video src={current.video_url} controls autoPlay playsInline poster={current.image_url || undefined} className="w-full max-h-[80vh]" />
           </motion.div>
         </AnimatePresence>
         <p className="text-center text-white/70 text-sm mt-4">{current.title}</p>
-        {videos.length > 1 && (
-          <>
+        {videos.length > 1 &&
+        <>
             <button onClick={() => setIdx((i) => (i - 1 + videos.length) % videos.length)} aria-label="Předchozí video"
-              className="absolute left-2 top-1/2 -translate-y-1/2 -translate-x-full sm:translate-x-0 sm:-left-14 w-11 h-11 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
+          className="absolute left-2 top-1/2 -translate-y-1/2 -translate-x-full sm:translate-x-0 sm:-left-14 w-11 h-11 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
               <ChevronLeft size={20} />
             </button>
             <button onClick={() => setIdx((i) => (i + 1) % videos.length)} aria-label="Další video"
-              className="absolute right-2 top-1/2 -translate-y-1/2 translate-x-full sm:translate-x-0 sm:-right-14 w-11 h-11 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
+          className="absolute right-2 top-1/2 -translate-y-1/2 translate-x-full sm:translate-x-0 sm:-right-14 w-11 h-11 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
               <ChevronRight size={20} />
             </button>
           </>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 export default function VideoUkazky() {
@@ -69,23 +69,23 @@ export default function VideoUkazky() {
       title: 'Video — Živé ukázky mlžení',
       description: 'Video ukázky mlžných systémů HolmTec v reálném provozu — produkty i realizace.',
       keywords: 'video mlžení, živé ukázky, mlžný systém video, mlžná brána video',
-      canonicalPath: '/video-ukazky',
+      canonicalPath: '/video-ukazky'
     });
 
     const load = async () => {
       const [products, realizace] = await Promise.all([
-        base44.entities.Product.list().catch(() => []),
-        base44.entities.Realizace.list().catch(() => []),
-      ]);
+      base44.entities.Product.list().catch(() => []),
+      base44.entities.Realizace.list().catch(() => [])]
+      );
       const demoVideos = [
-        { title: 'Živá ukázka mlhy — detail', video_url: DEMO_VIDEO_2, image_url: null, link: '/kontakt', type: 'Živá ukázka mlhy' },
-      ];
-      const productVideos = (products || [])
-        .filter((p) => p.video_url)
-        .map((p) => ({ title: p.name, video_url: p.video_url, image_url: p.image_url, link: `/produkt/${p.slug}`, type: 'Produkt' }));
-      const realizaceVideos = (realizace || [])
-        .filter((r) => r.published !== false && r.video_url)
-        .map((r) => ({ title: r.name, video_url: r.video_url, image_url: r.image_url, link: `/reference/${r.id}`, type: 'Realizace' }));
+      { title: 'Živá ukázka mlhy — detail', video_url: DEMO_VIDEO_2, image_url: null, link: '/kontakt', type: 'Živá ukázka mlhy' }];
+
+      const productVideos = (products || []).
+      filter((p) => p.video_url).
+      map((p) => ({ title: p.name, video_url: p.video_url, image_url: p.image_url, link: `/produkt/${p.slug}`, type: 'Produkt' }));
+      const realizaceVideos = (realizace || []).
+      filter((r) => r.published !== false && r.video_url).
+      map((r) => ({ title: r.name, video_url: r.video_url, image_url: r.image_url, link: `/reference/${r.id}`, type: 'Realizace' }));
 
       setVideos([...demoVideos, ...productVideos, ...realizaceVideos]);
     };
@@ -120,10 +120,10 @@ export default function VideoUkazky() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-            {OPERATION_VIDEOS.map((v, i) => (
-              <motion.button key={v.title} type="button" onClick={() => setOperationLightboxIdx(i)}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="group relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video bg-black text-left">
+            {OPERATION_VIDEOS.map((v, i) =>
+            <motion.button key={v.title} type="button" onClick={() => setOperationLightboxIdx(i)}
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+            className="group relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-video bg-black text-left">
                 <video src={v.video_url} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                 <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/30 transition-colors flex items-center justify-center">
                   <span className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -132,13 +132,13 @@ export default function VideoUkazky() {
                 </div>
                 <p className="absolute bottom-0 left-0 right-0 p-4 text-white text-sm font-medium bg-gradient-to-t from-black/60 to-transparent">{v.title}</p>
               </motion.button>
-            ))}
+            )}
           </div>
         </div>
       </section>
 
       {/* ═══════ GATE SHOWCASE — TEXT + IMAGES ═══════ */}
-      <section className="py-16 lg:py-20 border-b border-slate-200">
+      <section className="py-16 lg:py-20 border-b border-slate-200 hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="max-w-2xl mb-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mlžná brána LINEA CE70</p>
@@ -148,36 +148,36 @@ export default function VideoUkazky() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100">
-              <img src={GATE_IMAGE_1} alt="Mlžná brána LINEA CE70 v provozu s duhou" className="w-full h-full object-cover" loading="lazy" />
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 hidden">
+              <img src={GATE_IMAGE_1} alt="Mlžná brána LINEA CE70 v provozu s duhou" className="w-full h-full object-cover hidden" loading="lazy" />
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100">
-              <img src={GATE_IMAGE_2} alt="Mlžná brána LINEA CE70 na náměstí" className="w-full h-full object-cover" loading="lazy" />
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 hidden">
+              <img src={GATE_IMAGE_2} alt="Mlžná brána LINEA CE70 na náměstí" className="w-full h-full object-cover hidden" loading="lazy" />
             </motion.div>
           </div>
         </div>
       </section>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-        {loading ? (
-          <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div>
-        ) : videos.length === 0 ? (
-          <p className="text-slate-400 font-light">Zatím žádná videa k zobrazení.</p>
-        ) : (
-          <>
+        {loading ?
+        <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div> :
+        videos.length === 0 ?
+        <p className="text-slate-400 font-light">Zatím žádná videa k zobrazení.</p> :
+
+        <>
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Videotéka</p>
             <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">Všechna videa na jednom místě.</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {videos.map((v, i) => (
-                <motion.button key={v.title + i} onClick={() => setLightboxIdx(i)}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-                  className="group text-left rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 hover:border-slate-300 hover:shadow-lg transition-all">
+              {videos.map((v, i) =>
+            <motion.button key={v.title + i} onClick={() => setLightboxIdx(i)}
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+            className="group text-left rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 hover:border-slate-300 hover:shadow-lg transition-all">
                   <div className="aspect-video bg-black relative overflow-hidden">
-                    {v.image_url ? (
-                      <img src={v.image_url} alt={v.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" loading="lazy" />
-                    ) : (
-                      <video src={v.video_url} muted playsInline className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                    )}
+                    {v.image_url ?
+                <img src={v.image_url} alt={v.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" loading="lazy" /> :
+
+                <video src={v.video_url} muted playsInline className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                }
                     <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
                       <span className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Play size={20} className="text-slate-900 ml-0.5" fill="currentColor" />
@@ -192,10 +192,10 @@ export default function VideoUkazky() {
                     <ArrowRight size={14} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
                   </div>
                 </motion.button>
-              ))}
+            )}
             </div>
           </>
-        )}
+        }
       </div>
 
       {/* ═══════ CTA ═══════ */}
@@ -209,12 +209,12 @@ export default function VideoUkazky() {
         </div>
       </div>
 
-      {lightboxIdx !== null && (
-        <VideoLightbox videos={videos} index={lightboxIdx} onClose={() => setLightboxIdx(null)} />
-      )}
-      {operationLightboxIdx !== null && (
-        <VideoLightbox videos={OPERATION_VIDEOS} index={operationLightboxIdx} onClose={() => setOperationLightboxIdx(null)} />
-      )}
-    </div>
-  );
+      {lightboxIdx !== null &&
+      <VideoLightbox videos={videos} index={lightboxIdx} onClose={() => setLightboxIdx(null)} />
+      }
+      {operationLightboxIdx !== null &&
+      <VideoLightbox videos={OPERATION_VIDEOS} index={operationLightboxIdx} onClose={() => setOperationLightboxIdx(null)} />
+      }
+    </div>);
+
 }

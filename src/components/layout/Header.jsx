@@ -172,37 +172,27 @@ export default function Header() {
                       </Link>
                   )}
                   </div>
-                  <div className="flex flex-col gap-1.5 mt-4 pt-4 border-t border-slate-100">
-                    <Link to="/katalog" onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-900">
-                      Všechny produkty a mlžítka <ArrowRight size={14} />
-                    </Link>
-                    <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
-                      Celá kolekce <ArrowRight size={14} />
-                    </Link>
-                    <Link to="/produkt/gate70" onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-                      Mlžné brány a portály <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                  <div className="flex flex-col gap-0.5 mt-4 pt-4 border-t border-slate-100">
+                  <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-100">
                     <Link key="chytre-ovladani" to="/chytra-mlzidla" onClick={(e) => e.stopPropagation()}
-                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-                      <Wifi size={15} className="text-cyan opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
-                      <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Chytré ovládání</p>
+                  className="group flex flex-col items-start gap-2 p-3 rounded-xl bg-slate-50 hover:bg-slate-900 border border-slate-100 hover:border-slate-900 transition-colors">
+                      <Wifi size={17} className="text-cyan shrink-0" />
+                      <p className="text-xs text-slate-700 group-hover:text-white transition-colors font-medium leading-tight">Chytré ovládání</p>
                     </Link>
                     <Link key="video-ukazky" to="/video-ukazky" onClick={(e) => e.stopPropagation()}
-                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-                      <PlayCircle size={15} className="text-slate-400 opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
-                      <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Video ukázky mlžení</p>
+                  className="group flex flex-col items-start gap-2 p-3 rounded-xl bg-slate-50 hover:bg-slate-900 border border-slate-100 hover:border-slate-900 transition-colors">
+                      <PlayCircle size={17} className="text-slate-500 group-hover:text-cyan transition-colors shrink-0" />
+                      <p className="text-xs text-slate-700 group-hover:text-white transition-colors font-medium leading-tight">Video ukázky mlžení</p>
                     </Link>
                     <Link key="partnerstvi" to="/partnerstvi" onClick={(e) => e.stopPropagation()}
-                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-                      <Users size={15} className="text-slate-400 opacity-80 group-hover:opacity-100 transition-opacity shrink-0" />
-                      <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">Partnerství</p>
+                  className="group flex flex-col items-start gap-2 p-3 rounded-xl bg-slate-50 hover:bg-slate-900 border border-slate-100 hover:border-slate-900 transition-colors">
+                      <Users size={17} className="text-slate-500 group-hover:text-cyan transition-colors shrink-0" />
+                      <p className="text-xs text-slate-700 group-hover:text-white transition-colors font-medium leading-tight">Partnerství</p>
                     </Link>
                   </div>
+                  <Link to="/katalog" onClick={(e) => e.stopPropagation()}
+                  className="flex items-center justify-center gap-1.5 mt-4 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold transition-colors">
+                    Zobrazit celý katalog <ArrowRight size={14} />
+                  </Link>
                 </div>
 
                 {/* Right: Products — expanded grid */}
@@ -212,8 +202,13 @@ export default function Header() {
                     {PRODUCT_LINKS.map((p) =>
                   <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col gap-2">
-                        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
-                          <img src={p.image} alt={p.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                        <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
+                          <img src={p.image} alt={p.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                          <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/40 transition-colors duration-300 flex items-center justify-center">
+                            <span className="opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300 inline-flex items-center gap-1 px-3 py-1.5 bg-white text-slate-900 text-[10px] font-bold rounded-full">
+                              Detail <ArrowRight size={10} />
+                            </span>
+                          </div>
                         </div>
                         <div>
                           <p className="font-heading text-xs text-slate-800 group-hover:text-slate-950 transition-colors font-medium leading-tight">{p.label}</p>

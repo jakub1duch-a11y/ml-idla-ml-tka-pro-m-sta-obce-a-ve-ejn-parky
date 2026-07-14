@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Loader, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
+function slugify(str) {
+  return (str || '').toLowerCase()
+    .replace(/á/g,'a').replace(/č/g,'c').replace(/ď/g,'d').replace(/é|ě/g,'e')
+    .replace(/í/g,'i').replace(/ň/g,'n').replace(/ó/g,'o').replace(/ř/g,'r')
+    .replace(/š/g,'s').replace(/ť/g,'t').replace(/ú|ů/g,'u').replace(/ý/g,'y').replace(/ž/g,'z')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import ClientReviewsStrip from '@/components/home/ClientReviewsStrip';
@@ -48,7 +56,7 @@ const CATEGORY_LABELS = {
 
 function SlideCard({ project, index }) {
   return (
-    <Link to={`/reference/${project.id}`}
+    <Link to={`/reference/${project.id}-${slugify(project.name)}`}
       className="group relative shrink-0 w-[70vw] sm:w-[300px] lg:w-[320px] aspect-[4/5] rounded-2xl overflow-hidden snap-start bg-slate-800">
       {project.image_url ? (
         <img src={project.image_url} alt={project.name}

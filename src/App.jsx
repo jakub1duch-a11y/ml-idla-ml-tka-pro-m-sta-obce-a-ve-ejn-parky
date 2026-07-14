@@ -89,7 +89,7 @@ const AuthenticatedApp = () => {
         <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
-        <Route path="/reference/:id" element={<ReferenceDetail />} />
+        <Route path="/reference/:slug" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />

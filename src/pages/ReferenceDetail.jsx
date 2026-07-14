@@ -70,7 +70,8 @@ function isVideoFile(url) {
 }
 
 export default function ReferenceDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
+  const id = slug ? slug.split('-')[0] : slug;
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -156,6 +157,15 @@ export default function ReferenceDetail() {
               <MapPin size={13} /> {project.location}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* ═══════ BACK BUTTON ═══════ */}
+      <div className="bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-3">
+          <Link to="/reference" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+            <ArrowLeft size={15} /> Zpět do realizací
+          </Link>
         </div>
       </div>
 

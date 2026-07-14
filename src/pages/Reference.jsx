@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, ZoomIn, ChevronLeft, ChevronRight, X, Loader, ArrowRight } from 'lucide-react';
+
+function slugify(str) {
+  return (str || '').toLowerCase()
+    .replace(/á/g,'a').replace(/č/g,'c').replace(/ď/g,'d').replace(/é|ě/g,'e')
+    .replace(/í/g,'i').replace(/ň/g,'n').replace(/ó/g,'o').replace(/ř/g,'r')
+    .replace(/š/g,'s').replace(/ť/g,'t').replace(/ú|ů/g,'u').replace(/ý/g,'y').replace(/ž/g,'z')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
@@ -149,7 +157,7 @@ function ProjectCard({ project, onOpen }) {
           {project.product_used && (
             <span className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">Produkt: {project.product_used}</span>
           )}
-          <Link to={`/reference/${project.id}`} className="flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors font-mono ml-auto border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-full hover:bg-slate-50">
+          <Link to={`/reference/${project.id}-${slugify(project.name)}`} className="flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-slate-600 transition-colors font-mono ml-auto border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-full hover:bg-slate-50">
             Detail <ArrowRight size={11} />
           </Link>
         </div>

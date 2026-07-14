@@ -6,6 +6,14 @@ import { base44 } from '@/api/base44Client';
 
 const HIGHLIGHT_NAME = 'ZOO Praha';
 
+function slugify(str) {
+  return (str || '').toLowerCase()
+    .replace(/á/g,'a').replace(/č/g,'c').replace(/ď/g,'d').replace(/é|ě/g,'e')
+    .replace(/í/g,'i').replace(/ň/g,'n').replace(/ó/g,'o').replace(/ř/g,'r')
+    .replace(/š/g,'s').replace(/ť/g,'t').replace(/ú|ů/g,'u').replace(/ý/g,'y').replace(/ž/g,'z')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+
 export default function RealizaceGallerySection() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,7 +68,7 @@ export default function RealizaceGallerySection() {
                   transition={{ delay: i * 0.05 }}
                   className={isHighlighted ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'}
                 >
-                  <Link to={`/reference/${p.id}`} className="group relative block w-full h-full rounded-2xl overflow-hidden bg-slate-100">
+                  <Link to={`/reference/${p.id}-${slugify(p.name)}`} className="group relative block w-full h-full rounded-2xl overflow-hidden bg-slate-100">
                     {p.image_url ? (
                       <img src={p.image_url} alt={p.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />

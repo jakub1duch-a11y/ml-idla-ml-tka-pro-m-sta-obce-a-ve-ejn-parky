@@ -50,7 +50,7 @@ export default function Blog() {
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog HolmTec</p>
+          <p className="text-sm font-semibold text-techblue mb-4">Novinky</p>
           <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
             O mlžení do hloubky
           </h1>
@@ -76,12 +76,12 @@ export default function Blog() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
         <div className="flex gap-2 flex-wrap">
           <button onClick={() => setCategory('all')}
-            className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${category === 'all' ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
+            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${category === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
             Všechna témata
           </button>
           {Object.entries(CATEGORY_LABELS).map(([v, l]) => (
             <button key={v} onClick={() => setCategory(v)}
-              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${category === v ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${category === v ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
               {l}
             </button>
           ))}
@@ -106,8 +106,8 @@ export default function Blog() {
                   )}
                   <div className="p-8 flex flex-col">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
-                      {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs font-mono text-slate-300">{formatDate(featured.published_date)}</span></>}
+                      <span className="text-xs font-medium text-slate-400">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
+                      {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs text-slate-300">{formatDate(featured.published_date)}</span></>}
                     </div>
                     <h2 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
                     <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
@@ -133,11 +133,11 @@ export default function Blog() {
                       <div className="p-5 flex flex-col justify-between flex-1 min-w-0">
                         <div>
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
+                            <span className="text-xs font-medium text-slate-400">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
                           </div>
                           <h3 className="font-light text-slate-900 text-sm leading-snug group-hover:text-slate-600 transition-colors line-clamp-2">{post.title}</h3>
                         </div>
-                        {post.published_date && <p className="text-xs font-mono text-slate-300 mt-2">{formatDate(post.published_date)}</p>}
+                        {post.published_date && <p className="text-xs text-slate-300 mt-2">{formatDate(post.published_date)}</p>}
                       </div>
                     </Link>
                   </motion.div>
@@ -159,9 +159,9 @@ export default function Blog() {
                     </div>
                   )}
                   <div className="p-6">
-                    <span className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
+                    <span className="text-xs font-medium text-slate-400 block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
                     <h3 className="font-light text-slate-900 text-base leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2">{post.title}</h3>
-                    {post.published_date && <p className="text-xs font-mono text-slate-300">{formatDate(post.published_date)}</p>}
+                    {post.published_date && <p className="text-xs text-slate-300">{formatDate(post.published_date)}</p>}
                   </div>
                 </Link>
               </motion.div>

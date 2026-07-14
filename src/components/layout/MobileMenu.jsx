@@ -33,7 +33,7 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
             {[
               { id: 'katalog', label: 'Katalog mlžítek' },
               { id: 'reseni', label: 'Řešení pro obor' },
-              { id: 'info', label: 'Informace' },
+              { id: 'info', label: 'Podpora' },
             ].map((t) => (
               <button key={t.id} onClick={() => setSection(t.id)}
                 className={`shrink-0 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${section === t.id ? 'bg-slate-900 text-white' : 'text-slate-500 bg-slate-50 hover:bg-slate-100'}`}>
@@ -139,7 +139,8 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
 
             <div className="flex flex-col gap-1 pt-4 mt-2 border-t border-slate-100">
               {[
-              { label: 'Realizace', path: '/reference' },
+              { label: 'Reference', path: '/reference' },
+              { label: 'Novinky', path: '/blog' },
               { label: 'Partnerství', path: '/partnerstvi' },
               { label: 'Kontakt', path: '/kontakt' }].
               map((l) =>

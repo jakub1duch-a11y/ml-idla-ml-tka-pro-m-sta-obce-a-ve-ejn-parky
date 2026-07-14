@@ -116,7 +116,7 @@ export default function Podpora() {
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Nejčastější dotazy</p>
+          <p className="text-sm font-semibold text-techblue mb-4">Podpora</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4" style={{ letterSpacing: '-0.03em' }}>
             Nejčastější dotazy
           </h1>
@@ -131,7 +131,7 @@ export default function Podpora() {
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 text-xs font-mono tracking-widest uppercase text-slate-600 transition-all hover:bg-slate-50 hover:border-slate-300"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-100 text-sm font-medium text-slate-600 transition-all hover:bg-slate-200"
             >
               <s.icon size={13} />
               {s.title}
@@ -158,7 +158,7 @@ export default function Podpora() {
               </div>
               <div>
                 <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight">{section.title}</h2>
-                <p className="text-xs font-mono text-slate-400 mt-0.5">{section.items.length} otázek</p>
+                <p className="text-xs text-slate-400 mt-0.5">{section.items.length} otázek</p>
               </div>
             </div>
 
@@ -189,7 +189,7 @@ export default function Podpora() {
           <div>
             <h3 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2">Nenašli jste odpověď?</h3>
             <p className="text-slate-500 text-sm leading-relaxed mb-4">Obraťte se přímo na náš tým — rádi zodpovíme jakýkoliv dotaz.</p>
-            <div className="flex flex-col sm:flex-row gap-4 text-sm font-mono text-slate-500">
+            <div className="flex flex-col sm:flex-row gap-4 text-sm text-slate-500">
               <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
                 <Phone size={13} /> +420 774 700 390
               </a>

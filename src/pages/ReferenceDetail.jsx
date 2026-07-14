@@ -140,21 +140,21 @@ export default function ReferenceDetail() {
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14">
           <div className="flex flex-wrap gap-2 mb-5">
             {project.category && (
-              <span className="px-3 py-1 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
+              <span className="px-3 py-1 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full text-xs font-medium text-white">
                 {CATEGORY_LABELS[project.category] || project.category}
               </span>
             )}
             {project.year && (
-              <span className="px-3 py-1 bg-emerald-500 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
+              <span className="px-3 py-1 bg-emerald-500 rounded-full text-xs font-medium text-white">
                 {project.year}
               </span>
             )}
           </div>
-          <h1 className="font-heading font-semibold text-4xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-3 max-w-3xl">
+          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-3 max-w-3xl">
             {project.name}
           </h1>
           {project.location && (
-            <div className="flex items-center gap-1.5 text-white/70 text-sm font-mono mt-3">
+            <div className="flex items-center gap-1.5 text-white/70 text-sm mt-3">
               <MapPin size={13} /> {project.location}
             </div>
           )}
@@ -176,7 +176,7 @@ export default function ReferenceDetail() {
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
             {STATS.map((s, i) => (
               <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1.5">{s.label}</p>
+                <p className="text-xs text-slate-400 mb-1.5">{s.label}</p>
                 <p className="text-lg font-heading font-medium text-slate-900">{s.value}</p>
               </motion.div>
             ))}
@@ -190,7 +190,7 @@ export default function ReferenceDetail() {
           <div className="lg:col-span-2">
             {project.description && (
               <>
-                <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">O projektu</p>
+                <p className="text-sm font-semibold text-techblue mb-4">O projektu</p>
                 <div className="space-y-5">
                   {project.description.split(/\n{2,}/).map((para, i) => (
                     <p key={i} className="text-slate-600 text-lg leading-[1.8] font-light whitespace-pre-line">{para}</p>
@@ -214,29 +214,29 @@ export default function ReferenceDetail() {
 
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">Detaily projektu</p>
+              <p className="text-xs font-semibold text-slate-400 mb-5">Detaily projektu</p>
               <div className="space-y-4">
                 {project.client && (
                   <div>
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Klient</p>
+                    <p className="text-xs text-slate-400 mb-1">Klient</p>
                     <p className="text-sm text-slate-900 font-medium">{project.client}</p>
                   </div>
                 )}
                 {project.location && (
                   <div>
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Lokalita</p>
+                    <p className="text-xs text-slate-400 mb-1">Lokalita</p>
                     <p className="text-sm text-slate-700">{project.location}</p>
                   </div>
                 )}
                 {project.year && (
                   <div>
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Rok realizace</p>
+                    <p className="text-xs text-slate-400 mb-1">Rok realizace</p>
                     <p className="text-sm text-slate-700">{project.year}</p>
                   </div>
                 )}
                 {project.product_used && (
                   <div className="pt-4 border-t border-slate-200">
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Použitý produkt</p>
+                    <p className="text-xs text-slate-400 mb-1">Použitý produkt</p>
                     <p className="text-sm text-slate-900 font-medium">{project.product_used}</p>
                   </div>
                 )}
@@ -258,7 +258,7 @@ export default function ReferenceDetail() {
       {heroVideo && (
         <div className="bg-slate-50 border-y border-slate-200 py-16 lg:py-20">
           <div className="max-w-5xl mx-auto px-6 lg:px-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4 flex items-center gap-2">
+            <p className="text-sm font-semibold text-techblue mb-4 flex items-center gap-2">
               <PlayCircle size={14} /> Video z realizace
             </p>
             <div className="rounded-2xl overflow-hidden border border-slate-200 bg-black">
@@ -271,7 +271,7 @@ export default function ReferenceDetail() {
       {/* ═══════ PHOTO GALLERY (Apex Arc style mixed grid) ═══════ */}
       {allImages.length > 1 && (
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Fotogalerie</p>
+          <p className="text-sm font-semibold text-techblue mb-3">Fotogalerie</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
             Fotografie z realizace
           </h2>

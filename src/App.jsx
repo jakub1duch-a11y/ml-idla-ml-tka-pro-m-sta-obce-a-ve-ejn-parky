@@ -18,6 +18,7 @@ import Home2 from '@/pages/Home2';
 import Home3 from '@/pages/Home3';
 import Home4 from '@/pages/Home4';
 import Home5 from '@/pages/Home5';
+import Home6 from '@/pages/Home6';
 import Kolekce from '@/pages/Kolekce';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
@@ -84,10 +85,10 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        <Route path="/" element={<Home5 />} />
         <Route path="/home-2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home-3" element={<Home4 />} />
+        <Route path="/home-5" element={<Home5 />} />
         <Route path="/home-bold" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
@@ -136,6 +137,7 @@ const AuthenticatedApp = () => {
         <Route path="/video-ukazky" element={<VideoUkazky />} />
         <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
       </Route>
+      <Route path="/" element={<Home6 />} />
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />
       <Route path="/admin" element={<Admin />} />

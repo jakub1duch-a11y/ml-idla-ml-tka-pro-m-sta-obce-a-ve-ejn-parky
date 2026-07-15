@@ -1,0 +1,31 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+export default function CircleDrawIcon({ children, size = 56, delay = 0, className = '' }) {
+  return (
+    <div className={`relative flex items-center justify-center shrink-0 ${className}`} style={{ width: size, height: size }}>
+      <svg className="absolute inset-0" width={size} height={size} viewBox="0 0 56 56">
+        <circle cx="28" cy="28" r="26" fill="none" stroke="currentColor" strokeWidth="1" className="text-slate-200" />
+        <motion.circle
+          cx="28" cy="28" r="26" fill="none" stroke="currentColor" strokeWidth="1.5"
+          className="text-slate-900"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, delay, ease: 'easeInOut' }}
+          transform="rotate(-90 28 28)"
+        />
+      </svg>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: delay + 0.3, duration: 0.5, ease: 'backOut' }}
+        className="relative z-10 flex items-center justify-center"
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}

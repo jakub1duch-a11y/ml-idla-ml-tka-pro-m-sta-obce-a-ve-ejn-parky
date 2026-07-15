@@ -1,0 +1,31 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowRight, Building2, Droplets, ShieldCheck, ThermometerSnowflake, Trees } from 'lucide-react';
+
+const VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b5e93510_mlzitka_v_provozu_-_mlzidla_cz.mp4';
+const BENEFITS = [
+  { icon: ThermometerSnowflake, label: 'Ochlazení až o 10 °C' },
+  { icon: Trees, label: 'Pro parky a náměstí' },
+  { icon: Droplets, label: 'Jemná mlha bez kaluží' },
+  { icon: ShieldCheck, label: 'Bezpečné pro občany' },
+];
+
+export default function UrbanHero() {
+  return (
+    <section className="relative min-h-[760px] h-[100svh] overflow-hidden bg-slate-950 flex items-end">
+      <video src={VIDEO_URL} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-950/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/15 to-transparent" />
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14">
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }} className="max-w-3xl">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white text-xs font-semibold tracking-widest uppercase mb-5"><Building2 size={14} /> Veřejný prostor pro každého</span>
+          <h1 className="font-heading font-bold text-white text-4xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">Chladivé městské prostory, kde se lidé chtějí zastavit.</h1>
+          <p className="text-white/80 text-base sm:text-lg leading-relaxed text-measure mt-6">Navrhujeme mlžítka a mlžné brány pro města, parky, školní dvory i náměstí. Přinášejí občanům úlevu v horkých dnech a místům nový přirozený život.</p>
+          <div className="flex flex-wrap gap-3 mt-8"><Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-slate-950 text-sm font-bold hover:bg-slate-100 transition-colors">Nezávazná konzultace <ArrowRight size={16} /></Link><Link to="/kategorie/mesta-obce" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/35 text-white text-sm font-semibold hover:bg-white/10 transition-colors">Řešení pro města</Link></div>
+        </motion.div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 mt-10 max-w-4xl">{BENEFITS.map((benefit, index) => <motion.div key={benefit.label} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 + index * 0.08, ease: [0.4, 0, 0.2, 1] }} className="flex items-center gap-3 rounded-xl border border-white/15 bg-white/10 backdrop-blur-md px-3.5 py-3.5"><benefit.icon size={17} className="text-white shrink-0" /><span className="text-xs text-white/90 leading-snug">{benefit.label}</span></motion.div>)}</div>
+      </div>
+    </section>
+  );
+}

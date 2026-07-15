@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 const HEADLINES = [
-'Mlžítka a mlžné brány pro chladnější prostor.',
+'Mlžítka a mlžné brány pro města, obce a parky.',
 'Mlžné brány — vstup skrze zeď mlhy.',
-'Mlžítka, která mění prostor v zážitek.',
+'Mlžítka, která mění veřejný prostor v zážitek.',
 'Vaše náměstí, terasa i zahrada — o pár stupňů chladnější.',
-'Architektura, která dýchá mlhou.'];
+'Architektura pro obce a parky, která dýchá mlhou.'];
 
 
 const TAGLINES = [

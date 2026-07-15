@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import KolekceHero from '@/components/kolekce/KolekceHero';
-import CategorySelector from '@/components/kolekce/CategorySelector';
+import CollectionLinksRow from '@/components/kolekce/CollectionLinksRow';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import GatesSlider from '@/components/kolekce/GatesSlider';
@@ -9,38 +9,11 @@ import CollectionMainInfoSection from '@/components/kolekce/CollectionMainInfoSe
 import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Trees, Landmark, Building2, Home, Users, Warehouse, Baby, ArrowRight } from 'lucide-react';
+import { Building2, Home, Users, Warehouse, Baby, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 // ─── KATEGORIE ─────────────────────────────────────────────────────────────
-
-const categoryGroups = [
-{
-  id: 'sochy',
-  label: 'Mlžné sochy',
-  icon: Trees,
-  tagline: 'Přírodní tvary. Živá atmosféra.',
-  description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
-  audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
-  usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
-  accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-  dbCategories: ['NATURE'],
-  slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik']
-},
-{
-  id: 'brany',
-  label: 'Mlžné brány a portály',
-  icon: Landmark,
-  tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-  description: 'Mlžné brány a portály vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie mlžítka z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
-  audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
-  usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
-  accent: 'text-sky-700 bg-sky-50 border-sky-200',
-  dbCategories: ['URBAN ART'],
-  slugKeywords: ['aura', 'linear', 'Y-ARMIST', 'Spirála', 'BENDY']
-}];
-
 
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
@@ -51,7 +24,6 @@ const audienceSegments = [
 
 
 export default function Kolekce() {
-  const [activeCategory, setActiveCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -83,8 +55,8 @@ export default function Kolekce() {
       {/* ── HERO SLIDER ── */}
       <KolekceHero />
 
-      {/* ── KATEGORIE (hover icon cards) ── */}
-      <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
+      {/* ── KRÁTKÉ ODKAZY NA KOLEKCE ── */}
+      <CollectionLinksRow />
 
       {/* ── HLAVNÍ INFORMACE ── */}
       <CollectionMainInfoSection />

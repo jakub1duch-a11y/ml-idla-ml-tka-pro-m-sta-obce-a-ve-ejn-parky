@@ -13,17 +13,10 @@ import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
-import Home from '@/pages/Home';
 import Home2 from '@/pages/Home2';
-import Home3 from '@/pages/Home3';
-import Home4 from '@/pages/Home4';
-import Home5 from '@/pages/Home5';
-import Home6 from '@/pages/Home6';
 import Kolekce from '@/pages/Kolekce';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
-import ProduktDetail2 from '@/pages/ProduktDetail2';
-import ProduktDetail3 from '@/pages/ProduktDetail3';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Poradce from '@/pages/Poradce';
@@ -85,17 +78,11 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        <Route path="/home-2" element={<Home2 />} />
-        <Route path="/home3" element={<Home3 />} />
-        <Route path="/home-3" element={<Home4 />} />
-        <Route path="/home-5" element={<Home5 />} />
-        <Route path="/home-bold" element={<Home />} />
+        <Route path="/" element={<Home2 />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
-        <Route path="/produkt/:slug" element={<ProduktDetail2 />} />
-        <Route path="/produkt-klasika/:slug" element={<ProduktDetail />} />
-        <Route path="/produkt3/:slug" element={<ProduktDetail3 />} />
+        <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
@@ -137,7 +124,6 @@ const AuthenticatedApp = () => {
         <Route path="/video-ukazky" element={<VideoUkazky />} />
         <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
       </Route>
-      <Route path="/" element={<Home6 />} />
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />
       <Route path="/admin" element={<Admin />} />

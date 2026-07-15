@@ -66,6 +66,9 @@ export default function HeroSlider() {
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent" />
+      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.14] mix-blend-screen pointer-events-none">
+        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/89e2370d6_bpAy8OMobUZ4p0l9vai_eS.png" alt="" className="w-full h-full object-cover" />
+      </div>
 
       <div className="absolute inset-0 flex items-center pt-10 sm:pt-0">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">

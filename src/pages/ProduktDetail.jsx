@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, LayoutTemplate, Truck, Tag } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, Truck, Tag } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
@@ -243,12 +243,6 @@ export default function ProduktDetail() {
               <ChevronRight size={16} className="text-slate-500" />
             </button>
             }
-          </div>
-          <div className="flex items-center py-2 sm:py-4 order-3 shrink-0">
-            <Link to={`/produkt/${product.slug}`} title="Zobrazit alternativní verzi stránky produktu"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-medium text-slate-500 hover:text-slate-900 hover:border-slate-400 transition-colors shrink-0 whitespace-nowrap">
-              <LayoutTemplate size={13} /> Změnit alternativní zobrazení karty
-            </Link>
           </div>
         </div>
       </div>

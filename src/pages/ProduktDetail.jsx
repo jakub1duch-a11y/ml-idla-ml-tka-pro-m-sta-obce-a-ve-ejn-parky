@@ -245,7 +245,7 @@ export default function ProduktDetail() {
             }
           </div>
           <div className="flex items-center py-2 sm:py-4 order-3 shrink-0">
-            <Link to={`/produkt2/${product.slug}`} title="Zobrazit alternativní verzi stránky produktu"
+            <Link to={`/produkt/${product.slug}`} title="Zobrazit alternativní verzi stránky produktu"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-medium text-slate-500 hover:text-slate-900 hover:border-slate-400 transition-colors shrink-0 whitespace-nowrap">
               <LayoutTemplate size={13} /> Změnit alternativní zobrazení karty
             </Link>

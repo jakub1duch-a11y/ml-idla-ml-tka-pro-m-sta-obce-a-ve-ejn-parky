@@ -4,10 +4,11 @@ import { Loader, ArrowLeft, LayoutTemplate } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import SectionNav from '@/components/produkt2/SectionNav';
-import HeroSlide from '@/components/produkt2/HeroSlide';
+import ScrollHeroVideoSlide from '@/components/produkt2/ScrollHeroVideoSlide';
 import InfoSlide from '@/components/produkt2/InfoSlide';
+import InfoTabsGallery from '@/components/produkt2/InfoTabsGallery';
 import SpecsWaterSlide from '@/components/produkt2/SpecsWaterSlide';
-import BenefitsSlide from '@/components/produkt2/BenefitsSlide';
+import BenefitsBoxCircle from '@/components/produkt2/BenefitsBoxCircle';
 import VideoMistCtaSlide from '@/components/produkt2/VideoMistCtaSlide';
 import RelatedBackSlide from '@/components/produkt2/RelatedBackSlide';
 
@@ -29,6 +30,7 @@ export default function ProduktDetail2() {
 
   const heroRef = useRef(null);
   const infoRef = useRef(null);
+  const tabsRef = useRef(null);
   const specsRef = useRef(null);
   const benefitsRef = useRef(null);
   const videoRef = useRef(null);
@@ -87,6 +89,7 @@ export default function ProduktDetail2() {
   const sections = [
     { id: 'hero', label: 'Úvod', ref: heroRef },
     { id: 'info', label: 'O produktu', ref: infoRef },
+    { id: 'tabs', label: 'Informace', ref: tabsRef },
     { id: 'specs', label: 'Spotřeba vody', ref: specsRef },
     { id: 'benefits', label: 'Benefity', ref: benefitsRef },
     { id: 'video', label: 'Poptat produkt', ref: videoRef },
@@ -107,16 +110,19 @@ export default function ProduktDetail2() {
       <SectionNav sections={sections} />
 
       <div ref={heroRef}>
-        <HeroSlide product={product} categoryName={categoryName} onScrollNext={() => infoRef.current?.scrollIntoView({ behavior: 'smooth' })} />
+        <ScrollHeroVideoSlide product={product} categoryName={categoryName} onScrollNext={() => infoRef.current?.scrollIntoView({ behavior: 'smooth' })} />
       </div>
       <div ref={infoRef}>
         <InfoSlide product={product} />
+      </div>
+      <div ref={tabsRef}>
+        <InfoTabsGallery product={product} />
       </div>
       <div ref={specsRef}>
         <SpecsWaterSlide specRows={specRows} defaultNozzles={guessNozzleCount(product)} />
       </div>
       <div ref={benefitsRef}>
-        <BenefitsSlide />
+        <BenefitsBoxCircle />
       </div>
       <div ref={videoRef}>
         <VideoMistCtaSlide product={product} />

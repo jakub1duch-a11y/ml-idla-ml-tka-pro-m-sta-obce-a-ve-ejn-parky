@@ -84,16 +84,16 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home5 />} />
         <Route path="/home-2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home-3" element={<Home4 />} />
-        <Route path="/home-4" element={<Home5 />} />
+        <Route path="/home-bold" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
-        <Route path="/produkt/:slug" element={<ProduktDetail />} />
-        <Route path="/produkt2/:slug" element={<ProduktDetail2 />} />
+        <Route path="/produkt/:slug" element={<ProduktDetail2 />} />
+        <Route path="/produkt-klasika/:slug" element={<ProduktDetail />} />
         <Route path="/produkt3/:slug" element={<ProduktDetail3 />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />

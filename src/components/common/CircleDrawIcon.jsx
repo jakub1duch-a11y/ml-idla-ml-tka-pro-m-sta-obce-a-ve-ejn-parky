@@ -13,7 +13,7 @@ export default function CircleDrawIcon({ children, size = 56, delay = 0, classNa
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, delay, ease: 'easeInOut' }}
+          transition={{ duration: 1.05, delay, ease: [0.4, 0, 0.2, 1] }}
           transform="rotate(-90 28 28)"
         />
       </svg>
@@ -21,7 +21,7 @@ export default function CircleDrawIcon({ children, size = 56, delay = 0, classNa
         initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
         whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: delay + 0.3, duration: 0.5, ease: 'backOut' }}
+        transition={{ delay: delay + 0.28, duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
         className="relative z-10 flex items-center justify-center"
       >
         {children}

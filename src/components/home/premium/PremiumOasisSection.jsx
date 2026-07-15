@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { HumidifyIcon, DustIcon, ShieldIcon, FrostIcon, SparkleIcon, CheckGlowIcon } from "./MistIcons";
 import CircleDrawIcon from "@/components/common/CircleDrawIcon";
 import AnimatedCounter from "@/components/common/AnimatedCounter";
@@ -27,7 +27,8 @@ const DEVICE_IMG = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4
 export default function PremiumOasisSection() {
   const imgRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: imgRef, offset: ['start end', 'end start'] });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [-34, 34]);
+  const smoothParallaxY = useSpring(parallaxY, { stiffness: 55, damping: 24, mass: 0.5 });
 
   return (
     <section className="relative bg-[#F8F9FA] py-24 lg:py-32 overflow-hidden">
@@ -43,7 +44,7 @@ export default function PremiumOasisSection() {
           </motion.div>
           <div ref={imgRef} className="relative overflow-hidden rounded-2xl">
             <motion.img
-              style={{ y: parallaxY, scale: 1.15 }}
+              style={{ y: smoothParallaxY, scale: 1.12 }}
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.9 }}
               src={DEVICE_IMG} alt="Mlžidlo v provozu" className="w-full rounded-2xl shadow-xl" />
           </div>

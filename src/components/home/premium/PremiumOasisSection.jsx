@@ -58,7 +58,7 @@ export default function PremiumOasisSection() {
                 <CircleDrawIcon delay={i * 0.08} size={56}>
                   <Icon />
                 </CircleDrawIcon>
-                <p className="font-body text-xs text-slate-400 tracking-widest mt-4 mb-1 hidden">{app.num}</p>
+                
                 <h3 className="font-heading text-lg text-slate-900 mb-2">{app.title}</h3>
                 <p className="font-body text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{app.desc}</p>
               </motion.div>);

@@ -17,8 +17,8 @@ export default function SmartSensorGrid() {
       transition={{ delay: i * 0.08, duration: 0.5 }}
       className="relative p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md overflow-hidden">
           <span className="absolute top-3 right-3 flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-70 hidden" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 hidden" />
+            
+            
           </span>
           <s.icon size={20} className="mb-2 text-cyan-100" />
           <p className="text-sm font-semibold text-white">{s.label}</p>

@@ -22,7 +22,7 @@ export default function CircleDrawIcon({ children, size = 56, delay = 0, classNa
         whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
         viewport={{ once: true }}
         transition={{ delay: delay + 0.28, duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-        className="relative z-10 flex items-center justify-center">
+        className="relative flex items-center justify-center z-0">
         
         {children}
       </motion.div>

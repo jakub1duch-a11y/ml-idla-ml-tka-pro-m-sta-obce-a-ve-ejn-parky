@@ -7,6 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
 import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
@@ -157,6 +158,7 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
+          <AnalyticsTracker />
           <AuthenticatedApp />
         </Router>
         <Toaster />

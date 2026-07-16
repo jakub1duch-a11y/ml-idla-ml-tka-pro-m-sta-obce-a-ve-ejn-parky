@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -26,9 +26,9 @@
     --input: 220 15% 14%;
     --ring: 215 55% 32%;
     --radius: 14px;
-    --font-heading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 

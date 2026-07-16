@@ -7,7 +7,7 @@ import CookieConsent from '@/components/common/CookieConsent';
 
 export default function SiteLayout() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="site-shell min-h-screen flex flex-col bg-slate-50 text-slate-950">
       <Header />
       <main className="flex-1">
         <Outlet />

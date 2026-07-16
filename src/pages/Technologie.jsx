@@ -116,11 +116,11 @@ export default function Technologie() {
       <InstallationComparisonSection />
       <ConceptToRealitySection />
 
-      <div className="text-center mt-14 hidden">
-        <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
-          Nezávazná poptávka <ArrowRight size={16} />
-        </Link>
-      </div>
+      
+
+
+
+      
     </div>);
 
 }

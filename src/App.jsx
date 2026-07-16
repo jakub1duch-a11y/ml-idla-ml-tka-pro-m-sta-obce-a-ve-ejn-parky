@@ -59,6 +59,7 @@ import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import VideoUkazky from '@/pages/VideoUkazky';
 import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 import PrinosMlzitek from '@/pages/PrinosMlzitek';
+import Vyuziti from '@/pages/Vyuziti';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -82,6 +83,7 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home2 />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
+        <Route path="/jak-funguje-mlzeni" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
@@ -97,6 +99,16 @@ const AuthenticatedApp = () => {
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
+        <Route path="/vyuziti" element={<Vyuziti />} />
+        <Route path="/vyuziti/mesta-obce" element={<MestaObce />} />
+        <Route path="/vyuziti/parky-hriste" element={<ParkyHriste />} />
+        <Route path="/vyuziti/koupaliste" element={<Koupaliste />} />
+        <Route path="/vyuziti/architekti" element={<Architekti />} />
+        <Route path="/vyuziti/komercni" element={<Komercni />} />
+        <Route path="/vyuziti/eventy" element={<Eventy />} />
+        <Route path="/vyuziti/outdoor-zahrady" element={<Outdoor />} />
+        <Route path="/vyuziti/art-instalace" element={<Art />} />
+        <Route path="/vyuziti/skoly-skolky-deti" element={<Deti />} />
         <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
         <Route path="/kategorie/koupaliste" element={<Koupaliste />} />

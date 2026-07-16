@@ -28,11 +28,11 @@ export default function SmartSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-10 lg:mb-12">
           <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Senzory v reálném čase</p>
+            <p className="text-xs font-mono tracking-widest uppercase mb-3 text-[hsl(var(--popover))]">SENZORY V REÁLNÉM ČASE</p>
             <SmartSensorGrid />
           </div>
           <div>
-            <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Automatizace</p>
+            <p className="text-xs font-mono tracking-widest uppercase mb-3 text-[hsl(var(--popover))]">AUTOMATIZACE</p>
             <SmartAutomationList />
           </div>
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-between">
@@ -41,13 +41,13 @@ export default function SmartSection() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-8 border-t border-white/10">
-          <p className="text-sm text-white/50 max-w-md">Podrobný přehled senzorů, automatizačních scénářů a nabídky Smart Wi-Fi systémů najdete na detailní stránce.</p>
+        className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-8 border-t border-white/10">
+          <p className="text-sm max-w-md text-[hsl(var(--popover))]">Podrobný přehled senzorů, automatizačních scénářů a nabídky Smart Wi-Fi systémů najdete na detailní stránce.</p>
           <Link to="/chytra-mlzidla" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all whitespace-nowrap">
             Chytré ovládání <ArrowRight size={15} />
           </Link>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

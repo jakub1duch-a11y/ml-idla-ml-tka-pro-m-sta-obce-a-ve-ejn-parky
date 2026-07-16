@@ -154,7 +154,7 @@ export default function Podpora() {
             {/* Section header */}
             <div className="flex items-center gap-4 mb-6">
               <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center">
-                <section.icon size={20} className="text-slate-700 size-" />
+                <section.icon size={20} className="text-slate-700 size-2" />
               </div>
               <div>
                 <h2 className="font-heading font-light text-slate-900 tracking-tight text-xxl">{section.title}</h2>

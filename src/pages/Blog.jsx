@@ -11,14 +11,14 @@ const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
   realizace: 'Realizace',
   technika: 'Technologie',
-  novinky: 'Novinky',
+  novinky: 'Novinky'
 };
 
 const AUDIENCE_TABS = [
-  { value: 'all', label: 'Vše' },
-  { value: 'firmy', label: 'Pro firmy a provozy' },
-  { value: 'soukrome', label: 'Pro domácnosti a zahrady' },
-];
+{ value: 'all', label: 'Vše' },
+{ value: 'firmy', label: 'Pro firmy a provozy' },
+{ value: 'soukrome', label: 'Pro domácnosti a zahrady' }];
+
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -34,9 +34,9 @@ export default function Blog() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.blog);
-    base44.entities.BlogPost.list('-published_date')
-      .then((items) => setPosts((items || []).filter((p) => p.published)))
-      .finally(() => setLoading(false));
+    base44.entities.BlogPost.list('-published_date').
+    then((items) => setPosts((items || []).filter((p) => p.published))).
+    finally(() => setLoading(false));
   }, []);
 
   const visible = posts.filter((p) => {
@@ -51,14 +51,14 @@ export default function Blog() {
       <BlogHero />
 
       {/* Audience segmentation */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-4">
+      <div className="max-w-7xl px-6 lg:px-8 my-1">
         <div className="flex gap-2 flex-wrap">
-          {AUDIENCE_TABS.map((t) => (
-            <button key={t.value} onClick={() => setAudience(t.value)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${audience === t.value ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+          {AUDIENCE_TABS.map((t) =>
+          <button key={t.value} onClick={() => setAudience(t.value)}
+          className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${audience === t.value ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
               {t.label}
             </button>
-          ))}
+          )}
         </div>
       </div>
 
@@ -66,32 +66,32 @@ export default function Blog() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
         <div className="flex gap-2 flex-wrap">
           <button onClick={() => setCategory('all')}
-            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${category === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+          className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${category === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
             Všechna témata
           </button>
-          {Object.entries(CATEGORY_LABELS).map(([v, l]) => (
-            <button key={v} onClick={() => setCategory(v)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${category === v ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+          {Object.entries(CATEGORY_LABELS).map(([v, l]) =>
+          <button key={v} onClick={() => setCategory(v)}
+          className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${category === v ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
               {l}
             </button>
-          ))}
+          )}
         </div>
       </div>
 
       <div id="blog-vypis" className="max-w-7xl mx-auto px-6 lg:px-8 pb-24 scroll-mt-24">
-        {loading ? (
-          <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div>
-        ) : visible.length === 0 ? (
-          <p className="text-center text-slate-400 py-20 font-mono text-sm">Žádné články v této kategorii.</p>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+        {loading ?
+        <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div> :
+        visible.length === 0 ?
+        <p className="text-center text-slate-400 py-20 font-mono text-sm">Žádné články v této kategorii.</p> :
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
             {/* Featured */}
-            {featured && (
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-3">
+            {featured &&
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-3">
                 <Link to={`/blog/${featured.slug || featured.id}`} className="group relative block rounded-2xl overflow-hidden bg-slate-950 h-full min-h-[440px]">
-                  {featured.image_url && (
-                    <div className="absolute inset-0 overflow-hidden"><img src={featured.image_url} alt={featured.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-95 transition-all duration-700" /></div>
-                  )}
+                  {featured.image_url &&
+              <div className="absolute inset-0 overflow-hidden"><img src={featured.image_url} alt={featured.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-95 transition-all duration-700" /></div>
+              }
                   <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-xs font-medium text-white/60">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
@@ -105,19 +105,19 @@ export default function Blog() {
                   </div>
                 </Link>
               </motion.div>
-            )}
+          }
 
             {/* Side posts */}
-            {rest.length > 0 && (
-              <div className="lg:col-span-2 flex flex-col gap-5">
-                {rest.slice(0, 3).map((post, i) => (
-                  <motion.div key={post.id} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+            {rest.length > 0 &&
+          <div className="lg:col-span-2 flex flex-col gap-5">
+                {rest.slice(0, 3).map((post, i) =>
+            <motion.div key={post.id} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                     <Link to={`/blog/${post.slug || post.id}`} className="group flex rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
-                      {post.image_url && (
-                        <div className="w-28 flex-shrink-0 overflow-hidden">
+                      {post.image_url &&
+                <div className="w-28 flex-shrink-0 overflow-hidden">
                           <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
-                      )}
+                }
                       <div className="p-5 flex flex-col justify-between flex-1 min-w-0">
                         <div>
                           <div className="flex items-center gap-2 mb-2">
@@ -129,23 +129,23 @@ export default function Blog() {
                       </div>
                     </Link>
                   </motion.div>
-                ))}
-              </div>
             )}
+              </div>
+          }
           </div>
-        )}
+        }
 
         {/* All posts grid if more than 4 */}
-        {visible.length > 4 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-            {visible.slice(4).map((post, i) => (
-              <motion.div key={post.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
+        {visible.length > 4 &&
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+            {visible.slice(4).map((post, i) =>
+          <motion.div key={post.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
                 <Link to={`/blog/${post.slug || post.id}`} className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
-                  {post.image_url && (
-                    <div className="aspect-[4/3] overflow-hidden">
+                  {post.image_url &&
+              <div className="aspect-[4/3] overflow-hidden">
                       <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
-                  )}
+              }
                   <div className="p-6">
                     <span className="text-xs font-medium text-slate-400 block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
                     <h3 className="font-light text-slate-900 text-base leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2">{post.title}</h3>
@@ -153,12 +153,12 @@ export default function Blog() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+          )}
           </div>
-        )}
+        }
       </div>
 
       <LeadMagnetPopup />
-    </div>
-  );
+    </div>);
+
 }

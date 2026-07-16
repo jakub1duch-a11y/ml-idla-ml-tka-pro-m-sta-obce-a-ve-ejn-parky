@@ -31,6 +31,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
             key={active}
             src={images[active]}
             alt={productName}
+            decoding="async"
             custom={direction}
             initial={{ opacity: 0, x: direction * 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -73,7 +74,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
               onClick={() => goTo(i)}
               className={`relative rounded-lg overflow-hidden aspect-[4/3] border-2 transition-colors ${active === i ? 'border-slate-900' : 'border-transparent hover:border-slate-300'}`}
             >
-              <img src={img} alt="" className="w-full h-full object-cover" />
+              <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
               <span className="absolute bottom-0.5 right-1 text-[9px] font-mono text-white drop-shadow">{i + 1}</span>
             </button>
           ))}

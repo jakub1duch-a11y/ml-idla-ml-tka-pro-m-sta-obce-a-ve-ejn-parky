@@ -97,7 +97,6 @@
     font-weight: 600;
     line-height: var(--lh-heading);
     letter-spacing: -0.02em;
-    color: hsl(var(--foreground));
   }
 
   /* !important enforces the same heading size/spacing everywhere, regardless of
@@ -136,6 +135,16 @@
   li:last-child { margin-bottom: 0; }
   li > ul, li > ol { margin-top: 0.375rem; margin-bottom: 0; }
 }
+
+@keyframes mist-hero-drift {
+  0%, 100% { transform: translate3d(-4%, 4%, 0) scale(1); opacity: .18; }
+  50% { transform: translate3d(8%, -8%, 0) scale(1.16); opacity: .33; }
+}
+.mist-veil { position: absolute; width: 42vw; height: 30vw; min-width: 280px; min-height: 200px; border-radius: 999px; filter: blur(70px); pointer-events: none; will-change: transform, opacity; animation: mist-hero-drift 13s ease-in-out infinite; }
+.mist-veil-one { left: 5%; bottom: -16%; background: rgba(103, 232, 249, .2); }
+.mist-veil-two { right: 2%; top: 12%; background: rgba(255, 255, 255, .1); animation-delay: -6s; }
+
+@media (prefers-reduced-motion: reduce) { .mist-veil { animation: none; } }
 
 @keyframes mlzDropFall {
   0% { top: 0; opacity: 0; transform: scale(0.7) rotate(45deg); }

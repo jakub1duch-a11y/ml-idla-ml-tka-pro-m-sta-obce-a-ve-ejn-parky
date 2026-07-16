@@ -33,7 +33,7 @@ export default function ProductFilterGrid() {
               <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'} onClick={() => trackProductClick(p.name, p.slug, 'chytra_mlzidla')}
             className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-900 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
                 <div className="aspect-[4/3] overflow-hidden bg-slate-100 relative">
-                  {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />}
+                  {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" decoding="async" />}
                   <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/50 transition-colors duration-300 flex items-center justify-center">
                     <span className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 inline-flex items-center gap-1.5 px-4 py-2 bg-white text-slate-900 text-xs font-bold rounded-full">
                       Detail mlžítka <ArrowRight size={13} />

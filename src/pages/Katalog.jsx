@@ -32,7 +32,7 @@ export default function Katalog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="min-h-screen bg-white pt-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Katalog 2026</p>

@@ -68,7 +68,7 @@ export default function Partnerstvi() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-36 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end pb-0">
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-36 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end pb-10">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-6">
               Partnerství a spolupráce

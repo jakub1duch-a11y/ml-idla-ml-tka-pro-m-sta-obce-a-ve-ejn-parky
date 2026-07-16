@@ -88,7 +88,7 @@ export default function Header() {
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2 bg-black/75 rounded-lg px-3 py-2">
+          <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2 bg-black/75 px-3 py-0">
             <Logo size="sm" />
           </Link>
 

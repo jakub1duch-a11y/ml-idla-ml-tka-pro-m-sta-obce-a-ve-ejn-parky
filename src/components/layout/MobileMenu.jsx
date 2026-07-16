@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, X } from 'lucide-react';
-import Logo from '@/components/layout/Logo';
+import MobileMenuSection from '@/components/layout/MobileMenuSection';
+import { mobileNavigation } from '@/components/layout/menuData';
 
-const links = [{ label: 'Jak mlžení funguje?', path: '/jak-funguje-mlzeni' }, { label: 'Produkty', path: '/katalog' }, { label: 'Přínosy mlžítek', path: '/prinosy-mlzitek' }, { label: 'Realizace', path: '/reference' }, { label: 'Novinky', path: '/blog' }, { label: 'Podpora a servis', path: '/podpora' }, { label: 'B2B Partnerství', path: '/partnerstvi' }, { label: 'Využití B2B', path: '/vyuziti' }];
-export default function MobileMenu({ open, onClose }) { return <AnimatePresence>{open && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-slate-950 lg:hidden flex flex-col"><div className="h-16 px-6 flex items-center justify-between border-b border-white/10"><div className="self-stretch flex items-center bg-black px-3"><Logo size="sm" /></div><button onClick={onClose} className="w-11 h-11 text-white flex items-center justify-center" aria-label="Zavřít menu"><X size={22} /></button></div><nav className="flex-1 px-6 py-7">{links.map((link) => <Link key={link.path} to={link.path} onClick={onClose} className="flex items-center justify-between py-4 border-b border-white/10 text-white text-lg"><span>{link.label}</span><ArrowRight size={16} className="text-white/40" /></Link>)}</nav><div className="p-6 border-t border-white/10 grid grid-cols-2 gap-3"><Link to="/poptavka" onClick={onClose} className="text-center border border-sky-400 text-sky-300 py-3 text-sm font-bold">Rychlá poptávka</Link><Link to="/kontakt" onClick={onClose} className="text-center bg-sky-500 text-white py-3 text-sm font-bold">Kontakt</Link></div></motion.div>}</AnimatePresence>; }
+export default function MobileMenu({ open, onClose }) {
+  return <AnimatePresence>{open && <motion.nav initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.2 }} className="fixed top-14 left-3 right-3 z-40 max-h-[75vh] overflow-y-auto border border-white/10 bg-slate-950/95 shadow-2xl shadow-slate-950/40 backdrop-blur-xl xl:hidden">
+    <div className="px-5 py-3">{mobileNavigation.map(item => <MobileMenuSection key={item.path} item={item} onClose={onClose} />)}</div>
+    <div className="sticky bottom-0 p-4 border-t border-white/10 grid grid-cols-2 gap-3 bg-slate-950/95"><Link to="/poptavka" onClick={onClose} className="text-center border border-sky-400 text-sky-300 py-3 text-sm font-bold">Rychlá poptávka</Link><Link to="/kontakt" onClick={onClose} className="text-center bg-sky-500 text-white py-3 text-sm font-bold">Kontakt</Link></div>
+  </motion.nav>}</AnimatePresence>;
+}

@@ -17,6 +17,10 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+function formatMultilineText(str) {
+  return escapeHtml(str).replace(/\r?\n/g, '<br>');
+}
+
 function encodeRFC2047(str) {
   const encoded = btoa(unescape(encodeURIComponent(str)));
   return `=?UTF-8?B?${encoded}?=`;
@@ -55,7 +59,7 @@ Deno.serve(async (req) => {
     // Only send email to the address provided in the inquiry (not arbitrary addresses)
     const name = escapeHtml(data.name || 'Neznámý');
     const email = escapeHtml(data.email || '—');
-    const message = escapeHtml(data.message || '—');
+    const message = formatMultilineText(data.message || '—');
     const rawEmail = data.email || '';
     const createdAt = new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' });
 
@@ -72,7 +76,7 @@ Deno.serve(async (req) => {
   </table>
   <div style="margin-top:20px;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;">
     <p style="color:#64748b;font-size:11px;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px;">Zpráva</p>
-    <p style="margin:0;line-height:1.7;">${message.replace(/\n/g, '<br>')}</p>
+    <p style="margin:0;line-height:1.7;">${message}</p>
   </div>
   <div style="margin-top:24px;">
     <a href="mailto:${encodeURIComponent(rawEmail)}?subject=Re: Poptávka mlžného systému Mlzidla.cz" style="display:inline-block;background:#22d3ee;color:#0d1117;padding:12px 24px;border-radius:99px;text-decoration:none;font-weight:700;font-size:14px;">Odpovědět zájemci</a>
@@ -106,7 +110,7 @@ Deno.serve(async (req) => {
   <p style="line-height:1.7;color:#cbd5e1;">obdrželi jsme vaši poptávku a děkujeme za váš zájem o naše mlžné systémy. Náš tým ji nyní zpracovává a brzy se vám ozveme — obvykle do 1–2 pracovních dnů.</p>
   <div style="margin:24px 0;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;">
     <p style="color:#64748b;font-size:11px;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px;">Vaše zpráva</p>
-    <p style="margin:0;line-height:1.7;color:#94a3b8;">${message.replace(/\n/g, '<br>')}</p>
+    <p style="margin:0;line-height:1.7;color:#94a3b8;">${message}</p>
   </div>
   <p style="line-height:1.7;color:#cbd5e1;">V případě dotazů nás můžete kontaktovat přímo na <a href="mailto:obchod1@holmtec.cz" style="color:#22d3ee;">obchod1@holmtec.cz</a> nebo na tel. <a href="tel:+420774700390" style="color:#22d3ee;">+420 777 880 099</a>.</p>
   <div style="margin-top:28px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">

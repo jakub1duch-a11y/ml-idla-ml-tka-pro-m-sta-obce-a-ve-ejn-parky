@@ -15,6 +15,11 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Invalid input types' }, { status: 400 });
     }
 
+    const entityIdRegex = /^[0-9a-f]{24}$/i;
+    if (!entityIdRegex.test(projectId)) {
+      return Response.json({ error: 'Invalid project_id' }, { status: 400 });
+    }
+
     // Session tokens are always issued as crypto.randomUUID() — reject anything
     // that doesn't match that format before querying, so a malformed/non-string
     // shaped value can never be used to probe the session store.
@@ -24,17 +29,18 @@ Deno.serve(async (req) => {
     }
 
     const sessions = await base44.asServiceRole.entities.PortalSession.filter({ token: sessionToken });
-    // Defense-in-depth: require an exact token match rather than trusting the filter alone.
-    const session = sessions.find((s) => s.token === sessionToken);
+    // Require exactly one exact token match before using privileged access.
+    const session = sessions.length === 1 && sessions[0].token === sessionToken ? sessions[0] : null;
+    const expiresAt = session ? new Date(session.expires_at).getTime() : NaN;
 
-    if (!session || new Date(session.expires_at).getTime() < Date.now()) {
+    if (!session || !Number.isFinite(expiresAt) || expiresAt < Date.now() || typeof session.email !== 'string') {
       return Response.json({ error: 'invalid_or_expired_session' }, { status: 401 });
     }
 
     const project = await base44.asServiceRole.entities.ProjectOrder.get(projectId).catch(() => null);
     if (!project) return Response.json({ error: 'not_found' }, { status: 404 });
 
-    if ((project.client_email || '').toLowerCase() !== session.email.toLowerCase()) {
+    if (typeof project.client_email !== 'string' || project.client_email.trim().toLowerCase() !== session.email.trim().toLowerCase()) {
       return Response.json({ error: 'forbidden' }, { status: 403 });
     }
 

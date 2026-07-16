@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductClick } from '@/lib/ga4';
+import Gate70ProductCard from '@/components/katalog/Gate70ProductCard';
 
 const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
 
@@ -28,6 +29,7 @@ export default function ProductFilterGrid() {
       <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> :
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <Gate70ProductCard />
           {products.map((p, i) =>
         <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
               <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'} onClick={() => trackProductClick(p.name, p.slug, 'chytra_mlzidla')}

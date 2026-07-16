@@ -20,7 +20,7 @@ export default function SmartSensorGrid() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-70" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
           </span>
-          <s.icon size={20} className="text-cyan-300 mb-" />
+          <s.icon size={20} className="mb-2 text-cyan-100" />
           <p className="text-sm font-semibold text-white">{s.label}</p>
           <p className="text-[11px] text-white/50 leading-snug">{s.sub}</p>
         </motion.div>

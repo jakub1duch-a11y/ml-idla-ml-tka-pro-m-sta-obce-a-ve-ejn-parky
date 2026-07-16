@@ -157,7 +157,7 @@ export default function Podpora() {
                 <section.icon size={20} className="text-slate-700" />
               </div>
               <div>
-                <h2 className="font-heading font-light text-xl tracking-tight text-slate-200">{section.title}</h2>
+                <h2 className="font-heading font-light text-slate-900 tracking-tight text-xxl">{section.title}</h2>
                 <p className="text-xs text-slate-400 mt-0.5">{section.items.length} otázek</p>
               </div>
             </div>

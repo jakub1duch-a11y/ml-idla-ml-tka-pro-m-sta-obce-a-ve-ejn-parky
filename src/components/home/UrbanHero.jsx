@@ -34,7 +34,7 @@ export default function UrbanHero() {
         <motion.video key={HERO_VIDEOS[activeVideo]} src={HERO_VIDEOS[activeVideo]} autoPlay muted loop playsInline preload="auto" initial={{ opacity: 0, scale: 1.03 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, ease: 'easeOut' }} className="absolute inset-0 w-full h-full object-cover" />
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-950/10" />
-      <div className="absolute inset-0 bg-gradient-to-r to-transparent via-slate-250/95 from-slate-400/0" />
+      <div className="absolute inset-0 bg-gradient-to-r via-slate-250/95 to-transparen9 from-slate-700/82" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14">
         <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }} className="max-w-3xl py-16">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 backdrop-blur-md text-white font-semibold tracking-widest uppercase mb-5 text-base">VEŘEJNÝ PROSTOR PRO KAŽDÉHO</span>

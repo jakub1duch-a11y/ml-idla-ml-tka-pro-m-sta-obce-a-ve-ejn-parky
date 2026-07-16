@@ -38,7 +38,7 @@ export default function UrbanHero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14">
         <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }} className="max-w-3xl">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white text-xs font-semibold tracking-widest uppercase mb-5"><Building2 size={14} /> Veřejný prostor pro každého</span>
-          <h1 className="font-heading font-bold text-white text-4xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight">Chladivé městské prostory, kde se lidé chtějí zastavit.</h1>
+          <h1 className="text-white leading-[1.02] tracking-tight [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-3xl sm:text-3xl lg:text-3xl">Chladivé městské prostory, kde se lidé chtějí zastavit.</h1>
           <p className="text-white/80 text-base sm:text-lg leading-relaxed text-measure mt-6">Navrhujeme mlžítka a mlžné brány pro města, parky, školní dvory i náměstí. Přinášejí občanům úlevu v horkých dnech a místům nový přirozený život.</p>
           <div className="flex flex-wrap gap-3 mt-8"><Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-slate-950 text-sm font-bold hover:bg-slate-100 transition-colors">Nezávazná konzultace <ArrowRight size={16} /></Link><Link to="/kategorie/mesta-obce" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/35 text-white text-sm font-semibold hover:bg-white/10 transition-colors">Řešení pro města</Link></div>
         </motion.div>

@@ -5,7 +5,7 @@ import CircleDrawIcon from "@/components/common/CircleDrawIcon";
 
 const SERVICES = [
 { icon: Ruler, title: "Zakázková výroba mlžných systémů", desc: "Navrhneme a vyrobíme originální mlžné systémy přesně podle architektonických požadavků vašeho projektu." },
-{ icon: Wrench, title: "Instalace na klíč", desc: "Kompletní profesionální montáž, zapojení vysokotlaké technologie a otestování celého systému na místě." },
+{ icon: Wrench, title: "Instalace na klíč", desc: "Kompletní profesionální montáž, zapojení nízkotlakého řešení 3–8 barů a otestování celého systému na místě." },
 { icon: Box, title: "Konzultace a 3D vizualizace", desc: "Odborné poradenství a reálný 3D digitální model zakomponovaný do vaší zahrady nebo provozu ještě před realizací." },
 { icon: CalendarClock, title: "Pronájem mlžných instalací", desc: "Krátkodobý i dlouhodobý pronájem mobilních mlžných systémů pro festivaly, svatby, firemní akce a catering." },
 { icon: ShieldCheck, title: "Servis a údržba", desc: "Pravidelné kontroly, zazimování systému, dekalcifikace trysek a rychlý záruční i pozáruční servis." },

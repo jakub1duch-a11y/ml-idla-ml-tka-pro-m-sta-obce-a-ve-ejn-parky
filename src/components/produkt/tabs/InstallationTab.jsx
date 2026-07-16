@@ -12,7 +12,7 @@ export default function InstallationTab({ product }) {
             Instalace a kotvení<br /><span className="text-slate-400">bez betonování.</span>
           </h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
-            Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (2–7 BAR) — Plug &amp; Mist bez nutnosti vysokotlakých čerpadel.
+            Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (3–8 barů) — Plug &amp; Mist pro úsporný nízkotlaký provoz.
           </p>
         </motion.div>
 
@@ -56,9 +56,9 @@ export default function InstallationTab({ product }) {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-20">
           {[
-            { icon: ShieldCheck, title: 'Pojistný ventil', desc: 'Hardwarová ochrana proti přetlaku v řadu nad 7 BAR.' },
+            { icon: ShieldCheck, title: 'Pojistný ventil', desc: 'Hardwarová ochrana proti přetlaku v řadu nad 8 barů.' },
             { icon: ShieldCheck, title: 'Kryt proti krupobití', desc: 'Mechanický štít solárního panelu, 100% odolnost proti krupobití.' },
-            { icon: Wrench, title: 'Bez čerpadel', desc: 'Provoz přímo na 2–7 BAR z běžného vodovodního řadu.' },
+            { icon: Wrench, title: 'Bez čerpadel', desc: 'Provoz přímo na 3–8 barů z běžného vodovodního řadu.' },
           ].map((f) => (
             <div key={f.title} className="p-5 rounded-2xl border border-slate-200 bg-slate-50">
               <f.icon size={20} className="text-slate-500 mb-3" />

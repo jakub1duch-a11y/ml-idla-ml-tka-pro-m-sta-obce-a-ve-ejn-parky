@@ -4,10 +4,7 @@ import { Calculator, Droplets } from 'lucide-react';
 
 const WATER_PRICE_PER_M3 = 90; // Kč
 const PRESSURES = [
-  { label: '2 bar', key: 'flow_2bar' },
   { label: '5 bar', key: 'flow_5bar' },
-  { label: '10 bar', key: 'flow_10bar' },
-  { label: '15 bar', key: 'flow_15bar' },
 ];
 
 function parseNumber(str) {

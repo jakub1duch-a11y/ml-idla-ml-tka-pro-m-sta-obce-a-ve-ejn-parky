@@ -22,7 +22,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Mohu si mlžítka nainstalovat sám?',
-        a: 'Jednodušší modely (START, PARK) jsou navrženy tak, aby je zvládl instalovat zkušený řemeslník. Pro složitější mlžné sochy a systémy s vysokotlakým čerpadlem doporučujeme naši servisní instalaci — zajistíme správné nastavení tlaku, tryskového systému a řídící elektroniky.',
+        a: 'Jednodušší modely (START, PARK) jsou navrženy tak, aby je zvládl instalovat zkušený řemeslník. Pro složitější mlžné sochy a rozsáhlejší nízkotlaké systémy doporučujeme naši servisní instalaci — zajistíme správné nastavení tlaku v rozsahu 3–8 barů, trysek a řídící elektroniky.',
       },
       {
         q: 'Na jaký typ povrchu lze mlžítka instalovat?',
@@ -76,7 +76,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Jaký tlak vody je potřeba pro mlžítka?',
-        a: 'Standardní přívod z vodovodní sítě (3–6 bar) postačí pro systémy s interním vysokotlakým čerpadlem. Čerpadlo zvýší tlak na 50–70 bar, který je potřebný pro správnou atomizaci kapének. Systémy bez vlastního čerpadla vyžadují min. 4 bar vstupního tlaku.',
+        a: 'Pro nízkotlaké mlžení postačí standardní přívod z vodovodní sítě v rozsahu 3–8 barů. Přesný provozní tlak se nastavuje podle typu instalace, počtu trysek a požadovaného efektu mlžení.',
       },
       {
         q: 'Lze použít dešťovou nebo recyklovanou vodu?',
@@ -84,7 +84,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Jaká je spotřeba elektrické energie?',
-        a: 'Vysokotlaké čerpadlo má příkon typicky 300–900 W podle výkonu. Řídící jednotka s displejem spotřebuje cca 10–20 W. Celkový roční provoz při průměrném využití (3–4 hodiny denně, 120 dnů v roce) odpovídá spotřebě běžného vysavače.',
+        a: 'Nízkotlaký systém má nízké energetické nároky podle rozsahu instalace. Řídící jednotka s displejem spotřebuje cca 10–20 W. Celkový roční provoz při průměrném využití (3–4 hodiny denně, 120 dnů v roce) odpovídá spotřebě běžného vysavače.',
       },
     ],
   },

@@ -7,7 +7,7 @@ import NozzleCostCalculator from './NozzleCostCalculator';
 const STATS = [
   { val: '−10 °C', label: 'Pokles teploty okolí', icon: Thermometer, desc: 'Evaporativní chlazení mikrokapkami sníží teplotu vzduchu v okolí až o 10 °C během několika minut provozu.' },
   { val: 'ČSN EN 1176', label: 'Certifikace bezpečnosti', icon: ShieldCheck, desc: 'Konstrukce i mlžení splňují normu pro veřejná dětská hřiště a náměstí — bezpečné pro děti i seniory.' },
-  { val: '2–7 BAR', label: 'Nízkotlaký provoz', icon: Gauge, desc: 'Systém pracuje na běžném tlaku vodovodního řadu, bez nutnosti čerpadel nebo vysokotlakých kompresorů.' },
+  { val: '3–8 BAR', label: 'Nízkotlaký provoz', icon: Gauge, desc: 'Systém pracuje v rozsahu 3–8 barů na běžném tlaku vodovodního řadu, bez potřeby tlakové stanice.' },
   { val: '−45 %', label: 'Úspora vody', icon: Leaf, desc: 'Chytrá regulace dle počasí a teploty šetří vodu oproti nepřerušovanému provozu.' },
   { val: '−70 %', label: 'Méně prachu a pylů', icon: Wind, desc: 'Mikrokapky mlhy vážou prachové částice a pyly ve vzduchu, čímž zlepšují kvalitu ovzduší v okolí.' },
   { val: '10 μm', label: 'Velikost kapky', icon: Droplet, desc: 'Extrémně jemná mlha se okamžitě odpařuje — povrch ani oblečení kolemjdoucích nezvlhnou.' },

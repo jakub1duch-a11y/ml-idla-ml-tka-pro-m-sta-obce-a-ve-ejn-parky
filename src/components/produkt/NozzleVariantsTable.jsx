@@ -23,10 +23,7 @@ export default function NozzleVariantsTable({ variants }) {
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
                 <th className="text-left px-6 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">Varianta</th>
-                <th className="text-left px-4 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">2 bar</th>
                 <th className="text-left px-4 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">5 bar</th>
-                <th className="text-left px-4 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">10 bar</th>
-                <th className="text-left px-4 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">15 bar</th>
               </tr>
             </thead>
             <tbody>
@@ -43,10 +40,7 @@ export default function NozzleVariantsTable({ variants }) {
                     </div>
                     {v.material && <p className="text-xs text-slate-400 font-light mt-0.5">{v.material}</p>}
                   </td>
-                  <td className="px-4 py-4 text-slate-700">{v.flow_2bar || '—'}</td>
                   <td className="px-4 py-4 text-slate-700">{v.flow_5bar || '—'}</td>
-                  <td className="px-4 py-4 text-slate-700">{v.flow_10bar || '—'}</td>
-                  <td className="px-4 py-4 text-slate-700">{v.flow_15bar || '—'}</td>
                 </tr>
               ))}
             </tbody>

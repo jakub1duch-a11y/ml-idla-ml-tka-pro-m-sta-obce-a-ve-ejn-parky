@@ -17,23 +17,23 @@ export default function PremiumServicesSection() {
     <section className="relative bg-slate-50 py-20">
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Služby</p>
+          <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-xs">SLUŽBY</p>
           <h2 className="font-heading tracking-tight font-bold text-left text-slate-900 text-3xl">
             Služby a řešení pro dokonalý mlžný systém
           </h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((s, i) => (
-            <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
-              whileHover={{ y: -4 }}
-              className="bg-white rounded-2xl border border-slate-200 p-6 transition-shadow hover:shadow-lg">
+          {SERVICES.map((s, i) =>
+          <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
+          whileHover={{ y: -4 }}
+          className="bg-white rounded-2xl border border-slate-200 p-6 transition-shadow hover:shadow-lg">
               <CircleDrawIcon delay={i * 0.06} size={48} className="mb-5">
                 <s.icon size={18} className="text-slate-700" strokeWidth={1.5} />
               </CircleDrawIcon>
               <h3 className="font-heading font-bold text-slate-900 text-lg mb-2 leading-snug">{s.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
             </motion.div>
-          ))}
+          )}
         </div>
       </div>
     </section>);

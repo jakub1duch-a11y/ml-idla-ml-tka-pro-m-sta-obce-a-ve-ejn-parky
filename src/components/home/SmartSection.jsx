@@ -18,8 +18,8 @@ export default function SmartSection() {
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono tracking-widest uppercase mb-5">
             <Smartphone size={13} /> Smart Wi-Fi ovládání
           </span>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-5">
-            Mlžení, které <span className="italic text-cyan-300">samo ví, kdy zapnout.</span>
+          <h2 className="font-light text-4xl lg:text-5xl text-white tracking-tight mb-5 [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">Mlžení, které samo ví, kdy zapnout.
+
           </h2>
           <p className="text-white/60 text-base lg:text-lg leading-relaxed">
             Senzory teploty, vlhkosti, větru a pohybu předávají data do aplikace, která mlžení automaticky spouští, upravuje i vypíná — bez zásahu obsluhy.
@@ -42,7 +42,7 @@ export default function SmartSection() {
 
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-8 border-t border-white/10">
-          <p className="text-sm max-w-md text-[hsl(var(--popover))]">Podrobný přehled senzorů, automatizačních scénářů a nabídky Smart Wi-Fi systémů najdete na detailní stránce.</p>
+          <p className="max-w-md text-[hsl(var(--popover))] text-base">Podrobný přehled senzorů, automatizačních scénářů a nabídky Smart Wi-Fi systémů najdete na detailní stránce.</p>
           <Link to="/chytra-mlzidla" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all whitespace-nowrap">
             Chytré ovládání <ArrowRight size={15} />
           </Link>

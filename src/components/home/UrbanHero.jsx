@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Building2, Droplets, ShieldCheck, ThermometerSnowflake, Trees } from 'lucide-react';
 
-const VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b5e93510_mlzitka_v_provozu_-_mlzidla_cz.mp4';
+const HERO_VIDEOS = [
+  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/6297e30bb_Svaovnukzkazive.mov',
+  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/16e481607_Mlzitkaostev-zivaukazkamlznystrom.mov',
+  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2b83755fa_instalace-mlzitka-mrak1.MOV',
+  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9d016456c_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV',
+  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/66dee6ceb_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV',
+];
+
 const BENEFITS = [
   { icon: ThermometerSnowflake, label: 'Ochlazení až o 10 °C' },
   { icon: Trees, label: 'Pro parky a náměstí' },
@@ -12,9 +19,20 @@ const BENEFITS = [
 ];
 
 export default function UrbanHero() {
+  const [activeVideo, setActiveVideo] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveVideo((current) => (current + 1) % HERO_VIDEOS.length);
+    }, 7000);
+    return () => window.clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-[760px] h-[100svh] overflow-hidden bg-slate-950 flex items-end">
-      <video src={VIDEO_URL} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
+      <AnimatePresence mode="wait">
+        <motion.video key={HERO_VIDEOS[activeVideo]} src={HERO_VIDEOS[activeVideo]} autoPlay muted loop playsInline preload="auto" initial={{ opacity: 0, scale: 1.03 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, ease: 'easeOut' }} className="absolute inset-0 w-full h-full object-cover" />
+      </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-950/10" />
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/15 to-transparent" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14">

@@ -36,7 +36,7 @@ export default function UrbanHero() {
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-slate-950/10" />
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/15 to-transparent" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14">
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }} className="max-w-3xl">
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }} className="max-w-3xl py-16">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white text-xs font-semibold tracking-widest uppercase mb-5"><Building2 size={14} /> Veřejný prostor pro každého</span>
           <h1 className="text-white tracking-tight [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl leading-[1.02] sm:text-4xl lg:text-4xl text-left">Chladivé městské prostory, kde se lidé chtějí zastavit.</h1>
           <p className="text-white/80 text-base sm:text-lg leading-relaxed text-measure mt-6">Navrhujeme mlžítka a mlžné brány pro města, parky, školní dvory i náměstí. Přinášejí občanům úlevu v horkých dnech a místům nový přirozený život.</p>

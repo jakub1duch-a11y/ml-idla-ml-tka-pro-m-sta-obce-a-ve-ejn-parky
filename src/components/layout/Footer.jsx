@@ -46,7 +46,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               <Link to="/technologie" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Technologie</Link>
               <Link to="/chytra-mlzidla" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Chytré ovládání</Link>
-              <Link to="/vyhody" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Přínosy mlžítek</Link>
+              <Link to="/prinosy-mlzitek" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Přínosy mlžítek</Link>
               <Link to="/podpora" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Nejčastější dotazy</Link>
               <Link to="/servis-udrzba" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Servis a údržba</Link>
               <Link to="/ke-stazeni" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ke stažení a manuály</Link>

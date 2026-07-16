@@ -60,6 +60,7 @@ import VideoUkazky from '@/pages/VideoUkazky';
 import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 import PrinosMlzitek from '@/pages/PrinosMlzitek';
 import Vyuziti from '@/pages/Vyuziti';
+import Prinosy from '@/pages/Prinosy';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -135,6 +136,7 @@ const AuthenticatedApp = () => {
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
         <Route path="/videosekce-mlzitka" element={<VideoUkazky />} />
+        <Route path="/prinosy-mlzitek" element={<Prinosy />} />
         <Route path="/prinosy-mlzitek/:slug" element={<PrinosMlzitek />} />
         <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
       </Route>

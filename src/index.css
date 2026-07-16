@@ -137,6 +137,18 @@
   li > ul, li > ol { margin-top: 0.375rem; margin-bottom: 0; }
 }
 
+@keyframes mlzDropFall {
+  0% { top: 0; opacity: 0; transform: scale(0.7) rotate(45deg); }
+  15%, 70% { opacity: 1; }
+  90%, 100% { top: 39px; opacity: 0; transform: scale(0.5) rotate(45deg); }
+}
+.mlz-scroll-wrapper { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 14px; z-index: 20; text-decoration: none; cursor: pointer; }
+.mlz-water-line { position: relative; width: 2px; height: 45px; background: rgba(0, 168, 204, 0.35); border-radius: 2px; }
+.mlz-water-drop { position: absolute; left: 50%; width: 7px; height: 7px; background: #4dd9f5; border-radius: 0 50% 50% 50%; animation: mlzDropFall 2.2s cubic-bezier(0.4, 0, 1, 1) infinite; }
+.mlz-scroll-text { color: #fff; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; white-space: nowrap; text-shadow: 0 2px 4px rgba(0,0,0,.4); opacity: .82; transition: opacity .25s ease; }
+.mlz-scroll-wrapper:hover .mlz-scroll-text { opacity: 1; }
+.mlz-scroll-pulse .mlz-water-drop { animation-duration: 1.8s; background: #fff; }
+
 @keyframes drip {
   0% { transform: translateY(-20px); opacity: 0; }
   10% { opacity: 1; }

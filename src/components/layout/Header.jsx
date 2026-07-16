@@ -37,7 +37,7 @@ const INFO_LINKS = [
 { icon: ShieldCheck, label: 'Přínosy mlžítek', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
-{ icon: PlayCircle, label: 'Video — živé ukázky mlžení', path: '/video-ukazky' },
+{ icon: PlayCircle, label: 'Video — živé ukázky mlžení', path: '/videosekce-mlzitka' },
 { icon: Newspaper, label: 'Blog & novinky', path: '/blog' }];
 
 
@@ -88,7 +88,7 @@ export default function Header() {
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2">
+          <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2 bg-black/75 rounded-lg px-3 py-2">
             <Logo size="sm" />
           </Link>
 
@@ -99,12 +99,12 @@ export default function Header() {
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               megaOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
               }>
-                Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
+                Produkty <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
             <Link to="/mlzidla-mlzitka" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Mlžítka a mlžné brány</Link>
             <Link to="/prislusenstvi" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Smart moduly a příslušenství</Link>
-            <Link to="/vyhody" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Proč mlzidla.cz</Link>
+            <Link to="/prinosy-mlzitek/zvyseni-trzeb-a-prodeje" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Přínosy mlžítek</Link>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Reference</Link>
             <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
@@ -181,7 +181,7 @@ export default function Header() {
                       <Wifi size={17} className="text-cyan shrink-0" />
                       <p className="text-xs text-slate-700 group-hover:text-white transition-colors font-medium leading-tight">Chytré ovládání</p>
                     </Link>
-                    <Link key="video-ukazky" to="/video-ukazky" onClick={(e) => e.stopPropagation()}
+                    <Link key="video-ukazky" to="/videosekce-mlzitka" onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col items-start gap-2 p-3 rounded-xl bg-slate-50 hover:bg-slate-900 border border-slate-100 hover:border-slate-900 transition-colors">
                       <PlayCircle size={17} className="text-slate-500 group-hover:text-cyan transition-colors shrink-0" />
                       <p className="text-xs text-slate-700 group-hover:text-white transition-colors font-medium leading-tight">Video ukázky mlžení</p>

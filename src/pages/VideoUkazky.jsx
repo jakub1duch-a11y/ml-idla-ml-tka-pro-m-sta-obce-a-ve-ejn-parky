@@ -69,7 +69,7 @@ export default function VideoUkazky() {
       title: 'Video — Živé ukázky mlžení',
       description: 'Video ukázky mlžných systémů HolmTec v reálném provozu — produkty i realizace.',
       keywords: 'video mlžení, živé ukázky, mlžný systém video, mlžná brána video',
-      canonicalPath: '/video-ukazky'
+      canonicalPath: '/videosekce-mlzitka'
     });
 
     const load = async () => {

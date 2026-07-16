@@ -98,72 +98,17 @@ function Lightbox({ images, initialIndex, onClose }) {
 
 function ProjectCard({ project, onOpen }) {
   const allImages = [project.image_url, ...(project.gallery_urls || [])].filter(Boolean);
-
+  const city = (project.location || '').split('—')[0].trim();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="group rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white">
-      
-      {/* Thumbnail */}
-      <div
-        className="relative aspect-[4/3] overflow-hidden bg-slate-100 cursor-pointer"
-        onClick={() => allImages.length > 0 && onOpen(allImages, 0)}>
-        
-        {project.image_url ?
-        <img src={project.image_url} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> :
-
-        <div className="w-full h-full flex items-center justify-center text-slate-300 text-4xl">📷</div>
-        }
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-        {/* Badges */}
-        <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
-          {project.category &&
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700">
-              {CATEGORY_LABELS[project.category] || project.category}
-            </span>
-          }
-          {project.year &&
-          <span className="px-3 py-1 bg-slate-900/85 backdrop-blur-sm rounded-full text-xs font-medium text-white">
-              {project.year}
-            </span>
-          }
-        </div>
-
-        {/* Gallery indicator */}
-        {allImages.length > 1 &&
-        <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs text-white/80">
-            <ZoomIn size={10} /> {allImages.length} fotek
-          </div>
-        }
+    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-slate-100 cursor-pointer" onClick={() => allImages.length > 0 && onOpen(allImages, 0)}>
+      {project.image_url ? <img src={project.image_url} alt={project.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" /> : <div className="w-full h-full flex items-center justify-center text-slate-300 text-4xl">📷</div>}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/10 to-transparent group-hover:from-slate-950/95 transition-colors" />
+      <div className="absolute left-0 right-0 bottom-0 p-5 sm:p-6 translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+        <h3 className="font-heading font-medium text-white text-lg leading-snug mb-2">{project.name}</h3>
+        <div className="flex items-center justify-between gap-3">{city && <p className="inline-flex items-center gap-1.5 text-xs text-white/75"><MapPin size={13} /> {city}</p>}<Link to={`/reference/${project.id}-${slugify(project.name)}`} onClick={(event) => event.stopPropagation()} aria-label={`Detail ${project.name}`} className="w-8 h-8 rounded-full bg-white/15 hover:bg-white text-white hover:text-slate-950 flex items-center justify-center transition-colors"><ArrowRight size={14} /></Link></div>
       </div>
-
-      {/* Content */}
-      <div className="p-6">
-        {project.location &&
-        <div className="flex items-center gap-1.5 text-slate-400 text-xs mb-3">
-            <MapPin size={11} /> {project.location}
-          </div>
-        }
-        <h3 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2 leading-snug group-hover:text-slate-600 transition-colors">
-          {project.name}
-        </h3>
-        {project.description &&
-        <p className="text-sm text-slate-500 leading-relaxed line-clamp-3 font-light">{project.description}</p>
-        }
-        <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
-          {project.product_used &&
-          <span className="text-xs text-slate-400">Produkt: {project.product_used}</span>
-          }
-          <Link to={`/reference/${project.id}-${slugify(project.name)}`} className="flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:text-slate-600 transition-colors ml-auto border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-full hover:bg-slate-50">
-            Detail <ArrowRight size={11} />
-          </Link>
-        </div>
-      </div>
-    </motion.div>);
-
+    </motion.div>
+  );
 }
 
 const FILTERS = [
@@ -201,7 +146,7 @@ export default function Reference() {
       <GateLiveDemoCard />
 
       {/* Filters */}
-      <div id="realizace" className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
+      <div id="reference-vypis" className="max-w-7xl mx-auto px-6 lg:px-8 mb-10 scroll-mt-24">
         <div className="flex gap-2 flex-wrap">
           {FILTERS.map((f) =>
           <button key={f.value} onClick={() => setFilter(f.value)}

@@ -5,6 +5,7 @@ import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
+import BlogHero from '@/components/blog/BlogHero';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -46,19 +47,8 @@ export default function Blog() {
   const [featured, ...rest] = visible;
 
   return (
-    <div className="min-h-screen bg-white pt-28">
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-sm font-semibold text-techblue mb-4">Novinky</p>
-          <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
-            O mlžení do hloubky
-          </h1>
-          <p className="text-slate-500 max-w-xl text-lg font-light">
-            Řešení pro gastro provozy a eventy, design pro zahrady a terasy — technologie, inspirace a realizace na jednom místě.
-          </p>
-        </motion.div>
-      </div>
+    <div className="min-h-screen bg-white">
+      <BlogHero />
 
       {/* Audience segmentation */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-4">
@@ -88,7 +78,7 @@ export default function Blog() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+      <div id="blog-vypis" className="max-w-7xl mx-auto px-6 lg:px-8 pb-24 scroll-mt-24">
         {loading ? (
           <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : visible.length === 0 ? (
@@ -98,20 +88,18 @@ export default function Blog() {
             {/* Featured */}
             {featured && (
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-3">
-                <Link to={`/blog/${featured.slug || featured.id}`} className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all bg-white h-full">
+                <Link to={`/blog/${featured.slug || featured.id}`} className="group relative block rounded-2xl overflow-hidden bg-slate-950 h-full min-h-[440px]">
                   {featured.image_url && (
-                    <div className="aspect-[16/9] overflow-hidden">
-                      <img src={featured.image_url} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
+                    <div className="absolute inset-0 overflow-hidden"><img src={featured.image_url} alt={featured.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-95 transition-all duration-700" /></div>
                   )}
-                  <div className="p-8 flex flex-col">
+                  <div className="absolute inset-x-0 bottom-0 p-8 flex flex-col bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-xs font-medium text-slate-400">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
+                      <span className="text-xs font-medium text-white/60">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
                       {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs text-slate-300">{formatDate(featured.published_date)}</span></>}
                     </div>
-                    <h2 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
-                    <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
-                    <div className="mt-6 flex items-center gap-2 text-xs text-slate-900 font-medium group-hover:gap-3 transition-all">
+                    <h2 className="font-heading font-light text-2xl text-white tracking-tight mb-3 leading-snug group-hover:text-white/80 transition-colors">{featured.title}</h2>
+                                         <p className="text-sm text-white/70 font-light leading-relaxed">{featured.perex}</p>
+                    <div className="mt-6 flex items-center gap-2 text-xs text-white font-medium group-hover:gap-3 transition-all">
                       Číst článek <ArrowRight size={12} />
                     </div>
                   </div>

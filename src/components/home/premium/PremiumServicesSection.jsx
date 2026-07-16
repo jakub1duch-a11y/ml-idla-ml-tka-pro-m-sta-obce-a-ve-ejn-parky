@@ -30,7 +30,7 @@ export default function PremiumServicesSection() {
               <CircleDrawIcon delay={i * 0.06} size={48} className="mb-5">
                 <s.icon size={18} className="size-22 text-slate-700" strokeWidth={1.5} />
               </CircleDrawIcon>
-              <h3 className="font-heading font-bold text-slate-900 text-lg mb-2 leading-snug">{s.title}</h3>
+              <h3 className="text-slate-900 text-lg mb-2 leading-snug [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{s.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
             </motion.div>
           )}

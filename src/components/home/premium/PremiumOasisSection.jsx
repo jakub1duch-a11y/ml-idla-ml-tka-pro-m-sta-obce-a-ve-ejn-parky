@@ -40,7 +40,7 @@ export default function PremiumOasisSection() {
             <p className="font-heading text-6xl md:text-7xl text-slate-900 tracking-tight">
               <AnimatedCounter to={10} prefix="-" suffix="°C" />
             </p>
-            <p className="font-body text-xs text-slate-400 tracking-widest uppercase mt-2">Maximální ochlazení prostoru</p>
+            <p className="font-body tracking-widest uppercase mt-2 text-base text-[hsl(var(--card-foreground))]">MAXIMÁLNÍ OCHLAZENÍ PROSTORU</p>
           </motion.div>
           <div ref={imgRef} className="relative overflow-hidden rounded-2xl">
             <motion.img

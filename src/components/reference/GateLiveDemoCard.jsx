@@ -18,7 +18,7 @@ export default function GateLiveDemoCard() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
     className="max-w-7xl mx-auto px-6 lg:px-8 mb-10 sm:mb-16">
-      <div className="group relative block rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all min-h-[280px]">
+      <div className="group relative block rounded-3xl overflow-hidden border shadow-sm hover:shadow-lg transition-all min-h-[280px] border-slate-200 mx-1">
         <video
           src={VIDEO_URL}
           autoPlay muted loop playsInline

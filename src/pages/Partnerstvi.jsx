@@ -5,25 +5,25 @@ import { ArrowRight, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, S
 import { setSEO } from '@/lib/seo';
 
 const BENEFITS = [
-  { icon: FileText, title: '3D modely a výkresy', desc: 'Kompletní technická dokumentace, DWG/IFC soubory a materiálové listy pro projektovou přílohu.', color: 'text-blue-500' },
-  { icon: Ruler, title: 'Zakázková výroba', desc: 'Každé mlžítko vzniká na míru — tvar, výška, počet trysek i povrchová úprava.', color: 'text-violet-500' },
-  { icon: Clock, title: 'Realizace do 8 týdnů', desc: 'Od schválení výkresové dokumentace po instalaci a uvedení do provozu.', color: 'text-amber-500' },
-  { icon: Shield, title: 'Norma HolmTec', desc: 'Provozní tlak 3–5 bar, nerez AISI 316L, bezpečnostní doložka pro veřejný prostor.', color: 'text-emerald-500' },
-  { icon: Award, title: 'Reference 120+ projektů', desc: 'Parky, náměstí, aquaparky, eventy — ověřené řešení pro veřejné i soukromé investory.', color: 'text-slate-500' },
-  { icon: Box, title: 'Servis a záruční podpora', desc: '24měsíční záruka, pravidelná údržba a rychlý záruční i pozáruční servis.', color: 'text-rose-500' },
-];
+{ icon: FileText, title: '3D modely a výkresy', desc: 'Kompletní technická dokumentace, DWG/IFC soubory a materiálové listy pro projektovou přílohu.', color: 'text-blue-500' },
+{ icon: Ruler, title: 'Zakázková výroba', desc: 'Každé mlžítko vzniká na míru — tvar, výška, počet trysek i povrchová úprava.', color: 'text-violet-500' },
+{ icon: Clock, title: 'Realizace do 8 týdnů', desc: 'Od schválení výkresové dokumentace po instalaci a uvedení do provozu.', color: 'text-amber-500' },
+{ icon: Shield, title: 'Norma HolmTec', desc: 'Provozní tlak 3–5 bar, nerez AISI 316L, bezpečnostní doložka pro veřejný prostor.', color: 'text-emerald-500' },
+{ icon: Award, title: 'Reference 120+ projektů', desc: 'Parky, náměstí, aquaparky, eventy — ověřené řešení pro veřejné i soukromé investory.', color: 'text-slate-500' },
+{ icon: Box, title: 'Servis a záruční podpora', desc: '24měsíční záruka, pravidelná údržba a rychlý záruční i pozáruční servis.', color: 'text-rose-500' }];
+
 
 const USAGE_LINKS = [
-  { icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-slate-600' },
-  { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-500' },
-  { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-blue-500' },
-  { icon: Flower2, label: 'Outdoor a zahrady', path: '/kategorie/outdoor-zahrady', color: 'text-green-500' },
-  { icon: Sparkles, label: 'Art instalace na míru', path: '/kategorie/art-instalace', color: 'text-fuchsia-500' },
-  { icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-sky-500' },
-  { icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-violet-500' },
-  { icon: Factory, label: 'Komerční prostory', path: '/kategorie/komercni', color: 'text-amber-500' },
-  { icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-rose-500' },
-];
+{ icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-slate-600' },
+{ icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-500' },
+{ icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-blue-500' },
+{ icon: Flower2, label: 'Outdoor a zahrady', path: '/kategorie/outdoor-zahrady', color: 'text-green-500' },
+{ icon: Sparkles, label: 'Art instalace na míru', path: '/kategorie/art-instalace', color: 'text-fuchsia-500' },
+{ icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-sky-500' },
+{ icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-violet-500' },
+{ icon: Factory, label: 'Komerční prostory', path: '/kategorie/komercni', color: 'text-amber-500' },
+{ icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-rose-500' }];
+
 
 function AnimCounter({ to, duration = 1.8, suffix = '' }) {
   const [val, setVal] = useState(0);
@@ -36,8 +36,8 @@ function AnimCounter({ to, duration = 1.8, suffix = '' }) {
     const step = to / (duration * 60);
     const id = setInterval(() => {
       start += step;
-      if (start >= to) { setVal(to); clearInterval(id); }
-      else setVal(Math.round(start));
+      if (start >= to) {setVal(to);clearInterval(id);} else
+      setVal(Math.round(start));
     }, 1000 / 60);
     return () => clearInterval(id);
   }, [inView, to, duration]);
@@ -51,7 +51,7 @@ export default function Partnerstvi() {
       title: 'Partnerství — Architekti, projektanti a města',
       description: 'Spolupráce HolmTec pro architekty, projektanty a zástupce měst. 3D modely, technická dokumentace, zakázková výroba mlžných soch a mlhovišť pro veřejné prostory.',
       keywords: 'partnerství architekti mlžení, projektová dokumentace mlžitka, mlžné sochy pro města, spolupráce HolmTec architekti',
-      canonicalPath: '/partnerstvi',
+      canonicalPath: '/partnerstvi'
     });
   }, []);
 
@@ -63,12 +63,12 @@ export default function Partnerstvi() {
           <img
             src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/742398fb8_d2d38c7f9_Copilot_20260507_020118.png"
             alt="Mlžná brána HolmTec pro veřejné prostory"
-            className="w-full h-full object-cover object-center"
-          />
+            className="w-full h-full object-cover object-center" />
+          
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pb-20 pt-36 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-36 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end pb-0">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-6">
               Partnerství a spolupráce
@@ -110,16 +110,16 @@ export default function Partnerstvi() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: Gauge, label: 'Provozní tlak', value: '4 bar', sub: 'standard (rozsah 3–5 bar)', highlight: false },
-                { icon: Droplets, label: 'Průtok (2 trysky)', value: '36 L/h', sub: 'GATE70 — 18 L/h × 2', highlight: false },
-                { icon: Droplets, label: 'Spotřeba — den', value: null, counter: 288, suffix: ' L', sub: '8 hod. denního provozu', highlight: true },
-                { icon: Droplets, label: 'Spotřeba — sezóna', value: null, counter: 25920, suffix: ' L', sub: '90 dní (cca 26 m³)', highlight: true },
-                { icon: Thermometer, label: 'Efekt ochlazení', value: '−9 °C', sub: 'okolní vzduch (při 35 °C)', highlight: false },
-                { icon: Award, label: 'Náklady na vodu', value: null, counter: 2600, suffix: ' Kč', sub: 'za celou sezónu', highlight: false },
-              ].map((item, i) => (
-                <motion.div key={i}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                  className={`rounded-2xl border p-5 ${item.highlight ? 'bg-white border-slate-300 shadow-sm' : 'bg-white border-slate-200'}`}>
+              { icon: Gauge, label: 'Provozní tlak', value: '4 bar', sub: 'standard (rozsah 3–5 bar)', highlight: false },
+              { icon: Droplets, label: 'Průtok (2 trysky)', value: '36 L/h', sub: 'GATE70 — 18 L/h × 2', highlight: false },
+              { icon: Droplets, label: 'Spotřeba — den', value: null, counter: 288, suffix: ' L', sub: '8 hod. denního provozu', highlight: true },
+              { icon: Droplets, label: 'Spotřeba — sezóna', value: null, counter: 25920, suffix: ' L', sub: '90 dní (cca 26 m³)', highlight: true },
+              { icon: Thermometer, label: 'Efekt ochlazení', value: '−9 °C', sub: 'okolní vzduch (při 35 °C)', highlight: false },
+              { icon: Award, label: 'Náklady na vodu', value: null, counter: 2600, suffix: ' Kč', sub: 'za celou sezónu', highlight: false }].
+              map((item, i) =>
+              <motion.div key={i}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+              className={`rounded-2xl border p-5 ${item.highlight ? 'bg-white border-slate-300 shadow-sm' : 'bg-white border-slate-200'}`}>
                   <item.icon size={18} className="text-slate-400 mb-3" />
                   <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">{item.label}</p>
                   <p className="font-heading font-light text-2xl mb-1 text-slate-900">
@@ -127,32 +127,32 @@ export default function Partnerstvi() {
                   </p>
                   <p className="text-xs text-slate-400 font-light">{item.sub}</p>
                 </motion.div>
-              ))}
+              )}
             </div>
           </div>
 
           {/* Cost comparison bar */}
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
-            className="mt-10 p-6 rounded-2xl bg-white border border-slate-200">
+          className="mt-10 p-6 rounded-2xl bg-white border border-slate-200">
             <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-4">Srovnání nákladů za sezónu (90 dní)</p>
             <div className="space-y-4">
               {[
-                { label: 'Mlžná brána HolmTec (voda)', value: 2600, max: 90000, color: 'bg-slate-700' },
-                { label: 'Venkovní klimatizace (elektřina)', value: 85000, max: 90000, color: 'bg-red-400' },
-              ].map((item) => (
-                <div key={item.label}>
+              { label: 'Mlžná brána HolmTec (voda)', value: 2600, max: 90000, color: 'bg-slate-700' },
+              { label: 'Venkovní klimatizace (elektřina)', value: 85000, max: 90000, color: 'bg-red-400' }].
+              map((item) =>
+              <div key={item.label}>
                   <div className="flex items-center justify-between mb-1.5">
                     <p className="text-sm text-slate-600 font-light">{item.label}</p>
                     <p className="text-sm font-mono text-slate-900 font-medium">{item.value.toLocaleString('cs-CZ')} Kč</p>
                   </div>
                   <div className="w-full h-2.5 rounded-full bg-slate-100">
                     <motion.div className={`h-full rounded-full ${item.color}`}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${(item.value / item.max) * 100}%` }}
-                      viewport={{ once: true }} transition={{ duration: 1.2, ease: 'easeOut' }} />
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${item.value / item.max * 100}%` }}
+                  viewport={{ once: true }} transition={{ duration: 1.2, ease: 'easeOut' }} />
                   </div>
                 </div>
-              ))}
+              )}
             </div>
             <p className="text-xs text-slate-400 mt-4 font-light">
               Mlžítko šetří oproti klimatizaci přes 95 % provozních nákladů při srovnatelném efektu ochlazení venkovního prostoru.
@@ -169,16 +169,16 @@ export default function Partnerstvi() {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {BENEFITS.map((b, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 hover:shadow-md transition-all group">
+          {BENEFITS.map((b, i) =>
+          <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+          className="p-6 rounded-2xl bg-white border border-slate-200 hover:shadow-md transition-all group">
               <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-5">
                 <b.icon size={20} className={b.color} />
               </div>
               <h3 className="font-heading font-medium text-slate-900 text-base mb-2">{b.title}</h3>
               <p className="text-sm text-slate-500 font-light leading-relaxed">{b.desc}</p>
             </motion.div>
-          ))}
+          )}
         </div>
       </div>
 
@@ -187,17 +187,17 @@ export default function Partnerstvi() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
-              { label: 'Provozní tlak', value: '3–5 bar', sub: 'optimální rozsah' },
-              { label: 'Průměr kapky', value: '10–50 μm', sub: 'evaporuje před dopadem' },
-              { label: 'Materiál', value: 'AISI 316L', sub: 'potravinářský nerez' },
-              { label: 'Ochlazení', value: 'až −9 °C', sub: 'okolního vzduchu' },
-            ].map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+            { label: 'Provozní tlak', value: '3–5 bar', sub: 'optimální rozsah' },
+            { label: 'Průměr kapky', value: '10–50 μm', sub: 'evaporuje před dopadem' },
+            { label: 'Materiál', value: 'AISI 316L', sub: 'potravinářský nerez' },
+            { label: 'Ochlazení', value: 'až −9 °C', sub: 'okolního vzduchu' }].
+            map((s, i) =>
+            <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
                 <p className="font-heading font-light text-2xl text-slate-900 mb-1">{s.value}</p>
                 <p className="text-xs font-mono text-slate-500 uppercase tracking-widest">{s.label}</p>
                 <p className="text-xs text-slate-400 mt-0.5">{s.sub}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </div>
@@ -209,16 +209,16 @@ export default function Partnerstvi() {
           <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight">Pro jaký segment projektujete?</h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {USAGE_LINKS.map((link, i) => (
-            <motion.div key={link.path} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
+          {USAGE_LINKS.map((link, i) =>
+          <motion.div key={link.path} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
               <Link to={link.path}
-                className="group flex items-center gap-3 px-5 py-4 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all">
+            className="group flex items-center gap-3 px-5 py-4 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all">
                 <link.icon size={18} className={`${link.color} shrink-0`} />
                 <span className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors font-light">{link.label}</span>
                 <ArrowRight size={13} className="ml-auto text-slate-300 group-hover:text-slate-600 transition-colors" />
               </Link>
             </motion.div>
-          ))}
+          )}
         </div>
       </div>
 
@@ -229,8 +229,8 @@ export default function Partnerstvi() {
             <img
               src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.jpg"
               alt="Y-ARMIST technický výkres a mlžný efekt"
-              className="rounded-2xl w-full object-cover border border-slate-200"
-            />
+              className="rounded-2xl w-full object-cover border border-slate-200" />
+            
           </div>
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Partnerská dokumentace</p>
@@ -241,11 +241,11 @@ export default function Partnerstvi() {
               Pro architekty a projektanty připravujeme kompletní dokumentaci: technické výkresy ve formátech DWG a PDF, 3D modely, materiálové certifikáty AISI 316L a instalační specifikace kompatibilní s projektovými standardy.
             </p>
             <ul className="space-y-3 mb-8">
-              {['Technické výkresy (DWG, PDF)', '3D modely pro renderování', 'Materiálové certifikáty AISI 316L', 'Instalační manuály a schémata zapojení', 'Parametrické specifikace pro BIM'].map((item) => (
-                <li key={item} className="flex items-center gap-2.5 text-sm text-slate-600 font-light">
+              {['Technické výkresy (DWG, PDF)', '3D modely pro renderování', 'Materiálové certifikáty AISI 316L', 'Instalační manuály a schémata zapojení', 'Parametrické specifikace pro BIM'].map((item) =>
+              <li key={item} className="flex items-center gap-2.5 text-sm text-slate-600 font-light">
                   <span className="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />{item}
                 </li>
-              ))}
+              )}
             </ul>
             <div className="flex flex-wrap gap-3">
               <Link to="/manualy" className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:bg-slate-100 transition-all">
@@ -272,6 +272,6 @@ export default function Partnerstvi() {
           </Link>
         </motion.div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

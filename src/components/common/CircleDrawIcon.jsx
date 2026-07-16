@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function CircleDrawIcon({ children, size = 56, delay = 0, className = '' }) {
   return (
-    <div className={`relative flex items-center justify-center shrink-0 ${className}`} style={{ width: size, height: size }}>
+    <div className={`relative flex items-center justify-center size-2shrink-0 ${className}`} style={{ width: size, height: size }}>
       <svg className="absolute inset-25" width={size} height={size} viewBox="0 0 56 56">
         <circle cx="28" cy="28" r="26" fill="none" stroke="currentColor" strokeWidth="1" className="text-slate-200" />
         <motion.circle

@@ -28,7 +28,7 @@ export default function PremiumServicesSection() {
           whileHover={{ y: -4 }}
           className="bg-white rounded-2xl border border-slate-200 p-6 transition-shadow hover:shadow-lg">
               <CircleDrawIcon delay={i * 0.06} size={48} className="mb-5">
-                <s.icon size={18} className="text-slate-700 size-2" strokeWidth={1.5} />
+                <s.icon size={18} className="text-slate-700 size-24" strokeWidth={1.5} />
               </CircleDrawIcon>
               <h3 className="text-slate-900 text-lg mb-2 leading-snug [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{s.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>

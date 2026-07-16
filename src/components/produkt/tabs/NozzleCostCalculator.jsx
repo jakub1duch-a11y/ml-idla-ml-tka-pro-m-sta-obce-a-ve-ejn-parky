@@ -14,7 +14,7 @@ function parseNumber(str) {
 }
 
 export default function NozzleCostCalculator({ product }) {
-  const [pressureIdx, setPressureIdx] = useState(1);
+  const [pressureIdx, setPressureIdx] = useState(0);
   const [hours, setHours] = useState(6);
   const [nozzleCount, setNozzleCount] = useState(6);
 

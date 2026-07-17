@@ -113,12 +113,13 @@ export function trackCategoryFilter(categoryName) {
   });
 }
 
-export function trackInquirySubmitted(requestType, productInterest) {
+export function trackInquirySubmitted(requestType, productInterest, acquisitionSource) {
   safeGtag('event', 'inquiry_submitted', {
     event_category: 'conversion',
     event_label: requestType || 'poptávka',
     request_type: requestType,
     product_interest: productInterest || 'bez produktu',
+    acquisition_source: acquisitionSource || 'direct',
     value: 1,
     send_to: 'G-0J3NKLWM2Q',
   });

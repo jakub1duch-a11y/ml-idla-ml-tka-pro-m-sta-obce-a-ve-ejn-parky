@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, Loader, Building2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackProductClick } from '@/lib/ga4';
 
 const EXCLUDED = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
 
@@ -29,8 +30,8 @@ const GATES = [
 
 function SlideCard({ item, index }) {
   return (
-    <Link to={item.href || (item.slug ? `/produkt/${item.slug}` : '/kontakt')}
-    className="group relative shrink-0 w-[75vw] sm:w-[320px] lg:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden snap-start bg-slate-800">
+    <Link to={item.href || (item.slug ? `/produkt/${item.slug}` : '/kontakt')} onClick={() => trackProductClick(item.name, item.slug || item.href, 'home_featured')}
+    className="group relative shrink-0 w-[82vw] sm:w-[320px] lg:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden snap-start bg-slate-800">
       {item.image_url ?
       <img src={item.image_url} alt={item.name}
       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" /> :

@@ -77,9 +77,11 @@ export default function Poptavka() {
     e.preventDefault();
     setSending(true);
     try {
-      await base44.entities.Poptavka.create({ ...form, soubory_urls: files.map((f) => f.url), status: 'nova' });
+      const params = new URLSearchParams(window.location.search);
+      const attribution = { landing_page: window.location.pathname, referrer: document.referrer || 'direct', utm_source: params.get('utm_source') || '', utm_medium: params.get('utm_medium') || '', utm_campaign: params.get('utm_campaign') || '' };
+      await base44.entities.Poptavka.create({ ...form, ...attribution, soubory_urls: files.map((f) => f.url), status: 'nova' });
       trackContactFormSubmit('poptavka', form.produkt);
-      trackInquirySubmitted('poptavka', form.produkt);
+      trackInquirySubmitted('poptavka', form.produkt, attribution.utm_source || attribution.referrer);
       navigate('/dekujeme?zdroj=poptavka');
     } finally {
       setSending(false);

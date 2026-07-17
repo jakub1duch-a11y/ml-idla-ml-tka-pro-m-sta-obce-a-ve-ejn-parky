@@ -37,7 +37,7 @@
       "items": {
         "type": "string"
       },
-      "description": "URL nahran\u00fdch soubor\u016f/obr\u00e1zk\u016f k projektu pro p\u0159esn\u00e9 ur\u010den\u00ed ceny"
+      "description": "URL nahran\u00fdch soubor\u016f/obr\u00e1zk\u016f k projektu"
     },
     "zprava": {
       "type": "string",
@@ -52,6 +52,26 @@
       ],
       "default": "nova",
       "description": "Stav popt\u00e1vky"
+    },
+    "landing_page": {
+      "type": "string",
+      "description": "Str\u00e1nka, ze kter\u00e9 byla popt\u00e1vka odesl\u00e1na"
+    },
+    "referrer": {
+      "type": "string",
+      "description": "P\u0159edchoz\u00ed zdroj n\u00e1v\u0161t\u011bvy"
+    },
+    "utm_source": {
+      "type": "string",
+      "description": "UTM zdroj kampan\u011b"
+    },
+    "utm_medium": {
+      "type": "string",
+      "description": "UTM m\u00e9dium kampan\u011b"
+    },
+    "utm_campaign": {
+      "type": "string",
+      "description": "UTM n\u00e1zev kampan\u011b"
     }
   },
   "required": [

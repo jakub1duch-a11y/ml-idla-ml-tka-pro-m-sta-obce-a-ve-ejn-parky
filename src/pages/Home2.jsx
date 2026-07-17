@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
 import MistCinematicHero from '@/components/home/MistCinematicHero';
+import HomeSectionNav from '@/components/home/HomeSectionNav';
 import ScrollMistExperience from '@/components/home/ScrollMistExperience';
 import MistBenefitsSection from '@/components/home/MistBenefitsSection';
 import ZooPrahaShowcase from '@/components/home/ZooPrahaShowcase';
@@ -12,5 +13,5 @@ export default function Home2() {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
   }, []);
-  return <><MistCinematicHero /><MistBenefitsSection /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection /><RealizaceGallerySection /></>;
+  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection /><RealizaceGallerySection /></>;
 }

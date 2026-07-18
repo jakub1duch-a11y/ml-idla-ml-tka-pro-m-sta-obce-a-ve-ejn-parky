@@ -16,6 +16,8 @@ const segments = [
   { title: 'Pro architekty', text: 'Mlha jako funkční materiál návrhu i výrazný prvek veřejného prostoru.', benefits: 'Nerezová konstrukce · řešení na míru', path: '/vyuziti/architekti', icon: Palette },
   { title: 'Eventy a festivaly', text: 'Mobilní mlžné konstrukce pro krátkodobé letní akce a bezpečné ochlazení davů.', benefits: 'Rychlá instalace · sezónní provoz', path: '/vyuziti/eventy', icon: Tent },
   { title: 'Outdoor a zahrady', text: 'Příjemná venkovní oáza pro soukromé terasy, pergoly a zahradní posezení.', benefits: 'Komfort doma · nenápadná instalace', path: '/vyuziti/outdoor-zahrady', icon: Flower2 },
+  { title: 'Komerční prostory', text: 'Komfortní prostředí pro retail, showroomy, firemní areály a jejich návštěvníky.', benefits: 'Plynulý provoz · chytrá automatizace', path: '/vyuziti/komercni', icon: Building2 },
+  { title: 'Art instalace', text: 'Zakázkové mlžné skulptury jako zážitkový prvek pro kulturní a veřejný prostor.', benefits: 'Autorský návrh · scénické řízení', path: '/vyuziti/art-instalace', icon: Palette },
 ];
 
 export default function Vyuziti() {

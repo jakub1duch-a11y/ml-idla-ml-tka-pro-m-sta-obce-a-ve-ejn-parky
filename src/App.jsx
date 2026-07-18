@@ -63,6 +63,7 @@ import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 import PrinosMlzitek from '@/pages/PrinosMlzitek';
 import Vyuziti from '@/pages/Vyuziti';
 import UsageSector from '@/pages/UsageSector';
+import UsageCategory from '@/pages/UsageCategory';
 import Prinosy from '@/pages/Prinosy';
 import Certifikace from '@/pages/Certifikace';
 import Galerie from '@/pages/Galerie';
@@ -107,27 +108,8 @@ const AuthenticatedApp = () => {
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
         <Route path="/vyuziti" element={<Vyuziti />} />
-        <Route path="/vyuziti/mesta-obce" element={<MestaObce />} />
-        <Route path="/vyuziti/parky-hriste" element={<ParkyHriste />} />
-        <Route path="/vyuziti/koupaliste" element={<Koupaliste />} />
-        <Route path="/vyuziti/architekti" element={<Architekti />} />
-        <Route path="/vyuziti/komercni" element={<Komercni />} />
-        <Route path="/vyuziti/eventy" element={<Eventy />} />
-        <Route path="/vyuziti/outdoor-zahrady" element={<Outdoor />} />
-        <Route path="/vyuziti/art-instalace" element={<Art />} />
-        <Route path="/vyuziti/skoly-skolky-deti" element={<Deti />} />
-        <Route path="/vyuziti/domovy-senioru" element={<UsageSector />} />
-        <Route path="/vyuziti/hotely" element={<UsageSector />} />
-        <Route path="/vyuziti/wellness-terasy" element={<UsageSector />} />
-        <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
-        <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
-        <Route path="/kategorie/koupaliste" element={<Koupaliste />} />
-        <Route path="/kategorie/architekti" element={<Architekti />} />
-        <Route path="/kategorie/komercni" element={<Komercni />} />
-        <Route path="/kategorie/eventy" element={<Eventy />} />
-        <Route path="/kategorie/outdoor-zahrady" element={<Outdoor />} />
-        <Route path="/kategorie/art-instalace" element={<Art />} />
-        <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
+        <Route path="/vyuziti/:sector" element={<UsageCategory />} />
+        <Route path="/kategorie/:sector" element={<UsageCategory />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
         <Route path="/faq" element={<Podpora />} />

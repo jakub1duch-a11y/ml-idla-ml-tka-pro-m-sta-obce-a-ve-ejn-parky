@@ -5,6 +5,7 @@ import { ArrowRight, Loader, Phone, Mail, MapPin, Info, Paperclip, X } from 'luc
 import { base44 } from '@/api/base44Client';
 import { trackContactFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import { playSoundEffect } from '@/lib/soundEffects';
 
 const OVLADANI_OPTIONS = [
   { value: '', label: 'Vyberte ovládání...', hint: '' },
@@ -82,6 +83,7 @@ export default function Poptavka() {
       await base44.entities.Poptavka.create({ ...form, ...attribution, soubory_urls: files.map((f) => f.url), status: 'nova' });
       trackContactFormSubmit('poptavka', form.produkt);
       trackInquirySubmitted('poptavka', form.produkt, attribution.utm_source || attribution.referrer);
+      playSoundEffect('success');
       navigate('/dekujeme?zdroj=poptavka');
     } finally {
       setSending(false);

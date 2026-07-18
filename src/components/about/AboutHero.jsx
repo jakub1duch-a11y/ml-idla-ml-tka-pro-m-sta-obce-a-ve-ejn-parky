@@ -1,0 +1,8 @@
+import React from 'react';
+import { ArrowDown, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+export default function AboutHero({ image }) {
+  return <section className="relative min-h-[78svh] overflow-hidden bg-slate-950 text-white"><img src={image} alt="Nerezová mlžná instalace ve veřejném prostoru" fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,.88),rgba(2,6,23,.48)_52%,rgba(2,6,23,.18))]" /><motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative mx-auto flex min-h-[78svh] max-w-7xl flex-col justify-end px-6 pb-24 pt-36 lg:px-10"><p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan">O společnosti · HolmTec</p><h1 className="mt-5 max-w-4xl font-heading text-5xl font-medium leading-[.95] tracking-tight sm:text-6xl lg:text-8xl">Přesnost, která<br />osvěžuje města.</h1><p className="mt-6 max-w-xl text-lg leading-relaxed text-white/78">Zkušenost z nerezové výroby přetváříme v mlžné objekty, které dávají veřejnému prostoru úlevu, charakter a život.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link to="/poptavka" className="btn-metallic-mist min-h-12 justify-center px-7 py-4 text-sm font-bold">Navrhnout řešení <ArrowRight size={17} /></Link><a href="#pribeh" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/35 px-7 py-4 text-sm font-bold text-white transition hover:bg-white/10"><ArrowDown size={16} /> Náš příběh</a></div></motion.div></section>;
+}

@@ -5,6 +5,7 @@ import HomeSectionNav from '@/components/home/HomeSectionNav';
 import ScrollMistExperience from '@/components/home/ScrollMistExperience';
 import MistBenefitsSection from '@/components/home/MistBenefitsSection';
 import MistPerformanceSection from '@/components/home/MistPerformanceSection';
+import SmartMicroclimateHero from '@/components/home/SmartMicroclimateHero';
 import ZooPrahaShowcase from '@/components/home/ZooPrahaShowcase';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
@@ -15,5 +16,5 @@ export default function Home2() {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
   }, []);
-  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection /><MistPerformanceSection /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection /><RealizaceGallerySection /><BlogSection /></>;
+  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection /><RealizaceGallerySection /><BlogSection /></>;
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Archivo:wght@300;400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -26,13 +26,19 @@
     --input: 220 15% 14%;
     --ring: 215 55% 32%;
     --radius: 14px;
-    --font-heading: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --content-width: 80rem;
+    --page-gutter: 1.5rem;
   }
 }
 
 @layer utilities {
+  .site-container {
+    width: min(100% - (var(--page-gutter) * 2), var(--content-width));
+    margin-inline: auto;
+  }
   .text-measure {
     max-width: 60ch;
   }
@@ -45,17 +51,17 @@
 
 @layer base {
   :root {
-    /* Unified typographic scale — desktop */
-    --fs-h1: 3rem;
-    --fs-h2: 2.25rem;
-    --fs-h3: 1.75rem;
-    --fs-h4: 1.375rem;
+    /* Unified typographic scale */
+    --fs-h1: clamp(2.5rem, 5vw, 4.5rem);
+    --fs-h2: clamp(2rem, 3.5vw, 3.25rem);
+    --fs-h3: clamp(1.5rem, 2.4vw, 2.125rem);
+    --fs-h4: clamp(1.25rem, 1.8vw, 1.5rem);
     --fs-h5: 1.125rem;
     --fs-h6: 1rem;
     --fs-body: 1rem;
     --fs-small: 0.875rem;
-    --lh-heading: 1.2;
-    --lh-body: 1.6;
+    --lh-heading: 1.12;
+    --lh-body: 1.65;
   }
 
   @media (max-width: 640px) {
@@ -99,14 +105,12 @@
     letter-spacing: -0.02em;
   }
 
-  /* !important enforces the same heading size/spacing everywhere, regardless of
-     one-off Tailwind text-size utilities left on individual page sections. */
-  h1 { font-size: var(--fs-h1) !important; margin-top: 0 !important; margin-bottom: 1.25rem !important; }
-  h2 { font-size: var(--fs-h2) !important; margin-top: 2.5rem !important; margin-bottom: 1.125rem !important; }
-  h3 { font-size: var(--fs-h3) !important; margin-top: 2rem !important; margin-bottom: 1rem !important; }
-  h4 { font-size: var(--fs-h4) !important; margin-top: 1.75rem !important; margin-bottom: 0.875rem !important; }
-  h5 { font-size: var(--fs-h5) !important; margin-top: 1.5rem !important; margin-bottom: 0.75rem !important; }
-  h6 { font-size: var(--fs-h6) !important; margin-top: 1.25rem !important; margin-bottom: 0.625rem !important; text-transform: uppercase; letter-spacing: 0.04em; }
+  h1 { font-size: var(--fs-h1); margin-top: 0; margin-bottom: 1.25rem; }
+  h2 { font-size: var(--fs-h2); margin-top: 2.5rem; margin-bottom: 1.125rem; }
+  h3 { font-size: var(--fs-h3); margin-top: 2rem; margin-bottom: 1rem; }
+  h4 { font-size: var(--fs-h4); margin-top: 1.75rem; margin-bottom: 0.875rem; }
+  h5 { font-size: var(--fs-h5); margin-top: 1.5rem; margin-bottom: 0.75rem; }
+  h6 { font-size: var(--fs-h6); margin-top: 1.25rem; margin-bottom: 0.625rem; text-transform: uppercase; letter-spacing: 0.04em; }
 
   @media (max-width: 640px) {
     h2 { margin-top: 2rem !important; margin-bottom: 1rem !important; }
@@ -307,8 +311,13 @@ html { scroll-behavior: smooth; }
 .hero-mist-overlay span:nth-child(3) { right: 24%; top: 15%; animation-delay: -5.2s; opacity: .6; }
 @media (prefers-reduced-motion: reduce) { .hero-light-rays span, .hero-mist-overlay span { animation: none; } }
 
-/* Mobile devices render the same content without expensive ambient animation layers. */
-@media (max-width: 1024px) {
-  .mist-veil, .mist-hero-glow, .mist-scene-cloud, .mist-particles i, .cooling-rings span, .hero-light-rays span, .hero-mist-overlay span { animation: none !important; }
+/* Decorative motion never participates in layout and is disabled on touch devices. */
+@media (max-width: 1024px), (prefers-reduced-motion: reduce) {
+  .mist-veil, .mist-hero-glow, .mist-scene-cloud, .mist-particles i, .cooling-rings span, .hero-light-rays span, .hero-mist-overlay span, .btn-metallic-mist, .btn-pulse { animation: none !important; }
   .mist-veil, .mist-hero-glow, .mist-scene-cloud, .hero-mist-overlay span { filter: none; }
+  .reveal-element { opacity: 1; transform: none; transition: none; }
+}
+
+@media (min-width: 1025px) {
+  .hero-light-rays, .hero-mist-overlay, .mist-hero-glow { content-visibility: auto; }
 }

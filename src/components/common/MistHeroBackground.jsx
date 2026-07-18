@@ -6,7 +6,6 @@ const MEDIA = [
   { type: 'video', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/6632efc0c_Mlznabrana-zivaukazkamlzeni.MOV' },
   { type: 'image', url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg' },
   { type: 'image', url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3c7f3e65f_copilot_image_1784351460863.jpg' },
-  { type: 'image', url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/97adcdb67_file_000000001abc8243a41e16d7f22e87b8.png' },
 ];
 
 export default function MistHeroBackground() {

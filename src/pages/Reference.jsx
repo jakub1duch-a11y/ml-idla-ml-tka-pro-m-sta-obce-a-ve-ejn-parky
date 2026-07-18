@@ -17,6 +17,7 @@ import GateLiveDemoCard from '@/components/reference/GateLiveDemoCard';
 import Collection2026Section from '@/components/reference/Collection2026Section';
 import FeaturesSection from '@/components/reference/FeaturesSection';
 import RealizaceCategoryGrid from '@/components/reference/RealizaceCategoryGrid';
+import ReferenceHeatMap from '@/components/reference/ReferenceHeatMap';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -144,6 +145,7 @@ export default function Reference() {
       <ReferenceHero />
 
       <GateLiveDemoCard />
+      {!loading && <ReferenceHeatMap projects={projects} />}
 
       {/* Filters */}
       <div id="reference-vypis" className="max-w-7xl mx-auto px-6 lg:px-8 mb-10 scroll-mt-24">

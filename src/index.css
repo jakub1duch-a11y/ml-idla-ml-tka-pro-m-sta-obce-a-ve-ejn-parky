@@ -286,3 +286,23 @@
 
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+@keyframes hero-light-sweep {
+  0%, 100% { transform: translateX(-14%) rotate(-18deg); opacity: .12; }
+  50% { transform: translateX(14%) rotate(-14deg); opacity: .3; }
+}
+@keyframes hero-mist-flow {
+  0%, 100% { transform: translate3d(-8%, 8%, 0) scale(.9); opacity: .08; }
+  50% { transform: translate3d(10%, -7%, 0) scale(1.13); opacity: .36; }
+}
+.hero-light-rays { position: absolute; inset: -20%; overflow: hidden; pointer-events: none; mix-blend-mode: screen; }
+.hero-light-rays span { position: absolute; top: -25%; width: 18vw; height: 160%; background: linear-gradient(90deg, transparent, rgba(186, 230, 253, .22), transparent); filter: blur(7px); transform: rotate(-16deg); animation: hero-light-sweep 10s ease-in-out infinite; }
+.hero-light-rays span:nth-child(1) { left: 26%; }
+.hero-light-rays span:nth-child(2) { left: 54%; animation-delay: -3.4s; opacity: .65; }
+.hero-light-rays span:nth-child(3) { left: 75%; animation-delay: -6.8s; opacity: .42; }
+.hero-mist-overlay { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.hero-mist-overlay span { position: absolute; width: 46vw; height: 28vw; min-width: 300px; min-height: 190px; border-radius: 999px; background: rgba(207, 250, 254, .38); filter: blur(58px); animation: hero-mist-flow 8s ease-in-out infinite; }
+.hero-mist-overlay span:nth-child(1) { right: -8%; bottom: 8%; }
+.hero-mist-overlay span:nth-child(2) { left: 28%; bottom: -10%; animation-delay: -2.6s; }
+.hero-mist-overlay span:nth-child(3) { right: 24%; top: 15%; animation-delay: -5.2s; opacity: .6; }
+@media (prefers-reduced-motion: reduce) { .hero-light-rays span, .hero-mist-overlay span { animation: none; } }

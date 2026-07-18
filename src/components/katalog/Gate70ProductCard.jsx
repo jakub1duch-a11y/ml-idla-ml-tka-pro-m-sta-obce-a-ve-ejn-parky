@@ -7,6 +7,11 @@ const VARIANTS = [
   { label: 'GATE70-V', detail: 'Lomený oblouk' },
 ];
 
+const SPECS = [
+  ['Tlak', '2–8 bar'],
+  ['Spotřeba', '15–25 l/h'],
+];
+
 export default function Gate70ProductCard() {
   return (
     <Link to="/gate70" className="group relative block min-h-full overflow-hidden rounded-2xl border border-slate-900 bg-slate-950 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -20,9 +25,10 @@ export default function Gate70ProductCard() {
         <p className="text-xs font-mono tracking-[0.18em] text-white/60 uppercase">Architektonický prvek</p>
         <h3 className="mt-1 font-heading text-3xl font-semibold tracking-tight">GATE70</h3>
         <p className="mt-2 text-sm leading-relaxed text-white/75">Nerezová mlžná brána pro náměstí, parky a vstupy do veřejných prostor.</p>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          {VARIANTS.map((variant) => <div key={variant.label} className="rounded-lg border border-white/20 bg-white/10 px-2.5 py-2 backdrop-blur-sm"><p className="text-xs font-bold">{variant.label}</p><p className="mt-0.5 text-[10px] text-white/65">{variant.detail}</p></div>)}
-        </div>
+        <dl className="mt-4 grid grid-cols-2 gap-2">
+          {SPECS.map(([label, value]) => <div key={label} className="rounded-lg border border-white/20 bg-white/10 px-2.5 py-2 backdrop-blur-sm"><dt className="text-[9px] font-medium uppercase tracking-wide text-white/60">{label}</dt><dd className="mt-0.5 text-xs font-bold">{value}</dd></div>)}
+        </dl>
+        <div className="mt-2 flex gap-3 text-[10px] text-white/65">{VARIANTS.map((variant) => <span key={variant.label}><b className="text-white">{variant.label}</b> · {variant.detail}</span>)}</div>
         <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-bold">Zobrazit varianty <ArrowRight size={14} /></span>
       </div>
     </Link>

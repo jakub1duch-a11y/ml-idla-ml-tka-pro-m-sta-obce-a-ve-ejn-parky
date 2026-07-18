@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle } from 'lucide-react';
+import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Cpu, Loader, ShieldCheck, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle, Wrench } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';
@@ -9,6 +9,7 @@ import ShareButtons from '@/components/blog/ShareButtons';
 import RealizaceCommentsSection from '@/components/reference/RealizaceCommentsSection';
 import ProjectTechTable from '@/components/reference/ProjectTechTable';
 import RelatedProductsSection from '@/components/common/RelatedProductsSection';
+import ContentBenefitsStrip from '@/components/common/ContentBenefitsStrip';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -184,6 +185,8 @@ export default function ReferenceDetail() {
           </div>
         </div>
       )}
+
+      <div className="site-container"><ContentBenefitsStrip title="Klíčové prvky realizace" items={[{ icon: Wrench, title: 'Návrh na míru', text: 'Konstrukce a rozmístění vycházejí z konkrétního prostoru.' }, { icon: Cpu, title: 'Řízení provozu', text: 'Systém lze doplnit o automatické spouštění a chytré zóny.' }, { icon: ShieldCheck, title: 'Odolné provedení', text: 'Nerezové komponenty pro dlouhodobý venkovní provoz.' }]} /></div>
 
       {/* ═══════ ABOUT + SIDEBAR ═══════ */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">

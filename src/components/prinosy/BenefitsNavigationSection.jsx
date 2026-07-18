@@ -1,0 +1,14 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, BarChart3, ShieldCheck, Smartphone, WalletCards } from 'lucide-react';
+
+const items = [
+  { title: 'Zvýšení tržeb a prodeje', text: 'Příjemnější terasa a veřejný prostor prodlouží pobyt návštěvníků.', path: '/prinosy-mlzitek/zvyseni-trzeb-a-prodeje', icon: BarChart3 },
+  { title: 'Automatizace provozu', text: 'Senzory a harmonogramy spouští mlžení bez práce personálu.', path: '/prinosy-mlzitek/automatizace-provozu', icon: Smartphone },
+  { title: 'Zabezpečení a shoda', text: 'Filtrace, hygiena vody a dohled pro bezpečný veřejný provoz.', path: '/prinosy-mlzitek/zabezpeceni-a-shoda', icon: ShieldCheck },
+  { title: 'Snižování nákladů', text: 'Řízená spotřeba vody a odolná konstrukce pro dlouhodobý provoz.', path: '/prinosy-mlzitek/snizovani-provoznich-nakladu', icon: WalletCards },
+];
+
+export default function BenefitsNavigationSection() {
+  return <section className="site-container py-16 lg:py-20"><div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-[.18em] text-[#0070F3]">Přínosy podle cíle</p><h2 className="mt-3 text-slate-950">Co má mlžení přinést vašemu provozu?</h2><p className="mt-4 text-slate-600">Od komfortu návštěvníků po měřitelnou úsporu vody. Vyberte si oblast, kterou chcete pro svůj prostor řešit jako první.</p></div><div className="mt-10 grid gap-4 md:grid-cols-2">{items.map((item) => <Link key={item.path} to={item.path} className="group flex gap-5 border border-slate-200 bg-white p-7 transition-all hover:-translate-y-1 hover:border-slate-950 hover:bg-slate-950"><item.icon size={25} className="shrink-0 text-[#0070F3]" /><div><h3 className="m-0 text-xl font-medium text-slate-950 group-hover:text-white">{item.title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-500 group-hover:text-white/65">{item.text}</p><span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 group-hover:text-cyan">Prozkoumat přínos <ArrowRight size={15} /></span></div></Link>)}</div><div className="mt-8 grid gap-4 border-l-4 border-[#0070F3] bg-slate-50 p-6 md:grid-cols-3"><div><b className="block text-slate-950">Prostor</b><p className="mt-1 text-sm text-slate-600">Určíme místa, kde má ochlazení největší efekt.</p></div><div><b className="block text-slate-950">Provoz</b><p className="mt-1 text-sm text-slate-600">Nastavíme automatické cykly podle návštěvnosti a počasí.</p></div><div><b className="block text-slate-950">Rozpočet</b><p className="mt-1 text-sm text-slate-600">Porovnáme spotřebu, úspory a vhodnou úroveň řízení.</p></div></div></section>;
+}

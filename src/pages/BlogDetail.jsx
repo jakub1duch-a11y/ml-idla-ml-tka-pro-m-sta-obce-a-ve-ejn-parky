@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Loader } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, Loader, Wrench } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO } from '@/lib/seo';
@@ -15,6 +15,7 @@ import BlogNewsletterInline from '@/components/blog/BlogNewsletterInline';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
 import RelatedProductsSection from '@/components/common/RelatedProductsSection';
+import ContentBenefitsStrip from '@/components/common/ContentBenefitsStrip';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -114,6 +115,7 @@ export default function BlogDetail() {
 
         {/* Internal links to configurator / inquiry — placed right after the intro */}
         <ArticleQuickLinks />
+        <ContentBenefitsStrip title="Co si z článku odnesete" items={[{ icon: BookOpen, title: 'Souvislosti', text: 'Téma vysvětlené věcně a bez zbytečné složitosti.' }, { icon: Wrench, title: 'Praktický postup', text: 'Konkrétní kroky pro návrh, provoz nebo údržbu.' }, { icon: Lightbulb, title: 'Navazující řešení', text: 'Odkazy na relevantní produkty a služby.' }]} />
 
         {/* Content — supports technical images, expert quotes (blockquote), paragraphs */}
         {post.content ? (

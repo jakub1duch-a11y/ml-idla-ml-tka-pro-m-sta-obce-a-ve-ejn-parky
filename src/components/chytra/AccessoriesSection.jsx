@@ -29,9 +29,9 @@ export default function AccessoriesSection() {
     <section className="bg-slate-50 border-t border-slate-200 py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="max-w-2xl mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Moduly a příslušenství</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">Senzory a chytré doplňky ke každému mlžítku.</h2>
-          <p className="text-slate-500 leading-relaxed">Rychlé nastavení, mobilní aplikace a plně programovatelné scénáře — přizpůsobte mlžení počasí, vlhkosti, času i pohybu.</p>
+          <p className="content-eyebrow mb-3">Moduly a příslušenství</p>
+          <h2 className="content-title text-3xl mb-4">Senzory a chytré doplňky ke každému mlžítku.</h2>
+          <p className="content-lead">Rychlé nastavení, mobilní aplikace a plně programovatelné scénáře — přizpůsobte mlžení počasí, vlhkosti, času i pohybu.</p>
         </div>
 
         {products.length > 0 &&

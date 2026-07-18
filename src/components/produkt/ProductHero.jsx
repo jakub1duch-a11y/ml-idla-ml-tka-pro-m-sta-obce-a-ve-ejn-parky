@@ -48,12 +48,12 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-          {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight leading-[1.02] mb-5">
+          {categoryName && <p className="content-eyebrow mb-3">{categoryName}</p>}
+          <h1 className="content-title mb-5">
             {product.name}
           </h1>
           {product.short_description && (
-            <p className="text-slate-500 text-base leading-relaxed mb-6">{product.short_description}</p>
+            <p className="content-lead mb-6">{product.short_description}</p>
           )}
 
           <p className="flex items-center gap-1.5 text-sm text-slate-500 mb-6">

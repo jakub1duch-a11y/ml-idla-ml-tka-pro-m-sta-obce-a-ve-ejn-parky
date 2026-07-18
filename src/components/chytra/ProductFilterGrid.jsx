@@ -22,14 +22,14 @@ export default function ProductFilterGrid() {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
       <div className="mb-10">
-        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mlžné brány</p>
-        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vstupní a lineární mlžné brány.</h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-500">Nerezové brány pro vstupy, náměstí, koupaliště a pěší trasy.</p>
+        <p className="content-eyebrow mb-3">Mlžné brány</p>
+        <h2 className="content-title text-3xl">Vstupní a lineární mlžné brány.</h2>
+        <p className="content-lead mt-3 max-w-2xl">Nerezové brány pro vstupy, náměstí, koupaliště a pěší trasy.</p>
       </div>
       <GateCollectionCards />
       <div className="mb-10 mt-16">
-        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Celý katalog</p>
-        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Designová architektonická mlžítka - Mlžné stromy,  mraky,stébla a monolity.</h2>
+        <p className="content-eyebrow mb-3">Celý katalog</p>
+        <h2 className="content-title text-3xl">Designová architektonická mlžítka — stromy, mraky, stébla i monolity.</h2>
       </div>
 
       {loading ?

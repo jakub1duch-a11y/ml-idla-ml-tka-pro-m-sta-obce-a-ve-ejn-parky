@@ -29,7 +29,7 @@ export default function ProductFilterGrid() {
       <GateCollectionCards />
       <div className="mb-10 mt-16">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Celý katalog</p>
-        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Designová architektonická mlžítkaMlžné stromy, stébla a monolity.</h2>
+        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Designová architektonická mlžítka - Mlžné stromy,  mrakystébla a monolity.</h2>
       </div>
 
       {loading ?

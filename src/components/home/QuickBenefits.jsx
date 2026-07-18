@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Building2, Cloud, Cog, Droplets, Leaf, PencilRuler, ShieldCheck, ThermometerSnowflake, Truck, Utensils, Waves, Wind, Wrench } from 'lucide-react';
 
 export const QUICK_BENEFITS = [
-  { icon: Droplets, value: 'Úsporné vysokotlaké mlžení', text: 'Jemná vodní mlha ochlazuje prostor s minimální spotřebou vody.', animation: { y: [0, 9, 0], scaleY: [1, 0.72, 1] } },
+  { icon: Droplets, value: 'Úsporné nízkotlaké mlžení', text: 'Jemná vodní mlha ochlazuje prostor s minimální spotřebou vody.', animation: { y: [0, 9, 0], scaleY: [1, 0.72, 1] } },
   { icon: ThermometerSnowflake, value: 'Ochlazení až o 12 °C', text: 'Okamžitá úleva pro terasy, parky i frekventovaný veřejný prostor.', animation: { y: [-4, 8, -4], rotate: [0, -5, 0] }, aura: true },
   { icon: Leaf, value: 'Ekologické ochlazení', text: 'Příjemnější mikroklima bez klimatizace a bez mokrého efektu.', animation: { rotate: [0, 9, -6, 0], y: [0, -4, 0] } },
   { icon: Cloud, value: 'Mikromlha 5–15 μm', text: 'Velmi jemné kapénky se odpaří dřív, než dopadnou na povrch.', animation: { scale: [0.88, 1.12, 0.88], x: [-3, 4, -3], opacity: [0.6, 1, 0.6] } },

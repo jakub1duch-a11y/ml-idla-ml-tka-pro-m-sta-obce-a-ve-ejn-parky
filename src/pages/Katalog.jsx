@@ -10,7 +10,7 @@ import FeatureIconRow from '@/components/common/FeatureIconRow';
 const CATALOG_FEATURES = [
 { icon: Droplets, label: 'Nízká spotřeba vody', value: 'od 4,6 l/h' },
 { icon: ThermometerSnowflake, label: 'Ochlazení okolí', value: 'až −9 °C' },
-{ icon: Gauge, label: 'Nízkotlaký provoz', value: '2–7 BAR' },
+{ icon: Gauge, label: 'Nízkotlaký provoz', value: '200–800 kPa' },
 { icon: Cpu, label: 'Smart řízení', value: 'volitelné moduly' }];
 
 const TABS = [

@@ -1,44 +1,14 @@
-import React from 'react';
-import { Droplet, Gauge, ShieldCheck, SlidersHorizontal, Sparkles, Wrench } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { AppWindow, CalendarClock, CloudSun, Play, ShieldCheck, Smartphone, Thermometer, Wifi } from 'lucide-react';
 
-const VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7f15df00d_mln_brna_GATE74_-_v_akci.MOV';
-const POSTER_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg';
-
-const leftCards = [
-  { icon: Sparkles, label: 'Materiál', title: 'Nerezová ocel AISI 316L', text: 'Odolná konstrukce pro dlouhodobý venkovní provoz.' },
-  { icon: Droplet, label: 'Technologie', title: 'Trysky HolmTec®', text: 'Jemná mikromlha pro přirozené ochlazení bez mokrého efektu.' },
-  { icon: Wrench, label: 'Hygiena', title: 'Proplach trysek', text: 'Pravidelné čištění a údržba 2× ročně.' },
-];
-
-const rightCards = [
-  { icon: Gauge, label: 'Optimalizace', title: 'Úsporný nízkotlak', text: 'Provoz v rozsahu 2–8 bar (200–800 kPa).' },
-  { icon: SlidersHorizontal, label: 'Smart', title: 'Chytrá integrace', text: 'Řízení zón podle času, teploty a provozních potřeb.' },
-];
-
-function DetailCard({ item }) {
-  const Icon = item.icon;
-  return <article className="relative rounded-xl border border-white/10 bg-white/[0.035] p-4 shadow-lg shadow-black/20 backdrop-blur-sm">
-    <Icon size={15} className="absolute right-4 top-4 text-white/35" />
-    <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-cyan">{item.label}</p>
-    <h3 className="mt-2 text-sm font-bold text-white">{item.title}</h3>
-    <p className="mt-1 text-[11px] leading-relaxed text-white/45">{item.text}</p>
-  </article>;
-}
+const PHOTO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png';
+const VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5e7a7f5d5_mlzidlospiralavakci-video.MOV';
+const features = [{ icon: Smartphone, title: 'Aplikace', text: 'Přehled zón a spotřeby.' }, { icon: Thermometer, title: 'Senzory', text: 'Reakce na teplotu a vlhkost.' }, { icon: CalendarClock, title: 'Harmonogram', text: 'Automatické provozní cykly.' }, { icon: Wifi, title: 'Smart ventil', text: 'Přesné řízení každé zóny.' }];
 
 export default function SmartMicroclimateHero() {
-  return <section className="relative overflow-hidden bg-slate-950 py-20 text-white lg:py-28">
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(14,165,233,.13),transparent_28%),linear-gradient(90deg,rgba(255,255,255,.025)_1px,transparent_1px),linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:auto,42px_42px,42px_42px]" />
-    <div className="relative mx-auto max-w-5xl px-6 lg:px-10">
-      <div className="mb-10 text-center"><p className="text-xs font-bold uppercase tracking-[0.22em] text-cyan">Smart systém HolmTec</p><h2 className="mt-3 font-heading text-4xl font-medium tracking-tight text-white lg:text-5xl">Chytrá správa mikroklimatu.</h2></div>
-      <div className="grid gap-5 lg:grid-cols-[0.82fr_1fr_0.82fr] lg:items-center">
-        <div className="space-y-4">{leftCards.map((item) => <DetailCard key={item.title} item={item} />)}</div>
-        <div className="relative overflow-hidden rounded-xl border border-cyan/20 bg-black shadow-2xl shadow-black/40">
-          <video controls preload="metadata" poster={POSTER_URL} className="aspect-[4/5] w-full object-cover" aria-label="Pauznuté video mlžné brány"><source src={VIDEO_URL} type="video/quicktime" />Váš prohlížeč nepodporuje přehrávání videa.</video>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/20" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 text-center"><span className="mx-auto mb-4 block h-2 w-2 rounded-full bg-cyan shadow-[0_0_14px_#22d3ee]" /><h3 className="font-heading text-2xl font-medium text-cyan">Mlžná brána</h3><p className="mt-2 text-xs text-white/55">Chladivý vstup do veřejného prostoru</p></div>
-        </div>
-        <div className="space-y-4"><DetailCard item={rightCards[0]} /><DetailCard item={rightCards[1]} /><div className="rounded-xl border border-white/10 bg-white/[0.035] p-4"><p className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/40">Mist control panel</p><div className="mt-4 flex items-center justify-between gap-3"><span className="rounded-lg bg-cyan px-3 py-2 text-[10px] font-bold uppercase tracking-wide text-slate-950">Aktivovat mlžení</span><span className="rounded-full border border-white/10 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-white/40">● Offline</span></div><p className="mt-3 text-[10px] leading-relaxed text-white/40">Nastavení zón a provozních režimů na jednom místě.</p></div></div>
-      </div>
-    </div>
-  </section>;
+  const [playing, setPlaying] = useState(false); const [active, setActive] = useState(0);
+  useEffect(() => { if (!playing) return undefined; const timer = window.setInterval(() => setActive((current) => (current + 1) % features.length), 1400); return () => window.clearInterval(timer); }, [playing]);
+  return <section className="relative overflow-hidden bg-slate-950 py-20 text-white lg:py-28"><div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(34,211,238,.16),transparent_30%),linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:auto,36px_36px,36px_36px]" /><div className="site-container relative"><div className="mb-12 max-w-3xl"><p className="text-xs font-bold uppercase tracking-[.22em] text-cyan">Smart systém HolmTec</p><h2 className="mt-3 font-heading text-4xl font-medium tracking-tight lg:text-5xl">Chytrá správa řízení mlžítek.</h2><p className="mt-5 text-lg text-white/65">Účinné ochlazení pro města, terasy a veřejný prostor.</p></div><div className="grid gap-6 lg:grid-cols-[.8fr_1.15fr_.8fr] lg:items-center"><div className="space-y-3">{features.slice(0, 2).map((item, index) => <FeatureCard key={item.title} item={item} active={playing && active === index} />)}</div><div className="relative overflow-hidden rounded-2xl border border-cyan/30 bg-black shadow-2xl shadow-cyan/10">{playing ? <video src={VIDEO_URL} autoPlay muted loop playsInline className="aspect-[4/3] w-full object-cover" /> : <><img src={PHOTO_URL} alt="Mlžná brána v provozu" className="aspect-[4/3] w-full object-cover" /><div className="absolute inset-0 bg-slate-950/20" /></>}<button onClick={() => setPlaying((value) => !value)} className="absolute inset-0 flex items-center justify-center"><span className="flex h-20 w-20 items-center justify-center rounded-full border border-cyan/60 bg-slate-950/70 text-cyan shadow-[0_0_36px_rgba(34,211,238,.5)] transition hover:scale-110">{playing ? <AppWindow size={25} /> : <Play size={28} fill="currentColor" />}</span></button><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 to-transparent p-6"><p className="text-xs font-bold uppercase tracking-[.18em] text-cyan">Živá ukázka</p><p className="mt-1 text-lg font-semibold">Mlžná brána se smart řízením</p></div></div><div className="space-y-3">{features.slice(2).map((item, index) => <FeatureCard key={item.title} item={item} active={playing && active === index + 2} />)}<div className="flex items-center gap-3 px-3 pt-2 text-xs text-white/50"><ShieldCheck size={17} className="text-cyan" />Aktivní zóny se zvýrazňují podle provozu.</div></div></div></div></section>;
 }
+
+function FeatureCard({ item, active }) { const Icon = item.icon; return <article className={`relative border-l-2 p-4 transition-all duration-500 ${active ? 'border-cyan bg-cyan/15 shadow-[0_0_22px_rgba(34,211,238,.14)]' : 'border-white/15 bg-white/[.035]'}`}><span className={`absolute -left-[5px] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full ${active ? 'bg-cyan shadow-[0_0_12px_#22d3ee]' : 'bg-white/30'}`} /><div className="flex gap-3"><Icon size={21} className="shrink-0 text-cyan" /><div><h3 className="text-base font-semibold">{item.title}</h3><p className="mt-1 text-sm text-white/55">{item.text}</p></div></div></article>; }

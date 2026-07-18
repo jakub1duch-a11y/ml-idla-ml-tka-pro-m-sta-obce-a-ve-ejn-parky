@@ -18,7 +18,7 @@ export default function HeroFeatureGrid() {
       {/* Background photo */}
       <div className="absolute inset-0">
         <img
-          src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4d6333cb_generated_image.png"
+          src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png"
           alt=""
           className="w-full h-full object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/85 to-slate-900" />
@@ -36,7 +36,7 @@ export default function HeroFeatureGrid() {
             SMART APP ovládání — Wi-Fi / Bluetooth
           </span>
           <h1 className="font-heading font-light text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-5">
-            Chytré řízení <span className="italic font-light text-cyan">mlzidla.cz</span>
+            Chytré <span className="italic font-light text-cyan">řízení mlžítek.</span>
           </h1>
           <p className="text-white/60 text-lg leading-relaxed max-w-lg">
             Náš vlastní SMART APP systém řízení mlžítek — reaguje na počasí, vlhkost i pohyb, ovládá se z mobilu a instaluje se během chvilky na kterékoliv naše mlžítko.

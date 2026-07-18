@@ -31,7 +31,7 @@ export default function ControlVariants() {
     <section className="bg-white py-20 lg:py-24 border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="max-w-2xl mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Chytré řízení mlzidla.cz</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Chytré řízení mlžítek</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vyberte si úroveň automatizace.</h2>
         </div>
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Loader, Image, Eye, EyeOff, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const EMPTY = { name: '', client: '', location: '', year: new Date().getFullYear(), category: 'mestsky', description: '', image_url: '', video_url: '', source_url: '', product_used: '', featured: false, published: false };
+const EMPTY = { name: '', client: '', location: '', year: new Date().getFullYear(), category: 'mestsky', description: '', image_url: '', video_url: '', source_url: '', product_used: '', featured: false, published: false, show_product_promo: true };
 
 const CATS = [
   { value: 'mestsky', label: 'Městský prostor' },
@@ -145,6 +145,10 @@ export default function AdminReferences() {
           <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer">
             <input type="checkbox" checked={!!form.published} onChange={set('published')} />
             Publikovat (zobrazit na webu)
+          </label>
+          <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer">
+            <input type="checkbox" checked={form.show_product_promo !== false} onChange={set('show_product_promo')} />
+            Zobrazit nabídku BENDY_60
           </label>
         </div>
         <div className="flex gap-3 pt-2">

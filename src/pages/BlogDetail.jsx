@@ -16,6 +16,8 @@ import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
 import RelatedProductsSection from '@/components/common/RelatedProductsSection';
 import ContentBenefitsStrip from '@/components/common/ContentBenefitsStrip';
+import ProductLaunchPromo from '@/components/common/ProductLaunchPromo';
+import BendyLaunchContent from '@/components/blog/BendyLaunchContent';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -80,7 +82,7 @@ export default function BlogDetail() {
       {/* Hero image */}
       {post.image_url && (
         <div className="relative h-72 lg:h-[460px] overflow-hidden">
-          <img src={post.image_url} alt={post.image_alt || post.title} className="w-full h-full object-cover" />
+          <motion.img src={post.image_url} alt={post.image_alt || post.title} initial={post.product_launch === 'bendy_60' ? { scale: 1.08 } : false} animate={post.product_launch === 'bendy_60' ? { scale: [1.08, 1.16, 1.1], y: [0, -12, 0] } : {}} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-black/10" />
         </div>
       )}
@@ -146,6 +148,7 @@ export default function BlogDetail() {
         <ArticleSafetyNotice />
 
         <RelatedProductsSection />
+        {post.product_launch === 'bendy_60' ? <BendyLaunchContent /> : post.show_product_promo !== false && <ProductLaunchPromo />}
 
         {/* Newsletter + follow us */}
         <BlogNewsletterInline />

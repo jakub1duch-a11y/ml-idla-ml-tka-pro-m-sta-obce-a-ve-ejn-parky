@@ -1,0 +1,9 @@
+import React from 'react';
+import { Droplets, Leaf, MapPin, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const BENEFITS = [{ icon: Droplets, title: 'Jemná mlha', text: 'Osvěžení pro horké dny bez mokrého povrchu.' }, { icon: Leaf, title: 'Přirozeně do exteriéru', text: 'Čistá nerezová silueta pro zahrady i parky.' }, { icon: MapPin, title: 'Kam se hodí', text: 'Terasy, pěší zóny, zahrady a odpočinková místa.' }];
+
+export default function BendyLaunchContent() {
+  return <section className="py-8"><div className="rounded-3xl bg-slate-950 p-7 text-white lg:p-10"><p className="text-xs font-bold uppercase tracking-[.2em] text-cyan">Představujeme BENDY_60</p><h2 className="mt-4 font-heading text-3xl font-light leading-tight text-white lg:text-4xl">Nové zahradní mlžítko pro léto, kdy chcete zůstat venku déle.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-white/65">BENDY_60 propojuje jednoduchý oblouk, odolné venkovní provedení a jemnou mlhu. Vzniklo pro místa, kde se setkává design, pohoda a letní provoz.</p><div className="mt-8 grid gap-4 sm:grid-cols-3">{BENEFITS.map(({ icon: Icon, title, text }) => <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4"><Icon size={25} className="text-cyan" /><h3 className="mt-4 text-base font-semibold text-white">{title}</h3><p className="mt-1 text-sm leading-relaxed text-white/55">{text}</p></div>)}</div><Link to="/poptavka" className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan px-6 py-3 text-sm font-bold text-slate-950 hover:bg-white">Poptat BENDY_60 <ArrowRight size={15} /></Link></div></section>;
+}

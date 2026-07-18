@@ -93,6 +93,8 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
         </select>
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><select value={form.product_launch || ''} onChange={(e) => setForm(f => ({ ...f, product_launch: e.target.value }))} className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:border-cyan/40 focus:outline-none"><option value="" className="bg-ink">Standardní článek</option><option value="bendy_60" className="bg-ink">Produktová novinka: BENDY_60</option></select><label className="flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 text-sm text-white/60"><input type="checkbox" checked={form.show_product_promo !== false} onChange={(e) => setForm(f => ({ ...f, show_product_promo: e.target.checked }))} />Zobrazit nabídku BENDY_60</label></div>
+
       <textarea value={form.perex} onChange={(e) => setForm(f => ({ ...f, perex: e.target.value }))} rows={2}
         placeholder="Perex — krátký úvodní text (zobrazí se i ve výsledcích vyhledávání)"
         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-none" />

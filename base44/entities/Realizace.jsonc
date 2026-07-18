@@ -45,11 +45,11 @@
     },
     "video_url": {
       "type": "string",
-      "description": "URL videa realizace (pokud existuje)"
+      "description": "URL videa realizace"
     },
     "source_url": {
       "type": "string",
-      "description": "Odkaz na to, jak realizaci sd\u00edl\u00ed klient (nap\u0159. p\u0159\u00edsp\u011bvek na Facebooku/Instagramu klienta)"
+      "description": "Client source link"
     },
     "product_used": {
       "type": "string",
@@ -63,6 +63,11 @@
     "published": {
       "type": "boolean",
       "default": false
+    },
+    "show_product_promo": {
+      "type": "boolean",
+      "default": true,
+      "description": "Zobrazit nab\u00eddku BENDY_60 v detailu realizace"
     }
   },
   "required": [

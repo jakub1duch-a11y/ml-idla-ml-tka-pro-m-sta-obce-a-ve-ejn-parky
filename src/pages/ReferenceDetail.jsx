@@ -10,6 +10,7 @@ import RealizaceCommentsSection from '@/components/reference/RealizaceCommentsSe
 import ProjectTechTable from '@/components/reference/ProjectTechTable';
 import RelatedProductsSection from '@/components/common/RelatedProductsSection';
 import ContentBenefitsStrip from '@/components/common/ContentBenefitsStrip';
+import ProductLaunchPromo from '@/components/common/ProductLaunchPromo';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -301,6 +302,7 @@ export default function ReferenceDetail() {
       )}
 
       <RelatedProductsSection productUsed={project.product_used} />
+      {project.show_product_promo !== false && <div className="site-container"><ProductLaunchPromo /></div>}
 
       {/* ═══════ CTA ═══════ */}
       <div className="py-20 bg-slate-900">

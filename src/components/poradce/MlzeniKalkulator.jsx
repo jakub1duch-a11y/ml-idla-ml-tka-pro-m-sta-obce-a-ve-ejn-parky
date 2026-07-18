@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Droplets, Clock, ChevronDown, Sparkles, Info, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const SMART_APP_SAVINGS = 0.25; // úspora vody při Smart APP řízení (senzory větru/teploty/vlhkosti)
+const SMART_APP_SAVINGS = 0.5; // model chytrého řízení: aktivní cykly podle teploty, vlhkosti a harmonogramu
 
 // Produkty, které nejsou samostatná mlžítka/brány (příslušenství), do kalkulačky nepatří
 const ACCESSORY_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
 
-const WATER_PRICE_PER_M3 = 85; // Kč / m³ (ČR průměr 2025)
+const WATER_PRICE_PER_M3 = 129.11; // Kč / m³, Trutnov 2026: vodné 75,86 Kč + stočné 53,25 Kč
 const NOZZLE_PRICE_KC = 390; // Kč za 1 ks nerezové trysky AISI 316L
 
 // ─── Parsování reálných dat produktu ───────────────────────────────────────
@@ -253,7 +253,7 @@ export default function MlzeniKalkulator() {
         </div>
         <div>
           <p className="text-sm font-medium text-[hsl(var(--popover))]">Kalkulátor spotřeby vody</p>
-          <p className="text-xs text-[hsl(var(--popover))]">Orientační výpočet pro vybraný produkt z katalogu</p>
+          <p className="text-xs text-[hsl(var(--popover))]">Trutnov 2026 · vodné a stočné 129,11 Kč / m³ · osmihodinový model</p>
         </div>
       </div>
 
@@ -471,10 +471,10 @@ export default function MlzeniKalkulator() {
               <span className="text-sm font-medium text-white">{NOZZLE_PRICE_KC} Kč</span>
             </div>
             <div className="flex items-center justify-between text-xs text-white/30 font-mono">
-              <span>Cena vody: {WATER_PRICE_PER_M3} Kč/m³</span>
+              <span>Vodné a stočné Trutnov 2026: {WATER_PRICE_PER_M3} Kč/m³</span>
             </div>
             <p className="text-[10px] text-white/20 font-mono mt-2 leading-relaxed">
-              * Průměrné ceny ČR 2025. Skutečné náklady závisí na tarifu poskytovatele.
+              * Výpočet zahrnuje vodné i stočné pro Trutnov v roce 2026. Náklady ovlivňuje průtok, počet trysek, délka provozu a úroveň chytrého řízení.
             </p>
           </div>
         </div>

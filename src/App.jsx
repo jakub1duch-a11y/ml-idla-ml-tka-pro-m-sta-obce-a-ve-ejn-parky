@@ -62,6 +62,7 @@ import VideoUkazky from '@/pages/VideoUkazky';
 import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 import PrinosMlzitek from '@/pages/PrinosMlzitek';
 import Vyuziti from '@/pages/Vyuziti';
+import ZahradniMlzitka from '@/pages/ZahradniMlzitka';
 import UsageSector from '@/pages/UsageSector';
 import UsageCategory from '@/pages/UsageCategory';
 import Prinosy from '@/pages/Prinosy';
@@ -108,6 +109,7 @@ const AuthenticatedApp = () => {
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
         <Route path="/vyuziti" element={<Vyuziti />} />
+        <Route path="/zahradni-mlzitka" element={<ZahradniMlzitka />} />
         <Route path="/vyuziti/:sector" element={<UsageCategory />} />
         <Route path="/kategorie/:sector" element={<UsageCategory />} />
         <Route path="/gdpr" element={<Gdpr />} />

@@ -1,0 +1,7 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+
+const links = [{ title: 'Kalkulačka provozu', text: 'Spočítejte spotřebu a orientační náklady podle konkrétního produktu.', to: '/kalkulacka' }, { title: 'Mlžítka pro zahrady', text: 'Osvěžení pro pergoly, terasy, okolí bazénu a soukromé venkovní prostory.', to: '/zahradni-mlzitka' }, { title: 'Využití ve veřejném prostoru', text: 'Inspirace pro města, parky, hřiště, gastro i eventy.', to: '/vyuziti' }, { title: 'Nezávazný návrh řešení', text: 'Probereme prostor, technologii, instalaci i možnosti ovládání.', to: '/poptavka' }];
+
+export default function TechLinks() { return <section className="site-container py-16 lg:py-24"><p className="text-xs font-bold uppercase tracking-[.18em] text-[#0070F3]">Navazující informace</p><h2 className="mt-3 text-slate-950">Vyberte další krok pro váš projekt.</h2><div className="mt-8 grid gap-4 md:grid-cols-2">{links.map(({ title, text, to }) => <Link key={to} to={to} className="group border border-slate-200 p-6 transition hover:border-slate-950 hover:bg-slate-950"><h3 className="text-lg font-semibold text-slate-950 group-hover:text-white">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600 group-hover:text-white/65">{text}</p><ArrowRight size={17} className="mt-5 text-[#0070F3]" /></Link>)}</div></section>; }

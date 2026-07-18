@@ -62,6 +62,7 @@ import VideoUkazky from '@/pages/VideoUkazky';
 import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 import PrinosMlzitek from '@/pages/PrinosMlzitek';
 import Vyuziti from '@/pages/Vyuziti';
+import UsageSector from '@/pages/UsageSector';
 import Prinosy from '@/pages/Prinosy';
 import Certifikace from '@/pages/Certifikace';
 import Galerie from '@/pages/Galerie';
@@ -115,6 +116,9 @@ const AuthenticatedApp = () => {
         <Route path="/vyuziti/outdoor-zahrady" element={<Outdoor />} />
         <Route path="/vyuziti/art-instalace" element={<Art />} />
         <Route path="/vyuziti/skoly-skolky-deti" element={<Deti />} />
+        <Route path="/vyuziti/domovy-senioru" element={<UsageSector />} />
+        <Route path="/vyuziti/hotely" element={<UsageSector />} />
+        <Route path="/vyuziti/wellness-terasy" element={<UsageSector />} />
         <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
         <Route path="/kategorie/koupaliste" element={<Koupaliste />} />

@@ -1,5 +1,5 @@
 export const usageLinks = [
-  ['Města a obce', 'Chladnější veřejný prostor.', '/vyuziti/mesta-obce'], ['Parky a hřiště', 'Bezpečné letní osvěžení.', '/vyuziti/parky-hriste'], ['Koupaliště a aquaparky', 'Komfort kolem vody.', '/vyuziti/koupaliste'], ['Pro architekty', 'Mlha jako materiál návrhu.', '/vyuziti/architekti'], ['Komerční prostory', 'Pohodlí, které podporuje provoz.', '/vyuziti/komercni'], ['Eventy a festivaly', 'Osvěžení, na které se vzpomíná.', '/vyuziti/eventy'], ['Outdoor a zahrady', 'Chladivá oáza venku.', '/vyuziti/outdoor-zahrady'], ['Art instalace', 'Zakázkové mlžné skulptury.', '/vyuziti/art-instalace'], ['Školy, školky a děti', 'Jemné a bezpečné ochlazení.', '/vyuziti/skoly-skolky-deti'],
+  ['Města a obce', 'Chladnější veřejný prostor.', '/vyuziti/mesta-obce'], ['Parky a hřiště', 'Bezpečné letní osvěžení.', '/vyuziti/parky-hriste'], ['Školy, školky a děti', 'Bezpečné ochlazení dětí.', '/vyuziti/skoly-skolky-deti'], ['Domovy seniorů', 'Komfort během veder.', '/vyuziti/domovy-senioru'], ['Hotely', 'Komfort pro hotelové hosty.', '/vyuziti/hotely'], ['Wellness terasy', 'Osvěžení spa zón.', '/vyuziti/wellness-terasy'], ['Koupaliště a aquaparky', 'Komfort kolem vody.', '/vyuziti/koupaliste'], ['Pro architekty', 'Mlha jako materiál návrhu.', '/vyuziti/architekti'], ['Komerční prostory', 'Pohodlí, které podporuje provoz.', '/vyuziti/komercni'], ['Eventy a festivaly', 'Osvěžení, na které se vzpomíná.', '/vyuziti/eventy'], ['Outdoor a zahrady', 'Chladivá oáza venku.', '/vyuziti/outdoor-zahrady'], ['Art instalace', 'Zakázkové mlžné skulptury.', '/vyuziti/art-instalace'], 
 ];
 
 export const benefitLinks = [
@@ -14,5 +14,5 @@ export const mobileNavigation = [
   { label: 'Realizace', path: '/reference' },
   { label: 'Inspirace', path: '/blog' },
   { label: 'Podpora a servis', path: '/podpora', links: [['Nejčastější dotazy', '/podpora'], ['Technické listy', '/ke-stazeni'], ['Certifikace a kvalita', '/certifikace'], ['Kontakt', '/kontakt']] },
-  { label: 'B2B partnerství', path: '/partnerstvi' },
+  { label: 'B2B partnerství', path: '/partnerstvi', links: [['Pro města a obce', '/vyuziti/mesta-obce'], ['Parky a hřiště', '/vyuziti/parky-hriste'], ['Školy, školky a děti', '/vyuziti/skoly-skolky-deti'], ['Domovy seniorů', '/vyuziti/domovy-senioru'], ['Hotely', '/vyuziti/hotely'], ['Wellness terasy', '/vyuziti/wellness-terasy']] },
 ];

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Gate70ProductCard from '@/components/katalog/Gate70ProductCard';
+import GateCollectionCards from '@/components/katalog/GateCollectionCards';
 import CatalogProductCard from '@/components/katalog/CatalogProductCard';
 
 const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
@@ -21,6 +22,12 @@ export default function ProductFilterGrid() {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
       <div className="mb-10">
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mlžné brány</p>
+        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vstupní a lineární mlžné brány.</h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-500">Nerezové brány pro vstupy, náměstí, koupaliště a pěší trasy.</p>
+      </div>
+      <GateCollectionCards />
+      <div className="mb-10 mt-16">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Celý katalog</p>
         <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vyberte si mlžítko z naší KOLEKCE2026</h2>
       </div>

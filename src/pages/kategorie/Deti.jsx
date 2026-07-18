@@ -27,7 +27,7 @@ export default function Deti() {
   useEffect(() => {
     setSEO(SEO_PAGES.deti);
     base44.entities.Product.list().catch(() => []).then(p => {
-      setProducts((p || []).slice(0, 6));
+      setProducts((p || []).filter((item) => item.category_id !== '6a5119a4abdfd991c476d9fc' && !/zemní|vrut|trysk|příslušenství/i.test(item.name || '')).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 

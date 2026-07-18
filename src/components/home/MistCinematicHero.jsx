@@ -1,22 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowRight, Droplets, MapPin, Play, ThermometerSnowflake, Factory } from 'lucide-react';
+import QuickBenefits from '@/components/home/QuickBenefits';
 
-const VIDEOS = [
-  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/aba1e0ccb_Mln_brna_video.mp4',
-  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/57b2e36fa_VID_20260715_144946_037.mp4',
-  'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2a9d10fda_VID_20260715_144952_432.mp4',
+const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png';
+const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9c5fe353e_VID_20260715_144946_037.mp4';
+const QUICK_LINKS = [
+  { icon: Droplets, label: '5–15 μm', text: 'velikost kapének', to: '/jak-funguje-mlzeni' },
+  { icon: ThermometerSnowflake, label: 'až −12 °C', text: 'pocitové ochlazení', to: '/vyhody' },
+  { icon: MapPin, label: 'celá ČR', text: 'realizace po celé zemi', to: '/galerie' },
+  { icon: Factory, label: 'na míru', text: 'zakázková výroba', to: '/katalog' },
+  { icon: Play, label: 'Přehrát video', text: 'realizací', to: '/videosekce-mlzitka' },
 ];
 
 export default function MistCinematicHero() {
-  const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1.03, 1.18]);
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-3%']);
-  const blur = useTransform(scrollYProgress, [0, 0.75, 1], ['blur(0px)', 'blur(0px)', 'blur(8px)']);
-  const opacityOne = useTransform(scrollYProgress, [0, 0.26, 0.38], [1, 1, 0]);
-  const opacityTwo = useTransform(scrollYProgress, [0.25, 0.42, 0.62, 0.74], [0, 1, 1, 0]);
-  const opacityThree = useTransform(scrollYProgress, [0.62, 0.78, 1], [0, 1, 1]);
-  const opacities = [opacityOne, opacityTwo, opacityThree];
-  return <section className="relative h-[230svh] bg-slate-950 text-white"><div className="sticky top-0 h-[100svh] overflow-hidden"><div className="absolute inset-0 overflow-hidden">{VIDEOS.map((video, index) => <motion.video key={video} src={video} autoPlay muted loop playsInline preload={index === 0 ? 'auto' : 'metadata'} style={{ opacity: opacities[index], scale, x, filter: blur }} className="absolute inset-0 h-full w-full scale-105 object-cover" />)}<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_75%_35%,rgba(207,250,254,0.16),transparent_42%),linear-gradient(100deg,rgba(2,6,23,0.78)_0%,rgba(2,6,23,0.35)_55%,rgba(2,6,23,0.18)_100%)]" /><div className="mist-hero-glow" /></div><motion.div style={{ opacity: useTransform(scrollYProgress, [0, 0.82, 1], [1, 1, 0]) }} className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-14 pt-32 lg:px-10 lg:pb-20"><p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-cyan">TeePe · městské mlžení</p><h1 className="max-w-4xl font-heading text-5xl font-medium leading-[0.94] tracking-tight text-white lg:text-7xl">Oáza pro<br />naše město.</h1><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80 lg:text-xl">Moderní mlžítka pro historická náměstí, parky, školy, veřejný prostor a architekturu.</p><div className="mt-8 flex flex-wrap gap-3"><Link to="/reference" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:bg-cyan">Prohlédnout realizace <ArrowRight size={16} /></Link><Link to="/poptavka" className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-white/10">Navrhnout řešení</Link></div><a href="#navigace-uvod" className="mt-12 inline-flex w-fit items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-white/65 transition hover:text-white"><ArrowDown size={15} /> Objevte možnosti</a></motion.div></div></section>;
+  return <section className="relative min-h-[100svh] overflow-hidden bg-slate-950 text-white"><img src={HERO_IMAGE} alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" /><video src={HERO_VIDEO} poster={HERO_IMAGE} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover md:hidden" /><div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.82)_0%,rgba(2,6,23,0.54)_42%,rgba(2,6,23,0.16)_100%)]" /><div className="mist-hero-glow" /><div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl items-center px-6 py-32 lg:px-10"><div className="max-w-xl"><p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan">Mlžidla.cz · městské mlžení</p><h1 className="mt-5 font-heading text-5xl font-medium leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">Oáza pro<br />vaše město.</h1><p className="mt-6 max-w-lg text-lg leading-relaxed text-white/80">Designové mlžné brány a skulptury, které přinášejí letní osvěžení do parků, náměstí i veřejných areálů.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link to="/galerie" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-slate-950 transition hover:bg-cyan">Prohlédnout realizace <ArrowRight size={17} /></Link><Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/45 bg-white/5 px-7 py-4 text-sm font-bold text-white backdrop-blur transition hover:bg-white/15">Navrhnout řešení</Link></div></div><QuickBenefits className="absolute right-10 top-1/2 hidden w-[320px] -translate-y-1/2 grid-cols-2 lg:grid" compact /></div><div className="absolute bottom-0 left-0 right-0 z-20 border-t border-white/20 bg-slate-950/45 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl overflow-x-auto px-3 py-3 lg:px-7 [&::-webkit-scrollbar]:hidden">{QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/15 px-4 text-left transition hover:bg-white/10"><Icon size={23} className="shrink-0 text-cyan" /><span><b className="block text-sm text-white">{label}</b><small className="block text-[11px] text-white/65">{text}</small></span></Link>)}</div></div></section>;
 }

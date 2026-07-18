@@ -279,3 +279,7 @@
 .cooling-rings span:nth-child(3) { inset: 36%; animation-delay: -3s; }
 @media (max-width: 640px) { .mist-hero-glow { width: 90vw; height: 80vw; right: -35vw; } .mist-scene-cloud { width: 100vw; height: 72vw; right: -35vw; bottom: 0; } .cooling-rings { right: -16vw; top: 26%; width: 70vw; } }
 @media (prefers-reduced-motion: reduce) { .mist-hero-glow, .mist-scene-cloud, .mist-particles i, .cooling-rings span { animation: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  video { animation: none; }
+}

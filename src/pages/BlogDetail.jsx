@@ -79,7 +79,7 @@ export default function BlogDetail() {
       {/* Hero image */}
       {post.image_url && (
         <div className="relative h-72 lg:h-[460px] overflow-hidden">
-          <img src={post.image_url} alt={post.title} className="w-full h-full object-cover" />
+          <img src={post.image_url} alt={post.image_alt || post.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-black/10" />
         </div>
       )}
@@ -138,6 +138,8 @@ export default function BlogDetail() {
           <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
         )}
 
+        {(post.gallery_urls || []).length > 0 && <section className="mt-12 border-y border-slate-200 py-10"><p className="text-xs font-bold uppercase tracking-[.18em] text-slate-400">Fotogalerie</p><div className="mt-5 grid grid-cols-2 gap-3"><img src={post.gallery_urls[0]} alt={`${post.title} – fotografie realizace 1`} loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />{post.gallery_urls[1] && <img src={post.gallery_urls[1]} alt={`${post.title} – fotografie realizace 2`} loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />}</div></section>}
+
         {/* Fixed safety/standard notice — appears in every article */}
         <ArticleSafetyNotice />
 
@@ -171,7 +173,7 @@ export default function BlogDetail() {
                   className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all bg-white">
                   {r.image_url && (
                     <div className="aspect-[4/3] overflow-hidden">
-                      <img src={r.image_url} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <img src={r.image_url} alt={r.image_alt || r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                   )}
                   <div className="p-5">

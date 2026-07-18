@@ -8,11 +8,12 @@ import MistPerformanceSection from '@/components/home/MistPerformanceSection';
 import ZooPrahaShowcase from '@/components/home/ZooPrahaShowcase';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
+import BlogSection from '@/components/home/BlogSection';
 
 export default function Home2() {
   useEffect(() => {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
   }, []);
-  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection /><MistPerformanceSection /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection /><RealizaceGallerySection /></>;
+  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection /><MistPerformanceSection /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection /><RealizaceGallerySection /><BlogSection /></>;
 }

@@ -42,6 +42,17 @@
       "type": "string",
       "description": "Cover image URL"
     },
+    "image_alt": {
+      "type": "string",
+      "description": "SEO alt text for the cover image"
+    },
+    "gallery_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "SEO photo gallery URLs for the article"
+    },
     "published": {
       "type": "boolean",
       "default": false,
@@ -61,11 +72,11 @@
     },
     "cta_label": {
       "type": "string",
-      "description": "Text tla\u010d\u00edtka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku (nap\u0159. 'Nez\u00e1vazn\u00e1 kalkulace realizace')"
+      "description": "Text tla\u010d\u00edtka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku"
     },
     "cta_link": {
       "type": "string",
-      "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy (nap\u0159. /poptavka nebo /kalkulacka)"
+      "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku"
     },
     "instagram_posted": {
       "type": "boolean",

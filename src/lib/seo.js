@@ -190,11 +190,11 @@ export const SEO_PAGES = {
 
 export function getProductSEO(product, reviewStats) {
   if (!product) return {};
-  const title = `${product.name} — Nízkotlaké mlžítko 200–800 kPa`;
+  const title = `${product.name} — Nízkotlaké mlžítko 2–8 bar (200–800 kPa)`;
   const description = product.short_description
-    ? `${product.name}: ${product.short_description} Nízkotlaký mlžící systém 200–800 kPa, kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
-    : `Nízkotlaké mlžítko ${product.name} — provoz 200–800 kPa bez čerpadel, kotvení zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena na vyžádání.`;
-  const keywords = `${product.name}, nízkotlaký mlžící systém 200–800 kPa, kotvení zemním vrutem, rychlá instalace do 30 minut, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, HolmTec ${product.name}`;
+    ? `${product.name}: ${product.short_description} Nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
+    : `Nízkotlaké mlžítko ${product.name} — provoz 2–8 bar (200–800 kPa) bez čerpadel, kotvení zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena na vyžádání.`;
+  const keywords = `${product.name}, nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, HolmTec ${product.name}`;
 
   const sku = `HT-${(product.slug || product.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-')}`;
   const images = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);

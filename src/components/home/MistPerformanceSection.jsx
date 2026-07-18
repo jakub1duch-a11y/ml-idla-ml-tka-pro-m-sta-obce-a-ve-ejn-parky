@@ -5,7 +5,7 @@ import { Droplets, Gauge, Sparkles, ThermometerSnowflake, Zap } from 'lucide-rea
 const METRICS = [
   { icon: Droplets, label: 'Spotřeba vody', value: 'úsporný provoz', width: '40%' },
   { icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až −12 °C', width: '92%' },
-  { icon: Gauge, label: 'Nízkotlaký provoz', value: '200–800 kPa', width: '64%' },
+  { icon: Gauge, label: 'Nízkotlaký provoz', value: '2–8 bar (200–800 kPa)', width: '64%' },
   { icon: Zap, label: 'Řízení mlžení', value: 'na míru provozu', width: '74%' },
   { icon: Sparkles, label: 'Velikost kapének', value: '5–15 μm', width: '28%' },
 ];

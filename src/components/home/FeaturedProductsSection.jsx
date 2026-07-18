@@ -83,7 +83,7 @@ export default function FeaturedProductsSection() {
   const scrollBy = (amount) => scrollRef.current?.scrollBy({ left: amount, behavior: 'smooth' });
 
   return (
-    <section className="py-20 bg-slate-950 border-t border-slate-900 overflow-hidden">
+    <section id="produkty" className="py-20 bg-slate-950 border-t border-slate-900 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}

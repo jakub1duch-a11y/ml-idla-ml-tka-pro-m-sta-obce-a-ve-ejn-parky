@@ -14,7 +14,7 @@ export default function MistStoryScene({ scene }) {
         <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-cyan">{scene.number} · {scene.eyebrow}</p>
         <h2 className="font-heading text-4xl font-medium leading-[1.02] tracking-tight text-white lg:text-6xl">{scene.title}</h2>
         <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75 lg:text-lg">{scene.text}</p>
-        <div className="mt-8 flex flex-wrap gap-2">{scene.tags.map((tag, index) => { const Icon = [Gauge, Droplets, Wind][index % 3]; return <span key={tag} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/40 px-4 py-2 text-xs font-semibold text-white/90 backdrop-blur"><Icon size={14} className="text-cyan" />{tag}</span>; })}</div>
+        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">{scene.tags.map((tag, index) => { const Icon = [Gauge, Droplets, Wind][index % 3]; return <motion.span key={tag} whileHover={{ x: 3 }} className="inline-flex items-center gap-2 text-xs font-semibold text-white/90"><Icon size={16} className="text-cyan drop-shadow-[0_0_10px_rgba(103,232,249,.75)]" />{tag}</motion.span>; })}</div>
       </motion.div>
     </div>
   </motion.article>;

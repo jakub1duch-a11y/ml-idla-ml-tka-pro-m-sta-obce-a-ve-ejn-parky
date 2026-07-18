@@ -36,7 +36,7 @@ export default function RealizaceGallerySection() {
   if (!loading && projects.length === 0) return null;
 
   return (
-    <section className="py-20 lg:py-24 bg-white border-t border-slate-100">
+    <section id="realizace" className="py-20 lg:py-24 bg-white border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">

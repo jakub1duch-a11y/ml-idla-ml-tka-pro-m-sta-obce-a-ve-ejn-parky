@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, Loader, Building2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductClick } from '@/lib/ga4';
+import CoolingCardEffect from '@/components/home/CoolingCardEffect';
 
 const EXCLUDED = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
 
@@ -28,7 +29,7 @@ const GATES = [
 }];
 
 
-function SlideCard({ item, index }) {
+function SlideCard({ item, index, isCoolingCard }) {
   return (
     <Link to={item.href || (item.slug ? `/produkt/${item.slug}` : '/kontakt')} onClick={() => trackProductClick(item.name, item.slug || item.href, 'home_featured')}
     className="group relative shrink-0 w-[82vw] sm:w-[320px] lg:w-[340px] aspect-[3/4] rounded-2xl overflow-hidden snap-start bg-slate-800">
@@ -38,6 +39,7 @@ function SlideCard({ item, index }) {
 
       <div className="w-full h-full flex items-center justify-center text-white/20 text-4xl">📷</div>
       }
+      <CoolingCardEffect active={isCoolingCard} />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
       {item.featured && !item.isGate &&
       <span className="absolute top-4 left-4 bg-white text-slate-900 text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full">
@@ -63,9 +65,10 @@ function SlideCard({ item, index }) {
 
 }
 
-export default function FeaturedProductsSection() {
+export default function FeaturedProductsSection({ enableCooling = false }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [coolingIndex, setCoolingIndex] = useState(null);
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -74,7 +77,9 @@ export default function FeaturedProductsSection() {
       const filtered = (products || []).
       filter((p) => p.image_url && !EXCLUDED.includes(p.name)).
       sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-      setItems([...filtered, ...GATES]);
+      const nextItems = [...filtered, ...GATES];
+      setItems(nextItems);
+      if (enableCooling) setCoolingIndex(Math.floor(Math.random() * nextItems.length));
     }).
     catch(() => setItems(GATES)).
     finally(() => setLoading(false));
@@ -118,7 +123,7 @@ a mlžné brány.
 
         <div ref={scrollRef}
         className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-            {items.map((item, i) => <SlideCard key={item.id || item.name} item={item} index={i} />)}
+            {items.map((item, i) => <SlideCard key={item.id || item.name} item={item} index={i} isCoolingCard={i === coolingIndex} />)}
           </div>
         }
 

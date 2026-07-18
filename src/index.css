@@ -321,3 +321,16 @@ html { scroll-behavior: smooth; }
 @media (min-width: 1025px) {
   .hero-light-rays, .hero-mist-overlay, .mist-hero-glow { content-visibility: auto; }
 }
+
+@keyframes cooling-droplet-fall {
+  0% { transform: translateY(-8px) scale(.7); opacity: 0; }
+  30% { opacity: .9; }
+  100% { transform: translateY(78px) scale(1); opacity: 0; }
+}
+.cooling-droplets { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.cooling-droplets i { position: absolute; top: 24%; left: 22%; width: 7px; height: 10px; border-radius: 999px 999px 999px 999px; background: rgba(207, 250, 254, .9); box-shadow: 0 0 12px rgba(34, 211, 238, .75); animation: cooling-droplet-fall 2.6s ease-in infinite; }
+.cooling-droplets i:nth-child(2) { left: 48%; top: 42%; width: 5px; height: 8px; animation-delay: -.8s; }
+.cooling-droplets i:nth-child(3) { left: 74%; top: 19%; width: 8px; height: 12px; animation-delay: -1.5s; }
+.cooling-droplets i:nth-child(4) { left: 88%; top: 52%; width: 4px; height: 6px; animation-delay: -2.1s; }
+@media (prefers-reduced-motion: reduce) { .cooling-droplets i { animation: none; } }
+.cooling-texture { position: absolute; inset: 0; opacity: .28; background-image: radial-gradient(rgba(255,255,255,.7) .55px, transparent .7px), linear-gradient(125deg, transparent 30%, rgba(207,250,254,.22) 50%, transparent 70%); background-size: 7px 7px, 100% 100%; mix-blend-mode: soft-light; pointer-events: none; }

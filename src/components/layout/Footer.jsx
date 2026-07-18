@@ -36,7 +36,9 @@ export default function Footer() {
             <p className="text-white text-xs tracking-widest uppercase mb-5 font-medium">Katalog</p>
             <div className="flex flex-col gap-3">
               <Link to="/mlzidla-mlzitka" className="text-sm text-white/60 hover:text-white transition-colors">Mlžítka a mlžné brány</Link>
-              <Link to="/technologie" className="text-sm text-white/60 hover:text-white transition-colors">Jak to funguje</Link>
+              <Link to="/katalog" className="text-sm text-white/60 hover:text-white transition-colors">Katalog řešení</Link>
+              <Link to="/zahradni-mlzitka" className="text-sm text-white/60 hover:text-white transition-colors">Mlžítko na zahradu</Link>
+              <Link to="/jak-funguje-mlzeni" className="text-sm text-white/60 hover:text-white transition-colors">Jak funguje mlžení</Link>
               <Link to="/o-nas" className="text-sm text-white/60 hover:text-white transition-colors">O společnosti</Link>
             </div>
           </div>
@@ -44,8 +46,10 @@ export default function Footer() {
           <div>
             <p className="text-white text-xs tracking-widest uppercase mb-5 font-medium">Informace</p>
             <div className="flex flex-col gap-3">
-              <Link to="/technologie" className="text-sm text-white/60 hover:text-white transition-colors">Technologie</Link>
+              <Link to="/jak-funguje-mlzeni" className="text-sm text-white/60 hover:text-white transition-colors">Technologie</Link>
               <Link to="/chytra-mlzidla" className="text-sm text-white/60 hover:text-white transition-colors">Chytré ovládání</Link>
+              <Link to="/reference" className="text-sm text-white/60 hover:text-white transition-colors">Reference</Link>
+              <Link to="/blog" className="text-sm text-white/60 hover:text-white transition-colors">Novinky a blog</Link>
               <Link to="/prinosy-mlzitek" className="text-sm text-white/60 hover:text-white transition-colors">Přínosy mlžítek</Link>
               <Link to="/podpora" className="text-sm text-white/60 hover:text-white transition-colors">Nejčastější dotazy</Link>
               <Link to="/servis-udrzba" className="text-sm text-white/60 hover:text-white transition-colors">Servis a údržba</Link>

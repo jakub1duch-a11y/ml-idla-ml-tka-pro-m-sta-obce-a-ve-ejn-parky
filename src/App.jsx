@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -90,7 +90,7 @@ const AuthenticatedApp = () => {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home2 />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
-        <Route path="/jak-to-funguje" element={<Technologie />} />
+        <Route path="/jak-to-funguje" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
         <Route path="/jak-funguje-mlzeni" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
@@ -115,7 +115,7 @@ const AuthenticatedApp = () => {
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
         <Route path="/faq" element={<Podpora />} />
-        <Route path="/technologie" element={<Technologie />} />
+        <Route path="/technologie" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
         <Route path="/vyhody" element={<Vyhody />} />
         <Route path="/ke-stazeni" element={<KeStazeni />} />
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
@@ -134,6 +134,17 @@ const AuthenticatedApp = () => {
         <Route path="/prinosy-mlzitek/:slug" element={<PrinosMlzitek />} />
         <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
         <Route path="/certifikace" element={<Certifikace />} />
+        <Route path="/domu" element={<Navigate to="/" replace />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
+        <Route path="/mlzici-brany" element={<Navigate to="/reseni/brany" replace />} />
+        <Route path="/product-category/*" element={<Navigate to="/katalog" replace />} />
+        <Route path="/product/*" element={<Navigate to="/katalog" replace />} />
+        <Route path="/vodni-mlha" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
+        <Route path="/mlhoviste" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
+        <Route path="/obchod" element={<Navigate to="/katalog" replace />} />
+        <Route path="/obchod-2" element={<Navigate to="/katalog" replace />} />
+        <Route path="/category/uncategorized" element={<Navigate to="/blog" replace />} />
+        <Route path="/help-info" element={<Navigate to="/podpora" replace />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />

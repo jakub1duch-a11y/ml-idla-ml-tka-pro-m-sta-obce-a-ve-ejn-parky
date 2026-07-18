@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.38';
 
-const SITE_URL = 'https://mlzidla.cz/';
+const SITE_URL = 'sc-domain:mlzidla.cz';
 const SITEMAP_URL = 'https://mlzidla.cz/functions/sitemap';
 
 Deno.serve(async (req) => {

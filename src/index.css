@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -27,8 +27,8 @@
     --ring: 215 55% 32%;
     --radius: 14px;
     --font-heading: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Urbanist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
@@ -306,3 +306,9 @@ html { scroll-behavior: smooth; }
 .hero-mist-overlay span:nth-child(2) { left: 28%; bottom: -10%; animation-delay: -2.6s; }
 .hero-mist-overlay span:nth-child(3) { right: 24%; top: 15%; animation-delay: -5.2s; opacity: .6; }
 @media (prefers-reduced-motion: reduce) { .hero-light-rays span, .hero-mist-overlay span { animation: none; } }
+
+/* Mobile devices render the same content without expensive ambient animation layers. */
+@media (max-width: 1024px) {
+  .mist-veil, .mist-hero-glow, .mist-scene-cloud, .mist-particles i, .cooling-rings span, .hero-light-rays span, .hero-mist-overlay span { animation: none !important; }
+  .mist-veil, .mist-hero-glow, .mist-scene-cloud, .hero-mist-overlay span { filter: none; }
+}

@@ -7,14 +7,12 @@ export const benefitLinks = [
 ];
 
 export const mobileNavigation = [
-  { label: 'Jak mlžení funguje?', path: '/jak-funguje-mlzeni', links: [['SMART APP řízení', '/smart-ovladani'], ['UV-C filtrace a hygiena', '/prinosy-mlzitek/zabezpeceni-a-shoda']] },
-  { label: 'Produkty', path: '/katalog' },
+  { label: 'Produkty a řešení', path: '/katalog' },
+  { label: 'Využití', path: '/vyuziti', links: usageLinks.map(([label, , path]) => [label, path]) },
+  { label: 'Technologie a chytré řízení', path: '/jak-funguje-mlzeni', links: [['Jak funguje mlžení', '/jak-funguje-mlzeni'], ['Chytré řízení', '/chytra-mlzidla'], ['Smart ovládání', '/smart-ovladani']] },
   { label: 'Přínosy mlžítek', path: '/prinosy-mlzitek', links: benefitLinks.map(([label, , path]) => [label, path]) },
   { label: 'Realizace', path: '/reference' },
-  { label: 'Novinky', path: '/blog' },
-  { label: 'Podpora a servis', path: '/podpora' },
-  { label: 'Technické listy', path: '/ke-stazeni' },
-  { label: 'Certifikace a kvalita', path: '/certifikace' },
-  { label: 'B2B Partnerství', path: '/partnerstvi' },
-  { label: 'Využití B2B', path: '/vyuziti', links: usageLinks.map(([label, , path]) => [label, path]) },
+  { label: 'Inspirace', path: '/blog' },
+  { label: 'Podpora a servis', path: '/podpora', links: [['Nejčastější dotazy', '/podpora'], ['Technické listy', '/ke-stazeni'], ['Certifikace a kvalita', '/certifikace'], ['Kontakt', '/kontakt']] },
+  { label: 'B2B partnerství', path: '/partnerstvi' },
 ];

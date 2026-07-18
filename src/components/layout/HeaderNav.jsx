@@ -6,6 +6,7 @@ import ProductMegaMenu from '@/components/layout/ProductMegaMenu';
 const LINKS = [
   { label: 'Jak funguje mlžení', to: '/jak-funguje-mlzeni' },
   { label: 'Chytré řízení', to: '/chytra-mlzidla' },
+  { label: 'Přínosy mlžítek', to: '/prinosy-mlzitek' },
   { label: 'Realizace', to: '/reference' },
   { label: 'Inspirace', to: '/blog' },
   { label: 'Podpora a servis', to: '/podpora' },

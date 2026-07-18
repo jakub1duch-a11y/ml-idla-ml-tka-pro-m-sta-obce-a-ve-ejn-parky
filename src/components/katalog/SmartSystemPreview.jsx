@@ -36,8 +36,8 @@ export default function SmartSystemPreview() {
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-all">
               Zobrazit varianty <ArrowRight size={16} />
             </Link>
-            <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:border-slate-300 transition-all">
-              O aplikaci
+            <Link to="/chytre-ventily-mlzitka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:border-slate-300 transition-all">
+              Ventily a samostatná mlžítka
             </Link>
           </div>
         </motion.div>

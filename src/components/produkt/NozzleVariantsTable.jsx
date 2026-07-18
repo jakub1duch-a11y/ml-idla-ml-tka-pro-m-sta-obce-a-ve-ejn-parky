@@ -23,7 +23,7 @@ export default function NozzleVariantsTable({ variants }) {
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
                 <th className="text-left px-6 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">Varianta</th>
-                <th className="text-left px-4 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">5 bar</th>
+                <th className="text-left px-4 py-4 text-xs font-mono tracking-widest uppercase text-slate-400">5 bar (500 kPa)</th>
               </tr>
             </thead>
             <tbody>

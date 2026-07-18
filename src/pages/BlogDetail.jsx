@@ -102,11 +102,11 @@ export default function BlogDetail() {
             ))}
           </div>
 
-          <h1 className="font-heading font-light text-3xl lg:text-5xl text-slate-900 tracking-tight leading-tight mb-4">
+          <h1 className="content-title mb-4">
             {post.title}
           </h1>
           {post.perex && (
-            <p className="text-slate-500 text-lg leading-relaxed font-light mb-2 border-l-2 border-slate-300 pl-5">
+            <p className="content-lead mb-2 border-l-2 border-slate-300 pl-5">
               {post.perex}
             </p>
           )}

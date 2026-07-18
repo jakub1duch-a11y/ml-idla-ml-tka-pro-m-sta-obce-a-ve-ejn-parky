@@ -195,8 +195,8 @@ export default function ReferenceDetail() {
           <div className="lg:col-span-2">
             {project.description && (
               <>
-                <p className="text-sm font-semibold text-techblue mb-4">Řešení pro toto místo</p>
-                <h2 className="max-w-2xl font-heading text-3xl font-light tracking-tight text-slate-900">Návrh, který respektuje prostor i jeho rytmus.</h2>
+                <p className="content-eyebrow mb-4">Řešení pro toto místo</p>
+                <h2 className="content-title max-w-2xl text-3xl">Návrh, který respektuje prostor i jeho rytmus.</h2>
                 <div className="mt-7 space-y-5">
                   {project.description.split(/\n{2,}/).map((para, i) => (
                     <p key={i} className="text-slate-600 text-lg leading-[1.8] font-light whitespace-pre-line">{para}</p>

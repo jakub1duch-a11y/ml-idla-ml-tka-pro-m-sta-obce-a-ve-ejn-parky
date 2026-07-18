@@ -47,6 +47,19 @@
       max-width: 38ch;
     }
   }
+  .content-eyebrow {
+    @apply text-xs font-bold uppercase tracking-[.18em] text-techblue;
+  }
+  .content-title {
+    @apply font-heading font-light tracking-tight text-slate-900;
+    font-size: clamp(2.25rem, 4vw, 4.5rem);
+    line-height: 1.08;
+  }
+  .content-lead {
+    @apply text-slate-600;
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    line-height: 1.7;
+  }
 }
 
 @layer base {

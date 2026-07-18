@@ -62,6 +62,7 @@ import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
 import PrinosMlzitek from '@/pages/PrinosMlzitek';
 import Vyuziti from '@/pages/Vyuziti';
 import Prinosy from '@/pages/Prinosy';
+import Certifikace from '@/pages/Certifikace';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -94,6 +95,7 @@ const AuthenticatedApp = () => {
         <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
+        <Route path="/galerie" element={<Reference />} />
         <Route path="/reference/:slug" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
@@ -140,6 +142,7 @@ const AuthenticatedApp = () => {
         <Route path="/prinosy-mlzitek" element={<Prinosy />} />
         <Route path="/prinosy-mlzitek/:slug" element={<PrinosMlzitek />} />
         <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
+        <Route path="/certifikace" element={<Certifikace />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />

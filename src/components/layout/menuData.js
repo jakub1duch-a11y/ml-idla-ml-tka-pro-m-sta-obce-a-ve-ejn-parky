@@ -13,6 +13,8 @@ export const mobileNavigation = [
   { label: 'Realizace', path: '/reference' },
   { label: 'Novinky', path: '/blog' },
   { label: 'Podpora a servis', path: '/podpora' },
+  { label: 'Technické listy', path: '/ke-stazeni' },
+  { label: 'Certifikace a kvalita', path: '/certifikace' },
   { label: 'B2B Partnerství', path: '/partnerstvi' },
   { label: 'Využití B2B', path: '/vyuziti', links: usageLinks.map(([label, , path]) => [label, path]) },
 ];

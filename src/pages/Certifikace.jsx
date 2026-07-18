@@ -1,0 +1,16 @@
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, FileCheck2, ShieldCheck, Droplets, Wrench } from 'lucide-react';
+import { setSEO } from '@/lib/seo';
+
+const STANDARDS = [
+  { icon: ShieldCheck, title: 'Bezpečný návrh instalace', text: 'Každý projekt posuzujeme podle charakteru místa, návštěvnosti a způsobu provozu. Navrhujeme bezpečné kotvení, vedení vody i ovládání.' },
+  { icon: Droplets, title: 'Hygiena a kvalita vody', text: 'Pro veřejné instalace doporučujeme vhodnou filtraci a pravidelný servis. Konkrétní řešení určujeme podle zdroje a rozboru vody.' },
+  { icon: FileCheck2, title: 'Materiálová dokumentace', text: 'K vybraným nerezovým komponentům a projektovým dodávkám poskytujeme na vyžádání technické listy, výkresy a dostupné materiálové podklady.' },
+  { icon: Wrench, title: 'Kontrola a údržba', text: 'Součástí předání je doporučený plán údržby pro dlouhodobě spolehlivý provoz včetně zazimování systému.' },
+];
+
+export default function Certifikace() {
+  useEffect(() => setSEO({ title: 'Certifikace a kvalita', description: 'Informace o kvalitě materiálů, bezpečném návrhu, hygieně vody a dokumentaci mlžných instalací HolmTec.', keywords: 'certifikace mlžítka, kvalita mlžných systémů, hygienický provoz mlžení, nerez AISI 316L', canonicalPath: '/certifikace' }), []);
+  return <main className="min-h-screen bg-white pt-28"><section className="bg-slate-950 py-20 text-white lg:py-28"><div className="mx-auto max-w-5xl px-6 lg:px-8"><p className="text-xs font-bold uppercase tracking-[0.22em] text-cyan">Kvalita a bezpečnost</p><h1 className="mt-4 max-w-3xl font-heading text-5xl font-medium tracking-tight lg:text-6xl">Certifikace a kvalita pro veřejný prostor.</h1><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">Od volby materiálu až po pravidelnou údržbu navrhujeme mlžné instalace s ohledem na dlouhodobý, bezpečný a přehledně doložený provoz.</p></div></section><section className="mx-auto max-w-6xl px-6 py-16 lg:px-8 lg:py-24"><div className="grid gap-4 sm:grid-cols-2">{STANDARDS.map((item, index) => <article key={item.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-7"><item.icon size={34} className="text-cyan" /><p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">0{index + 1}</p><h2 className="mt-2 font-heading text-2xl font-semibold text-slate-900">{item.title}</h2><p className="mt-3 leading-relaxed text-slate-600">{item.text}</p></article>)}</div><div className="mt-16 grid gap-8 rounded-3xl border border-slate-200 p-8 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Podklady pro váš projekt</p><h2 className="mt-3 font-heading text-3xl font-semibold text-slate-900">Technické listy, manuály a dokumentace.</h2><p className="mt-3 max-w-2xl text-slate-600">Stáhněte si dostupné instalační podklady, dokumentaci k údržbě a technické listy. Pro konkrétní projekt připravíme podklady na vyžádání.</p></div><Link to="/ke-stazeni" className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-cyan hover:text-slate-950">Technické listy <ArrowRight size={16} /></Link></div></section></main>;
+}

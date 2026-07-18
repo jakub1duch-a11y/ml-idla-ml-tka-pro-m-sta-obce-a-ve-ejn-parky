@@ -126,7 +126,7 @@ export default function Reference() {
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
-    setSEO(SEO_PAGES.reference);
+    setSEO(window.location.pathname === '/galerie' ? { ...SEO_PAGES.reference, title: 'Galerie realizací mlžných systémů', canonicalPath: '/galerie' } : SEO_PAGES.reference);
     base44.entities.Realizace.list().
     then((items) => {
       const published = (items || []).filter((i) => i.published);

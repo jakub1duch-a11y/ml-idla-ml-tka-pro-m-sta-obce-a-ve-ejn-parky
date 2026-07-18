@@ -102,7 +102,7 @@ export default function Podpora() {
         acceptedAnswer: { '@type': 'Answer', text: item.a }
       }))
     };
-    setSEO({ ...SEO_PAGES.podpora, jsonLd: faqJsonLd });
+    setSEO({ ...SEO_PAGES.podpora, canonicalPath: window.location.pathname === '/faq' ? '/faq' : '/podpora', jsonLd: faqJsonLd });
   }, []);
 
   const toggle = (sectionId, idx) => {

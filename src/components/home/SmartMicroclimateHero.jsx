@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droplet, Gauge, ShieldCheck, SlidersHorizontal, Sparkles, Wrench } from 'lucide-react';
 
-const VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b30b0391_Brna_Video.mp4';
+const VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/7f15df00d_mln_brna_GATE74_-_v_akci.MOV';
 const POSTER_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg';
 
 const leftCards = [
@@ -33,7 +33,7 @@ export default function SmartMicroclimateHero() {
       <div className="grid gap-5 lg:grid-cols-[0.82fr_1fr_0.82fr] lg:items-center">
         <div className="space-y-4">{leftCards.map((item) => <DetailCard key={item.title} item={item} />)}</div>
         <div className="relative overflow-hidden rounded-xl border border-cyan/20 bg-black shadow-2xl shadow-black/40">
-          <video controls preload="metadata" poster={POSTER_URL} className="aspect-[4/5] w-full object-cover" aria-label="Pauznuté video mlžné brány"><source src={VIDEO_URL} type="video/mp4" />Váš prohlížeč nepodporuje přehrávání videa.</video>
+          <video controls preload="metadata" poster={POSTER_URL} className="aspect-[4/5] w-full object-cover" aria-label="Pauznuté video mlžné brány"><source src={VIDEO_URL} type="video/quicktime" />Váš prohlížeč nepodporuje přehrávání videa.</video>
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/20" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 text-center"><span className="mx-auto mb-4 block h-2 w-2 rounded-full bg-cyan shadow-[0_0_14px_#22d3ee]" /><h3 className="font-heading text-2xl font-medium text-cyan">Mlžná brána</h3><p className="mt-2 text-xs text-white/55">Chladivý vstup do veřejného prostoru</p></div>
         </div>

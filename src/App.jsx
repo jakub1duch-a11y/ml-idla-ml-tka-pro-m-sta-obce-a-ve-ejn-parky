@@ -53,6 +53,7 @@ import ServisUdrzba from '@/pages/ServisUdrzba';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import ChytraMlzidla from '@/pages/ChytraMlzidla';
 import Katalog from '@/pages/Katalog';
+import SolutionCategory from '@/pages/SolutionCategory';
 import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
@@ -133,6 +134,7 @@ const AuthenticatedApp = () => {
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
         <Route path="/katalog" element={<Katalog />} />
+        <Route path="/reseni/:solution" element={<SolutionCategory />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />

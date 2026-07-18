@@ -1,0 +1,7 @@
+import React from 'react';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+
+export default function WaterSavingsChart({ smartRatio }) {
+  const data = Array.from({ length: 11 }, (_, hour) => ({ hour, standard: hour * 60, smart: hour * 60 * smartRatio }));
+  return <div className="h-72"><ResponsiveContainer width="100%" height="100%"><LineChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 15 }}><CartesianGrid stroke="#e2e8f0" vertical={false} /><XAxis dataKey="hour" label={{ value: 'Čas (hodiny)', position: 'insideBottom', offset: -5 }} tickLine={false} axisLine={false} /><YAxis label={{ value: 'Celková spotřeba (litry)', angle: -90, position: 'insideLeft' }} tickLine={false} axisLine={false} domain={[0, 600]} /><Tooltip formatter={(value) => [`${value} l`, '']} labelFormatter={(value) => `Po ${value}. hodině`} /><Legend verticalAlign="top" height={34} /><Line type="monotone" dataKey="standard" name="Neřízené mlžítko" stroke="#334155" strokeWidth={3} dot={false} /><Line type="monotone" dataKey="smart" name="Chytré řízení HolmTec" stroke="#0070F3" strokeWidth={3} dot={false} /></LineChart></ResponsiveContainer></div>;
+}

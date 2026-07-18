@@ -195,8 +195,9 @@ export default function ReferenceDetail() {
           <div className="lg:col-span-2">
             {project.description && (
               <>
-                <p className="text-sm font-semibold text-techblue mb-4">O projektu</p>
-                <div className="space-y-5">
+                <p className="text-sm font-semibold text-techblue mb-4">Řešení pro toto místo</p>
+                <h2 className="max-w-2xl font-heading text-3xl font-light tracking-tight text-slate-900">Návrh, který respektuje prostor i jeho rytmus.</h2>
+                <div className="mt-7 space-y-5">
                   {project.description.split(/\n{2,}/).map((para, i) => (
                     <p key={i} className="text-slate-600 text-lg leading-[1.8] font-light whitespace-pre-line">{para}</p>
                   ))}
@@ -273,32 +274,25 @@ export default function ReferenceDetail() {
         </div>
       )}
 
-      {/* ═══════ PHOTO GALLERY (Apex Arc style mixed grid) ═══════ */}
-      {allImages.length > 1 && (
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-          <p className="text-sm font-semibold text-techblue mb-3">Fotogalerie</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
-            Fotografie z realizace
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[160px] md:auto-rows-[200px]">
-            {allImages.map((img, i) => (
-              <motion.button
-                key={i}
-                onClick={() => setLightbox(i)}
-                initial={{ opacity: 0, scale: 0.97 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.03 }}
-                className={`group relative overflow-hidden rounded-2xl border border-slate-200 hover:border-slate-300 transition-all ${i === 0 ? 'col-span-2 row-span-2' : ''}`}
-              >
-                <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
-                  <ZoomIn size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </motion.button>
-            ))}
+      {/* ═══════ PHOTO GALLERY ═══════ */}
+      {allImages.length > 0 && (
+        <section className="border-y border-slate-200 bg-slate-50 py-16 lg:py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div><p className="text-sm font-semibold text-techblue">Fotogalerie realizace</p><h2 className="mt-3 font-heading text-3xl font-light tracking-tight text-slate-900 lg:text-5xl">Prostor v detailu</h2></div>
+              <p className="max-w-sm text-sm leading-relaxed text-slate-500">Prohlédněte si materiály, měřítko i atmosféru hotového řešení.</p>
+            </div>
+            <div className="grid gap-3 lg:grid-cols-12">
+              {allImages.map((img, i) => (
+                <motion.button key={img} onClick={() => setLightbox(i)} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }} className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-white ${i === 0 ? 'aspect-[16/10] lg:col-span-8' : 'aspect-[4/3] lg:col-span-4'}`}>
+                  <img src={img} alt={`${project.name} – fotografie ${i + 1}`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading={i === 0 ? 'eager' : 'lazy'} />
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/25"><span className="rounded-full border border-white/40 bg-white/10 p-3 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100"><ZoomIn size={19} /></span></div>
+                  <span className="absolute bottom-4 left-4 text-xs font-semibold tracking-[.14em] text-white opacity-0 transition-opacity group-hover:opacity-100">{String(i + 1).padStart(2, '0')}</span>
+                </motion.button>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
       )}
 
       <RelatedProductsSection productUsed={project.product_used} />

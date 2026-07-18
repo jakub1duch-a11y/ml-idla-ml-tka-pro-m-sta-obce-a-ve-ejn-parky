@@ -14,6 +14,7 @@ import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
 import BlogNewsletterInline from '@/components/blog/BlogNewsletterInline';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
+import RelatedProductsSection from '@/components/common/RelatedProductsSection';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -139,6 +140,8 @@ export default function BlogDetail() {
 
         {/* Fixed safety/standard notice — appears in every article */}
         <ArticleSafetyNotice />
+
+        <RelatedProductsSection />
 
         {/* Newsletter + follow us */}
         <BlogNewsletterInline />

@@ -8,6 +8,7 @@ import { setSEO, getReferenceSEO } from '@/lib/seo';
 import ShareButtons from '@/components/blog/ShareButtons';
 import RealizaceCommentsSection from '@/components/reference/RealizaceCommentsSection';
 import ProjectTechTable from '@/components/reference/ProjectTechTable';
+import RelatedProductsSection from '@/components/common/RelatedProductsSection';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -295,6 +296,8 @@ export default function ReferenceDetail() {
           </div>
         </div>
       )}
+
+      <RelatedProductsSection productUsed={project.product_used} />
 
       {/* ═══════ CTA ═══════ */}
       <div className="py-20 bg-slate-900">

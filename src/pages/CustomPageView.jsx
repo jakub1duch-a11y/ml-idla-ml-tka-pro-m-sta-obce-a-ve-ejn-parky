@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import BlockRenderer from '@/components/pages/blocks/BlockRenderer';
+import RelatedProductsSection from '@/components/common/RelatedProductsSection';
 
 export default function CustomPageView() {
   const { slug } = useParams();
@@ -37,6 +38,7 @@ export default function CustomPageView() {
   return (
     <div className="min-h-screen bg-white">
       {(page.blocks || []).map((block, i) => <BlockRenderer key={i} block={block} />)}
+      <RelatedProductsSection />
     </div>
   );
 }

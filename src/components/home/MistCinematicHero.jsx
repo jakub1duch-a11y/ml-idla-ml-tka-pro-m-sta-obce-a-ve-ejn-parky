@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Droplets, MapPin, ThermometerSnowflake, Factory } from 'lucide-react';
 import QuickBenefits from '@/components/home/QuickBenefits';
 
-const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png';
+const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3c7f3e65f_copilot_image_1784351460863.jpg';
 const QUICK_LINKS = [
   { icon: Droplets, label: '5–15 μm', text: 'velikost kapének', to: '/jak-funguje-mlzeni' },
   { icon: ThermometerSnowflake, label: 'až −12 °C', text: 'pocitové ochlazení', to: '/vyhody' },

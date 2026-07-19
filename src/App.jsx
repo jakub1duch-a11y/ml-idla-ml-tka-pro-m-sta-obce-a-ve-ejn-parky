@@ -69,6 +69,7 @@ import Prinosy from '@/pages/Prinosy';
 import Certifikace from '@/pages/Certifikace';
 import Galerie from '@/pages/Galerie';
 import ChytreVentilyMlzitka from '@/pages/ChytreVentilyMlzitka';
+import AppControlGuide from '@/pages/AppControlGuide';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -123,6 +124,7 @@ const AuthenticatedApp = () => {
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
         <Route path="/chytre-ventily-mlzitka" element={<ChytreVentilyMlzitka />} />
+        <Route path="/aplikace-ovladani-mlzitek" element={<AppControlGuide />} />
         <Route path="/katalog" element={<Katalog />} />
         <Route path="/reseni/:solution" element={<SolutionCategory />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Activity, Droplets, Gauge } from 'lucide-react';
+import { Activity, ArrowRight, Droplets, Gauge } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 function PhoneDiagram() {
   return <div className="relative h-36 w-20 shrink-0 rounded-[1.1rem] border-2 border-cyan/60 bg-slate-950 p-2 shadow-[0_0_24px_rgba(34,211,238,.2)]"><div className="mx-auto h-1 w-7 rounded-full bg-white/20" /><div className="mt-3 space-y-2"><div className="rounded bg-cyan/15 p-2 text-center"><Droplets size={15} className="mx-auto text-cyan" /><span className="mt-1 block text-[7px] text-cyan">ZÓNA 01</span></div><div className="grid grid-cols-2 gap-1"><span className="h-5 rounded bg-white/10" /><span className="h-5 rounded bg-white/10" /></div><div className="h-1.5 rounded bg-cyan/40" /><div className="h-1.5 w-2/3 rounded bg-white/15" /></div></div>;
@@ -13,6 +14,6 @@ export default function GateActivePreview({ item, active }) {
   const isApp = active === 0; const isMaterial = active === 4;
   return <div className="flex min-h-44 items-center gap-5 border-t border-white/10 bg-slate-900/95 p-5">
     {isApp ? <PhoneDiagram /> : isMaterial ? <TubeDiagram /> : <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border border-cyan/30 bg-cyan/10"><Activity size={34} className="text-cyan" /></div>}
-    <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-cyan">Aktivní prvek</p><h3 className="mt-2 text-lg font-semibold text-white">{item.title}</h3><p className="mt-2 text-sm leading-relaxed text-white/55">{item.detail}</p><div className="mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-white/40"><Gauge size={13} className="text-cyan" /> Propojeno s GATE</div></div>
+    <div className="flex-1"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-cyan">Aktivní prvek</p><h3 className="mt-2 text-xl font-semibold text-white">{item.title}</h3><p className="mt-2 text-sm leading-relaxed text-white/65">{item.detail}</p><div className="mt-4 flex flex-wrap items-center gap-4"><span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-white/40"><Gauge size={13} className="text-cyan" /> Propojeno s GATE</span>{isApp && <Link to="/aplikace-ovladani-mlzitek" className="inline-flex items-center gap-1 text-xs font-bold text-cyan">Aplikace a návod <ArrowRight size={12} /></Link>}<Link to="/produkt/gate-60-76" className="inline-flex items-center gap-1 text-xs font-bold text-white">Detail GATE <ArrowRight size={12} /></Link><Link to="/poptavka?produkt=Mlžná%20brána%20GATE" className="inline-flex items-center gap-1 text-xs font-bold text-white">Poptat řešení <ArrowRight size={12} /></Link></div></div>
   </div>;
 }

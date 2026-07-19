@@ -5,6 +5,7 @@ import Footer from './Footer';
 import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
 import ContextualFooterLinks from '@/components/common/ContextualFooterLinks';
+import FloatingAdvisor from '@/components/advisor/FloatingAdvisor';
 
 export default function SiteLayout() {
   return (
@@ -16,6 +17,7 @@ export default function SiteLayout() {
       <ContextualFooterLinks />
       <Footer />
       <NotificationPrompt />
+      <FloatingAdvisor />
       <CookieConsent />
     </div>
   );

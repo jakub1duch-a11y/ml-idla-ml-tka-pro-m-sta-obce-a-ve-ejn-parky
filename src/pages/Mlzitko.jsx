@@ -135,7 +135,7 @@ export default function Mlzitko() {
               Tlak 2–7 bar vytváří kapénky 50–100 μm a jemný viditelný oblak, který odebírá teplo z okolního vzduchu. Výsledkem je přirozené, úsporné a esteticky přitažlivé ochlazení veřejného prostoru.
             </p>
             <ul className="space-y-2">
-              {['Bez chemikálií — pouze čistá voda', 'Tichý provoz, žádný hluk', 'Potravinářská nerez — bezpečné pro děti', 'Nízká spotřeba vody vs. klimatizace'].map((item) => (
+              {['Bez chemikálií — pouze čistá voda', 'Tichý provoz podporuje klid a rekreační odpočinek', 'Potravinářská nerez — bezpečné pro děti', 'Nízká spotřeba vody vs. klimatizace'].map((item) => (
                 <li key={item} className="flex items-center gap-2.5 text-sm text-slate-600">
                   <CheckCircle2 size={15} className="text-slate-700 shrink-0" /> {item}
                 </li>

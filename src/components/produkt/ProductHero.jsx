@@ -56,8 +56,9 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             <p className="content-lead mb-6">{product.short_description}</p>
           )}
 
-          <p className="flex items-center gap-1.5 text-sm text-slate-500 mb-6">
-            <Truck size={14} className="text-slate-400 shrink-0" /> Možný termín dodání: <span className="font-medium text-slate-900">{deliveryText}</span>
+          <p className="flex flex-wrap items-center gap-1.5 text-sm text-slate-500 mb-6">
+            <Truck size={14} className="text-slate-400 shrink-0" /> Výroba a dodání: <span className="font-medium text-slate-900">{deliveryText}</span>
+            <a href="tel:+420774700390" className="ml-1 font-bold text-techblue underline underline-offset-2">Ověřit telefonicky</a>
           </p>
 
           {product.nozzle_variants?.length > 0 && (

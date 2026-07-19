@@ -7,7 +7,7 @@ export const benefitLinks = [
 ];
 
 export const mobileNavigation = [
-  { label: 'Produkty a řešení', path: '/katalog', links: [['Designová architektonická mlžítka', '/reseni/designova'], ['Vstupní a uvítací mlžné brány', '/reseni/brany'], ['Chytré moduly a příslušenství', '/reseni/chytre-moduly'], ['PRONÁJEM mobilních eventových mlžítek', '/katalog?sekce=pronajem']] },
+  { label: 'Produkty a řešení', path: '/katalog', links: [['Designová architektonická mlžítka', '/reseni/designova'], ['Vstupní a uvítací mlžné brány', '/reseni/brany'], ['Chytré moduly a příslušenství', '/reseni/chytre-moduly'], ['PRONÁJEM mobilních eventových mlžítek', '/pronajem']] },
   { label: 'Využití', path: '/vyuziti', links: usageLinks.map(([label, , path]) => [label, path]) },
   { label: 'Technologie a chytré řízení', path: '/jak-funguje-mlzeni', links: [['Jak funguje mlžení', '/jak-funguje-mlzeni'], ['Chytré řízení', '/chytra-mlzidla'], ['Smart ovládání', '/smart-ovladani']] },
   { label: 'Přínosy mlžítek', path: '/prinosy-mlzitek', links: benefitLinks.map(([label, , path]) => [label, path]) },

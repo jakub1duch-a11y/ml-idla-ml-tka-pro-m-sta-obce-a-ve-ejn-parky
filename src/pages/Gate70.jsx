@@ -83,7 +83,7 @@ const TECH_ROWS = [
 
 
 const SMART_FEATURES = [
-{ icon: Wifi, title: 'Wi-Fi Smart ovládání', desc: 'Nastavte harmonogram, intenzitu mlžení a časovač mlžné brány přes mobilní app bez nutnosti přístupu k elektrice na místě.' },
+{ icon: Wifi, title: 'Wi-Fi Smart ovládání', desc: 'Nastavte harmonogram a časovač mlžné brány v mobilní aplikaci; chytré řízení je napájeno od 3 V podle zvoleného řešení.' },
 { icon: Thermometer, title: 'Teplotní senzor', desc: 'Automatické spuštění při překročení nastavené teploty (např. 28 °C). Mlžení se samo vypne při poklesu.' },
 { icon: Radio, title: 'PIR — senzor pohybu', desc: 'Brána aktivuje mlžení jen tehdy, když v dosahu detekuje osobu. Šetří až 40 % vody.' },
 { icon: Smartphone, title: 'Mobile App', desc: 'Ovládání, statistiky spotřeby a přehled chyb přímo v telefonu (iOS / Android).' },

@@ -5,7 +5,7 @@ import { Layers, Thermometer, Wrench, ShieldCheck } from 'lucide-react';
 const INFO_ITEMS = [
   { icon: Layers, label: 'Materiál', value: 'Nerezová ocel AISI 304 / 316L' },
   { icon: Thermometer, label: 'Ochlazení', value: 'Až −9 °C bez pocitu mokra' },
-  { icon: Wrench, label: 'Výroba a dodání', value: 'Zakázkově, 1–8 týdnů dle modelu' },
+  { icon: Wrench, label: 'Výroba a dodání', value: 'Obvykle do 14 pracovních dnů (do 3 týdnů)' },
   { icon: ShieldCheck, label: 'Servis a podpora', value: 'Instalace, záruka i servis v ČR' },
 ];
 

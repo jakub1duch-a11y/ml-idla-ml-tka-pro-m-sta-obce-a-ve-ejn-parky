@@ -47,7 +47,7 @@ const ROWS = [
   { label: 'Spotřeba vody', icon: Droplets, gateU: '15–25 l/h', gateV: '15–25 l/h', linea: '≈ 30 l/h (0,5 l/min)' },
   { label: 'Tlak mlžení', icon: Gauge, gateU: '3–7 bar', gateV: '3–7 bar', linea: '4–7 bar' },
   { label: 'Rozměry', icon: Ruler, gateU: '2 × 2,2 m (upravitelné)', gateV: '2 × 2,2 m (upravitelné)', linea: 'Výška 0,7 m (upravitelné)' },
-  { label: 'Napájení / řízení', icon: Zap, gateU: '12 V, Wi-Fi Smart, senzory', gateV: '12 V, Wi-Fi Smart, senzory', linea: 'Vodovodní řad, volitelně Wi-Fi + LED' },
+  { label: 'Napájení / řízení', icon: Zap, gateU: '0–24 V / manuálně bez napětí / Smart od 3 V', gateV: '0–24 V / manuálně bez napětí / Smart od 3 V', linea: '0–24 V / manuálně bez napětí / Smart od 3 V' },
 ];
 
 const COLUMN_KEYS = ['gateU', 'gateV', 'linea'];
@@ -64,7 +64,7 @@ export default function GateComparisonTable() {
             GATE70 vs. LINEA CE70 — <span className="italic text-slate-400">hlavní rozdíl je v konstrukci.</span>
           </h2>
           <p className="text-slate-500 text-sm font-light max-w-2xl leading-relaxed">
-            Obě řady jsou z prémiové nerezové oceli AISI 316L, odolné korozi po celý rok. Zásadní rozdíl je v profilu konstrukce — GATE70 je svařován z kulaté trubky, LINEA CE70 z uzavřeného hranatého (jeklového) profilu.
+            Obě řady jsou z prémiové nerezové oceli AISI 316L pro spolehlivý sezónní provoz. Zásadní rozdíl je v profilu konstrukce — GATE70 je svařován z kulaté trubky, LINEA CE70 z uzavřeného hranatého (jeklového) profilu.
           </p>
         </motion.div>
 

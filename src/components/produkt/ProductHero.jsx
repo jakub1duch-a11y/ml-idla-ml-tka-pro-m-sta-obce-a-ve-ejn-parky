@@ -10,7 +10,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
   const [selectedVariant, setSelectedVariant] = useState(
     product.nozzle_variants?.find((v) => v.is_standard)?.code || product.nozzle_variants?.[0]?.code
   );
-  const deliveryText = isAccessory ? 'Do 7 prac. dnů (Ověřit - Zavolat)' : '1–3 pracovní týdny (Ověřit - Zavolat)';
+  const deliveryText = isAccessory ? 'Do 7 pracovních dnů (ověřit telefonicky)' : 'Výroba a dodání obvykle do 3 týdnů (ověřit telefonicky)';
   const quickSpecs = [
     product.coverage_area && { icon: Thermometer, label: 'Ochlazení', value: product.coverage_area },
     product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },

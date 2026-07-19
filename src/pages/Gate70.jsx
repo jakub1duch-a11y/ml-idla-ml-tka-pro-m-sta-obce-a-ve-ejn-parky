@@ -76,8 +76,8 @@ const TECH_ROWS = [
 { label: 'Šířka × Výška', value: '2 m × 2,2 m *(volitelná)' },
 { label: 'Kotvení', value: 'Skryté kotvící patky, chemické kotvy M10–M16 do betonu' },
 { label: 'Povrch', value: 'Broušený / kartáčovaný' },
-{ label: 'Napájení', value: "dle zvolení - 12V / Wi-Fi Smart \u0159\xEDzen\xED" },
-{ label: 'Dodací lhůta', value: '1–5 týdnů dle výroby' },
+{ label: 'Napájení', value: '0–24 V dle spouštění / manuálně bez napětí / Smart od 3 V' },
+{ label: 'Dodací lhůta', value: 'Obvykle do 14 pracovních dnů (do 3 týdnů)' },
 { label: 'Záruka', value: "na konstrukci" },
 { label: "", value: "" }];
 

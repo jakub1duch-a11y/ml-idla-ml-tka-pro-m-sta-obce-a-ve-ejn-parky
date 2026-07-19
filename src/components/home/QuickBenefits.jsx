@@ -7,7 +7,7 @@ export const QUICK_BENEFITS = [
   { icon: Droplets, value: 'Úsporné nízkotlaké mlžení', text: 'Jemná vodní mlha ochlazuje prostor s minimální spotřebou vody.', detail: 'Pracovní tlak 2–8 bar · cílené mlžení bez mokrého efektu' },
   { icon: ThermometerSnowflake, value: 'Ochlazení až o 12 °C', text: 'Okamžitá úleva pro terasy, parky i frekventovaný veřejný prostor.', detail: 'Pocitové ochlazení v aktivní zóně · okamžitý efekt', to: '/vyuziti' },
   { icon: Leaf, value: 'Ekologické ochlazení', text: 'Příjemnější mikroklima bez klimatizace a bez mokrého efektu.', detail: 'Voda se mění na jemnou mlhu · bez energeticky náročné klimatizace' },
-  { icon: Cloud, value: 'Mikromlha 5–15 μm', text: 'Velmi jemné kapénky se odpaří dřív, než dopadnou na povrch.', detail: 'Jemné kapénky · rovnoměrné rozprostření v prostoru' },
+  { icon: Cloud, value: 'Jemná mlha 50–100 μm', text: 'Jemné kapénky vytvářejí viditelný osvěžující oblak.', detail: 'Kapénky 50–100 μm · rovnoměrné rozprostření v prostoru' },
   { icon: Cog, value: 'Nerezová konstrukce', text: 'Precizní komponenty navržené pro dlouhodobý provoz.', detail: 'Nerez AISI 316L · odolné provedení pro venkovní použití' },
   { icon: ShieldCheck, value: 'Bezpečný provoz', text: 'Promyšlené řešení pro veřejný prostor.', detail: 'Navrženo pro pohyb lidí · komfortní a přehledná instalace' },
   { icon: Wrench, value: 'Servis a údržba', text: 'Dostupná péče pro spolehlivý provoz v každé sezóně.', detail: 'Sezónní kontrola · snadná údržba systému' },

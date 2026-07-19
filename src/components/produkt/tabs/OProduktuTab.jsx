@@ -9,7 +9,7 @@ const HIGHLIGHTS = [
 ];
 
 export default function OProduktuTab({ product }) {
-  const description = product.description || product.short_description || 'Nerezová konstrukce navržená pro celoroční venkovní provoz s důrazem na minimalistický design a spolehlivost.';
+  const description = product.description || product.short_description || 'Nerezová konstrukce navržená pro spolehlivý provoz během letní sezóny s důrazem na minimalistický design a snadnou údržbu.';
   const paragraphs = description.split(/\n{2,}/).filter(Boolean);
 
   return (

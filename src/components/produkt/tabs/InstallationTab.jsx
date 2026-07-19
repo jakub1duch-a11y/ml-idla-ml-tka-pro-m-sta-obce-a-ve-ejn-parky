@@ -12,7 +12,7 @@ export default function InstallationTab({ product }) {
             Instalace a kotvení<br /><span className="text-slate-400">bez betonování.</span>
           </h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
-            Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (3–8 barů) — Plug &amp; Mist pro úsporný nízkotlaký provoz.
+            Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (3–8 barů). Ovládání může být manuální bez napětí, spouštěné v rozsahu 0–24 V nebo chytré od 3 V.
           </p>
         </motion.div>
 

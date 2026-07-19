@@ -6,7 +6,7 @@ import { setSEO } from '@/lib/seo';
 
 const TECH_SPECS = [
   { label: 'Materiál', value: 'Nerezová ocel AISI 316L', icon: Layers },
-  { label: 'Trysky', value: 'AISI 316L, kapičky 10–50 μm', icon: Waves },
+  { label: 'Trysky', value: 'AISI 316L, kapénky 50–100 μm, vlastní sítko', icon: Waves },
   { label: 'Provozní tlak', value: '2–7 bar', icon: Gauge },
   { label: 'Spotřeba vody', value: '4–15 l/h dle modelu', icon: Droplets },
   { label: 'Ochlazení prostoru', value: 'až −9 °C', icon: Thermometer },
@@ -14,8 +14,8 @@ const TECH_SPECS = [
 ];
 
 const BENEFITS = [
-  { title: 'Potravinářská nerezová ocel', desc: 'Veškeré mlžítka jsou vyráběna z nerezové oceli AISI 316L — odolné vůči korozi, UV záření a mrazu. Bez nátěrů, bez chemikálií.' },
-  { title: 'Evaporativní chlazení', desc: 'Mikrotrysky rozprašují kapičky 10–50 μm, které se okamžitě odpařují ve vzduchu. Žádné mokré chodníky — jen příjemný chlad.' },
+  { title: 'Nerezová ocel AISI 316L', desc: 'Mlžítka vyrábíme z kvalitní nerezové oceli bez nátěrů. Konstrukce je připravená pro pravidelný provoz během letní sezóny.' },
+  { title: 'Evaporativní chlazení', desc: 'Mikrotrysky vytvářejí kapénky 50–100 μm a viditelnou osvěžující mlhu. Správné nastavení omezuje smáčení okolních povrchů.' },
   { title: 'Zakázková výroba na míru', desc: 'Každé mlžítko vzniká na zakázku. Tvar, výška, počet trysek, povrchová úprava — vše přizpůsobíme vašemu prostoru a projektu.' },
   { title: 'Chytré Smart ovládání', desc: 'Volitelný Wi-Fi / Bluetooth modul umožňuje ovládání z mobilní aplikace, automatizaci dle teploty, vlhkosti a denní doby.' },
   { title: 'Jednoduchos instalace', desc: 'Standardní instalace chemickými kotvami nebo zemním vrutem za jeden den. Napojení na běžný vodovodní řad (min. 2–3 bar).' },
@@ -105,11 +105,11 @@ export default function Mlzitko() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
             {[
               { val: 'AISI 316L', label: 'Materiál' },
-              { val: '10–50 μm', label: 'Kapičky mlhy' },
+              { val: '50–100 μm', label: 'Kapénky mlhy' },
               { val: '2–7 bar', label: 'Provozní tlak' },
               { val: '−9 °C', label: 'Ochlazení prostoru' },
               { val: '4–15 l/h', label: 'Spotřeba vody' },
-              { val: '6–8 týdnů', label: 'Výroba na míru' },
+              { val: 'Do 3 týdnů', label: 'Výroba a dodání' },
             ].map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <p className="font-heading font-light text-xl lg:text-2xl text-slate-900 mb-1">{s.val}</p>
@@ -132,7 +132,7 @@ export default function Mlzitko() {
               Mlžítko je architektonický prvek z nerezové oceli s integrovanými mlžícími tryskami. Pomocí principu evaporace (odpařování) vytváří jemnou mlhovou clonu, která ochlazuje okolní vzduch až o 9 °C bez mokrého povrchu.
             </p>
             <p className="text-slate-500 leading-relaxed mb-6">
-              Tlak 2–7 bar rozptyluje vodu na mikrokapičky 10–50 μm, které se okamžitě odpařují ve vzduchu — absorbují teplo z okolí. Výsledkem je přirozené, ekologické a esteticky přitažlivé chlazení veřejného prostoru.
+              Tlak 2–7 bar vytváří kapénky 50–100 μm a jemný viditelný oblak, který odebírá teplo z okolního vzduchu. Výsledkem je přirozené, úsporné a esteticky přitažlivé ochlazení veřejného prostoru.
             </p>
             <ul className="space-y-2">
               {['Bez chemikálií — pouze čistá voda', 'Tichý provoz, žádný hluk', 'Potravinářská nerez — bezpečné pro děti', 'Nízká spotřeba vody vs. klimatizace'].map((item) => (
@@ -213,7 +213,7 @@ export default function Mlzitko() {
           <div className="mt-8 p-5 rounded-2xl bg-white border border-slate-200 flex items-start gap-3">
             <Wrench size={18} className="text-slate-500 shrink-0 mt-0.5" />
             <p className="text-sm text-slate-500 leading-relaxed">
-              <strong className="text-slate-900">Rozvod vody:</strong> napojení na vodovodní řad (zahradní hadice nebo potrubí do 1"), min. tlak 2–3 bar. Pro Smart ventil zajistěte 230 V AC nebo 12 V DC poblíž patky, voděodolnou krabičku IP65.
+              <strong className="text-slate-900">Rozvod vody a ovládání:</strong> napojení na vodovodní řad, min. tlak 2–3 bar. Spouštění lze řešit v rozsahu 0–24 V, manuální uzavření přívodu je bez napětí a chytré řízení pracuje od 3 V.
             </p>
           </div>
         </div>

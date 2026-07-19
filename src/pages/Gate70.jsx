@@ -69,7 +69,7 @@ const VIDEOS = [
 const TECH_ROWS = [
 { label: 'Materiál', value: 'Nerezová ocel AISI 316L (1.4301)' },
 { label: 'Trubky', value: 'TR76×3 mm, svařované' },
-{ label: 'Trysky', value: '5-8 ks AISI 316L, 10–50 μm' },
+{ label: 'Trysky', value: '5-8 ks AISI 316L, 50–100 μm' },
 { label: 'Spotřeba vody', value: '40–100 l/h' },
 { label: 'Tlak mlžení', value: "3-7 bar" },
 { label: 'Šířka × Výška', value: '2 m × 2,2 m *(volitelná)' },

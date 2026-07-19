@@ -12,7 +12,7 @@ export default function FloatingAdvisor() {
   useEffect(() => {
     const pages = new Set(JSON.parse(sessionStorage.getItem('advisorPages') || '[]')); pages.add(pathname); sessionStorage.setItem('advisorPages', JSON.stringify([...pages]));
     const products = new Set(JSON.parse(sessionStorage.getItem('advisorProducts') || '[]')); if (pathname.startsWith('/produkt/')) products.add(pathname); sessionStorage.setItem('advisorProducts', JSON.stringify([...products]));
-    const shouldOpen = products.size >= 2 || pages.size > 3 || pathname.startsWith('/reference');
+    const shouldOpen = products.size >= 2 || pages.size > 3 || pathname.startsWith('/reference') || pathname === '/blog/ai-poradce-vyber-mlzitka';
     if (shouldOpen && !sessionStorage.getItem('advisorDismissed')) setOpen(true);
   }, [pathname]);
   const close = () => { setOpen(false); sessionStorage.setItem('advisorDismissed', '1'); };

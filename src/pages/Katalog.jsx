@@ -5,7 +5,6 @@ import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge, CalendarDays } from
 import { setSEO } from '@/lib/seo';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
-import SmartSystemPreview from '@/components/katalog/SmartSystemPreview';
 import FeatureIconRow from '@/components/common/FeatureIconRow';
 import CatalogRentalCard from '@/components/katalog/CatalogRentalCard';
 
@@ -16,19 +15,22 @@ const CATALOG_FEATURES = [
 { icon: Cpu, label: 'Smart řízení', value: 'volitelné moduly' }];
 
 const TABS = [
-  { id: 'mlzitka', label: 'Mlžítka', icon: Droplets },
-  { id: 'prislusenstvi', label: 'Příslušenství', icon: Layers },
-  { id: 'smart', label: 'Smart moduly', icon: Cpu },
+  { id: 'brany', label: 'Mlžné brány a portály', icon: Droplets },
+  { id: 'mlzitka', label: 'Designová mlžítka', icon: Layers },
+  { id: 'prislusenstvi', label: 'Příslušenství a Smart', icon: Cpu },
   { id: 'pronajem', label: 'Pronájem', icon: CalendarDays }];
 
 
 export default function Katalog() {
   const location = useLocation();
-  const [tab, setTab] = useState(() => new URLSearchParams(window.location.search).get('sekce') === 'pronajem' ? 'pronajem' : 'mlzitka');
+  const [tab, setTab] = useState(() => {
+    const section = new URLSearchParams(window.location.search).get('sekce');
+    return ['brany', 'mlzitka', 'prislusenstvi', 'pronajem'].includes(section) ? section : 'brany';
+  });
 
   useEffect(() => {
     const section = new URLSearchParams(location.search).get('sekce');
-    if (section === 'pronajem') setTab('pronajem');
+    if (['brany', 'mlzitka', 'prislusenstvi', 'pronajem'].includes(section)) setTab(section);
   }, [location.search]);
 
   useEffect(() => {
@@ -57,9 +59,9 @@ export default function Katalog() {
       </div>
 
       <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-0">
-        {tab === 'mlzitka' && <ProductFilterGrid />}
+        {tab === 'brany' && <ProductFilterGrid mode="gates" />}
+        {tab === 'mlzitka' && <ProductFilterGrid mode="sculptures" />}
         {tab === 'prislusenstvi' && <AccessoriesSection />}
-        {tab === 'smart' && <SmartSystemPreview />}
         {tab === 'pronajem' && <CatalogRentalCard />}
       </motion.div>
     </div>);

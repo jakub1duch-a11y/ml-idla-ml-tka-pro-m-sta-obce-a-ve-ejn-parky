@@ -10,6 +10,7 @@ import ZooPrahaShowcase from '@/components/home/ZooPrahaShowcase';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
 import ClientReviewsStrip from '@/components/home/ClientReviewsStrip';
+import HomeRentalTeaser from '@/components/home/HomeRentalTeaser';
 import BlogSection from '@/components/home/BlogSection';
 
 export default function Home2() {
@@ -17,5 +18,5 @@ export default function Home2() {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
   }, []);
-  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection enableCooling /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection enableCooling /><RealizaceGallerySection /><ClientReviewsStrip /><BlogSection /></>;
+  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection enableCooling /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection enableCooling /><HomeRentalTeaser /><RealizaceGallerySection /><ClientReviewsStrip /><BlogSection /></>;
 }

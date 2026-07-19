@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Droplets, Radio, Settings2, Smartphone } from 'lucide-react';
+import { ArrowRight, Droplets, Power, Radio, Settings2, Smartphone } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import { base44 } from '@/api/base44Client';
 import SystemComponentCard from '@/components/katalog/SystemComponentCard';
@@ -13,6 +13,7 @@ const ACCESSORIES = [
   { icon: Settings2, kicker: 'Řízení průtoku', title: 'Smart a ruční ventily', desc: 'Samostatné ovládání zóny, bezpečné uzavření a možnost časového plánu.', metrics: [['Ovládání', 'App / ruční'], ['Připojení', 'Wi‑Fi 2,4 GHz']], to: '/chytre-ventily-mlzitka' },
   { icon: Radio, kicker: 'Automatizace', title: 'Teplotní a pohybové senzory', desc: 'Spouštějí mlžení podle teploty, přítomnosti osob nebo provozního scénáře.', metrics: [['Vstup', 'teplota / pohyb'], ['Režim', 'automatický']], to: '/chytra-mlzidla' },
   { icon: Smartphone, kicker: 'Mobilní kontrola', title: 'Tuya Smart a Smart Life', desc: 'Spuštění mlžítka, denní interval od–do a přehled aktivních zón.', metrics: [['Platforma', 'iOS / Android'], ['Plán', 'denní cykly']], to: '/aplikace-ovladani-mlzitek' },
+  { icon: Power, kicker: 'Lokální ovládání', title: 'Tlačítka a spínače', desc: 'Odolné ruční ovládání přímo u mlžítka pro okamžité spuštění nebo časovaný cyklus.', metrics: [['Ovládání', 'tlačítko / časovač'], ['Použití', 'veřejné prostory']], to: '/kontakt?produkt=Tlačítka%20a%20spínače' },
 ];
 
 

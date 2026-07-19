@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Droplets, Gauge, Snowflake, Wind } from 'lucide-react';
+import StoryImageCrossfade from '@/components/home/StoryImageCrossfade';
 
 const COOLING_STEPS = ['Mlha aktivní', 'Vzduch příjemnější', 'Místo pro setkání'];
 
@@ -12,6 +13,7 @@ export default function MistStoryScene({ scene }) {
   const isHeatScene = scene.mode === 'heat';
   const cooled = isHeatScene && inView;
   const cooling = scene.mode !== 'heat' || cooled;
+  const hasPhoto = Boolean(scene.image || scene.images?.length);
 
   useEffect(() => {
     if (inView) videoRef.current?.play();
@@ -23,8 +25,8 @@ export default function MistStoryScene({ scene }) {
 
   return <motion.article ref={ref} initial={{ opacity: 0.25, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ amount: 0.35 }} transition={{ duration: 0.7 }} className="relative min-h-[78svh] overflow-hidden border-y border-white/10 bg-slate-950 text-white">
     {isHeatScene && scene.coolingVideo && <video src={scene.coolingVideo} preload="auto" muted playsInline className="hidden" />}
-    {scene.image ? <img src={scene.image} alt="Děti v chladivé mlze ve veřejném parku" className="absolute inset-0 h-full w-full object-cover" loading="lazy" /> : <video ref={videoRef} key={video} src={video} muted loop playsInline preload="metadata" className={`absolute inset-0 h-full w-full object-cover transition-all duration-1000 ${isHeatScene && !cooled ? 'scale-110 saturate-150 sepia-[.18]' : 'scale-100 opacity-80'}`} />}
-    <div className={`absolute inset-0 transition-all duration-700 ${isHeatScene && !cooled ? 'bg-gradient-to-r from-orange-950/90 via-red-950/62 to-slate-950/75' : scene.image ? 'bg-gradient-to-r from-slate-950/90 via-slate-950/25 to-slate-950/85' : 'bg-gradient-to-r from-slate-950/88 via-cyan-950/52 to-slate-950/70'}`} />
+    {scene.images ? <StoryImageCrossfade images={scene.images} alt={scene.imageAlt || scene.title} /> : scene.image ? <img src={scene.image} alt={scene.imageAlt || 'Mlžítko ve veřejném prostoru'} className="absolute inset-0 h-full w-full object-cover" loading="lazy" /> : <video ref={videoRef} key={video} src={video} muted loop playsInline preload="metadata" className={`absolute inset-0 h-full w-full object-cover transition-all duration-1000 ${isHeatScene && !cooled ? 'scale-110 saturate-150 sepia-[.18]' : 'scale-100 opacity-80'}`} />}
+    <div className={`absolute inset-0 transition-all duration-700 ${isHeatScene && !cooled ? 'bg-gradient-to-r from-orange-950/90 via-red-950/62 to-slate-950/75' : hasPhoto ? 'bg-gradient-to-r from-slate-950/95 via-slate-950/52 to-slate-950/75' : 'bg-gradient-to-r from-slate-950/88 via-cyan-950/52 to-slate-950/70'}`} />
     {isHeatScene && !cooled && <div className="absolute inset-0 opacity-45 mix-blend-screen" style={{ backgroundImage: 'repeating-linear-gradient(115deg, transparent 0, transparent 20px, rgba(251,146,60,.2) 21px, transparent 23px)' }} />}
     {cooling && <><div className="mist-scene-cloud" /><div className="mist-particles"><i /><i /><i /><i /></div><div className="absolute inset-0 bg-[radial-gradient(rgba(207,250,254,.45)_0.6px,transparent_0.7px)] bg-[size:7px_7px] opacity-25 mix-blend-screen" /></>}
     {scene.mode === 'map' && <div className="cooling-rings"><span /><span /><span /></div>}

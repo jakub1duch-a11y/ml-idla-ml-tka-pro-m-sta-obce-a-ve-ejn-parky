@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge, CalendarDays } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
@@ -22,7 +23,13 @@ const TABS = [
 
 
 export default function Katalog() {
-  const [tab, setTab] = useState('mlzitka');
+  const location = useLocation();
+  const [tab, setTab] = useState(() => new URLSearchParams(window.location.search).get('sekce') === 'pronajem' ? 'pronajem' : 'mlzitka');
+
+  useEffect(() => {
+    const section = new URLSearchParams(location.search).get('sekce');
+    if (section === 'pronajem') setTab('pronajem');
+  }, [location.search]);
 
   useEffect(() => {
     setSEO({

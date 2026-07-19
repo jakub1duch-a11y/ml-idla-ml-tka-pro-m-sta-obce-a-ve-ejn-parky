@@ -71,6 +71,7 @@ import Galerie from '@/pages/Galerie';
 import ChytreVentilyMlzitka from '@/pages/ChytreVentilyMlzitka';
 import AppControlGuide from '@/pages/AppControlGuide';
 import Pronajem from '@/pages/Pronajem';
+import PartnerstviDetail from '@/pages/PartnerstviDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -113,6 +114,7 @@ const AuthenticatedApp = () => {
         <Route path="/podpora" element={<Podpora />} />
         <Route path="/vyuziti" element={<Vyuziti />} />
         <Route path="/zahradni-mlzitka" element={<ZahradniMlzitka />} />
+        <Route path="/vyuziti/mesta-a-obce" element={<Navigate to="/vyuziti/mesta-obce" replace />} />
         <Route path="/vyuziti/:sector" element={<UsageCategory />} />
         <Route path="/kategorie/:sector" element={<UsageCategory />} />
         <Route path="/gdpr" element={<Gdpr />} />
@@ -132,6 +134,7 @@ const AuthenticatedApp = () => {
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />
+        <Route path="/partnerstvi/:type" element={<PartnerstviDetail />} />
         <Route path="/manualy" element={<KeStazeni />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />

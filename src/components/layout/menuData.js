@@ -14,5 +14,5 @@ export const mobileNavigation = [
   { label: 'Realizace', path: '/reference' },
   { label: 'Inspirace', path: '/blog' },
   { label: 'Podpora a servis', path: '/podpora', links: [['Produktový poradce', '/poradce'], ['O nás', '/o-nas'], ['Výhody mlžítek', '/vyhody'], ['Nejčastější dotazy', '/faq'], ['Technické listy', '/ke-stazeni'], ['Servis a údržba', '/servis-udrzba'], ['Video ukázky', '/videosekce-mlzitka'], ['Certifikace', '/certifikace'], ['Spočítat provozní náklady', '/kalkulacka']] },
-  { label: 'B2B partnerství', path: '/partnerstvi', links: [['Pro města a obce', '/vyuziti/mesta-obce'], ['Parky a hřiště', '/vyuziti/parky-hriste'], ['Školy, školky a děti', '/vyuziti/skoly-skolky-deti'], ['Domovy seniorů', '/vyuziti/domovy-senioru'], ['Hotely', '/vyuziti/hotely'], ['Wellness terasy', '/vyuziti/wellness-terasy']] },
+  { label: 'B2B partnerství', path: '/partnerstvi', links: [['Distributoři a prodejci', '/partnerstvi/distributori'], ['Architekti a projektanti', '/partnerstvi/architekti'], ['Montážní a servisní firmy', '/partnerstvi/montazni'], ['Města a veřejný sektor', '/partnerstvi/verejny-sektor']] },
 ];

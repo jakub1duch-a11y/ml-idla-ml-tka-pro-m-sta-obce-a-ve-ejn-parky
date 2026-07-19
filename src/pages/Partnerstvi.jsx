@@ -5,6 +5,7 @@ import { ArrowRight, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, S
 import { setSEO } from '@/lib/seo';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import PartnershipProgramGrid from '@/components/partnerstvi/PartnershipProgramGrid';
+import B2BReferencesSection from '@/components/reference/B2BReferencesSection';
 
 const BENEFITS = [
 { icon: FileText, title: '3D modely a výkresy', desc: 'Kompletní technická dokumentace, DWG/IFC soubory a materiálové listy pro projektovou přílohu.', color: 'text-blue-500' },
@@ -263,6 +264,8 @@ export default function Partnerstvi() {
           </motion.div>
         </div>
       </div>
+
+      <B2BReferencesSection context="mesta-obce" />
 
       {/* CTA */}
       <div className="py-20 text-center max-w-3xl mx-auto px-6">

@@ -9,6 +9,7 @@ import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import NozzleVariantsTable from '@/components/produkt/NozzleVariantsTable';
 import NozzleMaintenanceTab from '@/components/produkt/tabs/NozzleMaintenanceTab';
 import GateProductSmartPanel from '@/components/produkt/GateProductSmartPanel';
+import NozzleCostCalculator from '@/components/produkt/tabs/NozzleCostCalculator';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'gate-60-76'];
 
@@ -22,6 +23,7 @@ export default function ProductDetailContent({ product, techRows, allImages, isA
         {GATE_SLUGS.includes(product.slug) && <GateProductSmartPanel />}
         {isAccessory && <NozzleVariantsTable variants={product.nozzle_variants} />}
       </section>
+      {!isAccessory && <NozzleCostCalculator product={product} />}
       {isAccessory && <NozzleMaintenanceTab product={product} />}
       <section id="o-produktu"><OProduktuTab product={product} /></section>
       <section id="ukazka"><ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={onOpenLightbox} /></section>

@@ -1,25 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Calculator, Droplets } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const TOTAL_RATE = 129.11;
-const WATER_RATE = 75.86;
-const FLOW_AT_4_BAR = 7.2;
-const COUNTS = { 'bendy-60': 2, 'gate-60-76': 5, 'ostrev-mlzitko': 7 };
-const money = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 });
+import OperatingCostResults from '@/components/produkt/OperatingCostResults';
+import { getNozzleCount, HOURS_PER_DAY, WATER_RATE_WITH_SEWER } from '@/lib/operatingCosts';
 
 export default function NozzleCostCalculator({ product }) {
-  const parsed = Number((product.micron_size || '').match(/(\d+)\s*trysk/i)?.[1]);
-  const nozzles = COUNTS[product.slug] || parsed || 1;
-  const hourly = nozzles * FLOW_AT_4_BAR;
-  const dayLiters = hourly * 8;
-  const seasonLiters = hourly * 960;
-  const sensorLiters = hourly * 360;
-  const totalCost = (liters) => liters / 1000 * TOTAL_RATE;
-  const waterCost = (liters) => liters / 1000 * WATER_RATE;
-  return <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 text-white"><div className="grid md:grid-cols-[180px_1fr]">
-    <img src={product.image_url} alt={product.name} className="h-full min-h-44 w-full object-cover" /><div className="p-6"><div className="flex items-center gap-2 text-cyan"><Calculator size={16} /><p className="text-xs font-bold uppercase tracking-widest">Provoz při 4 bar · {nozzles} trysek</p></div><h3 className="mt-3 text-xl font-semibold text-white">{product.name}</h3>
-      <div className="mt-5 grid gap-3 sm:grid-cols-3"><div className="rounded-xl bg-white/5 p-3"><span className="text-xs text-white/45">8 hodin denně</span><b className="mt-1 block">{money.format(dayLiters)} l · {money.format(totalCost(dayLiters))} Kč</b></div><div className="rounded-xl bg-white/5 p-3"><span className="text-xs text-white/45">Sezóna · 960 h</span><b className="mt-1 block">{money.format(seasonLiters)} l · {money.format(totalCost(seasonLiters))} Kč</b></div><div className="rounded-xl bg-emerald-500/10 p-3"><span className="text-xs text-emerald-300">Se senzorem · 360 h</span><b className="mt-1 block">{money.format(sensorLiters)} l · {money.format(totalCost(sensorLiters))} Kč</b></div></div>
-      <p className="mt-4 text-xs leading-relaxed text-white/55">Cena se senzorem bez stočného: {money.format(waterCost(sensorLiters))} Kč. Úspora oproti celodenní sezóně: {money.format(totalCost(seasonLiters - sensorLiters))} Kč.</p><Link to={`/poptavka?produkt=${encodeURIComponent(product.name)}`} className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-cyan"><Droplets size={14} /> Poptat toto řešení</Link>
-    </div></div></div>;
+  const [seasonDays, setSeasonDays] = useState(120);
+  const nozzles = getNozzleCount(product);
+  return <section className="border-y border-slate-200 bg-slate-50 py-16 lg:py-20"><div className="site-container"><div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"><div className="max-w-2xl"><p className="content-eyebrow mb-3 flex items-center gap-2"><Calculator size={16} /> Spočítat provozní náklady</p><h2 className="content-title text-3xl">Kolik stojí provoz modelu {product.name}.</h2><p className="content-lead mt-3">Výpočet vychází z {nozzles} {nozzles === 1 ? 'trysky' : 'trysek'}, tlaku 4 bar a ceny {WATER_RATE_WITH_SEWER} Kč/m³ včetně vodného a stočného.</p></div><label className="w-full max-w-xs text-sm font-semibold text-slate-800">Délka letní sezóny: {seasonDays} dní<input type="range" min="30" max="150" step="5" value={seasonDays} onChange={(event) => setSeasonDays(Number(event.target.value))} className="mt-3 w-full accent-slate-950" /><span className="mt-1 flex justify-between text-xs font-normal text-slate-400"><span>30 dní</span><span>{seasonDays * HOURS_PER_DAY} hodin</span><span>150 dní</span></span></label></div><OperatingCostResults nozzles={nozzles} seasonDays={seasonDays} /><div className="mt-7 flex flex-wrap gap-3"><Link to={`/poptavka?produkt=${encodeURIComponent(product.name)}`} className="btn-metallic-mist px-6 py-3 text-sm font-bold"><Droplets size={15} /> Poptat toto řešení</Link><Link to="/kalkulacka" className="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-800">Otevřít úplnou kalkulačku</Link></div></div></section>;
 }

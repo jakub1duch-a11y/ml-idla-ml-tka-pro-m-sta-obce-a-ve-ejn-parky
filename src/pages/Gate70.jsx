@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
+import NozzleCostCalculator from '@/components/produkt/tabs/NozzleCostCalculator';
 
 // ─── Asset URLs ───────────────────────────────────────────────────────────────
 const HERO_U = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png';
@@ -344,6 +345,8 @@ export default function Gate70() {
           </motion.div>
         </div>
       </section>
+
+      <NozzleCostCalculator product={{ name: 'GATE70', slug: 'gate70', image_url: HERO_U, micron_size: '5 trysek · 50–100 μm' }} />
 
       <GateComparisonTable />
 

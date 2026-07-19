@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download } from 'lucide-react';
-import ProductDatasheetDownload from '@/components/produkt/ProductDatasheetDownload';
+import ProductPdfDownloads from '@/components/produkt/ProductPdfDownloads';
 
 const NOZZLE_PDF = 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/96db07d39_drbatrysek.pdf';
 const NOZZLE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/af0d47654_drbatrysek.png';
@@ -32,10 +32,10 @@ export default function DownloadsTab({ product }) {
           </p>
         </motion.div>
 
-        <div className="max-w-2xl mb-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-2">Firemní PDF podklad</p>
-          <p className="text-sm text-slate-600 mb-4">Technický list s hlavičkou značky, parametry produktu a kontaktní patičkou.</p>
-          <ProductDatasheetDownload product={product} />
+        <div className="mb-10 max-w-4xl rounded-2xl border border-slate-200 bg-slate-50 p-6">
+          <p className="mb-2 text-xs font-mono uppercase tracking-widest text-slate-400">PDF dokumentace mlzidla.cz</p>
+          <p className="mb-5 text-sm text-slate-600">Jednotný český produktový list, instalační postup a údržbový manuál s fotografií, technickými parametry, logem a číslovanou patičkou.</p>
+          <ProductPdfDownloads product={product} />
         </div>
 
         <div className="max-w-2xl space-y-4 mb-10">

@@ -49,7 +49,7 @@ export default function Vyhody() {
       </div>
 
       {/* STATS STRIP — dynamic loading */}
-      <div className="bg-slate-50 border-y border-slate-200 py-8">
+      <div className="border-y border-slate-200 py-8 bg-[hsl(var(--primary))]">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {STATS.map((s, i) =>

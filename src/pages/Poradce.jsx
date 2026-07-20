@@ -34,7 +34,7 @@ export default function Poradce() {
   const [loading, setLoading] = useState(false);
   const [starting, setStarting] = useState(false);
   
-  // Oprava: Sledujeme odeslané dropdowny podle indexu zprávy, aby po kliknutí nezamrzly
+  // Sleduje odeslané dropdowny podle indexu konkrétní zprávy
   const [sentDropdowns, setSentDropdowns] = useState({});
   const messagesEndRef = useRef(null);
 
@@ -63,7 +63,7 @@ export default function Poradce() {
       });
       setConversation(conv);
 
-      // Přihlášení k real-time aktualizacím přes SDK Base44
+      // Přihlášení k real-time aktualizacím zpráv přes SDK Base44
       base44.agents.subscribeToConversation(conv.id, (data) => {
         setMessages(data.messages || []);
         setLoading(false);
@@ -96,14 +96,13 @@ export default function Poradce() {
     }
   };
 
-  // Oprava: Funkce ošetřuje výběr konkrétního řádku konverzace
   const handleDropdownSelect = async (messageIndex, value) => {
     if (!value || loading || starting || sentDropdowns[messageIndex]) return;
     
-    // Zaznamenáme, že z tohoto konkrétního dropdownu už bylo odesláno
+    // Uloží vybranou hodnotu, aby se menu uzamklo pro tento krok
     setSentDropdowns(prev => ({ ...prev, [messageIndex]: value }));
     
-    // Odešleme vybraný text do Base44 inteligence
+    // Automaticky odešle vybraný text do Base44 inteligence
     await sendMessage(value);
   };
 
@@ -153,8 +152,17 @@ export default function Poradce() {
             )}
 
             {messages.map((msg, i) => {
-              const hasDropdownTrigger = msg.content?.includes('[TRIGGER_DROPDOWN_COMPONENT]');
-              const cleanedContent = msg.content?.replace('[TRIGGER_DROPDOWN_COMPONENT]', '') || '';
+              // Pokročilá detekce spouštěče imunní vůči chybějícím závorkám nebo malým písmenům
+              const contentUpper = (msg.content || '').toUpperCase();
+              const hasDropdownTrigger = contentUpper.includes('TRIGGER_DROPDOWN_COMPONENT') || 
+                                         contentUpper.includes('[TRIGGER_DROPDOWN') ||
+                                         contentUpper.includes('TRIGGER_DROPDOWN');
+
+              // Odstranění značek z textu zprávy, aby nerušily zákazníka v textovém okně
+              let cleanedContent = msg.content || '';
+              cleanedContent = cleanedContent.replace(/\[?TRIGGER_DROPDOWN_COMPONENT\]?/gi, '');
+              cleanedContent = cleanedContent.replace(/\[?TRIGGER_DROPDOWN\]?/gi, '');
+
               const isSelected = sentDropdowns[i];
 
               return (
@@ -180,7 +188,7 @@ export default function Poradce() {
                     </div>
                   </div>
 
-                  {/* Vykreslení upraveného rozbalovacího menu */}
+                  {/* Vykreslení opraveného a stabilního Dropdown komponentu pod zprávou */}
                   {msg.role !== 'user' && hasDropdownTrigger && (
                     <div className="ml-9 w-full max-w-xs">
                       <select
@@ -209,51 +217,4 @@ export default function Poradce() {
                 <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
                   <Droplets size={13} className="text-slate-700" />
                 </div>
-                <div className="bg-white border border-slate-200 px-4 py-3 rounded-2xl flex gap-1.5 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '300ms' }} />
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          <div className="border-t border-slate-200 p-4 flex gap-3">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Popište váš prostor nebo potřeby..."
-              disabled={loading || starting}
-              className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none disabled:opacity-50"
-            />
-            <button
-              onClick={() => sendMessage()}
-              disabled={!input.trim() || loading || starting}
-              className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 disabled:opacity-40 transition-all flex-shrink-0"
-            >
-              {loading ? <Loader size={16} className="animate-spin" /> : <Send size={16} />}
-            </button>
-          </div>
-        </div>
-
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator size={16} className="text-slate-700" />
-            <h2 className="text-slate-900 text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů mlžítka</h2>
-          </div>
-          <MlzeniKalkulator />
-        </motion.div>
-
-        <div className="mt-6 text-center">
-          <p className="text-slate-400 text-xs mb-3">Jste připraveni na nezávaznou poptávku?</p>
-          <Link to="/kontakt" className="inline-flex items-center gap-2 px-6 py-3 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-full hover:bg-slate-100 hover:border-slate-300 transition-all">
-            Kontaktovat Mlžidla.cz <ArrowRight size={14} />
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
+<span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '0ms' }} /><span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '150ms' }} /><span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '300ms' }} />)}{/* Input */}<inputvalue={input}onChange={(e) => setInput(e.target.value)}onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}placeholder="Popište váš prostor nebo potřeby..."disabled={loading || starting}className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none disabled:opacity-50"/><button onClick={sendMessage} disabled={!input.trim() || loading || starting}className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 disabled:opacity-40 transition-all flex-shrink-0">{loading ?  : }{/* Kalkulátor */}<motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">Technická specifikace</motion.div>);}

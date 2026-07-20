@@ -19,6 +19,12 @@
       "allowed_operations": [
         "read"
       ]
+    },
+    {
+      "entity_name": "Poptavka",
+      "allowed_operations": [
+        "create"
+      ]
     }
   ],
   "context_files": [],

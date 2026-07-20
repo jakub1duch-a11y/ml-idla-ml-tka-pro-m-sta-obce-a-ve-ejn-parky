@@ -42,7 +42,7 @@ export default function Poptavka() {
     firma: '',
     produkt: 'Doporučte mi vhodný produkt',
     ovladani: 'doporucit',
-    zprava: 'Dobrý den, poptávám cenu mlžítka (doplňte typ mlžítka nebo vaše požadavky k zakázkové výrobě na míru) pro [lokalita, např. Trutnov]. Moje hlavní požadavky jsou: [1-2 klíčové parametry, např. termín dodání, materiál, rozměry].Prosím o zaslání [upřesnění, např. cenové nabídky, návrhu řešení] a předpokládaného termínu realizace. Děkuji za nabídku a těším se na spolupráci. S pozdravem/ e-mail]',
+    zprava: 'Dobrý den, poptávám cenu mlžítka (doplňte typ mlžítka nebo vaše požadavky k zakázkové výrobě na míru) pro [lokalita, např. Trutnov]. Moje hlavní požadavky jsou: [1-2 klíčové parametry, např. termín dodání, materiál, rozměry].Prosím o zaslání [upřesnění, např. cenové nabídky, návrhu řešení] a předpokládaného termínu realizace. Děkuji za nabídku a těším se na spolupráci. S pozdravem',
   });
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);

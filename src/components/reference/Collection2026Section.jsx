@@ -21,7 +21,7 @@ export default function Collection2026Section() {
   const scrollBy = (amount) => scrollRef.current?.scrollBy({ left: amount, behavior: 'smooth' });
 
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden bg-[hsl(var(--popover-foreground))]">
+    <section className="relative py-16 sm:py-24 overflow-hidden bg-[hsl(var(--popover-foreground))] hidden">
       <div className="absolute top-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-b from-white to-slate-950 pointer-events-none" />
       <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-t from-white to-slate-950 pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">

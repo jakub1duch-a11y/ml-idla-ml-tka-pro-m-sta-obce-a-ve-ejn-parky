@@ -183,7 +183,7 @@ export default function Reference() {
       {/* CTA */}
       <div className="py-20 bg-slate-50 border-t border-slate-200">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-4">Chcete váš projekt zde?</h2>
+          <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-4">Máte zájem o podobné řešení?</h2>
           <p className="text-slate-500 mb-8">Konzultace zdarma, 3D vizualizace do 48 h, montáž za jeden den.</p>
           <Link to="/kontakt" className="btn-metallic-mist px-8 py-4 text-sm font-bold">
             Nezávazná poptávka <ArrowRight size={16} />

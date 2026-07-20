@@ -140,7 +140,7 @@ export default function Reference() {
   const visible = filter === 'all' ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <div className="min-h-screen bg-[hsl(var(--card-foreground))]">
+    <div className="min-h-screen bg-slate-950">
       {/* Hero */}
       <ReferenceHero />
 

@@ -108,8 +108,8 @@ function ProjectCard({ project, onOpen }) {
         <h3 className="font-heading font-medium text-white text-lg leading-snug mb-2">{project.name}</h3>
         <div className="flex items-center justify-between gap-3">{city && <p className="inline-flex items-center gap-1.5 text-xs text-white/75"><MapPin size={13} /> {city}</p>}<Link to={`/reference/${project.id}-${slugify(project.name)}`} onClick={(event) => event.stopPropagation()} aria-label={`Detail ${project.name}`} className="w-8 h-8 rounded-full bg-white/15 hover:bg-white text-white hover:text-slate-950 flex items-center justify-center transition-colors"><ArrowRight size={14} /></Link></div>
       </div>
-    </motion.div>
-  );
+    </motion.div>);
+
 }
 
 const FILTERS = [
@@ -140,7 +140,7 @@ export default function Reference() {
   const visible = filter === 'all' ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[hsl(var(--card-foreground))]">
       {/* Hero */}
       <ReferenceHero />
 

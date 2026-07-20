@@ -31,7 +31,9 @@
   },
   "allow_anonymous_access": true,
   "app_user_connector_configs": [],
-  "selected_skill_names": [],
+  "selected_skill_names": [
+    "eskalace-podpory"
+  ],
   "selected_workspace_skill_ids": [],
   "whatsapp_greeting": "",
   "telegram_greeting": "",

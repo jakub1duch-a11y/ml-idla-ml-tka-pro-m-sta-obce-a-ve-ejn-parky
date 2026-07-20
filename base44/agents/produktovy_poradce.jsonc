@@ -37,7 +37,9 @@
   },
   "allow_anonymous_access": true,
   "app_user_connector_configs": [],
-  "selected_skill_names": [],
+  "selected_skill_names": [
+    "step-by-step"
+  ],
   "selected_workspace_skill_ids": [],
   "whatsapp_greeting": "Dobr\u00fd den! Jsem v\u00e1\u0161 pr\u016fvodce sv\u011btem zak\u00e1zkov\u00fdch ml\u017e\u00edc\u00edch skulptur. R\u00e1d s v\u00e1mi projdu va\u0161e p\u0159edstavy, abychom mohli navrhnout dokonal\u00e9 um\u011bleck\u00e9 d\u00edlo s vodn\u00ed mlhou. Kde by m\u011bla va\u0161e skulptura ide\u00e1ln\u011b st\u00e1t \u2013 v interi\u00e9ru, nebo venku na zahrad\u011b \u010di terase?\u201c",
   "telegram_greeting": "",

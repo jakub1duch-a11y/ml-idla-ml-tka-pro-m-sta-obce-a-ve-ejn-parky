@@ -47,7 +47,7 @@ export default function Poradce() {
   useEffect(() => {
     setSEO({
       title: 'AI Mlžný poradce — Vyberte si ideální mlžný systém pro mlžítko - Mlžidla.cz',
-      description: 'Popište svůj prostor, potřeby a náš AI poradce vám doporučí vhodný mlžítko neboli mlžný systém či mlžnou sochu Mlžidla.cz.',
+      description: 'Popište svůj prostor, potřeby a náš AI poradce vám doporučí vhodný mlžítko neboli popište vaše požadavky mlžného systému. Zadáním vybraného mlžítka nebo požadavků k zakázkové výrobě okamžitě vytvoříme žádost o cenovou nabídku vašeho mlžítka.',
       canonicalPath: '/poradce',
     });
   }, []);

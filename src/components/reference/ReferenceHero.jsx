@@ -8,7 +8,7 @@ const BG_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d6
 
 export default function ReferenceHero() {
   return (
-    <section className="relative min-h-[720px] h-[100svh] overflow-hidden flex items-center justify-center text-center bg-slate-950">
+    <section className="relative min-h-[720px] h-[100svh] overflow-hidden flex items-center justify-center text-center bg-[hsl(var(--popover-foreground))]">
       <img src={BG_IMAGE} alt="Mlžný oblak ve veřejném prostoru" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/55 via-slate-950/35 to-slate-950/90" />
       <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }} className="relative z-10 px-6 max-w-3xl">

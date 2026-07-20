@@ -33,7 +33,9 @@ export default function Poradce() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [starting, setStarting] = useState(false);
-  const [selectedDropdownValue, setSelectedDropdownValue] = useState('');
+  
+  // Oprava: Sledujeme odeslané dropdowny podle indexu zprávy, aby po kliknutí nezamrzly
+  const [sentDropdowns, setSentDropdowns] = useState({});
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -61,13 +63,12 @@ export default function Poradce() {
       });
       setConversation(conv);
 
-      // Subscribe to updates
+      // Přihlášení k real-time aktualizacím přes SDK Base44
       base44.agents.subscribeToConversation(conv.id, (data) => {
         setMessages(data.messages || []);
         setLoading(false);
       });
 
-      // Send first message
       setLoading(true);
       await base44.agents.addMessage(conv, { role: 'user', content: firstMessage });
     } finally {
@@ -95,12 +96,14 @@ export default function Poradce() {
     }
   };
 
-  const handleDropdownSelect = async (e) => {
-    const value = e.target.value;
-    if (!value || loading || starting) return;
+  // Oprava: Funkce ošetřuje výběr konkrétního řádku konverzace
+  const handleDropdownSelect = async (messageIndex, value) => {
+    if (!value || loading || starting || sentDropdowns[messageIndex]) return;
     
-    setSelectedDropdownValue(value);
-    // Automatically send the chosen product as a text message to Base44 trigger logic
+    // Zaznamenáme, že z tohoto konkrétního dropdownu už bylo odesláno
+    setSentDropdowns(prev => ({ ...prev, [messageIndex]: value }));
+    
+    // Odešleme vybraný text do Base44 inteligence
     await sendMessage(value);
   };
 
@@ -131,7 +134,7 @@ export default function Poradce() {
           <div className="flex-1 overflow-y-auto p-5 space-y-4" style={{ maxHeight: '520px' }}>
             {messages.length === 0 && !starting && (
               <div className="h-full flex flex-col items-center justify-center gap-6 py-8">
-                <p className="text-slate-400 text-sm text-center">Zahajte konverzaci nebo vyberte téma:</p>
+                <p className="text-slate-400 text-sm text-center">Nevíte si rady s výběrem? Chcete zažádat o cenu a nabídku vhodného mlžítka?</p>
                 <div className="flex flex-col gap-2 w-full max-w-sm">
                   {SUGGESTED_QUESTIONS.map((q) => (
                     <button key={q} onClick={() => handleSuggestion(q)}
@@ -152,6 +155,7 @@ export default function Poradce() {
             {messages.map((msg, i) => {
               const hasDropdownTrigger = msg.content?.includes('[TRIGGER_DROPDOWN_COMPONENT]');
               const cleanedContent = msg.content?.replace('[TRIGGER_DROPDOWN_COMPONENT]', '') || '';
+              const isSelected = sentDropdowns[i];
 
               return (
                 <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} space-y-2`}>
@@ -176,17 +180,19 @@ export default function Poradce() {
                     </div>
                   </div>
 
-                  {/* Render Custom Interactive Dropdown Component */}
+                  {/* Vykreslení upraveného rozbalovacího menu */}
                   {msg.role !== 'user' && hasDropdownTrigger && (
                     <div className="ml-9 w-full max-w-xs">
                       <select
-                        value={selectedDropdownValue}
-                        onChange={handleDropdownSelect}
-                        disabled={loading}
-                        className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm shadow-sm focus:border-slate-400 focus:outline-none disabled:opacity-50 transition-all cursor-pointer font-medium"
+                        value={isSelected || ''}
+                        onChange={(e) => handleDropdownSelect(i, e.target.value)}
+                        disabled={loading || !!isSelected}
+                        className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm shadow-sm focus:border-slate-400 focus:outline-none disabled:opacity-60 transition-all cursor-pointer font-medium"
                       >
-                        <option value="" disabled>Vyberte si produkt ze seznamu...</option>
-                        {DROPDOWN_OPTIONS.map((opt) => (
+                        <option value="" disabled>
+                          {isSelected ? `Zvoleno: ${isSelected}` : 'Vyberte si produkt ze seznamu...'}
+                        </option>
+                        {!isSelected && DROPDOWN_OPTIONS.map((opt) => (
                           <option key={opt.value} value={opt.value}>
                             {opt.label}
                           </option>
@@ -211,45 +217,3 @@ export default function Poradce() {
               </div>
             )}
 
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <div className="border-t border-slate-200 p-4 flex gap-3">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Popište váš prostor nebo potřeby..."
-              disabled={loading || starting}
-              className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none disabled:opacity-50"
-            />
-            <button
-              onClick={() => sendMessage()}
-              disabled={!input.trim() || loading || starting}
-              className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 disabled:opacity-40 transition-all flex-shrink-0"
-            >
-              {loading ? <Loader size={16} className="animate-spin" /> : <Send size={16} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Kalkulátor */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator size={16} className="text-slate-700" />
-            <h2 className="text-slate-900 text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů mlžítka</h2>
-          </div>
-          <MlzeniKalkulator />
-        </motion.div>
-
-        <div className="mt-6 text-center">
-          <p className="text-slate-400 text-xs mb-3">Jste připraveni na nezávaznou poptávku?</p>
-          <Link to="/kontakt" className="inline-flex items-center gap-2 px-6 py-3 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-full hover:bg-slate-100 hover:border-slate-300 transition-all">
-            Kontaktovat Mlžidla.cz <ArrowRight size={14} />
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}

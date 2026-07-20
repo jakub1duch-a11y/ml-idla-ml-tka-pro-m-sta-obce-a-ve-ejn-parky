@@ -32,7 +32,8 @@
   "allow_anonymous_access": true,
   "app_user_connector_configs": [],
   "selected_skill_names": [
-    "eskalace-podpory"
+    "eskalace-podpory",
+    "brand-voice"
   ],
   "selected_workspace_skill_ids": [],
   "whatsapp_greeting": "",

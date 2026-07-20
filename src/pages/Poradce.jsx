@@ -223,3 +223,5 @@ export default function Poradce() {
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
               placeholder="Popište váš prostor nebo potřeby..."
               disabled={loading || starting}
+            
+{/* Kalkulátor */}<motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">Technická specifikace</motion.div>); }

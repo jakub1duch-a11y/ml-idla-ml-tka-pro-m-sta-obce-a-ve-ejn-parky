@@ -39,7 +39,8 @@
   "app_user_connector_configs": [],
   "selected_skill_names": [
     "eskalace-podpory",
-    "brand-voice"
+    "brand-voice",
+    "step-by-step"
   ],
   "selected_workspace_skill_ids": [],
   "whatsapp_greeting": "",

@@ -1,102 +1,140 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Send, Droplets, Loader } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
-export default function PoradceRozcestnik() {
-  const [vybranySmer, setVybranySmer] = useState(null);
+export default function Poradce() {
+  const [conversation, setConversation] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
 
-  // Definice možností na základě vaší otázky
-  const moznosti = [
-    {
-      id: 'produkt',
-      titulek: 'Vybrat produkt',
-      popis: 'Prohlédněte si katalog mlžítek a vyberte si standardní model.',
-      ikona: '📦'
-    },
-    {
-      id: 'nabidka',
-      titulek: 'Zažádat o cenovou nabídku',
-      popis: 'Máte vybraný produkt a chcete znát přesnou cenu a termín dodání.',
-      ikona: '💰'
-    },
-    {
-      id: 'vlastni_reseni',
-      titulek: 'Poptat vlastní řešení a tvar mlžítka',
-      popis: 'Potřebujete atypický tvar nebo specifické technické řešení na míru.',
-      ikona: '📐'
+  // 1. Inicializace konverzace s agentem při načtení komponenty
+  useEffect(() => {
+    async function startChat() {
+      setLoading(true);
+      try {
+        const conv = await base44.agents.createConversation({
+          agent_name: 'produktovy_poradce', // Název vašeho agenta v Base44
+        });
+        setConversation(conv);
+      } catch (error) {
+        console.error('Chyba při zakládání konverzace v Base44:', error);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+    startChat();
+  }, []);
+
+  // 2. Real-time odběr (WebSocket) na zprávy z Base44
+  useEffect(() => {
+    if (!conversation?.id) return;
+
+    // Přihlášení k odběru změn (streamování zpráv)
+    const unsubscribe = base44.agents.subscribeToConversation(
+      conversation.id,
+      (data) => {
+        setMessages(data.messages || []);
+        setLoading(false);
+      }
+    );
+
+    // Správné vyčištění spojení (cleanup) při odchodu z komponenty
+    return () => unsubscribe();
+  }, [conversation?.id]);
+
+  // Automatické scrollování na nejnovější zprávy
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, loading]);
+
+  // 3. Odeslání zprávy uživatele přes SDK
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!input.trim() || !conversation || loading) return;
+
+    const userText = input.trim();
+    setInput('');
+    setLoading(true);
+
+    try {
+      await base44.agents.addMessage(conversation, {
+        role: 'user',
+        content: userText,
+      });
+    } catch (error) {
+      console.error('Chyba při odesílání zprávy:', error);
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen flex flex-col justify-center">
-      
-      {/* Hlavní nadpis - Vaše otázka */}
-      <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">
-          S čím vám mohu pomoci?
-        </h1>
-        <p className="text-gray-600 text-lg">
-          Vyberte si jednu z možností níže a já vás provedu dalším postupem.
-        </p>
-      </div>
-
-      {/* Grid s interaktivními kartami */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {moznosti.map((moznost) => (
-          <button
-            key={moznost.id}
-            onClick={() => setVybranySmer(moznost.id)}
-            className={`flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-sm border transition-all duration-200 hover:shadow-md hover:border-blue-500 ${
-              vybranySmer === moznost.id 
-                ? 'ring-2 ring-blue-500 border-blue-500 bg-blue-50/30' 
-                : 'border-gray-200'
-            }`}
-          >
-            {/* Ikona */}
-            <span className="text-4xl mb-4" role="img" aria-label={moznost.titulek}>
-              {moznost.ikona}
-            </span>
-            
-            {/* Titulek */}
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {moznost.titulek}
-            </h3>
-            
-            {/* Popis */}
-            <p className="text-sm text-gray-500 line-clamp-3">
-              {moznost.popis}
-            </p>
-          </button>
-        ))}
-      </div>
-
-      {/* Dynamické zobrazení dalšího kroku podle výběru */}
-      {vybranySmer && (
-        <div className="mt-10 p-6 bg-white rounded-xl shadow-sm border border-gray-200 animate-fadeIn">
-          {vybranySmer === 'produkt' && (
-            <div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">Skvělé! Pojďme vybrat mlžítko.</h4>
-              <p className="text-gray-600 mb-4">Zde se zobrazí filtr produktů nebo odkaz na katalog...</p>
-              <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700">Otevřít katalog</button>
-            </div>
-          )}
-
-          {vybranySmer === 'nabidka' && (
-            <div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">Formulář pro cenovou nabídku</h4>
-              <p className="text-gray-600 mb-4">Připravte si prosím kód produktu nebo odkaz z katalogu.</p>
-              <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700">Pokračovat k poptávce</button>
-            </div>
-          )}
-
-          {vybranySmer === 'vlastni_reseni' && (
-            <div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">Návrh vlastního tvaru a řešení</h4>
-              <p className="text-gray-600 mb-4">Budeme od vás potřebovat přibližné rozměry např. výšku mlžítka a představu o umístění.</p>
-              <button className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700">Konfigurovat vlastní tvar</button>
-            </div>
-          )}
+    <div className="max-w-2xl mx-auto my-10 px-4">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col h-[550px]">
+        {/* Hlavička */}
+        <div className="p-4 bg-slate-900 text-white flex items-center gap-2">
+          <Droplets className="text-blue-400 animate-pulse" size={20} />
+          <div>
+            <h1 className="text-sm font-semibold">AI Průvodce výběrem mlžítka</h1>
+            <p className="text-[11px] text-slate-400">Propojeno s Base44 Agent API</p>
+          </div>
         </div>
-      )}
 
+        {/* Výpis zpráv chatu */}
+        <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50">
+          {messages.length === 0 && (
+            <div className="h-full flex items-center justify-center text-sm text-slate-400">
+              {loading ? 'Připojuji agenta...' : 'Napište cokoli pro zahájení poptávky...'}
+            </div>
+          )}
+
+          {messages.map((msg, index) => {
+            const isUser = msg.role === 'user';
+            return (
+              <div key={index} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                    isUser
+                      ? 'bg-slate-900 text-white rounded-tr-none'
+                      : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
+                  }`}
+                >
+                  <p className="whitespace-pre-line">{msg.content}</p>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Indikátor načítání / generování textu */}
+          {loading && (
+            <div className="flex items-center gap-2 text-xs text-slate-400">
+              <Loader size={12} className="animate-spin" />
+              <span>Agent zpracovává odpověď...</span>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input formulář */}
+        <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-slate-200 flex gap-2">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Napište zprávu..."
+            disabled={loading || !conversation}
+            className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:border-slate-400 transition-all disabled:opacity-60"
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || loading || !conversation}
+            className="p-2.5 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-colors disabled:bg-slate-100 disabled:text-slate-300 flex items-center justify-center"
+          >
+            <Send size={18} />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

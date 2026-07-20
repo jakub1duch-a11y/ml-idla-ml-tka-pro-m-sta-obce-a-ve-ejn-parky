@@ -3,9 +3,9 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
-const SITE_NAME = 'Mlžidla.cz - Mlžítka Holmtec';
+const SITE_NAME = 'Mlžidla.cz - Mlžítka a mlžné systémy Holmtec';
 const BASE_URL = 'https://mlzidla.cz';
-const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg';
+const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png';
 
 function setMeta(name, content) {
   if (!content) return;
@@ -77,19 +77,19 @@ export const SEO_PAGES = {
     title: 'Mlžítka a mlžné brány',
     description: 'Zakázkové mlžítka, mlžné brány a chladicí systémy HolmTec z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad.',
     keywords: 'mlžné, sochy, mlžítka, mlzitka, mlžné, brány, HolmTec, mlzidla, nerezové sochy, mlžení',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3671a8607_generated_image.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png',
     canonicalPath: '/',
   },
   kolekce: {
     title: 'Celý katalog 2026 - Mlžítka a mlžné brány',
-    description: 'Kolekce 2026 - Mlžítka a mlžné brány HolmTec: OSTREV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70 a další. Zakázková výroba z nerezové oceli, navržená pro každý veřejný prostor.',
-    keywords: 'mlžítka, mlžné brány, katalog mlžných soch, mlžné skulptury, mlžné systémy katalog, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70, mlžná brána',
+    description: 'Mlžítka a mlžné brány HolmTec: Designová architektonická mlžítka, vstupní a uvítací mlžící mlžné brány, Zakázková výroba mlžítek a mlžných dětských hřišt.',
+    keywords: 'mlžítka, mlžné brány, mlžící, mlžné, systémy, výroba',
     canonicalPath: '/mlzidla-mlzitka',
   },
    jakToFunguje: {
-    title: 'Jak funguje mlžení? Princip evaporace a technologie mlžných soch',
-    description: 'Vysvětlujeme princip mlžení: kapky 50–100 μm se při vhodných podmínkách odpařují ve vzduchu a odebírají teplo. Poznejte technologii mlžítek HolmTec.',
-    keywords: 'jak funguje mlžení, kapky 50–100 μm, evaporace mlha, mlžné trysky princip, ochlazení evaporací, technologie mlžítek HolmTec',
+    title: 'Jak funguje mlžení a mlžítka? Princip evaporace a technologie mlžítek a mlžných systémů',
+    description: 'Princip mlžení a mlžítka: kapky 50–100 μm - Poznejte technologii mlžítek HolmTec kdy se kapičky ve vzduchu odpařují a odebírají teplo.',
+    keywords: 'mlžení, mlžítka, evaporace, mlha, mlžné, mlžítek',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7d93243ca_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
     canonicalPath: '/jak-funguje-mlzeni',
   },
@@ -141,7 +141,7 @@ export const SEO_PAGES = {
     title: 'Mlžítka pro parky a dětská hřiště — Bezpečné mlžení pro děti',
     description: 'Mlžné systémy a mlžítka pro parky a dětská hřiště. Bezpečné pro děti, potravinářská nerez AISI 316L, bez chemie. Ochlazení až −9 °C. HolmTec mlzidla.',
     keywords: 'mlžítka, hřiště, mlžení mlžné, mlzitka',
-    canonicalPath: '/kategorie/parky-hriste',
+    canonicalPath: '/vyuziti/parky-hriste',
   },
   koupaliste: {
     title: 'Mlhoviště pro koupaliště a aquaparky — Chladicí zóny u vody',
@@ -191,11 +191,11 @@ export const SEO_PAGES = {
 
 export function getProductSEO(product, reviewStats) {
   if (!product) return {};
-  const title = `${product.name} — Nízkotlaké mlžítko 2–8 bar (200–800 kPa)`;
+  const title = `${product.name} — Mlžítko 2–8 bar (200–800 kPa)`;
   const description = product.short_description
-    ? `${product.name}: ${product.short_description} Nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
-    : `Nízkotlaké mlžítko ${product.name} — provoz 2–8 bar (200–800 kPa) bez čerpadel, kotvení zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena na vyžádání.`;
-  const keywords = `${product.name}, nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, HolmTec ${product.name}`;
+    ? `${product.name}: ${product.short_description} Mlžítka a nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
+    : `Mlžítka a mlžné systémy ${product.name} — provoz 2–8 bar, bez čerpadel, kotvení mlžítka zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena mlžítek na vyžádání.`;
+  const keywords = `${product.name} nízkotlaký, mlžící, mlžítka,systémy, mlžný systémy ${product.name}, ${product.material || 'nerezová ocel'}, Mlžítka - Mlzidla.cz ${product.name}`;
 
   const sku = `HT-${(product.slug || product.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-')}`;
   const images = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
@@ -211,8 +211,8 @@ export function getProductSEO(product, reviewStats) {
     description: product.short_description || description,
     sku,
     mpn: sku,
-    brand: { '@type': 'Brand', name: 'HolmTec' },
-    manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
+    brand: { '@type': 'Brand', name: 'mlzidla.cz' },
+    manufacturer: { '@type': 'Organization', name: 'Mlzidla.cz', url: BASE_URL },
     material: product.material || 'Nerezová ocel AISI 316L',
     offers: {
       '@type': 'Offer',
@@ -284,7 +284,7 @@ export function getBlogPostSEO(post) {
   if (!post) return {};
   const description = post.perex
     ? post.perex.slice(0, 160)
-    : `Přečtěte si článek "${post.title}" na blogu HolmTec — mlzidla.cz.`;
+    : `Přečtěte si článek "${post.title}" na blogu — Mlžítka - mlzidla.cz.`;
   const previewImage = post.image_url || extractFirstContentImage(post.content) || DEFAULT_IMAGE;
 
   const jsonLd = {

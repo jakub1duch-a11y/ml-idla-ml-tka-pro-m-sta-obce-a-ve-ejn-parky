@@ -19,7 +19,7 @@ export default function FeatureIconRow({ items = [], className = '' }) {
             <item.icon size={18} className="text-slate-700 size-" />
           </div>
           <p className="font-medium leading-tight text-s text-slate-900">{item.label}</p>
-          {item.value && <p className="text-[11px] text-slate-500 leading-tight">{item.value}</p>}
+          {item.value && <p className="text-slate-500 leading-tight text-2xl">{item.value}</p>}
         </motion.div>
       )}
     </div>);

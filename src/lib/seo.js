@@ -3,9 +3,9 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
-const SITE_NAME = 'Mlžidla.cz - Mlžítka a mlžné systémy Holmtec';
+const SITE_NAME = 'Mlžidla.cz - Mlžítka Holmtec';
 const BASE_URL = 'https://mlzidla.cz';
-const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png';
+const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg';
 
 function setMeta(name, content) {
   if (!content) return;
@@ -77,19 +77,25 @@ export const SEO_PAGES = {
     title: 'Mlžítka a mlžné brány',
     description: 'Zakázkové mlžítka, mlžné brány a chladicí systémy HolmTec z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad.',
     keywords: 'mlžné, sochy, mlžítka, mlzitka, mlžné, brány, HolmTec, mlzidla, nerezové sochy, mlžení',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3671a8607_generated_image.png',
     canonicalPath: '/',
   },
   kolekce: {
     title: 'Celý katalog 2026 - Mlžítka a mlžné brány',
-    description: 'Mlžítka a mlžné brány HolmTec: Designová architektonická mlžítka, vstupní a uvítací mlžící mlžné brány, Zakázková výroba mlžítek a mlžných dětských hřišt.',
-    keywords: 'mlžítka, mlžné brány, mlžící, mlžné, systémy, výroba',
+    description: 'Kolekce 2026 - Mlžítka a mlžné brány HolmTec: OSTREV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70 a další. Zakázková výroba z nerezové oceli, navržená pro každý veřejný prostor.',
+    keywords: 'mlžítka, mlžné brány, katalog mlžných soch, mlžné skulptury, mlžné systémy katalog, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70, mlžná brána',
     canonicalPath: '/mlzidla-mlzitka',
   },
-   jakToFunguje: {
-    title: 'Jak funguje mlžení a mlžítka? Princip evaporace a technologie mlžítek a mlžných systémů',
-    description: 'Princip mlžení a mlžítka: kapky 50–100 μm - Poznejte technologii mlžítek HolmTec kdy se kapičky ve vzduchu odpařují a odebírají teplo.',
-    keywords: 'mlžení, mlžítka, evaporace, mlha, mlžné, mlžítek',
+  mlhoviste: {
+    title: 'Mlhoviště pro mlžná dětská hřiště, terasy a veřejné prostory',
+    description: 'Mlžné systémy - Mlhoviště START, PARK a ARENA pro dětská hřiště, restaurační terasy a veřejné prostory. Ochlazení až −9 °C, bezpečné pro děti, potravinářská nerezová ocel.',
+    keywords: 'mlhoviště, mlžná, hřiště, mlžné, systémy, terasy',
+    canonicalPath: '/mlhoviste',
+  },
+  jakToFunguje: {
+    title: 'Jak funguje mlžení? Princip evaporace a technologie mlžných soch',
+    description: 'Vysvětlujeme princip mlžení: kapky 50–100 μm se při vhodných podmínkách odpařují ve vzduchu a odebírají teplo. Poznejte technologii mlžítek HolmTec.',
+    keywords: 'jak funguje mlžení, kapky 50–100 μm, evaporace mlha, mlžné trysky princip, ochlazení evaporací, technologie mlžítek HolmTec',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7d93243ca_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
     canonicalPath: '/jak-funguje-mlzeni',
   },
@@ -135,55 +141,55 @@ export const SEO_PAGES = {
     title: 'Mlžítka pro města a obce — Ochlazení veřejných prostranství',
     description: 'Mlžítka, mlžné sochy a mlhoviště pro města a obce. Ochlazení náměstí, parků a zastávek. Dotační programy, certifikované materiály, zakázková výroba HolmTec.',
     keywords: 'mlžítka, mlžné sochy, pro města, mlhoviště obce, ochlazení náměstí,',
-    canonicalPath: '/vyuziti/mesta-obce',
+    canonicalPath: '/kategorie/mesta-obce',
   },
   parkyHriste: {
-    title: 'Mlžítka pro parky a dětská hřiště — Bezpečné mlžení pro děti',
-    description: 'Mlžné systémy a mlžítka pro parky a dětská hřiště. Bezpečné pro děti, potravinářská nerez AISI 316L, bez chemie. Ochlazení až −9 °C. HolmTec mlzidla.',
-    keywords: 'mlžítka, hřiště, mlžení mlžné, mlzitka',
-    canonicalPath: '/vyuziti/parky-hriste',
+    title: 'Mlhoviště pro parky a dětská hřiště — Bezpečné mlžení pro děti',
+    description: 'Mlžné systémy pro parky a dětská hřiště. Bezpečné pro děti, potravinářská nerez AISI 316L, bez chemie. Ochlazení až −9 °C. HolmTec mlzidla.',
+    keywords: 'mlhoviště hřiště, mlžení dětské hřiště, mlžný systém park, mlžné sochy pro parky, ochlazení hřiště',
+    canonicalPath: '/kategorie/parky-hriste',
   },
   koupaliste: {
     title: 'Mlhoviště pro koupaliště a aquaparky — Chladicí zóny u vody',
     description: 'Mlžné systémy LINEA CE70 a Y-ARMIST pro koupaliště, aquaparky a bazény. Chladicí zóny pro návštěvníky, elegantní design, odolné materiály.',
     keywords: 'mlhoviště koupaliště, mlžení aquapark, chladicí systém bazén, mlžné trysky koupaliště, ochlazení u vody',
-    canonicalPath: '/vyuziti/koupaliste',
+    canonicalPath: '/kategorie/koupaliste',
   },
   architekti: {
     title: 'Mlžné skulptury pro architekty a projektanty — 3D modely a dokumentace',
     description: 'Spolupráce s architekty: 3D modely, technické výkresy, materiálové certifikáty, zakázková výroba. Mlžné skulptury HolmTec jako dominanta moderního veřejného prostoru.',
     keywords: 'mlžné sochy pro architekty, 3D model mlžení, technická dokumentace mlžný systém, projektová spolupráce mlhoviště',
-    canonicalPath: '/vyuziti/architekti',
+    canonicalPath: '/kategorie/architekti',
   },
   komercni: {
     title: 'Mlhování pro obchodní centra a komerční prostory',
     description: 'Mlžné instalace pro obchodní centra, hotely, showroomy a komerční prostory. Zvýšení komfortu zákazníků, elegantní design, individuální návrh.',
     keywords: 'mlhování obchodní centrum, mlžení hotel, mlžná instalace komerční, mlžné sochy pro firmy',
-    canonicalPath: '/vyuziti/komercni',
+    canonicalPath: '/kategorie/komercni',
   },
   eventy: {
     title: 'Mlžné efekty pro eventy, festivaly a pronájem',
     description: 'Pronájem mlžných soch a instalací na festivaly, eventy a firemní akce. Mlžné brány, portály, mobilní mlhoviště. Rychlá montáž, nezaměnitelný vizuální efekt.',
     keywords: 'mlžení festival, mlžné efekty event, pronájem mlžné sochy, mlžná brána festival, mobilní mlhoviště event',
-    canonicalPath: '/vyuziti/eventy',
+    canonicalPath: '/kategorie/eventy',
   },
   outdoor: {
     title: 'Mlžné prvky pro zahrady, terasy a rezidenční projekty',
     description: 'Mlžné skulptury pro soukromé zahrady, terasy a rezidenční projekty. Elegantní chlazení venkovních prostorů z nerezové oceli AISI 316L.',
     keywords: 'mlžení zahrada, mlžný prvek terasa, mlhoviště rezidenční projekt, mlžná socha zahrada, ochlazení terasy',
-    canonicalPath: '/vyuziti/outdoor-zahrady',
+    canonicalPath: '/kategorie/outdoor-zahrady',
   },
   art: {
     title: 'Art instalace na míru — mlžné skulptury jako umělecké dílo',
     description: 'Zakázkové umělecké mlžné instalace pro galerie, veřejný prostor a site-specific projekty. Mlha jako médium — návrh, výroba a realizace HolmTec.',
     keywords: 'art instalace mlžení, umělecká mlžná socha, site-specific mlha, mlžné dílo na míru, galerie mlžná instalace',
-    canonicalPath: '/vyuziti/art-instalace',
+    canonicalPath: '/kategorie/art-instalace',
   },
   deti: {
     title: 'Mlžné systémy pro školy, školky a dětská hřiště',
     description: 'Bezpečné mlžné systémy pro školy, mateřské školky a dětská hřiště. Potravinářská nerez, bez chemie, ochlazení až o 9 °C.',
     keywords: 'mlžení škola, mlhoviště školka, mlžný systém dětské hřiště, bezpečné mlžení pro děti, ochlazení školní dvůr',
-    canonicalPath: '/vyuziti/skoly-skolky-deti',
+    canonicalPath: '/kategorie/skoly-skolky-deti',
   },
 };
 
@@ -191,11 +197,11 @@ export const SEO_PAGES = {
 
 export function getProductSEO(product, reviewStats) {
   if (!product) return {};
-  const title = `${product.name} — Mlžítko 2–8 bar (200–800 kPa)`;
+  const title = `${product.name} — Nízkotlaké mlžítko 2–8 bar (200–800 kPa)`;
   const description = product.short_description
-    ? `${product.name}: ${product.short_description} Mlžítka a nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
-    : `Mlžítka a mlžné systémy ${product.name} — provoz 2–8 bar, bez čerpadel, kotvení mlžítka zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena mlžítek na vyžádání.`;
-  const keywords = `${product.name} nízkotlaký, mlžící, mlžítka,systémy, mlžný systémy ${product.name}, ${product.material || 'nerezová ocel'}, Mlžítka - Mlzidla.cz ${product.name}`;
+    ? `${product.name}: ${product.short_description} Nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut. ${product.material ? `Materiál: ${product.material}.` : ''} Doprava zdarma, cena na vyžádání.`
+    : `Nízkotlaké mlžítko ${product.name} — provoz 2–8 bar (200–800 kPa) bez čerpadel, kotvení zemním vrutem, rychlá instalace do 30 minut. Doprava zdarma, cena na vyžádání.`;
+  const keywords = `${product.name}, nízkotlaký mlžící systém 2–8 bar (200–800 kPa), kotvení zemním vrutem, rychlá instalace do 30 minut, mlžný systém ${product.name}, ${product.material || 'nerezová ocel'}, HolmTec ${product.name}`;
 
   const sku = `HT-${(product.slug || product.name).toUpperCase().replace(/[^A-Z0-9]+/g, '-')}`;
   const images = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
@@ -211,8 +217,8 @@ export function getProductSEO(product, reviewStats) {
     description: product.short_description || description,
     sku,
     mpn: sku,
-    brand: { '@type': 'Brand', name: 'mlzidla.cz' },
-    manufacturer: { '@type': 'Organization', name: 'Mlzidla.cz', url: BASE_URL },
+    brand: { '@type': 'Brand', name: 'HolmTec' },
+    manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
     material: product.material || 'Nerezová ocel AISI 316L',
     offers: {
       '@type': 'Offer',
@@ -284,7 +290,7 @@ export function getBlogPostSEO(post) {
   if (!post) return {};
   const description = post.perex
     ? post.perex.slice(0, 160)
-    : `Přečtěte si článek "${post.title}" na blogu — Mlžítka - mlzidla.cz.`;
+    : `Přečtěte si článek "${post.title}" na blogu HolmTec — mlzidla.cz.`;
   const previewImage = post.image_url || extractFirstContentImage(post.content) || DEFAULT_IMAGE;
 
   const jsonLd = {
@@ -295,7 +301,7 @@ export function getBlogPostSEO(post) {
     image: previewImage,
     datePublished: post.published_date || post.created_date,
     dateModified: post.updated_date || post.published_date || post.created_date,
-    author: { '@type': 'Organization', name: 'Mlžidla.cz - Mlžítka HolmTec' },
+    author: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
     publisher: { '@type': 'Organization', name: 'Mlžidla.cz - Mlžítka HolmTec', url: BASE_URL, logo: { '@type': 'ImageObject', url: DEFAULT_IMAGE } },
     mainEntityOfPage: `${BASE_URL}/blog/${post.slug || post.id}`,
   };
@@ -317,7 +323,7 @@ export function getReferenceSEO(project) {
   if (!project) return {};
   const description = project.description
     ? project.description.slice(0, 160)
-    : `Realizace mlžného systému ${project.product_used || ''} — ${project.name}. Mlzidla.cz.`;
+    : `Realizace mlžného systému ${project.product_used || ''} — ${project.name}. HolmTec — mlzidla.cz.`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -327,13 +333,13 @@ export function getReferenceSEO(project) {
     image: project.image_url || DEFAULT_IMAGE,
     locationCreated: project.location ? { '@type': 'Place', name: project.location } : undefined,
     dateCreated: project.year ? String(project.year) : undefined,
-    creator: { '@type': 'Organization', name: 'mlzidla.cz', url: BASE_URL },
+    creator: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
   };
 
   return {
     title: `${project.name}${project.location ? ` — ${project.location}` : ''}`,
     description,
-    keywords: `${project.name}, ${project.location || ''}, reference Mlžítek a mlžných systémů, ${project.product_used || ''}, realizace mlžítek - Mlzidla.cz`,
+    keywords: `${project.name}, ${project.location || ''}, reference mlžné sochy, ${project.product_used || ''}, realizace HolmTec`,
     image: project.image_url,
     canonicalPath: `/reference/${project.id}`,
     type: 'article',

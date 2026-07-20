@@ -10,19 +10,19 @@ const ACCESSORY_ID = '6a5119a4abdfd991c476d9fc';
 const isGate = (product) => ['gate-60-76', 'linea-el70'].includes(product.slug);
 const copy = {
   gates: { eyebrow: 'Mlžné brány a vstupní portály', title: 'Brány pro průchod, vstup a lineární ochlazení.', text: 'Modely GATE a LINEA přehledně na jednom místě pro eventy, náměstí, koupaliště i pěší trasy.' },
-  sculptures: { eyebrow: 'Designová architektonická mlžítka', title: 'Samostatné modely mlžítek a mlžných soch.', text: 'Mrak, BENDY, OSTREV, AURA, LÍZÁTKO a další modely pro zahrady, parky i veřejný prostor.' },
+  sculptures: { eyebrow: 'Designová architektonická mlžítka', title: 'Samostatné modely mlžítek a mlžných soch.', text: 'Mrak, BENDY, OSTREV, AURA, LÍZÁTKO a další modely pro zahrady, parky i veřejný prostor.' }
 };
 
 export default function ProductFilterGrid({ mode = 'sculptures' }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { base44.entities.Product.list().catch(() => []).then((items) => {
-    const physical = (items || []).filter((item) => item.category_id !== ACCESSORY_ID);
-    setProducts(physical.filter((item) => mode === 'gates' ? isGate(item) : !isGate(item)));
-  }).finally(() => setLoading(false)); }, [mode]);
+  useEffect(() => {base44.entities.Product.list().catch(() => []).then((items) => {
+      const physical = (items || []).filter((item) => item.category_id !== ACCESSORY_ID);
+      setProducts(physical.filter((item) => mode === 'gates' ? isGate(item) : !isGate(item)));
+    }).finally(() => setLoading(false));}, [mode]);
   const content = copy[mode];
   return <section className="site-container py-16 lg:py-20">
-    <div className="mb-9 max-w-3xl"><p className="content-eyebrow mb-3">{content.eyebrow}</p><h2 className="content-title text-3xl">{content.title}</h2><p className="content-lead mt-3">{content.text}</p></div>
+    <div className="mb-9 max-w-3xl"><p className="content-eyebrow mb-3">{content.eyebrow}</p><h2 className="content-title text-3xl text-[#ffffff]">{content.title}</h2><p className="content-lead mt-3">{content.text}</p></div>
     {loading ? <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> : <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {mode === 'gates' && <Gate70ProductCard />}
       {products.map((product, index) => <motion.div key={product.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.04 }}><CatalogProductCard product={product} /></motion.div>)}

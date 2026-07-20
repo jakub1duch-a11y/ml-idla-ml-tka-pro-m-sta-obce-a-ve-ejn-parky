@@ -39,8 +39,8 @@ export default function Poptavka() {
     telefon: '',
     firma: '',
     produkt: '',
-    ovladani: '',
-    zprava: '',
+    ovladani: 'doporucit',
+    zprava: 'Dobrý den. ',
   });
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);

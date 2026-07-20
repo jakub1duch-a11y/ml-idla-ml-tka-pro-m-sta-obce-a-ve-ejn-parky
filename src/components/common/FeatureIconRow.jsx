@@ -16,7 +16,7 @@ export default function FeatureIconRow({ items = [], className = '' }) {
         className="flex flex-col items-center text-center gap-2 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
         
           <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center">
-            <item.icon size={18} className="text-slate-700" />
+            <item.icon size={18} className="text-slate-700 size-" />
           </div>
           <p className="font-medium leading-tight text-s text-slate-900">{item.label}</p>
           {item.value && <p className="text-[11px] text-slate-500 leading-tight">{item.value}</p>}

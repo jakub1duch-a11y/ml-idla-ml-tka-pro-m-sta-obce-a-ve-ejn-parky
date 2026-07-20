@@ -16,7 +16,7 @@ const OVLADANI_OPTIONS = [
 ];
 
 const PRODUKTY = [
-  'Doporučte mi vhodný produkt'
+  'Doporučte mi vhodný produkt',
   'Mlžítko OSTREV',
   'Mlžítko MRAK',
   'Mlžítko AURA',

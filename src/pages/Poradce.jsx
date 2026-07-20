@@ -15,12 +15,25 @@ const SUGGESTED_QUESTIONS = [
   'Hledám řešení pro průmyslový prostor',
 ];
 
+const DROPDOWN_OPTIONS = [
+  { label: 'Brána GATE', value: 'Brána GATE' },
+  { label: 'Brána LINEA CE', value: 'Brána LINEA CE' },
+  { label: 'Mlžítko MRAK', value: 'Mlžítko MRAK' },
+  { label: 'Mlžný strom OŠTĚV', value: 'Mlžný strom OŠTĚV' },
+  { label: 'Mlžítko AURA', value: 'Mlžítko AURA' },
+  { label: 'Mlžítko Y-ARMIST J70', value: 'Mlžítko Y-ARMIST J70' },
+  { label: 'Mlžítko BENDY 60', value: 'Mlžítko BENDY 60' },
+  { label: 'Mlžítko LÍZÁTKO', value: 'Mlžítko LÍZÁTKO' },
+  { label: '🛠️ Zakázková výroba mlžítka dle vašich požadavků', value: '🛠️ Zakázková výroba mlžítka dle vašich požadavků' },
+];
+
 export default function Poradce() {
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [starting, setStarting] = useState(false);
+  const [selectedDropdownValue, setSelectedDropdownValue] = useState('');
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -62,10 +75,10 @@ export default function Poradce() {
     }
   };
 
-  const sendMessage = async () => {
-    const text = input.trim();
+  const sendMessage = async (customText) => {
+    const text = typeof customText === 'string' ? customText.trim() : input.trim();
     if (!text || loading) return;
-    setInput('');
+    if (typeof customText !== 'string') setInput('');
 
     if (!conversation) {
       await startConversation(text);
@@ -80,6 +93,15 @@ export default function Poradce() {
     if (!starting && !loading) {
       startConversation(q);
     }
+  };
+
+  const handleDropdownSelect = async (e) => {
+    const value = e.target.value;
+    if (!value || loading || starting) return;
+    
+    setSelectedDropdownValue(value);
+    // Automatically send the chosen product as a text message to Base44 trigger logic
+    await sendMessage(value);
   };
 
   const isAssistantTyping = loading && messages.length > 0 && messages[messages.length - 1]?.role === 'user';
@@ -98,7 +120,7 @@ export default function Poradce() {
             Najdeme ideální řešení pro vás
           </h1>
           <p className="text-slate-500 text-sm">
-            Popište svůj prostor, potřeby — náš poradce vám doporučí optimální mlžný systém pro vaše mlžítko.
+            Popište svůj prostor, potřeby - a náš poradce vám doporučí optimální mlžný systém pro vaše mlžítko.
           </p>
         </motion.div>
 
@@ -127,28 +149,55 @@ export default function Poradce() {
               </div>
             )}
 
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {msg.role !== 'user' && (
-                  <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 mr-2 mt-1">
-                    <Droplets size={13} className="text-slate-700" />
+            {messages.map((msg, i) => {
+              const hasDropdownTrigger = msg.content?.includes('[TRIGGER_DROPDOWN_COMPONENT]');
+              // Clean the content from raw code tag so it doesn't render as ugly text
+              const cleanedContent = msg.content?.replace('[TRIGGER_DROPDOWN_COMPONENT]', '') || '';
+
+              return (
+                <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} space-y-2`}>
+                  <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
+                    {msg.role !== 'user' && (
+                      <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 mr-2 mt-1">
+                        <Droplets size={13} className="text-slate-700" />
+                      </div>
+                    )}
+                    <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                      msg.role === 'user'
+                        ? 'bg-slate-900 text-white font-medium'
+                        : 'bg-white border border-slate-200 text-slate-700'
+                    }`}>
+                      {msg.role === 'user' ? (
+                        <p>{msg.content}</p>
+                      ) : (
+                        <ReactMarkdown className="prose prose-sm max-w-none">
+                          {cleanedContent}
+                        </ReactMarkdown>
+                      )}
+                    </div>
                   </div>
-                )}
-                <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
-                  msg.role === 'user'
-                    ? 'bg-slate-900 text-white font-medium'
-                    : 'bg-white border border-slate-200 text-slate-700'
-                }`}>
-                  {msg.role === 'user' ? (
-                    <p>{msg.content}</p>
-                  ) : (
-                    <ReactMarkdown className="prose prose-sm max-w-none">
-                      {msg.content || ''}
-                    </ReactMarkdown>
+
+                  {/* Render Custom Interactive Dropdown Component beneath the actual assistant message */}
+                  {msg.role !== 'user' && hasDropdownTrigger && (
+                    <div className="ml-9 w-full max-w-xs">
+                      <select
+                        value={selectedDropdownValue}
+                        onChange={handleDropdownSelect}
+                        disabled={loading}
+                        className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm shadow-sm focus:border-slate-400 focus:outline-none disabled:opacity-50 transition-all cursor-pointer font-medium"
+                      >
+                        <option value="" disabled>Vyberte si produkt ze seznamu...</option>
+                        {DROPDOWN_OPTIONS.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {isAssistantTyping && (
               <div className="flex justify-start items-center gap-2">
@@ -174,34 +223,3 @@ export default function Poradce() {
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
               placeholder="Popište váš prostor nebo potřeby..."
               disabled={loading || starting}
-              className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none disabled:opacity-50"
-            />
-            <button onClick={sendMessage} disabled={!input.trim() || loading || starting}
-              className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 disabled:opacity-40 transition-all flex-shrink-0">
-              {loading ? <Loader size={16} className="animate-spin" /> : <Send size={16} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Kalkulátor */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator size={16} className="text-slate-700" />
-            <h2 className="text-slate-900 text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů mlžítka</h2>
-          </div>
-          <MlzeniKalkulator />
-        </motion.div>
-
-        {/* CTA */}
-        <div className="mt-6 text-center">
-          <p className="text-slate-400 text-xs mb-3">Jste připraveni na nezávaznou poptávku?</p>
-          <Link to="/kontakt"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-full hover:bg-slate-100 hover:border-slate-300 transition-all">
-            Kontaktovat Mlžidla.cz <ArrowRight size={14} />
-          </Link>
-        </div>
-
-      </div>
-    </div>
-  );
-}

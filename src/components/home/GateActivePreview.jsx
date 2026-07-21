@@ -3,7 +3,7 @@ import { Activity, ArrowRight, Droplets, Gauge } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 function PhoneDiagram() {
-  return <div className="relative h-36 w-20 shrink-0 rounded-[1.1rem] border-2 border-cyan/60 bg-slate-950 p-2 shadow-[0_0_24px_rgba(34,211,238,.2)]"><div className="mx-auto h-1 w-7 rounded-full bg-white/20" /><div className="mt-3 space-y-2 bg-[hsl(var(--card))]"><div className="rounded bg-cyan/15 p-2 text-center"><Droplets size={15} className="mx-auto text-cyan" /><span className="mt-1 block text-[7px] text-[hsl(var(--popover-foreground))]">ZÓNA 01</span></div><div className="grid grid-cols-2 gap-1"><span className="h-5 rounded text-[hsl(var(--card))] bg-[hsl(var(--primary))]" /><span className="h-5 rounded text-[hsl(var(--popover))] bg-[hsl(var(--card-foreground))]" /></div><div className="h-1.5 rounded bg-cyan/40" /><div className="h-1.5 w-2/3 rounded bg-white/15" /></div></div>;
+  return <div className="relative h-36 w-20 shrink-0 rounded-[1.1rem] border-2 border-cyan/60 bg-slate-950 p-2 shadow-[0_0_24px_rgba(34,211,238,.2)]"><div className="mx-auto h-1 w-7 rounded-full bg-white/20" /><div className="mt-3 space-y-2 bg-[hsl(var(--card))]"><div className="rounded bg-cyan/15 p-2 text-center"><Droplets size={15} className="mx-auto text-cyan" /><span className="mt-1 block text-[hsl(var(--popover-foreground))] uppercase text-base">ZÓNA 01</span></div><div className="grid grid-cols-2 gap-1"><span className="h-5 rounded text-[hsl(var(--card))] bg-[hsl(var(--primary))]" /><span className="h-5 rounded text-[hsl(var(--popover))] bg-[hsl(var(--card-foreground))]" /></div><div className="h-1.5 rounded bg-cyan/40" /><div className="h-1.5 w-2/3 rounded bg-white/15" /></div></div>;
 }
 
 function TubeDiagram() {

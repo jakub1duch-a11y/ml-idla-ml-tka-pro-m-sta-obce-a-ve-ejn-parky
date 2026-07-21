@@ -94,7 +94,7 @@ export default function FeaturedProductsSection({ enableCooling = false }) {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 lg:mb-10">
           <div>
-            <p className="text-[11px] font-mono tracking-widest uppercase text-white/40 mb-2">NAŠE PRODUKTY</p>
+            <p className="font-mono tracking-widest uppercase mb-2 text-sm text-[hsl(var(--primary))]">NAŠE PRODUKTY</p>
             <h2 className="font-light text-3xl lg:text-4xl text-white tracking-tight [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] no-underline not-italic">Nejoblíbenější mlžítka
 a mlžné brány.
             </h2>

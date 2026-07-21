@@ -11,7 +11,7 @@ export default function SiteLayout() {
   return (
     <div className="site-shell min-h-screen flex flex-col bg-slate-50 text-slate-950">
       <Header />
-      <main className="flex-1 h-50ree">
+      <main className="flex-1">
         <Outlet />
       </main>
       <ContextualFooterLinks />
@@ -19,6 +19,6 @@ export default function SiteLayout() {
       <NotificationPrompt />
       <FloatingAdvisor />
       <CookieConsent />
-    </div>);
-
+    </div>
+  );
 }

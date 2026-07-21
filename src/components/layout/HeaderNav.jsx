@@ -19,7 +19,7 @@ export default function HeaderNav() {
   const [supportOpen, setSupportOpen] = useState(false);
   return <nav className="hidden xl:block min-w-0 flex-1"><ul className="flex list-none items-center gap-1 whitespace-nowrap my-0">
     <li className="relative" onMouseEnter={() => setProductsOpen(true)} onMouseLeave={() => setProductsOpen(false)}>
-      <Link to="/katalog" className="inline-flex items-center gap-1 rounded-lg border border-cyan/35 bg-cyan/10 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-cyan hover:text-slate-950"><span className="text-xs">Produkty a řešení</span><ChevronDown size={15} className={productsOpen ? 'rotate-180 transition-transform' : 'transition-transform'} /></Link>
+      <Link to="/katalog" className="inline-flex items-center rounded-lg border bg-cyan/10 px-3 py-2.5 text-sm font-bold text-white transition hover:bg-cyan hover:text-slate-950 gap-2 border-cyan/85"><span className="text-xs">Produkty a řešení</span><ChevronDown size={15} className={productsOpen ? 'rotate-180 transition-transform' : 'transition-transform'} /></Link>
       {productsOpen && <ProductMegaMenu />}
     </li>
     <li><Link to="/pronajem" className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-2.5 font-bold text-cyan transition hover:bg-white hover:text-slate-950 text-xs">Pronájem</Link></li>

@@ -11,8 +11,8 @@ function TubeDiagram() {
 }
 
 export default function GateActivePreview({ item, active }) {
-  const isApp = active === 0; const isMaterial = active === 4;
-  return <div className="flex min-h-44 items-center gap-5 border-t border-white/10 bg-slate-900/95 p-5">
+  const isApp = active === 0;const isMaterial = active === 4;
+  return <div className="flex min-h-44 items-center gap-5 border-t border-white/10 p-5 bg-[#09ccd3]">
     {isApp ? <PhoneDiagram /> : isMaterial ? <TubeDiagram /> : <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border border-cyan/30 bg-cyan/10"><Activity size={34} className="text-cyan" /></div>}
     <div className="flex-1"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-cyan">Aktivní prvek</p><h3 className="mt-2 text-xl font-semibold text-white">{item.title}</h3><p className="mt-2 text-sm leading-relaxed text-white/65">{item.detail}</p><div className="mt-4 flex flex-wrap items-center gap-4"><span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-white/40"><Gauge size={13} className="text-cyan" /> Propojeno s GATE</span>{isApp && <Link to="/aplikace-ovladani-mlzitek" className="inline-flex items-center gap-1 text-xs font-bold text-cyan">Aplikace a návod <ArrowRight size={12} /></Link>}<Link to="/produkt/gate-60-76" className="inline-flex items-center gap-1 text-xs font-bold text-white">Detail GATE <ArrowRight size={12} /></Link><Link to="/poptavka?produkt=Mlžná%20brána%20GATE" className="inline-flex items-center gap-1 text-xs font-bold text-white">Poptat řešení <ArrowRight size={12} /></Link></div></div>
   </div>;

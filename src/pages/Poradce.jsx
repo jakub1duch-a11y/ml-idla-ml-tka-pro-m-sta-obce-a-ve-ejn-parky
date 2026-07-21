@@ -179,13 +179,6 @@ export default function Poradce() {
           </div>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-10">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator size={16} className="text-slate-700" />
-            <h2 className="text-slate-900 text-base font-medium tracking-tight">Kalkulátor spotřeby a provozních nákladů mlžítka</h2>
-          </div>
-          <MlzeniKalkulator />
-        </motion.div>
 
         <div className="mt-6 text-center">
           <p className="text-slate-400 text-xs mb-3">Jste připraveni na nezávaznou poptávku?</p>

@@ -3,11 +3,11 @@ import { Activity, ArrowRight, Droplets, Gauge } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 function PhoneDiagram() {
-  return <div className="relative h-36 w-20 shrink-0 rounded-[1.1rem] border-2 border-cyan/60 bg-slate-950 p-2 shadow-[0_0_24px_rgba(34,211,238,.2)]"><div className="mx-auto h-1 w-7 rounded-full bg-white/20" /><div className="mt-3 space-y-2 bg-[hsl(var(--card))]"><div className="rounded bg-cyan/15 p-2 text-center"><Droplets size={15} className="mx-auto text-cyan" /><span className="mt-1 block text-[7px] text-[hsl(var(--popover-foreground))]">ZÓNA 01</span></div><div className="grid grid-cols-2 gap-1"><span className="h-5 rounded bg-[hsl(var(--card-foreground))] text-[hsl(var(--card))]" /><span className="h-5 rounded bg-white/10" /></div><div className="h-1.5 rounded bg-cyan/40" /><div className="h-1.5 w-2/3 rounded bg-white/15" /></div></div>;
+  return <div className="relative h-36 w-20 shrink-0 rounded-[1.1rem] border-2 border-cyan/60 bg-slate-950 p-2 shadow-[0_0_24px_rgba(34,211,238,.2)]"><div className="mx-auto h-1 w-7 rounded-full bg-white/20" /><div className="mt-3 space-y-2 bg-[hsl(var(--card))]"><div className="rounded bg-cyan/15 p-2 text-center"><Droplets size={15} className="mx-auto text-cyan" /><span className="mt-1 block text-[7px] text-[hsl(var(--popover-foreground))]">ZÓNA 01</span></div><div className="grid grid-cols-2 gap-1"><span className="h-5 rounded bg-[hsl(var(--card-foreground))] text-[hsl(var(--card))]" /><span className="h-5 rounded text-[hsl(var(--popover))] bg-[hsl(var(--card-foreground))]" /></div><div className="h-1.5 rounded bg-cyan/40" /><div className="h-1.5 w-2/3 rounded bg-white/15" /></div></div>;
 }
 
 function TubeDiagram() {
-  return <div className="relative flex h-36 w-24 shrink-0 items-center justify-center text-[hsl(var(--card-foreground))]"><div className="h-28 w-12 rounded-full border-[7px] border-slate-300 bg-slate-700 shadow-[inset_0_0_0_1px_rgba(255,255,255,.4)]" /><span className="absolute right-0 top-6 text-[8px] font-bold text-[hsl(var(--foreground))]">AISI 316L</span><span className="absolute right-0 bottom-6 text-[8px] font-bold text-white/55">Ø 60–76</span></div>;
+  return <div className="relative flex h-36 w-24 shrink-0 items-center justify-center text-[hsl(var(--card-foreground))]"><div className="h-28 w-12 rounded-full border-[7px] border-slate-300 bg-slate-700 shadow-[inset_0_0_0_1px_rgba(255,255,255,.4)]" /><span className="absolute right-0 top-6 text-[8px] font-bold text-[hsl(var(--foreground))]">AISI 316L</span><span className="absolute right-0 bottom-6 text-[8px] font-bold text-[hsl(var(--popover-foreground))]">Ø 60–76</span></div>;
 }
 
 export default function GateActivePreview({ item, active }) {

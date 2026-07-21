@@ -52,7 +52,7 @@
   }
   .content-title {
     @apply font-heading font-light tracking-tight text-slate-900;
-    font-size: clamp(2.25rem, 4vw, 4.5rem);
+    font-size: clamp(2.25rem, 3.5vw, 3.0rem);
     line-height: 1.08;
   }
   .content-lead {

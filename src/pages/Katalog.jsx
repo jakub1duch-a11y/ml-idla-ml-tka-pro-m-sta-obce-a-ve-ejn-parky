@@ -48,7 +48,7 @@ export default function Katalog() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <p className="content-eyebrow mb-3">KATALOG 2026</p>
           <h1 className="content-title mb-3 text-2xl text-[hsl(var(--popover))]">Mlžítka, příslušenství a Smart systém.</h1>
-          <p className="content-lead text-justify text-base pb-4 max-w-1xl">Přehled řešení pro příjemnější venkovní prostor — od mlžných bran po chytré řízení.</p>
+          <p className="content-lead text-justify text-base pb-4 max-w-2x1">Přehled řešení pro příjemnější venkovní prostor — od mlžných bran po chytré řízení.</p>
         </motion.div>
 
         <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />

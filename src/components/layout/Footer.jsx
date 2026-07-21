@@ -6,7 +6,7 @@ import { GOOGLE_MAPS_URL } from '@/lib/seo';
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 border-t border-white/10">
+    <footer className="border-t bg-slate-950 border-white/20">
       <div className="mx-auto lg:px-8 py-20 px-6 max-w-6x3">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
           <div className="sm:col-span-2 md:col-span-2">

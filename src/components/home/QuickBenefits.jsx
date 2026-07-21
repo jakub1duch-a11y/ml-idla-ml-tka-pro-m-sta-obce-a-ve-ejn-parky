@@ -23,7 +23,7 @@ export default function QuickBenefits({ className = '', compact = false, limit, 
   const [coolingIndex] = useState(() => Math.floor(Math.random() * benefits.length));
   const [openIndex, setOpenIndex] = useState(null);
 
-  return <div className={`grid right-6 right-450 w-[500px] top-0 gap-4 top-1/2 grid-cols-2 ${className}`}>{benefits.map(({ icon: Icon, value, text, detail, to }, index) => {
+  return <div className={`grid right-6 right-450 top-0 gap-4 top-1/2 grid-cols-2 w-[600px] ${className}`}>{benefits.map(({ icon: Icon, value, text, detail, to }, index) => {
       const isOpen = openIndex === index;
       const isCoolingCard = compact && enableCooling && index === coolingIndex;
       const compactContent = <><div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan/30 bg-cyan/10 text-cyan"><Icon size={32} strokeWidth={1.5} /></div><div className="relative z-10 min-w-0"><h3 className="text-base font-semibold leading-snug text-white">{value}</h3><p className="text-xs leading-relaxed text-white/60">{text}</p><p className={`overflow-hidden text-xs leading-relaxed text-cyan transition-all duration-300 ${isOpen ? 'mt-3 max-h-16 opacity-100' : 'max-h-0 opacity-0'}`}>{detail}</p></div>{to && <Link to={to} onClick={(event) => event.stopPropagation()} className="relative z-10 ml-auto shrink-0 rounded-full p-2 text-cyan" aria-label={`${value}: zobrazit vhodné řešení`}><ArrowRight size={20} /></Link>}</>;

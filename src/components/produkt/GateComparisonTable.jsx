@@ -13,7 +13,7 @@ const COLUMNS = [
 },
 {
   id: 'gate-v',
-  name: "ML\u017DN\xC1 BR\xC1NAGATE0-V",
+  name: "ML\u017DN\xC1 BR\xC1NA GATE0-V",
   tag: 'Lomený oblouk',
   detailLink: '/gate70',
   demoLink: '/gate70#video'

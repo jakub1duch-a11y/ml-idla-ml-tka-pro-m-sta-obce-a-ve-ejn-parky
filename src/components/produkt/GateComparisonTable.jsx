@@ -6,7 +6,7 @@ import { Sparkles, Circle, Square, ArrowRight, PlayCircle, Building2, Shapes, Co
 const COLUMNS = [
 {
   id: 'gate-u',
-  name: "GATE-U",
+  name: "MGATE-U",
   tag: 'Rovná varianta',
   detailLink: '/gate70',
   demoLink: '/gate70#video'
@@ -20,7 +20,7 @@ const COLUMNS = [
 },
 {
   id: 'linea',
-  name: 'LINEA CE70',
+  name: "IRIS",
   tag: 'Obloukový design',
   detailLink: '/produkt/linea-el70',
   demoLink: '/produkt/linea-el70?tab=video'

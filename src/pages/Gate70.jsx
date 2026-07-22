@@ -153,8 +153,8 @@ export default function Gate70() {
     <div className="min-h-screen bg-white">
 
       {/* ══════════════════════════════════════════════════════
-                               1. HERO — dvě varianty s přepínačem
-                            ══════════════════════════════════════════════════════ */}
+                                1. HERO — dvě varianty s přepínačem
+                             ══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen overflow-hidden">
         <video
           autoPlay
@@ -180,7 +180,7 @@ export default function Gate70() {
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/60 mb-3">Mlžidla.cz · Mlžné brány a portály</p>
             <h1 style={{ fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 0.9, fontSize: 'clamp(4rem, 12vw, 9rem)' }}
-            className="text-white uppercase mb-6">GATE70</h1>
+            className="text-white uppercase mb-6 text-4xl">GATE70</h1>
 
             {/* Variant switcher */}
             <div className="flex gap-3 mb-6">
@@ -230,13 +230,13 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               2. DVĚ VARIANTY — porovnání vedle sebe
-                            ══════════════════════════════════════════════════════ */}
+                                2. DVĚ VARIANTY — porovnání vedle sebe
+                             ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Dvě tvarové varianty</p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            style={{ fontWeight: 700, fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em', lineHeight: 1.0 }} className="text-slate-900">
+          style={{ fontWeight: 700, fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.04em', lineHeight: 1.0 }} className="text-slate-900">
             Vyberte svůj <span className="italic">GATE70.</span>
           </motion.h2>
         </motion.div>
@@ -267,8 +267,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               3. LANDING INFO — o bráně
-                            ══════════════════════════════════════════════════════ */}
+                                3. LANDING INFO — o bráně
+                             ══════════════════════════════════════════════════════ */}
       <section className="bg-white py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
@@ -302,14 +302,14 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               4. TECHNICKÉ SPECIFIKACE
-                            ══════════════════════════════════════════════════════ */}
+                                4. TECHNICKÉ SPECIFIKACE
+                             ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Technické parametry</p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-              style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }} className="text-slate-900 mb-10">
+            style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', letterSpacing: '-0.04em' }} className="text-slate-900 mb-10">
               Preciznost<br /><span className="italic">v každém detailu.</span>
             </motion.h2>
             <div className="rounded-2xl overflow-hidden border border-slate-200 mb-6">
@@ -351,15 +351,15 @@ export default function Gate70() {
       <GateComparisonTable />
 
       {/* ══════════════════════════════════════════════════════
-                               5. SMART ŘÍZENÍ
-                            ══════════════════════════════════════════════════════ */}
+                                5. SMART ŘÍZENÍ
+                             ══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 flex items-start justify-between gap-8">
             <div>
               <p className="text-sm text-slate-500 mb-3">Wi-Fi Smart mlžný systém</p>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-                style={{ lineHeight: 1.1, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 mb-4">
+              style={{ lineHeight: 1.1, fontWeight: 700, fontSize: 'clamp(2.2rem, 4vw, 3rem)', letterSpacing: '-0.03em' }} className="text-slate-900 mb-4">
                 Inteligentní SMART mlžná brána.
               </motion.h2>
               <p className="text-slate-500 leading-relaxed max-w-2xl">GATE70 je možnost vybavit plně integrovaným Wi-Fi Smart systémem. Ovládání, senzory, osvětlení a časovače — vše v jednom zařízení.
@@ -386,13 +386,13 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               6. FOTOGALERIE + DETAIL FOTO
-                            ══════════════════════════════════════════════════════ */}
+                                6. FOTOGALERIE + DETAIL FOTO
+                             ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Fotogalerie</p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
+          style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
             GATE70<br /><span className="italic">v detailu.</span>
           </motion.h2>
         </motion.div>
@@ -420,14 +420,14 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               7. VIDEA V AKCI
-                            ══════════════════════════════════════════════════════ */}
+                                7. VIDEA V AKCI
+                             ══════════════════════════════════════════════════════ */}
       <section id="video" className="bg-slate-50 border-y border-slate-200 py-24 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Videa</p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-              style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
+            style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
               GATE70<br /><span className="italic">v akci.</span>
             </motion.h2>
           </motion.div>
@@ -448,13 +448,13 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               8. REALIZACE
-                            ══════════════════════════════════════════════════════ */}
+                                8. REALIZACE
+                             ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Realizace</p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
+          style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
             GATE70<br /><span className="italic">v reálném světě.</span>
           </motion.h2>
         </motion.div>
@@ -476,8 +476,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                               9. CTA — Poptávka
-                            ══════════════════════════════════════════════════════ */}
+                                9. CTA — Poptávka
+                             ══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

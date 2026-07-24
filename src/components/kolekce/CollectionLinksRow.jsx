@@ -16,7 +16,7 @@ export default function CollectionLinksRow() {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-20">
       <motion.p initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-6">
+      className="text-xs font-mono tracking-widest uppercase mb-6 text-[hsl(var(--foreground))]">
         Procházet dle prostoru
       </motion.p>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">

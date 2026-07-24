@@ -56,7 +56,7 @@ export default function ProductsShowcaseSlider() {
         className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 lg:mb-10">
           <div>
             <p className="text-[11px] font-mono tracking-widest uppercase mb-2 text-[hsl(var(--foreground))]">KOMPLETNÍ NABÍDKA</p>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl tracking-tight text-[hsl(var(--card-foreground))]">Prohlédněte si
+            <h2 className="text-3xl lg:text-4xl tracking-tight text-[hsl(var(--card-foreground))] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">Prohlédněte si
 celou kolekci mlžítek.
             </h2>
           </div>

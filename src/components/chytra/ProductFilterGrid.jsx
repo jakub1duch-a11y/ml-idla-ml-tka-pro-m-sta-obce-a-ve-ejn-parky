@@ -27,7 +27,7 @@ export default function ProductFilterGrid({ mode = 'sculptures' }) {
       {mode === 'gates' && <Gate70ProductCard />}
       {products.map((product, index) => <motion.div key={product.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.04 }}><CatalogProductCard product={product} /></motion.div>)}
       {mode === 'sculptures' && <Link to="/poptavka?produkt=Mlžítko%20na%20míru" className="group flex min-h-80 flex-col justify-between rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 transition hover:border-slate-500"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm"><PenTool size={19} /></span><div><p className="content-eyebrow mb-2">Zakázková výroba</p><h3 className="m-0 text-xl font-semibold text-slate-950">Mlžítko na míru</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Navrhneme tvar, rozměry, počet trysek i kotvení pro váš prostor.</p><span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-slate-900">Poslat představu <ArrowRight size={15} /></span></div></Link>}
-      {!products.length && <p className="col-span-full py-14 text-center text-sm text-slate-400">V této kategorii zatím nejsou produkty.</p>}
+      {!products.length && <p className="col-span-full py-14 text-center text-slate-400 text-base">V této kategorii zatím nejsou produkty.</p>}
     </div>}
   </section>;
 }

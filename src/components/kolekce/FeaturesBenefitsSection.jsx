@@ -33,12 +33,12 @@ export default function FeaturesBenefitsSection() {
               <motion.div
               whileHover={{ scale: 1.15, rotate: -6 }}
               transition={{ type: 'spring', stiffness: 300, damping: 14 }}
-              className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-slate-900 transition-colors">
+              className="w-11 h-11 rounded-xl border border-slate-200 flex items-center justify-center mb-4 group-hover:bg-slate-900 transition-colors bg-slate-40">
               
                 <f.icon size={19} className="text-slate-900 group-hover:text-white transition-colors" />
               </motion.div>
               <h3 className="font-medium mb-1.5 text-[hsl(var(--popover))] text-2xl">{f.title}</h3>
-              <p className="text-slate-500 leading-relaxed text-base">{f.desc}</p>
+              <p className="leading-relaxed text-base text-[#c2c2c2]">{f.desc}</p>
             </motion.div>
           )}
         </div>

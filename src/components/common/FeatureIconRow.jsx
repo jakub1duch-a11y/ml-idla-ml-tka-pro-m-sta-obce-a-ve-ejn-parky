@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 // e.g. <FeatureIconRow items={[{ icon: Droplets, label: 'Spotřeba vody', value: '4,6 l/h' }]} />
 export default function FeatureIconRow({ items = [], className = '' }) {
   return (
-    <div className={`grid grid-cols-2 sm:grid-cols-4 gap-4 ${className}`}>
+    <div className={`grid grid-cols-2 sm:grid-cols-4 gap-4 hidden ${className}`}>
       {items.map((item, i) =>
       <motion.div
         key={item.label}

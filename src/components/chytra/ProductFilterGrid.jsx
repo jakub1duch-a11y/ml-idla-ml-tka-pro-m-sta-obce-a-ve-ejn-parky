@@ -22,7 +22,7 @@ export default function ProductFilterGrid({ mode = 'sculptures' }) {
     }).finally(() => setLoading(false));}, [mode]);
   const content = copy[mode];
   return <section className="site-container lg:py-1 0 py-6">
-    <div className="mb-9 max-w-3xl"><p className="content-lead mt-3 text-justify [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">{content.text}</p></div>
+    <div className="mb-9 max-w-3xl"></div>
     {loading ? <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> : <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {mode === 'gates' && <Gate70ProductCard />}
       {products.map((product, index) => <motion.div key={product.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.04 }}><CatalogProductCard product={product} /></motion.div>)}

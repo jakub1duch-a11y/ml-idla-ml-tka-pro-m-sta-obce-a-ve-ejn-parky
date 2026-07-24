@@ -18,8 +18,8 @@ export default function FeatureIconRow({ items = [], className = '' }) {
           <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center">
             <item.icon size={18} className="size- text-slate-900" />
           </div>
-          <p className="leading-tight text-2xl text-[hsl(var(--border))] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">{item.label}</p>
-          {item.value && <p className="text-slate-500 leading-tight text-xl normal-case">{item.value}</p>}
+          <p className="leading-tight text-2xl text-[hsl(var(--border))] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">{item.label}</p>
+          {item.value && <p className="text-slate-500 leading-tight normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold text-xl">{item.value}</p>}
         </motion.div>
       )}
     </div>);

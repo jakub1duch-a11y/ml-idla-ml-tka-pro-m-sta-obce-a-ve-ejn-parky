@@ -44,6 +44,19 @@ Deno.serve(async (req) => {
     const container = await containerRes.json();
     if (!containerRes.ok) return Response.json({ error: container }, { status: containerRes.status });
 
+    // Instagram needs time to fetch/process the image before it can be published.
+    // Poll the container status until it's FINISHED (or fail fast on ERROR).
+    let statusCode = 'IN_PROGRESS';
+    for (let attempt = 0; attempt < 10 && statusCode === 'IN_PROGRESS'; attempt++) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const statusRes = await fetch(`https://graph.instagram.com/${container.id}?fields=status_code&access_token=${accessToken}`);
+      const statusData = await statusRes.json();
+      statusCode = statusData.status_code;
+    }
+    if (statusCode !== 'FINISHED') {
+      return Response.json({ error: { message: `Media container not ready (status: ${statusCode})` } }, { status: 400 });
+    }
+
     const publishRes = await fetch(`https://graph.instagram.com/${me.id}/media_publish`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

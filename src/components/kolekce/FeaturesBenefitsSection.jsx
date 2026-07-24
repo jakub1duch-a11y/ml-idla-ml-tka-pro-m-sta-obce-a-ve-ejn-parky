@@ -17,7 +17,7 @@ export default function FeaturesBenefitsSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
           <p className="text-xs font-mono tracking-widest uppercase mb-3 text-[hsl(var(--card-foreground))]">VLASTNOSTI A VÝHODY</p>
-          <h2 className="font-light text-3xl lg:text-4xl text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">Proč zvolit naše mlžítka.</h2>
+          <h2 className="font-light text-3xl text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] lg:text-3xl">Proč zvolit naše mlžítka.</h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {FEATURES.map((f, i) =>
@@ -28,7 +28,7 @@ export default function FeaturesBenefitsSection() {
             viewport={{ once: true }}
             transition={{ delay: i * 0.07 }}
             whileHover={{ y: -3 }}
-            className="group p-6 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all overflow-hidden">
+            className="group p-6 rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all overflow-hidden bg-[hsl(var(--foreground))] text-[hsl(var(--card))]">
             
               <motion.div
               whileHover={{ scale: 1.15, rotate: -6 }}
@@ -37,7 +37,7 @@ export default function FeaturesBenefitsSection() {
               
                 <f.icon size={19} className="text-slate-900 group-hover:text-white transition-colors" />
               </motion.div>
-              <h3 className="text-slate-900 font-medium mb-1.5">{f.title}</h3>
+              <h3 className="text-slate-900 font-medium mb-1.5 text-lg">{f.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
             </motion.div>
           )}

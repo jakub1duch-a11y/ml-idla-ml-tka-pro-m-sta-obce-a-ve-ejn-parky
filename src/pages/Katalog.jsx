@@ -43,11 +43,11 @@ export default function Katalog() {
   }, []);
 
   return (
-    <div className="min-h-screen pt-24 bg-[hsl(var(--popover-foreground))]">
+    <div className="min-h-screen pt-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <p className="content-eyebrow mb-3">KATALOG 2026</p>
-          <h1 className="content-title mb-3 text-2xl text-[hsl(var(--popover))]">Mlžítka, příslušenství a Smart systém.</h1>
+          <h1 className="content-title mb-3 text-[hsl(var(--popover))] text-1xl">Mlžítka, příslušenství a Smart systém.</h1>
           <p className="content-lead text-justify text-base pb-4 max-w-2x1">Přehled řešení pro příjemnější venkovní prostor — od mlžných bran po chytré řízení.</p>
         </motion.div>
 

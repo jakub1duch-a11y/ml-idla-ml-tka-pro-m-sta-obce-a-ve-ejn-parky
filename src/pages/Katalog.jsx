@@ -58,7 +58,7 @@ export default function Katalog() {
         </nav>
       </div>
 
-      <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-0">
+      <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-">
         {tab === 'brany' && <ProductFilterGrid mode="gates" />}
         {tab === 'mlzitka' && <ProductFilterGrid mode="sculptures" />}
         {tab === 'prislusenstvi' && <AccessoriesSection />}

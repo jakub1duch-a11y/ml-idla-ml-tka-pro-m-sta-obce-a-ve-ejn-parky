@@ -1,0 +1,34 @@
+{
+  "name": "Nov\u00e1 popt\u00e1vka ",
+  "description": "Ukl\u00e1d\u00e1 formul\u00e1\u0159 Kontakt dotaz popt\u00e1vek do tabulky GOOGLE",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ContactInquiry"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "nov_popt_vka",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncInquiryToSheets",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  }
+}

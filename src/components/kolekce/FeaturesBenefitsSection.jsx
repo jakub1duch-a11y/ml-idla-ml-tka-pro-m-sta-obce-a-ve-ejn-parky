@@ -37,8 +37,8 @@ export default function FeaturesBenefitsSection() {
               
                 <f.icon size={19} className="text-slate-900 group-hover:text-white transition-colors" />
               </motion.div>
-              <h3 className="text-slate-900 font-medium mb-1.5 text-lg">{f.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
+              <h3 className="font-medium mb-1.5 text-[hsl(var(--popover))] text-2xl">{f.title}</h3>
+              <p className="text-slate-500 leading-relaxed text-base">{f.desc}</p>
             </motion.div>
           )}
         </div>

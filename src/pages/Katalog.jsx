@@ -53,7 +53,7 @@ export default function Katalog() {
 
         <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />
 
-        <nav aria-label="Kategorie katalogu" className="sticky top-16 z-20 -mx-3 overflow-x-auto border-y border-slate-200 px-3 py-3 backdrop-blur-xl">
+        <nav aria-label="Kategorie katalogu" className="sticky top-16 z-20 overflow-x-auto border-y px-3 py-3 backdrop-blur-xl -mx-2 border-slate-500">
           <div className="flex min-w-max gap-2">{TABS.map((t) => {const Icon = t.icon;const active = tab === t.id;return <button key={t.id} onClick={() => setTab(t.id)} className={`relative inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all ${active ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/15' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}><Icon size={17} />{t.label}{active && <span className="absolute -bottom-1 left-1/2 h-1 w-8 -translate-x-1/2 rounded-full text-[hsl(var(--background))] bg-[hsl(var(--foreground))] my-1" />}</button>;})}</div>
         </nav>
       </div>

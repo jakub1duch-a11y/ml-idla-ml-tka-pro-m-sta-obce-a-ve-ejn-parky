@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    --background: 220 54% 27%;
-    --foreground: 205 79% 18%;
+    --background: 210 20% 98%;
+    --foreground: 220 22% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 22% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 200 87% 46%;
-    --primary-foreground: 220 20% 6%;
-    --secondary: 220 0% 94%;
-    --secondary-foreground: 219 0% 85%;
-    --muted: 220 0% 62%;
-    --muted-foreground: 220 8% 50%;
-    --accent: 215 29% 80%;
-    --accent-foreground: 206 92% 38%;
-    --destructive: 169 0% 100%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 0% 44%;
-    --input: 220 0% 83%;
-    --ring: 215 55% 32%;
-    --radius: 14px;
+    --popover-foreground: 220 22% 10%;
+    --primary: 194 92% 42%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 18% 94%;
+    --secondary-foreground: 220 22% 10%;
+    --muted: 210 16% 94%;
+    --muted-foreground: 215 14% 38%;
+    --accent: 194 80% 94%;
+    --accent-foreground: 195 88% 28%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 18% 88%;
+    --input: 214 18% 88%;
+    --ring: 194 92% 42%;
+    --radius: 18px;
     --font-heading: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;

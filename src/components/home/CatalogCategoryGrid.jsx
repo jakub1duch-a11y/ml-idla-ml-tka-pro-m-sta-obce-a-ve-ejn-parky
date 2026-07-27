@@ -6,7 +6,7 @@ export default function CatalogCategoryGrid({ categories }) {
   return <section id="kolekce" className="py-20 sm:py-28">
     <div className="site-container">
       <p className="content-eyebrow">Vyberte podle prostoru</p>
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-4"><h2 className="content-title m-0">Kolekce mlžných systémů</h2><Link to="/katalog" className="text-sm font-bold text-primary hover:underline">Celý katalog</Link></div>
+      <div className="mb-10 flex flex-wrap items-end justify-between gap-4"><h2 className="m-0 text-3xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">Kolekce mlžných systémů</h2><Link to="/katalog" className="text-sm font-bold text-primary hover:underline">Celý katalog</Link></div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => <Link key={category.id} to="/katalog" className="group min-h-56 overflow-hidden rounded-lg border border-border bg-card p-6 transition-shadow hover:shadow-lg">
           {category.image_url && <img src={category.image_url} alt="" className="mb-6 h-20 w-full rounded-md object-cover opacity-80" />}

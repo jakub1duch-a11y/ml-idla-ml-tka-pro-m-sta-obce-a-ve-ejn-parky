@@ -14,8 +14,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const requestedNextUrl = new URLSearchParams(window.location.search).get("next");
-  const nextUrl = requestedNextUrl?.startsWith("/") && !requestedNextUrl.startsWith("//") ? requestedNextUrl : "/";
+  const nextUrl = new URLSearchParams(window.location.search).get("next") || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

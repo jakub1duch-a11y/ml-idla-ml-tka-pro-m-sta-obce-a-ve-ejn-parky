@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import React, { useEffect } from 'react';
 import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
-import CatalogHomeHero from '@/components/home/CatalogHomeHero';
-import CatalogCategoryGrid from '@/components/home/CatalogCategoryGrid';
-import CatalogProductGrid from '@/components/home/CatalogProductGrid';
-import CatalogHomeCta from '@/components/home/CatalogHomeCta';
+import MistCinematicHero from '@/components/home/MistCinematicHero';
+import HomeSectionNav from '@/components/home/HomeSectionNav';
+import ScrollMistExperience from '@/components/home/ScrollMistExperience';
+import MistBenefitsSection from '@/components/home/MistBenefitsSection';
+import MistPerformanceSection from '@/components/home/MistPerformanceSection';
+import SmartMicroclimateHero from '@/components/home/SmartMicroclimateHero';
+import ZooPrahaShowcase from '@/components/home/ZooPrahaShowcase';
+import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
+import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
+import ClientReviewsStrip from '@/components/home/ClientReviewsStrip';
+import HomeRentalTeaser from '@/components/home/HomeRentalTeaser';
+import BlogSection from '@/components/home/BlogSection';
 
 export default function Home2() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
-    Promise.all([base44.entities.Product.list(), base44.entities.ProductCategory.list()]).then(([productItems, categoryItems]) => {
-      setProducts((productItems || []).filter((item) => item.image_url).sort((a, b) => Number(b.featured) - Number(a.featured)).slice(0, 6));
-      setCategories((categoryItems || []).slice(0, 4));
-    }).finally(() => setLoading(false));
   }, []);
-
-  return <><CatalogHomeHero productCount={products.length} /><CatalogCategoryGrid categories={categories} /><CatalogProductGrid products={products} loading={loading} /><CatalogHomeCta /></>;
+  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection enableCooling /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection enableCooling /><HomeRentalTeaser /><RealizaceGallerySection /><ClientReviewsStrip /><BlogSection /></>;
 }

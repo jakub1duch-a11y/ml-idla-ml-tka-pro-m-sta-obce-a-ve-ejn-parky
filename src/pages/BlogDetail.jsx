@@ -87,7 +87,7 @@ export default function BlogDetail() {
         </div>
       }
 
-      <div className="mx-auto px-6 lg:px-8 max-w-x-">
+      <div className="px-6 lg:px-8 max-w-x">
         {/* Meta */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className={post.image_url ? '-mt-20 relative z-10 pb-4' : 'pt-8 pb-4'}>
           <div className="flex flex-wrap items-center gap-3 mb-6">

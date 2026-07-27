@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Droplets, Factory, MapPin, ThermometerSnowflake } from 'lucide-react';
+import QuickBenefits from '@/components/home/QuickBenefits';
 
 const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3c7f3e65f_copilot_image_1784351460863.jpg';
 const MOBILE_BENDY_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ff03dd7df_export-1775421627756png.jpg';
@@ -9,10 +10,10 @@ const QUICK_LINKS = [{ icon: Droplets, label: '50–100 μm', text: 'velikost ka
 
 export default function MistCinematicHero() {
   return (
-    <section id="uvod" className="relative min-h-[100svh] overflow-hidden bg-slate-950 text-white">
-      <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
+    <section id="uvod" className="relative overflow-hidden text-white min-h-[150svh] bg-slate-950">
+      <img src={HERO_IMAGE} alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
       <motion.img src={MOBILE_BENDY_IMAGE} alt="Zahradní mlžítko BENDY_60 v parku" fetchPriority="high" initial={{ scale: 1.06, y: 20 }} animate={{ scale: [1.06, 1.16, 1.1], y: [20, -8, 0] }} transition={{ duration: 11, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }} className="absolute inset-0 h-full w-full object-cover object-[61%_center] md:hidden" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_10%,rgba(2,6,0,0.5)_55%,rgba(1,6,23,0.12)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.86)_10%,rgba(2,6,23,0.5)_55%,rgba(2,6,23,0.92)_100%)]" />
       <div className="hero-mist-overlay md:hidden"><span /><span /></div>
       <div className="site-container relative flex items-center py-28 min-h-[100svh] z-10">
         <div className="max-w-xl">
@@ -24,12 +25,13 @@ export default function MistCinematicHero() {
             <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 bg-transparent px-7 py-4 text-sm font-bold text-white hover:bg-white/10">Navrhnout řešení</Link>
           </div>
         </div>
+        <QuickBenefits className="absolute right-10 top-1/2 hidden w-[320px] -translate-y-1/2 grid-cols-1 lg:grid" compact limit={4} enableCooling />
       </div>
       <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-slate-950/60 backdrop-blur-sm">
         <div className="site-container flex overflow-x-auto py-3 [&::-webkit-scrollbar]:hidden">
           {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan" /><span><b className="block text-sm text-white">{label}</b><small className="block text-white/60 text-sm">{text}</small></span></Link>)}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }

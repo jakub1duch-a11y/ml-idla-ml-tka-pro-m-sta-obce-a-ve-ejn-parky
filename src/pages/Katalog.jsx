@@ -1,84 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Droplet } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge, CalendarDays } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
-import { base44 } from '@/api/base44Client';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import MlzidlaCzSidebar from '@/components/mlzidlacz/MlzidlaCzSidebar';
-import MlzidlaCzShowcase from '@/components/mlzidlacz/MlzidlaCzShowcase';
-import MlzidlaCzSpecsSidebar from '@/components/mlzidlacz/MlzidlaCzSpecsSidebar';
-import MlzidlaCzFeatureRow from '@/components/mlzidlacz/MlzidlaCzFeatureRow';
-import MlzidlaCzTechDetails from '@/components/mlzidlacz/MlzidlaCzTechDetails';
-import MlzidlaCzCollectionBanner from '@/components/mlzidlacz/MlzidlaCzCollectionBanner';
-import MlzidlaCzCalculatorSection from '@/components/mlzidlacz/MlzidlaCzCalculatorSection';
+import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
+import AccessoriesSection from '@/components/chytra/AccessoriesSection';
+import FeatureIconRow from '@/components/common/FeatureIconRow';
+import CatalogRentalCard from '@/components/katalog/CatalogRentalCard';
 
-export default function Mlzidla() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeId, setActiveId] = useState(null);
+const CATALOG_FEATURES = [
+{ icon: Droplets, label: 'Nízká spotřeba vody', value: 'od 4,6 l/h' },
+{ icon: ThermometerSnowflake, label: 'Ochlazení okolí', value: 'až −9 °C' },
+{ icon: Gauge, label: 'Nízkotlaký provoz', value: '2–8 bar (200–800 kPa)' },
+{ icon: Cpu, label: 'Smart řízení', value: 'volitelné moduly' }];
+
+const TABS = [
+{ id: 'brany', label: 'Mlžné brány a portály', icon: Droplets },
+{ id: 'mlzitka', label: 'Designová mlžítka', icon: Layers },
+{ id: 'prislusenstvi', label: 'Příslušenství a Smart', icon: Cpu },
+{ id: 'pronajem', label: 'Pronájem', icon: CalendarDays }];
+
+
+export default function Katalog() {
+  const location = useLocation();
+  const [tab, setTab] = useState(() => {
+    const section = new URLSearchParams(window.location.search).get('sekce');
+    return ['brany', 'mlzitka', 'prislusenstvi', 'pronajem'].includes(section) ? section : 'brany';
+  });
+
+  useEffect(() => {
+    const section = new URLSearchParams(location.search).get('sekce');
+    if (['brany', 'mlzitka', 'prislusenstvi', 'pronajem'].includes(section)) setTab(section);
+  }, [location.search]);
 
   useEffect(() => {
     setSEO({
-      title: 'Mlžidla.cz — Mlžné systémy',
-      description: 'Interaktivní mlžné sochy, brány, linie a mobilní mlžítka z nerezové oceli. Ochlazení veřejných prostorů, parků, hřišť a zoo.',
+      title: 'Katalog — mlžítka, příslušenství a Smart systém | mlzidla.cz',
+      description: 'Kompletní katalog mlžítek, příslušenství a modulů a přehled Smart systému pro chytré řízení mlžení.',
+      keywords: 'katalog mlžítek, příslušenství mlžítek, smart systém mlžidla',
+      canonicalPath: '/katalog'
     });
   }, []);
 
-  useEffect(() => {
-    Promise.all([
-      base44.entities.Product.list().catch(() => []),
-      base44.entities.ProductCategory.list().catch(() => []),
-    ]).then(([prods, cats]) => {
-      const enriched = (prods || []).map((p) => ({
-        ...p,
-        id: p.id,
-        name: p.name,
-        short: (cats || []).find((c) => c.id === p.category_id)?.name || '',
-        category: (cats || []).find((c) => c.id === p.category_id)?.name || 'Mlžný systém',
-        description: p.short_description || p.description || '',
-        description2: p.description && p.description !== p.short_description ? p.description : '',
-        image: p.image_url,
-        icon: Droplet,
-      }));
-      setProducts(enriched);
-      if (enriched.length > 0) setActiveId(enriched[0].id);
-    }).finally(() => setLoading(false));
-  }, []);
-
-  const activeIndex = products.findIndex((p) => p.id === activeId);
-  const activeProduct = products[activeIndex];
-
-  const goPrev = () => setActiveId(products[(activeIndex - 1 + products.length) % products.length].id);
-  const goNext = () => setActiveId(products[(activeIndex + 1) % products.length].id);
-
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Header />
+    <div className="min-h-screen pt-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <p className="content-eyebrow mb-3 mt-12">KATALOG 2026</p>
+          <h1 className="mb-2 text-[hsl(var(--ring))] text-3xl mt-4">Mlžítka, příslušenství a Smart systém.</h1>
+          <p className="content-lead text-justify text-base pb-4 max-w-2x1">Přehled řešení pro příjemnější venkovní prostor — od mlžných bran po chytré řízení.</p>
+        </motion.div>
 
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 pt-24 space-y-6">
-        {loading ? (
-          <div className="flex justify-center py-24">
-            <Loader size={24} className="animate-spin text-slate-300" />
-          </div>
-        ) : !activeProduct ? (
-          <p className="text-center text-slate-400 py-24 text-sm">Žádné produkty k zobrazení.</p>
-        ) : (
-          <>
-            <MlzidlaCzCollectionBanner />
+        <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr_220px] gap-6 items-stretch">
-              <MlzidlaCzSidebar products={products} activeId={activeId} onSelect={setActiveId} />
-              <MlzidlaCzShowcase product={activeProduct} onPrev={goPrev} onNext={goNext} />
-              <MlzidlaCzSpecsSidebar />
-            </div>
-
-            <MlzidlaCzFeatureRow />
-            <MlzidlaCzTechDetails />
-            <MlzidlaCzCalculatorSection product={activeProduct} />
-          </>
-        )}
+        <nav aria-label="Kategorie katalogu" className="sticky top-16 z-20 overflow-x-auto border-y px-3 py-3 backdrop-blur-xl -mx-2 border-slate-500">
+          <div className="flex min-w-max gap-2">{TABS.map((t) => {const Icon = t.icon;const active = tab === t.id;return <button key={t.id} onClick={() => setTab(t.id)} className={`relative inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all ${active ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/15' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}><Icon size={17} />{t.label}{active && <span className="absolute -bottom-1 left-1/2 h-1 w-8 -translate-x-1/2 rounded-full text-[hsl(var(--background))] bg-[hsl(var(--foreground))] my-1" />}</button>;})}</div>
+        </nav>
       </div>
-      <Footer />
-    </div>
-  );
+
+      <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-5">
+        {tab === 'brany' && <ProductFilterGrid mode="gates" />}
+        {tab === 'mlzitka' && <ProductFilterGrid mode="sculptures" />}
+        {tab === 'prislusenstvi' && <AccessoriesSection />}
+        {tab === 'pronajem' && <CatalogRentalCard />}
+      </motion.div>
+    </div>);
+
 }

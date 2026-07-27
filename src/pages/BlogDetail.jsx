@@ -87,7 +87,7 @@ export default function BlogDetail() {
         </div>
       }
 
-      <div className="mx-auto px-6 lg:px-8 max-w-x">
+      <div className="mx-auto px-6 lg:px-8 max-w-20">
         {/* Meta */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className={post.image_url ? '-mt-20 relative z-10 pb-4' : 'pt-8 pb-4'}>
           <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -132,6 +132,15 @@ export default function BlogDetail() {
               prose-code:text-slate-900 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:rounded
               prose-a:text-slate-900 prose-a:underline hover:prose-a:text-slate-600
               [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:object-cover [&_img]:border [&_img]:border-slate-200 [&_h2]:mt-10 [&_h3]:mt-8">
+
+
+
+
+
+
+
+
+          
 
 
 

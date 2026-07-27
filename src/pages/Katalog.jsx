@@ -28,16 +28,6 @@ export default function Kolekce() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
-  useEffect(() => {
-    setSEO({
-      title: 'Katalog — mlžítka, příslušenství a Smart systém | mlzidla.cz',
-      description: 'Kompletní katalog mlžítek, příslušenství a modulů a přehled Smart systému pro chytré řízení mlžení.',
-      keywords: 'katalog mlžítek, příslušenství mlžítek, smart systém mlžidla',
-      canonicalPath: '/katalog'
-    });
-  }, []);
-
   useEffect(() => {
     Promise.all([
     base44.entities.Product.list().catch(() => []),

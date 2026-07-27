@@ -30,13 +30,9 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
-    const isAutomationEvent = body?.event?.entity_name === 'Poptavka';
-
-    if (!isAutomationEvent) {
-      const user = await base44.auth.me();
-      if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-      if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    const user = await base44.auth.me().catch(() => null);
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const entityId = body?.event?.entity_id || body?.data?.id;
     if (!entityId) return Response.json({ error: 'Missing entity id' }, { status: 400 });

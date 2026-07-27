@@ -5,16 +5,16 @@ const BASE_URL = 'https://mlzidla.cz';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const { event, data, payload_too_large } = await req.json();
+    const user = await base44.auth.me().catch(() => null);
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
-    if (!event || event.entity_name !== 'BlogPost') {
-      return Response.json({ ok: false, reason: 'Not a BlogPost event' });
+    const { event } = await req.json();
+    if (!event || event.entity_name !== 'BlogPost' || !event.entity_id) {
+      return Response.json({ ok: false, reason: 'Missing BlogPost event id' }, { status: 400 });
     }
 
-    let post = data;
-    if (payload_too_large || !post) {
-      post = await base44.asServiceRole.entities.BlogPost.get(event.entity_id);
-    }
+    const post = await base44.asServiceRole.entities.BlogPost.get(event.entity_id);
 
     if (!post || !post.published || post.instagram_posted) {
       return Response.json({ ok: false, reason: 'Post not published or already shared' });

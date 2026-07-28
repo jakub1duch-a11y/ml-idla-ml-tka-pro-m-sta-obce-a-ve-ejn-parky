@@ -10,7 +10,7 @@ const QUICK_LINKS = [{ icon: Droplets, label: '50–100 μm', text: 'velikost ka
 
 export default function MistCinematicHero() {
   return (
-    <section id="uvod" className="relative overflow-hidden text-white bg-slate-950 min-h-[10svh]">
+    <section id="uvod" className="relative overflow-hidden text-white bg-slate-950 min-h-[20svh]">
       <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
       
       <div className="absolute bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_20%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_100%)] inset-20" />

@@ -18,7 +18,7 @@ export default function MistCinematicHero() {
       <div className="site-container relative min-h-[70svh] z-10 flex items-center px-1">
         <div className="max-w-xl">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan">Mlžidla.cz · nízkotlaké mlžné systémy</p>
-          <h1 className="mt-5 font-heading font-light tracking-tight text-white text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">Mlžící systémy, vodní mlha pro efektivní ochlazování</h1>
+          <h1 className="mt-5 font-heading font-light tracking-tight text-white leading-[1.08] text-3xl sm:text-3xl lg:text-3xl">Mlžící systémy, vodní mlha pro efektivní ochlazování</h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">Navrhujeme mlžítka, mlžné brány a ochlazení teras, parků i veřejných prostranství — účinně, úsporně a bez mokrého efektu.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link to="/mlzidla-mlzitka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-slate-950 hover:bg-cyan">Prohlédnout mlžítka <ArrowRight size={17} /></Link>

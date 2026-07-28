@@ -122,7 +122,7 @@ export default function HeroSlider() {
         <button
           key={s.title}
           onClick={() => setIndex(i)}
-          className={`h-1.5 rounded-full transition-all ${i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`} />
+          className={`h-1.5 rounded-full transition-all hidden ${i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`} />
 
         )}
       </div>

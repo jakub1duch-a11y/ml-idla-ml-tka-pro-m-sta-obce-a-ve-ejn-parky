@@ -71,7 +71,7 @@ export default function HeroSlider() {
         <div className="mx-auto px-6 lg:px-10 max-w-7x1">
           <div className="max-w-6x2">
             <AnimatePresence mode="wait">
-              <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
+              <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }} className="w-">
                 <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 mb-4">{slide.tag}</p>
                 <h1 className="font-light text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-center mb-4">
                   {slide.title}

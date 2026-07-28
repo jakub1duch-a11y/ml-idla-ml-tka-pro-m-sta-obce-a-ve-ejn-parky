@@ -54,8 +54,8 @@ export default function HeroSlider() {
     <section className="relative h-screen min-h-[640px] overflow-hidden bg-[#F8F9FA]">
       <AnimatePresence mode="wait">
         <motion.img
-          key={slide.image}
-          src={slide.image}
+          key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cb0d19929_staen_soubor.jpg"
+
           alt={slide.title}
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}

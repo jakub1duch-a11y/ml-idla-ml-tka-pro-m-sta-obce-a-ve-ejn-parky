@@ -1,23 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
-import ScrollDropLink from '@/components/common/ScrollDropLink';
-
-const BG_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b1ef284f1_generated_image.png';
+import { ArrowRight, PlayCircle } from 'lucide-react';
+import MistAmbientBackground from '@/components/reference/MistAmbientBackground';
+import WaterCostWidget from '@/components/reference/WaterCostWidget';
 
 export default function ReferenceHero() {
   return (
-    <section className="relative min-h-[720px] h-[100svh] overflow-hidden flex items-center justify-center text-center bg-slate-950">
-      <img src={BG_IMAGE} alt="Mlžný oblak ve veřejném prostoru" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/55 via-slate-950/35 to-slate-950/90" />
-      <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }} className="relative z-10 px-6 max-w-3xl">
-        <p className="text-xs font-semibold tracking-[0.22em] uppercase text-white/65 mb-4">Realizace</p>
-        <h1 className="font-light text-white leading-[1.1] [font-family:'DM_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-5xl sm:text-5xl">Mlžení, které dává veřejnému prostoru nový rozměr.</h1>
-        <p className="text-white/75 max-w-xl mx-auto text-base sm:text-lg mt-6">Podívejte se na instalace pro města, parky, gastro provozy a místa, kde má být příjemně i v horkých dnech.</p>
-        <Link to="/videosekce-mlzitka" className="inline-flex items-center gap-2 px-6 py-3 mt-8 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-colors"><Play size={15} fill="currentColor" /> Prohlédnout videosekci</Link>
-      </motion.div>
-      <ScrollDropLink href="#reference-vypis" label="Pokračovat k realizacím" />
-    </section>);
+    <div className="relative overflow-hidden max-w-7xl mx-auto px-6 lg:px-8 pb-16">
+      <MistAmbientBackground />
+      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        {/* Left — text + CTAs */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Reference</p>
+          <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-5 leading-[1.05]">
+            Osvěžující mlžné sochy<br />pro moderní prostory
+          </h1>
+          <p className="text-slate-500 max-w-lg text-lg font-light mb-8">
+            Luxusní design z nerezové oceli AISI 316L, jemná mlhová clona a ochlazení okolního vzduchu až o 9 °C — bez kapek na zemi, bez hluku.
+          </p>
+          <div className="flex flex-wrap items-center gap-3 mb-8">
+            <Link to="/poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+              Nezávazná poptávka <ArrowRight size={15} />
+            </Link>
+            <a href="#realizace" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:bg-slate-50 transition-all">
+              Sledovat realizace
+            </a>
+          </div>
+          <WaterCostWidget />
+        </motion.div>
 
+        {/* Right — framed video */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="relative">
+          <span className="absolute -top-3 left-6 z-10 inline-flex items-center gap-1.5 text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-slate-900 rounded-full shadow">
+            <PlayCircle size={11} /> Živá ukázka
+          </span>
+          <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 aspect-[4/5] lg:aspect-[4/5]">
+            <video
+              src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.mov"
+              autoPlay muted loop playsInline
+              className="w-full h-full object-cover" />
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
 }

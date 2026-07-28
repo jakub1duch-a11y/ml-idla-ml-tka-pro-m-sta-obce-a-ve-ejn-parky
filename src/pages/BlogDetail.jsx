@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, Loader, Wrench } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO } from '@/lib/seo';
@@ -14,10 +14,6 @@ import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
 import BlogNewsletterInline from '@/components/blog/BlogNewsletterInline';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
-import RelatedProductsSection from '@/components/common/RelatedProductsSection';
-import ContentBenefitsStrip from '@/components/common/ContentBenefitsStrip';
-import ProductLaunchPromo from '@/components/common/ProductLaunchPromo';
-import BendyLaunchContent from '@/components/blog/BendyLaunchContent';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -82,7 +78,7 @@ export default function BlogDetail() {
       {/* Hero image */}
       {post.image_url && (
         <div className="relative h-72 lg:h-[460px] overflow-hidden">
-          <motion.img src={post.image_url} alt={post.image_alt || post.title} initial={post.product_launch === 'bendy_60' ? { scale: 1.08 } : false} animate={post.product_launch === 'bendy_60' ? { scale: [1.08, 1.16, 1.1], y: [0, -12, 0] } : {}} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} className="w-full h-full object-cover" />
+          <img src={post.image_url} alt={post.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-black/10" />
         </div>
       )}
@@ -102,11 +98,11 @@ export default function BlogDetail() {
             ))}
           </div>
 
-          <h1 className="content-title mb-4">
+          <h1 className="font-heading font-light text-3xl lg:text-5xl text-slate-900 tracking-tight leading-tight mb-4">
             {post.title}
           </h1>
           {post.perex && (
-            <p className="content-lead mb-2 border-l-2 border-slate-300 pl-5">
+            <p className="text-slate-500 text-lg leading-relaxed font-light mb-2 border-l-2 border-slate-300 pl-5">
               {post.perex}
             </p>
           )}
@@ -117,16 +113,14 @@ export default function BlogDetail() {
 
         {/* Internal links to configurator / inquiry — placed right after the intro */}
         <ArticleQuickLinks />
-        <ContentBenefitsStrip title="Co si z článku odnesete" items={[{ icon: BookOpen, title: 'Souvislosti', text: 'Téma vysvětlené věcně a bez zbytečné složitosti.' }, { icon: Wrench, title: 'Praktický postup', text: 'Konkrétní kroky pro návrh, provoz nebo údržbu.' }, { icon: Lightbulb, title: 'Navazující řešení', text: 'Odkazy na relevantní produkty a služby.' }]} />
 
         {/* Content — supports technical images, expert quotes (blockquote), paragraphs */}
         {post.content ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
             className="prose prose-lg max-w-none pb-4
-              prose-headings:font-heading prose-headings:font-light prose-headings:tracking-tight prose-headings:text-slate-900 prose-headings:mt-12 prose-headings:mb-5
-              prose-p:text-slate-600 prose-p:font-light prose-p:leading-[1.9] prose-p:mb-6 prose-p:text-[1.05rem]
-              prose-li:text-slate-600 prose-li:font-light prose-li:leading-[1.8] prose-li:mb-2
-              prose-ul:my-6 prose-ol:my-6
+              prose-headings:font-heading prose-headings:font-light prose-headings:tracking-tight prose-headings:text-slate-900
+              prose-p:text-slate-600 prose-p:font-light prose-p:leading-relaxed
+              prose-li:text-slate-600 prose-li:font-light
               prose-strong:text-slate-900 prose-strong:font-medium
               prose-blockquote:border-slate-900 prose-blockquote:bg-slate-50 prose-blockquote:rounded-r-xl prose-blockquote:py-3 prose-blockquote:not-italic prose-blockquote:text-slate-700
               prose-code:text-slate-900 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:rounded
@@ -142,13 +136,8 @@ export default function BlogDetail() {
           <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
         )}
 
-        {(post.gallery_urls || []).length > 0 && <section className="mt-12 border-y border-slate-200 py-10"><p className="text-xs font-bold uppercase tracking-[.18em] text-slate-400">Fotogalerie</p><div className="mt-5 grid grid-cols-2 gap-3"><img src={post.gallery_urls[0]} alt={`${post.title} – fotografie realizace 1`} loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />{post.gallery_urls[1] && <img src={post.gallery_urls[1]} alt={`${post.title} – fotografie realizace 2`} loading="lazy" className="aspect-[4/3] w-full rounded-2xl object-cover" />}</div></section>}
-
         {/* Fixed safety/standard notice — appears in every article */}
         <ArticleSafetyNotice />
-
-        <RelatedProductsSection />
-        {post.product_launch === 'bendy_60' ? <BendyLaunchContent /> : post.show_product_promo !== false && <ProductLaunchPromo />}
 
         {/* Newsletter + follow us */}
         <BlogNewsletterInline />
@@ -178,7 +167,7 @@ export default function BlogDetail() {
                   className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all bg-white">
                   {r.image_url && (
                     <div className="aspect-[4/3] overflow-hidden">
-                      <img src={r.image_url} alt={r.image_alt || r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <img src={r.image_url} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                   )}
                   <div className="p-5">

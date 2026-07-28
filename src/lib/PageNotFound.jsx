@@ -1,8 +1,76 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Home, Sparkles } from 'lucide-react';
-import Logo from '@/components/layout/Logo';
+import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
-export default function PageNotFound() {
-  return <main className="relative flex min-h-screen overflow-hidden bg-slate-950 px-6 py-10 text-white"><div className="hero-mist-overlay"><span /><span /><span /></div><div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col"><header><Logo /></header><div className="my-auto grid items-center gap-12 py-16 lg:grid-cols-[1.15fr_.85fr]"><div><p className="text-xs font-bold uppercase tracking-[.24em] text-cyan">Mlžidla.cz · jsme stále tady</p><p className="mt-6 font-heading text-[clamp(7rem,20vw,13rem)] font-light leading-none text-white/15">404</p><h1 className="-mt-8 max-w-xl font-heading text-4xl font-light leading-tight text-white lg:text-6xl">Tahle cesta se v mlze ztratila.</h1><p className="mt-6 max-w-lg text-lg leading-relaxed text-white/65">Najdeme vám lepší. Prohlédněte si naše mlžítka, inspirujte se realizacemi nebo nám rovnou popište svůj prostor.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link to="/" className="inline-flex items-center justify-center gap-2 rounded-full bg-cyan px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-white"><Home size={16} /> Na hlavní stránku</Link><Link to="/poptavka" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-6 py-3.5 text-sm font-bold text-white hover:bg-white/10">Nezávazná poptávka <ArrowRight size={16} /></Link></div></div><aside className="rounded-3xl border border-white/15 bg-white/[.06] p-6 backdrop-blur-xl"><span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.18em] text-cyan"><Sparkles size={14} /> Doporučujeme</span><h2 className="mt-5 font-heading text-2xl font-light text-white">Osvěžení pro každý horký den.</h2><div className="mt-6 space-y-3"><Link to="/katalog" className="flex items-center justify-between rounded-2xl border border-white/10 p-4 text-sm font-semibold hover:border-cyan/60"><span className="flex items-center gap-3"><Droplets size={19} className="text-cyan" /> Prohlédnout mlžítka</span><ArrowRight size={15} /></Link><Link to="/reference" className="flex items-center justify-between rounded-2xl border border-white/10 p-4 text-sm font-semibold hover:border-cyan/60">Realizace v terénu <ArrowRight size={15} /></Link></div></aside></div><footer className="text-xs text-white/35">© Mlžidla.cz · HolmTec</footer></div></main>;
+
+export default function PageNotFound({}) {
+    const location = useLocation();
+    const pageName = location.pathname.substring(1);
+
+    const { data: authData, isFetched } = useQuery({
+        queryKey: ['user'],
+        queryFn: async () => {
+            try {
+                const user = await base44.auth.me();
+                return { user, isAuthenticated: true };
+            } catch (error) {
+                return { user: null, isAuthenticated: false };
+            }
+        }
+    });
+    return (
+      
+        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }} className="max-w-md w-full">
+                <div className="text-center space-y-6">
+                    {/* 404 Error Code */}
+                    <div className="space-y-2">
+                        <h1 className="text-7xl font-light text-slate-300">404</h1>
+                        <div className="h-0.5 w-16 bg-slate-200 mx-auto"></div>
+                    </div>
+                    
+                    {/* Main Message */}
+                    <div className="space-y-3">
+                        <h2 className="text-2xl font-medium text-slate-800">
+                            Stránka nenalezena
+                        </h2>
+                        <p className="text-slate-600 leading-relaxed">
+                            Stránka <span className="font-medium text-slate-700">"{pageName}"</span> v této aplikaci nebyla nalezena.
+                        </p>
+                    </div>
+                    
+                    {/* Admin Note */}
+                    {isFetched && authData.isAuthenticated && authData.user?.role === 'admin' && (
+                        <div className="mt-8 p-4 bg-slate-100 rounded-lg border border-slate-200">
+                            <div className="flex items-start space-x-3">
+                                <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center mt-0.5">
+                                    <div className="w-2 h-2 rounded-full bg-orange-400"></div>
+                                </div>
+                                <div className="text-left space-y-1">
+                                    <p className="text-sm font-medium text-slate-700">Admin Note</p>
+                                    <p className="text-sm text-slate-600 leading-relaxed">
+                                        This could mean that the AI hasn't implemented this page yet. Ask it to implement it in the chat.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Action Button */}
+                    <div className="pt-6">
+                        <button 
+                            onClick={() => window.location.href = '/'} 
+                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                        >
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Přejít na hlavní stránku - Mlžidla.cz
+                        </button>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    )
 }

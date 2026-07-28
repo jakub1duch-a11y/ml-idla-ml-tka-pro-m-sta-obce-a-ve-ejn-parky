@@ -5,7 +5,6 @@ import { ArrowRight, Building2, CheckCircle, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
-import GateCollectionCards from '@/components/katalog/GateCollectionCards';
 
 const BENEFITS = [
 'Ochlazení okolního vzduchu až o 9 °C',
@@ -30,7 +29,7 @@ export default function MestaObce() {
   useEffect(() => {
     setSEO(SEO_PAGES.mestOobce);
     base44.entities.Product.list().catch(() => []).then((p) => {
-      setProducts((p || []).filter((item) => item.category_id !== '6a5119a4abdfd991c476d9fc' && !/zemní|vrut|trysk|příslušenství/i.test(item.name || '')).slice(0, 6));
+      setProducts((p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -143,9 +142,7 @@ export default function MestaObce() {
       <section className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Doporučené produkty</p>
-          <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Mlžné brány pro obce.</h2>
-          <GateCollectionCards />
-          <h3 className="mt-14 text-slate-900 text-2xl" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Další doporučené modely.</h3>
+          <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely pro obce.</h2>
           {loading ?
           <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
 

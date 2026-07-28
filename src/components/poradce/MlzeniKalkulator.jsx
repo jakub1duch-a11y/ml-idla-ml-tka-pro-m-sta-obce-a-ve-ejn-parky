@@ -1,48 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Droplets, Clock, ChevronDown, Sparkles, Info, Loader } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { Droplets, Zap, Euro, Clock, TrendingDown, ChevronDown } from 'lucide-react';
 
-const SMART_APP_SAVINGS = 0.5; // model chytrého řízení: aktivní cykly podle teploty, vlhkosti a harmonogramu
+// ─── Systémy ────────────────────────────────────────────────────────────────
+const SYSTEMS = [
+{
+  id: 'bench',
+  name: 'BENDY 60 — Lavička',
+  type: 'Mlžná lavička',
+  nozzles: 4,
+  flowPerNozzle: 0.06, // l/min na trysku při 70 bar
+  pressure: 70,
+  powerW: 350,
+  desc: 'Kompaktní mlžná lavička pro terasy a veřejné prostory.'
+},
+{
+  id: 'ostev',
+  name: 'OSTEV — Mlžný strom',
+  type: 'Mlžná socha',
+  nozzles: 8,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 550,
+  desc: 'Skulpturální mlžný strom pro náměstí a parky.'
+},
+{
+  id: 'gate60',
+  name: 'GATE 60 — Mlžná brána',
+  type: 'Mlžný portál',
+  nozzles: 12,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 700,
+  desc: 'Vstupní mlžná brána pro eventy a veřejné prostory.'
+},
+{
+  id: 'arena',
+  name: 'ARENA — Mlžná zóna',
+  type: 'Chladicí zóna',
+  nozzles: 20,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 1100,
+  desc: 'Plošné ochlazení pro velké venkovní prostory a tribuny.'
+},
+{
+  id: 'aura',
+  name: 'AURA — Mlžná socha',
+  type: 'Designová socha',
+  nozzles: 8,
+  flowPerNozzle: 0.06,
+  pressure: 70,
+  powerW: 550,
+  desc: 'Kruhová mlžná socha — dominanta veřejného prostoru.'
+}];
 
-// Produkty, které nejsou samostatná mlžítka/brány (příslušenství), do kalkulačky nepatří
-const ACCESSORY_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'Zemní vrut – rychlá mobilní instalace'];
 
-const WATER_PRICE_PER_M3 = 129.11; // Kč / m³, Trutnov 2026: vodné 75,86 Kč + stočné 53,25 Kč
-const NOZZLE_PRICE_KC = 390; // Kč za 1 ks nerezové trysky AISI 316L
-
-// ─── Parsování reálných dat produktu ───────────────────────────────────────
-function parseFlowLH(str) {
-  if (!str) return 10; // rozumný odhad, když produkt spotřebu neuvádí
-  const nums = (str.match(/[\d.,]+/g) || []).map((n) => parseFloat(n.replace(',', '.'))).filter((n) => !isNaN(n));
-  if (nums.length === 0) return 10;
-  const avg = nums.reduce((a, b) => a + b, 0) / nums.length;
-  return /l\/min/i.test(str) ? avg * 60 : avg;
-}
-
-function parseNozzles(str) {
-  const m = str && str.match(/(\d+)\s*trys/i);
-  return m ? parseInt(m[1], 10) : 1;
-}
-
-function buildSystems(products, categories) {
-  const catName = (id) => categories.find((c) => c.id === id)?.name || id || 'Mlžítko';
-  return products.
-  filter((p) => !ACCESSORY_NAMES.includes(p.name)).
-  map((p) => {
-    const totalFlowLH = parseFlowLH(p.water_consumption);
-    const nozzles = parseNozzles(p.micron_size) || parseNozzles(p.water_consumption) || 1;
-    return {
-      id: p.id,
-      name: p.name,
-      type: catName(p.category_id),
-      nozzles,
-      flowPerNozzle: totalFlowLH / nozzles / 60, // l/min na trysku
-      pressure: p.pressure || '2–7 bar',
-      desc: p.short_description || ''
-    };
-  });
-}
+const WATER_PRICE_PER_M3 = 85; // Kč / m³ (ČR průměr 2025)
+const ELECTRICITY_PRICE_PER_KWH = 5.5; // Kč / kWh
 
 // ─── Mist Canvas Animace ────────────────────────────────────────────────────
 // intensity: 0.3–1.5 (počet trysek / max)
@@ -193,53 +208,25 @@ function AnimNum({ value, decimals = 0, suffix = '' }) {
 
 // ─── Hlavní komponent ────────────────────────────────────────────────────────
 export default function MlzeniKalkulator() {
-  const [systems, setSystems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [systemId, setSystemId] = useState(null);
-  const [seasonHours, setSeasonHours] = useState(300);
+  const [systemId, setSystemId] = useState('ostev');
+  const [hoursPerDay, setHoursPerDay] = useState(8);
+  const [daysPerMonth, setDaysPerMonth] = useState(20);
   const [openSelect, setOpenSelect] = useState(false);
 
-  useEffect(() => {
-    Promise.all([
-    base44.entities.Product.list().catch(() => []),
-    base44.entities.ProductCategory.list().catch(() => [])]
-    ).then(([products, categories]) => {
-      const built = buildSystems(products || [], categories || []);
-      setSystems(built);
-      if (built.length > 0) setSystemId(built[0].id);
-    }).finally(() => setLoading(false));
-  }, []);
+  const sys = SYSTEMS.find((s) => s.id === systemId);
 
-  const sys = systems.find((s) => s.id === systemId);
+  // Výpočty
+  const flowPerHour = sys.nozzles * sys.flowPerNozzle * 60; // l/h
+  const waterPerDay = flowPerHour * hoursPerDay; // l/day
+  const waterPerMonth = waterPerDay * daysPerMonth; // l/month
+  const waterCostMonth = waterPerMonth / 1000 * WATER_PRICE_PER_M3;
 
-  if (loading) {
-    return (
-      <div className="rounded-2xl border border-white/10 bg-card_bg flex items-center justify-center py-24">
-        <Loader size={22} className="animate-spin text-cyan" />
-      </div>);
+  const electricityPerDay = sys.powerW / 1000 * hoursPerDay; // kWh/day
+  const electricityPerMonth = electricityPerDay * daysPerMonth;
+  const electricityCostMonth = electricityPerMonth * ELECTRICITY_PRICE_PER_KWH;
 
-  }
-
-  if (!sys) {
-    return (
-      <div className="rounded-2xl border border-white/10 bg-card_bg flex items-center justify-center py-24 px-6 text-center">
-        <p className="text-sm text-white/50">Zatím nejsou k dispozici žádné produkty pro výpočet.</p>
-      </div>);
-
-  }
-
-  // Výpočty — pouze spotřeba a náklady na vodu
-  const flowPerNozzleLH = sys.flowPerNozzle * 60; // l/h na 1 trysku
-  const flowTotalLH = sys.nozzles * flowPerNozzleLH; // l/h celý systém
-
-  const costPerNozzleHour = flowPerNozzleLH / 1000 * WATER_PRICE_PER_M3;
-  const costTotalHour = flowTotalLH / 1000 * WATER_PRICE_PER_M3;
-
-  const water8h = flowTotalLH * 8;
-  const cost8h = water8h / 1000 * WATER_PRICE_PER_M3;
-
-  const seasonWater = seasonHours * flowTotalLH;
-  const seasonCost = seasonHours * costTotalHour;
+  const totalCostMonth = waterCostMonth + electricityCostMonth;
+  const costPerHour = totalCostMonth / (hoursPerDay * daysPerMonth);
 
   // Intensity pro animaci mlhy (0.3–1.5)
   const mistIntensity = Math.min(1.5, 0.3 + sys.nozzles / 20 * 1.2);
@@ -252,8 +239,8 @@ export default function MlzeniKalkulator() {
           <Droplets size={18} className="text-cyan" />
         </div>
         <div>
-          <p className="text-sm font-medium text-[hsl(var(--popover))]">Kalkulátor spotřeby vody</p>
-          <p className="text-xs text-[hsl(var(--popover))]">Trutnov 2026 · vodné a stočné 129,11 Kč / m³ · osmihodinový model</p>
+          <p className="text-sm font-medium text-[hsl(var(--popover))]">Kalkulátor spotřeby a nákladů</p>
+          <p className="text-xs text-[hsl(var(--popover))]">Orientační výpočet pro vybraný systém</p>
         </div>
       </div>
 
@@ -264,7 +251,7 @@ export default function MlzeniKalkulator() {
           {/* Výběr systému */}
           <div>
             <label className="block text-[10px] font-mono text-white/40 tracking-widest uppercase mb-2">
-              Mlžítko / mlžná brána
+              Mlžný systém
             </label>
             <div className="relative">
               <button
@@ -280,9 +267,9 @@ export default function MlzeniKalkulator() {
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  className="absolute z-20 top-full mt-1 w-full max-h-72 overflow-y-auto rounded-xl bg-surface border border-white/15 shadow-2xl shadow-black/50">
+                  className="absolute z-20 top-full mt-1 w-full rounded-xl bg-surface border border-white/15 overflow-hidden shadow-2xl shadow-black/50">
                   
-                    {systems.map((s) =>
+                    {SYSTEMS.map((s) =>
                   <button
                     key={s.id}
                     onClick={() => {setSystemId(s.id);setOpenSelect(false);}}
@@ -292,29 +279,45 @@ export default function MlzeniKalkulator() {
                           <p className={`text-sm font-medium truncate ${s.id === systemId ? 'text-cyan' : 'text-white'}`}>{s.name}</p>
                           <p className="text-xs text-white/35 truncate">{s.desc}</p>
                         </div>
-                        <span className="text-[10px] font-mono text-white/30 shrink-0 mt-0.5">{s.type}</span>
+                        <span className="text-[10px] font-mono text-white/30 shrink-0 mt-0.5">{s.nozzles} trysek</span>
                       </button>
                   )}
                   </motion.div>
                 }
               </AnimatePresence>
             </div>
-            <p className="text-xs mt-1.5 font-mono text-[hsl(var(--card-foreground))]">{sys.type} · {sys.nozzles} trysek · {sys.pressure}</p>
+            <p className="text-xs mt-1.5 font-mono text-[hsl(var(--card-foreground))]">{sys.type} · {sys.nozzles} trysek · {sys.powerW} W</p>
           </div>
 
-          {/* Hodin za letní sezónu */}
+          {/* Hodiny denně */}
           <div>
             <div className="flex justify-between mb-2">
-              <label className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Provoz za letní sezónu</label>
-              <span className="text-sm font-mono text-cyan">{seasonHours} h</span>
+              <label className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Provoz hodin denně</label>
+              <span className="text-sm font-mono text-cyan">{hoursPerDay} h</span>
             </div>
             <input
-              type="range" min={50} max={800} step={10} value={seasonHours}
-              onChange={(e) => setSeasonHours(Number(e.target.value))}
+              type="range" min={1} max={16} step={1} value={hoursPerDay}
+              onChange={(e) => setHoursPerDay(Number(e.target.value))}
               className="w-full accent-cyan h-1 rounded-full" />
             
             <div className="flex justify-between text-[10px] font-mono text-white/20 mt-1">
-              <span>50 h</span><span>800 h</span>
+              <span>1 h</span><span>16 h</span>
+            </div>
+          </div>
+
+          {/* Dny v měsíci */}
+          <div>
+            <div className="flex justify-between mb-2">
+              <label className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Dní provozu za měsíc</label>
+              <span className="text-sm font-mono text-cyan">{daysPerMonth} dní</span>
+            </div>
+            <input
+              type="range" min={1} max={31} step={1} value={daysPerMonth}
+              onChange={(e) => setDaysPerMonth(Number(e.target.value))}
+              className="w-full accent-cyan h-1 rounded-full" />
+            
+            <div className="flex justify-between text-[10px] font-mono text-white/20 mt-1">
+              <span>1 den</span><span>31 dní</span>
             </div>
           </div>
 
@@ -331,10 +334,10 @@ export default function MlzeniKalkulator() {
               <div key={i} className="w-0.5 h-0.5 rounded-full bg-cyan/80 shadow-[0_0_6px_2px_rgba(34,211,238,0.6)]" />
               )}
             </div>
-            <MistCanvas intensity={mistIntensity} flowRate={flowTotalLH} />
+            <MistCanvas intensity={mistIntensity} flowRate={flowPerHour} />
             <div className="absolute bottom-3 left-0 right-0 text-center">
               <span className="font-mono tracking-widest uppercase text-base text-[hsl(var(--foreground))]">
-                {sys.nozzles} trysek · {flowTotalLH.toFixed(1)} l/h
+                {sys.nozzles} trysek · {flowPerHour.toFixed(1)} l/h
               </span>
             </div>
           </div>
@@ -343,138 +346,115 @@ export default function MlzeniKalkulator() {
         {/* ─── Pravá strana: výsledky ─── */}
         <div className="space-y-4">
 
-          {/* Spotřeba jedné trysky */}
-          <div className="group relative rounded-xl bg-surface border border-white/10 p-5">
+          {/* Spotřeba vody */}
+          <div className="rounded-xl bg-surface border border-white/10 p-5">
             <div className="flex items-center gap-2 mb-3">
               <Droplets size={15} className="text-cyan" />
-              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba jedné trysky</p>
-              <Info size={11} className="text-white/25 group-hover:text-cyan transition-colors cursor-help" />
+              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba vody</p>
             </div>
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-light text-white tabular-nums">
-                <AnimNum value={flowPerNozzleLH} decimals={1} />
-                <span className="text-sm text-white/30 ml-1">l/h</span>
-              </p>
-              <p className="text-lg font-light text-cyan tabular-nums">
-                = <AnimNum value={costPerNozzleHour} decimals={2} suffix=" Kč/h" />
-              </p>
-            </div>
-            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
-                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {flowPerNozzleLH.toFixed(1)} l/h × {WATER_PRICE_PER_M3} Kč/m³ ÷ 1000 = {costPerNozzleHour.toFixed(2)} Kč/h.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Spotřeba celého systému */}
-          <div className="group relative rounded-xl bg-surface border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Droplets size={15} className="text-cyan" />
-              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba systému ({sys.nozzles} trysek)</p>
-              <Info size={11} className="text-white/25 group-hover:text-cyan transition-colors cursor-help" />
-            </div>
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-light text-white tabular-nums">
-                <AnimNum value={flowTotalLH} decimals={1} />
-                <span className="text-sm text-white/30 ml-1">l/h</span>
-              </p>
-              <p className="text-lg font-light text-cyan tabular-nums">
-                = <AnimNum value={costTotalHour} decimals={2} suffix=" Kč/h" />
-              </p>
-            </div>
-            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
-                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {sys.nozzles} trysek × {flowPerNozzleLH.toFixed(1)} l/h = {flowTotalLH.toFixed(1)} l/h. × {WATER_PRICE_PER_M3} Kč/m³ ÷ 1000 = {costTotalHour.toFixed(2)} Kč/h.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Za 8 hodin mlžení (den) */}
-          <div className="group relative rounded-xl bg-surface border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Clock size={15} className="text-cyan" />
-              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Za den (8 hodin mlžení)</p>
-              <Info size={11} className="text-white/25 group-hover:text-cyan transition-colors cursor-help" />
-            </div>
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-light text-white tabular-nums">
-                <AnimNum value={water8h} decimals={0} />
-                <span className="text-sm text-white/30 ml-1">l</span>
-              </p>
-              <p className="text-lg font-light text-cyan tabular-nums">
-                = <AnimNum value={cost8h} decimals={0} suffix=" Kč" />
-              </p>
-            </div>
-            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
-                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {flowTotalLH.toFixed(1)} l/h × 8 h = {water8h.toFixed(0)} l. × {WATER_PRICE_PER_M3} Kč/m³ ÷ 1000 = {cost8h.toFixed(0)} Kč/den.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Za letní sezónu — zvýrazněno */}
-          <div className="group relative rounded-xl bg-gradient-to-br from-cyan/10 to-cyan/5 border border-cyan/25 p-5">
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles size={15} className="text-cyan" />
-              <p className="text-[10px] font-mono text-cyan/70 tracking-widest uppercase">Za letní sezónu ({seasonHours} h)</p>
-              <Info size={11} className="text-white/30 group-hover:text-cyan transition-colors cursor-help" />
-            </div>
-            <div className="flex items-end gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <p className="text-xs text-white/30 font-mono mb-1">Spotřeba vody</p>
                 <p className="text-2xl font-light text-white tabular-nums">
-                  <AnimNum value={seasonWater / 1000} decimals={2} />
-                  <span className="text-sm text-white/30 ml-1">m³</span>
+                  <AnimNum value={waterPerDay} decimals={1} />
+                  <span className="text-sm text-white/30 ml-1">l/den</span>
+                </p>
+              </div>
+              <div>
+                <p className="text-2xl font-light text-white tabular-nums">
+                  <AnimNum value={waterPerMonth / 1000} decimals={2} />
+                  <span className="text-sm text-white/30 ml-1">m³/měs</span>
+                </p>
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/8 flex items-center justify-between">
+              <span className="text-xs text-white/30 font-mono">Náklad za vodu / měsíc</span>
+              <span className="text-sm text-white font-medium">
+                <AnimNum value={waterCostMonth} decimals={0} suffix=" Kč" />
+              </span>
+            </div>
+          </div>
+
+          {/* Elektřina */}
+          <div className="rounded-xl bg-surface border border-white/10 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap size={15} className="text-cyan" />
+              <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Spotřeba elektřiny</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-2xl font-light text-white tabular-nums">
+                  <AnimNum value={electricityPerDay} decimals={2} />
+                  <span className="text-sm text-white/30 ml-1">kWh/den</span>
+                </p>
+              </div>
+              <div>
+                <p className="text-2xl font-light text-white tabular-nums">
+                  <AnimNum value={electricityPerMonth} decimals={1} />
+                  <span className="text-sm text-white/30 ml-1">kWh/měs</span>
+                </p>
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/8 flex items-center justify-between">
+              <span className="text-xs text-white/30 font-mono">Náklad za elektřinu / měsíc</span>
+              <span className="text-sm text-white font-medium">
+                <AnimNum value={electricityCostMonth} decimals={0} suffix=" Kč" />
+              </span>
+            </div>
+          </div>
+
+          {/* Celkové provozní náklady */}
+          <div className="rounded-xl bg-gradient-to-br from-cyan/10 to-cyan/5 border border-cyan/25 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <TrendingDown size={15} className="text-cyan" />
+              <p className="text-[10px] font-mono text-cyan/70 tracking-widest uppercase">Celkové provozní náklady</p>
+            </div>
+            <div className="flex items-end gap-3 mb-4">
+              <div>
+                <p className="text-xs text-white/30 font-mono mb-1">Za měsíc</p>
+                <p className="text-4xl font-light text-white tabular-nums">
+                  <AnimNum value={totalCostMonth} decimals={0} />
+                  <span className="text-lg text-white/50 ml-1">Kč</span>
                 </p>
               </div>
               <div className="pb-1 pl-4 border-l border-white/10">
-                <p className="text-xs text-white/30 font-mono mb-1">Náklad na vodu</p>
-                <p className="text-3xl font-light text-cyan tabular-nums">
-                  <AnimNum value={seasonCost} decimals={0} suffix=" Kč" />
+                <p className="text-xs text-white/30 font-mono mb-1">Za hodinu provozu</p>
+                <p className="text-xl font-light text-cyan tabular-nums">
+                  <AnimNum value={costPerHour} decimals={2} />
+                  <span className="text-sm text-cyan/60 ml-1">Kč/h</span>
                 </p>
               </div>
             </div>
-            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
-                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Výpočet: {flowTotalLH.toFixed(1)} l/h × {seasonHours} h = {seasonWater.toFixed(0)} l ({(seasonWater / 1000).toFixed(2)} m³). × {WATER_PRICE_PER_M3} Kč/m³ = {seasonCost.toFixed(0)} Kč.</p>
+
+            {/* Progress bar voda vs elektřina */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-[10px] font-mono text-white/30">
+                <span className="w-2 h-2 rounded-full bg-cyan inline-block" />
+                <span>Voda {totalCostMonth > 0 ? Math.round(waterCostMonth / totalCostMonth * 100) : 0}%</span>
+                <span className="w-2 h-2 rounded-full bg-white/20 inline-block ml-2" />
+                <span>Elektřina {totalCostMonth > 0 ? Math.round(electricityCostMonth / totalCostMonth * 100) : 0}%</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-cyan to-cyan/50"
+                  animate={{ width: `${totalCostMonth > 0 ? waterCostMonth / totalCostMonth * 100 : 0}%` }}
+                  transition={{ type: 'spring', stiffness: 120, damping: 20 }} />
+                
               </div>
             </div>
           </div>
 
-          {/* Smart APP úspora za sezónu */}
-          <div className="group relative rounded-xl bg-emerald-500/5 border border-emerald-500/25 p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={15} className="text-emerald-400" />
-              <p className="text-[10px] font-mono text-emerald-400/80 tracking-widest uppercase">Se Smart APP (−{SMART_APP_SAVINGS * 100}%) za sezónu</p>
-              <Info size={11} className="text-white/25 group-hover:text-emerald-400 transition-colors cursor-help" />
-            </div>
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-light text-white tabular-nums">
-                <AnimNum value={seasonWater * (1 - SMART_APP_SAVINGS) / 1000} decimals={2} />
-                <span className="text-sm text-white/30 ml-1">m³</span>
-              </p>
-              <p className="text-lg font-light text-emerald-400 tabular-nums">
-                ušetříte <AnimNum value={seasonCost * SMART_APP_SAVINGS} decimals={0} suffix=" Kč" />
-              </p>
-            </div>
-            <div className="pointer-events-none absolute left-5 right-5 bottom-full mb-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-              <div className="bg-ink border border-white/20 rounded-lg px-3 py-2 shadow-xl">
-                <p className="text-[10px] font-mono text-white/60 leading-relaxed">Smart APP automaticky tlumí/vypíná mlžení dle teploty, vlhkosti a větru — orientační úspora vody {SMART_APP_SAVINGS * 100}% ze sezónní spotřeby {seasonCost.toFixed(0)} Kč = {(seasonCost * SMART_APP_SAVINGS).toFixed(0)} Kč.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Cena trysky + tarif */}
+          {/* Srovnání — ceník vody */}
           <div className="rounded-xl bg-surface border border-white/8 p-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Cena jedné trysky (AISI 316L)</span>
-              <span className="text-sm font-medium text-white">{NOZZLE_PRICE_KC} Kč</span>
+            <div className="flex items-center gap-2 mb-3">
+              <Clock size={14} className="text-white/30" />
+              <p className="text-[10px] font-mono text-white/25 tracking-widest uppercase">Orientační tarify</p>
             </div>
-            <div className="flex items-center justify-between text-xs text-white/30 font-mono">
-              <span>Vodné a stočné Trutnov 2026: {WATER_PRICE_PER_M3} Kč/m³</span>
+            <div className="grid grid-cols-2 gap-2 text-xs text-white/30 font-mono">
+              <span>Voda: {WATER_PRICE_PER_M3} Kč/m³</span>
+              <span>Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
             </div>
             <p className="text-[10px] text-white/20 font-mono mt-2 leading-relaxed">
-              * Výpočet zahrnuje vodné i stočné pro Trutnov v roce 2026. Náklady ovlivňuje průtok, počet trysek, délka provozu a úroveň chytrého řízení.
+              * Průměrné ceny ČR 2025. Skutečné náklady závisí na tarifu poskytovatele.
             </p>
           </div>
         </div>

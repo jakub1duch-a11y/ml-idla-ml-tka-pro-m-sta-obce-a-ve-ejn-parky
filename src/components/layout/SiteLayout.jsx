@@ -4,16 +4,14 @@ import Header from './Header';
 import Footer from './Footer';
 import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
-import ContextualFooterLinks from '@/components/common/ContextualFooterLinks';
 
 export default function SiteLayout() {
   return (
-    <div className="site-shell min-h-screen flex flex-col bg-slate-50 text-slate-950">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         <Outlet />
       </main>
-      <ContextualFooterLinks />
       <Footer />
       <NotificationPrompt />
       <CookieConsent />

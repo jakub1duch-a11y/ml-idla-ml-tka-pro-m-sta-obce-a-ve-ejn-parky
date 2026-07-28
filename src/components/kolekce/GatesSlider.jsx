@@ -46,9 +46,6 @@ export default function GatesSlider() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 lg:mb-10">
           <div>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/70 text-[10px] font-mono tracking-widest uppercase mb-3">
-              <Building2 size={12} /> Městská mlžítka
-            </span>
             <p className="text-[11px] font-mono tracking-widest uppercase text-white/40 mb-2">Mlžné brány a portály</p>
             <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight">
               Vstup skrze mlhu.<br /><span className="text-white/40 italic font-extralight">Nezapomenutelný moment.</span>

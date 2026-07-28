@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { setSEO } from '@/lib/seo';
 import SmartHero from '@/components/smart-ovladani/SmartHero';
-import SmartHowItWorks from '@/components/smart-ovladani/SmartHowItWorks';
 import SmartBenefits from '@/components/smart-ovladani/SmartBenefits';
 import SmartSensorsSection from '@/components/smart-ovladani/SmartSensorsSection';
-import SmartControlOffer from '@/components/smart-ovladani/SmartControlOffer';
 import SmartCTA from '@/components/smart-ovladani/SmartCTA';
 
 export default function SmartOvladani() {
@@ -20,10 +18,8 @@ export default function SmartOvladani() {
   return (
     <div className="min-h-screen bg-white">
       <SmartHero />
-      <SmartHowItWorks />
       <SmartBenefits />
       <SmartSensorsSection />
-      <SmartControlOffer />
       <SmartCTA />
     </div>);
 

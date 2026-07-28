@@ -137,48 +137,30 @@ export default function GateComparisonTable() {
           ))}
         </motion.div>
 
-        {/* Comparison — mobile: one card per parameter, 3 models side-by-side */}
-        <div className="lg:hidden space-y-3 mb-10">
-          {ROWS.map((row, i) => {
-            const isKeyRow = row.label === 'Materiál' || row.label === 'Spotřeba vody';
-            return (
-              <motion.div key={row.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-                className={`rounded-xl overflow-hidden border bg-white shadow-sm ${isKeyRow ? 'border-sky-300 ring-1 ring-sky-100' : 'border-slate-200'}`}>
-                <div className="flex items-center gap-2 px-3.5 py-2 border-b border-slate-100 bg-slate-50">
-                  <row.icon size={13} className="text-slate-400 shrink-0" />
-                  <span className="text-[11px] font-mono text-slate-500 tracking-widest uppercase">{row.label}</span>
-                </div>
-                {isKeyRow ? (
-                  // Materiál a spotřeba vody — plná šířka pro čitelnost na malých displejích
-                  <div className="divide-y divide-slate-100">
-                    {COLUMNS.map((col, ci) => {
-                      const key = COLUMN_KEYS[ci];
-                      const differs = row[key] !== row.gateU;
-                      return (
-                        <div key={col.id} className={`flex items-start justify-between gap-3 px-3.5 py-2.5 ${differs ? 'bg-sky-50/60' : ''}`}>
-                          <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase shrink-0 pt-0.5">{col.name}</span>
-                          <span className={`text-xs font-semibold leading-snug text-right ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</span>
-                        </div>
-                      );
-                    })}
+        {/* Comparison — mobile stacked cards */}
+        <div className="lg:hidden space-y-4 mb-10">
+          {COLUMNS.map((col, ci) => (
+            <motion.div key={col.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: ci * 0.06 }}
+              className="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+              <div className="px-4 py-3.5 bg-gradient-to-r from-slate-900 to-slate-700 flex items-baseline gap-2">
+                <span className="text-sm font-bold text-white tracking-tight">{col.name}</span>
+                <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{col.tag}</span>
+              </div>
+              {ROWS.map((row, i) => {
+                const key = COLUMN_KEYS[ci];
+                const differs = row[key] !== row.gateU;
+                return (
+                  <div key={row.label} className={`flex items-start gap-3 px-4 py-3 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'} ${differs ? 'border-l-2 border-sky-400' : ''}`}>
+                    <row.icon size={14} className="text-slate-400 shrink-0 mt-0.5" />
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-0.5">{row.label}</p>
+                      <p className={`text-sm font-medium leading-snug ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</p>
+                    </div>
                   </div>
-                ) : (
-                  <div className="grid grid-cols-3 divide-x divide-slate-100">
-                    {COLUMNS.map((col, ci) => {
-                      const key = COLUMN_KEYS[ci];
-                      const differs = row[key] !== row.gateU;
-                      return (
-                        <div key={col.id} className={`px-2.5 py-3 ${differs ? 'bg-sky-50/60' : ''}`}>
-                          <p className="text-[9px] font-mono text-slate-400 tracking-wider uppercase mb-1 truncate">{col.name}</p>
-                          <p className={`text-xs font-semibold leading-snug ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
+                );
+              })}
+            </motion.div>
+          ))}
         </div>
 
         {/* Urban / parks offer callout */}

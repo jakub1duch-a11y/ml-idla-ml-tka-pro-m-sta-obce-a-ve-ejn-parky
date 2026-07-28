@@ -18,7 +18,7 @@ const categories = [
   id: 'mlhoviste',
   label: 'Mlhoviště & chladicí zóny',
   tagline: 'Až −9 °C. Komfort bez mokra.',
-  desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Nízkotlaké řešení 3–8 barů.',
+  desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Průmyslové čerpadlo 70 bar.',
   image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq',
   link: '/mlhoviste',
   count: '4 produkty',

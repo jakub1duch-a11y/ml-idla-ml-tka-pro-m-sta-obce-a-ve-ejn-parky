@@ -1,19 +1,90 @@
 import React, { useState, useEffect } from 'react';
 import KolekceHero from '@/components/kolekce/KolekceHero';
-import CollectionLinksRow from '@/components/kolekce/CollectionLinksRow';
+import CategorySelector from '@/components/kolekce/CategorySelector';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import GatesSlider from '@/components/kolekce/GatesSlider';
-import AccessoriesRow from '@/components/kolekce/AccessoriesRow';
 import CollectionMainInfoSection from '@/components/kolekce/CollectionMainInfoSection';
 import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Building2, Home, Users, Warehouse, Baby, ArrowRight } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import { trackQuickInquiryClick } from '@/lib/ga4';
+
+const HEIGHT_OPTIONS = [
+{ value: 'all', label: 'Všechny výšky' },
+{ value: 'low', label: 'Do 1 m' },
+{ value: 'medium', label: '1–3 m' },
+{ value: 'tall', label: '3 m a více' }];
+
+
+const INSTALL_OPTIONS = [
+{ value: 'all', label: 'Jakákoliv instalace' },
+{ value: 'easy', label: 'Snadná (plug & play)' },
+{ value: 'medium', label: 'Střední (odborník)' },
+{ value: 'complex', label: 'Komplexní (projekt)' }];
+
+
+function getHeightRange(product) {
+  const h = (product.coverage_area || '').toLowerCase();
+  if (!h) return 'all';
+  const match = h.match(/(\d+)/);
+  if (!match) return 'all';
+  const val = parseInt(match[1]);
+  if (val < 100) return 'low';
+  if (val < 300) return 'medium';
+  return 'tall';
+}
+
+function getInstallComplexity(product) {
+  const desc = ((product.description || '') + (product.short_description || '')).toLowerCase();
+  if (desc.includes('plug') || desc.includes('snadná') || desc.includes('terasa') || desc.includes('zahrada')) return 'easy';
+  if (desc.includes('projekt') || desc.includes('zakázk') || desc.includes('instalace')) return 'complex';
+  return 'medium';
+}
 
 // ─── KATEGORIE ─────────────────────────────────────────────────────────────
+
+const categoryGroups = [
+{
+  id: 'sochy',
+  label: 'Mlžné sochy',
+  icon: Trees,
+  tagline: 'Přírodní tvary. Živá atmosféra.',
+  description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
+  audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
+  usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
+  accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+  dbCategories: ['NATURE'],
+  slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik']
+},
+{
+  id: 'brany',
+  label: 'Mlžné brány a portály',
+  icon: Landmark,
+  tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
+  description: 'Mlžné brány a portály vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie mlžítka z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
+  audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
+  usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
+  accent: 'text-sky-700 bg-sky-50 border-sky-200',
+  dbCategories: ['URBAN ART'],
+  slugKeywords: ['aura', 'linear', 'Y-ARMIST', 'Spirála', 'BENDY']
+},
+{
+  id: 'mlhoviste',
+  label: 'Mlhoviště a chladicí zóny',
+  icon: Flame,
+  tagline: 'Až −9 °C. Komfort bez kompromisů.',
+  description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
+  audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
+  usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
+  accent: 'text-orange-700 bg-orange-50 border-orange-200',
+  dbCategories: ['GEOMETRY'],
+  slugKeywords: ['Mlžítka', 'Mlžiště', 'Mlžné systémy', 'Mlžné příslušenství', 'SMART mlžítka']
+}];
+
 
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
@@ -23,10 +94,73 @@ const audienceSegments = [
 { icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžítka - mlžná hřiště pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
 
 
+// Fallback images by category
+const FALLBACK_IMAGES = {
+  NATURE: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
+  'URBAN ART': 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&q=80',
+  GEOMETRY: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
+  DEFAULT: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'
+};
+
+function ProductCard({ product, i }) {
+  const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
+  return (
+    <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+    className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col bg-white">
+      <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'}
+      className="group block flex-1">
+        <div className="aspect-[4/3] overflow-hidden relative bg-slate-100">
+          <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
+          {product.featured &&
+          <span className="absolute top-3 left-3 bg-slate-900 text-white text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
+              Výběr
+            </span>
+          }
+          {/* Mist overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* Hover quick-view icon */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            whileHover={{ opacity: 1, scale: 1 }}
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center"
+            >
+              <Eye size={18} className="text-slate-900" />
+            </motion.div>
+          </motion.div>
+        </div>
+        <div className="p-6">
+          <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">{product._categoryName || 'Mlžný systém'}</p>
+          <h3 className="text-xl font-normal text-slate-900 mb-1">{product.name}</h3>
+          <p className="text-sm text-slate-500 mb-3 line-clamp-2">{product.short_description}</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1 text-xs text-slate-900 font-medium">
+              Detail <ArrowRight size={12} />
+            </div>
+          </div>
+        </div>
+      </Link>
+      <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
+        onClick={() => trackQuickInquiryClick(product.name, 'katalog')}
+        className="flex items-center justify-center gap-1.5 py-3 text-xs font-bold text-slate-900 border-t border-slate-200 hover:bg-slate-50 transition-colors shrink-0">
+        <Zap size={13} /> Rychlá poptávka
+      </Link>
+    </motion.div>);
+
+}
+
 export default function Kolekce() {
+  const [activeCategory, setActiveCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [heightFilter, setHeightFilter] = useState('all');
+  const [installFilter, setInstallFilter] = useState('all');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     setSEO(SEO_PAGES.kolekce);
@@ -46,8 +180,27 @@ export default function Kolekce() {
     }).finally(() => setLoading(false));
   }, []);
 
-  const ACCESSORY_CATEGORY_ID = '6a5119a4abdfd991c476d9fc';
-  const accessoryProducts = products.filter((p) => p.category_id === ACCESSORY_CATEGORY_ID);
+  const activeGroup = categoryGroups.find((g) => g.id === activeCategory);
+  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
+
+  const displayedProducts = products.
+  filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory'].includes(p.name)).
+  filter((p) => {
+    if (activeGroup) {
+      return activeGroup.dbCategories.includes(p._categoryName) ||
+      activeGroup.slugKeywords.some((kw) => (p.slug || '').includes(kw));
+    }
+    return true;
+  }).
+  filter((p) => heightFilter === 'all' || getHeightRange(p) === heightFilter).
+  filter((p) => installFilter === 'all' || getInstallComplexity(p) === installFilter).
+  filter((p) => {
+    if (!search.trim()) return true;
+    const q = search.toLowerCase();
+    return (p.name || '').toLowerCase().includes(q) ||
+    (p.short_description || '').toLowerCase().includes(q) ||
+    (p.description || '').toLowerCase().includes(q);
+  });
 
   return (
     <div className="min-h-screen bg-white">
@@ -55,8 +208,11 @@ export default function Kolekce() {
       {/* ── HERO SLIDER ── */}
       <KolekceHero />
 
-      {/* ── KRÁTKÉ ODKAZY NA KOLEKCE ── */}
-      <CollectionLinksRow />
+      {/* ── KATEGORIE (hover icon cards) ── */}
+      <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
+
+      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
+      <GatesSlider />
 
       {/* ── HLAVNÍ INFORMACE ── */}
       <CollectionMainInfoSection />
@@ -67,21 +223,32 @@ export default function Kolekce() {
       {/* ── VLASTNOSTI A VÝHODY ── */}
       <FeaturesBenefitsSection />
 
-      {/* ── ODKAZ NA CELÝ KATALOG ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20 text-center border-t border-slate-100">
-        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Chcete vidět úplně vše?</p>
-        <h3 className="font-heading font-light text-2xl lg:text-3xl text-slate-900 mb-6">Kompletní katalog mlžítek a mlžných bran na jednom místě.</h3>
-        <Link to="/katalog"
-          className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
-          Zobrazit celý katalog <ArrowRight size={15} />
-        </Link>
+      {/* ── PRODUKTY ── */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
+        <div className="flex items-center justify-between mb-10 lg:mb-12">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400">
+            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
+            {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
+          </p>
+          {activeCategory &&
+          <button onClick={() => setActiveCategory(null)} className="text-xs text-slate-400 hover:text-slate-900 transition-colors font-mono">
+              × Zobrazit vše
+            </button>
+          }
+        </div>
+        {loading ?
+        <div className="flex justify-center py-24">
+            <Loader size={24} className="animate-spin text-slate-300" />
+          </div> :
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-5">
+            {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
+            {displayedProducts.length === 0 &&
+          <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
+          }
+          </div>
+        }
       </div>
-
-      {/* ── PŘÍSLUŠENSTVÍ ── */}
-      <AccessoriesRow products={accessoryProducts} />
-
-      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
-      <GatesSlider />
 
       {/* ── ŽIVÁ UKÁZKA ── */}
       <LiveDemoSection />

@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Cpu, Loader, ShieldCheck, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle, Wrench } from 'lucide-react';
+import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';
-import ShareButtons from '@/components/blog/ShareButtons';
-import RealizaceCommentsSection from '@/components/reference/RealizaceCommentsSection';
-import ProjectTechTable from '@/components/reference/ProjectTechTable';
-import RelatedProductsSection from '@/components/common/RelatedProductsSection';
-import ContentBenefitsStrip from '@/components/common/ContentBenefitsStrip';
-import ProductLaunchPromo from '@/components/common/ProductLaunchPromo';
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -74,8 +68,7 @@ function isVideoFile(url) {
 }
 
 export default function ReferenceDetail() {
-  const { slug } = useParams();
-  const id = slug ? slug.split('-')[0] : slug;
+  const { id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -143,33 +136,24 @@ export default function ReferenceDetail() {
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14">
           <div className="flex flex-wrap gap-2 mb-5">
             {project.category && (
-              <span className="px-3 py-1 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full text-xs font-medium text-white">
+              <span className="px-3 py-1 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
                 {CATEGORY_LABELS[project.category] || project.category}
               </span>
             )}
             {project.year && (
-              <span className="px-3 py-1 bg-emerald-500 rounded-full text-xs font-medium text-white">
+              <span className="px-3 py-1 bg-emerald-500 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
                 {project.year}
               </span>
             )}
           </div>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-3 max-w-3xl">
+          <h1 className="font-heading font-semibold text-4xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-3 max-w-3xl">
             {project.name}
           </h1>
           {project.location && (
-            <div className="flex items-center gap-1.5 text-white/70 text-sm mt-3">
+            <div className="flex items-center gap-1.5 text-white/70 text-sm font-mono mt-3">
               <MapPin size={13} /> {project.location}
             </div>
           )}
-        </div>
-      </div>
-
-      {/* ═══════ BACK BUTTON ═══════ */}
-      <div className="bg-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-3">
-          <Link to="/reference" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
-            <ArrowLeft size={15} /> Zpět do realizací
-          </Link>
         </div>
       </div>
 
@@ -179,7 +163,7 @@ export default function ReferenceDetail() {
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
             {STATS.map((s, i) => (
               <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <p className="text-xs text-slate-400 mb-1.5">{s.label}</p>
+                <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1.5">{s.label}</p>
                 <p className="text-lg font-heading font-medium text-slate-900">{s.value}</p>
               </motion.div>
             ))}
@@ -187,25 +171,16 @@ export default function ReferenceDetail() {
         </div>
       )}
 
-      <div className="site-container"><ContentBenefitsStrip title="Klíčové prvky realizace" items={[{ icon: Wrench, title: 'Návrh na míru', text: 'Konstrukce a rozmístění vycházejí z konkrétního prostoru.' }, { icon: Cpu, title: 'Řízení provozu', text: 'Systém lze doplnit o automatické spouštění a chytré zóny.' }, { icon: ShieldCheck, title: 'Odolné provedení', text: 'Nerezové komponenty pro dlouhodobý venkovní provoz.' }]} /></div>
-
       {/* ═══════ ABOUT + SIDEBAR ═══════ */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
             {project.description && (
               <>
-                <p className="content-eyebrow mb-4">Řešení pro toto místo</p>
-                <h2 className="content-title max-w-2xl text-3xl">Návrh, který respektuje prostor i jeho rytmus.</h2>
-                <div className="mt-7 space-y-5">
-                  {project.description.split(/\n{2,}/).map((para, i) => (
-                    <p key={i} className="text-slate-600 text-lg leading-[1.8] font-light whitespace-pre-line">{para}</p>
-                  ))}
-                </div>
+                <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">O projektu</p>
+                <p className="text-slate-600 text-lg leading-relaxed font-light whitespace-pre-line">{project.description}</p>
               </>
             )}
-
-            <ProjectTechTable technologies={project.technologies} mistPointsCount={project.mist_points_count} />
 
             {project.source_url && (
               <a href={project.source_url} target="_blank" rel="noopener noreferrer"
@@ -213,36 +188,33 @@ export default function ReferenceDetail() {
                 Podívejte se, jak realizaci sdílí klient <ExternalLink size={13} />
               </a>
             )}
-
-            <ShareButtons title={project.name} />
-            <RealizaceCommentsSection realizaceId={project.id} />
           </div>
 
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-              <p className="text-xs font-semibold text-slate-400 mb-5">Detaily projektu</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">Detaily projektu</p>
               <div className="space-y-4">
                 {project.client && (
                   <div>
-                    <p className="text-xs text-slate-400 mb-1">Klient</p>
+                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Klient</p>
                     <p className="text-sm text-slate-900 font-medium">{project.client}</p>
                   </div>
                 )}
                 {project.location && (
                   <div>
-                    <p className="text-xs text-slate-400 mb-1">Lokalita</p>
+                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Lokalita</p>
                     <p className="text-sm text-slate-700">{project.location}</p>
                   </div>
                 )}
                 {project.year && (
                   <div>
-                    <p className="text-xs text-slate-400 mb-1">Rok realizace</p>
+                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Rok realizace</p>
                     <p className="text-sm text-slate-700">{project.year}</p>
                   </div>
                 )}
                 {project.product_used && (
                   <div className="pt-4 border-t border-slate-200">
-                    <p className="text-xs text-slate-400 mb-1">Použitý produkt</p>
+                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Použitý produkt</p>
                     <p className="text-sm text-slate-900 font-medium">{project.product_used}</p>
                   </div>
                 )}
@@ -264,7 +236,7 @@ export default function ReferenceDetail() {
       {heroVideo && (
         <div className="bg-slate-50 border-y border-slate-200 py-16 lg:py-20">
           <div className="max-w-5xl mx-auto px-6 lg:px-10">
-            <p className="text-sm font-semibold text-techblue mb-4 flex items-center gap-2">
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4 flex items-center gap-2">
               <PlayCircle size={14} /> Video z realizace
             </p>
             <div className="rounded-2xl overflow-hidden border border-slate-200 bg-black">
@@ -274,29 +246,33 @@ export default function ReferenceDetail() {
         </div>
       )}
 
-      {/* ═══════ PHOTO GALLERY ═══════ */}
-      {allImages.length > 0 && (
-        <section className="border-y border-slate-200 bg-slate-50 py-16 lg:py-24">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <div className="mb-10 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <div><p className="text-sm font-semibold text-techblue">Fotogalerie realizace</p><h2 className="mt-3 font-heading text-3xl font-light tracking-tight text-slate-900 lg:text-5xl">Prostor v detailu</h2></div>
-              <p className="max-w-sm text-sm leading-relaxed text-slate-500">Prohlédněte si materiály, měřítko i atmosféru hotového řešení.</p>
-            </div>
-            <div className="grid gap-3 lg:grid-cols-12">
-              {allImages.map((img, i) => (
-                <motion.button key={img} onClick={() => setLightbox(i)} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }} className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-white ${i === 0 ? 'aspect-[16/10] lg:col-span-8' : 'aspect-[4/3] lg:col-span-4'}`}>
-                  <img src={img} alt={`${project.name} – fotografie ${i + 1}`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading={i === 0 ? 'eager' : 'lazy'} />
-                  <div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/25"><span className="rounded-full border border-white/40 bg-white/10 p-3 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100"><ZoomIn size={19} /></span></div>
-                  <span className="absolute bottom-4 left-4 text-xs font-semibold tracking-[.14em] text-white opacity-0 transition-opacity group-hover:opacity-100">{String(i + 1).padStart(2, '0')}</span>
-                </motion.button>
-              ))}
-            </div>
+      {/* ═══════ PHOTO GALLERY (Apex Arc style mixed grid) ═══════ */}
+      {allImages.length > 1 && (
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Fotogalerie</p>
+          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
+            Fotografie z realizace
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[160px] md:auto-rows-[200px]">
+            {allImages.map((img, i) => (
+              <motion.button
+                key={i}
+                onClick={() => setLightbox(i)}
+                initial={{ opacity: 0, scale: 0.97 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.03 }}
+                className={`group relative overflow-hidden rounded-2xl border border-slate-200 hover:border-slate-300 transition-all ${i === 0 ? 'col-span-2 row-span-2' : ''}`}
+              >
+                <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                  <ZoomIn size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              </motion.button>
+            ))}
           </div>
-        </section>
+        </div>
       )}
-
-      <RelatedProductsSection productUsed={project.product_used} />
-      {project.show_product_promo !== false && <div className="site-container"><ProductLaunchPromo /></div>}
 
       {/* ═══════ CTA ═══════ */}
       <div className="py-20 bg-slate-900">

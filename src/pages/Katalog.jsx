@@ -10,7 +10,7 @@ import FeatureIconRow from '@/components/common/FeatureIconRow';
 const CATALOG_FEATURES = [
 { icon: Droplets, label: 'Nízká spotřeba vody', value: 'od 4,6 l/h' },
 { icon: ThermometerSnowflake, label: 'Ochlazení okolí', value: 'až −9 °C' },
-{ icon: Gauge, label: 'Nízkotlaký provoz', value: '2–8 bar (200–800 kPa)' },
+{ icon: Gauge, label: 'Nízkotlaký provoz', value: '2–7 BAR' },
 { icon: Cpu, label: 'Smart řízení', value: 'volitelné moduly' }];
 
 const TABS = [
@@ -32,7 +32,7 @@ export default function Katalog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-16">
+    <div className="min-h-screen bg-white pt-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Katalog 2026</p>

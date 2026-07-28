@@ -1,7 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Droplet } from 'lucide-react';
 
 export default function Logo({ size = 'md' }) {
-  const compact = size === 'sm';
-  return <div className="inline-flex h-full items-center gap-2 whitespace-nowrap leading-none text-white"><Link to="/" aria-label="Mlžidla.cz" className={`${compact ? 'text-2xl sm:text-3xl xl:text-[2rem]' : 'text-3xl sm:text-4xl'} font-heading font-semibold tracking-tight`}><span className="text-cyan">mlž</span>idla</Link><span className="text-white/25" aria-hidden="true">|</span><a href="https://holmtec.cz" target="_blank" rel="noopener noreferrer" aria-label="Mateřský web HolmTec" title="HolmTec" className="text-[8px] font-semibold tracking-[0.16em] text-white/55 transition-colors hover:text-white">HOLMTEC</a></div>;
+  const iconSize = size === 'sm' ? 20 : 24;
+  return (
+    <motion.div
+      initial={{ opacity: 0, filter: 'blur(10px)' }}
+      animate={{ opacity: 1, filter: 'blur(0px)' }}
+      transition={{ duration: 1.8, ease: 'easeOut' }}
+      className="inline-flex items-center gap-2">
+      
+      <Droplet size={iconSize} className="shrink-0 text-[#40a2d4] fill-[#40a2d4]/20" />
+      <span className="font-heading text-lg font-semibold tracking-wide uppercase">
+        mlžidla<span className="text-[#40a2d4] text-base normal-case px-0.5" style={{ letterSpacing: '0.06em' }}>.cz</span>
+      </span>
+    </motion.div>);
+
 }

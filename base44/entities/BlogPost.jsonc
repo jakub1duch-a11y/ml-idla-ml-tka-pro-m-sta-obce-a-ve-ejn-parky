@@ -28,7 +28,7 @@
         "oboji"
       ],
       "default": "oboji",
-      "description": "C\u00edlov\u00e1 skupina \u010dl\u00e1nku"
+      "description": "C\u00edlov\u00e1 skupina \u010dl\u00e1nku \u2014 firmy (gastro, eventy, obce) nebo soukrom\u00ed z\u00e1kazn\u00edci (zahrady)"
     },
     "perex": {
       "type": "string",
@@ -41,17 +41,6 @@
     "image_url": {
       "type": "string",
       "description": "Cover image URL"
-    },
-    "image_alt": {
-      "type": "string",
-      "description": "SEO alt text"
-    },
-    "gallery_urls": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "SEO photo gallery URLs"
     },
     "published": {
       "type": "boolean",
@@ -72,28 +61,16 @@
     },
     "cta_label": {
       "type": "string",
-      "description": "Text CTA"
+      "description": "Text tla\u010d\u00edtka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku (nap\u0159. 'Nez\u00e1vazn\u00e1 kalkulace realizace')"
     },
     "cta_link": {
       "type": "string",
-      "description": "CTA link"
+      "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy (nap\u0159. /poptavka nebo /kalkulacka)"
     },
     "instagram_posted": {
       "type": "boolean",
       "default": false,
-      "description": "Instagram shared"
-    },
-    "show_product_promo": {
-      "type": "boolean",
-      "default": true,
-      "description": "Zobrazit nab\u00eddku BENDY_60 v detailu \u010dl\u00e1nku"
-    },
-    "product_launch": {
-      "type": "string",
-      "enum": [
-        "bendy_60"
-      ],
-      "description": "Speci\u00e1ln\u00ed produktov\u00e1 novinka"
+      "description": "Zda byl \u010dl\u00e1nek u\u017e automaticky sd\u00edlen na Instagram"
     }
   },
   "required": [

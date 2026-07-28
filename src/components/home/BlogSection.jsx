@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Loader, Radio, Sparkles, Play, X } from 'lucide-react';
+import { ArrowRight, Loader, Radio, Sparkles } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-
-const GATE_VIDEO_URL = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -44,7 +42,7 @@ function PostCard({ post, i }) {
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
       <Link to={`/blog/${post.slug || post.id}`}
         className="group relative block h-72 rounded-2xl overflow-hidden border border-white/10 shadow-sm hover:shadow-lg transition-all">
-        <img src={bg} alt={post.image_alt || post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <img src={bg} alt={post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" />
         <div className="relative h-full flex flex-col justify-end p-6">
           <div className="flex items-center gap-2 mb-3">
@@ -67,22 +65,12 @@ function PostCard({ post, i }) {
 }
 
 function LiveDemoCard() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-
-  useEffect(() => {
-    if (!lightboxOpen) return;
-    const handler = (e) => e.key === 'Escape' && setLightboxOpen(false);
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [lightboxOpen]);
-
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="lg:col-span-2">
-      <button type="button" onClick={() => setLightboxOpen(true)}
-        className="group relative block w-full text-left h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
+      <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
         <video
-          src={GATE_VIDEO_URL}
+          src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov"
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
@@ -105,26 +93,11 @@ function LiveDemoCard() {
               Podívejte se, jak jemná mlhová clona GATE ochlazuje vzduch v reálném čase — bez mokrého povrchu, bez hluku, s okamžitým osvěžujícím efektem už na první nádech.
             </p>
             <div className="flex items-center gap-2 text-sm text-white font-medium group-hover:gap-3 transition-all">
-              <Play size={14} fill="currentColor" /> Přehrát video <ArrowRight size={15} />
+              Prohlédnout mlžnou bránu GATE <ArrowRight size={15} />
             </div>
           </div>
         </div>
-      </button>
-
-      <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4" onClick={() => setLightboxOpen(false)}>
-            <button onClick={() => setLightboxOpen(false)} aria-label="Zavřít"
-              className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all z-10">
-              <X size={18} />
-            </button>
-            <div className="relative max-w-4xl w-full rounded-2xl overflow-hidden bg-black" onClick={(e) => e.stopPropagation()}>
-              <video src={GATE_VIDEO_URL} controls autoPlay playsInline className="w-full max-h-[80vh]" />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </Link>
     </motion.div>
   );
 }
@@ -174,7 +147,7 @@ export default function BlogSection() {
   const latestTwo = posts.slice(0, 2);
 
   return (
-    <section id="poznatky" className="py-24 bg-slate-950">
+    <section className="py-24 bg-slate-950">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">

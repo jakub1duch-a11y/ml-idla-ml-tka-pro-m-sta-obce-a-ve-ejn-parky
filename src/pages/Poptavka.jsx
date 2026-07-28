@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Loader, Phone, Mail, MapPin, Info, Paperclip, X } from 'lucide-react';
+import { ArrowRight, Loader, Phone, Mail, MapPin } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackContactFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
-import { playSoundEffect } from '@/lib/soundEffects';
-
-const OVLADANI_OPTIONS = [
-  { value: '', label: 'Vyberte ovládání...', hint: '' },
-  { value: 'wifi_smart_app', label: 'Wi-Fi Smart APP', hint: 'Ovládání a plánování mlžení z mobilní aplikace, senzory teploty a vlhkosti.' },
-  { value: 'manualni_ventil', label: 'Manuální ventil', hint: 'Zapínání a vypínání přímo na ventilu, bez elektroniky.' },
-  { value: 'casovy_spinac', label: 'Časový spínač', hint: 'Automatické spínání dle nastaveného denního plánu.' },
-  { value: 'doporucit', label: 'Doporučit vhodné ovládání', hint: 'Necháte výběr na nás — do cenové nabídky navrhneme optimální řízení mlžítka dle vašeho projektu.' },
-];
 
 const PRODUKTY = [
   'OSTEV (mlžný strom)',
@@ -39,51 +30,22 @@ export default function Poptavka() {
     telefon: '',
     firma: '',
     produkt: '',
-    ovladani: '',
     zprava: '',
   });
-  const [files, setFiles] = useState([]);
-  const [uploading, setUploading] = useState(false);
   const [sending, setSending] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setSEO(SEO_PAGES.poptavka);
-    const urlParams = new URLSearchParams(window.location.search);
-    const produkt = urlParams.get('produkt');
-    const ovladani = urlParams.get('ovladani');
-    setForm((f) => ({
-      ...f,
-      produkt: produkt && PRODUKTY.includes(produkt) ? produkt : f.produkt,
-      ovladani: ovladani && OVLADANI_OPTIONS.some((o) => o.value === ovladani) ? ovladani : f.ovladani,
-    }));
-  }, []);
+  useEffect(() => { setSEO(SEO_PAGES.poptavka); }, []);
 
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
-
-  const handleFiles = async (e) => {
-    const selected = Array.from(e.target.files || []);
-    if (selected.length === 0) return;
-    setUploading(true);
-    for (const file of selected) {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file }).catch(() => ({ file_url: null }));
-      if (file_url) setFiles((f) => [...f, { name: file.name, url: file_url }]);
-    }
-    setUploading(false);
-  };
-
-  const removeFile = (url) => setFiles((f) => f.filter((x) => x.url !== url));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
     try {
-      const params = new URLSearchParams(window.location.search);
-      const attribution = { landing_page: window.location.pathname, referrer: document.referrer || 'direct', utm_source: params.get('utm_source') || '', utm_medium: params.get('utm_medium') || '', utm_campaign: params.get('utm_campaign') || '' };
-      await base44.entities.Poptavka.create({ ...form, ...attribution, soubory_urls: files.map((f) => f.url), status: 'nova' });
+      await base44.entities.Poptavka.create({ ...form, status: 'nova' });
       trackContactFormSubmit('poptavka', form.produkt);
-      trackInquirySubmitted('poptavka', form.produkt, attribution.utm_source || attribution.referrer);
-      playSoundEffect('success');
+      trackInquirySubmitted('poptavka', form.produkt);
       navigate('/dekujeme?zdroj=poptavka');
     } finally {
       setSending(false);
@@ -218,31 +180,6 @@ export default function Poptavka() {
                   </select>
                 </div>
 
-                <div className="group relative">
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase">Ovládání / řízení mlžítka</label>
-                    <Info size={12} className="text-slate-300 group-hover:text-slate-600 transition-colors cursor-help" />
-                  </div>
-                  <select
-                    value={form.ovladani}
-                    onChange={set('ovladani')}
-                    className={inputCls + ' cursor-pointer'}
-                  >
-                    {OVLADANI_OPTIONS.map((o) => (
-                      <option key={o.value} value={o.value}>{o.label}</option>
-                    ))}
-                  </select>
-                  {form.ovladani && (
-                    <div className="pointer-events-none absolute left-0 right-0 top-full mt-1.5 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200">
-                      <div className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 shadow-xl">
-                        <p className="text-[11px] text-white/70 leading-relaxed">
-                          {OVLADANI_OPTIONS.find((o) => o.value === form.ovladani)?.hint}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
                 <div>
                   <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-1.5">Zpráva / poptávka *</label>
                   <textarea
@@ -253,25 +190,6 @@ export default function Poptavka() {
                     onChange={set('zprava')}
                     className={inputCls + ' resize-none'}
                   />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-1.5">Soubory, obrázky nebo projekt (pro přesnou cenu)</label>
-                  <label className="flex items-center justify-center gap-2 w-full border-2 border-dashed border-slate-200 rounded-xl px-4 py-4 text-sm text-slate-500 cursor-pointer hover:border-slate-400 transition-colors">
-                    <Paperclip size={15} />
-                    {uploading ? 'Nahrávám...' : 'Přidat soubory / fotky / projekt'}
-                    <input type="file" multiple accept="image/*,.pdf,.dwg" onChange={handleFiles} className="hidden" disabled={uploading} />
-                  </label>
-                  {files.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {files.map((f) => (
-                        <span key={f.url} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-600 text-xs px-2.5 py-1.5 rounded-full">
-                          {f.name}
-                          <button type="button" onClick={() => removeFile(f.url)} className="text-slate-400 hover:text-slate-900"><X size={11} /></button>
-                        </span>
-                      ))}
-                    </div>
-                  )}
                 </div>
 
                 <button

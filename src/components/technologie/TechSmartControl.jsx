@@ -1,8 +1,0 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { CalendarClock, CloudSun, Smartphone, Thermometer, ArrowRight } from 'lucide-react';
-
-const image = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/65cb802f9_8bU5n-o22OI3SuAphWO4sL.png';
-const features = [{ icon: Smartphone, title: 'Ovládání z telefonu' }, { icon: Thermometer, title: 'Teplotní čidlo' }, { icon: CloudSun, title: 'Reakce na podmínky' }, { icon: CalendarClock, title: 'Časové programy' }];
-
-export default function TechSmartControl() { return <section className="site-container py-16 lg:py-24"><div className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr]"><img src={image} alt="Chytré řízení mlžítka v parku" className="aspect-[4/3] w-full object-cover" /><div><p className="text-xs font-bold uppercase tracking-[.18em] text-[#0070F3]">Smart systém</p><h2 className="mt-3 text-slate-950">Mlha přesně tehdy, kdy dává smysl.</h2><p className="mt-5 text-slate-600">Chytré řízení umožní nastavit provoz podle času, teploty a dalších zvolených podmínek. Systém tak nepracuje zbytečně v době, kdy ochlazení není potřeba.</p><div className="mt-7 grid gap-3 sm:grid-cols-2">{features.map(({ icon: Icon, title }) => <div key={title} className="flex items-center gap-3 border border-slate-200 p-4 text-sm font-semibold text-slate-800"><Icon size={19} className="text-[#0070F3]" />{title}</div>)}</div><Link to="/chytra-mlzidla" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#0070F3] underline">Objevte chytré řízení <ArrowRight size={16} /></Link></div></div></section>; }

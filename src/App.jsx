@@ -2,22 +2,22 @@ import { useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-import AnalyticsTracker from '@/components/AnalyticsTracker';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
 import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
-import Home2 from '@/pages/Home2';
+import Home from '@/pages/Home';
 import Kolekce from '@/pages/Kolekce';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
+import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Poradce from '@/pages/Poradce';
@@ -49,25 +49,15 @@ import Gate70 from '@/pages/Gate70';
 import Technologie from '@/pages/Technologie';
 import Vyhody from '@/pages/Vyhody';
 import KeStazeni from '@/pages/KeStazeni';
+import OchranaZdravi from '@/pages/OchranaZdravi';
 import ServisUdrzba from '@/pages/ServisUdrzba';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import ChytraMlzidla from '@/pages/ChytraMlzidla';
 import Katalog from '@/pages/Katalog';
-import SolutionCategory from '@/pages/SolutionCategory';
 import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
-import VideoUkazky from '@/pages/VideoUkazky';
-import PrislusenstviSmartModuly from '@/pages/PrislusenstviSmartModuly';
-import PrinosMlzitek from '@/pages/PrinosMlzitek';
-import Vyuziti from '@/pages/Vyuziti';
-import ZahradniMlzitka from '@/pages/ZahradniMlzitka';
-import UsageSector from '@/pages/UsageSector';
-import UsageCategory from '@/pages/UsageCategory';
-import Prinosy from '@/pages/Prinosy';
-import Certifikace from '@/pages/Certifikace';
-import Galerie from '@/pages/Galerie';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -88,63 +78,51 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        <Route path="/" element={<Home2 />} />
+        <Route path="/" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
-        <Route path="/jak-to-funguje" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
-        <Route path="/jak-funguje-mlzeni" element={<Technologie />} />
+        <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
+        <Route path="/produkt2/:slug" element={<ProduktDetail2 />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
         <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
-        <Route path="/galerie" element={<Galerie />} />
-        <Route path="/reference/:slug" element={<ReferenceDetail />} />
+        <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
-        <Route path="/vyuziti" element={<Vyuziti />} />
-        <Route path="/zahradni-mlzitka" element={<ZahradniMlzitka />} />
-        <Route path="/vyuziti/:sector" element={<UsageCategory />} />
-        <Route path="/kategorie/:sector" element={<UsageCategory />} />
+        <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
+        <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
+        <Route path="/kategorie/koupaliste" element={<Koupaliste />} />
+        <Route path="/kategorie/architekti" element={<Architekti />} />
+        <Route path="/kategorie/komercni" element={<Komercni />} />
+        <Route path="/kategorie/eventy" element={<Eventy />} />
+        <Route path="/kategorie/outdoor-zahrady" element={<Outdoor />} />
+        <Route path="/kategorie/art-instalace" element={<Art />} />
+        <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
         <Route path="/faq" element={<Podpora />} />
-        <Route path="/technologie" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
+        <Route path="/technologie" element={<Technologie />} />
         <Route path="/vyhody" element={<Vyhody />} />
         <Route path="/ke-stazeni" element={<KeStazeni />} />
+        <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
         <Route path="/katalog" element={<Katalog />} />
-        <Route path="/reseni/:solution" element={<SolutionCategory />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />
         <Route path="/manualy" element={<KeStazeni />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
-        <Route path="/videosekce-mlzitka" element={<VideoUkazky />} />
-        <Route path="/prinosy-mlzitek" element={<Prinosy />} />
-        <Route path="/prinosy-mlzitek/:slug" element={<PrinosMlzitek />} />
-        <Route path="/prislusenstvi" element={<PrislusenstviSmartModuly />} />
-        <Route path="/certifikace" element={<Certifikace />} />
-        <Route path="/domu" element={<Navigate to="/" replace />} />
-        <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/mlzici-brany" element={<Navigate to="/reseni/brany" replace />} />
-        <Route path="/product-category/*" element={<Navigate to="/katalog" replace />} />
-        <Route path="/product/*" element={<Navigate to="/katalog" replace />} />
-        <Route path="/vodni-mlha" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
-        <Route path="/mlhoviste" element={<Navigate to="/jak-funguje-mlzeni" replace />} />
-        <Route path="/obchod" element={<Navigate to="/katalog" replace />} />
-        <Route path="/obchod-2" element={<Navigate to="/katalog" replace />} />
-        <Route path="/category/uncategorized" element={<Navigate to="/blog" replace />} />
-        <Route path="/help-info" element={<Navigate to="/podpora" replace />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />
@@ -163,7 +141,6 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
-          <AnalyticsTracker />
           <AuthenticatedApp />
         </Router>
         <Toaster />

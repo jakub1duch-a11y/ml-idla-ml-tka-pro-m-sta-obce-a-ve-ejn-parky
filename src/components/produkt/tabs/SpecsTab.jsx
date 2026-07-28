@@ -25,11 +25,6 @@ function SpecRow({ row, index }) {
         </span>
         <span className="text-sm text-slate-900 font-medium text-right">{row.value}</span>
       </div>
-      {/* Mobile: description always readable, no hover needed */}
-      {row.desc && (
-        <p className="sm:hidden text-xs text-slate-500 font-light leading-relaxed pr-4 mt-2">{row.desc}</p>
-      )}
-      {/* Desktop: reveal on hover */}
       <AnimatePresence>
         {hovered && row.desc && (
           <motion.p
@@ -37,7 +32,7 @@ function SpecRow({ row, index }) {
             animate={{ opacity: 1, height: 'auto', marginTop: 10 }}
             exit={{ opacity: 0, height: 0, marginTop: 0 }}
             transition={{ duration: 0.25 }}
-            className="hidden sm:block text-xs text-slate-500 font-light leading-relaxed pr-4 overflow-hidden"
+            className="text-xs text-slate-500 font-light leading-relaxed pr-4 overflow-hidden"
           >
             {row.desc}
           </motion.p>
@@ -57,7 +52,7 @@ export default function SpecsTab({ product, techRows }) {
             Materiál a parametry<br /><span className="text-slate-400">v přesných číslech.</span>
           </h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
-            Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (2–7 BAR) — popis funkce je uveden u každé položky (na desktopu po najetí myší na řádek).
+            Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (2–7 BAR) — najeďte myší na řádek pro detailní popis funkce.
           </p>
         </motion.div>
 

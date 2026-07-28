@@ -24,10 +24,10 @@ export default function SmartSavingsSection() {
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Kolik ušetříte se Smart systémem</p>
             <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
-              Méně vody, <span className="italic">stejný chladivý efekt.</span>
+              Méně vody, méně energie, <span className="italic">stejný chladivý efekt.</span>
             </h2>
             <p className="text-slate-500 leading-relaxed mb-6">
-              Chytré senzory hlídají teplotu, vlhkost, čas i pohyb a mlžení spouští jen tehdy, kdy má smysl. Výsledkem je výrazná úspora vody bez ztráty komfortu.
+              Chytré senzory hlídají teplotu, vlhkost, čas i pohyb a mlžení spouští jen tehdy, kdy má smysl. Výsledkem je výrazná úspora vody i elektřiny bez ztráty komfortu.
             </p>
             <div className="grid grid-cols-2 gap-3">
               {INTEGRATIONS.map((it) =>

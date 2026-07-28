@@ -31,30 +31,25 @@ export default function ControlVariants() {
     <section className="bg-white py-20 lg:py-24 border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="max-w-2xl mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Chytré řízení mlžítek</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Chytré řízení mlzidla.cz</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vyberte si úroveň automatizace.</h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {VARIANTS.map((v, i) =>
           <motion.div key={v.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-            whileHover={{ y: -6 }}
-            className={`flex flex-col p-7 rounded-3xl border transition-all hover:shadow-xl ${v.highlighted ? 'border-slate-900 bg-slate-900 text-white shadow-xl' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
+            whileHover={{ y: -4 }}
+            className={`p-7 rounded-3xl border transition-all ${v.highlighted ? 'border-slate-900 bg-slate-900 text-white shadow-xl' : 'border-slate-200 bg-white'}`}>
               <p className={`text-xs font-mono tracking-widest uppercase mb-3 ${v.highlighted ? 'text-cyan' : 'text-slate-400'}`}>{v.tag}</p>
               <h3 className={`text-xl font-heading font-medium mb-2 ${v.highlighted ? 'text-white' : 'text-slate-900'}`}>{v.name}</h3>
               <p className={`text-sm mb-5 leading-relaxed ${v.highlighted ? 'text-white/60' : 'text-slate-500'}`}>{v.desc}</p>
-              <ul className="space-y-2.5 mb-6 flex-1">
+              <ul className="space-y-2.5">
                 {v.features.map((f) =>
               <li key={f} className={`flex items-start gap-2 text-sm ${v.highlighted ? 'text-white/80' : 'text-slate-600'}`}>
                     <Check size={15} className={`shrink-0 mt-0.5 ${v.highlighted ? 'text-cyan' : 'text-slate-900'}`} /> {f}
                   </li>
               )}
               </ul>
-              <Link to={`/kontakt?produkt=${encodeURIComponent(v.name)}`}
-                onClick={() => trackQuickInquiryClick(v.name, 'control_variants_card')}
-                className={`inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold rounded-full transition-colors ${v.highlighted ? 'bg-cyan text-slate-900 hover:bg-cyan/90' : 'bg-slate-900 text-white hover:bg-slate-800'}`}>
-                Poptat variantu <ArrowRight size={14} />
-              </Link>
             </motion.div>
           )}
         </div>

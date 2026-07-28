@@ -1,24 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap, Truck } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
 
-export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical, isAccessory }) {
-  const [selectedVariant, setSelectedVariant] = useState(
-    product.nozzle_variants?.find((v) => v.is_standard)?.code || product.nozzle_variants?.[0]?.code
-  );
-  const deliveryText = isAccessory ? 'Do 7 prac. dnů (Ověřit - Zavolat)' : '1–3 pracovní týdny (Ověřit - Zavolat)';
+export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
   const quickSpecs = [
     product.coverage_area && { icon: Thermometer, label: 'Ochlazení', value: product.coverage_area },
     product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
     product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
     product.power_supply && { icon: Zap, label: 'Napájení', value: product.power_supply },
   ].filter(Boolean);
-
-  const priceRequestLink = `/kontakt?produkt=${encodeURIComponent(product.name)}`;
 
   return (
     <div className="relative overflow-hidden">
@@ -31,11 +25,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
         {categoryName && (
           <>
             <ChevronRight size={12} />
-            {isAccessory ? (
-              <Link to="/prislusenstvi" className="hover:text-slate-700 transition-colors">{categoryName}</Link>
-            ) : (
-              <span>{categoryName}</span>
-            )}
+            <span>{categoryName}</span>
           </>
         )}
         <ChevronRight size={12} />
@@ -56,23 +46,9 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             <p className="text-slate-500 text-base leading-relaxed mb-6">{product.short_description}</p>
           )}
 
-          <p className="flex items-center gap-1.5 text-sm text-slate-500 mb-6">
-            <Truck size={14} className="text-slate-400 shrink-0" /> Možný termín dodání: <span className="font-medium text-slate-900">{deliveryText}</span>
-          </p>
-
-          {product.nozzle_variants?.length > 0 && (
-            <div className="mb-6">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-2">Varianta trysky</p>
-              <div className="flex flex-wrap gap-2">
-                {product.nozzle_variants.map((v) => (
-                  <button key={v.code} type="button" onClick={() => setSelectedVariant(v.code)}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold border transition-colors ${selectedVariant === v.code ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'}`}>
-                    {v.code}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {product.price_from ? (
+            <p className="text-xl font-light text-slate-900 mb-6">od {product.price_from} Kč <span className="text-sm text-slate-400">(orientační cena)</span></p>
+          ) : null}
 
           {quickSpecs.length > 0 && (
             <div className="grid grid-cols-2 gap-3 mb-8">
@@ -92,15 +68,19 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
 
           <div className="flex flex-wrap gap-3">
             <Link
-              to={priceRequestLink}
+              to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
               onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
               className="btn-metallic-mist px-7 py-3.5 text-sm font-bold"
             >
-              Vyžádat individuální cenu <ArrowRight size={16} />
+              Rychlá poptávka <ArrowRight size={16} />
             </Link>
-            <a href="#parametry" className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-full hover:bg-slate-50 transition-colors">
+            <button
+              type="button"
+              onClick={onShowTechnical}
+              className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-full hover:bg-slate-50 transition-colors"
+            >
               Technické parametry <FileText size={14} />
-            </a>
+            </button>
           </div>
         </motion.div>
       </div>

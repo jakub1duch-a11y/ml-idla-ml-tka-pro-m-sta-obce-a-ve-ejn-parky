@@ -21,7 +21,7 @@ export const PRODUCTS = [
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 10 °C' },
       { icon: Droplet, label: 'Spotřeba vody', value: 'od 1,2 l/min' },
-      { icon: Gauge, label: 'Tlak vody', value: '3–8 bar' },
+      { icon: Gauge, label: 'Tlak vody', value: '70–100 bar' },
       { icon: Zap, label: 'Příkon systému', value: 'od 0,75 kW' },
       { icon: Plug, label: 'Napájení', value: '230 V / 50 Hz' },
       { icon: ShieldCheck, label: 'Záruka', value: '24 měsíců' },
@@ -31,7 +31,7 @@ export const PRODUCTS = [
     baseParams: [
       { label: 'Výška', value: '3050 mm' }, { label: 'Šířka', value: '3400 mm' }, { label: 'Hloubka', value: '450 mm' },
       { label: 'Materiál', value: 'Nerezová ocel AISI 304 / 316' }, { label: 'Povrchová úprava', value: 'Broušená / leštěná' },
-      { label: 'Trysky', value: 'Nerezové nízkotlaké' }, { label: 'Tlak vody', value: '3–8 bar' },
+      { label: 'Trysky', value: 'Nerezové vysokotlaké' }, { label: 'Tlak vody', value: '70–100 bar' },
       { label: 'Spotřeba vody', value: '1,2–2,5 l/min' }, { label: 'Příkon', value: '0,75–1,5 kW' },
       { label: 'Napájení', value: '230 V / 50 Hz' }, { label: 'Ovládání', value: 'Automatické' }, { label: 'Provozní teplota', value: '+5 °C až +40 °C' },
     ],
@@ -56,7 +56,7 @@ export const PRODUCTS = [
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 8 °C' },
       { icon: Droplet, label: 'Spotřeba vody', value: 'od 2 l/min' },
-      { icon: Gauge, label: 'Tlak vody', value: '3–8 bar' },
+      { icon: Gauge, label: 'Tlak vody', value: '70–100 bar' },
       { icon: Zap, label: 'Příkon systému', value: 'od 1,1 kW' },
       { icon: Plug, label: 'Napájení', value: '230 V / 50 Hz' },
       { icon: ShieldCheck, label: 'Záruka', value: '24 měsíců' },
@@ -66,7 +66,7 @@ export const PRODUCTS = [
     baseParams: [
       { label: 'Výška', value: '2400 mm' }, { label: 'Šířka', value: '3000 mm' }, { label: 'Hloubka', value: '300 mm' },
       { label: 'Materiál', value: 'Nerezová ocel AISI 304 / 316' }, { label: 'Povrchová úprava', value: 'Broušená / leštěná' },
-      { label: 'Trysky', value: 'Nerezové nízkotlaké' }, { label: 'Tlak vody', value: '3–8 bar' },
+      { label: 'Trysky', value: 'Nerezové vysokotlaké' }, { label: 'Tlak vody', value: '70–100 bar' },
       { label: 'Spotřeba vody', value: '2–3,5 l/min' }, { label: 'Příkon', value: '1,1–1,8 kW' },
       { label: 'Napájení', value: '230 V / 50 Hz' }, { label: 'Ovládání', value: 'Automatické' }, { label: 'Provozní teplota', value: '+5 °C až +40 °C' },
     ],
@@ -80,7 +80,7 @@ export const PRODUCTS = [
     categoryGroup: 'Mlžné linie',
     description: 'Lineární nerezové potrubí s řadou trysek pro plošné ochlazení chodníků, teras a promenád.',
     description2: 'Snadná instalace podél zdí, pergol i lemů hřišť.',
-    longDescription: 'Mlžná linie je modulární nerezové potrubí osazené řadou nízkotlakých trysek, které rovnoměrně rozptylují jemnou mlhu podél celé délky instalace. Systém lze libovolně prodlužovat po jednotlivých modulech a přizpůsobit tak přesně tvaru terasy, promenády nebo dětského hřiště. Montáž je možná na zeď, strop i samostatnou konstrukci.',
+    longDescription: 'Mlžná linie je modulární nerezové potrubí osazené řadou vysokotlakých trysek, které rovnoměrně rozptylují jemnou mlhu podél celé délky instalace. Systém lze libovolně prodlužovat po jednotlivých modulech a přizpůsobit tak přesně tvaru terasy, promenády nebo dětského hřiště. Montáž je možná na zeď, strop i samostatnou konstrukci.',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56eb29c84_generated_image.png',
     gallery: [
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56eb29c84_generated_image.png',
@@ -91,7 +91,7 @@ export const PRODUCTS = [
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 7 °C' },
       { icon: Droplet, label: 'Spotřeba vody', value: 'od 1,5 l/min/m' },
-      { icon: Gauge, label: 'Tlak vody', value: '3–8 bar' },
+      { icon: Gauge, label: 'Tlak vody', value: '70 bar' },
       { icon: Zap, label: 'Příkon systému', value: 'od 0,55 kW' },
       { icon: Plug, label: 'Napájení', value: '230 V / 50 Hz' },
       { icon: ShieldCheck, label: 'Záruka', value: '24 měsíců' },
@@ -101,7 +101,7 @@ export const PRODUCTS = [
     baseParams: [
       { label: 'Výška', value: '300 mm' }, { label: 'Šířka modulu', value: '2000 mm' }, { label: 'Hloubka', value: '200 mm' },
       { label: 'Materiál', value: 'Nerezová ocel AISI 304' }, { label: 'Povrchová úprava', value: 'Broušená' },
-      { label: 'Trysky', value: 'Nerezové, anti-drip' }, { label: 'Tlak vody', value: '3–8 bar' },
+      { label: 'Trysky', value: 'Nerezové, anti-drip' }, { label: 'Tlak vody', value: '70 bar' },
       { label: 'Spotřeba vody', value: '1,5–2 l/min/m' }, { label: 'Příkon', value: '0,55–0,9 kW' },
       { label: 'Napájení', value: '230 V / 50 Hz' }, { label: 'Ovládání', value: 'Časové / pohybové čidlo' }, { label: 'Provozní teplota', value: '+5 °C až +40 °C' },
     ],
@@ -109,13 +109,13 @@ export const PRODUCTS = [
   {
     id: 'tryska',
     name: 'MLŽNÁ TRYSKA',
-    short: 'Nízkotlaká tryska',
+    short: 'Vysokotlaká tryska',
     icon: ShowerHead,
-    category: 'Nízkotlaká tryska',
+    category: 'Vysokotlaká tryska',
     categoryGroup: 'Mlžné trysky',
-    description: 'Nerezová nízkotlaká tryska HT-LT rozptylující mikro-kapky 5–10 µm, které se odpaří dřív, než dopadnou.',
+    description: 'Nerezová vysokotlaká tryska HT-LT rozptylující mikro-kapky 5–10 µm, které se odpaří dřív, než dopadnou.',
     description2: 'Základní stavební prvek každé mlžné instalace HolmTec.',
-    longDescription: 'Tryska HT-LT je precizně obráběný nerezový komponent tvořící základ všech mlžných instalací HolmTec. Díky provoznímu tlaku 3–8 bar rozptyluje vodu na mikro-kapky o velikosti 5–10 µm, které se odpaří dříve, než dopadnou na zem — výsledkem je suchá, příjemně chladivá mlha bez pocitu mokra. Tryska je vybavena systémem anti-drip proti odkapávání.',
+    longDescription: 'Tryska HT-LT je precizně obráběný nerezový komponent tvořící základ všech mlžných instalací HolmTec. Díky vysokému tlaku 70–100 bar rozptyluje vodu na mikro-kapky o velikosti 5–10 µm, které se odpaří dříve, než dopadnou na zem — výsledkem je suchá, příjemně chladivá mlha bez pocitu mokra. Tryska je vybavena systémem anti-drip proti odkapávání.',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
     gallery: [
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
@@ -126,7 +126,7 @@ export const PRODUCTS = [
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 6 °C' },
       { icon: Droplet, label: 'Spotřeba vody', value: 'od 0,3 l/min' },
-      { icon: Gauge, label: 'Tlak vody', value: '3–8 bar' },
+      { icon: Gauge, label: 'Tlak vody', value: '70–100 bar' },
       { icon: Zap, label: 'Kapka', value: '5–10 µm' },
       { icon: Plug, label: 'Připojení', value: 'Rychlospojka 1/2"' },
       { icon: ShieldCheck, label: 'Záruka', value: '24 měsíců' },
@@ -136,7 +136,7 @@ export const PRODUCTS = [
     baseParams: [
       { label: 'Výška', value: '120 mm' }, { label: 'Šířka', value: '40 mm' }, { label: 'Hloubka', value: '40 mm' },
       { label: 'Materiál', value: 'Nerezová ocel AISI 316' }, { label: 'Povrchová úprava', value: 'Leštěná' },
-      { label: 'Velikost kapky', value: '5–10 µm' }, { label: 'Tlak vody', value: '3–8 bar' },
+      { label: 'Velikost kapky', value: '5–10 µm' }, { label: 'Tlak vody', value: '70–100 bar' },
       { label: 'Spotřeba vody', value: '0,3–0,5 l/min' }, { label: 'Připojení', value: 'Rychlospojka 1/2"' },
       { label: 'Ovládání', value: '—' }, { label: 'Provozní teplota', value: '+5 °C až +40 °C' },
     ],
@@ -161,7 +161,7 @@ export const PRODUCTS = [
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 9 °C' },
       { icon: Droplet, label: 'Spotřeba vody', value: 'od 1,8 l/min' },
-      { icon: Gauge, label: 'Tlak vody', value: '3–8 bar' },
+      { icon: Gauge, label: 'Tlak vody', value: '70 bar' },
       { icon: Zap, label: 'Příkon systému', value: 'od 0,75 kW' },
       { icon: Plug, label: 'Napájení', value: '230 V / solár' },
       { icon: ShieldCheck, label: 'Záruka', value: '24 měsíců' },
@@ -171,7 +171,7 @@ export const PRODUCTS = [
     baseParams: [
       { label: 'Výška', value: '1900 mm' }, { label: 'Šířka', value: '400 mm' }, { label: 'Hloubka', value: '400 mm' },
       { label: 'Materiál', value: 'Nerezová ocel AISI 304' }, { label: 'Povrchová úprava', value: 'Broušená' },
-      { label: 'Trysky', value: 'Nerezové nízkotlaké' }, { label: 'Tlak vody', value: '3–8 bar' },
+      { label: 'Trysky', value: 'Nerezové vysokotlaké' }, { label: 'Tlak vody', value: '70 bar' },
       { label: 'Spotřeba vody', value: '1,8–2,5 l/min' }, { label: 'Příkon', value: '0,75 kW' },
       { label: 'Napájení', value: '230 V / solární modul' }, { label: 'Ovládání', value: 'Automatické' }, { label: 'Provozní teplota', value: '+5 °C až +40 °C' },
     ],

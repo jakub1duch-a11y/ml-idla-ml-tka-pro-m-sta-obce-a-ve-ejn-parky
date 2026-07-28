@@ -3,7 +3,7 @@ import { Plus, Loader, Pencil, Trash2, Eye, EyeOff, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import BlogPostForm from '@/components/admin/BlogPostForm';
 
-const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', tags: '', published: false, cta_label: '', cta_link: '', show_product_promo: true, product_launch: '' };
+const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', tags: '', published: false, cta_label: '', cta_link: '' };
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
@@ -27,7 +27,7 @@ export default function AdminBlog() {
       audience: post.audience || 'oboji',
       perex: post.perex || '', content: post.content || '', image_url: post.image_url || '',
       tags: (post.tags || []).join(', '), published: !!post.published,
-      cta_label: post.cta_label || '', cta_link: post.cta_link || '', show_product_promo: post.show_product_promo !== false, product_launch: post.product_launch || '',
+      cta_label: post.cta_label || '', cta_link: post.cta_link || '',
     });
     setEditing(post.id);
   };
@@ -39,7 +39,7 @@ export default function AdminBlog() {
       category: post.category, audience: post.audience || 'oboji',
       perex: post.perex, content: post.content, image_url: post.image_url,
       tags: post.tags || [], published: false,
-      cta_label: post.cta_label, cta_link: post.cta_link, show_product_promo: post.show_product_promo !== false, product_launch: post.product_launch,
+      cta_label: post.cta_label, cta_link: post.cta_link,
     });
     loadPosts();
   };

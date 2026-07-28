@@ -16,7 +16,7 @@ export default function SmartControlPromo() {
     <section className="bg-slate-50 border-t border-slate-200 py-20 lg:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4d6333cb_generated_image.png" alt="Smart App řízení mlžítek"
+          <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=900&q=80" alt="Smart App řízení mlžítek"
             className="w-full rounded-3xl object-cover aspect-[4/3] border border-slate-200" />
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>

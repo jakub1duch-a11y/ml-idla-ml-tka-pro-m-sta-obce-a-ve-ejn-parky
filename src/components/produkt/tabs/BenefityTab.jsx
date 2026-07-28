@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Thermometer, ShieldCheck, Gauge, Leaf, Wind, Droplet, Timer, HeartPulse } from 'lucide-react';
-import FeaturesWarrantySection from './FeaturesWarrantySection';
-import NozzleCostCalculator from './NozzleCostCalculator';
+import { Thermometer, ShieldCheck, Gauge, Leaf } from 'lucide-react';
 
 const STATS = [
   { val: '−10 °C', label: 'Pokles teploty okolí', icon: Thermometer, desc: 'Evaporativní chlazení mikrokapkami sníží teplotu vzduchu v okolí až o 10 °C během několika minut provozu.' },
   { val: 'ČSN EN 1176', label: 'Certifikace bezpečnosti', icon: ShieldCheck, desc: 'Konstrukce i mlžení splňují normu pro veřejná dětská hřiště a náměstí — bezpečné pro děti i seniory.' },
-  { val: '3–8 BAR', label: 'Nízkotlaký provoz', icon: Gauge, desc: 'Systém pracuje v rozsahu 3–8 barů na běžném tlaku vodovodního řadu, bez potřeby tlakové stanice.' },
+  { val: '2–7 BAR', label: 'Nízkotlaký provoz', icon: Gauge, desc: 'Systém pracuje na běžném tlaku vodovodního řadu, bez nutnosti čerpadel nebo vysokotlakých kompresorů.' },
   { val: '−45 %', label: 'Úspora vody', icon: Leaf, desc: 'Chytrá regulace dle počasí a teploty šetří vodu oproti nepřerušovanému provozu.' },
-  { val: '−70 %', label: 'Méně prachu a pylů', icon: Wind, desc: 'Mikrokapky mlhy vážou prachové částice a pyly ve vzduchu, čímž zlepšují kvalitu ovzduší v okolí.' },
-  { val: '10 μm', label: 'Velikost kapky', icon: Droplet, desc: 'Extrémně jemná mlha se okamžitě odpařuje — povrch ani oblečení kolemjdoucích nezvlhnou.' },
-  { val: '< 1 den', label: 'Doba instalace', icon: Timer, desc: 'Systém Plug & Mist umožňuje napojení na vodovodní řad a spuštění provozu během jednoho dne.' },
-  { val: '365 dní', label: 'Celoroční provoz', icon: HeartPulse, desc: 'Mrazuvzdorné a UV odolné komponenty umožňují provoz venku po celý rok.' },
 ];
 
-function StatCard({ s, i }) {
+function StatCard({ s }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.5 }}
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      className="p-6 rounded-2xl border border-slate-200 bg-white text-center transition-shadow hover:shadow-md hover:border-slate-300">
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      className="p-6 rounded-2xl border border-slate-200 bg-white text-center transition-shadow hover:shadow-md">
       <motion.div animate={hovered ? { y: [0, -5, 0], scale: 1.1 } : { y: 0, scale: 1 }} transition={{ duration: 0.6 }} className="flex justify-center mb-3">
         <s.icon size={20} className="text-slate-400" />
       </motion.div>
@@ -34,7 +27,7 @@ function StatCard({ s, i }) {
           </motion.p>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
@@ -53,13 +46,7 @@ export default function BenefityTab({ product }) {
         </motion.div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          {STATS.map((s, i) => <StatCard key={s.label} s={s} i={i} />)}
-        </div>
-
-        <FeaturesWarrantySection />
-
-        <div className="mt-16">
-          <NozzleCostCalculator product={product} />
+          {STATS.map((s) => <StatCard key={s.label} s={s} />)}
         </div>
       </div>
     </section>

@@ -15,7 +15,7 @@ export default function MistCinematicHero() {
       <motion.img src={MOBILE_BENDY_IMAGE} alt="Zahradní mlžítko BENDY_60 v parku" fetchPriority="high" initial={{ scale: 1.06, y: 20 }} animate={{ scale: [1.06, 1.16, 1.1], y: [20, -8, 0] }} transition={{ duration: 11, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }} className="absolute inset-0 h-full w-full object-cover object-[61%_center] md:hidden" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.86)_10%,rgba(2,6,23,0.5)_55%,rgba(2,6,23,0.92)_100%)]" />
       <div className="hero-mist-overlay md:hidden"><span /><span /></div>
-      <div className="site-container relative flex items-center py-28 min-h-[100svh] z-10">
+      <div className="site-container relative flex items-center z-10 py-0 min-h-[0svh]">
         <div className="max-w-xl">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan">Mlžidla.cz · nízkotlaké mlžné systémy</p>
           <h1 className="mt-5 font-heading font-light tracking-tight text-white text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">Mlžící systémy, vodní mlha pro efektivní ochlazování</h1>
@@ -32,6 +32,6 @@ export default function MistCinematicHero() {
           {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan" /><span><b className="block text-sm text-white">{label}</b><small className="block text-white/60 text-sm">{text}</small></span></Link>)}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

@@ -13,7 +13,7 @@ export default function MistCinematicHero() {
     <section id="uvod" className="relative overflow-hidden text-white bg-slate-950 min-h-[10svh]">
       <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
       
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_10%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_800%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_20%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_100%)]" />
       <div className="hero-mist-overlay md:hidden"><span /><span /></div>
       <div className="site-container relative flex items-center z-10 py-0 min-h-[70svh]">
         <div className="max-w-xl">

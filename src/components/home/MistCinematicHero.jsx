@@ -13,7 +13,7 @@ export default function MistCinematicHero() {
     <section id="uvod" className="relative overflow-hidden text-white bg-slate-950 min-h-[10svh]">
       <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
       
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_20%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_100%)]" />
+      <div className="absolute bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_20%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_100%)] inset-20" />
       <div className="hero-mist-overlay md:hidden"><span /><span /></div>
       <div className="site-container relative flex items-center min-h-[70svh] py-0 z-10">
         <div className="max-w-xl">
@@ -29,7 +29,7 @@ export default function MistCinematicHero() {
       </div>
       <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-slate-950/60 backdrop-blur-sm pt-12">
         <div className="site-container flex overflow-x-auto [&::-webkit-scrollbar]:hidden pt-3 pb-3">
-          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan size-12r" /><span><b className="block text-sm text-white size-">{label}</b><small className="block text-white/60 text-sm">{text}</small></span></Link>)}
+          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan size-12r" /><span><b className="block text-sm text-white size-">{label}</b><small className="block text-white/60 text-base">{text}</small></span></Link>)}
         </div>
       </div>
     </section>);

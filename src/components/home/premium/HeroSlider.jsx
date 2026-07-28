@@ -54,8 +54,8 @@ export default function HeroSlider() {
     <section className="relative h-screen min-h-[640px] overflow-hidden bg-[#F8F9FA]">
       <AnimatePresence mode="wait">
         <motion.img
-          key={slide.image}
-          src={slide.image}
+          key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cb0d19929_staen_soubor.jpg"
+
           alt={slide.title}
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -68,8 +68,26 @@ export default function HeroSlider() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent" />
 
       <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
+        <div className="mx-auto px-6 lg:px-10 w-50 max-w-6xl">
           <div className="max-w-2xl">
+            <AnimatePresence mode="wait">
+              <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
+                <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 mb-4">{slide.tag}</p>
+                <h1 className="font-light text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
+                  {slide.title}
+                </h1>
+                <p className="text-white/70 leading-relaxed mb-8 text-measure text-lg">{slide.desc}</p>
+
+                <div className="flex flex-wrap gap-3 mb-10">
+                  <Link to={slide.cta1.to} className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+                    {slide.cta1.label} <ArrowRight size={16} />
+                  </Link>
+                  <Link to={slide.cta2.to} className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/40 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-all">
+                    {slide.cta2.label}
+                  </Link>
+                </div>
+              </motion.div>
+            </AnimatePresence>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {BENEFITS.map((b, i) =>

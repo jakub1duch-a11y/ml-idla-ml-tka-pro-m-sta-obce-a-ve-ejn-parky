@@ -1,7 +1,0 @@
-import React from 'react';
-import { Plus } from 'lucide-react';
-import { CITY_ARC_ACCESSORIES, formatPrice } from '@/lib/cityArcData';
-
-export default function AccessoryGrid({ selected, onToggle }) {
-  return <section className="border-t border-[#e5e5e5] py-12"><div className="flex items-end justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-600">Rozšiřte systém</p><h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">Doporučené příslušenství</h2></div><p className="hidden text-sm text-slate-500 sm:block">Přidejte položky do poptávky.</p></div><div className="mt-7 grid gap-4 md:grid-cols-3">{CITY_ARC_ACCESSORIES.map((item) => <button key={item.id} type="button" onClick={() => onToggle(item.id)} className={`rounded-lg border p-5 text-left transition ${selected.includes(item.id) ? 'border-sky-500 bg-sky-50' : 'border-[#e5e5e5] bg-white hover:border-slate-400'}`}><span className="flex h-10 w-10 items-center justify-center rounded-md border border-[#e5e5e5] text-slate-900"><Plus size={18} /></span><h3 className="mt-7 font-semibold text-slate-950">{item.name}</h3><p className="mt-1 text-sm text-slate-500">{item.detail}</p><p className="mt-5 text-sm font-semibold text-slate-950">+ {formatPrice(item.price)} Kč bez DPH</p></button>)}</div></section>;
-}

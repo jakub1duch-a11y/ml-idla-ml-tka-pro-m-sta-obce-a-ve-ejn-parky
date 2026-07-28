@@ -22,5 +22,19 @@ export default function QuickBenefits({ className = '', compact = false, limit, 
   const benefits = limit ? QUICK_BENEFITS.slice(0, limit) : QUICK_BENEFITS;
   const [coolingIndex] = useState(() => Math.floor(Math.random() * benefits.length));
   const [openIndex, setOpenIndex] = useState(null);
- </div>;
+
+  return (
+    <div className={`grid gap-4 ${className}`}>
+      {benefits.map(({ icon: Icon, value, text, detail, to }, index) => {
+        const isOpen = openIndex === index;
+        const isCoolingCard = compact && enableCooling && index === coolingIndex;
+        const compactContent = <><div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan/30 bg-cyan/10 text-cyan"><Icon size={32} strokeWidth={1.5} /></div><div className="relative z-10 min-w-0"><h3 className="text-base font-semibold text-white">{value}</h3><p className="mt-1 text-sm leading-relaxed text-white/70">{text}</p>{isOpen && <p className="mt-2 text-xs leading-relaxed text-cyan/90">{detail}</p>}</div>{to && <Link to={to} className="relative z-10 text-cyan" aria-label={`Zjistit více o ${value}`}><ArrowRight size={20} /></Link>}</>;
+        const standardContent = <><div className="relative z-10 flex h-14 w-14 items-center justify-center text-cyan"><Icon size={42} strokeWidth={1.5} /></div><div className="relative z-10 mt-5"><h3 className="text-xl font-semibold text-white">{value}</h3><p className="mt-2 text-sm leading-relaxed text-white/70">{text}</p></div></>;
+        const classes = `${compact ? 'group grid grid-cols-[3.5rem_1fr_auto] items-center gap-4 border border-white/10 bg-white/[.04] p-4 text-left text-white transition hover:border-cyan/70 hover:bg-cyan/[.08]' : 'grid min-h-48 grid-rows-[auto_1fr] rounded-2xl border border-white/10 bg-white/[.04] p-6 text-left text-white transition hover:border-cyan/70 hover:bg-cyan/[.08]'} ${isCoolingCard ? 'relative isolate overflow-hidden' : ''}`;
+        const content = <><CoolingCardEffect active={isCoolingCard} />{compact ? compactContent : standardContent}</>;
+        if (compact) return <article key={value} tabIndex="0" onClick={() => setOpenIndex(isOpen ? null : index)} onKeyDown={(event) => event.key === 'Enter' && setOpenIndex(isOpen ? null : index)} className={classes}>{content}</article>;
+        return to ? <Link key={value} to={to} className={classes}>{content}</Link> : <article key={value} className={classes}>{content}</article>;
+      })}
+    </div>
+  );
 }

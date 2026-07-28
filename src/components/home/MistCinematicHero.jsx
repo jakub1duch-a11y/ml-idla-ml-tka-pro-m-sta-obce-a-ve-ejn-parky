@@ -27,9 +27,9 @@ export default function MistCinematicHero() {
         </div>
         <QuickBenefits className="absolute right-10 top-1/2 hidden w-[320px] -translate-y-1/2 grid-cols-1 lg:grid" compact limit={4} enableCooling />
       </div>
-      <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-slate-950/60 backdrop-blur-sm pt-5 pb-5">
+      <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-slate-950/60 backdrop-blur-sm pt-12">
         <div className="site-container flex overflow-x-auto py-3 [&::-webkit-scrollbar]:hidden">
-          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan" /><span><b className="block text-sm text-white">{label}</b><small className="block text-white/60 text-sm">{text}</small></span></Link>)}
+          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan size-" /><span><b className="block text-sm text-white">{label}</b><small className="block text-white/60 text-sm">{text}</small></span></Link>)}
         </div>
       </div>
     </section>);

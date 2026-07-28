@@ -15,7 +15,7 @@ export default function MistCinematicHero() {
       
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_20%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_100%)]" />
       <div className="hero-mist-overlay md:hidden"><span /><span /></div>
-      <div className="site-container relative flex items-center z-10 py-0 min-h-[70svh] w-80">
+      <div className="site-container relative flex items-center z-10 py-0 min-h-[70svh] w-8">
         <div className="max-w-xl">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan">Mlžidla.cz · nízkotlaké mlžné systémy</p>
           <h1 className="mt-5 font-heading font-light tracking-tight text-white text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">Mlžící systémy, vodní mlha pro efektivní ochlazování</h1>

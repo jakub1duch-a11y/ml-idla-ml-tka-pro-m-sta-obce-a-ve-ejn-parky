@@ -10,7 +10,7 @@ const QUICK_LINKS = [{ icon: Droplets, label: '50–100 μm', text: 'velikost ka
 
 export default function MistCinematicHero() {
   return (
-    <section id="uvod" aria-label="Mlžidla.cz — nízkotlaké mlžné systémy" className="relative w-full bg-[#062238] text-white mx-auto rounded-[12px] max-w-[100px]">
+    <section id="uvod" aria-label="Mlžidla.cz — nízkotlaké mlžné systémy" className="relative w-full bg-[#062238] text-white mx-auto rounded-[12px] max-w-[1020px]">
       <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/728d4c2eb_generated_550b2dcc.png" alt="Technický nákres mlžné brány" fetchPriority="high" decoding="async" className="pointer-events-none absolute -left-[8.83%] -top-[7.45%] h-auto w-[117.65%] max-w-none select-none" />
       <div className="absolute inset-0">
         <Link to="/mlzidla-mlzitka" aria-label="Prohlédnout mlžítka" className="absolute left-[10.9%] top-[57.2%] h-[5.5%] w-[17.5%] rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"><span className="sr-only">Prohlédnout mlžítka</span></Link>

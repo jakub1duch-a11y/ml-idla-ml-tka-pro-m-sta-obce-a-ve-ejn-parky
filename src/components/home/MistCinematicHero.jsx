@@ -10,7 +10,7 @@ const QUICK_LINKS = [{ icon: Droplets, label: '50–100 μm', text: 'velikost ka
 
 export default function MistCinematicHero() {
   return (
-    <section id="uvod" className="relative overflow-hidden text-white min-h-[150svh] bg-slate-950">
+    <section id="uvod" className="relative overflow-hidden text-white bg-slate-950 min-h-[10svh]">
       <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
       <motion.img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Zahradní mlžítko BENDY_60 v parku" fetchPriority="high" initial={{ scale: 1.06, y: 20 }} animate={{ scale: [1.06, 1.16, 1.1], y: [20, -8, 0] }} transition={{ duration: 11, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }} className="absolute inset-0 h-full w-full object-cover object-[61%_center] md:hidden hidden" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.86)_10%,rgba(2,6,23,0.5)_55%,rgba(2,6,23,0.92)_100%)]" />

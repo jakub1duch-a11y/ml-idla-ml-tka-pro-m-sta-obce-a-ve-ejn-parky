@@ -30,7 +30,7 @@ export default function QuickBenefits({ className = '', compact = false, limit, 
       const standardContent = <><div className="relative z-10 flex h-14 w-14 items-center justify-center text-cyan"><Icon size={42} strokeWidth={1.5} /></div><div className="relative z-10 mt-5"><h3 className="text-xl font-semibold text-white">{value}</h3><p className="mt-2 text-sm leading-relaxed text-white/70">{text}</p></div></>;
       const classes = `${compact ? 'group grid grid-cols-[3.5rem_1fr_auto] items-center gap-3 border border-white/10 bg-white/[.04] p-3 text-left text-white transition hover:border-cyan/70 hover:bg-cyan/[.08]' : 'grid min-h-48 grid-rows-[auto_1fr] rounded-2xl border border-white/25 bg-white/10 p-5 text-white backdrop-blur-xl transition-transform duration-300 hover:scale-[1.03]'} ${isCoolingCard ? 'relative isolate overflow-hidden' : ''}`;
       const content = <><CoolingCardEffect active={isCoolingCard} />{compact ? compactContent : standardContent}</>;
-      if (compact) return <article key={value} tabIndex="0" onClick={() => setOpenIndex(isOpen ? null : index)} onKeyDown={(event) => event.key === 'Enter' && setOpenIndex(isOpen ? null : index)} className={classes}>{content}</article>;
+      if (compact) return null;
       return to ? <Link key={value} to={to} className={classes}>{content}</Link> : <article key={value} className={classes}>{content}</article>;
     })}</div>;
 }

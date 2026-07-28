@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Volume1, SunSnow, Wrench, Smartphone, Move, ShieldCheck, Award, Headset } from 'lucide-react';
 
 const FEATURES = [
-  { icon: Sparkles, title: 'Tryska s vlastním sítkem', desc: 'Integrované sítko zachytává drobné nečistoty před vstupem do trysky a usnadňuje pravidelnou sezónní údržbu.' },
-  { icon: Volume1, title: 'Tichý a uklidňující provoz', desc: 'Jemný zvuk vody neruší okolí a podporuje klidnou atmosféru pro rekreační odpočinek.' },
-  { icon: SunSnow, title: 'Příjemné letní mikroklima', desc: 'Viditelná mlha vytváří osvěžující zážitek a zvyšuje komfort venkovního prostoru během horkých dnů.' },
+  { icon: Sparkles, title: 'Samočistící tryska', desc: 'Vnitřní filtr a konstrukce trysky brání usazování vodního kamene a prodlužuje interval údržby.' },
+  { icon: Volume1, title: 'Tichý provoz', desc: 'Hladina hluku pod 40 dB — mlžení nenarušuje pohodu okolí ani v klidových zónách.' },
+  { icon: SunSnow, title: 'Odolnost UV a mrazu', desc: 'Nerezová konstrukce a komponenty snáší celoroční venkovní provoz i extrémní teploty.' },
   { icon: Wrench, title: 'Rychlá montáž', desc: 'Systém Plug & Mist — napojení na vodovodní řad bez čerpadla, instalace do jednoho dne.' },
   { icon: Smartphone, title: 'Chytré řízení', desc: 'Programovatelné scénáře, ovládání z mobilní aplikace, kompatibilní se SMART moduly.' },
   { icon: Move, title: 'Mobilní i pevná instalace', desc: 'Volitelně na zemní vrut pro rychlé přemístění, nebo na skrytou patku pro trvalé kotvení.' },

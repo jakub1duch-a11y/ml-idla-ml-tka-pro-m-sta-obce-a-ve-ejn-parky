@@ -1,11 +1,78 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Calculator, Droplets } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import OperatingCostResults from '@/components/produkt/OperatingCostResults';
-import { getNozzleCount, HOURS_PER_DAY, WATER_RATE_WITH_SEWER } from '@/lib/operatingCosts';
+
+const WATER_PRICE_PER_M3 = 90; // Kč
+const PRESSURES = [
+  { label: '5 bar', key: 'flow_5bar' },
+];
+
+function parseNumber(str) {
+  if (!str) return 0;
+  const match = String(str).match(/[\d.,]+/);
+  return match ? parseFloat(match[0].replace(',', '.')) : 0;
+}
 
 export default function NozzleCostCalculator({ product }) {
-  const [seasonDays, setSeasonDays] = useState(120);
-  const nozzles = getNozzleCount(product);
-  return <section className="border-y border-slate-200 bg-slate-50 py-16 lg:py-20"><div className="site-container"><div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"><div className="max-w-2xl"><p className="content-eyebrow mb-3 flex items-center gap-2"><Calculator size={16} /> Spočítat provozní náklady</p><h2 className="content-title text-3xl">Kolik stojí provoz modelu {product.name}.</h2><p className="content-lead mt-3">Výpočet vychází z {nozzles} {nozzles === 1 ? 'trysky' : 'trysek'}, tlaku 4 bar a ceny {WATER_RATE_WITH_SEWER} Kč/m³ včetně vodného a stočného.</p></div><label className="w-full max-w-xs text-sm font-semibold text-slate-800">Délka letní sezóny: {seasonDays} dní<input type="range" min="30" max="150" step="5" value={seasonDays} onChange={(event) => setSeasonDays(Number(event.target.value))} className="mt-3 w-full accent-slate-950" /><span className="mt-1 flex justify-between text-xs font-normal text-slate-400"><span>30 dní</span><span>{seasonDays * HOURS_PER_DAY} hodin</span><span>150 dní</span></span></label></div><OperatingCostResults nozzles={nozzles} seasonDays={seasonDays} /><div className="mt-7 flex flex-wrap gap-3"><Link to={`/poptavka?produkt=${encodeURIComponent(product.name)}`} className="btn-metallic-mist px-6 py-3 text-sm font-bold"><Droplets size={15} /> Poptat toto řešení</Link><Link to="/kalkulacka" className="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-800">Otevřít úplnou kalkulačku</Link></div></div></section>;
+  const [pressureIdx, setPressureIdx] = useState(0);
+  const [hours, setHours] = useState(6);
+  const [nozzleCount, setNozzleCount] = useState(6);
+
+  const m2Variant = useMemo(() => {
+    const variants = product.nozzle_variants || [];
+    return variants.find((v) => /m2/i.test(v.code)) || variants.find((v) => v.is_standard) || variants[0] || null;
+  }, [product.nozzle_variants]);
+
+  const flowPerMinute = m2Variant ? parseNumber(m2Variant[PRESSURES[pressureIdx].key]) : parseNumber(product.water_consumption) / 60;
+  const dailyLiters = flowPerMinute * nozzleCount * 60 * hours;
+  const dailyCost = (dailyLiters / 1000) * WATER_PRICE_PER_M3;
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      className="rounded-2xl border border-slate-200 bg-slate-900 p-6 lg:p-8">
+      <div className="flex items-center gap-2 mb-6">
+        <Calculator size={16} className="text-cyan" />
+        <p className="font-mono tracking-widest uppercase text-white/60 text-xs">Technická kalkulace provozních nákladů</p>
+      </div>
+      <p className="text-xs text-white/40 mb-6">
+        Výpočet dle {m2Variant ? `standardní trysky ${m2Variant.code}` : 'orientační spotřeby vody'}.
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+        {m2Variant && (
+          <div>
+            <p className="text-xs text-white/50 mb-2">Tlak vody</p>
+            <div className="flex flex-wrap gap-2">
+              {PRESSURES.map((p, i) => (
+                <button key={p.key} type="button" onClick={() => setPressureIdx(i)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${pressureIdx === i ? 'bg-white text-slate-900 border-white' : 'bg-transparent text-white/60 border-white/20 hover:border-white/40'}`}>
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {m2Variant && (
+          <div>
+            <label className="block text-xs text-white/50 mb-2">Počet trysek: <span className="text-white font-medium">{nozzleCount}</span></label>
+            <input type="range" min="1" max="20" value={nozzleCount} onChange={(e) => setNozzleCount(Number(e.target.value))} className="w-full accent-cyan-400" />
+          </div>
+        )}
+        <div className={m2Variant ? '' : 'sm:col-span-3'}>
+          <label className="block text-xs text-white/50 mb-2">Provoz (hod / den): <span className="text-white font-medium">{hours} h</span></label>
+          <input type="range" min="1" max="16" value={hours} onChange={(e) => setHours(Number(e.target.value))} className="w-full accent-cyan-400" />
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between pt-6 border-t border-white/10">
+        <div>
+          <p className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Denní náklad na vodu</p>
+          <p className="text-3xl text-white font-heading font-medium">{dailyCost.toFixed(1)} Kč</p>
+        </div>
+        <div className="flex items-center gap-2 text-white/50 text-xs max-w-[10rem] text-right">
+          <Droplets size={14} className="shrink-0" /> {dailyLiters.toFixed(0)} l vody denně
+        </div>
+      </div>
+    </motion.div>
+  );
 }

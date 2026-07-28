@@ -15,9 +15,9 @@ export default function SmartSystemPreview() {
     <section className="py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <p className="content-eyebrow mb-3">Náš Smart systém</p>
-          <h2 className="content-title text-3xl mb-4">Chytré řízení mlzidla.cz</h2>
-          <p className="content-lead mb-6">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Náš Smart systém</p>
+          <h2 className="font-heading font-medium text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">Chytré řízení mlzidla.cz</h2>
+          <p className="text-slate-500 leading-relaxed mb-6">
             Vlastní systém pro ovládání mlžítek — od jednoduchého ovládání z mobilu až po plnou automatizaci podle počasí, senzorů a smart home ekosystému.
           </p>
           <ul className="space-y-3 mb-8">
@@ -36,8 +36,8 @@ export default function SmartSystemPreview() {
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-all">
               Zobrazit varianty <ArrowRight size={16} />
             </Link>
-            <Link to="/chytre-ventily-mlzitka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:border-slate-300 transition-all">
-              Ventily a samostatná mlžítka
+            <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-200 text-slate-700 text-sm font-medium rounded-full hover:border-slate-300 transition-all">
+              O aplikaci
             </Link>
           </div>
         </motion.div>

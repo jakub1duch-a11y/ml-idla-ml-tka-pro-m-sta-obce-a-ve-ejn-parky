@@ -46,9 +46,6 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setOg('og:title', fullTitle);
   setOg('og:description', description);
   setOg('og:image', img);
-  setOg('og:image:secure_url', img);
-  setOg('og:image:width', '1200');
-  setOg('og:image:height', '630');
   setOg('og:type', type);
   setOg('og:site_name', SITE_NAME);
   setOg('og:locale', 'cs_CZ');
@@ -77,7 +74,6 @@ export const SEO_PAGES = {
     title: 'Mlžítka a mlžné brány',
     description: 'Zakázkové mlžítka, mlžné brány a chladicí systémy HolmTec z nerezové oceli AISI 316L. Ochlazení veřejných prostorů, parků, náměstí, festivalů a zahrad.',
     keywords: 'mlžné, sochy, mlžítka, mlzitka, mlžné, brány, HolmTec, mlzidla, nerezové sochy, mlžení',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3671a8607_generated_image.png',
     canonicalPath: '/',
   },
   kolekce: {
@@ -94,16 +90,14 @@ export const SEO_PAGES = {
   },
   jakToFunguje: {
     title: 'Jak funguje mlžení? Princip evaporace a technologie mlžných soch',
-    description: 'Vysvětlujeme princip mlžení: kapky 50–100 μm se při vhodných podmínkách odpařují ve vzduchu a odebírají teplo. Poznejte technologii mlžítek HolmTec.',
-    keywords: 'jak funguje mlžení, kapky 50–100 μm, evaporace mlha, mlžné trysky princip, ochlazení evaporací, technologie mlžítek HolmTec',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7d93243ca_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
-    canonicalPath: '/jak-funguje-mlzeni',
+    description: 'Vysvětlujeme fyziku mlžení: kapičky 10–50 μm se odpařují ve vzduchu a absorbují teplo. Ochlazení až −9 °C bez mokrých ploch. Zjistěte, jak mlžné sochy HolmTec fungují.',
+    keywords: 'jak funguje mlžení, evaporace mlha, mlžné trysky princip, ochlazení evaporací, fyzika mlžení, mlžné sochy jak to funguje',
+    canonicalPath: '/jak-to-funguje',
   },
   oNas: {
     title: 'O nás — HolmTec, výrobce mlžných skulptur z Trutnova',
     description: 'HolmTec je česká firma s kořeny v automobilovém průmyslu. Vyrábíme zakázkové mlžné skulptury a chladicí systémy z nerezové oceli AISI 316L pro veřejné prostory, parky a eventy.',
-    keywords: 'HolmTec, výrobce mlžných soch, ohýbání nerezových trubek, mlžítka na míru, zakázková výroba Trutnov, nerezové mlžné sochy',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1dd60f1b8_image-20260416-133342-657.jpg',
+    keywords: 'HolmTec, výrobce mlžných soch, mlzidla.cz, mlžné skulptury výroba, zakázková výroba Trutnov, nerezové mlžné sochy',
     canonicalPath: '/o-nas',
   },
   reference: {
@@ -115,8 +109,7 @@ export const SEO_PAGES = {
   blog: {
     title: 'Blog — Mlžné technologie, inspirace a realizace | HolmTec',
     description: 'Technologie, inspirace a novinky ze světa mlžných soch a chladicích systémů. Články o evaporaci, srovnání s klimatizací, realizacích a inovacích HolmTec.',
-    keywords: 'blog mlžení, AI poradce mlžítka, chytré ovládání mlžení, provozní náklady mlžítka, zakázkové mlžné sochy',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
+    keywords: 'blog mlžení, mlžné sochy novinky, evaporace veřejný prostor, mlhoviště inspirace, mlžné skulptury technologie',
     canonicalPath: '/blog',
   },
   poptavka: {
@@ -302,8 +295,7 @@ export function getBlogPostSEO(post) {
     datePublished: post.published_date || post.created_date,
     dateModified: post.updated_date || post.published_date || post.created_date,
     author: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-    publisher: { '@type': 'Organization', name: 'Mlžidla.cz - Mlžítka HolmTec', url: BASE_URL, logo: { '@type': 'ImageObject', url: DEFAULT_IMAGE } },
-    mainEntityOfPage: `${BASE_URL}/blog/${post.slug || post.id}`,
+    publisher: { '@type': 'Organization', name: 'Mlžidla.cz - Mlžítka HolmTec', url: BASE_URL },
   };
 
   return {

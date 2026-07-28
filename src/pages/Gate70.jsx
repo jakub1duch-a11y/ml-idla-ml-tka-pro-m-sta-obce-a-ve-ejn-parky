@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
-import NozzleCostCalculator from '@/components/produkt/tabs/NozzleCostCalculator';
 
 // ─── Asset URLs ───────────────────────────────────────────────────────────────
 const HERO_U = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png';
@@ -70,14 +69,14 @@ const VIDEOS = [
 const TECH_ROWS = [
 { label: 'Materiál', value: 'Nerezová ocel AISI 316L (1.4301)' },
 { label: 'Trubky', value: 'TR76×3 mm, svařované' },
-{ label: 'Trysky', value: '5-8 ks AISI 316L, 50–100 μm' },
+{ label: 'Trysky', value: '5-8 ks AISI 316L, 10–50 μm' },
 { label: 'Spotřeba vody', value: '40–100 l/h' },
 { label: 'Tlak mlžení', value: "3-7 bar" },
 { label: 'Šířka × Výška', value: '2 m × 2,2 m *(volitelná)' },
 { label: 'Kotvení', value: 'Skryté kotvící patky, chemické kotvy M10–M16 do betonu' },
 { label: 'Povrch', value: 'Broušený / kartáčovaný' },
-{ label: 'Napájení', value: '0–24 V dle spouštění / manuálně bez napětí / Smart od 3 V' },
-{ label: 'Dodací lhůta', value: 'Obvykle do 14 pracovních dnů (do 3 týdnů)' },
+{ label: 'Napájení', value: "dle zvolení - 12V / Wi-Fi Smart \u0159\xEDzen\xED" },
+{ label: 'Dodací lhůta', value: '1–5 týdnů dle výroby' },
 { label: 'Záruka', value: "na konstrukci" },
 { label: "", value: "" }];
 
@@ -345,8 +344,6 @@ export default function Gate70() {
           </motion.div>
         </div>
       </section>
-
-      <NozzleCostCalculator product={{ name: 'GATE70', slug: 'gate70', image_url: HERO_U, micron_size: '5 trysek · 50–100 μm' }} />
 
       <GateComparisonTable />
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Thermometer, ShieldCheck, Gauge, Leaf, Wind, Droplet, Timer, HeartPulse } from 'lucide-react';
 import FeaturesWarrantySection from './FeaturesWarrantySection';
+import NozzleCostCalculator from './NozzleCostCalculator';
 
 const STATS = [
   { val: '−10 °C', label: 'Pokles teploty okolí', icon: Thermometer, desc: 'Evaporativní chlazení mikrokapkami sníží teplotu vzduchu v okolí až o 10 °C během několika minut provozu.' },
@@ -9,9 +10,9 @@ const STATS = [
   { val: '3–8 BAR', label: 'Nízkotlaký provoz', icon: Gauge, desc: 'Systém pracuje v rozsahu 3–8 barů na běžném tlaku vodovodního řadu, bez potřeby tlakové stanice.' },
   { val: '−45 %', label: 'Úspora vody', icon: Leaf, desc: 'Chytrá regulace dle počasí a teploty šetří vodu oproti nepřerušovanému provozu.' },
   { val: '−70 %', label: 'Méně prachu a pylů', icon: Wind, desc: 'Mikrokapky mlhy vážou prachové částice a pyly ve vzduchu, čímž zlepšují kvalitu ovzduší v okolí.' },
-  { val: '50–100 μm', label: 'Velikost kapky', icon: Droplet, desc: 'Jemná viditelná mlha přináší osvěžení a při správném nastavení omezuje smáčení okolních povrchů.' },
+  { val: '10 μm', label: 'Velikost kapky', icon: Droplet, desc: 'Extrémně jemná mlha se okamžitě odpařuje — povrch ani oblečení kolemjdoucích nezvlhnou.' },
   { val: '< 1 den', label: 'Doba instalace', icon: Timer, desc: 'Systém Plug & Mist umožňuje napojení na vodovodní řad a spuštění provozu během jednoho dne.' },
-  { val: 'Letní sezóna', label: 'Komfort v horkých dnech', icon: HeartPulse, desc: 'Sezónní provoz přináší příjemné ochlazení přesně v období, kdy je venkovní prostor nejvíce zatížen horkem.' },
+  { val: '365 dní', label: 'Celoroční provoz', icon: HeartPulse, desc: 'Mrazuvzdorné a UV odolné komponenty umožňují provoz venku po celý rok.' },
 ];
 
 function StatCard({ s, i }) {
@@ -56,6 +57,10 @@ export default function BenefityTab({ product }) {
         </div>
 
         <FeaturesWarrantySection />
+
+        <div className="mt-16">
+          <NozzleCostCalculator product={product} />
+        </div>
       </div>
     </section>
   );

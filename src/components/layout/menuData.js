@@ -7,12 +7,12 @@ export const benefitLinks = [
 ];
 
 export const mobileNavigation = [
-  { label: 'Produkty a řešení', path: '/katalog', links: [['Designová architektonická mlžítka', '/reseni/designova'], ['Vstupní a uvítací mlžné brány', '/reseni/brany'], ['Chytré moduly a příslušenství', '/reseni/chytre-moduly'], ['PRONÁJEM mobilních eventových mlžítek', '/katalog?sekce=pronajem']] },
+  { label: 'Produkty a řešení', path: '/katalog', links: [['Designová architektonická mlžítka', '/reseni/designova'], ['Vstupní a uvítací mlžné brány', '/reseni/brany'], ['Chytré moduly a příslušenství', '/reseni/chytre-moduly'], ['Mobilní eventová mlžítka', '/reseni/mobilni-eventove']] },
   { label: 'Využití', path: '/vyuziti', links: usageLinks.map(([label, , path]) => [label, path]) },
   { label: 'Technologie a chytré řízení', path: '/jak-funguje-mlzeni', links: [['Jak funguje mlžení', '/jak-funguje-mlzeni'], ['Chytré řízení', '/chytra-mlzidla'], ['Smart ovládání', '/smart-ovladani']] },
   { label: 'Přínosy mlžítek', path: '/prinosy-mlzitek', links: benefitLinks.map(([label, , path]) => [label, path]) },
   { label: 'Realizace', path: '/reference' },
   { label: 'Inspirace', path: '/blog' },
-  { label: 'Podpora a servis', path: '/podpora', links: [['Produktový poradce', '/poradce'], ['O nás', '/o-nas'], ['Výhody mlžítek', '/vyhody'], ['Nejčastější dotazy', '/faq'], ['Technické listy', '/ke-stazeni'], ['Servis a údržba', '/servis-udrzba'], ['Video ukázky', '/videosekce-mlzitka'], ['Certifikace', '/certifikace'], ['Spočítat provozní náklady', '/kalkulacka']] },
+  { label: 'Podpora a servis', path: '/podpora', links: [['Produktový poradce', '/poradce'], ['O nás', '/o-nas'], ['Výhody mlžítek', '/vyhody'], ['Nejčastější dotazy', '/faq'], ['Technické listy', '/ke-stazeni'], ['Servis a údržba', '/servis-udrzba'], ['Video ukázky', '/videosekce-mlzitka'], ['Certifikace', '/certifikace'], ['Kalkulačka nákladů', '/kalkulacka']] },
   { label: 'B2B partnerství', path: '/partnerstvi', links: [['Pro města a obce', '/vyuziti/mesta-obce'], ['Parky a hřiště', '/vyuziti/parky-hriste'], ['Školy, školky a děti', '/vyuziti/skoly-skolky-deti'], ['Domovy seniorů', '/vyuziti/domovy-senioru'], ['Hotely', '/vyuziti/hotely'], ['Wellness terasy', '/vyuziti/wellness-terasy']] },
 ];

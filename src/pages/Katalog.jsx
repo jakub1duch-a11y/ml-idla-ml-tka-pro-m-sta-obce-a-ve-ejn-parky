@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
-import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge, CalendarDays } from 'lucide-react';
+import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
+import SmartSystemPreview from '@/components/katalog/SmartSystemPreview';
 import FeatureIconRow from '@/components/common/FeatureIconRow';
-import CatalogRentalCard from '@/components/katalog/CatalogRentalCard';
 
 const CATALOG_FEATURES = [
 { icon: Droplets, label: 'Nízká spotřeba vody', value: 'od 4,6 l/h' },
@@ -15,23 +14,13 @@ const CATALOG_FEATURES = [
 { icon: Cpu, label: 'Smart řízení', value: 'volitelné moduly' }];
 
 const TABS = [
-  { id: 'brany', label: 'Mlžné brány a portály', icon: Droplets },
-  { id: 'mlzitka', label: 'Designová mlžítka', icon: Layers },
-  { id: 'prislusenstvi', label: 'Příslušenství a Smart', icon: Cpu },
-  { id: 'pronajem', label: 'Pronájem', icon: CalendarDays }];
+{ id: 'mlzitka', label: 'Mlžítka', icon: Droplets },
+{ id: 'prislusenstvi', label: 'Příslušenství a moduly', icon: Layers },
+{ id: 'smart', label: 'Smart systém', icon: Cpu }];
 
 
 export default function Katalog() {
-  const location = useLocation();
-  const [tab, setTab] = useState(() => {
-    const section = new URLSearchParams(window.location.search).get('sekce');
-    return ['brany', 'mlzitka', 'prislusenstvi', 'pronajem'].includes(section) ? section : 'brany';
-  });
-
-  useEffect(() => {
-    const section = new URLSearchParams(location.search).get('sekce');
-    if (['brany', 'mlzitka', 'prislusenstvi', 'pronajem'].includes(section)) setTab(section);
-  }, [location.search]);
+  const [tab, setTab] = useState('mlzitka');
 
   useEffect(() => {
     setSEO({
@@ -46,24 +35,49 @@ export default function Katalog() {
     <div className="min-h-screen bg-white pt-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p className="content-eyebrow mb-3">Katalog 2026</p>
-          <h1 className="content-title mb-3">Mlžítka, příslušenství a Smart systém.</h1>
-          <p className="content-lead max-w-2xl">Přehled řešení pro příjemnější venkovní prostor — od mlžných bran po chytré řízení.</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Katalog 2026</p>
+          <h1 className="font-heading font-medium text-3xl lg:text-5xl text-slate-900 tracking-tight mb-8">Mlžítka, příslušenství a Smart systém.</h1>
         </motion.div>
 
         <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />
 
-        <nav aria-label="Kategorie katalogu" className="sticky top-16 z-20 -mx-3 overflow-x-auto border-y border-slate-200 bg-white/90 px-3 py-3 backdrop-blur-xl">
-          <div className="flex min-w-max gap-2">{TABS.map((t) => { const Icon = t.icon; const active = tab === t.id; return <button key={t.id} onClick={() => setTab(t.id)} className={`relative inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all ${active ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/15' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}><Icon size={17} />{t.label}{active && <span className="absolute -bottom-1 left-1/2 h-1 w-8 -translate-x-1/2 rounded-full bg-cyan" />}</button>; })}</div>
-        </nav>
+        {/* Desktop tab bar */}
+        <div className="hidden lg:flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+          {TABS.map((t) =>
+          <button key={t.id} onClick={() => setTab(t.id)}
+            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${tab === t.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+              {t.label}
+            </button>
+          )}
+        </div>
       </div>
 
       <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-0">
-        {tab === 'brany' && <ProductFilterGrid mode="gates" />}
-        {tab === 'mlzitka' && <ProductFilterGrid mode="sculptures" />}
+        {tab === 'mlzitka' && <ProductFilterGrid />}
         {tab === 'prislusenstvi' && <AccessoriesSection />}
-        {tab === 'pronajem' && <CatalogRentalCard />}
+        {tab === 'smart' && <SmartSystemPreview />}
       </motion.div>
+
+      {/* Mobile switcher — thumb-reachable, fixed at bottom, one-handed use */}
+      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
+        <div className="flex items-center gap-1 p-1.5 rounded-full bg-white/70 backdrop-blur-xl border border-slate-200 shadow-xl shadow-slate-900/10">
+          {TABS.map((t) => {
+            const Icon = t.icon;
+            const active = tab === t.id;
+            return (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-2 rounded-full text-[11px] font-medium transition-colors ${active ? 'text-white' : 'text-slate-500'}`}>
+                {active &&
+                <motion.div layoutId="katalog-mobile-tab" className="absolute inset-0 bg-slate-900 rounded-full -z-10"
+                  transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+                }
+                <Icon size={16} />
+                <span className="leading-tight px-1 text-center">{t.label.split(' ')[0]}</span>
+              </button>);
+
+          })}
+        </div>
+      </div>
     </div>);
 
 }

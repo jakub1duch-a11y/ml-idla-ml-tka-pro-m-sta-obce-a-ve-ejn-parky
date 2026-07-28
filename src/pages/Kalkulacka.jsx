@@ -7,9 +7,8 @@ import { setSEO } from '@/lib/seo';
 export default function Kalkulacka() {
   useEffect(() => {
     setSEO({
-      title: 'Spočítat provozní náklady mlžítek a mlžných bran | HolmTec',
-      description: 'Spočítejte spotřebu vody a orientační náklady včetně stočného podle počtu trysek při tlaku 4 bar za 8 hodin, týden a letní sezónu.',
-      canonicalPath: '/kalkulacka'
+      title: 'Kalkulátor provozních nákladů mlžítek a mlžných bran | HolmTec',
+      description: 'Spočítejte si orientační spotřebu vody, elektřiny a měsíční provozní náklady pro váš mlžný systém či mlžnou bránu.'
     });
   }, []);
 
@@ -17,9 +16,9 @@ export default function Kalkulacka() {
     <div className="min-h-screen pt-28 pb-16 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <p className="text-xs font-mono tracking-widest uppercase mb-3 flex items-center justify-center gap-2 text-slate-400"><Calculator size={16} /> KALKULÁTOR</p>
-          <h1 className="font-heading font-light text-3xl lg:text-4xl tracking-tight mb-3 text-slate-900">Spočítat provozní náklady</h1>
-          <p className="text-sm max-w-2xl mx-auto text-slate-500">Vyberte model mlžítka nebo mlžné brány GATE a počet trysek. Výsledek ukazuje spotřebu vody a cenu včetně stočného při tlaku 4 bar.</p>
+          <p className="text-xs font-mono tracking-widest uppercase mb-3 flex items-center justify-center gap-2 text-slate-400">KALKULÁTOR</p>
+          <h1 className="font-heading font-light text-3xl lg:text-4xl tracking-tight mb-3 text-slate-900">Provozní náklady mlžítek a mlžných bran</h1>
+          <p className="text-sm max-w-xl mx-auto text-slate-500">Vyberte typ systému a zjistěte orientační spotřebu vody, elektřiny a měsíční provozní náklady.</p>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>

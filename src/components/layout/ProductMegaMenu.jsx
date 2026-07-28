@@ -7,7 +7,7 @@ const CATEGORIES = [
 ];
 
 const SOLUTIONS = [
-  { label: 'Designová architektonická mlžítka', text: 'Zakázkové mlžné prvky pro veřejný prostor.', to: '/reseni/designova', icon: Landmark }, { label: 'Vstupní a uvítací mlžné brány', text: 'Výrazný vstup a osvěžení návštěvníků.', to: '/reseni/brany', icon: Building2 }, { label: 'Chytré moduly a příslušenství', text: 'Snímače, ventily, aplikace a přehled provozu.', to: '/reseni/chytre-moduly', icon: Cable }, { label: 'Mobilní eventová mlžítka – PRONÁJEM', text: 'Rychle připravené řešení pro krátkodobé akce.', to: '/katalog?sekce=pronajem', icon: TentTree },
+  { label: 'Designová architektonická mlžítka', text: 'Zakázkové mlžné prvky pro veřejný prostor.', to: '/reseni/designova', icon: Landmark }, { label: 'Vstupní a uvítací mlžné brány', text: 'Výrazný vstup a osvěžení návštěvníků.', to: '/reseni/brany', icon: Building2 }, { label: 'Chytré moduly a příslušenství', text: 'Snímače, ventily, aplikace a přehled provozu.', to: '/reseni/chytre-moduly', icon: Cable }, { label: 'Mobilní eventová mlžítka – pronájem', text: 'Rychle připravené řešení pro krátkodobé akce.', to: '/reseni/mobilni-eventove', icon: TentTree },
 ];
 
 export default function ProductMegaMenu() {

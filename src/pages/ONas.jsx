@@ -5,7 +5,6 @@ import AboutStory from '@/components/about/AboutStory';
 import CompanyTimeline from '@/components/about/CompanyTimeline';
 import AboutDetails from '@/components/about/AboutDetails';
 import AboutPerformanceCharts from '@/components/about/AboutPerformanceCharts';
-import BendingCapabilities from '@/components/about/BendingCapabilities';
 
 const IMAGES = {
   hero: [
@@ -21,5 +20,5 @@ const IMAGES = {
 
 export default function ONas() {
   useEffect(() => { setSEO(SEO_PAGES.oNas); }, []);
-  return <main className="bg-white pt-[72px]"><AboutHero images={IMAGES.hero} /><AboutStory images={[IMAGES.workshop, IMAGES.team]} /><AboutPerformanceCharts /><BendingCapabilities /><CompanyTimeline /><AboutDetails images={[IMAGES.team, IMAGES.workshop, IMAGES.installation]} /></main>;
+  return <main className="bg-white pt-[72px]"><AboutHero images={IMAGES.hero} /><AboutStory images={[IMAGES.workshop, IMAGES.team]} /><AboutPerformanceCharts /><CompanyTimeline /><AboutDetails images={[IMAGES.team, IMAGES.workshop, IMAGES.installation]} /></main>;
 }

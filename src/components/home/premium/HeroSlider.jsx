@@ -20,14 +20,7 @@ const SLIDES = [
   cta1: { label: 'Prohlédnout kolekci', to: '/mlzidla-mlzitka' },
   cta2: { label: 'Outdoor a zahrady', to: '/kategorie/outdoor-zahrady' }
 },
-{
-  tag: 'Chytré nízkotlaké mlžítko',
-  title: 'Řízeno z mobilu, provoz bez čerpadel',
-  desc: 'WiFi + aplikace HolmApp, automatické plány dle počasí, spotřeba vody v reálném čase — vše na 2–7 BAR.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png',
-  cta1: { label: 'Kalkulačka nákladů', to: '/kalkulacka' },
-  cta2: { label: 'Jak to funguje', to: '/jak-to-funguje' }
-}];
+];
 
 
 const BENEFITS = [
@@ -118,11 +111,11 @@ export default function HeroSlider() {
       </div>
 
       <div className="absolute bottom-8 left-8 flex items-center gap-2 z-20">
-        {SLIDES.map((s, i) => null
-
-
-
-
+        {SLIDES.map((s, i) =>
+        <button
+          key={s.title}
+          onClick={() => setIndex(i)}
+          className={`h-1.5 rounded-full transition-all ${i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`} />
 
         )}
       </div>

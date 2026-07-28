@@ -27,9 +27,9 @@ export default function MistCinematicHero() {
         </div>
         <QuickBenefits className="absolute right-10 top-1/2 hidden w-[320px] -translate-y-1/2 grid-cols-1 lg:grid" compact limit={4} enableCooling />
       </div>
-      <div className="absolute bottom-0 z-20 border-t border-white/10 bg-slate-950/60 backdrop-blur-sm pt-12 inset-x-0">
+      <div className="absolute bottom-0 z-20 border-t border-white/10 backdrop-blur-sm pt-12 inset-x-0 bg-[hsl(var(--popover))] text-[hsl(var(--popover-foreground))]">
         <div className="site-container flex overflow-x-auto [&::-webkit-scrollbar]:hidden pt-3 pb-3">
-          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan size-12r" /><span><b className="block text-sm text-white size-">{label}</b><small className="block text-white/60 text-base">{text}</small></span></Link>)}
+          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan size-12r" /><span><b className="block text-sm text-white size-">{label}</b><small className="block text-base text-[hsl(var(--card-foreground))]">{text}</small></span></Link>)}
         </div>
       </div>
     </section>);

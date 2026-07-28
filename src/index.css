@@ -4,6 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tailwind content scan refresh */
+
 @layer base {
   :root {
     --background: 220 0% 98%;

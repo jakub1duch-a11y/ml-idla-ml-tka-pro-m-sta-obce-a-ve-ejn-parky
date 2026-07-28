@@ -18,5 +18,5 @@ export default function Home2() {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
   }, []);
-  return <><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection enableCooling /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection enableCooling /><HomeRentalTeaser /><RealizaceGallerySection /><ClientReviewsStrip /><BlogSection /></>;
+  return <div className="blueprint-home"><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection enableCooling /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection enableCooling /><HomeRentalTeaser /><RealizaceGallerySection /><ClientReviewsStrip /><BlogSection /></div>;
 }

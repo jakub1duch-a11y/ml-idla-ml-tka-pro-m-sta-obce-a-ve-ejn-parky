@@ -3,14 +3,11 @@ import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, FileText, Ruler, Clock, Shield, Award, Droplets, Gauge, Thermometer, Users, Box } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
-import Breadcrumbs from '@/components/common/Breadcrumbs';
-import PartnershipProgramGrid from '@/components/partnerstvi/PartnershipProgramGrid';
-import B2BReferencesSection from '@/components/reference/B2BReferencesSection';
 
 const BENEFITS = [
 { icon: FileText, title: '3D modely a výkresy', desc: 'Kompletní technická dokumentace, DWG/IFC soubory a materiálové listy pro projektovou přílohu.', color: 'text-blue-500' },
 { icon: Ruler, title: 'Zakázková výroba', desc: 'Každé mlžítko vzniká na míru — tvar, výška, počet trysek i povrchová úprava.', color: 'text-violet-500' },
-{ icon: Clock, title: 'Výroba obvykle do 3 týdnů', desc: 'Standardní zakázkovou výrobu plánujeme obvykle do 14 pracovních dnů; termín instalace potvrdíme podle rozsahu projektu.', color: 'text-amber-500' },
+{ icon: Clock, title: 'Realizace do 8 týdnů', desc: 'Od schválení výkresové dokumentace po instalaci a uvedení do provozu.', color: 'text-amber-500' },
 { icon: Shield, title: 'Norma HolmTec', desc: 'Provozní tlak 3–5 bar, nerez AISI 316L, bezpečnostní doložka pro veřejný prostor.', color: 'text-emerald-500' },
 { icon: Award, title: 'Reference 120+ projektů', desc: 'Parky, náměstí, aquaparky, eventy — ověřené řešení pro veřejné i soukromé investory.', color: 'text-slate-500' },
 { icon: Box, title: 'Servis a záruční podpora', desc: '24měsíční záruka, pravidelná údržba a rychlý záruční i pozáruční servis.', color: 'text-rose-500' }];
@@ -73,7 +70,6 @@ export default function Partnerstvi() {
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-36 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end pb-10">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
-            <div className="mb-7"><Breadcrumbs light items={[{ label: 'B2B partnerství' }]} /></div>
             <span className="inline-block px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-6">
               Partnerství a spolupráce
             </span>
@@ -96,8 +92,6 @@ export default function Partnerstvi() {
         </div>
       </div>
 
-      <PartnershipProgramGrid />
-
       {/* WATER CONSUMPTION CALCULATOR */}
       <div className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -117,11 +111,11 @@ export default function Partnerstvi() {
             <div className="grid grid-cols-2 gap-4">
               {[
               { icon: Gauge, label: 'Provozní tlak', value: '4 bar', sub: 'standard (rozsah 3–5 bar)', highlight: false },
-              { icon: Droplets, label: 'Průtok (2 trysky)', value: '14,4 L/h', sub: 'GATE70 — 7,2 L/h × 2 při 4 bar', highlight: false },
-              { icon: Droplets, label: 'Spotřeba — den', value: '115,2 L', sub: '8 hod. denního provozu', highlight: true },
-              { icon: Droplets, label: 'Spotřeba — sezóna', value: '10 368 L', sub: '90 dní (cca 10,4 m³)', highlight: true },
-              { icon: Thermometer, label: 'Efekt ochlazení', value: 'až −9 °C', sub: 'dle teploty, vlhkosti a proudění', highlight: false },
-              { icon: Award, label: 'Náklady na vodu', value: 'dle místního tarifu', sub: 'vodné a stočné se liší podle regionu', highlight: false }].
+              { icon: Droplets, label: 'Průtok (2 trysky)', value: '36 L/h', sub: 'GATE70 — 18 L/h × 2', highlight: false },
+              { icon: Droplets, label: 'Spotřeba — den', value: null, counter: 288, suffix: ' L', sub: '8 hod. denního provozu', highlight: true },
+              { icon: Droplets, label: 'Spotřeba — sezóna', value: null, counter: 25920, suffix: ' L', sub: '90 dní (cca 26 m³)', highlight: true },
+              { icon: Thermometer, label: 'Efekt ochlazení', value: '−9 °C', sub: 'okolní vzduch (při 35 °C)', highlight: false },
+              { icon: Award, label: 'Náklady na vodu', value: null, counter: 2600, suffix: ' Kč', sub: 'za celou sezónu', highlight: false }].
               map((item, i) =>
               <motion.div key={i}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
@@ -194,7 +188,7 @@ export default function Partnerstvi() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
             { label: 'Provozní tlak', value: '3–5 bar', sub: 'optimální rozsah' },
-            { label: 'Průměr kapky', value: '50–100 μm', sub: 'jemná viditelná mlha' },
+            { label: 'Průměr kapky', value: '10–50 μm', sub: 'evaporuje před dopadem' },
             { label: 'Materiál', value: 'AISI 316L', sub: 'potravinářský nerez' },
             { label: 'Ochlazení', value: 'až −9 °C', sub: 'okolního vzduchu' }].
             map((s, i) =>
@@ -264,8 +258,6 @@ export default function Partnerstvi() {
           </motion.div>
         </div>
       </div>
-
-      <B2BReferencesSection context="mesta-obce" />
 
       {/* CTA */}
       <div className="py-20 text-center max-w-3xl mx-auto px-6">

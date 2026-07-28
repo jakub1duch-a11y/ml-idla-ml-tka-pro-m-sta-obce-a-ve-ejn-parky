@@ -16,19 +16,17 @@ const OVLADANI_OPTIONS = [
 ];
 
 const PRODUKTY = [
-  'Doporučte mi vhodný produkt',
-  'Mlžítko OSTREV',
-  'Mlžítko MRAK',
-  'Mlžítko AURA',
-  'Mlžítko BENDY',
-  'Mlžítko LÍZÁTKO (dětské)',
-  'Mlžítko Y-ARMIST - JEKL',
-  'Mlžítko Y-ARMIST - TRUBKA',
-  'Mlžítko SPIRÁLA',
-  'Mlžítko LINEA',
-  'Vstupní mlžnou bránu - GATE / LINEA',
-  'Kombinaci mlžítek',
-  'Mlžítko na zakázku',
+  'OSTEV (mlžný strom)',
+  'MRAK',
+  'AURA (kruh)',
+  'VOLAVKA',
+  'KIDS (hřiště)',
+  'GATE 60 (brána)',
+  'LINEA EL70',
+  'START (terasa)',
+  'PARK',
+  'ARENA',
+  'Jiný / nevím',
 ];
 
 const inputCls =
@@ -40,9 +38,9 @@ export default function Poptavka() {
     email: '',
     telefon: '',
     firma: '',
-    produkt: 'Doporučte mi vhodný produkt',
-    ovladani: 'doporucit',
-    zprava: 'Dobrý den, poptávám cenu mlžítka (doplňte typ mlžítka nebo vaše požadavky k zakázkové výrobě na míru) pro [lokalita, např. Trutnov]. Moje hlavní požadavky jsou: [1-2 klíčové parametry, např. termín dodání, materiál, rozměry].Prosím o zaslání [upřesnění, např. cenové nabídky, návrhu řešení] a předpokládaného termínu realizace. Děkuji za nabídku a těším se na spolupráci. S pozdravem',
+    produkt: '',
+    ovladani: '',
+    zprava: '',
   });
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);

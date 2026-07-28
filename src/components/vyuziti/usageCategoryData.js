@@ -3,7 +3,7 @@ const techPhoto = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d
 const mistPhoto = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/97adcdb67_file_000000001abc8243a41e16d7f22e87b8.png';
 export const defaultHeroVideo = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2c401631b_ukazkamlhy-zivaukazka002.mov';
 
-const createCategory = (title, lead, places, benefits, image, scope = 'urban') => ({ title, lead, places, benefits, image, scope, video: defaultHeroVideo });
+const createCategory = (title, lead, places, benefits, image, scope = 'urban') => ({ title, lead, places, benefits, image, scope });
 
 export const usageCategories = {
   'mesta-obce': createCategory('Mlžítka pro města a obce', 'Ochlazení rozpálených náměstí, pěších zón a míst, kde se lidé setkávají.', ['Náměstí a pěší zóny', 'Zastávky MHD', 'Veřejná prostranství', 'Sportovní areály'], ['Ochlazení okolí až o 9 °C', 'Smart řízení podle teploty a pohybu', 'Zakázková výroba dle identity místa'], urbanPhoto),

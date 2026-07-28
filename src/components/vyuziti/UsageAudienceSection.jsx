@@ -1,8 +1,0 @@
-import React from 'react';
-import { BriefcaseBusiness, CheckCircle2, PackageCheck } from 'lucide-react';
-import { usageAudienceData } from '@/components/vyuziti/usageAudienceData';
-
-export default function UsageAudienceSection({ sector }) {
-  const data = usageAudienceData[sector] || usageAudienceData['mesta-obce'];
-  return <section className="bg-white py-16 lg:py-20"><div className="site-container"><p className="content-eyebrow">Pro váš obor</p><h2 className="mt-3 max-w-3xl text-slate-950">Informace, které potřebujete pro správné rozhodnutí.</h2><div className="mt-9 grid gap-5 lg:grid-cols-3"><article className="border border-slate-200 p-6"><BriefcaseBusiness className="text-techblue" /><h3 className="mt-5 text-xl text-slate-950">Pro koho je řešení</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{data.audience}</p></article><article className="border border-slate-200 p-6"><CheckCircle2 className="text-techblue" /><h3 className="mt-5 text-xl text-slate-950">Co při návrhu řešíme</h3><ul className="mt-3 space-y-2 pl-0 text-sm text-slate-600">{data.priorities.map(item => <li key={item} className="list-none">— {item}</li>)}</ul></article><article className="border border-slate-200 p-6"><PackageCheck className="text-techblue" /><h3 className="mt-5 text-xl text-slate-950">Co vám dodáme</h3><ul className="mt-3 space-y-2 pl-0 text-sm text-slate-600">{data.offer.map(item => <li key={item} className="list-none">— {item}</li>)}</ul></article></div></div></section>;
-}

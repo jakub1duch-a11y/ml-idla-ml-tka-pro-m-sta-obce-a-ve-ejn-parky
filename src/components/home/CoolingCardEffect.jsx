@@ -21,6 +21,6 @@ export default function CoolingCardEffect({ active = false }) {
     <div className="cooling-texture" />
     <div className={`cooling-droplets ${cooled ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}><i /><i /><i /><i /></div>
     <span className={`absolute left-4 top-4 rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.16em] transition-all duration-500 ${cooled ? 'bg-cyan text-slate-950' : 'bg-orange-500 text-white'}`}>{cooled ? 'Ochlazeno mlhou' : 'Horký den'}</span>
-    
+    {cooled && <div className="absolute right-5 top-4 flex gap-1.5 text-cyan animate-bounce"><i className="h-1.5 w-1.5 rounded-full bg-current" /><i className="mt-2 h-1 w-1 rounded-full bg-current" /><i className="h-1.5 w-1.5 rounded-full bg-current" /></div>}
   </div>;
 }

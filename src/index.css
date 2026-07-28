@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600&family=Albert+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,24 +6,24 @@
 
 @layer base {
   :root {
-    --background: 220 54% 27%;
-    --foreground: 205 79% 18%;
+    --background: 220 0% 98%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 200 87% 46%;
+    --primary: 200 43% 68%;
     --primary-foreground: 220 20% 6%;
-    --secondary: 220 0% 94%;
+    --secondary: 220 19% 6%;
     --secondary-foreground: 219 0% 85%;
-    --muted: 220 0% 62%;
+    --muted: 220 15% 12%;
     --muted-foreground: 220 8% 50%;
-    --accent: 215 29% 80%;
-    --accent-foreground: 206 92% 38%;
-    --destructive: 169 0% 100%;
+    --accent: 215 55% 32%;
+    --accent-foreground: 220 20% 6%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 0% 44%;
-    --input: 220 0% 83%;
+    --border: 220 0% 71%;
+    --input: 220 15% 14%;
     --ring: 215 55% 32%;
     --radius: 14px;
     --font-heading: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;

@@ -6,23 +6,23 @@ import { trackQuickInquiryClick } from '@/lib/ga4';
 
 const VARIANTS = [
 {
-  tag: 'Varianta A',
-  name: 'Spouštění 0–24 V',
-  desc: 'Elektrické spouštění mlžení podle zvoleného ventilu, tlačítka nebo časovače.',
-  features: ['Rozsah 0–24 V dle zvoleného spouštění', 'Tlačítko nebo časový spínač', 'Volba řešení podle místa instalace']
+  tag: 'Varianta 1',
+  name: 'Manuální Wi-Fi',
+  desc: 'Zapněte a vypněte mlžení kdykoliv přímo z mobilu.',
+  features: ['Wi-Fi / Bluetooth App ovládání', 'Plánovač mlžicích cyklů', 'Manuální tlačítko jako záloha']
 },
 {
-  tag: 'Varianta B',
-  name: 'Manuální uzavření bez napětí',
-  desc: 'Jednoduché ruční otevření a zavření přívodu vody bez elektrického napájení.',
+  tag: 'Varianta 2',
+  name: 'Smart senzory',
+  desc: 'Mlžení reaguje samo na okolní podmínky.',
   highlighted: true,
-  features: ['Bez přívodu elektrické energie', 'Přímé mechanické ovládání ventilu', 'Jednoduchý sezónní provoz']
+  features: ['Teplotní a vlhkostní senzor', 'PIR senzor pohybu', 'Automatické spouštění dle limitu']
 },
 {
-  tag: 'Varianta C',
-  name: 'Chytré řízení od 3 V',
-  desc: 'Automatizace podle teploty, času, vlhkosti nebo pohybu v prostoru.',
-  features: ['Napájení chytrého řízení od 3 V', 'Mobilní aplikace a harmonogram', 'Volitelné teplotní a pohybové senzory']
+  tag: 'Varianta 3',
+  name: 'Plná automatizace',
+  desc: 'Kompletní integrace s počasím, časem i smart home.',
+  features: ['Integrace dle předpovědi počasí', 'Časový harmonogram — dny i hodiny', 'Apple HomeKit, Google Home, Alexa']
 }];
 
 

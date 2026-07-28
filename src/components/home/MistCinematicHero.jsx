@@ -10,27 +10,12 @@ const QUICK_LINKS = [{ icon: Droplets, label: '50–100 μm', text: 'velikost ka
 
 export default function MistCinematicHero() {
   return (
-    <section id="uvod" className="relative overflow-hidden text-white bg-slate-950 min-h-[20svh]">
-      <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png" alt="Mlžná brána v letním městském parku" fetchPriority="high" decoding="async" className="absolute inset-0 hidden h-full w-full object-cover md:block" />
-      
-      <div className="absolute bg-[linear-gradient(90deg,rgba(2,6,23,0.46)_20%,rgba(2,6,03,0.5)_55%,rgba(2,6,23,0.92)_100%)] inset-0" />
-      <div className="hero-mist-overlay md:hidden"><span /><span /></div>
-      <div className="site-container relative min-h-[70svh] z-10 flex items-center px-1">
-        <div className="max-w-xl">
-          <p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan">Mlžidla.cz · nízkotlaké mlžné systémy</p>
-          <h1 className="mt-5 font-heading font-light tracking-tight text-white leading-[1.08] text-3xl sm:text-3xl lg:text-3xl">Mlžící systémy, vodní mlha pro efektivní ochlazování</h1>
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">Navrhujeme mlžítka, mlžné brány a ochlazení teras, parků i veřejných prostranství — účinně, úsporně a bez mokrého efektu.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/mlzidla-mlzitka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-slate-950 hover:bg-cyan">Prohlédnout mlžítka <ArrowRight size={17} /></Link>
-            <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 bg-transparent px-7 py-4 text-sm font-bold text-white hover:bg-white/10">Navrhnout řešení</Link>
-          </div>
-        </div>
-        <QuickBenefits className="absolute right-10 top-1/2 hidden w-[320px] -translate-y-1/2 grid-cols-1 lg:grid" compact limit={4} enableCooling />
-      </div>
-      <div className="absolute bottom-0 z-20 border-t border-white/10 backdrop-blur-sm inset-x-0 bg-[hsl(var(--popover))] text-[hsl(var(--popover-foreground))] pt-4 pb-4">
-        <div className="site-container flex overflow-x-auto [&::-webkit-scrollbar]:hidden pt-3 pb-3">
-          {QUICK_LINKS.map(({ icon: Icon, label, text, to }) => <Link key={to} to={to} className="flex min-h-12 min-w-[155px] flex-1 items-center gap-3 border-r border-white/10 px-4 text-left hover:bg-white/5"><Icon size={23} className="shrink-0 text-cyan size-12r" /><span><b className="block text-black text-m">{label}</b><small className="block text-base text-[hsl(var(--card-foreground))]">{text}</small></span></Link>)}
-        </div>
+    <section id="uvod" aria-label="Mlžidla.cz — nízkotlaké mlžné systémy" className="relative mx-auto mt-24 aspect-[255/188] w-full max-w-[1020px] overflow-hidden rounded-[12px] bg-[#062238] text-white">
+      <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/728d4c2eb_generated_550b2dcc.png" alt="Technický nákres mlžné brány" fetchPriority="high" decoding="async" className="pointer-events-none absolute -left-[8.83%] -top-[7.45%] h-auto w-[117.65%] max-w-none select-none" />
+      <div className="absolute inset-0">
+        <Link to="/mlzidla-mlzitka" aria-label="Prohlédnout mlžítka" className="absolute left-[10.9%] top-[57.2%] h-[5.5%] w-[17.5%] rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"><span className="sr-only">Prohlédnout mlžítka</span></Link>
+        <Link to="/poptavka" aria-label="Navrhnout řešení" className="absolute left-[29.5%] top-[57.2%] h-[5.5%] w-[15.8%] rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"><span className="sr-only">Navrhnout řešení</span></Link>
+        {QUICK_LINKS.map(({ label, text, to }, index) => <Link key={to} to={to} aria-label={`${label} — ${text}`} className="absolute top-[79%] h-[13%] w-[19%] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan" style={{ left: `${10.9 + index * 20.4}%` }}><span className="sr-only">{label} — {text}</span></Link>)}
       </div>
     </section>);
 

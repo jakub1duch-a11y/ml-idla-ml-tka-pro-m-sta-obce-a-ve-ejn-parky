@@ -12,14 +12,6 @@ const SLIDES = [
   cta1: { label: 'Poptat systém', to: '/poptavka' },
   cta2: { label: 'Kategorie města a obce', to: '/kategorie/mesta-obce' }
 },
-{
-  tag: 'Rezidenční a zahradní mlžné sochy',
-  title: 'Designové mlžné sochy pro zahrady a terasy',
-  desc: 'Nerezové sochy AURA, Mlžný mrak a Lízátko — umělecký prvek i funkční ochlazení vaší zahrady či terasy.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
-  cta1: { label: 'Prohlédnout kolekci', to: '/mlzidla-mlzitka' },
-  cta2: { label: 'Outdoor a zahrady', to: '/kategorie/outdoor-zahrady' }
-},
 ];
 
 

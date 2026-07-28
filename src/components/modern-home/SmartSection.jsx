@@ -1,0 +1,7 @@
+import React from 'react';
+import { Clock3, Smartphone, Thermometer } from 'lucide-react';
+
+export default function SmartSection() {
+  const features = [[Smartphone, 'Wi-Fi ovládání', 'Spuštění mlžení z mobilní aplikace.'], [Clock3, 'Vlastní harmonogramy', 'Automatický plán pro otevírací dobu.'], [Thermometer, 'Reakce na počasí', 'Chytřejší provoz podle aktuálních podmínek.']];
+  return <section id="smart" className="border-b border-[#e5e5e5] bg-slate-50 px-6 py-24 lg:px-14"><div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center"><div className="rounded-lg bg-slate-950 p-8 text-white"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-400">SMART Control Unit</p><div className="mt-12 rounded-lg border border-white/15 bg-white/5 p-5"><p className="text-sm text-white/60">CITY Arc · zóna 01</p><p className="mt-2 text-2xl font-semibold">Mlha aktivní</p><div className="mt-7 h-1.5 rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-sky-400" /></div></div></div><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-600">Smart ovládání</p><h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950">Přesné řízení ve vašich rukou.</h2><div className="mt-8 grid gap-5">{features.map(([Icon, title, text]) => <div key={title} className="flex gap-4"><Icon size={20} className="mt-1 text-sky-600" /><div><h3 className="font-semibold text-slate-950">{title}</h3><p className="mt-1 text-sm text-slate-600">{text}</p></div></div>)}</div></div></div></section>;
+}

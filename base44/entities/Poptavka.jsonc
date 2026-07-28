@@ -32,6 +32,21 @@
       ],
       "description": "Preferovan\u00fd typ ovl\u00e1d\u00e1n\u00ed / \u0159\u00edzen\u00ed ml\u017e\u00edtka pro cenovou nab\u00eddku"
     },
+    "installation_type": {
+      "type": "string",
+      "enum": [
+        "namesti",
+        "park",
+        "firemni_areal",
+        "event"
+      ],
+      "description": "Typ m\u00edsta instalace"
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Zvolen\u00e1 produktov\u00e1 konfigurace"
+    },
     "soubory_urls": {
       "type": "array",
       "items": {

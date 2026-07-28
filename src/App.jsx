@@ -72,6 +72,7 @@ import ChytreVentilyMlzitka from '@/pages/ChytreVentilyMlzitka';
 import AppControlGuide from '@/pages/AppControlGuide';
 import Pronajem from '@/pages/Pronajem';
 import PartnerstviDetail from '@/pages/PartnerstviDetail';
+import CityArc from '@/pages/CityArc';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -98,6 +99,7 @@ const AuthenticatedApp = () => {
         <Route path="/jak-funguje-mlzeni" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
+        <Route path="/city-arc" element={<CityArc />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />

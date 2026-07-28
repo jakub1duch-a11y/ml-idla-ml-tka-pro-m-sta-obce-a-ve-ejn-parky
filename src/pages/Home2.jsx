@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
 import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
-import MistCinematicHero from '@/components/home/MistCinematicHero';
-import HomeSectionNav from '@/components/home/HomeSectionNav';
-import ScrollMistExperience from '@/components/home/ScrollMistExperience';
-import MistBenefitsSection from '@/components/home/MistBenefitsSection';
-import MistPerformanceSection from '@/components/home/MistPerformanceSection';
-import SmartMicroclimateHero from '@/components/home/SmartMicroclimateHero';
-import ZooPrahaShowcase from '@/components/home/ZooPrahaShowcase';
-import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
-import RealizaceGallerySection from '@/components/home/RealizaceGallerySection';
-import ClientReviewsStrip from '@/components/home/ClientReviewsStrip';
-import HomeRentalTeaser from '@/components/home/HomeRentalTeaser';
-import BlogSection from '@/components/home/BlogSection';
+import ModernHero from '@/components/modern-home/ModernHero';
+import TechnologySection from '@/components/modern-home/TechnologySection';
+import SmartSection from '@/components/modern-home/SmartSection';
+import UseCasesSection from '@/components/modern-home/UseCasesSection';
+import HomeCta from '@/components/modern-home/HomeCta';
 
 export default function Home2() {
   useEffect(() => {
     setSEO(SEO_PAGES.home);
     injectOrgJsonLd();
   }, []);
-  return <div className="blueprint-home"><MistCinematicHero /><HomeSectionNav /><MistBenefitsSection enableCooling /><MistPerformanceSection /><SmartMicroclimateHero /><ScrollMistExperience /><ZooPrahaShowcase /><FeaturedProductsSection enableCooling /><HomeRentalTeaser /><RealizaceGallerySection /><ClientReviewsStrip /><BlogSection /></div>;
+  return <div className="bg-white"><ModernHero /><TechnologySection /><SmartSection /><UseCasesSection /><HomeCta /></div>;
 }

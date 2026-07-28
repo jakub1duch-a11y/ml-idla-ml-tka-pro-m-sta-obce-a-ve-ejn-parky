@@ -1,0 +1,8 @@
+import React from 'react';
+import { Droplets, Gauge, Zap } from 'lucide-react';
+
+const points = [{ icon: Droplets, title: 'Jemná vodní mlha', text: 'Mikrokapky se přirozeně odpaří ve vzduchu a nezanechávají mokrý povrch.' }, { icon: Gauge, title: 'Přímé napojení na vodu', text: 'Nízkotlaký provoz 2–8 bar bez čerpadla a bez náročné technické místnosti.' }, { icon: Zap, title: 'Úsporný provoz', text: 'Cílené ochlazení prostoru s nízkou spotřebou vody a jednoduchou údržbou.' }];
+
+export default function TechnologySection() {
+  return <section id="technologie" className="border-b border-[#e5e5e5] px-6 py-24 lg:px-14"><div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.2fr]"><div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-600">Technologie</p><h2 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950">Technologie, která ochladí prostor.</h2><p className="mt-5 max-w-md leading-7 text-slate-600">Čisté řešení pro náměstí, parky i firemní areály. Konstrukce CITY Arc spojuje přesnou výrobu z nerezové oceli s okamžitým komfortem v horkých dnech.</p></div><div className="grid gap-5 sm:grid-cols-3">{points.map((item) => <article key={item.title} className="border-t border-[#e5e5e5] pt-5"><item.icon size={22} className="text-sky-600" /><h3 className="mt-5 font-semibold text-slate-950">{item.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{item.text}</p></article>)}</div></div></section>;
+}

@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 import { Wifi, Clock, Layers, Droplets } from 'lucide-react';
 
 const features = [
-  { icon: Wifi, label: 'WiFi + Bluetooth', sub: 'Dual konektivita' },
-  { icon: Clock, label: 'Automatické plány', sub: 'Časovač i senzory' },
-  { icon: Layers, label: 'Skupinové scény', sub: 'Více zón najednou' },
-  { icon: Droplets, label: 'Vodní monitoring', sub: 'Spotřeba v reálu' },
-];
+{ icon: Wifi, label: 'WiFi + Bluetooth', sub: 'Dual konektivita' },
+{ icon: Clock, label: 'Automatické plány', sub: 'Časovač i senzory' },
+{ icon: Layers, label: 'Skupinové scény', sub: 'Více zón najednou' },
+{ icon: Droplets, label: 'Vodní monitoring', sub: 'Spotřeba v reálu' }];
+
 
 export default function SmartSection() {
   return (
@@ -20,7 +20,7 @@ export default function SmartSection() {
               Smart ovládání
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-              className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6">
+            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6 normal-case">
               Mlžení z mobilu.<br />Kdykoli. Odkudkoli.
             </motion.h2>
             <p className="text-slate-500 text-lg leading-relaxed mb-8">
@@ -28,9 +28,9 @@ export default function SmartSection() {
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
-              {features.map((f, i) => (
-                <motion.div key={f.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+              {features.map((f, i) =>
+              <motion.div key={f.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
+              className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
                   <motion.div initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.4, ease: 'backOut' }}>
                     <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
                   </motion.div>
@@ -39,11 +39,11 @@ export default function SmartSection() {
                     <p className="text-xs text-slate-400">{f.sub}</p>
                   </div>
                 </motion.div>
-              ))}
+              )}
             </div>
 
             <Link to="/kontakt"
-              className="btn-metallic-mist px-7 py-3.5 text-sm font-medium">
+            className="btn-metallic-mist px-7 py-3.5 text-sm font-medium">
               Spočítat náklady
             </Link>
           </motion.div>
@@ -51,13 +51,13 @@ export default function SmartSection() {
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
             <div className="grid grid-cols-2 gap-4">
               <img src="https://media.base44.com/images/public/69f87b0204346ce73cee73b1/ae189a9d2_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ.png"
-                alt="Smart app" className="w-full rounded-2xl border border-slate-200" />
+              alt="Smart app" className="w-full rounded-2xl border border-slate-200" />
               <img src="https://media.base44.com/images/public/69f87b0204346ce73cee73b1/4d63dd88b_videoframe_7589.png"
-                alt="Smart app 2" className="w-full rounded-2xl border border-slate-200 mt-8" />
+              alt="Smart app 2" className="w-full rounded-2xl border border-slate-200 mt-8" />
             </div>
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

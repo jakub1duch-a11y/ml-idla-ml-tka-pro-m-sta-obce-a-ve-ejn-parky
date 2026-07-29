@@ -58,7 +58,7 @@ export default function HeroSlider() {
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
                 <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 mb-4">{slide.tag}</p>
-                <h1 className="font-light text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
                   {slide.title}
                 </h1>
                 <p className="text-white/70 leading-relaxed mb-8 text-measure text-lg">{slide.desc}</p>
@@ -107,7 +107,7 @@ export default function HeroSlider() {
         <button
           key={s.title}
           onClick={() => setIndex(i)}
-          className={`h-1.5 rounded-full transition-all ${i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`} />
+          className={`h-1.5 rounded-full transition-all hidden ${i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`} />
 
         )}
       </div>

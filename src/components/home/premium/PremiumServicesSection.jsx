@@ -26,7 +26,7 @@ export default function PremiumServicesSection() {
           <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}
           className="bg-white rounded-2xl border border-slate-200 p-6">
               <div className="rounded-full flex items-center justify-center bg-slate-000 mb-5 h-22 w-22">
-                <s.icon size={20} className="text-slate-700" strokeWidth={1.5} />
+                <s.icon size={20} className="text-slate-700 size-2" strokeWidth={1.5} />
               </div>
               <h3 className="font-heading font-bold text-slate-900 text-lg mb-2 leading-snug">{s.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>

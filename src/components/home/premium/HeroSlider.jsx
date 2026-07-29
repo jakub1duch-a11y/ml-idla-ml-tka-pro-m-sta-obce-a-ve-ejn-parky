@@ -54,7 +54,7 @@ export default function HeroSlider() {
 
       <div className="absolute inset-0 items-center flex">
         <div className="lg:px-20 mx-auto w-500 max-w-7x2">
-          <div className="max-w-xl">
+          <div className="max-w-5xl">
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
                 <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 mb-4">{slide.tag}</p>

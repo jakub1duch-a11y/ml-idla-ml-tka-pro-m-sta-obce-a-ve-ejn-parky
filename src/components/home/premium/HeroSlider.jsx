@@ -74,7 +74,7 @@ export default function HeroSlider() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid gap-3 sm:grid-cols-4 grid-cols-3">
               {BENEFITS.map((b, i) =>
               <motion.div
                 key={b.label}

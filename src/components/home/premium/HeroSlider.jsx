@@ -50,7 +50,7 @@ export default function HeroSlider() {
         
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/0 to-black/0" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r via-black/10 to-transparent from-black/0" />
 
       <div className="absolute inset-0 flex items-center">
         <div className="mx-auto lg:px-10 w-50 px-6 max-w-4xl">

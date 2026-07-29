@@ -41,7 +41,7 @@ function PostCard({ post, i }) {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
       <Link to={`/blog/${post.slug || post.id}`}
-        className="group relative block h-72 rounded-2xl overflow-hidden border border-white/10 shadow-sm hover:shadow-lg transition-all">
+      className="group relative block h-72 rounded-2xl overflow-hidden border border-white/10 shadow-sm hover:shadow-lg transition-all">
         <img src={bg} alt={post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" />
         <div className="relative h-full flex flex-col justify-end p-6">
@@ -60,14 +60,14 @@ function PostCard({ post, i }) {
           </div>
         </div>
       </Link>
-    </motion.div>
-  );
+    </motion.div>);
+
 }
 
 function LiveDemoCard() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      className="lg:col-span-2">
+    className="lg:col-span-2">
       <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
         <video
           src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov"
@@ -98,8 +98,8 @@ function LiveDemoCard() {
           </div>
         </div>
       </Link>
-    </motion.div>
-  );
+    </motion.div>);
+
 }
 
 function GateOfferCard() {
@@ -126,8 +126,8 @@ function GateOfferCard() {
           </div>
         </div>
       </Link>
-    </motion.div>
-  );
+    </motion.div>);
+
 }
 
 export default function BlogSection() {
@@ -154,7 +154,7 @@ export default function BlogSection() {
           <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Novinky & znalosti</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-              className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight">
+            className="font-heading font-light text-white tracking-tight text-3xl lg:text-3xl">
               Co je nového u nás
             </motion.h2>
             <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-white/70 font-light hover:text-white hover:gap-3 transition-all">
@@ -170,15 +170,15 @@ export default function BlogSection() {
         </div>
 
         {/* Blog posts */}
-        {loading ? (
-          <div className="flex justify-center py-14">
+        {loading ?
+        <div className="flex justify-center py-14">
             <Loader size={22} className="animate-spin text-white/30" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          </div> :
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {latestTwo.map((post, i) => <PostCard key={post.id} post={post} i={i} />)}
           </div>
-        )}
+        }
       </div>
     </section>);
 

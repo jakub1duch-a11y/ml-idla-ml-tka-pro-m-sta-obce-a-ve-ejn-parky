@@ -103,11 +103,11 @@ export default function HeroSlider() {
       </div>
 
       <div className="absolute bottom-8 left-8 flex items-center gap-2 z-20">
-        {SLIDES.map((s, i) =>
-        <button
-          key={s.title}
-          onClick={() => setIndex(i)}
-          className={`h-1.5 rounded-full transition-all hidden ${i === index ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`} />
+        {SLIDES.map((s, i) => null
+
+
+
+
 
         )}
       </div>

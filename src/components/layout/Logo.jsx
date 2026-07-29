@@ -11,7 +11,7 @@ export default function Logo({ size = 'md' }) {
       transition={{ duration: 1.8, ease: 'easeOut' }}
       className="inline-flex items-center gap-2">
       
-      <img src={LOGO_URL} alt="Mlžidla.cz" width={iconSize} height={iconSize} className="shrink-0 hidden" style={{ height: iconSize, width: 'auto' }} />
+      
       <span className="font-heading text-lg font-semibold tracking-wide uppercase">
         mlžidla<span className="text-[#40a2d4] text-base normal-case px-0.5" style={{ letterSpacing: '0.06em' }}>.cz</span>
       </span>

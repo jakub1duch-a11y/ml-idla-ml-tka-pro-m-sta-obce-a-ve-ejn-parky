@@ -34,15 +34,15 @@ export default function MistVideoShowcase() {
         </motion.div>
 
         {/* Grid of clips */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 hidden">
-          {CLIPS.map((c, i) =>
-          <motion.div key={c.url} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-          className="rounded-xl overflow-hidden border border-white/10 bg-black">
-              <video src={c.url} controls playsInline className="w-full aspect-video bg-black hidden" />
-              <p className="px-3 py-2.5 text-xs font-mono text-white/50 tracking-widest uppercase">{c.caption}</p>
-            </motion.div>
-          )}
-        </div>
+        
+
+
+
+
+
+
+
+        
       </div>
     </section>);
 

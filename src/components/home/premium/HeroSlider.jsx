@@ -11,8 +11,8 @@ const SLIDES = [
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
   cta1: { label: 'Poptat systém', to: '/poptavka' },
   cta2: { label: 'Kategorie města a obce', to: '/kategorie/mesta-obce' }
-},
-];
+}];
+
 
 
 const BENEFITS = [
@@ -58,7 +58,7 @@ export default function HeroSlider() {
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
                 <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 mb-4">{slide.tag}</p>
-                <h1 className="font-light text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
                   {slide.title}
                 </h1>
                 <p className="text-white/70 leading-relaxed mb-8 text-measure text-lg">{slide.desc}</p>
@@ -83,7 +83,7 @@ export default function HeroSlider() {
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
                 className="flex items-center gap-2 px-3 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
                 
-                  <b.icon size={16} className="text-white/90 shrink-0" />
+                  <b.icon size={16} className="text-white/90 shrink-0 size-24rexm" />
                   <span className="text-xs text-white/85 font-light leading-tight">{b.label}</span>
                 </motion.div>
               )}

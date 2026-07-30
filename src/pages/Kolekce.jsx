@@ -6,6 +6,7 @@ import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import GatesSlider from '@/components/kolekce/GatesSlider';
 import CollectionMainInfoSection from '@/components/kolekce/CollectionMainInfoSection';
 import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider';
+import CollectionOffers from '@/components/kolekce/CollectionOffers';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
@@ -208,6 +209,8 @@ export default function Kolekce() {
       {/* ── HERO SLIDER ── */}
       <KolekceHero />
 
+      <CollectionOffers />
+
       {/* ── KATEGORIE (hover icon cards) ── */}
       <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
 
@@ -224,7 +227,7 @@ export default function Kolekce() {
       <FeaturesBenefitsSection />
 
       {/* ── PRODUKTY ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
+      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
         <div className="flex items-center justify-between mb-10 lg:mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400">
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}

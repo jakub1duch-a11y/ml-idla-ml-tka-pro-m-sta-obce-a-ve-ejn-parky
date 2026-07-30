@@ -6,9 +6,10 @@ import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
 
 const PRODUCT_LINKS = [
-  { label: 'CITY COLLECTION', sub: 'Městské systémy', path: '/mlzidla-mlzitka', image: '/media/placeholders/mist-scene.svg' },
-  { label: 'GARDEN COLLECTION', sub: 'Zahradní systémy', path: '/mlzidla-mlzitka', image: '/media/placeholders/mist-scene.svg' },
-  { label: 'ZAKÁZKOVÁ ŘEŠENÍ', sub: 'Návrh na míru', path: '/poptavka', image: '/media/placeholders/mist-scene.svg' }
+  { label: 'CELÁ KOLEKCE', sub: 'Všechny produkty', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
+  { label: 'CITY COLLECTION', sub: 'Městské systémy', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
+  { label: 'GARDEN COLLECTION', sub: 'Zahradní systémy', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG' },
+  { label: 'ART COLLECTION', sub: 'Autorské instalace', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' }
 ];
 
 const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek — mlžiště na míru', path: '/poptavka' };
@@ -91,9 +92,9 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              megaOpen ? 'bg-slate-100 text-slate-900' : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"}`
-              }>
+              <button onClick={() => setMegaOpen((open) => !open)} aria-expanded={megaOpen} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                             megaOpen ? 'bg-slate-100 text-slate-900' : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"}`
+                             }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
@@ -152,7 +153,7 @@ export default function Header() {
             transition={{ duration: 0.15 }}
             onMouseEnter={openMega}
             onMouseLeave={closeMega}
-            className="absolute top-full left-0 right-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
+            className="absolute top-full left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
             
               <div className="max-w-6xl mx-auto px-5 lg:px-8 py-7 grid grid-cols-1 lg:grid-cols-[0.7fr_1.3fr] gap-8">
                 {/* Left: B2B usage segments — compact list */}
@@ -182,7 +183,7 @@ export default function Header() {
                 {/* Right: Products — expanded grid */}
                 <div className="lg:border-l lg:border-slate-100 lg:pl-8">
                   <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-4">Produkty</p>
-                  <div className="grid grid-cols-4 gap-3 max-h-[320px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 max-h-[320px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
                     {PRODUCT_LINKS.map((p) =>
                   <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
                   className="group flex flex-col gap-2">

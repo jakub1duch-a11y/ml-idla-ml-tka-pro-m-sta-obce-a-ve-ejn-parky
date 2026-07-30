@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png';
+const LOGO_URL = '/media/logo/mlzidla.svg';
 
 export default function Logo({ size = 'md' }) {
   const width = size === 'sm' ? 124 : 168;

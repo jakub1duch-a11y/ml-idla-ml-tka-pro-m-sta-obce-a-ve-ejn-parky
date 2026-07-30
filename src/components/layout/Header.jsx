@@ -6,18 +6,10 @@ import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
 
 const PRODUCT_LINKS = [
-{ label: 'MLŽNÁ AURA', sub: 'Zahradní mlžítko', path: '/produkt/aura-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG' },
-{ label: 'BENDY mlžítko', sub: 'Zakřivené mlžítko', path: '/produkt/mlzitko-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c6442bcbc_bendy60-mlitkozahradn.png' },
-{ label: 'Y-ARMIST — TUBE', sub: 'Y-tvarový systém', path: '/produkt/y-armist-tr60', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png' },
-{ label: 'Y-ARMIST — 4HRAN', sub: 'Y-tvarový systém', path: '/produkt/y-armist-j70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/625f54e91_MlzitkoY-ARMISTJ70_1.png' },
-{ label: 'BRÁNA GATE', sub: 'Mlžná brána', path: '/produkt/mlzna-brana-gate', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
-{ label: 'MLŽÍTKO LINEA', sub: 'Linkové mlžítko', path: '/produkt/linea-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b63a21d72_mlzidlo-LINEA.png' },
-{ label: 'IRIS — sloupek/brána', sub: 'Obloukový systém', path: '/produkt/iris-sloupek-brana', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png' },
-{ label: 'MLŽNÝ MRAK', sub: 'Mlžná socha', path: '/produkt/mlzitko-mrak', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png' },
-{ label: 'MLŽNÉ LÍZÁTKO', sub: 'Mlžná socha', path: '/produkt/mlzitko-lizatko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c55aec790_Lzatko-mlzitko.png' },
-{ label: 'MLŽÍTKO OSTREV', sub: 'Mlžný strom', path: '/produkt/ostrev-mlzitko', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/cd22b84b0_1000000697.jpg' },
-{ label: 'SPIRÁLOVÉ MLŽÍTKO', sub: 'Mlžná socha', path: '/produkt/spiralove-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/df5b375c0_Mlzitko-spirala2.png' },
-{ label: 'Mlžící tryska', sub: 'Náhradní díl', path: '/produkt/mlzici-tryska', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7750acf57_mlzna-tryska-mlzidla.png' }];
+  { label: 'CITY COLLECTION', sub: 'Městské systémy', path: '/mlzidla-mlzitka', image: '/media/placeholders/mist-scene.svg' },
+  { label: 'GARDEN COLLECTION', sub: 'Zahradní systémy', path: '/mlzidla-mlzitka', image: '/media/placeholders/mist-scene.svg' },
+  { label: 'ZAKÁZKOVÁ ŘEŠENÍ', sub: 'Návrh na míru', path: '/poptavka', image: '/media/placeholders/mist-scene.svg' }
+];
 
 const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek — mlžiště na míru', path: '/poptavka' };
 

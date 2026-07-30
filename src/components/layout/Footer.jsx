@@ -1,87 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
-import { GOOGLE_MAPS_URL } from '@/lib/seo';
+
+const columns = [{ title: 'Produkty', links: [['City Collection', '/mlzidla-mlzitka'], ['Garden Collection', '/mlzidla-mlzitka'], ['Zakázková řešení', '/poptavka']] }, { title: 'Realizace', links: [['Města a obce', '/reference'], ['Parky', '/reference'], ['Hotely a gastro', '/reference']] }, { title: 'Ke stažení', links: [['Katalog', '/ke-stazeni'], ['Technické listy', '/ke-stazeni'], ['CAD / BIM', '/ke-stazeni']] }, { title: 'Podpora', links: [['Jak to funguje', '/technologie'], ['Servis', '/servis-udrzba'], ['Časté dotazy', '/podpora']] }, { title: 'Kontakt', links: [['Nezávazná poptávka', '/poptavka'], ['O nás', '/o-nas'], ['Kontakt', '/kontakt']] }];
 
 export default function Footer() {
-  return (
-    <footer className="bg-white border-t border-slate-200">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
-          <div className="sm:col-span-2 md:col-span-2">
-            <div className="mb-5 inline-block rounded-full px-4 py-2 text-[hsl(var(--popover))]">
-              <Logo size="sm" />
-            </div>
-            <p className="text-slate-500 text-sm leading-relaxed max-w-xs mb-7 font-light">
-              Zakázkové mlžné sochy z nerezové oceli AISI 304. Od návrhu přes výrobu až po instalaci. Trutnov, Česká republika.
-            </p>
-            <div className="flex gap-3">
-              <a href="https://www.instagram.com/mlzne_sochy" target="_blank" rel="noopener noreferrer" aria-label="Instagram HolmTec"
-              className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
-                <Instagram size={16} />
-              </a>
-              <a href="https://www.facebook.com/Mlznesochy" target="_blank" rel="noopener noreferrer" aria-label="Facebook HolmTec"
-              className="p-2 rounded-full border border-slate-200 hover:border-slate-900 hover:text-slate-900 text-slate-400 transition-all">
-                <Facebook size={16} />
-              </a>
-            </div>
-            <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-5 text-sm text-slate-500 hover:text-slate-900 transition-colors">
-              <MapPin size={14} /> Najdete nás na Google
-            </a>
-          </div>
-
-          <div>
-            <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Katalog</p>
-            <div className="flex flex-col gap-3">
-              <Link to="/mlzidla-mlzitka" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Mlžítka a mlžné brány</Link>
-              <Link to="/technologie" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Jak to funguje</Link>
-              <Link to="/o-nas" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">O společnosti</Link>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Informace</p>
-            <div className="flex flex-col gap-3">
-              <Link to="/technologie" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Technologie</Link>
-              <Link to="/vyhody" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Výhody</Link>
-              <Link to="/podpora" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Nejčastější dotazy</Link>
-              <Link to="/servis-udrzba" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Servis a údržba</Link>
-              <Link to="/ochrana-zdravi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ochrana zdraví</Link>
-              <Link to="/ke-stazeni" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Ke stažení a manuály</Link>
-              <Link to="/obchodni-podminky" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Obchodní podmínky</Link>
-              <Link to="/partnerstvi" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">Partnerství</Link>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-slate-900 text-xs tracking-widest uppercase mb-5 font-medium">Kontakt</p>
-            <div className="flex flex-col gap-3">
-              <a href="tel:+420774700390" className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
-                <Phone size={13} /> +420 774 700 390
-              </a>
-              <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
-                <Mail size={13} /> obchod1@holmtec.cz
-              </a>
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <MapPin size={13} /> Trutnov, 54102, Horní staré město 698, Česká republika
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-14 pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between gap-3 items-center">
-          <p className="text-xs text-slate-400">© {new Date().getFullYear()} HolmTec s.r.o. Všechna práva vyhrazena.</p>
-          <div className="flex items-center gap-4">
-            <Link to="/gdpr" className="text-xs text-slate-400 hover:text-slate-900 transition-colors">Ochrana osobních údajů (GDPR)</Link>
-            <span className="text-slate-200">·</span>
-            <Link to="/gdpr" className="text-xs text-slate-400 hover:text-slate-900 transition-colors">Cookies</Link>
-            <span className="text-slate-200">·</span>
-            <Link to="/podpora" className="text-xs text-slate-400 hover:text-slate-900 transition-colors">Podpora</Link>
-          </div>
-        </div>
-      </div>
-    </footer>);
-
-}
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+  const subscribe = async (event) => { event.preventDefault(); await base44.entities.NewsletterLead.create({ email, source: 'footer' }); setSubscribed(true); };
+  return <footer className="bg-[#062d3b] text-white"><div className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-8"><div className="grid lg:grid-cols-[1.5fr_repeat(5,1fr)] gap-10"><div><div className="inline-flex rounded bg-white px-3 py-2"><Logo size="sm"/></div><p className="mt-5 max-w-xs text-sm leading-relaxed text-white/65">Architektonické mlžicí systémy pro místa, kde se lidé chtějí zastavit.</p><div className="mt-6 flex gap-3"><a href="https://www.instagram.com/mlzne_sochy" aria-label="Instagram" className="text-white/70 hover:text-cyan"><Instagram size={18}/></a><a href="#linkedin" aria-label="LinkedIn" className="text-white/70 hover:text-cyan"><Linkedin size={18}/></a><a href="#youtube" aria-label="YouTube" className="text-white/70 hover:text-cyan"><Youtube size={18}/></a></div></div>{columns.map((column) => <div key={column.title}><p className="font-mono text-[10px] tracking-[.16em] uppercase text-cyan mb-5">{column.title}</p><div className="space-y-3">{column.links.map(([label, to]) => <Link key={label} to={to} className="block text-sm text-white/65 hover:text-white">{label}</Link>)}</div></div>)}</div><div className="mt-14 border-y border-white/10 py-7 flex flex-col md:flex-row gap-5 items-center justify-between"><div><p className="font-heading text-2xl">Méně horka. Více života venku.</p><p className="mt-1 text-sm text-white/60">Novinky z realizací a technologie, které dávají smysl.</p></div><form onSubmit={subscribe} className="flex w-full md:w-auto">{subscribed ? <p className="py-3 text-sm text-cyan">Děkujeme za váš zájem.</p> : <><input required value={email} onChange={(event) => setEmail(event.target.value)} aria-label="E-mail pro newsletter" type="email" placeholder="Váš e-mail" className="min-w-0 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/45 outline-none"/><button className="bg-cyan px-4 text-slate-950" aria-label="Přihlásit k odběru"><ArrowRight size={18}/></button></>}</form></div><div className="pt-8 flex flex-col md:flex-row gap-3 justify-between text-xs text-white/45"><p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p><div className="flex gap-4"><Link to="/gdpr">GDPR</Link><Link to="/gdpr">Cookies</Link><span>Certifikace</span></div></div></div></footer>; }

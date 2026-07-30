@@ -42,7 +42,7 @@ export default function Technologie() {
           alt="Mlžná socha v městském parku"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/45 to-primary/10" />
         <div className="absolute bottom-0 left-0 right-0 max-w-5xl mx-auto px-6 lg:px-8 pb-12">
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             className="text-xs font-mono text-white/70 tracking-widest uppercase mb-3">
@@ -66,7 +66,7 @@ export default function Technologie() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {BENEFITS.map((b, i) => (
             <motion.div key={b.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-              className="bg-slate-50 border border-slate-200 rounded-2xl p-7 text-center">
+              className="bg-card border border-border rounded-2xl p-7 text-center shadow-sm">
               <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center mx-auto mb-4">
                 <b.icon size={20} className="text-slate-700" />
               </div>
@@ -99,7 +99,7 @@ export default function Technologie() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="bg-slate-900 rounded-2xl p-8 text-center">
+          className="bg-primary rounded-2xl p-8 text-center border border-secondary/30">
           <p className="text-white/60 text-xs font-mono tracking-widest uppercase mb-2">Extrémně úsporný provoz</p>
           <p className="text-white text-lg font-light">
             Spotřeba vody se pohybuje pouze v jednotkách litrů za hodinu.

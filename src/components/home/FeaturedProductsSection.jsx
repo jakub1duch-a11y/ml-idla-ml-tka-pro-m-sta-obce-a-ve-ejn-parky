@@ -27,7 +27,7 @@ export default function FeaturedProductsSection() {
   if (products.length === 0) return null;
 
   return (
-    <section className="py-20 bg-slate-50 border-t border-slate-200">
+    <section className="py-20 bg-background border-y border-border">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Header */}

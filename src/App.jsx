@@ -60,6 +60,7 @@ import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
+import ObchodniNabidky from '@/pages/ObchodniNabidky';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -126,6 +127,7 @@ const AuthenticatedApp = () => {
         <Route path="/partnerstvi" element={<Partnerstvi />} />
         <Route path="/manualy" element={<KeStazeni />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
+        <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />

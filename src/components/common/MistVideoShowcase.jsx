@@ -16,7 +16,7 @@ const CLIPS = [
 
 export default function MistVideoShowcase() {
   return (
-    <section className="bg-slate-900 py-20 lg:py-24">
+    <section className="bg-primary py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-5">

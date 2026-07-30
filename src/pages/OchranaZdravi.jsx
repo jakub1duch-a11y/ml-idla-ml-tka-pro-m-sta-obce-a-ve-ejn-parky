@@ -20,8 +20,8 @@ export default function OchranaZdravi() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28 pb-20">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+    <div className="min-h-screen bg-background pt-16 pb-20">
+      <div className="bg-primary py-16 text-white"><div className="max-w-4xl mx-auto px-6 lg:px-8">
         <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Zdraví & prostředí</p>
         <h1 className="text-4xl lg:text-5xl font-light text-slate-900 mb-6">Ochrana zdraví</h1>
         <p className="text-slate-500 text-lg leading-relaxed mb-12 max-w-2xl">
@@ -29,7 +29,7 @@ export default function OchranaZdravi() {
           vázat prachové částice a alergeny přímo ve vzduchu veřejných prostor.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        </div></div><div className="max-w-4xl mx-auto px-6 lg:px-8 pt-12"><div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {POINTS.map((p, i) => (
             <div key={i} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
               <div className="w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-4">

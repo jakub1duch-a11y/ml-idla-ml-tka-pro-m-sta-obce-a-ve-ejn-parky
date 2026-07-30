@@ -1,204 +1,57 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { jsPDF } from 'npm:jspdf@4.0.0';
 
-Deno.serve(async (req) => {
+const toBase64 = (bytes) => {
+  let binary = '';
+  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
+  return btoa(binary);
+};
+
+export default async function(req) {
   try {
-    const body = await req.json();
-    const { product } = body;
-    if (!product || !product.name) {
-      return Response.json({ error: 'Product data required' }, { status: 400 });
-    }
+    const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const { product, document_type: documentType } = await req.json();
+    if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    const PW = 210; const PH = 297;
-    const ML = 14; const MR = 14; const CW = PW - ML - MR;
+    const width = 210; const height = 297; const margin = 16; const contentWidth = width - margin * 2;
+    doc.setFillColor(6, 45, 59); doc.rect(0, 0, width, 38, 'F');
+    doc.setFillColor(76, 190, 190); doc.rect(0, 36, width, 2, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.text('MLŽIDLA®', margin, 17);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(180, 220, 220); doc.text('ARCHITEKTONICKÉ MLŽICÍ SYSTÉMY', margin, 24);
+    doc.setTextColor(255, 255, 255); doc.setFontSize(8); doc.text(documentType === 'offer' ? 'OBCHODNÍ NABÍDKA' : 'TECHNICKÝ LIST', width - margin, 17, { align: 'right' });
+    doc.setTextColor(180, 220, 220); doc.text(new Date().toLocaleDateString('cs-CZ'), width - margin, 24, { align: 'right' });
 
-    // ── HEADER BAND ──────────────────────────────────────────────────────────
-    doc.setFillColor(13, 17, 23);
-    doc.rect(0, 0, PW, 38, 'F');
-
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(255, 255, 255);
-    doc.text('HolmTec s.r.o.', ML, 15);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    doc.setTextColor(34, 211, 238);
-    doc.text('mlzidla.cz', ML, 22);
-
-    doc.setTextColor(100, 120, 140);
-    doc.setFontSize(8);
-    doc.text('TECHNICKÝ LIST / DATASHEET', PW - MR, 15, { align: 'right' });
-
-    const dateStr = new Date().toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' });
-    doc.text(dateStr, PW - MR, 22, { align: 'right' });
-
-    // cyan accent line
-    doc.setDrawColor(34, 211, 238);
-    doc.setLineWidth(0.5);
-    doc.line(ML, 32, PW - MR, 32);
-
-    // ── CATEGORY TAG ─────────────────────────────────────────────────────────
-    let y = 50;
-    doc.setFillColor(34, 211, 238, 0.15);
-    doc.setFillColor(230, 252, 255);
-    doc.roundedRect(ML, y - 5, 38, 7, 2, 2, 'F');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7);
-    doc.setTextColor(0, 150, 170);
-    doc.text('NÍZKOTLAKÉ MLŽÍTKO', ML + 2, y);
-
-    // ── PRODUCT NAME ─────────────────────────────────────────────────────────
-    y += 9;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(26);
-    doc.setTextColor(13, 17, 23);
-    doc.text(product.name, ML, y);
-
-    // ── SHORT DESCRIPTION ────────────────────────────────────────────────────
-    if (product.short_description) {
-      y += 9;
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(10);
-      doc.setTextColor(80, 100, 120);
-      const sdLines = doc.splitTextToSize(product.short_description, CW);
-      doc.text(sdLines, ML, y);
-      y += sdLines.length * 5.5;
+    let y = 52;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(25); doc.setTextColor(6, 45, 59); doc.text(product.name, margin, y);
+    if (product.short_description) { y += 9; doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(72, 93, 102); doc.text(doc.splitTextToSize(product.short_description, contentWidth), margin, y); y += 14; }
+    if (product.image_url) {
+      try {
+        const imageResponse = await fetch(product.image_url);
+        const imageBytes = new Uint8Array(await imageResponse.arrayBuffer());
+        const mime = imageResponse.headers.get('content-type') || 'image/jpeg';
+        const imageType = mime.includes('png') ? 'PNG' : 'JPEG';
+        doc.addImage(`data:${mime};base64,${toBase64(imageBytes)}`, imageType, margin, y, contentWidth, 76);
+        y += 88;
+      } catch (_) { y += 4; }
     }
+    const price = product.price_from ? `${new Intl.NumberFormat('cs-CZ').format(product.price_from)} Kč bez DPH` : 'Cena na vyžádání';
+    doc.setFillColor(232, 247, 247); doc.roundedRect(margin, y, contentWidth, 19, 2, 2, 'F');
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(47, 92, 100); doc.text('ORIENTAČNÍ CENA OD', margin + 5, y + 7);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(6, 100, 108); doc.text(price, margin + 5, y + 14); y += 29;
 
-    // divider
-    y += 4;
-    doc.setDrawColor(220, 228, 236);
-    doc.setLineWidth(0.3);
-    doc.line(ML, y, PW - MR, y);
-    y += 8;
-
-    // ── TECHNICAL SPECS TABLE ─────────────────────────────────────────────────
-    const specs = [
-      product.pressure && ['Provozní tlak', product.pressure],
-      product.micron_size && ['Průměr kapky', `${product.micron_size} μm`],
-      product.water_consumption && ['Spotřeba vody', product.water_consumption],
-      product.material && ['Materiál', product.material],
-      product.coverage_area && ['Výška / dosah', product.coverage_area],
-      product.power_supply && ['Napájení a řízení', product.power_supply],
-      ['Povrch', 'Broušený / kartáčovaný'],
-      ['Výroba', 'Zakázková, 6–8 týdnů'],
-      ['Certifikace', 'Potravinářský nerez AISI 316L'],
-      ['Záruka', '24 měsíců'],
-    ].filter(Boolean) as string[][];
-
-    if (specs.length > 0) {
-      // Table header
-      doc.setFillColor(13, 17, 23);
-      doc.rect(ML, y, CW, 8, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8);
-      doc.setTextColor(255, 255, 255);
-      doc.text('TECHNICKÉ PARAMETRY', ML + 3, y + 5.2);
-      y += 8;
-
-      specs.forEach(([param, value], i) => {
-        const rowH = 7;
-        // alternating row bg
-        if (i % 2 === 0) {
-          doc.setFillColor(248, 250, 252);
-          doc.rect(ML, y, CW, rowH, 'F');
-        }
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(8.5);
-        doc.setTextColor(51, 65, 85);
-        doc.text(param, ML + 3, y + 4.8);
-
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(15, 23, 42);
-        doc.text(value, ML + 70, y + 4.8);
-
-        doc.setDrawColor(226, 232, 240);
-        doc.setLineWidth(0.2);
-        doc.line(ML, y + rowH, PW - MR, y + rowH);
-
-        y += rowH;
-      });
-      y += 10;
+    const specs = [['Provozní tlak', product.pressure], ['Spotřeba vody', product.water_consumption], ['Materiál', product.material], ['Průměr kapky', product.micron_size], ['Dosah / plocha', product.coverage_area], ['Napájení a řízení', product.power_supply]].filter((item) => item[1]);
+    if (specs.length) {
+      doc.setFillColor(6, 45, 59); doc.rect(margin, y, contentWidth, 8, 'F'); doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(255, 255, 255); doc.text('TECHNICKÉ PARAMETRY', margin + 4, y + 5.3); y += 8;
+      specs.forEach(([label, value], index) => { if (index % 2 === 0) { doc.setFillColor(247, 250, 250); doc.rect(margin, y, contentWidth, 8, 'F'); } doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(47, 72, 81); doc.text(label, margin + 4, y + 5.3); doc.setFont('helvetica', 'normal'); doc.setTextColor(20, 50, 59); doc.text(String(value), margin + 72, y + 5.3); y += 8; });
     }
-
-    // ── DESCRIPTION SECTION ───────────────────────────────────────────────────
-    if (product.description) {
-      const cleanDesc = product.description.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-      if (cleanDesc.length > 10) {
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(13, 17, 23);
-        doc.text('POPIS PRODUKTU', ML, y);
-        y += 6;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(71, 85, 105);
-        const descLines = doc.splitTextToSize(cleanDesc.slice(0, 800), CW);
-        doc.text(descLines, ML, y);
-        y += descLines.length * 4.8 + 10;
-      }
-    }
-
-    // ── SAFETY NOTICE ─────────────────────────────────────────────────────────
-    if (y > PH - 55) {
-      doc.addPage();
-      y = 20;
-    }
-    doc.setFillColor(255, 251, 235);
-    doc.setDrawColor(251, 191, 36);
-    doc.setLineWidth(0.4);
-    doc.roundedRect(ML, y, CW, 18, 2, 2, 'FD');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
-    doc.setTextColor(120, 80, 0);
-    doc.text('⚠ BEZPEČNOSTNÍ UPOZORNĚNÍ', ML + 4, y + 6);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(100, 70, 0);
-    const safetyText = 'Produkt je určen výhradně pro ochlazování a estetické ztvárnění prostoru (nízkotlaké mlžení 2–7 bar). Není určen k mechanické zátěži (věšení, lezení, skákání). Provoz výhradně v souladu s instalačním manuálem HolmTec.';
-    const safetyLines = doc.splitTextToSize(safetyText, CW - 8);
-    doc.text(safetyLines, ML + 4, y + 12);
-    y += 24;
-
-    // ── CTA BAND ─────────────────────────────────────────────────────────────
-    if (y > PH - 38) { doc.addPage(); y = 20; }
-    doc.setFillColor(230, 252, 255);
-    doc.roundedRect(ML, y, CW, 20, 3, 3, 'F');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9.5);
-    doc.setTextColor(0, 120, 150);
-    doc.text('Konzultace a poptávka zdarma', ML + 5, y + 8);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
-    doc.setTextColor(0, 90, 120);
-    doc.text('Odpovídáme do 24 h · 3D vizualizace do 48 h · Instalace na klíč', ML + 5, y + 14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 140, 170);
-    doc.text('mlzidla.cz · +420 774 700 390 · obchod1@holmtec.cz', PW - MR - 5, y + 11, { align: 'right' });
-
-    // ── FOOTER ────────────────────────────────────────────────────────────────
-    doc.setFillColor(13, 17, 23);
-    doc.rect(0, PH - 18, PW, 18, 'F');
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(150, 160, 170);
-    doc.text('HolmTec s.r.o. · Horní staré město 698, 541 02 Trutnov · IČO: 27486893', ML, PH - 10);
-    doc.setTextColor(34, 211, 238);
-    doc.text('mlzidla.cz', PW - MR, PH - 10, { align: 'right' });
-
-    // ── ENCODE & RETURN ───────────────────────────────────────────────────────
-    const pdfOutput = doc.output('arraybuffer');
-    const uint8 = new Uint8Array(pdfOutput);
-    let binary = '';
-    for (let i = 0; i < uint8.length; i++) binary += String.fromCharCode(uint8[i]);
-    const pdf_base64 = btoa(binary);
-
-    const filename = `HolmTec-${(product.slug || product.name).replace(/[^a-zA-Z0-9-_]/g, '-')}-datasheet.pdf`;
-    return Response.json({ pdf_base64, filename });
-
+    if (product.description) { y += 12; doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(6, 45, 59); doc.text('O PRODUKTU', margin, y); y += 6; doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(72, 93, 102); const description = product.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(); doc.text(doc.splitTextToSize(description.slice(0, 850), contentWidth), margin, y); }
+    doc.setFillColor(6, 45, 59); doc.rect(0, height - 18, width, 18, 'F'); doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(188, 220, 220); doc.text('MLŽIDLA® / HolmTec s.r.o. · mlzidla.cz · +420 774 700 390 · obchod1@holmtec.cz', margin, height - 10);
+    const output = new Uint8Array(doc.output('arraybuffer'));
+    return Response.json({ pdf_base64: toBase64(output), filename: `MLZIDLA-${(product.slug || product.name).replace(/[^a-zA-Z0-9-_]/g, '-')}-nabidka.pdf` });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-});
+}

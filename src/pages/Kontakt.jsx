@@ -126,7 +126,7 @@ export default function Kontakt() {
             </a>
 
             {/* Company registry info */}
-            <p className="text-center leading-relaxed px-2 text-lg text-[hsl(var(--card-foreground))] uppercase">IČO: 27486893, zapsaná v obchodním rejstříku vedeném u Krajského soudu.
+            <p className="leading-relaxed px-2 text-[hsl(var(--card-foreground))] normal-case text-left text-base">IČO: 27486893, zapsaná v obchodním rejstříku vedeném u Krajského soudu.
 
             </p>
 

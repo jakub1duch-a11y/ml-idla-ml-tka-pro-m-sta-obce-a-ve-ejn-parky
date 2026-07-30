@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
 { emoji: '🎨', title: 'Umělecké instalace', desc: 'Mlžná skulptura jako samostatné umělecké dílo — tvar, světlo a mlha v jednom celku.' },
@@ -105,6 +106,7 @@ export default function Art() {
           <CategoryInquiryForm category="Art instalace" projectScope="private" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Art instalace na míru" />
     </div>);
 
 }

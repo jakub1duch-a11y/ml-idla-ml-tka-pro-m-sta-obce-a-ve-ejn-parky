@@ -5,6 +5,7 @@ import { ArrowRight, Tent, CheckCircle, Loader, Phone, Mail } from 'lucide-react
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
@@ -152,6 +153,7 @@ export default function Eventy() {
           <CategoryInquiryForm category="Eventy & festivaly" projectScope="event" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Eventy & festivaly" />
     </div>
   );
 }

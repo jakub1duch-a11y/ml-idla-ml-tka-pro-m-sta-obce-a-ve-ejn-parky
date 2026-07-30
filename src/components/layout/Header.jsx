@@ -4,12 +4,13 @@ import { Menu, X, ChevronDown, ArrowRight, Layers, Building2, Trees, Waves, Pale
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
+import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
 
 const PRODUCT_LINKS = [
-  { label: 'CELÁ KOLEKCE', sub: 'Všechny produkty', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
-  { label: 'CITY COLLECTION', sub: 'Městské systémy', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
-  { label: 'GARDEN COLLECTION', sub: 'Zahradní systémy', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG' },
-  { label: 'ART COLLECTION', sub: 'Autorské instalace', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' }
+  { label: 'CELÁ KOLEKCE', sub: 'Všechny produkty', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6482eed7c_generated_image.png' },
+  { label: 'CITY COLLECTION', sub: 'Městské systémy', path: '/kolekce/city', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6482eed7c_generated_image.png' },
+  { label: 'GARDEN COLLECTION', sub: 'Zahrady a terasy', path: '/kolekce/garden', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3dd798c07_generated_image.png' },
+  { label: 'ART COLLECTION', sub: 'Autorské instalace', path: '/kolekce/art', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/de82205a7_generated_image.png' }
 ];
 
 const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek — mlžiště na míru', path: '/poptavka' };
@@ -143,73 +144,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mega menu panel */}
-        <AnimatePresence>
-          {megaOpen &&
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15 }}
-            onMouseEnter={openMega}
-            onMouseLeave={closeMega}
-            className="absolute top-full left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-xl shadow-slate-900/10 max-h-[85vh] overflow-y-auto">
-            
-              <div className="max-w-6xl mx-auto px-5 lg:px-8 py-7 grid grid-cols-1 lg:grid-cols-[0.7fr_1.3fr] gap-8">
-                {/* Left: B2B usage segments — compact list */}
-                <div>
-                  <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-3">B2B využití</p>
-                  <div className="flex flex-col gap-0.5">
-                    {USAGE_LINKS.map((link) =>
-                  <Link key={link.label} to={link.path} onClick={(e) => e.stopPropagation()}
-                  className="group flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-                        <link.icon size={15} className={`${link.color} opacity-80 group-hover:opacity-100 transition-opacity shrink-0`} />
-                        <p className="text-xs text-slate-600 group-hover:text-slate-900 transition-colors font-light leading-tight">{link.label}</p>
-                      </Link>
-                  )}
-                  </div>
-                  <div className="flex flex-col gap-1.5 mt-4 pt-4 border-t border-slate-100">
-                    <Link to="/mlzidla-mlzitka" onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-900">
-                      Celá kolekce <ArrowRight size={14} />
-                    </Link>
-                    <Link to="/produkt/mlzna-brana-gate" onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-                      Mlžné brány a portály <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right: Products — expanded grid */}
-                <div className="lg:border-l lg:border-slate-100 lg:pl-8">
-                  <p className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase mb-4">Produkty</p>
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 max-h-[320px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full">
-                    {PRODUCT_LINKS.map((p) =>
-                  <Link key={p.path} to={p.path} onClick={(e) => e.stopPropagation()}
-                  className="group flex flex-col gap-2">
-                        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
-                          <img src={p.image} alt={p.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                        </div>
-                        <div>
-                          <p className="font-heading text-xs text-slate-800 group-hover:text-slate-950 transition-colors font-medium leading-tight">{p.label}</p>
-                          <p className="text-[11px] text-slate-500 leading-tight">{p.sub}</p>
-                        </div>
-                      </Link>
-                  )}
-                  </div>
-                  <Link to={CUSTOM_LINK.path} onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-3 mt-4 px-3 py-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
-                    <Sparkles size={16} className="text-slate-500 flex-shrink-0" />
-                    <div>
-                      <p className="font-heading text-xs text-slate-800 font-medium leading-tight">{CUSTOM_LINK.label}</p>
-                      <p className="text-[11px] text-slate-500 leading-tight">{CUSTOM_LINK.sub}</p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          }
-        </AnimatePresence>
+        <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />
       </header>
 
       {/* Mobile menu — compact floating panel, not full screen */}

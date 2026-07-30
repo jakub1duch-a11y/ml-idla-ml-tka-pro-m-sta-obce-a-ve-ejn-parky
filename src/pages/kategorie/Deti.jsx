@@ -5,6 +5,7 @@ import { ArrowRight, Baby, Loader, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
   { emoji: '🏫', title: 'Základní školy', desc: 'Ochlazení školních dvorů a venkovních areálů během horkých dnů, bezpečné pro provoz o přestávkách.' },
@@ -150,6 +151,7 @@ export default function Deti() {
           <CategoryInquiryForm category="Školy, školky a děti" projectScope="urban" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Školy a školky" />
     </div>
   );
 }

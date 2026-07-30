@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucide-react';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const DOWNLOADS = [
   { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech mlžných produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
@@ -216,6 +217,7 @@ export default function Architekti() {
           <CategoryInquiryForm category="Architekti" projectScope="private" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Pro architekty" />
     </div>
   );
 }

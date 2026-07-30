@@ -5,6 +5,7 @@ import { ArrowRight, Factory, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
   { emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Zákazníci zůstanou déle a objednají víc. Příjemná terasa i v letních vedrech.' },
@@ -139,6 +140,7 @@ export default function Komercni() {
           <CategoryInquiryForm category="Komerční prostory" projectScope="industrial" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Komerční prostory" />
     </div>
   );
 }

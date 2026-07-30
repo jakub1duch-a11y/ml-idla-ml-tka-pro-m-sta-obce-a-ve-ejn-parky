@@ -5,6 +5,7 @@ import { ArrowRight, Trees, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
 { emoji: '🌿', title: 'Soukromé zahrady', desc: 'Mlžný prvek jako dominanta zahrady — chladivá mlha mezi zelení, klidná atmosféra i v letních vedrech.' },
@@ -145,6 +146,7 @@ export default function Outdoor() {
           <CategoryInquiryForm category="Outdoor a zahrady" projectScope="private" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Outdoor a zahrady" />
     </div>);
 
 }

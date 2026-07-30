@@ -5,6 +5,7 @@ import { ArrowRight, Building2, CheckCircle, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const BENEFITS = [
 'Ochlazení okolního vzduchu až o 9 °C',
@@ -186,6 +187,7 @@ export default function MestaObce() {
           <CategoryInquiryForm category="Města a obce" projectScope="urban" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Města a obce" />
     </div>);
 
 }

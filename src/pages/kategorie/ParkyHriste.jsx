@@ -5,6 +5,7 @@ import { ArrowRight, Trees, CheckCircle, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
+import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
   { emoji: '🏰', title: 'Zámecké parky', desc: 'Decentní estetika, organické tvary z nerezu — zapadnou do historické zeleně.' },
@@ -115,6 +116,7 @@ export default function ParkyHriste() {
           <CategoryInquiryForm category="Parky a hřiště" projectScope="urban" />
         </div>
       </section>
+      <B2BPortfolioNavigation current="Parky a hřiště" />
     </div>
   );
 }

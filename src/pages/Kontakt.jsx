@@ -85,10 +85,10 @@ export default function Kontakt() {
           <p className="text-slate-500 max-w-lg mx-auto">Mlžné prvky, mlžítka, Smart WiFi ovládání, podpora — vše na jednom místě.
           </p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs font-mono tracking-wide hidden">
-          <Flame size={14} /> Ještě to má cenu — poptávku do konce letošní sezóny stihneme zpracovat včas.
-        </motion.div>
+        
+
+
+        
         {form.product_interest &&
         <p className="mt-4 text-sm text-slate-500">Poptáváte: <span className="text-slate-900 font-medium">{form.product_interest}</span></p>
         }
@@ -131,16 +131,16 @@ export default function Kontakt() {
             </p>
 
             {/* Info box */}
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hidden">
-              <p className="text-xs font-mono text-slate-500 tracking-widest uppercase mb-2">Co nabízíme</p>
-              <ul className="space-y-1.5 text-xs text-slate-500 leading-relaxed">
-                <li>→ Zakázková výroba z nerezu 304 / 316L</li>
-                <li>→ Projektová dokumentace na míru</li>
-                <li>→ 3D modely pro architektonické rendery</li>
-                <li>→ Množstevní slevy při kombinaci mlžítek</li>
-                <li>→ Instalace, servis, záruční podpora - Mlžidla.cz</li>
-              </ul>
-            </div>
+            
+
+
+
+
+
+
+
+
+            
           </div>
 
           {/* Form */}

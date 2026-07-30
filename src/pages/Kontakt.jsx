@@ -22,7 +22,7 @@ const REQUEST_TYPES = [
 
 
 const PRODUCTS = [
-'Mlžítko na mířu', 'Mlžiště - chladící zóna','Mlžítko - OSTEV', 'Mlžítko - MRAK', 'Mlžítko - AURA', 'Mlžítko - SPIRÁLA', 'Mlžná brána GATE70', 'Mlžítko - BENDY',
+'Mlžítko na mířu', 'Mlžiště - chladící zóna', 'Mlžítko - OSTEV', 'Mlžítko - MRAK', 'Mlžítko - AURA', 'Mlžítko - SPIRÁLA', 'Mlžná brána GATE70', 'Mlžítko - BENDY',
 'Mlžná brána - LINEA EL70', 'Mlžítko - Y-ARMIST TR60', 'Mlžítko - Y-ARMIST J70', 'Mlžítko - Linea'];
 
 
@@ -80,13 +80,13 @@ export default function Kontakt() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">KONTAKT</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-3">
-            Jak vám<br /><span className="text-slate-400 italic font-extralight">můžeme pomoci?</span>
+            Jak vám<br /><span className="font-extralight normal-case no-underline not-italic text-[hsl(var(--ring))]">můžeme pomoci?</span>
           </h1>
           <p className="text-slate-500 max-w-lg mx-auto">Mlžné prvky, mlžítka, Smart WiFi ovládání, podpora — vše na jednom místě.
           </p>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs font-mono tracking-wide">
+        className="inline-flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 text-xs font-mono tracking-wide hidden">
           <Flame size={14} /> Ještě to má cenu — poptávku do konce letošní sezóny stihneme zpracovat včas.
         </motion.div>
         {form.product_interest &&
@@ -118,10 +118,10 @@ export default function Kontakt() {
             {/* Google Maps */}
             <div className="rounded-2xl overflow-hidden border border-slate-200">
               <iframe title="Mapa — HolmTec Trutnov" src={GOOGLE_MAPS_EMBED_URL}
-                width="100%" height="220" style={{ border: 0 }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+              width="100%" height="220" style={{ border: 0 }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
             <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all">
+            className="flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-all">
               <MapPin size={14} /> Najdete nás na Google
             </a>
 

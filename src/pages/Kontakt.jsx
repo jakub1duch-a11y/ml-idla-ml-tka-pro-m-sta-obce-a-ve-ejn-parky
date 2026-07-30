@@ -80,7 +80,7 @@ export default function Kontakt() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">KONTAKT</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-3">
-            Jak vám<br /><span className="font-extralight normal-case no-underline not-italic text-[hsl(var(--ring))]">můžeme pomoci?</span>
+            Jak vám<br /><span className="font-extralight normal-case no-underline not-italic text-[#1360a0]">můžeme pomoci?</span>
           </h1>
           <p className="text-slate-500 max-w-lg mx-auto">Mlžné prvky, mlžítka, Smart WiFi ovládání, podpora — vše na jednom místě.
           </p>

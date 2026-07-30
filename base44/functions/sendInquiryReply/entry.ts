@@ -36,10 +36,16 @@ export default async function(req) {
     }));
     const quoteAttachment = quotePdfBase64 ? [{ filename: quoteFilename || 'nabidka-mlzidla.pdf', content: Uint8Array.from(atob(quotePdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const html = `<div style="font-family:Arial,sans-serif;color:#19313b;line-height:1.6;white-space:pre-line">${message.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
-    const raw = await buildMessage({ from: 'MLŽIDLA® <me>', to: inquiry.email, subject, text: message, html, attachments: [...quoteAttachment, ...externalAttachments] });
+    const allAttachments = [...quoteAttachment, ...externalAttachments];
+    const clientRaw = await buildMessage({ from: 'MLŽIDLA® <me>', to: inquiry.email, subject, text: message, html, attachments: allAttachments });
+    const copyRecipients = ['meduna@holmtec.cz', 'jakub1duch@gmail.com'];
+    const copySubject = `Kopie nabídky pro ${inquiry.name}: ${subject}`;
+    const copyText = `Kopie odeslané nabídky pro klienta ${inquiry.name} (${inquiry.email}).\n\n${message}`;
+    const copyRaw = await buildMessage({ from: 'MLŽIDLA® <me>', to: copyRecipients.join(', '), subject: copySubject, text: copyText, html: `<p><strong>Kopie odeslané nabídky pro klienta ${inquiry.name} (${inquiry.email}).</strong></p>${html}`, attachments: allAttachments });
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-    const response = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', { method: 'POST', headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ raw: base64Url(raw) }) });
-    if (!response.ok) return Response.json({ error: 'Message delivery failed' }, { status: 502 });
+    const send = (raw) => fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', { method: 'POST', headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ raw: base64Url(raw) }) });
+    const [clientResponse, copyResponse] = await Promise.all([send(clientRaw), send(copyRaw)]);
+    if (!clientResponse.ok || !copyResponse.ok) return Response.json({ error: 'Message delivery failed' }, { status: 502 });
 
     const status = inquiryType === 'contact' ? 'contacted' : 'v_reseni';
     await base44.asServiceRole.entities[entityName].update(inquiryId, { status });

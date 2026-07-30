@@ -15,6 +15,7 @@ import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
 import Kolekce from '@/pages/Kolekce';
+import CollectionDetail from '@/pages/CollectionDetail';
 import Kontakt from '@/pages/Kontakt';
 import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
@@ -80,6 +81,7 @@ const AuthenticatedApp = () => {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
+        <Route path="/kolekce/:collection" element={<CollectionDetail />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />

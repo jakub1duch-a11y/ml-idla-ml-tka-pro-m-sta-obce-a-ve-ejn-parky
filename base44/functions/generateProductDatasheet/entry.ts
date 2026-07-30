@@ -15,7 +15,7 @@ export default async function(req) {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { product, document_type: documentType } = await req.json();
+    const { product, document_type: documentType, quote } = await req.json();
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -28,7 +28,8 @@ export default async function(req) {
     const ink = [25, 42, 50];
     const muted = [92, 108, 116];
     const date = new Date().toLocaleDateString('cs-CZ');
-    const price = product.price_from ? `${formatPrice(product.price_from)} Kč` : 'Cena na vyžádání';
+    const price = quote?.final_total ? `${formatPrice(quote.final_total)} Kč` : product.price_from ? `${formatPrice(product.price_from)} Kč` : 'Cena na vyžádání';
+    const priceLabel = quote?.final_total ? 'CENA PROJEKTU PO SLEVĚ' : 'ORIENTAČNÍ CENA OD';
     const orderUrl = `mailto:obchod1@holmtec.cz?subject=${encodeURIComponent(`Objednávka / dotaz – ${product.name}`)}&body=${encodeURIComponent(`Dobrý den, mám zájem o produkt ${product.name}. Prosím o kontaktování a upřesnění nabídky.`)}`;
 
     doc.setFillColor(...brand);
@@ -91,7 +92,7 @@ export default async function(req) {
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(7);
         doc.setTextColor(...brand);
-        doc.text('ORIENTAČNÍ CENA OD', x + 8, y + 54);
+        doc.text(priceLabel, x + 8, y + 54);
         doc.setFontSize(12);
         doc.text(price, x + 8, y + 59);
         y += 78;

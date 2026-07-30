@@ -87,7 +87,7 @@ export default function Header() {
 
       
 
-      <header className="fixed top-0 left-0 right-0 transition-all z-50 backdrop-blur-xl border-b border-white/10 shadow-sm bg-[#05132e]/[0.7]">
+      <header className="fixed top-0 left-0 right-0 transition-all z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
@@ -100,16 +100,16 @@ export default function Header() {
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              megaOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
+              megaOpen ? 'bg-slate-100 text-slate-900' : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"}`
               }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Reference</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Blog & novinky</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">Reference</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">Blog & novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              infoOpen ? 'bg-white/15 text-white' : "text-white/90 hover:text-white hover:bg-white/10"}`
+              infoOpen ? 'bg-slate-100 text-slate-900' : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"}`
               }>
                 Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -132,19 +132,19 @@ export default function Header() {
                 }
               </AnimatePresence>
             </div>
-            <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/90 hover:text-white hover:bg-white/10">Kontakt</Link>
+            <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">Kontakt</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/80 hover:text-white hover:bg-white/10">O společnosti</Link>
+              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">O společnosti</Link>
               <Link to="/poptavka"
               className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">
                 Poptávka
               </Link>
             </div>
-            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-11 h-11 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
+            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-11 h-11 -mr-2 rounded-full text-slate-800 hover:bg-slate-100 transition-colors">
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>

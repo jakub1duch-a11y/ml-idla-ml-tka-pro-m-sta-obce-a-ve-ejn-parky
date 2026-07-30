@@ -1,5 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
+const RECIPIENTS = ['meduna@holmtec.cz', 'jakub1duch@gmail.com', 'duch@holmtec.cz'];
+
 function escapeHtml(str) {
   return String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -96,24 +98,18 @@ Deno.serve(async (req) => {
     `;
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-    const raw = buildMimeMessage({
-      from: 'Mlzidla.cz-Web <me>',
-      to: 'obchod1@holmtec.cz',
-      subject: `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`,
-      body: html,
-    });
-    const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ raw }),
-    });
-
-    if (!sendRes.ok) {
-      const err = await sendRes.json().catch(() => ({}));
-      return Response.json({ error: err }, { status: 500 });
-    }
-
-    return Response.json({ ok: true });
+    const subject = `Nová poptávka: ${jmeno || 'Neznámý'} — ${produkt || 'neurčený produkt'}`;
+    const results = await Promise.all(RECIPIENTS.map(async (to) => {
+      const raw = buildMimeMessage({ from: 'Mlzidla.cz-Web <me>', to, subject, body: html });
+      const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ raw }),
+      });
+      return { to, ok: sendRes.ok };
+    }));
+    if (results.some((result) => !result.ok)) return Response.json({ error: 'Notification delivery failed', results }, { status: 500 });
+    return Response.json({ ok: true, results });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

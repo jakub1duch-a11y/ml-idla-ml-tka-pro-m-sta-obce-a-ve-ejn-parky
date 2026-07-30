@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,29 +6,29 @@
 
 @layer base {
   :root {
-    --background: 220 0% 98%;
-    --foreground: 0 0% 90%;
-    --card: 220 0% 81%;
-    --card-foreground: 0 0% 94%;
-    --popover: 220 18% 9%;
-    --popover-foreground: 0 0% 94%;
-    --primary: 200 43% 68%;
-    --primary-foreground: 220 20% 6%;
-    --secondary: 220 19% 6%;
-    --secondary-foreground: 219 0% 85%;
-    --muted: 220 15% 12%;
-    --muted-foreground: 220 8% 50%;
-    --accent: 215 55% 32%;
-    --accent-foreground: 220 20% 6%;
+    --background: 40 33% 98%;
+    --foreground: 203 68% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 203 68% 15%;
+    --popover: 203 68% 15%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 203 68% 15%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 190 75% 22%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 200 10% 74%;
+    --muted-foreground: 203 18% 38%;
+    --accent: 188 54% 59%;
+    --accent-foreground: 203 68% 15%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 0% 71%;
-    --input: 220 15% 14%;
-    --ring: 215 55% 32%;
+    --border: 200 10% 80%;
+    --input: 200 10% 80%;
+    --ring: 188 54% 59%;
     --radius: 14px;
-    --font-heading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
 }
 
@@ -58,9 +58,9 @@
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
   }
   p {
     font-weight: 400;

@@ -1,0 +1,34 @@
+{
+  "name": "Popt\u00e1vka \u2192 E-mail t\u00fdmu a pod\u011bkov\u00e1n\u00ed z\u00e1kazn\u00edkovi",
+  "description": "Odes\u00edl\u00e1 novou webovou popt\u00e1vku t\u00fdmu a z\u00e1kazn\u00edkovi potvrzen\u00ed.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "Poptavka"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "popt_vka_e_mail_t_mu_a_pod_kov_n_z_kazn_kovi",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendPoptavkaNotification",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  }
+}

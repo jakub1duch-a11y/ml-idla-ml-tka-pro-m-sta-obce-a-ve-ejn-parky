@@ -1,0 +1,40 @@
+{
+  "description": "Ode\u0161le novou zpr\u00e1vu z kontaktn\u00edch a produktov\u00fdch formul\u00e1\u0159\u016f intern\u00edmu t\u00fdmu.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ContactInquiry"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "contact_inquiry_email_notification",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_email": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendContactInquiryNotification",
+            "args": {
+              "inquiry_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Odeslat e-mail t\u00fdmu",
+            "description": "Nov\u00e1 kontaktn\u00ed zpr\u00e1va"
+          }
+        }
+      }
+    ]
+  },
+  "name": "Kontakt \u2192 e-mail t\u00fdmu"
+}

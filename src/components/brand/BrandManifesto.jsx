@@ -1,0 +1,8 @@
+import React from 'react';
+import { Compass, Factory, Leaf, Droplets } from 'lucide-react';
+
+const VALUES = [{ icon: Compass, title: 'Design', text: 'Minimalistické prvky, které přirozeně patří do architektury místa.' }, { icon: Factory, title: 'Přesnost', text: 'Nerezová výroba, technické know-how a detail bez kompromisů.' }, { icon: Leaf, title: 'Udržitelnost', text: 'Jemné ochlazení s ohledem na vodu, energii i okolí.' }, { icon: Droplets, title: 'Mikroklima', text: 'Funkční mlha, která vrací život do rozpáleného veřejného prostoru.' }];
+
+export default function BrandManifesto() {
+  return <section className="bg-primary text-primary-foreground"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-accent">MLŽIDLA® / charakter značky</p><div className="mt-6 grid gap-12 lg:grid-cols-[1fr_1fr]"><h2 className="font-heading text-4xl lg:text-6xl">Chladíme architekturu.</h2><p className="max-w-lg text-lg leading-relaxed text-white/75">Navrhujeme nerezové mlžicí systémy pro veřejný prostor. Klidné, funkční a přesné řešení pro místa, kde se lidé chtějí zastavit.</p></div><div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{VALUES.map(({ icon: Icon, title, text }) => <div key={title} className="border-t border-white/20 pt-5"><Icon size={20} className="text-accent" strokeWidth={1.5}/><h3 className="mt-7 font-heading text-xl">{title}</h3><p className="mt-2 text-sm leading-relaxed text-white/65">{text}</p></div>)}</div></div></section>;
+}

@@ -1,53 +1,18 @@
 import React, { useEffect } from 'react';
-import { Building2, Leaf, Zap, ShieldCheck } from 'lucide-react';
-import { setSEO } from '@/lib/seo';
+import { Building2, Droplets, Leaf, Radio, Snowflake, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { setSEO } from '@/lib/seo';
+import BrandFeatureGrid from '@/components/brand/BrandFeatureGrid';
 
 const BENEFITS = [
-  { icon: Building2, title: 'Přínos pro města', text: 'Ochlazení veřejných prostranství snižuje efekt tepelného ostrova, zvyšuje komfort obyvatel a atraktivitu veřejného prostoru.' },
-  { icon: Zap, title: 'Úspora energie', text: 'Ve srovnání s klimatizací mají mlžné systémy výrazně nižší spotřebu energie při srovnatelném pocitovém ochlazení venkovních prostor.' },
-  { icon: Leaf, title: 'Ekologický dopad', text: 'Nízká spotřeba vody, žádné chemikálie a minimální energetická náročnost dělají z mlžení šetrné řešení pro městské prostředí.' },
-  { icon: ShieldCheck, title: 'Odolnost materiálů', text: 'Nerezová ocel AISI 316L odolává korozi, povětrnostním vlivům i UV záření — systémy tak vydrží desítky let provozu.' },
+  { icon: Snowflake, title: 'Až −10 °C', text: 'Jemná mlha snižuje pocitovou teplotu v místech, kde lidé tráví čas.', code: '01 / CHLAZENÍ' },
+  { icon: Droplets, title: 'Úsporný provoz', text: 'Evaporační princip využívá vodu cíleně a bez potřeby klimatizace.', code: '02 / VODA' },
+  { icon: ShieldCheck, title: 'Nerez AISI 316L', text: 'Materiál určený pro dlouhou životnost ve venkovním prostředí.', code: '03 / MATERIÁL' },
+  { icon: Radio, title: 'Chytré řízení', text: 'Systém lze přizpůsobit podmínkám prostoru, provozu i počasí.', code: '04 / ŘÍZENÍ' }
 ];
 
 export default function Vyhody() {
-  useEffect(() => {
-    setSEO({
-      title: 'Výhody mlžných systémů',
-      description: 'Přehled benefitů mlžných systémů HolmTec: přínos pro města, úspora energie, ekologický dopad a odolnost materiálů.',
-      keywords: 'výhody mlžení, benefity mlžný systém, úspora energie chlazení, ekologické chlazení měst',
-      canonicalPath: '/vyhody',
-    });
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-white pt-28 pb-20">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Proč HolmTec</p>
-        <h1 className="text-4xl lg:text-5xl font-light text-slate-900 mb-6">Výhody mlžných systémů</h1>
-        <p className="text-slate-500 text-lg leading-relaxed mb-12 max-w-2xl">
-          Mlžení není jen o estetickém zážitku — přináší měřitelné přínosy pro města, životní prostředí i dlouhodobou návratnost investice.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {BENEFITS.map((b, i) => (
-            <div key={i} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-              <div className="w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-4">
-                <b.icon size={20} className="text-slate-700" />
-              </div>
-              <h3 className="text-slate-900 font-medium text-lg mb-2">{b.title}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed">{b.text}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center">
-          <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
-            Nezávazná poptávka <ArrowRight size={16} />
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => setSEO({ title: 'Výhody architektonického mlžení | MLŽIDLA®', description: 'Chlazení veřejného prostoru jemnou mlhou, nerezovou konstrukcí a úsporným provozem.', canonicalPath: '/vyhody' }), []);
+  return <main className="bg-background pt-16"><section className="bg-primary text-primary-foreground"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-accent">Proč MLŽIDLA®</p><h1 className="mt-5 max-w-4xl font-heading text-5xl lg:text-7xl">Méně horka. Více života venku.</h1><p className="mt-7 max-w-xl text-lg leading-relaxed text-white/75">Technické řešení, které ochlazuje veřejný prostor a zároveň se stává jeho přirozenou součástí.</p></div></section><section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><BrandFeatureGrid items={BENEFITS}/></section><section className="border-y border-[#b9c3c8] bg-card"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid gap-10 lg:grid-cols-[1fr_2fr]"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-secondary">Pro veřejný prostor</p><div className="grid gap-8 sm:grid-cols-3">{[[Building2, 'Města', 'Komfortnější náměstí, parky a pěší zóny.'], [Leaf, 'Krajina', 'Jemný zásah do architektury i okolní zeleně.'], [Snowflake, 'Lidé', 'Příjemný důvod zůstat venku déle.']].map(([Icon, title, text]) => <div key={title}><Icon size={20} className="text-secondary" strokeWidth={1.5}/><h2 className="mt-5 font-heading text-xl text-foreground">{title}</h2><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>)}</div></div></section><div className="max-w-7xl mx-auto px-6 lg:px-10 py-16"><Link to="/poptavka" className="inline-flex items-center gap-2 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-secondary">Navrhnout řešení pro váš prostor <ArrowRight size={16}/></Link></div></main>;
 }

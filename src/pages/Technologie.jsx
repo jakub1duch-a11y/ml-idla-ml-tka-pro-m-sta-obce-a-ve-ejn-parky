@@ -34,7 +34,7 @@ export default function Technologie() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pb-20">
+    <div className="min-h-screen bg-background pb-20">
       {/* ── HERO IMAGE ── */}
       <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
         <img
@@ -46,11 +46,11 @@ export default function Technologie() {
         <div className="absolute bottom-0 left-0 right-0 max-w-5xl mx-auto px-6 lg:px-8 pb-12">
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             className="text-xs font-mono text-white/70 tracking-widest uppercase mb-3">
-            Jak to funguje
+            Technologie MLŽIDLA®
           </motion.p>
           <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight">
-            Technologie mlžení
+            className="font-heading text-4xl lg:text-6xl text-white tracking-tight">
+            Chladíme architekturu
           </motion.h1>
         </div>
       </div>

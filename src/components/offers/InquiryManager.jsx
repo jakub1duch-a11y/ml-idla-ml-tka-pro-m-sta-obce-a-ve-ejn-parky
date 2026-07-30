@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { FileText, Send, Sparkles, Upload } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { withSignature } from '@/components/offers/messageSignature';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 const errorMessage = (error) => error?.response?.data?.error || error?.message || 'Akci se nepodařilo dokončit.';
@@ -23,10 +24,13 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
   const chooseProduct = (id) => { const product = products.find((item) => item.id === id); setProductId(id); setBasePrice(product?.price_from || 0); };
   const generateText = async () => {
     if (!selected) return;
+    const email = selected.email?.trim().toLowerCase();
+    const history = inquiries.filter((item) => item.key !== selected.key && item.email?.trim().toLowerCase() === email).reverse()
+      .map((item) => `${new Date(item.created_date).toLocaleDateString('cs-CZ')}: ${item.message}`).join('\n') || 'Žádná předchozí komunikace není k dispozici.';
     setError(''); setBusy('text');
     try {
-      const response = await base44.integrations.Core.InvokeLLM({ prompt: `Napiš stručnou profesionální odpověď v češtině na poptávku zákazníka. Zákazník: ${selected.name}. Poptávka: ${selected.message}. Produkt: ${products.find((item) => item.id === productId)?.name || selected.product || 'neurčeno'}. Cena po úpravě: ${money(finalTotal)} Kč bez DPH. Nabídni konzultaci, nepoužívej vymyšlené technické parametry.`, model: 'gpt_5_mini' });
-      setSubject('Re: vaše poptávka MLŽIDLA®'); setMessage(response);
+      const response = await base44.integrations.Core.InvokeLLM({ prompt: `Napiš personalizovanou odpověď v češtině na aktuální poptávku pro značku MLŽIDLA®. Tón: věcný, klidný, odborný a vstřícný; zdůrazňuje precizní českou výrobu, individuální návrh a praktický komfort. Nezveličuj, nepoužívej marketingové klišé ani vymyšlené technické parametry. Oslov zákazníka jménem a přirozeně navazuj na historii komunikace. Nabídni krátkou konzultaci nebo další krok. Vrať pouze text odpovědi bez předmětu a bez podpisu.\n\nZákazník: ${selected.name}\nAktuální poptávka: ${selected.message}\nVybraný produkt: ${products.find((item) => item.id === productId)?.name || selected.product || 'neurčeno'}\nCena projektu po úpravě: ${money(finalTotal)} Kč bez DPH\n\nHistorie komunikace:\n${history}` });
+      setSubject(`Re: vaše poptávka – MLŽIDLA®`); setMessage(withSignature(response));
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
   const uploadFiles = async (event) => {
@@ -47,7 +51,9 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
         const response = await base44.functions.invoke('generateProductDatasheet', { product, document_type: 'offer', quote: { final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount) } });
         quote = response.data;
       }
-      await base44.functions.invoke('sendInquiryReply', { inquiry_type: selected.type, inquiry_id: selected.id, subject, message, quote_pdf_base64: quote?.pdf_base64, quote_filename: quote?.filename, attachments });
+      const signedMessage = withSignature(message);
+      setMessage(signedMessage);
+      await base44.functions.invoke('sendInquiryReply', { inquiry_type: selected.type, inquiry_id: selected.id, subject, message: signedMessage, quote_pdf_base64: quote?.pdf_base64, quote_filename: quote?.filename, attachments });
       onSent(); setMessage(''); setSubject(''); setAttachments([]);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };

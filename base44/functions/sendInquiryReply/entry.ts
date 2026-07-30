@@ -11,14 +11,18 @@ const buildMessage = (options) => new Promise((resolve, reject) => {
   new MailComposer(options).compile().build((error, message) => error ? reject(error) : resolve(message));
 });
 
+const signature = `S pozdravem,\ntým technické podpory Mlžidla.cz\n\nIng. Radek Meduna\nTel.: +420 774 700 390\nE-mail pro objednávku:\n- meduna@holmtec.cz\n- info@mlzidla.cz`;
+const withSignature = (text) => text.includes('tým technické podpory Mlžidla.cz') ? text.trim() : `${text.trim()}\n\n${signature}`;
+
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
-    const { inquiry_type: inquiryType, inquiry_id: inquiryId, subject, message, quote_pdf_base64: quotePdfBase64, quote_filename: quoteFilename, attachments = [] } = await req.json();
-    if (!inquiryType || !inquiryId || !subject || !message) return Response.json({ error: 'Missing reply details' }, { status: 400 });
+    const { inquiry_type: inquiryType, inquiry_id: inquiryId, subject, message: draftMessage, quote_pdf_base64: quotePdfBase64, quote_filename: quoteFilename, attachments = [] } = await req.json();
+    if (!inquiryType || !inquiryId || !subject || !draftMessage) return Response.json({ error: 'Missing reply details' }, { status: 400 });
+    const message = withSignature(draftMessage);
 
     const entityName = inquiryType === 'contact' ? 'ContactInquiry' : 'Poptavka';
     let inquiry;

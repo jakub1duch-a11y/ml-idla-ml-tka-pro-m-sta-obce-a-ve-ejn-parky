@@ -126,12 +126,12 @@ export default function Kontakt() {
             </a>
 
             {/* Company registry info */}
-            <p className="text-xs text-slate-400 text-center leading-relaxed px-2">
-              IČO: 27486893, zapsaná v obchodním rejstříku vedeném u Krajského soudu.
+            <p className="text-center leading-relaxed px-2 text-lg text-[hsl(var(--card-foreground))] uppercase">IČO: 27486893, zapsaná v obchodním rejstříku vedeném u Krajského soudu.
+
             </p>
 
             {/* Info box */}
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hidden">
               <p className="text-xs font-mono text-slate-500 tracking-widest uppercase mb-2">Co nabízíme</p>
               <ul className="space-y-1.5 text-xs text-slate-500 leading-relaxed">
                 <li>→ Zakázková výroba z nerezu 304 / 316L</li>

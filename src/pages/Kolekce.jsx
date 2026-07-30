@@ -97,60 +97,18 @@ const audienceSegments = [
 
 // Fallback images by category
 const FALLBACK_IMAGES = {
-  NATURE: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
-  'URBAN ART': 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&q=80',
-  GEOMETRY: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
-  DEFAULT: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'
+  NATURE: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6993add8_Reference-mstoPolna.webp',
+  'URBAN ART': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/58e5e3931_MestskabranaGATE.png',
+  GEOMETRY: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/03ba352a3_mlzitka-zahradni-hotely-restaurace.png',
+  DEFAULT: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9cf838258_MlzicisprchaaSMARTaplikace.png'
 };
 
 function ProductCard({ product, i }) {
   const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
-  return (
-    <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-    className="rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col bg-white">
-      <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'}
-      className="group block flex-1">
-        <div className="aspect-[4/3] overflow-hidden relative bg-slate-100">
-          <img src={imgSrc} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
-          {product.featured &&
-          <span className="absolute top-3 left-3 bg-slate-900 text-white text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full">
-              Výběr
-            </span>
-          }
-          {/* Mist overlay on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          {/* Hover quick-view icon */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.6 }}
-            whileHover={{ opacity: 1, scale: 1 }}
-            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center"
-            >
-              <Eye size={18} className="text-slate-900" />
-            </motion.div>
-          </motion.div>
-        </div>
-        <div className="p-6">
-          <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">{product._categoryName || 'Mlžný systém'}</p>
-          <h3 className="text-xl font-normal text-slate-900 mb-1">{product.name}</h3>
-          <p className="text-sm text-slate-500 mb-3 line-clamp-2">{product.short_description}</p>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1 text-xs text-slate-900 font-medium">
-              Detail <ArrowRight size={12} />
-            </div>
-          </div>
-        </div>
-      </Link>
-      <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
-        onClick={() => trackQuickInquiryClick(product.name, 'katalog')}
-        className="flex items-center justify-center gap-1.5 py-3 text-xs font-bold text-slate-900 border-t border-slate-200 hover:bg-slate-50 transition-colors shrink-0">
-        <Zap size={13} /> Rychlá poptávka
-      </Link>
-    </motion.div>);
-
+  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async"/><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent"/>{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary">Prohlédnout detail <ArrowRight size={15}/></p></div></Link>
+    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 text-xs font-bold text-foreground transition hover:bg-muted"><Zap size={13}/> Rychlá poptávka</Link>
+  </motion.article>;
 }
 
 export default function Kolekce() {

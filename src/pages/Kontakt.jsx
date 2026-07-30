@@ -185,7 +185,7 @@ export default function Kontakt() {
               className={inputCls + ' resize-none'} />
 
                 <button type="submit" disabled={sending}
-              className="btn-metallic-mist w-full py-4 justify-center text-sm font-bold disabled:opacity-50">
+              className="btn-metallic-mist w-full py-4 justify-center text-sm font-bold disabled:opacity-50 bg-[hsl(var(--muted-foreground))] text-[hsl(var(--card))]">
                   {sending ? 'Odesílám...' : <>Odeslat poptávku <ArrowRight size={16} /></>}
                 </button>
               </form>

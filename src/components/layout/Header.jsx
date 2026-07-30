@@ -87,7 +87,7 @@ export default function Header() {
 
       
 
-      <header className="fixed top-0 left-0 right-0 transition-all z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
+      <header className="fixed top-0 left-0 right-0 transition-all z-50 backdrop-blur-xl border-b border-white/10 shadow-sm bg-[#082044]/[0.7]">
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}

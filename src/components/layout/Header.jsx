@@ -29,6 +29,7 @@ const USAGE_LINKS = [
 
 
 const INFO_LINKS = [
+{ icon: Palette, label: 'Brand identity', path: '/brand-identity' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
 { icon: Cpu, label: 'Technologie', path: '/technologie' },

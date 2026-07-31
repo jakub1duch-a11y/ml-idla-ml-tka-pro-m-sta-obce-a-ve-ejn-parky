@@ -5,11 +5,11 @@ import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, C
 
 const SLIDES = [
 {
-  tag: 'Architektonické chlazení veřejného prostoru',
-  title: 'Chladíme architekturu.',
-  desc: 'Nerezové mlžicí systémy pro moderní města, parky a komerční prostory. Jemná mlha, přesná technologie, dlouhodobá hodnota.',
+  tag: 'MLŽÍTKA · MLŽIDLA · CHLADICÍ PRVKY',
+  title: 'Chladíme města. Oživujeme zahrady.',
+  desc: 'Nerezová mlžítka pro městské prostory, parky, zahrady a terasy. Přirozené ochlazení pro místa, kde se žije venku.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
-  cta1: { label: 'Prozkoumat produkty', to: '/mlzidla-mlzitka' },
+  cta1: { label: 'Prohlédnout kolekce mlžítek', to: '/mlzidla-mlzitka' },
   cta2: { label: 'Nezávazná poptávka', to: '/poptavka' }
 }];
 
@@ -43,9 +43,9 @@ export default function HeroSlider() {
 
           alt={slide.title}
           initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
           className="absolute inset-0 w-full h-full object-cover" />
         
       </AnimatePresence>
@@ -64,7 +64,7 @@ export default function HeroSlider() {
                 <p className="text-white/70 leading-relaxed mb-8 text-measure text-lg">{slide.desc}</p>
 
                 <div className="flex flex-wrap gap-3 mb-10">
-                  <Link to={slide.cta1.to} className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
+                  <Link to={slide.cta1.to} className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-4 text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl">
                     {slide.cta1.label} <ArrowRight size={16} />
                   </Link>
                   <Link to={slide.cta2.to} className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/40 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-all">

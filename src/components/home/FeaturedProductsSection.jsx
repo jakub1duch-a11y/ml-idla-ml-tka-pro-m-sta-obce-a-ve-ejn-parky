@@ -38,8 +38,8 @@ export default function FeaturedProductsSection() {
               className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
               Oblíbené instalace
             </motion.h2>
-            <Link to="/kolekce" className="flex items-center gap-2 text-sm text-slate-900 hover:text-slate-600 transition-colors font-medium whitespace-nowrap">
-              Celá kolekce <ArrowRight size={14} />
+            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5 whitespace-nowrap">
+              Prohlédnout kolekce mlžítek <ArrowRight size={14} />
             </Link>
           </div>
         </motion.div>

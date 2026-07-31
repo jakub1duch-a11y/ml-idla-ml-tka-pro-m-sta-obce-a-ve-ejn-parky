@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Wifi, Clock, Layers, Droplets } from 'lucide-react';
+import { Wifi, Clock, Layers, Droplets, ArrowRight } from 'lucide-react';
+import SmartControlVisual from '@/components/home/SmartControlVisual';
 
 const features = [
 { icon: Wifi, label: 'WiFi + Bluetooth', sub: 'Dual konektivita' },
@@ -17,14 +18,14 @@ export default function SmartSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 text-xs font-mono text-secondary tracking-widest uppercase mb-6">
-              Smart ovládání
+              Automatizace mlžítek
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-6 normal-case">
-              Mlžení z mobilu.<br />Kdykoli. Odkudkoli.
+            className="font-heading text-4xl lg:text-5xl text-foreground tracking-tight mb-6">
+              Chladí, když je potřeba.<br />Vy řídíte jen dotykem.
             </motion.h2>
-            <p className="text-slate-500 text-lg leading-relaxed mb-8">
-              Aplikace HolmTec zobrazuje teplotu, vlhkost, spotřebu vody a stav systému v reálném čase. Automatické plány, scény, skupinové ovládání.
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              Aplikace HolmTec propojuje časové plány, senzory a jednotlivé zóny. Mlžítka se spustí přesně podle podmínek vašeho prostoru.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
@@ -42,20 +43,17 @@ export default function SmartSection() {
               )}
             </div>
 
-            <Link to="/kontakt"
-            className="btn-metallic-mist px-7 py-3.5 text-sm font-medium">
-              Spočítat náklady
-            </Link>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              <img src="https://media.base44.com/images/public/69f87b0204346ce73cee73b1/ae189a9d2_Social_Media_Video_Ads_A_hand_holds_a_smartphone_displaying_the_Zahrada_KQFVTEiZ.png"
-              alt="Smart app" className="w-full rounded-2xl border border-slate-200" />
-              <img src="https://media.base44.com/images/public/69f87b0204346ce73cee73b1/4d63dd88b_videoframe_7589.png"
-              alt="Smart app 2" className="w-full rounded-2xl border border-slate-200 mt-8" />
+            <div className="flex flex-wrap gap-3">
+              <Link to="/kalkulacka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+                Spočítat provozní náklady <ArrowRight size={16}/>
+              </Link>
+              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold text-secondary hover:text-foreground">
+                Chytrá aplikace a automatizace <ArrowRight size={16}/>
+              </Link>
             </div>
           </motion.div>
+
+          <SmartControlVisual />
         </div>
       </div>
     </section>);

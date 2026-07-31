@@ -46,10 +46,6 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             <p className="text-slate-500 text-base leading-relaxed mb-6">{product.short_description}</p>
           )}
 
-          {product.price_from ? (
-            <p className="text-xl font-light text-slate-900 mb-6">od {product.price_from} Kč <span className="text-sm text-slate-400">(orientační cena)</span></p>
-          ) : null}
-
           {quickSpecs.length > 0 && (
             <div className="grid grid-cols-2 gap-3 mb-8">
               {quickSpecs.map((s) => (

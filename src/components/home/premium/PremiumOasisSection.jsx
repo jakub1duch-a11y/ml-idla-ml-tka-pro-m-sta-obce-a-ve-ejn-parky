@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { HumidifyIcon, DustIcon, ShieldIcon, FrostIcon, SparkleIcon, CheckGlowIcon } from "./MistIcons";
 
 const APPLICATIONS = [
-{ icon: HumidifyIcon, num: "01", title: "Zvlhčení vzduchu", desc: "Ideální pro suché prostředí, skleníky a průmyslové provozy s citlivými procesy." },
-{ icon: DustIcon, num: "02", title: "Odprašování", desc: "Mikrokapky vážou prach ve vzduchu — snížení prašnosti až o 85 %." },
-{ icon: ShieldIcon, num: "03", title: "Odpuzování hmyzu", desc: "Vlhká clona snižuje výskyt komárů a much v okolí zahrádek a teras." },
-{ icon: FrostIcon, num: "04", title: "Protimrazová ochrana", desc: "V zemědělství chrání citlivé květy před jarními mrazíky." },
-{ icon: SparkleIcon, num: "05", title: "Efektní vzhled", desc: "Atmosférický oblak jako architektonický prvek — pro festivaly a event catering." }];
+{ icon: HumidifyIcon, num: "01", title: "Bez čerpadel", desc: "Přímé napojení na běžný vodovodní řad — bez vysokotlaké technologie." },
+ { icon: DustIcon, num: "02", title: "Odprašování", desc: "Mikrokapky vážou prach ve vzduchu — snížení prašnosti až o 85 %." },
+ { icon: ShieldIcon, num: "03", title: "Odpuzování hmyzu", desc: "Vlhká clona snižuje výskyt komárů a much v okolí zahrádek a teras." },
+ { icon: ShieldIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychlé mobilní kotvení bez betonování a s možností snadného přesunu." },
+ { icon: SparkleIcon, num: "05", title: "Efektní vzhled", desc: "Atmosférický oblak jako architektonický prvek — pro festivaly a event catering." }];
 
 
 const ADVANTAGES = [
@@ -24,14 +24,14 @@ const DEVICE_IMG = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4
 
 export default function PremiumOasisSection() {
   return (
-    <section className="relative bg-[#F8F9FA] py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-[#F8F9FA] py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
             <h2 className="text-4xl md:text-5xl text-slate-900 tracking-tight mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">Vzduch se právě proměnil v chladivou oázu</h2>
             <p className="font-body text-lg text-slate-500 leading-relaxed text-measure">Ochlazení až o 10 °C. Adiabatické chlazení odparem — bez klimatizace a bez elektrické spotřeby.</p>
           </motion.div>
-          <motion.div initial={{ opacity: 0, x: 60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
             <img src={DEVICE_IMG} alt="Mlžidlo v provozu" className="w-full rounded-2xl shadow-xl" />
           </motion.div>
         </div>
@@ -41,7 +41,7 @@ export default function PremiumOasisSection() {
             const Icon = app.icon;
             return (
               <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }}>
-                <motion.div initial={{ opacity: 0, scale: 0.6, rotate: -8 }} whileInView={{ opacity: 1, scale: 1, rotate: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.5, ease: 'backOut' }}>
+                <motion.div initial={{ opacity: 0, scale: 0.6, rotate: -8 }} whileInView={{ opacity: 1, scale: 1, rotate: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.5, ease: 'backOut' }} className="origin-left scale-125">
                   <Icon />
                 </motion.div>
                 <p className="font-body text-xs text-slate-400 tracking-widest mt-4 mb-1">{app.num}</p>

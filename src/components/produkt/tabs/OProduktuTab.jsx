@@ -39,7 +39,7 @@ export default function OProduktuTab({ product, onOpenLightbox }) {
         )}
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mb-14">
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-5">Obecné informace</h2>
+          <h2 className="font-heading text-4xl lg:text-5xl text-slate-900 tracking-tight mb-5">Design, který ochlazuje prostor.</h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
             {product.description || product.short_description || 'Nerezová konstrukce navržená pro celoroční venkovní provoz s důrazem na minimalistický design a spolehlivost.'}
           </p>

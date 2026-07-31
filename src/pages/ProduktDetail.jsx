@@ -61,12 +61,12 @@ function Lightbox({ images, initialIndex, onClose }) {
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
-{ id: 'o-produktu', label: 'O produktu' },
-{ id: 'technicke', label: 'Technické informace' },
-{ id: 'benefity', label: 'Benefity a přínosy' },
-{ id: 'instalace', label: 'Kotvení a instalace' },
-{ id: 'video', label: 'Živá ukázka' },
-{ id: 'ke-stazeni', label: 'Ke stažení' }];
+{ id: 'o-produktu', label: 'Příběh produktu' },
+{ id: 'technicke', label: 'Parametry' },
+{ id: 'benefity', label: 'Proč funguje' },
+{ id: 'instalace', label: 'Instalace' },
+{ id: 'video', label: 'Video a galerie' },
+{ id: 'ke-stazeni', label: 'Dokumenty' }];
 
 
 // ─── Main ─────────────────────────────────────────────────────────────────────

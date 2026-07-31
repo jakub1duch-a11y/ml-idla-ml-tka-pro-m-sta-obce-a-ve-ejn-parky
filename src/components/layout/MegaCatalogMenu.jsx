@@ -4,6 +4,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import MegaCollectionCard from '@/components/layout/MegaCollectionCard';
 import AllProductsImageCard from '@/components/common/AllProductsImageCard';
+import GoIcon from '@/components/pronajem/GoIcon';
 
 export default function MegaCatalogMenu({ open, onEnter, onLeave, onNavigate, collections, uses, customLink }) {
   const featured = collections.find((item) => item.featured);
@@ -16,7 +17,7 @@ export default function MegaCatalogMenu({ open, onEnter, onLeave, onNavigate, co
         {featured && <div className="mb-4"><AllProductsImageCard to={featured.path} image={featured.image} compact onClick={onNavigate} /></div>}
         <div className="grid grid-cols-3 gap-4">{cards.map((item) => <MegaCollectionCard key={item.label} item={item} onNavigate={onNavigate}/>)}</div>
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
-          {rental && <Link to={rental.path} onClick={onNavigate} className="group flex items-center justify-between rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-lg">{rental.label}<ArrowRight size={15} className="transition-transform group-hover:translate-x-1"/></Link>}
+          {rental && <Link to={rental.path} onClick={onNavigate} className="group relative flex items-center justify-between overflow-visible rounded-full bg-primary py-3 pl-5 pr-20 text-sm font-bold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-lg">{rental.label}<ArrowRight size={15} className="transition-transform group-hover:translate-x-1"/><GoIcon variant="button" /></Link>}
           <Link to={customLink.path} onClick={onNavigate} className="group flex items-center gap-3 rounded-full border border-slate-200 px-5 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-secondary hover:shadow-lg"><Sparkles size={17} className="text-secondary transition-transform group-hover:rotate-12"/><span className="text-sm font-semibold text-slate-900">{customLink.label}</span></Link>
         </div>
       </div>

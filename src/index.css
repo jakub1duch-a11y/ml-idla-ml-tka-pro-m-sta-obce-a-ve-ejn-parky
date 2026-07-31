@@ -27,7 +27,7 @@
     --ring: 188 60% 59%;
     --radius: 14px;
     --font-heading: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 }
@@ -65,6 +65,9 @@
   p {
     font-weight: 400;
     line-height: 1.6;
+  }
+  button, input, textarea, select {
+    font-family: var(--font-body);
   }
 }
 

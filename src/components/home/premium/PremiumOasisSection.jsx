@@ -28,7 +28,7 @@ export default function PremiumOasisSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h2 className="text-4xl md:text-5xl text-slate-900 tracking-tight mb-5 [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">Vzduch se právě proměnil v chladivou oázu</h2>
+            <h2 className="font-heading text-4xl md:text-5xl text-foreground tracking-tight mb-5">Vzduch se právě proměnil v chladivou oázu</h2>
             <p className="font-body text-lg text-slate-500 leading-relaxed text-measure">Ochlazení až o 10 °C. Adiabatické chlazení odparem — bez klimatizace a bez elektrické spotřeby.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
@@ -40,13 +40,13 @@ export default function PremiumOasisSection() {
           {APPLICATIONS.map((app, i) => {
             const Icon = app.icon;
             return (
-              <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }}>
-                <motion.div initial={{ opacity: 0, scale: 0.6, rotate: -8 }} whileInView={{ opacity: 1, scale: 1, rotate: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.5, ease: 'backOut' }} className="origin-left scale-125">
+              <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+                <motion.div initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} animate={{ y: [0, -5, 0], rotate: [0, 2, 0, -2, 0] }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 2.8, repeat: Infinity, ease: 'easeInOut' }} className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/10 text-secondary">
                   <Icon />
                 </motion.div>
-                <p className="font-body text-xs text-slate-400 tracking-widest mt-4 mb-1">{app.num}</p>
-                <h3 className="font-heading text-lg text-slate-900 mb-2">{app.title}</h3>
-                <p className="font-body text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{app.desc}</p>
+                <p className="font-mono text-xs text-muted-foreground tracking-widest mt-6 mb-1">{app.num}</p>
+                <h3 className="font-heading text-xl text-foreground mb-2">{app.title}</h3>
+                <p className="font-body text-sm leading-relaxed text-muted-foreground">{app.desc}</p>
               </motion.div>);
 
           })}

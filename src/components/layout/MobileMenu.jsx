@@ -53,8 +53,8 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                     <h2 className="font-heading font-semibold text-xl text-slate-900">Mlžítka a mlžné sochy</h2>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {productLinks.map((p) =>
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  {productLinks.filter((p) => !p.textOnly).map((p) =>
                   <Link key={p.path} to={p.path} onClick={onClose} className="group flex flex-col gap-2">
                       <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 border border-slate-100">
                         <img src={p.image} alt={p.label} className="w-full h-full object-cover group-active:scale-95 transition-transform" loading="lazy" />
@@ -66,6 +66,11 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                     </Link>
                   )}
                 </div>
+                {productLinks.filter((p) => p.textOnly).map((p) =>
+                <Link key={p.path} to={p.path} onClick={onClose} className="mb-4 flex items-center justify-between rounded-2xl bg-slate-900 px-5 py-4 text-sm font-bold text-white">
+                    {p.label} <ArrowRight size={15} />
+                  </Link>
+                )}
                 <Link to={customLink.path} onClick={onClose}
                   className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-3">
                   <Sparkles size={18} className="text-slate-500 shrink-0" />

@@ -1,0 +1,47 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "*/5 * * * *",
+      "one_time_date": null,
+      "timezone": "Europe/Prague",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Automatick\u00e9 publikov\u00e1n\u00ed Instagram pl\u00e1nu",
+  "description": "Ka\u017ed\u00fdch p\u011bt minut publikuje splatn\u00e9 napl\u00e1novan\u00e9 p\u0159\u00edsp\u011bvky na sd\u00edlen\u00fd \u00fa\u010det @mlzidla.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "automaticke_publikovani_instagram_planu",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "publikovat_splatne_prispevky": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "publishScheduledInstagramPosts",
+            "args": {
+              "dryRun": false
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Publikovat pl\u00e1n Instagramu",
+            "description": "Splatn\u00e9 p\u0159\u00edsp\u011bvky na @mlzidla"
+          }
+        }
+      }
+    ]
+  }
+}

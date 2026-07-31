@@ -1,64 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Instagram, CheckCircle2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { AlertCircle, CheckCircle2, Instagram, RefreshCw } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const CONNECTOR_ID = '6a48154c19f44e6e0269b046';
-
 export default function InstagramConnectCard() {
-  const [loading, setLoading] = useState(true);
-  const [connected, setConnected] = useState(false);
-  const [username, setUsername] = useState('');
-
+  const [status, setStatus] = useState({ loading: true, connected: false, username: '' });
   const checkConnection = async () => {
-    setLoading(true);
+    setStatus((current) => ({ ...current, loading: true }));
     try {
       const res = await base44.functions.invoke('getInstagramFeed', {});
-      setUsername(res.data.username || '');
-      setConnected(true);
+      setStatus({ loading: false, connected: true, username: res.data.username || 'mlzidla' });
     } catch {
-      setConnected(false);
-    } finally {
-      setLoading(false);
+      setStatus({ loading: false, connected: false, username: '' });
     }
   };
-
   useEffect(() => { checkConnection(); }, []);
-
-  const handleConnect = async () => {
-    const res = await base44.connectors.connectAppUser(CONNECTOR_ID);
-    const url = typeof res === 'string' ? res : res?.url;
-    const popup = window.open(url, '_blank');
-    const timer = setInterval(() => {
-      if (!popup || popup.closed) {
-        clearInterval(timer);
-        checkConnection();
-      }
-    }, 500);
-  };
-
-  return (
-    <div className="p-5 rounded-xl bg-white/3 border border-white/8 flex items-center justify-between flex-wrap gap-3">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center shrink-0">
-          <Instagram size={18} className="text-cyan" />
-        </div>
-        <div>
-          <p className="text-white text-sm font-medium">Instagram účet</p>
-          {loading ? (
-            <p className="text-white/35 text-xs font-mono">Kontroluji připojení...</p>
-          ) : connected ? (
-            <p className="text-emerald-400 text-xs font-mono flex items-center gap-1"><CheckCircle2 size={12} /> Připojeno{username && ` · @${username}`}</p>
-          ) : (
-            <p className="text-white/35 text-xs font-mono">Nepřipojeno</p>
-          )}
-        </div>
-      </div>
-      {!loading && !connected && (
-        <button onClick={handleConnect}
-          className="px-4 py-2 rounded-full bg-cyan text-ink text-xs font-medium hover:bg-cyan/90 transition-all">
-          Připojit Instagram
-        </button>
-      )}
-    </div>
-  );
+  return <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/8 bg-white/3 p-5">
+    <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan/20 bg-cyan/10"><Instagram size={18} className="text-cyan" /></div><div><p className="text-sm font-medium text-white">Sdílený Instagram @mlzidla</p>{status.loading ? <p className="text-xs font-mono text-white/35">Kontroluji připojení...</p> : status.connected ? <p className="flex items-center gap-1 text-xs font-mono text-emerald-400"><CheckCircle2 size={12} /> Připojeno · @{status.username}</p> : <p className="flex items-center gap-1 text-xs font-mono text-red-400"><AlertCircle size={12} /> Připojení není dostupné</p>}</div></div>
+    {!status.loading && !status.connected && <button onClick={checkConnection} className="flex items-center gap-1.5 rounded-full border border-cyan/30 px-4 py-2 text-xs font-medium text-cyan transition-all hover:bg-cyan/10"><RefreshCw size={12} /> Zkusit znovu</button>}
+  </div>;
 }

@@ -16,7 +16,7 @@ export default function ContentPlanForm({ onCreated }) {
     setGeneratingText(true);
     try {
       const res = await base44.integrations.Core.InvokeLLM({
-        prompt: `Napiš krátký, přesvědčivý marketingový popisek (caption) pro příspěvek na platformu "${form.platform}" pro značku mlzidla.cz (výrobce nerezových mlžítek pro veřejný prostor). Téma příspěvku: "${form.title}". Piš v češtině, max 3 věty, přidej 3-5 relevantních hashtagů na konec.`,
+        prompt: `Jsi seniorní creative director značky MLŽIDLA® pro Instagram @mlzidla. Vytvoř profesionální český reklamní caption k tématu: "${form.title}". Cílová skupina: architekti, města, obce, hotely a prémiová gastronomie. Struktura: silný scroll-stopping hook; 2–3 konkrétní přínosy (ochlazení prostoru, nerezová odolnost, nízká spotřeba, instalace bez čerpadla podle kontextu); krátký důkaz nebo scénář využití; jasná výzva k nezávazné poptávce na mlzidla.cz/poptavka. Tón prémiový, věcný a sebevědomý, bez prázdných superlativů. Použij přirozené odstavce a zakonči 5–7 relevantními hashtagy včetně #mlzidla, #ochlazenimesta a #mestskaarchitektura.`, 
       });
       setForm((f) => ({ ...f, caption: res }));
       setAiUsed(true);
@@ -30,7 +30,7 @@ export default function ContentPlanForm({ onCreated }) {
     setGeneratingImage(true);
     try {
       const res = await base44.integrations.Core.GenerateImage({
-        prompt: `Profesionální marketingová fotografie: elegantní nerezové mlžítko (misting sculpture) chladící veřejný prostor, sytá vodní mlha, moderní minimalistický styl, denní světlo. Kontext příspěvku: ${form.title}`,
+        prompt: `Prémiový Instagram reklamní vizuál pro českou značku MLŽIDLA®: nerezové mlžítko integrované do moderního evropského veřejného prostoru, jemná ultra-fine vodní mlha, lidé přirozeně zažívající úlevu od horka, čistá architektura, Apple a DJI cinematic estetika, zlatá hodina, realistická nerezová ocel, vysoký dynamický rozsah, profesionální produktová fotografie, čistá kompozice s volným místem pro text, bez logotypů a bez generovaného textu. Kontext kampaně: ${form.title}. Čtvercová kompozice pro Instagram feed.`, 
       });
       setForm((f) => ({ ...f, image_url: res.url }));
       setAiUsed(true);
@@ -68,11 +68,11 @@ export default function ContentPlanForm({ onCreated }) {
       <div className="flex gap-2">
         <button type="button" onClick={generateCaption} disabled={generatingText || !form.title}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-40">
-          {generatingText ? <Loader size={12} className="animate-spin" /> : <Sparkles size={12} />} Generovat text AI
+          {generatingText ? <Loader size={12} className="animate-spin" /> : <Sparkles size={12} />} Vytvořit reklamní text
         </button>
         <button type="button" onClick={generateImage} disabled={generatingImage || !form.title}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-40">
-          {generatingImage ? <Loader size={12} className="animate-spin" /> : <ImageIcon size={12} />} Generovat obrázek AI
+          {generatingImage ? <Loader size={12} className="animate-spin" /> : <ImageIcon size={12} />} Vytvořit reklamní vizuál
         </button>
       </div>
 

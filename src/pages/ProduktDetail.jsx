@@ -20,7 +20,7 @@ import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 
-const GATE_SLUGS = ['gate70', 'linea-el70'];
+const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
 gsap.registerPlugin(ScrollToPlugin);
 

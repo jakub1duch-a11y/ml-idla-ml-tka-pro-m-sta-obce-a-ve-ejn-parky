@@ -53,10 +53,10 @@ export default function Blog() {
       <div className="bg-primary text-white"><div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog HolmTec</p>
-          <h1 className="font-heading font-light text-5xl lg:text-7xl text-slate-900 tracking-tight mb-4">
+          <h1 className="font-heading font-light text-5xl lg:text-7xl text-white tracking-tight mb-4">
             O mlžení do hloubky
           </h1>
-          <p className="text-slate-500 max-w-xl text-lg font-light">
+          <p className="text-white/70 max-w-xl text-lg font-light">
             Řešení pro gastro provozy a eventy, design pro zahrady a terasy — technologie, inspirace a realizace na jednom místě.
           </p>
         </motion.div>

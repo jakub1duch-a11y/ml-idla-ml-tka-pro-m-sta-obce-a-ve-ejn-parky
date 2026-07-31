@@ -224,7 +224,7 @@ export default function ProduktDetail() {
             </button>
             }
           </div>
-          <div className="flex items-center gap-3 py-2.5 sm:py-4 border-t sm:border-t-0 sm:border-l border-slate-200 sm:pl-6 lg:pl-8 shrink-0 order-2 sm:order-first">
+          <div className="flex items-center gap-3 py-2.5 sm:py-4 border-t sm:border-t-0 sm:border-r border-slate-200 sm:pr-6 lg:pr-8 mr-2 shrink-0 order-2 sm:order-first">
             <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors uppercase">
               <ArrowLeft size={12} /> Zpět
             </Link>

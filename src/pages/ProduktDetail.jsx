@@ -64,7 +64,7 @@ const TABS = [
 { id: 'o-produktu', label: 'Příběh produktu' },
 { id: 'technicke', label: 'Parametry' },
 { id: 'benefity', label: 'Proč funguje' },
-{ id: 'instalace', label: 'Instalace' },
+{ id: 'instalace', label: 'Instalace a kotvení' },
 { id: 'video', label: 'Video a galerie' },
 { id: 'ke-stazeni', label: 'Dokumenty' }];
 

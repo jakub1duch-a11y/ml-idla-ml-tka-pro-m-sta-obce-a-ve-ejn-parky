@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Wrench } from 'lucide-react';
+import AnchoringGallery from '@/components/produkt/AnchoringGallery';
 
 export default function InstallationTab({ product }) {
   return (
@@ -48,6 +49,8 @@ export default function InstallationTab({ product }) {
             </div>
           </motion.div>
         </div>
+
+        <AnchoringGallery />
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-20">

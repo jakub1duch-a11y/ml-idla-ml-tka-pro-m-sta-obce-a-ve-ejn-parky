@@ -139,8 +139,9 @@ export default function Header() {
                 Poptávka
               </Link>
             </div>
-            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-11 h-11 -mr-2 rounded-full text-slate-800 hover:bg-slate-100 transition-colors">
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary px-3 py-2 text-[11px] font-bold text-primary-foreground">Poptat řešení</Link>
+            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-slate-800 hover:bg-slate-100 transition-colors">
+              {mobileOpen ? <X size={23} /> : <Menu size={23} />}
             </button>
           </div>
         </div>

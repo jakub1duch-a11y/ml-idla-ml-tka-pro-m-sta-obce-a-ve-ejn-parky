@@ -23,10 +23,8 @@ export default function SmartBenefits() {
           {BENEFITS.map((b, i) =>
           <motion.div key={b.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
             className="p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all">
-              <div className="w-11 h-11 rounded-full bg-slate-900 flex items-center justify-center mb-4">
-                <b.icon size={18} className="text-cyan" />
-              </div>
-              <h3 className="text-slate-900 font-medium mb-1.5">{b.title}</h3>
+              <b.icon size={38} strokeWidth={1.6} className="mb-5 text-secondary" />
+              <h3 className="font-heading text-xl text-foreground mb-1.5">{b.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{b.desc}</p>
             </motion.div>
           )}

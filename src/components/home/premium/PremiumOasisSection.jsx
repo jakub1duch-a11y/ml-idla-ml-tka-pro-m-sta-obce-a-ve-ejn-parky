@@ -1,18 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { HumidifyIcon, DustIcon, ShieldIcon, FrostIcon, SparkleIcon, CheckGlowIcon } from "./MistIcons";
+import { CheckGlowIcon } from "./MistIcons";
+import { NoPumpIcon, TemperatureDropIcon, MistMotionIcon, GroundScrewIcon, AtmosphereIcon, SmartAutomationIcon } from "./BenefitIcons";
 
 const APPLICATIONS = [
-{ icon: HumidifyIcon, num: "01", title: "Bez čerpadel", desc: "Přímé napojení na běžný vodovodní řad — bez vysokotlaké technologie." },
- { icon: DustIcon, num: "02", title: "Odprašování", desc: "Mikrokapky vážou prach ve vzduchu — snížení prašnosti až o 85 %." },
- { icon: ShieldIcon, num: "03", title: "Odpuzování hmyzu", desc: "Vlhká clona snižuje výskyt komárů a much v okolí zahrádek a teras." },
- { icon: ShieldIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychlé mobilní kotvení bez betonování a s možností snadného přesunu." },
- { icon: SparkleIcon, num: "05", title: "Efektní vzhled", desc: "Atmosférický oblak jako architektonický prvek — pro festivaly a event catering." }];
+  { icon: NoPumpIcon, num: "01", title: "Bez čerpadel", desc: "Přímé napojení na běžný vodovodní řad — bez vysokotlaké technologie." },
+  { icon: TemperatureDropIcon, num: "02", title: "Ochlazení až o 10 °C", desc: "Jemná voda odebírá teplo ze vzduchu a rychle zpříjemní venkovní prostor." },
+  { icon: MistMotionIcon, num: "03", title: "Mlha bez mokrého povrchu", desc: "Mikrokapky se odpaří ve vzduchu a zanechají po sobě příjemný chlad." },
+  { icon: GroundScrewIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychlé mobilní kotvení bez betonování a s možností snadného přesunu." },
+  { icon: AtmosphereIcon, num: "05", title: "Efektní vzhled", desc: "Atmosférický oblak jako architektonický prvek pro terasy, festivaly a catering." },
+  { icon: SmartAutomationIcon, num: "06", title: "Smart automatizace", desc: "Scénáře podle teploty, času i pohybu lidí šetří vodu a starosti." }];
 
 
 const ADVANTAGES = [
 "Ochlazuje vzduch, snižuje teplotu až o 5–10 °C bez použití ventilátorů",
-"Váže prach a zlepšuje kvalitu vzduchu a prostředí (např. v halách, dílnách, na stavbách)",
+"Jemná mlha se odpaří ve vzduchu a nezanechává mokrý povrch,",
 "Zvyšuje komfort uživatelů, nízká spotřeba vody",
 "Bezúdržbový provoz, dlouhá životnost komponent, snadná údržba a demontáž",
 "Snadná demontáž a přesun – vhodné i jako mobilní zařízení",
@@ -36,15 +38,15 @@ export default function PremiumOasisSection() {
           </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-24">
+        <div className="grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3 mb-24">
           {APPLICATIONS.map((app, i) => {
             const Icon = app.icon;
             return (
-              <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <motion.div initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} animate={{ y: [0, -5, 0], rotate: [0, 2, 0, -2, 0] }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 2.8, repeat: Infinity, ease: 'easeInOut' }} className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/10 text-secondary">
+              <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }} className="border-t border-border pt-6">
+                <motion.div initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} animate={{ y: [0, -6, 0] }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 3, repeat: Infinity, ease: 'easeInOut' }} className="text-secondary">
                   <Icon />
                 </motion.div>
-                <p className="font-mono text-xs text-muted-foreground tracking-widest mt-6 mb-1">{app.num}</p>
+                <p className="font-mono text-xs text-muted-foreground tracking-widest mt-5 mb-1">{app.num}</p>
                 <h3 className="font-heading text-xl text-foreground mb-2">{app.title}</h3>
                 <p className="font-body text-sm leading-relaxed text-muted-foreground">{app.desc}</p>
               </motion.div>);

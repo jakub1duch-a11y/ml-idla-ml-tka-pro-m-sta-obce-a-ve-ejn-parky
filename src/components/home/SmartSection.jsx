@@ -18,14 +18,14 @@ export default function SmartSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 text-xs font-mono text-secondary tracking-widest uppercase mb-6">
-              Automatizace mlžítek
+              Smart mlžení · WiFi / aplikace
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading text-4xl lg:text-5xl text-foreground tracking-tight mb-6">
               Mlha. Bez starostí.
             </motion.h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Nastavte průtok vody, plán mlžení a zóny přes chytrou domácnost. Přehledná analytika vám ukáže spotřebu i úspory — mlžítka pak pracují sama.
+              Ovládejte průtok, plán mlžení a zóny přes WiFi aplikaci. Přehledná analytika ukazuje spotřebu, úspory i stav zařízení — mlžítka pak pracují sama.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">

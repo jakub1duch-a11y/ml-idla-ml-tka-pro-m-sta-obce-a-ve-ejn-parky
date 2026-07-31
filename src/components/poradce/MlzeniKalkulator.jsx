@@ -56,8 +56,12 @@ const SYSTEMS = [
 }];
 
 
-const WATER_PRICE_PER_M3 = 85; // Kč / m³ (ČR průměr 2025)
-const ELECTRICITY_PRICE_PER_KWH = 5.5; // Kč / kWh
+const WATER_PRICE_PER_M3 = 75.86;
+const SEWERAGE_PRICE_PER_M3 = 53.25;
+const WATER_AND_SEWERAGE_PRICE_PER_M3 = WATER_PRICE_PER_M3 + SEWERAGE_PRICE_PER_M3;
+const ELECTRICITY_PRICE_PER_KWH = 5.5;
+const SMART_WATER_SAVING = 0.25;
+const SMART_ENERGY_SAVING = 0.15;
 
 // ─── Mist Canvas Animace ────────────────────────────────────────────────────
 // intensity: 0.3–1.5 (počet trysek / max)
@@ -219,13 +223,18 @@ export default function MlzeniKalkulator() {
   const flowPerHour = sys.nozzles * sys.flowPerNozzle * 60; // l/h
   const waterPerDay = flowPerHour * hoursPerDay; // l/day
   const waterPerMonth = waterPerDay * daysPerMonth; // l/month
-  const waterCostMonth = waterPerMonth / 1000 * WATER_PRICE_PER_M3;
+  const waterOnlyCostMonth = waterPerMonth / 1000 * WATER_PRICE_PER_M3;
+  const sewerageCostMonth = waterPerMonth / 1000 * SEWERAGE_PRICE_PER_M3;
+  const waterCostMonth = waterOnlyCostMonth + sewerageCostMonth;
 
-  const electricityPerDay = sys.powerW / 1000 * hoursPerDay; // kWh/day
+  const electricityPerDay = sys.powerW / 1000 * hoursPerDay;
   const electricityPerMonth = electricityPerDay * daysPerMonth;
   const electricityCostMonth = electricityPerMonth * ELECTRICITY_PRICE_PER_KWH;
-
-  const totalCostMonth = waterCostMonth + electricityCostMonth;
+  const standardCostMonth = waterCostMonth + electricityCostMonth;
+  const smartWaterCostMonth = waterCostMonth * (1 - SMART_WATER_SAVING);
+  const smartElectricityCostMonth = electricityCostMonth * (1 - SMART_ENERGY_SAVING);
+  const totalCostMonth = smartWaterCostMonth + smartElectricityCostMonth;
+  const monthlySaving = standardCostMonth - totalCostMonth;
   const costPerHour = totalCostMonth / (hoursPerDay * daysPerMonth);
 
   // Intensity pro animaci mlhy (0.3–1.5)
@@ -367,7 +376,7 @@ export default function MlzeniKalkulator() {
               </div>
             </div>
             <div className="mt-3 pt-3 border-t border-white/8 flex items-center justify-between">
-              <span className="text-xs text-white/30 font-mono">Náklad za vodu / měsíc</span>
+              <span className="text-xs text-white/30 font-mono">Voda + stočné / měsíc</span>
               <span className="text-sm text-white font-medium">
                 <AnimNum value={waterCostMonth} decimals={0} suffix=" Kč" />
               </span>
@@ -410,7 +419,7 @@ export default function MlzeniKalkulator() {
             </div>
             <div className="flex items-end gap-3 mb-4">
               <div>
-                <p className="text-xs text-white/30 font-mono mb-1">Za měsíc</p>
+                <p className="text-xs text-white/30 font-mono mb-1">Se Smart mlžením / měsíc</p>
                 <p className="text-4xl font-light text-white tabular-nums">
                   <AnimNum value={totalCostMonth} decimals={0} />
                   <span className="text-lg text-white/50 ml-1">Kč</span>
@@ -425,6 +434,7 @@ export default function MlzeniKalkulator() {
               </div>
             </div>
 
+            <div className="mb-4 grid grid-cols-2 gap-3 border-y border-white/10 py-3 text-xs font-mono"><div><p className="text-white/40">Bez automatizace</p><p className="mt-1 text-base text-white">{standardCostMonth.toFixed(0)} Kč</p></div><div><p className="text-cyan">Úspora Smart systému</p><p className="mt-1 text-base text-cyan">{monthlySaving.toFixed(0)} Kč / měs.</p></div></div>
             {/* Progress bar voda vs elektřina */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-[10px] font-mono text-white/30">
@@ -450,11 +460,13 @@ export default function MlzeniKalkulator() {
               <p className="text-[10px] font-mono text-white/25 tracking-widest uppercase">Orientační tarify</p>
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs text-white/30 font-mono">
-              <span>Voda: {WATER_PRICE_PER_M3} Kč/m³</span>
-              <span>Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
+              <span>Vodné: {WATER_PRICE_PER_M3.toFixed(2)} Kč/m³</span>
+                             <span>Stočné: {SEWERAGE_PRICE_PER_M3.toFixed(2)} Kč/m³</span>
+                             <span>Celkem: {WATER_AND_SEWERAGE_PRICE_PER_M3.toFixed(2)} Kč/m³</span>
+                             <span>Elektřina: {ELECTRICITY_PRICE_PER_KWH} Kč/kWh</span>
             </div>
             <p className="text-[10px] text-white/20 font-mono mt-2 leading-relaxed">
-              * Průměrné ceny ČR 2025. Skutečné náklady závisí na tarifu poskytovatele.
+              * Ceník VAK Trutnov platný od 1. 1. 2026 vč. DPH: vodné 75,86 Kč/m³ a stočné 53,25 Kč/m³. Smart úspora počítá s omezením průtoku o 25 % a energie o 15 %; skutečný provoz závisí na nastavení systému.
             </p>
           </div>
         </div>

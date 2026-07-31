@@ -168,3 +168,14 @@
   70% { box-shadow: 0 0 0 9px rgba(148, 197, 219, 0); }
   100% { box-shadow: 0 0 0 0 rgba(148, 197, 219, 0); }
 }
+.btn-inquiry-pulse {
+  border: 2px solid hsl(var(--accent));
+  animation: inquiry-pulse 2.1s ease-out infinite;
+  transition: transform .2s ease, filter .2s ease;
+}
+.btn-inquiry-pulse:hover { transform: translateY(-2px); filter: brightness(1.08); }
+@keyframes inquiry-pulse {
+  0% { box-shadow: 0 0 0 0 hsl(var(--accent) / .55); }
+  70% { box-shadow: 0 0 0 11px hsl(var(--accent) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0); }
+}

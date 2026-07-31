@@ -124,6 +124,17 @@ export function trackInquirySubmitted(requestType, productInterest) {
   });
 }
 
+export function trackRentalInquiry(productName, eventType) {
+  safeGtag('event', 'rental_inquiry_submit', {
+    event_category: 'conversion',
+    event_label: productName || 'pronájem GO',
+    product_name: productName || 'nezvoleno',
+    event_type: eventType || 'event',
+    value: 1,
+    send_to: 'G-0J3NKLWM2Q',
+  });
+}
+
 export function trackQuickInquiryClick(productName, location) {
   safeGtag('event', 'quick_inquiry_click', {
     event_category: 'conversion',
@@ -163,6 +174,7 @@ if (typeof window !== 'undefined') {
   window.trackHeroInteraction = trackHeroInteraction;
   window.trackCategoryFilter = trackCategoryFilter;
   window.trackInquirySubmitted = trackInquirySubmitted;
+  window.trackRentalInquiry = trackRentalInquiry;
   window.trackQuickInquiryClick = trackQuickInquiryClick;
   window.trackThankYouPageView = trackThankYouPageView;
 }

@@ -61,6 +61,7 @@ import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
+import Pronajem from '@/pages/Pronajem';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -128,6 +129,7 @@ const AuthenticatedApp = () => {
         <Route path="/manualy" element={<KeStazeni />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
+        <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />

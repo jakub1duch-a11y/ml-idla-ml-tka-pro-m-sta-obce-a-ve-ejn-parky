@@ -5,12 +5,14 @@ import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
+import BlogVideoShowcase from '@/components/blog/BlogVideoShowcase';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
   realizace: 'Realizace',
   technika: 'Technologie',
   novinky: 'Novinky',
+  videa: 'Videa',
 };
 
 const AUDIENCE_TABS = [
@@ -29,7 +31,7 @@ export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [audience, setAudience] = useState('all');
-  const [category, setCategory] = useState('all');
+  const [category, setCategory] = useState(() => new URLSearchParams(window.location.search).get('sekce') === 'videa' ? 'videa' : 'all');
 
   useEffect(() => {
     setSEO(SEO_PAGES.blog);
@@ -89,7 +91,9 @@ export default function Blog() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
-        {loading ? (
+        {category === 'videa' ? (
+          <BlogVideoShowcase />
+        ) : loading ? (
           <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : visible.length === 0 ? (
           <p className="text-center text-slate-400 py-20 font-mono text-sm">Žádné články v této kategorii.</p>

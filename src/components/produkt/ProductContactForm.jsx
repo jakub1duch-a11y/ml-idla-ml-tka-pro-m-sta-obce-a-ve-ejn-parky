@@ -115,7 +115,7 @@ export default function ProductContactForm({ productName }) {
         placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
       </div>
       <button type="submit" disabled={sending}
-      className="w-full py-5 text-white rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg normal-case font-normal text-sm bg-[#295189]">
+      className="btn-inquiry-pulse w-full py-5 text-white rounded-full transition-all disabled:opacity-60 flex items-center justify-center gap-2 normal-case font-bold text-sm bg-primary">
         {sending ? <Loader size={18} className="animate-spin" /> : <>Poptat produkt zdarma <ArrowRight size={18} /></>}
       </button>
     </form>);

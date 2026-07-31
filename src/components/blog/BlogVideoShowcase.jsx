@@ -1,0 +1,9 @@
+import React from 'react';
+import { Play } from 'lucide-react';
+
+const VIDEOS = [
+  { title: 'Mlžítka v reálném provozu', text: 'Živá ukázka instalace v Zoo Praha.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/27d926a20_MlzitkavarealuZOOPraha-zivaukazka.mov', poster: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg' },
+  { title: 'Efekt mlžné brány', text: 'Detail jemné mlhy a jejího pohybu v prostoru.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c857caa78_Efektmlhy-mlznabrana-zivynahled.mov', poster: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5401e0933_dac8b98065c5472b16bc1910348915a1.jpg' },
+  { title: 'Svařování a výroba', text: 'Pohled do české zakázkové výroby MLŽIDLA®.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2d9d98473_Svaovnukzkazive.mov', poster: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg' }
+];
+export default function BlogVideoShowcase() { return <div><div className="mb-8 flex items-center gap-3"><Play size={19} className="text-secondary"/><h2 className="font-heading text-3xl text-foreground">Videa a živé ukázky</h2></div><div className="grid gap-5 lg:grid-cols-3">{VIDEOS.map((video) => <article key={video.url} className="overflow-hidden rounded-2xl border border-border bg-card"><video controls playsInline preload="metadata" poster={video.poster} className="aspect-video w-full bg-primary object-cover"><source src={video.url}/></video><div className="p-5"><h3 className="font-heading text-xl text-foreground">{video.title}</h3><p className="mt-2 text-sm text-muted-foreground">{video.text}</p></div></article>)}</div></div>; }

@@ -5,10 +5,10 @@ import { Wifi, Clock, Layers, Droplets, ArrowRight } from 'lucide-react';
 import SmartControlVisual from '@/components/home/SmartControlVisual';
 
 const features = [
-{ icon: Wifi, label: 'WiFi + Bluetooth', sub: 'Dual konektivita' },
-{ icon: Clock, label: 'Automatické plány', sub: 'Časovač i senzory' },
-{ icon: Layers, label: 'Skupinové scény', sub: 'Více zón najednou' },
-{ icon: Droplets, label: 'Vodní monitoring', sub: 'Spotřeba v reálu' }];
+ { icon: Wifi, label: 'Google Assistant + Alexa', sub: 'Hlasové ovládání' },
+ { icon: Clock, label: 'Automatické plány', sub: 'Podle času i teploty' },
+ { icon: Layers, label: 'Zóny a scény', sub: 'Každé místo zvlášť' },
+ { icon: Droplets, label: 'Přehled průtoku vody', sub: 'Kontrola spotřeby v reálu' }];
 
 
 export default function SmartSection() {
@@ -22,10 +22,10 @@ export default function SmartSection() {
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading text-4xl lg:text-5xl text-foreground tracking-tight mb-6">
-              Chladí, když je potřeba.<br />Vy řídíte jen dotykem.
+              Mlha. Bez starostí.
             </motion.h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Aplikace HolmTec propojuje časové plány, senzory a jednotlivé zóny. Mlžítka se spustí přesně podle podmínek vašeho prostoru.
+              Nastavte průtok vody, plán mlžení a zóny přes chytrou domácnost. Přehledná analytika vám ukáže spotřebu i úspory — mlžítka pak pracují sama.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
@@ -48,7 +48,7 @@ export default function SmartSection() {
                 Spočítat provozní náklady <ArrowRight size={16}/>
               </Link>
               <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold text-secondary hover:text-foreground">
-                Chytrá aplikace a automatizace <ArrowRight size={16}/>
+                Automatizace mlžítek <ArrowRight size={16}/>
               </Link>
             </div>
           </motion.div>

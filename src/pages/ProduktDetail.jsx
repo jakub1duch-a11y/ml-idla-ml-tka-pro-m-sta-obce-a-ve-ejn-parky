@@ -19,6 +19,7 @@ import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
+import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -109,10 +110,16 @@ export default function ProduktDetail() {
       setProduct(p);
       trackProductView(p.name, p.slug, p.category_id);
       setSEO(getProductSEO(p));
-      if (p.category_id) {
-        const related = await base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []);
-        setRelatedProducts((related || []).filter((r) => r.id !== p.id).slice(0, 3));
-      }
+      const [related, nozzleResults, allProducts] = await Promise.all([
+        p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
+        base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
+        base44.entities.Product.list().catch(() => [])
+      ]);
+      const sameCategory = (related || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska');
+      const fallback = (allProducts || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !sameCategory.some((item) => item.id === r.id));
+      const similar = [...sameCategory, ...fallback].slice(0, 3);
+      const nozzle = nozzleResults?.[0];
+      setRelatedProducts(nozzle && nozzle.id !== p.id ? [...similar, nozzle] : similar);
     }).
     catch(() => setNotFound(true)).
     finally(() => setLoading(false));
@@ -323,23 +330,12 @@ export default function ProduktDetail() {
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mohlo by vás zajímat</p>
             <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((r, i) =>
-            <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <Link to={`/produkt/${r.slug}`} className="group block rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 transition-all">
-                    <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                      {r.image_url && <img src={r.image_url} alt={r.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
-                    </div>
-                    <div className="p-5 flex items-center justify-between">
-                      <div>
-                        <span className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors">{r.name}</span>
-                        {r.short_description && <p className="text-xs text-slate-400 mt-0.5 font-light">{r.short_description}</p>}
-                      </div>
-                      <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0 ml-4" />
-                    </div>
-                  </Link>
+              <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                  <RelatedProductCard product={r} index={i} />
                 </motion.div>
-            )}
+              )}
             </div>
             <div className="mt-10 flex justify-center">
               <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">

@@ -7,7 +7,7 @@ export default function MegaCollectionCard({ item, onNavigate }) {
     : 'h-full w-full object-cover transition-transform duration-500 group-hover:scale-105';
 
   return (
-    <Link to={item.path} onClick={onNavigate} className="group">
+    <Link to={item.path} onClick={onNavigate} className="group block rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
         <img src={item.image} alt={item.label} className={imageClass} />
       </div>

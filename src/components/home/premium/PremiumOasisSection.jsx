@@ -43,7 +43,7 @@ export default function PremiumOasisSection() {
             const Icon = app.icon;
             return (
               <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.6 }} className="border-t border-border pt-6">
-                <motion.div initial={{ opacity: 0, scale: 0.6 }} whileInView={{ opacity: 1, scale: 1 }} animate={{ y: [0, -6, 0] }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 3, repeat: Infinity, ease: 'easeInOut' }} className="text-secondary">
+                <motion.div initial={{ opacity: 0, scale: 0.6, y: 10 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.55 }} className="text-secondary">
                   <Icon />
                 </motion.div>
                 <p className="font-mono text-xs text-muted-foreground tracking-widest mt-5 mb-1">{app.num}</p>

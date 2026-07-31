@@ -3,6 +3,7 @@ import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
 import HeroSlider from '@/components/home/premium/HeroSlider';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
+import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
 import SmartSection from '@/components/home/SmartSection';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import ReferenceSection from '@/components/home/ReferenceSection';
@@ -23,6 +24,7 @@ export default function Home() {
       <HeroSlider />
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
+      <FadeIn><UrbanCoolingImpact /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
       <FadeIn><MistVideoShowcase /></FadeIn>

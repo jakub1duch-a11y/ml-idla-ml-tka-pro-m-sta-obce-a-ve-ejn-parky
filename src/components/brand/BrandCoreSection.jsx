@@ -11,7 +11,7 @@ const VALUES = [
 
 export default function BrandCoreSection() {
   return <section id="jadro" className="scroll-mt-32 bg-background py-20 lg:py-28"><div className="mx-auto max-w-7xl px-6 lg:px-10">
-    <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr]"><div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">01 · Brand jádro</p><h2 className="mt-4 font-heading text-4xl lg:text-5xl">Co jsme, kam jdeme a čím se řídíme.</h2></div><blockquote className="border-l-2 border-accent pl-6 text-xl leading-relaxed text-foreground">Přinášíme 20 let průmyslové preciznosti do veřejného prostoru — navrhujeme a vyrábíme česká mlžítka, která vydrží generace.</blockquote></div>
+    <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr]"><div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">01 · Brand jádro</p><h2 className="mt-4 font-heading text-4xl lg:text-5xl">Co jsme, kam jdeme a čím se řídíme.</h2></div><blockquote className="border-l-2 border-accent pl-6 text-xl leading-relaxed text-foreground">Navrhujeme a vyrábíme česká mlžítka pro města a obce — náměstí, promenády, parky a vstupy veřejné správy — i pro gastro, wellness, hotelové a rezidenční terasy a zahrady.</blockquote></div>
     <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-2 lg:grid-cols-5">{VALUES.map(([Icon,title,text], index) => <article key={title} className="bg-card p-6"><span className="font-mono text-xs text-secondary">0{index + 1}</span><Icon className="mt-8 text-secondary" size={22}/><h3 className="mt-5 text-lg">{title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p></article>)}</div>
   </div></section>;
 }

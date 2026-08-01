@@ -13,7 +13,7 @@ import '@/components/brand/brand-print.css';
 
 export default function BrandIdentity() {
   useEffect(() => setSEO({ title: 'Brand manuál | MLŽIDLA®', description: 'Praktický brand manuál MLŽIDLA®: mise, hlas značky, vizuální pravidla, reklamní šablony a ukázky použití.', canonicalPath: '/brand-identity' }), []);
-  return <main className="brand-manual-print bg-background pt-16 text-foreground">
+  return <main className="pulselab-theme brand-manual-print bg-background pt-16 text-foreground">
     <BrandManualHero />
     <BrandManualNav />
     <BrandCoreSection />

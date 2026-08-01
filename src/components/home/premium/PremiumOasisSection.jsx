@@ -8,7 +8,7 @@ const APPLICATIONS = [
   { icon: TemperatureDropIcon, num: "02", title: "Ochlazení až o 10 °C", desc: "Jemná voda odebírá teplo ze vzduchu a rychle zpříjemní venkovní prostor." },
   { icon: MistMotionIcon, num: "03", title: "Mlha bez mokrého povrchu", desc: "Mikrokapky se odpaří ve vzduchu a zanechají po sobě příjemný chlad." },
   { icon: GroundScrewIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychlé mobilní kotvení bez betonování a s možností snadného přesunu." },
-  { icon: AtmosphereIcon, num: "05", title: "Efektní vzhled", desc: "Atmosférický oblak jako architektonický prvek pro terasy, festivaly a catering." },
+  { icon: AtmosphereIcon, num: "05", title: "Součást architektury", desc: "Mlžný oblak jako funkční prvek pro městská prostranství, terasy, hotely a zahrady." },
   { icon: SmartAutomationIcon, num: "06", title: "Smart automatizace", desc: "Scénáře podle teploty, času i pohybu lidí šetří vodu a starosti." }];
 
 

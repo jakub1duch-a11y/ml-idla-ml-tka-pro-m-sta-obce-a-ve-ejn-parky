@@ -56,8 +56,8 @@ export default function Blog() {
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-4">
             O mlžení do hloubky
           </h1>
-          <p className="text-white/70 max-w-xl text-lg font-light">
-            Řešení pro gastro provozy a eventy, design pro zahrady a terasy — technologie, inspirace a realizace na jednom místě.
+          <p className="text-white/70 max-w-xl text-lg">
+            Technologie, realizace a zkušenosti z městských prostranství, gastro a hotelových teras, wellness i rezidenčních zahrad.
           </p>
         </motion.div>
       </div></div>

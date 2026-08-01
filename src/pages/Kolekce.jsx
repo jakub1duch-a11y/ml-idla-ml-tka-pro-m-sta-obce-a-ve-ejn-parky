@@ -77,7 +77,7 @@ const categoryGroups = [
   id: 'mlhoviste',
   label: 'Mlhoviště a chladicí zóny',
   icon: Flame,
-  tagline: 'Až −9 °C. Komfort bez kompromisů.',
+  tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
   description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
   audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
   usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
@@ -107,7 +107,7 @@ function ProductCard({ product, i }) {
   const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
   return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
     <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async"/><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent"/>{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary">Prohlédnout detail <ArrowRight size={15}/></p></div></Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 text-xs font-bold text-foreground transition hover:bg-muted"><Zap size={13}/> Rychlá poptávka</Link>
+    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 text-xs font-bold text-foreground transition hover:bg-muted"><Zap size={13}/> Popsat projekt</Link>
   </motion.article>;
 }
 
@@ -219,7 +219,7 @@ export default function Kolekce() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou mlžítka a mlžné systémy určeny</p>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení pro každé publikum.</h2>
+            <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení podle prostoru a provozu.</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {audienceSegments.map((seg, i) => {
@@ -254,7 +254,7 @@ export default function Kolekce() {
             </a>
             <Link to="/kontakt"
             className="px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">
-              Nezávazná rychlá poptávka
+              Popsat projekt
             </Link>
           </div>
         </div>

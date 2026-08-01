@@ -54,7 +54,7 @@ export default function Deti() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Nezávazná konzultace <ArrowRight size={15} />
+                Probrat záměr <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)

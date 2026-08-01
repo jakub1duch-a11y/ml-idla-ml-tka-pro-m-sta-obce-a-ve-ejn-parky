@@ -51,14 +51,14 @@ export default function MestaObce() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Mlžítka pro Města a Obce</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Bojujete v létě<br /><span style={{ fontStyle: 'italic' }}>s tepelnými ostrovy?</span>
+              Ochlazení pro města,<br /><span style={{ fontStyle: 'italic' }}>která pečují o veřejný prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Naše mlžítka efektivně ochlazují vzduch na náměstích, v parcích a podél pěších zón až o 9 °C. Stávají se oblíbenými místy setkávání a zároveň symbolem moderní a starostlivé správy města. Bez chemie, s minimální spotřebou vody a možností dotačního financování.
+              Mlžítka ochlazují vzduch na náměstích, promenádách, v parcích, pěších zónách i u vstupů veřejné správy až o 9 °C. Vytvářejí příjemnější místa pro setkávání, pracují bez chemie a s nízkou spotřebou vody.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Nezávazná konzultace <ArrowRight size={15} />
+                Probrat záměr <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)
@@ -73,7 +73,7 @@ export default function MestaObce() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč HolmTec pro obce</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč MLŽIDLA® pro obce</p>
               <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
                 Řešení, které<br /><span style={{ fontStyle: 'italic' }}>funguje a vydrží.</span>
               </h2>

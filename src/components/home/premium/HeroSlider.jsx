@@ -7,7 +7,7 @@ const SLIDES = [
 {
   tag: 'ČESKÁ VÝROBA · 20 LET PRŮMYSLOVÉ ZKUŠENOSTI',
   title: 'Česká přesnost pro místa, kde se žije venku.',
-  desc: 'Navrhujeme a vyrábíme nerezová mlžítka a mlžné systémy na míru — pro města, architekturu, zahrady i festivaly.',
+  desc: 'Navrhujeme a vyrábíme nerezová mlžítka pro města a obce, náměstí, promenády, parky, gastro, wellness, hotely i rezidenční terasy a zahrady.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
   cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },
   cta2: { label: 'Popsat projekt', to: '/poptavka' }

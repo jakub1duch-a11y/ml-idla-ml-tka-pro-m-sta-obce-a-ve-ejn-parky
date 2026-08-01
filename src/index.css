@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 210 25% 98%;
+    --background: 216 33% 97%;
     --foreground: 213 60% 10%;
     --card: 0 0% 100%;
     --card-foreground: 213 60% 10%;
@@ -26,11 +26,11 @@
     --input: 210 18% 84%;
     --ring: 197 74% 40%;
     --radius: 14px;
-    --font-heading: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    --brand-white: 210 33% 98%;
+    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --brand-white: 216 33% 97%;
   }
   .dark {
     --background: 213 60% 7%;
@@ -91,7 +91,7 @@
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.14;
     letter-spacing: -0.035em;
   }
@@ -126,8 +126,8 @@
 }
 
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #0a0e14; }
-::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 2px; }
+::-webkit-scrollbar-track { background: #0A1628; }
+::-webkit-scrollbar-thumb { background: #1A85B0; border-radius: 2px; }
 
 /* Fade-in & Slide-up on scroll (GSAP ScrollTrigger) */
 .reveal-element {

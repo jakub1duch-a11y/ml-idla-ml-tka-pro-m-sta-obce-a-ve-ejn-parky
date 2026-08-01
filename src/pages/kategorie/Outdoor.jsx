@@ -43,11 +43,11 @@ export default function Outdoor() {
               Zahrada, která<br /><span style={{ fontStyle: 'italic' }}>dýchá chladem.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Soukromé zahrady, terasy a rezidenční projekty získávají s mlžným prvkem HolmTec novou dimenzi. Elegantní skulptura z nerezové oceli, chladivá mlha a atmosféra, která promění váš venkovní prostor v oázu klidu.
+              Pro soukromé a rezidenční zahrady, terasy i venkovní wellness navrhujeme nerezová mlžítka jako přirozenou součást architektury. Tvar, rozměr i způsob řízení přizpůsobíme konkrétnímu prostoru.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Nezávazná konzultace <ArrowRight size={15} />
+                Probrat záměr <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)

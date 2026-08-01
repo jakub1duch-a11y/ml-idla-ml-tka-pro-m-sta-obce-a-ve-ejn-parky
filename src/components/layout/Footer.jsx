@@ -4,7 +4,7 @@ import { Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
 
-const columns = [{ title: 'Produkty', links: [['City Collection', '/mlzidla-mlzitka'], ['Garden Collection', '/mlzidla-mlzitka'], ['Zakázková řešení', '/poptavka']] }, { title: 'Realizace', links: [['Města a obce', '/reference'], ['Parky', '/reference'], ['Hotely a gastro', '/reference']] }, { title: 'Ke stažení', links: [['Katalog', '/ke-stazeni'], ['Technické listy', '/ke-stazeni'], ['CAD / BIM', '/ke-stazeni']] }, { title: 'Podpora', links: [['Brand identity', '/brand-identity'], ['Jak to funguje', '/technologie'], ['Servis', '/servis-udrzba'], ['Časté dotazy', '/podpora']] }, { title: 'Kontakt', links: [['Nezávazná poptávka', '/poptavka'], ['O nás', '/o-nas'], ['Kontakt', '/kontakt']] }];
+const columns = [{ title: 'Produkty', links: [['City Collection', '/mlzidla-mlzitka'], ['Garden Collection', '/mlzidla-mlzitka'], ['Zakázková řešení', '/poptavka']] }, { title: 'Realizace', links: [['Města a obce', '/reference'], ['Parky', '/reference'], ['Hotely a gastro', '/reference']] }, { title: 'Ke stažení', links: [['Katalog', '/ke-stazeni'], ['Technické listy', '/ke-stazeni'], ['CAD / BIM', '/ke-stazeni']] }, { title: 'Podpora', links: [['Brand identity', '/brand-identity'], ['Jak to funguje', '/technologie'], ['Servis', '/servis-udrzba'], ['Časté dotazy', '/podpora']] }, { title: 'Kontakt', links: [['Popsat projekt', '/poptavka'], ['O nás', '/o-nas'], ['Kontakt', '/kontakt']] }];
 
 export default function Footer() {
   const [email, setEmail] = useState('');

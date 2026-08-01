@@ -64,7 +64,7 @@ export default function Architekti() {
               Navrhněte prostor,<br />který dýchá. <span style={{ fontStyle: 'italic' }}>My dodáme mlhu.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Mlžidla.cz je partner architektů a designérů. Poskytujeme BIM modely, technické listy, konzultace a exkluzivní podmínky pro vaše projekty.
+              Jsme technickým partnerem architektů, krajinářů a designérů. Připravíme BIM modely, technické listy, konzultaci i podklady potřebné od studie po realizaci.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
@@ -202,7 +202,7 @@ export default function Architekti() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
-            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Pojďme tvořit společně.</h3>
+            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Proberme technické řešení vašeho návrhu.</h3>
             <p className="text-slate-500 text-sm mb-6">Získejte přístup k BIM modelům, technickým listům a prioritní podpoře. Připojte se k partnerskému programu Holmtec.</p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">

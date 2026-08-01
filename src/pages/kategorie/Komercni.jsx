@@ -36,14 +36,14 @@ export default function Komercni() {
             <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Komerční a industriální prostory</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-            Chlad, který zvyšuje<br /><span style={{ fontStyle: 'italic' }}>výkon i tržby.</span>
+            Ochlazení, které podporuje<br /><span style={{ fontStyle: 'italic' }}>komfort hostů i provozu.</span>
           </h1>
           <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Na terase restaurace, ve výrobní hale i v nákupním centru — mlžná technologie HolmTec zvyšuje komfort zákazníků i pracovníků. Ochlazení až o 9 °C bez klimatizace, minimální spotřeba energie.
+            Pro gastro, wellness, hotelové terasy a zahrady i komerční provozy navrhujeme mlžné systémy podle skutečného využití místa. Snižují pocitovou teplotu až o 9 °C bez klimatizace a s nízkou spotřebou energie.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-              Nezávazná konzultace <ArrowRight size={15} />
+              Probrat záměr <ArrowRight size={15} />
             </a>
             <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Zavolat (+420774700390)

@@ -27,7 +27,7 @@ export default function Technologie() {
   useEffect(() => {
     setSEO({
       title: 'Technologie mlžení',
-      description: 'Jak fungují mlžné systémy HolmTec: princip evaporace, mikrokapky a proč je mlžení extrémně úsporné.',
+      description: 'Jak fungují mlžné systémy HolmTec: princip evaporace, mikrokapky a úsporný provoz.',
       keywords: 'technologie mlžení, jak funguje mlžný systém, mikrokapky, evaporační chlazení',
       canonicalPath: '/technologie',
     });
@@ -100,7 +100,7 @@ export default function Technologie() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="bg-primary rounded-2xl p-8 text-center border border-secondary/30">
-          <p className="text-white/60 text-xs font-mono tracking-widest uppercase mb-2">Extrémně úsporný provoz</p>
+          <p className="text-white/60 text-xs font-mono tracking-widest uppercase mb-2">Úsporný provoz</p>
           <p className="text-white text-lg font-light">
             Spotřeba vody se pohybuje pouze v jednotkách litrů za hodinu.
           </p>
@@ -116,7 +116,7 @@ export default function Technologie() {
 
       <div className="text-center mt-14">
         <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
-          Nezávazná poptávka <ArrowRight size={16} />
+          Popsat projekt <ArrowRight size={16} />
         </Link>
       </div>
     </div>

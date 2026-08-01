@@ -19,14 +19,14 @@ const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek �
 
 const USAGE_LINKS = [
 { icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-cyan' },
-{ icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-400' },
-{ icon: Waves, label: 'Koupaliště & aquaparky', path: '/kategorie/koupaliste', color: 'text-blue-400' },
-{ icon: Flower2, label: 'Outdoor a zahrady', path: '/kategorie/outdoor-zahrady', color: 'text-green-400' },
-{ icon: Sparkles, label: 'Art instalace na míru', path: '/kategorie/art-instalace', color: 'text-fuchsia-400' },
-{ icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-sky-400' },
-{ icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-violet-400' },
-{ icon: Factory, label: 'Komerční prostory', path: '/kategorie/komercni', color: 'text-amber-400' },
-{ icon: Tent, label: 'Eventy & festivaly', path: '/kategorie/eventy', color: 'text-rose-400' }];
+{ icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-secondary' },
+{ icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-secondary' },
+{ icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/kategorie/outdoor-zahrady', color: 'text-accent' },
+{ icon: Sparkles, label: 'Autorské instalace', path: '/kategorie/art-instalace', color: 'text-accent' },
+{ icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-secondary' },
+{ icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-secondary' },
+{ icon: Factory, label: 'Gastro, wellness a hotely', path: '/kategorie/komercni', color: 'text-accent' },
+{ icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-secondary' }];
 
 
 const INFO_LINKS = [

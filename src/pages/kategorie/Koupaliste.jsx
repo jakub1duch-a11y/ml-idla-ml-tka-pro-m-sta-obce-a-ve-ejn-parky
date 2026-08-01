@@ -40,14 +40,14 @@ export default function Koupaliste() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Koupaliště, aquaparky & kempy</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Chlad i tam,<br /><span style={{ fontStyle: 'italic' }}>kde je voda všude.</span>
+              Příjemnější mikroklima<br /><span style={{ fontStyle: 'italic' }}>u vody i v zázemí areálu.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
               I u vody může být horko. Naše mlžítka vytvářejí příjemné mikroklima v relaxačních zónách koupališť, aquaparků a kempů. Oceníte je jako dekorativní i funkční prvky — bez nutnosti vodního zdroje u každého kusu, jen přívod z vodovodního řadu.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Nezávazná konzultace <ArrowRight size={15} />
+                Probrat záměr <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)

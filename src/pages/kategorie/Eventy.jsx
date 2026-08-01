@@ -48,10 +48,10 @@ export default function Eventy() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Eventy & festivaly</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Mlžítko, které se<br /><span style={{ fontStyle: 'italic' }}>stane hvězdou akce.</span>
+              Mlžítko jako součást<br /><span style={{ fontStyle: 'italic' }}>atmosféry a provozu akce.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Pronajměte si nebo kupte mobilní mlžné prvky pro festivaly, letní terasy a krátkodobé akce. Rychlá instalace, nezaměnitelná vizuální identita a ochlazení návštěvníků — v jednom balíčku.
+              Mobilní mlžné prvky dodáváme pro festivaly, letní terasy a krátkodobé akce formou pronájmu i prodeje. Zajistíme instalaci, technickou podporu a rozmístění podle provozu akce.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link to="/poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -141,7 +141,7 @@ export default function Eventy() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
-            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Termín se blíží? Napište nám hned.</h3>
+            <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Proberme termín a provoz vaší akce.</h3>
             <div className="flex flex-col sm:flex-row gap-4 mt-3 mb-6 text-sm font-mono text-slate-500">
               <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-slate-900 transition-colors"><Phone size={13} className="text-slate-900" /> +420 774 700 390</a>
               <a href="mailto:obchod1@holmtec.cz" className="flex items-center gap-2 hover:text-slate-900 transition-colors"><Mail size={13} className="text-slate-900" /> obchod1@holmtec.cz</a>

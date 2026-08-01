@@ -40,14 +40,14 @@ export default function ParkyHriste() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Parky a hřiště</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Příroda v nerezu.<br /><span style={{ fontStyle: 'italic' }}>Chlad v parku.</span>
+              Mlžítka pro parky,<br /><span style={{ fontStyle: 'italic' }}>zeleň a místa setkávání.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
               Mlžítka pro parky a hřiště jsou navržena tak, aby splynula s přírodním prostředím. Organické tvary inspirované stromy, mraky nebo rostlinami — z potravinářské nerezové oceli bez chemie. Ideální pro dětská hřiště, zámecké parky i městskou zeleň.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Nezávazná konzultace <ArrowRight size={15} />
+                Probrat záměr <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)

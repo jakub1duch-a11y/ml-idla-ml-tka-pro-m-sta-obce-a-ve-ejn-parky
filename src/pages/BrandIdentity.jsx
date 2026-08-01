@@ -2,11 +2,25 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
-import BrandValues from '@/components/brand/BrandValues';
-import BrandApproach from '@/components/brand/BrandApproach';
-import BrandShowcase from '@/components/brand/BrandShowcase';
+import BrandManualHero from '@/components/brand/BrandManualHero';
+import BrandManualNav from '@/components/brand/BrandManualNav';
+import BrandCoreSection from '@/components/brand/BrandCoreSection';
+import BrandVoiceSection from '@/components/brand/BrandVoiceSection';
+import BrandVisualSystem from '@/components/brand/BrandVisualSystem';
+import BrandAdvertisingGuide from '@/components/brand/BrandAdvertisingGuide';
+import BrandApplicationGallery from '@/components/brand/BrandApplicationGallery';
+import '@/components/brand/brand-print.css';
 
 export default function BrandIdentity() {
-  useEffect(() => setSEO({ title: 'Brand Identity | MLŽIDLA®', description: 'Vize, hodnoty a přístup MLŽIDLA® k udržitelnému ochlazování měst a veřejného prostoru.', canonicalPath: '/brand-identity' }), []);
-  return <main className="bg-background pt-16"><section className="relative overflow-hidden bg-primary text-primary-foreground"><div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_80%_15%,hsl(var(--accent))_0,transparent_30%),linear-gradient(120deg,transparent_35%,rgba(255,255,255,.08)_35.2%,transparent_35.5%)]"/><div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-36"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-accent">MLŽIDLA® / Brand Identity</p><h1 className="mt-5 max-w-5xl font-heading text-5xl lg:text-7xl">20 let průmyslové přesnosti pro veřejný prostor.</h1><p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/75">Navrhujeme a vyrábíme česká mlžítka a mlžné systémy, které osvěžují města, zahrady i festivaly a vydrží generace.</p><Link to="/poptavka" className="mt-10 inline-flex items-center gap-2 bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground">Popsat projekt <ArrowRight size={16}/></Link></div></section><BrandShowcase/><BrandApproach/><BrandValues/><section className="bg-secondary text-secondary-foreground"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24 grid gap-10 lg:grid-cols-[1fr_auto] items-end"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-accent">Vize značky</p><h2 className="mt-4 max-w-4xl font-heading text-4xl lg:text-6xl">Tvoříme s přesností. Pečujeme o výsledek.</h2></div><Link to="/kontakt" className="inline-flex items-center gap-2 border border-white/40 px-6 py-3 text-sm font-semibold">Probrat záměr <ArrowRight size={16}/></Link></div></section></main>;
+  useEffect(() => setSEO({ title: 'Brand manuál | MLŽIDLA®', description: 'Praktický brand manuál MLŽIDLA®: mise, hlas značky, vizuální pravidla, reklamní šablony a ukázky použití.', canonicalPath: '/brand-identity' }), []);
+  return <main className="brand-manual-print bg-background pt-16 text-foreground">
+    <BrandManualHero />
+    <BrandManualNav />
+    <BrandCoreSection />
+    <BrandVoiceSection />
+    <BrandVisualSystem />
+    <BrandAdvertisingGuide />
+    <BrandApplicationGallery />
+    <section className="bg-secondary text-secondary-foreground"><div className="mx-auto grid max-w-7xl items-end gap-10 px-6 py-20 lg:grid-cols-[1fr_auto] lg:px-10 lg:py-24"><div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Závěrečné doporučení</p><h2 className="mt-4 max-w-4xl font-heading text-4xl lg:text-6xl">Konzistence není omezení. Je to způsob, jak značku poznat na první pohled.</h2></div><Link to="/kontakt" className="brand-no-print inline-flex items-center gap-2 border border-secondary-foreground/40 px-6 py-3 text-sm font-semibold">Probrat použití značky <ArrowRight size={16}/></Link></div></section>
+  </main>;
 }

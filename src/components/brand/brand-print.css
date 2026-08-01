@@ -1,0 +1,10 @@
+@media print {
+  @page { size: A4; margin: 12mm; }
+  header, footer, .brand-no-print { display: none !important; }
+  body { background: white !important; color: #0A1628 !important; }
+  .brand-manual-print { padding-top: 0 !important; }
+  .brand-manual-print section { break-inside: avoid; padding-top: 12mm !important; padding-bottom: 12mm !important; }
+  .brand-manual-print article, .brand-manual-print figure { break-inside: avoid; box-shadow: none !important; }
+  .brand-manual-print img { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .brand-manual-print * { animation: none !important; transition: none !important; }
+}

@@ -28,7 +28,9 @@
     --radius: 14px;
     --font-heading: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --brand-white: 210 33% 98%;
   }
   .dark {
     --background: 213 60% 7%;
@@ -50,6 +52,7 @@
     --border: 213 22% 25%;
     --input: 213 22% 25%;
     --ring: 186 64% 49%;
+    --brand-white: 210 33% 98%;
   }
 }
 

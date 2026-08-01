@@ -98,7 +98,7 @@ export default function BlogDetail() {
             ))}
           </div>
 
-          <h1 className="font-heading font-light text-3xl lg:text-5xl text-slate-900 tracking-tight leading-tight mb-4">
+          <h1 className="font-heading font-light text-2xl lg:text-4xl text-slate-900 tracking-tight leading-tight mb-4">
             {post.title}
           </h1>
           {post.perex && (
@@ -125,7 +125,9 @@ export default function BlogDetail() {
               prose-blockquote:border-slate-900 prose-blockquote:bg-slate-50 prose-blockquote:rounded-r-xl prose-blockquote:py-3 prose-blockquote:not-italic prose-blockquote:text-slate-700
               prose-code:text-slate-900 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:rounded
               prose-a:text-slate-900 prose-a:underline hover:prose-a:text-slate-600
-              [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:object-cover [&_img]:border [&_img]:border-slate-200 [&_h2]:mt-10 [&_h3]:mt-8">
+              [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:max-h-[520px] [&_img]:object-cover [&_img]:border [&_img]:border-slate-200
+              [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:font-heading [&_h2]:font-light [&_h2]:text-2xl [&_h2]:leading-tight lg:[&_h2]:text-3xl
+              [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:font-heading [&_h3]:font-light [&_h3]:text-xl [&_h3]:leading-snug lg:[&_h3]:text-2xl">
             {/<\/?[a-z][\s\S]*>/i.test(post.content) ? (
               <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
             ) : (

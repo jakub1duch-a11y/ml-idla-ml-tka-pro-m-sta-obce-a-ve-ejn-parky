@@ -53,7 +53,7 @@ export default function Blog() {
       <div className="bg-primary text-white"><div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog HolmTec</p>
-          <h1 className="font-heading font-light text-5xl lg:text-7xl text-white tracking-tight mb-4">
+          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-4">
             O mlžení do hloubky
           </h1>
           <p className="text-white/70 max-w-xl text-lg font-light">
@@ -113,7 +113,7 @@ export default function Blog() {
                       <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
                       {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs font-mono text-slate-300">{formatDate(featured.published_date)}</span></>}
                     </div>
-                    <h2 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
+                    <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
                     <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
                     <div className="mt-6 flex items-center gap-2 text-xs text-slate-900 font-medium group-hover:gap-3 transition-all">
                       Číst článek <ArrowRight size={12} />

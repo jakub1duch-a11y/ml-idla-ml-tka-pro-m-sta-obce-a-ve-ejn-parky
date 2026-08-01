@@ -50,21 +50,24 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.68;
     text-align: left;
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.04em;
+    font-weight: 500;
+    line-height: 1.14;
+    letter-spacing: -0.035em;
   }
+  h1 { font-size: clamp(2rem, 5vw, 3.75rem); }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.75rem); }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 1.875rem); }
   p {
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.68;
   }
   button, input, textarea, select {
     font-family: var(--font-body);

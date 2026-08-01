@@ -14,6 +14,8 @@ import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
 import BlogNewsletterInline from '@/components/blog/BlogNewsletterInline';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
+import ArticleProductSlider from '@/components/blog/ArticleProductSlider';
+import ArticleLinkMap from '@/components/blog/ArticleLinkMap';
 
 const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
@@ -98,11 +100,11 @@ export default function BlogDetail() {
             ))}
           </div>
 
-          <h1 className="font-heading font-light text-2xl lg:text-4xl text-slate-900 tracking-tight leading-tight mb-4">
+          <h1 className="font-heading font-normal text-[clamp(1.75rem,5vw,2.75rem)] text-slate-900 tracking-tight leading-[1.15] mb-4">
             {post.title}
           </h1>
           {post.perex && (
-            <p className="text-slate-500 text-lg leading-relaxed font-light mb-2 border-l-2 border-slate-300 pl-5">
+            <p className="text-slate-500 text-base sm:text-lg leading-relaxed font-normal mb-2 border-l-2 border-slate-300 pl-5">
               {post.perex}
             </p>
           )}
@@ -117,17 +119,17 @@ export default function BlogDetail() {
         {/* Content — supports technical images, expert quotes (blockquote), paragraphs */}
         {post.content ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-            className="prose prose-lg max-w-none pb-4
-              prose-headings:font-heading prose-headings:font-light prose-headings:tracking-tight prose-headings:text-slate-900
-              prose-p:text-slate-600 prose-p:font-light prose-p:leading-relaxed
-              prose-li:text-slate-600 prose-li:font-light
+            className="prose max-w-none pb-4 text-[15px] leading-[1.75] sm:text-base lg:text-[17px]
+              prose-headings:font-heading prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-slate-900
+              prose-p:text-slate-600 prose-p:font-normal prose-p:leading-[1.75]
+              prose-li:text-slate-600 prose-li:font-normal
               prose-strong:text-slate-900 prose-strong:font-medium
               prose-blockquote:border-slate-900 prose-blockquote:bg-slate-50 prose-blockquote:rounded-r-xl prose-blockquote:py-3 prose-blockquote:not-italic prose-blockquote:text-slate-700
               prose-code:text-slate-900 prose-code:bg-slate-100 prose-code:px-1.5 prose-code:rounded
               prose-a:text-slate-900 prose-a:underline hover:prose-a:text-slate-600
               [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:max-h-[520px] [&_img]:object-cover [&_img]:border [&_img]:border-slate-200
-              [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:font-heading [&_h2]:font-light [&_h2]:text-2xl [&_h2]:leading-tight lg:[&_h2]:text-3xl
-              [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:font-heading [&_h3]:font-light [&_h3]:text-xl [&_h3]:leading-snug lg:[&_h3]:text-2xl">
+              [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:font-heading [&_h2]:font-normal [&_h2]:text-xl [&_h2]:leading-tight sm:[&_h2]:text-2xl lg:[&_h2]:text-[1.75rem]
+              [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:font-heading [&_h3]:font-normal [&_h3]:text-lg [&_h3]:leading-snug sm:[&_h3]:text-xl lg:[&_h3]:text-2xl">
             {/<\/?[a-z][\s\S]*>/i.test(post.content) ? (
               <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
             ) : (
@@ -137,6 +139,9 @@ export default function BlogDetail() {
         ) : (
           <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
         )}
+
+        <ArticleProductSlider />
+        <ArticleLinkMap />
 
         {/* Fixed safety/standard notice — appears in every article */}
         <ArticleSafetyNotice />

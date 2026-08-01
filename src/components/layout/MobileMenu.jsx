@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowRight, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Sparkles, X, Layers, Compass, Info } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 
 export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks, customLink }) {
@@ -29,15 +29,15 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
           </div>
 
           {/* Section tabs */}
-          <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 shrink-0 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          <div className="grid grid-cols-3 gap-2 px-4 py-3 border-b border-slate-100 shrink-0">
             {[
-              { id: 'katalog', label: 'Katalog mlžítek' },
-              { id: 'reseni', label: 'Řešení pro obor' },
-              { id: 'info', label: 'Informace' },
+              { id: 'katalog', label: 'Katalog', icon: Layers },
+              { id: 'reseni', label: 'Využití', icon: Compass },
+              { id: 'info', label: 'Informace', icon: Info },
             ].map((t) => (
               <button key={t.id} onClick={() => setSection(t.id)}
-                className={`shrink-0 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${section === t.id ? 'bg-slate-900 text-white' : 'text-slate-500 bg-slate-50 hover:bg-slate-100'}`}>
-                {t.label}
+                className={`flex min-h-16 flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-2 text-xs font-semibold transition-all ${section === t.id ? 'border-slate-900 bg-slate-900 text-white shadow-sm' : 'border-slate-200 bg-slate-50 text-slate-600'}`}>
+                <t.icon size={19} />{t.label}
               </button>
             ))}
           </div>
@@ -106,12 +106,10 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
               <motion.div key="info" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}>
                 <p className="text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-1">Poznejte firmu</p>
                 <h2 className="font-heading font-semibold text-xl text-slate-900 mb-5">Informace a podpora</h2>
-                <div className="flex flex-col gap-1 mb-6">
-                  <Link to="/blog" onClick={onClose} className="text-sm font-semibold text-slate-800 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">Blog & novinky</Link>
-                  <Link to="/o-nas" onClick={onClose} className="text-sm font-semibold text-slate-800 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">O společnosti</Link>
+                <div className="grid grid-cols-2 gap-3 mb-6">
                   {infoLinks.map((l) =>
-                  <Link key={l.path} to={l.path} onClick={onClose} className="flex items-center gap-3 text-sm font-medium text-slate-700 hover:bg-slate-50 py-3.5 px-4 rounded-xl transition-colors">
-                    <l.icon size={16} className="text-slate-400 shrink-0" /> {l.label}
+                  <Link key={l.path} to={l.path} onClick={onClose} className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-medium text-slate-700 transition-colors hover:border-slate-300">
+                    <l.icon size={20} className="text-slate-500" /><span className="mt-3 leading-tight">{l.label}</span>
                   </Link>
                   )}
                 </div>

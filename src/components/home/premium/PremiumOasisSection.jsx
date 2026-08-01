@@ -26,12 +26,12 @@ const DEVICE_IMG = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4
 
 export default function PremiumOasisSection() {
   return (
-    <section className="relative overflow-hidden bg-[#F8F9FA] py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-background py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h2 className="font-heading text-4xl md:text-5xl text-foreground tracking-tight mb-5">Vzduch se právě proměnil v chladivou oázu</h2>
-            <p className="font-body text-lg text-slate-500 leading-relaxed text-measure">Ochlazení až o 10 °C. Adiabatické chlazení odparem — bez klimatizace a bez elektrické spotřeby.</p>
+            <h2 className="font-heading text-4xl md:text-5xl text-foreground tracking-tight mb-5">Ochlazení navržené jako součást prostoru.</h2>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed text-measure">Jemná mlha snižuje pocitovou teplotu až o 10 °C. Bez klimatizace, bez elektrické spotřeby a bez mokrého povrchu.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
             <img src={DEVICE_IMG} alt="Mlžidlo v provozu" className="w-full rounded-2xl shadow-xl" />

@@ -3,12 +3,12 @@ import { motion } from "framer-motion";
 import { Ruler, Wrench, Box, CalendarClock, ShieldCheck, FileText } from "lucide-react";
 
 const SERVICES = [
-{ icon: Ruler, title: "Zakázková výroba mlžných systémů", desc: "Navrhneme a vyrobíme originální mlžné systémy přesně podle architektonických požadavků vašeho projektu." },
-{ icon: Wrench, title: "Instalace na klíč", desc: "Kompletní profesionální montáž, zapojení vysokotlaké technologie a otestování celého systému na místě." },
-{ icon: Box, title: "Konzultace a 3D vizualizace", desc: "Odborné poradenství a reálný 3D digitální model zakomponovaný do vaší zahrady nebo provozu ještě před realizací." },
-{ icon: CalendarClock, title: "Pronájem mlžných instalací", desc: "Krátkodobý i dlouhodobý pronájem mobilních mlžných systémů pro festivaly, svatby, firemní akce a catering." },
-{ icon: ShieldCheck, title: "Servis a údržba", desc: "Pravidelné kontroly, zazimování systému, dekalcifikace trysek a rychlý záruční i pozáruční servis." },
-{ icon: FileText, title: "Projektová dokumentace", desc: "Zpracování detailních technických podkladů, hydraulických výpočtů a schémat zapojení pro stavební povolení či kolaudaci." }];
+{ icon: Ruler, title: "Návrh na míru", desc: "Popište nám prostor a záměr. Navrhneme mlžný systém, který odpovídá architektuře i skutečnému provozu." },
+  { icon: Wrench, title: "Výroba a instalace", desc: "Systém sami vyrobíme v Česku, nainstalujeme a otestujeme přímo na místě." },
+  { icon: Box, title: "Konzultace a 3D návrh", desc: "Ještě před výrobou uvidíte, jak řešení zapadne do zahrady, provozu nebo veřejného prostoru." },
+  { icon: CalendarClock, title: "Pronájem pro akce", desc: "Dodáme mobilní mlžné systémy pro festivaly, firemní akce i catering — včetně přípravy a servisu." },
+  { icon: ShieldCheck, title: "Dlouhodobý servis", desc: "Postaráme se o pravidelnou kontrolu, zazimování, trysky i záruční a pozáruční podporu." },
+  { icon: FileText, title: "Technické podklady", desc: "Připravíme výpočty a schémata, se kterými mohou spolehlivě pracovat architekti i realizační firmy." }];
 
 
 export default function PremiumServicesSection() {
@@ -17,8 +17,8 @@ export default function PremiumServicesSection() {
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-10">
           <p className="text-xs font-mono tracking-widest uppercase text-accent mb-3">Služby</p>
-          <h2 className="font-heading tracking-tight font-bold text-left text-white text-3xl">
-            Služby a řešení pro dokonalý mlžný systém
+          <h2 className="font-heading tracking-tight font-medium text-left text-white text-3xl">
+            Od prvního návrhu po dlouhodobý servis.
           </h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

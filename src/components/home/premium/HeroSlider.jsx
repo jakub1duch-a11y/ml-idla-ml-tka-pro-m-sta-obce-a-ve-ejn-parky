@@ -5,12 +5,12 @@ import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, C
 
 const SLIDES = [
 {
-  tag: 'MLŽÍTKA · MLŽIDLA · CHLADICÍ PRVKY',
-  title: 'Chladíme města. Oživujeme zahrady.',
-  desc: 'Nerezová mlžítka pro městské prostory, parky, zahrady a terasy. Přirozené ochlazení pro místa, kde se žije venku.',
+  tag: 'ČESKÁ VÝROBA · 20 LET PRŮMYSLOVÉ ZKUŠENOSTI',
+  title: 'Česká přesnost pro místa, kde se žije venku.',
+  desc: 'Navrhujeme a vyrábíme nerezová mlžítka a mlžné systémy na míru — pro města, architekturu, zahrady i festivaly.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
-  cta1: { label: 'Prohlédnout kolekce mlžítek', to: '/mlzidla-mlzitka' },
-  cta2: { label: 'Nezávazná poptávka', to: '/poptavka' }
+  cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },
+  cta2: { label: 'Popsat projekt', to: '/poptavka' }
 }];
 
 
@@ -36,7 +36,7 @@ export default function HeroSlider() {
   const slide = SLIDES[index];
 
   return (
-    <section className="relative h-screen overflow-hidden bg-[#F8F9FA] min-h-[640px]">
+    <section className="relative h-screen overflow-hidden bg-background min-h-[640px]">
       <AnimatePresence mode="wait">
         <motion.img
           key={slide.image} src={slide.image}
@@ -49,8 +49,8 @@ export default function HeroSlider() {
           className="absolute inset-0 w-full h-full object-cover" />
         
       </AnimatePresence>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#082430]/90 via-[#082430]/20 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#082430]/75 via-[#082430]/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/25 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/25 to-transparent" />
 
       <div className="absolute inset-0 items-center flex">
         <div className="lg:px-20 w-500 max-w-7x2 mx-auto px-6">

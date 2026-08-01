@@ -138,10 +138,10 @@ export default function Header() {
               <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">O společnosti</Link>
               <Link to="/poptavka"
               className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">
-                Poptávka
+                Popsat projekt
               </Link>
             </div>
-            <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary px-3 py-2 text-[11px] font-bold text-primary-foreground">Poptat řešení</Link>
+            <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary px-3 py-2 text-[11px] font-bold text-primary-foreground">Popsat projekt</Link>
             <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-slate-800 hover:bg-slate-100 transition-colors">
               {mobileOpen ? <X size={23} /> : <Menu size={23} />}
             </button>

@@ -31,17 +31,17 @@ export default function ContactSection() {
           
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
           className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-3">
-            Chcete mlhoviště<br />ve vašem prostoru?
+            Popište nám prostor.<br />Navrhneme řešení.
           </motion.h2>
-          <p className="text-slate-500 max-w-xl mx-auto">
-            Kontaktujte nás a navrhnou řešení přesně pro váš prostor. Konzultace zdarma.
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Projdeme váš záměr, provozní podmínky i architekturu místa a doporučíme, co bude fungovat nejlépe.
           </p>
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-4">
           <Link to="/kontakt"
           className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-            Nezávazná poptávka <ArrowRight size={16} />
+            Popsat projekt <ArrowRight size={16} />
           </Link>
           <Link to="/jak-to-funguje"
           className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-medium rounded-full border border-slate-200 hover:bg-slate-100 transition-all">

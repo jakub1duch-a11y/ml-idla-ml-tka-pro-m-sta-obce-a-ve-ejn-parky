@@ -131,7 +131,7 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
           <div className="px-6 py-4 border-t border-slate-100 shrink-0 bg-white">
             <Link to="/poptavka" onClick={onClose}
               className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-slate-900 text-white text-sm font-bold rounded-2xl active:scale-[0.98] transition-transform">
-              <Sparkles size={16} /> Rychlá poptávka <ArrowRight size={16} />
+              <Sparkles size={16} /> Popsat projekt <ArrowRight size={16} />
             </Link>
           </div>
         </motion.div>

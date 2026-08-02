@@ -5,10 +5,10 @@ import { Wifi, Clock, Layers, Droplets, ArrowRight } from 'lucide-react';
 import SmartControlVisual from '@/components/home/SmartControlVisual';
 
 const features = [
- { icon: Wifi, label: 'Google Assistant + Alexa', sub: 'Hlasové ovládání' },
- { icon: Clock, label: 'Automatické plány', sub: 'Podle času i teploty' },
- { icon: Layers, label: 'Zóny a scény', sub: 'Každé místo zvlášť' },
- { icon: Droplets, label: 'Přehled průtoku vody', sub: 'Kontrola spotřeby v reálu' }];
+{ icon: Wifi, label: 'Google Assistant + Alexa', sub: 'Hlasové ovládání' },
+{ icon: Clock, label: 'Automatické plány', sub: 'Podle času i teploty' },
+{ icon: Layers, label: 'Zóny a scény', sub: 'Každé místo zvlášť' },
+{ icon: Droplets, label: 'Přehled průtoku vody', sub: 'Kontrola spotřeby v reálu' }];
 
 
 export default function SmartSection() {
@@ -36,7 +36,7 @@ export default function SmartSection() {
                     <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
                   </motion.div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-900">{f.label}</p>
+                    <p className="text-sm font-semibold text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{f.label}</p>
                     <p className="text-xs text-slate-400">{f.sub}</p>
                   </div>
                 </motion.div>
@@ -45,10 +45,10 @@ export default function SmartSection() {
 
             <div className="flex flex-wrap gap-3">
               <Link to="/kalkulacka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Spočítat provozní náklady <ArrowRight size={16}/>
+                Spočítat provozní náklady <ArrowRight size={16} />
               </Link>
               <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold text-secondary hover:text-foreground">
-                Automatizace mlžítek <ArrowRight size={16}/>
+                Automatizace mlžítek <ArrowRight size={16} />
               </Link>
             </div>
           </motion.div>

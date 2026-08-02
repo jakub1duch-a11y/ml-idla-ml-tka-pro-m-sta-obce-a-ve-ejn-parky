@@ -68,7 +68,7 @@ export default function FeaturedProductsSection() {
                 </div>
                 <div className="p-5 flex items-center justify-between gap-3">
                   <div>
-                    <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight">{product.name}</h3>
+                    <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-2xl">{product.name}</h3>
                     {product.short_description &&
                   <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-sm">{product.short_description}</p>
                   }

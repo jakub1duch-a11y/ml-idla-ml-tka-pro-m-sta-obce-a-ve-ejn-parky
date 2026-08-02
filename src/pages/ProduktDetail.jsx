@@ -301,7 +301,7 @@ export default function ProduktDetail() {
                 map((item) =>
                 <div key={item.q} className="border-b border-white/10 pb-4">
                     <p className="text-sm font-semibold text-white mb-1">{item.q}</p>
-                    <p className="text-sm text-white/50 leading-relaxed">{item.a}</p>
+                    <p className="text-sm text-white/75 leading-relaxed">{item.a}</p>
                   </div>
                 )}
               </motion.div>
@@ -329,7 +329,7 @@ export default function ProduktDetail() {
       <section className="py-20 bg-white border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mohlo by vás zajímat</p>
-            <h2 className="font-heading font-light text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
+            <h2 className="font-heading font-semibold text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((r, i) =>
               <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -26,7 +26,7 @@
     --input: 210 18% 84%;
     --ring: 197 74% 40%;
     --radius: 14px;
-    --font-heading: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -57,7 +57,7 @@
   .pulselab-theme {
     --background: 216 33% 97%;
     --brand-white: 216 33% 97%;
-    --font-heading: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -83,9 +83,9 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
-    font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+    font-size: clamp(1rem, 0.97rem + 0.18vw, 1.075rem);
     font-weight: 400;
-    line-height: 1.68;
+    line-height: 1.72;
     text-align: left;
     -webkit-font-smoothing: antialiased;
   }
@@ -100,7 +100,7 @@
   h3 { font-size: clamp(1.25rem, 2.5vw, 1.875rem); }
   p {
     font-weight: 400;
-    line-height: 1.68;
+    line-height: 1.72;
   }
   button, input, textarea, select {
     font-family: var(--font-body);

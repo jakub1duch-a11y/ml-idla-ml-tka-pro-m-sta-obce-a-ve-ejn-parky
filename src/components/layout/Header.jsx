@@ -43,16 +43,23 @@ const INFO_LINKS = [
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const location = useLocation();
   const timeoutRef = useRef(null);
   const infoTimeoutRef = useRef(null);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 24);
+      setHeaderVisible(currentY < lastScrollYRef.current || currentY < 24);
+      lastScrollYRef.current = currentY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -84,7 +91,7 @@ export default function Header() {
 
       
 
-      <header className="fixed top-0 left-0 right-0 transition-all z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro/90 text-white backdrop-blur-xl transition-all duration-500 ease-out ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-2xl shadow-primary/25' : 'shadow-sm'}`}>
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
@@ -97,16 +104,16 @@ export default function Header() {
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button onClick={() => setMegaOpen((open) => !open)} aria-expanded={megaOpen} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                             megaOpen ? 'bg-slate-100 text-slate-900' : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"}`
+                             megaOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
                              }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">Reference</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">Blog & novinky</Link>
+            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Blog & novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-              infoOpen ? 'bg-slate-100 text-slate-900' : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"}`
+              infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
                 Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -117,32 +124,32 @@ export default function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-white/95 backdrop-blur-2xl border border-slate-200 shadow-xl shadow-slate-900/10 rounded-2xl p-3">
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-primary/95 text-white backdrop-blur-2xl border border-white/15 shadow-xl shadow-primary/30 rounded-2xl p-3">
                   {INFO_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={() => setInfoOpen(false)}
-                  className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-slate-50 transition-colors">
-                      <link.icon size={16} className="text-slate-400 group-hover:text-slate-900 transition-colors flex-shrink-0" />
-                      <p className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors font-light">{link.label}</p>
+                  className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors">
+                      <link.icon size={16} className="text-accent group-hover:text-white transition-colors flex-shrink-0" />
+                      <p className="text-sm text-white/80 group-hover:text-white transition-colors">{link.label}</p>
                     </Link>
                   )}
                   </motion.div>
                 }
               </AnimatePresence>
             </div>
-            <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">Kontakt</Link>
+            <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
           </nav>
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-slate-700 hover:text-slate-950 hover:bg-slate-100">O společnosti</Link>
+              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/85 hover:text-white hover:bg-white/10">O společnosti</Link>
               <Link to="/poptavka"
               className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">
                 Popsat projekt
               </Link>
             </div>
             <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary px-3 py-2 text-[11px] font-bold text-primary-foreground">Popsat projekt</Link>
-            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-slate-800 hover:bg-slate-100 transition-colors">
+            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
               {mobileOpen ? <X size={23} /> : <Menu size={23} />}
             </button>
           </div>

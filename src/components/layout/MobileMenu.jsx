@@ -18,12 +18,12 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
         className="fixed inset-0 z-40 bg-white lg:hidden flex flex-col h-[100dvh]">
 
           {/* Header bar */}
-          <div className="flex items-center justify-between px-6 h-16 border-b border-slate-100 shrink-0">
+          <div className="flex items-center justify-between px-6 h-16 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro shrink-0">
             <Link to="/" onClick={onClose} className="flex items-center gap-2.5">
               <Logo size="sm" />
             </Link>
             <button onClick={onClose} aria-label="Zavřít menu"
-              className="w-11 h-11 flex items-center justify-center rounded-full bg-slate-50 text-slate-700 hover:bg-slate-100 transition-colors">
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors">
               <X size={20} />
             </button>
           </div>

@@ -6,9 +6,12 @@ import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, C
 const SLIDES = [
 {
   tag: 'ČESKÁ VÝROBA · 20 LET PRŮMYSLOVÉ ZKUŠENOSTI',
-  title: 'Česká přesnost pro místa, kde se žije venku.',
+  title: 'Nerezová mlžítka a mlžné brány s chytrým řízením',
   desc: 'Navrhujeme a vyrábíme nerezová mlžítka pro města a obce, náměstí, promenády, parky, gastro, wellness, hotely i rezidenční terasy a zahrady.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg alt="Nerezové designové mlžítka pro města a obcetí"'
+      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/69ad8a562_mlzitkomrkev-mesto-polna2.webp alt="Nerezové designové mlžítko MRKEV pro Polenské náměstí"',
+    'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6ac8af556_staensoubor1.jpg alt="Nerezové designové mlžítko na městském náměstí"',
+    'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3ed2ba00a_Reference-mstoPolna02.webp alt="Designové mlžítko pro mesto Polná"',
   cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },
   cta2: { label: 'Popsat projekt', to: '/poptavka' }
 }];

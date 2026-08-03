@@ -56,7 +56,7 @@ export default function SmartCloudTab() {
             { icon: Smartphone, title: 'HolmApp řízení', desc: 'Ovládání mlžení odkudkoliv z mobilu, notifikace o stavu systému.' },
             { icon: Cloud, title: 'Předpověď v cloudu', desc: 'Automatická regulace dle teploty, vlhkosti a předpovědi počasí.' },
             { icon: Droplet, title: 'Monitoring nádrží', desc: 'Snímač hladiny vody chrání čerpadlo proti chodu na sucho.' },
-            { icon: Gauge, title: 'Nízkotlaký provoz', desc: '2–7 BAR — napojení na běžný vodovodní řad bez čerpadel.' },
+            { icon: Gauge, title: 'Nízkotlaký provoz', desc: '2–8 bar — napojení na běžný vodovodní řad bez čerpadel.' },
           ].map((f) => (
             <div key={f.title} className="p-5 rounded-2xl border border-slate-200 bg-white">
               <f.icon size={20} className="text-slate-500 mb-3" />

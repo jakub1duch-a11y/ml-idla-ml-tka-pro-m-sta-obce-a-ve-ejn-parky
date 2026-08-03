@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, Wrench, EyeOff, Waves } from 'lucide-react';
 
 const CORNERS = [
-  { icon: ShieldCheck, title: 'Prémiový materiál', text: 'Jemně broušená nerezová ocel (trubka Ø 42 × 3 mm, s možností až do 76 mm) zaručuje extrémní odolnost.', side: 'left' },
+  { icon: ShieldCheck, title: 'Prémiový materiál', text: 'Jemně broušená nerezová ocel (trubka Ø42,Ø64.Ø76 × 3 mm, s možností až do 76 mm) zaručuje extrémní odolnost.', side: 'left' },
   { icon: EyeOff, title: 'Skrytá technologie', text: 'Vedení vody je plně integrováno uvnitř těla trubky — čistý design, ochrana proti vandalismu.', side: 'left' },
   { icon: Waves, title: 'Chytré trysky', text: 'Vybaveny zpětným ventilem proti nechtěnému odkapávání vody po vypnutí.', side: 'right' },
   { icon: Wrench, title: 'Organický tvar', text: 'Bezpečný a plynulý design (slouží jako vizuální prvek, není certifikováno jako herní prvek).', side: 'right' },
@@ -37,8 +37,8 @@ export default function AnatomySection() {
         <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
           className="rounded-2xl overflow-hidden border border-slate-200">
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6655535c2_generated_image.png"
-            alt="Anatomie městského mlžítka"
+            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/76d1f452d_generated_image.png"
+            alt="Anatomie - Chladící mlžítko a mlžné systémy a prvky"
             className="w-full h-full object-cover aspect-[4/5]"
           />
         </motion.div>

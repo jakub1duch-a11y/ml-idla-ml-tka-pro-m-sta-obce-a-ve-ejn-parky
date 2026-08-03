@@ -46,47 +46,6 @@ function getInstallComplexity(product) {
   return 'medium';
 }
 
-// ─── KATEGORIE ─────────────────────────────────────────────────────────────
-
-const categoryGroups = [
-{
-  id: 'sochy',
-  label: 'Mlžné sochy',
-  icon: Trees,
-  tagline: 'Přírodní tvary. Živá atmosféra.',
-  description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy, větve. Kombinují vizuální zážitek s funkčním ochlazením. Ideální tam, kde chcete víc než technologii: chcete dominantu místa.',
-  audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
-  usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
-  accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-  dbCategories: ['NATURE'],
-  slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik']
-},
-{
-  id: 'brany',
-  label: 'Mlžné brány a portály',
-  icon: Landmark,
-  tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-  description: 'Mlžné brány a portály vytváří dramatický vstupní zážitek — zákazník nebo návštěvník doslova prochází zdí mlhy. Architektonicky čisté linie mlžítka z nerezové oceli, přizpůsobitelné šíři a výšce průchodu.',
-  audience: ['Organizátoři eventů a festivalů', 'Hotely a resort vstupní zóny', 'Obchodní centra a showroomy', 'Sportovní areály'],
-  usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny a červené koberce'],
-  accent: 'text-sky-700 bg-sky-50 border-sky-200',
-  dbCategories: ['URBAN ART'],
-  slugKeywords: ['aura', 'linear', 'Y-ARMIST', 'Spirála', 'BENDY']
-},
-{
-  id: 'mlhoviste',
-  label: 'Mlhoviště a chladicí zóny',
-  icon: Flame,
-  tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
-  description: 'Systémy pro plošné ochlazení otevřených prostorů — terasy, hřiště, sportovní zázemí, průmyslové prostory. Průmyslové čerpadlo s tlakem 70 bar rozptyluje mikro-kapičky 5–10 µm, které se okamžitě odpaří a ochlazují vzduch bez pocitu mokra.',
-  audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové a logistické provozovny', 'Školy a mateřské školy'],
-  usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny a venkovní fitness', 'Sklady a výrobní haly s tepelnou zátěží'],
-  accent: 'text-orange-700 bg-orange-50 border-orange-200',
-  dbCategories: ['GEOMETRY'],
-  slugKeywords: ['Mlžítka', 'Mlžiště', 'Mlžné systémy', 'Mlžné příslušenství', 'SMART mlžítka']
-}];
-
-
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
 { icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžítek a mlžných instalací. Rychlá montáž a přenosnost.' },

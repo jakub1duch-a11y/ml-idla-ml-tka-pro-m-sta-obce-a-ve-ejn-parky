@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sprout, Layers, Wind, Compass, LucideIcon } from 'lucide-react';
+import { ShieldCheck, Palette, CloudRain, Cpu, LucideIcon } from 'lucide-react';
 
 interface FeatureItem {
   icon: LucideIcon;
@@ -15,32 +15,32 @@ interface SectionData {
 
 const SECTIONS: SectionData[] = [
   {
-    label: 'Forma (Organická integrace)',
+    label: 'Forma (Materiál a design)',
     items: [
       { 
-        icon: Sprout, 
-        title: 'Přírodní estetika', 
-        text: 'Design jemně vychází z organického tvaru stromu a respektuje okolní ráz.' 
+        icon: ShieldCheck, 
+        title: 'Nerezová ocel AISI 316L', 
+        text: 'Všechny produkty vyrábíme z vysoce odolné nerezové oceli, která garantuje extrémní životnost ve veřejném prostoru.' 
       },
       { 
-        icon: Layers, 
-        title: 'Architektonické začlenění', 
-        text: 'Elegantně a přirozeně zapadne do veřejného i soukromého prostranství.' 
+        icon: Palette, 
+        title: 'Variabilita sortimentu', 
+        text: 'Od minimalistických bran GATE70 po zakázkové mlžné sochy – systémy dokonale splynou s architekturou místa.' 
       },
     ]
   },
   {
-    label: 'Funkce (Mikroklima a orientace)',
+    label: 'Funkce (Efektivita a Smart technologie)',
     items: [
       { 
-        icon: Wind, 
-        title: 'Aktivní mikroklima', 
-        text: 'Jemná vodní mlha efektivně ochlazuje vzduch a zvyšuje komfort v horkých dnech.' 
+        icon: CloudRain, 
+        title: 'Vysokotlaká atomizace', 
+        text: 'Speciální trysky generují jemnou suchou mlhu, která bleskově ochladí okolí až o 10 °C bez tvoření kapek na zemi.' 
       },
       { 
-        icon: Compass, 
-        title: 'Intuitivní navigace', 
-        text: 'Směrovatelné větve navádějí k zajímavým bodům a tvoří přirozený středobod setkávání.' 
+        icon: Cpu, 
+        title: 'Smart APP/WIFI řízení ', 
+        text: 'Plná automatizace provozu podle teploty, vzdálená správa přes Wi-Fi aplikaci a sledování reálné spotřeby vody.' 
       },
     ]
   }
@@ -56,8 +56,8 @@ export default function FormFunctionSection() {
         viewport={{ once: true }} 
         className="text-center mb-12"
       >
-        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Model OSTEV</p>
-        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Forma a funkce mlžítka OSTEV</h2>
+        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Technologie mlžidla.cz a HolmTec.cz</p>
+        <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Forma a funkce mlžných systémů</h2>
       </motion.div>
 
       {/* Grid se sekcemi */}

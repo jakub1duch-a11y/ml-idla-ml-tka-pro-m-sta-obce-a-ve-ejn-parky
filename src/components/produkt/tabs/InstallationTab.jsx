@@ -24,9 +24,9 @@ export default function InstallationTab({ product }) {
               Instalace 30 min
             </div>
             <span className="inline-block px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono tracking-widest uppercase rounded-full mb-6">Mobilní</span>
-            <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut + kolečka</h3>
+            <h3 className="text-2xl font-light text-slate-900 mb-3">Zemní vrut</h3>
             <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">
-              Transportní kolečka a integrované úchyty na těle konstrukce, kotvení masivním zemním vrutem se závitem. Kompletní instalace a zprovoznění za 30 minut, bez betonování.
+              Transportní Kotvení masivním zemním vrutem se závitem. Kompletní instalace a zprovoznění za 30 minut, bez betonování.
             </p>
             <div className="space-y-3 text-sm text-slate-600 font-light">
               <div className="flex items-start gap-3"><span className="text-emerald-600 font-bold mt-0.5">✓</span><span>Zašroubování vrutu bez speciálního nářadí</span></div>

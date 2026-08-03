@@ -22,7 +22,7 @@ const ADVANTAGES = [
 "Vhodné pro vnitřní i venkovní použití"];
 
 
-const DEVICE_IMG = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png";
+const DEVICE_IMG = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png alt="Moderní nerezová mlžná brána instalovaná na náměstí"";
 
 export default function PremiumOasisSection() {
   return (

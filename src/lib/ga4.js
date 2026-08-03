@@ -1,4 +1,8 @@
-// GA4 Conversion Event Helpers – HolmTec
+// GA4 + Google Ads Conversion Event Helpers – HolmTec
+
+// ⚠️ ZDE DOPLŇTE SVÉ ÚDAJE Z GOOGLE ADS (najdete v Google Ads -> Konverze)
+const GOOGLE_ADS_ID = 'AW-18276263329'; // Nahraďte vaším AW-XXXXX ID účtu
+const GOOGLE_ADS_CONVERSION_LABEL = 'AbC-D_efGhIjKlMnOp'; // Nahraďte vaším štítkem konverze
 
 function safeGtag(...args) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -6,161 +10,141 @@ function safeGtag(...args) {
   }
 }
 
+// Pomocná funkce pro bezpečné odeslání konverze přímo do Google Ads
+function sendToGoogleAds(value = 1000) {
+  if (GOOGLE_ADS_ID !== 'AW-123456789') {
+    safeGtag('event', 'conversion', {
+      'send_to': `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
+      'value': value,
+      'currency': 'CZK'
+    });
+  }
+}
+// Zájem o produkty – opraveno podle oficiální terminologie
 export function trackGateInterest(productName) {
-  safeGtag('event', 'gate_interest', {
-    event_category: 'product_interest',
-    event_label: productName || 'brána',
+  safeGtag('event', 'product_interest', {
+    product_type: 'brána', // např. GATE70
+    product_name: productName || 'obecná brána',
     value: 1,
   });
 }
 
 export function trackMistSculptureInterest(productName) {
-  safeGtag('event', 'mist_sculpture_interest', {
-    event_category: 'product_interest',
-    event_label: productName || 'mlžná socha',
+  safeGtag('event', 'product_interest', {
+    product_type: 'mlžná plastika', // 🚀 Opraveno na správný název sortimentu
+    product_name: productName || 'obecná plastika',
     value: 1,
   });
 }
 
+
+// Konverzní formuláře (GA4 'generate_lead' + Přímý zásek do Google Ads)
 export function trackCooperationFormSubmit() {
-  safeGtag('event', 'cooperation_form_submit', {
-    event_category: 'conversion',
-    event_label: 'spolupráce',
+  safeGtag('event', 'generate_lead', {
+    lead_type: 'spolupráce',
     value: 1,
-    send_to: 'G-0J3NKLWM2Q',
   });
+  sendToGoogleAds(500); // Nižší hodnota pro lead ze spolupráce
 }
 
+export function trackContactFormSubmit(formType, productName) {
+  safeGtag('event', 'generate_lead', {
+    lead_type: formType || 'kontakt',
+    product_name: productName || 'nezadáno',
+    value: 1,
+  });
+  sendToGoogleAds(1000);
+}
+
+export function trackInquirySubmitted(requestType, productInterest) {
+  safeGtag('event', 'generate_lead', {
+    lead_type: requestType || 'poptávka',
+    product_name: productInterest || 'bez produktu',
+    value: 1,
+  });
+  sendToGoogleAds(2000); // Poptávka má pro byznys nejvyšší hodnotu
+}
+
+export function trackRentalInquiry(productName, eventType) {
+  safeGtag('event', 'generate_lead', {
+    lead_type: 'pronájem GO',
+    product_name: productName || 'nezvoleno',
+    event_type: eventType || 'event',
+    value: 1,
+  });
+  sendToGoogleAds(1500);
+}
+
+// Prohlížení a interakce (Čisté GA4 bez UA balastu)
 export function trackProductSectionEngagement(sectionName) {
   safeGtag('event', 'product_section_view', {
-    event_category: 'engagement',
-    event_label: sectionName,
-    value: 1,
+    section_name: sectionName,
   });
 }
 
 export function trackProductView(productName, productSlug, category) {
-  safeGtag('event', 'product_view', {
-    event_category: 'product_engagement',
-    event_label: productName,
+  safeGtag('event', 'view_item', {
     product_name: productName,
     product_slug: productSlug,
     product_category: category || 'neznámá',
-    value: 1,
   });
 }
 
 export function trackProductClick(productName, productSlug, section) {
-  safeGtag('event', 'product_click', {
-    event_category: 'product_engagement',
-    event_label: productName,
+  safeGtag('event', 'select_item', {
     product_name: productName,
     product_slug: productSlug,
-    section: section || 'katalog',
-    value: 1,
+    section_name: section || 'katalog',
   });
 }
 
 export function trackBlogPostView(postTitle, postSlug, category) {
   safeGtag('event', 'blog_post_view', {
-    event_category: 'content_engagement',
-    event_label: postTitle,
     content_title: postTitle,
     content_slug: postSlug,
     content_category: category || 'blog',
-    value: 1,
   });
 }
 
 export function trackReferenceView(projectName, location, category) {
   safeGtag('event', 'reference_view', {
-    event_category: 'portfolio_engagement',
-    event_label: projectName,
     project_name: projectName,
     project_location: location,
     project_category: category || 'realizace',
-    value: 1,
-  });
-}
-
-export function trackContactFormSubmit(formType, productName) {
-  safeGtag('event', 'contact_form_submit', {
-    event_category: 'conversion',
-    event_label: formType || 'kontakt',
-    form_type: formType,
-    product_name: productName,
-    value: 1,
-    send_to: 'G-0J3NKLWM2Q',
   });
 }
 
 export function trackHeroInteraction(slideName, ctaClicked) {
   safeGtag('event', 'hero_interaction', {
-    event_category: 'engagement',
-    event_label: slideName,
     slide_name: slideName,
     cta_clicked: ctaClicked || false,
-    value: 1,
   });
 }
 
 export function trackCategoryFilter(categoryName) {
   safeGtag('event', 'category_filter', {
-    event_category: 'navigation',
-    event_label: categoryName,
-    category: categoryName,
-    value: 1,
-  });
-}
-
-export function trackInquirySubmitted(requestType, productInterest) {
-  safeGtag('event', 'inquiry_submitted', {
-    event_category: 'conversion',
-    event_label: requestType || 'poptávka',
-    request_type: requestType,
-    product_interest: productInterest || 'bez produktu',
-    value: 1,
-    send_to: 'G-0J3NKLWM2Q',
-  });
-}
-
-export function trackRentalInquiry(productName, eventType) {
-  safeGtag('event', 'rental_inquiry_submit', {
-    event_category: 'conversion',
-    event_label: productName || 'pronájem GO',
-    product_name: productName || 'nezvoleno',
-    event_type: eventType || 'event',
-    value: 1,
-    send_to: 'G-0J3NKLWM2Q',
+    category_name: categoryName,
   });
 }
 
 export function trackQuickInquiryClick(productName, location) {
   safeGtag('event', 'quick_inquiry_click', {
-    event_category: 'conversion',
-    event_label: productName || 'produkt',
     product_name: productName,
-    location: location || 'neznámé umístění',
-    value: 1,
+    location_source: location || 'neznámé umístění',
   });
 }
 
-// Fired on the /dekujeme thank-you page — the actual conversion moment for GA4 + Google Ads.
+// Spustí se na /dekujeme – Finální konverze (GA4 + Google Ads jistota)
 export function trackThankYouPageView(source) {
-  safeGtag('event', 'thank_you_view', {
-    event_category: 'conversion',
-    event_label: source || 'kontakt',
-    source,
-    value: 1,
-    send_to: 'G-0J3NKLWM2Q',
-  });
   safeGtag('event', 'generate_lead', {
     currency: 'CZK',
     value: 1000,
+    lead_source: source || 'kontakt',
   });
+  sendToGoogleAds(1000); // Pojistka přímého měření na děkovné stránce
 }
 
-// Expose on window for external use
+// Exponování do window objektu pro externí použití
 if (typeof window !== 'undefined') {
   window.trackGateInterest = trackGateInterest;
   window.trackMistSculptureInterest = trackMistSculptureInterest;
@@ -171,7 +155,7 @@ if (typeof window !== 'undefined') {
   window.trackBlogPostView = trackBlogPostView;
   window.trackReferenceView = trackReferenceView;
   window.trackContactFormSubmit = trackContactFormSubmit;
-  window.trackHeroInteraction = trackHeroInteraction;
+  window.trackHeroInteraction = heroInteraction => trackHeroInteraction;
   window.trackCategoryFilter = trackCategoryFilter;
   window.trackInquirySubmitted = trackInquirySubmitted;
   window.trackRentalInquiry = trackRentalInquiry;

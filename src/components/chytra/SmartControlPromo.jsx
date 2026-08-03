@@ -27,7 +27,7 @@ export default function SmartControlPromo() {
             Vaše mlžítko, <span className="italic text-slate-400">chytřejší než kdy dřív.</span>
           </h2>
           <p className="text-slate-500 mb-6 leading-relaxed">
-            Doplňte kterékoliv mlžítko o Smart modul a řiďte celý systém z mobilu — automaticky podle počasí, nebo ručně podle vaší nálady.
+            Doplňte kterékoliv naše mlžítko o Smart modul a řiďte celý systém z mobilu — automaticky podle počasí, nebo ručně podle vaší nálady.
           </p>
           <ul className="space-y-3 mb-8">
             {BENEFITS.map((b) =>

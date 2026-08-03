@@ -102,7 +102,7 @@ export default function Kolekce() {
   const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
 
   const displayedProducts = products.
-  filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory'].includes(p.name)).
+  filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'].includes(p.name)).
   filter((p) => {
     if (activeGroup) {
       return activeGroup.dbCategories.includes(p._categoryName) ||

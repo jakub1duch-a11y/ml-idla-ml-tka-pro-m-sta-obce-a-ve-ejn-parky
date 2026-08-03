@@ -36,41 +36,41 @@ const defaultSlides = [
   cta: '/produkt/mrak'
 },
 {
-  slug: 'ostev-detail',
+  slug: 'ostrev-mlzitko',
   tag: 'Detail trysky',
   name: 'OSTEV',
   subtitle: 'Precizní mlžení.',
   desc: 'Trysky z AISI 316L rozprašují kapičky 10–50 μm, které se okamžitě odpaří. Žádné mokré chodníky, jen příjemný chlad.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg alt="Precizní mlžení mlžítka -OSTREPrecizní mlžení"',
   badge: 'Technologie',
-  cta: '/produkt/ostev-mlzny-strom'
+  cta: '/produkt/ostrev-mlzitko'
 },
 {
-  slug: 'bendy-60',
+  slug: 'mlzitko-bendy',
   tag: 'Zahradní mlžítko',
   name: 'BENDY 60',
   subtitle: 'Elegantní chlad pro zahradu.',
   desc: 'Stylové zahradní mlžítko s elegantním ohnutým designem. Chladivá mlha pro terasy, zahrady a venkovní odpočívárny.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png alt="Chladivá mlha pro terasy, zahrady a venkovní odpočívárny."',
   badge: 'Zahrada',
-  cta: '/produkt/bendy-60'
+  cta: '/produkt/mlzitko-bendy'
 },
 {
-  slug: 'mlhoviste-deti',
+  slug: 'skoly-skolky-deti',
   tag: 'Hřiště & parky',
   name: 'MLŽIŠTĚ',
   subtitle: 'Radost pro děti.',
   desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
-  badge: 'Kids',
-  cta: '/mlhoviste'
+  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg alt="mlžné prvky pro školky"',
+  badge: 'Dětské mlžiště',
+  cta: '/kategorie/skoly-skolky-deti'
 }];
 
 const features = [
 { icon: Droplets, label: 'Spotřeba vody', value: "4,6 l / hod\xA0" },
 { icon: Banknote, label: 'Provozní náklady', value: 'od 15 Kč / 8 hod' },
 { icon: ThermometerSnowflake, label: 'Ochlazení prostoru', value: 'až o −9 °C' },
-{ icon: CloudFog, label: 'Nízkotlaká mlha', value: "kapky 10 - 50\xA0 \u03BCm" },
+{ icon: CloudFog, label: 'Nízkotlaká mlha', value: "kapky 50 - 100\xA0 \u03BCm" },
 { icon: Gauge, label: 'Napojení na vodovodní řád', value: 'min. tlak 2 bar' }];
 
 

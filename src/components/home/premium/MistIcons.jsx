@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { DrawPath } from "./DrawIcon";
 
 const Wrap = ({ children }) =>
-<svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="h-12 w-12 text-secondary">
+<svg width="58" height="58" viewBox="0 0 58 58" fill="none" className="h-12 w-12 text-secondary">
     {children}
   </svg>;
 

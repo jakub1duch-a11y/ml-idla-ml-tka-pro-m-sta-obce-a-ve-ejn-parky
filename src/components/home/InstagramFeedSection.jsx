@@ -13,7 +13,7 @@ export default function InstagramFeedSection() {
   if (posts.length === 0) return null;
 
   return (
-    <section className="py-20 bg-[hsl(var(--card-foreground))]">
+    <section className="py-20 bg-[#0f0f0f]">
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <div className="flex items-center gap-3 mb-10">
           <Instagram size={22} className="text-slate-900" strokeWidth={1.5} />

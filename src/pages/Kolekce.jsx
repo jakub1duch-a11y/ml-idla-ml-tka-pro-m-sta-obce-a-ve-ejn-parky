@@ -46,6 +46,45 @@ function getInstallComplexity(product) {
   return 'medium';
 }
 
+const CATEGORY_GROUPS = [
+  {
+    id: 'sochy',
+    label: 'Mlžné sochy',
+    icon: Trees,
+    tagline: 'Přírodní tvary. Živá atmosféra.',
+    description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy a větve.',
+    audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
+    usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
+    accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+    dbCategories: ['NATURE'],
+    slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik'],
+  },
+  {
+    id: 'brany',
+    label: 'Mlžné brány a portály',
+    icon: Landmark,
+    tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
+    description: 'Mlžné brány a portály vytvářejí výrazný vstupní zážitek v čistých liniích nerezové oceli.',
+    audience: ['Organizátoři eventů a festivalů', 'Hotely a resorty', 'Obchodní centra a showroomy', 'Sportovní areály'],
+    usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny'],
+    accent: 'text-sky-700 bg-sky-50 border-sky-200',
+    dbCategories: ['URBAN ART'],
+    slugKeywords: ['aura', 'linear', 'y-armist', 'spirala', 'bendy'],
+  },
+  {
+    id: 'mlhoviste',
+    label: 'Mlhoviště a chladicí zóny',
+    icon: Flame,
+    tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
+    description: 'Systémy pro plošné ochlazení teras, hřišť, sportovního zázemí a průmyslových prostorů.',
+    audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové provozy', 'Školy a školky'],
+    usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny', 'Sklady a výrobní haly'],
+    accent: 'text-orange-700 bg-orange-50 border-orange-200',
+    dbCategories: ['GEOMETRY'],
+    slugKeywords: ['mlzitka', 'mlziste', 'mlzne-systemy', 'mlzne-prislusenstvi', 'smart'],
+  },
+];
+
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
 { icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžítek a mlžných instalací. Rychlá montáž a přenosnost.' },
@@ -98,7 +137,7 @@ export default function Kolekce() {
     }).finally(() => setLoading(false));
   }, []);
 
-  const activeGroup = categoryGroups.find((g) => g.id === activeCategory);
+  const activeGroup = CATEGORY_GROUPS.find((g) => g.id === activeCategory);
   const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
 
   const displayedProducts = products.
@@ -129,7 +168,7 @@ export default function Kolekce() {
       <CollectionOffers />
 
       {/* ── KATEGORIE (hover icon cards) ── */}
-      <CategorySelector groups={categoryGroups} activeCategory={activeCategory} onSelect={setActiveCategory} />
+      <CategorySelector groups={CATEGORY_GROUPS} activeCategory={activeCategory} onSelect={setActiveCategory} />
 
       {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
       <GatesSlider />

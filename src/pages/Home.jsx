@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { setSEO, SEO_PAGES, injectOrgJsonLd } from '@/lib/seo';
+import { SEO_PAGES, setSEO } from '@/lib/seo';
 import HeroSlider from '@/components/home/premium/HeroSlider';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
@@ -17,8 +17,8 @@ import FadeIn from '@/components/common/FadeIn';
 export default function Home() {
   useEffect(() => {
     setSEO(SEO_PAGES.home);
-    injectOrgJsonLd();
   }, []);
+
   return (
     <>
       <HeroSlider />

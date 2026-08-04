@@ -54,7 +54,7 @@ export default function HeroSlider() {
       <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/35 to-transparent" />
 
       <div className="absolute inset-0 flex items-end lg:items-center">
-        <div className="mx-auto w-full max-w-7xl px-5 pb-6 pt-24 sm:px-8 sm:pb-10 lg:px-20 lg:py-24">
+        <div className="mx-auto w-full max-w-7xl pb-6 sm:px-8 sm:pb-10 lg:px-20 lg:py-24 pt-24 px-0">
           <div className="max-w-5xl">
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>

@@ -82,7 +82,7 @@ export default function HeroSlider() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
-                className="flex min-h-14 items-center gap-2 rounded-xl border border-white/20 bg-primary/30 px-3 py-3 backdrop-blur-md sm:bg-white/5">
+                className="flex min-h-14 items-center gap-2 rounded-xl border px-3 py-3 backdrop-blur-md border-white/00 bg-primary/00 sm:bg-white/0">
                 
                   <b.icon size={20} className="text-white/90 shrink-0" />
                   <span className="text-white/85 font-medium leading-tight text-sm">{b.label}</span>

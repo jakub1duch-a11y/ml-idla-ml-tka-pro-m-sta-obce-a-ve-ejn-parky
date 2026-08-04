@@ -12,7 +12,7 @@ export function TemperatureDropIcon() {
 }
 
 export function MistMotionIcon() {
-  return <svg viewBox="0 0 64 64" className="h-24 w-1"><motion.g initial={{ opacity: 0, y: -6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><path {...iconProps} d="M12 24c8-8 17 8 28 0 4-3 8-3 12 0" /><path {...iconProps} d="M8 34c8-8 17 8 30 0 5-3 10-3 16 0" /><path {...iconProps} d="M14 44c8-7 16 7 27 0 4-3 8-3 11 0" /><motion.circle cx="22" cy="16" r="3" fill="currentColor" animate={{ y: [0, 20, 20], opacity: [0, 1, 0] }} transition={{ delay: 1.2, duration: 1.4, repeat: Infinity, repeatDelay: 2.6 }} /></motion.g></svg>;
+  return <svg viewBox="0 0 64 64" className="h-24 w-19"><motion.g initial={{ opacity: 0, y: -6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><path {...iconProps} d="M12 24c8-8 17 8 28 0 4-3 8-3 12 0" /><path {...iconProps} d="M8 34c8-8 17 8 30 0 5-3 10-3 16 0" /><path {...iconProps} d="M14 44c8-7 16 7 27 0 4-3 8-3 11 0" /><motion.circle cx="22" cy="16" r="3" fill="currentColor" animate={{ y: [0, 20, 20], opacity: [0, 1, 0] }} transition={{ delay: 1.2, duration: 1.4, repeat: Infinity, repeatDelay: 2.6 }} /></motion.g></svg>;
 }
 
 export function GroundScrewIcon() {

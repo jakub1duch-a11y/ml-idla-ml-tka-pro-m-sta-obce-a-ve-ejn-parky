@@ -17,7 +17,7 @@ export default function MlzidlaCzNav() {
         <Link to="/mlzidla" className="flex items-center gap-2.5">
           <Component size={24} className="text-blue-600" strokeWidth={1.5} />
           <div className="leading-tight">
-            <p className="font-heading font-black text-slate-900 text-lg tracking-tight">MLŽIDLA.CZ</p>
+            <p className="font-heading font-black text-slate-900 text-lg tracking-tight">MLŽIDLA.CZ®</p>
             <p className="text-[10px] font-bold text-blue-600 tracking-widest -mt-1">MLŽNÉ SYSTÉMY</p>
           </div>
         </Link>

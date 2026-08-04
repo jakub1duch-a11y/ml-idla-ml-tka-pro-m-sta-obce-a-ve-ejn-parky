@@ -32,7 +32,7 @@ export default function MlzidlaCzNav() {
         </div>
 
         <Link to="/poptavka" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-colors whitespace-nowrap">
-          Poptat řešení <ArrowRight size={15} />
+          Vyžadat cenu řešení <ArrowRight size={15} />
         </Link>
       </div>
     </nav>

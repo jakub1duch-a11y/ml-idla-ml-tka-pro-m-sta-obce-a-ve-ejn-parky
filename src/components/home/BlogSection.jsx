@@ -54,7 +54,7 @@ function PostCard({ post, i }) {
           <h3 className="font-heading font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2">
             {post.title}
           </h3>
-          <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 mb-3">{post.perex}</p>
+          <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 mb-3 text-left">{post.perex}</p>
           <div className="flex items-center gap-2 text-xs text-white font-medium group-hover:gap-3 transition-all">
             Číst článek <ArrowRight size={12} />
           </div>

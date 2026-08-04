@@ -24,8 +24,8 @@ export default function SmartSection() {
             className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--input))]">
               Automatizace, která šetří vodu i váš čas. Bez starostí.
             </motion.h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-           Provoz pod kontrolou WiF.Ovládejte průtok, plán mlžení a zóny přes WiFi aplikaci. Přehledná analytika ukazuje spotřebu, úspory i stav zařízení — mlžítka pak pracují sama.
+            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))]">Provoz pod kontrolou WiF. Ovládejte průtok, plán mlžení a zóny přes WiFi aplikaci v mobil. Přehledná analytika ukazuje spotřebu, úspory i stav zařízení — mlžítka pak pracují sama.
+
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">

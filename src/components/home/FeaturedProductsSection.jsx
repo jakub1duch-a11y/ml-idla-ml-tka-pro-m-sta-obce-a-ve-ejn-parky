@@ -32,7 +32,7 @@ export default function FeaturedProductsSection() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Naše produkty</p>
+          <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm">NAŠE PRODUKTY</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">

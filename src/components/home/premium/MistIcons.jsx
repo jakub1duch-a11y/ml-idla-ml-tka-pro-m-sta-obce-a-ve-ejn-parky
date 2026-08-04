@@ -53,7 +53,7 @@ export function SparkleIcon() {
 
 export function CheckGlowIcon() {
   return (
-    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" className="flex-shrink-0 mt-0.5">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" className="flex-shrink-0 mt-0.5 text-[hsl(var(--popover))]">
       <motion.circle
         cx="13" cy="13" r="11" stroke="#22c55e" strokeWidth="1.4"
         initial={{ pathLength: 0, opacity: 0 }}

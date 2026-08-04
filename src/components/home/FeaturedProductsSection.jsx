@@ -70,7 +70,7 @@ export default function FeaturedProductsSection() {
                   <div>
                     <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-2xl">{product.name}</h3>
                     {product.short_description &&
-                  <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-sm">{product.short_description}</p>
+                  <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-base">{product.short_description}</p>
                   }
                   </div>
                   <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />

@@ -151,14 +151,14 @@ export default function BlogSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-white/40 mb-3">Novinky & znalosti</p>
+          <p className="font-mono tracking-widest uppercase mb-3 text-sm text-[hsl(var(--card))]">NOVINKY & ZNALOSTI</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading font-light text-white tracking-tight text-3xl lg:text-3xl">
               Co je nového u nás
             </motion.h2>
-            <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-white/70 font-light hover:text-white hover:gap-3 transition-all">
-              Všechny články <ArrowRight size={14} />
+            <Link to="/blog" className="inline-flex items-center gap-2 font-light hover:text-white hover:gap-3 transition-all text-[hsl(var(--card))] text-base">Všechny články
+
             </Link>
           </div>
         </motion.div>

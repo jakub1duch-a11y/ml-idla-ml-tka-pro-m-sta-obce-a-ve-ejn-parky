@@ -48,7 +48,7 @@ export default function AnatomySection() {
           <motion.div key={c.title} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
           className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
               <div className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-3">
-                <c.icon size={16} className="text-slate-700" />
+                <c.icon size={16} className="text-slate-00" />
               </div>
               <h3 className="text-slate-900 mb-1.5 text-3xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">{c.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base">{c.text}</p>

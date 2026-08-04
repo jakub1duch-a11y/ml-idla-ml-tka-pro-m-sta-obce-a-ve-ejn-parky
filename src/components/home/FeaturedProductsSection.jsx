@@ -66,11 +66,11 @@ export default function FeaturedProductsSection() {
                 </span>
                 }
                 </div>
-                <div className="p-5 flex items-center justify-between gap-3">
+                <div className="p-5 flex items-center justify-between gap-4">
                   <div>
                     <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] normal-case text-left">{product.name}</h3>
                     {product.short_description &&
-                  <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-sm">{product.short_description}</p>
+                  <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-base">{product.short_description}</p>
                   }
                   </div>
                   <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />

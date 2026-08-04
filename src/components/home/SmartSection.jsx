@@ -21,7 +21,7 @@ export default function SmartSection() {
               Smart mlžení · WiFi / aplikace
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading text-4xl lg:text-5xl text-foreground tracking-tight mb-6">
+            className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--background))]">
               Mlha. Bez starostí.
             </motion.h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">

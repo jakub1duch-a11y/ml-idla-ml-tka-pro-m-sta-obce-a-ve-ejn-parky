@@ -56,7 +56,7 @@ export default function PremiumOasisSection() {
           {ADVANTAGES.map((text, index) =>
           <motion.div key={text} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06, duration: 0.5 }} className="flex items-start gap-3">
               <CheckGlowIcon />
-              <p className="leading-relaxed text-slate-600 md:text-base text-base text-left normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{text}</p>
+              <p className="leading-relaxed text-slate-600 text-left normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-base md:text-base font-normal">{text}</p>
             </motion.div>
           )}
         </div>

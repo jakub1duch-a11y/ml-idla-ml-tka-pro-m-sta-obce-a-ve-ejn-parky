@@ -44,7 +44,7 @@ function PostCard({ post, i }) {
       className="group relative block h-72 rounded-2xl overflow-hidden border border-white/10 shadow-sm hover:shadow-lg transition-all">
         <img src={bg} alt={post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" />
-        <div className="relative h-full flex flex-col justify-end p-6">
+        <div className="relative h-full flex flex-col justify-end p-">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase px-2.5 py-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
               {CATEGORY_LABELS[post.category] || post.category || 'Článek'}
@@ -54,7 +54,7 @@ function PostCard({ post, i }) {
           <h3 className="font-heading font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2">
             {post.title}
           </h3>
-          <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 mb-3 text-left">{post.perex}</p>
+          <p className="text-sm font-light leading-relaxed line-clamp-2 mb-3 text-left text-[hsl(var(--card))]">{post.perex}</p>
           <div className="flex items-center gap-2 text-xs text-white font-medium group-hover:gap-3 transition-all">
             Číst článek <ArrowRight size={12} />
           </div>

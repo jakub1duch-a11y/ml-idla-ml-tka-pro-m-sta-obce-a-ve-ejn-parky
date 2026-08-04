@@ -71,7 +71,7 @@ export default function Technologie() {
                 <b.icon size={20} className="text-slate-700" />
               </div>
               <h3 className="text-slate-900 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold text-2xl">{b.title}</h3>
-              <p className="text-slate-500 leading-relaxed text-base">{b.text}</p>
+              <p className="text-slate-500 leading-relaxed text-base [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{b.text}</p>
             </motion.div>
           )}
         </div>
@@ -92,8 +92,8 @@ export default function Technologie() {
               <div className="w-11 h-11 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
                 <s.icon size={19} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 font-medium text-base mb-2">{s.title}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed">{s.text}</p>
+              <h3 className="text-slate-900 mb-2 text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">{s.title}</h3>
+              <p className="text-slate-500 leading-relaxed text-base [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{s.text}</p>
             </motion.div>
           )}
         </div>

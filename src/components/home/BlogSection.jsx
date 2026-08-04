@@ -49,12 +49,12 @@ function PostCard({ post, i }) {
             <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase px-2.5 py-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
               {CATEGORY_LABELS[post.category] || post.category || 'Článek'}
             </span>
-            {post.published_date && <span className="text-[10px] font-mono text-white/50">{formatDate(post.published_date)}</span>}
+            {post.published_date && <span className="text-[10px] font-mono text-[hsl(var(--popover-foreground))]">{formatDate(post.published_date)}</span>}
           </div>
           <h3 className="font-heading font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2">
             {post.title}
           </h3>
-          <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 mb-3">{post.perex}</p>
+          <p className="text-sm font-light leading-relaxed line-clamp-2 mb-3 text-[hsl(var(--card))]">{post.perex}</p>
           <div className="flex items-center gap-2 text-xs text-white font-medium group-hover:gap-3 transition-all">
             Číst článek <ArrowRight size={12} />
           </div>
@@ -117,7 +117,7 @@ function GateOfferCard() {
             <Sparkles size={11} /> Nabídka produktu
           </span>
           <div>
-            <p className="text-xs font-mono text-white/50 tracking-widest uppercase mb-2">Mlžná brána</p>
+            <p className="text-xs font-mono tracking-widest uppercase mb-2 text-[hsl(var(--foreground))]">MLŽNÁ BRÁNA</p>
             <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3">GATE70</h3>
             <p className="text-sm text-white/60 font-light leading-relaxed mb-5">Ochlazení až o 9 °C, Wi-Fi Smart řízení, dvě tvarové varianty na míru vašemu prostoru.</p>
             <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 text-xs font-bold rounded-full group-hover:bg-white/90 transition-all">

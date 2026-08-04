@@ -62,7 +62,7 @@ export default function HeroSlider() {
                 <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white sm:mb-5 text-4xl sm:text-6xl lg:text-7xl hidden">
                   {slide.title}
                 </h1>
-                <p className="text-measure text-base font-medium leading-relaxed text-white/90 sm:text-lg sm:mb-6 mb-">{slide.desc}</p>
+                <p className="text-measure text-base font-medium leading-relaxed text-white/90 sm:mb-6 mb-6">{slide.desc}</p>
 
                 <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-10 sm:flex sm:flex-wrap">
                   <Link to={slide.cta1.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl sm:px-7 sm:py-4">

@@ -257,6 +257,36 @@ export const SEO_PAGES = {
     title: 'Pro architekty a projektanty — 3D modely, DWG a technická dokumentace',
     description: 'Kompletní podklady pro architektonické ateliéry a projektanty. Ke stažení: 2D/3D DWG výkresy, BIM modely, texty do zadávacích dokumentací a konzultace stavební připravenosti.',
     keywords: 'BIM modely mlžítka, DWG výkresy mlžná brána, podklady pro architekty, technická specifikace HolmTec',
-    canonicalPath: '/pro-architekty',
+    canonicalPath: '/kategorie/architekti',
+  },
+  komercni: {
+    title: 'Mlžení pro komerční prostory — restaurace, obchodní centra, výrobní haly',
+    description: 'Mlžné systémy pro terasy restaurací, nákupní centra, showroomy a výrobní haly. Zvyšte komfort zákazníků i zaměstnanců, nerezová konstrukce s dlouhou životností.',
+    keywords: 'mlžení komerční prostory, mlžítka restaurace, mlžné terasy, ochlazení nákupní centrum, mlžení výrobní haly',
+    canonicalPath: '/kategorie/komercni',
+  },
+  eventy: {
+    title: 'Mlžení pro eventy a festivaly — mobilní chladicí řešení na akce',
+    description: 'Mlžné prvky pro hudební festivaly, letní terasy, sportovní akce a veletrhy. Mobilní instalace k pronájmu i koupi, rychlé osvěžení návštěvníků kdekoli venku.',
+    keywords: 'mlžení festival, mlžítka na akce, mobilní mlžení, chlazení eventy, pronájem mlžítek',
+    canonicalPath: '/kategorie/eventy',
+  },
+  outdoor: {
+    title: 'Mlžítka pro zahrady a venkovní prostory — Outdoor kolekce',
+    description: 'Designová mlžítka pro zahrady, terasy a venkovní posezení. Nerezové skulptury HolmTec, které osvěží soukromý outdoor prostor bez nutnosti klimatizace.',
+    keywords: 'mlžítka zahrada, venkovní mlžení, zahradní mlžná skulptura, ochlazení terasy, outdoor mlžítka',
+    canonicalPath: '/kategorie/outdoor-zahrady',
+  },
+  art: {
+    title: 'Mlžné umělecké instalace — Art & Design kolekce HolmTec',
+    description: 'Mlžná skulptura jako umělecké dílo. Site-specific instalace pro galerie, výstavy a veřejný prostor, kombinující design, technologii a smyslový zážitek.',
+    keywords: 'mlžné umělecké instalace, art instalace mlha, site-specific mlžítko, designová skulptura mlha',
+    canonicalPath: '/kategorie/art-instalace',
+  },
+  deti: {
+    title: 'Mlhoviště pro školy, školky a dětská hřiště — bezpečné mlžení',
+    description: 'Bezpečná mlhoviště pro základní školy, mateřské školky a dětská hřiště. Potravinářská nerez, jemná mlha bez tlakového rizika, certifikováno pro dětské prostory.',
+    keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
+    canonicalPath: '/kategorie/skoly-skolky-deti',
   },
 };

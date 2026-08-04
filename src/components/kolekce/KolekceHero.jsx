@@ -21,7 +21,7 @@ const SLIDES = [
 { type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9f0153e3a_ml_detailvparku_01.MOV' },
 { type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.MOV' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' },];
+{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' }];
 
 
 // Duration per slide: videos ~8s, images 5s
@@ -97,11 +97,11 @@ export default function KolekceHero() {
       {/* Content */}
       <div className="absolute z-30 flex flex-col justify-end pb-12 inset-0">
         <div className="absolute bottom-12 left-0 right-0 px-6 lg:px-8 max-w-7xl mx-auto">
-          <h1 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight mb-4">
-            Mlžítka<br /><span className="text-slate-400">a mlžné brány.</span>
+          <h1 className="font-heading font-light text-white tracking-tight mb-4 text-5xl lg:text-6xl">Mlžítka
+a mlžné brány.
           </h1>
-          <p className="text-white/70 max-w-xl text-base leading-relaxed font-light">
-            Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
+          <p className="text-white/70 max-w-xl leading-relaxed font-light text-xl">Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
+
           </p>
         </div>
         <AnimatePresence mode="wait">

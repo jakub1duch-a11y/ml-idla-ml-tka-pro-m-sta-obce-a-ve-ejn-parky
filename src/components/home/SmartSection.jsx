@@ -13,7 +13,7 @@ const features = [
 
 export default function SmartSection() {
   return (
-    <section className="py-24 overflow-hidden border-y border-border bg-[hsl(var(--accent-foreground))]">
+    <section className="py-24 bg-background overflow-hidden border-y border-border">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -21,11 +21,11 @@ export default function SmartSection() {
               Smart mlžení · WiFi / aplikace
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--input))]">
-              Mlha. Bez starostí.
+            className="font-heading text-4xl lg:text-5xl text-foreground tracking-tight mb-6">
+              Automatizace, která šetří vodu i váš čas Bez starostí.
             </motion.h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Ovládejte průtok, plán mlžení a zóny přes WiFi aplikaci. Přehledná analytika ukazuje spotřebu, úspory i stav zařízení — mlžítka pak pracují sama.
+              Chlazení bez starostí.Ovládejte průtok, plán mlžení a zóny přes WiFi aplikaci. Přehledná analytika ukazuje spotřebu, úspory i stav zařízení — mlžítka pak pracují sama.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8">

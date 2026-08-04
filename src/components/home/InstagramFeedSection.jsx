@@ -13,7 +13,7 @@ export default function InstagramFeedSection() {
   if (posts.length === 0) return null;
 
   return (
-    <section className="py-20 bg-[#0f0f0f]">
+    <section className="bg-[#f2f3f5] py-20">
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <div className="flex items-center gap-3 mb-10">
           <Instagram size={22} className="text-slate-900" strokeWidth={1.5} />
@@ -21,28 +21,28 @@ export default function InstagramFeedSection() {
             Sledujte nás na Instagramu
           </h2>
         </div>
-        <div className="grid sm:grid-cols-5 grid-cols-6 gap-5">
-          {posts.map((post, i) =>
-          <motion.a
-            key={post.id}
-            href={post.permalink}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05, duration: 0.5 }}
-            className="group relative aspect-square overflow-hidden rounded-2xl bg-white border border-slate-200">
-            
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {posts.map((post, i) => (
+            <motion.a
+              key={post.id}
+              href={post.permalink}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05, duration: 0.5 }}
+              className="group relative aspect-square overflow-hidden rounded-2xl bg-white border border-slate-200"
+            >
               <img
-              src={post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url}
-              alt={post.caption?.slice(0, 60) || 'Instagram příspěvek'}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            
+                src={post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url}
+                alt={post.caption?.slice(0, 60) || 'Instagram příspěvek'}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
             </motion.a>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }

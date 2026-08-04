@@ -15,7 +15,26 @@ const CLIPS = [
 
 
 export default function MistVideoShowcase() {
-  return null;
+  return (
+    <section className="bg-primary py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-5">
+            <Play size={11} /> Ukázky mlhy
+          </span>
+          <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight">
+            Mlha, výroba a instalace — v reálném provozu.
+          </h2>
+        </motion.div>
+
+        {/* Hero clip */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+        className="rounded-2xl overflow-hidden border border-white/10 mb-5">
+          <video src={HERO_VIDEO} autoPlay muted loop playsInline className="w-full aspect-video object-cover bg-black" />
+        </motion.div>
+
+        {/* Grid of clips */}
+        
 
 
 
@@ -23,27 +42,8 @@ export default function MistVideoShowcase() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+      </div>
+    </section>);
 
 }

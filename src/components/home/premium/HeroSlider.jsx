@@ -59,10 +59,10 @@ export default function HeroSlider() {
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
                 <p className="mb-3 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 sm:mb-4 sm:text-xs sm:tracking-[0.3em] text-xs">{slide.tag}</p>
-                <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white sm:mb-5 text-4xl sm:text-6xl lg:text-7xl hidden">
+                <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white sm:mb-5 text-4xl sm:text-6xl lg:text-7xl">
                   {slide.title}
                 </h1>
-                <p className="text-measure text-base font-medium leading-relaxed text-white/90 sm:text-lg mb-6 sm:mb-8">{slide.desc}</p>
+                <p className="text-measure mb-6 text-base font-medium leading-relaxed text-white/90 sm:mb-8 sm:text-lg">{slide.desc}</p>
 
                 <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-10 sm:flex sm:flex-wrap">
                   <Link to={slide.cta1.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl sm:px-7 sm:py-4">

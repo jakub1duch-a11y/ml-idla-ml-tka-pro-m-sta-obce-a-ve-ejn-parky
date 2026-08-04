@@ -36,7 +36,7 @@ export default function SmartSection() {
                     <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
                   </motion.div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{f.label}</p>
+                    <p className="text-sm font-semibold text-slate-900 [font-family:'Plus_Jakarta_Sans',_sans-serif]">{f.label}</p>
                     <p className="text-xs text-slate-400">{f.sub}</p>
                   </div>
                 </motion.div>

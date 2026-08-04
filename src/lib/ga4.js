@@ -1,6 +1,6 @@
 // ⚠️ ZDE NAHRAĎTE 'AbC-D...' SKUTEČNÝM ŠTÍTKEM Z GOOGLE ADS
-const GOOGLE_ADS_ID = 'AW-18276263329'; 
-const GOOGLE_ADS_CONVERSION_LABEL = 'AbC-D_8356326891'; 
+const GOOGLE_ADS_ID = 'AW-18276263329';
+const GOOGLE_ADS_CONVERSION_LABEL = 'AbC-D_8356326891';
 
 function safeGtag(...args) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -8,19 +8,17 @@ function safeGtag(...args) {
   }
 }
 
-// Pomocná funkce pro odeslání konverze přímo do Google Ads
 function sendToGoogleAds(value = 1000) {
   safeGtag('event', 'conversion', {
-    'send_to': `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
-    'value': value,
-    'currency': 'CZK'
+    send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
+    value,
+    currency: 'CZK'
   });
 }
 
-// Konverzní formuláře (GA4 + Google Ads)
 export function trackCooperationFormSubmit() {
   safeGtag('event', 'generate_lead', { lead_type: 'spolupráce', value: 1 });
-  sendToGoogleAds(500); 
+  sendToGoogleAds(500);
 }
 
 export function trackContactFormSubmit(formType, productName) {
@@ -30,7 +28,7 @@ export function trackContactFormSubmit(formType, productName) {
 
 export function trackInquirySubmitted(requestType, productInterest) {
   safeGtag('event', 'generate_lead', { lead_type: requestType || 'poptávka', product_name: productInterest || 'bez produktu', value: 1 });
-  sendToGoogleAds(2000); 
+  sendToGoogleAds(2000);
 }
 
 export function trackRentalInquiry(productName, eventType) {
@@ -40,10 +38,9 @@ export function trackRentalInquiry(productName, eventType) {
 
 export function trackThankYouPageView(source) {
   safeGtag('event', 'generate_lead', { currency: 'CZK', value: 1000, lead_source: source || 'kontakt' });
-  sendToGoogleAds(1000); 
+  sendToGoogleAds(1000);
 }
 
-// Ostatní měření chování (Pouze GA4)
 export function trackGateInterest(productName) {
   safeGtag('event', 'product_interest', { product_type: 'brána', product_name: productName || 'obecná brána' });
 }
@@ -64,6 +61,29 @@ export function trackProductClick(productName, productSlug, section) {
   safeGtag('event', 'select_item', { product_name: productName, product_slug: productSlug, section_name: section || 'katalog' });
 }
 
+export function trackQuickInquiryClick(productName, section) {
+  safeGtag('event', 'quick_inquiry_click', {
+    product_name: productName || 'bez produktu',
+    section_name: section || 'produkt'
+  });
+}
+
+export function trackBlogPostView(title, slug, category) {
+  safeGtag('event', 'blog_post_view', {
+    post_title: title,
+    post_slug: slug,
+    post_category: category || 'nezadaná'
+  });
+}
+
+export function trackReferenceView(name, location, category) {
+  safeGtag('event', 'reference_view', {
+    reference_name: name,
+    reference_location: location || 'nezadaná',
+    reference_category: category || 'nezadaná'
+  });
+}
+
 if (typeof window !== 'undefined') {
   window.trackGateInterest = trackGateInterest;
   window.trackMistSculptureInterest = trackMistSculptureInterest;
@@ -71,6 +91,9 @@ if (typeof window !== 'undefined') {
   window.trackProductSectionEngagement = trackProductSectionEngagement;
   window.trackProductView = trackProductView;
   window.trackProductClick = trackProductClick;
+  window.trackQuickInquiryClick = trackQuickInquiryClick;
+  window.trackBlogPostView = trackBlogPostView;
+  window.trackReferenceView = trackReferenceView;
   window.trackContactFormSubmit = trackContactFormSubmit;
   window.trackInquirySubmitted = trackInquirySubmitted;
   window.trackRentalInquiry = trackRentalInquiry;

@@ -6,6 +6,8 @@
 const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
 const BASE_URL = 'https://mlzidla.cz';
 const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg';
+export const GOOGLE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Horn%C3%AD+Star%C3%A9+M%C4%9Bsto+698%2C+Trutnov';
+export const GOOGLE_MAPS_EMBED_URL = 'https://www.google.com/maps?q=Horn%C3%AD+Star%C3%A9+M%C4%9Bsto+698%2C+Trutnov&output=embed';
 
 function setMeta(name, content) {
   if (!content) return;
@@ -101,6 +103,73 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
     setMeta('geo.placename', geo.placename);
     setMeta('geo.region', geo.region || 'CZ');
   }
+}
+
+export function getProductSEO(product, reviewStats) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.short_description || product.description,
+    image: [product.image_url, ...(product.gallery_urls || [])].filter(Boolean),
+    brand: { '@type': 'Brand', name: 'HolmTec' }
+  };
+
+  if (product.price_from) {
+    jsonLd.offers = {
+      '@type': 'Offer',
+      priceCurrency: 'CZK',
+      price: product.price_from,
+      availability: 'https://schema.org/InStock',
+      url: `${BASE_URL}/produkt/${product.slug}`
+    };
+  }
+
+  if (reviewStats?.count && reviewStats?.average) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: reviewStats.average,
+      reviewCount: reviewStats.count
+    };
+  }
+
+  return {
+    title: product.name,
+    description: product.short_description || product.description,
+    image: product.image_url,
+    canonicalPath: `/produkt/${product.slug}`,
+    type: 'product',
+    jsonLd
+  };
+}
+
+export function getBlogPostSEO(post) {
+  return {
+    title: post.title,
+    description: post.perex,
+    image: post.image_url,
+    canonicalPath: `/blog/${post.slug || post.id}`,
+    type: 'article',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.perex,
+      image: post.image_url,
+      datePublished: post.published_date,
+      author: { '@type': 'Organization', name: 'HolmTec' }
+    }
+  };
+}
+
+export function getReferenceSEO(project) {
+  return {
+    title: project.name,
+    description: project.description,
+    image: project.image_url,
+    canonicalPath: `/reference/${project.id}`,
+    type: 'article'
+  };
 }
 
 // ─── Per-page SEO presets ────────────────────────────────────────────────────

@@ -7,8 +7,8 @@ import SmartControlVisual from '@/components/home/SmartControlVisual';
 const features = [
 { icon: Wifi, label: 'Google Assistant + Alexa', sub: 'Hlasové ovládání' },
 { icon: Clock, label: 'Automatické plány', sub: 'Podle času i teploty' },
-{ icon: Layers, label: 'Zóny a scény', sub: 'Každé místo zvlášť' },
-{ icon: Droplets, label: 'Přehled průtoku vody', sub: 'Kontrola spotřeby v reálu' }];
+{ icon: Layers, label: 'Zóny a scény', sub: 'Každé místo (mlžítko)zvlášť' },
+{ icon: Droplets, label: 'Přehled průtoku vody', sub: 'Kontrola spotřeby v reálných číslech' }];
 
 
 export default function SmartSection() {

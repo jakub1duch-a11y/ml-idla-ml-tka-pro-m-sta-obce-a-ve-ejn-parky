@@ -81,12 +81,12 @@ export default function FeaturedProductsSection() {
         </div>
 
         {/* CTA */}
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-center hidden">
-          <Link to="/kontakt"
-          className="btn-metallic-mist px-8 py-4 text-sm font-bold hidden">
-            ✦ Nezávazná poptávka <ArrowRight size={16} />
-          </Link>
-        </motion.div>
+        
+
+
+
+
+        
       </div>
     </section>);
 

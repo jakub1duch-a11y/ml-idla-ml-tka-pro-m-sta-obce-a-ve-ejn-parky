@@ -41,7 +41,7 @@ export default function FormFunctionSection() {
                     </div>
                     <div>
                       <h3 className="mb-1 font-medium text-slate-900 text-lg">{item.title}</h3>
-                      <p className="leading-relaxed text-slate-500 text-sm">{item.text}</p>
+                      <p className="leading-relaxed text-slate-500 text-sm [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">{item.text}</p>
                     </div>
                   </div>);
 

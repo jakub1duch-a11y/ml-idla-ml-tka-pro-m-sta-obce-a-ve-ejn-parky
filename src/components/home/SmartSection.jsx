@@ -22,7 +22,7 @@ export default function SmartSection() {
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading text-4xl lg:text-5xl text-foreground tracking-tight mb-6">
-              Automatizace, která šetří vodu i váš čas Bez starostí.
+              Automatizace, která šetří vodu i váš čas. Bez starostí.
             </motion.h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
            Provoz pod kontrolou WiF.Ovládejte průtok, plán mlžení a zóny přes WiFi aplikaci. Přehledná analytika ukazuje spotřebu, úspory i stav zařízení — mlžítka pak pracují sama.

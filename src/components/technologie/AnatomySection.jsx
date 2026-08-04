@@ -24,7 +24,7 @@ export default function AnatomySection() {
         <div className="flex flex-col gap-5">
           {left.map((c, i) =>
           <motion.div key={c.title} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-          className="border border-slate-200 rounded-2xl p-5 bg-[hsl(var(--card-foreground))]">
+          className="border border-slate-200 rounded-2xl p-5 bg-[hsl(var(--muted))]">
               <div className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-3">
                 <c.icon size={16} className="text-slate-700" />
               </div>

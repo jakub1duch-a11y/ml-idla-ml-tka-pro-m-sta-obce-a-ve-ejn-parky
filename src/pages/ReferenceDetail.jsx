@@ -275,7 +275,7 @@ export default function ReferenceDetail() {
       }
 
       {/* ═══════ CTA ═══════ */}
-      <div className="py-20 bg-slate-900">
+      <div className="py-20 bg-[#164e64]">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <h2 className="font-heading font-light text-3xl text-white mb-4">Chcete podobné řešení?</h2>
           <p className="text-white/50 mb-8">Konzultace zdarma, 3D vizualizace do 48 h, montáž za jeden den.</p>

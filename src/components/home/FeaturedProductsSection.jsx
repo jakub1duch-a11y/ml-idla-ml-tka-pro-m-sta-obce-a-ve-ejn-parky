@@ -35,7 +35,7 @@ export default function FeaturedProductsSection() {
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Naše produkty</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight">
+            className="text-4xl lg:text-5xl text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
               Oblíbené instalace
             </motion.h2>
             <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5 whitespace-nowrap">
@@ -61,14 +61,14 @@ export default function FeaturedProductsSection() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   {product.featured &&
-                <span className="absolute top-3 left-3 bg-slate-900 text-white text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full">
-                      Oblíbené
-                    </span>
+                <span className="absolute top-3 left-3 bg-slate-900 text-white font-mono tracking-widest uppercase px-2.5 py-1 rounded-full text-xs">OBLÍBENÉ
+
+                </span>
                 }
                 </div>
                 <div className="p-5 flex items-center justify-between gap-3">
                   <div>
-                    <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-2xl">{product.name}</h3>
+                    <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] capitalize">{product.name}</h3>
                     {product.short_description &&
                   <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-sm">{product.short_description}</p>
                   }

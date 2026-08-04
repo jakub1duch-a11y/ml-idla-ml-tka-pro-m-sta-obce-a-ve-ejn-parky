@@ -47,8 +47,8 @@ export default function SmartSection() {
               <Link to="/kalkulacka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Spočítat provozní náklady <ArrowRight size={16} />
               </Link>
-              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold text-secondary hover:text-foreground">
-                Automatizace mlžítek <ArrowRight size={16} />
+              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold hover:text-foreground text-[hsl(var(--ring))] bg-[#721313]">Automatizace mlžítek
+
               </Link>
             </div>
           </motion.div>

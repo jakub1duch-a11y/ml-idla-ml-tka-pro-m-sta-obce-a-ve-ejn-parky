@@ -70,7 +70,7 @@ export default function Technologie() {
               <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center mx-auto mb-4">
                 <b.icon size={20} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold text-2xl">{b.title}</h3>
+              <h3 className="text-slate-900 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-2xl font-medium">{b.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{b.text}</p>
             </motion.div>
           )}
@@ -81,7 +81,7 @@ export default function Technologie() {
       <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-2xl">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Princip mlžení</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Od mikrokapky k ochlazení</h2>
+          <h2 className="text-3xl lg:text-4xl text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">Od mikrokapky k ochlazení</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
@@ -92,7 +92,7 @@ export default function Technologie() {
               <div className="w-11 h-11 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
                 <s.icon size={19} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 mb-2 text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">{s.title}</h3>
+              <h3 className="text-slate-900 mb-2 text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">{s.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{s.text}</p>
             </motion.div>
           )}

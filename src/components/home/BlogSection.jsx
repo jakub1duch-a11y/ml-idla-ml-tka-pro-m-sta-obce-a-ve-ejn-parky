@@ -46,10 +46,10 @@ function PostCard({ post, i }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" />
         <div className="relative h-full flex flex-col justify-end p-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase px-2.5 py-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
+            <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase px-2.5 py-1 backdrop-blur-sm border border-white/20 rounded-full bg-[hsl(var(--card-foreground))]">
               {CATEGORY_LABELS[post.category] || post.category || 'Článek'}
             </span>
-            {post.published_date && <span className="text-[10px] font-mono text-[hsl(var(--popover-foreground))]">{formatDate(post.published_date)}</span>}
+            {post.published_date && <span className="text-[10px] font-mono text-[hsl(var(--popover-foreground))] bg-[hsl(var(--popover))]">{formatDate(post.published_date)}</span>}
           </div>
           <h3 className="font-heading font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2">
             {post.title}

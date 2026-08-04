@@ -13,7 +13,7 @@ export default function InstagramFeedSection() {
   if (posts.length === 0) return null;
 
   return (
-    <section className="bg-[#f2f3f5] py-20">
+    <section className="py-20 bg-[hsl(var(--card-foreground))]">
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <div className="flex items-center gap-3 mb-10">
           <Instagram size={22} className="text-slate-900" strokeWidth={1.5} />
@@ -21,7 +21,7 @@ export default function InstagramFeedSection() {
             Sledujte nás na Instagramu
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2">
+        <div className="grid sm:grid-cols-5 grid-cols-6 gap-5">
           {posts.map((post, i) =>
           <motion.a
             key={post.id}

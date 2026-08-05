@@ -22,7 +22,7 @@ export default function SmartSection() {
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--input))]">
-              Automatizace, která šetří vodu i váš čas. Bez starostí.
+              Automatizace, která šetří vodu i váš čas
             </motion.h2>
             <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))]">Provoz pod kontrolou s
 

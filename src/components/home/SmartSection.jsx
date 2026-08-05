@@ -24,7 +24,7 @@ export default function SmartSection() {
             className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--input))]">
               Automatizace, která šetří vodu i váš čas. Bez starostí.
             </motion.h2>
-            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))]">Provoz pod kontrolou s WiFi AP
+            <p className="leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))] text-6xl [font-family:'Montserrat',_sans-serif] font-bold">Provoz pod kontrolou s
 
             </p>
 

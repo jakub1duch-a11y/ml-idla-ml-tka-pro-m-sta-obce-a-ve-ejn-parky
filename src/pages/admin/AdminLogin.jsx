@@ -27,7 +27,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-ink flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[#1f4e61]">
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-cyan/10 border border-cyan/20 mb-4">
@@ -38,11 +38,11 @@ export default function AdminLogin() {
         </div>
 
         <div className="bg-card_bg rounded-2xl border border-white/10 p-8">
-          {error && (
-            <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+          {error &&
+          <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
               {error}
             </div>
-          )}
+          }
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-white/60">Email</Label>
@@ -57,8 +57,8 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 h-12 bg-white/5 border-white/10 text-white placeholder:text-white/20"
-                  required
-                />
+                  required />
+                
               </div>
             </div>
             <div className="space-y-2">
@@ -78,19 +78,19 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 h-12 bg-white/5 border-white/10 text-white placeholder:text-white/20"
-                  required
-                />
+                  required />
+                
               </div>
             </div>
             <Button type="submit" className="w-full h-12 font-medium bg-cyan text-ink hover:bg-cyan/90" disabled={loading}>
-              {loading ? (
-                <>
+              {loading ?
+              <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Přihlašování...
-                </>
-              ) : (
-                "Přihlásit se"
-              )}
+                </> :
+
+              "Přihlásit se"
+              }
             </Button>
           </form>
         </div>
@@ -99,6 +99,6 @@ export default function AdminLogin() {
           <Link to="/" className="hover:text-white/60 transition-colors">← Zpět na web</Link>
         </p>
       </div>
-    </div>
-  );
+    </div>);
+
 }

@@ -26,7 +26,7 @@ const DEVICE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4
 
 export default function PremiumOasisSection() {
   return (
-    <section className="relative overflow-hidden bg-background py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-background py-24 lg">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-24 grid items-center gap-12 lg:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
@@ -52,7 +52,7 @@ export default function PremiumOasisSection() {
           })}
         </div>
 
-        <div className="grid gap-x-10 gap-y-5 rounded-3xl border border-slate-200 bg-white p-8 md:grid-cols-2 lg:p-12">
+        <div className="grid gap-x-10 gap-y-5 rounded-3xl border border-slate-200 bg-white p-8 md:grid-cols-2 lg:p-12 hidden">
           {ADVANTAGES.map((text, index) =>
           <motion.div key={text} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06, duration: 0.5 }} className="flex items-start gap-3">
               <CheckGlowIcon />

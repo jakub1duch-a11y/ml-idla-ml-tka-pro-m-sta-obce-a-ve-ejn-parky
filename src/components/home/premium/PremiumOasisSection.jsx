@@ -52,14 +52,14 @@ export default function PremiumOasisSection() {
           })}
         </div>
 
-        <div className="grid gap-x-10 gap-y-5 rounded-3xl border border-slate-200 bg-white p-8 md:grid-cols-2 lg:p-12 hidden">
-          {ADVANTAGES.map((text, index) =>
-          <motion.div key={text} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06, duration: 0.5 }} className="flex items-start gap-3">
-              <CheckGlowIcon />
-              <p className="leading-relaxed text-slate-600 text-left normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-base md:text-base font-normal">{text}</p>
-            </motion.div>
-          )}
-        </div>
+        
+
+
+
+
+
+
+        
       </div>
     </section>);
 

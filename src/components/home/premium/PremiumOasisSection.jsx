@@ -43,7 +43,7 @@ export default function PremiumOasisSection() {
             const Icon = app.icon;
             return (
               <motion.div key={app.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08, duration: 0.6 }} className="border-t border-border pt-6">
-                <div className="text-secondary px-6"><Icon /></div>
+                <div className="text-secondary px-6 2x10"><Icon /></div>
                 <p className="mb-1 mt-5 tracking-widest text-[#a8a8a8] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light text-2xl">{app.num}</p>
                 <h3 className="mb-2 text-foreground [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold text-2xl">{app.title}</h3>
                 <p className="font-body text-sm leading-relaxed text-muted-foreground">{app.desc}</p>

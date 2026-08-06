@@ -31,7 +31,7 @@ export default function SmartSection() {
             <div className="grid grid-cols-2 gap-3 mb-8">
               {features.map((f, i) =>
               <motion.div key={f.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="flex items-start gap-3 p-4 rounded-xl border border-slate-200 text-[hsl(var(--card))]">
+              className="flex items-start gap-3 p-4 border border-slate-200 text-[hsl(var(--card))]">
                   <motion.div initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.08 + 0.1, duration: 0.4, ease: 'backOut' }}>
                     <f.icon size={18} className="text-slate-700 mt-0.5 flex-shrink-0" />
                   </motion.div>

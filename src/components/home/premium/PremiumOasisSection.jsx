@@ -26,7 +26,7 @@ const DEVICE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4
 
 export default function PremiumOasisSection() {
   return (
-    <section className="relative overflow-hidden bg-background lg py-24">
+    <section className="relative overflow-hidden bg-background py-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-24 grid items-center gap-12 lg:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>

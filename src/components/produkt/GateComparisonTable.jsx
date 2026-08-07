@@ -110,7 +110,7 @@ export default function GateComparisonTable() {
         className="hidden lg:block rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm mb-10">
           <div className="grid grid-cols-4 bg-gradient-to-r from-slate-900 to-slate-700">
             <div className="px-4 py-4">
-              <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">Parametr</span>
+              <span className="font-mono tracking-widest uppercase text-sm text-[hsl(var(--background))]">PARAMETR</span>
             </div>
             {COLUMNS.map((col) =>
             <div key={col.id} className="px-4 py-4 border-l border-white/10">

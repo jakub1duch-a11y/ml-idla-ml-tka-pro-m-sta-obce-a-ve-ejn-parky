@@ -22,7 +22,7 @@ function SlideCard({ product, index }) {
       </span>
       <div className="absolute bottom-0 left-0 right-0 p-5">
         <h3 className="font-heading font-light text-xl text-white tracking-tight mb-2 leading-snug">{product.name}</h3>
-        <p className="text-xs text-white/60 font-light line-clamp-2 mb-4">{product.short_description}</p>
+        <p className="text-white/60 font-light line-clamp-2 mb-4 text-sm">{product.short_description}</p>
         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:gap-2.5 transition-all">
           Detail produktu <ArrowRight size={12} />
         </span>

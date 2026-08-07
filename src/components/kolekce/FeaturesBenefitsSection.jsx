@@ -16,7 +16,7 @@ export default function FeaturesBenefitsSection() {
     <div className="border-t border-slate-200 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-          <p className="tracking-widest uppercase text-slate-400 mb-3 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-lg">VLASTNOSTI A VÝHODY</p>
+          <p className="tracking-widest uppercase text-slate-400 mb-3 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">VLASTNOSTI A VÝHODY</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Proč zvolit naše mlžítka.</h2>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

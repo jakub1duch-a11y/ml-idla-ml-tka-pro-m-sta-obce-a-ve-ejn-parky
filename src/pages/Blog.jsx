@@ -111,7 +111,7 @@ export default function Blog() {
                   <div className="p-8 flex flex-col">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
-                      {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs font-mono text-slate-300">{formatDate(featured.published_date)}</span></>}
+                      {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="font-mono text-[hsl(var(--ring))] text-sm">{formatDate(featured.published_date)}</span></>}
                     </div>
                     <h2 className="text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors text-xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{featured.title}</h2>
                     <p className="text-slate-500 font-light leading-relaxed text-base">{featured.perex}</p>

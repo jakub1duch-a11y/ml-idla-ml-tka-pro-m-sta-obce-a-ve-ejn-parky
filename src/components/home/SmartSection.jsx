@@ -24,9 +24,9 @@ export default function SmartSection() {
             className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--popover-foreground))]">
               Automatizace, která šetří vodu i váš čas
             </motion.h2>
-            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))] hidden">Provoz pod kontrolou.
+            
 
-            </p>
+            
 
             <div className="grid grid-cols-2 gap-3 mb-8">
               {features.map((f, i) =>

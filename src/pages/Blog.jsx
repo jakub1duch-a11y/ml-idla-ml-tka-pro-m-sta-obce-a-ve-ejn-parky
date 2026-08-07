@@ -52,7 +52,7 @@ export default function Blog() {
       {/* Header */}
       <div className="bg-primary text-white"><div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog HolmTec</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog MLŽIDLA</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-4">
             O mlžení do hloubky
           </h1>

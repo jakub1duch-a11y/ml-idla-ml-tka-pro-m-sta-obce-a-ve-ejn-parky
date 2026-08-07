@@ -39,7 +39,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
           {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
-          <h1 className="font-semibold text-4xl lg:text-6xl tracking-tight leading-[1.08] mb-5 [font-family:'Architects_Daughter',_system-ui] text-[#106384]">
+          <h1 className="font-semibold tracking-tight leading-[1.08] mb-5 [font-family:'Architects_Daughter',_system-ui] text-[#0b4860] text-5xl lg:text-5xl">
             {product.name}
           </h1>
           {product.short_description &&

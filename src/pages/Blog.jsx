@@ -115,7 +115,7 @@ export default function Blog() {
                     </div>
                     <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
                     <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
-                    <div className="mt-6 flex items-center gap-2 text-xs text-slate-900 font-medium group-hover:gap-3 transition-all">
+                    <div className="flex items-center text-slate-900 font-medium group-hover:gap-3 transition-all btn-metallic-mist mt-6 gap-2 text-s">
                       Číst článek <ArrowRight size={12} />
                     </div>
                   </div>

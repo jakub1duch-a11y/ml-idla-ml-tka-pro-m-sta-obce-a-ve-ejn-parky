@@ -14,7 +14,7 @@ export default function CollectionMainInfoSection() {
     <section className="py-16 lg:py-20 border-b border-slate-100 bg-[hsl(var(--accent-foreground))]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-          <p className="font-mono tracking-widest uppercase mb-3 text-[hsl(var(--background))] text-xl hidden">HLAVNÍ INFORMACE</p>
+          
           <h2 className="font-heading font-light tracking-tight text-[hsl(var(--background))] text-xl lg:text-xl">Co potřebujete vědět o mlžných systémech HolmTec.
 
           </h2>

@@ -21,7 +21,7 @@ const COLUMNS = [
 {
   id: 'linea',
   name: "IRIS BR\xC1NA",
-  tag: 'Obloukový design',
+  tag: "SA design",
   detailLink: '/produkt/linea-el70',
   demoLink: '/produkt/linea-el70?tab=video'
 }];

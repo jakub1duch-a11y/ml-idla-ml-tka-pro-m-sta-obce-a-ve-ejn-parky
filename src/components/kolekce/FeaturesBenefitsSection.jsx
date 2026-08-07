@@ -37,7 +37,7 @@ export default function FeaturesBenefitsSection() {
               
                 <f.icon size={19} className="size-10 text-[hsl(var(--secondary))]" />
               </motion.div>
-              <h3 className="text-slate-900 font-medium mb-1.5 text-2xl">{f.title}</h3>
+              <h3 className="text-slate-900 mb-1.5 text-xl [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{f.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
             </motion.div>
           )}

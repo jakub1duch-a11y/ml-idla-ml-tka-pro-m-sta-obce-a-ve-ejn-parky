@@ -228,7 +228,7 @@ export default function Kolekce() {
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3 bg-[hsl(var(--ring))] text-[hsl(var(--background))]">
                     <Icon size={16} className="text-[hsl(var(--card))]" />
                   </div>
-                  <h4 className="text-sm font-normal text-slate-900 mb-2">{seg.label}</h4>
+                  <h4 className="text-slate-900 mb-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{seg.label}</h4>
                   <p className="text-slate-400 leading-relaxed text-sm">{seg.desc}</p>
                 </motion.div>);
 

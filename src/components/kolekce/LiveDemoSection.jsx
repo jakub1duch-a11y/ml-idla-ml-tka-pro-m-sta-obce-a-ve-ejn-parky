@@ -18,16 +18,16 @@ export default function LiveDemoSection() {
         autoPlay
         muted
         loop
-        playsInline
-      />
+        playsInline />
+      
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20" />
       <div className="relative h-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col justify-end pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/25 text-white text-xs font-mono tracking-widest uppercase rounded-full mb-5">
             <Play size={11} /> Živá ukázka
           </span>
-          <h2 className="font-heading font-light text-4xl lg:text-5xl text-white tracking-tight max-w-xl mb-4">
-            Podívejte se, jak mlžítko ožívá.
+          <h2 className="text-4xl lg:text-5xl text-white tracking-tight max-w-xl mb-4 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">Podívejte se, jak mlžítko ožívá.
+
           </h2>
           <p className="text-white/60 max-w-lg font-light leading-relaxed mb-8">
             Jemná mlha, dramatický vizuální efekt a okamžité ochlazení prostoru — přesně takový je zážitek z instalací HolmTec v reálném provozu.
@@ -37,6 +37,6 @@ export default function LiveDemoSection() {
           </Link>
         </motion.div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

@@ -152,8 +152,8 @@ export default function Gate70() {
     <div className="min-h-screen bg-white">
 
       {/* ══════════════════════════════════════════════════════
-                                                              1. HERO — dvě varianty s přepínačem
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               1. HERO — dvě varianty s přepínačem
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen overflow-hidden">
         <video
           autoPlay
@@ -229,8 +229,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              2. DVĚ VARIANTY — porovnání vedle sebe
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               2. DVĚ VARIANTY — porovnání vedle sebe
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto lg:px-10 pt-12 pr-6 pl-6 pb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14">
           <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm">DVĚ TVAROVÉ VARIANTY</p>
@@ -266,8 +266,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              3. LANDING INFO — o bráně
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               3. LANDING INFO — o bráně
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="bg-white py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
@@ -301,8 +301,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              4. TECHNICKÉ SPECIFIKACE
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               4. TECHNICKÉ SPECIFIKACE
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -348,8 +348,8 @@ export default function Gate70() {
       <GateComparisonTable />
 
       {/* ══════════════════════════════════════════════════════
-                                                              5. SMART ŘÍZENÍ
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               5. SMART ŘÍZENÍ
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 flex items-start justify-between gap-8">
@@ -383,8 +383,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              6. FOTOGALERIE + DETAIL FOTO
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               6. FOTOGALERIE + DETAIL FOTO
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-24">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Fotogalerie</p>
@@ -417,15 +417,15 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              7. VIDEA V AKCI
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               7. VIDEA V AKCI
+                                                            ══════════════════════════════════════════════════════ */}
       <section id="video" className="bg-slate-50 border-y border-slate-200 scroll-mt-24 py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-            <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm">VIDEA</p>
+            <p className="font-mono tracking-widest uppercase mb-3 text-sm text-[hsl(var(--background))]">VIDEA</p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             style={{ lineHeight: 1.0, fontWeight: 700, fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.04em' }} className="text-slate-900">
-              GATE70<br /><span className="[font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light no-underline not-italic">v akci.</span>
+              GATE70<br /><span className="[font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light no-underline not-italic text-[hsl(var(--background))]">v akci.</span>
             </motion.h2>
           </motion.div>
 
@@ -433,10 +433,10 @@ export default function Gate70() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {VIDEOS.slice(1).map((v, i) =>
             <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-            className="rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+            className="rounded-xl overflow-hidden border border-slate-200 shadow-sm">
                 <video src={v.url} controls playsInline className="w-full bg-black" />
                 <div className="px-4 py-3">
-                  <p className="font-mono text-slate-400 tracking-widest uppercase leading-snug text-sm">{v.caption}</p>
+                  <p className="font-mono tracking-widest uppercase leading-snug text-sm text-[hsl(var(--popover-foreground))]">{v.caption}</p>
                 </div>
               </motion.div>
             )}
@@ -445,8 +445,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              8. REALIZACE
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               8. REALIZACE
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm hidden">REALIZACE</p>
@@ -473,8 +473,8 @@ export default function Gate70() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-                                                              9. CTA — Poptávka
-                                                           ══════════════════════════════════════════════════════ */}
+                                                               9. CTA — Poptávka
+                                                            ══════════════════════════════════════════════════════ */}
       <section className="bg-slate-50 border-t border-slate-200 py-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

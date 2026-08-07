@@ -21,7 +21,7 @@ function SlideCard({ product, index }) {
         {String(index + 1).padStart(2, '0')}
       </span>
       <div className="absolute bottom-0 left-0 right-0 p-5">
-        <h3 className="font-heading font-light text-xl text-white tracking-tight mb-2 leading-snug">{product.name}</h3>
+        <h3 className="font-heading font-light text-xl text-white mb-2 leading-snug tracking-bo">{product.name}</h3>
         <p className="font-light line-clamp-2 mb-4 text-sm text-white/80">{product.short_description}</p>
         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:gap-2.5 transition-all">
           Detail produktu <ArrowRight size={12} />

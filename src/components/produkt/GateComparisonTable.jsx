@@ -20,7 +20,7 @@ const COLUMNS = [
 },
 {
   id: 'linea',
-  name: 'LINEA CE70',
+  name: "IRIS BR\xC1NA",
   tag: 'Obloukový design',
   detailLink: '/produkt/linea-el70',
   demoLink: '/produkt/linea-el70?tab=video'
@@ -60,7 +60,7 @@ export default function GateComparisonTable() {
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-mono tracking-widest uppercase mb-4">
             <Sparkles size={12} /> Nerezová konstrukce AISI 316L
           </span>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-3">
+          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-3 hidden">
             GATE70 vs. LINEA CE70 — <span className="italic text-slate-400">hlavní rozdíl je v konstrukci.</span>
           </h2>
           <p className="text-slate-500 text-sm font-light max-w-2xl leading-relaxed">
@@ -72,7 +72,7 @@ export default function GateComparisonTable() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
           {CONSTRUCTION.map((c, i) =>
           <motion.div key={c.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-          className="p-5 rounded-2xl bg-white border border-slate-200 flex gap-4">
+          className="p-5 rounded-2xl bg-white border border-slate-200 flex gap-4 hidden">
               <div className="w-10 h-10 shrink-0 rounded-xl bg-slate-100 flex items-center justify-center">
                 <c.icon size={18} className="text-slate-900" />
               </div>

@@ -5,7 +5,7 @@ import AllProductsImageCard from '@/components/common/AllProductsImageCard';
 
 const OFFERS = [
 { slug: 'city', title: 'Městská kolekce', eyebrow: 'Města a veřejný prostor', text: 'Nerezová mlžítka a mlžné brány pro náměstí, parky a pěší zóny.', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png' },
-{ slug: 'garden', title: 'Zahradní kolekce', eyebrow: 'Zahrady a terasy', text: 'Čisté nerezové mlžítko pro soukromé zahrady, hotelové a restaurační terasy.', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg' },
+{ slug: 'garden', title: 'Zahradní kolekce', eyebrow: 'Zahrady a terasy', text: 'Čisté nerezové mlžítko pro soukromé zahrady, hotelové a restaurační terasy.', image: "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/eb03ffe38_file_00000000db9072469c9f2e9b61c49933.png" },
 { slug: 'art', title: 'Autorská kolekce', eyebrow: 'Autorské instalace', text: 'Mlžné skulptury a řešení na míru jako součást identity konkrétního místa.', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' }];
 
 

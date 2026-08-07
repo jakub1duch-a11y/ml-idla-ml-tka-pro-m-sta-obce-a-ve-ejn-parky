@@ -78,7 +78,7 @@ export default function Blog() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
         <div className="flex gap-2 flex-wrap">
           <button onClick={() => setCategory('all')}
-          className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all ${category === 'all' ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
+          className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all btn-metallic-mist ${category === 'all' ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300 hover:text-slate-800'}`}>
             Všechna témata
           </button>
           {Object.entries(CATEGORY_LABELS).map(([v, l]) =>

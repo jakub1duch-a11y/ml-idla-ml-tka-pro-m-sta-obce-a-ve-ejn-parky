@@ -4,7 +4,7 @@ import { Layers, Waves, Gauge, Wifi, ShieldCheck, Sparkles } from 'lucide-react'
 
 const FEATURES = [
 { icon: Layers, title: 'Nerezová ocel AISI 316L', desc: 'Potravinářská nerez odolná korozi, mrazu i UV záření. Bez nátěrů a chemikálií.' },
-{ icon: Waves, title: 'Mikrokapky 10–50 μm', desc: 'Voda se okamžitě odpaří ve vzduchu — chladí prostor, aniž by cokoliv zvlhčila.' },
+{ icon: Waves, title: "Mikrokapky 50\u2013100 \u03BCm", desc: 'Voda se okamžitě odpaří ve vzduchu — chladí prostor, aniž by cokoliv zvlhčila.' },
 { icon: Gauge, title: 'Nízký tlak 2–7 bar', desc: 'Napojení přímo na vodovodní řad, bez nutnosti čerpadla či tlakové stanice.' },
 { icon: Wifi, title: 'Smart Wi-Fi ovládání', desc: 'Automatizace podle teploty, vlhkosti a denní doby přes mobilní aplikaci.' },
 { icon: ShieldCheck, title: '24 měsíců záruka', desc: 'Rychlý záruční i pozáruční servis, pravidelná údržba na vyžádání.' },

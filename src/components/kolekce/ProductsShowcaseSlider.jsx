@@ -17,7 +17,7 @@ function SlideCard({ product, index }) {
       <div className="w-full h-full flex items-center justify-center text-white/20 text-4xl">📷</div>
       }
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
-      <span className="absolute top-4 right-4 font-mono text-white/20 text-2xl font-black">
+      <span className="absolute top-4 right-4 text-[hsl(var(--background))] text-3xl [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
         {String(index + 1).padStart(2, '0')}
       </span>
       <div className="absolute bottom-0 left-0 right-0 p-5">

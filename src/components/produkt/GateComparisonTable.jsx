@@ -55,7 +55,7 @@ const COLUMN_KEYS = ['gateU', 'gateV', 'linea'];
 export default function GateComparisonTable() {
   return (
     <section className="py-20 lg:py-24 bg-slate-50 border-y border-slate-200">
-      <div className="max-w-6xl lg:px-10 pr-6 pl-6">
+      <div className="max-w-6xl lg:px-10 mx-aut">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 hidden">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-mono tracking-widest uppercase mb-4">
             <Sparkles size={12} /> Nerezová konstrukce AISI 316L

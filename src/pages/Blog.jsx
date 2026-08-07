@@ -139,7 +139,7 @@ export default function Blog() {
                           <div className="flex items-center gap-2 mb-2">
                             <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>
                           </div>
-                          <h3 className="font-light text-slate-900 text-sm leading-snug group-hover:text-slate-600 transition-colors line-clamp-2">{post.title}</h3>
+                          <h3 className="text-slate-900 leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{post.title}</h3>
                         </div>
                         {post.published_date && <p className="text-xs font-mono text-slate-300 mt-2">{formatDate(post.published_date)}</p>}
                       </div>

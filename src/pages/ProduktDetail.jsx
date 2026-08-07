@@ -111,10 +111,10 @@ export default function ProduktDetail() {
       trackProductView(p.name, p.slug, p.category_id);
       setSEO(getProductSEO(p));
       const [related, nozzleResults, allProducts] = await Promise.all([
-        p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
-        base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
-        base44.entities.Product.list().catch(() => [])
-      ]);
+      p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
+      base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
+      base44.entities.Product.list().catch(() => [])]
+      );
       const sameCategory = (related || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska');
       const fallback = (allProducts || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !sameCategory.some((item) => item.id === r.id));
       const similar = [...sameCategory, ...fallback].slice(0, 3);
@@ -199,8 +199,8 @@ export default function ProduktDetail() {
         categoryName={categoryName}
         allImages={allImages}
         onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
-        onShowTechnical={() => handleTabClick(TABS[1])}
-      />
+        onShowTechnical={() => handleTabClick(TABS[1])} />
+      
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
       <div ref={tabsNavRef} className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
@@ -208,12 +208,12 @@ export default function ProduktDetail() {
           <div className="relative flex-1 min-w-0 order-1">
             {canScrollLeft &&
             <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
-              className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
+            className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
               <ChevronLeft size={16} className="text-slate-500" />
             </button>
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-              className="flex gap-2 sm:gap-6 lg:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+            className="flex gap-2 sm:gap-6 lg:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
               {TABS.map((t) =>
               <button key={t.id} onClick={() => handleTabClick(t)}
               className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
@@ -226,7 +226,7 @@ export default function ProduktDetail() {
             </div>
             {canScrollRight &&
             <button type="button" onClick={() => scrollTabs(160)} aria-label="Posunout záložky vpravo"
-              className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-l from-white via-white/95 to-transparent lg:hidden">
+            className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-l from-white via-white/95 to-transparent lg:hidden">
               <ChevronRight size={16} className="text-slate-500" />
             </button>
             }
@@ -243,12 +243,12 @@ export default function ProduktDetail() {
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
           {activeTab === 'o-produktu' && <OProduktuTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ images: customImages || allImages, idx: i })} />}
-          {activeTab === 'technicke' && (
-            <>
+          {activeTab === 'technicke' &&
+          <>
               <SpecsTab product={product} techRows={techRows} />
               {GATE_SLUGS.includes(product.slug) && <GateComparisonTable />}
             </>
-          )}
+          }
           {activeTab === 'benefity' && <BenefityTab product={product} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
           {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}
@@ -267,7 +267,7 @@ export default function ProduktDetail() {
           <span />
           }
           <button onClick={scrollToContact}
-          className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all">
+          className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all hidden">
             Poptat produkt zdarma <ArrowRight size={16} />
           </button>
         </div>
@@ -332,10 +332,10 @@ export default function ProduktDetail() {
             <h2 className="font-heading font-semibold text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((r, i) =>
-              <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+            <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                   <RelatedProductCard product={r} index={i} />
                 </motion.div>
-              )}
+            )}
             </div>
             <div className="mt-10 flex justify-center">
               <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">

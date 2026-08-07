@@ -74,9 +74,9 @@ export default function ProductContactForm({ productName }) {
       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
         <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">Doplňkové možnosti</p>
         <div>
-          <p className="text-sm text-slate-700 mb-2">Smart řízení</p>
+          <p className="text-sm text-slate-700 mb-2">Ovládání mlžítka</p>
           <select value={form.smartVariant} onChange={(e) => setForm((f) => ({ ...f, smartVariant: e.target.value }))}
-            className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-slate-900 transition-colors">
+          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-slate-900 transition-colors">
             {SMART_VARIANTS.map((v) => <option key={v.value} value={v.value}>{v.label}</option>)}
           </select>
         </div>

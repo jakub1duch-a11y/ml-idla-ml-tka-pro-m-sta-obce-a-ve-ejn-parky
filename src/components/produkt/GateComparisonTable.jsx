@@ -54,8 +54,8 @@ const COLUMN_KEYS = ['gateU', 'gateV', 'linea'];
 
 export default function GateComparisonTable() {
   return (
-    <section className="border-y border-slate-200 bg-slate-50">
-      <div className="max-w-6xl lg:px-10 mx-autO">
+    <section className="border-y border-slate-200 bg-slate-50 mx-auto">
+      <div className="max-w-6xl lg:px-10 mx-auto">
         
 
 

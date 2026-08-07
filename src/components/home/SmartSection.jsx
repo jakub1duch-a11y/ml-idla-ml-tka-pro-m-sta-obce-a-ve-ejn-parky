@@ -21,10 +21,10 @@ export default function SmartSection() {
               Smart mlžení · WiFi / aplikace
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--input))]">
+            className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--popover-foreground))]">
               Automatizace, která šetří vodu i váš čas
             </motion.h2>
-            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))]">Provoz pod kontrolou s
+            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))]">Provoz pod kontrolou.
 
             </p>
 
@@ -36,7 +36,7 @@ export default function SmartSection() {
                     <f.icon size={18} className="mt-0.5 flex-shrink-0 text-[hsl(var(--background))]" />
                   </motion.div>
                   <div>
-                    <p className="font-semibold [font-family:'Plus_Jakarta_Sans',_sans-serif] text-[hsl(var(--card))] text-xl">{f.label}</p>
+                    <p className="font-semibold [font-family:'Plus_Jakarta_Sans',_sans-serif] text-[hsl(var(--card))] text-lg">{f.label}</p>
                     <p className="text-xs text-[#dedede]">{f.sub}</p>
                   </div>
                 </motion.div>

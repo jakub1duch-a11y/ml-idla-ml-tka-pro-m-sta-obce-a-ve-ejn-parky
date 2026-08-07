@@ -47,43 +47,43 @@ function getInstallComplexity(product) {
 }
 
 const CATEGORY_GROUPS = [
-  {
-    id: 'sochy',
-    label: 'Mlžné sochy',
-    icon: Trees,
-    tagline: 'Přírodní tvary. Živá atmosféra.',
-    description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy a větve.',
-    audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
-    usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
-    accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-    dbCategories: ['NATURE'],
-    slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik'],
-  },
-  {
-    id: 'brany',
-    label: 'Mlžné brány a portály',
-    icon: Landmark,
-    tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-    description: 'Mlžné brány a portály vytvářejí výrazný vstupní zážitek v čistých liniích nerezové oceli.',
-    audience: ['Organizátoři eventů a festivalů', 'Hotely a resorty', 'Obchodní centra a showroomy', 'Sportovní areály'],
-    usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny'],
-    accent: 'text-sky-700 bg-sky-50 border-sky-200',
-    dbCategories: ['URBAN ART'],
-    slugKeywords: ['aura', 'linear', 'y-armist', 'spirala', 'bendy'],
-  },
-  {
-    id: 'mlhoviste',
-    label: 'Mlhoviště a chladicí zóny',
-    icon: Flame,
-    tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
-    description: 'Systémy pro plošné ochlazení teras, hřišť, sportovního zázemí a průmyslových prostorů.',
-    audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové provozy', 'Školy a školky'],
-    usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny', 'Sklady a výrobní haly'],
-    accent: 'text-orange-700 bg-orange-50 border-orange-200',
-    dbCategories: ['GEOMETRY'],
-    slugKeywords: ['mlzitka', 'mlziste', 'mlzne-systemy', 'mlzne-prislusenstvi', 'smart'],
-  },
-];
+{
+  id: 'sochy',
+  label: 'Mlžné sochy',
+  icon: Trees,
+  tagline: 'Přírodní tvary. Živá atmosféra.',
+  description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy a větve.',
+  audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
+  usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
+  accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+  dbCategories: ['NATURE'],
+  slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik']
+},
+{
+  id: 'brany',
+  label: 'Mlžné brány a portály',
+  icon: Landmark,
+  tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
+  description: 'Mlžné brány a portály vytvářejí výrazný vstupní zážitek v čistých liniích nerezové oceli.',
+  audience: ['Organizátoři eventů a festivalů', 'Hotely a resorty', 'Obchodní centra a showroomy', 'Sportovní areály'],
+  usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny'],
+  accent: 'text-sky-700 bg-sky-50 border-sky-200',
+  dbCategories: ['URBAN ART'],
+  slugKeywords: ['aura', 'linear', 'y-armist', 'spirala', 'bendy']
+},
+{
+  id: 'mlhoviste',
+  label: 'Mlhoviště a chladicí zóny',
+  icon: Flame,
+  tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
+  description: 'Systémy pro plošné ochlazení teras, hřišť, sportovního zázemí a průmyslových prostorů.',
+  audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové provozy', 'Školy a školky'],
+  usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny', 'Sklady a výrobní haly'],
+  accent: 'text-orange-700 bg-orange-50 border-orange-200',
+  dbCategories: ['GEOMETRY'],
+  slugKeywords: ['mlzitka', 'mlziste', 'mlzne-systemy', 'mlzne-prislusenstvi', 'smart']
+}];
+
 
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
@@ -104,8 +104,8 @@ const FALLBACK_IMAGES = {
 function ProductCard({ product, i }) {
   const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
   return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async"/><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent"/>{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary">Prohlédnout detail <ArrowRight size={15}/></p></div></Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 text-xs font-bold text-foreground transition hover:bg-muted"><Zap size={13}/> Popsat projekt</Link>
+    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" /><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" />{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary">Prohlédnout detail <ArrowRight size={15} /></p></div></Link>
+    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 text-xs font-bold text-foreground transition hover:bg-muted"><Zap size={13} /> Popsat projekt</Link>
   </motion.article>;
 }
 
@@ -225,8 +225,8 @@ export default function Kolekce() {
               return (
                 <motion.div key={seg.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                 className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center mb-3">
-                    <Icon size={16} className="text-slate-900" />
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3 bg-[hsl(var(--ring))] text-[hsl(var(--background))]">
+                    <Icon size={16} className="text-[hsl(var(--card))]" />
                   </div>
                   <h4 className="text-sm font-normal text-slate-900 mb-2">{seg.label}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">{seg.desc}</p>
@@ -238,7 +238,7 @@ export default function Kolekce() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20 bg-[hsl(var(--ring))]">
         <div className="p-6 md:p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
             <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Nový katalog - kolekce 2026</p>

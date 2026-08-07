@@ -239,11 +239,11 @@ export default function Kolekce() {
 
       {/* ── CTA ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20 bg-[hsl(var(--ring))]">
-        <div className="p-6 md:p-10 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="p-6 md:p-10 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[hsl(var(--secondary))]">
           <div>
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Nový katalog - kolekce 2026</p>
-            <h3 className="font-heading font-light text-2xl text-slate-900">Celá kolekce mlžítek v jednom PDF.</h3>
-            <p className="text-sm text-slate-400 mt-1">Technické listy, výkresy, ceníky a referenční fotografie všech modelů mlžítek.</p>
+            <p className="font-mono text-slate-400 tracking-widest uppercase mb-2 text-lg">NOVÝ KATALOG - KOLEKCE 2026</p>
+            <h3 className="text-2xl text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">Celá kolekce mlžítek v jednom PDF.</h3>
+            <p className="text-sm mt-1 text-[hsl(var(--background))]">Technické listy, výkresy, ceníky a referenční fotografie všech modelů mlžítek.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF"

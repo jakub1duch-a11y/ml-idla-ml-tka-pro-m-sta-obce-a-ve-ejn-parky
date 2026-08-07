@@ -229,7 +229,7 @@ export default function Kolekce() {
                     <Icon size={16} className="text-[hsl(var(--card))]" />
                   </div>
                   <h4 className="text-sm font-normal text-slate-900 mb-2">{seg.label}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">{seg.desc}</p>
+                  <p className="text-slate-400 leading-relaxed text-sm">{seg.desc}</p>
                 </motion.div>);
 
             })}
@@ -242,7 +242,7 @@ export default function Kolekce() {
         <div className="p-6 md:p-10 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[hsl(var(--secondary))]">
           <div>
             <p className="font-mono text-slate-400 tracking-widest uppercase mb-2 text-lg">NOVÝ KATALOG - KOLEKCE 2026</p>
-            <h3 className="text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-3xl">Celá kolekce mlžítek v jednom PDF.</h3>
+            <h3 className="text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-3xl font-semibold">Celá kolekce mlžítek v jednom PDF.</h3>
             <p className="text-sm mt-1 text-[hsl(var(--background))]">Technické listy, výkresy, ceníky a referenční fotografie všech modelů mlžítek.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">

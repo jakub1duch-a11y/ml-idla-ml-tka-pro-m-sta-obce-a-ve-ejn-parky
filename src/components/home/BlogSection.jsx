@@ -157,7 +157,7 @@ export default function BlogSection() {
             className="font-heading font-light text-white tracking-tight text-3xl lg:text-3xl">
               Co je nového u nás
             </motion.h2>
-            <Link to="/blog" className="items-center gap-2 font-light hover:text-white hover:gap-3 transition-all text-[hsl(var(--card))] btn-metallic-mist inline-flex text-lg px-5 py-2">Všechny články
+            <Link to="/blog" className="items-center gap-2 font-light hover:text-white hover:gap-3 transition-all text-[hsl(var(--card))] btn-metallic-mist inline-flex px-5 py-2 text-xl">Všechny články
 
             </Link>
           </div>

@@ -266,10 +266,10 @@ export default function ProduktDetail() {
             </button> :
           <span />
           }
-          <button onClick={scrollToContact}
-          className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all hidden">
-            Poptat produkt zdarma <ArrowRight size={16} />
-          </button>
+          
+
+
+          
         </div>
       </div>
 

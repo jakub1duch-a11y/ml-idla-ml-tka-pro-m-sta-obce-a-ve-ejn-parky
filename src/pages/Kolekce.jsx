@@ -247,8 +247,8 @@ export default function Kolekce() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF"
-            className="px-7 py-3.5 border border-slate-300 text-slate-900 text-sm font-medium rounded-full hover:bg-slate-100 transition-all whitespace-nowrap">
-              Zaslat katalog na e-mail
+            className="py-3.5 border border-slate-300 text-slate-900 text-sm font-medium rounded-full hover:bg-slate-100 transition-all whitespace-nowrap btn-metallic-mist px-7">Zaslat katalog na e-mail
+
             </a>
             <Link to="/kontakt"
             className="px-7 py-3.5 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap">

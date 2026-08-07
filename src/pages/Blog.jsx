@@ -134,7 +134,7 @@ export default function Blog() {
                           <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
                 }
-                      <div className="p-5 flex flex-col justify-between flex-1 min-w-0">
+                      <div className="flex flex-col justify-between flex-1 min-w-0 px-5 py-5">
                         <div>
                           <div className="flex items-center gap-2 mb-2">
                             <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[post.category] || post.category || 'Článek'}</span>

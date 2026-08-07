@@ -17,14 +17,14 @@ export default function SmartSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-secondary/20 text-xs font-mono tracking-widest uppercase mb-6 bg-[hsl(var(--popover-foreground))] text-[hsl(var(--card-foreground))]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-secondary/20 text-xs font-mono tracking-widest uppercase mb-6 text-[hsl(var(--card))]">
               Smart mlžení · WiFi / aplikace
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--popover-foreground))]">
               Automatizace, která šetří vodu i váš čas
             </motion.h2>
-            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))]">Provoz pod kontrolou.
+            <p className="text-lg leading-relaxed mb-8 text-[hsl(var(--secondary-foreground))] hidden">Provoz pod kontrolou.
 
             </p>
 
@@ -47,7 +47,7 @@ export default function SmartSection() {
               <Link to="/kalkulacka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Spočítat provozní náklady <ArrowRight size={16} />
               </Link>
-              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold text-secondary hover:text-foreground bg-[hsl(var(--card))] rounded-[20px]">Automatizace mlžítek
+              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-bold hover:text-foreground bg-[hsl(var(--card))] rounded-[20px] text-[hsl(var(--foreground))]">Automatizace mlžítek
 
               </Link>
             </div>

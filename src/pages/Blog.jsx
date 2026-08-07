@@ -115,7 +115,7 @@ export default function Blog() {
                     </div>
                     <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
                     <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
-                    <div className="flex items-center text-slate-900 font-medium group-hover:gap-3 transition-all btn-metallic-mist mt-6 gap-2 text-s">
+                    <div className="flex items-center group-hover:gap-3 transition-all mt-6 gap-2 text-s text-slate-900 font-medium">
                       Číst článek <ArrowRight size={12} />
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export default function Blog() {
               }
                   <div className="p-6">
                     <span className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
-                    <h3 className="font-light text-slate-900 text-base leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2">{post.title}</h3>
+                    <h3 className="text-slate-900 leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-xl">{post.title}</h3>
                     {post.published_date && <p className="text-xs font-mono text-slate-300">{formatDate(post.published_date)}</p>}
                   </div>
                 </Link>

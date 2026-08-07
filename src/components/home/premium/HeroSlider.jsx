@@ -65,7 +65,7 @@ export default function HeroSlider() {
                 <p className="text-measure mb-6 text-base font-medium leading-relaxed text-white/90 sm:mb-8 sm:text-lg">{slide.desc}</p>
 
                 <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-10 sm:flex sm:flex-wrap">
-                  <Link to={slide.cta1.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl sm:px-7 sm:py-4">
+                  <Link to={slide.cta1.to} className="min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl sm:px-7 sm:py-4 btn-metallic-mistinline-flex">
                     {slide.cta1.label} <ArrowRight size={16} />
                   </Link>
                   <Link to={slide.cta2.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/50 bg-primary/20 px-6 py-3.5 text-center text-sm font-semibold text-white transition-all hover:bg-white/10 sm:px-7">

@@ -165,7 +165,7 @@ export default function Blog() {
                   <div className="p-6">
                     <span className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
                     <h3 className="text-slate-900 leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-xl">{post.title}</h3>
-                    {post.published_date && <p className="text-xs font-mono text-slate-300">{formatDate(post.published_date)}</p>}
+                    {post.published_date && <p className="text-xs font-mono text-[hsl(var(--ring))]">{formatDate(post.published_date)}</p>}
                   </div>
                 </Link>
               </motion.div>

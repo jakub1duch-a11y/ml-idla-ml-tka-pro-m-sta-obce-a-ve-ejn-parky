@@ -40,7 +40,7 @@ export default function LeadMagnetPopup() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 40 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:left-4 sm:max-w-sm z-[60] bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl border border-cyan/20 shadow-2xl shadow-black/30 p-6">
+        className="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:left-4 sm:max-w-sm z-[60] bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl border border-cyan/20 shadow-2xl shadow-black/30 p-6 hidden">
         <button onClick={close} aria-label="Zavřít" className="absolute top-3 right-3 text-white/40 hover:text-white transition-colors">
           <X size={16} />
         </button>
@@ -63,9 +63,9 @@ export default function LeadMagnetPopup() {
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
               <input type="email" required placeholder="Váš e-mail" value={email} onChange={(e) => setEmail(e.target.value)}
-              className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+            className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
               <button type="submit" disabled={sending}
-              className="px-4 py-2.5 bg-cyan text-ink text-sm font-bold rounded-xl hover:bg-cyan/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+            className="px-4 py-2.5 bg-cyan text-ink text-sm font-bold rounded-xl hover:bg-cyan/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2">
                 {sending ? <Loader size={14} className="animate-spin" /> : 'Chci slevu 15 %'}
               </button>
             </form>

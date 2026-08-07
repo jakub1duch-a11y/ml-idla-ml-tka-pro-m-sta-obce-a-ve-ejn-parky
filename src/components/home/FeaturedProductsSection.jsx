@@ -38,8 +38,8 @@ export default function FeaturedProductsSection() {
             className="text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-5xl lg:text-5xl">
               Oblíbené instalace
             </motion.h2>
-            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5 whitespace-nowrap">
-              Prohlédnout kolekce mlžítek <ArrowRight size={14} />
+            <Link to="/mlzidla-mlzitka" className="items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5 whitespace-nowrap btn-metallic-mist inline-flex">Prohlédnout kolekce mlžítek
+
             </Link>
           </div>
         </motion.div>

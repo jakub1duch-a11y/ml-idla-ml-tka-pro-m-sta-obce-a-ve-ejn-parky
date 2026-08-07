@@ -144,8 +144,8 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-2">
               <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/85 hover:text-white hover:bg-white/10">O společnosti</Link>
               <Link to="/poptavka"
-              className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">
-                Popsat projekt
+              className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">POPTAT PRO
+
               </Link>
             </div>
             <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-5 pt-2 pb-2 pr-8 pl-8">Popsat projekt</Link>

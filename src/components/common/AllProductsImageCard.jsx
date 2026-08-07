@@ -8,7 +8,7 @@ export default function AllProductsImageCard({ to, image, compact = false, onCli
       <img src={image} alt="Všechny produkty" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
       <div className="absolute inset-0 bg-white/70 transition-colors duration-300 group-hover:bg-white/60" />
       <div className="absolute inset-0 flex items-center justify-center text-center px-6 py-6">
-        <div><p className={`${compact ? 'text-2xl' : ""} font-heading font-extrabold text-primary lg:text-2xl`}>Všechny produkty</p><p className="mt-2 inline-flex items-center gap-2 font-bold text-secondary text-base">Kompletní katalog MLŽIDLA®</p></div>
+        <div><p className={`${compact ? 'text-2xl' : ""} font-heading font-extrabold text-primary lg:text-2xl`}>Všechny produkty</p><p className="mt-2 inline-flex items-center gap-2 text-secondary text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">Kompletní katalog MLŽIDLA®</p></div>
       </div>
     </Link>);
 

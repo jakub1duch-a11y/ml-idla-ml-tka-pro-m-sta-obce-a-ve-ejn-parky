@@ -33,9 +33,9 @@ export default function FeaturesBenefitsSection() {
               <motion.div
               whileHover={{ scale: 1.15, rotate: -6 }}
               transition={{ type: 'spring', stiffness: 300, damping: 14 }}
-              className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
+              className="w-11 h-11 flex items-center justify-center mb-4">
               
-                <f.icon size={19} className="text-slate-900" />
+                <f.icon size={19} className="text-slate-900 size-10" />
               </motion.div>
               <h3 className="text-slate-900 font-medium mb-1.5">{f.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>

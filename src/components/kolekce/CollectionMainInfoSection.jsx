@@ -23,7 +23,7 @@ export default function CollectionMainInfoSection() {
           {INFO_ITEMS.map((item, i) =>
           <motion.div key={item.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
           className="p-6 text-[hsl(var(--card))]">
-              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4">
+              <div className="w-10 items-center justify-center mb-4 h-10flex">
                 <item.icon size={17} className="size-10" />
               </div>
               <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-1.5">{item.label}</p>

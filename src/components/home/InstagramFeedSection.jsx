@@ -17,7 +17,7 @@ export default function InstagramFeedSection() {
       <div className="mx-auto px-6 lg:px-10 max-w-6xl">
         <div className="flex items-center gap-3 mb-10">
           <Instagram size={22} className="text-slate-900" strokeWidth={1.5} />
-          <h2 className="tracking-tight text-[#111827] text-3xl font-medium [font-family:'Albert_Sans',_sans-serif]">Sledujte nás na Instagramu
+          <h2 className="tracking-tight text-[#111827] text-3xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">Sledujte nás na Instagramu
 
           </h2>
         </div>

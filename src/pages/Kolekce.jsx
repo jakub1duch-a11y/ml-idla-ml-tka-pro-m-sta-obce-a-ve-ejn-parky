@@ -185,7 +185,7 @@ export default function Kolekce() {
       {/* ── PRODUKTY ── */}
       <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
         <div className="flex items-center justify-between mb-10 lg:mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400">
+          <p className="tracking-widest uppercase text-slate-400 text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
             {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
           </p>

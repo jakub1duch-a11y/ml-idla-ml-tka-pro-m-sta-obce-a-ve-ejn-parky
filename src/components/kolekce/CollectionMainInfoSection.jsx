@@ -15,9 +15,9 @@ export default function CollectionMainInfoSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
           
-          <h2 className="font-heading font-light tracking-tight text-[hsl(var(--background))] text-xl lg:text-xl hidden">Co potřebujete vědět o mlžných systémech HolmTec.
+          
 
-          </h2>
+          
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {INFO_ITEMS.map((item, i) =>

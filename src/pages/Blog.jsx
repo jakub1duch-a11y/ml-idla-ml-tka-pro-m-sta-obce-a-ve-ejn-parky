@@ -113,8 +113,8 @@ export default function Blog() {
                       <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
                       {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="text-xs font-mono text-slate-300">{formatDate(featured.published_date)}</span></>}
                     </div>
-                    <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors">{featured.title}</h2>
-                    <p className="text-sm text-slate-500 font-light leading-relaxed">{featured.perex}</p>
+                    <h2 className="text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors text-xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{featured.title}</h2>
+                    <p className="text-slate-500 font-light leading-relaxed text-base">{featured.perex}</p>
                     <div className="flex items-center group-hover:gap-3 transition-all mt-6 gap-2 text-s text-slate-900 font-medium">
                       Číst článek <ArrowRight size={12} />
                     </div>
@@ -141,7 +141,7 @@ export default function Blog() {
                           </div>
                           <h3 className="text-slate-900 leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{post.title}</h3>
                         </div>
-                        {post.published_date && <p className="text-xs font-mono text-slate-300 mt-2">{formatDate(post.published_date)}</p>}
+                        {post.published_date && <p className="text-xs font-mono mt-2 text-[hsl(var(--ring))]">{formatDate(post.published_date)}</p>}
                       </div>
                     </Link>
                   </motion.div>

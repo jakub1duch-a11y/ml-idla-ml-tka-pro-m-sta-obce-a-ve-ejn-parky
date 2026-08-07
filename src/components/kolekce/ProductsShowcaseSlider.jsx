@@ -50,7 +50,7 @@ export default function ProductsShowcaseSlider() {
   if (!loading && products.length === 0) return null;
 
   return (
-    <section className="relative py-20 lg:py-24 overflow-hidden bg-[hsl(var(--ring))]">
+    <section className="relative py-20 lg:py-24 overflow-hidden bg-[#034b68]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 lg:mb-10">

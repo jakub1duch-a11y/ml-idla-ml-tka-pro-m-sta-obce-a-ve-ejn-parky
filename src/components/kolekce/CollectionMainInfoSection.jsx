@@ -22,7 +22,7 @@ export default function CollectionMainInfoSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {INFO_ITEMS.map((item, i) =>
           <motion.div key={item.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-          className="p-6 rounded-2xl border border-slate-200 text-[hsl(var(--card))]">
+          className="p-6 text-[hsl(var(--card))]">
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4">
                 <item.icon size={17} className="size-10 text-[hsl(var(--card))]" />
               </div>

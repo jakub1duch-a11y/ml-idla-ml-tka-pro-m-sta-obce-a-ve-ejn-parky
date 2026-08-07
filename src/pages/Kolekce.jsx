@@ -238,7 +238,7 @@ export default function Kolekce() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20 bg-[hsl(var(--ring))]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div className="p-6 md:p-10 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[hsl(var(--secondary))]">
           <div>
             <p className="font-mono text-slate-400 tracking-widest uppercase mb-2 text-lg">NOVÝ KATALOG - KOLEKCE 2026</p>

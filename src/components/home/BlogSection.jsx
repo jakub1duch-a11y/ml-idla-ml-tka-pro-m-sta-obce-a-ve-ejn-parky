@@ -120,7 +120,7 @@ function GateOfferCard() {
             <p className="text-xs font-mono tracking-widest uppercase mb-2 text-[hsl(var(--foreground))]">MLŽNÁ BRÁNA</p>
             <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3">GATE70</h3>
             <p className="text-sm text-white/60 font-light leading-relaxed mb-5">Ochlazení až o 9 °C, Wi-Fi Smart řízení, dvě tvarové varianty na míru vašemu prostoru.</p>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 text-xs font-bold rounded-full group-hover:bg-white/90 transition-all">
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 text-xs font-bold rounded-full group-hover:bg-white/90 transition-all hidden">
               Poptat GATE70 <ArrowRight size={13} />
             </span>
           </div>

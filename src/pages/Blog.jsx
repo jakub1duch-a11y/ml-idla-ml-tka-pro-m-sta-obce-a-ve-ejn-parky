@@ -50,7 +50,7 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background pt-16">
       {/* Header */}
-      <div className="bg-primary text-white"><div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+      <div className="bg-primary text-white mb-4"><div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog MLŽIDLA</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-4">

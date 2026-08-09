@@ -6,8 +6,8 @@ import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, C
 const SLIDES = [
 {
   tag: 'ČESKÁ VÝROBA · 20 LET PRŮMYSLOVÉ ZKUŠENOSTI',
-  title: 'Nerezová mlžítka a mlžné brány s chytrým řízením',
-  desc: 'Navrhujeme a vyrábíme nerezová mlžítka pro města a obce, náměstí, promenády, parky, gastro, wellness, hotely i rezidenční terasy a zahrady.',
+  title: 'Nerezová mlžítka a mlžné brány, které chladí bez čerpadla',
+  desc: 'Navrhujeme a vyrábíme mlžné systémy z nerezové oceli pro náměstí, parky a promenády, gastro a wellness provozy i rezidenční terasy a zahrady. Napojení přímo na vodovodní řad, bez čerpadla a bez složité údržby.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
   imageAlt: 'Nerezová designová mlžítka pro města a obce',
   cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },

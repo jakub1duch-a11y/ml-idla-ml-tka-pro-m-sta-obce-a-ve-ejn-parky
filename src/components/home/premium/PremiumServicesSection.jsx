@@ -19,7 +19,7 @@ export default function PremiumServicesSection() {
         <div className="mb-14 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Jak spolupracujeme</p>
-            <h2 className="max-w-xl font-heading text-4xl tracking-tight text-foreground md:text-5xl">Od prvního nápadu po servis, který nikdy nespí</h2>
+            <h2 className="max-w-xl font-heading text-4xl tracking-tight text-foreground md:text-5xl">Od prvního nápadu po servis</h2>
           </div>
           <p className="max-w-sm text-sm text-muted-foreground">Každý projekt provázíme od návrhu přes výrobu až po dlouhodobou péči — ať jde o jedno mlžítko na terase, nebo mlžnou bránu na náměstí.</p>
         </div>

@@ -85,7 +85,7 @@ export default function HeroSlider() {
                 className="flex min-h-14 items-center gap-2">
                 
                   <b.icon size={20} className="text-white/90 shrink-0" />
-                  <span className="text-white/85 font-medium leading-tight text-sm">{b.label}</span>
+                  <span className="text-white/85 font-medium leading-tight text-sm text-right">{b.label}</span>
                 </motion.div>
               )}
             </div>

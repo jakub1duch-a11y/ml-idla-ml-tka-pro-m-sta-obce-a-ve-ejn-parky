@@ -1,1 +1,12 @@
-Sitemap: https://mlzidla.cz/functions/sitemap/
+# SEO: Tell search engines which pages to crawl
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /api/
+
+# Crawl-delay to avoid overwhelming server
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://mlzidla.cz/sitemap.xml

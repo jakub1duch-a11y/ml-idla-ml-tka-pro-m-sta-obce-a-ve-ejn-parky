@@ -40,7 +40,7 @@ export default function HeroSlider() {
     <section className="relative min-h-[740px] h-[100svh] overflow-hidden bg-background lg:h-screen lg:min-h-[640px]">
       <AnimatePresence mode="wait">
         <motion.img
-          key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/76d1f452d_generated_image.png"
+          key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/40b8ab44d_1000006103.jpg"
 
           alt={slide.imageAlt}
           initial={{ opacity: 0, scale: 1.06 }}

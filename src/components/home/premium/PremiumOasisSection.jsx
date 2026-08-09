@@ -34,7 +34,7 @@ export default function PremiumOasisSection() {
             <p className="text-measure font-body text-lg leading-relaxed text-muted-foreground">Jemná mlha snižuje pocitovou teplotu až o 10 °C. Bez klimatizace, bez elektrické spotřeby a bez mokrého povrchu.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
-            <img src={DEVICE_IMG} alt="Moderní nerezová mlžná brána instalovaná na náměstí" className="w-full rounded-2xl shadow-xl" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/eb03ffe38_file_00000000db9072469c9f2e9b61c49933.png" alt="Moderní nerezová mlžná brána instalovaná na náměstí" className="w-full rounded-2xl shadow-xl" />
           </motion.div>
         </div>
 

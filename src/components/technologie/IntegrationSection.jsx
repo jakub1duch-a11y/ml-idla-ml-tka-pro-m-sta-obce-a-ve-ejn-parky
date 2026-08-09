@@ -41,7 +41,7 @@ export default function IntegrationSection() {
 
       <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="text-center text-slate-500 text-sm max-w-2xl mx-auto">
-        Každá instalace je zároveň funkčním chladicím systémem — nejen vizuálním prvkem. Jemná mlha doplachí prostor a během provozu snižuje okolní teplotu až o 10 °C.
+        Každá instalace je zároveň funkčním chladicím systémem — nejen vizuálním prvkem. Jemná mlha prostoupí vzduch a během provozu sníží okolní teplotu až o 10 °C.
       </motion.p>
     </div>
   );

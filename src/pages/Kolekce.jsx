@@ -75,7 +75,7 @@ const CATEGORY_GROUPS = [
   id: 'mlhoviste',
   label: 'Mlhoviště a chladicí zóny',
   icon: Flame,
-  tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
+  tagline: 'Ochlazení otevřených prostorů až o 10 °C.',
   description: 'Systémy pro plošné ochlazení teras, hřišť, sportovního zázemí a průmyslových prostorů.',
   audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové provozy', 'Školy a školky'],
   usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny', 'Sklady a výrobní haly'],
@@ -88,7 +88,7 @@ const CATEGORY_GROUPS = [
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
 { icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžítek a mlžných instalací. Rychlá montáž a přenosnost.' },
-{ icon: Home, label: 'Rezidenční', desc: 'Mlžítka zahradní pro soukromé zahrady, terasy, wellness hotely, restaurační zahrádky... Individuální návrh a diskrétní mlžná instalace.' },
+{ icon: Home, label: 'Rezidenční', desc: 'Zahradní mlžítka pro soukromé zahrady, terasy, wellness hotely i restaurační zahrádky. Individuální návrh a diskrétní instalace.' },
 { icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
 { icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžítka - mlžná hřiště pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
 

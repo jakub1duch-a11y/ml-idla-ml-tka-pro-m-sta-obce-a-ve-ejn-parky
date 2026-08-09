@@ -1,77 +1,101 @@
-# Base44 Project
+# MLZIDLA — Aplikace pro města, obce a veřejné parky
 
-Use this repository to run and edit the app locally, then publish changes back through Base44.
+Tento repozitář obsahuje zdrojové soubory aplikace, kterou můžete spouštět a upravovat lokálně a následně publikovat přes platformu Base44.
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+Jakékoli změny odeslané do repozitáře se promítnou do Base44 Builderu a mohou být publikovány přes dashboard.
 
-## Prerequisites
+## Požadavky
 
-1. Clone the repository using the project's Git URL.
-2. Navigate to the project directory.
-3. Install dependencies: `npm install`.
-4. Install the Base44 CLI: `npm install -g base44@latest`.
+1. Naklonujte repozitář pomocí Git URL projektu.
+2. Otevřete terminál a přejděte do kořenového adresáře projektu.
+3. Instalujte závislosti:
 
-See the [Base44 CLI docs](https://docs.base44.com/developers/references/cli/get-started/overview) if you want to run Base44 commands directly.
+```bash
+npm install
+```
 
-## Run Locally
+4. (Volitelné) Nainstalujte Base44 CLI, pokud budete používat lokální backend nebo dashboard:
 
-Run the full local development environment from the project root:
+```bash
+npm install -g base44@latest
+```
+
+Více informací najdete v dokumentaci Base44: https://docs.base44.com/developers/references/cli/get-started/overview
+
+## Spuštění lokálně (celé prostředí)
+
+Pro spuštění lokálního vývojového prostředí (backend i frontend) z kořenového adresáře projektu spusťte:
 
 ```bash
 base44 dev
 ```
 
-`base44 dev` starts the local Base44 development backend and, when this app is configured for it, also starts the frontend dev server for you. Use the frontend URL printed by the command.
+Příkaz `base44 dev` spustí lokální backend Base44 a — pokud je projekt nakonfigurovaný — rovněž spustí frontendový vývojový server. V konzoli se zobrazí lokální URL pro frontend i backend.
 
-For example, when the Base44 project config includes a `serveCommand`, `base44 dev` can launch the frontend too:
+Poznámka: pokud chcete, aby `base44 dev` automaticky spouštěl frontend, přidejte do konfiguračního souboru `base44/config.jsonc` položku `site.serveCommand` (např. `"npm run dev"`).
 
-```json5
-{
-  "site": {
-    "serveCommand": "npm run dev"
-  }
-}
-```
+## Pouze frontend (bez lokálního backendu)
 
-In a Base44 project this lives in `base44/config.jsonc`.
-
-## Run Only The Frontend
-
-If you only want to work on the frontend against the hosted Base44 backend, run:
+Pokud chcete vyvíjet pouze frontend vůči již nasazenému backendu, spusťte:
 
 ```bash
 npm run dev
 ```
 
-Open the local URL printed by Vite.
+Otevřete URL, kterou Vite vypíše v konzoli (obvykle http://localhost:5173).
 
-## Use The Hosted Backend
+## Připojení na nasazený backend
 
-For frontend-only development, create or update `.env.local` in the project root:
+Pro směrování lokálního frontendového serveru na nasazený Base44 backend vytvořte v kořeni projektu soubor `.env.local` s následujícím obsahem (bez uvozovek):
 
-```bash
+```
 VITE_BASE44_APP_ID=your_app_id
 VITE_BASE44_APP_BASE_URL=https://your-app.base44.app
 ```
 
-`VITE_BASE44_APP_ID` identifies the Base44 app.
+- `VITE_BASE44_APP_ID` identifikuje vaši Base44 aplikaci.
+- `VITE_BASE44_APP_BASE_URL` říká Vite pluginu kam posílat volání na `/api` během vývoje.
 
-`VITE_BASE44_APP_BASE_URL` tells the Base44 Vite plugin where to send local `/api` requests. Point it at your deployed Base44 app URL when you want the local frontend to use the hosted backend.
+Důležité: nikdy necommitujte skutečná tajemství nebo citlivé údaje do repozitáře. Místo toho přidejte soubor `.env.local` do `.gitignore` a do repozitáře uložte pouze `env.local.example` s ukázkovými hodnotami.
 
-When you use `base44 dev`, the command injects the local Base44 values for you, so `.env.local` is mainly needed for frontend-only workflows.
+## Nasazení a vlastní doména
 
-## Publish Your Changes
-
-After pushing your changes to git, open the Base44 dashboard and publish the app:
+Po dokončení změn pusťte build a publikujte aplikaci přes Base44 dashboard:
 
 ```bash
 base44 dashboard open
 ```
 
-## Docs & Support
+V dashboardu můžete provést publikaci, zobrazit záznamy z buildu a přidat vlastní doménu (např. `mlzidla.cz`). Base44 poskytne instrukce k nastavení DNS a vystavení SSL certifikátu.
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+Doporučení pro produkci
+- Pro nejlepší výkon a soukromí self‑hostujte webfonty (WOFF2) a použijte preload pro kritické zdroje.
+- Omezte počet načítaných vah písma (např. 400, 600, 700) a používejte `font-display: swap`.
 
-Base44 CLI command reference: [https://docs.base44.com/developers/references/cli/commands/introduction](https://docs.base44.com/developers/references/cli/commands/introduction)
+## Úprava typografie
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+V tomto repozitáři je doporučená základní typografická konfigurace (CSS custom properties, měřítko nadpisů, řádkování). Pro rychlé nasazení:
+
+- Importujte CSS soubor s typografií do vstupního modulu aplikace (`src/main.js`, `src/main.ts`) nebo napojte link do `index.html`:
+
+```js
+import './styles/typography.css';
+```
+
+Nebo v HTML:
+
+```html
+<link rel="stylesheet" href="/src/styles/typography.css">
+```
+
+Pokud chcete profesionální typografické řešení (self‑hosted písma, ladění měřítka a kerningu, tiskové styly), připravím kompletní balík změn v samostatné větvi včetně náhledů a instrukcí pro nasazení.
+
+## Podpora a dokumentace
+
+- Base44 integrace: https://docs.base44.com/Integrations/Using-GitHub
+- Base44 CLI reference: https://docs.base44.com/developers/references/cli/commands/introduction
+- Podpora: https://app.base44.com/support
+
+---
+
+Pokud chcete, aby změny převedl do nové větve a vytvořil PR (včetně profesionálních úprav typografie a konfigurace nasazení na `mlzidla.cz`), dejte mi vědět — připravím kompletní commit a PR s náhledy.

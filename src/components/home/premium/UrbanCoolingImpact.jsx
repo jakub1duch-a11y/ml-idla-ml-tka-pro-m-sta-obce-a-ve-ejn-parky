@@ -5,15 +5,50 @@ import { ArrowRight, Building2, Heart, ShoppingBag, UsersRound, Wind } from 'luc
 import WindMistOverlay from '@/components/home/premium/WindMistOverlay';
 
 const BENEFITS = [
-{ Icon: Heart, text: 'Vraťte život na náměstí i zahrádky' },
+{ Icon: Heart, text: 'Ruch se vrací na náměstí i do zahrádek' },
 { Icon: UsersRound, text: 'Zábava pro děti, rodiče i návštěvníky' },
 { Icon: Wind, text: 'Čistší a příjemnější vzduch v úmorných vedrech' },
 { Icon: Building2, text: 'Vyšší komfort pro obyvatele i zvířata' },
-{ Icon: ShoppingBag, text: 'Delší návštěvy a větší podpora prodeje' }];
+{ Icon: ShoppingBag, text: 'Delší návštěvy, vyšší tržby v okolních podnicích' }];
 
 
 export default function UrbanCoolingImpact() {
   const [temperature, setTemperature] = useState(34);
-  useEffect(() => {const timer = setInterval(() => setTemperature((value) => value > 24 ? value - 1 : value), 480);return () => clearInterval(timer);}, []);
-  return null;
+  useEffect(() => {
+    const timer = setInterval(() => setTemperature((value) => value > 24 ? value - 1 : 34), 480);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section className="relative overflow-hidden bg-primary py-24 text-primary-foreground">
+      <WindMistOverlay />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid items-center gap-16 lg:grid-cols-2">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-white/70">Dopad na veřejný prostor</p>
+            <h2 className="mb-5 font-heading text-4xl tracking-tight text-white md:text-5xl">Vraťte lidem důvod zůstat venku i v horku</h2>
+            <p className="max-w-md text-base leading-relaxed text-white/80">Mlha snižuje teplotu ve svém okolí v řádu sekund. Je to vidět na náměstí i na terase — lidé se vrací tam, kde je jim příjemně.</p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              {BENEFITS.map((b, i) =>
+              <motion.div key={b.text} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }} className="flex items-center gap-2 text-sm text-white/90">
+                  <b.Icon size={16} className="shrink-0 text-accent" />
+                  {b.text}
+                </motion.div>
+              )}
+            </div>
+
+            <Link to="/mlzidla-mlzitka" className="btn-metallic-mist mt-8 inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold">
+              Prohlédnout mlžítka <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="mx-auto flex h-64 w-64 flex-col items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur">
+            <span className="font-heading text-7xl tabular-nums text-white">{temperature}°</span>
+            <span className="mt-2 font-mono text-xs uppercase tracking-widest text-white/60">pocitová teplota v mlze</span>
+          </motion.div>
+        </div>
+      </div>
+    </section>);
+
 }

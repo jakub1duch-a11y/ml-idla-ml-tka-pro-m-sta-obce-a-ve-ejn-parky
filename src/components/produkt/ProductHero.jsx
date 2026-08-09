@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
 
 export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
   const quickSpecs = [
-  product.coverage_area && { icon: Thermometer, label: 'Ochlazení', value: product.coverage_area },
+  product.coverage_area && { icon: Ruler, label: 'Výška', value: product.coverage_area },
   product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
   product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
   product.power_supply && { icon: Zap, label: 'Napájení', value: product.power_supply }].

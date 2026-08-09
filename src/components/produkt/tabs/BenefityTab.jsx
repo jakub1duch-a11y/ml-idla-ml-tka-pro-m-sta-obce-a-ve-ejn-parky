@@ -38,7 +38,7 @@ export default function BenefityTab({ product }) {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-2xl">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Benefity a přínosy</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-5">
-            Příjemné mikroklima,<br /><span className="text-slate-400">certifikovaná bezpečnost.</span>
+            Příjemné mikroklima,<br /><span className="text-slate-400">bezpečný materiál.</span>
           </h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
             Pokles teploty okolí, pohlcování prachu a pylů, nízkotlaký úsporný provoz. {product.name} je vyroben z bezpečné potravinářské nerezi bez ostrých hran — slouží jako vizuální a chladicí prvek pro veřejný prostor.

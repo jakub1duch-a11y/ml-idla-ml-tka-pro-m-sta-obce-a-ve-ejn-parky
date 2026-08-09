@@ -4,7 +4,7 @@ import { Thermometer, ShieldCheck, Gauge, Leaf } from 'lucide-react';
 
 const STATS = [
   { val: '−10 °C', label: 'Pokles teploty okolí', icon: Thermometer, desc: 'Evaporativní chlazení mikrokapkami sníží teplotu vzduchu v okolí až o 10 °C během několika minut provozu.' },
-  { val: 'ČSN EN 1176', label: 'Certifikace bezpečnosti', icon: ShieldCheck, desc: 'Konstrukce i mlžení splňují normu pro veřejná dětská hřiště a náměstí — bezpečné pro děti i seniory.' },
+  { val: 'AISI 316L', label: 'Bezpečný materiál', icon: ShieldCheck, desc: 'Potravinářská nerez bez ostrých hran a chemických nátěrů — vhodná pro provoz v blízkosti dětí i seniorů. Mlžítko je vizuální a chladicí prvek, nikoli certifikované herní zařízení dle ČSN EN 1176.' },
   { val: '2–7 BAR', label: 'Nízkotlaký provoz', icon: Gauge, desc: 'Systém pracuje na běžném tlaku vodovodního řadu, bez nutnosti čerpadel nebo vysokotlakých kompresorů.' },
   { val: '−45 %', label: 'Úspora vody', icon: Leaf, desc: 'Chytrá regulace dle počasí a teploty šetří vodu oproti nepřerušovanému provozu.' },
 ];
@@ -41,7 +41,7 @@ export default function BenefityTab({ product }) {
             Příjemné mikroklima,<br /><span className="text-slate-400">certifikovaná bezpečnost.</span>
           </h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
-            Pokles teploty okolí, pohlcování prachu a pylů, nízkotlaký úsporný provoz. {product.name} je certifikováno pro veřejná dětská hřiště a náměstí dle ČSN EN 1176.
+            Pokles teploty okolí, pohlcování prachu a pylů, nízkotlaký úsporný provoz. {product.name} je vyroben z bezpečné potravinářské nerezi bez ostrých hran — slouží jako vizuální a chladicí prvek pro veřejný prostor.
           </p>
         </motion.div>
 

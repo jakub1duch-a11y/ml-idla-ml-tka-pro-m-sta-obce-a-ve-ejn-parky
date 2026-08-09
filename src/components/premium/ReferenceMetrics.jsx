@@ -1,7 +1,29 @@
 import React from 'react';
+import { Building2, MapPin, CalendarClock, Thermometer, ShieldCheck, Gauge } from 'lucide-react';
 
-const metrics = [['27+', 'instalací ve veřejném prostoru'], ['5+', 'měst'], ['20+', 'let zkušeností']];
+const metrics = [
+{ icon: Building2, number: '27+', label: 'Instalací ve veřejném prostoru' },
+{ icon: MapPin, number: '5+', label: 'Měst a obcí' },
+{ icon: CalendarClock, number: '20+', label: 'Let zkušeností' },
+{ icon: Thermometer, number: '−10 °C', label: 'Maximální chladicí efekt' },
+{ icon: ShieldCheck, number: 'AISI 316L', label: 'Nerezová ocel' },
+{ icon: Gauge, number: '2–7 bar', label: 'Provozní tlak, bez čerpadla' }];
+
 
 export default function ReferenceMetrics() {
-  return <section className="bg-[#062d3b] py-14"><div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-3 gap-5">{metrics.map(([number, label]) => <div key={label} className="text-center border-r border-white/15 last:border-0"><p className="font-heading text-4xl lg:text-6xl text-white">{number}</p><p className="font-mono text-[10px] tracking-[0.16em] uppercase text-cyan mt-2">{label}</p></div>)}</div></section>;
+  return (
+    <section className="bg-[#062d3b] py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
+          {metrics.map(({ icon: Icon, number, label }) => (
+            <div key={label} className="flex flex-col items-center gap-3 bg-[#062d3b] px-4 py-8 text-center sm:py-10">
+              <Icon size={20} className="text-cyan" strokeWidth={1.6} />
+              <p className="font-heading text-3xl text-white lg:text-4xl">{number}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/60">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>);
+
 }

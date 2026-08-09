@@ -51,7 +51,7 @@ function PostCard({ post, i }) {
             </span>
             {post.published_date && <span className="text-[10px] font-mono text-[hsl(var(--popover-foreground))] bg-[hsl(var(--popover))]">{formatDate(post.published_date)}</span>}
           </div>
-          <h3 className="font-heading font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2">
+          <h3 className="font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2 normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
             {post.title}
           </h3>
           <p className="text-sm font-light leading-relaxed line-clamp-2 mb-3 text-[hsl(var(--card))]">{post.perex}</p>

@@ -5,11 +5,11 @@ import { NoPumpIcon, TemperatureDropIcon, MistMotionIcon, GroundScrewIcon, Atmos
 
 const APPLICATIONS = [
 { icon: NoPumpIcon, num: "01", title: "Bez čerpadel", desc: "Přímé napojení na běžný vodovodní řad — bez vysokotlaké technologie." },
-{ icon: TemperatureDropIcon, num: "02", title: "Ochlazení až o 10 °C", desc: "Jemn\xE1 voda odeb\xEDr\xE1 teplo ze vzduchu rychle zp\u0159\xEDjemn\xED venkovn\xED prostor." },
-{ icon: MistMotionIcon, num: "03", title: "Mlha bez mokrého povrchu", desc: "Mikrokapky se odpa\u0159\xED ve vzduchu zanechaj\xED po sob\u011B p\u0159\xEDjemn\xFD chlad." },
+{ icon: TemperatureDropIcon, num: "02", title: "Ochlazení až o 10 °C", desc: "Jemná voda odebírá teplo ze vzduchu a hned zpříjemní okolní prostor." },
+{ icon: MistMotionIcon, num: "03", title: "Mlha bez mokrého povrchu", desc: "Mikrokapky se odpaří ve vzduchu a zanechají po sobě příjemný chlad." },
 { icon: GroundScrewIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychl\xE9 mobiln\xED kotven\xED bez betonov\xE1n\xED s mo\u017Enost\xED snadn\xE9ho p\u0159esunu." },
-{ icon: AtmosphereIcon, num: "05", title: "Součást architektury", desc: "Ml\u017En\xFD oblak jako funk\u010Dn\xED prvek pro m\u011Bstsk\xE1 prostranstv\xED, terasy, hotely zahrady." },
-{ icon: SmartAutomationIcon, num: "06", title: "Smart automatizace", desc: "Sc\xE9n\xE1\u0159e podle teploty, \u010Dasu i pohybu lid\xED \u0161et\u0159\xED vodu starosti." }];
+{ icon: AtmosphereIcon, num: "05", title: "Součást architektury", desc: "Mlžný oblak jako funkční prvek pro městská prostranství, terasy, hotely i zahrady." },
+{ icon: SmartAutomationIcon, num: "06", title: "Smart automatizace", desc: "Scénáře podle teploty, času i pohybu lidí šetří vodu i váš čas." }];
 
 
 const ADVANTAGES = [

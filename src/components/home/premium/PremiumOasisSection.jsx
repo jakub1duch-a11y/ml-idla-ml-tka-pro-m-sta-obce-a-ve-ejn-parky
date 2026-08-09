@@ -7,7 +7,7 @@ const APPLICATIONS = [
 { icon: NoPumpIcon, num: "01", title: "Bez čerpadel", desc: "Přímé napojení na běžný vodovodní řad — bez vysokotlaké technologie." },
 { icon: TemperatureDropIcon, num: "02", title: "Ochlazení až o 10 °C", desc: "Jemná voda odebírá teplo ze vzduchu a hned zpříjemní okolní prostor." },
 { icon: MistMotionIcon, num: "03", title: "Mlha bez mokrého povrchu", desc: "Mikrokapky se odpaří ve vzduchu a zanechají po sobě příjemný chlad." },
-{ icon: GroundScrewIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychl\xE9 mobiln\xED kotven\xED bez betonov\xE1n\xED s mo\u017Enost\xED snadn\xE9ho p\u0159esunu." },
+{ icon: GroundScrewIcon, num: "04", title: "Zemní vrut do 30 min", desc: "Rychlé mobilní kotvení bez betonování s možností snadného přesunu." },
 { icon: AtmosphereIcon, num: "05", title: "Součást architektury", desc: "Mlžný oblak jako funkční prvek pro městská prostranství, terasy, hotely i zahrady." },
 { icon: SmartAutomationIcon, num: "06", title: "Smart automatizace", desc: "Scénáře podle teploty, času i pohybu lidí šetří vodu i váš čas." }];
 

@@ -45,7 +45,7 @@ export default function UrbanCoolingImpact() {
 
           <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="mx-auto flex h-64 w-64 flex-col items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur">
             <span className="font-heading text-7xl tabular-nums text-white">{temperature}°</span>
-            <span className="mt-2 font-mono text-xs uppercase tracking-widest text-white/60">pocitová teplota v mlze</span>
+            <span className="mt-2 font-mono text-xs uppercase tracking-widest text-white/70">POCITOVÁ TEPLOTA V MLZE</span>
           </motion.div>
         </div>
       </div>

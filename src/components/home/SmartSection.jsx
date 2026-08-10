@@ -13,10 +13,11 @@ const features = [
 
 export default function SmartSection() {
   return (
-    <section className="overflow-hidden border-y border-border bg-[hsl(var(--accent-foreground))] py-16">
+    <section id="smart-misteni" className="smart-scroll-trigger overflow-hidden border-y border-border bg-[hsl(var(--accent-foreground))] py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="smart-scroll-progress" aria-hidden="true"><span /></div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }} whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }} viewport={{ once: false, amount: 0.35 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-secondary/20 text-xs font-mono tracking-widest uppercase mb-6 text-[hsl(var(--card))]">
               Smart mlžení · WiFi / aplikace
             </div>
@@ -53,7 +54,7 @@ export default function SmartSection() {
             </div>
           </motion.div>
 
-          <SmartControlVisual />
+          <motion.div initial={{ opacity: 0, x: 80, scale: 0.94 }} whileInView={{ opacity: 1, x: 0, scale: 1 }} viewport={{ once: false, amount: 0.25 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}><SmartControlVisual /></motion.div>
         </div>
       </div>
     </section>);

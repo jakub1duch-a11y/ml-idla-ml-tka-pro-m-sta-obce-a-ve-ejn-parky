@@ -103,24 +103,9 @@ const FALLBACK_IMAGES = {
 
 function ProductCard({ product, i }) {
   const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
-  const meta = [product.material, product.coverage_area, product.pressure].filter(Boolean).slice(0, 2);
-  return <motion.article initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ delay: Math.min(i * 0.045, .25), duration: .5 }} className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_8px_30px_rgba(15,23,42,.04)] transition-all duration-500 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-[0_20px_55px_rgba(15,23,42,.10)]">
-    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1">
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-        <img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.045]" loading="lazy" decoding="async" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent opacity-80" />
-        {product.featured && <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 font-mono text-[9px] tracking-[.16em] text-slate-900 shadow-sm">DOPORUČUJEME</span>}
-        <span className="absolute bottom-4 left-4 font-mono text-[9px] tracking-[.16em] text-white/75 uppercase">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span>
-        <span className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all group-hover:bg-cyan-300 group-hover:text-slate-950"><ArrowRight size={15}/></span>
-      </div>
-      <div className="p-6 lg:p-7">
-        <h3 className="font-heading text-[22px] text-slate-950 tracking-tight">{product.name}</h3>
-        <p className="mt-2.5 line-clamp-2 min-h-[42px] text-[13px] leading-6 text-slate-500">{product.short_description || 'Architektonické mlžicí řešení navržené pro dlouhodobý venkovní provoz.'}</p>
-        {meta.length > 0 && <div className="mt-5 flex flex-wrap gap-2">{meta.map((m) => <span key={m} className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] text-slate-500 border border-slate-100">{m}</span>)}</div>}
-        <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4"><span className="text-xs font-semibold text-slate-900">Detail produktu</span><span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase">Technické údaje →</span></div>
-      </div>
-    </Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="mx-4 mb-4 flex items-center justify-center gap-2 rounded-full bg-slate-950 py-3.5 text-xs font-bold text-white transition hover:bg-cyan-500 hover:text-slate-950"><Zap size={13} /> Vyžádat cenovou nabídku</Link>
+  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl mx-auto">
+    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" /><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" />{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary pl-1">Prohlédnout detail</p></div></Link>
+    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 font-bold transition hover:bg-muted text-[hsl(var(--background))] text-sm bg-[hsl(var(--ring))]"><Zap size={13} /> Popsat projekt</Link>
   </motion.article>;
 }
 
@@ -197,35 +182,32 @@ export default function Kolekce() {
       {/* ── VLASTNOSTI A VÝHODY ── */}
       <FeaturesBenefitsSection />
 
-      {/* ── PRODUKTOVÝ KATALOG ── */}
-      <section id="catalog" className="border-t border-slate-200 bg-[#f7f8f8]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
-          <div className="max-w-3xl mb-10 lg:mb-12">
-            <p className="text-[10px] font-mono tracking-[.24em] uppercase text-teal-700 mb-4">01 / PRODUKTOVÁ KOLEKCE</p>
-            <h2 className="font-heading font-light text-4xl lg:text-6xl text-slate-950 tracking-tight">Mlžítko jako <span className="text-teal-700">součást prostoru.</span></h2>
-            <p className="mt-5 max-w-2xl text-sm lg:text-base leading-7 text-slate-500">Prohlédněte si jednotlivé modely a vyberte řešení podle charakteru prostoru, rozměru a způsobu instalace. Každý produkt navrhujeme pro konkrétní architekturu a provoz.</p>
-          </div>
-
-          <div className="sticky top-16 z-20 rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-[0_10px_40px_rgba(15,23,42,.08)] backdrop-blur-xl mb-10">
-            <div className="flex flex-col lg:flex-row gap-3">
-              <div className="relative flex-1"><Eye size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat model, použití nebo řešení…" className="w-full rounded-xl bg-slate-50 border border-slate-100 py-3.5 pl-11 pr-4 text-sm outline-none focus:border-teal-300 focus:ring-2 focus:ring-teal-100"/></div>
-              <div className="flex gap-2 overflow-x-auto pb-1 lg:pb-0">
-                <button onClick={() => setActiveCategory(null)} className={`shrink-0 rounded-xl px-4 py-3 text-xs font-semibold transition ${!activeCategory ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}>Všechny produkty</button>
-                {CATEGORY_GROUPS.map((g) => <button key={g.id} onClick={() => setActiveCategory(activeCategory === g.id ? null : g.id)} className={`shrink-0 rounded-xl px-4 py-3 text-xs font-semibold transition ${activeCategory === g.id ? 'bg-teal-700 text-white' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}>{g.label}</button>)}
-                <button onClick={() => setShowAdvanced(!showAdvanced)} className={`shrink-0 inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-xs font-semibold ${showAdvanced || hasAdvancedFilter ? 'border-teal-200 bg-teal-50 text-teal-800' : 'border-slate-100 text-slate-500'}`}><SlidersHorizontal size={14}/> Filtry</button>
-              </div>
-            </div>
-            {showAdvanced && <div className="mt-3 grid sm:grid-cols-2 gap-3 border-t border-slate-100 pt-3">
-              <select value={heightFilter} onChange={(e) => setHeightFilter(e.target.value)} className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-600 outline-none"><option value="all">Výška — všechny</option>{HEIGHT_OPTIONS.slice(1).map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>
-              <select value={installFilter} onChange={(e) => setInstallFilter(e.target.value)} className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-600 outline-none"><option value="all">Instalace — všechny</option>{INSTALL_OPTIONS.slice(1).map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select>
-            </div>}
-          </div>
-
-          <div className="flex items-center justify-between mb-6"><p className="text-xs font-mono tracking-widest uppercase text-slate-400">{activeGroup ? activeGroup.label : 'Celý katalog'} <span className="text-slate-300">/ {!loading ? displayedProducts.length : '…'} modelů</span></p>{(activeCategory || hasAdvancedFilter) && <button onClick={() => { setActiveCategory(null); setHeightFilter('all'); setInstallFilter('all'); setSearch(''); }} className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-900"><X size={13}/> Vymazat filtry</button>}</div>
-
-          {loading ? <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">{displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}{displayedProducts.length === 0 && <div className="col-span-full rounded-3xl border border-dashed border-slate-300 bg-white py-20 text-center"><p className="text-slate-900 font-medium">Pro toto zadání jsme nenašli vhodný model.</p><p className="mt-2 text-sm text-slate-400">Navrhneme řešení na míru vašemu prostoru.</p><Link to="/poptavka" className="mt-5 inline-flex rounded-full bg-slate-950 px-6 py-3 text-xs font-bold text-white">Vyžádat cenovou nabídku</Link></div>}</div>}
+      {/* ── PRODUKTY ── */}
+      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
+        <div className="flex items-center justify-between mb-10 lg:mb-12">
+          <p className="tracking-widest uppercase text-slate-400 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
+            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
+            {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
+          </p>
+          {activeCategory &&
+          <button onClick={() => setActiveCategory(null)} className="text-xs text-slate-400 hover:text-slate-900 transition-colors font-mono">
+              × Zobrazit vše
+            </button>
+          }
         </div>
-      </section>
+        {loading ?
+        <div className="flex justify-center py-24">
+            <Loader size={24} className="animate-spin text-slate-300" />
+          </div> :
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-5">
+            {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
+            {displayedProducts.length === 0 &&
+          <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
+          }
+          </div>
+        }
+      </div>
 
       {/* ── ŽIVÁ UKÁZKA ── */}
       <LiveDemoSection />

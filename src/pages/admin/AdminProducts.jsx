@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader, Image, Link2, FileText, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader, Image } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
-const EMPTY = { name: '', slug: '', category_id: '', short_description: '', description: '', image_url: '', gallery_urls: [], video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', documents_urls: [], featured: false };
+const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
 
 function slugify(str) {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -11,31 +11,21 @@ function slugify(str) {
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null); // null | 'new' | product object
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const load = async () => {
+  const load = () => {
     setLoading(true);
-    try {
-      const [productItems, categoryItems] = await Promise.all([
-        base44.entities.Product.list(),
-        base44.entities.ProductCategory.list(),
-      ]);
-      setProducts(productItems || []);
-      setCategories(categoryItems || []);
-    } finally {
-      setLoading(false);
-    }
+    base44.entities.Product.list().then(setProducts).finally(() => setLoading(false));
   };
 
   useEffect(() => {load();}, []);
 
-  const startEdit = (p) => {setEditing(p);setForm({ ...EMPTY, ...p, gallery_urls: p.gallery_urls || [], documents_urls: p.documents_urls || [] });};
-  const startNew = () => {setEditing('new');setForm({ ...EMPTY });};
+  const startEdit = (p) => {setEditing(p);setForm(p || EMPTY);};
+  const startNew = () => {setEditing('new');setForm(EMPTY);};
   const cancel = () => {setEditing(null);setForm(EMPTY);};
 
   const set = (field) => (e) => {
@@ -49,56 +39,25 @@ export default function AdminProducts() {
     });
   };
 
-  const handleFileUpload = async (e, field, multiple = false) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
     setUploading(true);
-    try {
-      const uploaded = [];
-      for (const file of (multiple ? files : files.slice(0, 1))) {
-        const result = await base44.integrations.Core.UploadFile({ file }).catch(() => ({}));
-        if (result?.file_url) uploaded.push(result.file_url);
-      }
-      if (uploaded.length) setForm((f) => ({ ...f, [field]: field === 'image_url' ? uploaded[0] : [...(f[field] || []), ...uploaded] }));
-    } finally {
-      setUploading(false);
-      e.target.value = '';
-    }
+    const { file_url } = await base44.integrations.Core.UploadFile({ file }).catch(() => ({}));
+    if (file_url) setForm((f) => ({ ...f, image_url: file_url }));
+    setUploading(false);
   };
-
-  const addUrl = (field, value) => {
-    const url = value.trim();
-    if (!url) return;
-    setForm((f) => ({ ...f, [field]: [...(f[field] || []), url] }));
-  };
-
-  const removeItem = (field, index) => setForm((f) => ({ ...f, [field]: (f[field] || []).filter((_, i) => i !== index) }));
-
-  const moveItem = (field, index, direction) => setForm((f) => {
-    const items = [...(f[field] || [])];
-    const target = index + direction;
-    if (target < 0 || target >= items.length) return f;
-    [items[index], items[target]] = [items[target], items[index]];
-    return { ...f, [field]: items };
-  });
 
   const save = async () => {
-    if (!form.name.trim() || !form.slug.trim() || !form.category_id) return;
     setSaving(true);
-    try {
-      const payload = {
-        ...form,
-        name: form.name.trim(),
-        slug: form.slug.trim(),
-        price_from: form.price_from === '' ? undefined : Number(form.price_from),
-      };
-      if (editing === 'new') await base44.entities.Product.create(payload);
-      else await base44.entities.Product.update(editing.id, payload);
-      cancel();
-      await load();
-    } finally {
-      setSaving(false);
+    if (editing === 'new') {
+      await base44.entities.Product.create(form);
+    } else {
+      await base44.entities.Product.update(editing.id, form);
     }
+    setSaving(false);
+    cancel();
+    load();
   };
 
   const remove = async (id) => {
@@ -127,13 +86,6 @@ export default function AdminProducts() {
           </div>
         </div>
         <div>
-          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Kategorie *</label>
-          <select value={form.category_id || ''} onChange={set('category_id')} className={inputCls}>
-            <option value="" className="bg-[#0d1117]">Vyberte kategorii</option>
-            {categories.map((category) => <option key={category.id} value={category.id} className="bg-[#0d1117]">{category.name}</option>)}
-          </select>
-        </div>
-        <div>
           <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Krátký popis</label>
           <input value={form.short_description} onChange={set('short_description')} className={inputCls} />
         </div>
@@ -150,29 +102,9 @@ export default function AdminProducts() {
               <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all w-fit">
                 {uploading ? <Loader size={12} className="animate-spin" /> : <Image size={12} />}
                 {uploading ? 'Nahrávám...' : 'Nahrát soubor'}
-                <input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, 'image_url')} className="hidden" />
+                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
               </label>
             </div>
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Galerie fotografií</label>
-            <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all">
-              <Image size={12} /> Přidat fotografie
-              <input type="file" accept="image/*" multiple onChange={(e) => handleFileUpload(e, 'gallery_urls', true)} className="hidden" />
-            </label>
-          </div>
-          {(form.gallery_urls || []).map((url, index) => <div key={`${url}-${index}`} className="flex items-center gap-2 mb-2">
-            <img src={url} alt="" className="w-16 h-10 object-cover rounded border border-white/10" />
-            <input value={url} onChange={(e) => setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.map((item, i) => i === index ? e.target.value : item) }))} className={inputCls + ' flex-1'} />
-            <button type="button" onClick={() => moveItem('gallery_urls', index, -1)} className="text-white/30 hover:text-white"><ChevronUp size={14} /></button>
-            <button type="button" onClick={() => moveItem('gallery_urls', index, 1)} className="text-white/30 hover:text-white"><ChevronDown size={14} /></button>
-            <button type="button" onClick={() => removeItem('gallery_urls', index)} className="text-white/30 hover:text-red-400"><X size={14} /></button>
-          </div>)}
-          <div className="flex gap-2 mt-2">
-            <input id="gallery-url" placeholder="Nebo vložte URL fotografie" className={inputCls + ' flex-1'} />
-            <button type="button" onClick={() => { const el = document.getElementById('gallery-url'); addUrl('gallery_urls', el.value); el.value = ''; }} className="px-3 border border-white/10 rounded-lg text-white/50 hover:text-white"><Link2 size={14} /></button>
           </div>
         </div>
         <div>
@@ -189,24 +121,6 @@ export default function AdminProducts() {
           <div>
             <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Cena od (Kč)</label>
             <input type="number" value={form.price_from || ''} onChange={set('price_from')} placeholder="např. 89000" className={inputCls} />
-          </div>
-        </div>
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Dokumentace ke stažení</label>
-            <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all">
-              <FileText size={12} /> Nahrát dokument
-              <input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip" multiple onChange={(e) => handleFileUpload(e, 'documents_urls', true)} className="hidden" />
-            </label>
-          </div>
-          {(form.documents_urls || []).map((url, index) => <div key={`${url}-${index}`} className="flex items-center gap-2 mb-2">
-            <FileText size={14} className="text-cyan shrink-0" />
-            <input value={url} onChange={(e) => setForm((f) => ({ ...f, documents_urls: f.documents_urls.map((item, i) => i === index ? e.target.value : item) }))} className={inputCls + ' flex-1'} />
-            <button type="button" onClick={() => removeItem('documents_urls', index)} className="text-white/30 hover:text-red-400"><X size={14} /></button>
-          </div>)}
-          <div className="flex gap-2">
-            <input id="document-url" placeholder="Nebo vložte URL PDF / dokumentu" className={inputCls + ' flex-1'} />
-            <button type="button" onClick={() => { const el = document.getElementById('document-url'); addUrl('documents_urls', el.value); el.value = ''; }} className="px-3 border border-white/10 rounded-lg text-white/50 hover:text-white"><Link2 size={14} /></button>
           </div>
         </div>
         <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer">

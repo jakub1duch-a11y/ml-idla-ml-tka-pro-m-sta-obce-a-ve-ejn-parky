@@ -11,7 +11,7 @@ const SLIDES = [
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
   imageAlt: 'Nerezová designová mlžítka pro města a obce',
   cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },
-  cta2: { label: 'Vyžádat cenovou nabídku', to: '/poptavka' }
+  cta2: { label: 'Popsat projekt', to: '/poptavka' }
 }];
 
 

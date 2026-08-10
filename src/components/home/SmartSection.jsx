@@ -13,7 +13,7 @@ const features = [
 
 export default function SmartSection() {
   return (
-    <section className="overflow-hidden border-y border-border py-16 bg-[#015474]">
+    <section className="overflow-hidden border-y border-border bg-[hsl(var(--accent-foreground))] py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

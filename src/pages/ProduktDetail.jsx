@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, CircleDot } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
@@ -239,26 +239,6 @@ export default function ProduktDetail() {
           </div>
         </div>
       </div>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-          <div><p className="text-[10px] font-mono tracking-[0.25em] uppercase text-teal-700 mb-3">Varianty produktu</p><h2 className="font-heading text-3xl lg:text-5xl text-slate-950">Vyberte provedení</h2></div>
-          <p className="max-w-xl text-sm leading-6 text-slate-500">Přehled dostupných provedení produktové řady. Rozměry, povrch i způsob kotvení lze u zakázkové výroby přizpůsobit konkrétnímu projektu.</p>
-        </div>
-        <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <table className="w-full min-w-[900px] text-left border-collapse">
-            <thead className="bg-slate-50 border-b border-slate-200"><tr>{['Varianta','Výška','Průměr','Materiál','Povrch','Kotvení','Smart','Dostupnost'].map((h) => <th key={h} className="px-5 py-4 text-[10px] font-mono tracking-widest uppercase text-slate-500 font-medium">{h}</th>)}</tr></thead>
-            <tbody>{[
-              ['01','170 cm','Ø 42 mm','316L','Kartáčovaný','Do země','Volitelné','Zakázková'],
-              ['02','180 cm','Ø 42 mm','316L','Kartáčovaný','Do země / dlažba','Volitelné','Zakázková'],
-              ['03','220 cm','Ø 42 mm','316L','Kartáčovaný','Do země / dlažba','Ano','Zakázková'],
-              ['04','250 cm','Ø 42 mm','316L','Matná černá','Do země / dlažba','Ano','Zakázková'],
-            ].map((row, i) => <tr key={row[0]} className={`border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors ${i === 0 ? 'bg-teal-50/30' : ''}`}>{row.map((cell, j) => <td key={j} className={`px-5 py-4 text-sm ${j === 0 ? 'font-mono text-teal-700' : 'text-slate-700'}`}>{j === 6 ? <span className="inline-flex items-center gap-1.5"><CircleDot size={12} className={cell === 'Ano' ? 'text-teal-600' : 'text-slate-300'}/>{cell}</span> : cell}</td>)}</tr>)}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-4 text-[11px] text-slate-400">* Konkrétní konfiguraci a technické parametry potvrzujeme v rámci projektové nabídky.</p>
-      </section>
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>

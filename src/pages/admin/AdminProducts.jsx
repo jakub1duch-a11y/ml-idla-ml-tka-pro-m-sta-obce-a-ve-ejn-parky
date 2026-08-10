@@ -11,21 +11,31 @@ function slugify(str) {
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null); // null | 'new' | product object
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const load = () => {
+  const load = async () => {
     setLoading(true);
-    base44.entities.Product.list().then(setProducts).finally(() => setLoading(false));
+    try {
+      const [productItems, categoryItems] = await Promise.all([
+        base44.entities.Product.list(),
+        base44.entities.ProductCategory.list(),
+      ]);
+      setProducts(productItems || []);
+      setCategories(categoryItems || []);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {load();}, []);
 
-  const startEdit = (p) => {setEditing(p);setForm(p || EMPTY);};
-  const startNew = () => {setEditing('new');setForm(EMPTY);};
+  const startEdit = (p) => {setEditing(p);setForm({ ...EMPTY, ...p, gallery_urls: p.gallery_urls || [], documents_urls: p.documents_urls || [] });};
+  const startNew = () => {setEditing('new');setForm({ ...EMPTY });};
   const cancel = () => {setEditing(null);setForm(EMPTY);};
 
   const set = (field) => (e) => {
@@ -39,25 +49,56 @@ export default function AdminProducts() {
     });
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFileUpload = async (e, field, multiple = false) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
     setUploading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file }).catch(() => ({}));
-    if (file_url) setForm((f) => ({ ...f, image_url: file_url }));
-    setUploading(false);
+    try {
+      const uploaded = [];
+      for (const file of (multiple ? files : files.slice(0, 1))) {
+        const result = await base44.integrations.Core.UploadFile({ file }).catch(() => ({}));
+        if (result?.file_url) uploaded.push(result.file_url);
+      }
+      if (uploaded.length) setForm((f) => ({ ...f, [field]: field === 'image_url' ? uploaded[0] : [...(f[field] || []), ...uploaded] }));
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
   };
 
+  const addUrl = (field, value) => {
+    const url = value.trim();
+    if (!url) return;
+    setForm((f) => ({ ...f, [field]: [...(f[field] || []), url] }));
+  };
+
+  const removeItem = (field, index) => setForm((f) => ({ ...f, [field]: (f[field] || []).filter((_, i) => i !== index) }));
+
+  const moveItem = (field, index, direction) => setForm((f) => {
+    const items = [...(f[field] || [])];
+    const target = index + direction;
+    if (target < 0 || target >= items.length) return f;
+    [items[index], items[target]] = [items[target], items[index]];
+    return { ...f, [field]: items };
+  });
+
   const save = async () => {
+    if (!form.name.trim() || !form.slug.trim() || !form.category_id) return;
     setSaving(true);
-    if (editing === 'new') {
-      await base44.entities.Product.create(form);
-    } else {
-      await base44.entities.Product.update(editing.id, form);
+    try {
+      const payload = {
+        ...form,
+        name: form.name.trim(),
+        slug: form.slug.trim(),
+        price_from: form.price_from === '' ? undefined : Number(form.price_from),
+      };
+      if (editing === 'new') await base44.entities.Product.create(payload);
+      else await base44.entities.Product.update(editing.id, payload);
+      cancel();
+      await load();
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-    cancel();
-    load();
   };
 
   const remove = async (id) => {

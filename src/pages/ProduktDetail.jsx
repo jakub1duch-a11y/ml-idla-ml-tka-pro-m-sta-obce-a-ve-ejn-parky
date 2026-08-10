@@ -18,6 +18,7 @@ import ZivaUkazkaTab from '@/components/produkt/tabs/ZivaUkazkaTab';
 import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
 import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
+import ProductConfigurator from '@/components/produkt/ProductConfigurator';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 
@@ -186,6 +187,18 @@ export default function ProduktDetail() {
   { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' }].
   filter(Boolean);
 
+  const handleConfiguratorQuote = (config) => {
+    const params = new URLSearchParams({
+      product: product.name || '',
+      height: config.height || '',
+      mounting: config.mounting || '',
+      finish: config.finish || '',
+      nozzle: config.nozzle || '',
+      smart: config.smart ? 'Ano' : 'Ne',
+    });
+    navigate(`/poptavka?${params.toString()}`);
+  };
+
   const contentTabs = TABS;
   const idx = contentTabs.findIndex((t) => t.id === activeTab);
   const nextTab = contentTabs[idx + 1];
@@ -239,6 +252,9 @@ export default function ProduktDetail() {
           </div>
         </div>
       </div>
+
+      {/* ═══════ CONFIGURATOR ═══════ */}
+      <ProductConfigurator product={product} onRequestQuote={handleConfiguratorQuote} />
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>

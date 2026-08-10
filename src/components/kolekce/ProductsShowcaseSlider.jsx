@@ -68,10 +68,9 @@ export default function ProductsShowcaseSlider() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 lg:mb-10">
           <div>
-            <p className="font-mono tracking-widest uppercase text-white/40 mb-2 text-lg">KOMPLETNÍ NABÍDKA</p>
-            <h2 className="text-3xl lg:text-4xl text-white tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">Prohlédněte si
-celou kolekci mlžítek.
-            </h2>
+            <p className="font-mono tracking-[.22em] uppercase text-cyan-300/70 mb-2 text-[10px]">PRODUKTOVÉ KOLEKCE · 2026</p>
+            <h2 className="text-3xl lg:text-5xl text-white tracking-tight font-light">Kolekce. Varianty. Charakter.</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-white/45">Každý tvar vzniká jako samostatný designový systém. Prohlédněte si kolekce a jednotlivé varianty včetně studiových náhledů.</p>
           </div>
           <div className="hidden sm:flex gap-2">
             <button onClick={() => scrollBy(-380)} aria-label="Předchozí"
@@ -90,9 +89,13 @@ celou kolekci mlžítek.
             <Loader size={22} className="animate-spin text-white/30" />
           </div> :
 
-        <div ref={scrollRef}
-        className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-            {products.map((p, i) => <SlideCard key={p.id} product={p} index={i} />)}
+        <div ref={scrollRef} className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+            {COLLECTIONS.map((collection, i) => <CollectionCard key={collection.name} collection={collection} index={i} />)}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            {COLLECTIONS.flatMap((c) => c.variants).map((variant) => <Link key={variant.name} to={`/mlzidla-mlzitka?variant=${encodeURIComponent(variant.name)}`} className="rounded-full border border-white/10 bg-white/[.04] px-4 py-2 text-[10px] font-mono tracking-widest uppercase text-white/55 transition hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:text-cyan-200">{variant.name}</Link>)}
+            <Link to="/mlzidla-mlzitka" className="rounded-full bg-white px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-slate-950 transition hover:bg-cyan-300">Celý katalog →</Link>
           </div>
         }
       </div>

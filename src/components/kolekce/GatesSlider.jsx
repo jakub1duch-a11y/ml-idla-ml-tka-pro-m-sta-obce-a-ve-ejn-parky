@@ -19,18 +19,14 @@ const B2G_LINKS = [
 
 
 const GATES = [
-{
-  name: 'GATE70',
-  tagline: 'Vstupní mlžná brána',
-  short_description: 'Designová mlžná brána z nerezové oceli AISI 316L — ochlazení až −10 °C bez kapek na zemi, smart Wi-Fi řízení.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png'
-},
-{
-  name: 'LINEA CE70',
-  tagline: 'Obloukový mlžný systém',
-  short_description: 'Zakřivený obloukový design z nerezi AISI 316L — ikonická architektura pro náměstí, bazény a veřejné prostory.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png'
-}];
+  { name: 'GATE70-U', tagline: 'Rovný architektonický portál', short_description: 'Čistá pravoúhlá mlžná brána z AISI 316L. Reprezentativní vstup pro města, koupaliště, parky a komerční areály.', image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
+  { name: 'GATE70-V', tagline: 'Organický lomený oblouk', short_description: 'Výraznější architektonická silueta s jemnou mlhovou clonou. Vhodná tam, kde má ochlazení zároveň vytvářet vizuální dominantu.', image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png' },
+  { name: 'LINEA CE70', tagline: 'Plynulý obloukový design', short_description: 'Elegantní obloukový systém z AISI 316L pro náměstí, bazény, aquaparky a moderní veřejný prostor.', image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png' },
+  { name: 'GATE 60', tagline: 'Kompaktní mlžná brána', short_description: 'Praktické řešení pro vstupy, promenády, sportovní areály a eventy. Kompaktní rozměr, výrazný chladicí efekt.', image_url: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/e03a84d77_L-Mltko_GATE_60_3R-1.png' },
+  { name: 'RAINBOW GATE', tagline: 'Interaktivní barevný oblouk', short_description: 'Půlkruhová mlžná brána s výrazným vizuálním charakterem. Ideální pro dětská mlhoviště, parky a zážitkové zóny.', image_url: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/7ee43ab21_generated_image.png' },
+  { name: 'MARATON', tagline: 'Modulární mlžný tunel', short_description: 'Modulární průchozí systém pro velké návštěvnické zatížení, festivaly, sportovní akce a městské cooling zóny.', image_url: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/3a39f6017_generated_image.png' },
+  { name: 'GATE CUSTOM', tagline: 'Zakázková mlžná brána', short_description: 'Tvar, výška, délka i technické řešení podle architektonického návrhu. Od konceptu a CAD podkladů po vlastní výrobu.', image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2dcd39f66_MRKEV_rozkres1.png' }
+];
 
 
 export default function GatesSlider() {
@@ -42,8 +38,9 @@ export default function GatesSlider() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-10 lg:mb-12">
           <div>
-            <p className="tracking-widest uppercase text-white/40 mb-3 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">MLŽNÉ BRÁNY</p>
-            <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight max-w-xl">Vstupní portály, které si pamatujete.</h2>
+            <p className="tracking-[.22em] uppercase text-cyan-300/70 mb-3 text-[10px] font-mono">Kolekce / Mlžné brány · 2026</p>
+            <h2 className="font-heading font-light text-3xl lg:text-5xl text-white tracking-tight max-w-2xl">Vstupní portály, které ochladí prostor a vytvoří zážitek.</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-white/45">Od kompaktní brány pro event až po monumentální zakázkový portál. Každý model vyrábíme z nerezové oceli a přizpůsobujeme konkrétnímu místu.</p>
           </div>
           <div className="hidden sm:flex gap-2">
             <button onClick={() => scrollBy(-420)} aria-label="Předchozí" className="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-all">

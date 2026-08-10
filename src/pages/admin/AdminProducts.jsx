@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader, Image } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader, Image, Link2, FileText, ChevronUp, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
-const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
+const EMPTY = { name: '', slug: '', category_id: '', short_description: '', description: '', image_url: '', gallery_urls: [], video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', documents_urls: [], featured: false };
 
 function slugify(str) {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

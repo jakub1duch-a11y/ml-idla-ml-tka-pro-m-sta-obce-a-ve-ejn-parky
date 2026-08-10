@@ -127,6 +127,13 @@ export default function AdminProducts() {
           </div>
         </div>
         <div>
+          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Kategorie *</label>
+          <select value={form.category_id || ''} onChange={set('category_id')} className={inputCls}>
+            <option value="" className="bg-[#0d1117]">Vyberte kategorii</option>
+            {categories.map((category) => <option key={category.id} value={category.id} className="bg-[#0d1117]">{category.name}</option>)}
+          </select>
+        </div>
+        <div>
           <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Krátký popis</label>
           <input value={form.short_description} onChange={set('short_description')} className={inputCls} />
         </div>
@@ -143,9 +150,29 @@ export default function AdminProducts() {
               <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all w-fit">
                 {uploading ? <Loader size={12} className="animate-spin" /> : <Image size={12} />}
                 {uploading ? 'Nahrávám...' : 'Nahrát soubor'}
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                <input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, 'image_url')} className="hidden" />
               </label>
             </div>
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Galerie fotografií</label>
+            <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all">
+              <Image size={12} /> Přidat fotografie
+              <input type="file" accept="image/*" multiple onChange={(e) => handleFileUpload(e, 'gallery_urls', true)} className="hidden" />
+            </label>
+          </div>
+          {(form.gallery_urls || []).map((url, index) => <div key={`${url}-${index}`} className="flex items-center gap-2 mb-2">
+            <img src={url} alt="" className="w-16 h-10 object-cover rounded border border-white/10" />
+            <input value={url} onChange={(e) => setForm((f) => ({ ...f, gallery_urls: f.gallery_urls.map((item, i) => i === index ? e.target.value : item) }))} className={inputCls + ' flex-1'} />
+            <button type="button" onClick={() => moveItem('gallery_urls', index, -1)} className="text-white/30 hover:text-white"><ChevronUp size={14} /></button>
+            <button type="button" onClick={() => moveItem('gallery_urls', index, 1)} className="text-white/30 hover:text-white"><ChevronDown size={14} /></button>
+            <button type="button" onClick={() => removeItem('gallery_urls', index)} className="text-white/30 hover:text-red-400"><X size={14} /></button>
+          </div>)}
+          <div className="flex gap-2 mt-2">
+            <input id="gallery-url" placeholder="Nebo vložte URL fotografie" className={inputCls + ' flex-1'} />
+            <button type="button" onClick={() => { const el = document.getElementById('gallery-url'); addUrl('gallery_urls', el.value); el.value = ''; }} className="px-3 border border-white/10 rounded-lg text-white/50 hover:text-white"><Link2 size={14} /></button>
           </div>
         </div>
         <div>
@@ -162,6 +189,24 @@ export default function AdminProducts() {
           <div>
             <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Cena od (Kč)</label>
             <input type="number" value={form.price_from || ''} onChange={set('price_from')} placeholder="např. 89000" className={inputCls} />
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-xs font-mono text-white/40 uppercase tracking-widest">Dokumentace ke stažení</label>
+            <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all">
+              <FileText size={12} /> Nahrát dokument
+              <input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip" multiple onChange={(e) => handleFileUpload(e, 'documents_urls', true)} className="hidden" />
+            </label>
+          </div>
+          {(form.documents_urls || []).map((url, index) => <div key={`${url}-${index}`} className="flex items-center gap-2 mb-2">
+            <FileText size={14} className="text-cyan shrink-0" />
+            <input value={url} onChange={(e) => setForm((f) => ({ ...f, documents_urls: f.documents_urls.map((item, i) => i === index ? e.target.value : item) }))} className={inputCls + ' flex-1'} />
+            <button type="button" onClick={() => removeItem('documents_urls', index)} className="text-white/30 hover:text-red-400"><X size={14} /></button>
+          </div>)}
+          <div className="flex gap-2">
+            <input id="document-url" placeholder="Nebo vložte URL PDF / dokumentu" className={inputCls + ' flex-1'} />
+            <button type="button" onClick={() => { const el = document.getElementById('document-url'); addUrl('documents_urls', el.value); el.value = ''; }} className="px-3 border border-white/10 rounded-lg text-white/50 hover:text-white"><Link2 size={14} /></button>
           </div>
         </div>
         <label className="flex items-center gap-2 text-sm text-white/60 cursor-pointer">

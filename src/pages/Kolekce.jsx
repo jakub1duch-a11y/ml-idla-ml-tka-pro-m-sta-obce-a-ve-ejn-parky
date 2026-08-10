@@ -103,9 +103,24 @@ const FALLBACK_IMAGES = {
 
 function ProductCard({ product, i }) {
   const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
-  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl mx-auto">
-    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" /><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" />{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary pl-1">Prohlédnout detail</p></div></Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 font-bold transition hover:bg-muted text-[hsl(var(--background))] text-sm bg-[hsl(var(--ring))]"><Zap size={13} /> Popsat projekt</Link>
+  const meta = [product.material, product.coverage_area, product.pressure].filter(Boolean).slice(0, 2);
+  return <motion.article initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ delay: Math.min(i * 0.045, .25), duration: .5 }} className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_8px_30px_rgba(15,23,42,.04)] transition-all duration-500 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-[0_20px_55px_rgba(15,23,42,.10)]">
+    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1">
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+        <img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.045]" loading="lazy" decoding="async" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent opacity-80" />
+        {product.featured && <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 font-mono text-[9px] tracking-[.16em] text-slate-900 shadow-sm">DOPORUČUJEME</span>}
+        <span className="absolute bottom-4 left-4 font-mono text-[9px] tracking-[.16em] text-white/75 uppercase">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span>
+        <span className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all group-hover:bg-cyan-300 group-hover:text-slate-950"><ArrowRight size={15}/></span>
+      </div>
+      <div className="p-6 lg:p-7">
+        <h3 className="font-heading text-[22px] text-slate-950 tracking-tight">{product.name}</h3>
+        <p className="mt-2.5 line-clamp-2 min-h-[42px] text-[13px] leading-6 text-slate-500">{product.short_description || 'Architektonické mlžicí řešení navržené pro dlouhodobý venkovní provoz.'}</p>
+        {meta.length > 0 && <div className="mt-5 flex flex-wrap gap-2">{meta.map((m) => <span key={m} className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] text-slate-500 border border-slate-100">{m}</span>)}</div>}
+        <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4"><span className="text-xs font-semibold text-slate-900">Detail produktu</span><span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase">Technické údaje →</span></div>
+      </div>
+    </Link>
+    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="mx-4 mb-4 flex items-center justify-center gap-2 rounded-full bg-slate-950 py-3.5 text-xs font-bold text-white transition hover:bg-cyan-500 hover:text-slate-950"><Zap size={13} /> Vyžádat cenovou nabídku</Link>
   </motion.article>;
 }
 

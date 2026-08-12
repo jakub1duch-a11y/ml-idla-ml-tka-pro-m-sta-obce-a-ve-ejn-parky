@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=Mulish:wght@300;400;500;600;700&family=Overpass:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Public+Sans:wght@300;400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&family=Abril+Fatface:wght@400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Architects+Daughter:wght@400&display=swap');
+/* Fonts (Plus Jakarta Sans + Inter) are loaded via <link> in index.html so the
+   browser can fetch them in parallel instead of waiting for this stylesheet
+   to download first. Previously this file @imported 11 font families across
+   ~60 weight/style combinations even though only these 2 are ever used. */
 
 @tailwind base;
 @tailwind components;

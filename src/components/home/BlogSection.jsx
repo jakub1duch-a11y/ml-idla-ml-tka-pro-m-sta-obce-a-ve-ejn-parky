@@ -112,7 +112,7 @@ function GateOfferCard() {
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/0" />
 
-        <div className="relative h-full flex flex-col justify-between p-6">
+        <div className="relative h-full flex flex-col justify-between p-6 hidden">
           <span className="inline-flex items-center gap-1.5 self-start text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full">
             <Sparkles size={11} /> Nabídka produktu
           </span>

@@ -112,19 +112,19 @@ function GateOfferCard() {
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/0" />
 
-        <div className="relative h-full flex flex-col justify-between p-6 hidden">
-          <span className="inline-flex items-center gap-1.5 self-start text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full">
-            <Sparkles size={11} /> Nabídka produktu
-          </span>
-          <div>
-            <p className="text-xs font-mono tracking-widest uppercase mb-2 text-[hsl(var(--foreground))]">MLŽNÁ BRÁNA</p>
-            <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3">.sm</h3>
-            <p className="text-sm text-white/60 font-light leading-relaxed mb-5">Ochlazení až o 9 °C, Wi-Fi Smart řízení, dvě tvarové varianty na míru vašemu prostoru.</p>
-            
+        
 
-            
-          </div>
-        </div>
+
+
+
+
+
+
+
+
+
+
+        
       </Link>
     </motion.div>);
 

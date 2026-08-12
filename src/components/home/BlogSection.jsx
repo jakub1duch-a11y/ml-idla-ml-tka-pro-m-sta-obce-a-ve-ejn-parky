@@ -118,7 +118,7 @@ function GateOfferCard() {
           </span>
           <div>
             <p className="text-xs font-mono tracking-widest uppercase mb-2 text-[hsl(var(--foreground))]">MLŽNÁ BRÁNA</p>
-            <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3">GATE70</h3>
+            <h3 className="font-heading font-light text-2xl text-white tracking-tight mb-3">.sm</h3>
             <p className="text-sm text-white/60 font-light leading-relaxed mb-5">Ochlazení až o 9 °C, Wi-Fi Smart řízení, dvě tvarové varianty na míru vašemu prostoru.</p>
             
 

@@ -68,14 +68,14 @@ function LiveDemoCard() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
     className="lg:col-span-2">
-      <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
+      <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900 hidden">
         <video
           src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov"
           autoPlay muted loop playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
+          className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10 hidden" />
 
-        <div className="relative h-full flex flex-col justify-between p-7 lg:p-9">
+        <div className="relative h-full flex flex-col justify-between p-7 lg:p-9 hidden">
           <div className="flex items-center gap-2">
             <span className="flex items-center gap-1.5 text-[10px] font-mono text-white tracking-widest uppercase px-3 py-1.5 bg-red-500/90 rounded-full">
               <Radio size={11} className="animate-pulse" /> Živě

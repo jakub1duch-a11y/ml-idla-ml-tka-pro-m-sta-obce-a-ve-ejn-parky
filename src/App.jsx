@@ -91,6 +91,7 @@ const AuthenticatedApp = () => {
   }
 
   return (
+    <Suspense fallback={<RouteFallback />}>
     <Routes>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
@@ -151,6 +152,7 @@ const AuthenticatedApp = () => {
       <Route path="/admin-forgot-password" element={<AdminForgotPassword />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </Suspense>
   );
 };
 

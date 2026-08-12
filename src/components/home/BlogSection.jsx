@@ -106,11 +106,11 @@ function GateOfferCard() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
       <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
-        <img
-          src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png"
-          alt="Mlžná brána GATE70"
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 hidden" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/0 hidden" />
+        
+
+
+        
+        
 
         
 

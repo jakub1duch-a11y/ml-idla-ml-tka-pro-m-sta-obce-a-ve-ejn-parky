@@ -109,8 +109,8 @@ function GateOfferCard() {
         <img
           src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png"
           alt="Mlžná brána GATE70"
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/0" />
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/0 hidden" />
 
         
 

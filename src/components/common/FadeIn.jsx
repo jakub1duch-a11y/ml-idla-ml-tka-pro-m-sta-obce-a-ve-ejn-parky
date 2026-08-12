@@ -22,7 +22,7 @@ export default function FadeIn({ children, className = '', as: Tag = 'div' }) {
   }, []);
 
   return (
-    <Tag ref={ref} className={`reveal-element bg-[#c7dce5] ${className}`}>
+    <Tag ref={ref} className={`reveal-element ${className}`}>
       {children}
     </Tag>);
 

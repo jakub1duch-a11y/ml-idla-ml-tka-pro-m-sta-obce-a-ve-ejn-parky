@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -7,61 +7,72 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-import Mlzitko from '@/pages/Mlzitko';
-import Mlzidla from '@/pages/Mlzidla';
-import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
-
 
 import SiteLayout from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
-import Kolekce from '@/pages/Kolekce';
-import CollectionDetail from '@/pages/CollectionDetail';
-import BrandIdentity from '@/pages/BrandIdentity';
-import Kontakt from '@/pages/Kontakt';
-import ProduktDetail from '@/pages/ProduktDetail';
-import ProduktDetail2 from '@/pages/ProduktDetail2';
-import SearchAnalytics from '@/pages/SearchAnalytics';
-import CustomerPortal from '@/pages/CustomerPortal';
-import Poradce from '@/pages/Poradce';
-import Kalkulacka from '@/pages/Kalkulacka';
-import ONas from '@/pages/ONas';
-import Reference from '@/pages/Reference';
-import ReferenceDetail from '@/pages/ReferenceDetail';
-import Blog from '@/pages/Blog';
-import BlogDetail from '@/pages/BlogDetail';
-import Poptavka from '@/pages/Poptavka';
-import Dekujeme from '@/pages/Dekujeme';
-import CustomPageView from '@/pages/CustomPageView';
-import Podpora from '@/pages/Podpora';
-import MestaObce from '@/pages/kategorie/MestaObce';
-import ParkyHriste from '@/pages/kategorie/ParkyHriste';
-import Koupaliste from '@/pages/kategorie/Koupaliste';
-import Architekti from '@/pages/kategorie/Architekti';
-import Komercni from '@/pages/kategorie/Komercni';
-import Eventy from '@/pages/kategorie/Eventy';
-import Outdoor from '@/pages/kategorie/Outdoor';
-import Art from '@/pages/kategorie/Art';
-import Deti from '@/pages/kategorie/Deti';
-import Gdpr from '@/pages/Gdpr';
-import Admin from '@/pages/admin/Admin';
-import AdminLogin from '@/pages/admin/AdminLogin';
-import AdminLogout from '@/pages/admin/AdminLogout';
-import AdminForgotPassword from '@/pages/admin/AdminForgotPassword';
-import Gate70 from '@/pages/Gate70';
-import Technologie from '@/pages/Technologie';
-import Vyhody from '@/pages/Vyhody';
-import KeStazeni from '@/pages/KeStazeni';
-import OchranaZdravi from '@/pages/OchranaZdravi';
-import ServisUdrzba from '@/pages/ServisUdrzba';
-import VraceniZbozi from '@/pages/VraceniZbozi';
-import ChytraMlzidla from '@/pages/ChytraMlzidla';
-import Katalog from '@/pages/Katalog';
-import SmartOvladani from '@/pages/SmartOvladani';
-import Udrzitelnost from '@/pages/Udrzitelnost';
-import Partnerstvi from '@/pages/Partnerstvi';
-import ObchodniPodminky from '@/pages/ObchodniPodminky';
-import ObchodniNabidky from '@/pages/ObchodniNabidky';
-import Pronajem from '@/pages/Pronajem';
+
+// All other routes are code-split (React.lazy) so a visit to "/" only
+// downloads Home + its dependencies instead of every page in the site
+// (admin panel, blog editor, all category pages, etc.) in one bundle.
+const Mlzitko = lazy(() => import('@/pages/Mlzitko'));
+const Mlzidla = lazy(() => import('@/pages/Mlzidla'));
+const MlzidlaProdukt = lazy(() => import('@/pages/MlzidlaProdukt'));
+const Kolekce = lazy(() => import('@/pages/Kolekce'));
+const CollectionDetail = lazy(() => import('@/pages/CollectionDetail'));
+const BrandIdentity = lazy(() => import('@/pages/BrandIdentity'));
+const Kontakt = lazy(() => import('@/pages/Kontakt'));
+const ProduktDetail = lazy(() => import('@/pages/ProduktDetail'));
+const ProduktDetail2 = lazy(() => import('@/pages/ProduktDetail2'));
+const SearchAnalytics = lazy(() => import('@/pages/SearchAnalytics'));
+const CustomerPortal = lazy(() => import('@/pages/CustomerPortal'));
+const Poradce = lazy(() => import('@/pages/Poradce'));
+const Kalkulacka = lazy(() => import('@/pages/Kalkulacka'));
+const ONas = lazy(() => import('@/pages/ONas'));
+const Reference = lazy(() => import('@/pages/Reference'));
+const ReferenceDetail = lazy(() => import('@/pages/ReferenceDetail'));
+const Blog = lazy(() => import('@/pages/Blog'));
+const BlogDetail = lazy(() => import('@/pages/BlogDetail'));
+const Poptavka = lazy(() => import('@/pages/Poptavka'));
+const Dekujeme = lazy(() => import('@/pages/Dekujeme'));
+const CustomPageView = lazy(() => import('@/pages/CustomPageView'));
+const Podpora = lazy(() => import('@/pages/Podpora'));
+const MestaObce = lazy(() => import('@/pages/kategorie/MestaObce'));
+const ParkyHriste = lazy(() => import('@/pages/kategorie/ParkyHriste'));
+const Koupaliste = lazy(() => import('@/pages/kategorie/Koupaliste'));
+const Architekti = lazy(() => import('@/pages/kategorie/Architekti'));
+const Komercni = lazy(() => import('@/pages/kategorie/Komercni'));
+const Eventy = lazy(() => import('@/pages/kategorie/Eventy'));
+const Outdoor = lazy(() => import('@/pages/kategorie/Outdoor'));
+const Art = lazy(() => import('@/pages/kategorie/Art'));
+const Deti = lazy(() => import('@/pages/kategorie/Deti'));
+const Gdpr = lazy(() => import('@/pages/Gdpr'));
+const Admin = lazy(() => import('@/pages/admin/Admin'));
+const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'));
+const AdminLogout = lazy(() => import('@/pages/admin/AdminLogout'));
+const AdminForgotPassword = lazy(() => import('@/pages/admin/AdminForgotPassword'));
+const Gate70 = lazy(() => import('@/pages/Gate70'));
+const Technologie = lazy(() => import('@/pages/Technologie'));
+const Vyhody = lazy(() => import('@/pages/Vyhody'));
+const KeStazeni = lazy(() => import('@/pages/KeStazeni'));
+const OchranaZdravi = lazy(() => import('@/pages/OchranaZdravi'));
+const ServisUdrzba = lazy(() => import('@/pages/ServisUdrzba'));
+const VraceniZbozi = lazy(() => import('@/pages/VraceniZbozi'));
+const ChytraMlzidla = lazy(() => import('@/pages/ChytraMlzidla'));
+const Katalog = lazy(() => import('@/pages/Katalog'));
+const SmartOvladani = lazy(() => import('@/pages/SmartOvladani'));
+const Udrzitelnost = lazy(() => import('@/pages/Udrzitelnost'));
+const Partnerstvi = lazy(() => import('@/pages/Partnerstvi'));
+const ObchodniPodminky = lazy(() => import('@/pages/ObchodniPodminky'));
+const ObchodniNabidky = lazy(() => import('@/pages/ObchodniNabidky'));
+const Pronajem = lazy(() => import('@/pages/Pronajem'));
+
+function RouteFallback() {
+  return (
+    <div className="flex min-h-[50vh] w-full items-center justify-center py-24">
+      <div className="w-6 h-6 border-2 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
+    </div>
+  );
+}
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();

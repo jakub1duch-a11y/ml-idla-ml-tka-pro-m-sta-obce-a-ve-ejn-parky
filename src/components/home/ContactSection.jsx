@@ -18,12 +18,12 @@ export default function ContactSection() {
     } catch (err) {
 
 
+
       // error
-    } finally {setSending(false);}
-  };
+    } finally {setSending(false);}};
 
   return (
-    <section className="py-24 bg-slate-50">
+    <section className="py-24 bg-[hsl(var(--card))]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           

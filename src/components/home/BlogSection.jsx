@@ -105,14 +105,7 @@ function LiveDemoCard() {
 function GateOfferCard() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-      <Link to="/gate70" className="group relative block h-full min-h-[340px] rounded-3xl overflow-hidden border border-white/10 bg-slate-900 hidden">
-        
-
-
-        
-        
-
-        
+      
 
 
 
@@ -124,8 +117,15 @@ function GateOfferCard() {
 
 
 
-        
-      </Link>
+
+
+
+
+
+
+
+
+      
     </motion.div>);
 
 }

@@ -7,7 +7,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
 
   if (!images || images.length === 0) {
     return (
-      <div className="rounded-none lg:rounded-2xl bg-slate-100 aspect-[4/5] sm:aspect-[4/3] flex flex-col items-center justify-center text-slate-300 gap-2">
+      <div className="rounded-2xl bg-slate-100 aspect-[4/3] flex flex-col items-center justify-center text-slate-300 gap-2">
         <ImageOff size={28} />
         <span className="text-xs font-mono uppercase tracking-widest">Fotografie doplní se</span>
       </div>
@@ -19,7 +19,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
 
   return (
     <div>
-      <button type="button" onClick={() => onOpenLightbox(active)} className="relative block w-full rounded-none lg:rounded-2xl overflow-hidden bg-slate-100 aspect-[4/5] sm:aspect-[4/3] group">
+      <button type="button" onClick={() => onOpenLightbox(active)} className="relative block w-full rounded-2xl overflow-hidden bg-slate-100 aspect-[4/3] group">
         <img src={images[active]} alt={productName} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
         <span className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
           <Maximize2 size={15} />
@@ -36,7 +36,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
         )}
       </button>
       {images.length > 1 && (
-        <div className="grid grid-cols-5 gap-2 px-4 lg:px-0 lg:gap-2.5 mt-3">
+        <div className="grid grid-cols-5 gap-2.5 mt-3">
           {images.slice(0, 5).map((img, i) => (
             <button
               key={img + i}

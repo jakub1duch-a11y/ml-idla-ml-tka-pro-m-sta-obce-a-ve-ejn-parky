@@ -17,8 +17,8 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
   return (
     <div className="relative overflow-hidden">
       <ProductHeroMist />
-      <div className="relative z-10 max-w-7xl mx-auto pt-20 lg:pt-28 pb-10">
-      <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-6 flex-wrap px-6 lg:px-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-10">
+      <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-6 flex-wrap">
         <Link to="/" className="hover:text-slate-700 transition-colors">Domů</Link>
         <ChevronRight size={12} />
         <Link to="/mlzidla-mlzitka" className="hover:text-slate-700 transition-colors">Produkty</Link>
@@ -32,12 +32,12 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
         <span className="text-slate-700 font-medium">{product.name}</span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6 lg:gap-14 items-start">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="lg:pl-10">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-14 items-start">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <ProductGalleryPanel images={allImages} productName={product.name} onOpenLightbox={onOpenLightbox} />
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="px-6 lg:px-0 lg:pr-10">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
           {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
           <h1 className="tracking-tight leading-[1.08] mb-5 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-4xl">
             {product.name}

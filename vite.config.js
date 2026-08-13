@@ -18,20 +18,5 @@ export default defineConfig({
   ],
   build: {
     sourcemap: true,
-    cssCodeSplit: true,
-    reportCompressedSize: false,
-    rollupOptions: {
-      output: {
-        // Split the libraries used on every page into their own cacheable
-        // chunk, separate from per-route code (which is now lazy-loaded in
-        // App.jsx). Returning visitors reuse this chunk from cache instead
-        // of re-downloading it on every page.
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          motion: ['framer-motion'],
-          query: ['@tanstack/react-query'],
-        },
-      },
-    },
   },
 });

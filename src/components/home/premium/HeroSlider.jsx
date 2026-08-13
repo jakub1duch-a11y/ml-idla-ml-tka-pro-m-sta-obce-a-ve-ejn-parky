@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 
 const SLIDES = [
 {
@@ -50,19 +50,25 @@ export default function HeroSlider() {
           className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
         
       </AnimatePresence>
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/10 lg:from-primary/95 lg:via-primary/25 lg:to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/35 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/25 lg:from-primary/95 lg:via-primary/50 lg:to-primary/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-transparent" />
 
       <div className="absolute inset-0 flex items-end lg:items-center">
         <div className="mx-auto w-full max-w-7xl pb-6 sm:px-8 lg:py-24 pt-24 lg:px-20 sm:pb-10 px-5">
           <div className="max-w-5xl">
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
-                <p className="mb-3 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 sm:mb-4 sm:text-xs sm:tracking-[0.3em] text-xs">{slide.tag}</p>
-                <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white sm:mb-5 text-4xl sm:text-6xl lg:text-7xl">
+                <span className="mb-4 inline-flex items-center rounded-full border border-white/25 bg-black/20 px-3 py-1.5 font-mono font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-sm sm:mb-5 sm:text-xs sm:tracking-[0.3em] text-[11px]">{slide.tag}</span>
+                <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.5)] sm:mb-5 text-4xl sm:text-6xl lg:text-7xl">
                   {slide.title}
                 </h1>
-                <p className="text-measure mb-6 text-base font-medium leading-relaxed text-white/90 sm:mb-8 sm:text-lg">{slide.desc}</p>
+                <p className="text-measure mb-5 text-base font-medium leading-relaxed text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.4)] sm:mb-6 sm:text-lg">{slide.desc}</p>
+
+                <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-white sm:mb-8 sm:text-sm">
+                  <span className="inline-flex items-center gap-1.5"><CheckCircle2 size={15} className="shrink-0 text-accent" /> 20 let výroby v ČR</span>
+                  <span className="inline-flex items-center gap-1.5"><CheckCircle2 size={15} className="shrink-0 text-accent" /> Nerez AISI 304/316L</span>
+                  <span className="inline-flex items-center gap-1.5"><CheckCircle2 size={15} className="shrink-0 text-accent" /> Realizace: Polná, ZOO Praha, Jičín</span>
+                </div>
 
                 <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-10 sm:flex sm:flex-wrap">
                   <Link to={slide.cta1.to} className="min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl sm:px-7 sm:py-4 btn-metallic-mist inline-flex">

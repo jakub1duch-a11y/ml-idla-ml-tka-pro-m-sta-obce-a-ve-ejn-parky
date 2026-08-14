@@ -34,7 +34,7 @@ export default function PremiumServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06, duration: 0.5 }}
-                className="border-t border-border">
+                className="border-t border-border py-4">
                 <Icon size={26} className="text-secondary mb-4 size-12" strokeWidth={1.6} />
                 <h3 className="mb-2 text-xl font-semibold text-foreground [font-family:'Plus_Jakarta_Sans',_sans-serif]">{service.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{service.desc}</p>

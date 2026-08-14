@@ -20,10 +20,11 @@ export default function SmartSensorsSection() {
             alt="Aplikace pro chytré mlžítko se senzory" className="w-full h-full object-cover" />
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Napojení na chytré senzory</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Senzory · ventily · automatizace</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-6">
             Systém reaguje na reálné podmínky.
           </h2>
+          <p className="mb-6 text-sm leading-7 text-slate-500">Podle projektu propojujeme řídicí logiku se senzorikou a ovládáním jednotlivých vodních zón. U variant s PEVEKO / SUPLA vždy vycházíme z konkrétního technického návrhu a kompatibility použitých komponent.</p>
           <ul className="space-y-3">
             {SENSORS.map((s) =>
             <li key={s} className="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">

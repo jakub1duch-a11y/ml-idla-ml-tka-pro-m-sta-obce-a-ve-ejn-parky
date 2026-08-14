@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Droplets, FileCheck2, HeartPulse, ShieldCheck, Sparkles, ThermometerSun, Wrench, Wind } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import ContextLinks from '@/components/common/ContextLinks';
 
 const HEALTH_POINTS = [
   { icon: ThermometerSun, title: 'Tepelný komfort', text: 'Jemná vodní mlha podporuje ochlazování bez nutnosti klimatizovat otevřený veřejný prostor. Výsledný efekt závisí na teplotě, vlhkosti, proudění vzduchu a návrhu konkrétní instalace.' },
@@ -92,6 +93,15 @@ export default function OchranaZdravi() {
     </section>
 
     <section className="bg-primary py-20 text-white lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><div className="max-w-3xl"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-cyan-300">Doporučený postup</p><h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-white sm:text-4xl lg:text-5xl">Od přípojky až po předání správci.</h2></div><div className="mt-10 grid gap-3 lg:grid-cols-5">{PROCESS.map((item,i)=><div key={item} className="rounded-2xl border border-white/10 bg-white/[.04] p-5"><span className="font-mono text-xs text-cyan-300">0{i+1}</span><p className="mt-4 text-sm leading-relaxed text-white/75">{item}</p></div>)}</div></div></section>
+
+    <ContextLinks eyebrow="Související informace" title="Pro městský projekt doporučujeme projít i tyto části." items={[
+      { path: '/mestske-mlzitka', kicker: 'Produkty', title: 'Městská mlžítka', text: 'Modely a řešení navržené pro náměstí, parky, školy, promenády a další veřejný prostor.' },
+      { path: '/vyhody', kicker: 'Přínosy', title: 'Výhody a benefity', text: 'Tepelný komfort, provoz, životnost, chytré řízení a architektonická hodnota mlžítek.' },
+      { path: '/jak-to-funguje', kicker: 'Technologie', title: 'Jak mlžítka fungují', text: 'Princip mlžení, napojení a technické souvislosti pro projektanta i správce.' },
+      { path: '/smart-ovladani', kicker: 'Provoz', title: 'Chytré ovládání', text: 'Řízení podle času, teploty a provozu pro omezení zbytečné spotřeby.' },
+      { path: '/udrzitelnost', kicker: 'Mikroklima', title: 'Udržitelnost', text: 'Voda, životnost materiálů a dlouhodobý přínos pro veřejný prostor.' },
+      { path: '/ke-stazeni', kicker: 'Podklady', title: 'Technické dokumenty', text: 'Katalogy, technické listy a podklady pro přípravu městské instalace.' }
+    ]} />
 
     <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24"><div className="grid gap-8 rounded-3xl border border-border bg-slate-50 p-7 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Důležité</p><h2 className="mt-3 font-heading text-3xl text-foreground sm:text-4xl">Hygiena se řeší podle konkrétního projektu.</h2><p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">České předpisy stanovují hygienické požadavky na kvalitu pitné a teplé vody. U veřejného mlžného systému je proto vhodné zohlednit charakter zdroje vody, konstrukci rozvodů a provozní režim; u specifických projektů doporučujeme konzultaci s projektantem a místně příslušným orgánem ochrany veřejného zdraví. Tato stránka nenahrazuje individuální hygienické posouzení projektu.</p></div><Link to="/kontakt" className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-foreground">Konzultovat projekt <ArrowRight size={15}/></Link></div></section>
   </div>;

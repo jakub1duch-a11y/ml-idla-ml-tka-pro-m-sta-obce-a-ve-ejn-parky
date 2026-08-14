@@ -21,7 +21,7 @@ const FEATURE_SECTIONS = [
 
 export default function FormFunctionSection() {
   return (
-    <section className="mx-auto max-w-5xl border-t border-slate-100 px-6 py-16 lg:px-8">
+    <section className="mx-auto max-w-7xl border-t border-slate-100 px-6 py-16 lg:px-10">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 text-center">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-slate-400">Technologie mlžidla.cz a HolmTec.cz</p>
         <h2 className="font-heading text-3xl font-light tracking-tight text-slate-900 lg:text-4xl">Forma a funkce mlžných systémů</h2>

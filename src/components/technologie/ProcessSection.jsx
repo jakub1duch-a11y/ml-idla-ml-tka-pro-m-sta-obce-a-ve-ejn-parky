@@ -11,7 +11,7 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100">
+    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
         <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-2">Zhmotňujeme vaši vizi.</h2>
         <p className="text-slate-400 text-sm font-mono tracking-widest uppercase">Od CAD návrhu k realitě</p>

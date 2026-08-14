@@ -32,14 +32,14 @@ export default function Reference() {
           <div className="max-w-3xl">
             <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Reference MLŽIDLA®</p>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace, které dávají veřejnému prostoru nový důvod zůstat.</h1>
-            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-white/88">Od ZOO Praha přes náměstí a parky až po hotely a soukromé zahrady. Navrhujeme nerezové mlžicí systémy, které spojují funkci, design a spolehlivý provoz.</p>
+            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-[hsl(var(--background))]">Od ZOO Praha přes náměstí a parky až po hotely a soukromé zahrady. Navrhujeme nerezové mlžicí systémy, které spojují funkci, design a spolehlivý provoz.</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link to="/poptavka" className="inline-flex items-center gap-2 bg-white px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5">Navrhnout váš prostor <ArrowRight size={16} /></Link>
               <a href="#realizace" className="inline-flex items-center gap-2 border border-white/35 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/10">Prohlédnout realizace <ArrowRight size={16} /></a>
             </div>
             <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/82">
-              <span className="inline-flex items-center gap-2"><ShieldCheck size={16} className="text-cyan" /> Český návrh a výroba</span>
-              <span className="inline-flex items-center gap-2"><MapPin size={16} className="text-cyan" /> Realizace po celé ČR</span>
+              <span className="inline-flex items-center gap-2 text-[hsl(var(--background))]"><ShieldCheck size={16} className="text-cyan" /> Český návrh a výroba</span>
+              <span className="inline-flex items-center gap-2 text-[hsl(var(--background))]"><MapPin size={16} className="text-cyan" /> Realizace po celé ČR</span>
             </div>
           </div>
 
@@ -87,7 +87,7 @@ export default function Reference() {
           <div>
             <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Váš projekt</p>
             <h2 className="max-w-3xl font-heading text-4xl text-white lg:text-6xl">Navrhneme řešení, které obstojí vizuálně i v každodenním provozu.</h2>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/78">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
+            <p className="mt-5 max-w-2xl leading-relaxed text-[hsl(var(--background))] text-3xl">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link to="/poptavka" className="bg-cyan px-6 py-3 text-sm font-bold text-slate-950">Popsat projekt</Link>

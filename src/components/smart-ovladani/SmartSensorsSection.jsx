@@ -12,7 +12,7 @@ const SENSORS = [
 
 export default function SmartSensorsSection() {
   return (
-    <section className="bg-slate-50 py-20 lg:py-24 border-y border-slate-200">
+    <section className="border-y border-slate-200 bg-slate-50 py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           className="rounded-3xl overflow-hidden border border-slate-200 shadow-sm order-2 lg:order-1">

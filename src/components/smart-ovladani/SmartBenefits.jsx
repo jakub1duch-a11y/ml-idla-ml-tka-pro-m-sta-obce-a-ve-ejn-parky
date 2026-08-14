@@ -17,7 +17,7 @@ export default function SmartBenefits() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="max-w-2xl mb-12">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Výhody smart řízení</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Kontrola nad provozem bez každodenní obsluhy.</h2>
+          <h2 className="font-heading font-light text-3xl leading-tight lg:text-4xl text-slate-900 tracking-tight">Kontrola nad provozem bez každodenní obsluhy.</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {BENEFITS.map((b, i) =>

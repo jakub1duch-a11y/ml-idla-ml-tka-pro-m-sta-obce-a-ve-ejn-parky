@@ -4,9 +4,9 @@ import { CloudSun, Thermometer, Timer, Waves, Radio, Gauge, Droplets, ArrowRight
 
 const STEPS = [
   { Icon: Thermometer, number: '01', title: 'Senzor vyhodnotí teplotu', text: 'Překročí-li teplota váš limit, systém připraví zónu.' },
-  { Icon: CloudSun, number: '02', title: 'Ověří počasí a prostor', text: 'Zohlední déšť, vítr, čas i pohyb lidí v místě.' },
+  { Icon: CloudSun, number: '02', title: 'Ověří nastavené podmínky', text: 'Podle konfigurace zohlední čas, počasí nebo další připojené senzory.' },
   { Icon: Timer, number: '03', title: 'Spustí správný scénář', text: 'Mlha běží jen po dobu, která přináší skutečný komfort.' },
-  { Icon: Waves, number: '04', title: 'Sleduje provoz a úspory', text: 'V aplikaci máte přehled o každém cyklu a spotřebě.' }
+  { Icon: Waves, number: '04', title: 'Řídí provoz zóny', text: 'Po skončení scénáře nebo podmínky systém příslušnou vodní zónu opět uzavře.' }
 ];
 
 export default function SmartAutomationFlow() {

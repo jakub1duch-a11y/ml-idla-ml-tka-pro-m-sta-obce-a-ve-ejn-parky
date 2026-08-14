@@ -23,6 +23,7 @@ import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Poradce from '@/pages/Poradce';
+import AIVizualizace from '@/pages/AIVizualizace';
 import Kalkulacka from '@/pages/Kalkulacka';
 import ONas from '@/pages/ONas';
 import Reference from '@/pages/Reference';
@@ -99,6 +100,7 @@ const AuthenticatedApp = () => {
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
+        <Route path="/ai-vizualizace" element={<AIVizualizace />} />
         <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />

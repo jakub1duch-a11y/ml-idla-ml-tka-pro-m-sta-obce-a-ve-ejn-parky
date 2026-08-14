@@ -60,9 +60,14 @@ export default function AIProjectDesignerSection() {
                 </button>
               ))}
             </div>
-            <button type="button" onClick={() => start()} disabled={!value.trim()} className="mt-5 w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
-              Navrhnout řešení pomocí AI <ArrowRight size={16}/>
-            </button>
+            <div className="mt-5 flex flex-col sm:flex-row gap-3">
+              <button type="button" onClick={() => start()} disabled={!value.trim()} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
+                Navrhnout řešení pomocí AI <ArrowRight size={16}/>
+              </button>
+              <button type="button" onClick={() => navigate(`/ai-vizualizace${value.trim() ? `?zadani=${encodeURIComponent(value.trim())}` : ''}`)} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-6 py-3.5 text-sm font-semibold text-white/80 hover:bg-white/[.08] transition-colors">
+                Vizualizovat z fotografie
+              </button>
+            </div>
           </div>
         </div>
       </div>

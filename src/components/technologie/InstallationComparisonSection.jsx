@@ -11,7 +11,7 @@ const ROWS = [
 
 export default function InstallationComparisonSection() {
   return (
-    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100 bg-slate-50">
+    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100 bg-slate-50">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2">1. Trvalé kotvení (Profesionální)</h2>

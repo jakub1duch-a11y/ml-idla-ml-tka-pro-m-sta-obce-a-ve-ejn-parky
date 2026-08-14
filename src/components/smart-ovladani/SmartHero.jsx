@@ -5,7 +5,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import AutomationPreview from '@/components/smart-ovladani/AutomationPreview';
 
 export default function SmartHero() {
-  return <section className="relative overflow-hidden bg-primary pb-20 pt-32 lg:pb-28">
+  return <section className="relative overflow-hidden bg-primary pb-20 pt-28 sm:pt-32 lg:pb-28">
     <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-secondary/35 blur-3xl" />
     <div className="absolute right-0 top-24 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
     <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.05fr_.95fr] lg:px-10">

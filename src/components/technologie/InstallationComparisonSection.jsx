@@ -46,7 +46,7 @@ export default function InstallationComparisonSection() {
           <div>
             {ROWS.map((r) =>
             <div key={r.label} className="flex items-center justify-between px-6 py-3 border-b border-slate-100 last:border-0 bg-[hsl(var(--ring))]">
-                <span className="text-xs text-slate-400">{r.label}</span>
+                <span className="text-xs text-[hsl(var(--background))]">{r.label}</span>
                 <span className="text-sm font-medium text-right text-[hsl(var(--background))]">{r.mobile}</span>
               </div>
             )}

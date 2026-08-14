@@ -32,7 +32,7 @@ export default function IntegrationSection() {
                 <div className="w-9 h-9 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mb-2">
                   <p.icon size={16} className="text-slate-700" />
                 </div>
-                <p className="text-slate-600 text-xs leading-relaxed">{p.title}</p>
+                <p className="text-slate-600 leading-relaxed text-sm">{p.title}</p>
               </div>
             )}
           </div>

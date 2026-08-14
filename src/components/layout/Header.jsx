@@ -148,7 +148,7 @@ export default function Header() {
 
               </Link>
             </div>
-            <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-5 pt-2 pb-2 pr-8 pl-8">Popsat projekt</Link>
+            <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-5 pt-2 pb-2 pr-5 pl-4">Popsat projekt</Link>
             <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
               {mobileOpen ? <X size={23} /> : <Menu size={23} />}
             </button>

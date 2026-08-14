@@ -59,7 +59,7 @@ export default function Reference() {
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
           <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Vybrané realizace a partneři</p>
           <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-6 sm:px-8 lg:px-10">
-            <img src="/reference-logos.svg" alt="Reference: Praha 8, Praha 5, Město Polná, Jičín a ZOO Praha" className="mx-auto h-auto w-full max-w-5xl opacity-90" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.jpg" alt="Reference: Praha 8, Praha 5, Město Polná, Jičín a ZOO Praha" className="mx-auto h-auto w-full max-w-5xl opacity-90" />
           </div>
         </div>
       </section>

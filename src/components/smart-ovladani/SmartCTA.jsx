@@ -17,8 +17,8 @@ export default function SmartCTA() {
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
               Poptat smart ovládání <ArrowRight size={16} />
             </Link>
-            <Link to="/chytra-mlzidla" className="text-white/50 hover:text-white text-sm transition-colors">
-              Zobrazit celý katalog →
+            <Link to="/mlzidla-mlzitka" className="text-white/50 hover:text-white text-sm transition-colors">
+              Zobrazit mlžítka →
             </Link>
           </div>
         </motion.div>

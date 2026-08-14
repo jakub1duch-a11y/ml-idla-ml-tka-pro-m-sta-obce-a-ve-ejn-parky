@@ -49,7 +49,7 @@ export default function HeroSlider() {
             animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center]" />
+            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center] py-4" />
         </AnimatePresence>
 
         {/* Mobile: layered vignette - subtle top wash + clear middle so the photo breathes + smooth ramp into the bottom text zone */}

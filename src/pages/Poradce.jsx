@@ -116,12 +116,12 @@ export default function Poradce() {
           <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center mx-auto mb-5">
             <Droplets size={26} className="text-slate-700" />
           </div>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">AI Poradce</p>
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">AI Projektant MLŽIDLA®</p>
           <h1 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-3">
-            Najdeme ideální řešení pro vás
+            Navrhneme mlžení pro váš prostor
           </h1>
-          <p className="text-slate-500 text-sm">
-            Popište svůj prostor, potřeby — náš poradce vám doporučí optimální mlžný systém pro vaše mlžítko.
+          <p className="text-slate-500 text-sm max-w-xl mx-auto">
+            Popište místo, velikost a způsob využití. AI Projektant doporučí vhodnou kolekci, rozsah sestavy a připraví podklady pro přesné nacenění.
           </p>
         </motion.div>
 
@@ -217,11 +217,18 @@ export default function Poradce() {
 
         {/* CTA */}
         <div className="mt-6 text-center">
-          <p className="text-slate-400 text-xs mb-3">Jste připraveni na nezávaznou poptávku?</p>
-          <Link to="/kontakt"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-full hover:bg-slate-100 hover:border-slate-300 transition-all">
-            Kontaktovat Mlžidla.cz <ArrowRight size={14} />
-          </Link>
+          <p className="text-slate-400 text-xs mb-3">AI návrh je orientační. Finální řešení ověří náš technický tým.</p>
+          {latestAssistantMessage ? (
+            <button onClick={goToQuote}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-sm font-semibold rounded-full hover:bg-slate-800 transition-all">
+              Nechat nacenit tento návrh <ArrowRight size={14} />
+            </button>
+          ) : (
+            <Link to="/poptavka"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-50 text-slate-900 text-sm border border-slate-200 rounded-full hover:bg-slate-100 hover:border-slate-300 transition-all">
+              Nezávazná poptávka <ArrowRight size={14} />
+            </Link>
+          )}
         </div>
 
       </div>

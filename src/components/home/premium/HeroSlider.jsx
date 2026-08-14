@@ -50,8 +50,8 @@ export default function HeroSlider() {
           className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
         
       </AnimatePresence>
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/10 lg:from-primary/95 lg:via-primary/25 lg:to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/35 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/25 lg:from-primary/95 lg:via-primary/55 lg:to-primary/15" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
       <div className="absolute inset-0 flex items-end lg:items-center">
         <div className="mx-auto w-full max-w-7xl pb-6 sm:px-8 lg:py-24 pt-24 lg:px-20 sm:pb-10 px-5">

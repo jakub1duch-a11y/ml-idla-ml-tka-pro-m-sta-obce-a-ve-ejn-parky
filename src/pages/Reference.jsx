@@ -57,7 +57,7 @@ export default function Reference() {
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
           <p className="mb-6 text-center font-mono uppercase tracking-[.18em] text-slate-400 text-xs">Vybrané realizace a partneři</p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 sm:grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:grid-cols-5">
             {[0, 1, 2, 3, 4].map((item) =>
             <div key={item} className="flex min-h-24 items-center justify-center border border-slate-200 px-0 py-0 bg-slate-0 rounded-1x2">
                 <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.jpg" alt="Logo reference" className="max-h-12 w-auto max-w-full object-contain" />

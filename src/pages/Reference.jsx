@@ -8,11 +8,11 @@ import ReferenceShowcase from '@/components/premium/ReferenceShowcase';
 const HERO_IMAGE = '/assets/reference-zoo-hero.webp';
 
 const sectors = [
-  [Building2, 'Města', '/kategorie/mesta-obce'],
-  [Trees, 'Parky', '/kategorie/parky-hriste'],
-  [Hotel, 'Hotely', '/kategorie/komercni'],
-  [Utensils, 'Restaurace', '/kategorie/komercni'],
-];
+[Building2, 'Města', '/kategorie/mesta-obce'],
+[Trees, 'Parky', '/kategorie/parky-hriste'],
+[Hotel, 'Hotely', '/kategorie/komercni'],
+[Utensils, 'Restaurace', '/kategorie/komercni']];
+
 
 export default function Reference() {
   useEffect(() => setSEO({
@@ -24,7 +24,7 @@ export default function Reference() {
   return (
     <div className="bg-background pt-16">
       <section className="relative min-h-[680px] overflow-hidden bg-primary lg:min-h-[760px]">
-        <img src={HERO_IMAGE} alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
+        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp" alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/96 via-[#082f3f]/76 to-[#0a3b4d]/24" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/72 via-transparent to-[#041c28]/10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(54,189,214,0.18),transparent_34%)]" />
@@ -68,12 +68,12 @@ export default function Reference() {
 
       <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <div className="grid grid-cols-2 overflow-hidden border border-slate-200 bg-white lg:grid-cols-4">
-          {sectors.map(([Icon, label, path]) => (
-            <Link to={path} key={label} className="group flex items-center justify-center gap-3 border-b border-r border-slate-200 px-4 py-6 transition hover:bg-slate-50 lg:border-b-0 last:border-r-0">
+          {sectors.map(([Icon, label, path]) =>
+          <Link to={path} key={label} className="group flex items-center justify-center gap-3 border-b border-r border-slate-200 px-4 py-6 transition hover:bg-slate-50 lg:border-b-0 last:border-r-0">
               <Icon size={19} className="text-teal-700 transition-transform group-hover:scale-110" />
               <span className="font-medium text-slate-700">{label}</span>
             </Link>
-          ))}
+          )}
         </div>
       </section>
 
@@ -92,6 +92,6 @@ export default function Reference() {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }

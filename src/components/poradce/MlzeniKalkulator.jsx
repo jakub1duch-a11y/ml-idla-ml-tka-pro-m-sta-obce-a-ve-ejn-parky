@@ -74,4 +74,4 @@ export default function MlzeniKalkulator() {
   </div>;
 }
 
-function Metric({ icon: Icon, label, value }) {return <div className="rounded-2xl border border-white/10 bg-white/[.035] p-5"><Icon size={16} className="text-cyan-300" /><span className="mt-4 block text-white/45 text-sm">{label}</span><strong className="mt-1 block text-2xl font-light tabular-nums">{value}</strong></div>;}
+function Metric({ icon: Icon, label, value }) {return <div className="rounded-2xl border border-white/10 bg-white/[.035] p-5"><Icon size={16} className="text-cyan-300" /><span className="mt-4 block text-sm">{label}</span><strong className="mt-1 block text-2xl font-light tabular-nums">{value}</strong></div>;}

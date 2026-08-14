@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight, Building2, Factory, Tent, Palette } from 'lucide-react';
 import GateSlideCard from '@/components/kolekce/GateSlideCard';
+import { base44 } from '@/api/base44Client';
 
 const USE_CASES = [
 { icon: Building2, title: 'Vstup na náměstí a do parku', desc: 'Mlžná brána jako dominanta veřejného prostoru — chladí a zdobí zároveň.' },
@@ -18,23 +19,18 @@ const B2G_LINKS = [
 { label: 'Pro architekty', path: '/kategorie/architekti' }];
 
 
-const GATES = [
-{
-  name: 'GATE70',
-  tagline: 'Vstupní mlžná brána',
-  short_description: 'Designová mlžná brána z nerezové oceli AISI 316L — ochlazení až −10 °C bez kapek na zemi, smart Wi-Fi řízení.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png'
-},
-{
-  name: 'LINEA CE70',
-  tagline: 'Obloukový mlžný systém',
-  short_description: 'Zakřivený obloukový design z nerezi AISI 316L — ikonická architektura pro náměstí, bazény a veřejné prostory.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png'
-}];
-
+const GATE_SLUGS = ['mlzna-brana-gate', 'brana-bendy', 'iris-brana'];
 
 export default function GatesSlider() {
   const scrollRef = useRef(null);
+  const [gates, setGates] = useState([]);
+
+  useEffect(() => {
+    base44.entities.Product.list().then((items) => {
+      const bySlug = new Map((items || []).map((item) => [item.slug, item]));
+      setGates(GATE_SLUGS.map((slug) => bySlug.get(slug)).filter(Boolean));
+    }).catch(() => setGates([]));
+  }, []);
   const scrollBy = (amount) => scrollRef.current?.scrollBy({ left: amount, behavior: 'smooth' });
 
   return (
@@ -56,7 +52,7 @@ export default function GatesSlider() {
         </div>
 
         <div ref={scrollRef} className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden mb-16" style={{ scrollbarWidth: 'none' }}>
-          {GATES.map((gate, i) => <GateSlideCard key={gate.name} product={gate} index={i} />)}
+          {gates.map((gate, i) => <GateSlideCard key={gate.id || gate.slug} product={gate} index={i} />)}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">

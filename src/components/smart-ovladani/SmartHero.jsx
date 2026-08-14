@@ -12,7 +12,7 @@ export default function SmartHero() {
       <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
         <p className="font-mono text-[11px] tracking-[.18em] uppercase text-accent">Smart mlžení · WiFi / aplikace</p>
         <h1 className="mt-5 max-w-4xl font-heading text-4xl leading-[1.02] tracking-[-.02em] text-primary-foreground sm:text-5xl lg:text-7xl">Komfort, který se <span className="text-accent">spustí sám.</span></h1>
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Aplikace propojí teplotu, počasí i pohyb lidí v prostoru. Každá zóna dostane přesně tolik mlhy, kolik právě potřebuje.</p>
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Smart řízení propojí časový režim, teplotu a podle konfigurace další senzory. Jednotlivé zóny se spouštějí jen při splnění nastavených provozních podmínek.</p>
         <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-sm text-primary-foreground/80"><span className="flex items-center gap-2"><Check size={16} className="text-accent" /> Automatické scénáře</span><span className="flex items-center gap-2"><Check size={16} className="text-accent" /> Přehled spotřeby</span></div>
         <Link to="/kontakt?produkt=Smart%20ovl%C3%A1d%C3%A1n%C3%AD" className="btn-metallic-mist mt-8 px-7 py-3.5 text-sm font-bold">Poptat chytré řešení <ArrowRight size={16} /></Link>
       </motion.div>

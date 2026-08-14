@@ -27,7 +27,7 @@ export default function Reference() {
         <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp" alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/96 via-[#082f3f]/76 to-[#0a3b4d]/24" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/72 via-transparent to-[#041c28]/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(54,189,214,0.18),transparent_34%)]" />
+        <div className="absolute bg-[radial-gradient(circle_at_72%_34%,rgba(54,189,214,0.18),transparent_34%)] inset-10" />
 
         <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-end gap-10 px-6 pb-16 pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
           <div className="max-w-3xl">

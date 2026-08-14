@@ -2,8 +2,8 @@ import React from 'react';
 import { Building2, MapPin, CalendarClock, Thermometer, ShieldCheck, Gauge } from 'lucide-react';
 
 const metrics = [
-{ icon: Building2, number: '27+', label: 'Instalací ve veřejném prostoru' },
-{ icon: MapPin, number: '5+', label: 'Měst a obcí' },
+{ icon: Building2, number: '47+', label: 'Instalací ve veřejném prostoru' },
+{ icon: MapPin, number: '17+', label: 'Měst a obcí' },
 { icon: CalendarClock, number: '20+', label: 'Let zkušeností' },
 { icon: Thermometer, number: '−10 °C', label: 'Maximální chladicí efekt' },
 { icon: ShieldCheck, number: 'AISI 316L', label: 'Nerezová ocel' },

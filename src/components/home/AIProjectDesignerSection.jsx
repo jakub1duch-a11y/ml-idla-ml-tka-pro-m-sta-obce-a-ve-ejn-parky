@@ -13,26 +13,25 @@ const examples = [
 export default function AIProjectDesignerSection() {
   const navigate = useNavigate();
   const [value, setValue] = useState(() => sessionStorage.getItem('mlzidla-ai-zadani') || '');
+  const [selectedType, setSelectedType] = useState(() => sessionStorage.getItem('mlzidla-ai-typ') || '');
 
   const updateValue = (nextValue) => {
     setValue(nextValue);
     sessionStorage.setItem('mlzidla-ai-zadani', nextValue);
   };
 
-  const applyExample = (text) => {
-    const current = value.trim();
-    if (!current) {
-      updateValue(text);
-      return;
-    }
-    if (current.includes(text)) return;
-    updateValue(`${current}\n${text}`);
+  const selectType = (label) => {
+    setSelectedType(label);
+    sessionStorage.setItem('mlzidla-ai-typ', label);
   };
 
-  const start = (text = value) => {
-    const zadani = text.trim();
-    if (!zadani) return;
-    navigate(`/poradce?zadani=${encodeURIComponent(zadani)}`);
+  const start = () => {
+    const zadani = value.trim();
+    if (!zadani && !selectedType) return;
+    const params = new URLSearchParams();
+    if (zadani) params.set('zadani', zadani);
+    if (selectedType) params.set('typ', selectedType);
+    navigate(`/poradce?${params.toString()}`);
   };
 
   return (

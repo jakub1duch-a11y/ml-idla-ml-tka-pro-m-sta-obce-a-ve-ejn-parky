@@ -51,10 +51,10 @@ function PostCard({ post, i }) {
             </span>
             {post.published_date && <span className="text-[10px] font-mono text-[hsl(var(--popover-foreground))] bg-[hsl(var(--popover))]">{formatDate(post.published_date)}</span>}
           </div>
-          <h3 className="font-light text-lg text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2 normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">
+          <h3 className="text-white tracking-tight leading-snug mb-2 group-hover:text-white/80 transition-colors line-clamp-2 normal-case [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-xl font-semibold">
             {post.title}
           </h3>
-          <p className="text-sm font-light leading-relaxed line-clamp-2 mb-3 text-[hsl(var(--card))]">{post.perex}</p>
+          <p className="text-sm font-light leading-relaxed line-clamp-2 mb-3 text-[hsl(var(--card))] hidden">{post.perex}</p>
           <div className="flex items-center gap-2 text-xs text-white font-medium group-hover:gap-3 transition-all">
             Číst článek <ArrowRight size={12} />
           </div>

@@ -22,9 +22,9 @@ const FEATURE_SECTIONS = [
 export default function FormFunctionSection() {
   return (
     <section className="mx-auto max-w-7xl border-t border-slate-100 px-6 py-16 lg:px-10">
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 text-center">
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-3xl">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-slate-400">Technologie mlžidla.cz a HolmTec.cz</p>
-        <h2 className="font-heading text-3xl font-light tracking-tight text-slate-900 lg:text-4xl">Forma a funkce mlžných systémů</h2>
+        <h2 className="font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">Forma a funkce mlžných systémů</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 gap-12 sm:grid-cols-2">
@@ -41,7 +41,7 @@ export default function FormFunctionSection() {
                     </div>
                     <div>
                       <h3 className="mb-1 font-medium text-slate-900 text-lg">{item.title}</h3>
-                      <p className="leading-relaxed text-slate-500 text-sm [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">{item.text}</p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
                     </div>
                   </div>);
 

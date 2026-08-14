@@ -13,7 +13,7 @@ export default function SmartOvladani() {
     setSEO({
       title: 'Smart ovládání mlžítek — aplikace a automatizace | mlzidla.cz',
       description: 'Smart řízení mlžítek podle času, teploty a provozních podmínek. Vzdálené ovládání, více zón, senzory a automatizační scénáře pro města i soukromé instalace.',
-      keywords: 'smart ovládání mlžítek, aplikace mlžení, automatizace mlžení, chytré senzory mlžítka',
+      keywords: 'smart ovládání mlžítek, automatizace mlžení, chytré senzory mlžítka, řízení mlžného systému, SUPLA mlžení, PEVEKO ventil',
       canonicalPath: '/smart-ovladani',
     });
   }, []);

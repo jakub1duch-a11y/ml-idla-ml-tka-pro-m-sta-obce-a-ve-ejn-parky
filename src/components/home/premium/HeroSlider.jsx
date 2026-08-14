@@ -43,7 +43,7 @@ export default function HeroSlider() {
       <div className="relative h-[58vh] min-h-[380px] max-h-[560px] lg:absolute lg:inset-0 lg:h-full lg:max-h-none">
         <AnimatePresence mode="wait">
           <motion.img
-            key={slide.image} src={slide.image}
+            key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3230cda2_mlzidla-vizual__5_.png"
             alt={slide.imageAlt}
             initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
@@ -57,7 +57,7 @@ export default function HeroSlider() {
           className="absolute inset-0 lg:hidden"
           style={{
             backgroundImage:
-              'linear-gradient(180deg, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0) 24%, hsl(var(--primary) / 0) 52%, hsl(var(--primary) / 0.5) 76%, hsl(var(--primary) / 0.93) 100%)'
+            'linear-gradient(180deg, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0) 24%, hsl(var(--primary) / 0) 52%, hsl(var(--primary) / 0.5) 76%, hsl(var(--primary) / 0.93) 100%)'
           }} />
 
         {/* Mobile: soft side vignette for a more finished, premium framing */}
@@ -65,7 +65,7 @@ export default function HeroSlider() {
           className="absolute inset-0 lg:hidden"
           style={{
             backgroundImage:
-              'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
+            'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
           }} />
 
         {/* Desktop: full overlay for the complete text block */}

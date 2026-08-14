@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Loader, Mail, MapPin, Phone } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { trackContactFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
 import { setSEO } from '@/lib/seo';
 import InquiryHero from '@/components/premium/InquiryHero';
 import InquiryTrust from '@/components/premium/InquiryTrust';
 
-const products = ['City Collection', 'Garden Collection', 'Zakázkové řešení', 'Smart řízení', 'Ještě nevím'];
+const products = ['AI návrh projektu', 'City Collection', 'Garden Collection', 'Zakázkové řešení', 'Smart řízení', 'Ještě nevím'];
 const input = 'w-full border-b border-slate-300 bg-transparent px-0 py-3 text-sm text-slate-950 placeholder:text-slate-400 focus:border-teal-700 focus:outline-none';
 
 export default function Poptavka() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [sending, setSending] = useState(false);
-  const [form, setForm] = useState({ jmeno: '', email: '', telefon: '', firma: '', produkt: '', zprava: '' });
+  const [form, setForm] = useState(() => ({
+    jmeno: '', email: '', telefon: '', firma: '',
+    produkt: searchParams.get('produkt') || '',
+    zprava: searchParams.get('zprava') || '',
+  }));
   useEffect(() => setSEO({ title: 'Nezávazná poptávka | MLŽIDLA®', description: 'Navrhneme architektonický mlžicí systém přesně pro váš prostor.', canonicalPath: '/poptavka' }), []);
   const change = (name) => (event) => setForm((values) => ({ ...values, [name]: event.target.value }));
   const submit = async (event) => { event.preventDefault(); setSending(true); try { await base44.entities.Poptavka.create({ ...form, status: 'nova' }); trackContactFormSubmit('poptavka', form.produkt); trackInquirySubmitted('poptavka', form.produkt); navigate('/dekujeme?zdroj=poptavka'); } finally { setSending(false); } };

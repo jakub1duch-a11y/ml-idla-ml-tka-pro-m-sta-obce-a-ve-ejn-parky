@@ -24,12 +24,12 @@ export default function Home() {
     <>
       <HeroSlider />
       <FadeIn><PremiumServicesSection /></FadeIn>
-      <AIProjectDesignerSection />
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><UrbanCoolingImpact /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
       <FadeIn><MistVideoShowcase /></FadeIn>
+      <AIProjectDesignerSection />
       <FadeIn><InstagramFeedSection /></FadeIn>
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>

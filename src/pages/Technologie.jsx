@@ -9,6 +9,7 @@ import FormFunctionSection from '@/components/technologie/FormFunctionSection';
 import IntegrationSection from '@/components/technologie/IntegrationSection';
 import ProcessSection from '@/components/technologie/ProcessSection';
 import InstallationComparisonSection from '@/components/technologie/InstallationComparisonSection';
+import ContextLinks from '@/components/common/ContextLinks';
 
 const BENEFITS = [
 { icon: Thermometer, title: 'Ochlazení', text: 'Zlepšení mikroklimatu přirozeným odpařováním.' },
@@ -29,7 +30,7 @@ export default function Technologie() {
       title: 'Technologie mlžení',
       description: 'Jak fungují mlžné systémy HolmTec: princip evaporace, mikrokapky a úsporný provoz.',
       keywords: 'technologie mlžení, jak funguje mlžný systém, mikrokapky, evaporační chlazení',
-      canonicalPath: '/technologie'
+      canonicalPath: '/jak-to-funguje'
     });
   }, []);
 
@@ -113,6 +114,15 @@ export default function Technologie() {
       <IntegrationSection />
       <ProcessSection />
       <InstallationComparisonSection />
+
+      <ContextLinks eyebrow="Další krok" title="Od principu mlžení k výběru a provozu systému." items={[
+        { path: '/mestske-mlzitka', kicker: 'Výběr řešení', title: 'Městská mlžítka', text: 'Prohlédněte si produkty vhodné pro veřejný prostor, parky, náměstí a sportoviště.' },
+        { path: '/smart-ovladani', kicker: 'Automatizace', title: 'Chytré ovládání', text: 'Nastavení času, teploty, senzorů a vzdálené správy provozu.' },
+        { path: '/ochrana-zdravi', kicker: 'Hygiena', title: 'Ochrana zdraví', text: 'Praktické informace k vodě, proplachu, údržbě a hygienickému režimu veřejných instalací.' },
+        { path: '/vyhody', kicker: 'Přínosy', title: 'Výhody a benefity', text: 'Co dobře navržené mlžení přináší uživatelům, městu a samotnému prostoru.' },
+        { path: '/udrzitelnost', kicker: 'Mikroklima', title: 'Udržitelnost', text: 'Spotřeba vody, materiály a dlouhodobý provoz v kontextu městského klimatu.' },
+        { path: '/reference', kicker: 'Praxe', title: 'Reference', text: 'Podívejte se, jak technologie funguje v reálných realizacích.' }
+      ]} />
 
       <div className="mx-auto mt-14 flex max-w-7xl justify-start px-6 lg:px-10">
         <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">

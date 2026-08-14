@@ -86,18 +86,19 @@ export default function BlogDetail() {
   const cleanContent = cleanArticleContent(post.content);
 
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen bg-white">
       {/* Hero image */}
       {post.image_url && (
-        <div className="relative h-72 lg:h-[460px] overflow-hidden">
+        <div className="relative h-[420px] overflow-hidden sm:h-[500px] lg:h-[620px]">
           <img src={post.image_url} alt={post.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/88 via-[#041c28]/50 to-[#041c28]/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-[#041c28]/20" />
         </div>
       )}
 
-      <div className="max-w-3xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Meta */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className={post.image_url ? '-mt-20 relative z-10 pb-4' : 'pt-8 pb-4'}>
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className={post.image_url ? '-mt-28 relative z-10 pb-6 max-w-5xl' : 'pt-24 pb-6 max-w-5xl'}>
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <span className="px-3 py-1.5 bg-slate-900 text-white rounded-full text-xs font-mono tracking-widest uppercase">
               {CATEGORY_LABELS[post.category] || post.category || 'Článek'}
@@ -110,11 +111,11 @@ export default function BlogDetail() {
             ))}
           </div>
 
-          <h1 className="font-heading font-normal text-[clamp(1.75rem,5vw,2.75rem)] text-slate-900 tracking-tight leading-[1.15] mb-4">
+          <h1 className="font-heading font-normal text-[clamp(2.25rem,5vw,4.5rem)] text-slate-900 tracking-[-.035em] leading-[1.03] mb-5">
             {post.title}
           </h1>
           {post.perex && (
-            <p className="text-slate-500 text-base sm:text-lg leading-relaxed font-normal mb-2 border-l-2 border-slate-300 pl-5">
+            <p className="max-w-3xl text-slate-600 text-base sm:text-lg lg:text-xl leading-relaxed font-normal mb-2 border-l-2 border-secondary pl-5">
               {post.perex}
             </p>
           )}
@@ -129,7 +130,7 @@ export default function BlogDetail() {
         {/* Content — supports technical images, expert quotes (blockquote), paragraphs */}
         {post.content ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-            className="prose max-w-none pb-4 text-[15px] leading-[1.75] sm:text-base lg:text-[17px]
+            className="prose prose-slate max-w-none pb-6 text-[15px] leading-[1.8] sm:text-base lg:text-[17px] lg:grid lg:grid-cols-12 lg:gap-x-10 [&>*]:lg:col-span-8 [&>*]:lg:col-start-3 [&>img]:lg:col-span-10 [&>img]:lg:col-start-2 [&>div]:lg:col-span-8 [&>div]:lg:col-start-3
               prose-headings:font-heading prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-slate-900
               prose-p:text-slate-600 prose-p:font-normal prose-p:leading-[1.75]
               prose-li:text-slate-600 prose-li:font-normal

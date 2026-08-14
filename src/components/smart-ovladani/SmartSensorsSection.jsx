@@ -27,7 +27,7 @@ export default function SmartSensorsSection() {
           <p className="mb-6 text-sm leading-7 text-slate-500">Podle projektu propojujeme řídicí logiku se senzorikou a ovládáním jednotlivých vodních zón. U variant s PEVEKO / SUPLA vždy vycházíme z konkrétního technického návrhu a kompatibility použitých komponent.</p><div className="mb-6 flex flex-wrap gap-2"><span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-600">SUPLA · vzdálené řízení dle konfigurace</span><span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-600">PEVEKO · ventilová část dle projektu</span></div>
           <ul className="space-y-3">
             {SENSORS.map((s) =>
-            <li key={s} className="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
+            <li key={s} className="flex items-start gap-3 text-sm leading-6 text-slate-600">
                 <Check size={16} className="text-slate-900 shrink-0 mt-0.5" /> {s}
               </li>
             )}

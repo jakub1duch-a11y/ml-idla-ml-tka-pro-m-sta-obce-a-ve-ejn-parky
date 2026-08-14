@@ -52,8 +52,21 @@ export default function HeroSlider() {
             className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
         </AnimatePresence>
 
-        {/* Mobile: light overlay, only strong enough at the bottom to hold the short title */}
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/10 to-transparent lg:hidden" />
+        {/* Mobile: layered vignette - subtle top wash + clear middle so the photo breathes + smooth ramp into the bottom text zone */}
+        <div
+          className="absolute inset-0 lg:hidden"
+          style={{
+            backgroundImage:
+              'linear-gradient(180deg, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0) 24%, hsl(var(--primary) / 0) 52%, hsl(var(--primary) / 0.5) 76%, hsl(var(--primary) / 0.93) 100%)'
+          }} />
+
+        {/* Mobile: soft side vignette for a more finished, premium framing */}
+        <div
+          className="absolute inset-0 lg:hidden"
+          style={{
+            backgroundImage:
+              'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
+          }} />
 
         {/* Desktop: full overlay for the complete text block */}
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/55 to-primary/15" />

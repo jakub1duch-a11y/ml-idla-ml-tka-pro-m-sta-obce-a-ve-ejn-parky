@@ -49,7 +49,7 @@ export default function HeroSlider() {
             animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center] py-3" />
+            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center]" />
         </AnimatePresence>
 
         {/* Mobile: layered vignette - subtle top wash + clear middle so the photo breathes + smooth ramp into the bottom text zone */}
@@ -62,14 +62,14 @@ export default function HeroSlider() {
 
         {/* Mobile: soft side vignette for a more finished, premium framing */}
         <div
-          className="absolute inset-0 lg:hidden my-8"
+          className="absolute inset-0 lg:hidden"
           style={{
             backgroundImage:
             'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
           }} />
 
         {/* Desktop: full overlay for the complete text block */}
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t via-primary/15 from-primary/65 to-primary/55 my-1" />
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t via-primary/15 from-primary/65 to-primary/55" />
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
         {/* Mobile: short tag + title directly on the image */}

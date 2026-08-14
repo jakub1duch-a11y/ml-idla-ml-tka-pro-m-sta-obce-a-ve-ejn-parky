@@ -31,15 +31,13 @@ const USAGE_LINKS = [
 
 const INFO_LINKS = [
 { icon: Building2, label: 'O společnosti', path: '/o-nas' },
-{ icon: Palette, label: 'Brand identity', path: '/brand-identity' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
-{ icon: Cpu, label: 'Technologie', path: '/technologie' },
 { icon: ShieldCheck, label: 'Výhody', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
-{ icon: Newspaper, label: 'Blog & novinky', path: '/blog' },
+{ icon: Newspaper, label: 'Blog & novinky', path: '/blog', featured: true },
 { icon: PlayCircle, label: 'Videa a živé ukázky', path: '/blog?sekce=videa' }];
 
 
@@ -134,9 +132,10 @@ export default function Header() {
                   className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-primary/95 text-white backdrop-blur-2xl border border-white/15 shadow-xl shadow-primary/30 rounded-2xl p-3">
                   {INFO_LINKS.map((link) =>
                   <Link key={link.label} to={link.path} onClick={() => setInfoOpen(false)}
-                  className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors">
-                      <link.icon size={16} className="text-accent group-hover:text-white transition-colors flex-shrink-0" />
-                      <p className="text-sm text-white/80 group-hover:text-white transition-colors">{link.label}</p>
+                  className={`group flex items-center gap-2.5 rounded-xl px-3 py-2.5 transition-all ${link.featured ? 'my-1 border border-cyan-300/25 bg-cyan-300/10 shadow-sm' : 'hover:bg-white/10'}`}>
+                      <link.icon size={16} className={`${link.featured ? 'text-cyan-300' : 'text-accent'} group-hover:text-white transition-colors flex-shrink-0`} />
+                      <p className={`text-sm transition-colors ${link.featured ? 'font-semibold text-white' : 'text-white/80 group-hover:text-white'}`}>{link.label}</p>
+                      {link.featured && <span className="ml-auto rounded-full border border-cyan-300/25 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[.14em] text-cyan-200">Nové</span>}
                     </Link>
                   )}
                   </motion.div>

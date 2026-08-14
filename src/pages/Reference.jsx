@@ -14,14 +14,6 @@ const sectors = [
   [Utensils, 'Restaurace', '/kategorie/komercni'],
 ];
 
-const partners = [
-  { name: 'ZOO PRAHA', sub: 'Zoologická zahrada hl. m. Prahy' },
-  { name: 'MĚSTO JIČÍN', sub: 'veřejný prostor' },
-  { name: 'MĚSTO POLNÁ', sub: 'veřejný prostor' },
-  { name: 'PRAHA 5', sub: 'Palata' },
-  { name: 'PRAHA 8', sub: 'MŠ Šiškova' },
-];
-
 export default function Reference() {
   useEffect(() => setSEO({
     title: 'Realizace mlžítek a mlžných bran | MLŽIDLA®',
@@ -62,15 +54,10 @@ export default function Reference() {
       </section>
 
       <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-7 lg:px-8">
-          <p className="mb-5 text-center font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Vybrané realizace a partneři</p>
-          <div className="grid grid-cols-2 gap-px overflow-hidden border border-slate-200 bg-slate-200 md:grid-cols-5">
-            {partners.map((partner) => (
-              <div key={partner.name} className="flex min-h-24 flex-col items-center justify-center bg-white px-4 py-5 text-center grayscale transition hover:grayscale-0">
-                <p className="text-base font-extrabold tracking-tight text-slate-800">{partner.name}</p>
-                <p className="mt-1 text-[10px] uppercase tracking-[.12em] text-slate-400">{partner.sub}</p>
-              </div>
-            ))}
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
+          <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Vybrané realizace a partneři</p>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-6 sm:px-8 lg:px-10">
+            <img src="/reference-logos.svg" alt="Reference: Praha 8, Praha 5, Město Polná, Jičín a ZOO Praha" className="mx-auto h-auto w-full max-w-5xl opacity-90" />
           </div>
         </div>
       </section>

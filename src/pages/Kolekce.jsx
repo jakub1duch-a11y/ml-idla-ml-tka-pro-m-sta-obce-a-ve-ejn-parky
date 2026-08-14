@@ -13,6 +13,7 @@ import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, 
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { trackQuickInquiryClick } from '@/lib/ga4';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const HEIGHT_OPTIONS = [
 { value: 'all', label: 'Všechny výšky' },
@@ -102,10 +103,13 @@ const FALLBACK_IMAGES = {
 };
 
 function ProductCard({ product, i }) {
-  const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
-  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl mx-auto">
-    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" /><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" />{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary pl-1">Prohlédnout detail</p></div></Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 font-bold transition hover:bg-muted text-[hsl(var(--background))] text-sm bg-[hsl(var(--ring))]"><Zap size={13} /> Popsat projekt</Link>
+  const fallback = FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
+  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group mx-auto flex h-full w-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
+    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="flex flex-1 flex-col">
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted"><ProductHoverImage product={product} fallback={fallback} className="h-full w-full" overlay />{product.featured && <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary shadow-sm">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div>
+      <div className="flex flex-1 flex-col p-6"><h3 className="min-h-[3.6rem] line-clamp-2 font-heading text-2xl leading-[1.2] text-foreground">{product.name}</h3><p className="mt-3 min-h-[2.75rem] line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><span className="btn-secondary-outline mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground">Detail produktu <ArrowRight size={15} /></span></div>
+    </Link>
+    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="mx-6 mb-6 inline-flex items-center justify-center gap-2 rounded-full border border-border bg-transparent px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-secondary hover:text-secondary"><Zap size={13} /> Popsat projekt</Link>
   </motion.article>;
 }
 
@@ -171,12 +175,12 @@ export default function Kolekce() {
       <CategorySelector groups={CATEGORY_GROUPS} activeCategory={activeCategory} onSelect={setActiveCategory} />
 
       {/* ── PRODUKTY (posunuto výš — hned pod výběrem kategorií) ── */}
-      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <div className="flex items-center justify-between mb-10 lg:mb-12">
-          <p className="tracking-widest uppercase text-slate-400 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
-            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
-            {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
-          </p>
+      <div id="catalog" className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between lg:mb-12">
+          <div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kompletní katalog</p><h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
+            {activeGroup ? `${activeGroup.label}` : 'Všechna mlžítka a mlžné systémy'}
+          </h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">Vyberte produkt podle typu prostoru. Každý model lze upravit podle konkrétní instalace, způsobu napojení a požadovaného provozu.</p></div>
+          {!loading && <span className="shrink-0 rounded-full border border-border px-4 py-2 font-mono text-xs text-muted-foreground">{displayedProducts.length} produktů</span>}
           {activeCategory &&
           <button onClick={() => setActiveCategory(null)} className="text-xs text-slate-400 hover:text-slate-900 transition-colors font-mono">
               × Zobrazit vše
@@ -188,7 +192,7 @@ export default function Kolekce() {
             <Loader size={24} className="animate-spin text-slate-300" />
           </div> :
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-5">
+        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
             {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
             {displayedProducts.length === 0 &&
           <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
@@ -217,7 +221,7 @@ export default function Kolekce() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou mlžítka a mlžné systémy určeny</p>
-            <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení podle prostoru a provozu.</h2>
+            <h2 className="font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">Řešení podle prostoru a provozu.</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {audienceSegments.map((seg, i) => {
@@ -228,7 +232,7 @@ export default function Kolekce() {
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3 bg-[hsl(var(--ring))] text-[hsl(var(--background))]">
                     <Icon size={16} className="text-[hsl(var(--card))]" />
                   </div>
-                  <h4 className="text-slate-900 mb-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{seg.label}</h4>
+                  <h4 className="mb-2 font-heading text-lg text-foreground">{seg.label}</h4>
                   <p className="text-slate-400 leading-relaxed text-sm">{seg.desc}</p>
                 </motion.div>);
 

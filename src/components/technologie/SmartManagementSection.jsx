@@ -19,7 +19,7 @@ export default function SmartManagementSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
         className="rounded-2xl overflow-hidden border border-slate-200">
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/16ca9d71c_9RFLppbaXYD67osYj_pkoR.png"
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp"
 
           alt="Smart správa mlžení přes mobilní aplikaci"
           className="w-full h-full object-cover aspect-[4/3]" />

@@ -38,9 +38,9 @@ export default function HeroSlider() {
   const slide = SLIDES[index];
 
   return (
-    <section className="relative overflow-hidden bg-background lg:h-screen lg:min-h-[640px]">
+    <section className="relative overflow-hidden bg-primary lg:h-screen lg:min-h-[640px] lg:bg-background">
       {/* Image + overlay block. Fixed height on mobile so the photo stays visible; full-bleed with text overlay on desktop. */}
-      <div className="relative h-[58vh] min-h-[380px] lg:absolute lg:inset-0 lg:h-full lg:max-h-none max-h-[450px]">
+      <div className="relative -mb-px h-[58vh] min-h-[380px] max-h-[450px] bg-primary lg:absolute lg:inset-0 lg:mb-0 lg:h-full lg:max-h-none">
         <AnimatePresence mode="wait">
           <motion.img
             key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp"
@@ -136,7 +136,7 @@ export default function HeroSlider() {
       </div>
 
       {/* Mobile: description, CTAs and benefits live below the image on a solid background — fully readable, image stays uncluttered */}
-      <div className="lg:hidden bg-primary px-5 pb-10 pt-6">
+      <div className="relative z-10 -mt-px bg-primary px-5 pb-10 pt-6 lg:hidden">
         <p className="mb-6 font-medium leading-relaxed text-white/90 text-sm">{slide.desc}</p>
 
         <div className="mb-6 grid grid-cols-1 gap-3">

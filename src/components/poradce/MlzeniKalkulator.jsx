@@ -67,11 +67,11 @@ export default function MlzeniKalkulator() {
           <div className="mt-4 flex items-end gap-2"><strong className="font-heading text-5xl font-light tabular-nums">{money(calc.cost)}</strong><span className="pb-1">Kč / měsíc</span></div>
           <p className="mt-3 leading-relaxed text-sm text-[hsl(var(--card))]">Počítáno orientačně s vodným a stočným {number(WATER_PRICE, 2)} Kč/m³. Skutečná sazba se liší podle lokality a provozovatele.</p>
         </div>
-        {smart && <div className="mt-3 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[.035] p-5"><div><p className="text-xs text-[hsl(var(--background))]">Modelovaná úspora díky chytrému řízení</p><p className="mt-1 text-sm text-white/70">oproti nepřetržitému provozu v nastaveném čase</p></div><strong className="ml-4 whitespace-nowrap text-xl text-cyan-200">≈ {money(calc.saving)} Kč/měs.</strong></div>}
-        <div className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-5 text-sm"><div><span className="block text-white/40 text-sm">Průtok produktu</span><strong className="mt-1 block">{product.range}</strong></div><div><span className="block text-xs text-white/40">Provozní tlak</span><strong className="mt-1 block">{product.pressure}</strong></div></div>
+        {smart && <div className="mt-3 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[.035] p-5"><div><p className="text-xs text-[hsl(var(--background))]">Modelovaná úspora díky chytrému řízení</p><p className="mt-1 text-sm text-[hsl(var(--card))]">oproti nepřetržitému provozu v nastaveném čase</p></div><strong className="ml-4 whitespace-nowrap text-xl text-cyan-200">≈ {money(calc.saving)} Kč/měs.</strong></div>}
+        <div className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-5 text-sm"><div><span className="block text-sm text-[hsl(var(--card))]">Průtok produktu</span><strong className="mt-1 block">{product.range}</strong></div><div><span className="block text-sm text-[hsl(var(--card))]">Provozní tlak</span><strong className="mt-1 block">{product.pressure}</strong></div></div>
       </div>
     </div>
   </div>;
 }
 
-function Metric({ icon: Icon, label, value }) {return <div className="rounded-2xl border border-white/10 bg-white/[.035] p-5"><Icon size={16} className="text-cyan-300" /><span className="mt-4 block text-xs text-white/45">{label}</span><strong className="mt-1 block text-2xl font-light tabular-nums">{value}</strong></div>;}
+function Metric({ icon: Icon, label, value }) {return <div className="rounded-2xl border border-white/10 bg-white/[.035] p-5"><Icon size={16} className="text-cyan-300" /><span className="mt-4 block text-white/45 text-sm">{label}</span><strong className="mt-1 block text-2xl font-light tabular-nums">{value}</strong></div>;}

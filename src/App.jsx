@@ -101,6 +101,12 @@ const AuthenticatedApp = () => {
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
         <Route path="/reference/mlzitka-pro-zoo-praha" element={<ReferenceDetail fixedId="6a42491409abbf575447aaeb" />} />
+        <Route path="/reference/mlzitko-mrak-materska-skola-siskova" element={<ReferenceDetail fixedId="6a480e05664f948152611f5f" />} />
+        <Route path="/reference/mlzitko-aura-domov-palata-praha-5" element={<ReferenceDetail fixedId="6a480c0da87022c6c9559115" />} />
+        <Route path="/reference/mlzitko-mrak-soukroma-zahrada" element={<ReferenceDetail fixedId="6a72947ef1579cba611a2f6b" />} />
+        <Route path="/reference/bendy-jicinske-namesti" element={<ReferenceDetail fixedId="6a71d1ff57598752eed27bfb" />} />
+        <Route path="/reference/mestska-mlzna-brana-gate" element={<ReferenceDetail fixedId="6a6b8d1d553d8991f46cd6a3" />} />
+        <Route path="/reference/mesto-polna-mlzitko-mrkev" element={<ReferenceDetail fixedId="6a450e035aef0b45b2a8728f" />} />
         <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />

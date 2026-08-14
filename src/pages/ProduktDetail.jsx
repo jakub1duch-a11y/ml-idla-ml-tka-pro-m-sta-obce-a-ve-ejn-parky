@@ -203,9 +203,15 @@ export default function ProduktDetail() {
       
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
-      <div ref={tabsNavRef} className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row sm:items-center">
-          <div className="relative flex-1 min-w-0 order-1">
+      <div ref={tabsNavRef} className="sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 sm:px-6 lg:px-10">
+          <div className="flex shrink-0 items-center border-r border-slate-200 pr-3 sm:pr-5 lg:pr-6">
+            <Link to="/mlzidla-mlzitka" className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-2 text-xs font-mono uppercase tracking-widest text-slate-400 transition-colors hover:text-slate-900">
+              <ArrowLeft size={12} /> <span className="hidden xs:inline">Zpět</span>
+            </Link>
+            <span className="ml-2 hidden max-w-[180px] truncate font-heading text-sm font-medium text-slate-900 md:inline lg:max-w-[240px]">{product.name}</span>
+          </div>
+          <div className="relative min-w-0 flex-1">
             {canScrollLeft &&
             <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
             className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
@@ -213,10 +219,10 @@ export default function ProduktDetail() {
             </button>
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-            className="flex gap-2 sm:gap-6 lg:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+            className="flex flex-row gap-2 overflow-x-auto whitespace-nowrap py-2.5 pr-2 sm:gap-6 sm:py-0 lg:gap-8 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
               {TABS.map((t) =>
               <button key={t.id} onClick={() => handleTabClick(t)}
-              className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
+              className={`relative flex min-h-[42px] shrink-0 items-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all sm:min-h-0 sm:rounded-none sm:px-0 sm:py-5 ${activeTab === t.id ? 'bg-slate-900 text-white shadow-sm sm:bg-transparent sm:text-slate-900 sm:shadow-none' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 sm:bg-transparent sm:hover:bg-transparent'}`}>
                   {t.label}
                   {activeTab === t.id &&
                 <motion.div layoutId="produkt-tab-underline" className="hidden sm:block absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
@@ -230,12 +236,6 @@ export default function ProduktDetail() {
               <ChevronRight size={16} className="text-slate-500" />
             </button>
             }
-          </div>
-          <div className="flex items-center gap-3 py-2.5 sm:py-4 border-t sm:border-t-0 sm:border-r border-slate-200 sm:pr-6 lg:pr-8 mr-2 shrink-0 order-2 sm:order-first">
-            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors uppercase">
-              <ArrowLeft size={12} /> Zpět
-            </Link>
-            <span className="hidden sm:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
           </div>
         </div>
       </div>

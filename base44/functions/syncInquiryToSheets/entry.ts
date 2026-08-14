@@ -17,21 +17,12 @@ const HEADERS = [
   'Stav',
 ];
 
-Deno.serve(async (req) => {
+export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me().catch(() => null);
+    if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
     const body = await req.json();
-
-    // Accept both direct call (data={}) and entity automation payload (event + data)
-    const isAutomationEvent = !!(body.event && body.event.entity_name);
-
-    if (!isAutomationEvent) {
-      // Direct manual calls must be authenticated as admin
-      const user = await base44.auth.me();
-      if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-      if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     const payload = body.data?.data ?? body.data ?? body;
 
     if (!payload) {
@@ -98,4 +89,4 @@ Deno.serve(async (req) => {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-});
+}

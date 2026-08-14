@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -84,6 +84,8 @@ const AuthenticatedApp = () => {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
+        <Route path="/mestske-mlzitka" element={<CollectionDetail forcedCollection="city" canonicalPath="/mestske-mlzitka" />} />
+        <Route path="/kolekce/city" element={<Navigate to="/mestske-mlzitka" replace />} />
         <Route path="/kolekce/:collection" element={<CollectionDetail />} />
         <Route path="/brand-identity" element={<BrandIdentity />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />

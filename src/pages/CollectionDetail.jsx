@@ -5,6 +5,7 @@ import { setSEO } from '@/lib/seo';
 import CollectionHero from '@/components/kolekce/CollectionHero';
 import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
 import { COLLECTIONS } from '@/components/kolekce/collectionData';
+import ContextLinks from '@/components/common/ContextLinks';
 
 const CITY_TRUST = [
   { icon: Building2, title: 'Český návrh a výroba', text: 'Jeden partner pro návrh, výrobu, instalaci i následný servis.' },
@@ -114,6 +115,15 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
       )}
 
       <CollectionProductGrid collection={collection} />
+
+      {isCity && <ContextLinks eyebrow="Pro města a projektanty" title="Technika, hygiena a benefity na jednom místě." items={[
+        { path: '/jak-to-funguje', kicker: 'Technologie', title: 'Jak mlžítka fungují', text: 'Princip mlžení, napojení, provozní tlak a technické řešení pro veřejný prostor.' },
+        { path: '/ochrana-zdravi', kicker: 'Hygiena a provoz', title: 'Ochrana zdraví', text: 'Zdroj vody, proplach, údržba, servisní režim a informace důležité pro městské instalace.' },
+        { path: '/vyhody', kicker: 'Přínos projektu', title: 'Výhody a benefity', text: 'Tepelný komfort, chytré řízení, životnost, servis a architektonická hodnota řešení.' },
+        { path: '/smart-ovladani', kicker: 'Správa', title: 'Chytré ovládání', text: 'Automatizace provozu podle času, teploty a podmínek v místě instalace.' },
+        { path: '/udrzitelnost', kicker: 'Městské klima', title: 'Udržitelnost', text: 'Jak navrhovat provoz s ohledem na vodu, mikroklima a dlouhodobou životnost.' },
+        { path: '/reference', kicker: 'Důvěra', title: 'Reálné realizace', text: 'Podívejte se na instalace ve městech, parcích, ZOO a dalších veřejných prostorech.' }
+      ]} />}
 
       <section className="bg-[#12415e] text-primary-foreground">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-16 lg:flex-row lg:items-end lg:px-10 lg:py-20">

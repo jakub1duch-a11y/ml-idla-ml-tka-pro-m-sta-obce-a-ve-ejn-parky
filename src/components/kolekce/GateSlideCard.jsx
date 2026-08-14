@@ -21,15 +21,15 @@ export default function GateSlideCard({ product, index }) {
         <p className="text-sm text-white/60 font-light max-w-md mb-5 line-clamp-2">{product.short_description}</p>
         <div className="flex flex-wrap gap-2.5">
           <Link to={`/produkt/${product.slug}`}
-            className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-white">
+          className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-white btn-metallic-mist">
             Prohlédnout produkt <ArrowRight size={13} />
           </Link>
           <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
-            className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-white/90">
+          className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-white/90">
             Poptat řešení
           </Link>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

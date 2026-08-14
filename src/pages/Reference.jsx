@@ -59,11 +59,11 @@ export default function Reference() {
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
           <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Vybrané realizace a partneři</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {[0,1,2,3,4].map((item) => (
-              <div key={item} className="flex min-h-24 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-5">
+            {[0, 1, 2, 3, 4].map((item) =>
+            <div key={item} className="flex min-h-24 items-center justify-center border border-slate-200 px-0 py-0 bg-slate-0 rounded-1x2">
                 <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.jpg" alt="Logo reference" className="max-h-12 w-auto max-w-full object-contain" />
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>

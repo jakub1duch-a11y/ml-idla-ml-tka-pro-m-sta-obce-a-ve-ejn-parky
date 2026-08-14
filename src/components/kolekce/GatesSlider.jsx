@@ -42,10 +42,10 @@ export default function GatesSlider() {
             <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight max-w-xl">Vstupní portály, které si pamatujete.</h2>
           </div>
           <div className="hidden sm:flex gap-2">
-            <button onClick={() => scrollBy(-420)} aria-label="Předchozí" className="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-all">
+            <button onClick={() => scrollBy(-420)} aria-label="Předchozí" className="w-10 h-10 rounded-full border flex items-center justify-center hover:text-white hover:border-white/40 transition-all text-[hsl(var(--background))] border-white/65">
               <ChevronLeft size={15} />
             </button>
-            <button onClick={() => scrollBy(420)} aria-label="Další" className="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-all">
+            <button onClick={() => scrollBy(420)} aria-label="Další" className="w-10 h-10 rounded-full border flex items-center justify-center hover:text-white hover:border-white/40 transition-all text-[hsl(var(--background))] border-white/65">
               <ChevronRight size={15} />
             </button>
           </div>

@@ -23,23 +23,26 @@ const CITY_BENEFITS = [
 
 export default function Vyhody() {
   useEffect(() => setSEO({
-    title: 'Výhody mlžítek pro města, veřejný prostor a zahrady | MLŽIDLA®',
+    title: 'Výhody a benefity mlžítek pro města a veřejný prostor | MLŽIDLA®',
     description: 'Hlavní benefity mlžítek: tepelný komfort, úsporný provoz, chytré řízení, nerezové provedení, servis a architektonická hodnota.',
     canonicalPath: '/vyhody'
   }), []);
 
   return <main className="bg-background pt-16">
-    <section className="relative overflow-hidden bg-primary text-white">
+    <section className="relative min-h-[520px] overflow-hidden bg-primary text-white lg:min-h-[620px]">
       <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ccf06b29a_mlzidla-mlzitka-pro-mesta-obce.webp" alt="Městské mlžítko ve veřejném prostoru" className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/96 via-[#041c28]/78 to-[#041c28]/20" />
-      <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-        <p className="font-mono text-[11px] uppercase tracking-[.2em] text-cyan-300">Proč MLŽIDLA®</p>
-        <h1 className="mt-4 max-w-5xl font-heading text-4xl leading-[1.03] tracking-[-.03em] sm:text-5xl lg:text-7xl">Méně horka. Více života venku.</h1>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/95 via-[#041c28]/72 to-[#041c28]/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/55 via-transparent to-[#041c28]/15" />
+      <div className="relative mx-auto flex min-h-[520px] max-w-7xl items-center px-6 py-20 lg:min-h-[620px] lg:px-10 lg:py-28">
+       <div>
+        <p className="font-mono text-[11px] uppercase tracking-[.2em] text-cyan-300">Výhody a benefity · MLŽIDLA®</p>
+        <h1 className="mt-4 max-w-5xl font-heading text-4xl leading-[1.03] tracking-[-.03em] sm:text-5xl lg:text-7xl">Výhody a benefity mlžítek.</h1>
         <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/78 sm:text-lg">Mlžítko není jen způsob ochlazení. U dobře navrženého projektu spojuje tepelný komfort, nízké nároky na provoz, jednoduchou správu a architektonickou hodnotu prostoru.</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/mestske-mlzitka" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Městská mlžítka <ArrowRight size={16}/></Link>
           <Link to="/ochrana-zdravi" className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white">Hygiena a ochrana zdraví</Link>
         </div>
+       </div>
       </div>
     </section>
 

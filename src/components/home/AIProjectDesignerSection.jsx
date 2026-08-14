@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Sparkles, Building2, Trees, School, Dumbbell } from 'lucide-react';
+import { ArrowRight, Sparkles, Building2, Trees, School, Dumbbell, House } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const examples = [
@@ -7,6 +7,7 @@ const examples = [
   { icon: Trees, label: 'Park', text: 'Městský park, klidová zóna podél pěší trasy, trvalá instalace bez čerpadla.' },
   { icon: School, label: 'Škola / školka', text: 'Areál mateřské školy, bezpečné ochlazení dětí v letních měsících, plocha přibližně 120 m².' },
   { icon: Dumbbell, label: 'Sportoviště', text: 'Venkovní sportoviště s vysokou návštěvností, potřebujeme odolné mlžení pro větší počet lidí.' },
+  { icon: House, label: 'Rezidenční zahrada', text: 'Rezidenční zahrada u rodinného domu, chceme elegantní mlžení pro terasu a odpočinkovou zónu s důrazem na design a jednoduchou instalaci.' },
 ];
 
 export default function AIProjectDesignerSection() {
@@ -52,7 +53,7 @@ export default function AIProjectDesignerSection() {
               placeholder="Např. náměstí 20 × 30 m, vysoká návštěvnost, chceme vytvořit atraktivní mlžiště pro děti i dospělé…"
               className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-[15px] leading-relaxed text-white placeholder:text-white/25 focus:outline-none focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/10"
             />
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               {examples.map(({icon: Icon, label, text}) => (
                 <button key={label} type="button" onClick={() => setValue(text)} className="group rounded-xl border border-white/10 bg-white/[.04] px-3 py-3 text-left hover:bg-white/[.08] hover:border-white/20 transition-colors">
                   <Icon size={15} className="text-white/45 group-hover:text-teal-300 mb-2" />

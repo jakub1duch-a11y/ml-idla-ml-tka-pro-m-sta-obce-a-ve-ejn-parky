@@ -25,9 +25,9 @@ export default function Reference() {
     <div className="bg-background pt-16">
       <section className="relative min-h-[680px] overflow-hidden bg-primary lg:min-h-[760px]">
         <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp" alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/96 via-[#082f3f]/76 to-[#0a3b4d]/24" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/72 via-transparent to-[#041c28]/10" />
-        <div className="absolute inset-10 bg-[radial-gradient(circle_at_72%_34%,rgba(54,189,214,0.48),transparent_84%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031923]/98 via-[#083244]/82 to-[#0a3b4d]/28" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#031923]/82 via-[#062d3b]/18 to-[#031923]/14" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_30%,rgba(43,191,207,0.20),transparent_42%)]" />
 
         <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-end gap-10 px-6 pb-16 pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
           <div className="max-w-3xl">
@@ -58,8 +58,12 @@ export default function Reference() {
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
           <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Vybrané realizace a partneři</p>
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-6 sm:px-8 lg:px-10">
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.jpg" alt="Reference: Praha 8, Praha 5, Město Polná, Jičín a ZOO Praha" className="mx-auto h-auto w-full max-w-5xl opacity-90" />
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {[0,1,2,3,4].map((item) => (
+              <div key={item} className="flex min-h-24 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-5">
+                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.jpg" alt="Logo reference" className="max-h-12 w-auto max-w-full object-contain" />
+              </div>
+            ))}
           </div>
         </div>
       </section>

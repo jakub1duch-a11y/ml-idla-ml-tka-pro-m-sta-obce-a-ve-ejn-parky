@@ -43,31 +43,31 @@ export default function Technologie() {
         className="w-full h-full object-cover" />
         
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/45 to-primary/10" />
-        <div className="absolute bottom-0 left-0 right-0 max-w-5xl mx-auto px-6 lg:px-8 pb-12">
+        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-12">
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
           className="text-xs font-mono text-white/70 tracking-widest uppercase mb-3">
             Technologie MLŽIDLA®
           </motion.p>
           <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-heading text-4xl lg:text-6xl text-white tracking-tight">
+          className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">
             Chladíme architekturu
           </motion.h1>
         </div>
       </div>
 
       {/* ── SNIŽUJEME POCITOVOU TEPLOTU ── */}
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 pt-16 pb-14">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight leading-snug">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-14">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-4xl">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-slate-950 tracking-[-0.02em] leading-[1.08]">
             Snižujeme pocitovou teplotu okolí<br />o <span className="[font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">5 až 10 °C</span>.
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((b, i) =>
           <motion.div key={b.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-          className="bg-card border border-border rounded-2xl p-7 text-center shadow-sm">
-              <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center mx-auto mb-4">
+          className="bg-card border border-border rounded-2xl p-7 lg:p-8 shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-5">
                 <b.icon size={20} className="text-slate-700" />
               </div>
               <h3 className="text-slate-900 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-2xl font-medium">{b.title}</h3>
@@ -78,7 +78,7 @@ export default function Technologie() {
       </div>
 
       {/* ── TECHNICKÝ PROCES ── */}
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-2xl">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Princip mlžení</p>
           <h2 className="text-3xl lg:text-4xl text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">Od mikrokapky k ochlazení</h2>
@@ -99,7 +99,7 @@ export default function Technologie() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="bg-primary rounded-2xl p-8 text-center border border-secondary/30">
+        className="bg-primary rounded-2xl p-8 lg:p-10 border border-secondary/30">
           <p className="text-white/60 font-mono tracking-widest uppercase mb-2 text-xl">ÚSPORNÝ PROVOZ</p>
           <p className="text-white font-light text-lg">Spotřeba vody se pohybuje pouze v jednotkách litrů za hodinu.
 
@@ -114,7 +114,7 @@ export default function Technologie() {
       <ProcessSection />
       <InstallationComparisonSection />
 
-      <div className="text-center mt-14">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-14 flex justify-start">
         <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
           Popsat projekt <ArrowRight size={16} />
         </Link>

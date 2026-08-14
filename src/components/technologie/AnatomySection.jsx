@@ -16,7 +16,7 @@ export default function AnatomySection() {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100">
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      className="text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
+      className="mb-10 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
         Anatomie městského mlžítka.
       </motion.h2>
 
@@ -28,7 +28,7 @@ export default function AnatomySection() {
               <div className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-3">
                 <c.icon size={16} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 mb-1.5 text-3xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">{c.title}</h3>
+              <h3 className="mb-1.5 font-heading text-2xl text-foreground">{c.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base">{c.text}</p>
             </motion.div>
           )}
@@ -50,7 +50,7 @@ export default function AnatomySection() {
               <div className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-3">
                 <c.icon size={16} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 mb-1.5 text-3xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">{c.title}</h3>
+              <h3 className="mb-1.5 font-heading text-2xl text-foreground">{c.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base">{c.text}</p>
             </motion.div>
           )}

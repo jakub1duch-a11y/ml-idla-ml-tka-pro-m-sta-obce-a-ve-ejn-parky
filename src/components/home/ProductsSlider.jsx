@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 export default function ProductsSlider() {
   const [products, setProducts] = useState([]);
@@ -61,9 +62,8 @@ export default function ProductsSlider() {
           {products.map((product) => (
             <Link key={product.id} to={`/produkt/${product.slug}`}
               className="group shrink-0 w-72 snap-start block rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img src={product.image_url} alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600" />
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <ProductHoverImage product={product} className="h-full w-full" />
                 {product.featured && (
                   <span className="absolute top-3 left-3 bg-slate-900 text-white text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full">
                     Oblíbené

@@ -27,7 +27,7 @@ export default function CollectionMainInfoSection() {
                 <item.icon size={17} className="size-10" />
               </div>
               <p className="font-mono tracking-widest uppercase mb-1.5 text-sm text-[hsl(var(--background))]">{item.label}</p>
-              <p className="text-sm leading-snug text-[hsl(var(--card))] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">{item.value}</p>
+              <p className="text-sm leading-snug [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light text-gray-50/[0.5]">{item.value}</p>
             </motion.div>
           )}
         </div>

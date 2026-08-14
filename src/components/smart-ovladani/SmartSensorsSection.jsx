@@ -24,7 +24,7 @@ export default function SmartSensorsSection() {
           <h2 className="font-heading font-light text-3xl leading-tight lg:text-4xl text-slate-900 tracking-tight mb-4">
             Systém reaguje na skutečné provozní podmínky.
           </h2>
-          <p className="mb-6 text-sm leading-7 text-slate-500">Podle projektu propojujeme řídicí logiku se senzorikou a ovládáním jednotlivých vodních zón. U variant s PEVEKO / SUPLA vždy vycházíme z konkrétního technického návrhu a kompatibility použitých komponent.</p>
+          <p className="mb-6 text-sm leading-7 text-slate-500">Podle projektu propojujeme řídicí logiku se senzorikou a ovládáním jednotlivých vodních zón. U variant s PEVEKO / SUPLA vždy vycházíme z konkrétního technického návrhu a kompatibility použitých komponent.</p><div className="mb-6 flex flex-wrap gap-2"><span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-600">SUPLA · vzdálené řízení dle konfigurace</span><span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-600">PEVEKO · ventilová část dle projektu</span></div>
           <ul className="space-y-3">
             {SENSORS.map((s) =>
             <li key={s} className="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">

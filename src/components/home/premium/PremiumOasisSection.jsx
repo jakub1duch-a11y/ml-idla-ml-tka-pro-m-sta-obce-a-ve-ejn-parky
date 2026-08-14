@@ -30,7 +30,7 @@ export default function PremiumOasisSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-24 grid items-center gap-12 lg:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h2 className="mb-5 font-heading text-4xl tracking-tight text-foreground md:text-5xl">Ochlazení navržené jako součást prostoru.</h2>
+            <h2 className="mb-5 font-heading text-4xl tracking-tight text-foreground md:text-4xl">Ochlazení navržené jako součást prostoru.</h2>
             <p className="text-measure font-body text-lg leading-relaxed text-muted-foreground">Jemná mlha snižuje pocitovou teplotu až o 10 °C. Bez klimatizace, bez elektrické spotřeby a bez mokrého povrchu.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">

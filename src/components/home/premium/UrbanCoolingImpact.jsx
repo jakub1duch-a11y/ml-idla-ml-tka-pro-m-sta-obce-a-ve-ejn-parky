@@ -26,7 +26,7 @@ export default function UrbanCoolingImpact() {
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-white/70">Dopad na veřejný prostor</p>
-            <h2 className="mb-5 font-heading text-4xl tracking-tight text-white md:text-5xl">Vraťte lidem důvod zůstat venku i v horku</h2>
+            <h2 className="mb-5 font-heading text-4xl tracking-tight text-white md:text-4xl">Vraťte lidem důvod zůstat venku i v horku</h2>
             <p className="max-w-md text-base leading-relaxed text-white/80">Mlha snižuje teplotu ve svém okolí v řádu sekund. Je to vidět na náměstí i na terase — lidé se vrací tam, kde je jim příjemně.</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">

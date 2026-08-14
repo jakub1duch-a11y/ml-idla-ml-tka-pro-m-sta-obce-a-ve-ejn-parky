@@ -22,7 +22,7 @@ export default function SmartSection() {
               Smart mlžení · WiFi / aplikace
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading text-4xl lg:text-5xl tracking-tight mb-6 text-[hsl(var(--popover-foreground))]">
+            className="font-heading text-4xl tracking-tight mb-6 text-[hsl(var(--popover-foreground))] lg:text-4xl">
               Automatizace, která šetří vodu i váš čas
             </motion.h2>
             

@@ -4,21 +4,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 
-const solutionTypes = [
-  { value: 'auto', label: 'Nechat vybrat AI' },
-  { value: 'bendy', label: 'Bendy – městské stéblo' },
-  { value: 'city', label: 'CITY / obloukové sestavy' },
-  { value: 'linea', label: 'Linea – čistý vertikální prvek' },
-  { value: 'custom', label: 'Zakázkové řešení na míru' },
-];
-
-const prompts = {
-  auto: 'zvol nejvhodnější elegantní městské mlžítko podle prostoru a kompozice',
-  bendy: 'použij štíhlé organicky prohnuté nerezové mlžítko Bendy, delší městské provedení připomínající stéblo',
-  city: 'použij architektonickou sestavu CITY s nerezovými oblouky nebo víceprvkovým mlžištěm',
-  linea: 'použij minimalistický vertikální nerezový prvek Linea, čistý a subtilní',
-  custom: 'navrhni originální zakázkovou nerezovou mlžnou instalaci respektující charakter místa',
-};
+const isImageUrl = (url = '') => /\.(png|jpe?g|webp)(\?|$)/i.test(url) || url.includes('/images/');
 
 export default function AIVizualizace() {
   const [searchParams] = useSearchParams();
@@ -29,23 +15,45 @@ export default function AIVizualizace() {
   const [previewUrl, setPreviewUrl] = useState('');
   const [resultUrl, setResultUrl] = useState('');
   const [description, setDescription] = useState(searchParams.get('zadani') || '');
-  const [solution, setSolution] = useState('auto');
+  const [products, setProducts] = useState([]);
+  const [selectedProductId, setSelectedProductId] = useState('');
+  const [productsLoading, setProductsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     setSEO({
       title: 'AI vizualizace mlžítka v prostoru | MLŽIDLA®',
-      description: 'Nahrajte fotografii místa a vytvořte orientační AI vizualizaci mlžítka přímo ve vašem prostoru.',
+      description: 'Nahrajte fotografii místa a vytvořte orientační AI vizualizaci reálného výrobku MLŽIDLA® přímo ve vašem prostoru.',
       canonicalPath: '/ai-vizualizace',
     });
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const list = await base44.entities.Product.list();
+        if (!active) return;
+        const visualProducts = (list || []).filter((item) => item?.image_url && item?.slug !== 'mlzici-tryska');
+        setProducts(visualProducts);
+        const preferred = visualProducts.find((item) => item.slug === 'mlzitko-bendy') || visualProducts[0];
+        if (preferred) setSelectedProductId(preferred.id);
+      } catch (e) {
+        if (active) setError('Nepodařilo se načíst produktový katalog. Obnovte prosím stránku.');
+      } finally {
+        if (active) setProductsLoading(false);
+      }
+    })();
+    return () => { active = false; };
   }, []);
 
   useEffect(() => () => {
     if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
   }, [previewUrl]);
 
-  const canGenerate = useMemo(() => Boolean(file || sourceUrl), [file, sourceUrl]);
+  const selectedProduct = useMemo(() => products.find((item) => item.id === selectedProductId) || null, [products, selectedProductId]);
+  const canGenerate = useMemo(() => Boolean((file || sourceUrl) && selectedProduct?.image_url), [file, sourceUrl, selectedProduct]);
 
   const pickFile = (selected) => {
     if (!selected) return;
@@ -77,10 +85,14 @@ export default function AIVizualizace() {
         setSourceUrl(uploadedUrl);
       }
 
-      const context = description.trim() || 'veřejný venkovní prostor určený k ochlazení lidí během horkých dnů';
+      const context = description.trim() || 'venkovní prostor určený k ochlazení lidí během horkých dnů';
+      const productRefs = [selectedProduct.image_url, ...(selectedProduct.gallery_urls || []).filter(isImageUrl)]
+        .filter(Boolean)
+        .filter((url, index, all) => all.indexOf(url) === index)
+        .slice(0, 4);
       const response = await base44.integrations.Core.GenerateImage({
-        prompt: `Vytvoř fotorealistickou architektonickou AI vizualizaci pro značku MLŽIDLA® HolmTec. ZÁKLAD: zachovej geometrii, perspektivu, budovy, povrchy, zeleň, mobiliář, světlo a celkovou identitu původní fotografie co nejvěrněji. Do stejného prostoru přirozeně integruj profesionální nerezový mlžicí prvek: ${prompts[solution]}. Zadání prostoru: ${context}. Produkt musí působit fyzicky realisticky, správně ukotvený k terénu a v odpovídajícím měřítku. Použij kartáčovanou nerezovou ocel, subtilní prémiový městský design a velmi jemnou chladicí mlhu vycházející z trysek. Mlha nesmí zakrývat scénu ani vytvářet mokré louže. Zachovej lidi a okolí přirozené, bez deformací. Bez textu, bez logotypů, bez grafických overlayů. Výsledek má vypadat jako profesionální vizualizace skutečné realizace, ne jako fantasy koncept.`,
-        existing_image_urls: [uploadedUrl],
+        prompt: `Vytvoř fotorealistickou architektonickou vizualizaci skutečného výrobku MLŽIDLA® HolmTec v nahraném prostoru. PRVNÍ referenční obrázek je fotografie prostoru. DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct.name}. PRIORITA Č. 1 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct.name}. Materiál dle katalogu: ${selectedProduct.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct.short_description || ''}. ZÁKLAD SCÉNY: zachovej geometrii, perspektivu, budovy, povrchy, zeleň, mobiliář, osoby, světlo a identitu původní fotografie co nejvěrněji. Smíš upravit pouze to, co je nutné pro fyzické vložení výrobku: jeho měřítko, perspektivu, natočení, kontakt se zemí, realistické stíny a odrazy. Zadání zákazníka: ${context}. Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci výrobku; bez mokrých louží a bez zakrytí produktu. Bez textu, bez logotypů, bez grafických overlayů. Výsledek musí vypadat jako fotografie možné realizace se SKUTEČNÝM PRODUKTEM, nikoli jako nový koncept inspirovaný produktem.`,
+        existing_image_urls: [uploadedUrl, ...productRefs],
       });
       if (!response?.url) throw new Error('Generátor nevrátil výsledný obrázek.');
       setResultUrl(response.url);
@@ -95,7 +107,8 @@ export default function AIVizualizace() {
     const text = [
       'AI vizualizace projektu MLŽIDLA®',
       description.trim() ? `Zadání: ${description.trim()}` : '',
-      `Preferované řešení: ${solutionTypes.find((item) => item.value === solution)?.label || solution}`,
+      selectedProduct ? `Vybraný reálný výrobek: ${selectedProduct.name}` : '',
+      selectedProduct?.slug ? `Produkt: /produkt/${selectedProduct.slug}` : '',
       resultUrl ? `AI vizualizace: ${resultUrl}` : '',
       sourceUrl ? `Fotografie prostoru: ${sourceUrl}` : '',
     ].filter(Boolean).join('\n\n');
@@ -131,10 +144,21 @@ export default function AIVizualizace() {
             </button>
             <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => pickFile(e.target.files?.[0])}/>
 
-            <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">2 · Typ řešení</label>
-            <select value={solution} onChange={(e) => { setSolution(e.target.value); setResultUrl(''); }} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3.5 text-sm text-white focus:outline-none focus:border-teal-300/50">
-              {solutionTypes.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">2 · Skutečný výrobek</label>
+            <select value={selectedProductId} onChange={(e) => { setSelectedProductId(e.target.value); setResultUrl(''); }} disabled={productsLoading} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3.5 text-sm text-white focus:outline-none focus:border-teal-300/50 disabled:opacity-50">
+              {productsLoading && <option>Načítám katalog…</option>}
+              {products.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
             </select>
+            {selectedProduct && (
+              <div className="mt-3 flex gap-3 rounded-xl border border-white/10 bg-black/20 p-3">
+                <img src={selectedProduct.image_url} alt={selectedProduct.name} className="h-20 w-20 flex-none rounded-lg bg-white object-contain" />
+                <div className="min-w-0 self-center">
+                  <p className="text-sm font-semibold text-white/85">{selectedProduct.name}</p>
+                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/40">{selectedProduct.short_description || selectedProduct.material}</p>
+                  <p className="mt-1.5 text-[10px] font-mono uppercase tracking-wider text-teal-300/70">Reference výrobku je povinná</p>
+                </div>
+              </div>
+            )}
 
             <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">3 · Doplňte záměr</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4} placeholder="Např. chceme vytvořit atraktivní ochlazovací místo pro děti i dospělé, vysoká návštěvnost, trvalá instalace…" className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm leading-relaxed text-white placeholder:text-white/25 focus:outline-none focus:border-teal-300/50"/>
@@ -144,7 +168,7 @@ export default function AIVizualizace() {
             <button type="button" onClick={generate} disabled={!canGenerate || loading} className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
               {loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Vytvořit AI vizualizaci</>}
             </button>
-            <p className="mt-4 text-[11px] leading-relaxed text-white/30">Vizualizace je koncepční. Přesnou polohu, počet trysek, tlak, průtok, kotvení a napojení potvrzuje technický návrh HolmTec.</p>
+            <p className="mt-4 text-[11px] leading-relaxed text-white/30">AI používá jako povinnou referenci skutečné fotografie vybraného výrobku z katalogu. Vizualizace je stále koncepční; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
           </div>
 
           <div className="rounded-[26px] border border-white/10 bg-white/[.04] p-4 sm:p-5 lg:p-6 min-h-[520px] flex flex-col">

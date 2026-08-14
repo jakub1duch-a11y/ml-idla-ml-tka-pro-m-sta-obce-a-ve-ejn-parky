@@ -80,8 +80,31 @@ export default function AIVizualizace() {
   const selectedProduct = useMemo(() => products.find((item) => item.id === selectedProductId) || null, [products, selectedProductId]);
   const canGenerate = useMemo(() => Boolean((file || sourceUrl) && selectedProduct?.image_url), [file, sourceUrl, selectedProduct]);
 
-                  <p className="mt-2 text-xs text-white/35">JPG, PNG nebo WebP · max. 20 MB</p>
-                  <p className="mt-1 text-[10px] text-white/25">Fotky nad 12 MB automaticky optimalizujeme před nahráním.</p>
+  const pickFile = async (selected) => {
+    if (!selected) return;
+    if (!selected.type?.startsWith('image/')) {
+      setError('Nahrajte prosím fotografii ve formátu JPG, PNG nebo WebP.');
+      return;
+    }
+    if (selected.size > MAX_UPLOAD_MB * 1024 * 1024) {
+      setError(`Fotografie je příliš velká. Maximální velikost je ${MAX_UPLOAD_MB} MB.`);
+      return;
+    }
+    setError('');
+    setOptimizing(true);
+    try {
+      const prepared = await optimizeLargePhoto(selected);
+      setFile(prepared);
+      setSourceUrl('');
+      setResultUrl('');
+      if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(URL.createObjectURL(prepared));
+    } catch (e) {
+      setError('Fotografii se nepodařilo připravit. Zkuste menší JPG nebo WebP soubor.');
+    } finally {
+      setOptimizing(false);
+    }
+  };
 
   const generate = async () => {
     if (!canGenerate || loading) return;
@@ -147,7 +170,8 @@ export default function AIVizualizace() {
                 <div className="text-center px-6">
                   <div className="mx-auto mb-4 w-12 h-12 rounded-full border border-white/10 bg-white/[.06] flex items-center justify-center"><Camera size={20} className="text-white/60"/></div>
                   <p className="text-sm font-semibold text-white/80">Nahrát fotografii prostoru</p>
-                  <p className="mt-2 text-xs text-white/35">JPG, PNG nebo WebP · max. 12 MB</p>
+                  <p className="mt-2 text-xs text-white/35">JPG, PNG nebo WebP · max. 20 MB</p>
+                  <p className="mt-1 text-[10px] text-white/25">Fotky nad 12 MB automaticky optimalizujeme před nahráním.</p>
                 </div>
               )}
               {(previewUrl || sourceUrl) && <div className="absolute bottom-3 right-3 rounded-full bg-slate-950/85 backdrop-blur px-3 py-2 text-xs flex items-center gap-2"><Upload size={13}/> Změnit foto</div>}

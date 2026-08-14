@@ -25,30 +25,31 @@ export default function Reference() {
     <div className="bg-background pt-16">
       <section className="relative min-h-[680px] overflow-hidden bg-primary lg:min-h-[760px]">
         <img src={HERO_IMAGE} alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/95 via-[#082f3f]/78 to-[#0a3b4d]/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/70 via-transparent to-[#041c28]/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/98 via-[#082f3f]/84 to-[#0a3b4d]/38" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/78 via-transparent to-[#041c28]/16" />
 
         <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-end gap-10 px-6 pb-16 pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
           <div className="max-w-3xl">
             <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Reference MLŽIDLA®</p>
-            <h1 className="font-heading text-5xl leading-[.98] text-white lg:text-7xl">Realizace, které dávají veřejnému prostoru nový důvod zůstat.</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/78">Od ZOO Praha přes náměstí a parky až po hotely a soukromé zahrady. Navrhujeme nerezové mlžicí systémy, které spojují funkci, design a spolehlivý provoz.</p>
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace, které dávají veřejnému prostoru nový důvod zůstat.</h1>
+            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-white/88">Od ZOO Praha přes náměstí a parky až po hotely a soukromé zahrady. Navrhujeme nerezové mlžicí systémy, které spojují funkci, design a spolehlivý provoz.</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link to="/poptavka" className="inline-flex items-center gap-2 bg-white px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5">Navrhnout váš prostor <ArrowRight size={16} /></Link>
               <a href="#realizace" className="inline-flex items-center gap-2 border border-white/35 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/10">Prohlédnout realizace <ArrowRight size={16} /></a>
             </div>
-            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/70">
+            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/82">
               <span className="inline-flex items-center gap-2"><ShieldCheck size={16} className="text-cyan" /> Český návrh a výroba</span>
               <span className="inline-flex items-center gap-2"><MapPin size={16} className="text-cyan" /> Realizace po celé ČR</span>
             </div>
           </div>
 
           <div className="hidden lg:block">
-            <div className="ml-auto max-w-md border border-white/15 bg-[#062d3b]/78 p-7 text-white shadow-2xl backdrop-blur-xl">
+            <Link to="/reference/mlzitka-pro-zoo-praha" className="group ml-auto block max-w-md border border-white/20 bg-[#062d3b]/88 p-7 text-white shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan/60 hover:bg-[#062d3b]/95">
               <div className="flex items-center gap-3"><Sparkles size={18} className="text-cyan" /><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Vybraná reference</p></div>
-              <h2 className="mt-5 font-heading text-3xl">ZOO Praha</h2>
-              <p className="mt-3 text-sm leading-relaxed text-white/68">Mlžítka v jednom z nejnavštěvovanějších veřejných areálů v Česku. Důraz na odolnost, provozní spolehlivost a komfort návštěvníků.</p>
-            </div>
+              <h2 className="mt-5 font-heading text-3xl tracking-[-0.01em]">ZOO Praha</h2>
+              <p className="mt-3 text-sm leading-relaxed text-white/82">Mlžítka v jednom z nejnavštěvovanějších veřejných areálů v Česku. Důraz na odolnost, provozní spolehlivost a komfort návštěvníků.</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-cyan">Zobrazit realizaci <ArrowRight size={15} /></span>
+            </Link>
           </div>
         </div>
       </section>
@@ -82,7 +83,7 @@ export default function Reference() {
           <div>
             <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Váš projekt</p>
             <h2 className="max-w-3xl font-heading text-4xl text-white lg:text-6xl">Navrhneme řešení, které obstojí vizuálně i v každodenním provozu.</h2>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/65">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/78">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link to="/poptavka" className="bg-cyan px-6 py-3 text-sm font-bold text-slate-950">Popsat projekt</Link>

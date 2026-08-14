@@ -14,7 +14,7 @@ export default function GateSlideCard({ product, index }) {
       </span>
 
       <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-        <p className="text-[10px] font-mono text-white/50 tracking-widest uppercase mb-2">MLŽNÁ BRÁNA · MLŽIDLA®</p>
+        <p className="text-[10px] tracking-widest uppercase mb-2 text-[hsl(var(--card))] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">MLŽNÁ BRÁNA · MLŽIDLA®</p>
         <h3 className="font-heading font-light text-2xl sm:text-3xl text-white tracking-tight mb-3">
           {product.name}
         </h3>

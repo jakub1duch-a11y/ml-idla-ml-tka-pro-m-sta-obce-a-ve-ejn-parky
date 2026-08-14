@@ -5,7 +5,7 @@ import { CloudSun, Thermometer, Timer, Waves, Radio, Gauge, Droplets, ArrowRight
 const STEPS = [
   { Icon: Thermometer, number: '01', title: 'Senzor vyhodnotí teplotu', text: 'Po dosažení nastaveného teplotního limitu systém pokračuje ve vyhodnocení pravidel zóny.' },
   { Icon: CloudSun, number: '02', title: 'Ověří nastavené podmínky', text: 'Podle konfigurace zohlední čas, počasí nebo další připojené senzory.' },
-  { Icon: Timer, number: '03', title: 'Spustí správný scénář', text: 'Mlha běží jen po dobu, která přináší skutečný komfort.' },
+  { Icon: Timer, number: '03', title: 'Spustí správný scénář', text: 'Řízení otevře příslušnou vodní zónu podle nastaveného časového nebo cyklického režimu.' },
   { Icon: Waves, number: '04', title: 'Řídí provoz zóny', text: 'Po skončení scénáře nebo podmínky systém příslušnou vodní zónu opět uzavře.' }
 ];
 

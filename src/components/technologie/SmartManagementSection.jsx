@@ -12,7 +12,7 @@ export default function SmartManagementSection() {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100 bg-slate-50">
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      className="text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
+      className="mb-10 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
         Smart správa pro moderní města.
       </motion.h2>
 

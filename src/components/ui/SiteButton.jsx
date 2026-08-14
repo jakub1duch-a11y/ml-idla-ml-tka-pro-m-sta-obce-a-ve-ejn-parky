@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const variants = {
   primary: 'btn-metallic-mist',
-  secondary: 'border-2 border-current/40 bg-transparent hover:bg-current/10 hover:border-current/70 backdrop-blur-sm'
+  secondary: 'btn-secondary-outline'
 };
 
 export default function SiteButton({ to, href, children, variant = 'primary', className = '', ...props }) {

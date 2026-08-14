@@ -137,7 +137,7 @@ export default function HeroSlider() {
 
       {/* Mobile: description, CTAs and benefits live below the image on a solid background — fully readable, image stays uncluttered */}
       <div className="lg:hidden bg-primary px-5 pb-10 pt-6">
-        <p className="mb-6 text-base font-medium leading-relaxed text-white/90">{slide.desc}</p>
+        <p className="mb-6 font-medium leading-relaxed text-white/90 text-sm">{slide.desc}</p>
 
         <div className="mb-6 grid grid-cols-1 gap-3">
           <Link to={slide.cta1.to} className="min-h-12 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 btn-metallic-mist">
@@ -152,7 +152,7 @@ export default function HeroSlider() {
           {BENEFITS.map((b) =>
           <div key={b.label} className="flex min-h-14 items-center gap-2">
               <b.icon size={20} className="text-white/90 shrink-0" />
-              <span className="text-white/85 font-medium leading-tight text-sm">{b.label}</span>
+              <span className="text-white/85 font-medium leading-tight text-xs">{b.label}</span>
             </div>
           )}
         </div>

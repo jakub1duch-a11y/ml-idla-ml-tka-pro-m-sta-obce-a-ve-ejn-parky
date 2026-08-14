@@ -33,7 +33,7 @@ const INFO_LINKS = [
 { icon: Building2, label: 'O společnosti', path: '/o-nas' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
-{ icon: ShieldCheck, label: 'Výhody', path: '/vyhody' },
+{ icon: ShieldCheck, label: 'Výhody a benefity', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },

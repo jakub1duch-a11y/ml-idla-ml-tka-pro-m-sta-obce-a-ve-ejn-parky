@@ -35,7 +35,7 @@ export default function FeaturedProductsSection() {
           <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm">NAŠE PRODUKTY</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-5xl lg:text-5xl">
+            className="text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-3xl lg:text-3xl">
               Oblíbené instalace
             </motion.h2>
             <Link to="/mlzidla-mlzitka" className="items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5 whitespace-nowrap btn-metallic-mist inline-flex">Prohlédnout kolekce mlžítek

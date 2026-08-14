@@ -20,7 +20,7 @@ export default function MistVideoShowcase() {
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Mlžení naživo</p>
-            <h2 className="max-w-lg font-heading text-4xl tracking-tight text-foreground md:text-5xl">Od svařování nerezu po první mlhu na místě</h2>
+            <h2 className="max-w-lg font-heading tracking-tight text-foreground text-3xl md:text-3xl">Od svařování nerezu po první mlhu na místě</h2>
           </div>
           <p className="max-w-sm text-sm text-muted-foreground">Krátké záběry přímo z dílny a instalací — tak, jak to u nás skutečně vypadá.</p>
         </div>

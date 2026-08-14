@@ -62,7 +62,7 @@ export default function HeroSlider() {
 
         {/* Mobile: soft side vignette for a more finished, premium framing */}
         <div
-          className="absolute inset-0 lg:hidden pb-40"
+          className="absolute inset-0 lg:hidden"
           style={{
             backgroundImage:
             'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
@@ -73,7 +73,7 @@ export default function HeroSlider() {
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
         {/* Mobile: short tag + title directly on the image */}
-        <div className="absolute inset-x-0 bottom-0 p-5 pb-6 lg:hidden">
+        <div className="absolute inset-x-0 bottom-0 lg:hidden px-5 py-5">
           <p className="mb-2 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 text-[11px] [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">{slide.tag}</p>
           <h1 className="font-heading font-semibold leading-[1.1] tracking-tight text-white text-3xl [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]">
             {slide.titleMobile || slide.title}

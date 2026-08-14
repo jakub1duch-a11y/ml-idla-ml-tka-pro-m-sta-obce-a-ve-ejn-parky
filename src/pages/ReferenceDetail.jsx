@@ -1,299 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle } from 'lucide-react';
+import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle, ShieldCheck, Droplets, Wrench } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';
 
-const CATEGORY_LABELS = {
-  mestsky: 'Městský prostor',
-  event: 'Event',
-  soukromy: 'Soukromý',
-  prumyslovy: 'Průmyslový'
-};
+const CATEGORY_LABELS = { mestsky: 'Městský prostor', event: 'Event', soukromy: 'Soukromý', prumyslovy: 'Průmyslový' };
+const ZOO_ID = '6a42491409abbf575447aaeb';
 
 function Lightbox({ images, initialIndex, onClose }) {
   const [idx, setIdx] = useState(initialIndex);
+  useEffect(() => { const h = e => { if (e.key === 'Escape') onClose(); if (e.key === 'ArrowLeft') setIdx(i => (i - 1 + images.length) % images.length); if (e.key === 'ArrowRight') setIdx(i => (i + 1) % images.length); }; window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h); }, [onClose, images.length]);
+  return <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center" onClick={onClose}><button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white z-10"><X size={18}/></button><div className="relative max-w-6xl w-full mx-6" onClick={e=>e.stopPropagation()}><AnimatePresence mode="wait"><motion.img key={idx} src={images[idx]} alt="Realizace MLŽIDLA®" initial={{opacity:0,scale:.97}} animate={{opacity:1,scale:1}} exit={{opacity:0}} className="w-full max-h-[82vh] object-contain rounded-2xl"/></AnimatePresence>{images.length>1&&<><button onClick={()=>setIdx(i=>(i-1+images.length)%images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/70 text-white flex items-center justify-center"><ChevronLeft/></button><button onClick={()=>setIdx(i=>(i+1)%images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/70 text-white flex items-center justify-center"><ChevronRight/></button></>}</div></div>;
+}
+function isVideoFile(url){ return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url||''); }
 
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + images.length) % images.length);
-      if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % images.length);
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [onClose, images.length]);
-
-  const prev = () => setIdx((i) => (i - 1 + images.length) % images.length);
-  const next = () => setIdx((i) => (i + 1) % images.length);
-
-  return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
-      <button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all z-10">
-        <X size={18} />
-      </button>
-      <div className="relative max-w-6xl w-full mx-6" onClick={(e) => e.stopPropagation()}>
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={idx}
-            src={images[idx]}
-            alt=""
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-            className="w-full max-h-[82vh] object-contain rounded-2xl" />
-          
-        </AnimatePresence>
-        {images.length > 1 &&
-        <>
-            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronLeft size={20} />
-            </button>
-            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronRight size={20} />
-            </button>
-            <p className="text-center text-xs font-mono text-white/50 mt-4 tracking-widest">{idx + 1} / {images.length}</p>
-          </>
-        }
-      </div>
-    </div>);
-
+function VideoSlider({ videos }) {
+  const [active,setActive]=useState(0);
+  if(!videos.length) return null;
+  return <section className="bg-[#061f2b] py-16 lg:py-24 text-white"><div className="max-w-7xl mx-auto px-6 lg:px-10"><div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-9"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-cyan mb-3">Video / v provozu</p><h2 className="font-heading text-3xl lg:text-5xl">Podívejte se na mlžítka přímo v realizaci.</h2></div><p className="max-w-lg text-white/60 leading-relaxed">Skutečný provoz nejlépe ukazuje jemnost mlhy, měřítko instalace a způsob, jakým se řešení začlení do návštěvnického prostoru.</p></div><div className="overflow-hidden rounded-2xl border border-white/10 bg-black"><video key={videos[active]} src={videos[active]} controls playsInline className="w-full max-h-[72vh] object-contain"/></div>{videos.length>1&&<div className="mt-5 flex gap-3 overflow-x-auto pb-2">{videos.map((v,i)=><button key={v} onClick={()=>setActive(i)} className={`shrink-0 px-5 py-3 border text-sm ${active===i?'bg-white text-slate-950 border-white':'border-white/20 text-white/70'}`}><PlayCircle size={15} className="inline mr-2"/>Ukázka {i+1}</button>)}</div>}</div></section>;
 }
 
-function isVideoFile(url) {
-  return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url || '');
-}
-
-export default function ReferenceDetail() {
-  const { id } = useParams();
-  const [project, setProject] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [lightbox, setLightbox] = useState(null);
-
-  useEffect(() => {
-    base44.entities.Realizace.get(id).
-    then((p) => {
-      if (p) {
-        setProject(p);
-        trackReferenceView(p.name, p.location, p.category);
-        setSEO(getReferenceSEO(p));
-      } else {
-        setNotFound(true);
-      }
-    }).
-    catch(() => setNotFound(true)).
-    finally(() => setLoading(false));
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader size={28} className="animate-spin text-slate-300" />
-      </div>);
-
-  }
-
-  if (notFound || !project) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center pt-28">
-        <div className="text-center">
-          <p className="text-slate-400 mb-4">Projekt nenalezen.</p>
-          <Link to="/reference" className="text-slate-900 hover:underline">← Zpět na reference</Link>
-        </div>
-      </div>);
-
-  }
-
-  const allImages = [project.image_url, ...(project.gallery_urls || [])].filter(Boolean).filter((u) => !isVideoFile(u));
-  const galleryVideos = (project.gallery_urls || []).filter(isVideoFile);
-  const heroVideo = project.video_url || galleryVideos[0];
-
-  const STATS = [
-  { icon: Calendar, label: 'Rok realizace', value: project.year },
-  { icon: MapPin, label: 'Lokalita', value: project.location },
-  { icon: Tag, label: 'Kategorie', value: CATEGORY_LABELS[project.category] || project.category },
-  { icon: null, label: 'Produkt', value: project.product_used }].
-  filter((s) => s.value);
-
-  return (
-    <div className="min-h-screen bg-white">
-
-      {/* ═══════ HERO ═══════ */}
-      <div className="relative h-[70vh] min-h-[520px] overflow-hidden bg-slate-900">
-        {project.image_url &&
-        <img src={project.image_url} alt={project.name} className="w-full h-full object-cover" />
-        }
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10" />
-        <div className="absolute top-8 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10">
-          <Link to="/reference" className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors">
-            <ArrowLeft size={14} /> Zpět na reference
-          </Link>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 lg:px-10 pb-14">
-          <div className="flex flex-wrap gap-2 mb-5">
-            {project.category &&
-            <span className="px-3 py-1 bg-white/15 backdrop-blur-sm border border-white/25 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
-                {CATEGORY_LABELS[project.category] || project.category}
-              </span>
-            }
-            {project.year &&
-            <span className="px-3 py-1 bg-emerald-500 rounded-full text-[10px] font-mono text-white tracking-widest uppercase">
-                {project.year}
-              </span>
-            }
-          </div>
-          <h1 className="font-heading font-semibold text-4xl lg:text-6xl text-white tracking-tight leading-[1.05] mb-3 max-w-3xl">
-            {project.name}
-          </h1>
-          {project.location &&
-          <div className="flex items-center gap-1.5 text-white/70 text-sm font-mono mt-3">
-              <MapPin size={13} /> {project.location}
-            </div>
-          }
-        </div>
-      </div>
-
-      {/* ═══════ STATS ROW ═══════ */}
-      {STATS.length > 0 &&
-      <div className="border-b border-slate-200 bg-slate-50">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {STATS.map((s, i) =>
-          <motion.div key={s.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1.5">{s.label}</p>
-                <p className="text-lg font-heading font-medium text-slate-900">{s.value}</p>
-              </motion.div>
-          )}
-          </div>
-        </div>
-      }
-
-      {/* ═══════ ABOUT + SIDEBAR ═══════ */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2">
-            {project.description &&
-            <>
-                <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">O projektu</p>
-                <p className="text-slate-600 text-lg leading-relaxed font-light whitespace-pre-line">{project.description}</p>
-              </>
-            }
-
-            {project.source_url &&
-            <a href={project.source_url} target="_blank" rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-slate-900 hover:text-slate-600 transition-colors border-b border-slate-300 hover:border-slate-500 pb-0.5">
-                Podívejte se, jak realizaci sdílí klient <ExternalLink size={13} />
-              </a>
-            }
-          </div>
-
-          <div className="space-y-6">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-              <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">Detaily projektu</p>
-              <div className="space-y-4">
-                {project.client &&
-                <div>
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Klient</p>
-                    <p className="text-sm text-slate-900 font-medium">{project.client}</p>
-                  </div>
-                }
-                {project.location &&
-                <div>
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Lokalita</p>
-                    <p className="text-sm text-slate-700">{project.location}</p>
-                  </div>
-                }
-                {project.year &&
-                <div>
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Rok realizace</p>
-                    <p className="text-sm text-slate-700">{project.year}</p>
-                  </div>
-                }
-                {project.product_used &&
-                <div className="pt-4 border-t border-slate-200">
-                    <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-1">Použitý produkt</p>
-                    <p className="text-sm text-slate-900 font-medium">{project.product_used}</p>
-                  </div>
-                }
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900">
-              <p className="text-sm text-white font-light mb-1">Máte zájem o podobný projekt?</p>
-              <p className="text-xs text-white/50 mb-4">Konzultace zdarma, vizualizace do 48 h.</p>
-              <Link to="/kontakt" className="btn-metallic-mist w-full justify-center py-3 text-xs font-bold">
-                Nezávazná poptávka <ArrowRight size={13} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ═══════ VIDEO ═══════ */}
-      {heroVideo &&
-      <div className="bg-slate-50 border-y border-slate-200 py-16 lg:py-20">
-          <div className="max-w-5xl mx-auto px-6 lg:px-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4 flex items-center gap-2">
-              <PlayCircle size={14} /> Video z realizace
-            </p>
-            <div className="rounded-2xl overflow-hidden border border-slate-200 bg-black">
-              <video src={heroVideo} controls className="w-full max-h-[70vh]" />
-            </div>
-          </div>
-        </div>
-      }
-
-      {/* ═══════ PHOTO GALLERY (Apex Arc style mixed grid) ═══════ */}
-      {allImages.length > 1 &&
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Fotogalerie</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10">
-            Fotografie z realizace
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[160px] md:auto-rows-[200px]">
-            {allImages.map((img, i) =>
-          <motion.button
-            key={i}
-            onClick={() => setLightbox(i)}
-            initial={{ opacity: 0, scale: 0.97 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.03 }}
-            className={`group relative overflow-hidden rounded-2xl border border-slate-200 hover:border-slate-300 transition-all ${i === 0 ? 'col-span-2 row-span-2' : ''}`}>
-            
-                <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
-                  <ZoomIn size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </motion.button>
-          )}
-          </div>
-        </div>
-      }
-
-      {/* ═══════ CTA ═══════ */}
-      <div className="py-20 bg-[#164e64]">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="font-heading font-light text-3xl text-white mb-4">Chcete podobné řešení?</h2>
-          <p className="text-white/50 mb-8">Konzultace zdarma, 3D vizualizace do 48 h, montáž za jeden den.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/kontakt" className="btn-metallic-mist px-8 py-4 text-sm font-bold justify-center">
-              Nezávazná poptávka
-            </Link>
-            <Link to="/reference"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 text-white text-sm font-medium rounded-full border border-white/20 hover:bg-white/10 transition-all justify-center">
-              <ArrowLeft size={16} /> Všechny reference
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {lightbox !== null &&
-      <Lightbox images={allImages} initialIndex={lightbox} onClose={() => setLightbox(null)} />
-      }
-    </div>);
-
+export default function ReferenceDetail(){
+ const {id}=useParams(); const [project,setProject]=useState(null); const [loading,setLoading]=useState(true); const [notFound,setNotFound]=useState(false); const [lightbox,setLightbox]=useState(null);
+ useEffect(()=>{base44.entities.Realizace.get(id).then(p=>{if(p){setProject(p);trackReferenceView(p.name,p.location,p.category);setSEO(getReferenceSEO(p));}else setNotFound(true)}).catch(()=>setNotFound(true)).finally(()=>setLoading(false))},[id]);
+ if(loading)return <div className="min-h-screen flex items-center justify-center"><Loader className="animate-spin"/></div>;
+ if(notFound||!project)return <div className="min-h-screen flex items-center justify-center"><Link to="/reference">← Zpět na reference</Link></div>;
+ const isZoo=id===ZOO_ID;
+ const allImages=[project.image_url,...(project.gallery_urls||[])].filter(Boolean).filter(u=>!isVideoFile(u));
+ const videos=[project.video_url,...(project.gallery_urls||[]).filter(isVideoFile)].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
+ const zooCopy='Pro Zoologickou zahradu hl. m. Prahy jsme realizovali nerezová mlžítka jako funkční prvek pro ochlazení návštěvníků během horkých letních dnů. Řešení bylo navrženo s důrazem na intenzivní veřejný provoz, jednoduchou obsluhu, odolnost a přirozené začlenění do prostředí areálu. Jemná vodní mlha vytváří příjemnější mikroklima bez potřeby masivní stavební technologie a současně se stává atraktivním bodem pro návštěvníky všech věkových kategorií.';
+ const stats=[['Rok realizace',project.year],['Lokalita',isZoo?'ZOO Praha · Troja':project.location],['Kategorie',CATEGORY_LABELS[project.category]||project.category],['Klient',project.client]].filter(x=>x[1]);
+ return <div className="min-h-screen bg-white">
+ <section className="relative min-h-[650px] h-[78vh] overflow-hidden bg-slate-950">{project.image_url&&<img src={project.image_url} alt={project.name} className="absolute inset-0 w-full h-full object-cover"/>}<div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/10"/><div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20"/><div className="relative max-w-7xl mx-auto h-full px-6 lg:px-10 flex flex-col justify-between py-9 lg:py-14"><Link to="/reference" className="inline-flex items-center gap-2 text-sm text-white/75"><ArrowLeft size={15}/> Všechny realizace</Link><div className="max-w-4xl"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-cyan mb-5">{isZoo?'Reference · ZOO Praha':'Reference MLŽIDLA®'}</p><h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl text-white leading-[1.02]">{isZoo?'Mlžítka pro ZOO Praha. Ochlazení pro jeden z nejnavštěvovanějších areálů v Česku.':project.name}</h1><p className="mt-6 max-w-2xl text-lg text-white/75 leading-relaxed">{isZoo?'Nerezová mlžítka pro návštěvnický provoz v pražské zoologické zahradě — funkční ochlazení, odolné provedení a čistý design.':project.description}</p></div></div></section>
+ <section className="border-b border-slate-200 bg-white"><div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-2 lg:grid-cols-4">{stats.map(([l,v])=><div key={l} className="py-7 lg:py-9 border-r border-slate-200 last:border-r-0 px-4 first:pl-0"><p className="font-mono text-[10px] tracking-widest uppercase text-slate-400">{l}</p><p className="mt-2 font-heading text-lg text-slate-950">{v}</p></div>)}</div></section>
+ <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><div className="grid lg:grid-cols-[1fr_.9fr] gap-12 lg:gap-20 items-start"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-4">O projektu</p><h2 className="font-heading text-3xl lg:text-5xl text-slate-950 mb-7">{isZoo?'Ochlazení, které musí fungovat v reálném veřejném provozu.':'Řešení navržené pro konkrétní místo.'}</h2><p className="text-lg leading-relaxed text-slate-600">{isZoo?zooCopy:project.description}</p>{isZoo&&<div className="mt-9 grid sm:grid-cols-3 gap-3">{[[ShieldCheck,'Odolnost','Nerezové provedení pro veřejný prostor'],[Droplets,'Komfort','Jemná mlha pro horké letní dny'],[Wrench,'Provoz','Řešení s ohledem na servis a údržbu']].map(([Icon,t,d])=><div key={t} className="border border-slate-200 p-5"><Icon size={20} className="text-teal-700"/><h3 className="mt-4 font-semibold">{t}</h3><p className="mt-2 text-sm text-slate-500 leading-relaxed">{d}</p></div>)}</div>}</div>{allImages[1]&&<button onClick={()=>setLightbox(1)} className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-slate-100"><img src={allImages[1]} alt="Mlžítka v ZOO Praha" className="w-full h-full object-cover transition duration-700 group-hover:scale-105"/><span className="absolute bottom-4 right-4 bg-white/90 p-3 rounded-full"><ZoomIn size={18}/></span></button>}</div></section>
+ {isZoo&&<section className="bg-slate-50 border-y border-slate-200"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20 grid lg:grid-cols-2 gap-12"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">Veřejný prostor</p><h2 className="font-heading text-3xl lg:text-4xl">Reference, která prověřuje řešení každý den.</h2></div><p className="text-lg leading-relaxed text-slate-600">Zoologická zahrada je prostředí s vysokou návštěvností, dětmi, rodinami a dlouhými pěšími trasami. Právě zde je důležitá kombinace spolehlivosti, bezpečného provozu, snadné údržby a skutečného komfortu pro návštěvníka.</p></div></section>}
+ <VideoSlider videos={videos}/>
+ {allImages.length>1&&<section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">Fotogalerie</p><h2 className="font-heading text-3xl lg:text-5xl mb-10">{isZoo?'Mlžítka v areálu ZOO Praha':'Fotografie z realizace'}</h2><div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[170px] md:auto-rows-[220px]">{allImages.slice(0,16).map((img,i)=><motion.button key={img} onClick={()=>setLightbox(i)} initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} className={`group relative overflow-hidden rounded-xl bg-slate-100 ${i===0?'col-span-2 row-span-2':i===5?'col-span-2':''}`}><img src={img} alt={isZoo?`ZOO Praha – realizace mlžítek ${i+1}`:''} loading="lazy" className="w-full h-full object-cover transition duration-500 group-hover:scale-105"/><div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition"/></motion.button>)}</div></section>}
+ <section className="bg-[#062d3b] py-16 lg:py-20"><div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-[1fr_auto] gap-8 items-end"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-cyan mb-4">Podobný projekt</p><h2 className="font-heading text-4xl lg:text-5xl text-white max-w-3xl">Navrhneme mlžítka pro váš veřejný prostor, park nebo návštěvnický areál.</h2><p className="mt-5 text-white/60 max-w-xl">Od prvního návrhu přes technické řešení až po výrobu, instalaci a servis.</p></div><div className="flex flex-wrap gap-3"><Link to="/poptavka" className="inline-flex items-center gap-2 bg-cyan px-6 py-3 font-bold text-slate-950">Poptat řešení <ArrowRight size={16}/></Link><Link to="/mestske-mlzitka" className="border border-white/25 px-6 py-3 text-white font-semibold">Městská mlžítka</Link></div></div></section>
+ {lightbox!==null&&<Lightbox images={allImages} initialIndex={lightbox} onClose={()=>setLightbox(null)}/>}</div>;
 }

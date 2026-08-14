@@ -91,7 +91,7 @@ export default function Reference() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Link to="/poptavka" className="bg-cyan px-6 py-3 text-sm font-bold text-slate-950 btn-metallic-mist">Popsat projekt</Link>
-            <Link to="/kontakt" className="border border-white/35 px-6 py-3 text-sm font-semibold text-white">Probrat záměr</Link>
+            <Link to="/kontakt" className="border border-white/35 px-6 py-3 text-sm font-semibold text-white rounded-[20px]">Probrat záměr</Link>
           </div>
         </div>
       </section>

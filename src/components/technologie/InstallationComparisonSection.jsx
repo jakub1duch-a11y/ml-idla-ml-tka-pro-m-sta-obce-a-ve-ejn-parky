@@ -31,7 +31,7 @@ export default function InstallationComparisonSection() {
 
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="bg-white border border-slate-200 rounded-2xl overflow-hidden mb-8">
-        <p className="text-center font-mono tracking-widest uppercase text-slate-400 py-4 border-b border-slate-200 text-sm">
+        <p className="text-center font-mono tracking-widest uppercase text-slate-400 py-4 border-b border-slate-200 text-xs">
           Technické srovnání požadavků pro oba typy instalace
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">

@@ -56,7 +56,7 @@ export default function Reference() {
 
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
-          <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Vybrané realizace a partneři</p>
+          <p className="mb-6 text-center font-mono uppercase tracking-[.18em] text-slate-400 text-sm">Vybrané realizace a partneři</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {[0, 1, 2, 3, 4].map((item) =>
             <div key={item} className="flex min-h-24 items-center justify-center border border-slate-200 px-0 py-0 bg-slate-0 rounded-1x2">
@@ -86,8 +86,8 @@ export default function Reference() {
         <div className="mx-auto grid max-w-7xl items-end gap-8 px-6 lg:grid-cols-[1fr_auto] lg:px-8">
           <div>
             <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Váš projekt</p>
-            <h2 className="max-w-3xl font-heading text-4xl text-white lg:text-6xl">Navrhneme řešení, které obstojí vizuálně i v každodenním provozu.</h2>
-            <p className="mt-5 max-w-2xl leading-relaxed text-[hsl(var(--background))] text-3xl">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
+            <h2 className="max-w-3xl font-heading text-white text-3xl lg:text-3xl">Navrhneme řešení, které obstojí vizuálně i v každodenním provozu.</h2>
+            <p className="mt-5 max-w-2xl leading-relaxed text-[hsl(var(--background))] text-base">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link to="/poptavka" className="bg-cyan px-6 py-3 text-sm font-bold text-slate-950">Popsat projekt</Link>

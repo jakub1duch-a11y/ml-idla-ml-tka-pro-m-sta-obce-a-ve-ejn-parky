@@ -49,7 +49,7 @@ export default function HeroSlider() {
             animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
+            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center]" />
         </AnimatePresence>
 
         {/* Mobile: layered vignette - subtle top wash + clear middle so the photo breathes + smooth ramp into the bottom text zone */}
@@ -62,7 +62,7 @@ export default function HeroSlider() {
 
         {/* Mobile: soft side vignette for a more finished, premium framing */}
         <div
-          className="absolute inset-0 lg:hidden"
+          className="absolute inset-0 lg:hidden pb-40"
           style={{
             backgroundImage:
             'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'

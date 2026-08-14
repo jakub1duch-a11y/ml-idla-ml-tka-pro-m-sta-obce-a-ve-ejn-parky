@@ -119,6 +119,8 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
 
             <div className="flex flex-col gap-1 pt-4 mt-2 border-t border-slate-100">
               {[
+              { label: 'Jak fungují', path: '/jak-to-funguje' },
+              { label: 'Chytré ovládání', path: '/smart-ovladani' },
               { label: 'Reference', path: '/reference' },
               { label: 'Kontakt', path: '/kontakt' }].
               map((l) =>

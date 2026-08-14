@@ -10,7 +10,7 @@ const PRODUCT_LINKS = [
 { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cfc837b23_image.png', featured: true },
 { label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png' },
 { label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/zahradni-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg', crop: 'garden' },
-{ label: 'Autorská kolekce', sub: 'Instalace na míru', path: '/kolekce/art', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' },
+{ label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' },
 { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }];
 
 
@@ -38,6 +38,7 @@ const INFO_LINKS = [
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
+{ icon: Newspaper, label: 'Blog & novinky', path: '/blog' },
 { icon: PlayCircle, label: 'Videa a živé ukázky', path: '/blog?sekce=videa' }];
 
 
@@ -113,8 +114,9 @@ export default function Header() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
+            <Link to="/jak-to-funguje" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
+            <Link to="/smart-ovladani" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Chytré ovládání</Link>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Blog & novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`

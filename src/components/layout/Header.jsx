@@ -101,13 +101,17 @@ export default function Header() {
 
           {/* Desktop nav — centered elegant style */}
           <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
-            {/* Katalog megamenu */}
+            {/* Produkty megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              
-
-
-
-              
+              <button
+                type="button"
+                onClick={() => setMegaOpen((value) => !value)}
+                aria-expanded={megaOpen}
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}
+              >
+                PRODUKTY
+                <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
+              </button>
             </div>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
             <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Blog & novinky</Link>

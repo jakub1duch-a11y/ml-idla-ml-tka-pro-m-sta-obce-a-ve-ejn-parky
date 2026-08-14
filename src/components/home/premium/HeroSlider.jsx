@@ -40,7 +40,7 @@ export default function HeroSlider() {
   return (
     <section className="relative overflow-hidden bg-background lg:h-screen lg:min-h-[640px]">
       {/* Image + overlay block. Fixed height on mobile so the photo stays visible; full-bleed with text overlay on desktop. */}
-      <div className="relative h-[58vh] min-h-[380px] max-h-[560px] lg:absolute lg:inset-0 lg:h-full lg:max-h-none">
+      <div className="relative h-[58vh] min-h-[380px] lg:absolute lg:inset-0 lg:h-full lg:max-h-none max-h-[450px]">
         <AnimatePresence mode="wait">
           <motion.img
             key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3230cda2_mlzidla-vizual__5_.png"

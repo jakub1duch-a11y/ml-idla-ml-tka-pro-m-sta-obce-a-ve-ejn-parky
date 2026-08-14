@@ -90,7 +90,7 @@ export default function Reference() {
             <p className="mt-5 max-w-2xl leading-relaxed text-[hsl(var(--background))] text-base">Pošlete nám fotografii, rozměry nebo situační plán. Doporučíme vhodný produkt, způsob instalace a další postup.</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link to="/poptavka" className="bg-cyan px-6 py-3 text-sm font-bold text-slate-950">Popsat projekt</Link>
+            <Link to="/poptavka" className="bg-cyan px-6 py-3 text-sm font-bold text-slate-950 btn-metallic-mist">Popsat projekt</Link>
             <Link to="/kontakt" className="border border-white/35 px-6 py-3 text-sm font-semibold text-white">Probrat záměr</Link>
           </div>
         </div>

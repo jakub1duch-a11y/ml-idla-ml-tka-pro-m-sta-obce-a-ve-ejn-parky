@@ -7,6 +7,7 @@ const SLIDES = [
 {
   tag: 'ČESKÁ VÝROBA · 20 LET PRŮMYSLOVÉ ZKUŠENOSTI',
   title: 'Nerezová mlžítka a mlžné brány, které chladí bez čerpadla',
+  titleMobile: 'Nerezová mlžítka, která chladí bez čerpadla',
   desc: 'Navrhujeme a vyrábíme mlžné systémy z nerezové oceli pro náměstí, parky a promenády, gastro a wellness provozy i rezidenční terasy a zahrady. Napojení přímo na vodovodní řad, bez čerpadla a bez složité údržby.',
   image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
   imageAlt: 'Nerezová designová mlžítka pro města a obce',
@@ -37,76 +38,116 @@ export default function HeroSlider() {
   const slide = SLIDES[index];
 
   return (
-    <section className="relative min-h-[740px] h-[100svh] overflow-hidden bg-background lg:h-screen lg:min-h-[640px]">
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={slide.image} src={slide.image}
+    <section className="relative overflow-hidden bg-background lg:h-screen lg:min-h-[640px]">
+      {/* Image + overlay block. Fixed height on mobile so the photo stays visible; full-bleed with text overlay on desktop. */}
+      <div className="relative h-[58vh] min-h-[380px] max-h-[560px] lg:absolute lg:inset-0 lg:h-full lg:max-h-none">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={slide.image} src={slide.image}
+            alt={slide.imageAlt}
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
+            className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
+        </AnimatePresence>
 
-          alt={slide.imageAlt}
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
-          exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
-          className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
-        
-      </AnimatePresence>
-      <div className="absolute inset-0 bg-primary/35 lg:bg-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/25 lg:from-primary/95 lg:via-primary/55 lg:to-primary/15" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
+        {/* Mobile: light overlay, only strong enough at the bottom to hold the short title */}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/10 to-transparent lg:hidden" />
 
-      <div className="absolute inset-0 flex items-end lg:items-center">
-        <div className="mx-auto w-full max-w-7xl pb-6 sm:px-8 lg:py-24 pt-24 lg:px-20 sm:pb-10 px-5">
-          <div className="max-w-5xl">
-            <AnimatePresence mode="wait">
-              <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
-                <p className="mb-3 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 sm:mb-4 sm:text-xs sm:tracking-[0.3em] text-xs [text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">{slide.tag}</p>
-                <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white sm:mb-5 text-4xl sm:text-6xl lg:text-7xl [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
-                  {slide.title}
-                </h1>
-                <p className="text-measure mb-6 text-base font-medium leading-relaxed text-white/90 sm:mb-8 sm:text-lg [text-shadow:0_1px_8px_rgba(0,0,0,0.3)]">{slide.desc}</p>
+        {/* Desktop: full overlay for the complete text block */}
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/55 to-primary/15" />
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
-                <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-10 sm:flex sm:flex-wrap">
-                  <Link to={slide.cta1.to} className="min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl sm:px-7 sm:py-4 btn-metallic-mist inline-flex">
-                    {slide.cta1.label} <ArrowRight size={16} />
-                  </Link>
-                  <Link to={slide.cta2.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/50 bg-primary/20 px-6 py-3.5 text-center text-sm font-semibold text-white transition-all hover:bg-white/10 sm:px-7">
-                    {slide.cta2.label}
-                  </Link>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        {/* Mobile: short tag + title directly on the image */}
+        <div className="absolute inset-x-0 bottom-0 p-5 pb-6 lg:hidden">
+          <p className="mb-2 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 text-[11px] [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">{slide.tag}</p>
+          <h1 className="font-heading font-semibold leading-[1.1] tracking-tight text-white text-3xl [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]">
+            {slide.titleMobile || slide.title}
+          </h1>
+        </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {BENEFITS.map((b, i) =>
-              <motion.div
-                key={b.label}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
-                className="flex min-h-14 items-center gap-2">
-                
-                  <b.icon size={20} className="text-white/90 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.35)]" />
-                  <span className="text-white/85 font-medium leading-tight text-sm text-right [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]">{b.label}</span>
+        {/* Desktop: full text block over the image */}
+        <div className="hidden lg:flex absolute inset-0 items-center">
+          <div className="mx-auto w-full max-w-7xl py-24 px-20">
+            <div className="max-w-5xl">
+              <AnimatePresence mode="wait">
+                <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
+                  <p className="mb-4 font-mono font-semibold uppercase tracking-[0.3em] text-white/85 text-xs [text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">{slide.tag}</p>
+                  <h1 className="mb-5 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white text-7xl [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
+                    {slide.title}
+                  </h1>
+                  <p className="text-measure mb-8 text-lg font-medium leading-relaxed text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.3)]">{slide.desc}</p>
+
+                  <div className="mb-10 flex flex-wrap gap-3">
+                    <Link to={slide.cta1.to} className="min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-7 py-4 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl btn-metallic-mist inline-flex">
+                      {slide.cta1.label} <ArrowRight size={16} />
+                    </Link>
+                    <Link to={slide.cta2.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/50 bg-primary/20 px-7 py-4 text-center text-sm font-semibold text-white transition-all hover:bg-white/10">
+                      {slide.cta2.label}
+                    </Link>
+                  </div>
                 </motion.div>
-              )}
+              </AnimatePresence>
+
+              <div className="grid grid-cols-4 gap-3">
+                {BENEFITS.map((b, i) =>
+                <motion.div
+                  key={b.label}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
+                  className="flex min-h-14 items-center gap-2">
+                    <b.icon size={20} className="text-white/90 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.35)]" />
+                    <span className="text-white/85 font-medium leading-tight text-sm text-right [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]">{b.label}</span>
+                  </motion.div>
+                )}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Controls (desktop only, same as before) */}
+        {SLIDES.length > 1 && <div className="hidden lg:flex absolute bottom-8 right-8 z-20 items-center gap-3">
+          <button onClick={prev} aria-label="Předchozí snímek" className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all">
+            <ChevronLeft size={16} />
+          </button>
+          <button onClick={next} aria-label="Další snímek" className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all">
+            <ChevronRight size={16} />
+          </button>
+        </div>}
+
+        {SLIDES.length > 1 && <div className="hidden lg:flex absolute bottom-8 left-8 z-20 items-center gap-2">
+          {SLIDES.map((s, i) => <span key={s.title} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/40'}`} />)}
+        </div>}
       </div>
 
-      {/* Controls */}
-      {SLIDES.length > 1 && <div className="absolute bottom-8 right-8 z-20 hidden items-center gap-3 sm:flex">
-        <button onClick={prev} aria-label="Předchozí snímek" className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all">
-          <ChevronLeft size={16} />
-        </button>
-        <button onClick={next} aria-label="Další snímek" className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all">
-          <ChevronRight size={16} />
-        </button>
-      </div>}
+      {/* Mobile: description, CTAs and benefits live below the image on a solid background — fully readable, image stays uncluttered */}
+      <div className="lg:hidden bg-primary px-5 pb-10 pt-6">
+        <p className="mb-6 text-base font-medium leading-relaxed text-white/90">{slide.desc}</p>
 
-      {SLIDES.length > 1 && <div className="absolute bottom-8 left-8 z-20 flex items-center gap-2">
-        {SLIDES.map((s, i) => <span key={s.title} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/40'}`} />)}
-      </div>}
+        <div className="mb-6 grid grid-cols-1 gap-3">
+          <Link to={slide.cta1.to} className="min-h-12 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 btn-metallic-mist">
+            {slide.cta1.label} <ArrowRight size={16} />
+          </Link>
+          <Link to={slide.cta2.to} className="min-h-12 inline-flex items-center justify-center gap-2 rounded-full border border-white/50 bg-primary/20 px-6 py-3.5 text-center text-sm font-semibold text-white">
+            {slide.cta2.label}
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          {BENEFITS.map((b) =>
+          <div key={b.label} className="flex min-h-14 items-center gap-2">
+              <b.icon size={20} className="text-white/90 shrink-0" />
+              <span className="text-white/85 font-medium leading-tight text-sm">{b.label}</span>
+            </div>
+          )}
+        </div>
+
+        {SLIDES.length > 1 && <div className="mt-6 flex items-center justify-center gap-2">
+          {SLIDES.map((s, i) => <span key={s.title} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/40'}`} />)}
+        </div>}
+      </div>
     </section>);
 
 }

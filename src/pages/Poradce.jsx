@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Send, ArrowRight, Droplets, Loader, Calculator } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -16,6 +16,8 @@ const SUGGESTED_QUESTIONS = [
 ];
 
 export default function Poradce() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -33,11 +35,21 @@ export default function Poradce() {
 
   useEffect(() => {
     setSEO({
-      title: 'AI Mlžný poradce — Vyberte si ideální mlžný systém pro mlžítko - Mlžidla.cz',
-      description: 'Popište svůj prostor, potřeby a náš AI poradce vám doporučí vhodný mlžítko neboli mlžný systém či mlžnou sochu Mlžidla.cz.',
+      title: 'AI Projektant mlžení — návrh sestavy | MLŽIDLA®',
+      description: 'Popište prostor a AI Projektant MLŽIDLA® doporučí vhodnou kolekci, rozsah sestavy a připraví zadání pro nezávaznou cenovou nabídku.',
       canonicalPath: '/poradce',
     });
   }, []);
+
+  const autoStartedRef = useRef(false);
+  useEffect(() => {
+    const zadani = searchParams.get('zadani')?.trim();
+    if (zadani && !autoStartedRef.current && !conversation && !starting) {
+      autoStartedRef.current = true;
+      setInput(zadani);
+      startConversation(zadani);
+    }
+  }, [searchParams]);
 
   const startConversation = async (firstMessage) => {
     setStarting(true);
@@ -83,6 +95,17 @@ export default function Poradce() {
   };
 
   const isAssistantTyping = loading && messages.length > 0 && messages[messages.length - 1]?.role === 'user';
+  const latestAssistantMessage = [...messages].reverse().find((msg) => msg.role !== 'user' && msg.content)?.content || '';
+
+  const goToQuote = () => {
+    const userInputs = messages.filter((msg) => msg.role === 'user' && msg.content).map((msg) => msg.content).join('\n');
+    const summary = [
+      'AI návrh projektu MLŽIDLA®',
+      userInputs ? `Zadání zákazníka:\n${userInputs}` : '',
+      latestAssistantMessage ? `\nDoporučení AI Projektanta:\n${latestAssistantMessage}` : '',
+    ].filter(Boolean).join('\n\n');
+    navigate(`/poptavka?produkt=${encodeURIComponent('AI návrh projektu')}&zprava=${encodeURIComponent(summary)}`);
+  };
 
   return (
     <div className="min-h-screen bg-white pt-24 pb-12">

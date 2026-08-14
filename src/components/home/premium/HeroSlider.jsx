@@ -62,7 +62,7 @@ export default function HeroSlider() {
 
         {/* Mobile: soft side vignette for a more finished, premium framing */}
         <div
-          className="absolute inset-0 lg:hidden px-2"
+          className="absolute inset-0 lg:hidden my-6"
           style={{
             backgroundImage:
             'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'

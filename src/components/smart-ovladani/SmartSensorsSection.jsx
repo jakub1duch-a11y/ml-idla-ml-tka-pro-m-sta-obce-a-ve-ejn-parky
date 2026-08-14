@@ -4,8 +4,8 @@ import { Check } from 'lucide-react';
 
 const SENSORS = [
 'Teplotní senzor — spustí mlžení po dosažení nastavené teploty',
-'Senzor vlhkosti — hlídá optimální mikroklima okolí',
-'PIR senzor pohybu — mlžení jen tehdy, když je někdo v prostoru',
+'Volitelný senzor vlhkosti — může vstupovat do automatizační logiky',
+'Volitelný PIR senzor — může podmínit provoz přítomností osob v prostoru',
 'Volitelná integrace počasí — podle konfigurace lze provoz blokovat při nevhodných podmínkách',
 'Manuální tlačítko jako spolehlivá záloha'];
 

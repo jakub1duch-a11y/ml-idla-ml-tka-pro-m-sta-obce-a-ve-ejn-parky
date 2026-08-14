@@ -5,6 +5,30 @@ import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 
 const isImageUrl = (url = '') => /\.(png|jpe?g|webp)(\?|$)/i.test(url) || url.includes('/images/');
+const MAX_UPLOAD_MB = 20;
+const OPTIMIZE_FROM_MB = 12;
+
+const optimizeLargePhoto = async (file) => {
+  if (file.size <= OPTIMIZE_FROM_MB * 1024 * 1024) return file;
+  const bitmap = await createImageBitmap(file);
+  const maxDimension = 3200;
+  const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
+  const width = Math.max(1, Math.round(bitmap.width * scale));
+  const height = Math.max(1, Math.round(bitmap.height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(bitmap, 0, 0, width, height);
+  bitmap.close?.();
+
+  const toBlob = (quality) => new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality));
+  let blob = await toBlob(0.88);
+  if (blob && blob.size > OPTIMIZE_FROM_MB * 1024 * 1024) blob = await toBlob(0.76);
+  if (!blob) return file;
+  const baseName = file.name.replace(/\.[^.]+$/, '');
+  return new File([blob], `${baseName}-optimized.jpg`, { type: 'image/jpeg', lastModified: Date.now() });
+};
 
 export default function AIVizualizace() {
   const [searchParams] = useSearchParams();
@@ -19,6 +43,7 @@ export default function AIVizualizace() {
   const [selectedProductId, setSelectedProductId] = useState('');
   const [productsLoading, setProductsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [optimizing, setOptimizing] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -55,23 +80,8 @@ export default function AIVizualizace() {
   const selectedProduct = useMemo(() => products.find((item) => item.id === selectedProductId) || null, [products, selectedProductId]);
   const canGenerate = useMemo(() => Boolean((file || sourceUrl) && selectedProduct?.image_url), [file, sourceUrl, selectedProduct]);
 
-  const pickFile = (selected) => {
-    if (!selected) return;
-    if (!selected.type?.startsWith('image/')) {
-      setError('Nahrajte prosím fotografii ve formátu JPG, PNG nebo WebP.');
-      return;
-    }
-    if (selected.size > 12 * 1024 * 1024) {
-      setError('Fotografie je příliš velká. Maximální velikost je 12 MB.');
-      return;
-    }
-    setError('');
-    setFile(selected);
-    setSourceUrl('');
-    setResultUrl('');
-    if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
-    setPreviewUrl(URL.createObjectURL(selected));
-  };
+                  <p className="mt-2 text-xs text-white/35">JPG, PNG nebo WebP · max. 20 MB</p>
+                  <p className="mt-1 text-[10px] text-white/25">Fotky nad 12 MB automaticky optimalizujeme před nahráním.</p>
 
   const generate = async () => {
     if (!canGenerate || loading) return;
@@ -165,8 +175,8 @@ export default function AIVizualizace() {
 
             {error && <p className="mt-4 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-100">{error}</p>}
 
-            <button type="button" onClick={generate} disabled={!canGenerate || loading} className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
-              {loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Vytvořit AI vizualizaci</>}
+            <button type="button" onClick={generate} disabled={!canGenerate || loading || optimizing} className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
+              {optimizing ? <><Loader size={16} className="animate-spin"/> Optimalizuji fotografii…</> : loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Vytvořit AI vizualizaci</>}
             </button>
             <p className="mt-4 text-[11px] leading-relaxed text-white/30">AI používá jako povinnou referenci skutečné fotografie vybraného výrobku z katalogu. Vizualizace je stále koncepční; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
           </div>

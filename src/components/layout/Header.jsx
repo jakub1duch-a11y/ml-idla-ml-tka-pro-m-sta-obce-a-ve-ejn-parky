@@ -109,7 +109,7 @@ export default function Header() {
                 aria-expanded={megaOpen}
                 className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}
               >
-                PRODUKTY
+                Produkty
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>

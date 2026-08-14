@@ -49,7 +49,7 @@ export default function HeroSlider() {
             animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center] py-1" />
+            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center] py-5" />
         </AnimatePresence>
 
         {/* Mobile: layered vignette - subtle top wash + clear middle so the photo breathes + smooth ramp into the bottom text zone */}
@@ -73,7 +73,7 @@ export default function HeroSlider() {
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
         {/* Mobile: short tag + title directly on the image */}
-        <div className="absolute inset-x-0 bottom-0 lg:hidden px-5 py-5">
+        <div className="absolute inset-x-0 bottom-0 lg:hidden px-5 py-3">
           <p className="mb-2 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)] text-xs">{slide.tag}</p>
           <h1 className="font-heading font-semibold leading-[1.1] tracking-tight text-white text-3xl [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]">
             {slide.titleMobile || slide.title}

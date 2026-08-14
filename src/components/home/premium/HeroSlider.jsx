@@ -74,7 +74,7 @@ export default function HeroSlider() {
 
         {/* Mobile: short tag + title directly on the image */}
         <div className="absolute inset-x-0 bottom-0 lg:hidden px-5 py-5">
-          <p className="mb-2 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 text-[11px] [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">{slide.tag}</p>
+          <p className="mb-2 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)] text-xs">{slide.tag}</p>
           <h1 className="font-heading font-semibold leading-[1.1] tracking-tight text-white text-3xl [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]">
             {slide.titleMobile || slide.title}
           </h1>

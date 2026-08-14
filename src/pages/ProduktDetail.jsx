@@ -20,6 +20,7 @@ import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
+import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -272,6 +273,9 @@ export default function ProduktDetail() {
           
         </div>
       </div>
+
+      {/* ═══════ SMART VALVE ═══════ */}
+      <SmartValveProductSection />
 
       {/* ═══════ REVIEWS ═══════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />

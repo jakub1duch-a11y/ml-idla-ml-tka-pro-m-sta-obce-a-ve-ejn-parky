@@ -1,42 +1,74 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Building2, Trees, Sparkles, Grid2X2, CalendarDays } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import GoIcon from '@/components/pronajem/GoIcon';
+
+const COLLECTION_META = {
+  '/mestske-mlzitka': { icon: Building2, eyebrow: 'Veřejný prostor', description: 'Odolná řešení pro náměstí, parky, školy a sportoviště.' },
+  '/zahradni-mlzitka': { icon: Trees, eyebrow: 'Zahrady & terasy', description: 'Minimalistická mlžítka pro soukromé a rezidenční projekty.' },
+  '/zakazkova-mlzitka': { icon: Sparkles, eyebrow: 'Na míru', description: 'Autorské tvary a individuální řešení podle prostoru a zadání.' },
+};
 
 export default function MegaCatalogMenu({ open, onEnter, onLeave, onNavigate, collections, uses, customLink }) {
   const featured = collections.find((item) => item.featured);
   const rental = collections.find((item) => item.textOnly);
-  const links = collections.filter((item) => !item.featured && !item.textOnly);
+  const collectionLinks = collections.filter((item) => !item.featured && !item.textOnly);
 
-  return <AnimatePresence>{open && <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }} onMouseEnter={onEnter} onMouseLeave={onLeave} className="absolute left-0 right-0 top-full z-50 border-b border-slate-200 bg-white shadow-xl shadow-slate-900/10">
-    <div className="mx-auto grid max-w-7xl gap-10 px-6 py-8 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
-      <div>
-        <div className="mb-5">
-          <p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kolekce MLŽIDLA®</p>
-          <p className="mt-1 text-sm text-slate-500">Vyberte podle charakteru místa.</p>
-        </div>
+  return <AnimatePresence>{open && <motion.div
+    initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .16 }}
+    onMouseEnter={onEnter} onMouseLeave={onLeave}
+    className="absolute left-0 right-0 top-full z-50 border-b border-slate-200/80 bg-white/95 shadow-2xl shadow-slate-950/10 backdrop-blur-xl"
+  >
+    <div className="mx-auto max-w-7xl px-6 py-7 lg:px-8">
+      <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr]">
+        <section>
+          <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Produkty MLŽIDLA®</p>
+              <h2 className="mt-1 font-heading text-xl font-medium text-slate-950">Vyberte podle typu projektu</h2>
+            </div>
+            {featured && <Link to={featured.path} onClick={onNavigate} className="group hidden items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-secondary sm:inline-flex">
+              Všechny produkty <ArrowRight size={15} className="transition-transform group-hover:translate-x-1"/>
+            </Link>}
+          </div>
 
-        <div className="grid gap-2 sm:grid-cols-2">
-          {featured && <Link to={featured.path} onClick={onNavigate} className="group col-span-full flex items-center justify-between rounded-2xl border border-slate-200 px-5 py-4 transition hover:border-secondary hover:bg-slate-50">
-            <div><p className="font-heading text-xl text-slate-950">{featured.label}</p><p className="mt-1 text-sm text-slate-500">{featured.sub}</p></div><ArrowRight size={17} className="text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-secondary" />
-          </Link>}
+          <div className="mt-3 divide-y divide-slate-100">
+            {collectionLinks.map((item) => {
+              const meta = COLLECTION_META[item.path] || {};
+              const Icon = meta.icon || Grid2X2;
+              return <Link key={item.label} to={item.path} onClick={onNavigate} className="group grid grid-cols-[42px_1fr_auto] items-center gap-3 rounded-xl px-2 py-3.5 transition hover:bg-slate-50">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-secondary transition group-hover:border-secondary/40"><Icon size={17}/></span>
+                <span>
+                  <span className="flex items-baseline gap-2"><strong className="font-heading text-[17px] font-medium text-slate-950">{item.label}</strong><small className="hidden font-mono text-[9px] uppercase tracking-[.14em] text-slate-400 sm:inline">{meta.eyebrow}</small></span>
+                  <span className="mt-0.5 block text-xs leading-relaxed text-slate-500">{meta.description || item.sub}</span>
+                </span>
+                <ArrowRight size={16} className="mr-2 text-slate-300 transition group-hover:translate-x-1 group-hover:text-secondary"/>
+              </Link>;
+            })}
+          </div>
 
-          {links.map((item) => <Link key={item.label} to={item.path} onClick={onNavigate} className="group flex items-center justify-between rounded-2xl border border-slate-200 px-5 py-4 transition hover:border-secondary hover:bg-slate-50">
-            <div><p className="font-heading text-lg text-slate-950">{item.label}</p><p className="mt-1 text-xs leading-relaxed text-slate-500">{item.sub}</p></div><ArrowRight size={15} className="ml-3 shrink-0 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-secondary" />
-          </Link>)}
-        </div>
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-4">
+            {featured && <Link to={featured.path} onClick={onNavigate} className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-slate-800 sm:hidden"><Grid2X2 size={14}/> Všechny produkty</Link>}
+            <Link to={customLink.path} onClick={onNavigate} className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold"><Sparkles size={14}/> Navrhnout řešení na míru</Link>
+            {rental && <Link to={rental.path} onClick={onNavigate} className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-slate-800"><CalendarDays size={14}/> {rental.label}</Link>}
+          </div>
+        </section>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          {rental && <Link to={rental.path} onClick={onNavigate} className="group relative flex items-center justify-between overflow-visible rounded-full bg-primary py-3 pl-5 pr-20 text-sm font-bold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-lg">{rental.label}<ArrowRight size={15} className="transition-transform group-hover:translate-x-1"/><GoIcon variant="button" /></Link>}
-          <Link to={customLink.path} onClick={onNavigate} className="btn-secondary-outline group flex items-center gap-3 rounded-full px-5 py-3 text-slate-900"><Sparkles size={17} className="text-secondary transition-transform group-hover:rotate-12"/><span className="text-sm font-semibold">{customLink.label}</span></Link>
-        </div>
-      </div>
-
-      <div className="border-t border-slate-200 pt-7 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-        <p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">B2B využití</p>
-        <p className="mt-1 text-sm text-slate-500">Řešení pro konkrétní provoz a typ projektu.</p>
-        <div className="mt-5 grid grid-cols-2 gap-1">{uses.map((item) => <Link key={item.label} to={item.path} onClick={onNavigate} className="group flex items-center gap-2 rounded-lg px-2 py-2.5 hover:bg-slate-50"><item.icon size={15} className="text-secondary"/><span className="text-sm text-slate-700 group-hover:text-slate-950">{item.label}</span></Link>)}</div>
+        <section className="border-t border-slate-200 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          <div className="border-b border-slate-200 pb-4">
+            <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Podle využití</p>
+            <h2 className="mt-1 font-heading text-xl font-medium text-slate-950">Kam mlžítko potřebujete?</h2>
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-x-2 gap-y-1">
+            {uses.map((item) => <Link key={item.label} to={item.path} onClick={onNavigate} className="group flex min-h-11 items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-50 hover:text-slate-950">
+              <item.icon size={15} className="shrink-0 text-secondary"/><span className="leading-tight">{item.label}</span>
+            </Link>)}
+          </div>
+          <div className="mt-4 rounded-2xl bg-slate-950 px-5 py-4 text-white">
+            <p className="font-mono text-[9px] uppercase tracking-[.18em] text-cyan-300">Nevíte, co vybrat?</p>
+            <div className="mt-1.5 flex items-center justify-between gap-4"><p className="text-xs leading-relaxed text-white/60">Popište prostor a doporučíme vhodný typ, počet prvků i způsob instalace.</p><Link to="/poptavka" onClick={onNavigate} className="shrink-0 text-white transition hover:text-cyan-300"><ArrowRight size={18}/></Link></div>
+          </div>
+        </section>
       </div>
     </div>
   </motion.div>}</AnimatePresence>;

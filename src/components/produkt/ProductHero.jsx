@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, Wrench, MapPin } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
@@ -43,13 +43,19 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             {product.name}
           </h1>
           {product.short_description &&
-            <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-7">{product.short_description}</p>
+            <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-6">{product.short_description}</p>
             }
+
+          <div className="mb-6 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 px-3 py-1.5 text-xs font-semibold text-cyan-800"><ShieldCheck size={13}/> Bez čerpadla</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700"><Wrench size={13}/> Zakázková výroba</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700"><MapPin size={13}/> Vyrobeno v ČR</span>
+          </div>
 
           {quickSpecs.length > 0 &&
             <div className="grid grid-cols-2 gap-3 mb-8">
               {quickSpecs.map((s) =>
-              <div key={s.label} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <div key={s.label} className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,.04)]">
                   <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
                     <s.icon size={14} className="text-slate-500" strokeWidth={1.75} />
                   </span>

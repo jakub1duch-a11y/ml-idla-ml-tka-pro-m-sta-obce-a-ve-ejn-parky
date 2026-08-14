@@ -23,7 +23,7 @@ export default function SmartOvladani() {
       <SmartAutomationFlow />
       <SmartBenefits />
       <SmartSensorsSection />
-      <section className="bg-primary px-6 py-16 lg:px-10 lg:py-24"><div className="mx-auto max-w-5xl"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-accent">Smart úspory</p><h2 className="mt-4 font-heading text-4xl text-primary-foreground lg:text-5xl">Zjistěte, kolik ušetří chytré mlžení.</h2><p className="mt-4 max-w-2xl text-primary-foreground/70">Propojte provozní parametry s automatizací podle teploty a využití prostoru.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>
+      <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Smart úspory</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Zjistěte, kolik může chytré řízení ušetřit.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Propojte skutečné provozní parametry s automatizací podle teploty, počasí a využití prostoru.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>
       <SmartCTA />
     </div>);
 

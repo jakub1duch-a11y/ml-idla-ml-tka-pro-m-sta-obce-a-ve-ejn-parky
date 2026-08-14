@@ -177,7 +177,7 @@ export default function Kolekce() {
       {/* ── PRODUKTY (posunuto výš — hned pod výběrem kategorií) ── */}
       <div id="catalog" className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between lg:mb-12">
-          <div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kompletní katalog</p><h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
+          <div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kompletní katalog</p><h2 className="mt-3 font-heading tracking-[-.02em] text-foreground sm:text-4xl text-4xl lg:text-4xl">
             {activeGroup ? `${activeGroup.label}` : 'Všechna mlžítka a mlžné systémy'}
           </h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">Vyberte produkt podle typu prostoru. Každý model lze upravit podle konkrétní instalace, způsobu napojení a požadovaného provozu.</p></div>
           {!loading && <span className="shrink-0 rounded-full border border-border px-4 py-2 font-mono text-xs text-muted-foreground">{displayedProducts.length} produktů</span>}

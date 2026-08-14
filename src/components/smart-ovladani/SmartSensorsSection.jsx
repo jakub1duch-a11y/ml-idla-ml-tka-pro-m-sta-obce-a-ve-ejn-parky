@@ -22,7 +22,7 @@ export default function SmartSensorsSection() {
         <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Senzory · ventily · automatizace</p>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
-            Systém reaguje na reálné podmínky.
+            Systém reaguje na skutečné provozní podmínky.
           </h2>
           <p className="mb-6 text-sm leading-7 text-slate-500">Podle projektu propojujeme řídicí logiku se senzorikou a ovládáním jednotlivých vodních zón. U variant s PEVEKO / SUPLA vždy vycházíme z konkrétního technického návrhu a kompatibility použitých komponent.</p>
           <ul className="space-y-3">

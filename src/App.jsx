@@ -86,6 +86,8 @@ const AuthenticatedApp = () => {
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/mestske-mlzitka" element={<CollectionDetail forcedCollection="city" canonicalPath="/mestske-mlzitka" />} />
         <Route path="/kolekce/city" element={<Navigate to="/mestske-mlzitka" replace />} />
+        <Route path="/zahradni-mlzitka" element={<CollectionDetail forcedCollection="garden" canonicalPath="/zahradni-mlzitka" />} />
+        <Route path="/kolekce/garden" element={<Navigate to="/zahradni-mlzitka" replace />} />
         <Route path="/kolekce/:collection" element={<CollectionDetail />} />
         <Route path="/brand-identity" element={<BrandIdentity />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />

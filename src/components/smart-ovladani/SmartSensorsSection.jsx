@@ -6,7 +6,7 @@ const SENSORS = [
 'Teplotní senzor — spustí mlžení po dosažení nastavené teploty',
 'Senzor vlhkosti — hlídá optimální mikroklima okolí',
 'PIR senzor pohybu — mlžení jen tehdy, když je někdo v prostoru',
-'Integrace předpovědi počasí — systém neběží zbytečně za deště nebo větru',
+'Volitelná integrace počasí — podle konfigurace lze provoz blokovat při nevhodných podmínkách',
 'Manuální tlačítko jako spolehlivá záloha'];
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const variants = {
-  primary: 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-slate-950 hover:shadow-2xl hover:from-cyan-400 hover:to-cyan-500 hover:scale-105',
+  primary: 'btn-metallic-mist',
   secondary: 'border-2 border-current/40 bg-transparent hover:bg-current/10 hover:border-current/70 backdrop-blur-sm'
 };
 

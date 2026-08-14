@@ -58,7 +58,7 @@ export default function HeroSlider() {
           <div className="max-w-5xl">
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
-                <p className="mb-3 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 sm:mb-4 sm:text-xs sm:tracking-[0.3em] text-xs">{slide.tag}</p>
+                <p className="mb-3 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 sm:mb-4 sm:text-xs sm:tracking-[0.3em] text-xs [text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">{slide.tag}</p>
                 <h1 className="mb-4 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white sm:mb-5 text-4xl sm:text-6xl lg:text-7xl [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
                   {slide.title}
                 </h1>
@@ -84,8 +84,8 @@ export default function HeroSlider() {
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
                 className="flex min-h-14 items-center gap-2">
                 
-                  <b.icon size={20} className="text-white/90 shrink-0" />
-                  <span className="text-white/85 font-medium leading-tight text-sm text-right">{b.label}</span>
+                  <b.icon size={20} className="text-white/90 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.35)]" />
+                  <span className="text-white/85 font-medium leading-tight text-sm text-right [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]">{b.label}</span>
                 </motion.div>
               )}
             </div>

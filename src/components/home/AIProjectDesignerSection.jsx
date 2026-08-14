@@ -56,7 +56,19 @@ export default function AIProjectDesignerSection() {
           </div>
 
           <div className="rounded-[28px] border border-white/12 bg-white/[.06] backdrop-blur-sm p-4 sm:p-6 lg:p-7 shadow-2xl shadow-black/20">
-            <label className="block font-mono text-[10px] tracking-[.16em] uppercase text-white/45 mb-3">Co potřebujete ochladit?</label>
+            <label className="block font-mono text-[10px] tracking-[.16em] uppercase text-white/45 mb-3">1 · Typ prostoru</label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+              {examples.map(({icon: Icon, label}) => {
+                const active = selectedType === label;
+                return (
+                  <button key={label} type="button" onClick={() => selectType(label)} className={`group rounded-xl border px-3 py-3 text-left transition-colors ${active ? 'border-teal-300/60 bg-teal-300/10' : 'border-white/10 bg-white/[.04] hover:bg-white/[.08] hover:border-white/20'}`}>
+                    <Icon size={15} className={`mb-2 ${active ? 'text-teal-300' : 'text-white/45 group-hover:text-teal-300'}`} />
+                    <span className={`block text-xs ${active ? 'text-white' : 'text-white/65'}`}>{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <label className="block mt-5 font-mono text-[10px] tracking-[.16em] uppercase text-white/45 mb-3">2 · Popis projektu</label>
             <textarea
               value={value}
               onChange={(e) => updateValue(e.target.value)}
@@ -64,22 +76,14 @@ export default function AIProjectDesignerSection() {
                 if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') start();
               }}
               rows={5}
-              placeholder="Např. náměstí 20 × 30 m, vysoká návštěvnost, chceme vytvořit atraktivní mlžiště pro děti i dospělé…"
+              placeholder="Např. plocha 20 × 30 m, vysoká návštěvnost, chceme vytvořit atraktivní mlžiště pro děti i dospělé…"
               className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-[15px] leading-relaxed text-white placeholder:text-white/25 focus:outline-none focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/10"
             />
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-              {examples.map(({icon: Icon, label, text}) => (
-                <button key={label} type="button" onClick={() => applyExample(text)} className="group rounded-xl border border-white/10 bg-white/[.04] px-3 py-3 text-left hover:bg-white/[.08] hover:border-white/20 transition-colors">
-                  <Icon size={15} className="text-white/45 group-hover:text-teal-300 mb-2" />
-                  <span className="block text-xs text-white/65">{label}</span>
-                </button>
-              ))}
-            </div>
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
-              <button type="button" onClick={() => start()} disabled={!value.trim()} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
+              <button type="button" onClick={() => start()} disabled={!value.trim() && !selectedType} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
                 Navrhnout řešení pomocí AI <ArrowRight size={16}/>
               </button>
-              <button type="button" onClick={() => navigate(`/ai-vizualizace${value.trim() ? `?zadani=${encodeURIComponent(value.trim())}` : ''}`)} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-6 py-3.5 text-sm font-semibold text-white/80 hover:bg-white/[.08] transition-colors">
+              <button type="button" onClick={() => { const params = new URLSearchParams(); if (value.trim()) params.set('zadani', value.trim()); if (selectedType) params.set('typ', selectedType); navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`); }} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-6 py-3.5 text-sm font-semibold text-white/80 hover:bg-white/[.08] transition-colors">
                 Vizualizovat z fotografie
               </button>
             </div>

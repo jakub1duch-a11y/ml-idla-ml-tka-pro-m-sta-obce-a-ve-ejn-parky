@@ -12,7 +12,7 @@ export default function SmartOvladani() {
   useEffect(() => {
     setSEO({
       title: 'Smart ovládání mlžítek — aplikace a automatizace | mlzidla.cz',
-      description: 'Chytrá aplikace pro ovládání mlžítek. Automatizace podle počasí, teploty, vlhkosti a pohybu. Vzdálené ovládání, scénáře a statistiky spotřeby.',
+      description: 'Smart řízení mlžítek podle času, teploty a provozních podmínek. Vzdálené ovládání, více zón, senzory a automatizační scénáře pro města i soukromé instalace.',
       keywords: 'smart ovládání mlžítek, aplikace mlžení, automatizace mlžení, chytré senzory mlžítka',
       canonicalPath: '/smart-ovladani',
     });

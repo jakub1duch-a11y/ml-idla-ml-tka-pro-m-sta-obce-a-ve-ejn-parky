@@ -30,11 +30,11 @@ function VideoSlider({ videos }) {
 }
 
 export default function ReferenceDetail({ fixedId }) {
-  const params = useParams();const id = fixedId || params.id;const [project, setProject] = useState(null);const [loading, setLoading] = useState(true);const [notFound, setNotFound] = useState(false);const [lightbox, setLightbox] = useState(null);
-  useEffect(() => {base44.entities.Realizace.get(id).then((p) => {if (p) {setProject(p);trackReferenceView(p.name, p.location, p.category);setSEO(getReferenceSEO(p));} else setNotFound(true);}).catch(() => setNotFound(true)).finally(() => setLoading(false));}, [id]);
+  const params = useParams();const referenceId = fixedId || params.id;const [project, setProject] = useState(null);const [loading, setLoading] = useState(true);const [notFound, setNotFound] = useState(false);const [lightbox, setLightbox] = useState(null);
+  useEffect(() => {base44.entities.Realizace.get(referenceId).then((p) => {if (p) {setProject(p);trackReferenceView(p.name, p.location, p.category);setSEO(getReferenceSEO(p));} else setNotFound(true);}).catch(() => setNotFound(true)).finally(() => setLoading(false));}, [referenceId]);
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader className="animate-spin" /></div>;
   if (notFound || !project) return <div className="min-h-screen flex items-center justify-center"><Link to="/reference">← Zpět na reference</Link></div>;
-  const isZoo = id === ZOO_ID;
+  const isZoo = referenceId === ZOO_ID;
   const allImages = [project.image_url, ...(project.gallery_urls || [])].filter(Boolean).filter((u) => !isVideoFile(u));
   const contentImage = allImages[1] || allImages[0];
   const heroText = getShortHeroText(project, isZoo);

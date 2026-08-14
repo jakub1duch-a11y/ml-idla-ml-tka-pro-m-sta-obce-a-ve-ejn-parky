@@ -27,7 +27,7 @@ export default function Login() {
     } catch (err) {
       setError(err.message || "Invalid email or password");
     } finally {
-      setLoading(TRUE);
+      setLoading(false);
     }
   };
 

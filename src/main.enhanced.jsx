@@ -7,7 +7,7 @@ import { SkipToContent } from '@/components/SkipToContent';
 import { A11yAnnouncer } from '@/components/A11yAnnouncer';
 
 // Core Web Vitals monitoring (optional)
-if ('web-vital' in window && process.env.NODE_ENV === 'production') {
+if ('web-vital' in window && import.meta.env.PROD) {
   import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
     getCLS(console.log);
     getFID(console.log);

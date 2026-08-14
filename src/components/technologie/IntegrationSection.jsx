@@ -11,7 +11,7 @@ const PLACES = [
 
 export default function IntegrationSection() {
   return (
-    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100 bg-slate-50">
+    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100 bg-slate-50">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-10">
         <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
           className="rounded-2xl overflow-hidden border border-slate-200 order-2 lg:order-1">

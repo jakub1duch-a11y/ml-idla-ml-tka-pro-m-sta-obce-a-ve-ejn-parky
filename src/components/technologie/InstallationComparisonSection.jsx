@@ -31,7 +31,7 @@ export default function InstallationComparisonSection() {
 
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="bg-white border border-slate-200 rounded-2xl overflow-hidden mb-8">
-        <p className="text-center text-xs font-mono tracking-widest uppercase text-slate-400 py-4 border-b border-slate-200">
+        <p className="text-center font-mono tracking-widest uppercase text-slate-400 py-4 border-b border-slate-200 text-sm">
           Technické srovnání požadavků pro oba typy instalace
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
@@ -47,7 +47,7 @@ export default function InstallationComparisonSection() {
             {ROWS.map((r) =>
             <div key={r.label} className="flex items-center justify-between px-6 py-3 border-b border-slate-100 last:border-0 bg-[hsl(var(--ring))]">
                 <span className="text-xs text-slate-400">{r.label}</span>
-                <span className="text-sm text-slate-900 font-medium text-right">{r.mobile}</span>
+                <span className="text-sm font-medium text-right text-[hsl(var(--background))]">{r.mobile}</span>
               </div>
             )}
           </div>

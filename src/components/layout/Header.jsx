@@ -30,6 +30,7 @@ const USAGE_LINKS = [
 
 
 const INFO_LINKS = [
+{ icon: Building2, label: 'O společnosti', path: '/o-nas' },
 { icon: Palette, label: 'Brand identity', path: '/brand-identity' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
 { icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
@@ -148,7 +149,6 @@ export default function Header() {
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/o-nas" className="px-5 py-2.5 text-sm font-medium rounded-full transition-all text-white/85 hover:text-white hover:bg-white/10">O společnosti</Link>
               <Link to="/poptavka"
               className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">POPTAT CENU
 

@@ -170,20 +170,8 @@ export default function Kolekce() {
       {/* ── KATEGORIE (hover icon cards) ── */}
       <CategorySelector groups={CATEGORY_GROUPS} activeCategory={activeCategory} onSelect={setActiveCategory} />
 
-      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
-      <GatesSlider />
-
-      {/* ── HLAVNÍ INFORMACE ── */}
-      <CollectionMainInfoSection />
-
-      {/* ── DYNAMICKÝ SLIDER PRODUKTŮ ── */}
-      <ProductsShowcaseSlider />
-
-      {/* ── VLASTNOSTI A VÝHODY ── */}
-      <FeaturesBenefitsSection />
-
-      {/* ── PRODUKTY ── */}
-      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
+      {/* ── PRODUKTY (posunuto výš — hned pod výběrem kategorií) ── */}
+      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div className="flex items-center justify-between mb-10 lg:mb-12">
           <p className="tracking-widest uppercase text-slate-400 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
             {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
@@ -208,6 +196,18 @@ export default function Kolekce() {
           </div>
         }
       </div>
+
+      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
+      <GatesSlider />
+
+      {/* ── HLAVNÍ INFORMACE ── */}
+      <CollectionMainInfoSection />
+
+      {/* ── DYNAMICKÝ SLIDER PRODUKTŮ ── */}
+      <ProductsShowcaseSlider />
+
+      {/* ── VLASTNOSTI A VÝHODY ── */}
+      <FeaturesBenefitsSection />
 
       {/* ── ŽIVÁ UKÁZKA ── */}
       <LiveDemoSection />

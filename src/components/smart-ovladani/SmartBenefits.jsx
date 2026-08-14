@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { Smartphone, CalendarClock, Droplets, BarChart3, Bell, Layers } from 'lucide-react';
 
 const BENEFITS = [
-{ icon: Smartphone, title: 'Vzdálené ovládání', desc: 'Zapněte, vypněte i naplánujte mlžení odkudkoliv z mobilu.' },
+{ icon: Smartphone, title: 'Vzdálené ovládání', desc: 'U podporované konfigurace můžete mlžení ovládat a plánovat také vzdáleně.' },
 { icon: CalendarClock, title: 'Automatické scénáře', desc: 'Nastavte si scénáře podle denní doby, počasí nebo senzorů.' },
 { icon: Droplets, title: 'Efektivní využití vody', desc: 'Mlžení běží jen tehdy, kdy má podle nastavených podmínek skutečně smysl.' },
 { icon: BarChart3, title: 'Provozní přehled', desc: 'Podle konfigurace lze sledovat stav systému, zón a provozních scénářů.' },
 { icon: Bell, title: 'Stavová upozornění', desc: 'U podporované konfigurace lze doplnit vzdálená stavová upozornění a diagnostiku.' },
-{ icon: Layers, title: 'Více zařízení najednou', desc: 'Ovládejte a skupinujte více mlžítek v jedné aplikaci.' }];
+{ icon: Layers, title: 'Více zařízení najednou', desc: 'Více mlžítek lze podle návrhu rozdělit do samostatně řízených zón.' }];
 
 
 export default function SmartBenefits() {

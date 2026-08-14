@@ -11,7 +11,7 @@ export default function SmartCTA() {
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight mb-4">
             Připraveni na chytré mlžení?
           </h2>
-          <p className="text-white/50 mb-8">Poradíme s výběrem senzorů i nastavením automatizace pro váš prostor.</p>
+          <p className="text-white/50 mb-8">Navrhneme variantu START, SMART nebo SMART PRO podle počtu mlžítek, zón, senzorů a požadované úrovně vzdálené správy.</p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/kontakt?produkt=Smart%20ovl%C3%A1d%C3%A1n%C3%AD"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">

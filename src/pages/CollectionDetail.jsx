@@ -19,28 +19,42 @@ const CITY_STEPS = [
   { code: '03', icon: Droplets, title: 'Realizace a servis', text: 'Dodáme hotové řešení a navazující podporu pro bezproblémový provoz.' },
 ];
 
+const GARDEN_TRUST = [
+  { icon: ShieldCheck, title: 'Nerezové provedení', text: 'Čisté a odolné řešení navržené pro dlouhodobé venkovní použití.' },
+  { icon: Droplets, title: 'Jednoduché napojení', text: 'Podle zvoleného modelu navrhneme vhodné připojení a příslušenství pro váš prostor.' },
+  { icon: Ruler, title: 'Pevně i dočasně', text: 'Řešení může být trvalé, nebo u vybraných modelů sezónní a snadno přemístitelné.' },
+  { icon: Wrench, title: 'Servis a podpora', text: 'Pomůžeme s výběrem, instalací, zazimováním i následnou údržbou.' },
+];
+
+const GARDEN_STEPS = [
+  { code: '01', icon: MapPin, title: 'Vybereme místo', text: 'Zohledníme velikost terasy či zahrady, proudění vzduchu, pohyb lidí a zdroj vody.' },
+  { code: '02', icon: Ruler, title: 'Doporučíme model', text: 'Vybereme tvar, počet prvků a typ instalace tak, aby mlžítko fungovalo i vizuálně zapadlo.' },
+  { code: '03', icon: Droplets, title: 'Připravíme instalaci', text: 'Navrhneme napojení a potřebné příslušenství pro co nejjednodušší používání během sezóny.' },
+];
+
 export default function CollectionDetail({ forcedCollection, canonicalPath }) {
   const { collection: routeSlug } = useParams();
   const slug = forcedCollection || routeSlug;
   const collection = COLLECTIONS[slug] || COLLECTIONS.city;
   const isCity = slug === 'city';
+  const isGarden = slug === 'garden';
 
   useEffect(() => {
     setSEO({
-      title: isCity ? 'Městská mlžítka pro města, obce a veřejný prostor | MLŽIDLA®' : `${collection.name} | MLŽIDLA®`,
+      title: isCity ? 'Městská mlžítka pro města, obce a veřejný prostor | MLŽIDLA®' : isGarden ? 'Zahradní mlžítka pro terasy, pergoly a zahrady | MLŽIDLA®' : `${collection.name} | MLŽIDLA®`,
       description: collection.text,
       canonicalPath: canonicalPath || `/kolekce/${slug}`,
     });
-  }, [collection, slug, canonicalPath, isCity]);
+  }, [collection, slug, canonicalPath, isCity, isGarden]);
 
   return (
     <main className="bg-background pt-16">
       <CollectionHero collection={collection} />
 
-      {isCity && (
+      {(isCity || isGarden) && (
         <section className="border-b border-border bg-white">
           <div className="mx-auto grid max-w-7xl gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {CITY_TRUST.map(({ icon: Icon, title, text }) => (
+            {(isCity ? CITY_TRUST : GARDEN_TRUST).map(({ icon: Icon, title, text }) => (
               <div key={title} className="bg-white p-6 lg:p-7">
                 <Icon size={22} className="text-secondary" strokeWidth={1.6} />
                 <h2 className="mt-5 font-heading text-xl text-foreground">{title}</h2>
@@ -56,6 +70,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
           <p className="font-mono text-sm tracking-[.18em] uppercase text-secondary">NAVRŽENO PRO VAŠE MÍSTO</p>
           <h2 className="mt-4 font-heading text-3xl text-foreground lg:text-4xl">{collection.sectionHeading}</h2>
           {isCity && <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">Městské mlžítko není jen produkt. Je součástí provozu náměstí, parku nebo pěší zóny, proto řešíme vzhled, techniku i budoucí údržbu jako jeden celek.</p>}
+          {isGarden && <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">Zahradní mlžítko má ochladit prostor a zároveň v něm působit přirozeně. Proto řešíme nejen výkon, ale i umístění, napojení, vzhled a způsob sezónního používání.</p>}
         </div>
         <div className="grid gap-5 sm:grid-cols-3">
           {collection.features.map((feature) => (
@@ -67,18 +82,18 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
         </div>
       </section>
 
-      {isCity && (
+      {(isCity || isGarden) && (
         <section className="bg-slate-50 border-y border-border">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
             <div className="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
               <div>
                 <p className="font-mono text-sm tracking-[.18em] uppercase text-secondary">OD ZÁMĚRU K REALIZACI</p>
-                <h2 className="mt-4 font-heading text-4xl text-foreground lg:text-5xl">Jasný proces pro město, projektanta i realizační firmu.</h2>
+                <h2 className="mt-4 font-heading text-4xl text-foreground lg:text-5xl">{isCity ? 'Jasný proces pro město, projektanta i realizační firmu.' : 'Jednoduchý proces od výběru místa po první spuštění.'}</h2>
               </div>
-              <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">Cílem je předvídatelné řešení bez zbytečných komplikací při návrhu, instalaci a následném provozu.</p>
+              <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">{isCity ? 'Cílem je předvídatelné řešení bez zbytečných komplikací při návrhu, instalaci a následném provozu.' : 'Pomůžeme vybrat řešení, které se hodí do prostoru, jednoduše se používá a dává smysl i po technické stránce.'}</p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {CITY_STEPS.map(({ code, icon: Icon, title, text }) => (
+              {(isCity ? CITY_STEPS : GARDEN_STEPS).map(({ code, icon: Icon, title, text }) => (
                 <article key={code} className="border border-border bg-white p-7">
                   <div className="flex items-center justify-between">
                     <Icon size={22} className="text-secondary" strokeWidth={1.6} />
@@ -92,7 +107,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/reference" className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-sm font-bold text-primary-foreground">Prohlédnout realizace <ArrowRight size={16} /></Link>
               <Link to="/technologie" className="inline-flex items-center gap-2 border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground">Jak mlžítka fungují <ArrowRight size={16} /></Link>
-              <Link to="/ke-stazeni" className="inline-flex items-center gap-2 border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground">Technické podklady <ArrowRight size={16} /></Link>
+              <Link to={isGarden ? '/podpora' : '/ke-stazeni'} className="inline-flex items-center gap-2 border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground">{isGarden ? 'Časté dotazy' : 'Technické podklady'} <ArrowRight size={16} /></Link>
             </div>
           </div>
         </section>
@@ -104,8 +119,8 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-16 lg:flex-row lg:items-end lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-sm tracking-[.18em] uppercase text-accent">ŘEŠENÍ NA MÍRU</p>
-            <h2 className="mt-4 max-w-2xl font-heading text-4xl">{isCity ? 'Připravíme městské mlžítko pro konkrétní prostor a způsob provozu.' : 'Společně vybereme správný model, rozměr i způsob instalace.'}</h2>
-            {isCity && <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70">Pošlete nám základní informace o místě. Doporučíme vhodné řešení a další postup.</p>}
+            <h2 className="mt-4 max-w-2xl font-heading text-4xl">{isCity ? 'Připravíme městské mlžítko pro konkrétní prostor a způsob provozu.' : isGarden ? 'Vybereme zahradní mlžítko, které bude fungovat technicky i vizuálně.' : 'Společně vybereme správný model, rozměr i způsob instalace.'}</h2>
+            {(isCity || isGarden) && <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70">{isCity ? 'Pošlete nám základní informace o místě. Doporučíme vhodné řešení a další postup.' : 'Stačí fotografie nebo rozměry prostoru a informace o přívodu vody. Navrhneme vhodný model a způsob instalace.'}</p>}
           </div>
           <Link to="/poptavka" className="inline-flex shrink-0 items-center gap-2 bg-accent px-6 py-3 text-base font-semibold text-accent-foreground">Nezávazná poptávka <ArrowRight size={17} /></Link>
         </div>

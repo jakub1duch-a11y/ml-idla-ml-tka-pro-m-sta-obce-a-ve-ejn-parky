@@ -5,9 +5,9 @@ import { Smartphone, CalendarClock, Droplets, BarChart3, Bell, Layers } from 'lu
 const BENEFITS = [
 { icon: Smartphone, title: 'Vzdálené ovládání', desc: 'Zapněte, vypněte i naplánujte mlžení odkudkoliv z mobilu.' },
 { icon: CalendarClock, title: 'Automatické scénáře', desc: 'Nastavte si scénáře podle denní doby, počasí nebo senzorů.' },
-{ icon: Droplets, title: 'Úspora vody a energie', desc: 'Mlžení běží jen tehdy, kdy má skutečně smysl.' },
-{ icon: BarChart3, title: 'Historie a statistiky', desc: 'Přehled spotřeby vody a provozních cyklů v čase.' },
-{ icon: Bell, title: 'Notifikace', desc: 'Upozornění na dokončení cyklu, poruchu nebo nízký tlak.' },
+{ icon: Droplets, title: 'Efektivní využití vody', desc: 'Mlžení běží jen tehdy, kdy má podle nastavených podmínek skutečně smysl.' },
+{ icon: BarChart3, title: 'Provozní přehled', desc: 'Podle konfigurace lze sledovat stav systému, zón a provozních scénářů.' },
+{ icon: Bell, title: 'Stavová upozornění', desc: 'U podporované konfigurace lze doplnit vzdálená stavová upozornění a diagnostiku.' },
 { icon: Layers, title: 'Více zařízení najednou', desc: 'Ovládejte a skupinujte více mlžítek v jedné aplikaci.' }];
 
 

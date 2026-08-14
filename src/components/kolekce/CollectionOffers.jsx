@@ -15,7 +15,7 @@ export default function CollectionOffers() {
     <div className="mb-5"><AllProductsImageCard to="#catalog" image="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png" /></div>
     <div className="grid gap-5 lg:grid-cols-3">{OFFERS.map((offer) => <Link key={offer.title} to={`/${offer.slug}`} className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
       <div className="aspect-[4/3] overflow-hidden bg-slate-100"><img src={offer.image} alt={offer.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" /></div>
-      <div className="p-6"><p className="mb-3 font-mono text-[10px] uppercase tracking-[.16em] text-secondary">{offer.eyebrow}</p><h3 className="font-heading text-2xl text-foreground">{offer.title}</h3><p className="mt-3 text-base leading-relaxed text-muted-foreground">{offer.text}</p><span className="btn-secondary-outline mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground hidden">Prohlédnout produkty <ArrowRight size={15} /></span></div>
+      <div className="p-6"><p className="mb-3 font-mono text-[10px] uppercase tracking-[.16em] text-secondary">{offer.eyebrow}</p><h3 className="font-heading text-2xl text-foreground">{offer.title}</h3><p className="mt-3 text-base leading-relaxed text-muted-foreground">{offer.text}</p></div>
     </Link>)}</div>
   </section>;
 }

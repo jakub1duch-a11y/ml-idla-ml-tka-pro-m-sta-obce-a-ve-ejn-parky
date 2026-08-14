@@ -12,7 +12,22 @@ const examples = [
 
 export default function AIProjectDesignerSection() {
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(() => sessionStorage.getItem('mlzidla-ai-zadani') || '');
+
+  const updateValue = (nextValue) => {
+    setValue(nextValue);
+    sessionStorage.setItem('mlzidla-ai-zadani', nextValue);
+  };
+
+  const applyExample = (text) => {
+    const current = value.trim();
+    if (!current) {
+      updateValue(text);
+      return;
+    }
+    if (current.includes(text)) return;
+    updateValue(`${current}\n${text}`);
+  };
 
   const start = (text = value) => {
     const zadani = text.trim();
@@ -45,7 +60,7 @@ export default function AIProjectDesignerSection() {
             <label className="block font-mono text-[10px] tracking-[.16em] uppercase text-white/45 mb-3">Co potřebujete ochladit?</label>
             <textarea
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => updateValue(e.target.value)}
               onKeyDown={(e) => {
                 if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') start();
               }}
@@ -55,7 +70,7 @@ export default function AIProjectDesignerSection() {
             />
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               {examples.map(({icon: Icon, label, text}) => (
-                <button key={label} type="button" onClick={() => setValue(text)} className="group rounded-xl border border-white/10 bg-white/[.04] px-3 py-3 text-left hover:bg-white/[.08] hover:border-white/20 transition-colors">
+                <button key={label} type="button" onClick={() => applyExample(text)} className="group rounded-xl border border-white/10 bg-white/[.04] px-3 py-3 text-left hover:bg-white/[.08] hover:border-white/20 transition-colors">
                   <Icon size={15} className="text-white/45 group-hover:text-teal-300 mb-2" />
                   <span className="block text-xs text-white/65">{label}</span>
                 </button>

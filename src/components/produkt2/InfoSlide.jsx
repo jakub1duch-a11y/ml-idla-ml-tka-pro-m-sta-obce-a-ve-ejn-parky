@@ -12,7 +12,7 @@ export default function InfoSlide({ product }) {
       </motion.h2>
       {product.description &&
         <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-          className="text-white/60 text-sm lg:text-base leading-relaxed max-w-2xl mb-10">
+          className="text-white/60 text-sm lg:text-base leading-relaxed max-w-2xl mb-10 text-justify [text-align-last:left] hyphens-auto">
           {product.description}
         </motion.p>
       }

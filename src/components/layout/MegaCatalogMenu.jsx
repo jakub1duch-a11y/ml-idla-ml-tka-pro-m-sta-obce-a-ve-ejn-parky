@@ -20,7 +20,7 @@ export default function MegaCatalogMenu({ open, onEnter, onLeave, onNavigate, co
     className="absolute left-0 right-0 top-full z-50 border-b border-slate-200/80 bg-white/95 shadow-2xl shadow-slate-950/10 backdrop-blur-xl"
   >
     <div className="mx-auto max-w-7xl px-6 py-7 lg:px-8">
-      <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr]">
+      <div className="grid gap-8 lg:grid-cols-2">
         <section>
           <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
             <div>

@@ -29,6 +29,15 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+function cleanArticleContent(content) {
+  if (!content) return '';
+  return content
+    .replace(/\*{1,3}(?=\S)|(?<=\S)\*{1,3}/g, '')
+    .replace(/^\s*[✕✖❌×]\s*/gm, '')
+    .replace(/\s+[✕✖❌×]\s*$/gm, '')
+    .trim();
+}
+
 export default function BlogDetail() {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
@@ -74,6 +83,7 @@ export default function BlogDetail() {
 
   const ctaLabel = post.cta_label || 'Nezávazná poptávka';
   const ctaLink = post.cta_link || '/poptavka';
+  const cleanContent = cleanArticleContent(post.content);
 
   return (
     <div className="min-h-screen bg-white pt-24">
@@ -130,10 +140,10 @@ export default function BlogDetail() {
               [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:max-h-[520px] [&_img]:object-cover [&_img]:border [&_img]:border-slate-200
               [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:font-heading [&_h2]:font-normal [&_h2]:text-xl [&_h2]:leading-tight sm:[&_h2]:text-2xl lg:[&_h2]:text-[1.75rem]
               [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:font-heading [&_h3]:font-normal [&_h3]:text-lg [&_h3]:leading-snug sm:[&_h3]:text-xl lg:[&_h3]:text-2xl">
-            {/<\/?[a-z][\s\S]*>/i.test(post.content) ? (
-              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
+            {/<\/?[a-z][\s\S]*>/i.test(cleanContent) ? (
+              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(cleanContent) }} />
             ) : (
-              <ReactMarkdown>{post.content}</ReactMarkdown>
+              <ReactMarkdown>{cleanContent}</ReactMarkdown>
             )}
           </motion.div>
         ) : (

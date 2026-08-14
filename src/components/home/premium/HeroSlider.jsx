@@ -40,7 +40,7 @@ export default function HeroSlider() {
     <section className="relative min-h-[740px] h-[100svh] overflow-hidden bg-background lg:h-screen lg:min-h-[640px]">
       <AnimatePresence mode="wait">
         <motion.img
-          key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png"
+          key={slide.image} src={slide.image}
 
           alt={slide.imageAlt}
           initial={{ opacity: 0, scale: 1.06 }}
@@ -50,6 +50,7 @@ export default function HeroSlider() {
           className="absolute inset-0 w-full h-full object-cover object-[58%_center] sm:object-center" />
         
       </AnimatePresence>
+      <div className="absolute inset-0 bg-primary/35 lg:bg-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/25 lg:from-primary/95 lg:via-primary/55 lg:to-primary/15" />
       <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 

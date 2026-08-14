@@ -4,8 +4,8 @@ import { ArrowUpRight } from 'lucide-react';
 
 const GROUPS = [
   { title: 'Produkty a kolekce', links: [
-    ['Všechny produkty', '/mlzidla-mlzitka'], ['Městská kolekce', '/kolekce/city'],
-    ['Zahradní kolekce', '/kolekce/garden'], ['Autorská kolekce', '/kolekce/art'],
+    ['Všechny produkty', '/mlzidla-mlzitka'], ['Městská mlžítka', '/mestske-mlzitka'],
+    ['Zahradní mlžítka', '/zahradni-mlzitka'], ['Zakázková mlžítka', '/zakazkova-mlzitka'],
   ]},
   { title: 'Řešení podle využití', links: [
     ['Města a obce', '/kategorie/mesta-obce'], ['Parky a hřiště', '/kategorie/parky-hriste'],

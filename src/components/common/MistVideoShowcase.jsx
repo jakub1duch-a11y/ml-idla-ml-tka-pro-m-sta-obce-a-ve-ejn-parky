@@ -1,16 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.mov';
+const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c78de92d2_detailmlhy-zivavideoukazka.webm';
 
 const CLIPS = [
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV', caption: 'Mlžení zblízka' },
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV', caption: 'Jemná mlha v provozu' },
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV', caption: 'Mlžná brána v akci' },
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV', caption: 'Chladivý efekt naživo' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/8148cb378_instalace-mlzitka-mrak.MOV', caption: 'Instalace mlžítka Mrak' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2d9d98473_Svaovnukzkazive.mov', caption: 'Svařování u zákazníka' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b8e2893af_Ukazkasvarovanikotvicihptek.mov', caption: 'Svařování kotvících patek' }];
+{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/cd51ba0aa_mlzitko-mrak-oblak.webm', caption: 'Instalace mlžítka Mrak' },
+{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/fc20c7f11_svarovanimlzitekHolmTec-video.webm', caption: 'Svařování u zákazníka' },
+{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f8417df7f_svarovanimlzitekHolmTec-video02.webm', caption: 'Svařování kotvících patek' }];
 
 
 export default function MistVideoShowcase() {

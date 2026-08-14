@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const TAG = 'KOMPLETNÍ KATALOG · ČESKÁ VÝROBA';
+const TITLE = 'Mlžítka a mlžné brány pro každý prostor';
+const TITLE_MOBILE = 'Mlžítka a mlžné brány';
+const DESC = 'Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.';
+
 const TAGLINES = [
 'Mlžítka – ochlazují prostor, osvěžují pocit.',
 'Když prostor chladí, pocit roste.',
@@ -78,7 +83,7 @@ export default function KolekceHero() {
   const slide = SLIDES[current];
 
   return (
-    <div className="relative w-full overflow-hidden bg-slate-900 h-[70vh] min-h-[480px]">
+    <div className="relative w-full overflow-hidden bg-primary h-[58vh] min-h-[380px] max-h-[560px] lg:h-[78vh] lg:min-h-[600px] lg:max-h-none">
       {/* Slides */}
       {SLIDES.map((s, i) =>
       <div
@@ -91,18 +96,33 @@ export default function KolekceHero() {
         </div>
       )}
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
+      {/* Mobile: layered vignette to match the homepage hero treatment */}
+      <div
+        className="absolute inset-0 z-20 lg:hidden"
+        style={{
+          backgroundImage:
+            'linear-gradient(180deg, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0) 24%, hsl(var(--primary) / 0) 52%, hsl(var(--primary) / 0.55) 76%, hsl(var(--primary) / 0.93) 100%)'
+        }} />
+      <div
+        className="absolute inset-0 z-20 lg:hidden"
+        style={{
+          backgroundImage:
+            'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
+        }} />
+
+      {/* Desktop: brand-color gradient overlay (matches homepage hero, not raw black) */}
+      <div className="hidden lg:block absolute inset-0 z-20 bg-gradient-to-t from-primary/95 via-primary/45 to-primary/10 pointer-events-none" />
+      <div className="hidden lg:block absolute inset-0 z-20 bg-gradient-to-r from-primary/70 via-primary/20 to-transparent pointer-events-none" />
 
       {/* Content */}
-      <div className="absolute z-30 flex flex-col justify-end pb-12 inset-0">
-        <div className="absolute bottom-12 left-0 right-0 px-6 lg:px-8 max-w-7xl mx-auto">
-          <h1 className="font-heading font-light text-white tracking-tight mb-4 text-5xl lg:text-6xl">Mlžítka
-a mlžné brány.
+      <div className="absolute z-30 flex flex-col justify-end pb-8 lg:pb-14 inset-0">
+        <div className="px-5 sm:px-6 lg:px-20 max-w-7xl mx-auto w-full">
+          <p className="mb-2 lg:mb-4 font-mono font-semibold uppercase tracking-[0.18em] lg:tracking-[0.3em] text-white/85 text-[11px] lg:text-xs [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]">{TAG}</p>
+          <h1 className="font-heading font-semibold text-white tracking-tight mb-3 lg:mb-5 leading-[1.1] lg:leading-[1.04] text-3xl sm:text-5xl lg:text-7xl max-w-4xl [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
+            <span className="lg:hidden">{TITLE_MOBILE}</span>
+            <span className="hidden lg:inline">{TITLE}</span>
           </h1>
-          <p className="text-white/70 max-w-xl leading-relaxed font-light text-xl">Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
-
-          </p>
+          <p className="hidden lg:block text-measure text-white/90 leading-relaxed font-medium text-lg max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.3)]">{DESC}</p>
         </div>
         <AnimatePresence mode="wait">
           <motion.h2

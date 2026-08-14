@@ -59,7 +59,7 @@ export default function Technologie() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-14">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-4xl">
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-slate-950 tracking-[-0.02em] leading-[1.08]">
-            Snižujeme pocitovou teplotu okolí<br />o <span className="[font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-bold">5 až 10 °C</span>.
+            Snižujeme pocitovou teplotu okolí<br />o <span className="font-heading font-semibold">5 až 10 °C</span>.
           </h2>
         </motion.div>
 
@@ -70,7 +70,7 @@ export default function Technologie() {
               <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-5">
                 <b.icon size={20} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-2xl font-medium">{b.title}</h3>
+              <h3 className="mb-2 font-heading text-2xl text-foreground">{b.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{b.text}</p>
             </motion.div>
           )}
@@ -81,7 +81,7 @@ export default function Technologie() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-2xl">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Princip mlžení</p>
-          <h2 className="text-3xl lg:text-4xl text-slate-900 tracking-tight [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">Od mikrokapky k ochlazení</h2>
+          <h2 className="font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">Od mikrokapky k ochlazení</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
@@ -92,7 +92,7 @@ export default function Technologie() {
               <div className="w-11 h-11 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
                 <s.icon size={19} className="text-slate-700" />
               </div>
-              <h3 className="text-slate-900 mb-2 text-2xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal">{s.title}</h3>
+              <h3 className="mb-2 font-heading text-xl text-foreground lg:text-2xl">{s.title}</h3>
               <p className="text-slate-500 leading-relaxed text-base [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif]">{s.text}</p>
             </motion.div>
           )}
@@ -101,7 +101,7 @@ export default function Technologie() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="bg-primary rounded-2xl p-8 lg:p-10 border border-secondary/30">
           <p className="text-white/60 font-mono tracking-widest uppercase mb-2 text-xl">ÚSPORNÝ PROVOZ</p>
-          <p className="text-white font-light text-lg">Spotřeba vody se pohybuje pouze v jednotkách litrů za hodinu.
+          <p className="max-w-3xl text-lg leading-relaxed text-white/80">Spotřeba vody se pohybuje pouze v jednotkách litrů za hodinu.
 
           </p>
         </motion.div>
@@ -114,7 +114,7 @@ export default function Technologie() {
       <ProcessSection />
       <InstallationComparisonSection />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-14 flex justify-start">
+      <div className="mx-auto mt-14 flex max-w-7xl justify-start px-6 lg:px-10">
         <Link to="/poptavka" className="btn-metallic-mist px-8 py-3 text-sm font-bold">
           Popsat projekt <ArrowRight size={16} />
         </Link>

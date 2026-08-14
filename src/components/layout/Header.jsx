@@ -103,7 +103,7 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             {/* Katalog megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              <button onClick={() => setMegaOpen((open) => !open)} aria-expanded={megaOpen} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+              <button onClick={() => setMegaOpen((open) => !open)} aria-expanded={megaOpen} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all hidden ${
               megaOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
                 Katalog <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />

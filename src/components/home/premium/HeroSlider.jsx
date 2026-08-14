@@ -69,7 +69,7 @@ export default function HeroSlider() {
           }} />
 
         {/* Desktop: full overlay for the complete text block */}
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/55 to-primary/15" />
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-primary/95 to-primary/15 via-primary/25" />
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
         {/* Mobile: short tag + title directly on the image */}

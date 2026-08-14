@@ -60,8 +60,8 @@ export default function GatesSlider() {
             const Icon = uc.icon;
             return (
               <motion.div key={uc.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }} className="rounded-2xl border border-white/10 p-5">
-                <Icon size={20} className="mb-4 text-white/60" strokeWidth={1.6} />
-                <h3 className="text-sm font-semibold text-white mb-1.5 [font-family:'Plus_Jakarta_Sans',_sans-serif] uppercase">{uc.title}</h3>
+                <Icon size={20} className="mb-4 text-white/60 size-10" strokeWidth={1.6} />
+                <h3 className="text-sm font-semibold text-white mb-1.5 [font-family:'Plus_Jakarta_Sans',_sans-serif]">{uc.title}</h3>
                 <p className="leading-relaxed text-white/50 text-sm">{uc.desc}</p>
               </motion.div>);
           })}

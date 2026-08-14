@@ -56,7 +56,7 @@ const FAQ = [
 
 export default function SmartOfferSection() {
   return <>
-    <section className="bg-white py-20 lg:py-28">
+    <section id="varianty" className="scroll-mt-24 bg-white py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="max-w-3xl">
           <p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Varianty řešení</p>

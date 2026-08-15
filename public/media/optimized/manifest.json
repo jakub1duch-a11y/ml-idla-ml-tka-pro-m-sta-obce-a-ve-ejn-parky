@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T15:51:26.444Z",
+  "generatedAt": "2026-08-15T15:54:10.419Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -410,6 +410,36 @@
       "output": "/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm",
       "before": 6927174,
       "after": 4444047
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9f0153e3a_ml_detailvparku_01.MOV",
+      "output": "/media/optimized/9f0153e3a_ml_detailvparku_01.webm",
+      "before": 65258888,
+      "after": 30279514
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.MOV",
+      "output": "/media/optimized/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.webm",
+      "before": 6954336,
+      "after": 6195868
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV",
+      "output": "/media/optimized/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm",
+      "before": 4985206,
+      "after": 4408971
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV",
+      "output": "/media/optimized/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm",
+      "before": 5281799,
+      "after": 4067645
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV",
+      "output": "/media/optimized/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm",
+      "before": 4201298,
+      "after": 3616350
     }
   ],
   "skippedTransparent": [
@@ -668,6 +698,6 @@
   ],
   "skippedAlreadyOptimized": [],
   "failed": [],
-  "changedFiles": 46,
-  "rewrittenRefs": 56
+  "changedFiles": 49,
+  "rewrittenRefs": 61
 }

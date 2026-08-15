@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/cd51ba0aa_mlzitko-mrak-oblak.webm';
 
 const CLIPS = [
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV', caption: 'Mlžení zblízka' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV', caption: 'Jemná mlha v provozu' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV', caption: 'Mlžná brána v akci' },
+{ url: '/media/optimized/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm', caption: 'Mlžení zblízka' },
+{ url: '/media/optimized/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm', caption: 'Jemná mlha v provozu' },
+{ url: '/media/optimized/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm', caption: 'Mlžná brána v akci' },
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV', caption: 'Chladivý efekt naživo' },
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/cd51ba0aa_mlzitko-mrak-oblak.webm', caption: 'Instalace mlžítka Mrak' },
 { url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/fc20c7f11_svarovanimlzitekHolmTec-video.webm', caption: 'Svařování u zákazníka' },

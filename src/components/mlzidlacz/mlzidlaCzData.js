@@ -11,11 +11,11 @@ export const PRODUCTS = [
     description: 'Designový mlžný prvek z nerezové oceli vytvářející jemnou vodní mlhu pro ochlazení, hru i vizuální efekt.',
     description2: 'Ideální pro dětská hřiště, parky, náměstí, zoologické zahrady a veřejné prostory.',
     longDescription: 'Interaktivní mlžná socha MRÁK vytváří jemnou aerosoli z mikrokapek vody, která přináší příjemné ochlazení a jedinečný vizuální efekt. Děti i dospělí si užijí zábavu v bezpečném prostředí bez chemie. Konstrukce z kvalitní nerezové oceli zaručuje dlouhou životnost a odolnost vůči povětrnostním vlivům. Systém je plně automatizovaný a navržen pro snadný provoz i údržbu. Možnost doplnění o RGB LED osvětlení pro ještě větší zážitek.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7016348c6_generated_image.png',
+    image: '/media/optimized/7016348c6_generated_image.webp',
     gallery: [
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7016348c6_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f436db8ab_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0549d625f_generated_image.png',
+      '/media/optimized/7016348c6_generated_image.webp',
+      '/media/optimized/f436db8ab_generated_image.webp',
+      '/media/optimized/0549d625f_generated_image.webp',
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
     ],
     quickSpecs: [
@@ -49,9 +49,9 @@ export const PRODUCTS = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
     gallery: [
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6eb8b2ea_generated_image.png',
+      '/media/optimized/f6eb8b2ea_generated_image.webp',
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f436db8ab_generated_image.png',
+      '/media/optimized/f436db8ab_generated_image.webp',
     ],
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 8 °C' },
@@ -81,12 +81,12 @@ export const PRODUCTS = [
     description: 'Lineární nerezové potrubí s řadou trysek pro plošné ochlazení chodníků, teras a promenád.',
     description2: 'Snadná instalace podél zdí, pergol i lemů hřišť.',
     longDescription: 'Mlžná linie je modulární nerezové potrubí osazené řadou vysokotlakých trysek, které rovnoměrně rozptylují jemnou mlhu podél celé délky instalace. Systém lze libovolně prodlužovat po jednotlivých modulech a přizpůsobit tak přesně tvaru terasy, promenády nebo dětského hřiště. Montáž je možná na zeď, strop i samostatnou konstrukci.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56eb29c84_generated_image.png',
+    image: '/media/optimized/56eb29c84_generated_image.webp',
     gallery: [
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56eb29c84_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6eb8b2ea_generated_image.png',
+      '/media/optimized/56eb29c84_generated_image.webp',
+      '/media/optimized/f6eb8b2ea_generated_image.webp',
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0549d625f_generated_image.png',
+      '/media/optimized/0549d625f_generated_image.webp',
     ],
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 7 °C' },
@@ -119,8 +119,8 @@ export const PRODUCTS = [
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
     gallery: [
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f436db8ab_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0549d625f_generated_image.png',
+      '/media/optimized/f436db8ab_generated_image.webp',
+      '/media/optimized/0549d625f_generated_image.webp',
       'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
     ],
     quickSpecs: [
@@ -151,12 +151,12 @@ export const PRODUCTS = [
     description: 'Samostatně stojící mobilní mlžný sloup — bez nutnosti zemních prací, ideální pro eventy a sezónní provoz.',
     description2: 'Rychlá instalace i přesun mezi lokacemi během několika minut.',
     longDescription: 'Mlžný stojan je volně stojící nerezový sloup s integrovaným čerpadlem a řadou trysek, který lze umístit kdekoliv bez zemních prací. Ideální pro sezónní provozy, eventy a festivaly, kde je potřeba rychlá instalace i přesun. K dispozici s připojením na běžný rozvod vody a elektřiny, případně se solárním modulem pro nezávislý provoz.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4ba44ac78_generated_image.png',
+    image: '/media/optimized/4ba44ac78_generated_image.webp',
     gallery: [
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4ba44ac78_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6eb8b2ea_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f436db8ab_generated_image.png',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0549d625f_generated_image.png',
+      '/media/optimized/4ba44ac78_generated_image.webp',
+      '/media/optimized/f6eb8b2ea_generated_image.webp',
+      '/media/optimized/f436db8ab_generated_image.webp',
+      '/media/optimized/0549d625f_generated_image.webp',
     ],
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 9 °C' },

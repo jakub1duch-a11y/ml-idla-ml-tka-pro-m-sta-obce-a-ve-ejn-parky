@@ -43,7 +43,7 @@ export default function SmartSystemPreview() {
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
           className="rounded-3xl overflow-hidden border border-slate-200">
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5c4b99749_Smartmlzitka-ovladanizmobilu.jpg"
+          <img src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp"
             alt="Smart aplikace pro řízení mlžítek" className="w-full h-full object-cover" />
         </motion.div>
       </div>

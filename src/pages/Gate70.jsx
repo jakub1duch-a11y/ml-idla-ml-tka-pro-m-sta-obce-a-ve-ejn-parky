@@ -49,8 +49,8 @@ const ALL_GALLERY = [
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60dab9091_mlnbrnaGATE70V2.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6fb189c0_MlznabranaGate76.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4333988f4_MlnbrnaGATE76V.png',
-'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg',
-'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg',
+'/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
+'/media/optimized/7a9bd010a_mlnbrnyaportaly-mlzidla.webp',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/405edf0a8_L-Mltko_GATE_60V.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22b4e3038_L-Mltko_GATE_60_3R.png',
@@ -91,8 +91,8 @@ const SMART_FEATURES = [
 
 
 const INSTALACE = [
-{ img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg', title: "Testov\xE1n\xED ml\u017En\xE9 br\xE1ny GATE70", location: "- Testov\xE1n\xED" },
-{ img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg', title: "Mlžítka - Mlžidla.cz", location: "- testov\xE1n\xED" },
+{ img: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp', title: "Testov\xE1n\xED ml\u017En\xE9 br\xE1ny GATE70", location: "- Testov\xE1n\xED" },
+{ img: '/media/optimized/7a9bd010a_mlnbrnyaportaly-mlzidla.webp', title: "Mlžítka - Mlžidla.cz", location: "- testov\xE1n\xED" },
 { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png', title: "Ml\u017En\xE1 br\xE1na v rekrea\u010Dn\xEDm are\xE1lu", location: "Ml\u017En\xE1 br\xE1na pro Rekrea\u010Dn\xED camp" }];
 
 

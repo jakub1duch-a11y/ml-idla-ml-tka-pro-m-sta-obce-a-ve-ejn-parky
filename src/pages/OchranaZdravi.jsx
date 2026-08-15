@@ -72,7 +72,7 @@ export default function OchranaZdravi() {
           <figcaption className="absolute bottom-0 left-0 right-0 p-5 text-sm leading-relaxed text-white/85 sm:p-6">Veřejná instalace má být navržena nejen esteticky, ale i s ohledem na provoz, servis a hygienický režim.</figcaption>
         </figure>
         <figure className="group relative overflow-hidden rounded-3xl bg-slate-100 aspect-[4/3] lg:aspect-auto">
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9cf838258_MlzicisprchaaSMARTaplikace.png" alt="Detail mlžícího systému a chytrého řízení" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" loading="lazy" />
+          <img src="/media/optimized/9cf838258_MlzicisprchaaSMARTaplikace.webp" alt="Detail mlžícího systému a chytrého řízení" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" loading="lazy" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/65 via-transparent to-transparent" />
           <figcaption className="absolute bottom-0 left-0 right-0 p-5 text-sm text-white/85">Řízení provozu pomáhá omezit zbytečné mlžení a zpřehlednit správu systému.</figcaption>
         </figure>
@@ -85,9 +85,9 @@ export default function OchranaZdravi() {
 
     <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
       <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <figure className="overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]"><img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/150f3566d_IMG_20260623_124103.jpg" alt="Detail nerezového městského mlžítka" className="h-full w-full object-cover" loading="lazy" /></figure>
+        <figure className="overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]"><img src="/media/optimized/150f3566d_IMG_20260623_124103.webp" alt="Detail nerezového městského mlžítka" className="h-full w-full object-cover" loading="lazy" /></figure>
         <figure className="overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]"><img src="https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/503ff73d9_mlznehriste-kopie.jpeg" alt="Mlžítko ve veřejném prostoru pro děti" className="h-full w-full object-cover" loading="lazy" /></figure>
-        <figure className="overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3] sm:col-span-2 lg:col-span-1"><img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg" alt="Mlžná brána pro veřejnou instalaci" className="h-full w-full object-cover" loading="lazy" /></figure>
+        <figure className="overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3] sm:col-span-2 lg:col-span-1"><img src="/media/optimized/a2d77392e_Mlnbranyaportaly.webp" alt="Mlžná brána pro veřejnou instalaci" className="h-full w-full object-cover" loading="lazy" /></figure>
       </div>
       <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr]"><div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Pro starostu a správce města</p><h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">Co chcete vědět před schválením instalace.</h2><p className="mt-5 text-base leading-relaxed text-muted-foreground">Tyto body doporučujeme projít ještě před finálním umístěním a rozpočtem. Urychlí přípravu projektu a omezí dodatečné změny při montáži.</p></div><div className="divide-y divide-border rounded-2xl border border-border bg-card">{MAYOR.map(([q,a],i)=><div key={q} className="grid gap-2 p-5 sm:grid-cols-[32px_1fr] sm:p-6"><span className="font-mono text-xs text-secondary">{String(i+1).padStart(2,'0')}</span><div><h3 className="font-heading text-lg text-foreground">{q}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p></div></div>)}</div></div>
     </section>

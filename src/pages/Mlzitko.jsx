@@ -23,12 +23,12 @@ const BENEFITS = [
 ];
 
 const GALLERY_IMAGES = [
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+  '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
   'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/72a6bb588_mlnprvek-mrak-mlzidla02.png',
   'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
+  '/media/optimized/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.webp',
+  '/media/optimized/fbcf274b1_FB_IMG_1782148331764.webp',
 ];
 
 const INSTALL_STEPS = [
@@ -69,7 +69,7 @@ export default function Mlzitko() {
       <div className="relative min-h-[85vh] flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg"
+            src="/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp"
             alt="Mlžná socha OSTEV v parku"
             className="w-full h-full object-cover"
             loading="eager"

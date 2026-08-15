@@ -11,7 +11,7 @@ const defaultSlides = [
   name: 'OSTEV',
   subtitle: 'Mlžný strom.',
   desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+  image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   badge: 'Nový produkt',
   cta: '/produkt/ostev-mlzny-strom'
 },
@@ -41,7 +41,7 @@ const defaultSlides = [
   name: 'OSTEV',
   subtitle: 'Precizní mlžení.',
   desc: 'Trysky z AISI 316L rozprašují kapičky 10–50 μm, které se okamžitě odpaří. Žádné mokré chodníky, jen příjemný chlad.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg alt="Precizní mlžení mlžítka -OSTREPrecizní mlžení"',
+  image: '/media/optimized/3f715c287_copilot_image_1782505642436.webp alt="Precizní mlžení mlžítka -OSTREPrecizní mlžení"',
   badge: 'Technologie',
   cta: '/produkt/ostrev-mlzitko'
 },

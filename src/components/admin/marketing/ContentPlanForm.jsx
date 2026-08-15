@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 
 const inputCls = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all";
 const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png';
-const BRAND_REFERENCE_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3865c06a7_ana.jpg';
+const BRAND_REFERENCE_URL = '/media/optimized/3865c06a7_ana.webp';
 
 export default function ContentPlanForm({ onCreated }) {
   const [form, setForm] = useState({ title: '', platform: 'instagram', caption: '', image_url: '', scheduled_date: '' });

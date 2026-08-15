@@ -29,7 +29,7 @@ const FALLBACK = [
   year: 2025,
   name: 'Přírodní amfiteátr s mlžnou oázou',
   description: 'V nejnavštěvovanějším pražském přírodním parku jsme instalovali 3 mlžné sochy GATE 60 podél hlavní promenády. V horkých dnech teplota v bezprostřední blízkosti klesla o 7 °C.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
+  image_url: '/media/optimized/fbcf274b1_FB_IMG_1782148331764.webp',
   stats: [{ val: '−7 °C', label: 'pokles teploty' }, { val: '34 %', label: 'více návštěvníků' }, { val: '3 ks', label: 'GATE 60' }]
 },
 {

@@ -8,7 +8,7 @@ const categories = [
   tag: 'Města a obce',
   title: 'Mlžné sochy pro veřejný prostor',
   desc: 'Zakázkové mlžítko MRKEV zdobí náměstí města Polná — spojuje lokální identitu s příjemným ochlazením pro chodce v horkých letních dnech.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/596fefdec_MlnsochaMRKEV-mstoPoln.jpg',
+  image: '/media/optimized/596fefdec_MlnsochaMRKEV-mstoPoln.webp',
   path: '/kategorie/mesta-obce'
 },
 {
@@ -29,7 +29,7 @@ const categories = [
   tag: 'Komerční prostory',
   title: 'Elegantní mlžítka pro exkluzivní interiéry',
   desc: 'Mlžítko AURA v nerezovém provedení doplňuje prostory hotelů, restaurací i domovů pro seniory — tichý, funkční a designový prvek.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3ffb5387e_mlzitkoprodomovsenioru-2.jpeg',
+  image: '/media/optimized/3ffb5387e_mlzitkoprodomovsenioru-2.webp',
   path: '/kategorie/komercni'
 },
 {

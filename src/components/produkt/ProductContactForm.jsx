@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const ANCHORING_PHOTO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/150f3566d_IMG_20260623_124103.jpg';
+const ANCHORING_PHOTO_URL = '/media/optimized/150f3566d_IMG_20260623_124103.webp';
 
 const SMART_VARIANTS = [
 { value: 'none', label: 'Bez smart řízení' },

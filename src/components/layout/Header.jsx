@@ -7,10 +7,10 @@ import MobileMenu from '@/components/layout/MobileMenu';
 import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
 
 const PRODUCT_LINKS = [
-{ label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cfc837b23_image.png', featured: true },
-{ label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png' },
-{ label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/zahradni-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg', crop: 'garden' },
-{ label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' },
+{ label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', image: '/media/optimized/cfc837b23_image.webp', featured: true },
+{ label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
+{ label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/zahradni-mlzitka', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
+{ label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: '/media/optimized/68953132b_IMG_3524.webp' },
 { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }];
 
 

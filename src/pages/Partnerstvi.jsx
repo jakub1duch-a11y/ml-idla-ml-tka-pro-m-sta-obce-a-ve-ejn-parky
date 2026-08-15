@@ -227,7 +227,7 @@ export default function Partnerstvi() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
             <img
-              src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.jpg"
+              src="/media/optimized/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.webp"
               alt="Y-ARMIST technický výkres a mlžný efekt"
               className="rounded-2xl w-full object-cover border border-slate-200"
             />

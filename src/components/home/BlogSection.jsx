@@ -18,7 +18,7 @@ const FALLBACK = [
   id: 'f1', slug: 'vyhody-mlznych-systemu-mestske-prostory',
   title: '7 výhod instalace mlžných systémů v městských prostorech',
   perex: 'Mlžné systémy ochlazují městské prostory až o 9 °C, zvyšují návštěvnost a vytvářejí ikonická místa.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/48d543124_generated_image.png',
+  image_url: '/media/optimized/48d543124_generated_image.webp',
   category: 'technika', published_date: '2026-06-29', published: true
 },
 {

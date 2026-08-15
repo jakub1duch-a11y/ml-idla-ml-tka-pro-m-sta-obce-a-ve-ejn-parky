@@ -9,7 +9,7 @@ const SLIDES = [
   title: 'Nerezová mlžítka a mlžné brány bez vysokotlakého čerpadla',
   titleMobile: 'Mlžítka bez vysokotlakého čerpadla',
   desc: 'Nízkotlaká mlha přímo z běžného vodovodního řadu. Navrhujeme a vyrábíme nerezové mlžící systémy pro náměstí, parky, promenády, gastro, wellness i rezidenční prostory — bez samostatného vysokotlakého čerpadla.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
+  image: '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp',
   imageAlt: 'Nerezová designová mlžítka pro města a obce',
   cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },
   cta2: { label: 'Vyžádat cenovou nabídku', to: '/poptavka' }

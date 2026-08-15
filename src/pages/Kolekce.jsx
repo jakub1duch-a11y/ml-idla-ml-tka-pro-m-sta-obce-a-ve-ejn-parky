@@ -140,8 +140,8 @@ function sortCatalogProducts(items, spaceFilter) {
 const FALLBACK_IMAGES = {
   NATURE: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6993add8_Reference-mstoPolna.webp',
   'URBAN ART': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/58e5e3931_MestskabranaGATE.png',
-  GEOMETRY: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/03ba352a3_mlzitka-zahradni-hotely-restaurace.png',
-  DEFAULT: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9cf838258_MlzicisprchaaSMARTaplikace.png'
+  GEOMETRY: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
+  DEFAULT: '/media/optimized/9cf838258_MlzicisprchaaSMARTaplikace.webp'
 };
 
 const PRODUCT_CARD_META = {

@@ -7,7 +7,10 @@ import { setSEO } from '@/lib/seo';
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
   sent: { label: 'Odeslána', color: 'bg-blue-50 text-blue-600', icon: '📤' },
+  viewed: { label: 'Zobrazena', color: 'bg-cyan-50 text-cyan-700', icon: '👁' },
   approved: { label: 'Odsouhlasena', color: 'bg-green-50 text-green-600', icon: '✓' },
+  expired: { label: 'Platnost skončila', color: 'bg-amber-50 text-amber-700', icon: '⌛' },
+  rejected: { label: 'Odmítnuta', color: 'bg-red-50 text-red-600', icon: '×' },
   in_production: { label: 'Ve výrobě', color: 'bg-orange-50 text-orange-600', icon: '⚙️' },
   ready: { label: 'Hotovo', color: 'bg-slate-100 text-slate-700', icon: '📦' },
   delivered: { label: 'Doručeno', color: 'bg-emerald-50 text-emerald-600', icon: '✓✓' },
@@ -23,6 +26,7 @@ export default function CustomerPortal() {
   const [inquiries, setInquiries] = useState([]);
   const [projects, setProjects] = useState([]);
   const [approving, setApproving] = useState(null);
+  const [acceptedTerms, setAcceptedTerms] = useState({});
   const [shareUrl, setShareUrl] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
 
@@ -62,12 +66,22 @@ export default function CustomerPortal() {
     }
   };
 
-  const approveQuote = async (projectId) => {
-    setApproving(projectId);
+  const approveQuote = async (project) => {
+    if (!acceptedTerms[project.id]) return;
+    setApproving(project.id);
+    setError('');
     try {
-      const res = await base44.functions.invoke('approveProjectOrder', { project_id: projectId, session_token: sessionToken });
+      const res = await base44.functions.invoke('approveProjectOrder', {
+        project_id: project.id,
+        session_token: sessionToken,
+        accept_terms: true,
+        acceptance_name: project.client_name,
+        acceptance_user_agent: navigator.userAgent,
+      });
       const updated = res.data.project;
-      setProjects(prev => prev.map(p => p.id === projectId ? { ...p, ...updated } : p));
+      setProjects(prev => prev.map(p => p.id === project.id ? { ...p, ...updated } : p));
+    } catch (e) {
+      setError(e?.response?.data?.error === 'offer_expired' ? 'Platnost této nabídky již skončila. Požádejte nás o její aktualizaci.' : 'Nabídku se nepodařilo odsouhlasit. Zkuste to znovu.');
     } finally {
       setApproving(null);
     }

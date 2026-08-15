@@ -14,9 +14,13 @@ const PRODUCT = {
 };
 const DIAMETERS = [50, 60.2, 70];
 const THICKNESSES = [2, 2.5, 3];
+const trackAR = (eventName, properties = {}) => {
+  try { base44.analytics.track({ eventName, properties }); } catch (_) {}
+};
 
 export default function BendyARPrototype() {
   const modelRef = useRef(null);
+  const trackedArRef = useRef(new Set());
   const navigate = useNavigate();
   const [modelStatus, setModelStatus] = useState('loading');
   const [arStatus, setArStatus] = useState('idle');
@@ -30,12 +34,20 @@ export default function BendyARPrototype() {
   const [savedKey, setSavedKey] = useState('');
 
   useEffect(() => {
+    trackAR('ar_product_view', { product: PRODUCT.slug, model: PRODUCT.arVersion });
     const viewer = modelRef.current;
     if (!viewer) return;
 
     const onLoad = () => setModelStatus('ready');
     const onError = () => setModelStatus('error');
-    const onArStatus = (event) => setArStatus(event.detail?.status || 'idle');
+    const onArStatus = (event) => {
+      const status = event.detail?.status || 'idle';
+      setArStatus(status);
+      if ((status === 'session-started' || status === 'object-placed') && !trackedArRef.current.has(status)) {
+        trackedArRef.current.add(status);
+        trackAR(status === 'session-started' ? 'ar_launch' : 'ar_object_placed', { product: PRODUCT.slug, model: PRODUCT.arVersion });
+      }
+    };
 
     viewer.addEventListener('load', onLoad);
     viewer.addEventListener('error', onError);
@@ -59,6 +71,7 @@ export default function BendyARPrototype() {
       setCaptureUrl(uploaded.file_url || '');
       setCaptureName(file.name || 'Fotografie návrhu');
       setSavedKey('');
+      trackAR('ar_capture_uploaded', { product: PRODUCT.slug, file_type: file.type || 'image' });
     } catch (err) {
       console.error(err);
       setError('Fotografii se nepodařilo uložit. Zkuste to prosím znovu.');
@@ -87,6 +100,7 @@ export default function BendyARPrototype() {
         status: captureUrl ? 'captured' : 'draft',
       });
       setSavedKey(sessionKey);
+      trackAR('ar_session_saved', { product: PRODUCT.slug, profile_diameter_mm: diameter, wall_thickness_mm: thickness, has_capture: !!captureUrl });
       return sessionKey;
     } catch (err) {
       console.error(err);
@@ -109,6 +123,7 @@ export default function BendyARPrototype() {
       note.trim() ? `Poznámka: ${note.trim()}` : '',
       captureUrl ? 'Fotografie návrhu je uložena v AR session.' : '',
     ].filter(Boolean).join('\n');
+    trackAR('ar_inquiry_click', { product: PRODUCT.slug, session_key: key, profile_diameter_mm: diameter, wall_thickness_mm: thickness, has_capture: !!captureUrl });
     navigate(`/poptavka?produkt=${encodeURIComponent(PRODUCT.name)}&ar_session=${encodeURIComponent(key)}&zprava=${encodeURIComponent(message)}`);
   };
 

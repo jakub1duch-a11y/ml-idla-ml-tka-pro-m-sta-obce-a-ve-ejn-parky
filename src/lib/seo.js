@@ -90,9 +90,15 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
 
   if (canonicalPath) setCanonical(canonicalPath);
   
-  // Kombinace vlastních a automatických JSON-LD strukturovaných dat
+  // Kombinace vlastních a automatických JSON-LD strukturovaných dat.
+  // Pokud stránka dodá vlastní @graph, zachováme ho a doplníme BreadcrumbList.
   const breadcrumbs = generateBreadcrumbsJsonLd(canonicalPath, title);
-  if (jsonLd) {
+  if (jsonLd && breadcrumbs) {
+    const graph = jsonLd['@graph']
+      ? [...jsonLd['@graph'], breadcrumbs]
+      : [jsonLd, breadcrumbs];
+    setJsonLd({ '@context': 'https://schema.org', '@graph': graph });
+  } else if (jsonLd) {
     setJsonLd(jsonLd);
   } else if (breadcrumbs) {
     setJsonLd(breadcrumbs);

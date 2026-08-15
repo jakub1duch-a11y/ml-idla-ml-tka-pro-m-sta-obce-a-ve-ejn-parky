@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, Wrench, MapPin, Sun, CloudFog, BadgeCheck } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, Wrench, MapPin, Sun, CloudFog, BadgeCheck, ScanLine } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
@@ -79,6 +79,11 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             }
 
           <div className="flex flex-wrap gap-3">
+            <Link
+                to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
+                className="inline-flex items-center gap-2 rounded-full bg-[#0b4860] px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-[#08394c] hover:-translate-y-0.5 shadow-[0_10px_30px_rgba(11,72,96,.18)]">
+              Vizualizovat ve vašem prostoru <ScanLine size={16} />
+            </Link>
             <Link
                 to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
                 onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}

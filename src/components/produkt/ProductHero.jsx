@@ -50,16 +50,23 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-6">{product.short_description}</p>
             }
 
-          <div className="mb-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {[
-              { icon: Sun, label: 'Ochlazení prostoru' },
-              { icon: CloudFog, label: 'Jemná vodní mlha' },
-              { icon: ShieldCheck, label: 'Bez vysokotlakého čerpadla' },
-              { icon: MapPin, label: 'Vyrobeno v ČR' },
-            ].map(({ icon: Icon, label }) => (
-              <div key={label} className="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center shadow-[0_8px_24px_rgba(15,23,42,.035)]">
-                <Icon size={18} className="mx-auto text-[#0b4860]" strokeWidth={1.7} />
-                <span className="mt-2 block text-[11px] font-semibold leading-tight text-slate-700">{label}</span>
+              { icon: ShieldCheck, title: 'Bez vysokotlakého čerpadla', desc: 'Nízkotlaká mlha přímo z běžného vodovodního řadu — bez samostatné vysokotlaké technologie.' },
+              { icon: Sun, title: 'Příjemné ochlazení', desc: 'Jemná vodní mlha pomáhá lokálně ochladit prostor během horkých letních dnů.' },
+              { icon: CloudFog, title: 'Jemná mlha, ne déšť', desc: 'Správně zvolené trysky vytvářejí jemné mikrokapky pro komfortní osvěžení bez zbytečného smáčení okolí.' },
+              { icon: MapPin, title: 'Česká výroba HolmTec', desc: 'Nerezovou konstrukci vyrábíme a dokončujeme v ČR s důrazem na detail, servis a dlouhou životnost.' },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_28px_rgba(15,23,42,.04)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#0b4860]/25 hover:shadow-[0_14px_34px_rgba(15,23,42,.07)]">
+                <div className="flex items-start gap-3.5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0b4860]/[.06] text-[#0b4860]">
+                    <Icon size={19} strokeWidth={1.65} />
+                  </span>
+                  <span className="min-w-0">
+                    <strong className="block text-sm font-semibold leading-snug text-slate-900">{title}</strong>
+                    <span className="mt-1.5 block text-xs leading-relaxed text-slate-500">{desc}</span>
+                  </span>
+                </div>
               </div>
             ))}
           </div>

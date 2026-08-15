@@ -133,7 +133,19 @@ export default function AIVizualizace() {
         .filter((url, index, all) => all.indexOf(url) === index)
         .slice(0, 4);
       const response = await base44.integrations.Core.GenerateImage({
-        prompt: `Vytvoř fotorealistickou architektonickou vizualizaci skutečného výrobku MLŽIDLA® HolmTec v nahraném prostoru. PRVNÍ referenční obrázek je fotografie prostoru. DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct.name}. PRIORITA Č. 1 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct.name}. Materiál dle katalogu: ${selectedProduct.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct.short_description || ''}. ZÁKLAD SCÉNY: zachovej geometrii, perspektivu, budovy, povrchy, zeleň, mobiliář, osoby, světlo a identitu původní fotografie co nejvěrněji. Smíš upravit pouze to, co je nutné pro fyzické vložení výrobku: jeho měřítko, perspektivu, natočení, kontakt se zemí, realistické stíny a odrazy. Zadání zákazníka: ${context}. Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci výrobku; bez mokrých louží a bez zakrytí produktu. Bez textu, bez logotypů, bez grafických overlayů. Výsledek musí vypadat jako fotografie možné realizace se SKUTEČNÝM PRODUKTEM, nikoli jako nový koncept inspirovaný produktem.`,
+        prompt: `Vytvoř fotorealistickou architektonickou vizualizaci skutečného výrobku MLŽIDLA® HolmTec v nahraném prostoru.
+
+SCENE LOCK — ABSOLUTNÍ PRIORITA: PRVNÍ referenční obrázek je fotografie zákazníkova prostoru a musí zůstat vizuálně totožný. Zachovej přesně kompozici, ořez, ohniskovou perspektivu, horizont, úběžníky, polohu kamery, poměry vzdáleností, budovy, fasády, okna, dveře, obrubníky, dlažbu, trávníky, stromy, záhony, ploty, komunikace, mobiliář, auta, osoby, stíny, světelné podmínky, počasí a všechny existující objekty. NEPŘESTAVUJ scénu. NEPOSOUVEJ existující objekty. NEMAŽ existující prvky. NEGENERUJ novou architekturu, jinou dlažbu, jinou zeleň ani alternativní verzi místa. Pokud si nejsi jistý detailem prostoru, ponech jej podle původní fotografie beze změny.
+
+VLOŽENÍ PRODUKTU: DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct.name}. PRIORITA Č. 2 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct.name}. Materiál dle katalogu: ${selectedProduct.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct.short_description || ''}.
+
+FYZICKÉ USAZENÍ: Smíš měnit pouze vložený výrobek a jeho bezprostřední fotorealistickou integraci. Urči jeho měřítko podle známých rozměrových vodítek ve scéně (lidé, dveře, obrubníky, lavičky, dlažební modul apod.), respektuj perspektivu kamery, kontaktní bod se zemí, natočení, zakrytí za reálnými objekty, realistické stíny, odrazy a světlo. Produkt musí působit skutečně instalovaný v daném místě, ne jako nalepený 2D objekt.
+
+Zadání zákazníka: ${context}.
+
+MLHA: Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci výrobku; bez mokrých louží, bez dramatických efektů a bez zakrytí produktu nebo důležitých částí scény.
+
+ZÁKAZY: Bez textu, bez logotypů, bez grafických overlayů, bez změny denní doby, bez změny sezóny, bez změny barevnosti celé fotografie, bez generování jiného prostředí. Výsledek musí vypadat jako tatáž původní fotografie po fyzické instalaci SKUTEČNÉHO PRODUKTU, nikoli jako nový koncept inspirovaný místem.`,
         existing_image_urls: [uploadedUrl, ...productRefs],
       });
       if (!response?.url) throw new Error('Generátor nevrátil výsledný obrázek.');
@@ -222,7 +234,7 @@ export default function AIVizualizace() {
               {optimizing ? <><Loader size={16} className="animate-spin"/> Optimalizuji fotografii…</> : loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Vytvořit AI vizualizaci</>}
             </button>}
             {fastMode && (optimizing || loading) && <div className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[.05] px-6 py-3.5 text-sm text-white/70"><Loader size={16} className="animate-spin"/>{optimizing ? 'Připravuji fotografii…' : 'Vytvářím vizualizaci…'}</div>}
-            <p className="mt-4 text-[11px] leading-relaxed text-white/30">AI používá jako povinnou referenci skutečné fotografie vybraného výrobku z katalogu. Vizualizace je stále koncepční; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
+            <p className="mt-4 text-[11px] leading-relaxed text-white/30">AI používá fotografii zákazníkova prostoru jako uzamčenou scénu a skutečné fotografie vybraného výrobku jako povinnou produktovou referenci. Vizualizace je stále koncepční; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
           </div>
 
           <div className="rounded-[26px] border border-white/10 bg-white/[.04] p-4 sm:p-5 lg:p-6 min-h-[520px] flex flex-col">
@@ -241,7 +253,7 @@ export default function AIVizualizace() {
                 <div className="text-center px-8">
                   <Loader size={28} className="animate-spin mx-auto text-teal-300"/>
                   <p className="mt-4 text-sm text-white/65">AI komponuje mlžítko do fotografie…</p>
-                  <p className="mt-2 text-xs text-white/30">Zachovává perspektivu a charakter původního místa.</p>
+                  <p className="mt-2 text-xs text-white/30">Uzamyká původní scénu a mění jen vložení produktu.</p>
                 </div>
               ) : (
                 <div className="text-center px-8 max-w-sm">

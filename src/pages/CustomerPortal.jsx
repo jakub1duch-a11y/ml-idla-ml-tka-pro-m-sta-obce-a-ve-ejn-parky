@@ -284,8 +284,8 @@ export default function CustomerPortal() {
                         <Download size={14} /> PDF nabídka
                       </a>
                     )}
-                    {project.presentation_url && (
-                      <a href={project.presentation_url} target="_blank" rel="noopener noreferrer"
+                    {(project.presentation_pdf_url || project.presentation_url) && (
+                      <a href={project.presentation_pdf_url || project.presentation_url} target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-2 px-4 py-2 bg-white text-[#0b4860] text-xs rounded-full hover:bg-slate-100 border border-[#0b4860]/20 transition-all">
                         <FileText size={14} /> Prezentace projektu
                       </a>

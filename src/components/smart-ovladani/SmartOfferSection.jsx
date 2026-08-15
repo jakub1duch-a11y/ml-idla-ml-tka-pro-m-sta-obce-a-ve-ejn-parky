@@ -74,7 +74,7 @@ export default function SmartOfferSection() {
             <div className={`my-6 h-px ${p.featured ? 'bg-white/10' : 'bg-slate-200'}`} />
             <ul className="space-y-3">{p.features.map(f => <li key={f} className={`flex items-start gap-3 text-sm ${p.featured ? 'text-white/80' : 'text-slate-700'}`}><Check size={16} className={`mt-0.5 shrink-0 ${p.featured ? 'text-accent' : 'text-secondary'}`} />{f}</li>)}</ul>
             <p className={`mt-7 text-xs leading-relaxed ${p.featured ? 'text-white/45' : 'text-slate-500'}`}><strong className={p.featured ? 'text-white/70' : 'text-slate-700'}>Vhodné pro:</strong> {p.use}</p>
-            <Link to={`/kontakt?produkt=${encodeURIComponent(`Smart ovládání ${p.name}`)}`} className={`mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-all ${p.featured ? 'bg-white text-slate-950 hover:bg-white/90' : 'border border-slate-300 text-slate-900 hover:border-slate-500'}`}>Poptat {p.name} <ArrowRight size={15} /></Link>
+            <Link to={`/poptavka?produkt=${encodeURIComponent(`Smart Cooling ${p.name}`)}`} className={`mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-all ${p.featured ? 'bg-white text-slate-950 hover:bg-white/90' : 'border border-slate-300 text-slate-900 hover:border-slate-500'}`}>Navrhnout {p.name} <ArrowRight size={15} /></Link>
           </motion.article>)}
         </div>
         <p className="mt-6 text-center text-xs text-slate-400">Cena a přesný rozsah se stanovují podle počtu zón, senzorů, způsobu připojení a požadované automatizace.</p>
@@ -113,7 +113,7 @@ export default function SmartOfferSection() {
 
     <section className="border-y border-slate-200 bg-slate-50 py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="max-w-3xl"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-slate-400">Od návrhu po předání</p><h2 className="mt-4 font-heading text-3xl tracking-tight text-slate-900 lg:text-4xl">Jak probíhá realizace smart řízení.</h2></div>
+        <div className="max-w-3xl"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-slate-400">Od návrhu po předání</p><h2 className="mt-4 font-heading text-3xl tracking-tight text-slate-900 lg:text-4xl">Jak probíhá realizace Smart Cooling.</h2></div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">{STEPS.map(([num,title,text]) => <div key={num} className="rounded-2xl border border-slate-200 bg-white p-6"><span className="font-mono text-xs text-secondary">{num}</span><h3 className="mt-5 font-heading text-xl text-slate-900">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-500">{text}</p></div>)}</div>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           <div className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-6"><ShieldCheck className="shrink-0 text-secondary" size={28}/><div><h3 className="font-heading text-xl text-slate-900">Pro veřejný provoz</h3><p className="mt-2 text-sm leading-relaxed text-slate-500">Při návrhu řešíme umístění technologie, provozní harmonogram, servisní přístup, sezónní odstavení a návaznost na vodní a elektrickou část instalace.</p></div></div>

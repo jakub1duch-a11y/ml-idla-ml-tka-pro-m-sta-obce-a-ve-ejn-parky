@@ -12,7 +12,7 @@ const IMAGES = {
   laser: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/55ad64b81_laserstitky.PNG'
 };
 
-const KNOW_HOW = [{ icon: Gauge, title: 'Bez čerpadla', text: 'Běžný tlak vody z vodovodního řadu 2–7 bar bez další elektřiny a údržby čerpadla.' }, { icon: Droplets, title: 'Evaporace, ne déšť', text: 'Jemná mlha se za slunečného počasí odpaří dříve, než dopadne na zem.' }, { icon: Hammer, title: 'Precizní nerez', text: 'Každá konstrukce je svařovaná v naší dílně, nikoli montovaná z katalogových dílů.' }, { icon: Ruler, title: 'Výroba na míru', text: 'Rozměr, tvar, kotvení i design přizpůsobíme vašemu prostoru.' }];
+const KNOW_HOW = [{ icon: Gauge, title: 'Bez vysokotlakého čerpadla', text: 'Nízkotlaký provoz využívá běžný tlak vodovodního řadu 2–7 bar bez samostatné vysokotlaké technologie.' }, { icon: Droplets, title: 'Evaporace, ne déšť', text: 'Jemná mlha se za slunečného počasí odpaří dříve, než dopadne na zem.' }, { icon: Hammer, title: 'Precizní nerez', text: 'Každá konstrukce je svařovaná v naší dílně, nikoli montovaná z katalogových dílů.' }, { icon: Ruler, title: 'Výroba na míru', text: 'Rozměr, tvar, kotvení i design přizpůsobíme vašemu prostoru.' }];
 const STATS = [['od 2005', 've strojírenském průmyslu'], ['20+ let', 'zkušeností s výrobou'], ['500+', 'realizovaných projektů'], ['350+', 'spokojených klientů']];
 
 export default function ONas() {

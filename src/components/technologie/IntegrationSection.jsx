@@ -24,7 +24,7 @@ export default function IntegrationSection() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
           <h2 className="font-heading font-light text-2xl lg:text-3xl text-slate-900 tracking-tight mb-5">
-           Naše mlžítka jsou ideální integrací do veřejného i soukromého prostoru
+           Mlžení navrhujeme jako součást veřejného i soukromého prostoru
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {PLACES.map((p) =>
@@ -41,7 +41,7 @@ export default function IntegrationSection() {
 
       <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="text-center text-slate-500 text-sm max-w-2xl mx-auto">
-        Každá instalace je zároveň funkčním chladicím systémem — nejen vizuálním prvkem. Jemná mlha prostoupí vzduch a během provozu sníží okolní teplotu až o 10 °C.
+        Každá instalace kombinuje funkční mlžení s architekturou místa. Reálný chladicí účinek se mění podle teploty, relativní vlhkosti, proudění vzduchu, rozmístění trysek a způsobu řízení.
       </motion.p>
     </div>);
 

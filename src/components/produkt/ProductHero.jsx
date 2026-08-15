@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, Wrench, MapPin } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, Wrench, MapPin, Sun, CloudFog, BadgeCheck } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
 
 export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
   const quickSpecs = [
-  product.coverage_area && { icon: Ruler, label: 'Výška', value: product.coverage_area },
+  product.coverage_area && { icon: Ruler, label: 'Výška / dosah', value: product.coverage_area },
+  product.micron_size && { icon: CloudFog, label: 'Mlžné trysky', value: product.micron_size },
   product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
   product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
-  product.power_supply && { icon: Zap, label: 'Napájení', value: product.power_supply }].
-  filter(Boolean);
+  product.power_supply && { icon: Zap, label: 'Napájení / řízení', value: product.power_supply },
+  product.material && { icon: BadgeCheck, label: 'Materiál', value: product.material }].
+  filter(Boolean).slice(0, 6);
 
   return (
     <div className="relative overflow-hidden">
@@ -32,7 +34,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
         <span className="text-slate-700 font-medium">{product.name}</span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-14 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-8 lg:gap-12 items-start">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <ProductGalleryPanel images={allImages} productName={product.name} onOpenLightbox={onOpenLightbox} />
         </motion.div>
@@ -46,22 +48,30 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-6">{product.short_description}</p>
             }
 
-          <div className="mb-6 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 px-3 py-1.5 text-xs font-semibold text-cyan-800"><ShieldCheck size={13}/> Bez čerpadla</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700"><Wrench size={13}/> Zakázková výroba</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700"><MapPin size={13}/> Vyrobeno v ČR</span>
+          <div className="mb-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {[
+              { icon: Sun, label: 'Ochlazení prostoru' },
+              { icon: CloudFog, label: 'Jemná vodní mlha' },
+              { icon: ShieldCheck, label: 'Bez čerpadla' },
+              { icon: MapPin, label: 'Vyrobeno v ČR' },
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center shadow-[0_8px_24px_rgba(15,23,42,.035)]">
+                <Icon size={18} className="mx-auto text-[#0b4860]" strokeWidth={1.7} />
+                <span className="mt-2 block text-[11px] font-semibold leading-tight text-slate-700">{label}</span>
+              </div>
+            ))}
           </div>
 
           {quickSpecs.length > 0 &&
-            <div className="grid grid-cols-2 gap-3 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
               {quickSpecs.map((s) =>
-              <div key={s.label} className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,.04)]">
+              <div key={s.label} className="flex min-h-[86px] items-start gap-2.5 p-3.5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,.04)]">
                   <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
                     <s.icon size={14} className="text-slate-500" strokeWidth={1.75} />
                   </span>
                   <span className="min-w-0">
                     <span className="block text-[11px] font-medium text-slate-500 uppercase tracking-wide">{s.label}</span>
-                    <span className="block text-sm font-semibold text-slate-900 truncate">{s.value}</span>
+                    <span className="block text-sm font-semibold leading-snug text-slate-900 line-clamp-2">{s.value}</span>
                   </span>
                 </div>
               )}

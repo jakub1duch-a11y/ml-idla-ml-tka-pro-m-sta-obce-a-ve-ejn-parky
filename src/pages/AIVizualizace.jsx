@@ -171,8 +171,8 @@ export default function AIVizualizace() {
             <WandSparkles size={14} className="text-teal-300" />
             <span className="font-mono text-[10px] tracking-[.18em] uppercase text-white/65">AI vizualizace MLŽIDLA®</span>
           </div>
-          <h1 className="font-heading font-light text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight">Uvidíte mlžítko přímo<br/><span className="text-white/45">ve vašem prostoru.</span></h1>
-          <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-white/55">{fastMode ? 'Nahrajte jednu fotografii prostoru. Vybraný produkt do ní automaticky zasadíme a připravíme vizualizaci bez dalšího nastavování.' : 'Nahrajte fotografii náměstí, parku, školky, sportoviště nebo zahrady. AI zachová scénu a vytvoří orientační vizualizaci vhodného mlžicího prvku.'}</p>
+          <h1 className="font-heading font-light text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight">{fastMode ? <>Vyfoťte místo.<br/><span className="text-white/45">BENDY se načte automaticky.</span></> : <>Uvidíte mlžítko přímo<br/><span className="text-white/45">ve vašem prostoru.</span></>}</h1>
+          <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-white/55">{fastMode ? 'Na mobilu otevřeme zadní kameru. Vyfoťte místo, kam chcete produkt umístit — po pořízení snímku se vizualizace spustí automaticky.' : 'Nahrajte fotografii náměstí, parku, školky, sportoviště nebo zahrady. AI zachová scénu a vytvoří orientační vizualizaci vhodného mlžicího prvku.'}</p>
         </div>
 
         <div className="grid lg:grid-cols-[.86fr_1.14fr] gap-7 lg:gap-10 items-start">
@@ -184,14 +184,14 @@ export default function AIVizualizace() {
               ) : (
                 <div className="text-center px-6">
                   <div className="mx-auto mb-4 w-12 h-12 rounded-full border border-white/10 bg-white/[.06] flex items-center justify-center"><Camera size={20} className="text-white/60"/></div>
-                  <p className="text-sm font-semibold text-white/80">Nahrát fotografii prostoru</p>
-                  <p className="mt-2 text-xs text-white/35">JPG, PNG nebo WebP · max. 20 MB</p>
+                  <p className="text-sm font-semibold text-white/80">{fastMode ? 'Vyfotit místo' : 'Nahrát fotografii prostoru'}</p>
+                  <p className="mt-2 text-xs text-white/35">{fastMode ? 'Použijte zadní kameru telefonu' : 'JPG, PNG nebo WebP · max. 20 MB'}</p>
                   <p className="mt-1 text-[10px] text-white/25">Fotky nad 12 MB automaticky optimalizujeme před nahráním.</p>
                 </div>
               )}
               {(previewUrl || sourceUrl) && <div className="absolute bottom-3 right-3 rounded-full bg-slate-950/85 backdrop-blur px-3 py-2 text-xs flex items-center gap-2"><Upload size={13}/> Změnit foto</div>}
             </button>
-            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => pickFile(e.target.files?.[0])}/>
+            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" capture={fastMode ? 'environment' : undefined} className="hidden" onChange={(e) => pickFile(e.target.files?.[0])}/>
 
             {!fastMode && <>
               <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">2 · Skutečný výrobek</label>
@@ -206,7 +206,7 @@ export default function AIVizualizace() {
                 <div className="min-w-0 self-center">
                   <p className="text-sm font-semibold text-white/85">{selectedProduct.name}</p>
                   <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/40">{selectedProduct.short_description || selectedProduct.material}</p>
-                  <p className="mt-1.5 text-[10px] font-mono uppercase tracking-wider text-teal-300/70">Reference výrobku je povinná</p>
+                  <p className="mt-1.5 text-[10px] font-mono uppercase tracking-wider text-teal-300/70">{fastMode ? 'Produkt je vybraný automaticky' : 'Reference výrobku je povinná'}</p>
                 </div>
               </div>
             )}

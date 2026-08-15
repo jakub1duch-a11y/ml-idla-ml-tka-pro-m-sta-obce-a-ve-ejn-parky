@@ -13,14 +13,14 @@ async function driveJson(url, accessToken, options = {}) {
   return response.json();
 }
 
-async function findOrCreateFolder(accessToken, folderName) {
+async function findOrCreateFolder(accessToken, folderName, parentFolderId = 'root') {
   const escaped = folderName.replace(/'/g, "\\'");
-  const q = encodeURIComponent(`name='${escaped}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
+  const q = encodeURIComponent(`name='${escaped}' and '${parentFolderId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`);
   const list = await driveJson(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&pageSize=10`, accessToken);
   if (list.files?.[0]?.id) return list.files[0].id;
   const created = await driveJson('https://www.googleapis.com/drive/v3/files?fields=id,name', accessToken, {
     method: 'POST',
-    body: JSON.stringify({ name: folderName, mimeType: 'application/vnd.google-apps.folder' }),
+    body: JSON.stringify({ name: folderName, mimeType: 'application/vnd.google-apps.folder', parents: [parentFolderId] }),
   });
   return created.id;
 }
@@ -62,7 +62,7 @@ export default async function(req) {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
     const rootFolderId = await findOrCreateFolder(accessToken, 'MLŽIDLA — Nabídky');
-    const sourceFolderId = await findOrCreateFolder(accessToken, 'MLŽIDLA — NotebookLM zdroje');
+    const sourceFolderId = await findOrCreateFolder(accessToken, 'NotebookLM zdroje', rootFolderId);
 
     const issuedAt = quote.issued_at ? new Date(quote.issued_at) : new Date();
     const validUntil = quote.valid_until ? new Date(quote.valid_until) : new Date(issuedAt.getTime() + 30 * 24 * 60 * 60 * 1000);

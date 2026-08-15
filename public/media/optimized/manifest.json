@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T15:33:19.878Z",
+  "generatedAt": "2026-08-15T15:33:55.036Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -290,7 +290,38 @@
       "height": 1024
     }
   ],
-  "videos": [],
+  "videos": [
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/0d9a4e147_mlznabranaGATE70-video.mp4",
+      "output": "/media/optimized/0d9a4e147_mlznabranaGATE70-video.webm",
+      "before": 2466954,
+      "after": 380319
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/feff82d99_Aura-mlzitko-video-01.MP4",
+      "output": "/media/optimized/feff82d99_Aura-mlzitko-video-01.webm",
+      "before": 1685304,
+      "after": 786992
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/e93fc3844_mist-animatedicon02.mp4",
+      "output": "/media/optimized/e93fc3844_mist-animatedicon02.webm",
+      "before": 99582,
+      "after": 145284
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2c4b0efa9_animatediconmist.mp4",
+      "output": "/media/optimized/2c4b0efa9_animatediconmist.webm",
+      "before": 81917,
+      "after": 108443
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.mov",
+      "output": "/media/optimized/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.webm",
+      "before": 7643935,
+      "after": 4610524
+    }
+  ],
   "skippedTransparent": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png",
@@ -547,6 +578,6 @@
   ],
   "skippedAlreadyOptimized": [],
   "failed": [],
-  "changedFiles": 32,
-  "rewrittenRefs": 36
+  "changedFiles": 37,
+  "rewrittenRefs": 41
 }

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Play, Film, Clapperboard, Factory, Waves, Building2, Sparkles } from 'lucide-react';
 
 const VIDEOS = [
-  { title: 'Městská kolekce — GATE70', text: 'Video používané v prezentaci městské kolekce a veřejného prostoru.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/0d9a4e147_mlznabranaGATE70-video.mp4', group: 'produkt' },
-  { title: 'Zahradní AURA', text: 'Produktová ukázka zahradního mlžítka AURA v provozu.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/feff82d99_Aura-mlzitko-video-01.MP4', group: 'produkt' },
-  { title: 'Animace mlhy MLŽIDLA®', text: 'Krátká animovaná sekvence vizuální identity a principu mlžení.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/e93fc3844_mist-animatedicon02.mp4', group: 'sekvence' },
-  { title: 'Animovaný symbol mlžení', text: 'Motion sekvence používaná v prezentaci MLŽIDLA®.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2c4b0efa9_animatediconmist.mp4', group: 'sekvence' },
-  { title: 'Mlžná brána — živá ukázka II', text: 'Další uložená sekvence reálného mlžného efektu brány.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.mov', group: 'detail' },
+  { title: 'Městská kolekce — GATE70', text: 'Video používané v prezentaci městské kolekce a veřejného prostoru.', url: '/media/optimized/0d9a4e147_mlznabranaGATE70-video.webm', group: 'produkt' },
+  { title: 'Zahradní AURA', text: 'Produktová ukázka zahradního mlžítka AURA v provozu.', url: '/media/optimized/feff82d99_Aura-mlzitko-video-01.webm', group: 'produkt' },
+  { title: 'Animace mlhy MLŽIDLA®', text: 'Krátká animovaná sekvence vizuální identity a principu mlžení.', url: '/media/optimized/e93fc3844_mist-animatedicon02.webm', group: 'sekvence' },
+  { title: 'Animovaný symbol mlžení', text: 'Motion sekvence používaná v prezentaci MLŽIDLA®.', url: '/media/optimized/2c4b0efa9_animatediconmist.webm', group: 'sekvence' },
+  { title: 'Mlžná brána — živá ukázka II', text: 'Další uložená sekvence reálného mlžného efektu brány.', url: '/media/optimized/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.webm', group: 'detail' },
   { title: 'Mlžná brána — živá ukázka III', text: 'Alternativní záběr mlžné brány používaný u referencí.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov', group: 'detail' },
   { title: 'Detail jemné mlhy — sekvence II', text: 'Další uložená verze detailní sekvence aktivního mlžení.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV', group: 'detail' },
   { title: 'Chladivý efekt — sekvence II', text: 'Alternativní záběr rozptylu mlhy v bezprostředním okolí.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV', group: 'detail' },

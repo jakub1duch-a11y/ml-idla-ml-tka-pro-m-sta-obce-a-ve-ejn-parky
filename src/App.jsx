@@ -64,6 +64,7 @@ import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
 import BendyARPrototype from '@/pages/BendyARPrototype';
+import GateARPrototype from '@/pages/GateARPrototype';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -103,6 +104,7 @@ const AuthenticatedApp = () => {
         <Route path="/poradce" element={<Poradce />} />
         <Route path="/ai-vizualizace" element={<AIVizualizace />} />
         <Route path="/ar/bendy-single" element={<BendyARPrototype />} />
+        <Route path="/ar/gate" element={<GateARPrototype />} />
         <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />

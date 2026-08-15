@@ -166,8 +166,15 @@ export default async function(req) {
     });
     const presentationId = pres.id;
 
+    // Google Drive may create a presentation with one default blank slide.
+    // Read the presentation first and remove any existing slides so every generated
+    // offer has exactly the intended 8-slide structure.
+    const initialPresentation = await driveJson(`https://slides.googleapis.com/v1/presentations/${presentationId}`, accessToken);
     const s = Array.from({ length: 8 }, (_, i) => `offer_slide_${i + 1}`);
     const requests = [];
+    (initialPresentation.slides || []).forEach((slide) => {
+      if (slide?.objectId) requests.push({ deleteObject: { objectId: slide.objectId } });
+    });
     for (const id of s) requests.push({ createSlide: { objectId: id, slideLayoutReference: { predefinedLayout: 'BLANK' } } });
 
     // 1 — cover

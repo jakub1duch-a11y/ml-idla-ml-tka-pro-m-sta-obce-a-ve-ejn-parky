@@ -59,6 +59,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
       let quote = null;
       let quoteDriveUrl = '';
       let presentation = null;
+      let notebookSourceUrl = '';
       if (product) {
         const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
           product,
@@ -113,6 +114,34 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
           console.warn('Offer presentation unavailable', presentationError);
         }
 
+        try {
+          const sourcePackResponse = await base44.functions.invoke('generateOfferSourcePack', {
+            inquiry: {
+              name: selected.name,
+              email: selected.email,
+              phone: selected.telefon || selected.phone || '',
+              company: selected.firma || selected.company || '',
+              message: selected.message,
+            },
+            product,
+            quote: {
+              quote_number: quoteNumber,
+              final_total: finalTotal,
+              base_price: Number(basePrice),
+              installation: Number(installation),
+              discount_percent: Number(discount),
+              issued_at: issuedAt.toISOString(),
+              valid_until: validUntil.toISOString(),
+            },
+            presentation_url: presentation?.presentation_url || '',
+            quote_pdf_url: quoteDriveUrl,
+            ar_url: arUrl,
+          });
+          notebookSourceUrl = sourcePackResponse.data?.source_url || '';
+        } catch (sourcePackError) {
+          console.warn('NotebookLM source pack unavailable', sourcePackError);
+        }
+
         projectOrder = await base44.entities.ProjectOrder.create({
           inquiry_id: selected.id,
           inquiry_type: selected.type,
@@ -129,6 +158,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
           quote_pdf_url: quoteDriveUrl,
           presentation_url: presentation?.presentation_url || '',
           presentation_pdf_url: presentation?.presentation_pdf_url || '',
+          notebook_source_url: notebookSourceUrl,
           issued_at: issuedAt.toISOString(),
           valid_until: validUntil.toISOString(),
           ar_url: arUrl,

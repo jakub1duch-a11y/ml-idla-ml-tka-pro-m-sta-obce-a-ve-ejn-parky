@@ -7,15 +7,16 @@ import SmartAutomationFlow from '@/components/smart-ovladani/SmartAutomationFlow
 import SmartCTA from '@/components/smart-ovladani/SmartCTA';
 import SmartOfferSection from '@/components/smart-ovladani/SmartOfferSection';
 import SmartValveMediaSection from '@/components/smart-ovladani/SmartValveMediaSection';
+import SmartCoolingConcept from '@/components/smart-ovladani/SmartCoolingConcept';
 import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
 import ContextLinks from '@/components/common/ContextLinks';
 
 export default function SmartOvladani() {
   useEffect(() => {
     setSEO({
-      title: 'Smart ovládání mlžítek — aplikace a automatizace | mlzidla.cz',
-      description: 'Smart řízení mlžítek podle času, teploty a provozních podmínek. Vzdálené ovládání, více zón, senzory a automatizační scénáře pro města i soukromé instalace.',
-      keywords: 'smart ovládání mlžítek, automatizace mlžení, chytré senzory mlžítka, řízení mlžného systému, SUPLA mlžení, PEVEKO ventil',
+      title: 'Smart Cooling — chytré řízení městského ochlazování | mlzidla.cz',
+      description: 'Smart Cooling propojuje designová mlžítka, chytré ventily, senzory, provozní scénáře a data. Řízené ochlazovací body pro města, parky, náměstí a sportoviště.',
+      keywords: 'smart cooling, chytré městské ochlazování, smart city mlžítka, automatizace mlžení, chytré senzory mlžítka, řízení mlžného systému, PEVEKO ventil',
       canonicalPath: '/smart-ovladani',
     });
   }, []);
@@ -23,6 +24,7 @@ export default function SmartOvladani() {
   return (
     <div className="min-h-screen bg-white">
       <SmartHero />
+      <SmartCoolingConcept />
       <SmartAutomationFlow />
       <SmartBenefits />
       <SmartSensorsSection />

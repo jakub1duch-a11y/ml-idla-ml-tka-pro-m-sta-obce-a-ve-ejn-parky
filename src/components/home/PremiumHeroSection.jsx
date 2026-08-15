@@ -90,7 +90,7 @@ export default function PremiumHeroSection() {
                 }}
               >
                 Nerezová mlžítka z <span className="text-cyan-300">české výroby</span>,<br />
-                která <span style={{ fontStyle: 'italic' }}>chladí bez čerpadla.</span>
+                s <span style={{ fontStyle: 'italic' }}>nízkotlakou mlhou bez vysokotlakého čerpadla.</span>
               </motion.h1>
 
               {/* Tagline */}

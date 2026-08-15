@@ -1,122 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { ArrowLeft, Box, Camera, Rotate3D, Ruler, ScanLine, TriangleAlert } from 'lucide-react';
+import '@google/model-viewer';
+import { ArrowLeft, Box, Camera, Cuboid, Move3D, Ruler, ScanLine, Smartphone, TriangleAlert } from 'lucide-react';
 
 const MODEL_URL = '/ar/bendy-single/bendy-single-ar-base-v1.glb';
 
 export default function BendyARPrototype() {
-  const mountRef = useRef(null);
-  const controlsRef = useRef(null);
-  const cameraRef = useRef(null);
-  const [status, setStatus] = useState('loading');
+  const modelRef = useRef(null);
+  const [modelStatus, setModelStatus] = useState('loading');
+  const [arStatus, setArStatus] = useState('idle');
 
   useEffect(() => {
-    const mount = mountRef.current;
-    if (!mount) return;
+    const viewer = modelRef.current;
+    if (!viewer) return;
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf5f7f8);
+    const onLoad = () => setModelStatus('ready');
+    const onError = () => setModelStatus('error');
+    const onArStatus = (event) => setArStatus(event.detail?.status || 'idle');
 
-    const camera = new THREE.PerspectiveCamera(34, 1, 0.01, 100);
-    camera.position.set(2.7, 1.45, 3.25);
-    cameraRef.current = camera;
+    viewer.addEventListener('load', onLoad);
+    viewer.addEventListener('error', onError);
+    viewer.addEventListener('ar-status', onArStatus);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
-    mount.appendChild(renderer.domElement);
-
-    const hemi = new THREE.HemisphereLight(0xffffff, 0x8b97a0, 2.5);
-    scene.add(hemi);
-    const key = new THREE.DirectionalLight(0xffffff, 4.2);
-    key.position.set(3, 5, 4);
-    scene.add(key);
-    const fill = new THREE.DirectionalLight(0xbdd9e5, 1.8);
-    fill.position.set(-3, 2, -2);
-    scene.add(fill);
-
-    const grid = new THREE.GridHelper(4, 20, 0xcdd5d9, 0xe5eaed);
-    grid.position.y = 0;
-    scene.add(grid);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0.38, 0.88, 0);
-    controls.enableDamping = true;
-    controls.enablePan = false;
-    controls.minDistance = 1.5;
-    controls.maxDistance = 7;
-    controls.maxPolarAngle = Math.PI / 2.02;
-    controlsRef.current = controls;
-
-    const loader = new GLTFLoader();
-    loader.load(
-      MODEL_URL,
-      (gltf) => {
-        const root = gltf.scene;
-        root.traverse((obj) => {
-          if (obj.isMesh) {
-            obj.castShadow = true;
-            obj.receiveShadow = true;
-          }
-        });
-        scene.add(root);
-        setStatus('ready');
-      },
-      undefined,
-      (err) => {
-        console.error('BENDY GLB load error', err);
-        setStatus('error');
-      }
-    );
-
-    const resize = () => {
-      const w = Math.max(mount.clientWidth, 280);
-      const h = Math.max(mount.clientHeight, 420);
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    };
-    const ro = new ResizeObserver(resize);
-    ro.observe(mount);
-    resize();
-
-    let frame;
-    const animate = () => {
-      frame = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    if (viewer.loaded) setModelStatus('ready');
 
     return () => {
-      cancelAnimationFrame(frame);
-      ro.disconnect();
-      controls.dispose();
-      renderer.dispose();
-      if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
-      scene.traverse((obj) => {
-        if (obj.geometry) obj.geometry.dispose?.();
-        if (obj.material) {
-          const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
-          materials.forEach((m) => m.dispose?.());
-        }
-      });
+      viewer.removeEventListener('load', onLoad);
+      viewer.removeEventListener('error', onError);
+      viewer.removeEventListener('ar-status', onArStatus);
     };
   }, []);
-
-  const resetView = () => {
-    const camera = cameraRef.current;
-    const controls = controlsRef.current;
-    if (!camera || !controls) return;
-    camera.position.set(2.7, 1.45, 3.25);
-    controls.target.set(0.38, 0.88, 0);
-    controls.update();
-  };
 
   return (
     <main className="min-h-screen bg-[#f4f7f8] pt-24 pb-16 text-slate-900">
@@ -131,33 +44,83 @@ export default function BendyARPrototype() {
         </div>
 
         <div className="grid gap-7 lg:grid-cols-[1.25fr_.75fr] lg:items-start">
-          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white">
-            <div ref={mountRef} className="relative h-[62vh] min-h-[500px] max-h-[760px] w-full">
-              {status === 'loading' && <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-white/75 text-sm font-medium text-slate-500">Načítám 3D model…</div>}
-              {status === 'error' && <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-white px-8 text-center text-sm font-medium text-red-700">3D model se nepodařilo načíst.</div>}
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,.06)]">
+            <div className="relative h-[62vh] min-h-[500px] max-h-[760px] w-full bg-gradient-to-b from-white to-[#eef3f5]">
+              <model-viewer
+                ref={modelRef}
+                src={MODEL_URL}
+                alt="BENDY SINGLE® — prototypní 3D model mlžítka"
+                camera-controls=""
+                touch-action="pan-y"
+                auto-rotate=""
+                rotation-per-second="12deg"
+                shadow-intensity="1.1"
+                shadow-softness=".8"
+                exposure="1.05"
+                environment-image="neutral"
+                ar=""
+                ar-modes="webxr scene-viewer quick-look"
+                ar-scale="fixed"
+                ar-placement="floor"
+                xr-environment=""
+                interaction-prompt="auto"
+                style={{ width: '100%', height: '100%', '--poster-color': 'transparent' }}
+              >
+                <button
+                  slot="ar-button"
+                  type="button"
+                  className="absolute bottom-5 left-1/2 z-20 inline-flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-[#0b4860] px-6 py-3.5 text-sm font-bold text-white shadow-[0_14px_36px_rgba(11,72,96,.30)] transition-transform hover:-translate-x-1/2 hover:scale-[1.02]"
+                >
+                  <Smartphone size={16}/> Zobrazit BENDY v AR
+                </button>
+
+                <div slot="progress-bar" className="absolute left-5 right-5 top-5 h-1 overflow-hidden rounded-full bg-slate-200">
+                  <div className="h-full w-1/2 animate-pulse bg-[#0b4860]" />
+                </div>
+              </model-viewer>
+
+              {modelStatus === 'loading' && (
+                <div className="pointer-events-none absolute inset-x-0 top-5 z-10 text-center text-xs font-semibold text-slate-400">Načítám 3D model…</div>
+              )}
+              {modelStatus === 'error' && (
+                <div className="absolute inset-0 z-30 flex items-center justify-center bg-white px-8 text-center text-sm font-medium text-red-700">3D model se nepodařilo načíst.</div>
+              )}
+
+              {(arStatus === 'session-started' || arStatus === 'object-placed') && (
+                <div className="pointer-events-none absolute left-1/2 top-5 z-30 -translate-x-1/2 rounded-full bg-slate-950/80 px-4 py-2 text-center text-xs font-semibold text-white backdrop-blur">
+                  {arStatus === 'object-placed' ? 'BENDY je umístěné v měřítku 1:1' : 'Pohybujte telefonem a najděte rovnou plochu'}
+                </div>
+              )}
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 px-4 py-3 sm:px-5">
-              <span className="inline-flex items-center gap-2 text-xs text-slate-500"><Rotate3D size={14}/> Tažením otáčejte · kolečkem / gestem přibližujte</span>
-              <button type="button" onClick={resetView} className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50">Obnovit pohled</button>
+
+            <div className="grid gap-3 border-t border-slate-200 px-4 py-4 sm:grid-cols-3 sm:px-5">
+              <span className="inline-flex items-center gap-2 text-xs text-slate-500"><Move3D size={14}/> Tažením otáčejte a přibližujte</span>
+              <span className="inline-flex items-center gap-2 text-xs text-slate-500"><ScanLine size={14}/> AR hledá vodorovnou plochu</span>
+              <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#0b4860]"><Ruler size={14}/> AR měřítko je uzamčené 1 : 1</span>
             </div>
           </div>
 
           <aside className="space-y-5">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">BENDY SINGLE® · 3D kontrola</p>
-              <h1 className="mt-3 font-heading text-4xl font-light tracking-tight text-[#0b4860]">První 1:1 model pro AR.</h1>
-              <p className="mt-4 text-sm leading-relaxed text-slate-600">Základní geometrický model slouží k ověření proporcí, práce ve 3D a budoucího AR workflow. Není ještě určený jako výrobně přesný digitální dvojník.</p>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">BENDY SINGLE® · 3D + AR kontrola</p>
+              <h1 className="mt-3 font-heading text-4xl font-light tracking-tight text-[#0b4860]">První živý AR základ.</h1>
+              <p className="mt-4 text-sm leading-relaxed text-slate-600">Model můžete nejdřív prohlédnout ve 3D. Na podporovaném telefonu použijte „Zobrazit BENDY v AR“ a položte prototyp do prostoru v měřítku 1:1. Geometrie je zatím validační, ne výrobní digitální dvojník.</p>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-2xl border border-slate-200 bg-white p-4"><Ruler size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Profil</span><strong className="mt-1 block text-sm">Ø60,2 mm</strong></div>
               <div className="rounded-2xl border border-slate-200 bg-white p-4"><Box size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Výška</span><strong className="mt-1 block text-sm">≈ 1 800 mm</strong></div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-4"><ScanLine size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Měřítko</span><strong className="mt-1 block text-sm">1 : 1</strong></div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-4"><Rotate3D size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Formát</span><strong className="mt-1 block text-sm">GLB</strong></div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-4"><ScanLine size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Měřítko</span><strong className="mt-1 block text-sm">1 : 1 · fixed</strong></div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-4"><Cuboid size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Model</span><strong className="mt-1 block text-sm">GLB · Base v1</strong></div>
+            </div>
+
+            <div className="rounded-2xl border border-[#0b4860]/15 bg-[#0b4860]/[.04] p-4">
+              <p className="text-xs font-bold uppercase tracking-wide text-[#0b4860]">AR kompatibilita</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-600">Priorita je WebXR, následně Android Scene Viewer a iOS Quick Look. Pro iPhone se v prototypu může USDZ vytvořit automaticky z GLB; produkční verzi později nahradíme kontrolovaným USDZ exportem.</p>
             </div>
 
             <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs leading-relaxed text-amber-900">
-              Před ostrým AR ověříme přesný rádius / střednici, horní přesah, kotvení a skutečné pozice trysek. Potom model označíme jako produkční.
+              Před označením „AR ready“ ověříme přesnou střednici / rádius, horní přesah, kotvení, tloušťku referenčního profilu a skutečné pozice trysek podle výrobního podkladu.
             </div>
 
             <div className="flex flex-col gap-3">

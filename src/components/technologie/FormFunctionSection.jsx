@@ -6,15 +6,15 @@ const FEATURE_SECTIONS = [
 {
   label: 'Forma (Materiál a design)',
   items: [
-  { icon: ShieldCheck, title: 'Nerezová ocel AISI 316L', text: 'Všechny produkty vyrábíme z vysoce odolné nerezové oceli, která garantuje extrémní životnost ve veřejném prostoru.' },
+  { icon: ShieldCheck, title: 'Nerez podle konkrétní řady', text: 'U městských a prémiových řad používáme korozivzdorné nerezové materiály včetně AISI 316L. Přesný materiál a povrch uvádíme vždy u konkrétního produktu nebo projektu.' },
   { icon: Palette, title: 'Variabilita sortimentu', text: 'Od minimalistických bran GATE70 po zakázkové mlžné sochy – systémy dokonale splynou s architekturou místa.' }]
 
 },
 {
   label: 'Funkce (Efektivita a Smart technologie)',
   items: [
-  { icon: CloudRain, title: 'Vysokotlaká atomizace', text: 'Speciální trysky generují jemnou suchou mlhu, která bleskově ochladí okolí až o 10 °C bez tvoření kapek na zemi.' },
-  { icon: Cpu, title: 'Smart APP/WIFI řízení', text: 'Plná automatizace provozu podle teploty, vzdálená správa přes Wi-Fi aplikaci a sledování reálné spotřeby vody.' }]
+  { icon: CloudRain, title: 'Nízkotlaké mlžení', text: 'U nízkotlakých řad volíme trysku, tlak a průtok jako jeden celek. Cílem je jemný rozptyl vody odpovídající konkrétnímu prostoru bez potřeby vysokotlakého čerpadla.' },
+  { icon: Cpu, title: 'Volitelné smart řízení', text: 'Podle projektu lze doplnit časový program, teplotní podmínky, vzdálené ovládání nebo více samostatných zón. Telemetrie a další senzory jsou volitelné podle zvolené sestavy.' }]
 
 }];
 

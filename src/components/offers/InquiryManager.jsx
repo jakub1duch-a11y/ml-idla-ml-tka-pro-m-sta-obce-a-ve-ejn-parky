@@ -63,7 +63,17 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
         const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
           product,
           document_type: 'offer',
+          inquiry: {
+            name: selected.name,
+            email: selected.email,
+            phone: selected.telefon || selected.phone || '',
+            company: selected.firma || selected.company || '',
+          },
           quote: { final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount) },
+          quote_number: quoteNumber,
+          valid_until: validUntil.toISOString(),
+          portal_url: 'https://mlzidla.cz/muj-projekt',
+          ar_url: arUrl,
         });
         quote = quoteResponse.data;
 

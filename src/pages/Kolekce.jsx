@@ -144,6 +144,10 @@ const FALLBACK_IMAGES = {
 };
 
 const PRODUCT_CARD_META = {
+  'aura-mlzitko': { dims: [['Varianta', 'Garden Single'], ['Provoz', '2–5 bar']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Rezidence', Home]] },
+  'aura-garden-duo': { dims: [['Varianta', 'Garden Duo'], ['Rozteč', 'projektová']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Wellness', Home]] },
+  'aura-city-single': { dims: [['Varianta', 'City Single'], ['Provoz', '2–5 bar']], places: [['Náměstí', Building2], ['Park', Trees], ['Promenáda', Landmark]] },
+  'aura-city-duo': { dims: [['Varianta', 'City Duo'], ['Rozteč', 'projektová']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Veřejná zóna', Trees]] },
   'mlzitko-bendy': { dims: [['Výška', '≈ 1 800 mm'], ['Průměr', 'Ø50 / Ø60,2 / Ø70 mm']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
   'bendy-arc': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
   'bendy-arc-2-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Sportoviště', Dumbbell]] },

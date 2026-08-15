@@ -150,6 +150,25 @@ export default async function(req) {
     const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl } = body;
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
+    // Prefer published real-life references over generic gallery images.
+    let realizationImages = [];
+    let realizationLabel = 'Produktové reference a kontext použití';
+    try {
+      const realizations = await base44.asServiceRole.entities.Realizace.filter({ published: true });
+      const productKey = `${product.name || ''} ${product.slug || ''}`.toLowerCase();
+      const matched = (realizations || []).filter((item) => {
+        const used = String(item.product_used || '').toLowerCase().trim();
+        return used && (productKey.includes(used) || used.includes(String(product.name || '').toLowerCase()) || String(product.name || '').toLowerCase().includes(used));
+      });
+      const selected = (matched.length ? matched : (realizations || []).filter((item) => item.featured)).slice(0, 3);
+      realizationImages = selected.map((item) => item.image_url).filter(Boolean);
+      if (realizationImages.length) realizationLabel = 'Realizované projekty MLŽIDLA®';
+    } catch (_) {}
+
+    if (!realizationImages.length) {
+      realizationImages = (product.gallery_urls || []).filter(Boolean).slice(0, 3);
+    }
+
     const now = quote.issued_at ? new Date(quote.issued_at) : new Date();
     const validUntil = quote.valid_until ? new Date(quote.valid_until) : new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
     const quoteNumber = quote.quote_number || `MLZ-${now.getFullYear()}-${String(Date.now()).slice(-6)}`;
@@ -220,12 +239,11 @@ export default async function(req) {
     requests.push(...shapeText('t4d', s[3], 'Automatické scénáře  ·  vzdálené ovládání  ·  projektové nastavení', 48, 330, 610, 32, 12, ACCENT, true));
 
     // 5 — realizations
-    const refs = (product.gallery_urls || []).filter(Boolean).slice(0, 3);
     requests.push(background(s[4], WHITE), ...accentBar('a5', s[4], 0, 0, 720, 8));
-    requests.push(...shapeText('t5a', s[4], 'Realizace a kontext použití', 42, 34, 500, 40, 25, DEEP, true));
-    requests.push(...shapeText('t5b', s[4], 'Ukázky produktu a souvisejících realizací. Finální řešení se vždy přizpůsobuje místu, provozu a požadovanému účinku.', 42, 79, 625, 52, 13, MUTED, false));
-    refs.forEach((url, i) => requests.push(image(`ref${i + 1}`, s[4], url, 42 + i * 216, 150, 195, 185)));
-    if (!refs.length) requests.push(...shapeText('t5c', s[4], 'Reference doplníme z databáze realizací MLŽIDLA® podle typu projektu.', 42, 170, 620, 55, 16, INK, false));
+    requests.push(...shapeText('t5a', s[4], realizationLabel, 42, 34, 500, 40, 25, DEEP, true));
+    requests.push(...shapeText('t5b', s[4], realizationLabel.startsWith('Realizované') ? 'Vybrané publikované realizace z databáze MLŽIDLA®. Finální řešení se vždy přizpůsobuje místu, provozu a požadovanému účinku.' : 'Produktové obrazové reference. Jakmile je k produktu dostupná publikovaná realizace, systém ji automaticky upřednostní.', 42, 79, 625, 52, 13, MUTED, false));
+    realizationImages.forEach((url, i) => requests.push(image(`ref${i + 1}`, s[4], url, 42 + i * 216, 150, 195, 185)));
+    if (!realizationImages.length) requests.push(...shapeText('t5c', s[4], 'Reference doplníme z databáze realizací MLŽIDLA® podle typu projektu.', 42, 170, 620, 55, 16, INK, false));
 
     // 6 — visualization / AR
     requests.push(background(s[5], LIGHT), ...accentBar('a6', s[5], 0, 0, 14, 405, ACCENT));

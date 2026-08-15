@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T15:36:03.499Z",
+  "generatedAt": "2026-08-15T15:51:26.444Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -380,6 +380,36 @@
       "output": "/media/optimized/a4733f633_detailnamlhumlznebrany.webm",
       "before": 13911131,
       "after": 3829639
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/37a6da879_mlzeni-mlznbrany-vakci.MOV",
+      "output": "/media/optimized/37a6da879_mlzeni-mlznbrany-vakci.webm",
+      "before": 11600206,
+      "after": 1851590
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/352fd3ef1_mlnbrnaGATE74-vakci.MOV",
+      "output": "/media/optimized/352fd3ef1_mlnbrnaGATE74-vakci.webm",
+      "before": 3633406,
+      "after": 840399
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b66409ed_mlnbrnaGATE74-vakci1.MOV",
+      "output": "/media/optimized/4b66409ed_mlnbrnaGATE74-vakci1.webm",
+      "before": 3633406,
+      "after": 840399
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV",
+      "output": "/media/optimized/ae9faa0a3_video-mlitkospiralavakci.webm",
+      "before": 20179540,
+      "after": 12161230
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eb7e87313_mlzidla-mlzitkaproparkyamesta03.MOV",
+      "output": "/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm",
+      "before": 6927174,
+      "after": 4444047
     }
   ],
   "skippedTransparent": [
@@ -638,6 +668,6 @@
   ],
   "skippedAlreadyOptimized": [],
   "failed": [],
-  "changedFiles": 43,
-  "rewrittenRefs": 51
+  "changedFiles": 46,
+  "rewrittenRefs": 56
 }

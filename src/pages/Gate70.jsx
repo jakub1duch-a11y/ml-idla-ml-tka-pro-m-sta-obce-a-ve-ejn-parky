@@ -61,9 +61,9 @@ const ALL_GALLERY = [
 const VIDEOS = [
 { url: '/media/optimized/aa11e932c_mlnbrnaGATE70.webm', caption: 'GATE70 — mlhový efekt v parku' },
 { url: '/media/optimized/a4733f633_detailnamlhumlznebrany.webm', caption: 'Detail mlhy — trysky v akci' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/37a6da879_mlzeni-mlznbrany-vakci.MOV', caption: 'Brána v provozu' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/352fd3ef1_mlnbrnaGATE74-vakci.MOV', caption: 'GATE74 realizace' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b66409ed_mlnbrnaGATE74-vakci1.MOV', caption: 'GATE74 — úhel pohledu' }];
+{ url: '/media/optimized/37a6da879_mlzeni-mlznbrany-vakci.webm', caption: 'Brána v provozu' },
+{ url: '/media/optimized/352fd3ef1_mlnbrnaGATE74-vakci.webm', caption: 'GATE74 realizace' },
+{ url: '/media/optimized/4b66409ed_mlnbrnaGATE74-vakci1.webm', caption: 'GATE74 — úhel pohledu' }];
 
 
 const TECH_ROWS = [

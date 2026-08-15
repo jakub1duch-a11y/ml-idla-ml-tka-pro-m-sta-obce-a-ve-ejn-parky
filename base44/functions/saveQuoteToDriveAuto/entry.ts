@@ -73,11 +73,14 @@ Deno.serve(async (req) => {
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const { pdfBytes, filename, quoteNumber, inquiryEmail, inquiryName } = body;
+    const { pdfBytes, pdf_base64: pdfBase64, filename, quoteNumber, inquiryEmail, inquiryName } = body;
 
-    if (!pdfBytes || !filename) {
-      return Response.json({ error: 'Missing pdfBytes or filename' }, { status: 400 });
+    if ((!pdfBytes && !pdfBase64) || !filename) {
+      return Response.json({ error: 'Missing PDF payload or filename' }, { status: 400 });
     }
+    const normalizedPdfBytes = pdfBase64
+      ? Uint8Array.from(atob(pdfBase64), (character) => character.charCodeAt(0))
+      : new Uint8Array(pdfBytes);
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
 
@@ -93,7 +96,7 @@ Deno.serve(async (req) => {
     const yearFolderId = await findOrCreateFolder(accessToken, mlznyDiskFolderId, yearMonth);
 
     // Upload PDF
-    const { fileId, driveUrl } = await uploadPdfToDrive(pdfBytes, filename, yearFolderId, accessToken);
+    const { fileId, driveUrl } = await uploadPdfToDrive(normalizedPdfBytes, filename, yearFolderId, accessToken);
 
     return Response.json({
       success: true,

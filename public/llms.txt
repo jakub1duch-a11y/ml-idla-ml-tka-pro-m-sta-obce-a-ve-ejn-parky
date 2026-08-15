@@ -5,6 +5,7 @@
 ## Klíčové stránky
 
 - [Domů](https://mlzidla.cz/): Přehled značky Mlžidla.cz a hlavní produktové řady mlžítek.
+- [Smart Cooling](https://mlzidla.cz/smart-ovladani): Řízené ochlazovací body pro veřejný prostor — produkt, senzory, chytré ventily, provozní scénáře a data.
 - [Kolekce](https://mlzidla.cz/mlzidla-mlzitka): Celý katalog mlžných soch, mlžítek a mlžných systémů.
 - [Mlžiště](https://mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
 - [Jak to funguje](https://mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
@@ -16,7 +17,11 @@
 
 ## Produkty
 
-Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody a tlakem.
+Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product + FAQPage), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody, tlakem a rychlými odpověďmi pro investory, města a projektanty.
+
+## Smart Cooling
+
+Smart Cooling je koncept řízeného městského ochlazování. Propojuje konkrétní mlžítko, rozmístění v prostoru, hydrauliku, chytré ventily, časování, teplotní a další provozní podmínky a případná data o provozu. Cílem je spouštět systém pouze tehdy a tam, kde přináší smysluplný efekt. Typický výstup projektu: produkt + rozmístění + řízení + provozní scénář + servisní plán.
 
 ## Kontakt
 

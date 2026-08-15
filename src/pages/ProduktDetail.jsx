@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, Compass, Wifi, Wrench, Images, FileText } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
@@ -64,12 +64,14 @@ function Lightbox({ images, initialIndex, onClose }) {
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
-{ id: 'o-produktu', label: 'Příběh produktu' },
-{ id: 'technicke', label: 'Parametry' },
-{ id: 'benefity', label: 'Proč funguje' },
-{ id: 'instalace', label: 'Instalace a kotvení' },
-{ id: 'video', label: 'Video a galerie' },
-{ id: 'ke-stazeni', label: 'Dokumenty' }];
+  { id: 'o-produktu', label: 'Přehled', hint: 'Design a realizace', icon: Compass },
+  { id: 'technicke', label: 'Parametry', hint: 'Rozměry a provoz', icon: Ruler },
+  { id: 'benefity', label: 'Přínosy', hint: 'Komfort a provoz', icon: Sparkles },
+  { id: 'smart', label: 'Smart řízení', hint: 'Automatizace vody', icon: Wifi },
+  { id: 'instalace', label: 'Instalace', hint: 'Kotvení a příprava', icon: Wrench },
+  { id: 'video', label: 'Galerie', hint: 'Foto a video', icon: Images },
+  { id: 'ke-stazeni', label: 'Ke stažení', hint: 'Výkresy a podklady', icon: FileText }
+];
 
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -259,16 +261,25 @@ export default function ProduktDetail() {
             </button>
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-            className="flex flex-row gap-2 overflow-x-auto whitespace-nowrap py-2.5 pr-2 sm:gap-6 sm:py-0 lg:gap-8 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-              {TABS.map((t) =>
-              <button key={t.id} onClick={() => handleTabClick(t)}
-              className={`relative flex min-h-[42px] shrink-0 items-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all sm:min-h-0 sm:rounded-none sm:px-0 sm:py-5 ${activeTab === t.id ? 'bg-slate-900 text-white shadow-sm sm:bg-transparent sm:text-slate-900 sm:shadow-none' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 sm:bg-transparent sm:hover:bg-transparent'}`}>
-                  {t.label}
-                  {activeTab === t.id &&
-                <motion.div layoutId="produkt-tab-underline" className="hidden sm:block absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
-                }
-                </button>
-              )}
+            className="flex gap-2 overflow-x-auto py-2.5 pr-2 [&::-webkit-scrollbar]:hidden sm:gap-2.5" style={{ scrollbarWidth: 'none' }}>
+              {TABS.map((t) => {
+                const Icon = t.icon;
+                const isActive = activeTab === t.id;
+                return (
+                  <button key={t.id} onClick={() => handleTabClick(t)}
+                    aria-pressed={isActive}
+                    className={`group relative flex min-w-[148px] shrink-0 items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all sm:min-w-[158px] ${isActive ? 'border-[#0b4860]/25 bg-[#eef8fb] text-[#0b4860] shadow-[0_8px_24px_rgba(11,72,96,.08)]' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'}`}>
+                    <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${isActive ? 'border-[#0b4860]/15 bg-white text-[#0b4860]' : 'border-slate-200 bg-slate-50 text-slate-500 group-hover:bg-white'}`}>
+                      <Icon size={16} strokeWidth={1.8} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[13px] font-semibold leading-tight">{t.label}</span>
+                      <span className={`mt-1 block text-[10px] leading-tight ${isActive ? 'text-[#0b4860]/65' : 'text-slate-400'}`}>{t.hint}</span>
+                    </span>
+                    {isActive && <motion.span layoutId="produkt-tab-marker" className="absolute inset-x-4 -bottom-[3px] h-[3px] rounded-full bg-[#0b4860]" />}
+                  </button>
+                );
+              })}
             </div>
             {canScrollRight &&
             <button type="button" onClick={() => scrollTabs(160)} aria-label="Posunout záložky vpravo"
@@ -290,6 +301,7 @@ export default function ProduktDetail() {
             </>
           }
           {activeTab === 'benefity' && <BenefityTab product={product} />}
+          {activeTab === 'smart' && <SmartValveProductSection embedded product={product} onPoptat={scrollToContact} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
           {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}
           {activeTab === 'ke-stazeni' && <DownloadsTab product={product} />}
@@ -301,23 +313,20 @@ export default function ProduktDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           {nextTab ?
           <button onClick={() => handleTabClick(nextTab)}
-          className="inline-flex items-center gap-2 font-medium text-slate-600 hover:text-slate-900 transition-colors uppercase text-sm">
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-2 font-medium text-slate-600 transition-colors hover:text-slate-900 text-sm">
               Pokračovat: {nextTab.label} <ArrowRight size={15} />
             </button> :
-          <span />
+          <span className="text-sm text-slate-400">Máte vše potřebné k rozhodnutí?</span>
           }
-          
-
-
-          
+          <button type="button" onClick={scrollToContact}
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#0b4860] px-5 py-2.5 text-sm font-bold text-white shadow-[0_8px_22px_rgba(11,72,96,.16)] transition-all hover:bg-[#08394c]">
+            Poptat {product.name} <ArrowRight size={15} />
+          </button>
         </div>
       </div>
 
       {/* ═══════ AEO / FAQ ═══════ */}
       <ProductAEOSection product={product} />
-
-      {/* ═══════ SMART COOLING / SMART VALVE ═══════ */}
-      <SmartValveProductSection />
 
       {/* ═══════ REVIEWS ═══════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />

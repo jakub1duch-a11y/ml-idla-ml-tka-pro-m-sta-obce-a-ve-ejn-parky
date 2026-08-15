@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T15:33:55.036Z",
+  "generatedAt": "2026-08-15T15:34:47.202Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -320,6 +320,36 @@
       "output": "/media/optimized/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.webm",
       "before": 7643935,
       "after": 4610524
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov",
+      "output": "/media/optimized/42cf4b972_Efektmlhy-mlznabrana-zivynahled.webm",
+      "before": 7643935,
+      "after": 4610524
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV",
+      "output": "/media/optimized/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm",
+      "before": 5281799,
+      "after": 4067645
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV",
+      "output": "/media/optimized/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm",
+      "before": 3899052,
+      "after": 3264330
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV",
+      "output": "/media/optimized/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm",
+      "before": 4201298,
+      "after": 3616350
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV",
+      "output": "/media/optimized/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm",
+      "before": 4985206,
+      "after": 4408971
     }
   ],
   "skippedTransparent": [
@@ -578,6 +608,6 @@
   ],
   "skippedAlreadyOptimized": [],
   "failed": [],
-  "changedFiles": 37,
-  "rewrittenRefs": 41
+  "changedFiles": 40,
+  "rewrittenRefs": 46
 }

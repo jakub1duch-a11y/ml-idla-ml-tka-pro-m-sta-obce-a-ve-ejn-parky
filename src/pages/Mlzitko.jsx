@@ -227,10 +227,10 @@ export default function Mlzitko() {
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV',
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV',
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV',
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV',
+            '/media/optimized/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm',
+            '/media/optimized/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm',
+            '/media/optimized/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm',
+            '/media/optimized/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm',
           ].map((url, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
               className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">

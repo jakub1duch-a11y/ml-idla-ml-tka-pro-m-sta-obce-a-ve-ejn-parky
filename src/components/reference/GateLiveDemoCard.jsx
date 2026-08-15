@@ -9,7 +9,7 @@ export default function GateLiveDemoCard() {
       className="max-w-7xl mx-auto px-6 lg:px-8 mb-10 sm:mb-16">
       <Link to="/gate70" className="group relative block rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all min-h-[280px]">
         <video
-          src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov"
+          src="/media/optimized/42cf4b972_Efektmlhy-mlznabrana-zivynahled.webm"
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10" />

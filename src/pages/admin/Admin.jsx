@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
@@ -14,6 +14,7 @@ import AdminPages from './AdminPages';
 import AdminMedia from './AdminMedia';
 import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
+import AdminAR from './AdminAR';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -25,6 +26,7 @@ const TABS = [
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
+  { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'instagram', label: 'Instagram', icon: Instagram },
 ];
@@ -81,6 +83,7 @@ export default function Admin() {
     media: AdminMedia,
     marketing: AdminMarketing,
     poptavky: AdminPoptavky,
+    ar: AdminAR,
     analytics: AdminAnalytics,
     instagram: AdminInstagram,
   }[activeTab];

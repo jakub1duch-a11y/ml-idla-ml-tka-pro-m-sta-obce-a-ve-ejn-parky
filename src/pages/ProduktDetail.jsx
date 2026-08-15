@@ -21,6 +21,7 @@ import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
+import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -90,7 +91,27 @@ export default function ProduktDetail() {
   const [canScrollRight, setCanScrollRight] = useState(false);
 
   const handleReviewStats = (stats) => {
-    if (product) setSEO(getProductSEO(product, stats));
+    if (product) {
+      const baseSEO = getProductSEO(product, stats);
+      const faq = buildAnswers(product);
+      setSEO({
+        ...baseSEO,
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@graph': [
+            baseSEO.jsonLd,
+            {
+              '@type': 'FAQPage',
+              mainEntity: faq.map((item) => ({
+                '@type': 'Question',
+                name: item.q,
+                acceptedAnswer: { '@type': 'Answer', text: item.a }
+              }))
+            }
+          ]
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -110,7 +131,25 @@ export default function ProduktDetail() {
       const p = results[0];
       setProduct(p);
       trackProductView(p.name, p.slug, p.category_id);
-      setSEO(getProductSEO(p));
+      const baseSEO = getProductSEO(p);
+      const faq = buildAnswers(p);
+      setSEO({
+        ...baseSEO,
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@graph': [
+            baseSEO.jsonLd,
+            {
+              '@type': 'FAQPage',
+              mainEntity: faq.map((item) => ({
+                '@type': 'Question',
+                name: item.q,
+                acceptedAnswer: { '@type': 'Answer', text: item.a }
+              }))
+            }
+          ]
+        }
+      });
       const [related, nozzleResults, allProducts] = await Promise.all([
       p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
       base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
@@ -274,7 +313,10 @@ export default function ProduktDetail() {
         </div>
       </div>
 
-      {/* ═══════ SMART VALVE ═══════ */}
+      {/* ═══════ AEO / FAQ ═══════ */}
+      <ProductAEOSection product={product} />
+
+      {/* ═══════ SMART COOLING / SMART VALVE ═══════ */}
       <SmartValveProductSection />
 
       {/* ═══════ REVIEWS ═══════ */}

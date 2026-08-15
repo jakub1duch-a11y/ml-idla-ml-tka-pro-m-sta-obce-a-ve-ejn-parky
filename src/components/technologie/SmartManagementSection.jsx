@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { Wifi, Thermometer, MonitorCheck } from 'lucide-react';
 
 const TOGGLES = [
-{ icon: Wifi, title: 'Konektivita', text: 'Plné ovládání přes Wi-Fi nebo Bluetooth.' },
-{ icon: Thermometer, title: 'Automatizace', text: 'Spínání na základě reálné teploty okolí (teplotní čidlo) nebo časového programu.' },
-{ icon: MonitorCheck, title: 'Efektivita', text: 'Vzdálený monitoring zajišťuje, že systém běží jen tehdy, kdy to dává smysl.' }];
+{ icon: Wifi, title: 'Konektivita', text: 'Volitelné Wi-Fi nebo jiné vzdálené ovládání podle zvolené řídicí sestavy.' },
+{ icon: Thermometer, title: 'Automatizace', text: 'Časový program a volitelné teplotní podmínky mohou omezit provoz na situace, kdy je mlžení skutečně účelné.' },
+{ icon: MonitorCheck, title: 'Více zón a dohled', text: 'U větších projektů lze řízení rozdělit do samostatných zón a doplnit vzdálený dohled podle požadavků provozovatele.' }];
 
 
 export default function SmartManagementSection() {
@@ -13,7 +13,7 @@ export default function SmartManagementSection() {
     <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100 bg-slate-50">
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="mb-10 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
-        Smart správa pro moderní města.
+        Chytré řízení podle rozsahu projektu.
       </motion.h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">

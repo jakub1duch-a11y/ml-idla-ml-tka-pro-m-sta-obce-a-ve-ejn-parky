@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T15:58:52.679Z",
+  "generatedAt": "2026-08-15T16:01:22.207Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -470,6 +470,36 @@
       "output": "/media/optimized/e557b652c_generated_video.webm",
       "before": 11134733,
       "after": 5317919
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/da5bb1cbb_mlzitko-mrak-oblak.MOV",
+      "output": "/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm",
+      "before": 15946270,
+      "after": 7509574
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/94c2b5f74_instalace-mlzitka-mrak.MOV",
+      "output": "/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm",
+      "before": 9376607,
+      "after": 8237237
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f0ba17112_generated_video.mp4",
+      "output": "/media/optimized/f0ba17112_generated_video.webm",
+      "before": 7191103,
+      "after": 3242871
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c7c9d3e68_video_20260619_164025.mp4",
+      "output": "/media/optimized/c7c9d3e68_video_20260619_164025.webm",
+      "before": 47574053,
+      "after": 28955708
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/78cf9a6c8_KolekceBendy_20260812_121335_0000.mp4",
+      "output": "/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm",
+      "before": 24120256,
+      "after": 8470284
     }
   ],
   "skippedTransparent": [
@@ -728,6 +758,6 @@
   ],
   "skippedAlreadyOptimized": [],
   "failed": [],
-  "changedFiles": 54,
-  "rewrittenRefs": 66
+  "changedFiles": 60,
+  "rewrittenRefs": 71
 }

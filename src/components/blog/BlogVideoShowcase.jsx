@@ -39,10 +39,10 @@ const VIDEOS = [
   { title: 'Parky a hřiště', text: 'Vizualizační videosekvence řešení pro veřejný prostor.', url: '/media/optimized/3c3e64d18_generated_video.webm', group: 'sekvence' },
   { title: 'Koupaliště a aquaparky', text: 'Videosekvence využití mlžení ve vodních areálech.', url: '/media/optimized/9eb62596b_generated_video.webm', group: 'sekvence' },
   { title: 'Školy a dětské prostory', text: 'Vizualizační sekvence mlžení pro dětské a školní areály.', url: '/media/optimized/e557b652c_generated_video.webm', group: 'sekvence' },
-  { title: 'Zahrady a terasy', text: 'Sekvence mlžítka v soukromém venkovním prostoru.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/da5bb1cbb_mlzitko-mrak-oblak.MOV', group: 'sekvence' },
-  { title: 'Instalace mlžítka MRAK', text: 'Ukázka autorské instalace a výsledného efektu.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/94c2b5f74_instalace-mlzitka-mrak.MOV', group: 'sekvence' },
-  { title: 'Eventy a festivaly', text: 'Videosekvence mobilního využití mlžení při akcích.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f0ba17112_generated_video.mp4', group: 'sekvence' },
-  { title: 'Mlžení — filmový detail', text: 'Atmosférická videosekvence používaná v prezentaci MLŽIDLA®.', url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c7c9d3e68_video_20260619_164025.mp4', group: 'detail' },
+  { title: 'Zahrady a terasy', text: 'Sekvence mlžítka v soukromém venkovním prostoru.', url: '/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm', group: 'sekvence' },
+  { title: 'Instalace mlžítka MRAK', text: 'Ukázka autorské instalace a výsledného efektu.', url: '/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm', group: 'sekvence' },
+  { title: 'Eventy a festivaly', text: 'Videosekvence mobilního využití mlžení při akcích.', url: '/media/optimized/f0ba17112_generated_video.webm', group: 'sekvence' },
+  { title: 'Mlžení — filmový detail', text: 'Atmosférická videosekvence používaná v prezentaci MLŽIDLA®.', url: '/media/optimized/c7c9d3e68_video_20260619_164025.webm', group: 'detail' },
 ];
 
 const FILTERS = [

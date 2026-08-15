@@ -103,7 +103,7 @@ const FALLBACK_IMAGES = {
 };
 
 const PRODUCT_CARD_META = {
-  'mlzitko-bendy': { dims: [['Výška', '1,7–2 m'], ['Průměr', '60 / 70 mm']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
+  'mlzitko-bendy': { dims: [['Výška', '≈ 1 800 mm'], ['Průměr', 'Ø50 / Ø60,2 / Ø70 mm']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
   'bendy-arc': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
   'bendy-arc-2-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Sportoviště', Dumbbell]] },
   'bendy-arc-3-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Park', Trees], ['Sportoviště', Dumbbell]] },

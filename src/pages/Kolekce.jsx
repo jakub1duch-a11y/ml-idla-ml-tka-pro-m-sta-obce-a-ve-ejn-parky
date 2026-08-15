@@ -9,7 +9,7 @@ import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider'
 import CollectionOffers from '@/components/kolekce/CollectionOffers';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye, Ruler, MoveHorizontal, Dumbbell, School, UtensilsCrossed, Waves } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Search, Ruler, MoveHorizontal, Dumbbell, School, UtensilsCrossed, Waves } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { trackQuickInquiryClick } from '@/lib/ga4';
@@ -93,6 +93,28 @@ const audienceSegments = [
 { icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
 { icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžítka - mlžná hřiště pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
 
+const SPACE_FILTERS = [
+  { value: 'all', label: 'Vše', icon: SlidersHorizontal },
+  { value: 'city', label: 'Města', icon: Building2 },
+  { value: 'garden', label: 'Zahrady', icon: Home },
+  { value: 'sport', label: 'Sportoviště', icon: Dumbbell },
+  { value: 'school', label: 'Školy & hřiště', icon: School },
+  { value: 'gastro', label: 'Gastro & hotel', icon: UtensilsCrossed }
+];
+
+function matchesSpace(product, filter) {
+  if (filter === 'all') return true;
+  const haystack = `${product.name || ''} ${product.slug || ''} ${product.short_description || ''} ${product.description || ''} ${product._categoryName || ''}`.toLowerCase();
+  const map = {
+    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'bendy-arc', 'bendy-back', 'bendy-alej'],
+    garden: ['zahrad', 'terasa', 'reziden', 'soukrom', 'garden'],
+    sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
+    school: ['škol', 'dětsk', 'hřiště'],
+    gastro: ['gastro', 'restaur', 'hotel', 'resort', 'terasa']
+  };
+  return map[filter].some((term) => haystack.includes(term));
+}
+
 
 // Fallback images by category
 const FALLBACK_IMAGES = {
@@ -175,6 +197,7 @@ export default function Kolekce() {
   const [loading, setLoading] = useState(true);
   const [heightFilter, setHeightFilter] = useState('all');
   const [installFilter, setInstallFilter] = useState('all');
+  const [spaceFilter, setSpaceFilter] = useState('all');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [search, setSearch] = useState('');
 
@@ -197,7 +220,14 @@ export default function Kolekce() {
   }, []);
 
   const activeGroup = CATEGORY_GROUPS.find((g) => g.id === activeCategory);
-  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
+  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || spaceFilter !== 'all' || search.trim();
+  const clearFilters = () => {
+    setActiveCategory(null);
+    setHeightFilter('all');
+    setInstallFilter('all');
+    setSpaceFilter('all');
+    setSearch('');
+  };
 
   const displayedProducts = products.
   filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'].includes(p.name)).
@@ -208,6 +238,7 @@ export default function Kolekce() {
     }
     return true;
   }).
+  filter((p) => matchesSpace(p, spaceFilter)).
   filter((p) => heightFilter === 'all' || getHeightRange(p) === heightFilter).
   filter((p) => installFilter === 'all' || getInstallComplexity(p) === installFilter).
   filter((p) => {
@@ -231,16 +262,58 @@ export default function Kolekce() {
 
       {/* ── PRODUKTY (posunuto výš — hned pod výběrem kategorií) ── */}
       <div id="catalog" className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between lg:mb-12">
-          <div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kompletní katalog</p><h2 className="mt-3 font-heading tracking-[-.02em] text-foreground sm:text-4xl text-4xl lg:text-4xl">
+        <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kompletní katalog</p><h2 className="mt-3 font-heading tracking-[-.02em] text-foreground text-4xl lg:text-5xl">
             {activeGroup ? `${activeGroup.label}` : 'Všechna mlžítka a mlžné systémy'}
-          </h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">Vyberte produkt podle typu prostoru. Každý model lze upravit podle konkrétní instalace, způsobu napojení a požadovaného provozu.</p></div>
-          {!loading && <span className="shrink-0 rounded-full border border-border px-4 py-2 font-mono text-xs text-muted-foreground">{displayedProducts.length} produktů</span>}
-          {activeCategory &&
-          <button onClick={() => setActiveCategory(null)} className="text-xs text-slate-400 hover:text-slate-900 transition-colors font-mono">
-              × Zobrazit vše
-            </button>
-          }
+          </h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">Vyberte produkt podle prostoru a typu instalace. Filtry jsou navržené tak, aby se architekt, město i soukromý zákazník dostali k vhodné sestavě během několika sekund.</p></div>
+          {!loading && <span className="shrink-0 rounded-full border border-border bg-white px-4 py-2 font-mono text-xs text-muted-foreground shadow-sm">{displayedProducts.length} produktů</span>}
+        </div>
+
+        <div className="sticky top-[72px] z-30 mb-10 rounded-[1.5rem] border border-slate-200/80 bg-white/92 p-3 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-4">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
+            <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {
+                const active = spaceFilter === value;
+                return <button key={value} onClick={() => setSpaceFilter(value)} className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-all ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md shadow-slate-900/10' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950'}`}>
+                  <Icon size={15} strokeWidth={1.8}/>{label}
+                </button>;
+              })}
+            </div>
+
+            <div className="flex gap-2">
+              <label className="relative min-w-0 flex-1 xl:w-[280px] xl:flex-none">
+                <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-11 w-full rounded-full border border-slate-200 bg-slate-50/70 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-[#0b4860]/40 focus:bg-white focus:ring-4 focus:ring-[#0b4860]/5"/>
+              </label>
+              <button onClick={() => setShowAdvanced((v) => !v)} aria-expanded={showAdvanced} className={`inline-flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition ${showAdvanced || heightFilter !== 'all' || installFilter !== 'all' ? 'border-[#0b4860]/30 bg-[#0b4860]/5 text-[#0b4860]' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
+                <SlidersHorizontal size={16}/> <span className="hidden sm:inline">Filtry</span>
+              </button>
+            </div>
+          </div>
+
+          {showAdvanced && <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-3 grid gap-3 border-t border-slate-100 pt-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto]">
+            <label className="text-xs font-mono uppercase tracking-wider text-slate-400">
+              Výška
+              <select value={heightFilter} onChange={(e) => setHeightFilter(e.target.value)} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-sans font-medium normal-case tracking-normal text-slate-700 outline-none focus:border-[#0b4860]/40">
+                {HEIGHT_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            <label className="text-xs font-mono uppercase tracking-wider text-slate-400">
+              Instalace
+              <select value={installFilter} onChange={(e) => setInstallFilter(e.target.value)} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-sans font-medium normal-case tracking-normal text-slate-700 outline-none focus:border-[#0b4860]/40">
+                {INSTALL_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            {hasAdvancedFilter && <button onClick={clearFilters} className="mt-auto inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-semibold text-slate-500 transition hover:border-slate-300 hover:text-slate-900"><X size={15}/> Zrušit filtry</button>}
+          </motion.div>}
+
+          {(spaceFilter !== 'all' || activeCategory || search.trim()) && <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <span className="font-mono uppercase tracking-wider text-slate-400">Aktivní:</span>
+            {spaceFilter !== 'all' && <span className="rounded-full bg-slate-100 px-3 py-1.5">{SPACE_FILTERS.find((f) => f.value === spaceFilter)?.label}</span>}
+            {activeGroup && <span className="rounded-full bg-slate-100 px-3 py-1.5">{activeGroup.label}</span>}
+            {search.trim() && <span className="rounded-full bg-slate-100 px-3 py-1.5">„{search.trim()}“</span>}
+            <button onClick={clearFilters} className="ml-auto inline-flex items-center gap-1 font-semibold text-[#0b4860] hover:underline"><X size={13}/> Vyčistit</button>
+          </div>}
         </div>
         {loading ?
         <div className="flex justify-center py-24">

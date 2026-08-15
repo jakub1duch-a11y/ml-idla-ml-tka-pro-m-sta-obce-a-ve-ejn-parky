@@ -7,7 +7,7 @@ const metrics = [
 { icon: CalendarClock, number: '20+', label: 'Let zkušeností' },
 { icon: Thermometer, number: '−10 °C', label: 'Maximální chladicí efekt' },
 { icon: ShieldCheck, number: 'AISI 316L', label: 'Nerezová ocel' },
-{ icon: Gauge, number: '2–7 bar', label: 'Provozní tlak, bez čerpadla' }];
+{ icon: Gauge, number: '2–7 bar', label: 'Nízkotlaký provoz bez vysokotlakého čerpadla' }];
 
 
 export default function ReferenceMetrics() {

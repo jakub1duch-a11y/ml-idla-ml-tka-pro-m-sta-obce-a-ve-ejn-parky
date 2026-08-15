@@ -28,7 +28,7 @@ export default function Koupaliste() {
   return (
     <div className="min-h-screen bg-white">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9eb62596b_generated_video.mp4"
+        <video src="/media/optimized/9eb62596b_generated_video.webm"
           className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">

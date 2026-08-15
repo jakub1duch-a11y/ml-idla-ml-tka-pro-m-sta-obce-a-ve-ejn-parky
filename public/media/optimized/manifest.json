@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T15:54:10.419Z",
+  "generatedAt": "2026-08-15T15:58:52.679Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -440,6 +440,36 @@
       "output": "/media/optimized/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm",
       "before": 4201298,
       "after": 3616350
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV",
+      "output": "/media/optimized/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm",
+      "before": 3899052,
+      "after": 3264330
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2d9d98473_Svaovnukzkazive.mov",
+      "output": "/media/optimized/2d9d98473_Svaovnukzkazive.webm",
+      "before": 12396197,
+      "after": 6509490
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/3c3e64d18_generated_video.mp4",
+      "output": "/media/optimized/3c3e64d18_generated_video.webm",
+      "before": 6428228,
+      "after": 3200637
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9eb62596b_generated_video.mp4",
+      "output": "/media/optimized/9eb62596b_generated_video.webm",
+      "before": 7118345,
+      "after": 3333280
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/e557b652c_generated_video.mp4",
+      "output": "/media/optimized/e557b652c_generated_video.webm",
+      "before": 11134733,
+      "after": 5317919
     }
   ],
   "skippedTransparent": [
@@ -698,6 +728,6 @@
   ],
   "skippedAlreadyOptimized": [],
   "failed": [],
-  "changedFiles": 49,
-  "rewrittenRefs": 61
+  "changedFiles": 54,
+  "rewrittenRefs": 66
 }

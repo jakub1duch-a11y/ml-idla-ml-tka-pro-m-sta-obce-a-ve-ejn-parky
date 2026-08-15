@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers3 } from 'lucide-react';
+import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers3, MoveVertical } from 'lucide-react';
 
 const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
@@ -56,10 +56,15 @@ function resolveVariantConfig(slug) {
   return own;
 }
 
+const formatMm = (value) => String(value).replace('.', ',');
+
 export default function ProductSignatureSystem({ product }) {
   const variants = resolveVariantConfig(product.slug);
   const isField = product.slug === 'bendy-field';
   const isBendyArc = product.product_family === 'BENDY ARC' || ['bendy-arc','bendy-arc-2-0','bendy-arc-3-0'].includes(product.slug);
+  const profileDiameters = product.profile_diameters_mm || [];
+  const wallThicknesses = product.wall_thicknesses_mm || [];
+  const hasProfileConfig = profileDiameters.length > 0 || wallThicknesses.length > 0;
   const signatures = [
     { icon: Gauge, label: 'Přímé napojení', value: product.pressure || 'Na vodovodní řad' },
     { icon: CloudFog, label: 'Jemná mlha', value: product.micron_size || 'Projektové trysky' },
@@ -79,6 +84,48 @@ export default function ProductSignatureSystem({ product }) {
           </div>
         ))}
       </div>
+
+      {hasProfileConfig && (
+        <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-mono uppercase tracking-widest text-slate-400">Technické varianty profilu</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-500">Dostupné výrobní varianty. Výchozí konfigurace pro vizualizace a AR je zvýrazněná.</p>
+            </div>
+            {product.ar_reference_version && <span className="hidden sm:inline-flex rounded-full border border-[#0b4860]/15 bg-white px-3 py-1 text-[10px] font-semibold text-[#0b4860]">AR Base v1</span>}
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold text-slate-700"><Ruler size={14} className="text-[#0b4860]"/> Průměr profilu</div>
+              <div className="flex flex-wrap gap-2">
+                {profileDiameters.map((diameter) => {
+                  const active = Number(diameter) === Number(product.default_profile_diameter_mm);
+                  return <span key={diameter} className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-700'}`}>Ø{formatMm(diameter)} mm</span>;
+                })}
+              </div>
+            </div>
+
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold text-slate-700"><Layers3 size={14} className="text-[#0b4860]"/> Tloušťka stěny</div>
+              <div className="flex flex-wrap gap-2">
+                {wallThicknesses.map((thickness) => {
+                  const active = Number(thickness) === Number(product.default_wall_thickness_mm);
+                  return <span key={thickness} className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-700'}`}>{formatMm(thickness)} mm</span>;
+                })}
+              </div>
+            </div>
+
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold text-slate-700"><MoveVertical size={14} className="text-[#0b4860]"/> Referenční výška</div>
+              <div className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+                <span className="text-sm font-bold text-slate-900">{product.nominal_height_mm ? `≈ ${formatMm(product.nominal_height_mm)} mm` : 'Projektová'}</span>
+                {product.ar_reference_version && <span className="mt-0.5 block text-[10px] text-slate-500">pro základní 3D / AR model</span>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isBendyArc && (
         <div>
@@ -127,9 +174,9 @@ export default function ProductSignatureSystem({ product }) {
       )}
 
       {product.slug === 'mlzitko-bendy' && (
-        <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
-          <Sparkles size={15} className="text-[#0b4860]" />
-          Rádius ohybu a výška městských variant se nastavují podle konkrétního projektu; nezobrazujeme neověřené pevné hodnoty.
+        <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-relaxed text-slate-600">
+          <Sparkles size={15} className="mt-0.5 shrink-0 text-[#0b4860]" />
+          <span><strong>BENDY SINGLE AR Base v1:</strong> Ø60,2 mm, referenční výška přibližně 1 800 mm, měřítko 1:1. Přesný průběh ohybu, kotvení a pozice trysek ještě zpřesníme podle výrobního podkladu.</span>
         </div>
       )}
     </div>

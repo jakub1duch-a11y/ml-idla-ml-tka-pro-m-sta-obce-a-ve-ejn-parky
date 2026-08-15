@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const examples = [
   { icon: Building2, label: 'Náměstí', text: 'Náměstí 20 × 30 m, vysoká návštěvnost, chceme atraktivní mlžiště pro děti i dospělé.' },
-  { icon: Trees, label: 'Park', text: 'Městský park, klidová zóna podél pěší trasy, trvalá instalace bez čerpadla.' },
+  { icon: Trees, label: 'Park', text: 'Městský park, klidová zóna podél pěší trasy, trvalá nízkotlaká instalace bez vysokotlakého čerpadla.' },
   { icon: School, label: 'Škola / školka', text: 'Areál mateřské školy, bezpečné ochlazení dětí v letních měsících, plocha přibližně 120 m².' },
   { icon: Dumbbell, label: 'Sportoviště', text: 'Venkovní sportoviště s vysokou návštěvností, potřebujeme odolné mlžení pro větší počet lidí.' },
   { icon: House, label: 'Rezidenční zahrada', text: 'Rezidenční zahrada u rodinného domu, chceme elegantní mlžení pro terasu a odpočinkovou zónu s důrazem na design a jednoduchou instalaci.' },

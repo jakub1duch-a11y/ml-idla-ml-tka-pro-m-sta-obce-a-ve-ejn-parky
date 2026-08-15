@@ -33,6 +33,8 @@ const optimizeLargePhoto = async (file) => {
 export default function AIVizualizace() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const requestedSlug = searchParams.get('slug') || '';
+  const fastMode = Boolean(requestedSlug);
   const fileRef = useRef(null);
   const [file, setFile] = useState(null);
   const [sourceUrl, setSourceUrl] = useState('');
@@ -49,6 +51,7 @@ export default function AIVizualizace() {
   const [productsLoading, setProductsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [optimizing, setOptimizing] = useState(false);
+  const [autoGeneratePending, setAutoGeneratePending] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -67,7 +70,7 @@ export default function AIVizualizace() {
         if (!active) return;
         const visualProducts = (list || []).filter((item) => item?.image_url && item?.slug !== 'mlzici-tryska');
         setProducts(visualProducts);
-        const preferred = visualProducts.find((item) => item.slug === 'mlzitko-bendy') || visualProducts[0];
+        const preferred = visualProducts.find((item) => item.slug === requestedSlug) || visualProducts.find((item) => item.slug === 'mlzitko-bendy') || visualProducts[0];
         if (preferred) setSelectedProductId(preferred.id);
       } catch (e) {
         if (active) setError('Nepodařilo se načíst produktový katalog. Obnovte prosím stránku.');
@@ -76,7 +79,7 @@ export default function AIVizualizace() {
       }
     })();
     return () => { active = false; };
-  }, []);
+  }, [requestedSlug]);
 
   useEffect(() => () => {
     if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
@@ -104,6 +107,7 @@ export default function AIVizualizace() {
       setResultUrl('');
       if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
       setPreviewUrl(URL.createObjectURL(prepared));
+      setAutoGeneratePending(true);
     } catch (e) {
       setError('Fotografii se nepodařilo připravit. Zkuste menší JPG nebo WebP soubor.');
     } finally {
@@ -141,6 +145,12 @@ export default function AIVizualizace() {
     }
   };
 
+  useEffect(() => {
+    if (!autoGeneratePending || optimizing || loading || !file || !selectedProduct?.image_url) return;
+    setAutoGeneratePending(false);
+    generate();
+  }, [autoGeneratePending, optimizing, loading, file, selectedProductId]);
+
   const sendToQuote = () => {
     const text = [
       'AI vizualizace projektu MLŽIDLA®',
@@ -162,7 +172,7 @@ export default function AIVizualizace() {
             <span className="font-mono text-[10px] tracking-[.18em] uppercase text-white/65">AI vizualizace MLŽIDLA®</span>
           </div>
           <h1 className="font-heading font-light text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight">Uvidíte mlžítko přímo<br/><span className="text-white/45">ve vašem prostoru.</span></h1>
-          <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-white/55">Nahrajte fotografii náměstí, parku, školky, sportoviště nebo zahrady. AI zachová scénu a vytvoří orientační vizualizaci vhodného mlžicího prvku.</p>
+          <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-white/55">{fastMode ? 'Nahrajte jednu fotografii prostoru. Vybraný produkt do ní automaticky zasadíme a připravíme vizualizaci bez dalšího nastavování.' : 'Nahrajte fotografii náměstí, parku, školky, sportoviště nebo zahrady. AI zachová scénu a vytvoří orientační vizualizaci vhodného mlžicího prvku.'}</p>
         </div>
 
         <div className="grid lg:grid-cols-[.86fr_1.14fr] gap-7 lg:gap-10 items-start">
@@ -183,11 +193,13 @@ export default function AIVizualizace() {
             </button>
             <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => pickFile(e.target.files?.[0])}/>
 
-            <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">2 · Skutečný výrobek</label>
-            <select value={selectedProductId} onChange={(e) => { setSelectedProductId(e.target.value); setResultUrl(''); }} disabled={productsLoading} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3.5 text-sm text-white focus:outline-none focus:border-teal-300/50 disabled:opacity-50">
-              {productsLoading && <option>Načítám katalog…</option>}
-              {products.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
-            </select>
+            {!fastMode && <>
+              <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">2 · Skutečný výrobek</label>
+              <select value={selectedProductId} onChange={(e) => { setSelectedProductId(e.target.value); setResultUrl(''); }} disabled={productsLoading} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3.5 text-sm text-white focus:outline-none focus:border-teal-300/50 disabled:opacity-50">
+                {productsLoading && <option>Načítám katalog…</option>}
+                {products.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+              </select>
+            </>}
             {selectedProduct && (
               <div className="mt-3 flex gap-3 rounded-xl border border-white/10 bg-black/20 p-3">
                 <img src={selectedProduct.image_url} alt={selectedProduct.name} className="h-20 w-20 flex-none rounded-lg bg-white object-contain" />
@@ -199,14 +211,17 @@ export default function AIVizualizace() {
               </div>
             )}
 
-            <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">3 · Doplňte záměr</label>
-            <textarea value={description} onChange={(e) => updateDescription(e.target.value)} rows={4} placeholder="Např. chceme vytvořit atraktivní ochlazovací místo pro děti i dospělé, vysoká návštěvnost, trvalá instalace…" className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm leading-relaxed text-white placeholder:text-white/25 focus:outline-none focus:border-teal-300/50"/>
+            {!fastMode && <>
+              <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">3 · Doplňte záměr</label>
+              <textarea value={description} onChange={(e) => updateDescription(e.target.value)} rows={4} placeholder="Např. chceme vytvořit atraktivní ochlazovací místo pro děti i dospělé, vysoká návštěvnost, trvalá instalace…" className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-black/20 px-4 py-3.5 text-sm leading-relaxed text-white placeholder:text-white/25 focus:outline-none focus:border-teal-300/50"/>
+            </>}
 
             {error && <p className="mt-4 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-100">{error}</p>}
 
-            <button type="button" onClick={generate} disabled={!canGenerate || loading || optimizing} className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
+            {!fastMode && <button type="button" onClick={generate} disabled={!canGenerate || loading || optimizing} className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
               {optimizing ? <><Loader size={16} className="animate-spin"/> Optimalizuji fotografii…</> : loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Vytvořit AI vizualizaci</>}
-            </button>
+            </button>}
+            {fastMode && (optimizing || loading) && <div className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[.05] px-6 py-3.5 text-sm text-white/70"><Loader size={16} className="animate-spin"/>{optimizing ? 'Připravuji fotografii…' : 'Vytvářím vizualizaci…'}</div>}
             <p className="mt-4 text-[11px] leading-relaxed text-white/30">AI používá jako povinnou referenci skutečné fotografie vybraného výrobku z katalogu. Vizualizace je stále koncepční; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
           </div>
 
@@ -239,8 +254,8 @@ export default function AIVizualizace() {
 
             {resultUrl && (
               <div className="mt-5 flex flex-col sm:flex-row gap-3">
-                <button type="button" onClick={sendToQuote} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors">Nechat tento návrh nacenit <ArrowRight size={15}/></button>
-                <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>
+                <button type="button" onClick={sendToQuote} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors">Poptat tento návrh <ArrowRight size={15}/></button>
+                {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>}
               </div>
             )}
           </div>

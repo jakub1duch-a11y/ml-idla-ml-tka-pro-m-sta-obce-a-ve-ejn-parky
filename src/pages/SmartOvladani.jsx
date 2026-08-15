@@ -8,6 +8,7 @@ import SmartCTA from '@/components/smart-ovladani/SmartCTA';
 import SmartOfferSection from '@/components/smart-ovladani/SmartOfferSection';
 import SmartValveMediaSection from '@/components/smart-ovladani/SmartValveMediaSection';
 import SmartCoolingConcept from '@/components/smart-ovladani/SmartCoolingConcept';
+import SmartCoolingCityUseCases from '@/components/smart-ovladani/SmartCoolingCityUseCases';
 import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
 import ContextLinks from '@/components/common/ContextLinks';
 
@@ -18,6 +19,28 @@ export default function SmartOvladani() {
       description: 'Smart Cooling propojuje designová mlžítka, chytré ventily, senzory, provozní scénáře a data. Řízené ochlazovací body pro města, parky, náměstí a sportoviště.',
       keywords: 'smart cooling, chytré městské ochlazování, smart city mlžítka, automatizace mlžení, chytré senzory mlžítka, řízení mlžného systému, PEVEKO ventil',
       canonicalPath: '/smart-ovladani',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'Service',
+            name: 'Smart Cooling — chytré městské ochlazování',
+            provider: { '@type': 'Organization', name: 'HolmTec' },
+            areaServed: 'CZ',
+            serviceType: 'Řízené ochlazování veřejného prostoru pomocí mlžných systémů, senzorů a automatizace',
+            url: 'https://mlzidla.cz/smart-ovladani'
+          },
+          {
+            '@type': 'FAQPage',
+            mainEntity: [
+              { '@type': 'Question', name: 'Co je Smart Cooling?', acceptedAnswer: { '@type': 'Answer', text: 'Smart Cooling propojuje mlžítko, hydrauliku, senzory, chytré ventily, provozní scénáře a podle konfigurace také data a vzdálenou správu.' } },
+              { '@type': 'Question', name: 'Lze řídit více mlžítek samostatně?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Projekt lze rozdělit do více samostatných zón s vlastním časovým a provozním režimem.' } },
+              { '@type': 'Question', name: 'Je možné automatické spuštění podle teploty?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. U varianty s teplotním řízením lze nastavit aktivační teplotu a další podmínky, například časové okno.' } },
+              { '@type': 'Question', name: 'Je Smart Cooling vhodný pro města a veřejný prostor?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Řešení je určeno pro náměstí, parky, školy, hřiště, sportoviště, koupaliště a další veřejné prostory.' } }
+            ]
+          }
+        ]
+      },
     });
   }, []);
 
@@ -25,6 +48,7 @@ export default function SmartOvladani() {
     <div className="min-h-screen bg-white">
       <SmartHero />
       <SmartCoolingConcept />
+      <SmartCoolingCityUseCases />
       <SmartAutomationFlow />
       <SmartBenefits />
       <SmartSensorsSection />

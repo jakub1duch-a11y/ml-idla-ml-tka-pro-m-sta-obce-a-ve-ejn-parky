@@ -104,7 +104,9 @@ const FALLBACK_IMAGES = {
 
 const PRODUCT_CARD_META = {
   'mlzitko-bendy': { dims: [['Výška', '1,7–2 m'], ['Průměr', '60 / 70 mm']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
-  'bendy-arc': { dims: [['Šířka', 'projektová'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
+  'bendy-arc': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
+  'bendy-arc-2-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Sportoviště', Dumbbell]] },
+  'bendy-arc-3-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Park', Trees], ['Sportoviště', Dumbbell]] },
   'bendy-back-to-back': { dims: [['Záběr', '360°'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Park', Trees], ['Resort', Home]] },
   'bendy-alej': { dims: [['Počet', '5+ prvků'], ['Rozteč', 'projektová']], places: [['Promenáda', Landmark], ['Sportoviště', Dumbbell], ['Náměstí', Building2]] },
   'bendy-field': { dims: [['Velikost', 'S / M / L'], ['Počet', '3–9 prvků']], places: [['Sportoviště', Dumbbell], ['Škola', School], ['Náměstí', Building2]] },

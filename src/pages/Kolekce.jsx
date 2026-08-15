@@ -106,13 +106,32 @@ function matchesSpace(product, filter) {
   if (filter === 'all') return true;
   const haystack = `${product.name || ''} ${product.slug || ''} ${product.short_description || ''} ${product.description || ''} ${product._categoryName || ''}`.toLowerCase();
   const map = {
-    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'bendy-arc', 'bendy-back', 'bendy-alej'],
+    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'bendy-arc', 'bendy-back', 'bendy-alej', 'bendy-field'],
     garden: ['zahrad', 'terasa', 'reziden', 'soukrom', 'garden'],
     sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
     school: ['škol', 'dětsk', 'hřiště'],
     gastro: ['gastro', 'restaur', 'hotel', 'resort', 'terasa']
   };
   return map[filter].some((term) => haystack.includes(term));
+}
+
+const CITY_ORDER = [
+  'bendy-arc', 'bendy-arc-2-0', 'bendy-arc-3-0', 'bendy-back-to-back', 'bendy-alej', 'bendy-field',
+  'city-arc-1', 'city-arc-2', 'city-arc-3', 'city-arc-4', 'city-arc-5', 'city-cooling-zone',
+  'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'brana-bendy', 'y-armist-j70', 'y-armist-tr60'
+];
+
+function sortCatalogProducts(items, spaceFilter) {
+  const list = [...items];
+  if (spaceFilter === 'city') {
+    return list.sort((a, b) => {
+      const ai = CITY_ORDER.indexOf(a.slug);
+      const bi = CITY_ORDER.indexOf(b.slug);
+      if (ai !== -1 || bi !== -1) return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+      return Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.name || '').localeCompare(b.name || '', 'cs');
+    });
+  }
+  return list.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.name || '').localeCompare(b.name || '', 'cs'));
 }
 
 
@@ -229,7 +248,7 @@ export default function Kolekce() {
     setSearch('');
   };
 
-  const displayedProducts = products.
+  const displayedProducts = sortCatalogProducts(products.
   filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'].includes(p.name)).
   filter((p) => {
     if (activeGroup) {
@@ -247,7 +266,7 @@ export default function Kolekce() {
     return (p.name || '').toLowerCase().includes(q) ||
     (p.short_description || '').toLowerCase().includes(q) ||
     (p.description || '').toLowerCase().includes(q);
-  });
+  }), spaceFilter);
 
   return (
     <div className="min-h-screen bg-white">
@@ -269,7 +288,7 @@ export default function Kolekce() {
           {!loading && <span className="shrink-0 rounded-full border border-border bg-white px-4 py-2 font-mono text-xs text-muted-foreground shadow-sm">{displayedProducts.length} produktů</span>}
         </div>
 
-        <div className="sticky top-[72px] z-30 mb-10 rounded-[1.5rem] border border-slate-200/80 bg-white/92 p-3 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-4">
+        <div className="sticky top-[72px] z-30 mb-10 rounded-[1.5rem] border border-slate-200/80 bg-white/95 p-3 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-4">
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
             <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {

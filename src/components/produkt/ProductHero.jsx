@@ -54,7 +54,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
             {[
               { icon: Sun, label: 'Ochlazení prostoru' },
               { icon: CloudFog, label: 'Jemná vodní mlha' },
-              { icon: ShieldCheck, label: 'Bez čerpadla' },
+              { icon: ShieldCheck, label: 'Bez vysokotlakého čerpadla' },
               { icon: MapPin, label: 'Vyrobeno v ČR' },
             ].map(({ icon: Icon, label }) => (
               <div key={label} className="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center shadow-[0_8px_24px_rgba(15,23,42,.035)]">

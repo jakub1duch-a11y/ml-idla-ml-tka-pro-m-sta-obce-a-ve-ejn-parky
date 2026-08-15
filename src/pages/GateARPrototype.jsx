@@ -131,8 +131,8 @@ export default function GateARPrototype() {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-slate-200 bg-white p-4"><Gauge size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Tlak</span><strong className="mt-1 block text-sm">3 Bar</strong></div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-4"><Droplets size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Spotřeba</span><strong className="mt-1 block text-sm">12 L/min</strong></div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-4"><Gauge size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Tlak</span><strong className="mt-1 block text-sm">2–8 bar</strong></div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-4"><Droplets size={17} className="text-[#0b4860]"/><span className="mt-3 block text-[10px] font-mono uppercase tracking-wider text-slate-400">Spotřeba</span><strong className="mt-1 block text-sm">15–25 l/h</strong></div>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-5">

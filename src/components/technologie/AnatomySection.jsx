@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, Wrench, EyeOff, Waves } from 'lucide-react';
 
 const CORNERS = [
-{ icon: ShieldCheck, title: 'Prémiový materiál', text: 'Jemně broušená nerezová ocel (trubka Ø42, Ø64, Ø76 × 3 mm, s možností až do 76 mm) zaručuje extrémní odolnost.', side: 'left' },
-{ icon: EyeOff, title: 'Skrytá technologie', text: 'Vedení vody je plně integrováno uvnitř těla trubky — čistý design, ochrana proti vandalismu.', side: 'left' },
-{ icon: Waves, title: 'Chytré trysky', text: 'Vybaveny zpětným ventilem proti nechtěnému odkapávání vody po vypnutí.', side: 'right' },
-{ icon: Wrench, title: 'Organický tvar', text: 'Bezpečný a plynulý design (slouží jako vizuální prvek, není certifikováno jako herní prvek).', side: 'right' }];
+{ icon: ShieldCheck, title: 'Materiál podle prostředí', text: 'Nerez, povrch a průřez konstrukce volíme podle produktové řady, umístění a požadované odolnosti. U městských a prémiových řad používáme také AISI 316L.', side: 'left' },
+{ icon: EyeOff, title: 'Integrovaný rozvod', text: 'Kde to konstrukce umožňuje, vedeme vodu uvnitř těla výrobku. Výsledkem je čistší architektonický detail a lépe chráněné vedení.', side: 'left' },
+{ icon: Waves, title: 'Trysky podle hydrauliky', text: 'Typ, počet a orientace trysek se volí podle dostupného tlaku, průtoku, výšky prvku a požadované mlžicí zóny.', side: 'right' },
+{ icon: Wrench, title: 'Servisovatelný detail', text: 'Konstrukce počítá s přístupem k servisním částem. Výrobek je určen k mlžení a případné jiné užití se posuzuje samostatně podle projektu.', side: 'right' }];
 
 
 export default function AnatomySection() {
@@ -17,7 +17,7 @@ export default function AnatomySection() {
     <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100">
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="mb-10 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
-        Anatomie městského mlžítka.
+        Anatomie dobře navrženého mlžítka.
       </motion.h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr] gap-5 items-center">

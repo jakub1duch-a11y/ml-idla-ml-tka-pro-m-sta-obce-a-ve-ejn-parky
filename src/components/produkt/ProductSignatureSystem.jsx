@@ -7,13 +7,17 @@ const FAMILY_VARIANTS = {
     title: 'Varianty kolekce BENDY®',
     items: [
       { label: 'SINGLE', sub: '1 ks', slug: 'mlzitko-bendy' },
-      { label: 'ARC', sub: '2 ks · průchozí', slug: 'bendy-arc' },
+      { label: 'ARC 1.0', sub: 'S / M / L', slug: 'bendy-arc' },
+      { label: 'ARC 2.0', sub: 'S / M / L', slug: 'bendy-arc-2-0' },
+      { label: 'ARC 3.0', sub: 'S / M / L', slug: 'bendy-arc-3-0' },
       { label: 'BACK-TO-BACK', sub: '2 ks · zády k sobě', slug: 'bendy-back-to-back' },
       { label: 'ALEJ', sub: '5+ ks', slug: 'bendy-alej' },
       { label: 'FIELD', sub: 'S / M / L', slug: 'bendy-field' },
     ],
   },
   'bendy-arc': { ref: 'mlzitko-bendy' },
+  'bendy-arc-2-0': { ref: 'mlzitko-bendy' },
+  'bendy-arc-3-0': { ref: 'mlzitko-bendy' },
   'bendy-back-to-back': { ref: 'mlzitko-bendy' },
   'bendy-alej': { ref: 'mlzitko-bendy' },
   'bendy-field': { ref: 'mlzitko-bendy' },
@@ -55,6 +59,7 @@ function resolveVariantConfig(slug) {
 export default function ProductSignatureSystem({ product }) {
   const variants = resolveVariantConfig(product.slug);
   const isField = product.slug === 'bendy-field';
+  const isBendyArc = product.product_family === 'BENDY ARC' || ['bendy-arc','bendy-arc-2-0','bendy-arc-3-0'].includes(product.slug);
   const signatures = [
     { icon: Gauge, label: 'Přímé napojení', value: product.pressure || 'Na vodovodní řad' },
     { icon: CloudFog, label: 'Jemná mlha', value: product.micron_size || 'Projektové trysky' },
@@ -74,6 +79,21 @@ export default function ProductSignatureSystem({ product }) {
           </div>
         ))}
       </div>
+
+      {isBendyArc && (
+        <div>
+          <div className="mb-2 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400"><Layers3 size={14}/> Velikost BENDY ARC®</div>
+          <div className="grid grid-cols-3 gap-2.5">
+            {(product.size_variants?.length ? product.size_variants : ['S','M','L']).map((size) => (
+              <div key={size} className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center">
+                <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-base font-bold text-slate-900">{size}</span>
+                <span className="mt-2 block text-[10px] font-medium uppercase tracking-wider text-slate-500">velikost</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-[11px] leading-relaxed text-slate-500">Rozměry S / M / L a rádius ohybu doplníme po potvrzení výrobních parametrů jednotlivých verzí.</p>
+        </div>
+      )}
 
       {isField && (
         <div>

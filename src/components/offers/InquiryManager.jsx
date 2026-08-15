@@ -30,7 +30,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
     setError(''); setBusy('text');
     try {
       const response = await base44.integrations.Core.InvokeLLM({ prompt: `Napiš personalizovanou odpověď v češtině na aktuální poptávku pro značku MLŽIDLA®. Tón: věcný, klidný, odborný a vstřícný; zdůrazňuje precizní českou výrobu, individuální návrh a praktický komfort. Nezveličuj, nepoužívej marketingové klišé ani vymyšlené technické parametry. Oslov zákazníka jménem a přirozeně navazuj na historii komunikace. Nabídni krátkou konzultaci nebo další krok. Vrať pouze text odpovědi bez předmětu a bez podpisu.\n\nZákazník: ${selected.name}\nAktuální poptávka: ${selected.message}\nVybraný produkt: ${products.find((item) => item.id === productId)?.name || selected.product || 'neurčeno'}\nCena projektu po úpravě: ${money(finalTotal)} Kč bez DPH\n\nHistorie komunikace:\n${history}` });
-      setSubject(`Re: vaše poptávka – MLŽIDLA®`); setMessage(withSignature(response));
+      setSubject(`Re: vaše poptávka – MLŽIDLA®`); setMessage(response);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
   const uploadFiles = async (event) => {
@@ -44,18 +44,117 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
   const sendReply = async () => {
     if (!selected || !subject || !message) return;
     setError(''); setBusy('send');
+    let projectOrder = null;
     try {
       const product = products.find((item) => item.id === productId);
+      const issuedAt = new Date();
+      const validUntil = new Date(issuedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+      const quoteNumber = `MLZ-${issuedAt.getFullYear()}-${String(Date.now()).slice(-6)}`;
+      const arUrl = product?.slug === 'mlzitko-bendy'
+        ? 'https://mlzidla.cz/ar/bendy-single'
+        : product?.slug === 'mlzna-brana-gate'
+          ? 'https://mlzidla.cz/ar/gate'
+          : '';
+
       let quote = null;
+      let quoteDriveUrl = '';
+      let presentation = null;
       if (product) {
-        const response = await base44.functions.invoke('generateProductDatasheet', { product, document_type: 'offer', quote: { final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount) } });
-        quote = response.data;
+        const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
+          product,
+          document_type: 'offer',
+          quote: { final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount) },
+        });
+        quote = quoteResponse.data;
+
+        try {
+          const savedQuote = await base44.functions.invoke('saveQuoteToDriveAuto', {
+            pdf_base64: quote?.pdf_base64,
+            filename: quote?.filename,
+            quoteNumber,
+            inquiryEmail: selected.email,
+            inquiryName: selected.name,
+          });
+          quoteDriveUrl = savedQuote.data?.drive_url || '';
+        } catch (driveError) {
+          console.warn('Quote Drive archive unavailable', driveError);
+        }
+
+        try {
+          const presentationResponse = await base44.functions.invoke('generateOfferPresentation', {
+            inquiry: {
+              name: selected.name,
+              email: selected.email,
+              phone: selected.telefon || selected.phone || '',
+              company: selected.firma || selected.company || '',
+              message: selected.message,
+            },
+            product,
+            quote: {
+              quote_number: quoteNumber,
+              final_total: finalTotal,
+              issued_at: issuedAt.toISOString(),
+              valid_until: validUntil.toISOString(),
+            },
+            ar_url: arUrl,
+          });
+          presentation = presentationResponse.data;
+        } catch (presentationError) {
+          console.warn('Offer presentation unavailable', presentationError);
+        }
+
+        projectOrder = await base44.entities.ProjectOrder.create({
+          inquiry_id: selected.id,
+          inquiry_type: selected.type,
+          project_name: `${product.name} — ${selected.firma || selected.company || selected.name}`,
+          client_name: selected.name,
+          client_email: selected.email,
+          client_phone: selected.telefon || selected.phone || '',
+          client_company: selected.firma || selected.company || '',
+          description: String(selected.message || '').slice(0, 1000),
+          product_id: product.id,
+          product_slug: product.slug,
+          product_name: product.name,
+          quote_number: quoteNumber,
+          quote_pdf_url: quoteDriveUrl,
+          presentation_url: presentation?.presentation_url || '',
+          presentation_pdf_url: presentation?.presentation_pdf_url || '',
+          issued_at: issuedAt.toISOString(),
+          valid_until: validUntil.toISOString(),
+          ar_url: arUrl,
+          smart_control_included: true,
+          status: 'draft',
+          total_price: finalTotal,
+          supplier_name: 'HolmTec s.r.o. — mlzidla.cz',
+          supplier_contact_name: 'Ing. Radek Meduna',
+          supplier_email: 'meduna@holmtec.cz',
+          supplier_phone: '+420 774 700 390',
+          shared_token: crypto.randomUUID(),
+        });
       }
-      const signedMessage = withSignature(message);
+
+      const validityLine = product ? `Cenová nabídka ${quoteNumber} je platná do ${validUntil.toLocaleDateString('cs-CZ')}.` : '';
+      const portalLine = product ? 'Nabídku, přílohy a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/muj-projekt' : '';
+      const signedMessage = withSignature([message.trim(), validityLine, portalLine].filter(Boolean).join('\n\n'));
       setMessage(signedMessage);
-      await base44.functions.invoke('sendInquiryReply', { inquiry_type: selected.type, inquiry_id: selected.id, subject, message: signedMessage, quote_pdf_base64: quote?.pdf_base64, quote_filename: quote?.filename, attachments });
+      await base44.functions.invoke('sendInquiryReply', {
+        inquiry_type: selected.type,
+        inquiry_id: selected.id,
+        subject,
+        message: signedMessage,
+        quote_pdf_base64: quote?.pdf_base64,
+        quote_filename: quote?.filename,
+        presentation_pdf_base64: presentation?.presentation_pdf_base64,
+        presentation_filename: presentation?.presentation_filename,
+        attachments,
+      });
+      if (projectOrder?.id) await base44.entities.ProjectOrder.update(projectOrder.id, { status: 'sent' });
       onSent(); setMessage(''); setSubject(''); setAttachments([]);
-    } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
+    } catch (requestError) {
+      setError(errorMessage(requestError));
+    } finally {
+      setBusy('');
+    }
   };
 
   if (!selected) return <section className="border-t border-border py-14"><p className="text-muted-foreground">Zatím nejsou k dispozici žádné poptávky.</p></section>;

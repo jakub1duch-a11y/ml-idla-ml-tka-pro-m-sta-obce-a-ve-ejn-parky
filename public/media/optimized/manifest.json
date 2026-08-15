@@ -1,5 +1,4 @@
 {
-  "generatedAt": "2026-08-15T16:01:22.207Z",
   "images": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
@@ -288,6 +287,303 @@
       "after": 50824,
       "width": 576,
       "height": 1024
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/cd22b84b0_1000000697.jpg",
+      "output": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
+      "before": 1921629,
+      "after": 244348,
+      "width": 1840,
+      "height": 2448,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1XRoTSquR6vFlm3MB5ItkEw9caP7SS6c0&sz=w1200",
+      "output": "/media/optimized/db-e6e5d71854-thumbnail.webp",
+      "before": 2089275,
+      "after": 134024,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1ye8lBRjTnc01oqbWgRVHIfQfz0RmXL92&sz=w1200",
+      "output": "/media/optimized/db-349ca3cbfc-thumbnail.webp",
+      "before": 2387065,
+      "after": 68774,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1g19kplCAJE32wxFesRj6KoMbWZP9QABy&sz=w1200",
+      "output": "/media/optimized/db-508b2b08d7-thumbnail.webp",
+      "before": 2067667,
+      "after": 124568,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1pNsS6BqLDCu3wCFw_WOryI6-sZU9uliU&sz=w1200",
+      "output": "/media/optimized/db-bdca53faa9-thumbnail.webp",
+      "before": 3630155,
+      "after": 167006,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1VlzZcQTOkLHrsJiKSGWDwmMJmUNMSEe3&sz=w1200",
+      "output": "/media/optimized/db-319ca57544-thumbnail.webp",
+      "before": 3663444,
+      "after": 138084,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1xke0z2mGdOh_VSVdY-aEg8IEJccE_CHr&sz=w1200",
+      "output": "/media/optimized/db-d325919fcc-thumbnail.webp",
+      "before": 1719780,
+      "after": 83942,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.jpg",
+      "output": "/media/optimized/db-377b5e7e28-3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp",
+      "before": 22065,
+      "after": 8094,
+      "width": 683,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG",
+      "output": "/media/optimized/db-858b838106-91ce94feb_MlzitkoAURA.webp",
+      "before": 301108,
+      "after": 140590,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/442982da0_mlzitkoaura-vysic.jpg",
+      "output": "/media/optimized/db-dc9b5ec6e1-442982da0_mlzitkoaura-vysic.webp",
+      "before": 101465,
+      "after": 61500,
+      "width": 576,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ad39c3ee1_mlzitkoprodomovsenioru.jpeg",
+      "output": "/media/optimized/db-dad6fa84fb-ad39c3ee1_mlzitkoprodomovsenioru.webp",
+      "before": 107057,
+      "after": 61784,
+      "width": 360,
+      "height": 640,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f37d76dfe_generated_image.png",
+      "output": "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+      "before": 196441,
+      "after": 110222,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b9da23d56_generated_image.png",
+      "output": "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp",
+      "before": 132312,
+      "after": 64620,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d87c0cdb3_generated_image.png",
+      "output": "/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp",
+      "before": 240713,
+      "after": 147090,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png",
+      "output": "/media/optimized/db-1eb118208f-4af832dea_generated_image.webp",
+      "before": 135448,
+      "after": 63070,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.jpg",
+      "output": "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+      "before": 32710,
+      "after": 11178,
+      "width": 683,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25f7cd749_volavka-rezidencnizahrady.jpg",
+      "output": "/media/optimized/db-d0e58a79d9-25f7cd749_volavka-rezidencnizahrady.webp",
+      "before": 303069,
+      "after": 230756,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a54a1faa7_Volavka_mlzitko.jpg",
+      "output": "/media/optimized/db-2accde7763-a54a1faa7_Volavka_mlzitko.webp",
+      "before": 289788,
+      "after": 217996,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/dda3e5142_mlzna-tryska-mlzidla.png",
+      "output": "/media/optimized/db-6d9a3b1fe5-dda3e5142_mlzna-tryska-mlzidla.webp",
+      "before": 1970970,
+      "after": 186558,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7750acf57_mlzna-tryska-mlzidla.png",
+      "output": "/media/optimized/db-5accb7e1f5-7750acf57_mlzna-tryska-mlzidla.webp",
+      "before": 1970970,
+      "after": 186558,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/607866493_images4.jpg",
+      "output": "/media/optimized/db-952f248814-607866493_images4.webp",
+      "before": 35924,
+      "after": 42540,
+      "width": 610,
+      "height": 503,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/85afbaef4_smartaplikacepromlzutka-nova.png",
+      "output": "/media/optimized/db-22e3d79c83-85afbaef4_smartaplikacepromlzutka-nova.webp",
+      "before": 1029448,
+      "after": 88694,
+      "width": 860,
+      "height": 480,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/4c13d4866_1000004418.png",
+      "output": "/media/optimized/db-ad208f4172-4c13d4866_1000004418.webp",
+      "before": 3526690,
+      "after": 262494,
+      "width": 1808,
+      "height": 1200,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/31478e4b3_bendymlzitko02.jpeg",
+      "output": "/media/optimized/db-323b5abc81-31478e4b3_bendymlzitko02.webp",
+      "before": 26778,
+      "after": 24960,
+      "width": 333,
+      "height": 600,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b47ae10f2_bendymlzitko.jpeg",
+      "output": "/media/optimized/db-9bb04eb6fe-b47ae10f2_bendymlzitko.webp",
+      "before": 12586,
+      "after": 16540,
+      "width": 194,
+      "height": 259,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fc2d57e81_C-MlzitkoLINEA_CE70_single1.jpg",
+      "output": "/media/optimized/db-f351ae794a-fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp",
+      "before": 357226,
+      "after": 222074,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.jpg",
+      "output": "/media/optimized/db-d46926d75f-bcb5c5f4d_C-MlzitkoLINEA_CE70_single.webp",
+      "before": 357226,
+      "after": 222074,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/edc3c46d8_BRACKETA_koupaliste.png",
+      "output": "/media/optimized/db-53153eac8d-edc3c46d8_BRACKETA_koupaliste.webp",
+      "before": 1835049,
+      "after": 127004,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84805a215_mlnprvek-mrak-mlzidla02.png",
+      "output": "/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp",
+      "before": 3177770,
+      "after": 421350,
+      "width": 1672,
+      "height": 941,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ad09f28ad_4ba76226-4e57-4242-bf1d-b9add4e0da7b.jpg",
+      "output": "/media/optimized/db-68273f5f2a-ad09f28ad_4ba76226-4e57-4242-bf1d-b9add4e0da7b.webp",
+      "before": 22261,
+      "after": 8108,
+      "width": 683,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.jpg",
+      "output": "/media/optimized/db-26362d070e-d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.webp",
+      "before": 312918,
+      "after": 181992,
+      "width": 720,
+      "height": 960,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c55aec790_Lzatko-mlzitko.png",
+      "output": "/media/optimized/db-54c72ac2af-c55aec790_Lzatko-mlzitko.webp",
+      "before": 690985,
+      "after": 98592,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1isiUlkBcCto3pxQO78fo6IZCruNWnwwk&sz=w1200",
+      "output": "/media/optimized/db-0ebea28aa0-thumbnail.webp",
+      "before": 3718072,
+      "after": 194774,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
     }
   ],
   "videos": [
@@ -500,6 +796,27 @@
       "output": "/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm",
       "before": 24120256,
       "after": 8470284
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/06d0df395_Zahradn-mlzitka.mp4",
+      "output": "/media/optimized/db-502997824c-06d0df395_Zahradn-mlzitka.webm",
+      "before": 3305063,
+      "after": 3521629,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/df874507a_mlzidlospiralavakci-video.MOV",
+      "output": "/media/optimized/db-9938e69714-df874507a_mlzidlospiralavakci-video.webm",
+      "before": 23081777,
+      "after": 11357402,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eca0629b1_video-mlitkospiralavakci1.MOV",
+      "output": "/media/optimized/db-a135d5312d-eca0629b1_video-mlitkospiralavakci1.webm",
+      "before": 20179540,
+      "after": 12161230,
+      "source": "Product entity"
     }
   ],
   "skippedTransparent": [
@@ -754,10 +1071,151 @@
       "width": 765,
       "height": 1024,
       "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4c8c44da_Gemini_Generated_Image_d421i6d421i6d421.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a73ab7232_Mltko-Bendy60-edited1.png",
+      "width": 768,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/080a7e429_MlzitkoY-ARMISTTR60_2.png",
+      "width": 685,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1668eda70_MlzitkoY-ARMISTTR60_1.png",
+      "width": 685,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56f93a8b2_MlzitkoY-ARMISTTR60.png",
+      "width": 685,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7bc7b6164_Y-ARMISTTR60.png",
+      "width": 686,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/625f54e91_MlzitkoY-ARMISTJ70_1.png",
+      "width": 1024,
+      "height": 768,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/93cd8ff63_MlzitkoY-ARMISTJ70_2.png",
+      "width": 674,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/95f7c7ca5_MlzitkoY-ARMISTJ70.png",
+      "width": 673,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91c5002dc_C-MlzitkoLINEA_CE70_single2.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ba9888b92_C-MlzitkoLINEA_CE70_double.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74c60312a_C-MlzitkoLINEA_CE70_single-1.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b4f4ca4a8_LINEACE70.png",
+      "width": 506,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/a01ebd4e8_volnytvar-motorkar-apli.png",
+      "width": 360,
+      "height": 540,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png",
+      "width": 360,
+      "height": 540,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9b46f2f7b_tepelnyostrov.png",
+      "width": 1024,
+      "height": 304,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/df5b375c0_Mlzitko-spirala2.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e43641bae_mlzitko-spirala.png",
+      "width": 683,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/838f908c3_Mltkospirla-mlzidla.png",
+      "width": 683,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
     }
   ],
-  "skippedAlreadyOptimized": [],
   "failed": [],
+  "generatedAt": "2026-08-15T16:22:39.858Z",
+  "skippedAlreadyOptimized": [],
   "changedFiles": 60,
   "rewrittenRefs": 71
 }

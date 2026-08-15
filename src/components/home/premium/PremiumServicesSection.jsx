@@ -34,12 +34,14 @@ export default function PremiumServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06, duration: 0.5 }}
-                className="group flex h-full flex-col items-center rounded-2xl border border-border bg-card px-6 py-7 text-center transition-colors duration-300 hover:border-secondary/40 sm:items-start sm:text-left lg:px-7 lg:py-8">
-                <div className="mb-5 flex size-14 items-center justify-center rounded-2xl border border-secondary/20 bg-secondary/5 text-secondary sm:mx-0">
+                className="group flex h-full items-start gap-4 rounded-2xl border border-border bg-card px-5 py-6 text-left transition-colors duration-300 hover:border-secondary/40 sm:gap-5 sm:px-6 sm:py-7 lg:px-7 lg:py-8">
+                <div className="mt-0.5 flex size-14 shrink-0 items-center justify-center rounded-2xl border border-secondary/20 bg-secondary/5 text-secondary">
                   <Icon className="size-7" strokeWidth={1.7} aria-hidden="true" />
                 </div>
-                <h3 className="mb-3 max-w-xs font-heading text-xl font-semibold leading-tight tracking-[-0.02em] text-foreground sm:text-[1.35rem]">{service.title}</h3>
-                <p className="m-0 max-w-sm text-[0.95rem] leading-7 text-muted-foreground sm:text-base">{service.desc}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="mb-2 font-heading text-xl font-semibold leading-tight tracking-[-0.02em] text-foreground sm:text-[1.35rem]">{service.title}</h3>
+                  <p className="m-0 max-w-sm text-[0.95rem] leading-7 text-muted-foreground sm:text-base">{service.desc}</p>
+                </div>
               </motion.div>);
 
           })}

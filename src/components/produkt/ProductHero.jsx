@@ -6,6 +6,7 @@ import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
 import ProductSignatureSystem from './ProductSignatureSystem';
+import ProductARQR from './ProductARQR';
 
 export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
   const quickSpecs = [
@@ -87,11 +88,11 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
                 className="inline-flex items-center gap-2 rounded-full bg-[#0b4860] px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-[#08394c] hover:-translate-y-0.5 shadow-[0_10px_30px_rgba(11,72,96,.18)]">
               Vizualizovat ve vašem prostoru <ScanLine size={16} />
             </Link>
-            {product.slug === 'mlzitko-bendy' && (
+            {(product.slug === 'mlzitko-bendy' || product.slug === 'mlzna-brana-gate') && (
               <Link
-                  to="/ar/bendy-single"
+                  to={product.slug === 'mlzitko-bendy' ? '/ar/bendy-single' : '/ar/gate'}
                   className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/20 bg-white px-6 py-3.5 text-sm font-bold text-[#0b4860] transition-colors hover:bg-slate-50">
-                3D náhled <Box size={16} />
+                {product.slug === 'mlzitko-bendy' ? '3D / AR náhled' : 'GATE AR projekt'} <Box size={16} />
               </Link>
             )}
             <Link
@@ -109,6 +110,8 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
               Technické parametry <FileText size={14} />
             </button>
           </div>
+
+          <ProductARQR product={product} />
         </motion.div>
       </div>
       </div>

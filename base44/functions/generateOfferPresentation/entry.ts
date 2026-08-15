@@ -153,6 +153,12 @@ export default async function(req) {
     const now = quote.issued_at ? new Date(quote.issued_at) : new Date();
     const validUntil = quote.valid_until ? new Date(quote.valid_until) : new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
     const quoteNumber = quote.quote_number || `MLZ-${now.getFullYear()}-${String(Date.now()).slice(-6)}`;
+    const arQrImageUrl = product.slug === 'mlzitko-bendy'
+      ? 'https://mlzidla.cz/qr/bendy-single-ar.svg'
+      : product.slug === 'mlzna-brana-gate'
+        ? 'https://mlzidla.cz/qr/brana-gate-ar.svg'
+        : '';
+    const portalQrImageUrl = 'https://mlzidla.cz/qr/muj-projekt.svg';
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
     const folderId = await findOrCreateFolder(accessToken, 'MLŽIDLA — Nabídky');
 
@@ -226,7 +232,8 @@ export default async function(req) {
     requests.push(...shapeText('t6a', s[5], 'Vizualizace ve vašem prostoru', 48, 38, 520, 42, 25, DEEP, true));
     requests.push(...shapeText('t6b', s[5], 'Fotografie nebo AR návrh pomůže ověřit měřítko a umístění ještě před výrobou.', 48, 92, 600, 58, 15, MUTED, false));
     if (arCaptureUrl) requests.push(image('arcap', s[5], arCaptureUrl, 48, 170, 350, 190));
-    requests.push(...shapeText('t6c', s[5], arUrl ? `Mobilní AR / vizualizace:\n${arUrl}` : 'Mobilní AR / vizualizace bude k nabídce připojena podle dostupnosti 3D modelu produktu.', 430, 190, 235, 120, 13, INK, false));
+    if (arQrImageUrl) requests.push(image('arqr', s[5], arQrImageUrl, 445, 165, 115, 115));
+    requests.push(...shapeText('t6c', s[5], arUrl ? `Naskenujte QR nebo otevřete:\n${arUrl}` : 'Mobilní AR / vizualizace bude k nabídce připojena podle dostupnosti 3D modelu produktu.', 430, 292, 245, 68, 12, INK, false));
 
     // 7 — price
     const price = quote.final_total ?? product.price_from;
@@ -240,6 +247,8 @@ export default async function(req) {
     requests.push(...shapeText('t8a', s[7], 'Další krok', 48, 52, 300, 42, 26, WHITE, true));
     requests.push(...shapeText('t8b', s[7], 'Odpovězte na nabídku nebo ji potvrďte v zákaznickém portálu. Po odsouhlasení navážeme výrobní přípravou a upřesněním instalace.', 48, 118, 610, 105, 18, WHITE, false));
     requests.push(...shapeText('t8c', s[7], 'HolmTec s.r.o. — mlzidla.cz\nIng. Radek Meduna\n+420 774 700 390\nmeduna@holmtec.cz', 48, 267, 330, 105, 14, ACCENT, true));
+    requests.push(image('portalqr', s[7], portalQrImageUrl, 500, 245, 115, 115));
+    requests.push(...shapeText('t8d', s[7], 'Naskenujte pro otevření nabídky a potvrzení objednávky', 440, 365, 230, 28, 10, WHITE, false));
 
     const slideRes = await fetch(`https://slides.googleapis.com/v1/presentations/${presentationId}:batchUpdate`, {
       method: 'POST',

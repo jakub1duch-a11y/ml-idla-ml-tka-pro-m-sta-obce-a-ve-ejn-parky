@@ -154,11 +154,11 @@ export default async function(req) {
     const validUntil = quote.valid_until ? new Date(quote.valid_until) : new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
     const quoteNumber = quote.quote_number || `MLZ-${now.getFullYear()}-${String(Date.now()).slice(-6)}`;
     const arQrImageUrl = product.slug === 'mlzitko-bendy'
-      ? 'https://mlzidla.cz/qr/bendy-single-ar.svg'
+      ? 'https://mlzidla.cz/qr/bendy-single-ar.png'
       : product.slug === 'mlzna-brana-gate'
-        ? 'https://mlzidla.cz/qr/brana-gate-ar.svg'
+        ? 'https://mlzidla.cz/qr/brana-gate-ar.png'
         : '';
-    const portalQrImageUrl = 'https://mlzidla.cz/qr/muj-projekt.svg';
+    const portalQrImageUrl = 'https://mlzidla.cz/qr/muj-projekt.png';
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
     const folderId = await findOrCreateFolder(accessToken, 'MLŽIDLA — Nabídky');
 

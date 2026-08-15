@@ -9,13 +9,13 @@ export default function SmartCTA() {
       <div className="max-w-3xl mx-auto px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-white tracking-tight mb-4">
-            Připraveni na chytré mlžení?
+            Připraveni navrhnout Smart Cooling?
           </h2>
-          <p className="text-white/50 mb-8">Navrhneme variantu START, SMART nebo SMART PRO podle počtu mlžítek, zón, senzorů a požadované úrovně vzdálené správy.</p>
+          <p className="text-white/50 mb-8">Navrhneme vhodný produkt, rozmístění, zóny, senzory, provozní scénář a úroveň vzdálené správy podle konkrétního veřejného prostoru.</p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link to="/kontakt?produkt=Smart%20ovl%C3%A1d%C3%A1n%C3%AD"
+            <Link to="/poptavka?produkt=Smart%20Cooling"
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all">
-              Poptat smart ovládání <ArrowRight size={16} />
+              Navrhnout Smart Cooling <ArrowRight size={16} />
             </Link>
             <Link to="/mlzidla-mlzitka" className="text-white/50 hover:text-white text-sm transition-colors">
               Zobrazit mlžítka →

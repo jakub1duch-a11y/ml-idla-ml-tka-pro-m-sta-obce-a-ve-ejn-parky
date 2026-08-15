@@ -40,7 +40,7 @@ export default async function(req) {
     const user = await base44.auth.me();
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
-    const { inquiry_type: inquiryType, inquiry_id: inquiryId, subject, message: draftMessage, quote_pdf_base64: quotePdfBase64, quote_filename: quoteFilename, attachments = [] } = await req.json();
+    const { inquiry_type: inquiryType, inquiry_id: inquiryId, subject, message: draftMessage, quote_pdf_base64: quotePdfBase64, quote_filename: quoteFilename, presentation_pdf_base64: presentationPdfBase64, presentation_filename: presentationFilename, attachments = [] } = await req.json();
     if (!inquiryType || !inquiryId || !subject || !draftMessage) return Response.json({ error: 'Missing reply details' }, { status: 400 });
     const message = withSignature(draftMessage);
     const entityName = inquiryType === 'contact' ? 'ContactInquiry' : 'Poptavka';
@@ -54,7 +54,8 @@ export default async function(req) {
       return { filename: file.file_name, content: new Uint8Array(await response.arrayBuffer()), contentType: response.headers.get('content-type') || 'application/octet-stream' };
     }));
     const quoteAttachment = quotePdfBase64 ? [{ filename: quoteFilename || 'nabidka-mlzidla.pdf', content: Uint8Array.from(atob(quotePdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
-    const allAttachments = [...quoteAttachment, ...externalAttachments];
+    const presentationAttachment = presentationPdfBase64 ? [{ filename: presentationFilename || 'prezentace-mlzidla.pdf', content: Uint8Array.from(atob(presentationPdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
+    const allAttachments = [...quoteAttachment, ...presentationAttachment, ...externalAttachments];
     const clientRaw = buildMessage({ to: inquiry.email, subject, text: message, attachments: allAttachments });
     const copyRecipients = ['meduna@holmtec.cz', 'jakub1duch@gmail.com'];
     const copySubject = `Kopie nabídky pro ${inquiry.name}: ${subject}`;

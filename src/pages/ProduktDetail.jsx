@@ -256,7 +256,7 @@ export default function ProduktDetail() {
           <div className="relative min-w-0 flex-1">
             {canScrollLeft &&
             <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
-            className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
+            className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-9 bg-gradient-to-r from-white via-white/95 to-transparent">
               <ChevronLeft size={16} className="text-slate-500" />
             </button>
             }
@@ -283,7 +283,7 @@ export default function ProduktDetail() {
             </div>
             {canScrollRight &&
             <button type="button" onClick={() => scrollTabs(160)} aria-label="Posunout záložky vpravo"
-            className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-l from-white via-white/95 to-transparent lg:hidden">
+            className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-9 bg-gradient-to-l from-white via-white/95 to-transparent">
               <ChevronRight size={16} className="text-slate-500" />
             </button>
             }

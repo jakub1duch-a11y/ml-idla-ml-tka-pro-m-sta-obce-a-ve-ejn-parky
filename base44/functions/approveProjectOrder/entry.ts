@@ -6,9 +6,15 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const projectId = body.project_id;
     const sessionToken = body.session_token;
+    const acceptTerms = body.accept_terms === true;
+    const acceptanceName = String(body.acceptance_name || '').trim();
+    const acceptanceUserAgent = String(body.acceptance_user_agent || '').slice(0, 500);
 
     if (!projectId || !sessionToken) {
       return Response.json({ error: 'Missing project_id or session_token' }, { status: 400 });
+    }
+    if (!acceptTerms) {
+      return Response.json({ error: 'terms_not_accepted' }, { status: 400 });
     }
 
     if (typeof projectId !== 'string' || typeof sessionToken !== 'string') {
@@ -38,14 +44,22 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'forbidden' }, { status: 403 });
     }
 
-    if (project.status !== 'sent') {
+    if (project.status !== 'sent' && project.status !== 'viewed') {
       return Response.json({ error: 'invalid_status' }, { status: 400 });
+    }
+
+    if (project.valid_until && new Date(project.valid_until).getTime() < Date.now()) {
+      await base44.asServiceRole.entities.ProjectOrder.update(projectId, { status: 'expired' });
+      return Response.json({ error: 'offer_expired' }, { status: 410 });
     }
 
     const approvedAt = new Date().toISOString();
     const updated = await base44.asServiceRole.entities.ProjectOrder.update(projectId, {
       status: 'approved',
       approved_at: approvedAt,
+      acceptance_terms_version: 'MLZIDLA-OBCHODNI-PODMINKY-v1',
+      acceptance_name: acceptanceName || project.client_name || '',
+      acceptance_user_agent: acceptanceUserAgent,
     });
 
     // Single-use: invalidate the session token immediately after a successful approval.

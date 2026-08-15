@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Wrench } from 'lucide-react';
+import { ShieldCheck, Wrench, Droplets, Snowflake } from 'lucide-react';
 import AnchoringGallery from '@/components/produkt/AnchoringGallery';
 
 export default function InstallationTab({ product }) {
@@ -53,11 +53,12 @@ export default function InstallationTab({ product }) {
         <AnchoringGallery />
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-20">
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
           {[
-            { icon: ShieldCheck, title: 'Pojistný ventil', desc: 'Hardwarová ochrana proti přetlaku v řadu nad 7 BAR.' },
-            { icon: ShieldCheck, title: 'Kryt proti krupobití', desc: 'Mechanický štít solárního panelu, 100% odolnost proti krupobití.' },
-            { icon: Wrench, title: 'Bez čerpadel', desc: 'Provoz přímo na 2–7 BAR z běžného vodovodního řadu.' },
+            { icon: ShieldCheck, title: 'Ochrana vodní větve', desc: 'Podle projektu lze doplnit uzavírací a bezpečnostní prvky pro kontrolovaný provoz.' },
+            { icon: Droplets, title: 'Filtrace vody', desc: 'Správně navržená filtrace pomáhá chránit trysky a udržet stabilní kvalitu mlžení.' },
+            { icon: Wrench, title: 'Bez vysokotlakého čerpadla', desc: 'Nízkotlaký systém je navržen pro přímé napojení na běžný vodovodní řad.' },
+            { icon: Snowflake, title: 'Servis a zazimování', desc: 'Pro sezónní odstávku doporučujeme vypuštění, kontrolu trysek a přípravu systému na zimu.' },
           ].map((f) => (
             <div key={f.title} className="p-5 rounded-2xl border border-slate-200 bg-slate-50">
               <f.icon size={20} className="text-slate-500 mb-3" />

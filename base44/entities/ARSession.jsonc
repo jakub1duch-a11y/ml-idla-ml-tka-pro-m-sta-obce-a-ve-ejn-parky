@@ -1,0 +1,79 @@
+{
+  "name": "ARSession",
+  "type": "object",
+  "properties": {
+    "session_key": {
+      "type": "string",
+      "description": "Ve\u0159ejn\u00fd identifik\u00e1tor AR konfigurace"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "ID produktu"
+    },
+    "product_slug": {
+      "type": "string",
+      "description": "Slug produktu"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "N\u00e1zev produktu"
+    },
+    "profile_diameter_mm": {
+      "type": "number",
+      "description": "Vybran\u00fd vn\u011bj\u0161\u00ed pr\u016fm\u011br profilu v mm"
+    },
+    "wall_thickness_mm": {
+      "type": "number",
+      "description": "Vybran\u00e1 tlou\u0161\u0165ka st\u011bny v mm"
+    },
+    "nominal_height_mm": {
+      "type": "number",
+      "description": "Referen\u010dn\u00ed v\u00fd\u0161ka modelu v mm"
+    },
+    "ar_reference_version": {
+      "type": "string",
+      "description": "Verze AR/3D modelu"
+    },
+    "capture_url": {
+      "type": "string",
+      "description": "Fotografie konfigurace nebo m\u00edsta po\u0159\u00edzen\u00e1 u\u017eivatelem"
+    },
+    "note": {
+      "type": "string",
+      "description": "Pozn\u00e1mka u\u017eivatele k um\u00edst\u011bn\u00ed"
+    },
+    "source": {
+      "type": "string",
+      "description": "Zdroj vytvo\u0159en\u00ed session, nap\u0159. bendy_ar"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "captured",
+        "inquiry_sent"
+      ],
+      "default": "draft",
+      "description": "Stav AR session"
+    }
+  },
+  "required": [
+    "session_key",
+    "product_slug",
+    "product_name"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": null,
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

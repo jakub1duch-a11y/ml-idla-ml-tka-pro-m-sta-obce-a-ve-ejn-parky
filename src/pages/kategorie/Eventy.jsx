@@ -14,6 +14,15 @@ const EVENT_SCENES = [
   { title: 'Oslavy a rodinné dny', kicker: 'Pobytová zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg' },
 ];
 
+const EVENT_PRODUCT_THUMBNAILS = {
+  'mlzna-brana-gate': EVENT_SCENES[0].image,
+  'brana-bendy': EVENT_SCENES[3].image,
+  'aura-city-duo': EVENT_SCENES[2].image,
+  'linea-gate': EVENT_SCENES[1].image,
+};
+
+const eventProductThumb = (product) => EVENT_PRODUCT_THUMBNAILS[product?.slug] || product?.gallery_urls?.[1] || product?.gallery_urls?.[0] || product?.image_url;
+
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
   { emoji: '🌞', title: 'Letní terasy', desc: 'Sezónní instalace pro restaurace a food festivaly — pronájem nebo koupě.' },
@@ -152,7 +161,7 @@ export default function Eventy() {
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                    {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
+                    {eventProductThumb(p) && <img src={eventProductThumb(p)} alt={`${p.name} v eventovém použití`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />}
                   </div>
                   <div className="p-5 flex items-center justify-between">
                     <div>

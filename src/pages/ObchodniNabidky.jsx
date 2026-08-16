@@ -36,9 +36,9 @@ export default function ObchodniNabidky() {
   const loadInquiries = async () => {
     const [poptavky, contacts] = await Promise.all([base44.entities.Poptavka.list(), base44.entities.ContactInquiry.list()]);
     setInquiries([
-      ...poptavky.map((item) => ({ ...item, key: `p-${item.id}`, type: 'poptavka', name: item.jmeno, message: item.zprava, product: item.produkt })),
-      ...contacts.map((item) => ({ ...item, key: `c-${item.id}`, type: 'contact', name: item.name, message: item.message, product: item.product_id }))
-    ].sort((a, b) => new Date(b.created_date) - new Date(a.created_date)));
+      ...poptavky.map((item) => ({ ...item, key: `p-${item.id}`, type: 'poptavka', name: item.jmeno, message: item.zprava, product: item.produkt, created_date: item.created_date })),
+      ...contacts.map((item) => ({ ...item, key: `c-${item.id}`, type: 'contact', name: item.name, message: item.message, product: item.product_id, created_date: item.created_date }))
+    ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime()));
   };
   const loadProjectOrders = async () => {
     const orders = await base44.entities.ProjectOrder.list('-created_date', 500);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackContactFormSubmit } from '@/lib/ga4';
 
 const ANCHORING_PHOTO_URL = '/media/optimized/150f3566d_IMG_20260623_124103.webp';
 
@@ -33,9 +34,7 @@ export default function ProductContactForm({ productName }) {
     }).catch(() => {});
     setSent(true);
     setSending(false);
-    if (typeof window !== 'undefined' && window.trackHolmTec) {
-      window.trackHolmTec('contact_form_submit', { product_name: productName, form_type: 'produkt' });
-    }
+    trackContactFormSubmit('produkt', productName);
   };
 
   if (sent) return (

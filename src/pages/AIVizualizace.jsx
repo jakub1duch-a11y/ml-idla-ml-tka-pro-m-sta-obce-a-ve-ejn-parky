@@ -149,7 +149,7 @@ export default function AIVizualizace() {
         setProducts(visualProducts);
         const preferred = visualProducts.find((item) => item.slug === requestedSlug) || visualProducts.find((item) => item.slug === 'mlzitko-bendy') || visualProducts[0];
         if (preferred) setSelectedProductId(preferred.id);
-      } catch (e) {
+      } catch {
         if (active) setError('Nepodařilo se načíst produktový katalog. Obnovte prosím stránku.');
       } finally {
         if (active) setProductsLoading(false);
@@ -201,7 +201,7 @@ export default function AIVizualizace() {
       setLeadProfile(profile);
       setLeadForm({ name, email, phone, company, gdprAcknowledged: true });
       setLeadGateOpen(false);
-    } catch (e) {
+    } catch {
       setLeadError('Registraci se nepodařilo uložit. Zkuste to prosím znovu.');
     } finally {
       setLeadSubmitting(false);
@@ -239,7 +239,7 @@ export default function AIVizualizace() {
       if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
       setPreviewUrl(URL.createObjectURL(prepared));
       setAutoGeneratePending(true);
-    } catch (e) {
+    } catch {
       setError('Fotografii se nepodařilo připravit. Zkuste menší JPG nebo WebP soubor.');
     } finally {
       setOptimizing(false);
@@ -266,7 +266,7 @@ export default function AIVizualizace() {
       const insertionInstruction = customConceptMode
         ? `VLOŽENÍ ZAKÁZKOVÉHO TVARU: Navrhni pouze nejjednodušší výrobně uvěřitelnou interpretaci motivu „${requestedConcept}“. Konstrukce musí působit jako skutečné mlžítko z broušené nerezové trubky, kterou lze reálně ohýbat. Upřednostni jednu souvislou plynulou linii nebo minimum jednoduchých napojení. Žádné tenké grafické čáry, ostré nereálné zlomy, dekorativní složitost ani křížení bez konstrukční logiky. Maximální vnější průměr ohýbané trubky je Ø 74 mm. Spodní konec má vizuálně vstupovat přímo do dlažby nebo terénu: bez viditelného spodního kroužku, bez límce a bez nadzemní patky; kotvení je schované pod finálním povrchem. Variantu motivu dodrž podle zadání — Solo je výchozí a nejjednodušší, Duo znamená dva stejné jednoduché prvky, Brána znamená průchozí sestavu ze stejného jednoduchého motivu.`
         : `VLOŽENÍ PRODUKTU: DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct?.name}. PRIORITA Č. 2 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct?.name}. Materiál dle katalogu: ${selectedProduct?.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct?.short_description || ''}.`;
-      const response = await base44.integrations.Core.GenerateImage({
+      const generateImageParams = /** @type {import('@base44/sdk').GenerateImageParams & { existing_image_urls?: string[] }} */ ({
         prompt: `Vytvoř fotorealistickou architektonickou vizualizaci MLŽIDLA® HolmTec v nahraném prostoru.
 
 SCENE LOCK — ABSOLUTNÍ PRIORITA: PRVNÍ referenční obrázek je fotografie zákazníkova prostoru a musí zůstat vizuálně totožný. Zachovej přesně kompozici, ořez, ohniskovou perspektivu, horizont, úběžníky, polohu kamery, poměry vzdáleností, budovy, fasády, okna, dveře, obrubníky, dlažbu, trávníky, stromy, záhony, ploty, komunikace, mobiliář, auta, osoby, stíny, světelné podmínky, počasí a všechny existující objekty. NEPŘESTAVUJ scénu. NEPOSOUVEJ existující objekty. NEMAŽ existující prvky. NEGENERUJ novou architekturu, jinou dlažbu, jinou zeleň ani alternativní verzi místa. Pokud si nejsi jistý detailem prostoru, ponech jej podle původní fotografie beze změny.
@@ -285,6 +285,7 @@ MLHA: Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá k
 ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změny denní doby, sezóny, barevnosti celé fotografie nebo prostředí. Výsledek musí vypadat jako tatáž původní fotografie po fyzické instalaci SKUTEČNÉHO MLŽÍTKA, nikoli jako nový koncept inspirovaný místem. Finální značkový vodoznak MLŽIDLA® a MLZIDLA.CZ se přidává až po generování, proto jej do samotné scény negeneruj.`,
         existing_image_urls: [uploadedUrl, ...productRefs],
       });
+      const response = await base44.integrations.Core.GenerateImage(generateImageParams);
       if (!response?.url) throw new Error('Generátor nevrátil výsledný obrázek.');
       let finalResultUrl = response.url;
       try {
@@ -344,7 +345,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
       anchor.click();
       anchor.remove();
       URL.revokeObjectURL(objectUrl);
-    } catch (e) {
+    } catch {
       window.open(resultUrl, '_blank', 'noopener,noreferrer');
     } finally {
       setDownloadBusy(false);
@@ -395,7 +396,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         }
       }
       setQuoteSent(true);
-    } catch (e) {
+    } catch {
       setError('Nezávaznou nabídku se nepodařilo odeslat. Zkuste to prosím znovu.');
     } finally {
       setQuoteUploading(false);

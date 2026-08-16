@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, X, Layers, Compass, Info, Grid2X2, CalendarDays } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  ArrowRight,
+  Calculator,
+  ChevronDown,
+  Cpu,
+  Grid2X2,
+  Images,
+  Layers3,
+  LifeBuoy,
+  Newspaper,
+  Sparkles,
+  X,
+} from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { ROUTE_MAP } from '@/lib/i18n';
@@ -14,10 +26,16 @@ const INTERNATIONAL_MOBILE_COPY = {
   it: { products: 'Prodotti', city: 'Nebulizzazione urbana', garden: 'Nebulizzazione giardino', custom: 'Soluzioni su misura', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', about: 'Chi siamo', faq: 'FAQ', contact: 'Contatti', quote: 'Richiedi preventivo' },
 };
 
-export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks, customLink, locale = 'cs' }) {
-  const [section, setSection] = useState('katalog');
-  const featured = productLinks.find((item) => item.featured);
-  const rental = productLinks.find((item) => item.textOnly);
+const PRIMARY_LINKS = [
+  { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', icon: Grid2X2 },
+  { label: 'Realizace', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
+  { label: 'Technologie', sub: 'Jak funguje nízkotlaké mlžení', path: '/jak-to-funguje', icon: Cpu },
+  { label: 'Blog', sub: 'Inspirace, projekty a novinky', path: '/blog', icon: Newspaper },
+  { label: 'Podpora', sub: 'FAQ, servis a technické informace', path: '/podpora', icon: LifeBuoy },
+];
+
+export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' }) {
+  const [collectionsOpen, setCollectionsOpen] = useState(false);
   const collections = productLinks.filter((item) => !item.featured && !item.textOnly);
 
   if (locale !== 'cs') {
@@ -41,11 +59,13 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} className="fixed inset-0 z-40 flex h-[100dvh] flex-col bg-white lg:hidden">
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro px-5">
               <Link to={ROUTE_MAP.home[locale]} onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
-              <button onClick={onClose} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"><X size={20}/></button>
+              <div className="flex items-center gap-2">
+                <LanguageSwitcher mobile onNavigate={onClose} />
+                <button onClick={onClose} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"><X size={20}/></button>
+              </div>
             </div>
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
-              <LanguageSwitcher mobile onNavigate={onClose} />
-              <div className="mt-5 grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {links.map(([label, path], index) => (
                   <motion.div key={path} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .03 + index * .025, duration: .2 }}>
                     <Link to={path} onClick={onClose} className="flex min-h-16 items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold leading-tight text-slate-800 transition hover:border-secondary/40 hover:bg-slate-50">
@@ -68,118 +88,98 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}
-          className="fixed inset-0 z-40 flex h-[100dvh] flex-col bg-white lg:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: .18 }}
+          className="fixed inset-0 z-40 flex h-[100dvh] flex-col bg-[#f8fafb] lg:hidden"
         >
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro px-5">
             <Link to="/" onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
-            <button onClick={onClose} aria-label="Zavřít menu" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"><X size={20}/></button>
-          </div>
-
-          <div className="shrink-0 border-b border-slate-200 bg-white px-4 py-3">
-            <div className="grid grid-cols-3 gap-2 rounded-2xl bg-slate-100 p-1.5">
-              {[
-                { id: 'katalog', label: 'Produkty', icon: Layers },
-                { id: 'reseni', label: 'Využití', icon: Compass },
-                { id: 'info', label: 'Informace', icon: Info },
-              ].map((t) => (
-                <button key={t.id} onClick={() => setSection(t.id)} className={`flex min-h-12 items-center justify-center gap-1.5 rounded-xl px-2 text-xs font-semibold transition-all ${section === t.id ? 'bg-white text-slate-950 shadow-sm' : 'text-slate-500'}`}>
-                  <t.icon size={16}/><span>{t.label}</span>
-                </button>
-              ))}
+            <div className="flex items-center gap-2">
+              <LanguageSwitcher mobile onNavigate={onClose} />
+              <button onClick={onClose} aria-label="Zavřít menu" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"><X size={20}/></button>
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
-            <AnimatePresence mode="wait">
-              {section === 'katalog' && (
-                <motion.div key="katalog" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .15 }}>
-                  <div className="border-b border-slate-200 pb-4">
-                    <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Produkty MLŽIDLA®</p>
-                    <h2 className="mt-1 font-heading text-2xl font-medium text-slate-950">Vyberte podle typu projektu</h2>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-500">Stejná logika jako v desktopovém mega menu — bez obrázků, rychle a přehledně.</p>
-                  </div>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-7 pt-5 sm:px-5">
+            <div className="mx-auto max-w-xl">
+              <div className="px-1 pb-4">
+                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Hlavní navigace</p>
+                <h2 className="mt-1 font-heading text-2xl font-medium tracking-[-.03em] text-slate-950">Kam chcete pokračovat?</h2>
+              </div>
 
-                  <div className="mt-2 divide-y divide-slate-100">
-                    {collections.map((item) => (
-                      <Link key={item.path} to={item.path} onClick={onClose} className="group flex items-center justify-between gap-4 rounded-xl px-1 py-4 transition hover:bg-slate-50">
-                        <div className="min-w-0">
-                          <h3 className="font-heading text-lg font-medium text-slate-950">{item.label}</h3>
-                          <p className="mt-1 text-xs leading-relaxed text-slate-500">{item.sub}</p>
-                        </div>
-                        <ArrowRight size={16} className="shrink-0 text-slate-300 transition group-hover:translate-x-1 group-hover:text-secondary"/>
+              <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => setCollectionsOpen((value) => !value)}
+                  aria-expanded={collectionsOpen}
+                  className="flex min-h-[70px] w-full items-center gap-4 border-b border-slate-100 px-4 py-3.5 text-left transition hover:bg-slate-50"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#eaf7fb] text-[#0b6c8e]"><Layers3 size={20}/></span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[15px] font-semibold text-slate-950">Kolekce</span>
+                    <span className="mt-0.5 block text-xs leading-5 text-slate-500">Městská, zahradní a zakázková řešení</span>
+                  </span>
+                  <ChevronDown size={17} className={`shrink-0 text-slate-400 transition-transform duration-200 ${collectionsOpen ? 'rotate-180' : ''}`}/>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {collectionsOpen && (
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: .2, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden border-b border-slate-100 bg-slate-50/80">
+                      <div className="grid gap-1 p-2.5">
+                        {collections.map((item, index) => (
+                          <motion.div key={item.path} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * .025, duration: .16 }}>
+                            <Link to={item.path} onClick={onClose} className="group flex min-h-12 items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition hover:bg-white">
+                              <span className="min-w-0"><strong className="block text-sm font-semibold text-slate-850">{item.label}</strong><span className="mt-0.5 block truncate text-[11px] text-slate-500">{item.sub}</span></span>
+                              <ArrowRight size={14} className="shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-secondary"/>
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {PRIMARY_LINKS.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.div key={item.path} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .025 + index * .025, duration: .18 }}>
+                      <Link to={item.path} onClick={onClose} className="group flex min-h-[70px] items-center gap-4 border-b border-slate-100 px-4 py-3.5 transition last:border-b-0 hover:bg-slate-50">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 transition group-hover:border-secondary/25 group-hover:bg-cyan-50 group-hover:text-secondary"><Icon size={19}/></span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[15px] font-semibold text-slate-950">{item.label}</span>
+                          <span className="mt-0.5 block text-xs leading-5 text-slate-500">{item.sub}</span>
+                        </span>
+                        <ArrowRight size={15} className="shrink-0 text-slate-300 transition group-hover:translate-x-1 group-hover:text-secondary"/>
                       </Link>
-                    ))}
-                  </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
 
-                  <div className="mt-4 grid gap-2 border-t border-slate-200 pt-4">
-                    {featured && <Link to={featured.path} onClick={onClose} className="btn-secondary-outline flex items-center justify-between rounded-full px-5 py-3 text-sm font-bold text-slate-900"><span className="flex items-center gap-2"><Grid2X2 size={15}/> Všechny produkty</span><ArrowRight size={15}/></Link>}
-                    <Link to={customLink.path} onClick={onClose} className="btn-metallic-mist flex items-center justify-between rounded-full px-5 py-3 text-sm font-bold"><span className="flex items-center gap-2"><Sparkles size={15}/> Navrhnout řešení na míru</span><ArrowRight size={15}/></Link>
-                    {rental && <Link to={rental.path} onClick={onClose} className="btn-secondary-outline flex items-center justify-between rounded-full px-5 py-3 text-sm font-bold text-slate-900"><span className="flex items-center gap-2"><CalendarDays size={15}/> {rental.label}</span><ArrowRight size={15}/></Link>}
-                  </div>
-                </motion.div>
-              )}
+              <motion.div initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .18, duration: .2 }} className="mt-3">
+                <Link to="/kalkulacka" onClick={onClose} className="group flex min-h-[76px] items-center gap-4 rounded-[22px] border border-cyan-200 bg-gradient-to-r from-cyan-50 to-white px-4 py-3.5 shadow-sm transition hover:border-cyan-300 hover:shadow-md">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0b4860] text-white shadow-sm"><Calculator size={20}/></span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-2"><strong className="text-[15px] text-slate-950">Nezávazná kalkulace</strong><span className="rounded-full bg-cyan-100 px-2 py-0.5 font-mono text-[8px] font-bold uppercase tracking-[.12em] text-cyan-800">rychle</span></span>
+                    <span className="mt-1 block text-xs leading-5 text-slate-500">Orientační provozní náklady a podklady pro projekt</span>
+                  </span>
+                  <ArrowRight size={16} className="shrink-0 text-secondary transition group-hover:translate-x-1"/>
+                </Link>
+              </motion.div>
 
-              {section === 'reseni' && (
-                <motion.div key="reseni" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .15 }}>
-                  <div className="border-b border-slate-200 pb-4">
-                    <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Podle využití</p>
-                    <h2 className="mt-1 font-heading text-2xl font-medium text-slate-950">Kam mlžítko potřebujete?</h2>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-500">Vyberte typ prostoru a zobrazíme řešení, produkty a reference vhodné pro dané použití.</p>
-                  </div>
-                  <div className="mt-3 grid grid-cols-2 gap-2">
-                    {usageLinks.map((l) => (
-                      <Link key={l.path} to={l.path} onClick={onClose} className="group flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-secondary/40 hover:bg-slate-50">
-                        <l.icon size={18} className="text-secondary"/>
-                        <span className="mt-4 text-sm font-semibold leading-tight text-slate-800">{l.label}</span>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="mt-4 rounded-2xl bg-slate-950 p-5 text-white">
-                    <p className="font-mono text-[9px] uppercase tracking-[.18em] text-cyan-300">Nevíte, co vybrat?</p>
-                    <p className="mt-2 text-sm leading-relaxed text-white/65">Popište prostor a doporučíme vhodný typ, počet prvků i způsob instalace.</p>
-                    <Link to="/poptavka" onClick={onClose} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white">Popsat projekt <ArrowRight size={15}/></Link>
-                  </div>
-                </motion.div>
-              )}
-
-              {section === 'info' && (
-                <motion.div key="info" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .15 }}>
-                  <div className="border-b border-slate-200 pb-4">
-                    <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Informace a podpora</p>
-                    <h2 className="mt-1 font-heading text-2xl font-medium text-slate-950">Technika, servis a inspirace</h2>
-                  </div>
-                  <div className="mt-3 space-y-1">
-                    {infoLinks.map((l) => (
-                      <Link key={l.path} to={l.path} onClick={onClose} className={`group flex items-center gap-3 rounded-xl px-3 py-3 transition ${l.featured ? 'border border-cyan-200 bg-cyan-50' : 'hover:bg-slate-50'}`}>
-                        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border ${l.featured ? 'border-cyan-200 bg-white text-cyan-700' : 'border-slate-200 bg-white text-secondary'}`}><l.icon size={16}/></span>
-                        <span className={`text-sm ${l.featured ? 'font-semibold text-slate-950' : 'font-medium text-slate-700'}`}>{l.label}</span>
-                        {l.featured && <span className="ml-auto rounded-full border border-cyan-200 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[.14em] text-cyan-700">Nové</span>}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="mt-6 border-t border-slate-200 pt-4">
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { label: 'Jak fungují', path: '/jak-to-funguje' },
-                  { label: 'Chytré ovládání', path: '/smart-ovladani' },
-                  { label: 'Reference', path: '/reference' },
-                  { label: 'Kontakt', path: '/kontakt' },
-                ].map((l) => <Link key={l.path} to={l.path} onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50">{l.label}</Link>)}
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <Link to="/smart-ovladani" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Smart řízení <ArrowRight size={13} className="text-slate-300"/></Link>
+                <Link to="/kontakt" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Kontakt <ArrowRight size={13} className="text-slate-300"/></Link>
               </div>
             </div>
-
-            <div className="mt-5">
-              <LanguageSwitcher mobile onNavigate={onClose} />
-            </div>
           </div>
 
-          <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-            <Link to="/poptavka" onClick={onClose} className="btn-metallic-mist flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-bold">Popsat projekt <ArrowRight size={16}/></Link>
+          <div className="shrink-0 border-t border-slate-200 bg-white px-4 py-3 pb-[max(.75rem,env(safe-area-inset-bottom))] sm:px-5">
+            <div className="mx-auto flex max-w-xl gap-2">
+              <Link to="/poptavka" onClick={onClose} className="btn-metallic-mist flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold"><Sparkles size={15}/>Popsat projekt<ArrowRight size={15}/></Link>
+            </div>
           </div>
         </motion.div>
       )}

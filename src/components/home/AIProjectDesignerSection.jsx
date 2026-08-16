@@ -52,7 +52,7 @@ const shapeOptions = [
 ];
 
 function BendableShapeIcon({ type, className = '' }) {
-  const common = /** @type {React.SVGProps<SVGPathElement>} */ ({
+  const common = /** @type {{ fill: string, stroke: string, strokeWidth: number, strokeLinecap: 'round', strokeLinejoin: 'round', vectorEffect: string }} */ ({
     fill: 'none',
     stroke: 'currentColor',
     strokeWidth: 3.2,

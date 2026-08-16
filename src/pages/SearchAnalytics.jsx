@@ -10,7 +10,7 @@ const PERIOD_OPTIONS = [
 { label: '90 dní', value: 90 }];
 
 
-const StatCard = ({ icon: Icon, label, value, sub }) =>
+const StatCard = ({ icon: Icon, label, value, sub = '' }) =>
 <div className="bg-card_bg border border-white/10 rounded-2xl p-5">
     <div className="flex items-center gap-3 mb-3">
       <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center">
@@ -29,7 +29,7 @@ export default function SearchAnalytics() {
   const [error, setError] = useState(null);
   const [days, setDays] = useState(28);
   const [sortBy, setSortBy] = useState('clicks');
-  const [meta, setMeta] = useState({});
+  const [meta, setMeta] = useState({ startDate: '', endDate: '' });
 
   const fetchData = async (d) => {
     setLoading(true);

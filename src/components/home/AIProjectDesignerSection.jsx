@@ -109,6 +109,12 @@ const productOptions = [
   },
 ];
 
+const shapeVariants = [
+  { key: 'solo', label: 'Solo', note: '1 prvek · nejjednodušší' },
+  { key: 'duo', label: 'Duo', note: '2 prvky vedle sebe' },
+  { key: 'gate', label: 'Brána', note: 'průchozí dvojice' },
+];
+
 const POLNA_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png';
 
 export default function AIProjectDesignerSection() {
@@ -116,6 +122,7 @@ export default function AIProjectDesignerSection() {
   const [value, setValue] = useState(() => sessionStorage.getItem('mlzidla-ai-zadani') || '');
   const [selectedType, setSelectedType] = useState(() => sessionStorage.getItem('mlzidla-ai-typ') || '');
   const [selectedConcept, setSelectedConcept] = useState(() => sessionStorage.getItem('mlzidla-project-concept') || '');
+  const [selectedVariant, setSelectedVariant] = useState(() => sessionStorage.getItem('mlzidla-project-variant') || 'solo');
   const [customShape, setCustomShape] = useState(() => sessionStorage.getItem('mlzidla-project-custom-shape') || '');
 
   const updateValue = (nextValue) => {
@@ -131,7 +138,16 @@ export default function AIProjectDesignerSection() {
   const selectConcept = (key) => {
     setSelectedConcept(key);
     sessionStorage.setItem('mlzidla-project-concept', key);
+    if (shapeOptions.some((item) => item.key === key)) {
+      setSelectedVariant('solo');
+      sessionStorage.setItem('mlzidla-project-variant', 'solo');
+    }
   };
+
+  const selectVariant = (key) => {
+    setSelectedVariant(key);
+    sessionStorage.setItem('mlzidla-project-variant', key);
+  }; 
 
   const updateCustomShape = (nextValue) => {
     const limited = nextValue.trimStart().split(/\s+/).slice(0, 2).join(' ');
@@ -144,7 +160,10 @@ export default function AIProjectDesignerSection() {
   const conceptLabel = () => {
     if (selectedConcept === 'custom') return customShape.trim() ? `Vlastní motiv: ${customShape.trim()}` : 'Vlastní motiv';
     const shape = shapeOptions.find((item) => item.key === selectedConcept);
-    if (shape) return `Symbol: ${shape.label}`;
+    if (shape) {
+      const variant = shapeVariants.find((item) => item.key === selectedVariant) || shapeVariants[0];
+      return `Symbol: ${shape.label} · varianta ${variant.label}`;
+    }
     const product = productOptions.find((item) => item.key === selectedConcept);
     if (product) return `Produkt: ${product.label}`;
     return '';
@@ -157,7 +176,7 @@ export default function AIProjectDesignerSection() {
     if (zadani) params.set('zadani', zadani);
     if (selectedType) params.set('typ', selectedType);
     if (conceptLabel()) params.set('tvar', conceptLabel());
-    params.set('profil', 'nerezová trubka: umíme ohýbat vnější průměr až Ø 74 mm; tvar musí být reálně vyrobitelný ohýbáním, případné větvení řešit výrobně vhodnými napojeními');
+    params.set('profil', 'nerezová trubka: umíme ohýbat vnější průměr až Ø 74 mm; vždy zvol nejjednodušší reálně vyrobitelnou geometrii; bez viditelného spodního kroužku nebo límce; kotevní patka má být skrytá pod úrovní dlažby nebo terénu; větvení řešit výrobně vhodnými napojeními');
     navigate(`/poradce?${params.toString()}`);
   };
 
@@ -166,7 +185,7 @@ export default function AIProjectDesignerSection() {
     if (value.trim()) params.set('zadani', value.trim());
     if (selectedType) params.set('typ', selectedType);
     if (conceptLabel()) params.set('tvar', conceptLabel());
-    params.set('profil', 'nerezová trubka: maximální ohýbaný vnější průměr Ø 74 mm; vizualizace musí zachovat realistickou tloušťku trubky a výrobně možné oblouky');
+    params.set('profil', 'nerezová trubka: maximální ohýbaný vnější průměr Ø 74 mm; použij nejjednodušší výrobně uvěřitelnou variantu; bez viditelného spodního kroužku nebo límce; kotevní patka skrytá pod úrovní dlažby nebo terénu; zachovej realistickou tloušťku trubky a výrobně možné oblouky');
     navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`);
   };
 
@@ -293,6 +312,28 @@ export default function AIProjectDesignerSection() {
                       );
                     })}
                   </div>
+                  {shapeOptions.some((item) => item.key === selectedConcept) && (
+                    <div className="mt-4 border-t border-slate-200 pt-4">
+                      <div className="flex items-end justify-between gap-4">
+                        <div>
+                          <p className="text-xs font-semibold text-slate-800">Možná varianta symbolu</p>
+                          <p className="mt-1 text-[10px] leading-4 text-slate-500">Výchozí je vždy nejjednodušší Solo. Další varianty jen skládají stejnou jednoduchou geometrii.</p>
+                        </div>
+                        <span className="font-mono text-[9px] uppercase tracking-[.12em] text-slate-400">skryté kotvení</span>
+                      </div>
+                      <div className="mt-3 grid grid-cols-3 gap-2">
+                        {shapeVariants.map((variant) => {
+                          const active = selectedVariant === variant.key;
+                          return (
+                            <button key={variant.key} type="button" onClick={() => selectVariant(variant.key)} aria-pressed={active} className={`border px-3 py-3 text-left transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}`}>
+                              <span className="block text-xs font-semibold">{variant.label}</span>
+                              <span className={`mt-1 block text-[9px] leading-4 ${active ? 'text-white/60' : 'text-slate-400'}`}>{variant.note}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-4 border border-slate-200 bg-slate-50/60 p-4 sm:p-5">

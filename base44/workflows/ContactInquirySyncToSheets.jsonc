@@ -1,0 +1,37 @@
+{
+  "name": "Kontakt \u2192 Google Sheets klienti",
+  "description": "Automaticky zapisuje nov\u00fd kontakt do listu Popt\u00e1vky a aktualizuje deduplikovan\u00fd seznam Klienti.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ContactInquiry"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "contact_inquiry_sync_to_sheets_clients",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_to_sheets": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncInquiryToSheets",
+            "args": {
+              "entity_name": "ContactInquiry",
+              "entity_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end"
+        }
+      }
+    ]
+  }
+}

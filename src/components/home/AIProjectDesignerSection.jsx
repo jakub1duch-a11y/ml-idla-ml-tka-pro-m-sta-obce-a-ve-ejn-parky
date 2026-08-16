@@ -49,14 +49,14 @@ const shapeOptions = [
 ];
 
 function BendableShapeIcon({ type, className = '' }) {
-  const common = {
+  const common = /** @type {React.SVGProps<SVGPathElement>} */ ({
     fill: 'none',
     stroke: 'currentColor',
     strokeWidth: 3.2,
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
     vectorEffect: 'non-scaling-stroke',
-  };
+  });
 
   const paths = {
     canopy: <><path {...common} d="M32 55V34"/><path {...common} d="M32 36c-10 0-16-6-16-14 0-7 5-12 12-12 2-6 7-9 13-9 8 0 14 6 14 14 6 1 10 6 10 12 0 7-6 12-14 12H32"/></>,

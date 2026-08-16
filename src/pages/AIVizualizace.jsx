@@ -101,6 +101,7 @@ export default function AIVizualizace() {
   const [description, setDescription] = useState(() => searchParams.get('zadani') || sessionStorage.getItem('mlzidla-ai-zadani') || '');
   const requestedType = searchParams.get('typ') || '';
   const requestedConcept = searchParams.get('tvar') || '';
+  const requestedProfile = searchParams.get('profil') || '';
   const [leadProfile, setLeadProfile] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem('mlzidla-visualizer-profile') || 'null'); } catch { return null; }
   });
@@ -255,6 +256,9 @@ VLOŽENÍ PRODUKTU: DALŠÍ referenční obrázky zobrazují skutečný výrobek
 FYZICKÉ USAZENÍ: Smíš měnit pouze vložený výrobek a jeho bezprostřední fotorealistickou integraci. Urči jeho měřítko podle známých rozměrových vodítek ve scéně (lidé, dveře, obrubníky, lavičky, dlažební modul apod.), respektuj perspektivu kamery, kontaktní bod se zemí, natočení, zakrytí za reálnými objekty, realistické stíny, odrazy a světlo. Produkt musí působit skutečně instalovaný v daném místě, ne jako nalepený 2D objekt.
 
 Zadání zákazníka: ${context}.
+Typ prostoru z projektové podpory: ${requestedType || 'neuveden'}.
+Výchozí motiv / produkt z projektové podpory: ${requestedConcept || selectedProduct.name}.
+Výrobní pravidla: ${requestedProfile || 'respektovat reálné výrobní proporce a kotvení'}; u nových návrhů bez viditelného spodního límce, s kotevní patkou skrytou pod úrovní finálního povrchu.
 
 MLHA: Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci výrobku; bez mokrých louží, bez dramatických efektů a bez zakrytí produktu nebo důležitých částí scény.
 
@@ -334,8 +338,34 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
 
         <div className="grid lg:grid-cols-[.86fr_1.14fr] gap-7 lg:gap-10 items-start">
           <div className="rounded-[26px] border border-white/10 bg-white/[.055] p-5 sm:p-6 lg:p-7">
+            {!leadProfile ? (
+              <form onSubmit={registerVisualizer} className="mb-7 rounded-2xl border border-teal-300/20 bg-teal-300/[.06] p-5">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-300/10 text-teal-300"><UserPlus size={18}/></div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[.16em] text-teal-200/70">Vizualizace zdarma</p>
+                    <h2 className="mt-1 text-xl font-semibold tracking-tight">Přidejte se k nám. Mlžte s námi.</h2>
+                    <p className="mt-2 text-xs leading-relaxed text-white/45">Než spustíme bezplatnou vizualizaci, uložte základní kontakt k projektu. Údaje použijeme pro navazující konzultaci a nezávaznou nabídku.</p>
+                  </div>
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                  <input required value={leadForm.name} onChange={(e) => setLeadForm((v) => ({ ...v, name: e.target.value }))} placeholder="Jméno" className="rounded-xl border border-white/10 bg-black/20 px-3.5 py-3 text-sm text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                  <input required type="email" value={leadForm.email} onChange={(e) => setLeadForm((v) => ({ ...v, email: e.target.value }))} placeholder="E-mail" className="rounded-xl border border-white/10 bg-black/20 px-3.5 py-3 text-sm text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                  <input required value={leadForm.phone} onChange={(e) => setLeadForm((v) => ({ ...v, phone: e.target.value }))} placeholder="Telefon" className="rounded-xl border border-white/10 bg-black/20 px-3.5 py-3 text-sm text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                </div>
+                {leadError && <p className="mt-3 text-xs text-red-200">{leadError}</p>}
+                <button disabled={leadSubmitting} className="mt-4 inline-flex items-center gap-2 rounded-full bg-teal-300 px-5 py-3 text-sm font-bold text-slate-950 disabled:opacity-50">{leadSubmitting ? <Loader size={15} className="animate-spin"/> : <Check size={15}/>} Aktivovat vizualizaci zdarma</button>
+                <p className="mt-3 text-[10px] leading-relaxed text-white/25">Odesláním souhlasíte se zpracováním kontaktních údajů pro tento projekt. Nejde o placenou objednávku.</p>
+              </form>
+            ) : (
+              <div className="mb-6 flex items-center gap-3 rounded-xl border border-teal-300/15 bg-teal-300/[.05] px-4 py-3">
+                <ShieldCheck size={16} className="text-teal-300"/>
+                <div className="min-w-0"><p className="text-xs font-semibold text-white/80">Vizualizace zdarma aktivní</p><p className="truncate text-[10px] text-white/35">{leadProfile.name} · {leadProfile.email} · {leadProfile.phone}</p></div>
+              </div>
+            )}
+
             <p className="font-mono text-[10px] tracking-[.16em] uppercase text-white/40 mb-3">1 · Fotografie prostoru</p>
-            <button type="button" onClick={() => fileRef.current?.click()} className="group relative w-full overflow-hidden rounded-2xl border border-dashed border-white/15 bg-black/20 aspect-[4/3] flex items-center justify-center hover:border-teal-300/50 transition-colors">
+            <button type="button" disabled={!leadProfile} onClick={() => fileRef.current?.click()} className="group relative w-full overflow-hidden rounded-2xl border border-dashed border-white/15 bg-black/20 aspect-[4/3] flex items-center justify-center hover:border-teal-300/50 transition-colors disabled:cursor-not-allowed disabled:opacity-35">
               {previewUrl || sourceUrl ? (
                 <img src={previewUrl || sourceUrl} alt="Nahraný prostor" className="absolute inset-0 h-full w-full object-cover" />
               ) : (

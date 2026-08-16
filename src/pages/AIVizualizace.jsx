@@ -440,9 +440,25 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
             </div>
 
             {resultUrl && (
-              <div className="mt-5 flex flex-col sm:flex-row gap-3">
-                <button type="button" onClick={sendToQuote} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors">Poptat tento návrh <ArrowRight size={15}/></button>
-                {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>}
+              <div className="mt-5">
+                <div className="rounded-2xl border border-white/10 bg-black/15 p-4">
+                  <div className="flex items-start gap-3">
+                    <FileText size={17} className="mt-0.5 shrink-0 text-teal-300/80"/>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-semibold text-white/80">Máte výkres, fotografii nebo dokumentaci?</p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-white/35">Podklady jsou dobrovolné a nahrají se až při přechodu k nezávazné nabídce. Samotná AI vizualizace zůstává zdarma.</p>
+                      <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/12 px-4 py-2.5 text-xs text-white/70 hover:bg-white/[.05]">
+                        <Upload size={13}/> Přidat podklady
+                        <input type="file" multiple accept="image/*,.pdf,.dwg,.dxf,.doc,.docx" className="hidden" onChange={(e) => pickQuoteFiles(e.target.files)}/>
+                      </label>
+                      {quoteFiles.length > 0 && <div className="mt-3 space-y-1">{quoteFiles.map((item) => <p key={`${item.name}-${item.size}`} className="truncate text-[10px] text-white/40">• {item.name}</p>)}</div>}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-col sm:flex-row gap-3">
+                  <button type="button" onClick={sendToQuote} disabled={quoteUploading} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors disabled:opacity-50">{quoteUploading ? <><Loader size={15} className="animate-spin"/> Připravuji podklady…</> : <>Poptat tento návrh <ArrowRight size={15}/></>}</button>
+                  {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>}
+                </div>
               </div>
             )}
           </div>

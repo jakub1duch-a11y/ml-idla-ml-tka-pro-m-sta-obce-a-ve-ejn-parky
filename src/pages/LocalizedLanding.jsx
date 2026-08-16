@@ -110,7 +110,7 @@ export default function LocalizedLanding({ routeKey = 'home' }) {
             <p className="mt-4 max-w-2xl text-sm leading-7 text-white/60">{page.description}</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-            <Link to={inquiryPath} className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold">{page.primaryCta}<ArrowRight size={16}/></Link>
+            <Link to={primaryPath} className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold">{page.primaryCta}<ArrowRight size={16}/></Link>
             {routeKey !== 'catalog' && <Link to={catalogPath} className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/10">MLŽIDLA®</Link>}
           </div>
         </div>

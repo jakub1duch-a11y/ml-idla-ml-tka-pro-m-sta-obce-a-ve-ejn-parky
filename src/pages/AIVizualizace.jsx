@@ -548,6 +548,60 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
           </div>
         </div>
       </section>
+
+      {leadGateOpen && resultUrl && !isUnlocked && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 px-4 py-6 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="visualizer-register-title">
+          <div className="w-full max-w-2xl overflow-hidden rounded-[28px] border border-white/12 bg-slate-950 shadow-2xl shadow-black/60">
+            <div className="grid md:grid-cols-[.72fr_1.28fr]">
+              <div className="relative hidden min-h-[520px] overflow-hidden border-r border-white/10 bg-black/30 md:block">
+                <img src={resultUrl} alt="Náhled vytvořené vizualizace" className="absolute inset-0 h-full w-full object-cover opacity-75" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <p className="font-mono text-[10px] uppercase tracking-[.16em] text-teal-300/80">Vizualizace hotová</p>
+                  <p className="mt-2 text-lg font-semibold text-white">Odemkněte plnou verzi</p>
+                  <p className="mt-2 text-xs leading-relaxed text-white/55">Po registraci zůstane tento návrh dostupný ke stažení a můžete ho jedním klikem poslat k nezávaznému nacenění.</p>
+                </div>
+              </div>
+
+              <form onSubmit={registerVisualizer} className="p-5 sm:p-7 lg:p-8">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-300/10 text-teal-300"><UserPlus size={19}/></div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[.16em] text-teal-300/70">2 sekundy náhledu dokončeny</p>
+                    <h2 id="visualizer-register-title" className="mt-1 text-2xl font-semibold tracking-tight">Přidejte se k nám. Mlžte s námi.</h2>
+                    <p className="mt-2 text-xs leading-relaxed text-white/45">Vyplňte kontakt jednou. Odemkneme stažení vizualizace a předvyplníme údaje pro nezávaznou cenovou nabídku.</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <label className="text-[10px] font-mono uppercase tracking-[.12em] text-white/40">Jméno a příjmení *
+                    <input autoFocus required value={leadForm.name} onChange={(e) => setLeadForm((v) => ({ ...v, name: e.target.value }))} placeholder="Jan Novák" className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/[.05] px-3.5 py-3 text-sm normal-case tracking-normal text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                  </label>
+                  <label className="text-[10px] font-mono uppercase tracking-[.12em] text-white/40">E-mail *
+                    <input required type="email" value={leadForm.email} onChange={(e) => setLeadForm((v) => ({ ...v, email: e.target.value }))} placeholder="jan@firma.cz" className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/[.05] px-3.5 py-3 text-sm normal-case tracking-normal text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                  </label>
+                  <label className="text-[10px] font-mono uppercase tracking-[.12em] text-white/40">Telefon *
+                    <input required type="tel" value={leadForm.phone} onChange={(e) => setLeadForm((v) => ({ ...v, phone: e.target.value }))} placeholder="+420 000 000 000" className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/[.05] px-3.5 py-3 text-sm normal-case tracking-normal text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                  </label>
+                  <label className="text-[10px] font-mono uppercase tracking-[.12em] text-white/40">Firma / město / organizace
+                    <input value={leadForm.company} onChange={(e) => setLeadForm((v) => ({ ...v, company: e.target.value }))} placeholder="Volitelné" className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/[.05] px-3.5 py-3 text-sm normal-case tracking-normal text-white placeholder:text-white/25 focus:border-teal-300/50 focus:outline-none"/>
+                  </label>
+                </div>
+
+                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[.035] p-3.5">
+                  <input required type="checkbox" checked={leadForm.gdprAcknowledged} onChange={(e) => setLeadForm((v) => ({ ...v, gdprAcknowledged: e.target.checked }))} className="mt-0.5 h-4 w-4 accent-teal-400"/>
+                  <span className="text-[11px] leading-relaxed text-white/50">Potvrzuji, že jsem se seznámil/a se <Link to="/gdpr" target="_blank" rel="noopener noreferrer" className="text-teal-300 underline decoration-teal-300/35 underline-offset-2">Zásadami ochrany osobních údajů</Link> a beru na vědomí zpracování kontaktních údajů pro tuto vizualizaci a navazující nezávaznou poptávku. *</span>
+                </label>
+
+                {leadError && <p className="mt-3 rounded-xl border border-red-400/20 bg-red-400/10 px-3.5 py-3 text-xs text-red-100">{leadError}</p>}
+
+                <button disabled={leadSubmitting || !leadForm.gdprAcknowledged} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-200 disabled:cursor-not-allowed disabled:opacity-45">{leadSubmitting ? <><Loader size={15} className="animate-spin"/> Ukládám kontakt…</> : <><Check size={15}/> Odeslat a odemknout vizualizaci</>}</button>
+                <p className="mt-3 text-center text-[10px] leading-relaxed text-white/25">Registrace není objednávka ani závazek k nákupu. Marketingový souhlas tímto neudělujete.</p>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

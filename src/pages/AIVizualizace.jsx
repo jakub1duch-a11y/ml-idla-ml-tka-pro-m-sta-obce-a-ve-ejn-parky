@@ -295,6 +295,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
       } catch (watermarkError) {
         console.warn('Watermark post-processing skipped', watermarkError);
       }
+      setQuoteSent(false);
       setResultUrl(finalResultUrl);
     } catch (e) {
       setError(e?.message || 'Vizualizaci se nepodařilo vytvořit. Zkuste to prosím znovu.');
@@ -309,8 +310,54 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
     generate();
   }, [autoGeneratePending, optimizing, loading, file, selectedProductId, customConceptMode]);
 
+  useEffect(() => {
+    if (!resultUrl || isUnlocked) {
+      setLeadGateOpen(false);
+      return undefined;
+    }
+    const timer = window.setTimeout(() => setLeadGateOpen(true), 2000);
+    return () => window.clearTimeout(timer);
+  }, [resultUrl, isUnlocked]);
+
+  useEffect(() => {
+    if (!leadGateOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [leadGateOpen]);
+
+  const downloadVisualization = async () => {
+    if (!resultUrl || !isUnlocked || downloadBusy) {
+      if (!isUnlocked) setLeadGateOpen(true);
+      return;
+    }
+    setDownloadBusy(true);
+    setError('');
+    try {
+      const response = await fetch(resultUrl, { mode: 'cors' });
+      if (!response.ok) throw new Error('download_failed');
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = `MLZIDLA-vizualizace-${selectedProduct?.slug || 'projekt'}.webp`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(objectUrl);
+    } catch (e) {
+      window.open(resultUrl, '_blank', 'noopener,noreferrer');
+    } finally {
+      setDownloadBusy(false);
+    }
+  };
+
   const sendToQuote = async () => {
-    if (quoteUploading) return;
+    if (!isUnlocked) {
+      setLeadGateOpen(true);
+      return;
+    }
+    if (quoteUploading || quoteSent) return;
     setQuoteUploading(true);
     setError('');
     try {
@@ -320,7 +367,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         if (upload?.file_url) uploadedDocs.push(`${item.name}: ${upload.file_url}`);
       }
       const text = [
-        'AI vizualizace projektu MLŽIDLA®',
+        'AI vizualizace projektu MLŽIDLA® — žádost o nezávaznou cenovou nabídku',
         description.trim() ? `Zadání: ${description.trim()}` : '',
         requestedType ? `Typ prostoru: ${requestedType}` : '',
         requestedConcept ? `Výchozí motiv: ${requestedConcept}` : '',
@@ -329,17 +376,28 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         resultUrl ? `AI vizualizace: ${resultUrl}` : '',
         sourceUrl ? `Fotografie prostoru: ${sourceUrl}` : '',
         uploadedDocs.length ? `Podklady k nezávazné nabídce:\n${uploadedDocs.join('\n')}` : '',
+        `Kontakt získán přes AI vizualizér; GDPR informace potvrzena: ${leadProfile?.gdprAcknowledgedAt || 'ano'}`,
       ].filter(Boolean).join('\n\n');
-      const params = new URLSearchParams({
-        produkt: 'AI návrh projektu',
-        zprava: text,
+
+      await base44.entities.Poptavka.create({
         jmeno: leadProfile?.name || '',
         email: leadProfile?.email || '',
         telefon: leadProfile?.phone || '',
+        firma: leadProfile?.company || '',
+        produkt: selectedProduct?.name || requestedConcept || 'AI návrh projektu',
+        zprava: text,
+        status: 'nova',
       });
-      navigate(`/poptavka?${params.toString()}`);
+      if (leadProfile?.leadId) {
+        try {
+          await base44.entities.VisualizerLead.update(leadProfile.leadId, { inquiry_sent: true, last_visualization_url: resultUrl });
+        } catch (leadUpdateError) {
+          console.warn('Visualizer lead status update skipped', leadUpdateError);
+        }
+      }
+      setQuoteSent(true);
     } catch (e) {
-      setError('Podklady se nepodařilo nahrát. Nabídku můžete odeslat i bez nich.');
+      setError('Nezávaznou nabídku se nepodařilo odeslat. Zkuste to prosím znovu.');
     } finally {
       setQuoteUploading(false);
     }

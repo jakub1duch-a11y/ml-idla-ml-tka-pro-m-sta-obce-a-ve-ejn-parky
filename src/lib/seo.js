@@ -3,7 +3,7 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
-import { LOCALE_CONFIG } from './i18n.js';
+import { LOCALE_CONFIG, getLanguageAlternates, getRouteKeyFromPath } from './i18n.js';
 
 const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
 const BASE_URL = 'https://mlzidla.cz';
@@ -117,6 +117,8 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const img = image || DEFAULT_IMAGE;
   const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
+  const routeKey = canonicalPath ? getRouteKeyFromPath(canonicalPath) : null;
+  const resolvedAlternates = alternates.length ? alternates : (routeKey ? getLanguageAlternates(routeKey) : []);
 
   document.documentElement.lang = localeConfig.htmlLang;
   document.title = fullTitle;
@@ -140,7 +142,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setMeta('twitter:image', img);
 
   if (canonicalPath) setCanonical(canonicalPath);
-  setLanguageAlternates(alternates);
+  setLanguageAlternates(resolvedAlternates);
   
   // Kombinace vlastních a automatických JSON-LD strukturovaných dat.
   // Pokud stránka dodá vlastní @graph, zachováme ho a doplníme BreadcrumbList.

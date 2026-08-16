@@ -1,6 +1,7 @@
 import React from 'react';
 import { Hammer, Ruler, Landmark, BadgeCheck, HeartHandshake } from 'lucide-react';
 
+/** @type {Array<[import('lucide-react').LucideIcon, string, string]>} */
 const VALUES = [
   [Hammer,'Česká řemeslná kvalita','Vyrábíme sami, v Česku a z materiálů prověřených průmyslovou praxí.'],
   [Ruler,'Zakázková přesnost','Nasloucháme zadání a navrhujeme řešení přímo pro konkrétní místo.'],

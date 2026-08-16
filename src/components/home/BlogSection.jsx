@@ -41,10 +41,10 @@ function PostCard({ post, i }) {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
       <Link to={`/blog/${post.slug || post.id}`}
-      className="group relative block h-72 rounded-2xl overflow-hidden border border-white/10 shadow-sm hover:shadow-lg transition-all">
+      className="group relative block h-64 overflow-hidden rounded-2xl border border-white/10 shadow-sm transition-all hover:shadow-lg sm:h-72">
         <img src={bg} alt={post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" />
-        <div className="relative h-full flex flex-col justify-end p-6">
+        <div className="relative flex h-full flex-col justify-end p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[10px] font-mono text-white/80 tracking-widest uppercase px-2.5 py-1 backdrop-blur-sm border border-white/20 rounded-full bg-[hsl(var(--card-foreground))]">
               {CATEGORY_LABELS[post.category] || post.category || 'Článek'}
@@ -60,72 +60,6 @@ function PostCard({ post, i }) {
           </div>
         </div>
       </Link>
-    </motion.div>);
-
-}
-
-function LiveDemoCard() {
-  return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-    className="lg:col-span-2">
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-    </motion.div>);
-
-}
-
-function GateOfferCard() {
-  return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
     </motion.div>);
 
 }
@@ -147,27 +81,21 @@ export default function BlogSection() {
   const latestTwo = posts.slice(0, 2);
 
   return (
-    <section className="py-24 bg-slate-950">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="bg-slate-950 py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }} className="mb-8 sm:mb-10 lg:mb-12">
           <p className="font-mono tracking-widest uppercase mb-3 text-sm text-[hsl(var(--card))]">NOVINKY & ZNALOSTI</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-            className="font-heading font-light text-white tracking-tight text-3xl lg:text-3xl">
+            className="font-heading text-[clamp(2rem,8vw,2.4rem)] font-light tracking-[-0.03em] text-white lg:text-3xl">
               Co je nového u nás
             </motion.h2>
-            <Link to="/blog" className="items-center gap-2 font-light hover:text-white hover:gap-3 transition-all text-[hsl(var(--card))] btn-metallic-mist inline-flex px-5 py-2 text-sm">Všechny články
+            <Link to="/blog" className="btn-metallic-mist inline-flex min-h-12 w-full items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium text-[hsl(var(--card))] transition-all hover:gap-3 hover:text-white sm:w-auto">Všechny články
 
             </Link>
           </div>
         </motion.div>
-
-        {/* Bento: live demo + product offer */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
-          <LiveDemoCard />
-          <GateOfferCard />
-        </div>
 
         {/* Blog posts */}
         {loading ?

@@ -56,7 +56,7 @@ export default function Admin() {
 
   if (!user) return null;
 
-  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz'];
+  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com'];
   const emailAllowed = !!user.email && (
     user.email.toLowerCase().endsWith('@mlzidla.cz') ||
     ADMIN_EMAIL_EXCEPTIONS.includes(user.email.toLowerCase())

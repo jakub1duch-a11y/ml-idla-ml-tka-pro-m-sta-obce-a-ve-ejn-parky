@@ -187,6 +187,7 @@ export default function LocalizedLanding({ routeKey = 'home' }) {
   const catalogPath = ROUTE_MAP.catalog[locale];
 
   useEffect(() => {
+    /** @type {any[]} */
     const graph = [
       {
         '@type': 'Organization',

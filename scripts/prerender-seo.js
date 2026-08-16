@@ -23,7 +23,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEO_PAGES } from '../src/lib/seo.js';
 import { LOCALIZED_SEO_PAGES } from '../src/lib/localized-content.js';
-import { LOCALE_CONFIG } from '../src/lib/i18n.js';
+import { LOCALE_CONFIG, getLanguageAlternates, getRouteKeyFromPath } from '../src/lib/i18n.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, '..', 'dist');
@@ -61,7 +61,8 @@ function renderPage(page) {
   html = html.replace(/<meta name="twitter:description" content=".*?" \/>/s, `<meta name="twitter:description" content="${escapeAttr(page.description)}" />`);
   html = html.replace(/<meta name="twitter:image" content=".*?" \/>/s, `<meta name="twitter:image" content="${img}" />`);
 
-  const alternates = page.alternates || [];
+  const routeKey = getRouteKeyFromPath(page.canonicalPath);
+  const alternates = page.alternates || (routeKey ? getLanguageAlternates(routeKey) : []);
   const alternateTags = alternates.map(({ hreflang, path }) => `    <link rel="alternate" hreflang="${escapeAttr(hreflang)}" href="${BASE_URL}${escapeAttr(path)}" />`).join('\n');
   if (alternateTags) html = html.replace('</head>', `${alternateTags}\n  </head>`);
 

@@ -43,8 +43,8 @@ export default function AdminProducts() {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file }).catch(() => ({}));
-    if (file_url) setForm((f) => ({ ...f, image_url: file_url }));
+    const upload = await base44.integrations.Core.UploadFile({ file }).catch(() => null);
+    if (upload?.file_url) setForm((f) => ({ ...f, image_url: upload.file_url }));
     setUploading(false);
   };
 

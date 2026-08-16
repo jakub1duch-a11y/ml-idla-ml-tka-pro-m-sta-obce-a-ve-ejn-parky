@@ -14,41 +14,78 @@ import {
   Leaf,
   Heart,
   Shapes,
+  Landmark,
+  HeartPulse,
+  Droplet,
+  Cloud,
+  Sun,
+  Flower2,
+  Waves,
+  Sparkles,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const examples = [
   { icon: Building2, label: 'Náměstí', text: 'Náměstí 20 × 30 m, vysoká návštěvnost, chceme atraktivní mlžiště pro děti i dospělé.' },
   { icon: Trees, label: 'Park', text: 'Městský park, klidová zóna podél pěší trasy, trvalá nízkotlaká instalace bez vysokotlakého čerpadla.' },
+  { icon: Landmark, label: 'Promenáda', text: 'Pěší promenáda nebo nábřeží, průchozí ochlazovací zóna s více prvky v pravidelném rytmu.' },
   { icon: School, label: 'Škola / školka', text: 'Areál mateřské školy, bezpečné ochlazení dětí v letních měsících, plocha přibližně 120 m².' },
+  { icon: HeartPulse, label: 'Domov seniorů', text: 'Pobytová zahrada nebo terasa zařízení pro seniory, klidné ochlazení u sezení a pěších tras.' },
   { icon: Dumbbell, label: 'Sportoviště', text: 'Venkovní sportoviště s vysokou návštěvností, potřebujeme odolné mlžení pro větší počet lidí.' },
   { icon: House, label: 'Rezidence', text: 'Rezidenční zahrada nebo společná odpočinková zóna, elegantní mlžení s důrazem na čistou architekturu.' },
 ];
 
 const outputs = [
   { icon: Ruler, title: 'Návrh rozsahu', text: 'Doporučená velikost a počet prvků podle prostoru.' },
-  { icon: Droplets, title: 'Vhodná kolekce', text: 'Výběr řešení podle provozu, využití a charakteru místa.' },
-  { icon: FileCheck2, title: 'Podklad pro nabídku', text: 'Strukturované zadání pro další technické ověření a nacenění.' },
+  { icon: Droplets, title: 'Tvar nebo produkt', text: 'Výchozí směr od vlastního symbolu po existující kolekci.' },
+  { icon: FileCheck2, title: 'Podklad pro nabídku', text: 'Strukturované zadání pro technické ověření a nacenění.' },
 ];
 
-const conceptOptions = [
-  { key: 'strom', label: 'Strom', icon: TreePine, kind: 'shape' },
-  { key: 'list', label: 'List', icon: Leaf, kind: 'shape' },
-  { key: 'srdce', label: 'Srdce', icon: Heart, kind: 'shape' },
-  { key: 'vlastni', label: 'Vlastní tvar', icon: Shapes, kind: 'custom' },
+const shapeOptions = [
+  { key: 'strom', label: 'Strom', icon: TreePine },
+  { key: 'list', label: 'List', icon: Leaf },
+  { key: 'srdce', label: 'Srdce', icon: Heart },
+  { key: 'kapka', label: 'Kapka', icon: Droplet },
+  { key: 'mrak', label: 'Mrak', icon: Cloud },
+  { key: 'slunce', label: 'Slunce', icon: Sun },
+  { key: 'kvet', label: 'Květ', icon: Flower2 },
+  { key: 'vlna', label: 'Vlna', icon: Waves },
+];
+
+const productOptions = [
   {
-    key: 'y-armist',
+    key: 'product-bendy',
+    label: 'BENDY®',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+  },
+  {
+    key: 'product-aura',
+    label: 'AURA®',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.jpg',
+  },
+  {
+    key: 'product-gate',
+    label: 'GATE',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f47023cbe_MlnbrnaGATE70V.png',
+  },
+  {
+    key: 'product-y-armist',
     label: 'Y-ARMIST',
-    kind: 'product',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/080a7e429_MlzitkoY-ARMISTTR60_2.png',
   },
   {
-    key: 'gate',
-    label: 'GATE',
-    kind: 'product',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f47023cbe_MlnbrnaGATE70V.png',
+    key: 'product-ostrev',
+    label: 'OSTREV',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+  },
+  {
+    key: 'product-linea',
+    label: 'LINEA',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.jpg',
   },
 ];
+
+const POLNA_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png';
 
 export default function AIProjectDesignerSection() {
   const navigate = useNavigate();
@@ -72,25 +109,31 @@ export default function AIProjectDesignerSection() {
     sessionStorage.setItem('mlzidla-project-concept', key);
   };
 
-  const updateCustomShape = (value) => {
-    const limited = value.trimStart().split(/\s+/).slice(0, 2).join(' ');
+  const updateCustomShape = (nextValue) => {
+    const limited = nextValue.trimStart().split(/\s+/).slice(0, 2).join(' ');
     setCustomShape(limited);
+    setSelectedConcept('custom');
     sessionStorage.setItem('mlzidla-project-custom-shape', limited);
-  }; 
+    sessionStorage.setItem('mlzidla-project-concept', 'custom');
+  };
 
   const conceptLabel = () => {
-    if (selectedConcept === 'vlastni' && customShape.trim()) return `Vlastní tvar: ${customShape.trim()}`;
-    return conceptOptions.find((item) => item.key === selectedConcept)?.label || '';
-  }; 
+    if (selectedConcept === 'custom') return customShape.trim() ? `Vlastní motiv: ${customShape.trim()}` : 'Vlastní motiv';
+    const shape = shapeOptions.find((item) => item.key === selectedConcept);
+    if (shape) return `Symbol: ${shape.label}`;
+    const product = productOptions.find((item) => item.key === selectedConcept);
+    if (product) return `Produkt: ${product.label}`;
+    return '';
+  };
 
   const start = () => {
     const zadani = value.trim();
-    if (!zadani && !selectedType) return;
+    if (!zadani && !selectedType && !selectedConcept) return;
     const params = new URLSearchParams();
     if (zadani) params.set('zadani', zadani);
     if (selectedType) params.set('typ', selectedType);
     if (conceptLabel()) params.set('tvar', conceptLabel());
-    params.set('profil', 'max Ø cca 70 mm');
+    params.set('profil', 'nerezový profil / trubka do cca Ø 70 mm; tvar musí být reálně vyrobitelný ohýbáním');
     navigate(`/poradce?${params.toString()}`);
   };
 
@@ -99,7 +142,7 @@ export default function AIProjectDesignerSection() {
     if (value.trim()) params.set('zadani', value.trim());
     if (selectedType) params.set('typ', selectedType);
     if (conceptLabel()) params.set('tvar', conceptLabel());
-    params.set('profil', 'max Ø cca 70 mm');
+    params.set('profil', 'nerezový profil / trubka do cca Ø 70 mm; realistická tloušťka ve vizualizaci');
     navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`);
   };
 
@@ -114,12 +157,12 @@ export default function AIProjectDesignerSection() {
             </div>
 
             <h2 className="max-w-2xl font-heading text-4xl font-medium leading-[1.02] tracking-[-.03em] text-slate-950 sm:text-5xl lg:text-6xl">
-              Navrhněte základ projektu.
-              <span className="mt-1 block text-slate-500">Technické řešení ověří náš tým.</span>
+              Od místa nebo symbolu
+              <span className="mt-1 block text-slate-500">k reálně vyrobitelnému mlžítku.</span>
             </h2>
 
             <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 lg:text-lg lg:leading-8">
-              Zadejte typ prostoru, přibližnou velikost a způsob využití. Projektant připraví orientační sestavu, vhodnou kolekci a podklad pro další konzultaci.
+              Vyberte prostor, jednoduchý motiv nebo některý z našich produktů. Můžete také zadat vlastní symbol — například znak obce, rostlinu nebo lokální motiv. Návrh následně technicky ověříme pro skutečnou výrobu.
             </p>
 
             <div className="mt-9 grid gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
@@ -132,10 +175,23 @@ export default function AIProjectDesignerSection() {
               ))}
             </div>
 
-            <div className="mt-8 flex items-start gap-3 border-l-2 border-slate-900 pl-4">
+            <div className="mt-8 overflow-hidden border border-slate-200 bg-white">
+              <div className="grid sm:grid-cols-[150px_1fr]">
+                <div className="relative min-h-[130px] bg-slate-100">
+                  <img src={POLNA_IMAGE} alt="Zakázkové mlžítko MRKEV pro město Polná" className="absolute inset-0 h-full w-full object-cover" />
+                </div>
+                <div className="p-5">
+                  <p className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-500">Příklad zakázkového motivu</p>
+                  <h3 className="mt-2 text-base font-semibold text-slate-950">MRKEV · město Polná</h3>
+                  <p className="mt-2 text-xs leading-5 text-slate-500">Lokální symbol jsme převedli do nerezového mlžítka. Stejný princip může začít stromem, listem, srdcem nebo vaším vlastním motivem.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex items-start gap-3 border-l-2 border-slate-900 pl-4">
               <ShieldCheck size={17} className="mt-0.5 shrink-0 text-slate-700" />
               <p className="max-w-lg text-xs leading-5 text-slate-500">
-                Výstup je orientační návrh. Finální počet prvků, tlak, průtok, kotvení a napojení vždy kontrolujeme podle skutečných podmínek projektu.
+                Motiv není libovolná tenká grafická ikona. Převádíme jej do jednoduché výrobní linie z nerezu s realistickým profilem do cca Ø 70 mm; rádiusy, napojení, stabilitu, trysky a kotvení potvrzuje technický návrh HolmTec.
               </p>
             </div>
           </div>
@@ -145,9 +201,9 @@ export default function AIProjectDesignerSection() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">Návrh projektu</p>
-                  <h3 className="mt-1 font-heading text-2xl font-medium tracking-tight text-slate-950 sm:text-3xl">Základní zadání</h3>
+                  <h3 className="mt-1 font-heading text-2xl font-medium tracking-tight text-slate-950 sm:text-3xl">Vyberte směr návrhu</h3>
                 </div>
-                <p className="text-xs text-slate-400">Stačí přibližné údaje.</p>
+                <p className="text-xs text-slate-400">Stačí přibližné zadání.</p>
               </div>
             </div>
 
@@ -155,9 +211,9 @@ export default function AIProjectDesignerSection() {
               <fieldset>
                 <legend className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">01</span>
-                  Typ prostoru
+                  Kde bude mlžítko
                 </legend>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4">
                   {examples.map(({ icon: Icon, label }) => {
                     const active = selectedType === label;
                     return (
@@ -166,7 +222,7 @@ export default function AIProjectDesignerSection() {
                         type="button"
                         onClick={() => selectType(label)}
                         aria-pressed={active}
-                        className={`min-h-[88px] border px-3 py-3 text-left transition-colors ${
+                        className={`min-h-[86px] border px-3 py-3 text-left transition-colors ${
                           active
                             ? 'border-slate-950 bg-slate-950 text-white'
                             : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
@@ -180,58 +236,93 @@ export default function AIProjectDesignerSection() {
                 </div>
               </fieldset>
 
-              <fieldset className="mt-7">
-                <legend className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
+              <fieldset className="mt-8">
+                <legend className="mb-2 flex items-center gap-3 text-xs font-semibold text-slate-700">
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">02</span>
-                  Tvar nebo produkt
+                  Jak má návrh začít
                 </legend>
-                <p className="mb-4 max-w-2xl text-xs leading-5 text-slate-500">Vyberte jednoduchý motiv vhodný k výrobě z ohýbaného nerezového profilu, nebo vyjděte z existujícího produktu. Pro návrhy držíme vizuálně reálný profil maximálně přibližně Ø 70 mm.</p>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {conceptOptions.map((item) => {
-                    const active = selectedConcept === item.key;
-                    const Icon = item.icon;
-                    return (
-                      <button
-                        key={item.key}
-                        type="button"
-                        onClick={() => selectConcept(item.key)}
-                        aria-pressed={active}
-                        className={`group min-h-[112px] overflow-hidden border text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400'}`}
-                      >
-                        {item.kind === 'product' ? (
-                          <div className="relative h-[78px] overflow-hidden bg-slate-100">
-                            <img src={item.image} alt={item.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-                            <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 font-mono text-[8px] uppercase tracking-[.12em] text-slate-700 backdrop-blur">Produkt</span>
-                          </div>
-                        ) : (
-                          <div className={`flex h-[78px] items-center justify-center ${active ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-600'}`}>
-                            {Icon && <Icon size={30} strokeWidth={1.5} />}
-                          </div>
-                        )}
-                        <div className={`px-3 py-2 text-xs font-semibold ${active ? 'bg-slate-950 text-white' : 'bg-white text-slate-700'}`}>{item.label}</div>
-                      </button>
-                    );
-                  })}
-                </div>
-                {selectedConcept === 'vlastni' && (
-                  <div className="mt-3 border border-slate-200 bg-slate-50 p-4">
-                    <label htmlFor="custom-shape" className="text-xs font-semibold text-slate-700">Vlastní tvar · maximálně 1–2 slova</label>
-                    <input
-                      id="custom-shape"
-                      value={customShape}
-                      onChange={(e) => updateCustomShape(e.target.value)}
-                      placeholder="např. Kapka, Dubový list"
-                      className="mt-2 w-full border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
-                    />
-                    <p className="mt-2 text-[11px] leading-5 text-slate-500">Návrh se má převést do jednoduché výrobně uvěřitelné linie z nerezu, ne do tenké grafické ikony nebo nereálné sochy.</p>
+                <p className="mb-5 max-w-2xl text-xs leading-5 text-slate-500">Máte tři možnosti: zvolit jednoduchý symbol, vyjít z našeho hotového produktu, nebo napsat vlastní motiv.</p>
+
+                <div className="border border-slate-200 bg-slate-50/60 p-4 sm:p-5">
+                  <div className="mb-3 flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">A · Přednastavené symboly</p>
+                      <p className="mt-1 text-[11px] leading-4 text-slate-500">Jednoduché tvary vhodné pro převod do ohýbané nerezové linie.</p>
+                    </div>
+                    <Sparkles size={17} className="shrink-0 text-slate-400" />
                   </div>
-                )}
+                  <div className="grid grid-cols-4 gap-2">
+                    {shapeOptions.map(({ key, label, icon: Icon }) => {
+                      const active = selectedConcept === key;
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => selectConcept(key)}
+                          aria-pressed={active}
+                          className={`flex min-h-[82px] flex-col items-center justify-center border px-2 py-3 text-center transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}`}
+                        >
+                          <Icon size={25} strokeWidth={1.45} />
+                          <span className="mt-2 text-[11px] font-semibold">{label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-4 border border-slate-200 bg-slate-50/60 p-4 sm:p-5">
+                  <div className="mb-3">
+                    <p className="text-sm font-semibold text-slate-900">B · Naše produkty</p>
+                    <p className="mt-1 text-[11px] leading-4 text-slate-500">Vyberte známou geometrii a projektant ji přizpůsobí měřítku a využití prostoru.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {productOptions.map((item) => {
+                      const active = selectedConcept === item.key;
+                      return (
+                        <button
+                          key={item.key}
+                          type="button"
+                          onClick={() => selectConcept(item.key)}
+                          aria-pressed={active}
+                          className={`group overflow-hidden border bg-white text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400'}`}
+                        >
+                          <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                            <img src={item.image} alt={item.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+                            <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 font-mono text-[8px] uppercase tracking-[.12em] text-slate-700 backdrop-blur">MLŽIDLA®</span>
+                          </div>
+                          <div className={`px-3 py-2.5 text-xs font-semibold ${active ? 'bg-slate-950 text-white' : 'text-slate-800'}`}>{item.label}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className={`mt-4 border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
+                  <div className="flex items-start gap-3">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center ${selectedConcept === 'custom' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                      <Shapes size={18} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <label htmlFor="custom-shape" className="text-sm font-semibold text-slate-900">C · Vlastní symbol nebo tvar</label>
+                      <p className="mt-1 text-[11px] leading-4 text-slate-500">Napište maximálně 1–2 slova. Např. Mrkev, Dubový list, Hvězda, Ryba.</p>
+                      <input
+                        id="custom-shape"
+                        value={customShape}
+                        onFocus={() => selectConcept('custom')}
+                        onChange={(e) => updateCustomShape(e.target.value)}
+                        placeholder="Zadejte motiv…"
+                        className="mt-3 w-full border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
+                      />
+                      <p className="mt-2 text-[11px] leading-5 text-slate-500">Projektant motiv zjednoduší tak, aby na vizualizaci i ve výrobě působil jako skutečný nerezový prvek, ne jako tenká grafická kresba.</p>
+                    </div>
+                  </div>
+                </div>
               </fieldset>
 
-              <div className="mt-7">
+              <div className="mt-8">
                 <label htmlFor="project-description" className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">03</span>
-                  Popis projektu
+                  Doplňte projekt
                 </label>
                 <textarea
                   id="project-description"
@@ -240,14 +331,14 @@ export default function AIProjectDesignerSection() {
                   onKeyDown={(e) => {
                     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') start();
                   }}
-                  rows={6}
-                  placeholder="Např. městský park, pěší promenáda cca 35 m, vysoká návštěvnost v létě, potřebujeme ochladit odpočinkovou zónu bez vysokotlakého čerpadla."
+                  rows={5}
+                  placeholder="Např. promenáda u náměstí, délka cca 35 m, horké odpoledne, hodně pěších, chceme vytvořit dvě klidové ochlazovací zóny u laviček."
                   className="w-full resize-none border border-slate-300 bg-white px-4 py-4 text-[15px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
                 />
                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-400">
                   <span>Rozměr prostoru</span>
                   <span>Počet návštěvníků</span>
-                  <span>Typ provozu</span>
+                  <span>Sezení / pěší trasa</span>
                   <span>Požadovaný efekt</span>
                 </div>
               </div>
@@ -266,13 +357,13 @@ export default function AIProjectDesignerSection() {
                   onClick={visualize}
                   className="inline-flex min-h-[52px] items-center justify-center border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50"
                 >
-                  Vizualizace z fotografie
+                  Vyzkoušet ve fotografii
                 </button>
               </div>
 
               <div className="mt-6 grid gap-2 border-t border-slate-200 pt-5 text-[11px] text-slate-500 sm:grid-cols-3">
-                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Doporučení kolekce</span>
-                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Orientační sestava</span>
+                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Motiv nebo produkt</span>
+                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Reálné výrobní proporce</span>
                 <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Kontrola týmem HolmTec</span>
               </div>
             </div>

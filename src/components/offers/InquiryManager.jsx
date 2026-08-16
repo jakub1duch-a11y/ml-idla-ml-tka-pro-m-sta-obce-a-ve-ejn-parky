@@ -271,7 +271,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
         <aside>
           <p className="font-mono text-[10px] tracking-[.16em] uppercase text-secondary">Poptávky</p>
           <h2 className="mt-2 font-heading text-3xl text-foreground">Tvorba nabídky</h2>
-          <div className="mt-5 space-y-2">{inquiries.map((item) => <button key={item.key} onClick={() => { setSelectedId(item.key); setError(''); setPrepared(null); setApprovedToSend(false); }} className={`w-full border p-4 text-left ${item.key === selectedId ? 'border-secondary bg-secondary/10' : 'border-border'}`}><strong className="block text-sm text-foreground">{item.name}</strong><span className="mt-1 block text-xs text-muted-foreground">{item.email}</span></button>)}</div>
+          <div className="mt-5 space-y-2">{inquiries.map((item) => <button key={item.key} onClick={() => { setSelectedId(item.key); setError(''); setPrepared(null); setApprovedToSend(false); setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); setSubject(''); setMessage(''); }} className={`w-full border p-4 text-left ${item.key === selectedId ? 'border-secondary bg-secondary/10' : 'border-border'}`}><strong className="block text-sm text-foreground">{item.name}</strong><span className="mt-1 block text-xs text-muted-foreground">{item.email}</span></button>)}</div>
         </aside>
 
         <div className="border border-border p-5 lg:p-7">
@@ -288,6 +288,16 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
           </div>
           <p className="mt-3 text-sm font-bold text-secondary">Cena projektu po slevě: {money(finalTotal)} Kč bez DPH</p>
           <p className="mt-1 text-[11px] text-muted-foreground">Skrytá kopie bude vždy odeslána na: {BCC.join(', ')}</p>
+
+          <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-secondary">Follow-up klienta</p><h3 className="mt-1 font-heading text-xl text-foreground">Předdefinované profesionální šablony</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">Připomenutí poptávky, připomenutí poslední odeslané cenové nabídky nebo návrh jednorázového akčního zvýhodnění. Text můžete před odesláním vždy upravit.</p></div>
+              <label className="w-full text-xs text-muted-foreground lg:w-40">Akční sleva %<input type="number" min="1" max="99" value={followUpDiscount} onChange={(e) => setFollowUpDiscount(e.target.value)} className="mt-1 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground"/></label>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">{FOLLOW_UP_TEMPLATES.map((template) => <button key={template.value} type="button" onClick={() => applyFollowUpTemplate(template.value)} disabled={busy === 'followup-template'} className={`rounded-full border px-4 py-2.5 text-xs font-semibold transition ${followUpType === template.value ? 'border-secondary bg-secondary text-secondary-foreground' : 'border-border bg-white text-foreground hover:border-secondary/50'}`}>{busy === 'followup-template' ? 'Načítám…' : template.label}</button>)}</div>
+            {latestOffer && <div className="mt-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-600"><strong className="text-slate-900">Poslední nabídka:</strong> {latestOffer.quote_number || 'bez čísla'} · {latestOffer.product_name || selected.product || 'projekt'}{latestOffer.total_price ? ` · ${money(latestOffer.total_price)} Kč bez DPH` : ''}{latestOffer.valid_until ? ` · původní platnost do ${new Date(latestOffer.valid_until).toLocaleDateString('cs-CZ')}` : ''}</div>}
+            {followUpType === 'action_discount' && latestOffer?.total_price > 0 && <div className="mt-3 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs leading-relaxed text-slate-700">Akční návrh: <strong>{money(latestOffer.total_price)} Kč</strong> → <strong className="text-cyan-800">{money(Math.round(Number(latestOffer.total_price) * (1 - Number(followUpDiscount || 0) / 100)))} Kč bez DPH</strong>. Platnost zvýhodnění bude 30 dní od odeslání. Původní PDF se nemění; po potvrzení zájmu se vystaví aktualizovaná formální nabídka.</div>}
+          </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
             <button onClick={generateText} disabled={busy === 'text'} className="inline-flex items-center gap-2 border border-secondary px-4 py-2.5 text-sm font-bold text-secondary"><Sparkles size={15}/>{busy === 'text' ? 'Připravuji…' : 'Navrhnout text'}</button>

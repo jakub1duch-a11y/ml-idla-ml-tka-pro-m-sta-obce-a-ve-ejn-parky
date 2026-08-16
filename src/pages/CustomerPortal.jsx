@@ -33,10 +33,19 @@ export default function CustomerPortal() {
   const [intentBusy, setIntentBusy] = useState(null);
   const [intentForms, setIntentForms] = useState({});
   const [intentSaved, setIntentSaved] = useState({});
+  const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
+  const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
 
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
   }, []);
+
+  useEffect(() => {
+    if (step !== 'dashboard' || !requestedQuote) return;
+    const target = projects.find((project) => project.quote_number === requestedQuote);
+    if (!target) return;
+    window.setTimeout(() => document.getElementById(`offer-${target.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
+  }, [step, projects, requestedQuote]);
 
   const requestOtp = async (e) => {
     e.preventDefault();
@@ -60,7 +69,8 @@ export default function CustomerPortal() {
       const res = await base44.functions.invoke('verifyPortalOtp', { email, otp });
       const { inquiries, projects, session_token } = res.data;
       setInquiries(inquiries || []);
-      setProjects(projects || []);
+      const projectList = projects || [];
+      setProjects(requestedQuote ? [...projectList].sort((a, b) => (b.quote_number === requestedQuote ? 1 : 0) - (a.quote_number === requestedQuote ? 1 : 0)) : projectList);
       setSessionToken(session_token);
       setStep('dashboard');
     } catch (e) {
@@ -219,9 +229,11 @@ export default function CustomerPortal() {
           {projects.map(project => {
             const statusInfo = STATUS_MAP[project.status] || STATUS_MAP.draft;
             const isApproved = ['approved', 'in_production', 'ready', 'delivered'].includes(project.status);
+            const isRequested = Boolean(requestedQuote && project.quote_number === requestedQuote);
 
             return (
-              <div key={project.id} className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden hover:border-slate-300 transition-all">
+              <div id={`offer-${project.id}`} key={project.id} className={`bg-slate-50 border rounded-2xl overflow-hidden transition-all ${isRequested ? 'border-cyan-400 ring-4 ring-cyan-100' : 'border-slate-200 hover:border-slate-300'}`}>
+                {isRequested && <div className="border-b border-cyan-200 bg-cyan-50 px-6 py-3 text-xs font-semibold text-cyan-900">{requestedAction === 'order' ? 'Otevřeli jste nabídku k elektronickému objednání. Zkontrolujte nabídku a níže potvrďte souhlas s podmínkami.' : requestedAction === 'extend' ? 'Otevřeli jste žádost o prodloužení platnosti této nabídky.' : requestedAction === 'timing' ? 'Otevřeli jste formulář pro doplnění plánovaného termínu.' : 'Otevřená nabídka z e-mailu.'}</div>}
                 {/* Header */}
                 <div className="p-6 border-b border-slate-200">
                   <div className="flex items-start justify-between gap-4 mb-3">

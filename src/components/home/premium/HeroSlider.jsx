@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SLIDES = [
@@ -26,6 +26,7 @@ const BENEFITS = [
 
 export default function HeroSlider() {
   const [index, setIndex] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   const next = useCallback(() => setIndex((i) => (i + 1) % SLIDES.length), []);
   const prev = () => setIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length);
@@ -40,15 +41,15 @@ export default function HeroSlider() {
   return (
     <section className="relative overflow-hidden bg-primary lg:h-screen lg:min-h-[640px] lg:bg-background">
       {/* Image + overlay block. Fixed height on mobile so the photo stays visible; full-bleed with text overlay on desktop. */}
-      <div className="relative -mb-px h-[58vh] min-h-[380px] max-h-[450px] bg-primary lg:absolute lg:inset-0 lg:mb-0 lg:h-full lg:max-h-none">
+      <div className="relative -mb-px h-[clamp(360px,56svh,500px)] bg-primary lg:absolute lg:inset-0 lg:mb-0 lg:h-full lg:max-h-none">
         <AnimatePresence mode="wait">
           <motion.img
             key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp"
             alt={slide.imageAlt}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: [1.03, 1.08, 1.03], x: [0, -10, 0] }}
+            initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.025 }}
+            animate={reduceMotion ? { opacity: 1, scale: 1, x: 0 } : { opacity: 1, scale: [1.02, 1.055, 1.02], x: [0, -6, 0] }}
             exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1 }, scale: { duration: 18, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 22, repeat: Infinity, ease: 'easeInOut' } }}
+            transition={reduceMotion ? { opacity: { duration: 0.2 } } : { opacity: { duration: 0.55 }, scale: { duration: 16, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 20, repeat: Infinity, ease: 'easeInOut' } }}
             className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center]" />
         </AnimatePresence>
 
@@ -73,9 +74,9 @@ export default function HeroSlider() {
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
 
         {/* Mobile: short tag + title directly on the image */}
-        <div className="absolute inset-x-0 bottom-0 lg:hidden px-5 py-5">
-          <p className="mb-2 font-mono font-semibold uppercase tracking-[0.18em] text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)] text-xs">{slide.tag}</p>
-          <h1 className="font-heading font-semibold leading-[1.1] tracking-tight text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.45)] text-4xl">
+        <div className="absolute inset-x-0 bottom-0 px-4 py-4 sm:px-5 sm:py-5 lg:hidden">
+          <p className="mb-2 max-w-[36rem] font-mono text-[10px] font-semibold uppercase leading-[1.45] tracking-[0.13em] text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)] sm:text-xs sm:tracking-[0.18em]">{slide.tag}</p>
+          <h1 className="max-w-[16ch] font-heading text-[clamp(2rem,9vw,2.75rem)] font-semibold leading-[1.06] tracking-[-0.035em] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]">
             {slide.titleMobile || slide.title}
           </h1>
         </div>
@@ -136,7 +137,7 @@ export default function HeroSlider() {
       </div>
 
       {/* Mobile: description, CTAs and benefits live below the image on a solid background — fully readable, image stays uncluttered */}
-      <div className="relative z-10 -mt-px bg-primary px-5 pb-10 pt-6 lg:hidden">
+      <div className="relative z-10 -mt-px bg-primary px-4 pb-9 pt-5 sm:px-5 sm:pb-10 sm:pt-6 lg:hidden">
         <p className="mb-6 font-medium leading-relaxed text-white/90 text-sm">{slide.desc}</p>
 
         <div className="mb-6 grid grid-cols-1 gap-3">
@@ -148,11 +149,11 @@ export default function HeroSlider() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2.5">
           {BENEFITS.map((b) =>
-          <div key={b.label} className="flex min-h-14 items-center gap-2">
-              <b.icon size={20} className="text-white/90 shrink-0" />
-              <span className="text-white/85 font-medium leading-tight text-xs">{b.label}</span>
+          <div key={b.label} className="flex min-h-14 items-center gap-2 rounded-xl border border-white/10 bg-white/[.045] px-3 py-2.5">
+              <b.icon size={18} className="shrink-0 text-white/90" />
+              <span className="text-[11px] font-medium leading-[1.25] text-white/85 sm:text-xs">{b.label}</span>
             </div>
           )}
         </div>

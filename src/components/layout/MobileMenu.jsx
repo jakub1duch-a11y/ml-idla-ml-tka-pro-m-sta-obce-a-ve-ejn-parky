@@ -172,6 +172,10 @@ export default function MobileMenu({ open, onClose, productLinks, usageLinks, in
                 ].map((l) => <Link key={l.path} to={l.path} onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50">{l.label}</Link>)}
               </div>
             </div>
+
+            <div className="mt-5">
+              <LanguageSwitcher mobile onNavigate={onClose} />
+            </div>
           </div>
 
           <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">

@@ -58,6 +58,17 @@ async function appendRow(accessToken, sheetName, width, row) {
   if (!res.ok) throw new Error(`Append ${sheetName} failed: ${await res.text()}`);
 }
 
+async function inquiryAlreadySynced(accessToken, entityId) {
+  if (!entityId) return false;
+  const range = `${INQUIRIES_SHEET}!J2:J`;
+  const readRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!readRes.ok) throw new Error(`Read inquiry ids failed: ${await readRes.text()}`);
+  const data = await readRes.json();
+  return (data.values || []).some((row) => String(row?.[0] || '') === String(entityId));
+}
+
 async function upsertClient(accessToken, client) {
   const range = `${CLIENTS_SHEET}!A2:J`;
   const readRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}`, {
@@ -145,13 +156,17 @@ export default async function(req) {
     await ensureHeaders(accessToken, INQUIRIES_SHEET, INQUIRY_HEADERS);
     await ensureHeaders(accessToken, CLIENTS_SHEET, CLIENT_HEADERS);
 
+    if (await inquiryAlreadySynced(accessToken, client.entityId)) {
+      return Response.json({ ok: true, inquiry_id: client.entityId, duplicate_skipped: true });
+    }
+
     await appendRow(accessToken, INQUIRIES_SHEET, INQUIRY_HEADERS.length, [
       client.timestamp, client.zdroj, client.jmeno, client.email, client.telefon,
       client.firma, client.produkt, client.zprava, client.stav, client.entityId
     ]);
     const clientResult = await upsertClient(accessToken, client);
 
-    return Response.json({ ok: true, inquiry_id: client.entityId, client: clientResult });
+    return Response.json({ ok: true, inquiry_id: client.entityId, client: clientResult, duplicate_skipped: false });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

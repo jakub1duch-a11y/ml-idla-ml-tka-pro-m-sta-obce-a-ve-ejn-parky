@@ -3,12 +3,66 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, X, Layers, Compass, Info, Grid2X2, CalendarDays } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import { ROUTE_MAP } from '@/lib/i18n';
 
-export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks, customLink }) {
+const INTERNATIONAL_MOBILE_COPY = {
+  en: { products: 'Products', city: 'Urban misting', garden: 'Garden misting', custom: 'Custom solutions', technology: 'How it works', smart: 'Smart control', references: 'Projects', about: 'About HolmTec', faq: 'FAQ', contact: 'Contact', quote: 'Request a quote' },
+  de: { products: 'Produkte', city: 'Städtische Nebelanlagen', garden: 'Garten-Nebelanlagen', custom: 'Sonderanfertigung', technology: 'Funktionsweise', smart: 'Smart-Steuerung', references: 'Referenzen', about: 'Über HolmTec', faq: 'FAQ', contact: 'Kontakt', quote: 'Angebot anfragen' },
+  pl: { products: 'Produkty', city: 'Systemy dla miast', garden: 'Systemy do ogrodu', custom: 'Na zamówienie', technology: 'Jak to działa', smart: 'Smart sterowanie', references: 'Realizacje', about: 'O HolmTec', faq: 'FAQ', contact: 'Kontakt', quote: 'Poproś o wycenę' },
+  sk: { products: 'Produkty', city: 'Systémy pre mestá', garden: 'Systémy do záhrady', custom: 'Na mieru', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', about: 'O HolmTec', faq: 'FAQ', contact: 'Kontakt', quote: 'Požiadať o ponuku' },
+  it: { products: 'Prodotti', city: 'Nebulizzazione urbana', garden: 'Nebulizzazione giardino', custom: 'Soluzioni su misura', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', about: 'Chi siamo', faq: 'FAQ', contact: 'Contatti', quote: 'Richiedi preventivo' },
+};
+
+export default function MobileMenu({ open, onClose, productLinks, usageLinks, infoLinks, customLink, locale = 'cs' }) {
   const [section, setSection] = useState('katalog');
   const featured = productLinks.find((item) => item.featured);
   const rental = productLinks.find((item) => item.textOnly);
   const collections = productLinks.filter((item) => !item.featured && !item.textOnly);
+
+  if (locale !== 'cs') {
+    const copy = INTERNATIONAL_MOBILE_COPY[locale];
+    const links = [
+      [copy.products, ROUTE_MAP.catalog[locale]],
+      [copy.city, ROUTE_MAP.city[locale]],
+      [copy.garden, ROUTE_MAP.garden[locale]],
+      [copy.custom, ROUTE_MAP.custom[locale]],
+      [copy.technology, ROUTE_MAP.technology[locale]],
+      [copy.smart, ROUTE_MAP.smart[locale]],
+      [copy.references, ROUTE_MAP.references[locale]],
+      [copy.about, ROUTE_MAP.about[locale]],
+      [copy.faq, ROUTE_MAP.faq[locale]],
+      [copy.contact, ROUTE_MAP.contact[locale]],
+    ];
+
+    return (
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} className="fixed inset-0 z-40 flex h-[100dvh] flex-col bg-white lg:hidden">
+            <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro px-5">
+              <Link to={ROUTE_MAP.home[locale]} onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
+              <button onClick={onClose} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"><X size={20}/></button>
+            </div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
+              <LanguageSwitcher mobile onNavigate={onClose} />
+              <div className="mt-5 grid grid-cols-2 gap-2">
+                {links.map(([label, path], index) => (
+                  <motion.div key={path} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .03 + index * .025, duration: .2 }}>
+                    <Link to={path} onClick={onClose} className="flex min-h-16 items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold leading-tight text-slate-800 transition hover:border-secondary/40 hover:bg-slate-50">
+                      <span>{label}</span><ArrowRight size={14} className="shrink-0 text-slate-300"/>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <Link to={ROUTE_MAP.inquiry[locale]} onClick={onClose} className="btn-metallic-mist flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-bold">{copy.quote}<ArrowRight size={16}/></Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  }
 
   return (
     <AnimatePresence>

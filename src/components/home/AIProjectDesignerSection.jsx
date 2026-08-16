@@ -10,6 +10,10 @@ import {
   Ruler,
   Droplets,
   FileCheck2,
+  TreePine,
+  Leaf,
+  Heart,
+  Shapes,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,10 +31,31 @@ const outputs = [
   { icon: FileCheck2, title: 'Podklad pro nabídku', text: 'Strukturované zadání pro další technické ověření a nacenění.' },
 ];
 
+const conceptOptions = [
+  { key: 'strom', label: 'Strom', icon: TreePine, kind: 'shape' },
+  { key: 'list', label: 'List', icon: Leaf, kind: 'shape' },
+  { key: 'srdce', label: 'Srdce', icon: Heart, kind: 'shape' },
+  { key: 'vlastni', label: 'Vlastní tvar', icon: Shapes, kind: 'custom' },
+  {
+    key: 'y-armist',
+    label: 'Y-ARMIST',
+    kind: 'product',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/080a7e429_MlzitkoY-ARMISTTR60_2.png',
+  },
+  {
+    key: 'gate',
+    label: 'GATE',
+    kind: 'product',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f47023cbe_MlnbrnaGATE70V.png',
+  },
+];
+
 export default function AIProjectDesignerSection() {
   const navigate = useNavigate();
   const [value, setValue] = useState(() => sessionStorage.getItem('mlzidla-ai-zadani') || '');
   const [selectedType, setSelectedType] = useState(() => sessionStorage.getItem('mlzidla-ai-typ') || '');
+  const [selectedConcept, setSelectedConcept] = useState(() => sessionStorage.getItem('mlzidla-project-concept') || '');
+  const [customShape, setCustomShape] = useState(() => sessionStorage.getItem('mlzidla-project-custom-shape') || '');
 
   const updateValue = (nextValue) => {
     setValue(nextValue);
@@ -42,12 +67,30 @@ export default function AIProjectDesignerSection() {
     sessionStorage.setItem('mlzidla-ai-typ', label);
   };
 
+  const selectConcept = (key) => {
+    setSelectedConcept(key);
+    sessionStorage.setItem('mlzidla-project-concept', key);
+  };
+
+  const updateCustomShape = (value) => {
+    const limited = value.trimStart().split(/\s+/).slice(0, 2).join(' ');
+    setCustomShape(limited);
+    sessionStorage.setItem('mlzidla-project-custom-shape', limited);
+  }; 
+
+  const conceptLabel = () => {
+    if (selectedConcept === 'vlastni' && customShape.trim()) return `Vlastní tvar: ${customShape.trim()}`;
+    return conceptOptions.find((item) => item.key === selectedConcept)?.label || '';
+  }; 
+
   const start = () => {
     const zadani = value.trim();
     if (!zadani && !selectedType) return;
     const params = new URLSearchParams();
     if (zadani) params.set('zadani', zadani);
     if (selectedType) params.set('typ', selectedType);
+    if (conceptLabel()) params.set('tvar', conceptLabel());
+    params.set('profil', 'max Ø cca 70 mm');
     navigate(`/poradce?${params.toString()}`);
   };
 
@@ -55,6 +98,8 @@ export default function AIProjectDesignerSection() {
     const params = new URLSearchParams();
     if (value.trim()) params.set('zadani', value.trim());
     if (selectedType) params.set('typ', selectedType);
+    if (conceptLabel()) params.set('tvar', conceptLabel());
+    params.set('profil', 'max Ø cca 70 mm');
     navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`);
   };
 
@@ -135,9 +180,57 @@ export default function AIProjectDesignerSection() {
                 </div>
               </fieldset>
 
+              <fieldset className="mt-7">
+                <legend className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
+                  <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">02</span>
+                  Tvar nebo produkt
+                </legend>
+                <p className="mb-4 max-w-2xl text-xs leading-5 text-slate-500">Vyberte jednoduchý motiv vhodný k výrobě z ohýbaného nerezového profilu, nebo vyjděte z existujícího produktu. Pro návrhy držíme vizuálně reálný profil maximálně přibližně Ø 70 mm.</p>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {conceptOptions.map((item) => {
+                    const active = selectedConcept === item.key;
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.key}
+                        type="button"
+                        onClick={() => selectConcept(item.key)}
+                        aria-pressed={active}
+                        className={`group min-h-[112px] overflow-hidden border text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400'}`}
+                      >
+                        {item.kind === 'product' ? (
+                          <div className="relative h-[78px] overflow-hidden bg-slate-100">
+                            <img src={item.image} alt={item.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+                            <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 font-mono text-[8px] uppercase tracking-[.12em] text-slate-700 backdrop-blur">Produkt</span>
+                          </div>
+                        ) : (
+                          <div className={`flex h-[78px] items-center justify-center ${active ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-600'}`}>
+                            {Icon && <Icon size={30} strokeWidth={1.5} />}
+                          </div>
+                        )}
+                        <div className={`px-3 py-2 text-xs font-semibold ${active ? 'bg-slate-950 text-white' : 'bg-white text-slate-700'}`}>{item.label}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+                {selectedConcept === 'vlastni' && (
+                  <div className="mt-3 border border-slate-200 bg-slate-50 p-4">
+                    <label htmlFor="custom-shape" className="text-xs font-semibold text-slate-700">Vlastní tvar · maximálně 1–2 slova</label>
+                    <input
+                      id="custom-shape"
+                      value={customShape}
+                      onChange={(e) => updateCustomShape(e.target.value)}
+                      placeholder="např. Kapka, Dubový list"
+                      className="mt-2 w-full border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
+                    />
+                    <p className="mt-2 text-[11px] leading-5 text-slate-500">Návrh se má převést do jednoduché výrobně uvěřitelné linie z nerezu, ne do tenké grafické ikony nebo nereálné sochy.</p>
+                  </div>
+                )}
+              </fieldset>
+
               <div className="mt-7">
                 <label htmlFor="project-description" className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
-                  <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">02</span>
+                  <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">03</span>
                   Popis projektu
                 </label>
                 <textarea
@@ -163,7 +256,7 @@ export default function AIProjectDesignerSection() {
                 <button
                   type="button"
                   onClick={start}
-                  disabled={!value.trim() && !selectedType}
+                  disabled={!value.trim() && !selectedType && !selectedConcept}
                   className="inline-flex min-h-[52px] items-center justify-center gap-2 bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-35"
                 >
                   Připravit návrh projektu <ArrowRight size={16} />

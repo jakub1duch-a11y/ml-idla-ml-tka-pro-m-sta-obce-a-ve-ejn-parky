@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
 import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
 
 const PRODUCT_LINKS = [
 { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', image: '/media/optimized/cfc837b23_image.webp', featured: true },
@@ -29,6 +31,14 @@ const USAGE_LINKS = [
 { icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-secondary' }];
 
 
+const INTERNATIONAL_NAV = {
+  en: { products: 'Products', urban: 'Urban', technology: 'How it works', smart: 'Smart control', references: 'Projects', contact: 'Contact', quote: 'Get a quote' },
+  de: { products: 'Produkte', urban: 'Stadt', technology: 'Funktionsweise', smart: 'Smart-Steuerung', references: 'Referenzen', contact: 'Kontakt', quote: 'Angebot' },
+  pl: { products: 'Produkty', urban: 'Dla miast', technology: 'Jak to działa', smart: 'Smart sterowanie', references: 'Realizacje', contact: 'Kontakt', quote: 'Wycena' },
+  sk: { products: 'Produkty', urban: 'Pre mestá', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', contact: 'Kontakt', quote: 'Ponuka' },
+  it: { products: 'Prodotti', urban: 'Urbano', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', contact: 'Contatti', quote: 'Preventivo' },
+};
+
 const INFO_LINKS = [
 { icon: Building2, label: 'O společnosti', path: '/o-nas' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
@@ -48,6 +58,10 @@ export default function Header() {
   const [megaOpen, setMegaOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const location = useLocation();
+  const locale = getLocaleFromPath(location.pathname);
+  const internationalCopy = INTERNATIONAL_NAV[locale];
+  const homePath = ROUTE_MAP.home[locale];
+  const inquiryPath = ROUTE_MAP.inquiry[locale];
   const timeoutRef = useRef(null);
   const infoTimeoutRef = useRef(null);
   const lastScrollYRef = useRef(0);
@@ -95,12 +109,12 @@ export default function Header() {
         <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center opacity-100 gap-2.5 shrink-2">
+          <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">
             <Logo size="sm" />
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
+          {locale === 'cs' ? <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             {/* Produkty megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button
@@ -143,24 +157,31 @@ export default function Header() {
               </AnimatePresence>
             </div>
             <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
-          </nav>
+          </nav> : <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
+            <Link to={ROUTE_MAP.catalog[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.products}</Link>
+            <Link to={ROUTE_MAP.city[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.urban}</Link>
+            <Link to={ROUTE_MAP.technology[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.technology}</Link>
+            <Link to={ROUTE_MAP.smart[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.smart}</Link>
+            <Link to={ROUTE_MAP.references[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.references}</Link>
+            <Link to={ROUTE_MAP.contact[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.contact}</Link>
+          </nav>}
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
-              <Link to="/poptavka"
-              className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">POPTAT CENU
-
+              <LanguageSwitcher />
+              <Link to={inquiryPath}
+              className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
-            <Link to="/poptavka" className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-5 pt-2 pb-2 pr-2 pl-2">Popsat projekt</Link>
+            <Link to={inquiryPath} className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-2 px-3 py-2">{locale === 'cs' ? 'Popsat projekt' : internationalCopy.quote}</Link>
             <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
               {mobileOpen ? <X size={23} /> : <Menu size={23} />}
             </button>
           </div>
         </div>
 
-        <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />
+        {locale === 'cs' && <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />}
       </header>
 
       {/* Mobile menu — compact floating panel, not full screen */}
@@ -170,7 +191,8 @@ export default function Header() {
         productLinks={PRODUCT_LINKS}
         usageLinks={USAGE_LINKS}
         infoLinks={INFO_LINKS}
-        customLink={CUSTOM_LINK} />
+        customLink={CUSTOM_LINK}
+        locale={locale} />
 
     </>);
 

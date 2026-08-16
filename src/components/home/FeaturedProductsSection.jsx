@@ -58,7 +58,7 @@ export default function FeaturedProductsSection() {
               <Link to={`/produkt/${product.slug}`}
             className="group block rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 h-full">
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <ProductHoverImage product={product} className="h-full w-full" overlay />
+                  <ProductHoverImage product={product} alt={product.name} fallback={product.image_url} className="h-full w-full" overlay />
                   {product.featured &&
                 <span className="absolute top-3 left-3 bg-slate-900 text-white text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-full">
                       Oblíbené

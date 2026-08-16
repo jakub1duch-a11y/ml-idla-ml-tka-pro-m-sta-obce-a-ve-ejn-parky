@@ -190,16 +190,16 @@ export default function AIProjectDesignerSection() {
   };
 
   return (
-    <section className="border-y border-slate-200 bg-[#f5f6f3] py-20 text-slate-950 lg:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-start gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
+    <section className="border-y border-slate-200 bg-[#f5f6f3] py-16 text-slate-950 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
           <div className="lg:sticky lg:top-28">
             <div className="mb-6 inline-flex items-center gap-2 border border-slate-300 bg-white px-3 py-1.5">
               <ShieldCheck size={14} className="text-slate-700" />
               <span className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-600">Projektová podpora MLŽIDLA®</span>
             </div>
 
-            <h2 className="max-w-2xl font-heading text-4xl font-medium leading-[1.02] tracking-[-.03em] text-slate-950 sm:text-5xl lg:text-6xl">
+            <h2 className="max-w-2xl font-heading text-[clamp(2rem,9vw,2.7rem)] font-medium leading-[1.04] tracking-[-.035em] text-slate-950 sm:text-5xl lg:text-6xl">
               Od místa nebo symbolu
               <span className="mt-1 block text-slate-500">k reálně vyrobitelnému mlžítku.</span>
             </h2>
@@ -239,8 +239,8 @@ export default function AIProjectDesignerSection() {
             </div>
           </div>
 
-          <div className="border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,.08)]">
-            <div className="border-b border-slate-200 px-5 py-5 sm:px-7 lg:px-8">
+          <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,.08)] sm:rounded-[2rem]">
+            <div className="border-b border-slate-200 px-4 py-5 sm:px-7 lg:px-8">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">Návrh projektu</p>
@@ -250,7 +250,7 @@ export default function AIProjectDesignerSection() {
               </div>
             </div>
 
-            <div className="p-5 sm:p-7 lg:p-8">
+            <div className="p-4 sm:p-7 lg:p-8">
               <fieldset>
                 <legend className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">01</span>
@@ -265,7 +265,7 @@ export default function AIProjectDesignerSection() {
                         type="button"
                         onClick={() => selectType(label)}
                         aria-pressed={active}
-                        className={`min-h-[86px] border px-3 py-3 text-left transition-colors ${
+                        className={`min-h-[82px] rounded-xl border px-3 py-3 text-left transition-colors sm:min-h-[86px] ${
                           active
                             ? 'border-slate-950 bg-slate-950 text-white'
                             : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
@@ -286,7 +286,7 @@ export default function AIProjectDesignerSection() {
                 </legend>
                 <p className="mb-5 max-w-2xl text-xs leading-5 text-slate-500">Máte tři možnosti: zvolit jednoduchý symbol, vyjít z našeho hotového produktu, nebo napsat vlastní motiv.</p>
 
-                <div className="border border-slate-200 bg-slate-50/60 p-4 sm:p-5">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
                   <div className="mb-3 flex items-center justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold text-slate-900">A · Přednastavené symboly</p>
@@ -294,7 +294,7 @@ export default function AIProjectDesignerSection() {
                     </div>
                     <Sparkles size={17} className="shrink-0 text-slate-400" />
                   </div>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                     {shapeOptions.map(({ key, label, type, note }) => {
                       const active = selectedConcept === key;
                       return (
@@ -303,7 +303,7 @@ export default function AIProjectDesignerSection() {
                           type="button"
                           onClick={() => selectConcept(key)}
                           aria-pressed={active}
-                          className={`flex min-h-[104px] flex-col items-center justify-center border px-2 py-3 text-center transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}`}
+                          className={`flex min-h-[96px] flex-col items-center justify-center rounded-xl border px-2 py-3 text-center transition sm:min-h-[104px] ${active ? 'border-slate-950 bg-slate-950 text-white shadow-sm' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'}`}
                         >
                           <BendableShapeIcon type={type} className="h-11 w-11" />
                           <span className="mt-2 text-[11px] font-semibold">{label}</span>
@@ -314,7 +314,7 @@ export default function AIProjectDesignerSection() {
                   </div>
                   {shapeOptions.some((item) => item.key === selectedConcept) && (
                     <div className="mt-4 border-t border-slate-200 pt-4">
-                      <div className="flex items-end justify-between gap-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
                         <div>
                           <p className="text-xs font-semibold text-slate-800">Možná varianta symbolu</p>
                           <p className="mt-1 text-[10px] leading-4 text-slate-500">Výchozí je vždy nejjednodušší Solo. Další varianty jen skládají stejnou jednoduchou geometrii.</p>
@@ -325,7 +325,7 @@ export default function AIProjectDesignerSection() {
                         {shapeVariants.map((variant) => {
                           const active = selectedVariant === variant.key;
                           return (
-                            <button key={variant.key} type="button" onClick={() => selectVariant(variant.key)} aria-pressed={active} className={`border px-3 py-3 text-left transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}`}>
+                            <button key={variant.key} type="button" onClick={() => selectVariant(variant.key)} aria-pressed={active} className={`rounded-xl border px-3 py-3 text-left transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'}`}>
                               <span className="block text-xs font-semibold">{variant.label}</span>
                               <span className={`mt-1 block text-[9px] leading-4 ${active ? 'text-white/60' : 'text-slate-400'}`}>{variant.note}</span>
                             </button>

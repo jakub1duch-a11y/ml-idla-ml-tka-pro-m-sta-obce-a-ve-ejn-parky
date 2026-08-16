@@ -7,6 +7,13 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
+const EVENT_SCENES = [
+  { title: 'Festivaly', kicker: 'Chill-out / vstupní zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png' },
+  { title: 'Veletrhy', kicker: 'Expozice / stánek', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG' },
+  { title: 'Firemní akce', kicker: 'Letní event / hospitality', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/83e0506f1_generated_fd2118cd.png' },
+  { title: 'Oslavy a rodinné dny', kicker: 'Pobytová zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg' },
+];
+
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
   { emoji: '🌞', title: 'Letní terasy', desc: 'Sezónní instalace pro restaurace a food festivaly — pronájem nebo koupě.' },
@@ -96,6 +103,26 @@ export default function Eventy() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+        <div className="mb-8 max-w-3xl">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Eventové náhledy</p>
+          <h2 className="text-slate-900 text-3xl lg:text-4xl" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Jak může mlžení fungovat přímo v atmosféře akce.</h2>
+          <p className="mt-4 text-sm leading-6 text-slate-500">Samostatné inspirační fotografie pro festivaly, oslavy, veletrhy a firemní eventy. Finální rozmístění vždy přizpůsobíme průchodu lidí, zónám sezení a dostupnému napojení.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {EVENT_SCENES.map((scene, index) => (
+            <motion.article key={scene.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="group relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100">
+              <img src={scene.image} alt={`${scene.title} — mlžení MLŽIDLA`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/5 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                <p className="font-mono text-[9px] uppercase tracking-[.16em] text-white/60">{scene.kicker}</p>
+                <h3 className="mt-1 font-heading text-2xl">{scene.title}</h3>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </section>
 

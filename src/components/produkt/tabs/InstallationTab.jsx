@@ -10,7 +10,7 @@ export default function InstallationTab({ product }) {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-14 max-w-2xl">
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Plug &amp; Mist · AISI 316L</p>
           <h2 className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-5">
-            Instalace a kotvení<br /><span className="text-slate-400">bez betonování.</span>
+            Instalace a kotvení<br /><span className="text-slate-400">podle typu povrchu.</span>
           </h2>
           <p className="text-slate-500 text-base font-light leading-relaxed">
             Nerezová ocel AISI 316L / 1.4301, přímé napojení na vodovod (2–7 BAR) — Plug &amp; Mist bez nutnosti vysokotlakých čerpadel.
@@ -40,12 +40,14 @@ export default function InstallationTab({ product }) {
             <span className="inline-block px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono tracking-widest uppercase rounded-full mb-6">Stálá instalace</span>
             <h3 className="text-2xl font-light text-slate-900 mb-3">Skrytá kotvící patka</h3>
             <p className="text-sm text-slate-500 font-light mb-6 leading-relaxed">
-              Patka skrytá pod úrovní terénu pro fixní městské instalace — čistý vzhled bez viditelného kotvení, maximální stabilita pro veřejný prostor.
+              Nerezová kotevní patka je osazena pod finální úroveň povrchu a mechanicky nebo chemicky ukotvena do nosného betonového základu. Po dokončení zůstává nad terénem viditelný pouze čistý nerezový sloup; kotevní deska, výztuhy i šrouby jsou skryté pod skladbou povrchu.
             </p>
             <div className="space-y-3 text-sm text-slate-600 font-light">
               <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Maximální stabilita a bezpečnost</span></div>
               <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Profesionální vzhled bez viditelného kotvení</span></div>
-              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Vhodné pro náměstí, parky, permanentní projekty</span></div>
+              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Kotvení do betonu kotevními šrouby / chemickými kotvami dle statického návrhu</span></div>
+              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Zakrytí dlažbou, kamennou deskou nebo jiným finálním povrchem podle projektu</span></div>
+              <div className="flex items-start gap-3"><span className="text-blue-600 font-bold mt-0.5">✓</span><span>Vhodné pro náměstí, parky a permanentní projekty</span></div>
             </div>
           </motion.div>
         </div>

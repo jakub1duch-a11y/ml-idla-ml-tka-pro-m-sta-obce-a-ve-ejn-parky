@@ -1,4 +1,4 @@
-import { getLanguageAlternates, ROUTE_MAP } from '@/lib/i18n';
+import { getLanguageAlternates, ROUTE_MAP } from './i18n.js';
 
 const shared = {
   en: {

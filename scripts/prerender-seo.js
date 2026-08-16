@@ -41,7 +41,8 @@ function renderPage(page) {
   const fullTitle = `${page.title} | ${SITE_NAME}`;
   const locale = page.locale || 'cs';
   const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
-  const img = page.image || DEFAULT_IMAGE;
+  const imagePath = page.image || DEFAULT_IMAGE;
+  const img = imagePath.startsWith('http') ? imagePath : `${BASE_URL}${imagePath}`;
   const url = `${BASE_URL}${page.canonicalPath}`;
   let html = template;
 

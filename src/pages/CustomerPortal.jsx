@@ -331,7 +331,41 @@ export default function CustomerPortal() {
                     </a>
                   </div>
 
-                  {(project.status === 'sent' || project.status === 'viewed') && (
+                  {['sent','viewed','extension_requested','expired'].includes(project.status) && (
+                    <div className="rounded-xl border border-slate-200 bg-white p-4">
+                      <p className="text-xs font-mono uppercase tracking-widest text-slate-400">Další krok k nabídce</p>
+                      <div className="mt-3 grid gap-3 md:grid-cols-2">
+                        <label className="text-xs text-slate-500">Přibližný termín objednání
+                          <input type="date" value={(intentForms[project.id] || {}).estimated_order_date || ''}
+                            onChange={(e) => setIntentForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), estimated_order_date: e.target.value } }))}
+                            className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900" />
+                        </label>
+                        <label className="text-xs text-slate-500">Nebo orientační období
+                          <input value={(intentForms[project.id] || {}).estimated_order_window || ''}
+                            onChange={(e) => setIntentForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), estimated_order_window: e.target.value } }))}
+                            placeholder="např. září 2026 / po schválení rozpočtu"
+                            className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900" />
+                        </label>
+                      </div>
+                      <textarea value={(intentForms[project.id] || {}).message || ''}
+                        onChange={(e) => setIntentForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), message: e.target.value } }))}
+                        placeholder="Poznámka k termínu, schvalování nebo žádosti o prodloužení platnosti…" rows={3}
+                        className="mt-3 w-full resize-none rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900" />
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button onClick={() => submitOfferIntent(project, 'timing')} disabled={intentBusy === `${project.id}:timing`}
+                          className="rounded-full bg-[#0b4860] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
+                          {intentBusy === `${project.id}:timing` ? 'Ukládám…' : 'Odeslat plánovaný termín'}
+                        </button>
+                        <button onClick={() => submitOfferIntent(project, 'extension')} disabled={intentBusy === `${project.id}:extension`}
+                          className="rounded-full border border-amber-300 bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-800 disabled:opacity-50">
+                          {intentBusy === `${project.id}:extension` ? 'Odesílám…' : 'Požádat o prodloužení platnosti'}
+                        </button>
+                      </div>
+                      {intentSaved[project.id] && <p className="mt-3 text-xs text-emerald-700">Požadavek byl uložen a předán k nabídce.</p>}
+                    </div>
+                  )}
+
+                  {(project.status === 'sent' || project.status === 'viewed' || project.status === 'extension_requested') && (
                     <div className="rounded-xl border border-green-200 bg-green-50/60 p-4">
                       <label className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-slate-700">
                         <input

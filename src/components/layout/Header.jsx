@@ -189,9 +189,6 @@ export default function Header() {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         productLinks={PRODUCT_LINKS}
-        usageLinks={USAGE_LINKS}
-        infoLinks={INFO_LINKS}
-        customLink={CUSTOM_LINK}
         locale={locale} />
 
     </>);

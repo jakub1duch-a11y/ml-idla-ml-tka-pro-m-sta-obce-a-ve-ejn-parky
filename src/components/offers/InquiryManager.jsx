@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { CheckCircle2, ExternalLink, FileText, Send, Sparkles, Upload } from 'lucide-react';
+import { CheckCircle2, ExternalLink, FileText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 
@@ -20,7 +20,7 @@ const FOLLOW_UP_TEMPLATES = [
 ];
 const FOLLOW_UP_OFFER_STATUSES = ['sent', 'viewed', 'extension_requested', 'approved', 'expired'];
 
-export default function InquiryManager({ inquiries, products, mediaFiles, onSent }) {
+export default function InquiryManager({ inquiries, products, mediaFiles, projectOrders = [], onSent }) {
   const [selectedId, setSelectedId] = useState(inquiries[0]?.key || '');
   const [productId, setProductId] = useState('');
   const [basePrice, setBasePrice] = useState(0);
@@ -37,10 +37,32 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
   const [followUpDiscount, setFollowUpDiscount] = useState(5);
   const [latestOffer, setLatestOffer] = useState(null);
   const [followUpApproved, setFollowUpApproved] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
 
+  const normalizeSearch = (value) => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  const ordersByInquiry = useMemo(() => projectOrders.reduce((map, order) => {
+    if (!order?.inquiry_id) return map;
+    if (!map[order.inquiry_id]) map[order.inquiry_id] = [];
+    map[order.inquiry_id].push(order);
+    return map;
+  }, {}), [projectOrders]);
+  const filteredInquiries = useMemo(() => {
+    const terms = normalizeSearch(searchQuery).split(/\s+/).filter(Boolean);
+    if (!terms.length) return inquiries;
+    return inquiries.filter((item) => {
+      const linkedOffers = ordersByInquiry[item.id] || [];
+      const haystack = normalizeSearch([
+        item.id, item.key, item.name, item.email, item.telefon, item.phone, item.firma, item.company,
+        item.product, item.produkt, item.message, item.zprava, item.status,
+        ...linkedOffers.flatMap((offer) => [offer.id, offer.quote_number, offer.project_name, offer.product_name, offer.client_name, offer.client_email, offer.client_phone, offer.client_company, offer.status])
+      ].filter(Boolean).join(' '));
+      return terms.every((term) => haystack.includes(term));
+    });
+  }, [inquiries, ordersByInquiry, searchQuery]);
   const selected = useMemo(() => inquiries.find((item) => item.key === selectedId), [inquiries, selectedId]);
+  const selectedOffers = useMemo(() => selected ? (ordersByInquiry[selected.id] || []) : [], [ordersByInquiry, selected]);
   const total = Number(basePrice || 0) + Number(installation || 0);
   const finalTotal = Math.round(total * (1 - Number(discount || 0) / 100));
   const selectedProduct = products.find((item) => item.id === productId);
@@ -271,12 +293,35 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
         <aside>
           <p className="font-mono text-[10px] tracking-[.16em] uppercase text-secondary">Poptávky</p>
           <h2 className="mt-2 font-heading text-3xl text-foreground">Tvorba nabídky</h2>
-          <div className="mt-5 space-y-2">{inquiries.map((item) => <button key={item.key} onClick={() => { setSelectedId(item.key); setError(''); setPrepared(null); setApprovedToSend(false); setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); setSubject(''); setMessage(''); }} className={`w-full border p-4 text-left ${item.key === selectedId ? 'border-secondary bg-secondary/10' : 'border-border'}`}><strong className="block text-sm text-foreground">{item.name}</strong><span className="mt-1 block text-xs text-muted-foreground">{item.email}</span></button>)}</div>
+          <div className="relative mt-5">
+            <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Číslo nabídky, ID poptávky, klient, firma, e-mail…"
+              className="w-full rounded-xl border border-border bg-background py-3 pl-10 pr-10 text-sm text-foreground outline-none transition focus:border-secondary"
+              aria-label="Vyhledat poptávku nebo nabídku"
+            />
+            {searchQuery && <button type="button" onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label="Vymazat hledání"><X size={15}/></button>}
+          </div>
+          <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground"><span>{filteredInquiries.length} z {inquiries.length} poptávek</span>{searchQuery && <span>Hledá i v číslech nabídek</span>}</div>
+          <div className="mt-4 space-y-2">{filteredInquiries.map((item) => {
+            const linkedOffers = ordersByInquiry[item.id] || [];
+            return <button key={item.key} onClick={() => { setSelectedId(item.key); setError(''); setPrepared(null); setApprovedToSend(false); setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); setSubject(''); setMessage(''); }} className={`w-full border p-4 text-left transition ${item.key === selectedId ? 'border-secondary bg-secondary/10' : 'border-border hover:border-secondary/40'}`}>
+              <strong className="block text-sm text-foreground">{item.name}</strong>
+              <span className="mt-1 block text-xs text-muted-foreground">{item.email}</span>
+              <span className="mt-2 block font-mono text-[10px] text-muted-foreground">ID: {item.id}</span>
+              {linkedOffers.length > 0 && <span className="mt-2 flex flex-wrap gap-1">{linkedOffers.slice(0, 3).map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2 py-1 font-mono text-[9px] text-secondary">{offer.quote_number || `Nabídka ${offer.id.slice(-6)}`}</span>)}</span>}
+            </button>;
+          })}
+          {filteredInquiries.length === 0 && <div className="rounded-xl border border-dashed border-border p-5 text-center text-xs text-muted-foreground">Nenalezena žádná poptávka ani nabídka odpovídající hledání.</div>}</div>
         </aside>
 
         <div className="border border-border p-5 lg:p-7">
           <p className="text-sm font-semibold text-foreground">{selected.name} · {selected.email}</p>
-          <p className="mt-2 text-sm text-muted-foreground">{selected.message}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-2"><span className="rounded-full bg-muted px-2.5 py-1 font-mono text-[10px] text-muted-foreground">Poptávka ID: {selected.id}</span>{selectedOffers.map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2.5 py-1 font-mono text-[10px] text-secondary">Nabídka: {offer.quote_number || offer.id}</span>)}</div>
+          <p className="mt-3 text-sm text-muted-foreground">{selected.message}</p>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             <label className="text-xs text-muted-foreground">Typ prezentace<select value={audienceVariant} onChange={(e) => { setAudienceVariant(e.target.value); resetPrepared(); }} className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm">{AUDIENCES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label>

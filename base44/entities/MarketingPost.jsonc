@@ -16,33 +16,138 @@
       ],
       "description": "Kan\u00e1l p\u0159\u00edsp\u011bvku"
     },
-    "caption": {
+    "content_group_id": {
       "type": "string",
-      "description": "Text p\u0159\u00edsp\u011bvku / popisek"
+      "description": "Spole\u010dn\u00e9 ID pro IG/FB/blog varianty stejn\u00e9ho t\u00e9matu"
+    },
+    "post_format": {
+      "type": "string",
+      "enum": [
+        "feed",
+        "story",
+        "reel",
+        "carousel",
+        "article",
+        "ad"
+      ],
+      "default": "feed"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "caption_instagram": {
+      "type": "string"
+    },
+    "caption_facebook": {
+      "type": "string"
+    },
+    "blog_content": {
+      "type": "string"
+    },
+    "hashtags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "cta_url": {
+      "type": "string"
     },
     "image_url": {
+      "type": "string"
+    },
+    "video_url": {
+      "type": "string"
+    },
+    "gallery_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "visual_prompt": {
+      "type": "string"
+    },
+    "visual_style": {
+      "type": "string"
+    },
+    "product_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "product_slugs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "realization_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_type": {
       "type": "string",
-      "description": "Obr\u00e1zek p\u0159\u00edsp\u011bvku"
+      "enum": [
+        "manual",
+        "morning_brief",
+        "ai_recommendation",
+        "blog_repurpose"
+      ],
+      "default": "manual"
+    },
+    "source_brief": {
+      "type": "string"
+    },
+    "morning_brief_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "marketing_recommendation": {
+      "type": "string"
     },
     "scheduled_date": {
       "type": "string",
-      "format": "date-time",
-      "description": "Pl\u00e1novan\u00e9 datum publikace"
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
     },
     "status": {
       "type": "string",
       "enum": [
         "draft",
         "scheduled",
-        "published"
+        "published",
+        "failed"
       ],
-      "default": "draft",
-      "description": "Stav p\u0159\u00edsp\u011bvku"
+      "default": "draft"
+    },
+    "publish_error": {
+      "type": "string"
     },
     "ai_generated": {
       "type": "boolean",
-      "default": false,
-      "description": "Obsah vygenerov\u00e1n AI"
+      "default": false
+    },
+    "drive_content_folder_url": {
+      "type": "string"
+    },
+    "drive_document_url": {
+      "type": "string"
+    },
+    "drive_visual_url": {
+      "type": "string"
+    },
+    "admin_sync_key": {
+      "type": "string"
     }
   },
   "required": [

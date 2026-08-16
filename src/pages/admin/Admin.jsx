@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
@@ -121,7 +121,11 @@ export default function Admin() {
             );
           })}
         </nav>
-        <div className="p-3 border-t border-white/8">
+        <div className="p-3 border-t border-white/8 space-y-1">
+          <button onClick={() => navigate('/obchodni-nabidky')}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
+            <BriefcaseBusiness size={16} /> Sales Hub
+          </button>
           <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">
             <LogOut size={16} /> Odhlásit

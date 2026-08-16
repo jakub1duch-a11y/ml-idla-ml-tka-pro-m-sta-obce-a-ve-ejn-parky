@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, Camera, Check, FileText, ImagePlus, Loader, RefreshCw, ShieldCheck, Sparkles, Upload, UserPlus, WandSparkles } from 'lucide-react';
+import { ArrowRight, Camera, Check, Download, FileText, ImagePlus, Loader, RefreshCw, ShieldCheck, Sparkles, Upload, UserPlus, WandSparkles } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
@@ -109,11 +109,16 @@ export default function AIVizualizace() {
     name: leadProfile?.name || '',
     email: leadProfile?.email || '',
     phone: leadProfile?.phone || '',
+    company: leadProfile?.company || '',
+    gdprAcknowledged: Boolean(leadProfile?.gdprAcknowledged),
   }));
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadError, setLeadError] = useState('');
+  const [leadGateOpen, setLeadGateOpen] = useState(false);
   const [quoteFiles, setQuoteFiles] = useState([]);
   const [quoteUploading, setQuoteUploading] = useState(false);
+  const [quoteSent, setQuoteSent] = useState(false);
+  const [downloadBusy, setDownloadBusy] = useState(false);
 
   const updateDescription = (nextValue) => {
     setDescription(nextValue);
@@ -160,7 +165,8 @@ export default function AIVizualizace() {
 
   const selectedProduct = useMemo(() => products.find((item) => item.id === selectedProductId) || null, [products, selectedProductId]);
   const customConceptMode = Boolean(requestedConcept && !requestedConcept.startsWith('Produkt:'));
-  const canGenerate = useMemo(() => Boolean(leadProfile && (file || sourceUrl) && (customConceptMode || selectedProduct?.image_url)), [leadProfile, file, sourceUrl, customConceptMode, selectedProduct]);
+  const isUnlocked = Boolean(leadProfile?.gdprAcknowledged);
+  const canGenerate = useMemo(() => Boolean((file || sourceUrl) && (customConceptMode || selectedProduct?.image_url)), [file, sourceUrl, customConceptMode, selectedProduct]);
 
   const registerVisualizer = async (event) => {
     event.preventDefault();
@@ -168,23 +174,34 @@ export default function AIVizualizace() {
     const name = leadForm.name.trim();
     const email = leadForm.email.trim();
     const phone = leadForm.phone.trim();
-    if (!name || !email || !phone) return;
+    const company = leadForm.company.trim();
+    if (!name || !email || !phone || !leadForm.gdprAcknowledged) {
+      setLeadError('Vyplňte jméno, e-mail, telefon a potvrďte seznámení se zásadami ochrany osobních údajů.');
+      return;
+    }
     setLeadSubmitting(true);
     setLeadError('');
     try {
+      const acknowledgedAt = new Date().toISOString();
       const created = await base44.entities.VisualizerLead.create({
         name,
         email,
         phone,
-        source: 'ai_vizualizace',
+        company,
+        source: 'ai_vizualizace_post_result',
         project_type: requestedType,
         selected_concept: requestedConcept || selectedProduct?.name || '',
+        last_visualization_url: resultUrl,
+        gdpr_acknowledged: true,
+        gdpr_acknowledged_at: acknowledgedAt,
+        gdpr_version: '2026-08',
         inquiry_sent: false,
       });
-      const profile = { name, email, phone, leadId: created?.id || '' };
+      const profile = { name, email, phone, company, leadId: created?.id || '', gdprAcknowledged: true, gdprAcknowledgedAt: acknowledgedAt };
       sessionStorage.setItem('mlzidla-visualizer-profile', JSON.stringify(profile));
       setLeadProfile(profile);
-      setLeadForm({ name, email, phone });
+      setLeadForm({ name, email, phone, company, gdprAcknowledged: true });
+      setLeadGateOpen(false);
     } catch (e) {
       setLeadError('Registraci se nepodařilo uložit. Zkuste to prosím znovu.');
     } finally {

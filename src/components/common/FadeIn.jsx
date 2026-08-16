@@ -23,7 +23,7 @@ export default function FadeIn({ children, className = '', as: Tag = 'div' }) {
 
   const Component = /** @type {React.ElementType} */ (Tag);
   return (
-    <Component ref={ref} className={`reveal-element bg-[#c7dce5] ${className}`}>
+    <Component ref={ref} className={`reveal-element ${className}`}>
       {children}
     </Component>);
 

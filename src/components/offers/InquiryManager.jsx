@@ -90,7 +90,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
 
       let quoteDriveUrl = '';
       try {
-        const savedQuote = await base44.functions.invoke('saveQuoteToDriveAuto', { pdf_base64: quote?.pdf_base64, filename: quote?.filename, quoteNumber, inquiryEmail: selected.email, inquiryName: selected.name });
+        const savedQuote = await base44.functions.invoke('saveQuoteToDriveAuto', { pdf_base64: quote?.pdf_base64, filename: quote?.filename, quoteNumber, inquiryEmail: selected.email, inquiryName: selected.firma || selected.company || selected.name, issued_at: issuedAt.toISOString() });
         quoteDriveUrl = savedQuote.data?.drive_url || '';
       } catch (driveError) { console.warn('Quote Drive archive unavailable', driveError); }
 
@@ -123,16 +123,29 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
         client_name: selected.name, client_email: selected.email, client_phone: selected.telefon || selected.phone || '', client_company: selected.firma || selected.company || '',
         description: String(selected.message || '').slice(0, 2000), product_id: selectedProduct.id, product_slug: selectedProduct.slug, product_name: selectedProduct.name,
         quote_number: quoteNumber, quote_pdf_url: quoteDriveUrl, presentation_url: presentation?.presentation_url || '', presentation_pdf_url: presentation?.presentation_pdf_url || '', notebook_source_url: notebookSourceUrl,
+        drive_case_folder_id: presentation?.drive_case_folder_id || '', drive_case_folder_url: presentation?.drive_case_folder_url || '',
         presentation_variant: audienceVariant, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
         status: 'draft', total_price: finalTotal, sender_email: senderEmail, bcc_recipients: BCC,
         supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz', supplier_contact_name: 'Ing. Radek Meduna', supplier_email: senderEmail, supplier_phone: '+420 774 700 390',
         shared_token: prepared?.projectOrder?.shared_token || crypto.randomUUID(),
       };
-      const projectOrder = prepared?.projectOrder?.id
+      let projectOrder = prepared?.projectOrder?.id
         ? await base44.entities.ProjectOrder.update(prepared.projectOrder.id, orderData)
         : await base44.entities.ProjectOrder.create(orderData);
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, notebookSourceUrl, quoteNumber, validUntil, arUrl });
+      let inquiryArchive = null;
+      try {
+        const archiveResponse = await base44.functions.invoke('archiveInquiryPdf', {
+          inquiry: { ...selected, name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: selected.message },
+          quote_number: quoteNumber,
+          issued_at: issuedAt.toISOString(),
+          project_order_id: projectOrder.id,
+        });
+        inquiryArchive = archiveResponse.data;
+        projectOrder = { ...projectOrder, inquiry_pdf_url: inquiryArchive?.inquiry_pdf_url || '', drive_case_folder_id: inquiryArchive?.drive_case_folder_id || projectOrder.drive_case_folder_id, drive_case_folder_url: inquiryArchive?.drive_case_folder_url || projectOrder.drive_case_folder_url };
+      } catch (archiveError) { console.warn('Inquiry PDF archive unavailable', archiveError); }
+
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl });
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 

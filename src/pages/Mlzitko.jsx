@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Droplets, Gauge, Thermometer, Layers, Waves, Wrench, Wifi, Shield, CheckCircle2, Download, FileText } from 'lucide-react';
+import { ArrowRight, Droplets, Gauge, Thermometer, Layers, Waves, Wrench, Wifi, CheckCircle2, Download, FileText } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const TECH_SPECS = [

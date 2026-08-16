@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Droplets, FileCheck2, HeartPulse, ShieldCheck, Sparkles, ThermometerSun, Wrench, Wind } from 'lucide-react';
+import { ArrowRight, Droplets, FileCheck2, HeartPulse, ShieldCheck, ThermometerSun, Wrench, Wind } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ContextLinks from '@/components/common/ContextLinks';
 

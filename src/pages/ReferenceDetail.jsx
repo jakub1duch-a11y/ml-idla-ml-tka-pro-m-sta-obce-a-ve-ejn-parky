@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, Calendar, Tag, ExternalLink, PlayCircle, ShieldCheck, Droplets, Wrench } from 'lucide-react';
+import { ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, PlayCircle, ShieldCheck, Droplets, Wrench } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';

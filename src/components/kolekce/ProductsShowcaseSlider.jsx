@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ArrowRight, Loader } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const EXCLUDED = ['Zemní vrut – rychlá mobilní instalace', 'SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky HT-LT', 'senzory', 'GATE70', 'LINEA CE70'];

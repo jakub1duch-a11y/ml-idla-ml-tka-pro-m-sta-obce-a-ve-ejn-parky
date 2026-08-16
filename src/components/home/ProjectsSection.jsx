@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, MapPin, Loader } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 
 const CATEGORY_LABELS = {

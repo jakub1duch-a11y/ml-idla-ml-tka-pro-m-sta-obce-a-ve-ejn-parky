@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Building2, Droplets, Gauge, Leaf, Radio, ShieldCheck, Snowflake, Sparkles, Wrench, Wind } from 'lucide-react';
+import { ArrowRight, Droplets, Radio, ShieldCheck, Snowflake, Sparkles, Wrench } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const BENEFITS = [

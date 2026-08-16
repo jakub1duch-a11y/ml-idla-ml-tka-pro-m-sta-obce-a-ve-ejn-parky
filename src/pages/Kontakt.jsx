@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } from 'lucide-react';
 import { trackCooperationFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
-import { Flame } from 'lucide-react';
 import { setSEO, SEO_PAGES, GOOGLE_MAPS_URL, GOOGLE_MAPS_EMBED_URL } from '@/lib/seo';
 
 const contactInfo = [

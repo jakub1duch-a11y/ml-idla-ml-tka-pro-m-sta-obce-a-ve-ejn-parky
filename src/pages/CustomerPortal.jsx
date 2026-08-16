@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Mail, Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const STATUS_MAP = {

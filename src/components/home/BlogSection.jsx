@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Loader, Radio, Sparkles } from 'lucide-react';
+import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const CATEGORY_LABELS = {

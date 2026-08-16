@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Gauge, Hammer, Ruler, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Droplets, Gauge, Hammer, Ruler } from 'lucide-react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const IMAGES = {

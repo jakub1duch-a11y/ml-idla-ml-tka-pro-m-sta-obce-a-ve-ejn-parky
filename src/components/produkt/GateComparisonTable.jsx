@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, Circle, Square, ArrowRight, PlayCircle, Building2, Shapes, Component, Layers, Droplets, Gauge, Ruler, Zap } from 'lucide-react';
+import { Circle, Square, ArrowRight, PlayCircle, Building2, Shapes, Component, Layers, Droplets, Gauge, Ruler, Zap } from 'lucide-react';
 
 const COLUMNS = [
 {

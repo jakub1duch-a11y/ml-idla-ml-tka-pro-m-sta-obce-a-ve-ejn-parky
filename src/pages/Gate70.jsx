@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';

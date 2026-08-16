@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, Loader } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 
 const STORAGE_KEY = 'lead_magnet_dismissed';

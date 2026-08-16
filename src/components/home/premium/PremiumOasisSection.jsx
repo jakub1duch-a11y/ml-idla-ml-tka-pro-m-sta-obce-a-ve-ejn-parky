@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CheckGlowIcon } from "./MistIcons";
 import { NoPumpIcon, TemperatureDropIcon, MistMotionIcon, GroundScrewIcon, AtmosphereIcon, SmartAutomationIcon } from "./BenefitIcons";
 
 const APPLICATIONS = [

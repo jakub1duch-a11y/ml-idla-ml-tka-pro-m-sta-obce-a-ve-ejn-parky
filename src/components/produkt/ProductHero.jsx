@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, Wrench, MapPin, Sun, CloudFog, BadgeCheck, ScanLine, Box } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, MapPin, Sun, CloudFog, BadgeCheck, ScanLine, Box } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';

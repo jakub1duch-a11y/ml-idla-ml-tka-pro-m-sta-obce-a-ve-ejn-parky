@@ -12,7 +12,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Search, Ruler, MoveHorizontal, Dumbbell, School, UtensilsCrossed, Waves } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
-import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const HEIGHT_OPTIONS = [

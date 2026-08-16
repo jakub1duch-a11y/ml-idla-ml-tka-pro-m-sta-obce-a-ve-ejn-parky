@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Camera, Check, Download, FileText, ImagePlus, Loader, RefreshCw, ShieldCheck, Sparkles, Upload, UserPlus, WandSparkles } from 'lucide-react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 
@@ -90,7 +90,6 @@ const optimizeLargePhoto = async (file) => {
 
 export default function AIVizualizace() {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const requestedSlug = searchParams.get('slug') || '';
   const fastMode = Boolean(requestedSlug);
   const fileRef = useRef(null);
@@ -508,24 +507,42 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
 
             {resultUrl && (
               <div className="mt-5">
-                <div className="rounded-2xl border border-white/10 bg-black/15 p-4">
-                  <div className="flex items-start gap-3">
-                    <FileText size={17} className="mt-0.5 shrink-0 text-teal-300/80"/>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-semibold text-white/80">Máte výkres, fotografii nebo dokumentaci?</p>
-                      <p className="mt-1 text-[11px] leading-relaxed text-white/35">Podklady jsou dobrovolné a nahrají se až při přechodu k nezávazné nabídce. Samotná AI vizualizace zůstává zdarma.</p>
-                      <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/12 px-4 py-2.5 text-xs text-white/70 hover:bg-white/[.05]">
-                        <Upload size={13}/> Přidat podklady
-                        <input type="file" multiple accept="image/*,.pdf,.dwg,.dxf,.doc,.docx" className="hidden" onChange={(e) => pickQuoteFiles(e.target.files)}/>
-                      </label>
-                      {quoteFiles.length > 0 && <div className="mt-3 space-y-1">{quoteFiles.map((item) => <p key={`${item.name}-${item.size}`} className="truncate text-[10px] text-white/40">• {item.name}</p>)}</div>}
+                {isUnlocked ? (
+                  <>
+                    <div className="mb-3 flex items-center gap-3 rounded-xl border border-teal-300/20 bg-teal-300/[.06] px-4 py-3">
+                      <ShieldCheck size={16} className="shrink-0 text-teal-300"/>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold text-white/85">Vizualizace je odemčená</p>
+                        <p className="truncate text-[10px] text-white/40">{leadProfile?.name} · {leadProfile?.email} · stažení a nezávazná nabídka jsou aktivní</p>
+                      </div>
                     </div>
+                    <div className="rounded-2xl border border-white/10 bg-black/15 p-4">
+                      <div className="flex items-start gap-3">
+                        <FileText size={17} className="mt-0.5 shrink-0 text-teal-300/80"/>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-semibold text-white/80">Máte výkres, fotografii nebo dokumentaci?</p>
+                          <p className="mt-1 text-[11px] leading-relaxed text-white/35">Podklady jsou dobrovolné. Pokud je přidáte, odešlou se spolu s vizualizací rovnou do nezávazné poptávky.</p>
+                          <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/12 px-4 py-2.5 text-xs text-white/70 hover:bg-white/[.05]">
+                            <Upload size={13}/> Přidat podklady
+                            <input type="file" multiple accept="image/*,.pdf,.dwg,.dxf,.doc,.docx" className="hidden" onChange={(e) => pickQuoteFiles(e.target.files)}/>
+                          </label>
+                          {quoteFiles.length > 0 && <div className="mt-3 space-y-1">{quoteFiles.map((item) => <p key={`${item.name}-${item.size}`} className="truncate text-[10px] text-white/40">• {item.name}</p>)}</div>}
+                        </div>
+                      </div>
+                    </div>
+                    {quoteSent && <div className="mt-3 flex items-center gap-2 rounded-xl border border-teal-300/20 bg-teal-300/[.08] px-4 py-3 text-xs text-teal-100"><Check size={15}/> Nezávazná poptávka byla odeslána. Vizualizaci můžete dál stáhnout.</div>}
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      <button type="button" onClick={downloadVisualization} disabled={downloadBusy} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-5 py-3.5 text-sm font-semibold text-white/85 hover:bg-white/[.08] disabled:opacity-50">{downloadBusy ? <Loader size={15} className="animate-spin"/> : <Download size={15}/>} Stáhnout vizualizaci</button>
+                      <button type="button" onClick={sendToQuote} disabled={quoteUploading || quoteSent} className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors disabled:opacity-50">{quoteUploading ? <><Loader size={15} className="animate-spin"/> Odesílám…</> : quoteSent ? <><Check size={15}/> Odesláno</> : <>Odeslat k nezávazné nabídce <ArrowRight size={15}/></>}</button>
+                    </div>
+                    {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>}
+                  </>
+                ) : (
+                  <div className="rounded-2xl border border-white/10 bg-black/15 p-4 text-center">
+                    <p className="text-xs font-semibold text-white/80">Výsledek je připraven</p>
+                    <p className="mt-1 text-[11px] text-white/35">Za okamžik se otevře krátká registrace, která odemkne stažení a odeslání do nezávazné nabídky.</p>
                   </div>
-                </div>
-                <div className="mt-3 flex flex-col sm:flex-row gap-3">
-                  <button type="button" onClick={sendToQuote} disabled={quoteUploading} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors disabled:opacity-50">{quoteUploading ? <><Loader size={15} className="animate-spin"/> Připravuji podklady…</> : <>Poptat tento návrh <ArrowRight size={15}/></>}</button>
-                  {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>}
-                </div>
+                )}
               </div>
             )}
           </div>

@@ -13,6 +13,48 @@ async function loadFont(doc: any) {
   } catch (_) {}
 }
 const money = (value: unknown) => new Intl.NumberFormat('cs-CZ').format(Math.round(Number(value || 0)));
+const TEAM_BCC = ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'];
+const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const SITE_URL = 'https://mlzidla.cz';
+const CONTACT_EMAIL = 'meduna@holmtec.cz';
+const INFO_EMAIL = 'info@mlzidla.cz';
+const CONTACT_PHONE = '+420 774 700 390';
+
+const toBase64Url = (bytes: Uint8Array) => toBase64(bytes).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const utf8Base64 = (value: string) => toBase64(new TextEncoder().encode(value));
+const encodeHeader = (value: string) => `=?UTF-8?B?${utf8Base64(value)}?=`;
+const escapeHtml = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[char] as string));
+
+function buildOrderConfirmationHtml(project: any, approvedAt: string) {
+  const pdfLink = project.order_confirmation_pdf_url ? `<a href="${escapeHtml(project.order_confirmation_pdf_url)}" style="display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:999px;background:#0e5b67;color:#fff;text-decoration:none;font-size:13px;font-weight:700">Otevřít potvrzení objednávky</a>` : '';
+  return `<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#eef3f4;font-family:Arial,'Helvetica Neue',sans-serif;color:#10242b"><table width="100%" cellpadding="0" cellspacing="0" role="presentation"><tr><td align="center" style="padding:28px 14px"><table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="max-width:680px;background:#fff;border:1px solid #dbe5e7;border-radius:22px;overflow:hidden"><tr><td style="background:#0d2d38;padding:28px 34px"><table width="100%"><tr><td><img src="${LOGO_URL}" width="190" alt="MLŽIDLA" style="display:block;width:190px;max-width:72%;height:auto"></td><td align="right" style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#8bcfda">Potvrzení objednávky</td></tr></table></td></tr><tr><td style="padding:36px 34px"><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0e7584;font-weight:700">Objednávka byla přijata</div><h1 style="margin:10px 0 14px;font-size:28px;color:#0d2d38">Děkujeme, ${escapeHtml(project.client_name || '')}.</h1><p style="margin:0;font-size:15px;line-height:1.7;color:#50666c">Elektronicky jste potvrdili cenovou nabídku a objednali uvedené řešení. Níže uvádíme základní rekapitulaci a další postup.</p><div style="margin:24px 0;padding:20px;border:1px solid #e1e9ea;border-radius:16px;background:#f5f8f8"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#6e858b;margin-bottom:10px">Shrnutí objednávky</div><table width="100%" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="padding:5px 0;color:#7a8d92;font-size:13px">Číslo nabídky</td><td align="right" style="padding:5px 0;color:#17343d;font-size:13px;font-weight:700">${escapeHtml(project.quote_number || '—')}</td></tr><tr><td style="padding:5px 0;color:#7a8d92;font-size:13px">Projekt</td><td align="right" style="padding:5px 0;color:#17343d;font-size:13px;font-weight:700">${escapeHtml(project.project_name || project.product_name || '—')}</td></tr><tr><td style="padding:5px 0;color:#7a8d92;font-size:13px">Cena bez DPH</td><td align="right" style="padding:5px 0;color:#17343d;font-size:13px;font-weight:700">${project.total_price ? `${money(project.total_price)} Kč` : 'dle nabídky'}</td></tr><tr><td style="padding:5px 0;color:#7a8d92;font-size:13px">Potvrzeno</td><td align="right" style="padding:5px 0;color:#17343d;font-size:13px;font-weight:700">${new Date(approvedAt).toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' })}</td></tr></table></div>${pdfLink}<a href="${SITE_URL}/muj-projekt" style="display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:999px;background:#dff7fa;color:#0d2d38;text-decoration:none;font-size:13px;font-weight:700">Můj projekt</a><div style="margin-top:26px;padding:22px;border-radius:16px;background:#0d2d38;color:#fff"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#61d5e5">Co bude následovat</div><p style="margin:9px 0 0;font-size:13px;line-height:1.7;color:#d7e8eb">Náš tým objednávku zkontroluje, naváže technickým upřesněním a potvrdí výrobní, dodací nebo realizační harmonogram. Pokud bude potřeba doplnit podklady, ozveme se vám přímo.</p><div style="margin-top:16px;font-size:13px;line-height:1.8;color:#cce4e8"><strong style="color:#fff">Ing. Radek Meduna</strong><br>${CONTACT_PHONE}<br><a href="mailto:${CONTACT_EMAIL}" style="color:#61d5e5;text-decoration:none">${CONTACT_EMAIL}</a><br><a href="mailto:${INFO_EMAIL}" style="color:#61d5e5;text-decoration:none">${INFO_EMAIL}</a></div></div></td></tr><tr><td align="center" style="padding:22px;background:#f5f8f8;border-top:1px solid #e1e9ea;color:#7a8d92;font-size:11px;line-height:1.6">MLŽIDLA® / HolmTec s.r.o. · Trutnov · Česká republika · <a href="${SITE_URL}" style="color:#0e7584;text-decoration:none">mlzidla.cz</a></td></tr></table></td></tr></table></body></html>`;
+}
+
+function buildOrderConfirmationMime(project: any, approvedAt: string, pdfBytes: Uint8Array | null, pdfFilename: string) {
+  const outer = `order-${crypto.randomUUID()}`;
+  const alt = `alt-${crypto.randomUUID()}`;
+  const subject = `Potvrzení objednávky ${project.quote_number || ''} | MLŽIDLA®`.replace('  ', ' ');
+  const text = `Dobrý den ${project.client_name || ''},\n\nděkujeme. Vaše objednávka k nabídce ${project.quote_number || '—'} byla úspěšně potvrzena.\nProjekt: ${project.project_name || project.product_name || '—'}\nCena bez DPH: ${project.total_price ? `${money(project.total_price)} Kč` : 'dle nabídky'}\nPotvrzeno: ${new Date(approvedAt).toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' })}\n\nNáš tým nyní naváže technickým upřesněním a potvrzením harmonogramu.\n\nIng. Radek Meduna\n${CONTACT_PHONE}\n${CONTACT_EMAIL}\n${INFO_EMAIL}`;
+  const html = buildOrderConfirmationHtml(project, approvedAt);
+  const lines = [
+    `From: ${encodeHeader('MLŽIDLA.cz by HolmTec')} <me>`,
+    `Reply-To: ${CONTACT_EMAIL}`,
+    `To: ${project.client_email}`,
+    `Bcc: ${TEAM_BCC.join(', ')}`,
+    `Subject: ${encodeHeader(subject)}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${outer}"`, '',
+    `--${outer}`, `Content-Type: multipart/alternative; boundary="${alt}"`, '',
+    `--${alt}`, 'Content-Type: text/plain; charset="UTF-8"', 'Content-Transfer-Encoding: base64', '', utf8Base64(text),
+    `--${alt}`, 'Content-Type: text/html; charset="UTF-8"', 'Content-Transfer-Encoding: base64', '', utf8Base64(html),
+    `--${alt}--`
+  ];
+  if (pdfBytes && pdfBytes.length) {
+    lines.push(`--${outer}`, `Content-Type: application/pdf; name="${pdfFilename}"`, 'Content-Transfer-Encoding: base64', `Content-Disposition: attachment; filename="${pdfFilename}"`, '', toBase64(pdfBytes));
+  }
+  lines.push(`--${outer}--`, '');
+  return new TextEncoder().encode(lines.join('\r\n'));
+}
 
 Deno.serve(async (req) => {
   try {
@@ -56,6 +98,8 @@ Deno.serve(async (req) => {
     });
 
     let archiveWarning = '';
+    let orderPdfBytes: Uint8Array | null = null;
+    let orderPdfFilename = '';
     try {
       const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
       const folders = await ensureOfferCaseFolders(accessToken, {
@@ -92,6 +136,8 @@ Deno.serve(async (req) => {
 
       const pdfBytes = new Uint8Array(doc.output('arraybuffer'));
       const filename = `04-OBJEDNAVKA-POTVRZENI-${project.quote_number || projectId}.pdf`;
+      orderPdfBytes = pdfBytes;
+      orderPdfFilename = filename;
       const uploaded = await uploadBytes(accessToken, folders.orderFolderId, pdfBytes, filename, 'application/pdf');
       const caseUrl = `https://drive.google.com/drive/folders/${folders.caseFolderId}`;
       updated = await base44.asServiceRole.entities.ProjectOrder.update(projectId, { order_confirmation_pdf_url: uploaded.url, drive_case_folder_id: folders.caseFolderId, drive_case_folder_url: caseUrl });
@@ -101,8 +147,23 @@ Deno.serve(async (req) => {
       console.error('Order archive failed', archiveError);
     }
 
+    let emailWarning = '';
+    try {
+      const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+      const raw = buildOrderConfirmationMime(updated, approvedAt, orderPdfBytes, orderPdfFilename || `potvrzeni-objednavky-${project.quote_number || projectId}.pdf`);
+      const sendResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ raw: toBase64Url(raw) }),
+      });
+      if (!sendResponse.ok) emailWarning = `Potvrzovací e-mail se nepodařilo odeslat: ${await sendResponse.text()}`;
+    } catch (emailError) {
+      emailWarning = emailError?.message || 'Potvrzovací e-mail se nepodařilo odeslat.';
+      console.error('Order confirmation email failed', emailError);
+    }
+
     await base44.asServiceRole.entities.PortalSession.delete(session.id);
-    return Response.json({ ok: true, project: updated, archive_warning: archiveWarning || undefined });
+    return Response.json({ ok: true, project: updated, archive_warning: archiveWarning || undefined, email_warning: emailWarning || undefined });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

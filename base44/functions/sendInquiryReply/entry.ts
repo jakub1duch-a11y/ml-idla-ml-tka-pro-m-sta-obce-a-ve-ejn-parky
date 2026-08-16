@@ -2,6 +2,11 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 
 const ALLOWED_SENDERS = ['meduna@holmtec.cz', 'info@mlzidla.cz'];
 const FIXED_BCC = ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'];
+const SITE_URL = 'https://mlzidla.cz';
+const INSTAGRAM_URL = 'https://www.instagram.com/mlzidla/';
+const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const INSTAGRAM_QR_URL = `${SITE_URL}/media/instagram-mlzidla-qr.svg`;
+const PHONE = '+420 774 700 390';
 
 const toBase64 = (bytes) => {
   let binary = '';

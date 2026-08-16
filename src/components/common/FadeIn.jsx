@@ -21,9 +21,10 @@ export default function FadeIn({ children, className = '', as: Tag = 'div' }) {
     return () => observer.disconnect();
   }, []);
 
+  const Component = /** @type {React.ElementType} */ (Tag);
   return (
-    <Tag ref={ref} className={`reveal-element bg-[#c7dce5] ${className}`}>
+    <Component ref={ref} className={`reveal-element bg-[#c7dce5] ${className}`}>
       {children}
-    </Tag>);
+    </Component>);
 
 }

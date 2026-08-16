@@ -227,6 +227,39 @@
   transition: transform .2s ease, filter .2s ease;
 }
 .btn-inquiry-pulse:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+/* Subtle global photo watermark — public website only. */
+.mlz-photo-watermark-host {
+  position: relative !important;
+}
+.mlz-photo-watermark {
+  position: absolute;
+  right: clamp(8px, 1.2vw, 18px);
+  bottom: clamp(8px, 1.2vw, 16px);
+  z-index: 25;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: clamp(8px, .56vw, 10px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.42);
+  text-shadow: 0 1px 2px rgba(0,0,0,.24), 0 0 10px rgba(0,0,0,.12);
+  mix-blend-mode: soft-light;
+  opacity: .78;
+}
+@media (max-width: 640px) {
+  .mlz-photo-watermark {
+    right: 8px;
+    bottom: 8px;
+    font-size: 8px;
+    letter-spacing: .055em;
+    opacity: .68;
+  }
+}
+
 @keyframes inquiry-pulse {
   0% { box-shadow: 0 0 0 0 hsl(var(--accent) / .55); }
   70% { box-shadow: 0 0 0 11px hsl(var(--accent) / 0); }

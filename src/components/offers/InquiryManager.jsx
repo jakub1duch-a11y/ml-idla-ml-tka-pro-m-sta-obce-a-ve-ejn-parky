@@ -13,6 +13,12 @@ const AUDIENCES = [
   { value: 'architecture_design', label: 'Architekt / developer / krajinář' },
   { value: 'custom', label: 'Zakázkový projekt / atypické řešení' },
 ];
+const FOLLOW_UP_TEMPLATES = [
+  { value: 'inquiry_reminder', label: 'Připomenout poptávku' },
+  { value: 'offer_reminder', label: 'Připomenout cenovou nabídku' },
+  { value: 'action_discount', label: 'Akční zvýhodnění · 30 dní' },
+];
+const FOLLOW_UP_OFFER_STATUSES = ['sent', 'viewed', 'extension_requested', 'approved', 'expired'];
 
 export default function InquiryManager({ inquiries, products, mediaFiles, onSent }) {
   const [selectedId, setSelectedId] = useState(inquiries[0]?.key || '');

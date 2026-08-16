@@ -109,7 +109,7 @@ function generateBreadcrumbsJsonLd(path, title) {
  *   jsonLd?: any,
  *   geo?: { placename?: string, region?: string },
  *   robots?: string,
- *   locale?: 'cs'|'en'|'de',
+ *   locale?: 'cs'|'en'|'de'|'pl'|'sk'|'it',
  *   alternates?: Array<{hreflang: string, path: string}>
  * }} options
  */

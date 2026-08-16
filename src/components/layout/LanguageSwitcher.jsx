@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Check, ChevronDown, Globe2 } from 'lucide-react';
 import { getLocaleFromPath, getSwitchTargets } from '@/lib/i18n';
 
-export default function LanguageSwitcher({ mobile = false, onNavigate }) {
+export default function LanguageSwitcher({ mobile = false, onNavigate = undefined }) {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const locale = getLocaleFromPath(location.pathname);

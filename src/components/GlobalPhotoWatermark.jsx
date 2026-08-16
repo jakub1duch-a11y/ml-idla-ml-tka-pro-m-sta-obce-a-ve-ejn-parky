@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const WATERMARK_CLASS = 'mlz-photo-watermark';
 const HOST_CLASS = 'mlz-photo-watermark-host';
+const WATERMARK_LOGO = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
 
 const shouldSkipImage = (img) => {
   if (!img || img.closest('[data-no-watermark="true"]')) return true;
@@ -29,7 +30,18 @@ const ensureWatermark = (host) => {
   const mark = document.createElement('span');
   mark.className = WATERMARK_CLASS;
   mark.setAttribute('aria-hidden', 'true');
-  mark.textContent = 'MLŽIDLA® · by HolmTec';
+
+  const logo = document.createElement('img');
+  logo.src = WATERMARK_LOGO;
+  logo.alt = '';
+  logo.className = 'mlz-photo-watermark-logo';
+
+  const label = document.createElement('span');
+  label.className = 'mlz-photo-watermark-label';
+  label.textContent = 'MLZIDLA.CZ · by HolmTec';
+
+  mark.appendChild(logo);
+  mark.appendChild(label);
   host.appendChild(mark);
 };
 

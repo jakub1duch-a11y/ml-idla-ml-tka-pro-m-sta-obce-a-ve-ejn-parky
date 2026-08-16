@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, Compass, Wifi, Wrench, Images, FileText } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
@@ -24,8 +22,6 @@ import SmartValveProductSection from '@/components/produkt/SmartValveProductSect
 import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
-
-gsap.registerPlugin(ScrollToPlugin);
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 function Lightbox({ images, initialIndex, onClose }) {
@@ -188,17 +184,17 @@ export default function ProduktDetail() {
     updateArrowVisibility();
   }, [product]);
 
-  const scrollToContact = () => {
-    if (contactRef.current) {
-      gsap.to(window, { duration: 0.9, scrollTo: { y: contactRef.current, offsetY: 80 }, ease: 'power2.inOut' });
-    }
+  const scrollToElement = (element, offset = 0) => {
+    if (!element) return;
+    const top = element.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
+
+  const scrollToContact = () => scrollToElement(contactRef.current, 80);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab.id);
-    if (tabsNavRef.current) {
-      gsap.to(window, { duration: 0.9, scrollTo: { y: tabsNavRef.current, offsetY: 64 }, ease: 'power2.inOut' });
-    }
+    scrollToElement(tabsNavRef.current, 64);
   };
 
   if (loading) return (

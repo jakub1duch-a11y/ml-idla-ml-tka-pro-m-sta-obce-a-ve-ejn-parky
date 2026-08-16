@@ -20,7 +20,8 @@ export default function ContentPlanForm({ onCreated }) {
       const res = await base44.integrations.Core.InvokeLLM({
         prompt: `Jsi seniorní creative director značky MLŽIDLA® pro Instagram @mlzidla. Vytvoř profesionální český reklamní caption k tématu: "${form.title}". Cílová skupina: architekti, města, obce, hotely a prémiová gastronomie. Struktura: silný scroll-stopping hook; 2–3 konkrétní přínosy (ochlazení prostoru, nerezová odolnost, nízká spotřeba, instalace bez čerpadla podle kontextu); krátký důkaz nebo scénář využití; jasná výzva k návštěvě https://mlzidla.cz a hlavní CTA k nezávazné poptávce na https://mlzidla.cz/poptavka. Tón prémiový, věcný a sebevědomý, bez prázdných superlativů. Použij přirozené odstavce a zakonči 5–7 relevantními hashtagy včetně #mlzidla, #ochlazenimesta a #mestskaarchitektura.`, 
       });
-      setForm((f) => ({ ...f, caption: res }));
+      const caption = typeof res === 'string' ? res : JSON.stringify(res, null, 2);
+      setForm((f) => ({ ...f, caption }));
       setAiUsed(true);
     } finally {
       setGeneratingText(false);
@@ -31,10 +32,11 @@ export default function ContentPlanForm({ onCreated }) {
     if (!form.title) return;
     setGeneratingImage(true);
     try {
-      const res = await base44.integrations.Core.GenerateImage({
+      const generateImageParams = /** @type {import('@base44/sdk').GenerateImageParams & { existing_image_urls?: string[] }} */ ({
         prompt: `Prémiový Instagram reklamní vizuál pro českou značku MLŽIDLA® k tématu: ${form.title}. Použij přesné dodané logo MLŽIDLA jako čistý podpis značky. Zachovej identitu Deep Steel #0D2D38, Ocean Teal #0E5B67, Mist Aqua #61D5E5 a čistou bílou. Nerezové mlžítko integrované do moderního evropského veřejného prostoru, detail jemné ultra-fine vodní mlhy, lidé přirozeně zažívající úlevu od horka, realistická nerezová ocel, prémiová Apple/DJI cinematic estetika. Přidej elegantní zaoblené CTA tlačítko v Mist Aqua s přesným českým textem „VYŽÁDAT NABÍDKU“ a malou adresou „MLZIDLA.CZ/POPTAVKA“. Udržuj text i logo v bezpečné zóně, vysoký kontrast, bez dalších log a bez dalších nápisů. Čtvercová kompozice pro Instagram feed.`,
         existing_image_urls: [BRAND_LOGO_URL, BRAND_REFERENCE_URL],
       });
+      const res = await base44.integrations.Core.GenerateImage(generateImageParams);
       setForm((f) => ({ ...f, image_url: res.url }));
       setAiUsed(true);
     } finally {

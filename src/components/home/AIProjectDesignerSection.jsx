@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { ArrowRight, Sparkles, Building2, Trees, School, Dumbbell, House } from 'lucide-react';
+import {
+  ArrowRight,
+  Building2,
+  Trees,
+  School,
+  Dumbbell,
+  House,
+  ShieldCheck,
+  Ruler,
+  Droplets,
+  FileCheck2,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const examples = [
@@ -7,7 +18,13 @@ const examples = [
   { icon: Trees, label: 'Park', text: 'Městský park, klidová zóna podél pěší trasy, trvalá nízkotlaká instalace bez vysokotlakého čerpadla.' },
   { icon: School, label: 'Škola / školka', text: 'Areál mateřské školy, bezpečné ochlazení dětí v letních měsících, plocha přibližně 120 m².' },
   { icon: Dumbbell, label: 'Sportoviště', text: 'Venkovní sportoviště s vysokou návštěvností, potřebujeme odolné mlžení pro větší počet lidí.' },
-  { icon: House, label: 'Rezidenční zahrada', text: 'Rezidenční zahrada u rodinného domu, chceme elegantní mlžení pro terasu a odpočinkovou zónu s důrazem na design a jednoduchou instalaci.' },
+  { icon: House, label: 'Rezidence', text: 'Rezidenční zahrada nebo společná odpočinková zóna, elegantní mlžení s důrazem na čistou architekturu.' },
+];
+
+const outputs = [
+  { icon: Ruler, title: 'Návrh rozsahu', text: 'Doporučená velikost a počet prvků podle prostoru.' },
+  { icon: Droplets, title: 'Vhodná kolekce', text: 'Výběr řešení podle provozu, využití a charakteru místa.' },
+  { icon: FileCheck2, title: 'Podklad pro nabídku', text: 'Strukturované zadání pro další technické ověření a nacenění.' },
 ];
 
 export default function AIProjectDesignerSection() {
@@ -34,58 +51,137 @@ export default function AIProjectDesignerSection() {
     navigate(`/poradce?${params.toString()}`);
   };
 
+  const visualize = () => {
+    const params = new URLSearchParams();
+    if (value.trim()) params.set('zadani', value.trim());
+    if (selectedType) params.set('typ', selectedType);
+    navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`);
+  };
+
   return (
-    <section className="relative overflow-hidden bg-slate-950 text-white py-20 lg:py-28">
-      <div className="absolute inset-0 pointer-events-none opacity-40" style={{background:'radial-gradient(circle at 78% 18%, rgba(13,148,136,.28), transparent 34%), radial-gradient(circle at 18% 82%, rgba(56,189,248,.12), transparent 30%)'}} />
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[.82fr_1.18fr] gap-12 lg:gap-20 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 mb-6">
-              <Sparkles size={14} className="text-teal-300" />
-              <span className="font-mono text-[10px] tracking-[.18em] uppercase text-white/70">AI Projektant MLŽIDLA®</span>
+    <section className="border-y border-slate-200 bg-[#f5f6f3] py-20 text-slate-950 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid items-start gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28">
+            <div className="mb-6 inline-flex items-center gap-2 border border-slate-300 bg-white px-3 py-1.5">
+              <ShieldCheck size={14} className="text-slate-700" />
+              <span className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-600">Projektová podpora MLŽIDLA®</span>
             </div>
-            <h2 className="font-heading font-light text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.04]">
-              Popište prostor.<br/><span className="text-white/55">Navrhneme mlžení.</span>
+
+            <h2 className="max-w-2xl font-heading text-4xl font-medium leading-[1.02] tracking-[-.03em] text-slate-950 sm:text-5xl lg:text-6xl">
+              Navrhněte základ projektu.
+              <span className="mt-1 block text-slate-500">Technické řešení ověří náš tým.</span>
             </h2>
-            <p className="mt-6 text-base lg:text-lg leading-relaxed text-white/60 max-w-xl">
-              AI projektant vyhodnotí typ prostoru, velikost a způsob využití. Doporučí vhodnou kolekci, počet prvků a připraví zadání pro přesnou cenovou nabídku.
+
+            <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 lg:text-lg lg:leading-8">
+              Zadejte typ prostoru, přibližnou velikost a způsob využití. Projektant připraví orientační sestavu, vhodnou kolekci a podklad pro další konzultaci.
             </p>
-            <p className="mt-5 text-xs text-white/35 max-w-lg leading-relaxed">
-              Návrh je orientační. Finální technické řešení vždy ověří náš tým podle přívodu vody, dispozice a požadavků projektu.
-            </p>
+
+            <div className="mt-9 grid gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {outputs.map(({ icon: Icon, title, text }) => (
+                <div key={title} className="border-t border-slate-300 pt-4">
+                  <Icon size={18} className="text-slate-700" />
+                  <h3 className="mt-3 text-sm font-semibold text-slate-900">{title}</h3>
+                  <p className="mt-1.5 text-xs leading-5 text-slate-500">{text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex items-start gap-3 border-l-2 border-slate-900 pl-4">
+              <ShieldCheck size={17} className="mt-0.5 shrink-0 text-slate-700" />
+              <p className="max-w-lg text-xs leading-5 text-slate-500">
+                Výstup je orientační návrh. Finální počet prvků, tlak, průtok, kotvení a napojení vždy kontrolujeme podle skutečných podmínek projektu.
+              </p>
+            </div>
           </div>
 
-          <div className="rounded-[28px] border border-white/12 bg-white/[.06] backdrop-blur-sm p-4 sm:p-6 lg:p-7 shadow-2xl shadow-black/20">
-            <label className="block font-mono text-[10px] tracking-[.16em] uppercase text-white/45 mb-3">1 · Typ prostoru</label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-              {examples.map(({icon: Icon, label}) => {
-                const active = selectedType === label;
-                return (
-                  <button key={label} type="button" onClick={() => selectType(label)} className={`group rounded-xl border px-3 py-3 text-left transition-colors ${active ? 'border-teal-300/60 bg-teal-300/10' : 'border-white/10 bg-white/[.04] hover:bg-white/[.08] hover:border-white/20'}`}>
-                    <Icon size={15} className={`mb-2 ${active ? 'text-teal-300' : 'text-white/45 group-hover:text-teal-300'}`} />
-                    <span className={`block text-xs ${active ? 'text-white' : 'text-white/65'}`}>{label}</span>
-                  </button>
-                );
-              })}
+          <div className="border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,.08)]">
+            <div className="border-b border-slate-200 px-5 py-5 sm:px-7 lg:px-8">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">Návrh projektu</p>
+                  <h3 className="mt-1 font-heading text-2xl font-medium tracking-tight text-slate-950 sm:text-3xl">Základní zadání</h3>
+                </div>
+                <p className="text-xs text-slate-400">Stačí přibližné údaje.</p>
+              </div>
             </div>
-            <label className="block mt-5 font-mono text-[10px] tracking-[.16em] uppercase text-white/45 mb-3">2 · Popis projektu</label>
-            <textarea
-              value={value}
-              onChange={(e) => updateValue(e.target.value)}
-              onKeyDown={(e) => {
-                if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') start();
-              }}
-              rows={5}
-              placeholder="Např. plocha 20 × 30 m, vysoká návštěvnost, chceme vytvořit atraktivní mlžiště pro děti i dospělé…"
-              className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-[15px] leading-relaxed text-white placeholder:text-white/25 focus:outline-none focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/10"
-            />
-            <div className="mt-5 flex flex-col sm:flex-row gap-3">
-              <button type="button" onClick={() => start()} disabled={!value.trim() && !selectedType} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
-                Navrhnout řešení pomocí AI <ArrowRight size={16}/>
-              </button>
-              <button type="button" onClick={() => { const params = new URLSearchParams(); if (value.trim()) params.set('zadani', value.trim()); if (selectedType) params.set('typ', selectedType); navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`); }} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-6 py-3.5 text-sm font-semibold text-white/80 hover:bg-white/[.08] transition-colors">
-                Vizualizovat z fotografie
-              </button>
+
+            <div className="p-5 sm:p-7 lg:p-8">
+              <fieldset>
+                <legend className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
+                  <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">01</span>
+                  Typ prostoru
+                </legend>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+                  {examples.map(({ icon: Icon, label }) => {
+                    const active = selectedType === label;
+                    return (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => selectType(label)}
+                        aria-pressed={active}
+                        className={`min-h-[88px] border px-3 py-3 text-left transition-colors ${
+                          active
+                            ? 'border-slate-950 bg-slate-950 text-white'
+                            : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
+                        }`}
+                      >
+                        <Icon size={17} className={active ? 'text-white' : 'text-slate-500'} />
+                        <span className="mt-3 block text-xs font-medium leading-4">{label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
+              <div className="mt-7">
+                <label htmlFor="project-description" className="mb-3 flex items-center gap-3 text-xs font-semibold text-slate-700">
+                  <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">02</span>
+                  Popis projektu
+                </label>
+                <textarea
+                  id="project-description"
+                  value={value}
+                  onChange={(e) => updateValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') start();
+                  }}
+                  rows={6}
+                  placeholder="Např. městský park, pěší promenáda cca 35 m, vysoká návštěvnost v létě, potřebujeme ochladit odpočinkovou zónu bez vysokotlakého čerpadla."
+                  className="w-full resize-none border border-slate-300 bg-white px-4 py-4 text-[15px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
+                />
+                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-400">
+                  <span>Rozměr prostoru</span>
+                  <span>Počet návštěvníků</span>
+                  <span>Typ provozu</span>
+                  <span>Požadovaný efekt</span>
+                </div>
+              </div>
+
+              <div className="mt-7 grid gap-3 sm:grid-cols-[1fr_auto]">
+                <button
+                  type="button"
+                  onClick={start}
+                  disabled={!value.trim() && !selectedType}
+                  className="inline-flex min-h-[52px] items-center justify-center gap-2 bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-35"
+                >
+                  Připravit návrh projektu <ArrowRight size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={visualize}
+                  className="inline-flex min-h-[52px] items-center justify-center border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50"
+                >
+                  Vizualizace z fotografie
+                </button>
+              </div>
+
+              <div className="mt-6 grid gap-2 border-t border-slate-200 pt-5 text-[11px] text-slate-500 sm:grid-cols-3">
+                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Doporučení kolekce</span>
+                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Orientační sestava</span>
+                <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Kontrola týmem HolmTec</span>
+              </div>
             </div>
           </div>
         </div>

@@ -60,7 +60,8 @@ export default function Kontakt() {
         name: form.name,
         email: form.email,
         message: msg,
-        status: 'NEW'
+        service_type: form.request_type || 'contact',
+        status: 'new'
       });
       trackCooperationFormSubmit();
       trackInquirySubmitted(form.request_type, form.product_interest);
@@ -147,7 +148,7 @@ export default function Kontakt() {
             <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-slate-50 border border-slate-200 space-y-5">
 
                 {/* Kontaktní údaje */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input type="text" required placeholder="Jméno a příjmení *"
                 value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className={inputCls} />
@@ -155,7 +156,7 @@ export default function Kontakt() {
                 value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className={inputCls} />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input type="tel" placeholder="Telefon"
                 value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className={inputCls} />
@@ -165,7 +166,7 @@ export default function Kontakt() {
                 </div>
 
                 {/* Produkt + množství */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-1">Produkt / mlžný systém</label>
                     <input list="products-contact" type="text"

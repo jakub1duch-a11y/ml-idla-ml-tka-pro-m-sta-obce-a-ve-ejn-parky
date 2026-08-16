@@ -15,38 +15,40 @@ const CLIPS = [
 
 export default function MistVideoShowcase() {
   return (
-    <section className="bg-background py-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Mlžení naživo</p>
-            <h2 className="max-w-lg font-heading tracking-tight text-foreground text-3xl md:text-3xl">Od svařování nerezu po první mlhu na místě</h2>
+            <h2 className="max-w-lg font-heading text-[clamp(2rem,8vw,2.4rem)] leading-[1.08] tracking-[-0.035em] text-foreground md:text-3xl">Od svařování nerezu po první mlhu na místě</h2>
           </div>
           <p className="max-w-sm text-sm text-muted-foreground">Krátké záběry přímo z dílny a instalací — tak, jak to u nás skutečně vypadá.</p>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-6 overflow-hidden rounded-3xl border border-border shadow-xl">
-          <video src={HERO_VIDEO} autoPlay muted loop playsInline className="aspect-video w-full object-cover" />
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }} className="mb-5 overflow-hidden rounded-2xl border border-border shadow-lg sm:mb-6 sm:rounded-3xl sm:shadow-xl">
+          <video src={HERO_VIDEO} autoPlay muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {CLIPS.map((clip, i) =>
           <motion.div
             key={clip.url}
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-            className="group relative overflow-hidden rounded-2xl border border-border">
+            transition={{ delay: Math.min(i * 0.04, 0.18), duration: 0.4 }}
+            className="group relative overflow-hidden rounded-xl border border-border bg-slate-950 shadow-sm sm:rounded-2xl">
             
               <video
               src={clip.url}
               muted
               loop
               playsInline
-              onMouseEnter={(e) => e.currentTarget.play()}
+              preload="none"
+              onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
               onMouseLeave={(e) => e.currentTarget.pause()}
-              className="aspect-square w-full object-cover" />
+              onClick={(e) => e.currentTarget.paused ? e.currentTarget.play().catch(() => {}) : e.currentTarget.pause()}
+              className="aspect-square w-full cursor-pointer object-cover" />
             
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
                 <p className="text-xs font-medium text-white">{clip.caption}</p>

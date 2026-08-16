@@ -237,18 +237,31 @@
   right: clamp(8px, 1.2vw, 18px);
   bottom: clamp(8px, 1.2vw, 16px);
   z-index: 25;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: clamp(5px, .5vw, 8px);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+  opacity: .28;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.28));
+}
+.mlz-photo-watermark-logo {
+  display: block;
+  width: clamp(48px, 5.5vw, 86px);
+  height: auto;
+  max-height: 24px;
+  object-fit: contain;
+  opacity: .82;
+}
+.mlz-photo-watermark-label {
   font-family: var(--font-body);
-  font-size: clamp(8px, .56vw, 10px);
+  font-size: clamp(7px, .52vw, 9px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: .08em;
-  color: rgba(255,255,255,.42);
-  text-shadow: 0 1px 2px rgba(0,0,0,.24), 0 0 10px rgba(0,0,0,.12);
-  mix-blend-mode: soft-light;
-  opacity: .78;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 1px 2px rgba(0,0,0,.3);
 }
 @media (max-width: 640px) {
   .mlz-photo-watermark {

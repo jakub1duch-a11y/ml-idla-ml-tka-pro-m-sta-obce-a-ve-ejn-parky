@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const iconProps = /** @type {React.SVGProps<SVGPathElement>} */ ({ fill: 'none', stroke: 'currentColor', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' });
+const iconProps = /** @type {{ fill: string, stroke: string, strokeWidth: number, strokeLinecap: 'round', strokeLinejoin: 'round' }} */ ({ fill: 'none', stroke: 'currentColor', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' });
 
 export function NoPumpIcon() {
   return <svg viewBox="0 0 64 64" className="h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-24"><motion.g initial={{ opacity: 0, y: -6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><path {...iconProps} d="M14 47V27c0-9 7-16 16-16s16 7 16 16v20" /><motion.path {...iconProps} d="M32 28c0 4-3 7-3 10a3 3 0 0 0 6 0c0-3-3-6-3-10Z" fill="currentColor" stroke="none" animate={{ y: [0, 10, 10], opacity: [0, 1, 0] }} transition={{ delay: 1.4, duration: 1.5, repeat: Infinity, repeatDelay: 2.4 }} /></motion.g></svg>;

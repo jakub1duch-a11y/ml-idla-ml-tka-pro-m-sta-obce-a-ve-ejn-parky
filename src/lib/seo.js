@@ -31,7 +31,13 @@ function setCanonical(path) {
 
 function setJsonLd(data) {
   let el = document.getElementById('json-ld-seo');
-  if (!el) { el = document.createElement('script'); el.id = 'json-ld-seo'; el.type = 'application/ld+json'; document.head.appendChild(el); }
+  if (!el) {
+    const script = document.createElement('script');
+    script.id = 'json-ld-seo';
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+    el = script;
+  }
   el.textContent = JSON.stringify(data);
 }
 

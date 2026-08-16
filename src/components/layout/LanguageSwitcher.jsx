@@ -4,19 +4,29 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Check, ChevronDown, Globe2 } from 'lucide-react';
 import { getLocaleFromPath, getSwitchTargets } from '@/lib/i18n';
 
+const SWITCH_LABELS = {
+  cs: { button: 'Změnit jazyk webu', heading: 'Jazyk webu' },
+  en: { button: 'Change website language', heading: 'Website language' },
+  de: { button: 'Sprache der Website ändern', heading: 'Website-Sprache' },
+  pl: { button: 'Zmień język strony', heading: 'Język strony' },
+  sk: { button: 'Zmeniť jazyk webu', heading: 'Jazyk webu' },
+  it: { button: 'Cambia lingua del sito', heading: 'Lingua del sito' },
+};
+
 export default function LanguageSwitcher({ mobile = false, onNavigate = undefined }) {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const locale = getLocaleFromPath(location.pathname);
   const targets = getSwitchTargets(location.pathname);
   const active = targets.find((item) => item.code === locale) || targets[0];
+  const labels = SWITCH_LABELS[locale] || SWITCH_LABELS.en;
 
   if (mobile) {
     return (
       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
         <div className="mb-3 flex items-center gap-2 px-1">
           <Globe2 size={15} className="text-secondary" />
-          <span className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Language / Jazyk</span>
+          <span className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">{labels.heading}</span>
         </div>
         <div className="grid grid-cols-3 gap-2">
           {targets.map((item, index) => (
@@ -43,7 +53,7 @@ export default function LanguageSwitcher({ mobile = false, onNavigate = undefine
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
-        aria-label="Změnit jazyk webu"
+        aria-label={labels.button}
         className={`flex min-h-10 items-center gap-1.5 rounded-full border px-3 text-xs font-semibold tracking-wide transition ${open ? 'border-white/30 bg-white/15 text-white' : 'border-white/15 bg-white/[.06] text-white/85 hover:border-white/30 hover:bg-white/10'}`}
       >
         <Globe2 size={14} />

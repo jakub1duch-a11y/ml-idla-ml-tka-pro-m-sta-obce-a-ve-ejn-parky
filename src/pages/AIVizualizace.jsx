@@ -9,6 +9,62 @@ const MAX_UPLOAD_MB = 20;
 const OPTIMIZE_FROM_MB = 12;
 const MAX_QUOTE_FILES = 6;
 const MAX_QUOTE_FILE_MB = 25;
+const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const BRAND_WEB = 'MLZIDLA.CZ';
+
+const createWatermarkedImageFile = async (imageUrl) => {
+  const imageResponse = await fetch(imageUrl, { mode: 'cors' });
+  if (!imageResponse.ok) throw new Error('Nepodařilo se načíst vytvořenou vizualizaci.');
+  const imageBlob = await imageResponse.blob();
+  const imageBitmap = await createImageBitmap(imageBlob);
+
+  const canvas = document.createElement('canvas');
+  canvas.width = imageBitmap.width;
+  canvas.height = imageBitmap.height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(imageBitmap, 0, 0);
+
+  const shortSide = Math.min(canvas.width, canvas.height);
+  const padding = Math.max(18, Math.round(shortSide * 0.022));
+  const targetLogoWidth = Math.max(90, Math.round(shortSide * 0.16));
+  const fontSize = Math.max(12, Math.round(shortSide * 0.018));
+
+  try {
+    const logoResponse = await fetch(BRAND_LOGO_URL, { mode: 'cors' });
+    if (logoResponse.ok) {
+      const logoBlob = await logoResponse.blob();
+      const logoBitmap = await createImageBitmap(logoBlob);
+      const scale = targetLogoWidth / logoBitmap.width;
+      const logoWidth = targetLogoWidth;
+      const logoHeight = Math.round(logoBitmap.height * scale);
+      const x = canvas.width - padding - logoWidth;
+      const y = canvas.height - padding - logoHeight - Math.round(fontSize * 1.6);
+      ctx.save();
+      ctx.globalAlpha = 0.18;
+      ctx.drawImage(logoBitmap, x, y, logoWidth, logoHeight);
+      ctx.restore();
+      logoBitmap.close?.();
+    }
+  } catch {
+    // Text signature below still protects the output if the logo asset cannot be loaded.
+  }
+
+  ctx.save();
+  ctx.globalAlpha = 0.24;
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'bottom';
+  ctx.font = `600 ${fontSize}px Arial, sans-serif`;
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = 'rgba(0,0,0,.45)';
+  ctx.shadowBlur = Math.max(2, Math.round(fontSize * 0.18));
+  ctx.fillText(BRAND_WEB, canvas.width - padding, canvas.height - padding);
+  ctx.restore();
+  imageBitmap.close?.();
+
+  const watermarkedBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/webp', 0.92));
+  if (!watermarkedBlob) throw new Error('Nepodařilo se vytvořit vodoznak.');
+  return new File([watermarkedBlob], `mlzidla-vizualizace-${Date.now()}.webp`, { type: 'image/webp' });
+};
 
 const optimizeLargePhoto = async (file) => {
   if (file.size <= OPTIMIZE_FROM_MB * 1024 * 1024) return file;
@@ -202,11 +258,19 @@ Zadání zákazníka: ${context}.
 
 MLHA: Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci výrobku; bez mokrých louží, bez dramatických efektů a bez zakrytí produktu nebo důležitých částí scény.
 
-ZÁKAZY: Bez textu, bez logotypů, bez grafických overlayů, bez změny denní doby, bez změny sezóny, bez změny barevnosti celé fotografie, bez generování jiného prostředí. Výsledek musí vypadat jako tatáž původní fotografie po fyzické instalaci SKUTEČNÉHO PRODUKTU, nikoli jako nový koncept inspirovaný místem.`,
+ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změny denní doby, sezóny, barevnosti celé fotografie nebo prostředí. Výsledek musí vypadat jako tatáž původní fotografie po fyzické instalaci SKUTEČNÉHO PRODUKTU, nikoli jako nový koncept inspirovaný místem. Finální značkový vodoznak MLŽIDLA® a MLZIDLA.CZ se přidává až po generování, proto jej do samotné scény negeneruj.`, 
         existing_image_urls: [uploadedUrl, ...productRefs],
       });
       if (!response?.url) throw new Error('Generátor nevrátil výsledný obrázek.');
-      setResultUrl(response.url);
+      let finalResultUrl = response.url;
+      try {
+        const watermarkedFile = await createWatermarkedImageFile(response.url);
+        const watermarkUpload = await base44.integrations.Core.UploadFile({ file: watermarkedFile });
+        if (watermarkUpload?.file_url) finalResultUrl = watermarkUpload.file_url;
+      } catch (watermarkError) {
+        console.warn('Watermark post-processing skipped', watermarkError);
+      }
+      setResultUrl(finalResultUrl);
     } catch (e) {
       setError(e?.message || 'Vizualizaci se nepodařilo vytvořit. Zkuste to prosím znovu.');
     } finally {

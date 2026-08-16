@@ -66,6 +66,12 @@ import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
 import BendyARPrototype from '@/pages/BendyARPrototype';
 import GateARPrototype from '@/pages/GateARPrototype';
+import LocalizedLanding from '@/pages/LocalizedLanding';
+import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
+
+const LOCALIZED_ROUTES = Object.entries(ROUTE_MAP).flatMap(([routeKey, paths]) =>
+  SUPPORTED_LOCALES.filter((locale) => locale !== 'cs').map((locale) => ({ routeKey, locale, path: paths[locale] }))
+);
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -86,6 +92,9 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
+        {LOCALIZED_ROUTES.map(({ routeKey, locale, path }) => (
+          <Route key={`${locale}-${routeKey}`} path={path} element={<LocalizedLanding routeKey={routeKey} />} />
+        ))}
         <Route path="/" element={<Home />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/mestske-mlzitka" element={<CollectionDetail forcedCollection="city" canonicalPath="/mestske-mlzitka" />} />

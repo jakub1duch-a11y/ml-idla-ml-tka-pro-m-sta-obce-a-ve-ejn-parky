@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { CheckCircle2, ExternalLink, FileText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
+import { CheckCircle2, ExternalLink, Eye, FileText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 
@@ -263,6 +263,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       } catch (archiveError) { console.warn('Inquiry PDF archive unavailable', archiveError); }
 
       setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl });
+      if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${selectedProduct.name} | MLŽIDLA®`);
+      if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${selectedProduct.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 
@@ -279,6 +281,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         presentation_pdf_base64: prepared.presentation?.presentation_pdf_base64, presentation_filename: prepared.presentation?.presentation_filename,
         presentation_url: prepared.presentation?.presentation_url || '', quote_pdf_url: prepared.quoteDriveUrl || '', portal_url: 'https://mlzidla.cz/muj-projekt',
         valid_until: prepared.validUntil.toISOString(), quote_number: prepared.quoteNumber, attachments,
+        project_summary: selected.message || '', email_type: 'offer',
       });
       if (prepared.projectOrder?.id) await base44.entities.ProjectOrder.update(prepared.projectOrder.id, { status: 'sent', sender_email: senderEmail, bcc_recipients: BCC });
       onSent(); setMessage(''); setSubject(''); setAttachments([]); setPrepared(null); setApprovedToSend(false);
@@ -365,8 +368,30 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
             </div>
           )}
 
-          <input value={subject} onChange={(event) => setSubject(event.target.value)} placeholder="Předmět zprávy" className="mt-6 w-full border border-border bg-background px-3 py-2.5 text-sm"/>
-          <textarea value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Napište odpověď nebo si ji nechte navrhnout." rows="9" className="mt-3 w-full border border-border bg-background px-3 py-3 text-sm"/>
+          <div className="mt-6 grid gap-3">
+            <label className="text-xs font-semibold text-muted-foreground">Předmět e-mailu
+              <input value={subject} onChange={(event) => setSubject(event.target.value)} placeholder="Předmět zprávy" className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm text-foreground"/>
+            </label>
+            <label className="text-xs font-semibold text-muted-foreground">Text e-mailu
+              <textarea value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Napište odpověď nebo si ji nechte navrhnout." rows="9" className="mt-1 w-full border border-border bg-background px-3 py-3 text-sm text-foreground"/>
+            </label>
+          </div>
+
+          {(subject || message) && <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-[#eef3f4]">
+            <div className="flex items-center justify-between border-b border-slate-200 bg-white px-5 py-3"><div className="flex items-center gap-2 text-xs font-semibold text-slate-700"><Eye size={14}/> Náhled e-mailu zákazníkovi</div><span className="text-[10px] text-slate-400">Před odesláním lze vše upravit výše</span></div>
+            <div className="p-4 sm:p-6">
+              <div className="mx-auto max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="bg-[#0d2d38] px-6 py-5"><div className="text-xl font-extrabold tracking-wide text-[#61d5e5]">MLŽIDLA® <span className="text-xs font-semibold text-white/50">by HolmTec</span></div><div className="mt-1 text-[10px] uppercase tracking-[.14em] text-white/55">Cenová nabídka projektu</div></div>
+                <div className="p-6">
+                  <p className="text-[10px] uppercase tracking-[.14em] text-cyan-700">Předmět</p><p className="mt-1 text-sm font-semibold text-slate-900">{subject || '—'}</p>
+                  <div className="mt-5 whitespace-pre-line text-sm leading-6 text-slate-600">{message || '—'}</div>
+                  {selected?.message && <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4"><p className="text-[10px] uppercase tracking-[.12em] text-slate-500">Shrnutí vaší poptávky k nacenění</p><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{selected.message}</p></div>}
+                  {prepared && <div className="mt-5 rounded-xl border border-cyan-200 bg-cyan-50/60 p-4"><div className="text-xs font-semibold text-slate-900">Nabídka {prepared.quoteNumber}</div><div className="mt-1 text-xs text-slate-600">Cena projektu: <strong>{money(finalTotal)} Kč bez DPH</strong> · platnost do {prepared.validUntil.toLocaleDateString('cs-CZ')}</div><div className="mt-4 flex flex-wrap gap-2"><span className="rounded-full bg-[#0e5b67] px-4 py-2 text-[11px] font-bold text-white">Souhlasím a objednávám</span><span className="rounded-full border border-slate-300 bg-white px-4 py-2 text-[11px] font-semibold text-slate-700">Otevřít PDF nabídku</span>{prepared.presentation?.presentation_url && <span className="rounded-full bg-[#dff7fa] px-4 py-2 text-[11px] font-semibold text-[#0d2d38]">Prezentace projektu</span>}</div></div>}
+                  <div className="mt-5 rounded-xl bg-[#0d2d38] p-4 text-white"><p className="text-[10px] uppercase tracking-[.12em] text-[#61d5e5]">Technický kontakt</p><p className="mt-1 text-sm font-bold">Ing. Radek Meduna</p><p className="mt-1 text-xs leading-5 text-white/70">+420 774 700 390 · meduna@holmtec.cz · info@mlzidla.cz</p></div>
+                </div>
+              </div>
+            </div>
+          </div>}
 
           {followUpType && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={followUpApproved} onChange={(e) => setFollowUpApproved(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji follow-up zprávu k odeslání.</strong><br/><span className="text-xs text-slate-500">E-mail použije jednotnou profesionální šablonu MLŽIDLA®, shrnutí projektu, kontaktní kartu a firemní patičku.</span></span></label>}
           {prepared && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={approvedToSend} onChange={(e) => setApprovedToSend(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji tuto verzi nabídky k odeslání.</strong><br/><span className="text-xs text-slate-500">Bez tohoto potvrzení systém nabídku zákazníkovi neodešle.</span></span></label>}

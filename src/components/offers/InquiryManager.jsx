@@ -46,7 +46,92 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
   const selectedProduct = products.find((item) => item.id === productId);
 
   const resetPrepared = () => { setPrepared(null); setApprovedToSend(false); };
+  const resetFollowUp = () => { setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); };
   const chooseProduct = (id) => { const product = products.find((item) => item.id === id); setProductId(id); setBasePrice(product?.price_from || 0); resetPrepared(); };
+
+  const findLatestOffer = async () => {
+    if (!selected?.id) return null;
+    const orders = await base44.entities.ProjectOrder.list('-created_date', 200);
+    return orders.find((order) => order.inquiry_id === selected.id && FOLLOW_UP_OFFER_STATUSES.includes(order.status))
+      || orders.find((order) => order.inquiry_id === selected.id)
+      || null;
+  };
+
+  const applyFollowUpTemplate = async (type) => {
+    if (!selected) return;
+    setError(''); setBusy('followup-template'); setFollowUpApproved(false); resetPrepared();
+    try {
+      const needsOffer = type === 'offer_reminder' || type === 'action_discount';
+      const offer = needsOffer ? await findLatestOffer() : null;
+      if (needsOffer && !offer) throw new Error('K této poptávce zatím není uložená předchozí cenová nabídka.');
+
+      const projectName = offer?.product_name || selected.product || 'váš projekt';
+      const quoteNumber = offer?.quote_number || '';
+      const validUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+      const previousTotal = Number(offer?.total_price || 0);
+      const promoTotal = Math.round(previousTotal * (1 - Number(followUpDiscount || 0) / 100));
+
+      if (type === 'inquiry_reminder') {
+        setSubject('Navazujeme na vaši poptávku | MLŽIDLA®');
+        setMessage(`Dobrý den,\n\nrádi bychom navázali na vaši poptávku k projektu „${projectName}“. Ověřujeme, zda je projekt stále aktuální a zda od nás potřebujete doplnit technické informace, doporučení vhodné konfigurace nebo podklady pro rozhodnutí.\n\nVaše původní zadání máme uložené a můžeme na něj přímo navázat. Pokud se mezitím změnily rozměry prostoru, termín, rozsah realizace nebo jiné požadavky, stačí nám změny odpovědí na tento e-mail doplnit.\n\nPokud je projekt stále aktuální, rádi s vámi projdeme další krok a připravíme podklady k nacenění.`);
+      }
+
+      if (type === 'offer_reminder') {
+        const validityText = offer.valid_until ? new Date(offer.valid_until).toLocaleDateString('cs-CZ') : 'dle původní nabídky';
+        setSubject(`Připomenutí cenové nabídky ${quoteNumber || ''} | MLŽIDLA®`.replace('  ', ' '));
+        setMessage(`Dobrý den,\n\nnavazujeme na naši cenovou nabídku${quoteNumber ? ` ${quoteNumber}` : ''} k projektu „${projectName}“. Chtěli bychom ověřit, zda jste měli možnost nabídku projít a zda můžeme doplnit některé technické, cenové nebo realizační informace.\n\nPůvodní platnost nabídky: ${validityText}. Pokud je projekt stále aktuální, můžeme společně ověřit rozsah, termín realizace a případně nabídku aktualizovat podle současného zadání.\n\nStačí odpovědět na tento e-mail nebo nám zavolat. Rádi navážeme tam, kde jsme skončili.`);
+      }
+
+      if (type === 'action_discount') {
+        if (!(Number(followUpDiscount) > 0 && Number(followUpDiscount) < 100)) throw new Error('Pro akční follow-up nastavte slevu mezi 1 a 99 %.');
+        if (!(previousTotal > 0)) throw new Error('Poslední nabídka nemá uloženou cenu, ze které lze akční zvýhodnění vypočítat.');
+        setSubject(`Akční zvýhodnění k nabídce ${quoteNumber || ''} | MLŽIDLA®`.replace('  ', ' '));
+        setMessage(`Dobrý den,\n\nnavazujeme na dříve zaslanou nabídku${quoteNumber ? ` ${quoteNumber}` : ''} k projektu „${projectName}“. Pokud je projekt stále aktuální, rádi bychom vám jako podnět k dokončení rozhodnutí nabídli jednorázové zvýhodnění ${Number(followUpDiscount).toLocaleString('cs-CZ')} % z poslední nabídkové ceny.\n\nZvýhodnění navrhujeme s platností do ${validUntil.toLocaleDateString('cs-CZ')}. Pokud o něj budete mít zájem, stačí odpovědět na tento e-mail a připravíme aktualizovanou formální cenovou nabídku s novou cenou a platností.\n\nSoučasně rádi doplníme jakékoli technické informace nebo upravíme rozsah projektu, pokud se od posledního kontaktu něco změnilo.`);
+      }
+
+      setLatestOffer(offer);
+      setFollowUpType(type);
+    } catch (requestError) {
+      setError(errorMessage(requestError));
+      resetFollowUp();
+    } finally { setBusy(''); }
+  };
+
+  const sendFollowUp = async () => {
+    if (!selected || !followUpType || !followUpApproved || !subject || !message) return;
+    setError(''); setBusy('followup-send');
+    try {
+      const actionDiscount = followUpType === 'action_discount';
+      const reminderOffer = followUpType === 'offer_reminder' ? latestOffer : null;
+      const previousTotal = Number(latestOffer?.total_price || 0);
+      const newTotal = actionDiscount ? Math.round(previousTotal * (1 - Number(followUpDiscount || 0) / 100)) : 0;
+      const validUntil = actionDiscount
+        ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        : reminderOffer?.valid_until ? new Date(reminderOffer.valid_until) : null;
+
+      await base44.functions.invoke('sendInquiryReply', {
+        inquiry_type: selected.type,
+        inquiry_id: selected.id,
+        subject,
+        message,
+        sender_email: senderEmail,
+        project_summary: selected.message || '',
+        email_type: followUpType,
+        discount_percent: actionDiscount ? Number(followUpDiscount || 0) : 0,
+        previous_total: actionDiscount ? previousTotal : 0,
+        new_total: actionDiscount ? newTotal : 0,
+        quote_number: reminderOffer?.quote_number || '',
+        quote_pdf_url: reminderOffer?.quote_pdf_url || '',
+        presentation_url: reminderOffer?.presentation_url || '',
+        portal_url: reminderOffer ? 'https://mlzidla.cz/muj-projekt' : '',
+        valid_until: validUntil?.toISOString() || '',
+        attachments: [],
+      });
+
+      onSent();
+      setMessage(''); setSubject(''); resetFollowUp();
+    } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
+  };
 
   const generateText = async () => {
     if (!selected) return;

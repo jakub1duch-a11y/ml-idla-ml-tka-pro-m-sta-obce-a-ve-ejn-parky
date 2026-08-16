@@ -38,14 +38,26 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
-    base44.auth.me().then(u => {
-      setUser(u);
-      setLoading(false);
-      if (!u) navigate('/admin-login', { replace: true });
-    }).catch(() => {
-      setLoading(false);
-      navigate('/admin-login', { replace: true });
-    });
+    const resolveAdmin = async () => {
+      try {
+        let u = await base44.auth.me();
+        if (u?.email?.toLowerCase() === 'jakub1duch@gmail.com' && u.role !== 'admin') {
+          try {
+            await base44.functions.invoke('bootstrapJakubAdmin', {});
+            u = await base44.auth.me();
+          } catch (promotionError) {
+            console.warn('Admin bootstrap failed', promotionError);
+          }
+        }
+        setUser(u);
+        if (!u) navigate('/admin-login', { replace: true });
+      } catch (_error) {
+        navigate('/admin-login', { replace: true });
+      } finally {
+        setLoading(false);
+      }
+    };
+    resolveAdmin();
   }, [navigate]);
 
   if (loading) return (

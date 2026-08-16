@@ -21,6 +21,20 @@ const STATIC_PAGES = [
   { loc: '/gdpr', priority: '0.3', changefreq: 'yearly' },
 ];
 
+const LOCALIZED_STATIC_PATHS = [
+  '/en', '/en/misting-systems', '/en/urban-misting', '/en/garden-misting', '/en/custom-misting', '/en/how-it-works', '/en/smart-control', '/en/projects', '/en/contact', '/en/quote', '/en/about', '/en/faq',
+  '/de', '/de/nebelanlagen', '/de/stadtnebel', '/de/gartennebel', '/de/sonderanfertigung', '/de/funktionsweise', '/de/smart-steuerung', '/de/referenzen', '/de/kontakt', '/de/anfrage', '/de/ueber-uns', '/de/faq',
+  '/pl', '/pl/systemy-mglowe', '/pl/systemy-mglowe-dla-miast', '/pl/mgla-wodna-do-ogrodu', '/pl/systemy-mglowe-na-zamowienie', '/pl/jak-dziala-mgla-wodna', '/pl/inteligentne-sterowanie', '/pl/realizacje', '/pl/kontakt', '/pl/wycena', '/pl/o-nas', '/pl/faq',
+  '/sk', '/sk/hmlove-systemy', '/sk/hmlove-systemy-pre-mesta', '/sk/hmlove-systemy-do-zahrady', '/sk/hmlove-systemy-na-mieru', '/sk/ako-funguje-vodna-hmla', '/sk/smart-riadenie', '/sk/realizacie', '/sk/kontakt', '/sk/cenova-ponuka', '/sk/o-nas', '/sk/faq',
+  '/it', '/it/sistemi-nebulizzazione', '/it/nebulizzazione-urbana', '/it/nebulizzazione-giardino', '/it/nebulizzazione-su-misura', '/it/come-funziona', '/it/controllo-smart', '/it/progetti', '/it/contatti', '/it/preventivo', '/it/chi-siamo', '/it/faq',
+];
+
+const LOCALIZED_STATIC_PAGES = LOCALIZED_STATIC_PATHS.map((loc) => ({
+  loc,
+  priority: loc.split('/').filter(Boolean).length === 1 ? '0.9' : '0.75',
+  changefreq: 'monthly',
+}));
+
 function toW3CDate(d) {
   return new Date(d).toISOString().split('T')[0];
 }
@@ -48,7 +62,7 @@ Deno.serve(async (req) => {
     const urls = [];
 
     // Static pages
-    for (const page of STATIC_PAGES) {
+    for (const page of [...STATIC_PAGES, ...LOCALIZED_STATIC_PAGES]) {
       urls.push(buildUrl(page.loc, today, page.priority, page.changefreq));
     }
 

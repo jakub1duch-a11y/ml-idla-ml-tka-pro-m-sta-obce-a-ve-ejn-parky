@@ -44,10 +44,20 @@ export default function Poradce() {
   const autoStartedRef = useRef(false);
   useEffect(() => {
     const zadani = searchParams.get('zadani')?.trim();
-    if (zadani && !autoStartedRef.current && !conversation && !starting) {
+    const typ = searchParams.get('typ')?.trim();
+    const tvar = searchParams.get('tvar')?.trim();
+    const profil = searchParams.get('profil')?.trim();
+    const structuredBrief = [
+      zadani,
+      typ ? `Typ prostoru: ${typ}` : '',
+      tvar ? `Výchozí motiv / produkt: ${tvar}` : '',
+      profil ? `Výrobní omezení: ${profil}` : '',
+    ].filter(Boolean).join('\n');
+
+    if (structuredBrief && !autoStartedRef.current && !conversation && !starting) {
       autoStartedRef.current = true;
-      setInput(zadani);
-      startConversation(zadani);
+      setInput(structuredBrief);
+      startConversation(structuredBrief);
     }
   }, [searchParams]);
 

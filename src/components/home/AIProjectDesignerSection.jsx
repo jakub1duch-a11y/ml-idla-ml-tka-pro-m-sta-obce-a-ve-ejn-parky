@@ -14,6 +14,7 @@ import {
   Landmark,
   HeartPulse,
   Sparkles,
+  Flower2,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ const examples = [
   { icon: Building2, label: 'Náměstí', text: 'Náměstí 20 × 30 m, vysoká návštěvnost, chceme atraktivní mlžiště pro děti i dospělé.' },
   { icon: Trees, label: 'Park', text: 'Městský park, klidová zóna podél pěší trasy, trvalá nízkotlaká instalace bez vysokotlakého čerpadla.' },
   { icon: Landmark, label: 'Promenáda', text: 'Pěší promenáda nebo nábřeží, průchozí ochlazovací zóna s více prvky v pravidelném rytmu.' },
+  { icon: Flower2, label: 'Záhony / chodník', text: 'Okraj pěší trasy, náměstí nebo parku se záhony; nízké designové mlžné zábradlí přibližně 0,9–1,05 m.' },
   { icon: School, label: 'Škola / školka', text: 'Areál mateřské školy, bezpečné ochlazení dětí v letních měsících, plocha přibližně 120 m².' },
   { icon: HeartPulse, label: 'Domov seniorů', text: 'Pobytová zahrada nebo terasa zařízení pro seniory, klidné ochlazení u sezení a pěších tras.' },
   { icon: Dumbbell, label: 'Sportoviště', text: 'Venkovní sportoviště s vysokou návštěvností, potřebujeme odolné mlžení pro větší počet lidí.' },
@@ -46,6 +48,7 @@ const shapeOptions = [
   { key: 'srdce', label: 'Srdce', type: 'heart', note: 'uzavřený motiv' },
   { key: 'vlna', label: 'Vlna', type: 'wave', note: '1 linie' },
   { key: 'ramecek', label: 'Rám', type: 'frame', note: 'oblý čtverec' },
+  { key: 'zabradli', label: 'Zábradlí', type: 'railing', note: 'nízká linie' },
 ];
 
 function BendableShapeIcon({ type, className = '' }) {
@@ -71,6 +74,7 @@ function BendableShapeIcon({ type, className = '' }) {
     heart: <><path {...common} d="M32 58V43"/><path {...common} d="M32 42 14 25C4 15 10 5 19 6c6 0 10 4 13 9 3-5 7-9 13-9 9-1 15 9 5 19L32 42Z"/></>,
     wave: <path {...common} d="M30 58c-8-9-7-18 2-26 10-9 10-18 1-28"/>,
     frame: <><path {...common} d="M32 58V44"/><path {...common} d="M18 44V18c0-7 5-12 12-12h4c7 0 12 5 12 12v26H18Z"/></>,
+    railing: <><path {...common} d="M8 48V27c0-4 3-7 7-7h34c4 0 7 3 7 7v21"/><path {...common} d="M8 30h48"/></>,
   };
 
   return <svg viewBox="0 0 64 64" aria-hidden="true" className={className}>{paths[type]}</svg>;

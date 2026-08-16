@@ -27,6 +27,7 @@ export default function CustomerPortal() {
   const [inquiries, setInquiries] = useState([]);
   const [projects, setProjects] = useState([]);
   const [approving, setApproving] = useState(null);
+  const [orderConfirmed, setOrderConfirmed] = useState({});
   const [acceptedTerms, setAcceptedTerms] = useState({});
   const [shareUrl, setShareUrl] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
@@ -94,6 +95,7 @@ export default function CustomerPortal() {
       });
       const updated = res.data.project;
       setProjects(prev => prev.map(p => p.id === project.id ? { ...p, ...updated } : p));
+      setOrderConfirmed(prev => ({ ...prev, [project.id]: true }));
     } catch (e) {
       setError(e?.response?.data?.error === 'offer_expired' ? 'Platnost této nabídky již skončila. Požádejte nás o její aktualizaci.' : 'Nabídku se nepodařilo odsouhlasit. Zkuste to znovu.');
     } finally {
@@ -310,6 +312,7 @@ export default function CustomerPortal() {
 
                 {/* Actions */}
                 <div className="px-6 py-4 border-t border-slate-200 space-y-3">
+                  {orderConfirmed[project.id] && <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4"><div className="flex items-start gap-3"><CheckCircle size={18} className="mt-0.5 shrink-0 text-emerald-600"/><div><p className="text-sm font-semibold text-emerald-900">Objednávka byla úspěšně potvrzena.</p><p className="mt-1 text-xs leading-5 text-emerald-800">Potvrzení objednávky jsme připravili k projektu a odesíláme jej také na váš e-mail. Náš tým naváže technickým upřesněním a potvrzením dalšího harmonogramu.</p>{project.order_confirmation_pdf_url && <a href={project.order_confirmation_pdf_url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-2 text-xs font-semibold text-white"><Download size={13}/> Potvrzení objednávky PDF</a>}</div></div></div>}
                   {project.valid_until && (
                     <p className="text-[11px] text-slate-500">
                       Cenová nabídka je platná do <strong className="text-slate-700">{new Date(project.valid_until).toLocaleDateString('cs-CZ')}</strong>.

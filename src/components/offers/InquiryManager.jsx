@@ -33,6 +33,10 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
   const [senderEmail, setSenderEmail] = useState('meduna@holmtec.cz');
   const [approvedToSend, setApprovedToSend] = useState(false);
   const [prepared, setPrepared] = useState(null);
+  const [followUpType, setFollowUpType] = useState('');
+  const [followUpDiscount, setFollowUpDiscount] = useState(5);
+  const [latestOffer, setLatestOffer] = useState(null);
+  const [followUpApproved, setFollowUpApproved] = useState(false);
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
 

@@ -14,6 +14,10 @@
       "type": "string",
       "description": "Telefon n\u00e1v\u0161t\u011bvn\u00edka"
     },
+    "company": {
+      "type": "string",
+      "description": "Firma, m\u011bsto nebo organizace"
+    },
     "source": {
       "type": "string",
       "description": "Zdroj registrace, nap\u0159. ai_vizualizace"
@@ -30,6 +34,18 @@
       "type": "string",
       "description": "Posledn\u00ed vytvo\u0159en\u00e1 AI vizualizace"
     },
+    "gdpr_acknowledged": {
+      "type": "boolean",
+      "description": "Povinn\u00e9 potvrzen\u00ed sezn\u00e1men\u00ed se zpracov\u00e1n\u00edm osobn\u00edch \u00fadaj\u016f"
+    },
+    "gdpr_acknowledged_at": {
+      "type": "string",
+      "description": "ISO datum a \u010das potvrzen\u00ed GDPR informace"
+    },
+    "gdpr_version": {
+      "type": "string",
+      "description": "Verze textu GDPR potvrzen\u00ed"
+    },
     "inquiry_sent": {
       "type": "boolean",
       "default": false,
@@ -39,7 +55,8 @@
   "required": [
     "name",
     "email",
-    "phone"
+    "phone",
+    "gdpr_acknowledged"
   ],
   "rls": {
     "create": null,

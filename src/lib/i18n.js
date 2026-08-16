@@ -1,3 +1,6 @@
+/** @typedef {'cs'|'en'|'de'|'pl'|'sk'|'it'} Locale */
+
+/** @type {Locale[]} */
 export const SUPPORTED_LOCALES = ['cs', 'en', 'de', 'pl', 'sk', 'it'];
 
 export const LOCALE_CONFIG = {
@@ -30,9 +33,11 @@ const PATH_TO_ROUTE = Object.fromEntries(
   )
 );
 
+/** @returns {Locale} */
 export function getLocaleFromPath(pathname = '/') {
   const segment = pathname.split('/').filter(Boolean)[0];
-  return SUPPORTED_LOCALES.includes(segment) && segment !== 'cs' ? segment : 'cs';
+  if (segment === 'en' || segment === 'de' || segment === 'pl' || segment === 'sk' || segment === 'it') return segment;
+  return 'cs';
 }
 
 export function getRouteKeyFromPath(pathname = '/') {

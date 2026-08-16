@@ -220,16 +220,40 @@ ZÁKAZY: Bez textu, bez logotypů, bez grafických overlayů, bez změny denní 
     generate();
   }, [autoGeneratePending, optimizing, loading, file, selectedProductId]);
 
-  const sendToQuote = () => {
-    const text = [
-      'AI vizualizace projektu MLŽIDLA®',
-      description.trim() ? `Zadání: ${description.trim()}` : '',
-      selectedProduct ? `Vybraný reálný výrobek: ${selectedProduct.name}` : '',
-      selectedProduct?.slug ? `Produkt: /produkt/${selectedProduct.slug}` : '',
-      resultUrl ? `AI vizualizace: ${resultUrl}` : '',
-      sourceUrl ? `Fotografie prostoru: ${sourceUrl}` : '',
-    ].filter(Boolean).join('\n\n');
-    navigate(`/poptavka?produkt=${encodeURIComponent('AI návrh projektu')}&zprava=${encodeURIComponent(text)}`);
+  const sendToQuote = async () => {
+    if (quoteUploading) return;
+    setQuoteUploading(true);
+    setError('');
+    try {
+      const uploadedDocs = [];
+      for (const item of quoteFiles) {
+        const upload = await base44.integrations.Core.UploadFile({ file: item });
+        if (upload?.file_url) uploadedDocs.push(`${item.name}: ${upload.file_url}`);
+      }
+      const text = [
+        'AI vizualizace projektu MLŽIDLA®',
+        description.trim() ? `Zadání: ${description.trim()}` : '',
+        requestedType ? `Typ prostoru: ${requestedType}` : '',
+        requestedConcept ? `Výchozí motiv: ${requestedConcept}` : '',
+        selectedProduct ? `Vybraný reálný výrobek: ${selectedProduct.name}` : '',
+        selectedProduct?.slug ? `Produkt: /produkt/${selectedProduct.slug}` : '',
+        resultUrl ? `AI vizualizace: ${resultUrl}` : '',
+        sourceUrl ? `Fotografie prostoru: ${sourceUrl}` : '',
+        uploadedDocs.length ? `Podklady k nezávazné nabídce:\n${uploadedDocs.join('\n')}` : '',
+      ].filter(Boolean).join('\n\n');
+      const params = new URLSearchParams({
+        produkt: 'AI návrh projektu',
+        zprava: text,
+        jmeno: leadProfile?.name || '',
+        email: leadProfile?.email || '',
+        telefon: leadProfile?.phone || '',
+      });
+      navigate(`/poptavka?${params.toString()}`);
+    } catch (e) {
+      setError('Podklady se nepodařilo nahrát. Nabídku můžete odeslat i bez nich.');
+    } finally {
+      setQuoteUploading(false);
+    }
   };
 
   return (

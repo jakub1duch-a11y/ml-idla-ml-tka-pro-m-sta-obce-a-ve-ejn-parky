@@ -24,8 +24,10 @@ export const ROUTE_MAP = {
   faq: { cs: '/podpora', en: '/en/faq', de: '/de/faq', pl: '/pl/faq', sk: '/sk/faq', it: '/it/faq' },
 };
 
-const PATH_TO_ROUTE = Object.entries(ROUTE_MAP).flatMap(([key, localized]) =>
-  Object.entries(localized).map(([locale, path]) => [path.replace(/\/$/, '') || '/', { key, locale }])
+const PATH_TO_ROUTE = Object.fromEntries(
+  Object.entries(ROUTE_MAP).flatMap(([key, localized]) =>
+    Object.entries(localized).map(([locale, path]) => [path.replace(/\/$/, '') || '/', { key, locale }])
+  )
 );
 
 export function getLocaleFromPath(pathname = '/') {
@@ -35,8 +37,7 @@ export function getLocaleFromPath(pathname = '/') {
 
 export function getRouteKeyFromPath(pathname = '/') {
   const normalized = pathname.replace(/\/$/, '') || '/';
-  const match = PATH_TO_ROUTE.find(([path]) => path === normalized);
-  return match?.[1]?.key || null;
+  return PATH_TO_ROUTE[normalized]?.key || null;
 }
 
 export function localizedPath(routeKeyOrPath, locale) {

@@ -1,4 +1,5 @@
-import { getLanguageAlternates, ROUTE_MAP } from './i18n.js';
+import { getLanguageAlternates, ROUTE_MAP, SUPPORTED_LOCALES } from './i18n.js';
+import { EXTRA_PAGES, EXTRA_SHARED } from './localized-content-extra.js';
 
 const shared = {
   en: {
@@ -14,6 +15,8 @@ const shared = {
     trust: ['Direkter Anschluss an die Wasserleitung', 'Keine Hochdruckpumpe', 'Edelstahlkonstruktion', 'Projektbegleitung von Planung bis Montage'],
   },
 };
+
+Object.assign(shared, EXTRA_SHARED);
 
 const pages = {
   home: {
@@ -154,6 +157,10 @@ const pages = {
   },
 };
 
+Object.entries(EXTRA_PAGES).forEach(([routeKey, localizedPages]) => {
+  pages[routeKey] = { ...(pages[routeKey] || {}), ...localizedPages };
+});
+
 export function getLocalizedPage(routeKey, locale) {
   const page = pages[routeKey]?.[locale] || pages.home[locale];
   const common = shared[locale];
@@ -167,7 +174,7 @@ export function getLocalizedPage(routeKey, locale) {
   };
 }
 
-export const LOCALIZED_SEO_PAGES = Object.keys(pages).flatMap((routeKey) => ['en', 'de'].map((locale) => {
+export const LOCALIZED_SEO_PAGES = Object.keys(pages).flatMap((routeKey) => SUPPORTED_LOCALES.filter((locale) => locale !== 'cs').map((locale) => {
   const page = getLocalizedPage(routeKey, locale);
   return {
     title: page.title,

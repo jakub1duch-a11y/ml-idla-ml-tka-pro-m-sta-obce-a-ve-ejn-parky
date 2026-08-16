@@ -64,6 +64,19 @@ function generateBreadcrumbsJsonLd(path, title) {
   };
 }
 
+/**
+ * @param {{
+ *   title?: string,
+ *   description?: string,
+ *   keywords?: string,
+ *   image?: string,
+ *   canonicalPath?: string,
+ *   type?: string,
+ *   jsonLd?: any,
+ *   geo?: { placename?: string, region?: string },
+ *   robots?: string
+ * }} options
+ */
 export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const img = image || DEFAULT_IMAGE;

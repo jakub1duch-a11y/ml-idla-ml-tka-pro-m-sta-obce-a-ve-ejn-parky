@@ -8,6 +8,7 @@ const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
   sent: { label: 'Odeslána', color: 'bg-blue-50 text-blue-600', icon: '📤' },
   viewed: { label: 'Zobrazena', color: 'bg-cyan-50 text-cyan-700', icon: '👁' },
+  extension_requested: { label: 'Žádost o prodloužení', color: 'bg-amber-50 text-amber-700', icon: '↻' },
   approved: { label: 'Odsouhlasena', color: 'bg-green-50 text-green-600', icon: '✓' },
   expired: { label: 'Platnost skončila', color: 'bg-amber-50 text-amber-700', icon: '⌛' },
   rejected: { label: 'Odmítnuta', color: 'bg-red-50 text-red-600', icon: '×' },
@@ -29,6 +30,9 @@ export default function CustomerPortal() {
   const [acceptedTerms, setAcceptedTerms] = useState({});
   const [shareUrl, setShareUrl] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
+  const [intentBusy, setIntentBusy] = useState(null);
+  const [intentForms, setIntentForms] = useState({});
+  const [intentSaved, setIntentSaved] = useState({});
 
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
@@ -84,6 +88,29 @@ export default function CustomerPortal() {
       setError(e?.response?.data?.error === 'offer_expired' ? 'Platnost této nabídky již skončila. Požádejte nás o její aktualizaci.' : 'Nabídku se nepodařilo odsouhlasit. Zkuste to znovu.');
     } finally {
       setApproving(null);
+    }
+  };
+
+  const submitOfferIntent = async (project, action) => {
+    const form = intentForms[project.id] || {};
+    setIntentBusy(`${project.id}:${action}`);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('updateOfferIntent', {
+        project_id: project.id,
+        session_token: sessionToken,
+        action,
+        estimated_order_date: form.estimated_order_date || '',
+        estimated_order_window: form.estimated_order_window || '',
+        message: form.message || '',
+      });
+      const updated = res.data.project;
+      setProjects(prev => prev.map(p => p.id === project.id ? { ...p, ...updated } : p));
+      setIntentSaved(prev => ({ ...prev, [project.id]: action }));
+    } catch (e) {
+      setError('Požadavek se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setIntentBusy(null);
     }
   };
 

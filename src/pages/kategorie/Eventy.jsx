@@ -23,15 +23,6 @@ const EVENT_PRODUCT_THUMBNAILS = {
 
 const eventProductThumb = (product) => EVENT_PRODUCT_THUMBNAILS[product?.slug] || product?.gallery_urls?.[1] || product?.gallery_urls?.[0] || product?.image_url;
 
-const EVENT_PRODUCT_THUMBNAILS = {
-  'mlzna-brana-gate': EVENT_SCENES[0].image,
-  'brana-bendy': EVENT_SCENES[3].image,
-  'aura-city-duo': EVENT_SCENES[2].image,
-  'linea-gate': EVENT_SCENES[1].image,
-};
-
-const eventProductThumb = (product) => EVENT_PRODUCT_THUMBNAILS[product?.slug] || product?.gallery_urls?.[1] || product?.gallery_urls?.[0] || product?.image_url;
-
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
   { emoji: '🌞', title: 'Letní terasy', desc: 'Sezónní instalace pro restaurace a food festivaly — pronájem nebo koupě.' },

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ProductHoverImage({ product, alt, className = '', overlay = false, fallback }) {
+export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '' }) {
   const primary = product?.image_url || fallback;
   const secondary = product?.gallery_urls?.find((url) => url && url !== primary);
   if (!primary) return <div className={`bg-muted ${className}`} />;

@@ -373,7 +373,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
               <input value={subject} onChange={(event) => setSubject(event.target.value)} placeholder="Předmět zprávy" className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm text-foreground"/>
             </label>
             <label className="text-xs font-semibold text-muted-foreground">Text e-mailu
-              <textarea value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Napište odpověď nebo si ji nechte navrhnout." rows="9" className="mt-1 w-full border border-border bg-background px-3 py-3 text-sm text-foreground"/>
+              <textarea value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Napište odpověď nebo si ji nechte navrhnout." rows={9} className="mt-1 w-full border border-border bg-background px-3 py-3 text-sm text-foreground"/>
             </label>
           </div>
 

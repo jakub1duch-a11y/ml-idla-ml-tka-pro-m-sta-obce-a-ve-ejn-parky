@@ -3,6 +3,8 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
+import { LOCALE_CONFIG } from './i18n.js';
+
 const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
 const BASE_URL = 'https://mlzidla.cz';
 const DEFAULT_IMAGE = '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp';
@@ -27,6 +29,32 @@ function setCanonical(path) {
   let el = document.querySelector('link[rel="canonical"]');
   if (!el) { el = document.createElement('link'); el.setAttribute('rel', 'canonical'); document.head.appendChild(el); }
   el.setAttribute('href', BASE_URL + path);
+}
+
+function setLanguageAlternates(alternates = []) {
+  document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => el.remove());
+  alternates.forEach(({ hreflang, path }) => {
+    if (!hreflang || !path) return;
+    const el = document.createElement('link');
+    el.setAttribute('rel', 'alternate');
+    el.setAttribute('hreflang', hreflang);
+    el.setAttribute('href', `${BASE_URL}${path}`);
+    document.head.appendChild(el);
+  });
+}
+
+function setOgLocale(locale = 'cs') {
+  const config = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
+  setOg('og:locale', config.ogLocale);
+  document.querySelectorAll('meta[property="og:locale:alternate"]').forEach((el) => el.remove());
+  Object.values(LOCALE_CONFIG)
+    .filter((item) => item.code !== locale)
+    .forEach((item) => {
+      const el = document.createElement('meta');
+      el.setAttribute('property', 'og:locale:alternate');
+      el.setAttribute('content', item.ogLocale);
+      document.head.appendChild(el);
+    });
 }
 
 function setJsonLd(data) {
@@ -80,13 +108,17 @@ function generateBreadcrumbsJsonLd(path, title) {
  *   type?: string,
  *   jsonLd?: any,
  *   geo?: { placename?: string, region?: string },
- *   robots?: string
+ *   robots?: string,
+ *   locale?: 'cs'|'en'|'de',
+ *   alternates?: Array<{hreflang: string, path: string}>
  * }} options
  */
-export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots }) {
+export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots, locale = 'cs', alternates = [] }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const img = image || DEFAULT_IMAGE;
+  const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
 
+  document.documentElement.lang = localeConfig.htmlLang;
   document.title = fullTitle;
   setMeta('description', description);
   if (keywords) setMeta('keywords', keywords);
@@ -98,7 +130,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setOg('og:image', img);
   setOg('og:type', type);
   setOg('og:site_name', SITE_NAME);
-  setOg('og:locale', 'cs_CZ');
+  setOgLocale(locale);
   if (canonicalPath) setOg('og:url', BASE_URL + canonicalPath);
 
   // Twitter
@@ -108,6 +140,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setMeta('twitter:image', img);
 
   if (canonicalPath) setCanonical(canonicalPath);
+  setLanguageAlternates(alternates);
   
   // Kombinace vlastních a automatických JSON-LD strukturovaných dat.
   // Pokud stránka dodá vlastní @graph, zachováme ho a doplníme BreadcrumbList.

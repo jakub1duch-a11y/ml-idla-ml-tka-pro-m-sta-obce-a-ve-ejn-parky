@@ -38,6 +38,11 @@ export default function MlzeniKalkulator() {
     return { litersDay, litersMonth, cost, standardCost, saving: standardCost - cost, hourly: cost / Math.max(hours * days, 1) };
   }, [product, hours, days, smart]);
 
+  const controls = [
+    { label: 'Provoz denně', value: hours, setValue: setHours, min: 1, max: 16, suffix: 'h' },
+    { label: 'Dní provozu za měsíc', value: days, setValue: setDays, min: 1, max: 31, suffix: 'dní' },
+  ];
+
   return <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#071b25] text-white shadow-2xl shadow-black/10">
     <div className="border-b border-white/10 px-6 py-6 sm:px-8 lg:flex lg:items-end lg:justify-between">
       <div><p className="font-mono text-[10px] uppercase tracking-[.2em] text-cyan-300">Provozní kalkulace</p><h3 className="mt-2 font-heading text-2xl sm:text-3xl">Kolik vody spotřebuje vaše mlžítko?</h3><p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/60">Výpočet vychází z parametrů aktivních produktů MLŽIDLA.cz. Naše systémy pracují přímo s tlakem vodovodního řadu, proto zde nepočítáme spotřebu elektrického čerpadla.</p></div>
@@ -52,7 +57,7 @@ export default function MlzeniKalkulator() {
           {open && <div className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl border border-white/15 bg-[#0b2632] p-2 shadow-2xl">{PRODUCTS.map((p) => <button key={p.id} onClick={() => {setProductId(p.id);setOpen(false);}} className={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm transition hover:bg-white/10 ${p.id === product.id ? 'bg-white/10 text-cyan-200' : ''}`}><span>{p.name}</span><span className="ml-3 text-xs text-white/40">{p.range}</span></button>)}</div>}
         </div>
 
-        {[['Provoz denně', hours, setHours, 1, 16, 'h'], ['Dní provozu za měsíc', days, setDays, 1, 31, 'dní']].map(([label, val, set, min, max, suffix]) => <div className="mt-7" key={label}><div className="mb-3 flex items-center justify-between"><span className="text-sm text-white/65">{label}</span><strong className="font-mono text-sm text-cyan-200">{val} {suffix}</strong></div><input type="range" min={min} max={max} value={val} onChange={(e) => set(Number(e.target.value))} className="h-1.5 w-full accent-cyan-400" /></div>)}
+        {controls.map(({ label, value, setValue, min, max, suffix }) => <div className="mt-7" key={label}><div className="mb-3 flex items-center justify-between"><span className="text-sm text-white/65">{label}</span><strong className="font-mono text-sm text-cyan-200">{value} {suffix}</strong></div><input type="range" min={min} max={max} value={value} onChange={(e) => setValue(Number(e.target.value))} className="h-1.5 w-full accent-cyan-400" /></div>)}
 
         <button onClick={() => setSmart(!smart)} className={`mt-8 flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition ${smart ? 'border-cyan-300/30 bg-cyan-300/10' : 'border-white/15 bg-white/[.03]'}`}><span className="flex items-center gap-3"><Sparkles size={18} className="text-cyan-300" /><span><strong className="block text-sm">Chytré řízení provozu</strong><small className="mt-1 block text-sm">Modeluje omezení zbytečného mlžení podle provozu a podmínek.</small></span></span><span className={`h-6 w-11 rounded-full p-1 transition ${smart ? 'bg-cyan-400' : 'bg-white/15'}`}><span className={`block h-4 w-4 rounded-full bg-white transition ${smart ? 'translate-x-5' : ''}`} /></span></button>
       </div>

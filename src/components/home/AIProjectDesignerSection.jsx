@@ -336,7 +336,7 @@ export default function AIProjectDesignerSection() {
                   )}
                 </div>
 
-                <div className="mt-4 border border-slate-200 bg-slate-50/60 p-4 sm:p-5">
+                <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
                   <div className="mb-3">
                     <p className="text-sm font-semibold text-slate-900">B · Naše produkty</p>
                     <p className="mt-1 text-[11px] leading-4 text-slate-500">Vyberte známou geometrii a projektant ji přizpůsobí měřítku a využití prostoru.</p>
@@ -350,7 +350,7 @@ export default function AIProjectDesignerSection() {
                           type="button"
                           onClick={() => selectConcept(item.key)}
                           aria-pressed={active}
-                          className={`group overflow-hidden border bg-white text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400'}`}
+                          className={`group overflow-hidden rounded-xl border bg-white text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400 hover:shadow-sm'}`}
                         >
                           <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
                             <img src={item.image} alt={item.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
@@ -363,7 +363,7 @@ export default function AIProjectDesignerSection() {
                   </div>
                 </div>
 
-                <div className={`mt-4 border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
+                <div className={`mt-4 rounded-2xl border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
                   <div className="flex items-start gap-3">
                     <div className={`flex h-9 w-9 shrink-0 items-center justify-center ${selectedConcept === 'custom' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-500'}`}>
                       <Shapes size={18} />
@@ -377,7 +377,7 @@ export default function AIProjectDesignerSection() {
                         onFocus={() => selectConcept('custom')}
                         onChange={(e) => updateCustomShape(e.target.value)}
                         placeholder="Zadejte motiv…"
-                        className="mt-3 w-full border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
+                        className="mt-3 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
                       />
                       <p className="mt-2 text-[11px] leading-5 text-slate-500">Projektant motiv nejprve zjednoduší na jednu nebo několik plynulých trubkových linií. Ostré zlomy a nereálné křížení se převedou na oblouky nebo výrobní spoje; maximální ohýbaný vnější průměr trubky je Ø 74 mm.</p>
                     </div>
@@ -399,7 +399,7 @@ export default function AIProjectDesignerSection() {
                   }}
                   rows={5}
                   placeholder="Např. promenáda u náměstí, délka cca 35 m, horké odpoledne, hodně pěších, chceme vytvořit dvě klidové ochlazovací zóny u laviček."
-                  className="w-full resize-none border border-slate-300 bg-white px-4 py-4 text-[15px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
+                  className="w-full resize-none rounded-2xl border border-slate-300 bg-white px-4 py-4 text-[15px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
                 />
                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-400">
                   <span>Rozměr prostoru</span>
@@ -414,14 +414,14 @@ export default function AIProjectDesignerSection() {
                   type="button"
                   onClick={start}
                   disabled={!value.trim() && !selectedType && !selectedConcept}
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-35"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-35"
                 >
                   Připravit návrh projektu <ArrowRight size={16} />
                 </button>
                 <button
                   type="button"
                   onClick={visualize}
-                  className="inline-flex min-h-[52px] items-center justify-center border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50"
+                  className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50"
                 >
                   Vyzkoušet ve fotografii
                 </button>

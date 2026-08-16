@@ -18,7 +18,10 @@ export default function Poptavka() {
   const initialProduct = searchParams.get('produkt') || '';
   const products = initialProduct && !baseProducts.includes(initialProduct) ? [initialProduct, ...baseProducts] : baseProducts;
   const [form, setForm] = useState(() => ({
-    jmeno: '', email: '', telefon: '', firma: '',
+    jmeno: searchParams.get('jmeno') || '',
+    email: searchParams.get('email') || '',
+    telefon: searchParams.get('telefon') || '',
+    firma: '',
     produkt: initialProduct,
     zprava: searchParams.get('zprava') || '',
   }));

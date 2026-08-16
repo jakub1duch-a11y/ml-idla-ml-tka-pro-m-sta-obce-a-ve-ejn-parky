@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, Camera, ImagePlus, Loader, RefreshCw, Sparkles, Upload, WandSparkles } from 'lucide-react';
+import { ArrowRight, Camera, Check, FileText, ImagePlus, Loader, RefreshCw, ShieldCheck, Sparkles, Upload, UserPlus, WandSparkles } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
@@ -7,6 +7,8 @@ import { setSEO } from '@/lib/seo';
 const isImageUrl = (url = '') => /\.(png|jpe?g|webp)(\?|$)/i.test(url) || url.includes('/images/');
 const MAX_UPLOAD_MB = 20;
 const OPTIMIZE_FROM_MB = 12;
+const MAX_QUOTE_FILES = 6;
+const MAX_QUOTE_FILE_MB = 25;
 
 const optimizeLargePhoto = async (file) => {
   if (file.size <= OPTIMIZE_FROM_MB * 1024 * 1024) return file;
@@ -41,6 +43,20 @@ export default function AIVizualizace() {
   const [previewUrl, setPreviewUrl] = useState('');
   const [resultUrl, setResultUrl] = useState('');
   const [description, setDescription] = useState(() => searchParams.get('zadani') || sessionStorage.getItem('mlzidla-ai-zadani') || '');
+  const requestedType = searchParams.get('typ') || '';
+  const requestedConcept = searchParams.get('tvar') || '';
+  const [leadProfile, setLeadProfile] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem('mlzidla-visualizer-profile') || 'null'); } catch { return null; }
+  });
+  const [leadForm, setLeadForm] = useState(() => ({
+    name: leadProfile?.name || '',
+    email: leadProfile?.email || '',
+    phone: leadProfile?.phone || '',
+  }));
+  const [leadSubmitting, setLeadSubmitting] = useState(false);
+  const [leadError, setLeadError] = useState('');
+  const [quoteFiles, setQuoteFiles] = useState([]);
+  const [quoteUploading, setQuoteUploading] = useState(false);
 
   const updateDescription = (nextValue) => {
     setDescription(nextValue);
@@ -86,7 +102,48 @@ export default function AIVizualizace() {
   }, [previewUrl]);
 
   const selectedProduct = useMemo(() => products.find((item) => item.id === selectedProductId) || null, [products, selectedProductId]);
-  const canGenerate = useMemo(() => Boolean((file || sourceUrl) && selectedProduct?.image_url), [file, sourceUrl, selectedProduct]);
+  const canGenerate = useMemo(() => Boolean(leadProfile && (file || sourceUrl) && selectedProduct?.image_url), [leadProfile, file, sourceUrl, selectedProduct]);
+
+  const registerVisualizer = async (event) => {
+    event.preventDefault();
+    if (leadSubmitting) return;
+    const name = leadForm.name.trim();
+    const email = leadForm.email.trim();
+    const phone = leadForm.phone.trim();
+    if (!name || !email || !phone) return;
+    setLeadSubmitting(true);
+    setLeadError('');
+    try {
+      const created = await base44.entities.VisualizerLead.create({
+        name,
+        email,
+        phone,
+        source: 'ai_vizualizace',
+        project_type: requestedType,
+        selected_concept: requestedConcept || selectedProduct?.name || '',
+        inquiry_sent: false,
+      });
+      const profile = { name, email, phone, leadId: created?.id || '' };
+      sessionStorage.setItem('mlzidla-visualizer-profile', JSON.stringify(profile));
+      setLeadProfile(profile);
+      setLeadForm({ name, email, phone });
+    } catch (e) {
+      setLeadError('Registraci se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setLeadSubmitting(false);
+    }
+  };
+
+  const pickQuoteFiles = (list) => {
+    const next = Array.from(list || []).slice(0, MAX_QUOTE_FILES);
+    const oversized = next.find((item) => item.size > MAX_QUOTE_FILE_MB * 1024 * 1024);
+    if (oversized) {
+      setError(`Soubor ${oversized.name} je větší než ${MAX_QUOTE_FILE_MB} MB.`);
+      return;
+    }
+    setError('');
+    setQuoteFiles(next);
+  };
 
   const pickFile = async (selected) => {
     if (!selected) return;

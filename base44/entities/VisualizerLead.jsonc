@@ -1,0 +1,62 @@
+{
+  "name": "VisualizerLead",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Jm\u00e9no n\u00e1v\u0161t\u011bvn\u00edka"
+    },
+    "email": {
+      "type": "string",
+      "description": "E-mail n\u00e1v\u0161t\u011bvn\u00edka"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Telefon n\u00e1v\u0161t\u011bvn\u00edka"
+    },
+    "source": {
+      "type": "string",
+      "description": "Zdroj registrace, nap\u0159. ai_vizualizace"
+    },
+    "project_type": {
+      "type": "string",
+      "description": "Typ prostoru nebo projektu"
+    },
+    "selected_concept": {
+      "type": "string",
+      "description": "Vybran\u00fd produkt nebo symbol"
+    },
+    "last_visualization_url": {
+      "type": "string",
+      "description": "Posledn\u00ed vytvo\u0159en\u00e1 AI vizualizace"
+    },
+    "inquiry_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Zda u\u017eivatel odeslal nez\u00e1vaznou popt\u00e1vku"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "phone"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

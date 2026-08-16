@@ -22,6 +22,10 @@
       "type": "string",
       "description": "Z\u00e1jem o produkt"
     },
+    "service_type": {
+      "type": "string",
+      "description": "Zdroj / typ slu\u017eby popt\u00e1vky"
+    },
     "zprava": {
       "type": "string",
       "description": "Zpr\u00e1va / popt\u00e1vka"

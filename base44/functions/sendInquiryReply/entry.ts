@@ -91,6 +91,11 @@ export default async function(req) {
       portal_url: portalUrl = 'https://mlzidla.cz/muj-projekt',
       valid_until: validUntil = '',
       quote_number: quoteNumber = '',
+      project_summary: projectSummary = '',
+      email_type: emailType = 'offer',
+      discount_percent: discountPercent = 0,
+      previous_total: previousTotal = 0,
+      new_total: newTotal = 0,
       attachments = []
     } = await req.json();
 
@@ -110,7 +115,7 @@ export default async function(req) {
     const quoteAttachment = quotePdfBase64 ? [{ filename: quoteFilename || 'nabidka-mlzidla.pdf', content: Uint8Array.from(atob(quotePdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const presentationAttachment = presentationPdfBase64 ? [{ filename: presentationFilename || 'prezentace-mlzidla.pdf', content: Uint8Array.from(atob(presentationPdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const allAttachments = [...quoteAttachment, ...presentationAttachment, ...externalAttachments];
-    const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber });
+    const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber, projectSummary, emailType, discountPercent, previousTotal, newTotal });
     const raw = buildMessage({ to: inquiry.email, bcc: FIXED_BCC, fromEmail: senderEmail, subject, text: message, html, attachments: allAttachments });
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');

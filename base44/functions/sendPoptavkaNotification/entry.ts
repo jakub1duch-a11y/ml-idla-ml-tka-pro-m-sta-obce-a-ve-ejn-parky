@@ -127,10 +127,11 @@ function buildCustomerEmail({ jmeno, firma, produkt, zprava }) {
         <tr><td style="padding:0 34px 28px;">
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f5f8f8;border:1px solid #e1e9ea;border-radius:16px;">
             <tr><td style="padding:20px 22px;">
-              <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6e858b;margin-bottom:8px;">Váš projekt</div>
+              <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6e858b;margin-bottom:8px;">Shrnutí vaší poptávky k našemu nacenění</div>
               <div style="font-size:18px;line-height:1.4;color:#0d2d38;font-weight:700;">${safeProduct || 'Projekt mlžení'}</div>
               ${safeCompany ? `<div style="margin-top:6px;font-size:13px;color:#71858a;">${safeCompany}</div>` : ''}
-              ${safeMessage ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid #dde7e9;font-size:13px;line-height:1.6;color:#5f747a;">${safeMessage}</div>` : ''}
+              <div style="margin-top:14px;font-size:12px;line-height:1.55;color:#7a8d92;">Níže uvádíme informace, ze kterých budeme vycházet při technickém posouzení a přípravě cenové nabídky.</div>
+              ${safeMessage ? `<div style="margin-top:14px;padding-top:16px;border-top:1px solid #dde7e9;font-size:13px;line-height:1.6;color:#5f747a;">${safeMessage}</div>` : ''}
             </td></tr>
           </table>
         </td></tr>

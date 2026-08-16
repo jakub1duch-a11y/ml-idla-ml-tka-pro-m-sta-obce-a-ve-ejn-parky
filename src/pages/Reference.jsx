@@ -8,10 +8,11 @@ import ReferenceShowcase from '@/components/premium/ReferenceShowcase';
 const HERO_IMAGE = '/assets/reference-zoo-hero.webp';
 
 const sectors = [
-[Building2, 'Města', '/kategorie/mesta-obce'],
-[Trees, 'Parky', '/kategorie/parky-hriste'],
-[Hotel, 'Hotely', '/kategorie/komercni'],
-[Utensils, 'Restaurace', '/kategorie/komercni']];
+  { Icon: Building2, label: 'Města', path: '/kategorie/mesta-obce' },
+  { Icon: Trees, label: 'Parky', path: '/kategorie/parky-hriste' },
+  { Icon: Hotel, label: 'Hotely', path: '/kategorie/komercni' },
+  { Icon: Utensils, label: 'Restaurace', path: '/kategorie/komercni' },
+];
 
 
 export default function Reference() {
@@ -71,7 +72,7 @@ export default function Reference() {
 
       <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <div className="grid grid-cols-2 overflow-hidden border border-slate-200 bg-white lg:grid-cols-4">
-          {sectors.map(([Icon, label, path]) =>
+          {sectors.map(({ Icon, label, path }) =>
           <Link to={path} key={label} className="group flex items-center justify-center gap-3 border-b border-r border-slate-200 px-4 py-6 transition hover:bg-slate-50 lg:border-b-0 last:border-r-0">
               <Icon size={19} className="text-teal-700 transition-transform group-hover:scale-110" />
               <span className="font-medium text-slate-700">{label}</span>

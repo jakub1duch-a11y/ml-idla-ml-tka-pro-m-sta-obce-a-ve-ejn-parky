@@ -10,17 +10,9 @@ import {
   Ruler,
   Droplets,
   FileCheck2,
-  TreePine,
-  Leaf,
-  Heart,
   Shapes,
   Landmark,
   HeartPulse,
-  Droplet,
-  Cloud,
-  Sun,
-  Flower2,
-  Waves,
   Sparkles,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -42,15 +34,47 @@ const outputs = [
 ];
 
 const shapeOptions = [
-  { key: 'strom', label: 'Strom', icon: TreePine },
-  { key: 'list', label: 'List', icon: Leaf },
-  { key: 'srdce', label: 'Srdce', icon: Heart },
-  { key: 'kapka', label: 'Kapka', icon: Droplet },
-  { key: 'mrak', label: 'Mrak', icon: Cloud },
-  { key: 'slunce', label: 'Slunce', icon: Sun },
-  { key: 'kvet', label: 'Květ', icon: Flower2 },
-  { key: 'vlna', label: 'Vlna', icon: Waves },
+  { key: 'koruna', label: 'Koruna', type: 'canopy', note: 'oblý strom' },
+  { key: 'cypres', label: 'Cypřiš', type: 'cypress', note: 'vysoká smyčka' },
+  { key: 'vetev', label: 'Větev', type: 'branch', note: 'větvený strom' },
+  { key: 'list', label: 'List', type: 'leaf', note: 'jedna smyčka' },
+  { key: 'dvojlist', label: 'Dvojlist', type: 'doubleLeaf', note: '2 listy' },
+  { key: 'spirala', label: 'Spirála', type: 'spiral', note: 'plynulý ohyb' },
+  { key: 'kruh', label: 'Kruh', type: 'ring', note: 'čistý symbol' },
+  { key: 'mrak', label: 'Mrak', type: 'cloud', note: 'měkký obrys' },
+  { key: 'kvet', label: 'Květ', type: 'flower', note: '3 okruhy' },
+  { key: 'srdce', label: 'Srdce', type: 'heart', note: 'uzavřený motiv' },
+  { key: 'vlna', label: 'Vlna', type: 'wave', note: '1 linie' },
+  { key: 'ramecek', label: 'Rám', type: 'frame', note: 'oblý čtverec' },
 ];
+
+function BendableShapeIcon({ type, className = '' }) {
+  const common = {
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 3.2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    vectorEffect: 'non-scaling-stroke',
+  };
+
+  const paths = {
+    canopy: <><path {...common} d="M32 55V34"/><path {...common} d="M32 36c-10 0-16-6-16-14 0-7 5-12 12-12 2-6 7-9 13-9 8 0 14 6 14 14 6 1 10 6 10 12 0 7-6 12-14 12H32"/></>,
+    cypress: <><path {...common} d="M32 57V48"/><path {...common} d="M32 48c-10 0-16-10-16-22C16 13 23 4 32 4s16 9 16 22c0 12-6 22-16 22Z"/></>,
+    branch: <><path {...common} d="M32 58V16"/><path {...common} d="M32 28 20 17"/><path {...common} d="M32 22 43 11"/><path {...common} d="M32 38 17 29"/><path {...common} d="M32 34 47 25"/></>,
+    leaf: <><path {...common} d="M32 58V42"/><path {...common} d="M32 43C15 39 12 21 30 8c17 7 24 24 2 35Z"/><path {...common} d="M32 42 41 24"/></>,
+    doubleLeaf: <><path {...common} d="M32 58V31"/><path {...common} d="M32 35C20 34 14 27 15 17c11-1 19 4 20 15"/><path {...common} d="M32 30c2-12 10-18 21-17 1 11-6 19-19 20"/></>,
+    spiral: <><path {...common} d="M32 58V45"/><path {...common} d="M32 45c-13-3-19-12-17-23 2-11 13-18 25-15 11 2 18 12 16 22-2 9-10 14-18 12-7-1-11-7-10-13 1-5 6-8 11-7 4 1 7 5 6 9"/></>,
+    ring: <><path {...common} d="M32 58V45"/><circle {...common} cx="32" cy="25" r="18"/></>,
+    cloud: <><path {...common} d="M32 58V43"/><path {...common} d="M17 42c-7 0-12-5-12-12 0-6 4-11 10-12 2-8 8-13 16-13 9 0 16 7 17 16 6 1 11 6 11 12 0 7-6 12-13 12H17Z"/></>,
+    flower: <><path {...common} d="M32 58V35"/><circle {...common} cx="32" cy="20" r="9"/><circle {...common} cx="18" cy="29" r="8"/><circle {...common} cx="46" cy="29" r="8"/></>,
+    heart: <><path {...common} d="M32 58V43"/><path {...common} d="M32 42 14 25C4 15 10 5 19 6c6 0 10 4 13 9 3-5 7-9 13-9 9-1 15 9 5 19L32 42Z"/></>,
+    wave: <path {...common} d="M30 58c-8-9-7-18 2-26 10-9 10-18 1-28"/>,
+    frame: <><path {...common} d="M32 58V44"/><path {...common} d="M18 44V18c0-7 5-12 12-12h4c7 0 12 5 12 12v26H18Z"/></>,
+  };
+
+  return <svg viewBox="0 0 64 64" aria-hidden="true" className={className}>{paths[type]}</svg>;
+}
 
 const productOptions = [
   {
@@ -133,7 +157,7 @@ export default function AIProjectDesignerSection() {
     if (zadani) params.set('zadani', zadani);
     if (selectedType) params.set('typ', selectedType);
     if (conceptLabel()) params.set('tvar', conceptLabel());
-    params.set('profil', 'nerezový profil / trubka do cca Ø 70 mm; tvar musí být reálně vyrobitelný ohýbáním');
+    params.set('profil', 'nerezová trubka: umíme ohýbat vnější průměr až Ø 74 mm; tvar musí být reálně vyrobitelný ohýbáním, případné větvení řešit výrobně vhodnými napojeními');
     navigate(`/poradce?${params.toString()}`);
   };
 
@@ -142,7 +166,7 @@ export default function AIProjectDesignerSection() {
     if (value.trim()) params.set('zadani', value.trim());
     if (selectedType) params.set('typ', selectedType);
     if (conceptLabel()) params.set('tvar', conceptLabel());
-    params.set('profil', 'nerezový profil / trubka do cca Ø 70 mm; realistická tloušťka ve vizualizaci');
+    params.set('profil', 'nerezová trubka: maximální ohýbaný vnější průměr Ø 74 mm; vizualizace musí zachovat realistickou tloušťku trubky a výrobně možné oblouky');
     navigate(`/ai-vizualizace${params.toString() ? `?${params.toString()}` : ''}`);
   };
 
@@ -191,7 +215,7 @@ export default function AIProjectDesignerSection() {
             <div className="mt-6 flex items-start gap-3 border-l-2 border-slate-900 pl-4">
               <ShieldCheck size={17} className="mt-0.5 shrink-0 text-slate-700" />
               <p className="max-w-lg text-xs leading-5 text-slate-500">
-                Motiv není libovolná tenká grafická ikona. Převádíme jej do jednoduché výrobní linie z nerezu s realistickým profilem do cca Ø 70 mm; rádiusy, napojení, stabilitu, trysky a kotvení potvrzuje technický návrh HolmTec.
+                Motiv není libovolná tenká grafická ikona. Převádíme jej do skutečné výrobní geometrie z nerezové trubky. Umíme ohýbat trubky až do vnějšího průměru Ø 74 mm. Konkrétní minimální rádius ohybu, napojení větví, stabilitu, trysky a kotvení vždy potvrzuje technický návrh HolmTec.
               </p>
             </div>
           </div>
@@ -247,12 +271,12 @@ export default function AIProjectDesignerSection() {
                   <div className="mb-3 flex items-center justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold text-slate-900">A · Přednastavené symboly</p>
-                      <p className="mt-1 text-[11px] leading-4 text-slate-500">Jednoduché tvary vhodné pro převod do ohýbané nerezové linie.</p>
+                      <p className="mt-1 text-[11px] leading-4 text-slate-500">Originální směry navržené jako reálně ohýbatelné trubkové geometrie — ne jako běžné UI ikony.</p>
                     </div>
                     <Sparkles size={17} className="shrink-0 text-slate-400" />
                   </div>
                   <div className="grid grid-cols-4 gap-2">
-                    {shapeOptions.map(({ key, label, icon: Icon }) => {
+                    {shapeOptions.map(({ key, label, type, note }) => {
                       const active = selectedConcept === key;
                       return (
                         <button
@@ -260,10 +284,11 @@ export default function AIProjectDesignerSection() {
                           type="button"
                           onClick={() => selectConcept(key)}
                           aria-pressed={active}
-                          className={`flex min-h-[82px] flex-col items-center justify-center border px-2 py-3 text-center transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}`}
+                          className={`flex min-h-[104px] flex-col items-center justify-center border px-2 py-3 text-center transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'}`}
                         >
-                          <Icon size={25} strokeWidth={1.45} />
+                          <BendableShapeIcon type={type} className="h-11 w-11" />
                           <span className="mt-2 text-[11px] font-semibold">{label}</span>
+                          <span className={`mt-0.5 text-[9px] ${active ? 'text-white/60' : 'text-slate-400'}`}>{note}</span>
                         </button>
                       );
                     })}
@@ -313,7 +338,7 @@ export default function AIProjectDesignerSection() {
                         placeholder="Zadejte motiv…"
                         className="mt-3 w-full border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
                       />
-                      <p className="mt-2 text-[11px] leading-5 text-slate-500">Projektant motiv zjednoduší tak, aby na vizualizaci i ve výrobě působil jako skutečný nerezový prvek, ne jako tenká grafická kresba.</p>
+                      <p className="mt-2 text-[11px] leading-5 text-slate-500">Projektant motiv nejprve zjednoduší na jednu nebo několik plynulých trubkových linií. Ostré zlomy a nereálné křížení se převedou na oblouky nebo výrobní spoje; maximální ohýbaný vnější průměr trubky je Ø 74 mm.</p>
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
 
 const DEEP = { red: 0.039, green: 0.086, blue: 0.157 };
 const PETROL = { red: 0.043, green: 0.282, blue: 0.376 };
@@ -135,15 +136,14 @@ export default async function(req) {
     const portalQrImageUrl = 'https://mlzidla.cz/qr/muj-projekt.png';
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
-    const sharedDrive = await findSharedDrive(accessToken);
-    const rootId = sharedDrive?.id || 'root';
-    const driveId = sharedDrive?.id || '';
-    const offersFolder = await findOrCreateFolder(accessToken, 'MLŽIDLA — Nabídky', rootId, driveId);
-    const yearFolder = await findOrCreateFolder(accessToken, String(now.getFullYear()), offersFolder, driveId);
-    const quoteFolder = await findOrCreateFolder(accessToken, `${quoteNumber} — ${inquiry.company || inquiry.name || 'klient'}`.slice(0, 120), yearFolder, driveId);
+    const folders = await ensureOfferCaseFolders(accessToken, {
+      quoteNumber,
+      clientName: inquiry.company || inquiry.name || inquiry.email || 'klient',
+      issuedAt: now,
+    });
 
     const pres = await driveJson('https://www.googleapis.com/drive/v3/files?fields=id,name,webViewLink&supportsAllDrives=true', accessToken, {
-      method: 'POST', body: JSON.stringify({ name: `${quoteNumber} — ${product.name} — ${inquiry.name || 'klient'}`, mimeType: 'application/vnd.google-apps.presentation', parents: [quoteFolder] })
+      method: 'POST', body: JSON.stringify({ name: `${quoteNumber} — ${product.name} — ${inquiry.name || 'klient'}`, mimeType: 'application/vnd.google-apps.presentation', parents: [folders.presentationFolderId] })
     });
     const presentationId = pres.id;
     const initialPresentation = await driveJson(`https://slides.googleapis.com/v1/presentations/${presentationId}`, accessToken);
@@ -225,9 +225,22 @@ export default async function(req) {
     if (!exportRes.ok) throw new Error(`Slides export failed ${exportRes.status}: ${await exportRes.text()}`);
     const pdfBytes = new Uint8Array(await exportRes.arrayBuffer());
     const pdfFilename = `${quoteNumber}-${(product.slug || 'produkt')}-${audienceVariant}-prezentace.pdf`;
-    const pdf = await uploadPdf(accessToken, quoteFolder, pdfBytes, pdfFilename);
+    const pdf = await uploadBytes(accessToken, folders.presentationFolderId, pdfBytes, pdfFilename, 'application/pdf');
 
-    return Response.json({ success: true, presentation_id: presentationId, presentation_url: pres.webViewLink || `https://docs.google.com/presentation/d/${presentationId}/edit`, presentation_pdf_url: pdf.url, presentation_pdf_base64: toBase64(pdfBytes), presentation_filename: pdfFilename, shared_drive_id: sharedDrive?.id || '', shared_drive_name: sharedDrive?.name || 'My Drive fallback', drive_folder_id: quoteFolder, quote_number: quoteNumber, valid_until: validUntil.toISOString(), audience_variant: audienceVariant });
+    return Response.json({
+      success: true,
+      presentation_id: presentationId,
+      presentation_url: pres.webViewLink || `https://docs.google.com/presentation/d/${presentationId}/edit`,
+      presentation_pdf_url: pdf.url,
+      presentation_pdf_base64: toBase64(pdfBytes),
+      presentation_filename: pdfFilename,
+      drive_folder_id: folders.presentationFolderId,
+      drive_case_folder_id: folders.caseFolderId,
+      drive_case_folder_url: `https://drive.google.com/drive/folders/${folders.caseFolderId}`,
+      quote_number: quoteNumber,
+      valid_until: validUntil.toISOString(),
+      audience_variant: audienceVariant,
+    });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

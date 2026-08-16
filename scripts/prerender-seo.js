@@ -22,6 +22,8 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEO_PAGES } from '../src/lib/seo.js';
+import { LOCALIZED_SEO_PAGES } from '../src/lib/localized-content.js';
+import { LOCALE_CONFIG } from '../src/lib/i18n.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, '..', 'dist');
@@ -37,10 +39,13 @@ function escapeAttr(str = '') {
 
 function renderPage(page) {
   const fullTitle = `${page.title} | ${SITE_NAME}`;
+  const locale = page.locale || 'cs';
+  const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
   const img = page.image || DEFAULT_IMAGE;
   const url = `${BASE_URL}${page.canonicalPath}`;
   let html = template;
 
+  html = html.replace(/<html lang=".*?">/s, `<html lang="${localeConfig.htmlLang}">`);
   html = html.replace(/<title>.*?<\/title>/s, `<title>${escapeAttr(fullTitle)}</title>`);
   html = html.replace(/<meta name="description" content=".*?" \/>/s, `<meta name="description" content="${escapeAttr(page.description)}" />`);
   if (page.keywords) {
@@ -51,16 +56,21 @@ function renderPage(page) {
   html = html.replace(/<meta property="og:title" content=".*?" \/>/s, `<meta property="og:title" content="${escapeAttr(fullTitle)}" />`);
   html = html.replace(/<meta property="og:description" content=".*?" \/>/s, `<meta property="og:description" content="${escapeAttr(page.description)}" />`);
   html = html.replace(/<meta property="og:image" content=".*?" \/>/s, `<meta property="og:image" content="${img}" />`);
+  html = html.replace(/<meta property="og:locale" content=".*?" \/>/s, `<meta property="og:locale" content="${localeConfig.ogLocale}" />`);
   html = html.replace(/<meta name="twitter:title" content=".*?" \/>/s, `<meta name="twitter:title" content="${escapeAttr(fullTitle)}" />`);
   html = html.replace(/<meta name="twitter:description" content=".*?" \/>/s, `<meta name="twitter:description" content="${escapeAttr(page.description)}" />`);
   html = html.replace(/<meta name="twitter:image" content=".*?" \/>/s, `<meta name="twitter:image" content="${img}" />`);
+
+  const alternates = page.alternates || [];
+  const alternateTags = alternates.map(({ hreflang, path }) => `    <link rel="alternate" hreflang="${escapeAttr(hreflang)}" href="${BASE_URL}${escapeAttr(path)}" />`).join('\n');
+  if (alternateTags) html = html.replace('</head>', `${alternateTags}\n  </head>`);
 
   return html;
 }
 
 let count = 0;
-for (const key of Object.keys(SEO_PAGES)) {
-  const page = SEO_PAGES[key];
+const pagesToRender = [...Object.values(SEO_PAGES), ...LOCALIZED_SEO_PAGES];
+for (const page of pagesToRender) {
   if (!page.canonicalPath) continue;
 
   const html = renderPage(page);
@@ -77,4 +87,4 @@ for (const key of Object.keys(SEO_PAGES)) {
   count++;
 }
 
-console.log(`[prerender-seo] wrote ${count} pre-rendered HTML file(s) with route-specific meta tags.`);
+console.log(`[prerender-seo] wrote ${count} pre-rendered HTML file(s) with route-specific language, hreflang and meta tags.`);

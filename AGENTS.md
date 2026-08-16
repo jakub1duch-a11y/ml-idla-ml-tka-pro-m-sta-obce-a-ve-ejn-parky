@@ -32,5 +32,5 @@ npx skills add base44/skills
 - Prefer the existing Base44 CLI workflow over adding new npm scripts for Base44-specific tasks.
 - Reuse the existing SDK client and Vite plugin patterns before adding new Base44 integration paths.
 - Run the relevant checks from `package.json` before finishing code changes.
-- Deployment policy for MLŽIDLA.cz: after any completed Base44 code, UI, content, entity, workflow, or related production change, automatically publish/update the live website unless the user explicitly requests a draft, preview, or no-deploy change.
-- Before publishing, run the production build and relevant targeted checks. After publishing, verify deployment success. Do not leave completed production changes only committed in the Base44 sandbox when deployment is available.
+- Deployment policy for MLŽIDLA.cz: this repository is edited through the Base44 cloud sandbox. Completed Base44 code, UI, content, entity, workflow, or related production changes should be treated as publishable by default unless the user explicitly requests a draft/preview-only change.
+- In the Base44 cloud sandbox, do NOT run project-level `base44 deploy`, `site deploy`, entity push, function deploy, or similar CLI deployment commands. Sandbox writes auto-commit and the platform ships/syncs them automatically. After changes, run the production build and relevant targeted checks, allow the auto-commit to land, and create/verify a checkpoint when appropriate.

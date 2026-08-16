@@ -3,7 +3,7 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
-import { LOCALE_CONFIG, getLanguageAlternates, getRouteKeyFromPath } from './i18n.js';
+import { LOCALE_CONFIG, ROUTE_MAP, getLanguageAlternates, getRouteKeyFromPath } from './i18n.js';
 
 const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
 const BASE_URL = 'https://mlzidla.cz';
@@ -69,32 +69,36 @@ function setJsonLd(data) {
   el.textContent = JSON.stringify(data);
 }
 
-// Generuje automatické drobečkové schéma pro Google z aktuální cesty
-function generateBreadcrumbsJsonLd(path, title) {
-  if (!path || path === '/') return null;
-  const segments = path.split('/').filter(Boolean);
-  const items = [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Hlavní stránka",
-      "item": BASE_URL
-    }
-  ];
-  
-  if (segments.length === 1) {
-    items.push({
-      "@type": "ListItem",
-      "position": 2,
-      "name": title || segments[0],
-      "item": BASE_URL + path
-    });
-  }
-  
+const BREADCRUMB_HOME = {
+  cs: 'Hlavní stránka',
+  en: 'Home',
+  de: 'Startseite',
+  pl: 'Strona główna',
+  sk: 'Domov',
+  it: 'Home',
+};
+
+// Lokalizované drobečkové schéma pro Google.
+function generateBreadcrumbsJsonLd(path, title, locale = 'cs') {
+  if (!path || path === ROUTE_MAP.home[locale]) return null;
+  const homePath = ROUTE_MAP.home[locale] || '/';
   return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": items
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: BREADCRUMB_HOME[locale] || BREADCRUMB_HOME.en,
+        item: `${BASE_URL}${homePath === '/' ? '' : homePath}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: title || path.split('/').filter(Boolean).at(-1),
+        item: BASE_URL + path,
+      },
+    ],
   };
 }
 
@@ -147,7 +151,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   
   // Kombinace vlastních a automatických JSON-LD strukturovaných dat.
   // Pokud stránka dodá vlastní @graph, zachováme ho a doplníme BreadcrumbList.
-  const breadcrumbs = generateBreadcrumbsJsonLd(canonicalPath, title);
+  const breadcrumbs = generateBreadcrumbsJsonLd(canonicalPath, title, locale);
   if (jsonLd && breadcrumbs) {
     const graph = jsonLd['@graph']
       ? [...jsonLd['@graph'], breadcrumbs]

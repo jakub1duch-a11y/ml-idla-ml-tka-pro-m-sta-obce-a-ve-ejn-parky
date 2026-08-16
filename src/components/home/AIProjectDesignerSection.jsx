@@ -52,7 +52,7 @@ const shapeOptions = [
 ];
 
 function BendableShapeIcon({ type, className = '' }) {
-  const common = /** @type {{ fill: string, stroke: string, strokeWidth: number, strokeLinecap: 'round', strokeLinejoin: 'round', vectorEffect: string }} */ ({
+  const common = /** @type {React.SVGProps<SVGPathElement>} */ ({
     fill: 'none',
     stroke: 'currentColor',
     strokeWidth: 3.2,
@@ -330,7 +330,7 @@ export default function AIProjectDesignerSection() {
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
                         <div>
                           <p className="text-xs font-semibold text-slate-800">Možná varianta symbolu</p>
-                          <p className="mt-1 text-[10px] leading-4 text-slate-500">Výchozí je vždy nejjednodušší Solo. Další varianty jen skládají stejnou jednoduchou geometrii.</p>
+                          <p className="mt-1 text-[10px] leading-4 text-slate-500">{selectedConcept === 'zabradli' ? 'Výchozí je vždy nejjednodušší rovný úsek. Další varianty pouze jemně ohýbají nebo modulově skládají stejnou výrobní logiku.' : 'Výchozí je vždy nejjednodušší Solo. Další varianty jen skládají stejnou jednoduchou geometrii.'}</p>
                         </div>
                         <span className="font-mono text-[9px] uppercase tracking-[.12em] text-slate-400">skryté kotvení</span>
                       </div>

@@ -323,10 +323,14 @@ export default function InquiryManager({ inquiries, products, mediaFiles, onSent
           <input value={subject} onChange={(event) => setSubject(event.target.value)} placeholder="Předmět zprávy" className="mt-6 w-full border border-border bg-background px-3 py-2.5 text-sm"/>
           <textarea value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Napište odpověď nebo si ji nechte navrhnout." rows="9" className="mt-3 w-full border border-border bg-background px-3 py-3 text-sm"/>
 
+          {followUpType && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={followUpApproved} onChange={(e) => setFollowUpApproved(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji follow-up zprávu k odeslání.</strong><br/><span className="text-xs text-slate-500">E-mail použije jednotnou profesionální šablonu MLŽIDLA®, shrnutí projektu, kontaktní kartu a firemní patičku.</span></span></label>}
           {prepared && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={approvedToSend} onChange={(e) => setApprovedToSend(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji tuto verzi nabídky k odeslání.</strong><br/><span className="text-xs text-slate-500">Bez tohoto potvrzení systém nabídku zákazníkovi neodešle.</span></span></label>}
 
           {error && <p role="alert" className="mt-3 border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</p>}
-          <button onClick={sendReply} disabled={busy === 'send' || !prepared || !approvedToSend || !subject || !message} className="mt-4 inline-flex items-center gap-2 bg-primary px-5 py-3 text-sm font-bold text-white disabled:opacity-40"><Send size={15}/>{busy === 'send' ? 'Odesílám…' : 'Schválit a odeslat nabídku'}</button>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {followUpType && <button onClick={sendFollowUp} disabled={busy === 'followup-send' || !followUpApproved || !subject || !message} className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground disabled:opacity-40"><Send size={15}/>{busy === 'followup-send' ? 'Odesílám…' : 'Schválit a odeslat follow-up'}</button>}
+            <button onClick={sendReply} disabled={busy === 'send' || !prepared || !approvedToSend || !subject || !message} className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-sm font-bold text-white disabled:opacity-40"><Send size={15}/>{busy === 'send' ? 'Odesílám…' : 'Schválit a odeslat nabídku'}</button>
+          </div>
         </div>
       </div>
     </section>

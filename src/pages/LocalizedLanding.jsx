@@ -28,6 +28,7 @@ export default function LocalizedLanding({ routeKey = 'home' }) {
   const locale = getLocaleFromPath(location.pathname);
   const page = getLocalizedPage(routeKey, locale);
   const inquiryPath = ROUTE_MAP.inquiry[locale];
+  const primaryPath = routeKey === 'inquiry' ? ROUTE_MAP.contact[locale] : inquiryPath;
   const referencePath = ROUTE_MAP.references[locale];
   const catalogPath = ROUTE_MAP.catalog[locale];
 
@@ -68,7 +69,7 @@ export default function LocalizedLanding({ routeKey = 'home' }) {
             <motion.h1 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .09, duration: .45, ease: [0.22, 1, 0.36, 1] }} className="mt-4 max-w-4xl font-heading text-[clamp(2.6rem,9vw,4.8rem)] font-medium leading-[.98] tracking-[-.045em]">{page.heading}</motion.h1>
             <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15, duration: .42 }} className="mt-7 max-w-3xl text-base leading-7 text-white/72 sm:text-lg sm:leading-8">{page.lead}</motion.p>
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .2, duration: .4 }} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link to={inquiryPath} className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold">{page.primaryCta}<ArrowRight size={16}/></Link>
+              <Link to={primaryPath} className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold">{page.primaryCta}<ArrowRight size={16}/></Link>
               <Link to={referencePath} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/[.06] px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/12">{page.secondaryCta}<ArrowRight size={16}/></Link>
             </motion.div>
           </div>

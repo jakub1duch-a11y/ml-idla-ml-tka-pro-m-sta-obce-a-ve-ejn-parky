@@ -36,7 +36,10 @@ export default function Eventy() {
   useEffect(() => {
     setSEO(SEO_PAGES.eventy);
     base44.entities.Product.list().catch(() => []).then(p => {
-      setProducts((p || []).slice(0, 3));
+      const preferred = ['mlzna-brana-gate', 'brana-bendy', 'aura-city-duo', 'linea-gate'];
+      const all = (p || []).filter((item) => item?.slug && !String(item.name || '').startsWith('ARCHIV'));
+      const curated = preferred.map((slug) => all.find((item) => item.slug === slug)).filter(Boolean);
+      setProducts(curated.length ? curated : all.slice(0, 4));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -144,7 +147,7 @@ export default function Eventy() {
         {loading ? (
           <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">

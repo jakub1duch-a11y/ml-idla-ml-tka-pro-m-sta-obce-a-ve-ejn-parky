@@ -18,8 +18,8 @@ export default function SiteLayout() {
         <Outlet />
       </main>
       {locale === 'cs' ? <Footer /> : <LocalizedFooter locale={locale} />}
-      <NotificationPrompt />
-      <CookieConsent />
+      {locale === 'cs' && <NotificationPrompt />}
+      <CookieConsent locale={locale} />
     </div>
   );
 }

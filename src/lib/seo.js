@@ -115,7 +115,8 @@ function generateBreadcrumbsJsonLd(path, title) {
  */
 export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots, locale = 'cs', alternates = [] }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-  const img = image || DEFAULT_IMAGE;
+  const imagePath = image || DEFAULT_IMAGE;
+  const img = imagePath.startsWith('http') ? imagePath : `${BASE_URL}${imagePath}`;
   const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
   const routeKey = canonicalPath ? getRouteKeyFromPath(canonicalPath) : null;
   const resolvedAlternates = alternates.length ? alternates : (routeKey ? getLanguageAlternates(routeKey) : []);

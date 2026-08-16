@@ -119,6 +119,14 @@ const shapeVariants = [
   { key: 'gate', label: 'Brána', note: 'průchozí dvojice' },
 ];
 
+const railingVariants = [
+  { key: 'solo', label: 'Rovné', note: '1 jednoduchý úsek' },
+  { key: 'duo', label: 'Obloukové', note: 'měkký rádius podél záhonu' },
+  { key: 'gate', label: 'Modulové', note: 'více navazujících úseků' },
+];
+
+const variantsFor = (conceptKey) => conceptKey === 'zabradli' ? railingVariants : shapeVariants;
+
 const POLNA_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png';
 
 export default function AIProjectDesignerSection() {
@@ -165,7 +173,8 @@ export default function AIProjectDesignerSection() {
     if (selectedConcept === 'custom') return customShape.trim() ? `Vlastní motiv: ${customShape.trim()}` : 'Vlastní motiv';
     const shape = shapeOptions.find((item) => item.key === selectedConcept);
     if (shape) {
-      const variant = shapeVariants.find((item) => item.key === selectedVariant) || shapeVariants[0];
+      const variants = variantsFor(selectedConcept);
+      const variant = variants.find((item) => item.key === selectedVariant) || variants[0];
       return `Symbol: ${shape.label} · varianta ${variant.label}`;
     }
     const product = productOptions.find((item) => item.key === selectedConcept);
@@ -326,7 +335,7 @@ export default function AIProjectDesignerSection() {
                         <span className="font-mono text-[9px] uppercase tracking-[.12em] text-slate-400">skryté kotvení</span>
                       </div>
                       <div className="mt-3 grid grid-cols-3 gap-2">
-                        {shapeVariants.map((variant) => {
+                        {variantsFor(selectedConcept).map((variant) => {
                           const active = selectedVariant === variant.key;
                           return (
                             <button key={variant.key} type="button" onClick={() => selectVariant(variant.key)} aria-pressed={active} className={`rounded-xl border px-3 py-3 text-left transition ${active ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'}`}>

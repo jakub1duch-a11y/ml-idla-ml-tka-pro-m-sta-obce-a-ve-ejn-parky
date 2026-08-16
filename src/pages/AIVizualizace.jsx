@@ -159,7 +159,8 @@ export default function AIVizualizace() {
   }, [previewUrl]);
 
   const selectedProduct = useMemo(() => products.find((item) => item.id === selectedProductId) || null, [products, selectedProductId]);
-  const canGenerate = useMemo(() => Boolean(leadProfile && (file || sourceUrl) && selectedProduct?.image_url), [leadProfile, file, sourceUrl, selectedProduct]);
+  const customConceptMode = Boolean(requestedConcept && !requestedConcept.startsWith('Produkt:'));
+  const canGenerate = useMemo(() => Boolean(leadProfile && (file || sourceUrl) && (customConceptMode || selectedProduct?.image_url)), [leadProfile, file, sourceUrl, customConceptMode, selectedProduct]);
 
   const registerVisualizer = async (event) => {
     event.preventDefault();
@@ -242,27 +243,30 @@ export default function AIVizualizace() {
       }
 
       const context = description.trim() || 'venkovní prostor určený k ochlazení lidí během horkých dnů';
-      const productRefs = [selectedProduct.image_url, ...(selectedProduct.gallery_urls || []).filter(isImageUrl)]
+      const productRefs = customConceptMode || !selectedProduct ? [] : [selectedProduct.image_url, ...(selectedProduct.gallery_urls || []).filter(isImageUrl)]
         .filter(Boolean)
         .filter((url, index, all) => all.indexOf(url) === index)
         .slice(0, 4);
+      const insertionInstruction = customConceptMode
+        ? `VLOŽENÍ ZAKÁZKOVÉHO TVARU: Navrhni pouze nejjednodušší výrobně uvěřitelnou interpretaci motivu „${requestedConcept}“. Konstrukce musí působit jako skutečné mlžítko z broušené nerezové trubky, kterou lze reálně ohýbat. Upřednostni jednu souvislou plynulou linii nebo minimum jednoduchých napojení. Žádné tenké grafické čáry, ostré nereálné zlomy, dekorativní složitost ani křížení bez konstrukční logiky. Maximální vnější průměr ohýbané trubky je Ø 74 mm. Spodní konec má vizuálně vstupovat přímo do dlažby nebo terénu: bez viditelného spodního kroužku, bez límce a bez nadzemní patky; kotvení je schované pod finálním povrchem. Variantu motivu dodrž podle zadání — Solo je výchozí a nejjednodušší, Duo znamená dva stejné jednoduché prvky, Brána znamená průchozí sestavu ze stejného jednoduchého motivu.`
+        : `VLOŽENÍ PRODUKTU: DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct?.name}. PRIORITA Č. 2 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct?.name}. Materiál dle katalogu: ${selectedProduct?.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct?.short_description || ''}.`;
       const response = await base44.integrations.Core.GenerateImage({
-        prompt: `Vytvoř fotorealistickou architektonickou vizualizaci skutečného výrobku MLŽIDLA® HolmTec v nahraném prostoru.
+        prompt: `Vytvoř fotorealistickou architektonickou vizualizaci MLŽIDLA® HolmTec v nahraném prostoru.
 
 SCENE LOCK — ABSOLUTNÍ PRIORITA: PRVNÍ referenční obrázek je fotografie zákazníkova prostoru a musí zůstat vizuálně totožný. Zachovej přesně kompozici, ořez, ohniskovou perspektivu, horizont, úběžníky, polohu kamery, poměry vzdáleností, budovy, fasády, okna, dveře, obrubníky, dlažbu, trávníky, stromy, záhony, ploty, komunikace, mobiliář, auta, osoby, stíny, světelné podmínky, počasí a všechny existující objekty. NEPŘESTAVUJ scénu. NEPOSOUVEJ existující objekty. NEMAŽ existující prvky. NEGENERUJ novou architekturu, jinou dlažbu, jinou zeleň ani alternativní verzi místa. Pokud si nejsi jistý detailem prostoru, ponech jej podle původní fotografie beze změny.
 
-VLOŽENÍ PRODUKTU: DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct.name}. PRIORITA Č. 2 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct.name}. Materiál dle katalogu: ${selectedProduct.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct.short_description || ''}.
+${insertionInstruction}
 
-FYZICKÉ USAZENÍ: Smíš měnit pouze vložený výrobek a jeho bezprostřední fotorealistickou integraci. Urči jeho měřítko podle známých rozměrových vodítek ve scéně (lidé, dveře, obrubníky, lavičky, dlažební modul apod.), respektuj perspektivu kamery, kontaktní bod se zemí, natočení, zakrytí za reálnými objekty, realistické stíny, odrazy a světlo. Produkt musí působit skutečně instalovaný v daném místě, ne jako nalepený 2D objekt.
+FYZICKÉ USAZENÍ: Smíš měnit pouze vložené mlžítko a jeho bezprostřední fotorealistickou integraci. Urči jeho měřítko podle známých rozměrových vodítek ve scéně (lidé, dveře, obrubníky, lavičky, dlažební modul apod.), respektuj perspektivu kamery, kontaktní bod se zemí, natočení, zakrytí za reálnými objekty, realistické stíny, odrazy a světlo. Prvek musí působit skutečně instalovaný v daném místě, ne jako nalepený 2D objekt.
 
 Zadání zákazníka: ${context}.
 Typ prostoru z projektové podpory: ${requestedType || 'neuveden'}.
-Výchozí motiv / produkt z projektové podpory: ${requestedConcept || selectedProduct.name}.
-Výrobní pravidla: ${requestedProfile || 'respektovat reálné výrobní proporce a kotvení'}; u nových návrhů bez viditelného spodního límce, s kotevní patkou skrytou pod úrovní finálního povrchu.
+Výchozí motiv / produkt z projektové podpory: ${requestedConcept || selectedProduct?.name || 'neuveden'}.
+Výrobní pravidla: ${requestedProfile || 'respektovat reálné výrobní proporce a skryté kotvení'}.
 
-MLHA: Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci výrobku; bez mokrých louží, bez dramatických efektů a bez zakrytí produktu nebo důležitých částí scény.
+MLHA: Přidej pouze jemnou realistickou vodní mlhu v místech, kde odpovídá konstrukci; bez mokrých louží, bez dramatických efektů a bez zakrytí produktu nebo důležitých částí scény.
 
-ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změny denní doby, sezóny, barevnosti celé fotografie nebo prostředí. Výsledek musí vypadat jako tatáž původní fotografie po fyzické instalaci SKUTEČNÉHO PRODUKTU, nikoli jako nový koncept inspirovaný místem. Finální značkový vodoznak MLŽIDLA® a MLZIDLA.CZ se přidává až po generování, proto jej do samotné scény negeneruj.`, 
+ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změny denní doby, sezóny, barevnosti celé fotografie nebo prostředí. Výsledek musí vypadat jako tatáž původní fotografie po fyzické instalaci SKUTEČNÉHO MLŽÍTKA, nikoli jako nový koncept inspirovaný místem. Finální značkový vodoznak MLŽIDLA® a MLZIDLA.CZ se přidává až po generování, proto jej do samotné scény negeneruj.`,
         existing_image_urls: [uploadedUrl, ...productRefs],
       });
       if (!response?.url) throw new Error('Generátor nevrátil výsledný obrázek.');
@@ -283,10 +287,10 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
   };
 
   useEffect(() => {
-    if (!autoGeneratePending || optimizing || loading || !file || !selectedProduct?.image_url) return;
+    if (!autoGeneratePending || optimizing || loading || !file || (!customConceptMode && !selectedProduct?.image_url)) return;
     setAutoGeneratePending(false);
     generate();
-  }, [autoGeneratePending, optimizing, loading, file, selectedProductId]);
+  }, [autoGeneratePending, optimizing, loading, file, selectedProductId, customConceptMode]);
 
   const sendToQuote = async () => {
     if (quoteUploading) return;
@@ -380,14 +384,20 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
             </button>
             <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" capture={fastMode ? 'environment' : undefined} className="hidden" onChange={(e) => pickFile(e.target.files?.[0])}/>
 
-            {!fastMode && <>
+            {!fastMode && !customConceptMode && <>
               <label className="block mt-6 font-mono text-[10px] tracking-[.16em] uppercase text-white/40">2 · Skutečný výrobek</label>
               <select value={selectedProductId} onChange={(e) => { setSelectedProductId(e.target.value); setResultUrl(''); }} disabled={productsLoading} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3.5 text-sm text-white focus:outline-none focus:border-teal-300/50 disabled:opacity-50">
                 {productsLoading && <option>Načítám katalog…</option>}
                 {products.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
               </select>
             </>}
-            {selectedProduct && (
+            {customConceptMode ? (
+              <div className="mt-6 rounded-xl border border-teal-300/15 bg-teal-300/[.05] p-4">
+                <p className="font-mono text-[10px] uppercase tracking-[.14em] text-teal-300/70">2 · Zakázkový motiv</p>
+                <p className="mt-2 text-sm font-semibold text-white/85">{requestedConcept}</p>
+                <p className="mt-2 text-xs leading-relaxed text-white/40">Vizualizace vytvoří nejjednodušší výrobně uvěřitelnou variantu z nerezové trubky do Ø 74 mm, bez spodního límce a se skrytým kotvením pod povrchem.</p>
+              </div>
+            ) : selectedProduct && (
               <div className="mt-3 flex gap-3 rounded-xl border border-white/10 bg-black/20 p-3">
                 <img src={selectedProduct.image_url} alt={selectedProduct.name} className="h-20 w-20 flex-none rounded-lg bg-white object-contain" />
                 <div className="min-w-0 self-center">

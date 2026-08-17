@@ -49,7 +49,7 @@ export default function BlogNewsletterInline() {
           <p className="text-sm text-slate-500 font-light mb-4">Realizace, zákulisí výroby a novinky sledujte na Instagramu a Google.</p>
         </div>
         <div className="flex gap-3">
-          <a href="https://www.instagram.com/mlzidla.cz" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noopener noreferrer"
             className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm text-slate-700 hover:border-slate-300 transition-all">
             <Instagram size={15} /> Instagram
           </a>

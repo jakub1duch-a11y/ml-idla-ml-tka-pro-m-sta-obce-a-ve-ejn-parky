@@ -7,6 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import AnalyticsRouteTracker from '@/components/common/AnalyticsRouteTracker';
 import GlobalPhotoWatermark from '@/components/GlobalPhotoWatermark';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
@@ -178,6 +179,7 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
+          <AnalyticsRouteTracker />
           <GlobalPhotoWatermark />
           <AuthenticatedApp />
         </Router>

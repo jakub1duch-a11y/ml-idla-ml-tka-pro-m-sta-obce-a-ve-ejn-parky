@@ -2,6 +2,7 @@ import type * as React from 'react';
 
 declare global {
   interface Window {
+    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
     trackGateInterest?: (...args: unknown[]) => void;
     trackMistSculptureInterest?: (...args: unknown[]) => void;
@@ -16,6 +17,10 @@ declare global {
     trackInquirySubmitted?: (...args: unknown[]) => void;
     trackRentalInquiry?: (...args: unknown[]) => void;
     trackThankYouPageView?: (...args: unknown[]) => void;
+    trackNewsletterSignup?: (...args: unknown[]) => void;
+    trackVisualizerRegistration?: (...args: unknown[]) => void;
+    trackVisualizerGenerated?: (...args: unknown[]) => void;
+    trackVisualizerDownload?: (...args: unknown[]) => void;
   }
 
   interface ImportMetaEnv {

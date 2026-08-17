@@ -59,16 +59,61 @@ function installGlobalListeners() {
     updateGoogleConsent(event?.detail?.value || 'essential');
   });
 
+  const startedForms = new WeakSet();
+  document.addEventListener('focusin', (event) => {
+    const form = event.target?.closest?.('form');
+    if (!form || startedForms.has(form)) return;
+    startedForms.add(form);
+    void emit('form_start', {
+      form_id: form.id || form.getAttribute('name') || 'web_form',
+      page_path: window.location.pathname,
+    });
+  }, { capture: true });
+
   document.addEventListener('click', (event) => {
     const anchor = event.target?.closest?.('a[href]');
     if (!anchor) return;
     const href = anchor.getAttribute('href') || '';
     if (href.startsWith('tel:')) {
-      void emit('phone_click', { phone_number: href.replace('tel:', ''), link_text: anchor.textContent?.trim() || '' });
-    } else if (href.startsWith('mailto:')) {
-      void emit('email_click', { email_address: href.replace('mailto:', '').split('?')[0], link_text: anchor.textContent?.trim() || '' });
+      void emit('phone_click', { contact_type: 'phone', page_path: window.location.pathname });
+      return;
+    }
+    if (href.startsWith('mailto:')) {
+      void emit('email_click', { contact_type: 'email', page_path: window.location.pathname });
+      return;
+    }
+    if (href.startsWith('/') || href.startsWith(window.location.origin)) {
+      let targetPath = href;
+      try { targetPath = new URL(href, window.location.origin).pathname; } catch (_) {}
+      const importantTargets = ['/poptavka', '/kontakt', '/kalkulacka', '/ai-vizualizace', '/smart-ovladani', '/ke-stazeni', '/mlzidla-mlzitka', '/pronajem'];
+      if (importantTargets.some((target) => targetPath.startsWith(target))) {
+        void emit('cta_click', {
+          cta_target: targetPath,
+          cta_text: (anchor.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80),
+          page_path: window.location.pathname,
+        });
+      }
     }
   }, { capture: true });
+
+  const sentDepths = new Set();
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    window.requestAnimationFrame(() => {
+      const doc = document.documentElement;
+      const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const pct = Math.round((window.scrollY / max) * 100);
+      [25, 50, 75, 90].forEach((depth) => {
+        if (pct >= depth && !sentDepths.has(`${window.location.pathname}:${depth}`)) {
+          sentDepths.add(`${window.location.pathname}:${depth}`);
+          void emit('scroll_depth', { percent_scrolled: depth, page_path: window.location.pathname });
+        }
+      });
+      scrollTicking = false;
+    });
+  }, { passive: true });
 }
 
 function loadScript(id) {

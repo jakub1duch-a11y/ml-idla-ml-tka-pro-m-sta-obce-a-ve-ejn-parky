@@ -56,12 +56,14 @@ function installGlobalListeners() {
   listenersInstalled = true;
 
   window.addEventListener('mlzidla:cookie-consent', (event) => {
-    updateGoogleConsent(event?.detail?.value || 'essential');
+    const consentEvent = /** @type {CustomEvent} */ (event);
+    updateGoogleConsent(consentEvent.detail?.value || 'essential');
   });
 
   const startedForms = new WeakSet();
   document.addEventListener('focusin', (event) => {
-    const form = event.target?.closest?.('form');
+    const target = event.target instanceof Element ? event.target : null;
+    const form = target?.closest?.('form');
     if (!form || startedForms.has(form)) return;
     startedForms.add(form);
     void emit('form_start', {
@@ -71,7 +73,8 @@ function installGlobalListeners() {
   }, { capture: true });
 
   document.addEventListener('click', (event) => {
-    const anchor = event.target?.closest?.('a[href]');
+    const target = event.target instanceof Element ? event.target : null;
+    const anchor = target?.closest?.('a[href]');
     if (!anchor) return;
     const href = anchor.getAttribute('href') || '';
     if (href.startsWith('tel:')) {

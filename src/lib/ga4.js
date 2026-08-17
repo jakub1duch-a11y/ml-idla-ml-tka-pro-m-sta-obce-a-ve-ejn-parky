@@ -96,6 +96,39 @@ function installGlobalListeners() {
     }
   }, { capture: true });
 
+  const observedSections = new Set();
+  const seenSections = new Set();
+  const observeSections = () => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.45) return;
+        const section = entry.target;
+        const heading = section.querySelector?.('h1,h2,h3');
+        const label = section.getAttribute('data-analytics-section') || section.id || heading?.textContent?.trim().replace(/\s+/g, ' ').slice(0, 80) || 'section';
+        const key = `${window.location.pathname}:${label}`;
+        if (seenSections.has(key)) return;
+        seenSections.add(key);
+        void emit('section_view', { section_name: label, page_path: window.location.pathname });
+        observer.unobserve(section);
+      });
+    }, { threshold: [0.45] });
+    document.querySelectorAll('main section, [data-analytics-section]').forEach((section) => {
+      if (observedSections.has(section)) return;
+      observedSections.add(section);
+      observer.observe(section);
+    });
+    const mutation = new MutationObserver(() => {
+      document.querySelectorAll('main section, [data-analytics-section]').forEach((section) => {
+        if (observedSections.has(section)) return;
+        observedSections.add(section);
+        observer.observe(section);
+      });
+    });
+    mutation.observe(document.body, { childList: true, subtree: true });
+  };
+  window.setTimeout(observeSections, 0);
+
   const playedVideos = new WeakSet();
   document.addEventListener('play', (event) => {
     const video = event.target;

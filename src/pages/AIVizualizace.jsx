@@ -302,6 +302,17 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
       }
       setQuoteSent(false);
       setResultUrl(finalResultUrl);
+      try {
+        await base44.functions.invoke('archiveGeneratedMediaToDrive', {
+          fileUrl: finalResultUrl,
+          fileName: `${selectedProduct?.slug || 'zakazkovy-navrh'}-vizualizace-${Date.now()}.webp`,
+          mimeType: 'image/webp',
+          productSlug: selectedProduct?.slug || '',
+          mediaRole: 'render',
+        });
+      } catch (archiveError) {
+        console.warn('Automatická archivace vizualizace na MLŽIDLA Disk se nezdařila', archiveError);
+      }
       trackVisualizerGenerated(selectedProduct?.name || requestedConcept || 'Zakázkový návrh', fastMode ? 'fast_camera' : customConceptMode ? 'custom' : 'standard');
     } catch (e) {
       setError(e?.message || 'Vizualizaci se nepodařilo vytvořit. Zkuste to prosím znovu.');

@@ -25,10 +25,18 @@ function setOg(property, content) {
   el.setAttribute('content', content);
 }
 
+function normalizeCanonicalPath(path) {
+  if (!path) return '/';
+  const rawPath = path.startsWith('http') ? new URL(path).pathname : path;
+  const cleanPath = rawPath.split('?')[0].split('#')[0] || '/';
+  return cleanPath === '/' ? '/' : cleanPath.replace(/\/+$/, '');
+}
+
 function setCanonical(path) {
+  const canonicalPath = normalizeCanonicalPath(path);
   let el = document.querySelector('link[rel="canonical"]');
   if (!el) { el = document.createElement('link'); el.setAttribute('rel', 'canonical'); document.head.appendChild(el); }
-  el.setAttribute('href', BASE_URL + path);
+  el.setAttribute('href', `${BASE_URL}${canonicalPath}`);
 }
 
 function setLanguageAlternates(alternates = []) {
@@ -138,7 +146,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setOg('og:type', type);
   setOg('og:site_name', SITE_NAME);
   setOgLocale(locale);
-  if (canonicalPath) setOg('og:url', BASE_URL + canonicalPath);
+  if (canonicalPath) setOg('og:url', BASE_URL + normalizeCanonicalPath(canonicalPath));
 
   // Twitter
   setMeta('twitter:card', 'summary_large_image');

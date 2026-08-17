@@ -86,7 +86,7 @@ export default function Footer() {
             </div>
 
             <div className="mt-7 flex items-center gap-4">
-              <a href="https://www.instagram.com/mlzne_sochy" target="_blank" rel="noreferrer" aria-label="Instagram" className="text-white/55 transition-colors hover:text-cyan"><Instagram size={18} /></a>
+              <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram" className="text-white/55 transition-colors hover:text-cyan"><Instagram size={18} /></a>
               <a href="#linkedin" aria-label="LinkedIn" className="text-white/55 transition-colors hover:text-cyan"><Linkedin size={18} /></a>
               <a href="#youtube" aria-label="YouTube" className="text-white/55 transition-colors hover:text-cyan"><Youtube size={18} /></a>
             </div>

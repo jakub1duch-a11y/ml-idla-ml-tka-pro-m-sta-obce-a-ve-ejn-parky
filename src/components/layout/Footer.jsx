@@ -4,6 +4,7 @@ import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight } from 'lucide-r
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
+import { trackNewsletterSignup } from '@/lib/ga4';
 
 const columns = [
   {
@@ -52,6 +53,7 @@ export default function Footer() {
   const subscribe = async (event) => {
     event.preventDefault();
     await base44.entities.NewsletterLead.create({ email, source: 'footer' });
+    trackNewsletterSignup('footer');
     setSubscribed(true);
   };
 

@@ -39,6 +39,15 @@ export default function ContentPlanForm({ onCreated }) {
       const res = await base44.integrations.Core.GenerateImage(generateImageParams);
       setForm((f) => ({ ...f, image_url: res.url }));
       setAiUsed(true);
+      try {
+        await base44.functions.invoke('archiveGeneratedMediaToDrive', {
+          fileUrl: res.url,
+          fileName: `marketing-${form.title || 'mlzidla'}-${Date.now()}.png`,
+          mediaRole: 'marketing',
+        });
+      } catch (archiveError) {
+        console.warn('Automatická archivace marketingového vizuálu na MLŽIDLA Disk se nezdařila', archiveError);
+      }
     } finally {
       setGeneratingImage(false);
     }

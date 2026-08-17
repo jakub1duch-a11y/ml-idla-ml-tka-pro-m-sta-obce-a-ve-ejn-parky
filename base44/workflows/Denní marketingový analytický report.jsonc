@@ -1,0 +1,47 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "30 18 * * *",
+      "one_time_date": null,
+      "timezone": "Europe/Prague",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Denn\u00ed marketingov\u00fd analytick\u00fd report",
+  "description": "Ka\u017ed\u00fd den v 18:30 sestav\u00ed report z GA4, Search Console, Base44 popt\u00e1vek, Instagramu, Facebooku a Meta Ads a ode\u0161le jej marketingov\u00e9mu t\u00fdmu.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "denni_marketingovy_analyticky_report",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "odeslat_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "marketingIntelligence",
+            "args": {
+              "sendEmail": true
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sestavit a odeslat marketingov\u00fd report",
+            "description": "GA4 + SEO + soci\u00e1ln\u00ed s\u00edt\u011b + reklamy + popt\u00e1vky"
+          }
+        }
+      }
+    ]
+  }
+}

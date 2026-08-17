@@ -297,12 +297,23 @@ export default function AIProjectDesignerSection() {
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">02</span>
                   Jak má návrh začít
                 </legend>
-                <p className="mb-5 max-w-2xl text-xs leading-5 text-slate-500">Máte tři možnosti: zvolit jednoduchý symbol, vyjít z našeho hotového produktu, nebo napsat vlastní motiv.</p>
+                <p className="mb-5 max-w-2xl text-xs leading-5 text-slate-500">Začněte vlastním návrhem, vyberte některý z našich produktů, nebo se inspirujte přednastavenými tvary.</p>
+
+                <div className={`mb-4 rounded-2xl border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
+                  <div className="flex items-start gap-3">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center ${selectedConcept === 'custom' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-500'}`}><Shapes size={18} /></div>
+                    <div className="min-w-0 flex-1">
+                      <label htmlFor="custom-shape-top" className="text-sm font-semibold text-slate-900">A · Vlastní návrh</label>
+                      <p className="mt-1 text-[11px] leading-4 text-slate-500">Začněte vlastním symbolem, motivem nebo představou. Stačí 1–2 slova.</p>
+                      <input id="custom-shape-top" value={customShape} onFocus={() => selectConcept('custom')} onChange={(e) => updateCustomShape(e.target.value)} placeholder="Např. Mrkev, Dubový list, Hvězda…" className="mt-3 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-slate-950 focus:ring-1 focus:ring-slate-950" />
+                    </div>
+                  </div>
+                </div>
 
                 <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
                   <div className="mb-3 flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold text-slate-900">A · Přednastavené symboly</p>
+                      <p className="text-sm font-semibold text-slate-900">C · Tvary a inspirace</p>
                       <p className="mt-1 text-[11px] leading-4 text-slate-500">Originální směry navržené jako reálně ohýbatelné trubkové geometrie — ne jako běžné UI ikony.</p>
                     </div>
                     <Sparkles size={17} className="shrink-0 text-slate-400" />
@@ -376,26 +387,7 @@ export default function AIProjectDesignerSection() {
                   </div>
                 </div>
 
-                <div className={`mt-4 rounded-2xl border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
-                  <div className="flex items-start gap-3">
-                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center ${selectedConcept === 'custom' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-500'}`}>
-                      <Shapes size={18} />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <label htmlFor="custom-shape" className="text-sm font-semibold text-slate-900">C · Vlastní symbol nebo tvar</label>
-                      <p className="mt-1 text-[11px] leading-4 text-slate-500">Napište maximálně 1–2 slova. Např. Mrkev, Dubový list, Hvězda, Ryba.</p>
-                      <input
-                        id="custom-shape"
-                        value={customShape}
-                        onFocus={() => selectConcept('custom')}
-                        onChange={(e) => updateCustomShape(e.target.value)}
-                        placeholder="Zadejte motiv…"
-                        className="mt-3 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
-                      />
-                      <p className="mt-2 text-[11px] leading-5 text-slate-500">Projektant motiv nejprve zjednoduší na jednu nebo několik plynulých trubkových linií. Ostré zlomy a nereálné křížení se převedou na oblouky nebo výrobní spoje; maximální ohýbaný vnější průměr trubky je Ø 74 mm.</p>
-                    </div>
-                  </div>
-                </div>
+
               </fieldset>
 
               <div className="mt-8">
@@ -436,7 +428,7 @@ export default function AIProjectDesignerSection() {
                   onClick={visualize}
                   className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50"
                 >
-                  Vyzkoušet ve fotografii
+                  Vložit vlastní fotografii
                 </button>
               </div>
 

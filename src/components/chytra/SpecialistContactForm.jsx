@@ -17,15 +17,20 @@ export default function SpecialistContactForm() {
     }
     setError('');
     setSending(true);
-    await base44.entities.ContactInquiry.create({
-      name: form.name || 'Neuvedeno',
-      email: form.email || 'neuvedeno@mlzidla.cz',
-      message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
-    }).catch(() => {});
-    trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
-    trackContactFormSubmit('smart-specialista', 'Smart systém');
-    setSent(true);
-    setSending(false);
+    try {
+      await base44.entities.ContactInquiry.create({
+        name: form.name || 'Neuvedeno',
+        email: form.email || 'neuvedeno@mlzidla.cz',
+        message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
+      });
+      trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
+      trackContactFormSubmit('smart-specialista', 'Smart systém');
+      setSent(true);
+    } catch (_) {
+      setError('Kontakt se nepodařilo odeslat. Zkuste to prosím znovu.');
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) return (

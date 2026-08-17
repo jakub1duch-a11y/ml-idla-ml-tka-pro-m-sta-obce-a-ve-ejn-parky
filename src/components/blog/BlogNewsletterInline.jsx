@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Instagram, Search, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackNewsletterSignup } from '@/lib/ga4';
 
 export default function BlogNewsletterInline() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ export default function BlogNewsletterInline() {
     e.preventDefault();
     setSending(true);
     await base44.entities.NewsletterLead.create({ email, source: 'blog_article_inline' });
+    trackNewsletterSignup('blog_article_inline');
     setSending(false);
     setDone(true);
   };

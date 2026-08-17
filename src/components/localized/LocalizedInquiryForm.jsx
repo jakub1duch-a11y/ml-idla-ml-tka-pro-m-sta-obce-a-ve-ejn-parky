@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { getLocalizedUi } from '@/lib/localized-ui';
+import { trackInquirySubmitted } from '@/lib/ga4';
 
 export default function LocalizedInquiryForm({ locale, routeKey, sourcePath }) {
   const ui = getLocalizedUi(locale);
@@ -31,6 +32,7 @@ export default function LocalizedInquiryForm({ locale, routeKey, sourcePath }) {
         zprava: `[${locale.toUpperCase()} international web]\nSource: ${sourcePath}\n\n${form.message.trim()}\n\nPrivacy acknowledgement: yes`,
         status: 'nova',
       });
+      trackInquirySubmitted(`international:${locale}`, routeKey);
       setSent(true);
     } catch (_error) {
       setError(copy.error);

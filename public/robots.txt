@@ -3,10 +3,15 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin-login
+Disallow: /admin-logout
+Disallow: /admin-forgot-password
 Disallow: /api/
+Disallow: /muj-projekt
+Disallow: /search-analytics
+Disallow: /dekujeme
+Disallow: /ar/
 
-# Crawl-delay to avoid overwhelming server
-Crawl-delay: 1
+# Public marketing, product, collection, reference and blog pages remain crawlable.
 
 # Sitemap location
 Sitemap: https://mlzidla.cz/sitemap.xml

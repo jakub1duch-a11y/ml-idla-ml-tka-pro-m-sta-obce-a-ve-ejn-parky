@@ -33,6 +33,7 @@ export default function AdminAnalytics() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
+  const [configuringAds, setConfiguringAds] = useState(false);
 
   const load = async () => {
     setLoading(true); setError('');
@@ -57,6 +58,18 @@ export default function AdminAnalytics() {
     finally { setSending(false); }
   };
 
+  const setupGoogleAds = async () => {
+    setConfiguringAds(true); setError('');
+    try {
+      const response = await base44.functions.invoke('configureGa4Ads', { ensure: true });
+      if (response?.data?.error) throw new Error(response.data.error);
+      if (response?.data?.setupError) throw new Error(response.data.setupError);
+      await load();
+    } catch (e) {
+      setError(e?.message || 'Nastavení Google Ads / GA4 se nepodařilo dokončit.');
+    } finally { setConfiguringAds(false); }
+  };
+
   const conversion = useMemo(() => data?.intelligence?.dbConversion || 0, [data]);
 
   if (loading) return <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-cyan/50"/></div>;
@@ -67,6 +80,7 @@ export default function AdminAnalytics() {
   const ig = data?.instagram || {};
   const fb = data?.facebook || {};
   const ads = data?.metaAds || {};
+  const googleAds = data?.googleAds || {};
   const adsCurrency = ads?.account?.currency || 'CZK';
 
   return <div className="space-y-6 p-6">
@@ -84,7 +98,8 @@ export default function AdminAnalytics() {
       <MetricCard icon={TrendingUp} label="Lead / session" value={pct(conversion)} note="Base44 databáze / GA4 sessions" tone="text-amber-300"/>
     </div>
 
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
+      <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Google Ads / GA4</p><StatusBadge ok={googleAds.generateLeadKeyEvent && googleAds.googleAdsLinked}>{googleAds.generateLeadKeyEvent && googleAds.googleAdsLinked ? 'připraveno' : 'dokončit'}</StatusBadge></div><div className="mt-5 space-y-2 text-xs text-white/45"><p>generate_lead Key event: <strong className={googleAds.generateLeadKeyEvent ? 'text-emerald-300' : 'text-amber-300'}>{googleAds.generateLeadKeyEvent ? 'ano' : 'ne'}</strong></p><p>GA4 ↔ Google Ads: <strong className={googleAds.googleAdsLinked ? 'text-emerald-300' : 'text-amber-300'}>{googleAds.googleAdsLinked ? 'propojeno' : 'nepropojeno'}</strong></p>{googleAds.googleAdsLinks?.[0]?.customerId && <p>Customer ID: <span className="font-mono text-white/65">{googleAds.googleAdsLinks[0].customerId}</span></p>}</div>{!googleAds.generateLeadKeyEvent && <button onClick={setupGoogleAds} disabled={configuringAds} className="mt-4 inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-2 text-[11px] font-semibold text-cyan disabled:opacity-50">{configuringAds ? <Loader size={12} className="animate-spin"/> : <Target size={12}/>}Nastavit lead jako Key event</button>}</div>
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Instagram @mlzidla</p><StatusBadge ok={ig.available}>{ig.available ? 'aktivní' : 'čeká na práva'}</StatusBadge></div>{ig.available ? <><p className="mt-5 text-3xl font-light text-white">{fmt(ig.followers)}</p><p className="text-xs text-white/35">followers · odhad engagement {pct(ig.avgEngagement)}</p><p className="mt-4 text-xs text-white/45">Insights: {ig.insightsEnabled ? 'aktivní' : 'vyžaduje manage_insights scope'}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po rozšíření oprávnění se doplní reach, interactions a top příspěvky.</p>}</div>
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Facebook Pages</p><StatusBadge ok={fb.available}>{fb.available ? 'aktivní' : 'nepřipojeno'}</StatusBadge></div>{fb.available ? <><p className="mt-5 text-3xl font-light text-white">{fmt(fb.followers)}</p><p className="text-xs text-white/35">followers · {fb.name}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po autorizaci se sem načtou nejlepší organické příspěvky a engagement.</p>}</div>
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Meta Ads · 7 dní</p><StatusBadge ok={ads.available}>{ads.available ? 'aktivní' : 'nepřipojeno'}</StatusBadge></div>{ads.available ? <><p className="mt-5 text-3xl font-light text-white">{money(ads.total?.spend, adsCurrency)}</p><p className="text-xs text-white/35">CTR {pct(ads.total?.ctr)} · CPC {money(ads.total?.cpc, adsCurrency)} · leady {fmt(ads.total?.leads)} · CPL {ads.total?.leads ? money(ads.total?.cpl, adsCurrency) : '—'}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po autorizaci se doplní spend, CTR, CPC, leady a CPL po kampaních.</p>}</div>

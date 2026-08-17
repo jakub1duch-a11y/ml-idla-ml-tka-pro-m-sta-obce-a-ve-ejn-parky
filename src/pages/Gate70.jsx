@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import { trackContactFormSubmit } from '@/lib/ga4';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 
 // ─── Asset URLs ───────────────────────────────────────────────────────────────
@@ -524,15 +525,19 @@ function Gate70ContactForm() {
   const submit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const { base44: b44 } = await import('@/api/base44Client');
-    await b44.entities.ContactInquiry.create({
-      name: form.name,
-      email: form.email,
-      message: `[${form.variant}] ${form.message || 'Zájem o produkt GATE70'}`,
-      description: form.phone ? `Tel: ${form.phone}` : ''
-    }).catch(() => {});
-    setSent(true);
-    setSending(false);
+    try {
+      const { base44: b44 } = await import('@/api/base44Client');
+      await b44.entities.ContactInquiry.create({
+        name: form.name,
+        email: form.email,
+        message: `[${form.variant}] ${form.message || 'Zájem o produkt GATE70'}`,
+        description: form.phone ? `Tel: ${form.phone}` : ''
+      });
+      trackContactFormSubmit('produkt-gate70', form.variant);
+      setSent(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) return (

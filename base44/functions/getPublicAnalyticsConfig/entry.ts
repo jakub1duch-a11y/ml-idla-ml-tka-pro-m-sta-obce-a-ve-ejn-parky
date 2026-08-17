@@ -2,6 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 const GA4_PROPERTY_ID = 'properties/496002660';
 const GOOGLE_ADS_ID = 'AW-18276263329';
+const META_PIXEL_ID = Deno.env.get('META_PIXEL_ID') || '';
 const SITE_HOST = 'mlzidla.cz';
 
 Deno.serve(async (req) => {
@@ -35,6 +36,8 @@ Deno.serve(async (req) => {
       defaultUri: selected.webStreamData?.defaultUri || '',
       streamName: selected.displayName || '',
       googleAdsId: GOOGLE_ADS_ID,
+      // Meta Pixel ID is a public browser identifier, never an access token or secret.
+      metaPixelId: META_PIXEL_ID,
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

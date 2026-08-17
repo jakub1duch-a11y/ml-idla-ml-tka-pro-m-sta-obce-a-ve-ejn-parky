@@ -3,6 +3,7 @@ import { ArrowRight, Camera, Check, Download, FileText, ImagePlus, Loader, Refre
 import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
+import { trackInquirySubmitted, trackVisualizerDownload, trackVisualizerGenerated, trackVisualizerRegistration } from '@/lib/ga4';
 
 const isImageUrl = (url = '') => /\.(png|jpe?g|webp)(\?|$)/i.test(url) || url.includes('/images/');
 const MAX_UPLOAD_MB = 20;
@@ -199,6 +200,7 @@ export default function AIVizualizace() {
       const profile = { name, email, phone, company, leadId: created?.id || '', gdprAcknowledged: true, gdprAcknowledgedAt: acknowledgedAt };
       sessionStorage.setItem('mlzidla-visualizer-profile', JSON.stringify(profile));
       setLeadProfile(profile);
+      trackVisualizerRegistration(requestedConcept || selectedProduct?.name || requestedType || 'AI vizualizace');
       setLeadForm({ name, email, phone, company, gdprAcknowledged: true });
       setLeadGateOpen(false);
     } catch {
@@ -300,6 +302,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
       }
       setQuoteSent(false);
       setResultUrl(finalResultUrl);
+      trackVisualizerGenerated(selectedProduct?.name || requestedConcept || 'Zakázkový návrh', fastMode ? 'fast_camera' : customConceptMode ? 'custom' : 'standard');
     } catch (e) {
       setError(e?.message || 'Vizualizaci se nepodařilo vytvořit. Zkuste to prosím znovu.');
     } finally {
@@ -346,6 +349,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
       anchor.download = `MLZIDLA-vizualizace-${selectedProduct?.slug || 'projekt'}.webp`;
       document.body.appendChild(anchor);
       anchor.click();
+      trackVisualizerDownload(selectedProduct?.name || requestedConcept || 'Zakázkový návrh');
       anchor.remove();
       URL.revokeObjectURL(objectUrl);
     } catch {
@@ -391,6 +395,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         zprava: text,
         status: 'nova',
       });
+      trackInquirySubmitted('ai-vizualizace', selectedProduct?.name || requestedConcept || 'AI návrh projektu');
       if (leadProfile?.leadId) {
         try {
           await base44.entities.VisualizerLead.update(leadProfile.leadId, { inquiry_sent: true, last_visualization_url: resultUrl });

@@ -108,7 +108,7 @@ const AuthenticatedApp = () => {
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
-        <Route path="/produkt2/:slug" element={<ProduktDetail2 />} />
+        <Route path="/produkt2/:slug" element={<Navigate to="/mlzidla-mlzitka" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
@@ -143,8 +143,8 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
-        <Route path="/faq" element={<Podpora />} />
-        <Route path="/technologie" element={<Technologie />} />
+        <Route path="/faq" element={<Navigate to="/podpora" replace />} />
+        <Route path="/technologie" element={<Navigate to="/jak-to-funguje" replace />} />
         <Route path="/vyhody" element={<Vyhody />} />
         <Route path="/ke-stazeni" element={<KeStazeni />} />
         <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
@@ -155,14 +155,14 @@ const AuthenticatedApp = () => {
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />
-        <Route path="/manualy" element={<KeStazeni />} />
+        <Route path="/manualy" element={<Navigate to="/ke-stazeni" replace />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
       </Route>
-      <Route path="/mlzidla" element={<Mlzidla />} />
-      <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />
+      <Route path="/mlzidla" element={<Navigate to="/mlzidla-mlzitka" replace />} />
+      <Route path="/mlzidla/produkt/:id" element={<Navigate to="/mlzidla-mlzitka" replace />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/admin-logout" element={<AdminLogout />} />

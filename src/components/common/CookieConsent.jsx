@@ -23,6 +23,7 @@ export default function CookieConsent({ locale = 'cs' }) {
 
   const choose = (value) => {
     localStorage.setItem(STORAGE_KEY, value);
+    window.dispatchEvent(new CustomEvent('mlzidla:cookie-consent', { detail: { value } }));
     setVisible(false);
   };
 

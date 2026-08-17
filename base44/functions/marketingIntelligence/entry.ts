@@ -378,62 +378,39 @@ async function getGoogleAdsSetup(base44: any) {
 function buildRecommendations(data: any) {
   const recs: string[] = [];
   const wins: string[] = [];
-  const { ga4, leads, search, instagram, facebook, metaAds, googleAds } = data;
+  const { ga4, leads, metaAds, googleAds } = data;
 
   const dbConversion = ga4.month.sessions ? (leads.month / ga4.month.sessions) * 100 : 0;
-  const todayChange = ga4.yesterday.sessions ? ((ga4.today.sessions - ga4.yesterday.sessions) / ga4.yesterday.sessions) * 100 : 0;
-  if (todayChange >= 15) wins.push(`Dnešní návštěvnost je o ${Math.round(todayChange)} % vyšší než včera.`);
-  if (dbConversion >= 2) wins.push(`Poptávkový poměr za měsíc je ${pct(dbConversion)} — pro B2B projektový web je to silný signál.`);
-  if (ga4.eventMap?.generate_lead?.eventCount > 0) wins.push(`GA4 registruje ${ga4.eventMap.generate_lead.eventCount} událostí generate_lead za 28 dní.`);
+  const yesterdayConversion = ga4.yesterday.sessions ? (leads.yesterday / ga4.yesterday.sessions) * 100 : 0;
+  const trafficChange = ga4.dayBefore.sessions ? ((ga4.yesterday.sessions - ga4.dayBefore.sessions) / ga4.dayBefore.sessions) * 100 : 0;
+  const leadEvents = ga4.yesterdayEventMap?.generate_lead?.eventCount || 0;
+  const formStarts = ga4.yesterdayEventMap?.form_start?.eventCount || 0;
 
-  const topSource = ga4.sources?.[0];
-  if (topSource?.sourceMedium) wins.push(`Nejsilnější zdroj návštěvnosti: ${topSource.sourceMedium} (${Math.round(topSource.sessions)} sessions / 28 dní).`);
-  const topPage = ga4.pages?.find((p: any) => p.pagePath !== '/');
-  if (topPage?.pagePath) wins.push(`Nejsilnější obsahová/produktová stránka: ${topPage.pagePath} (${Math.round(topPage.views)} zobrazení).`);
+  if (trafficChange >= 10) wins.push(`Návštěvnost vzrostla o ${Math.round(trafficChange)} % proti předchozímu dni.`);
+  if (ga4.yesterday.engagementRate >= 0.5) wins.push(`Engagement rate dosáhl ${pct(ga4.yesterday.engagementRate * 100)}.`);
+  if (leads.yesterday > 0) wins.push(`Web přinesl ${leads.yesterday} ${leads.yesterday === 1 ? 'poptávku' : 'poptávky'}; denní konverzní poměr ${pct(yesterdayConversion)}.`);
+  const topSource = ga4.yesterdaySources?.[0];
+  if (topSource?.sourceMedium) wins.push(`Nejsilnější zdroj: ${topSource.sourceMedium} (${Math.round(topSource.sessions)} návštěv).`);
+  const topPage = ga4.yesterdayPages?.find((p: any) => p.pagePath !== '/');
+  if (topPage?.pagePath) wins.push(`Nejsilnější stránka: ${topPage.pagePath} (${Math.round(topPage.views)} zobrazení).`);
 
-  if (search.available && search.queries?.length) {
-    const best = [...search.queries].sort((a: any, b: any) => b.clicks - a.clicks)[0];
-    if (best?.clicks > 0) wins.push(`SEO tahoun: „${best.key}“ — ${best.clicks} kliknutí, pozice ${best.position.toFixed(1)}.`);
-  }
-  if (instagram.available && instagram.topPosts?.[0]) {
-    const post = instagram.topPosts[0];
-    wins.push(`Instagram: nejlepší poslední příspěvek má ${Math.round(post.interactions)} měřených interakcí.`);
-  }
-  if (facebook.available && facebook.topPosts?.[0]) {
-    wins.push(`Facebook: nejlepší recentní příspěvek má ${Math.round(facebook.topPosts[0].interactions)} interakcí.`);
-  }
-  if (metaAds.available && metaAds.total?.leads > 0) {
-    wins.push(`Meta Ads za 7 dní: ${Math.round(metaAds.total.leads)} leadů při CPL ${money(metaAds.total.cpl, metaAds.account?.currency || 'CZK')}.`);
-  }
-  if (googleAds?.generateLeadKeyEvent) wins.push('GA4 generate_lead je nastavený jako Key event.');
-  if (googleAds?.googleAdsLinked) wins.push(`GA4 je propojeno s Google Ads${googleAds.googleAdsLinks?.[0]?.customerId ? ` (Customer ID ${googleAds.googleAdsLinks[0].customerId})` : ''}.`);
+  if (leads.yesterday > 0 && leadEvents === 0) recs.push('Databáze eviduje poptávku, ale GA4 nemá generate_lead. Ověřit konverzní event a jeho odeslání po úspěšném formuláři.');
+  if (formStarts > 0 && leadEvents === 0) recs.push(`Bylo zahájeno ${formStarts} formulářů bez měřené GA4 konverze. Prověřit formulářový funnel a CTA.`);
+  if (ga4.yesterday.sessions >= 20 && yesterdayConversion < 1) recs.push('Denní konverzní poměr je pod 1 %. Priorita: zkrátit cestu k poptávce a zesílit produktové CTA.');
+  if (ga4.yesterday.engagementRate < 0.45 && ga4.yesterday.sessions > 0) recs.push('Engagement je pod 45 %. Prověřit mobilní hero, rychlost a viditelnost hlavního CTA.');
+  if (!googleAds?.generateLeadKeyEvent || !googleAds?.googleAdsLinked) recs.push('Dokončit Google Ads konverzní propojení: generate_lead jako Key event + GA4 ↔ Google Ads.');
+  if (metaAds.available && metaAds.total?.spend > 0 && metaAds.total?.leads === 0) recs.push('Meta Ads má útratu bez evidovaných leadů. Před změnou rozpočtu ověřit Lead event a atribuci.');
 
-  if (!ga4.eventMap?.generate_lead?.eventCount && leads.month > 0) recs.push('GA4 lead eventy zatím neodpovídají databázovým poptávkám. Priorita: ověřit nový generate_lead v DebugView a označit jej jako Key event.');
-  if (dbConversion > 0 && dbConversion < 1) recs.push('Měsíční poměr poptávek k návštěvám je pod 1 %. Zkraťte cestu z produktových stránek k poptávce a testujte konkrétnější CTA „Nechat nacenit tento model“.');
-  if (ga4.eventMap?.form_start?.eventCount > 0 && ga4.eventMap?.generate_lead?.eventCount > 0) {
-    const abandon = 1 - ga4.eventMap.generate_lead.eventCount / ga4.eventMap.form_start.eventCount;
-    if (abandon > 0.55) recs.push(`Formuláře mají přibližně ${Math.round(abandon * 100)} % rozpracovanost bez odeslání. Zvažte kratší první krok a doplňující informace až po získání kontaktu.`);
-  }
-  const mobile = ga4.devices?.find((d: any) => d.deviceCategory === 'mobile');
-  if (mobile && mobile.sessions > 0 && mobile.engagementRate < 0.45) recs.push('Mobilní engagement je slabší než 45 %. Priorita: hero CTA, rychlost LCP, velikost formulářových polí a viditelnost hlavní poptávky bez scrollování.');
-  if (search.available) {
-    const opportunities = search.queries.filter((q: any) => q.impressions >= 20 && q.position >= 4 && q.position <= 15).slice(0, 5);
-    if (opportunities.length) recs.push(`SEO quick wins: rozšířit obsah pro dotazy ${opportunities.map((q: any) => `„${q.key}“`).join(', ')} — už mají impresní potenciál na pozicích 4–15.`);
-  }
-  if (!instagram.available) recs.push('Instagram analytika není dostupná. Dokončete oprávnění Insights v Base44, jinak report uvidí pouze web a Search Console.');
-  else if (!instagram.insightsEnabled) recs.push('Instagram účet je připojen, ale media Insights nejsou autorizované. Přidejte oprávnění instagram_business_manage_insights.');
-  if (!facebook.available) recs.push('Připojte Facebook Pages; report pak automaticky přidá organický výkon a nejlepší příspěvky.');
-  if (!metaAds.available) recs.push('Připojte Meta Ads; bez něj nelze porovnávat spend, CTR, CPC, leady a CPL s webovými konverzemi.');
-  else {
-    if (metaAds.total.spend > 0 && metaAds.total.ctr < 1) recs.push(`Meta Ads CTR je ${pct(metaAds.total.ctr)}. Obměňte první frame/kreativu a rozdělte veřejný prostor vs. zahrady do oddělených reklamních sestav.`);
-    if (metaAds.total.spend > 0 && metaAds.total.leads === 0) recs.push('Meta Ads utrácí, ale API nevrací leady. Zkontrolujte Pixel/CAPI event Lead a doménové přiřazení ještě před navyšováním rozpočtu.');
-  }
-  if (!googleAds?.generateLeadKeyEvent) recs.push('Google Ads: dokončete GA4 edit oprávnění a nastavte generate_lead jako hlavní Key event. Micro-events ponechte sekundární pro diagnostiku.');
-  else if (!googleAds?.googleAdsLinked) recs.push('Google Ads: Key event generate_lead je připravený, ale GA4 zatím nemá zjištěný Google Ads link. Propojte účet a zapněte auto-tagging.');
-  else recs.push('Google Ads: importujte GA4 generate_lead jako webovou konverzi a nastavte ji jako primární pro bidding; telefon, e-mail, CTA a form_start ponechte sekundární.');
-  recs.push('Pro kampaně držte jednotné UTM: utm_source, utm_medium, utm_campaign a utm_content. V reportu pak lze přesně porovnat města/segmenty/kreativy bez ručního třídění.');
+  if (!wins.length) wins.push('Data za předchozí den jsou načtena; bez výrazné pozitivní odchylky proti předchozímu dni.');
+  if (!recs.length) recs.push('Bez urgentního zásahu. Pokračovat ve sledování návštěvnosti, engagementu a poptávek.');
 
-  return { wins: wins.slice(0, 8), recommendations: recs.slice(0, 10), dbConversion };
+  return {
+    wins: wins.slice(0, 3),
+    recommendations: recs.slice(0, 3),
+    dbConversion,
+    yesterdayConversion,
+    trafficChange,
+  };
 }
 
 function statCard(label: string, value: string, note = '') {

@@ -195,22 +195,19 @@ async function emit(eventName, properties = {}) {
   safeGtag('event', eventName, properties);
 }
 
-function sendToGoogleAds(value = 1000) {
+function sendToGoogleAds() {
   if (!GOOGLE_ADS_CONVERSION_LABEL) return;
   safeGtag('event', 'conversion', {
     send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
-    value,
-    currency: 'CZK',
   });
 }
 
-function trackLead(leadType, productName, value) {
+function trackLead(leadType, productName, leadScore) {
   void emit('generate_lead', {
     lead_type: leadType || 'kontakt',
     product_name: productName || 'nezadáno',
-    value,
-    currency: 'CZK',
-  }).then(() => sendToGoogleAds(value));
+    lead_score: leadScore,
+  }).then(() => sendToGoogleAds());
 }
 
 export function trackPageView(path, title) {
@@ -223,15 +220,15 @@ export function trackPageView(path, title) {
 }
 
 export function trackCooperationFormSubmit() {
-  trackLead('spolupráce', '', 500);
+  trackLead('spolupráce', '', 60);
 }
 
 export function trackContactFormSubmit(formType, productName) {
-  trackLead(formType || 'kontakt', productName, 1000);
+  trackLead(formType || 'kontakt', productName, 75);
 }
 
 export function trackInquirySubmitted(requestType, productInterest) {
-  trackLead(requestType || 'poptávka', productInterest, 2000);
+  trackLead(requestType || 'poptávka', productInterest, 100);
 }
 
 export function trackRentalInquiry(productName, eventType) {
@@ -239,9 +236,8 @@ export function trackRentalInquiry(productName, eventType) {
     lead_type: 'pronájem GO',
     product_name: productName || 'nezvoleno',
     event_type: eventType || 'event',
-    value: 1500,
-    currency: 'CZK',
-  }).then(() => sendToGoogleAds(1500));
+    lead_score: 85,
+  }).then(() => sendToGoogleAds());
 }
 
 export function trackThankYouPageView(source) {

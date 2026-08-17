@@ -51,6 +51,18 @@ function monthStart() {
   return `${p.year}-${p.month}-01`;
 }
 
+function localDateOffset(days: number) {
+  return localDateString(new Date(Date.now() + days * 86400000));
+}
+
+function reportDateLabel() {
+  const date = new Date(Date.now() - 86400000);
+  return new Intl.DateTimeFormat('cs-CZ', {
+    timeZone: TZ,
+    day: '2-digit', month: '2-digit', year: 'numeric',
+  }).format(date);
+}
+
 async function fetchJson(url: string, init: RequestInit = {}) {
   const response = await fetch(url, init);
   const data = await response.json().catch(() => ({}));
@@ -93,9 +105,10 @@ async function getGa4(base44: any) {
     { name: 'engagementRate' },
   ];
 
-  const [todayRaw, yesterdayRaw, monthRaw, sourcesRaw, pagesRaw, devicesRaw, eventsRaw, trendRaw] = await Promise.all([
+  const [todayRaw, yesterdayRaw, dayBeforeRaw, monthRaw, sourcesRaw, pagesRaw, devicesRaw, eventsRaw, trendRaw, yesterdaySourcesRaw, yesterdayPagesRaw, yesterdayEventsRaw] = await Promise.all([
     gaRun(accessToken, { dateRanges: [{ startDate: 'today', endDate: 'today' }], metrics: commonMetrics }),
     gaRun(accessToken, { dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }], metrics: commonMetrics }),
+    gaRun(accessToken, { dateRanges: [{ startDate: '2daysAgo', endDate: '2daysAgo' }], metrics: commonMetrics }),
     gaRun(accessToken, { dateRanges: [{ startDate: monthStart(), endDate: 'today' }], metrics: commonMetrics }),
     gaRun(accessToken, {
       dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }],
@@ -133,6 +146,30 @@ async function getGa4(base44: any) {
       metrics: [{ name: 'sessions' }, { name: 'activeUsers' }, { name: 'screenPageViews' }],
       orderBys: [{ dimension: { dimensionName: 'date' } }],
     }),
+    gaRun(accessToken, {
+      dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }],
+      dimensions: [{ name: 'sessionSourceMedium' }],
+      metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'activeUsers' }],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 8,
+    }),
+    gaRun(accessToken, {
+      dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }],
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }, { name: 'averageSessionDuration' }],
+      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }], limit: 8,
+    }),
+    gaRun(accessToken, {
+      dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }],
+      dimensions: [{ name: 'eventName' }],
+      metrics: [{ name: 'eventCount' }, { name: 'totalUsers' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          inListFilter: { values: ['generate_lead','phone_click','email_click','cta_click','form_start','quick_inquiry_click','view_item','select_item','section_view','video_start','video_complete','sign_up','visualization_complete','file_download'] },
+        },
+      },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    }),
   ]);
 
   const toSummary = (data: any) => ({
@@ -142,16 +179,23 @@ async function getGa4(base44: any) {
 
   const eventRows = rows(eventsRaw, ['eventName'], ['eventCount', 'totalUsers']);
   const eventMap = Object.fromEntries(eventRows.map((r: any) => [r.eventName, r]));
+  const yesterdayEventRows = rows(yesterdayEventsRaw, ['eventName'], ['eventCount', 'totalUsers']);
+  const yesterdayEventMap = Object.fromEntries(yesterdayEventRows.map((r: any) => [r.eventName, r]));
 
   return {
     today: toSummary(todayRaw),
     yesterday: toSummary(yesterdayRaw),
+    dayBefore: toSummary(dayBeforeRaw),
     month: toSummary(monthRaw),
     sources: rows(sourcesRaw, ['sourceMedium'], ['sessions', 'engagedSessions', 'activeUsers']),
     pages: rows(pagesRaw, ['pagePath'], ['views', 'activeUsers', 'avgSessionDuration']),
     devices: rows(devicesRaw, ['deviceCategory'], ['sessions', 'activeUsers', 'engagementRate']),
     events: eventRows,
     eventMap,
+    yesterdaySources: rows(yesterdaySourcesRaw, ['sourceMedium'], ['sessions', 'engagedSessions', 'activeUsers']),
+    yesterdayPages: rows(yesterdayPagesRaw, ['pagePath'], ['views', 'activeUsers', 'avgSessionDuration']),
+    yesterdayEvents: yesterdayEventRows,
+    yesterdayEventMap,
     trend: rows(trendRaw, ['date'], ['sessions', 'activeUsers', 'views']),
   };
 }

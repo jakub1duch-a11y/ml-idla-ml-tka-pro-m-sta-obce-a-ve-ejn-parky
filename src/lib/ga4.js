@@ -1,4 +1,5 @@
 import { base44 } from '@/api/base44Client';
+import { configureMetaPixel, trackMetaEvent, updateMetaConsent } from '@/lib/meta';
 
 const GOOGLE_ADS_ID = 'AW-18276263329';
 // Google Ads conversion action label must come from the concrete Google Ads conversion action.
@@ -57,7 +58,9 @@ function installGlobalListeners() {
 
   window.addEventListener('mlzidla:cookie-consent', (event) => {
     const consentEvent = /** @type {CustomEvent} */ (event);
-    updateGoogleConsent(consentEvent.detail?.value || 'essential');
+    const value = consentEvent.detail?.value || 'essential';
+    updateGoogleConsent(value);
+    updateMetaConsent(value);
   });
 
   const startedForms = new WeakSet();
@@ -85,6 +88,22 @@ function installGlobalListeners() {
       void emit('email_click', { contact_type: 'email', page_path: window.location.pathname });
       return;
     }
+
+    let externalUrl = null;
+    try { externalUrl = new URL(href, window.location.origin); } catch (_) {}
+    const socialHost = externalUrl?.hostname?.replace(/^www\./, '').toLowerCase() || '';
+    const isInstagram = socialHost === 'instagram.com' || socialHost.endsWith('.instagram.com');
+    const isFacebook = socialHost === 'facebook.com' || socialHost.endsWith('.facebook.com') || socialHost === 'fb.com' || socialHost.endsWith('.fb.com') || socialHost === 'm.me';
+    if (isInstagram || isFacebook) {
+      void emit('social_click', {
+        network: isInstagram ? 'instagram' : 'facebook',
+        link_url: externalUrl.href,
+        link_text: (anchor.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80),
+        page_path: window.location.pathname,
+      });
+      return;
+    }
+
     if (href.startsWith('/') || href.startsWith(window.location.origin)) {
       let targetPath = href;
       try { targetPath = new URL(href, window.location.origin).pathname; } catch (_) {}
@@ -206,6 +225,7 @@ export function initGoogleAnalytics() {
       measurementId = response?.data?.measurementId || '';
       if (!measurementId) throw new Error(response?.data?.error || 'Missing GA4 Measurement ID');
 
+      await configureMetaPixel(response?.data?.metaPixelId || '');
       defineGtag();
       await loadScript(measurementId);
       safeGtag('js', new Date());
@@ -229,6 +249,7 @@ async function emit(eventName, properties = {}) {
   const ready = await initGoogleAnalytics();
   if (!ready) return;
   safeGtag('event', eventName, properties);
+  void trackMetaEvent(eventName, properties);
 }
 
 function sendToGoogleAds() {

@@ -310,6 +310,33 @@ export default function AIProjectDesignerSection() {
                   </div>
                 </div>
 
+                <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
+                  <div className="mb-3">
+                    <p className="text-sm font-semibold text-slate-900">B · Naše produkty</p>
+                    <p className="mt-1 text-[11px] leading-4 text-slate-500">Vyberte známou geometrii a projektant ji přizpůsobí měřítku a využití prostoru.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {productOptions.map((item) => {
+                      const active = selectedConcept === item.key;
+                      return (
+                        <button
+                          key={item.key}
+                          type="button"
+                          onClick={() => selectConcept(item.key)}
+                          aria-pressed={active}
+                          className={`group overflow-hidden rounded-xl border bg-white text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400 hover:shadow-sm'}`}
+                        >
+                          <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                            <img src={item.image} alt={item.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+                            <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 font-mono text-[8px] uppercase tracking-[.12em] text-slate-700 backdrop-blur">MLŽIDLA®</span>
+                          </div>
+                          <div className={`px-3 py-2.5 text-xs font-semibold ${active ? 'bg-slate-950 text-white' : 'text-slate-800'}`}>{item.label}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
                   <div className="mb-3 flex items-center justify-between gap-4">
                     <div>
@@ -358,33 +385,6 @@ export default function AIProjectDesignerSection() {
                       </div>
                     </div>
                   )}
-                </div>
-
-                <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
-                  <div className="mb-3">
-                    <p className="text-sm font-semibold text-slate-900">B · Naše produkty</p>
-                    <p className="mt-1 text-[11px] leading-4 text-slate-500">Vyberte známou geometrii a projektant ji přizpůsobí měřítku a využití prostoru.</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                    {productOptions.map((item) => {
-                      const active = selectedConcept === item.key;
-                      return (
-                        <button
-                          key={item.key}
-                          type="button"
-                          onClick={() => selectConcept(item.key)}
-                          aria-pressed={active}
-                          className={`group overflow-hidden rounded-xl border bg-white text-left transition ${active ? 'border-slate-950 ring-1 ring-slate-950' : 'border-slate-200 hover:border-slate-400 hover:shadow-sm'}`}
-                        >
-                          <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-                            <img src={item.image} alt={item.label} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-                            <span className="absolute left-2 top-2 bg-white/90 px-2 py-1 font-mono text-[8px] uppercase tracking-[.12em] text-slate-700 backdrop-blur">MLŽIDLA®</span>
-                          </div>
-                          <div className={`px-3 py-2.5 text-xs font-semibold ${active ? 'bg-slate-950 text-white' : 'text-slate-800'}`}>{item.label}</div>
-                        </button>
-                      );
-                    })}
-                  </div>
                 </div>
 
 

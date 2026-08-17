@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Phone, Mail, MapPin, ArrowRight, Package, FileText, Box, Layers, Tag } from 'lucide-react';
-import { trackCooperationFormSubmit, trackInquirySubmitted } from '@/lib/ga4';
+import { trackInquirySubmitted } from '@/lib/ga4';
 import { setSEO, SEO_PAGES, GOOGLE_MAPS_URL, GOOGLE_MAPS_EMBED_URL } from '@/lib/seo';
 
 const contactInfo = [
@@ -63,8 +63,7 @@ export default function Kontakt() {
         service_type: form.request_type || 'contact',
         status: 'new'
       });
-      trackCooperationFormSubmit();
-      trackInquirySubmitted(form.request_type, form.product_interest);
+      trackInquirySubmitted(form.request_type || 'kontakt', form.product_interest);
       navigate('/dekujeme?zdroj=kontakt');
     } finally {
       setSending(false);

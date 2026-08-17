@@ -480,6 +480,24 @@ export default async function(req: Request) {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
     const body = await req.json().catch(() => ({}));
+
+    if (body.action === 'listGa4Properties') {
+      const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+      const response = await fetch('https://analyticsadmin.googleapis.com/v1beta/accountSummaries?pageSize=200', {
+        headers: { Authorization: 'Bearer ' + accessToken },
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) return Response.json({ error: payload?.error?.message || `HTTP ${response.status}` }, { status: response.status });
+      return Response.json({
+        ok: true,
+        accounts: (payload.accountSummaries || []).map((account: any) => ({
+          account: account.account,
+          displayName: account.displayName,
+          properties: (account.propertySummaries || []).map((property: any) => ({ property: property.property, displayName: property.displayName })),
+        })),
+      });
+    }
+
     const sendEmail = Boolean(body.sendEmail);
 
     const [ga4, leads, search, instagram, facebook, metaAds, googleAds] = await Promise.all([

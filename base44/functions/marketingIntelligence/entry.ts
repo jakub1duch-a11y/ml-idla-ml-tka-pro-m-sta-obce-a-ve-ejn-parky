@@ -206,6 +206,8 @@ async function getDatabaseLeads(base44: any) {
     base44.asServiceRole.entities.Poptavka.filter({}),
   ]);
   const today = localDateString();
+  const yesterday = localDateOffset(-1);
+  const dayBefore = localDateOffset(-2);
   const month = monthStart();
   const normalizeDate = (record: any) => localDateString(new Date(record.created_date));
   const all = [
@@ -213,11 +215,15 @@ async function getDatabaseLeads(base44: any) {
     ...(Array.isArray(poptavky) ? poptavky.map((r: any) => ({ ...r, _kind: 'Poptavka' })) : []),
   ];
   const todayRows = all.filter((r: any) => normalizeDate(r) === today);
+  const yesterdayRows = all.filter((r: any) => normalizeDate(r) === yesterday);
+  const dayBeforeRows = all.filter((r: any) => normalizeDate(r) === dayBefore);
   const monthRows = all.filter((r: any) => normalizeDate(r) >= month && normalizeDate(r) <= today);
   return {
     today: todayRows.length,
+    yesterday: yesterdayRows.length,
+    dayBefore: dayBeforeRows.length,
     month: monthRows.length,
-    recent: todayRows.slice(-10).map((r: any) => ({
+    recent: yesterdayRows.slice(-10).map((r: any) => ({
       name: r.name || r.jmeno || '',
       company: r.firma || '',
       product: r.produkt || r.service_type || r.project_scope || '',

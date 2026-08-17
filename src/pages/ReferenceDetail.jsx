@@ -32,7 +32,15 @@ function VideoSlider({ videos }) {
 
 export default function ReferenceDetail({ fixedId }) {
   const params = useParams();const referenceId = fixedId || params.id;const [project, setProject] = useState(null);const [loading, setLoading] = useState(true);const [notFound, setNotFound] = useState(false);const [lightbox, setLightbox] = useState(null);
-  useEffect(() => {base44.entities.Realizace.get(referenceId).then((p) => {if (p) {setProject(p);trackReferenceView(p.name, p.location, p.category);setSEO(getReferenceSEO(p));} else setNotFound(true);}).catch(() => setNotFound(true)).finally(() => setLoading(false));}, [referenceId]);
+  useEffect(() => {base44.entities.Realizace.get(referenceId).then((p) => {if (p) {setProject(p);trackReferenceView(p.name, p.location, p.category);const seo = getReferenceSEO(p);const canonicalById = {
+    '6a42491409abbf575447aaeb': '/reference/mlzitka-pro-zoo-praha',
+    '6a480e05664f948152611f5f': '/reference/mlzitko-mrak-materska-skola-siskova',
+    '6a480c0da87022c6c9559115': '/reference/mlzitko-aura-domov-palata-praha-5',
+    '6a72947ef1579cba611a2f6b': '/reference/mlzitko-mrak-soukroma-zahrada',
+    '6a71d1ff57598752eed27bfb': '/reference/bendy-jicinske-namesti',
+    '6a6b8d1d553d8991f46cd6a3': '/reference/mestska-mlzna-brana-gate',
+    '6a450e035aef0b45b2a8728f': '/reference/mesto-polna-mlzitko-mrkev',
+  };setSEO({ ...seo, canonicalPath: canonicalById[referenceId] || seo.canonicalPath });} else setNotFound(true);}).catch(() => setNotFound(true)).finally(() => setLoading(false));}, [referenceId]);
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader className="animate-spin" /></div>;
   if (notFound || !project) return <div className="min-h-screen flex items-center justify-center"><Link to="/reference">← Zpět na reference</Link></div>;
   const isZoo = referenceId === ZOO_ID;

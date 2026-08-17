@@ -96,6 +96,25 @@ function installGlobalListeners() {
     }
   }, { capture: true });
 
+  const playedVideos = new WeakSet();
+  document.addEventListener('play', (event) => {
+    const video = event.target;
+    if (!(video instanceof HTMLVideoElement) || playedVideos.has(video)) return;
+    playedVideos.add(video);
+    void emit('video_start', {
+      video_src: (video.currentSrc || video.getAttribute('src') || '').split('/').pop()?.split('?')[0] || 'video',
+      page_path: window.location.pathname,
+    });
+  }, { capture: true });
+  document.addEventListener('ended', (event) => {
+    const video = event.target;
+    if (!(video instanceof HTMLVideoElement)) return;
+    void emit('video_complete', {
+      video_src: (video.currentSrc || video.getAttribute('src') || '').split('/').pop()?.split('?')[0] || 'video',
+      page_path: window.location.pathname,
+    });
+  }, { capture: true });
+
   const sentDepths = new Set();
   let scrollTicking = false;
   window.addEventListener('scroll', () => {
@@ -280,6 +299,22 @@ export function trackReferenceView(name, location, category) {
   });
 }
 
+export function trackNewsletterSignup(source) {
+  void emit('sign_up', { method: 'newsletter', source: source || 'web' });
+}
+
+export function trackVisualizerRegistration(concept) {
+  void emit('sign_up', { method: 'ai_visualizer', concept: concept || 'nezadáno' });
+}
+
+export function trackVisualizerGenerated(productName, mode = 'standard') {
+  void emit('visualization_complete', { product_name: productName || 'zakázkový návrh', visualization_mode: mode });
+}
+
+export function trackVisualizerDownload(productName) {
+  void emit('file_download', { file_type: 'ai_visualization', product_name: productName || 'zakázkový návrh' });
+}
+
 if (typeof window !== 'undefined') {
   window.trackGateInterest = trackGateInterest;
   window.trackMistSculptureInterest = trackMistSculptureInterest;
@@ -294,4 +329,8 @@ if (typeof window !== 'undefined') {
   window.trackInquirySubmitted = trackInquirySubmitted;
   window.trackRentalInquiry = trackRentalInquiry;
   window.trackThankYouPageView = trackThankYouPageView;
+  window.trackNewsletterSignup = trackNewsletterSignup;
+  window.trackVisualizerRegistration = trackVisualizerRegistration;
+  window.trackVisualizerGenerated = trackVisualizerGenerated;
+  window.trackVisualizerDownload = trackVisualizerDownload;
 }

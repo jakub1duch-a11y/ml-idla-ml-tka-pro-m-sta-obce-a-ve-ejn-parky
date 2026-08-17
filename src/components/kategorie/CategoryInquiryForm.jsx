@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Loader, CheckCircle, ArrowRight } from 'lucide-react';
+import { trackContactFormSubmit } from '@/lib/ga4';
 
 export default function CategoryInquiryForm({ category, projectScope = 'urban' }) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
@@ -15,6 +16,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban' }
       project_scope: projectScope,
       message: `[${category}] ${form.message}${form.phone ? ` | Tel: ${form.phone}` : ''}`
     });
+    trackContactFormSubmit(`kategorie:${projectScope}`, category);
     setStatus('sent');
   };
 

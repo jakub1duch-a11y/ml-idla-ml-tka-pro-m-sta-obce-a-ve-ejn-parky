@@ -122,7 +122,7 @@ async function getGa4(base44: any) {
       dimensionFilter: {
         filter: {
           fieldName: 'eventName',
-          inListFilter: { values: ['generate_lead','phone_click','email_click','cta_click','form_start','quick_inquiry_click','view_item','select_item','scroll_depth'] },
+          inListFilter: { values: ['generate_lead','phone_click','email_click','cta_click','form_start','quick_inquiry_click','view_item','select_item','scroll_depth','section_view','video_start','video_complete','sign_up','visualization_complete','file_download'] },
         },
       },
       orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
@@ -305,10 +305,30 @@ async function getMetaAds(base44: any) {
   }
 }
 
+async function getGoogleAdsSetup(base44: any) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+    const [keys, links] = await Promise.all([
+      fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/keyEvents?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
+      fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/googleAdsLinks?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
+    ]);
+    const keyEvents = Array.isArray(keys.keyEvents) ? keys.keyEvents : [];
+    const googleAdsLinks = Array.isArray(links.googleAdsLinks) ? links.googleAdsLinks : [];
+    return {
+      available: true,
+      generateLeadKeyEvent: keyEvents.some((item: any) => item.eventName === 'generate_lead'),
+      googleAdsLinked: googleAdsLinks.length > 0,
+      googleAdsLinks: googleAdsLinks.map((item: any) => ({ customerId: item.customerId, adsPersonalizationEnabled: item.adsPersonalizationEnabled })),
+    };
+  } catch (error) {
+    return { available: false, generateLeadKeyEvent: false, googleAdsLinked: false, googleAdsLinks: [], error: error.message };
+  }
+}
+
 function buildRecommendations(data: any) {
   const recs: string[] = [];
   const wins: string[] = [];
-  const { ga4, leads, search, instagram, facebook, metaAds } = data;
+  const { ga4, leads, search, instagram, facebook, metaAds, googleAds } = data;
 
   const dbConversion = ga4.month.sessions ? (leads.month / ga4.month.sessions) * 100 : 0;
   const todayChange = ga4.yesterday.sessions ? ((ga4.today.sessions - ga4.yesterday.sessions) / ga4.yesterday.sessions) * 100 : 0;
@@ -335,6 +355,8 @@ function buildRecommendations(data: any) {
   if (metaAds.available && metaAds.total?.leads > 0) {
     wins.push(`Meta Ads za 7 dní: ${Math.round(metaAds.total.leads)} leadů při CPL ${money(metaAds.total.cpl, metaAds.account?.currency || 'CZK')}.`);
   }
+  if (googleAds?.generateLeadKeyEvent) wins.push('GA4 generate_lead je nastavený jako Key event.');
+  if (googleAds?.googleAdsLinked) wins.push(`GA4 je propojeno s Google Ads${googleAds.googleAdsLinks?.[0]?.customerId ? ` (Customer ID ${googleAds.googleAdsLinks[0].customerId})` : ''}.`);
 
   if (!ga4.eventMap?.generate_lead?.eventCount && leads.month > 0) recs.push('GA4 lead eventy zatím neodpovídají databázovým poptávkám. Priorita: ověřit nový generate_lead v DebugView a označit jej jako Key event.');
   if (dbConversion > 0 && dbConversion < 1) recs.push('Měsíční poměr poptávek k návštěvám je pod 1 %. Zkraťte cestu z produktových stránek k poptávce a testujte konkrétnější CTA „Nechat nacenit tento model“.');
@@ -356,7 +378,9 @@ function buildRecommendations(data: any) {
     if (metaAds.total.spend > 0 && metaAds.total.ctr < 1) recs.push(`Meta Ads CTR je ${pct(metaAds.total.ctr)}. Obměňte první frame/kreativu a rozdělte veřejný prostor vs. zahrady do oddělených reklamních sestav.`);
     if (metaAds.total.spend > 0 && metaAds.total.leads === 0) recs.push('Meta Ads utrácí, ale API nevrací leady. Zkontrolujte Pixel/CAPI event Lead a doménové přiřazení ještě před navyšováním rozpočtu.');
   }
-  recs.push('Google Ads: používejte GA4 generate_lead jako hlavní Key event a importujte jej do Google Ads. Micro-events (telefon, e-mail, CTA, form_start) ponechte sekundární pro diagnostiku, ne pro bidding.');
+  if (!googleAds?.generateLeadKeyEvent) recs.push('Google Ads: dokončete GA4 edit oprávnění a nastavte generate_lead jako hlavní Key event. Micro-events ponechte sekundární pro diagnostiku.');
+  else if (!googleAds?.googleAdsLinked) recs.push('Google Ads: Key event generate_lead je připravený, ale GA4 zatím nemá zjištěný Google Ads link. Propojte účet a zapněte auto-tagging.');
+  else recs.push('Google Ads: importujte GA4 generate_lead jako webovou konverzi a nastavte ji jako primární pro bidding; telefon, e-mail, CTA a form_start ponechte sekundární.');
   recs.push('Pro kampaně držte jednotné UTM: utm_source, utm_medium, utm_campaign a utm_content. V reportu pak lze přesně porovnat města/segmenty/kreativy bez ručního třídění.');
 
   return { wins: wins.slice(0, 8), recommendations: recs.slice(0, 10), dbConversion };
@@ -372,7 +396,7 @@ function listHtml(items: string[], accent = '#0e7584') {
 }
 
 function reportHtml(data: any) {
-  const { ga4, leads, search, instagram, facebook, metaAds, intelligence } = data;
+  const { ga4, leads, search, instagram, facebook, metaAds, googleAds, intelligence } = data;
   const sourceRows = ga4.sources.slice(0, 6).map((s: any) => `<tr><td style="padding:7px 0;color:#40575d">${esc(s.sourceMedium)}</td><td align="right" style="padding:7px 0;font-weight:700;color:#17343d">${Math.round(s.sessions)}</td></tr>`).join('');
   const pageRows = ga4.pages.slice(0, 6).map((p: any) => `<tr><td style="padding:7px 0;color:#40575d">${esc(p.pagePath)}</td><td align="right" style="padding:7px 0;font-weight:700;color:#17343d">${Math.round(p.views)}</td></tr>`).join('');
   const igRows = instagram.available ? instagram.topPosts.slice(0, 3).map((p: any) => `<tr><td style="padding:7px 0;color:#40575d">${esc((p.caption || 'Příspěvek').slice(0, 80))}</td><td align="right" style="padding:7px 0;font-weight:700;color:#17343d">${Math.round(p.interactions)}</td></tr>`).join('') : '';
@@ -389,7 +413,7 @@ function reportHtml(data: any) {
 
 <div style="margin:18px 7px 0;background:#0d2d38;border-radius:16px;padding:20px;color:#fff"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#61d5e5">SEO / Search Console</div>${search.available && search.queries.length ? `<p style="font-size:13px;line-height:1.7;color:#d5e5e8">Nejvyšší počet kliků: <strong style="color:#fff">${esc(search.queries[0].key)}</strong> · ${search.queries[0].clicks} kliknutí · ${search.queries[0].impressions} zobrazení · pozice ${search.queries[0].position.toFixed(1)}.</p>` : `<p style="font-size:13px;color:#d5e5e8">Search Console data nejsou dostupná.</p>`}</div>
 
-<div style="margin:18px 7px 0;padding:16px 18px;border:1px solid #dbe5e7;border-radius:16px;background:#fff;font-size:11px;line-height:1.65;color:#71868b">Měření: GA4 property 496002660 · webové eventy page_view, generate_lead, form_start, CTA, telefon/e-mail, produktové interakce a scroll depth. Poptávky jsou pro kontrolu porovnávány také přímo s Base44 databází. Sociální a reklamní data se zobrazí automaticky po autorizaci příslušných konektorů.</div></td></tr><tr><td align="center" style="padding:18px;background:#eef3f4;color:#7a8d92;font-size:10px">MLŽIDLA® / HolmTec · automatický marketingový report</td></tr></table></td></tr></table></body></html>`;
+<div style="margin:18px 7px 0;padding:16px 18px;border:1px solid #dbe5e7;border-radius:16px;background:#fff;font-size:11px;line-height:1.65;color:#71868b"><strong style="color:#17343d">Google Ads readiness:</strong> generate_lead Key event ${googleAds?.generateLeadKeyEvent ? '✓' : '—'} · GA4↔Google Ads link ${googleAds?.googleAdsLinked ? '✓' : '—'}.<br>Měření: GA4 property 496002660 · page_view, section_view, generate_lead, form_start, CTA, telefon/e-mail, video, produktové interakce, AI vizualizace, newsletter a scroll depth. Poptávky jsou pro kontrolu porovnávány také přímo s Base44 databází. Sociální a reklamní data se doplní automaticky po autorizaci příslušných konektorů.</div></td></tr><tr><td align="center" style="padding:18px;background:#eef3f4;color:#7a8d92;font-size:10px">MLŽIDLA® / HolmTec · automatický marketingový report</td></tr></table></td></tr></table></body></html>`;
 }
 
 function encodeMessage(to: string, subject: string, html: string) {
@@ -432,15 +456,16 @@ export default async function(req: Request) {
     const body = await req.json().catch(() => ({}));
     const sendEmail = Boolean(body.sendEmail);
 
-    const [ga4, leads, search, instagram, facebook, metaAds] = await Promise.all([
+    const [ga4, leads, search, instagram, facebook, metaAds, googleAds] = await Promise.all([
       getGa4(base44),
       getDatabaseLeads(base44),
       getSearchConsole(base44),
       getInstagram(base44),
       getFacebook(base44),
       getMetaAds(base44),
+      getGoogleAdsSetup(base44),
     ]);
-    const data: any = { ga4, leads, search, instagram, facebook, metaAds };
+    const data: any = { ga4, leads, search, instagram, facebook, metaAds, googleAds };
     data.intelligence = buildRecommendations(data);
     const html = reportHtml(data);
     let emailResults: any[] = [];

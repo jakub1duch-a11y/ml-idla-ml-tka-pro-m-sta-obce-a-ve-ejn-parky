@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { trackQuickInquiryClick } from '@/lib/ga4';
+import { trackContactFormSubmit, trackQuickInquiryClick } from '@/lib/ga4';
 
 export default function SpecialistContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
@@ -23,6 +23,7 @@ export default function SpecialistContactForm() {
       message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
     }).catch(() => {});
     trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
+    trackContactFormSubmit('smart-specialista', 'Smart systém');
     setSent(true);
     setSending(false);
   };

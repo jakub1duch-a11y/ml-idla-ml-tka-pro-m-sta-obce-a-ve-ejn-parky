@@ -459,7 +459,7 @@ function encodeMessage(to: string, subject: string, html: string) {
 
 async function sendReportEmail(base44: any, html: string) {
   const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-  const subject = `MLŽIDLA® — analytický report ${new Intl.DateTimeFormat('cs-CZ', { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date())}`;
+  const subject = `MLŽIDLA® — Analytics za ${reportDateLabel()}`;
   const results = [];
   for (const to of REPORT_RECIPIENTS) {
     const response = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {

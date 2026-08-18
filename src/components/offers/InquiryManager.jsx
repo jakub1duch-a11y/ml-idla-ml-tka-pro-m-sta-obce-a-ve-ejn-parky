@@ -218,6 +218,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     const visualizationOverride = options.visualizationUrl || '';
     const clientContentOverride = options.clientContent || null;
     const projectOrderOverride = options.projectOrder || null;
+    const priceIsEstimate = Boolean(options.priceIsEstimate);
     if (!selected || !productForOffer) { setError('Nejdříve vyberte produkt pro nabídku.'); return; }
     if (options.product) setProductId(productForOffer.id);
     if (options.basePrice !== undefined) setBasePrice(basePriceForOffer);
@@ -264,7 +265,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         product: productForOffer,
         document_type: 'offer',
         inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
-        quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer },
+        quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),
         portal_url: 'https://mlzidla.cz/muj-projekt',
@@ -285,7 +286,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         const presentationResponse = await base44.functions.invoke('generateOfferPresentation', {
           inquiry: { id: selected.id, name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
           product: productForOffer,
-          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
+          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), price_is_estimate: priceIsEstimate },
           ar_url: arUrl,
           ar_capture_url: visualizationUrl,
           ai_content: clientContent,
@@ -302,7 +303,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         const sourcePackResponse = await base44.functions.invoke('generateOfferSourcePack', {
           inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
           product: productForOffer,
-          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
+          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
           presentation_url: presentation?.presentation_url || '', quote_pdf_url: quoteDriveUrl, ar_url: arUrl, audience_variant: audienceForOffer,
         });
         notebookSourceUrl = sourcePackResponse.data?.source_url || '';
@@ -400,6 +401,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         visualizationUrl: result.visualization_url || '',
         clientContent: result.ai_content || null,
         projectOrder: result.project_order || null,
+        priceIsEstimate: true,
         auto: true,
       });
       await onSent?.();

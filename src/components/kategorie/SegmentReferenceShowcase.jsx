@@ -5,6 +5,16 @@ import { ArrowRight, MapPin } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackFunnelStep } from '@/lib/ga4';
 
+const REFERENCE_PATHS = {
+  '6a42491409abbf575447aaeb': '/reference/mlzitka-pro-zoo-praha',
+  '6a480e05664f948152611f5f': '/reference/mlzitko-mrak-materska-skola-siskova',
+  '6a480c0da87022c6c9559115': '/reference/mlzitko-aura-domov-palata-praha-5',
+  '6a72947ef1579cba611a2f6b': '/reference/mlzitko-mrak-soukroma-zahrada',
+  '6a71d1ff57598752eed27bfb': '/reference/bendy-jicinske-namesti',
+  '6a6b8d1d553d8991f46cd6a3': '/reference/mestska-mlzna-brana-gate',
+  '6a450e035aef0b45b2a8728f': '/reference/mesto-polna-mlzitko-mrkev',
+};
+
 /**
  * Conversion-oriented reference block for segment landing pages.
  * References are loaded from the Realizace entity so the page always uses the
@@ -59,7 +69,7 @@ export default function SegmentReferenceShowcase({
             className={index === 0 ? 'lg:col-span-2' : ''}
           >
             <Link
-              to={`/reference/${item.id}`}
+              to={REFERENCE_PATHS[item.id] || `/reference/${item.id}`}
               onClick={() => trackFunnelStep(segment, 'reference_open', item.name)}
               className="group block h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-slate-300 transition-all"
             >

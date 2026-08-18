@@ -347,7 +347,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, clientContent });
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, clientContent, variantPricing: options.variantPricing || [] });
       if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${productForOffer.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${productForOffer.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
@@ -369,7 +369,11 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       if (!autoProduct) throw new Error('AI vybrala produkt, který není v aktuálním katalogu.');
 
       const requestedQuantity = Math.max(1, Number(result.requested_quantity || 1));
-      const autoPrice = Number(autoProduct.price_from || 0) * requestedQuantity;
+      const autoVariants = Array.isArray(result.requested_variants) && result.requested_variants.length
+        ? result.requested_variants
+        : [{ label: `${requestedQuantity} ks ${autoProduct.name}`, quantity: requestedQuantity, price: Number(autoProduct.price_from || 0) * requestedQuantity }];
+      const primaryVariant = autoVariants[0];
+      const autoPrice = Number(primaryVariant?.price || 0) || (Number(autoProduct.price_from || 0) * Number(primaryVariant?.quantity || requestedQuantity));
       const autoAudience = result.audience_variant || 'custom';
       setProductId(autoProduct.id);
       setBasePrice(autoPrice);
@@ -401,9 +405,13 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         discount: 0,
         audienceVariant: autoAudience,
         visualizationUrl: result.visualization_url || '',
-        clientContent: result.ai_content || null,
+        clientContent: result.ai_content ? {
+          ...result.ai_content,
+          solution_summary: `${result.ai_content.solution_summary || ''}${autoVariants.length > 1 ? `\n\nCenové varianty: ${autoVariants.map((variant) => `${variant.label}: ${Number(variant.price || 0).toLocaleString('cs-CZ')} Kč bez DPH`).join(' · ')}` : ''}`,
+        } : null,
         projectOrder: result.project_order || null,
         priceIsEstimate: false,
+        variantPricing: autoVariants,
         auto: true,
       });
       await onSent?.();
@@ -529,7 +537,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
                 {prepared.presentation?.presentation_pdf_url && <a href={prepared.presentation.presentation_pdf_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>PDF prezentace <ExternalLink size={12}/></a>}
                 {prepared.notebookSourceUrl && <a href={prepared.notebookSourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>Podklady / Notebook <ExternalLink size={12}/></a>}
               </div>
-              {prepared.visualizationUrl && <div className="mt-4 overflow-hidden rounded-xl border border-cyan-100 bg-white"><img src={prepared.visualizationUrl} alt="Vizualizace projektu vložená do nabídky" className="max-h-72 w-full object-cover"/><p className="px-3 py-2 text-[11px] text-slate-500">Tato vizualizace je vybraná pro klientskou prezentaci.</p></div>}
+              {prepared.variantPricing?.length > 1 && <div className="mt-4 rounded-xl border border-cyan-100 bg-white p-4"><p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Varianty nacenění</p><div className="mt-2 space-y-2">{prepared.variantPricing.map((variant, index) => <div key={`${variant.label}-${index}`} className="flex items-center justify-between gap-4 text-xs"><span className="font-semibold text-slate-700">{variant.label}</span><span className="font-bold text-[#0e5b67]">{money(variant.price)} Kč bez DPH</span></div>)}</div></div>}
+              {attachments.filter((item) => item.asset_type === 'generated_visualization').length > 0 && <div className="mt-4 grid gap-3 sm:grid-cols-2">{attachments.filter((item) => item.asset_type === 'generated_visualization').slice(0, 4).map((asset) => <div key={asset.id || asset.file_url} className="overflow-hidden rounded-xl border border-cyan-100 bg-white"><img src={asset.file_url} alt={asset.title || 'Vizualizace projektu'} className="h-48 w-full object-cover"/><p className="px-3 py-2 text-[11px] font-medium text-slate-600">{asset.title || 'Vizualizace varianty'}</p></div>)}</div>}
               {prepared.presentationWarning && <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">PDF nabídka byla připravena, ale prezentaci se nepodařilo dokončit: {prepared.presentationWarning}</p>}
               <p className="mt-3 text-xs leading-relaxed text-slate-600">Výstupy jsou klientské: bez interních poznámek, s projektovým shrnutím, vybranou vizualizací a cenou bez DPH. Před odesláním je můžete zkontrolovat a přegenerovat.</p>
             </div>

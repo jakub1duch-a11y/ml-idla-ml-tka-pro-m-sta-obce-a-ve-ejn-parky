@@ -217,6 +217,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     const finalTotalForOffer = Math.round((basePriceForOffer + installationForOffer) * (1 - discountForOffer / 100));
     const visualizationOverride = options.visualizationUrl || '';
     const clientContentOverride = options.clientContent || null;
+    const projectOrderOverride = options.projectOrder || null;
     if (!selected || !productForOffer) { setError('Nejdříve vyberte produkt pro nabídku.'); return; }
     if (options.product) setProductId(productForOffer.id);
     if (options.basePrice !== undefined) setBasePrice(basePriceForOffer);

@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucide-react';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import { trackFunnelStep } from '@/lib/ga4';
 
 const DOWNLOADS = [
   { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech mlžných produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
@@ -42,7 +44,10 @@ const FINISHES = [
 ];
 
 export default function Architekti() {
-  useEffect(() => { setSEO(SEO_PAGES.architekti); }, []);
+  useEffect(() => {
+    setSEO(SEO_PAGES.architekti);
+    trackFunnelStep('architects', 'landing_view', 'Pro architekty');
+  }, []);
   return (
     <div className="min-h-screen bg-white">
 
@@ -67,12 +72,15 @@ export default function Architekti() {
               Jsme technickým partnerem architektů, krajinářů a designérů. Připravíme BIM modely, technické listy, konzultaci i podklady potřebné od studie po realizaci.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
+              <a href="#projektova-konzultace"
+                onClick={() => trackFunnelStep('architects', 'consultation_click', 'hero')}
                 className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Partnerský program <Download size={15} />
+                Konzultovat projekt <ArrowRight size={15} />
               </a>
-              <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
-                BIM modely k dispozici
+              <Link to="/ke-stazeni"
+                onClick={() => trackFunnelStep('architects', 'downloads_click', 'hero')}
+                className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+                Projektové podklady <Download size={15} />
               </Link>
             </div>
           </motion.div>

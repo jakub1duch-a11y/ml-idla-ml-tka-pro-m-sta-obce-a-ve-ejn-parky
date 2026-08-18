@@ -82,6 +82,29 @@ export default function AdminAnalytics() {
   const ads = data?.metaAds || {};
   const googleAds = data?.googleAds || {};
   const adsCurrency = ads?.account?.currency || 'CZK';
+  const eventCount = (name) => fmt(ga?.eventMap?.[name]?.eventCount || 0);
+  const funnelRows = [
+    {
+      title: 'Města a obce · 28 dní',
+      rows: [
+        ['Landing page', 'funnel_cities_landing_view'],
+        ['Konzultace / CTA', 'funnel_cities_consultation_click'],
+        ['AI vizualizace', 'funnel_cities_visualizer_click'],
+        ['Otevření reference', 'funnel_cities_reference_open'],
+        ['Odeslaný lead', 'funnel_cities_lead_submit'],
+      ],
+    },
+    {
+      title: 'Architekti · 28 dní',
+      rows: [
+        ['Landing page', 'funnel_architects_landing_view'],
+        ['Konzultace / CTA', 'funnel_architects_consultation_click'],
+        ['Projektové podklady', 'funnel_architects_downloads_click'],
+        ['Otevření reference', 'funnel_architects_reference_open'],
+        ['Odeslaný lead', 'funnel_architects_lead_submit'],
+      ],
+    },
+  ];
 
   return <div className="space-y-6 p-6">
     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -103,6 +126,10 @@ export default function AdminAnalytics() {
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Instagram @mlzidla</p><StatusBadge ok={ig.available}>{ig.available ? 'aktivní' : 'čeká na práva'}</StatusBadge></div>{ig.available ? <><p className="mt-5 text-3xl font-light text-white">{fmt(ig.followers)}</p><p className="text-xs text-white/35">followers · odhad engagement {pct(ig.avgEngagement)}</p><p className="mt-4 text-xs text-white/45">Insights: {ig.insightsEnabled ? 'aktivní' : 'vyžaduje manage_insights scope'}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po rozšíření oprávnění se doplní reach, interactions a top příspěvky.</p>}</div>
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Facebook Pages</p><StatusBadge ok={fb.available}>{fb.available ? 'aktivní' : 'nepřipojeno'}</StatusBadge></div>{fb.available ? <><p className="mt-5 text-3xl font-light text-white">{fmt(fb.followers)}</p><p className="text-xs text-white/35">followers · {fb.name}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po autorizaci se sem načtou nejlepší organické příspěvky a engagement.</p>}</div>
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Meta Ads · 7 dní</p><StatusBadge ok={ads.available}>{ads.available ? 'aktivní' : 'nepřipojeno'}</StatusBadge></div>{ads.available ? <><p className="mt-5 text-3xl font-light text-white">{money(ads.total?.spend, adsCurrency)}</p><p className="text-xs text-white/35">CTR {pct(ads.total?.ctr)} · CPC {money(ads.total?.cpc, adsCurrency)} · leady {fmt(ads.total?.leads)} · CPL {ads.total?.leads ? money(ads.total?.cpl, adsCurrency) : '—'}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po autorizaci se doplní spend, CTR, CPC, leady a CPL po kampaních.</p>}</div>
+    </div>
+
+    <div className="grid gap-5 xl:grid-cols-2">
+      {funnelRows.map((funnel) => <div key={funnel.title} className="overflow-hidden rounded-xl border border-white/8 bg-white/3"><div className="flex items-center justify-between bg-white/5 px-4 py-3"><p className="font-mono text-[10px] uppercase tracking-widest text-white/45">{funnel.title}</p><span className="text-[10px] text-white/25">GA4 funnel</span></div><div className="divide-y divide-white/5">{funnel.rows.map(([label, eventName], index) => <div key={eventName} className="grid grid-cols-[34px_1fr_auto] items-center gap-3 px-4 py-3"><span className="font-mono text-[10px] text-white/20">{String(index + 1).padStart(2, '0')}</span><span className="text-sm text-white/65">{label}</span><span className="font-mono text-xs text-cyan">{eventCount(eventName)}</span></div>)}</div></div>)}
     </div>
 
     <div className="grid gap-5 xl:grid-cols-2">

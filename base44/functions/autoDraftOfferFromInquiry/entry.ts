@@ -74,8 +74,28 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       response_json_schema: {
         type: 'object',
         properties: {
+          product_mode: { type: 'string', enum: ['catalog', 'custom'] },
           product_id: { type: 'string' },
           product_name: { type: 'string' },
+          custom_product: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              design_description: { type: 'string' },
+              material: { type: 'string' },
+              primary_profile: { type: 'string' },
+              dimensions_summary: { type: 'string' },
+              bend_strategy: { type: 'string' },
+              weld_strategy: { type: 'string' },
+              nozzle_strategy: { type: 'string' },
+              water_connection_strategy: { type: 'string' },
+              manufacture_steps: { type: 'array', items: { type: 'string' } },
+              simplicity_score: { type: 'number' },
+              requires_316l: { type: 'boolean' },
+              cost_plan: { type: 'array', items: { type: 'object', properties: { rate_key: { type: 'string' }, quantity: { type: 'number' }, rationale: { type: 'string' } }, required: ['rate_key','quantity'] } },
+              production_notes: { type: 'string' },
+            },
+          },
           audience_variant: { type: 'string', enum: AUDIENCES },
           project_title: { type: 'string' },
           client_summary: { type: 'string' },
@@ -89,7 +109,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
           visualization_scenes: { type: 'array', items: { type: 'string' } },
           people_context: { type: 'string' },
         },
-        required: ['product_id', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity'], 
+        required: ['product_mode', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity'], 
       },
     });
 

@@ -162,6 +162,62 @@ export async function findPricingForProduct(base44: any, product: any, inquiryTe
   }
 }
 
+export type SmartControlPricing = {
+  source: string;
+  component_wifi_valve_ex_vat: number;
+  component_water_meter_ex_vat: number;
+  component_row02_ex_vat: number;
+  component_liw01_ex_vat: number;
+  component_thw01_ex_vat: number;
+  complete_supla_ex_vat: number;
+  complete_supla_inc_vat: number;
+  margin_percent: number;
+};
+
+export async function findSmartControlPricing(base44: any): Promise<SmartControlPricing> {
+  const fallback: SmartControlPricing = {
+    source: 'Google Sheets: Mlžítko / Chytré ovládání SUPLA',
+    component_wifi_valve_ex_vat: 0,
+    component_water_meter_ex_vat: 0,
+    component_row02_ex_vat: 0,
+    component_liw01_ex_vat: 0,
+    component_thw01_ex_vat: 0,
+    complete_supla_ex_vat: 0,
+    complete_supla_inc_vat: 0,
+    margin_percent: 0,
+  };
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+    const smartRange = encodeURIComponent(`'Chytré ovládání SUPLA'!A9:H60`);
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${PRICING_SPREADSHEET_ID}/values/${smartRange}?majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!response.ok) throw new Error(`Google Sheets ${response.status}: ${await response.text()}`);
+    const payload = await response.json();
+    const rows: any[][] = Array.isArray(payload?.values) ? payload.values : [];
+    const findPrice = (name: string) => {
+      const row = rows.find((r) => normalize(r?.[2]) === normalize(name));
+      return parseMoney(row?.[5]);
+    };
+    const totalRow = rows.find((r) => normalize(r?.[3]) === 'CENA BEZ DPH');
+    const vatTotalRow = rows.find((r) => normalize(r?.[3]) === 'CELKEM S DPH');
+    const marginRow = rows.find((r) => normalize(r?.[3]) === 'MARZE');
+    return {
+      source: fallback.source,
+      component_wifi_valve_ex_vat: findPrice('Chytrý ventil PEVEKO'),
+      component_water_meter_ex_vat: findPrice('Elektronický vodoměr'),
+      component_row02_ex_vat: findPrice('SUPLA ROW-02'),
+      component_liw01_ex_vat: findPrice('SUPLA LIW-01'),
+      component_thw01_ex_vat: findPrice('SUPLA THW-01'),
+      complete_supla_ex_vat: parseMoney(totalRow?.[5]),
+      complete_supla_inc_vat: parseMoney(vatTotalRow?.[5]),
+      margin_percent: parseMoney(marginRow?.[5]),
+    };
+  } catch (_) {
+    return fallback;
+  }
+}
+
 export function validatedCatalogFallback(product: any) {
   const value = Number(product?.price_from || 0);
   // Hodnoty 0/1 Kč v katalogu jsou placeholdery, ne obchodní cena.

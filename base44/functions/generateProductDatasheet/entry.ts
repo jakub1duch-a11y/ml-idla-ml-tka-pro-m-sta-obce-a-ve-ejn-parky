@@ -11,6 +11,7 @@ const toBase64 = (bytes) => {
 const formatPrice = (value) => new Intl.NumberFormat('cs-CZ').format(Math.round(Number(value || 0)));
 const safe = (value) => String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 const dateCs = (value) => new Date(value).toLocaleDateString('cs-CZ');
+const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
 
 const AUDIENCE = {
   city_public: {
@@ -86,20 +87,22 @@ function addBrand(doc, x, y, dark = true) {
   doc.setFontSize(6.5); doc.setTextColor(dark ? 185 : 85, dark ? 205 : 100, dark ? 212 : 110); doc.text('by HolmTec', x + 17, y + 14);
 }
 
-function addHeader(doc, { type, quoteNumber, issued, validUntil }) {
+async function addHeader(doc, { type, quoteNumber, issued, validUntil }) {
   const W = 210, M = 14;
-  const navy = [10, 22, 40], petrol = [11, 72, 96], accent = [43, 191, 207];
-  doc.setFillColor(...navy); doc.rect(0, 0, W, 42, 'F');
-  doc.setFillColor(...petrol); doc.rect(0, 38, W, 4, 'F');
-  doc.setFillColor(...accent); doc.rect(0, 38, 52, 4, 'F');
-  addBrand(doc, M, 10, true);
-  doc.setTextColor(255, 255, 255); doc.setFontSize(9.5); doc.text(type === 'offer' ? 'CENOVÁ NABÍDKA' : 'TECHNICKÝ LIST', W - M, 15, { align: 'right' });
-  doc.setTextColor(173, 210, 219); doc.setFontSize(6.8);
+  const navy = [13, 45, 56], accent = [43, 191, 207], border = [222, 232, 234], pale = [247, 250, 250], muted = [103, 124, 131];
+  doc.setFillColor(255, 255, 255); doc.rect(0, 0, W, 45, 'F');
+  doc.setFillColor(...accent); doc.rect(0, 0, W, 2.2, 'F');
+  const logoOk = await addRemoteImage(doc, LOGO_URL, M, 8, 62, 20);
+  if (!logoOk) addBrand(doc, M, 9, false);
+  doc.setFillColor(...pale); doc.setDrawColor(...border); doc.roundedRect(132, 7, 64, 27, 3, 3, 'FD');
+  doc.setTextColor(...navy); doc.setFontSize(8.5); doc.text(type === 'offer' ? 'CENOVÁ NABÍDKA' : 'TECHNICKÝ LIST', 191, 13, { align: 'right' });
+  doc.setTextColor(...muted); doc.setFontSize(6.4);
   if (type === 'offer') {
-    doc.text(`Č. ${quoteNumber}`, W - M, 22, { align: 'right' });
-    doc.text(`Vystaveno ${issued}`, W - M, 28, { align: 'right' });
-    doc.text(`Platnost do ${validUntil}`, W - M, 34, { align: 'right' });
+    doc.text(`Č. ${quoteNumber}`, 191, 19, { align: 'right' });
+    doc.text(`Vystaveno ${issued}`, 191, 25, { align: 'right' });
+    doc.text(`Platnost do ${validUntil}`, 191, 31, { align: 'right' });
   }
+  doc.setDrawColor(...border); doc.line(M, 40, W - M, 40);
 }
 
 function addFooter(doc, page, totalPages = 1) {
@@ -178,7 +181,7 @@ export default async function(req) {
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
 
     if (documentType !== 'offer') {
-      addHeader(doc, { type: 'datasheet', quoteNumber, issued, validUntil });
+      await addHeader(doc, { type: 'datasheet', quoteNumber, issued, validUntil });
       let y = 56;
       doc.setTextColor(...navy); doc.setFontSize(23); doc.text(product.name, M, y); y += 10;
       if (product.short_description) { doc.setTextColor(...muted); doc.setFontSize(9.2); doc.text(doc.splitTextToSize(safe(product.short_description), CW), M, y); y += 17; }
@@ -194,7 +197,7 @@ export default async function(req) {
     }
 
     // PAGE 1 - executive commercial offer
-    addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
+    await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
     let y = 49;
 
     doc.setFillColor(247, 250, 250); doc.roundedRect(M, y, 88, 39, 2, 2, 'F');
@@ -261,7 +264,7 @@ export default async function(req) {
 
     // PAGE 2 - technical, Smart, terms, contacts
     doc.addPage();
-    addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
+    await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
     y = 52;
     doc.setTextColor(...navy); doc.setFontSize(18); doc.text('Technické a projektové informace', M, y); y += 10;
 

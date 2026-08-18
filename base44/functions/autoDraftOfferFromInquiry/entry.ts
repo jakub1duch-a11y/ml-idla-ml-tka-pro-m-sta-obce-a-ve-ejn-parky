@@ -113,20 +113,60 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       },
     });
 
-    let product = products.find((item) => item.id === analysis?.product_id);
-    if (!product && analysis?.product_name) product = products.find((item) => clean(item.name).toLowerCase() === clean(analysis.product_name).toLowerCase());
-    if (!product && inquiry.produkt) {
-      const needle = clean(inquiry.produkt).toLowerCase();
-      product = products.find((item) => `${item.name || ''} ${item.slug || ''}`.toLowerCase().includes(needle));
-    }
-    if (!product) product = products[0];
+    const customMode = analysis?.product_mode === 'custom' && analysis?.custom_product?.name;
+    const customSpec = customMode ? analysis.custom_product : null;
+    let product: any = null;
 
-    // Ceník na MLŽNÉM DISKU je primární zdroj ceny. Katalog je jen bezpečný fallback.
-    const pricing = await findPricingForProduct(base44, product, inquiry.zprava || '');
-    const sheetUnitPrice = pricing.matched ? Number(pricing.offer_price_ex_vat || 0) : 0;
-    const catalogFallbackPrice = validatedCatalogFallback(product);
-    const unitPrice = sheetUnitPrice || catalogFallbackPrice;
-    const pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
+    if (!customMode) {
+      product = products.find((item) => item.id === analysis?.product_id);
+      if (!product && analysis?.product_name) product = products.find((item) => clean(item.name).toLowerCase() === clean(analysis.product_name).toLowerCase());
+      if (!product && inquiry.produkt) {
+        const needle = clean(inquiry.produkt).toLowerCase();
+        product = products.find((item) => `${item.name || ''} ${item.slug || ''}`.toLowerCase().includes(needle));
+      }
+      if (!product) product = products[0];
+    } else {
+      const customName = clean(customSpec?.name) || 'Mlžítko na míru';
+      const customSlugBase = customName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48) || 'mlzitko-na-miru';
+      product = {
+        id: '',
+        slug: `custom-${customSlugBase}-${String(inquiryId).slice(-6)}`,
+        name: customName,
+        short_description: clean(customSpec?.design_description) || 'Zakázkově navržené minimalistické nerezové mlžítko.',
+        description: clean(customSpec?.production_notes || customSpec?.design_description),
+        material: clean(customSpec?.material) || 'Nerez — kalkulační základ 1.4301 / AISI 304',
+        image_url: '',
+        gallery_urls: [],
+        price_from: 0,
+      };
+    }
+
+    // Katalogový produkt se páruje na hotovou cenu. Custom produkt se skládá z reálných výrobních sazeb.
+    let pricing: any = { matched: false, sheet_key: '', sheet_spec: '', source: '', note: '' };
+    let customPricing: any = null;
+    let unitPrice = 0;
+    let pricingSource = 'manual_required';
+    if (customMode) {
+      customPricing = await estimateCustomConceptPricing(base44, Array.isArray(customSpec?.cost_plan) ? customSpec.cost_plan : [], {
+        hzmPercent: 35,
+        requires316L: Boolean(customSpec?.requires_316l),
+      });
+      unitPrice = customPricing.matched ? Number(customPricing.offer_price_ex_vat || 0) : 0;
+      pricingSource = unitPrice > 0 ? 'custom_sheet_estimate' : 'manual_required';
+      pricing = {
+        matched: customPricing.matched,
+        sheet_key: 'CUSTOM COST PLAN',
+        sheet_spec: clean(customSpec?.primary_profile || customSpec?.dimensions_summary || ''),
+        source: customPricing.source,
+        note: (customPricing.warnings || []).join(' '),
+      };
+    } else {
+      pricing = await findPricingForProduct(base44, product, inquiry.zprava || '');
+      const sheetUnitPrice = pricing.matched ? Number(pricing.offer_price_ex_vat || 0) : 0;
+      const catalogFallbackPrice = validatedCatalogFallback(product);
+      unitPrice = sheetUnitPrice || catalogFallbackPrice;
+      pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
+    }
 
     const isBendy = /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
     const allProductRefs = [product.image_url, ...(product.gallery_urls || [])]

@@ -288,7 +288,7 @@ export default async function(req) {
     doc.setTextColor(255, 255, 255); doc.setFontSize(7.2);
     const smartFeatures = ['vzdálené zapnutí / vypnutí a správa zón', 'libovolné časové harmonogramy a cykly v aplikaci', `teplota + vlhkost přes THW‑01${smartPricing.component_thw01_ex_vat ? ` · ${formatPrice(smartPricing.component_thw01_ex_vat)} Kč` : ''}`, 'sledování spotřeby vody a historie provozu', 'volitelná logika podle externího API počasí', 'ruční režim, centrální blokace a sezónní odstavení'];
     smartFeatures.forEach((item, i) => doc.text(`• ${item}`, M + 7 + (i > 2 ? 86 : 0), y + 16 + (i % 3) * 7));
-    doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(`Zdroj cen: ${smartPricing.source}. Ceny Smart prvků jsou volitelné a nejsou zahrnuté v základní ceně projektu, pokud není v nabídce uvedeno jinak.`, M, 243);
+    doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(doc.splitTextToSize(`Zdroj cen: ${smartPricing.source}. Ceny Smart prvků jsou volitelné a nejsou zahrnuté v základní ceně projektu, pokud není v nabídce uvedeno jinak.`, CW), M, 263);
     addFooter(doc);
 
     // A4 BOARD 3 — project information, visual variants and next step

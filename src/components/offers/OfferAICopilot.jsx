@@ -174,8 +174,8 @@ Umístění navrhni bezpečně v návaznosti na pěší trasu a pobytová místa
       <div className="flex flex-col gap-3 border-b border-cyan-100 bg-[#0d2d38] px-5 py-4 text-white lg:flex-row lg:items-center lg:justify-between">
         <div><p className="flex items-center gap-2 text-xs font-semibold text-[#61d5e5]"><Bot size={15}/> AI Offer Studio</p><p className="mt-1 text-sm text-white/70">Z textové poptávky umí vybrat řešení, vytvořit vizualizaci a sestavit klientskou nabídku.</p></div>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" onClick={onAutoPrepareFromText} disabled={autoPrepareBusy || !inquiry?.message} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#61d5e5]/50 bg-white/5 px-4 py-2.5 text-xs font-bold text-white disabled:opacity-50"><Bot size={14}/>{autoPrepareBusy ? 'AI připravuje vše…' : 'AI: nabídka z textu + vizualizace'}</button>
-          <button type="button" onClick={onPrepareOffer} disabled={prepareBusy || !product} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#61d5e5] px-4 py-2.5 text-xs font-bold text-[#0d2d38] disabled:opacity-50"><Sparkles size={14}/>{prepareBusy ? 'Generuji…' : 'Vytvořit PDF + prezentaci'}</button>
+          <button type="button" onClick={onAutoPrepareFromText} disabled={autoPrepareBusy || !inquiry?.message} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#61d5e5]/50 bg-white/5 px-4 py-2.5 text-xs font-bold text-white disabled:opacity-50"><Bot size={14}/>{autoPrepareBusy ? 'AI připravuje varianty…' : 'AI: nacenit text + varianty + vizualizace'}</button>
+          <button type="button" onClick={onPrepareOffer} disabled={prepareBusy || !product} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#61d5e5] px-4 py-2.5 text-xs font-bold text-[#0d2d38] disabled:opacity-50"><Sparkles size={14}/>{prepareBusy ? 'Generuji…' : 'Vytvořit klientskou nabídku PDF'}</button>
         </div>
       </div>
 

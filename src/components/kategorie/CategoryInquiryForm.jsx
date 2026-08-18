@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Loader, CheckCircle, ArrowRight } from 'lucide-react';
 import { trackContactFormSubmit, trackFunnelStep } from '@/lib/ga4';
 
-export default function CategoryInquiryForm({ category, projectScope = 'urban' }) {
+export default function CategoryInquiryForm({ category, projectScope = 'urban', analyticsSegment = projectScope }) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', organization: '', location: '', message: '' });
   const [status, setStatus] = useState('idle');
 
@@ -25,7 +25,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban' }
         status: 'new',
       });
       trackContactFormSubmit(`kategorie:${projectScope}`, category);
-      trackFunnelStep(projectScope, 'lead_submit', category);
+      trackFunnelStep(analyticsSegment, 'lead_submit', category);
       setStatus('sent');
     } catch (_) {
       setStatus('error');

@@ -368,7 +368,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         || products.find((item) => item.slug === result.product_slug);
       if (!autoProduct) throw new Error('AI vybrala produkt, který není v aktuálním katalogu.');
 
-      const autoPrice = Number(autoProduct.price_from || 0);
+      const requestedQuantity = Math.max(1, Number(result.requested_quantity || 1));
+      const autoPrice = Number(autoProduct.price_from || 0) * requestedQuantity;
       const autoAudience = result.audience_variant || 'custom';
       setProductId(autoProduct.id);
       setBasePrice(autoPrice);
@@ -376,20 +377,21 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       setDiscount(0);
       setAudienceVariant(autoAudience);
 
-      const visualAsset = result.visualization_asset || (result.visualization_url ? {
-        inquiry_id: selected.id,
-        inquiry_type: selected.type,
-        file_url: result.visualization_url,
-        file_name: `${autoProduct.slug || 'mlzitko'}-auto-vizualizace.webp`,
-        file_type: 'image/webp',
-        asset_type: 'generated_visualization',
-        title: `AI koncept — ${autoProduct.name}`,
-        selected_for_offer: true,
-        generated_by_ai: true,
-      } : null);
-      const nextAttachments = visualAsset
-        ? [...attachments.filter((item) => item.file_url !== visualAsset.file_url), visualAsset]
-        : attachments;
+      const returnedVisualAssets = Array.isArray(result.visualization_assets) && result.visualization_assets.length
+        ? result.visualization_assets
+        : result.visualization_asset ? [result.visualization_asset] : (result.visualization_url ? [{
+          inquiry_id: selected.id,
+          inquiry_type: selected.type,
+          file_url: result.visualization_url,
+          file_name: `${autoProduct.slug || 'mlzitko'}-auto-vizualizace.webp`,
+          file_type: 'image/webp',
+          asset_type: 'generated_visualization',
+          title: `AI koncept — ${autoProduct.name}`,
+          selected_for_offer: true,
+          generated_by_ai: true,
+        }] : []);
+      const returnedUrls = new Set(returnedVisualAssets.map((item) => item.file_url));
+      const nextAttachments = [...attachments.filter((item) => !returnedUrls.has(item.file_url)), ...returnedVisualAssets];
       setAttachments(nextAttachments);
 
       await prepareOffer({
@@ -401,7 +403,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         visualizationUrl: result.visualization_url || '',
         clientContent: result.ai_content || null,
         projectOrder: result.project_order || null,
-        priceIsEstimate: true,
+        priceIsEstimate: false,
         auto: true,
       });
       await onSent?.();

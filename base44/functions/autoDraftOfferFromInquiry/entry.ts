@@ -1,0 +1,194 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+
+const AUDIENCES = ['city_public', 'residential', 'wellness_hospitality', 'architecture_design', 'custom'];
+
+const clean = (value: unknown) => String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+const short = (value: unknown, max = 1200) => clean(value).slice(0, max);
+
+Deno.serve(async (req) => {
+  try {
+    const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
+
+    const body = await req.json().catch(() => ({}));
+    const inquiryId = body?.inquiry_id || body?.event?.entity_id || body?.data?.id;
+    const force = Boolean(body?.force);
+    if (!inquiryId) return Response.json({ error: 'Missing inquiry id' }, { status: 400 });
+
+    const inquiry = await base44.asServiceRole.entities.Poptavka.get(inquiryId);
+    if (!inquiry) return Response.json({ error: 'Inquiry not found' }, { status: 404 });
+
+    const existingOrders = await base44.asServiceRole.entities.ProjectOrder.filter({ inquiry_id: inquiryId });
+    if (!force && existingOrders?.length) {
+      const existingAssets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId });
+      const visual = (existingAssets || []).find((item) => item.asset_type === 'generated_visualization');
+      return Response.json({
+        ok: true,
+        reused: true,
+        project_order: existingOrders[0],
+        visualization_url: visual?.file_url || '',
+        product_id: existingOrders[0]?.product_id || '',
+        product_slug: existingOrders[0]?.product_slug || '',
+        audience_variant: existingOrders[0]?.presentation_variant || 'custom',
+      });
+    }
+
+    const products = await base44.asServiceRole.entities.Product.list('-updated_date', 200);
+    if (!products?.length) return Response.json({ error: 'Product catalog is empty' }, { status: 400 });
+
+    const catalog = products.slice(0, 80).map((product) => ({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      description: short(product.short_description, 260),
+      price_from: Number(product.price_from || 0),
+      material: clean(product.material),
+    }));
+
+    const analysis = await base44.asServiceRole.integrations.Core.InvokeLLM({
+      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo ceny. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+
+POPTÁVKA:
+Jméno: ${clean(inquiry.jmeno)}
+Organizace: ${clean(inquiry.firma)}
+Produkt z formuláře: ${clean(inquiry.produkt)}
+Text: ${short(inquiry.zprava, 5000)}
+
+KATALOG PRODUKTŮ:
+${JSON.stringify(catalog)}
+
+Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U BENDY jeden štíhlý nerezový profil s jediným plynulým horním obloukem, žádné výhonky, větve, hadice, kabely ani přídavná ramena.`,
+      response_json_schema: {
+        type: 'object',
+        properties: {
+          product_id: { type: 'string' },
+          product_name: { type: 'string' },
+          audience_variant: { type: 'string', enum: AUDIENCES },
+          project_title: { type: 'string' },
+          client_summary: { type: 'string' },
+          solution_summary: { type: 'string' },
+          benefits: { type: 'array', items: { type: 'string' } },
+          visual_scene: { type: 'string' },
+          confidence_note: { type: 'string' },
+        },
+        required: ['product_id', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene'],
+      },
+    });
+
+    let product = products.find((item) => item.id === analysis?.product_id);
+    if (!product && analysis?.product_name) product = products.find((item) => clean(item.name).toLowerCase() === clean(analysis.product_name).toLowerCase());
+    if (!product && inquiry.produkt) {
+      const needle = clean(inquiry.produkt).toLowerCase();
+      product = products.find((item) => `${item.name || ''} ${item.slug || ''}`.toLowerCase().includes(needle));
+    }
+    if (!product) product = products[0];
+
+    const isBendy = /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
+    const refs = [product.image_url, ...(product.gallery_urls || [])]
+      .filter(Boolean)
+      .filter((url, index, all) => all.indexOf(url) === index)
+      .slice(0, 4);
+    const productLock = isBendy
+      ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. Malé kovové trysky jsou přímo v hlavní trubce. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
+      : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej.`;
+
+    let visualizationUrl = '';
+    try {
+      const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage({
+        prompt: `Vytvoř profesionální fotorealistickou KONCEPTUÁLNÍ vizualizaci pro obchodní nabídku MLŽIDLA.cz. Nejde o přesný zákres do fotografie lokality, ale o věrohodnou ukázku navrženého řešení podle textové poptávky.
+
+Projekt klienta: ${short(inquiry.zprava, 2200)}
+Navržené prostředí: ${short(analysis?.visual_scene, 1200)}
+Vybraný produkt: ${product.name}.
+${productLock}
+
+Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
+        existing_image_urls: refs,
+      });
+      visualizationUrl = imageResult?.url || '';
+    } catch (visualError) {
+      console.warn('Auto visualization failed', visualError);
+    }
+
+    const audienceVariant = AUDIENCES.includes(analysis?.audience_variant) ? analysis.audience_variant : 'custom';
+    const projectTitle = clean(analysis?.project_title) || `${product.name} — ${inquiry.firma || inquiry.jmeno}`;
+    const clientSummary = clean(analysis?.client_summary) || short(inquiry.zprava, 1200);
+    const solutionSummary = clean(analysis?.solution_summary) || clean(product.short_description) || `Návrh řešení ${product.name}`;
+    const benefits = Array.isArray(analysis?.benefits) ? analysis.benefits.map(clean).filter(Boolean).slice(0, 5) : [];
+
+    let order = existingOrders?.[0] || null;
+    const orderData = {
+      inquiry_id: inquiryId,
+      inquiry_type: 'poptavka',
+      project_name: projectTitle,
+      client_name: inquiry.jmeno,
+      client_email: inquiry.email,
+      client_phone: inquiry.telefon || '',
+      client_company: inquiry.firma || '',
+      description: `${clientSummary}\n\nNavržené řešení: ${solutionSummary}${benefits.length ? `\n\nPřínosy: ${benefits.join(' · ')}` : ''}`.slice(0, 2000),
+      product_id: product.id,
+      product_slug: product.slug || '',
+      product_name: product.name,
+      presentation_variant: audienceVariant,
+      smart_control_included: false,
+      status: 'draft',
+      total_price: 0,
+      sender_email: 'meduna@holmtec.cz',
+      bcc_recipients: ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'],
+      supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz',
+      supplier_contact_name: 'Ing. Radek Meduna',
+      supplier_email: 'meduna@holmtec.cz',
+      supplier_phone: '+420 774 700 390',
+      customer_message: `Automaticky připravený koncept z textové poptávky. ${clean(analysis?.confidence_note)}`.slice(0, 1000),
+      shared_token: order?.shared_token || crypto.randomUUID(),
+    };
+
+    order = order?.id
+      ? await base44.asServiceRole.entities.ProjectOrder.update(order.id, orderData)
+      : await base44.asServiceRole.entities.ProjectOrder.create(orderData);
+
+    let asset = null;
+    if (visualizationUrl) {
+      asset = await base44.asServiceRole.entities.OfferAsset.create({
+        inquiry_id: inquiryId,
+        inquiry_type: 'poptavka',
+        project_order_id: order.id,
+        file_url: visualizationUrl,
+        file_name: `${product.slug || 'mlzitko'}-${inquiryId.slice(-6)}-auto-koncept-${Date.now()}.webp`,
+        file_type: 'image/webp',
+        asset_type: 'generated_visualization',
+        title: `AI koncept — ${product.name}`,
+        description: 'Automaticky vytvořená konceptuální vizualizace z textové poptávky. Před odesláním klientovi je určena ke kontrole.',
+        selected_for_offer: true,
+        generated_by_ai: true,
+      });
+    }
+
+    try {
+      await base44.asServiceRole.entities.Poptavka.update(inquiryId, { status: 'v_reseni' });
+    } catch (_) {}
+
+    return Response.json({
+      ok: true,
+      reused: false,
+      project_order: order,
+      visualization_asset: asset,
+      visualization_url: visualizationUrl,
+      product_id: product.id,
+      product_slug: product.slug || '',
+      product_name: product.name,
+      product_price_from: Number(product.price_from || 0),
+      audience_variant: audienceVariant,
+      ai_content: {
+        project_goal: clientSummary,
+        solution_summary: solutionSummary,
+        benefits,
+        next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti, rozsah dodávky a finální cenu.',
+        presentation_title: projectTitle,
+      },
+    });
+  } catch (error) {
+    return Response.json({ error: error?.message || String(error) }, { status: 500 });
+  }
+});

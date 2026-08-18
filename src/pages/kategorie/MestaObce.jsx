@@ -226,7 +226,7 @@ export default function MestaObce() {
               Reference realizací <ArrowRight size={14} />
             </Link>
           </div>
-          <CategoryInquiryForm category="Města a obce" projectScope="urban" />
+          <CategoryInquiryForm category="Města a obce" projectScope="urban" analyticsSegment="cities" />
         </div>
       </section>
       <B2BPortfolioNavigation current="Města a obce" />

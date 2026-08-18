@@ -1,0 +1,41 @@
+{
+  "name": "Kontakt \u2192 automatick\u00fd n\u00e1vrh nab\u00eddky",
+  "description": "Po vytvo\u0159en\u00ed nov\u00e9 textov\u00e9 kontaktn\u00ed popt\u00e1vky automaticky p\u0159iprav\u00ed pracovn\u00ed n\u00e1vrh \u0159e\u0161en\u00ed, vybere vhodn\u00fd produkt a vytvo\u0159\u00ed konceptu\u00e1ln\u00ed vizualizaci. Nab\u00eddka z\u016fst\u00e1v\u00e1 jako draft ke kontrole obchodn\u00edkem.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "ContactInquiry"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "kontakt_automaticky_navrh_nabidky",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "auto_offer": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "autoDraftOfferFromInquiry",
+            "args": {
+              "inquiry_id": "${ .trigger.entity_id }",
+              "inquiry_type": "contact"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "AI n\u00e1vrh nab\u00eddky",
+            "description": "Vybere produkt a vytvo\u0159\u00ed vizualiza\u010dn\u00ed koncept"
+          }
+        }
+      }
+    ]
+  }
+}

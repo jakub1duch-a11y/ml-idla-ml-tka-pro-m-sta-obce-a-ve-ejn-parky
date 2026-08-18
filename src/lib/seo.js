@@ -345,8 +345,8 @@ export const SEO_PAGES = {
     canonicalPath: '/kategorie/eventy',
   },
   outdoor: {
-    title: 'Mlžítka pro zahrady a venkovní prostory — Outdoor kolekce',
-    description: 'Designová mlžítka pro zahrady, terasy a venkovní posezení. Nerezové skulptury HolmTec, které osvěží soukromý outdoor prostor bez nutnosti klimatizace.',
+    title: 'Mlžítka na zahradu a terasu | MLŽIDLA.cz',
+    description: 'Designová mlžítka pro zahrady, terasy a venkovní wellness. Nerezové provedení, Smart ovládání, vizualizace a návrh vhodné konfigurace.',
     keywords: 'mlžítka zahrada, venkovní mlžení, zahradní mlžná skulptura, ochlazení terasy, outdoor mlžítka',
     canonicalPath: '/kategorie/outdoor-zahrady',
   },

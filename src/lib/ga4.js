@@ -2,8 +2,8 @@ import { base44 } from '@/api/base44Client';
 import { configureMetaPixel, trackMetaEvent, updateMetaConsent } from '@/lib/meta';
 
 const GOOGLE_ADS_ID = 'AW-18276263329';
-// Google Ads conversion action label must come from the concrete Google Ads conversion action.
-// Keep empty until the real label is available — this prevents false/invalid conversion hits.
+// Google Ads conversion action: „Žádost o nabídku (1)“.
+// Label verified from the Google Ads event snippet for account AW-18276263329.
 const GOOGLE_ADS_CONVERSION_LABEL = 'RcQVCNuc79McEKHL5opE';
 const CONSENT_STORAGE_KEY = 'cookie_consent';
 

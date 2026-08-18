@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
     }));
 
     const analysis = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo ceny. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
 
 POPTÁVKA:
 Jméno: ${clean(inquiry.jmeno)}
@@ -82,8 +82,11 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
           benefits: { type: 'array', items: { type: 'string' } },
           visual_scene: { type: 'string' },
           confidence_note: { type: 'string' },
+          requested_quantity: { type: 'integer' },
+          requested_variants: { type: 'array', items: { type: 'string' } },
+          visualization_scenes: { type: 'array', items: { type: 'string' } },
         },
-        required: ['product_id', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene'],
+        required: ['product_id', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity'], 
       },
     });
 
@@ -111,26 +114,43 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
       ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. Malé kovové trysky jsou přímo v hlavní trubce. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
       : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej.`;
 
-    let visualizationUrl = '';
-    try {
-      const imageParams: any = {
-        prompt: `Vytvoř profesionální fotorealistickou vizualizaci pro obchodní nabídku MLŽIDLA.cz.
+    const requestedQuantity = Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
+    const requestedVariants = Array.isArray(analysis?.requested_variants) ? analysis.requested_variants.map(clean).filter(Boolean).slice(0, 4) : [];
+    const visualizationScenes = Array.isArray(analysis?.visualization_scenes) && analysis.visualization_scenes.length
+      ? analysis.visualization_scenes.map(clean).filter(Boolean).slice(0, 4)
+      : [clean(analysis?.visual_scene)].filter(Boolean);
+    const variantLabels = requestedVariants.length ? requestedVariants : [`${requestedQuantity} ks ${product.name}`];
+    const variantSpecs = variantLabels.map((label) => {
+      const quantityMatch = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
+      const quantity = quantityMatch ? Math.max(1, Number(quantityMatch[1])) : requestedQuantity;
+      return { label, quantity };
+    });
+
+    const generatedVisualizations: any[] = [];
+    for (let variantIndex = 0; variantIndex < variantSpecs.length; variantIndex += 1) {
+      const variant = variantSpecs[variantIndex];
+      try {
+        const imageParams: any = {
+        prompt: `Vytvoř profesionální ULTRAREALISTICKOU fotografickou vizualizaci pro obchodní nabídku MLŽIDLA.cz.
 
 ${sceneMode}
 
 Projekt klienta: ${short(inquiry.zprava, 2200)}
-Navržené prostředí: ${short(analysis?.visual_scene, 1200)}
+Navržené prostředí: ${short(visualizationScenes[variantIndex] || visualizationScenes[0] || analysis?.visual_scene, 1200)}
+Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ.
 Vybraný produkt: ${product.name}.
 ${productLock}
 
 Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
         existing_image_urls: imageReferences,
       };
-      const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage(imageParams);
-      visualizationUrl = imageResult?.url || '';
-    } catch (visualError) {
-      console.warn('Auto visualization failed', visualError);
+        const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage(imageParams);
+        if (imageResult?.url) generatedVisualizations.push({ url: imageResult.url, label: variant.label, quantity: variant.quantity });
+      } catch (visualError) {
+        console.warn('Auto visualization failed', visualError);
+      }
     }
+    const visualizationUrl = generatedVisualizations[0]?.url || '';
 
     const audienceVariant = AUDIENCES.includes(analysis?.audience_variant) ? analysis.audience_variant : 'custom';
     const projectTitle = clean(analysis?.project_title) || `${product.name} — ${inquiry.firma || inquiry.jmeno}`;
@@ -154,7 +174,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       presentation_variant: audienceVariant,
       smart_control_included: false,
       status: 'draft',
-      total_price: 0,
+      total_price: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * requestedQuantity : 0,
       sender_email: 'meduna@holmtec.cz',
       bcc_recipients: ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'],
       supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz',
@@ -169,22 +189,25 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       ? await base44.asServiceRole.entities.ProjectOrder.update(order.id, orderData)
       : await base44.asServiceRole.entities.ProjectOrder.create(orderData);
 
-    let asset = null;
-    if (visualizationUrl) {
-      asset = await base44.asServiceRole.entities.OfferAsset.create({
+    const visualAssets = [];
+    for (let i = 0; i < generatedVisualizations.length; i += 1) {
+      const visual = generatedVisualizations[i];
+      const asset = await base44.asServiceRole.entities.OfferAsset.create({
         inquiry_id: inquiryId,
         inquiry_type: inquiryType,
         project_order_id: order.id,
-        file_url: visualizationUrl,
-        file_name: `${product.slug || 'mlzitko'}-${inquiryId.slice(-6)}-auto-koncept-${Date.now()}.webp`,
+        file_url: visual.url,
+        file_name: `${product.slug || 'mlzitko'}-${inquiryId.slice(-6)}-varianta-${i + 1}-${Date.now()}.webp`,
         file_type: 'image/webp',
         asset_type: 'generated_visualization',
-        title: `AI koncept — ${product.name}`,
-        description: sourcePhoto?.file_url ? 'Automaticky vytvořená vizualizace z textové poptávky a fotografie prostoru. Před odesláním klientovi je určena ke kontrole.' : 'Automaticky vytvořená konceptuální vizualizace z textové poptávky. Před odesláním klientovi je určena ke kontrole.',
+        title: `AI vizualizace — ${visual.label}`,
+        description: sourcePhoto?.file_url ? `Ultrarealistická varianta ${visual.label} vytvořená podle textu poptávky a fotografie prostoru.` : `Ultrarealistická konceptuální varianta ${visual.label} vytvořená podle textu poptávky.`,
         selected_for_offer: true,
         generated_by_ai: true,
       });
+      visualAssets.push(asset);
     }
+    const asset = visualAssets[0] || null;
 
     try {
       if (inquiryType === 'contact') await base44.asServiceRole.entities.ContactInquiry.update(inquiryId, { status: 'in_progress' });
@@ -201,10 +224,14 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       product_slug: product.slug || '',
       product_name: product.name,
       product_price_from: Number(product.price_from || 0),
+      requested_quantity: requestedQuantity,
+      requested_variants: variantSpecs.map((variant) => ({ ...variant, price: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * variant.quantity : 0 })),
+      visualization_urls: generatedVisualizations.map((item) => item.url),
+      visualization_assets: visualAssets,
       audience_variant: audienceVariant,
       ai_content: {
         project_goal: clientSummary,
-        solution_summary: solutionSummary,
+        solution_summary: `${solutionSummary}${variantSpecs.length ? ` Nabídka počítá s variantami: ${variantSpecs.map((variant) => `${variant.label}${Number(product.price_from || 0) > 0 ? ` — ${new Intl.NumberFormat('cs-CZ').format(Number(product.price_from || 0) * variant.quantity)} Kč bez DPH` : ''}`).join('; ')}.` : ''}`,
         benefits,
         next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti, rozsah dodávky a finální cenu.',
         presentation_title: projectTitle,

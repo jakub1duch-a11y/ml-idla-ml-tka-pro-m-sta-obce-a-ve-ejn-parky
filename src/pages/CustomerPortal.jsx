@@ -44,11 +44,12 @@ export default function CustomerPortal() {
   }, []);
 
   useEffect(() => {
-    if (step !== 'dashboard' || !requestedQuote) return;
-    const target = projects.find((project) => project.quote_number === requestedQuote);
+    const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+    if (step !== 'dashboard' || !focusQuote) return;
+    const target = projects.find((project) => project.quote_number === focusQuote);
     if (!target) return;
     window.setTimeout(() => document.getElementById(`offer-${target.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
-  }, [step, projects, requestedQuote]);
+  }, [step, projects, requestedQuote, quoteNumber]);
 
   const requestOtp = async (e) => {
     e.preventDefault();
@@ -80,7 +81,8 @@ export default function CustomerPortal() {
       setEmail(verifiedEmail || email);
       setInquiries(inquiries || []);
       const projectList = projects || [];
-      setProjects(requestedQuote ? [...projectList].sort((a, b) => (b.quote_number === requestedQuote ? 1 : 0) - (a.quote_number === requestedQuote ? 1 : 0)) : projectList);
+      const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+      setProjects(focusQuote ? [...projectList].sort((a, b) => (b.quote_number === focusQuote ? 1 : 0) - (a.quote_number === focusQuote ? 1 : 0)) : projectList);
       setSessionToken(session_token);
       setStep('dashboard');
     } catch (e) {
@@ -225,20 +227,48 @@ export default function CustomerPortal() {
     );
   }
 
+  const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+  const focusedProject = projects.find((project) => project.quote_number === focusQuote) || projects[0] || null;
+  const focusedStatus = focusedProject ? (STATUS_MAP[focusedProject.status] || STATUS_MAP.draft) : STATUS_MAP.draft;
+
   return (
-    <div className="min-h-screen bg-white pt-28 pb-16">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+    <div className="min-h-screen bg-[#f4f7f7] pt-24 pb-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-5 flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-1">Váš účet</p>
-            <h1 className="text-2xl lg:text-3xl font-light text-slate-900">{email}</h1>
+            <p className="text-[10px] font-mono text-slate-400 tracking-[.16em] uppercase">Klientský portál</p>
+            <div className="mt-1 flex items-center gap-2"><h1 className="text-2xl font-light text-slate-900">Můj projekt</h1><span className="hidden text-xs text-slate-400 sm:inline">· {email}</span></div>
           </div>
-          <button onClick={() => { setStep('login'); setEmail(''); setInquiries([]); setProjects([]); setSessionToken(null); }}
-            className="px-4 py-2 bg-slate-50 text-slate-600 text-sm rounded-full hover:bg-slate-100 border border-slate-200 transition-all">
+          <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); }}
+            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900">
             Odhlásit se
           </button>
         </div>
+
+        {focusedProject && <section className="mb-7 overflow-hidden rounded-[28px] bg-[#0d2d38] text-white shadow-xl shadow-slate-900/5">
+          <div className="grid lg:grid-cols-[1.05fr_.95fr]">
+            <div className="flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+              <div>
+                <div className="flex flex-wrap items-center gap-2"><span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-[#8fe4ef]">{focusedStatus.icon} {focusedStatus.label}</span>{focusedProject.quote_number && <span className="font-mono text-[11px] text-white/45">{focusedProject.quote_number}</span>}</div>
+                <h2 className="mt-5 max-w-2xl text-3xl font-light leading-tight sm:text-4xl">{focusedProject.project_name}</h2>
+                {focusedProject.description && <p className="mt-4 max-w-xl text-sm leading-6 text-white/65">{focusedProject.description}</p>}
+              </div>
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] uppercase tracking-wider text-white/40">Cena nabídky</p><p className="mt-1 text-lg font-semibold">{focusedProject.total_price ? `${focusedProject.total_price.toLocaleString('cs-CZ')} Kč` : 'K doplnění'}</p><p className="text-[10px] text-white/35">bez DPH</p></div>
+                <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] uppercase tracking-wider text-white/40">Platnost</p><p className="mt-1 text-sm font-semibold">{focusedProject.valid_until ? new Date(focusedProject.valid_until).toLocaleDateString('cs-CZ') : 'Dle nabídky'}</p></div>
+                <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] uppercase tracking-wider text-white/40">Vizualizace</p><p className="mt-1 text-sm font-semibold">{focusedProject.visualizations?.length || 0} návrhů</p></div>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <button type="button" onClick={() => document.getElementById(`offer-${focusedProject.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="inline-flex items-center gap-2 rounded-full bg-[#61d5e5] px-5 py-3 text-xs font-bold text-[#0d2d38]">Otevřít nabídku <ArrowRight size={14}/></button>
+                {focusedProject.quote_pdf_url && <a href={focusedProject.quote_pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-3 text-xs font-semibold text-white">PDF nabídka <ExternalLink size={13}/></a>}
+              </div>
+            </div>
+            <div className="min-h-[260px] bg-[#10242b] lg:min-h-full">
+              {focusedProject.primary_visualization_url ? <img src={focusedProject.primary_visualization_url} alt={`Vizualizace ${focusedProject.project_name}`} className="h-full min-h-[260px] w-full object-cover"/> : <div className="flex h-full min-h-[260px] flex-col items-center justify-center gap-3 text-white/35"><Image size={34}/><span className="text-xs">Vizualizace se připravuje</span></div>}
+            </div>
+          </div>
+        </section>}
 
         {/* Tabs */}
         <div className="flex gap-4 mb-8 border-b border-slate-200">
@@ -259,7 +289,7 @@ export default function CustomerPortal() {
           {projects.map(project => {
             const statusInfo = STATUS_MAP[project.status] || STATUS_MAP.draft;
             const isApproved = ['approved', 'in_production', 'ready', 'delivered'].includes(project.status);
-            const isRequested = Boolean(requestedQuote && project.quote_number === requestedQuote);
+            const isRequested = Boolean(focusQuote && project.quote_number === focusQuote);
 
             return (
               <div id={`offer-${project.id}`} key={project.id} className={`bg-slate-50 border rounded-2xl overflow-hidden transition-all ${isRequested ? 'border-cyan-400 ring-4 ring-cyan-100' : 'border-slate-200 hover:border-slate-300'}`}>
@@ -284,7 +314,14 @@ export default function CustomerPortal() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-4">
+                <div className="p-6 space-y-5">
+                  {project.visualizations?.length > 0 && <div>
+                    <div className="mb-3 flex items-center justify-between"><div className="flex items-center gap-2"><Image size={15} className="text-[#0e7584]"/><p className="text-xs font-semibold text-slate-800">Vizualizace projektu</p></div><span className="text-[10px] text-slate-400">{project.visualizations.length} návrhů</span></div>
+                    <div className={`grid gap-3 ${project.visualizations.length > 1 ? 'sm:grid-cols-2' : ''}`}>{project.visualizations.slice(0, 4).map((visual, index) => <a key={visual.id || visual.file_url} href={visual.file_url} target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white"><img src={visual.file_url} alt={visual.title || `Vizualizace ${index + 1}`} className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.02]"/><div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-slate-950/70 to-transparent px-4 pb-3 pt-10 text-white"><span className="truncate text-[11px] font-semibold">{visual.title || `Vizualizace ${index + 1}`}</span><ExternalLink size={12}/></div></a>)}</div>
+                  </div>}
+
+                  {project.description && <div className="rounded-2xl border border-slate-200 bg-white p-4"><p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Shrnutí projektu</p><p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600">{project.description}</p></div>}
+
                   {/* Timeline */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {project.production_start_date && (
@@ -328,6 +365,8 @@ export default function CustomerPortal() {
                       )}
                     </div>
                   )}
+
+                  {project.documents?.filter((asset) => !['quote_pdf', 'presentation', 'presentation_pdf'].includes(asset.asset_type)).length > 0 && <div className="rounded-2xl border border-slate-200 bg-white p-4"><div className="flex items-center gap-2"><FileText size={14} className="text-[#0e7584]"/><p className="text-xs font-semibold text-slate-800">Další projektové podklady</p></div><div className="mt-3 grid gap-2 sm:grid-cols-2">{project.documents.filter((asset) => !['quote_pdf', 'presentation', 'presentation_pdf'].includes(asset.asset_type)).map((asset) => <a key={asset.id || asset.file_url} href={asset.file_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-700 hover:border-slate-300"><span className="truncate">{asset.title || asset.file_name}</span><ExternalLink size={12} className="shrink-0 text-slate-400"/></a>)}</div></div>}
 
                   {/* Delivery info */}
                   {project.delivery_location && (

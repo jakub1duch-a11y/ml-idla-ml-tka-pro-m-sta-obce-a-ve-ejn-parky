@@ -213,7 +213,7 @@ export default async function(req) {
 
     doc.setTextColor(...accent); doc.setFontSize(6.8); doc.text(audience.label.toUpperCase(), M, y);
     doc.setTextColor(...navy); doc.setFontSize(17.5); doc.text(product.name, M, y + 9);
-    doc.setTextColor(...muted); doc.setFontSize(8.3); doc.text(doc.splitTextToSize(audience.headline, 105), M, y + 16);
+    doc.setTextColor(...muted); doc.setFontSize(8.3); doc.text(doc.splitTextToSize(safe(inquiry.project_goal) || audience.headline, 105), M, y + 16);
     await addRemoteImage(doc, product.image_url, 133, y + 1, 61, 46);
     y += 53;
 

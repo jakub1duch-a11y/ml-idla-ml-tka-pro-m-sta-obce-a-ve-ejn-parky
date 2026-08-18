@@ -4,7 +4,7 @@ import { configureMetaPixel, trackMetaEvent, updateMetaConsent } from '@/lib/met
 const GOOGLE_ADS_ID = 'AW-18276263329';
 // Google Ads conversion action label must come from the concrete Google Ads conversion action.
 // Keep empty until the real label is available — this prevents false/invalid conversion hits.
-const GOOGLE_ADS_CONVERSION_LABEL = '';
+const GOOGLE_ADS_CONVERSION_LABEL = 'RcQVCNuc79McEKHL5opE';
 const CONSENT_STORAGE_KEY = 'cookie_consent';
 
 let initPromise = null;
@@ -107,7 +107,7 @@ function installGlobalListeners() {
     if (href.startsWith('/') || href.startsWith(window.location.origin)) {
       let targetPath = href;
       try { targetPath = new URL(href, window.location.origin).pathname; } catch (_) {}
-      const importantTargets = ['/poptavka', '/kontakt', '/kalkulacka', '/ai-vizualizace', '/smart-ovladani', '/ke-stazeni', '/mlzidla-mlzitka', '/pronajem'];
+      const importantTargets = ['/poptavka', '/kontakt', '/kalkulacka', '/ai-vizualizace', '/smart-ovladani', '/ke-stazeni', '/mlzidla-mlzitka', '/pronajem', '/reference', '/kategorie'];
       if (importantTargets.some((target) => targetPath.startsWith(target))) {
         void emit('cta_click', {
           cta_target: targetPath,
@@ -301,6 +301,19 @@ export function trackThankYouPageView(source) {
   void emit('thank_you_view', { lead_source: source || 'kontakt' });
 }
 
+/**
+ * Tracks a concrete step in a segment-specific acquisition funnel.
+ * Keep step names stable so GA4 Funnel Exploration can compare segments over time.
+ */
+export function trackFunnelStep(segment, step, detail = '') {
+  void emit('funnel_step', {
+    segment: segment || 'general',
+    funnel_step: step || 'unknown',
+    detail: detail || '',
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+  });
+}
+
 export function trackGateInterest(productName) {
   void emit('product_interest', { product_type: 'brána', product_name: productName || 'obecná brána' });
 }
@@ -382,6 +395,7 @@ if (typeof window !== 'undefined') {
   window.trackInquirySubmitted = trackInquirySubmitted;
   window.trackRentalInquiry = trackRentalInquiry;
   window.trackThankYouPageView = trackThankYouPageView;
+  window.trackFunnelStep = trackFunnelStep;
   window.trackNewsletterSignup = trackNewsletterSignup;
   window.trackVisualizerRegistration = trackVisualizerRegistration;
   window.trackVisualizerGenerated = trackVisualizerGenerated;

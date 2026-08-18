@@ -306,12 +306,17 @@ export function trackThankYouPageView(source) {
  * Keep step names stable so GA4 Funnel Exploration can compare segments over time.
  */
 export function trackFunnelStep(segment, step, detail = '') {
-  void emit('funnel_step', {
-    segment: segment || 'general',
-    funnel_step: step || 'unknown',
+  const safeSegment = String(segment || 'general').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 14);
+  const safeStep = String(step || 'unknown').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 18);
+  const properties = {
+    segment: safeSegment,
+    funnel_step: safeStep,
     detail: detail || '',
     page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-  });
+  };
+  void emit('funnel_step', properties);
+  // Named event keeps funnel reporting possible even before custom dimensions are registered in GA4.
+  void emit(`funnel_${safeSegment}_${safeStep}`.slice(0, 40), properties);
 }
 
 export function trackGateInterest(productName) {

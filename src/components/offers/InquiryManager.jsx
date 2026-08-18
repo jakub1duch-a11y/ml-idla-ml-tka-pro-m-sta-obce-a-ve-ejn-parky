@@ -3,7 +3,6 @@ import { CheckCircle2, ExternalLink, Eye, FileText, Search, Send, Sparkles, Uplo
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
-import OfferVariantTechnicalPanel from '@/components/offers/OfferVariantTechnicalPanel';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 const errorMessage = (error) => error?.response?.data?.error || error?.message || 'Akci se nepodařilo dokončit.';
@@ -240,11 +239,9 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           ? 'https://mlzidla.cz/ar/gate'
           : `https://mlzidla.cz/produkt/${productForOffer.slug}`;
       let approvedVisualizationAssets = [];
-      let approvedNozzleCalculations = [];
       try {
         approvedVisualizationAssets = (await base44.entities.VisualizationAsset.filter({ source_inquiry_id: selected.id, approved_for_presentation: true })) || [];
-        approvedNozzleCalculations = (await base44.entities.NozzleCalculation.filter({ inquiry_id: selected.id, approved_for_offer: true })) || [];
-      } catch (technicalDataError) { console.warn('Approved technical offer data unavailable', technicalDataError); }
+      } catch (technicalDataError) { console.warn('Approved visualization data unavailable', technicalDataError); }
       const visualizationUrl = visualizationOverride || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
 
       let clientContent = clientContentOverride || {
@@ -306,7 +303,6 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           ar_url: arUrl,
           ar_capture_url: visualizationUrl,
           approved_visualizations: approvedVisualizationAssets,
-          nozzle_calculations: approvedNozzleCalculations,
           ai_content: clientContent,
           audience_variant: audienceForOffer,
         });
@@ -359,7 +355,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, approvedNozzleCalculations, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null });
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null });
       if (!subject.trim()) setSubject(`Projektový návrh + cenová nabídka ${quoteNumber} | ${selected.firma || selected.company || productForOffer.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(`Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení pro daný prostor včetně projektové vizualizace a cenové nabídky. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je vizuální koncept osazení, cenová rekapitulace a projektová prezentace. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
@@ -620,11 +616,6 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
             autoPrepareBusy={busy === 'auto-offer'}
           />
 
-          <OfferVariantTechnicalPanel
-            inquiryId={selected.id}
-            onRegenerate={autoPrepareFromText}
-            regenerateBusy={busy === 'auto-offer'}
-          />
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

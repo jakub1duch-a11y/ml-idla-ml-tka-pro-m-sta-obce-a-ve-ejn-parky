@@ -87,6 +87,35 @@ export default function Architekti() {
         </div>
       </section>
 
+      {/* Konverzní cesta pro projektanty */}
+      <section className="border-b border-slate-200 bg-white" data-analytics-section="architects-funnel">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              ['01', 'Pošlete záměr', 'Typ prostoru, lokalita, fáze projektu a orientační rozsah. Stačí základní informace.'],
+              ['02', 'Doplníme podklady', 'Doporučíme vhodný produkt, konfiguraci, technické podklady a podle potřeby vizualizaci.'],
+              ['03', 'Koordinujeme řešení', 'Pomůžeme s napojením, kotvením, Smart řízením a návazností na realizační dokumentaci.'],
+            ].map(([number, heading, text]) => (
+              <div key={number} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <span className="font-mono text-[11px] tracking-widest text-slate-400">{number}</span>
+                <h2 className="mt-4 text-lg font-semibold text-slate-900">{heading}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 font-light">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('architects', 'visualizer_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
+              Otevřít AI vizualizaci <ArrowRight size={14} />
+            </Link>
+            <Link to="/ke-stazeni" onClick={() => trackFunnelStep('architects', 'downloads_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+              Projektové podklady <Download size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Mlha jako materiál */}
       <section className="relative h-[70vh] min-h-[480px] overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/7e305c760_mlzitkaholmtec.mp4"

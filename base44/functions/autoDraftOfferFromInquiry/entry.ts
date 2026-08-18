@@ -207,8 +207,12 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       : await base44.asServiceRole.entities.ProjectOrder.create(orderData);
 
     const visualAssets = [];
+    const visualizationDbAssets = [];
+    const offerVariants = [];
     for (let i = 0; i < generatedVisualizations.length; i += 1) {
       const visual = generatedVisualizations[i];
+      const variant = variantSpecs[i] || variantSpecs[0];
+      const variantKey = `${String.fromCharCode(65 + i)}-${variant.quantity}ks`;
       const asset = await base44.asServiceRole.entities.OfferAsset.create({
         inquiry_id: inquiryId,
         inquiry_type: inquiryType,
@@ -223,6 +227,71 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         generated_by_ai: true,
       });
       visualAssets.push(asset);
+
+      try {
+        const visualizationAsset = await base44.asServiceRole.entities.VisualizationAsset.create({
+          title: `AI vizualizace — ${visual.label}`,
+          image_url: visual.url,
+          product_slug: product.slug || '',
+          product_name: product.name,
+          configuration: visual.quantity === 1 ? 'single' : visual.quantity === 2 ? 'duo' : visual.quantity === 3 ? 'trio' : 'custom',
+          quantity: visual.quantity,
+          environment: audienceVariant === 'residential' ? 'rezidencni_zahrada' : audienceVariant === 'city_public' ? 'mestsky_park' : 'custom',
+          scene_description: visualizationScenes[i] || visualizationScenes[0] || analysis?.visual_scene || '',
+          source_inquiry_id: inquiryId,
+          offer_variant_key: variantKey,
+          generation_prompt: `Automatická vizualizace z textu poptávky: ${short(inquiry.zprava, 1800)}`,
+          reference_image_urls: imageReferences,
+          material: product.material || 'nerez',
+          is_master_geometry_locked: true,
+          approval_status: 'needs_review',
+          approved_for_presentation: false,
+          is_primary_for_variant: true,
+          sort_order: i,
+        });
+        visualizationDbAssets.push(visualizationAsset);
+
+        const offerVariant = await base44.asServiceRole.entities.OfferVariant.create({
+          project_order_id: order.id,
+          inquiry_id: inquiryId,
+          variant_key: variantKey,
+          variant_name: visual.label || variant.label,
+          product_slug: product.slug || '',
+          product_name: product.name,
+          quantity: variant.quantity,
+          configuration: variant.quantity === 1 ? 'single' : variant.quantity === 2 ? 'duo' : variant.quantity === 3 ? 'trio' : 'custom',
+          environment: audienceVariant,
+          unit_price: Number(product.price_from || 0),
+          products_subtotal: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * variant.quantity : 0,
+          total_price: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * variant.quantity : 0,
+          price_status: Number(product.price_from || 0) > 0 ? 'complete' : 'missing_price',
+          line_items: Number(product.price_from || 0) > 0 ? [{ label: product.name, quantity: variant.quantity, unit: 'ks', unit_price: Number(product.price_from || 0), total: Number(product.price_from || 0) * variant.quantity, source: 'Product.price_from' }] : [],
+          visualization_asset_ids: [visualizationAsset.id],
+          primary_visualization_id: visualizationAsset.id,
+          presentation_title: visual.label || variant.label,
+          presentation_text: solutionSummary,
+          status: 'needs_review',
+          sort_order: i,
+        });
+        offerVariants.push(offerVariant);
+
+        await base44.asServiceRole.entities.NozzleCalculation.create({
+          inquiry_id: inquiryId,
+          project_order_id: order.id,
+          offer_variant_id: offerVariant.id,
+          variant_key: variantKey,
+          product_slug: product.slug || '',
+          product_name: product.name,
+          product_quantity: variant.quantity,
+          zone_count: 1,
+          calculation_rows: [],
+          calculation_status: 'needs_data',
+          approved_for_offer: false,
+          notes: 'Doplnit podle schválené technické tabulky trysek a skutečného tlaku/přívodu. AI nesmí hodnoty odhadovat.'
+        });
+      } catch (dbError) {
+        console.warn('Variant / visualization DB indexing failed', dbError);
+      }
     }
     const asset = visualAssets[0] || null;
 
@@ -245,6 +314,8 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       requested_variants: variantSpecs.map((variant) => ({ ...variant, price: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * variant.quantity : 0 })),
       visualization_urls: generatedVisualizations.map((item) => item.url),
       visualization_assets: visualAssets,
+      visualization_db_assets: visualizationDbAssets,
+      offer_variants: offerVariants,
       audience_variant: audienceVariant,
       ai_content: {
         project_goal: clientSummary,

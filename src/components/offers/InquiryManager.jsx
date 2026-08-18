@@ -281,6 +281,12 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         portal_url: 'https://mlzidla.cz/muj-projekt',
         ar_url: arUrl,
         audience_variant: audienceForOffer,
+        visualization_urls: [
+          visualizationUrl,
+          ...approvedVisualizationAssets.map((item) => item.image_url).filter(Boolean),
+          ...attachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
+        ].filter((url, index, all) => url && all.indexOf(url) === index).slice(0, 4),
+        ai_content: clientContent,
       });
       const quote = quoteResponse.data;
 
@@ -354,8 +360,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
       setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, approvedNozzleCalculations, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null });
-      if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${productForOffer.name} | MLŽIDLA®`);
-      if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${productForOffer.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
+      if (!subject.trim()) setSubject(`Projektový návrh + cenová nabídka ${quoteNumber} | ${selected.firma || selected.company || productForOffer.name} | MLŽIDLA®`);
+      if (!message.trim()) setMessage(`Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení pro daný prostor včetně projektové vizualizace a cenové nabídky. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je vizuální koncept osazení, cenová rekapitulace a projektová prezentace. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { CheckCircle2, ExternalLink, Eye, FileText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
+import OfferAICopilot from '@/components/offers/OfferAICopilot';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 const errorMessage = (error) => error?.response?.data?.error || error?.message || 'Akci se nepodařilo dokončit.';
@@ -174,9 +175,37 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     setError('');
     try {
       const files = Array.from(event.target.files || []);
-      const uploaded = await Promise.all(files.map(async (file) => { const result = await base44.integrations.Core.UploadFile({ file }); return { file_name: file.name, file_url: result.file_url }; }));
+      const uploaded = await Promise.all(files.map(async (file) => {
+        const result = await base44.integrations.Core.UploadFile({ file });
+        const asset = { file_name: file.name, file_url: result.file_url, file_type: file.type || 'application/octet-stream', asset_type: file.type?.startsWith('image/') ? 'source_photo' : 'source_document' };
+        if (selected?.id) {
+          try {
+            return await base44.entities.OfferAsset.create({
+              inquiry_id: selected.id,
+              inquiry_type: selected.type,
+              ...asset,
+              title: file.type?.startsWith('image/') ? 'Fotografie / vizuální podklad' : 'Projektová příloha',
+              selected_for_offer: true,
+              generated_by_ai: false,
+            });
+          } catch (_) {}
+        }
+        return asset;
+      }));
       setAttachments((current) => [...current, ...uploaded]);
+      event.target.value = '';
     } catch (requestError) { setError(errorMessage(requestError)); }
+  };
+
+  const downloadPreparedPdf = () => {
+    if (!prepared?.quote?.pdf_base64) return;
+    const bytes = Uint8Array.from(atob(prepared.quote.pdf_base64), (character) => character.charCodeAt(0));
+    const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = prepared.quote.filename || `${prepared.quoteNumber}-nabidka.pdf`;
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   const prepareOffer = async () => {

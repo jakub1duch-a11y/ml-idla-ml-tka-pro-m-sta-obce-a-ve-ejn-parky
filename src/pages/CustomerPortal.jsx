@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const STATUS_MAP = {
@@ -20,6 +20,8 @@ const STATUS_MAP = {
 export default function CustomerPortal() {
   const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
+  const [accessMode, setAccessMode] = useState('quote');
+  const [quoteNumber, setQuoteNumber] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
@@ -53,7 +55,10 @@ export default function CustomerPortal() {
     setLoading(true);
     setError('');
     try {
-      await base44.functions.invoke('requestPortalOtp', { email });
+      const payload = accessMode === 'quote'
+        ? { quote_number: quoteNumber.trim().toUpperCase() }
+        : { email: email.trim().toLowerCase() };
+      await base44.functions.invoke('requestPortalOtp', payload);
       setOtpSent(true);
     } catch (e) {
       setError('Chyba při odesílání kódu. Zkuste to znovu.');
@@ -67,8 +72,12 @@ export default function CustomerPortal() {
     setLoading(true);
     setError('');
     try {
-      const res = await base44.functions.invoke('verifyPortalOtp', { email, otp });
-      const { inquiries, projects, session_token } = res.data;
+      const payload = accessMode === 'quote'
+        ? { quote_number: quoteNumber.trim().toUpperCase(), otp }
+        : { email: email.trim().toLowerCase(), otp };
+      const res = await base44.functions.invoke('verifyPortalOtp', payload);
+      const { inquiries, projects, session_token, email: verifiedEmail } = res.data;
+      setEmail(verifiedEmail || email);
       setInquiries(inquiries || []);
       const projectList = projects || [];
       setProjects(requestedQuote ? [...projectList].sort((a, b) => (b.quote_number === requestedQuote ? 1 : 0) - (a.quote_number === requestedQuote ? 1 : 0)) : projectList);
@@ -137,12 +146,18 @@ export default function CustomerPortal() {
       <div className="min-h-screen bg-white pt-28 flex items-center justify-center px-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Ověření přístupu</p>
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
+            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Klientský portál MLŽIDLA®</p>
             <h1 className="text-3xl font-light text-slate-900">Můj projekt</h1>
-            <p className="text-slate-500 text-sm mt-2">{otpSent ? 'Zadejte ověřovací kód z emailu' : 'Zadejte email pro přístup k vašim poptávkám a projektům'}</p>
+            <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">{otpSent ? 'Zadejte 6místný kód, který jsme poslali na e-mail přiřazený k projektu.' : 'Otevřete cenovou nabídku, vizualizace, dokumenty a další kroky projektu.'}</p>
           </div>
 
-          <form onSubmit={otpSent ? verifyOtp : requestOtp} className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-4">
+          {!otpSent && <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-100 p-1">
+            <button type="button" onClick={() => { setAccessMode('quote'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${accessMode === 'quote' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><Hash size={14}/> Číslo nabídky</button>
+            <button type="button" onClick={() => { setAccessMode('email'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${accessMode === 'email' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><Mail size={14}/> E-mail</button>
+          </div>}
+
+          <form onSubmit={otpSent ? verifyOtp : requestOtp} className="rounded-3xl border border-slate-200 bg-slate-50 p-7 shadow-sm sm:p-8 space-y-4">
             {error && (
               <div className="flex gap-3 p-4 rounded-xl bg-red-50 border border-red-200">
                 <AlertCircle size={18} className="text-red-500 flex-shrink-0 mt-0.5" />
@@ -151,15 +166,29 @@ export default function CustomerPortal() {
             )}
 
             {!otpSent ? (
-              <div>
-                <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Email *</label>
+              accessMode === 'quote' ? <div>
+                <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Číslo cenové nabídky *</label>
+                <div className="relative">
+                  <Hash size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                  <input
+                    type="text"
+                    required
+                    value={quoteNumber}
+                    onChange={e => setQuoteNumber(e.target.value.toUpperCase())}
+                    placeholder="např. MLZ-2026-123456"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-11 pr-4 font-mono text-sm uppercase tracking-wide text-slate-900 placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"
+                  />
+                </div>
+                <p className="mt-2 text-[11px] leading-5 text-slate-400">Číslo najdete v předmětu e-mailu a na PDF cenové nabídce. Ověřovací kód pošleme na e-mail evidovaný u této nabídky.</p>
+              </div> : <div>
+                <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">E-mail *</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="vas@email.cz"
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none"
+                  className="w-full px-4 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-[#0e7584] focus:outline-none"
                 />
               </div>
             ) : (
@@ -174,8 +203,8 @@ export default function CustomerPortal() {
                   maxLength={6}
                   className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none text-center text-2xl tracking-[0.5em] font-mono"
                 />
-                <button type="button" onClick={() => { setOtpSent(false); setError(''); }} className="mt-3 text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1 mx-auto">
-                  <X size={12} /> Změnit email
+                <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(''); }} className="mt-3 text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1 mx-auto">
+                  <X size={12} /> {accessMode === 'quote' ? 'Zadat jiné číslo nabídky' : 'Změnit e-mail'}
                 </button>
               </div>
             )}
@@ -185,13 +214,12 @@ export default function CustomerPortal() {
               disabled={loading}
               className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:opacity-50"
             >
-              {loading ? <><Loader size={16} className="animate-spin" /> {otpSent ? 'Ověřuji...' : 'Odesílám kód...'}</> : otpSent ? 'Ověřit' : 'Poslat kód'}
+              {loading ? <><Loader size={16} className="animate-spin" /> {otpSent ? 'Ověřuji...' : 'Odesílám kód...'}</> : otpSent ? 'Otevřít můj projekt' : accessMode === 'quote' ? 'Pokračovat k projektu' : 'Poslat ověřovací kód'}
             </button>
           </form>
 
-          <p className="text-xs text-slate-400 text-center mt-4">
-            Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a>
-          </p>
+          <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400"><ShieldCheck size={13}/> Přístup je chráněný jednorázovým kódem s platností 10 minut.</div>
+          <p className="text-xs text-slate-400 text-center mt-3">Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a></p>
         </div>
       </div>
     );

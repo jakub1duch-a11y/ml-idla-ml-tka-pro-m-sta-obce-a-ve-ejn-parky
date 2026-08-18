@@ -263,23 +263,26 @@ export default async function(req) {
     doc.setTextColor(...muted); doc.setFontSize(8); doc.text(doc.splitTextToSize('Od jednoduchého vzdáleného otevření vody po plně automatický systém SUPLA s časovými scénáři, teplotou, monitoringem spotřeby a správou v mobilní aplikaci.', 112), M, y + 20);
     await addRemoteImage(doc, smartVisualUrl, 137, 49, 59, 48);
 
-    y = 108;
+    y = 106;
     const smartCards = [
-      { title: 'PEVEKO Wi‑Fi ventil', price: smartPricing.component_wifi_valve_ex_vat, tag: 'CHYTRÝ VENTIL', text: 'SMART SUPLA Wi‑Fi servomotorický kulový ventil DN25. Vzdálené otevření a uzavření vodní větve přes internet / aplikaci.' },
-      { title: 'SUPLA + monitoring', price: smartPricing.complete_supla_ex_vat, tag: audienceVariant === 'city_public' ? 'DOPORUČENO PRO PROJEKT' : 'KOMPLETNÍ ŘÍZENÍ', text: 'Kompletní projektový celek: ventil, rozvaděč, Wi‑Fi řízení, konfigurace SUPLA, měření spotřeby, programování a uvedení do provozu.' },
-      { title: 'Měření vody', price: (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0), tag: 'SPOTŘEBA A DATA', text: 'Elektronický vodoměr ENBRA + SUPLA LIW‑01. Přehled spotřeby vody v čase, podklad pro správu provozu a vyhodnocování sezóny.' },
+      { title: 'PEVEKO Wi‑Fi ventil', price: smartPricing.component_wifi_valve_ex_vat, tag: '01 · OVLÁDÁNÍ VODY', text: 'SMART SUPLA Wi‑Fi servomotorický ventil DN25. Vzdálené otevření a uzavření vodní větve.' },
+      { title: 'Měření vody', price: (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0), tag: '02 · SPOTŘEBA A DATA', text: 'ENBRA vodoměr + SUPLA LIW‑01. Historie spotřeby, provozní přehled a vyhodnocení sezóny.' },
+      { title: 'Teplota + vlhkost', price: smartPricing.component_thw01_ex_vat, tag: '03 · KLIMATICKÁ LOGIKA', text: 'SUPLA THW‑01 jako vstup pro automatické spouštění, blokaci a provozní scénáře podle podmínek.' },
+      { title: 'Kompletní SUPLA', price: smartPricing.complete_supla_ex_vat, tag: audienceVariant === 'city_public' ? '04 · DOPORUČENO' : '04 · KOMPLETNÍ ŘÍZENÍ', text: 'Ventil, rozvaděč, Wi‑Fi, SUPLA, měření spotřeby, konfigurace, programování a uvedení do provozu.' },
     ];
     smartCards.forEach((card, i) => {
-      const x = M + i * 61;
-      doc.setFillColor(i === 1 ? 239 : 248, i === 1 ? 249 : 250, i === 1 ? 250 : 250); doc.setDrawColor(221, 231, 233); doc.roundedRect(x, y, 57, 72, 2, 2, 'FD');
-      doc.setTextColor(...accent); doc.setFontSize(5.5); doc.text(card.tag, x + 5, y + 8);
-      doc.setTextColor(...navy); doc.setFontSize(9.2); doc.text(doc.splitTextToSize(card.title, 47), x + 5, y + 17);
-      doc.setTextColor(...petrol); doc.setFontSize(10.5); doc.text(card.price ? `${formatPrice(card.price)} Kč` : 'cena dle projektu', x + 5, y + 33);
-      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(card.price ? 'bez DPH' : '', x + 5, y + 38);
-      doc.setTextColor(...ink); doc.setFontSize(6.2); doc.text(doc.splitTextToSize(card.text, 47), x + 5, y + 47);
+      const x = M + (i % 2) * 94;
+      const cardY = y + Math.floor(i / 2) * 52;
+      const featured = i === 3;
+      doc.setFillColor(featured ? 238 : 248, featured ? 248 : 250, featured ? 249 : 250); doc.setDrawColor(221, 231, 233); doc.roundedRect(x, cardY, 88, 47, 2, 2, 'FD');
+      doc.setTextColor(...accent); doc.setFontSize(5.3); doc.text(card.tag, x + 5, cardY + 7);
+      doc.setTextColor(...navy); doc.setFontSize(9); doc.text(card.title, x + 5, cardY + 15);
+      doc.setTextColor(...petrol); doc.setFontSize(10.5); doc.text(card.price ? `${formatPrice(card.price)} Kč` : 'cena dle projektu', x + 5, cardY + 25);
+      doc.setTextColor(...muted); doc.setFontSize(5.7); doc.text(card.price ? 'bez DPH' : '', x + 5, cardY + 30);
+      doc.setTextColor(...ink); doc.setFontSize(5.9); doc.text(doc.splitTextToSize(card.text, 78), x + 5, cardY + 36);
     });
 
-    y = 190;
+    y = 214;
     doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 43, 2, 2, 'F');
     doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('CO UMÍ APLIKACE SUPLA', M + 7, y + 8);
     doc.setTextColor(255, 255, 255); doc.setFontSize(7.2);

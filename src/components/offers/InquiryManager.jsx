@@ -244,7 +244,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti a finální rozsah realizace.',
         presentation_title: `${productForOffer.name} — návrh řešení`,
       };
-      try {
+      if (!clientContentOverride) try {
         const aiContent = await base44.integrations.Core.InvokeLLM({
           prompt: `Připrav čistě klientský obsah obchodní nabídky MLŽIDLA.cz. Z následující poptávky vytěž pouze potvrzený účel projektu, potřeby klienta a přínosy navrženého produktu. Nezobrazuj interní komunikaci, instrukce obchodníkovi, ID, historii e-mailů ani interní nejistoty. Nevymýšlej technické parametry ani ceny. Piš česky, profesionálně a stručně. U produktu BENDY respektuj minimalistický čistý nerezový tvar bez výhonků, hadic a přídavných ramen.\n\nKlient: ${selected.name}\nOrganizace: ${selected.firma || selected.company || ''}\nPoptávka: ${selected.message || ''}\nProdukt: ${productForOffer.name}\nTyp projektu: ${AUDIENCES.find((item) => item.value === audienceForOffer)?.label || audienceForOffer}`,
           response_json_schema: {

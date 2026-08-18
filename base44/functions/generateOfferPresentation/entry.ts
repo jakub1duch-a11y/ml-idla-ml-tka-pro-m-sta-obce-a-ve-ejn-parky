@@ -186,15 +186,18 @@ export default async function(req) {
 
     // 5 — Smart control
     requests.push(background(s[4], DEEP), ...accentBar('a5', s[4], 0, 0, 720, 8));
-    requests.push(...shapeText('t5a', s[4], 'Smart řízení MLŽIDLA.cz', 48, 46, 500, 42, 27, WHITE, true));
-    requests.push(...shapeText('t5b', s[4], 'Voda jen tehdy, když je potřeba.', 48, 104, 520, 50, 21, ACCENT, true));
+    requests.push(...shapeText('t5a', s[4], 'SUPLA — řídicí platforma mlžítek', 48, 46, 560, 42, 27, WHITE, true));
+    requests.push(...shapeText('t5b', s[4], 'Automatizace, vzdálená správa a přehled o vodě.', 48, 104, 590, 50, 20, ACCENT, true));
+    const waterManagementPrice = (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0);
     const smartPriceText = [
-      smartPricing.component_wifi_valve_ex_vat > 0 && `PEVEKO SMART SUPLA Wi‑Fi ventil: ${fmt(smartPricing.component_wifi_valve_ex_vat)} Kč bez DPH`,
-      smartPricing.complete_supla_ex_vat > 0 && `Kompletní SUPLA řízení + monitoring + uvedení do provozu: ${fmt(smartPricing.complete_supla_ex_vat)} Kč bez DPH`,
-      ((smartPricing.component_thw01_ex_vat || 0) + (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0)) > 0 && `Rozšíření senzory + měření spotřeby: ${fmt((smartPricing.component_thw01_ex_vat || 0) + (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0))} Kč bez DPH`,
+      smartPricing.component_wifi_valve_ex_vat > 0 && `PEVEKO SMART SUPLA Wi‑Fi ventil · ${fmt(smartPricing.component_wifi_valve_ex_vat)} Kč bez DPH`,
+      smartPricing.component_row02_ex_vat > 0 && `SUPLA ROW‑02 · Wi‑Fi spínací modul · ${fmt(smartPricing.component_row02_ex_vat)} Kč bez DPH`,
+      waterManagementPrice > 0 && `Měření a správa spotřeby vody · ENBRA + LIW‑01 · ${fmt(waterManagementPrice)} Kč bez DPH`,
+      smartPricing.component_thw01_ex_vat > 0 && `Teplota + vlhkost · THW‑01 · ${fmt(smartPricing.component_thw01_ex_vat)} Kč bez DPH`,
+      smartPricing.complete_supla_ex_vat > 0 && `Kompletní projektové SUPLA řízení · ${fmt(smartPricing.complete_supla_ex_vat)} Kč bez DPH`,
     ].filter(Boolean).join('\n');
-    requests.push(...shapeText('t5c', s[4], `Wi‑Fi / aplikace SUPLA · časové harmonogramy · vzdálené ovládání · automatika podle podmínek · monitoring spotřeby\n\n${smartPriceText || 'Cena Smart varianty se doplní z aktuálního projektového ceníku.'}`, 48, 170, 610, 155, 15, WHITE, false));
-    requests.push(...shapeText('t5d', s[4], audienceVariant === 'city_public' ? 'Pro tento typ projektu doporučujeme kompletní SUPLA řízení s monitoringem.' : 'Smart řízení lze přidat jako volitelnou vrstvu podle požadovaného komfortu obsluhy.', 48, 338, 610, 35, 12, ACCENT, true));
+    requests.push(...shapeText('t5c', s[4], `V aplikaci lze nastavit libovolné časové harmonogramy, délku a cykly mlžení, ruční režim, centrální blokaci, více zón a automatické scénáře podle teploty nebo vlhkosti. Podle projektu lze doplnit logiku využívající externí API počasí — například nespouštět při dešti nebo nevhodných podmínkách.\n\n${smartPriceText || 'Cena Smart varianty se doplní z aktuálního projektového ceníku.'}`, 48, 158, 610, 175, 14, WHITE, false));
+    requests.push(...shapeText('t5d', s[4], audienceVariant === 'city_public' ? 'Doporučení: kompletní SUPLA řízení + monitoring spotřeby vody + klimatické čidlo.' : 'Smart řízení lze sestavit modulárně podle požadovaného komfortu a provozní logiky.', 48, 342, 610, 34, 12, ACCENT, true));
 
     // 6 — proof / references
     requests.push(background(s[5], WHITE), ...accentBar('a6', s[5], 0, 0, 720, 8));

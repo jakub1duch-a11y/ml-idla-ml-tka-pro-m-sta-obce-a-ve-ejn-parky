@@ -219,6 +219,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     const clientContentOverride = options.clientContent || null;
     const projectOrderOverride = options.projectOrder || null;
     const priceIsEstimate = Boolean(options.priceIsEstimate);
+    const variantPricing = Array.isArray(options.variantPricing) ? options.variantPricing : [];
     if (!selected || !productForOffer) { setError('Nejdříve vyberte produkt pro nabídku.'); return; }
     if (options.product) setProductId(productForOffer.id);
     if (options.basePrice !== undefined) setBasePrice(basePriceForOffer);
@@ -265,7 +266,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         product: productForOffer,
         document_type: 'offer',
         inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
-        quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate },
+        quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate, variants: variantPricing },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),
         portal_url: 'https://mlzidla.cz/muj-projekt',
@@ -286,7 +287,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         const presentationResponse = await base44.functions.invoke('generateOfferPresentation', {
           inquiry: { id: selected.id, name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
           product: productForOffer,
-          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), price_is_estimate: priceIsEstimate },
+          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), price_is_estimate: priceIsEstimate, variants: variantPricing },
           ar_url: arUrl,
           ar_capture_url: visualizationUrl,
           ai_content: clientContent,
@@ -410,7 +411,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           solution_summary: `${result.ai_content.solution_summary || ''}${autoVariants.length > 1 ? `\n\nCenové varianty: ${autoVariants.map((variant) => `${variant.label}: ${Number(variant.price || 0).toLocaleString('cs-CZ')} Kč bez DPH`).join(' · ')}` : ''}`,
         } : null,
         projectOrder: result.project_order || null,
-        priceIsEstimate: false,
+        priceIsEstimate: autoVariants.some((variant) => !(Number(variant.price || 0) > 0)),
         variantPricing: autoVariants,
         auto: true,
       });

@@ -13,11 +13,22 @@ Deno.serve(async (req) => {
 
     const body = await req.json().catch(() => ({}));
     const inquiryId = body?.inquiry_id || body?.event?.entity_id || body?.data?.id;
+    const inquiryType = body?.inquiry_type === 'contact' ? 'contact' : 'poptavka';
     const force = Boolean(body?.force);
     if (!inquiryId) return Response.json({ error: 'Missing inquiry id' }, { status: 400 });
 
-    const inquiry = await base44.asServiceRole.entities.Poptavka.get(inquiryId);
-    if (!inquiry) return Response.json({ error: 'Inquiry not found' }, { status: 404 });
+    const sourceRecord = inquiryType === 'contact'
+      ? await base44.asServiceRole.entities.ContactInquiry.get(inquiryId)
+      : await base44.asServiceRole.entities.Poptavka.get(inquiryId);
+    if (!sourceRecord) return Response.json({ error: 'Inquiry not found' }, { status: 404 });
+    const inquiry = inquiryType === 'contact' ? {
+      jmeno: sourceRecord.name,
+      email: sourceRecord.email,
+      telefon: sourceRecord.phone || '',
+      firma: sourceRecord.company || '',
+      produkt: sourceRecord.product_id || '',
+      zprava: sourceRecord.message || sourceRecord.description || '',
+    } : sourceRecord;
 
     const existingOrders = await base44.asServiceRole.entities.ProjectOrder.filter({ inquiry_id: inquiryId });
     if (!force && existingOrders?.length) {
@@ -120,7 +131,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
     let order = existingOrders?.[0] || null;
     const orderData = {
       inquiry_id: inquiryId,
-      inquiry_type: 'poptavka',
+      inquiry_type: inquiryType,
       project_name: projectTitle,
       client_name: inquiry.jmeno,
       client_email: inquiry.email,
@@ -152,7 +163,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
     if (visualizationUrl) {
       asset = await base44.asServiceRole.entities.OfferAsset.create({
         inquiry_id: inquiryId,
-        inquiry_type: 'poptavka',
+        inquiry_type: inquiryType,
         project_order_id: order.id,
         file_url: visualizationUrl,
         file_name: `${product.slug || 'mlzitko'}-${inquiryId.slice(-6)}-auto-koncept-${Date.now()}.webp`,
@@ -166,7 +177,8 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
     }
 
     try {
-      await base44.asServiceRole.entities.Poptavka.update(inquiryId, { status: 'v_reseni' });
+      if (inquiryType === 'contact') await base44.asServiceRole.entities.ContactInquiry.update(inquiryId, { status: 'in_progress' });
+      else await base44.asServiceRole.entities.Poptavka.update(inquiryId, { status: 'v_reseni' });
     } catch (_) {}
 
     return Response.json({

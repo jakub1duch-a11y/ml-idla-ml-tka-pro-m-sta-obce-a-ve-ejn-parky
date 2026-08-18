@@ -111,7 +111,7 @@ export default async function(req) {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom' } = body;
+    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom', smart_scenarios: smartScenarios = [] } = body;
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
     const smartPricing = await findSmartControlPricing(base44);
@@ -196,7 +196,12 @@ export default async function(req) {
       smartPricing.component_thw01_ex_vat > 0 && `Teplota + vlhkost · THW‑01 · ${fmt(smartPricing.component_thw01_ex_vat)} Kč bez DPH`,
       smartPricing.complete_supla_ex_vat > 0 && `Kompletní projektové SUPLA řízení · ${fmt(smartPricing.complete_supla_ex_vat)} Kč bez DPH`,
     ].filter(Boolean).join('\n');
-    requests.push(...shapeText('t5c', s[4], `V aplikaci lze nastavit libovolné časové harmonogramy, délku a cykly mlžení, ruční režim, centrální blokaci, více zón a automatické scénáře podle teploty nebo vlhkosti. Podle projektu lze doplnit logiku využívající externí API počasí — například nespouštět při dešti nebo nevhodných podmínkách.\n\n${smartPriceText || 'Cena Smart varianty se doplní z aktuálního projektového ceníku.'}`, 48, 158, 610, 175, 14, WHITE, false));
+    const scenarioText = (Array.isArray(smartScenarios) && smartScenarios.length ? smartScenarios : [
+      { label: 'Scénář A · Teplotní automatika', value: '> 25 °C' },
+      { label: 'Scénář B · Časový plán', value: 'intervaly a cykly dle provozu' },
+      { label: 'Scénář C · Interaktivní sepnutí', value: 'bezkontaktní aktivace na nastavenou dobu' },
+    ]).slice(0, 6).map((item) => `• ${item.label}: ${item.value || item.description || ''}`).join('\n');
+    requests.push(...shapeText('t5c', s[4], `Doporučené provozní scénáře pro projekt:\n${scenarioText}\n\n${smartPriceText || 'Cena Smart varianty se doplní z aktuálního projektového ceníku.'}`, 48, 150, 610, 185, 13, WHITE, false));
     requests.push(...shapeText('t5d', s[4], audienceVariant === 'city_public' ? 'Doporučení: kompletní SUPLA řízení + monitoring spotřeby vody + klimatické čidlo.' : 'Smart řízení lze sestavit modulárně podle požadovaného komfortu a provozní logiky.', 48, 342, 610, 34, 12, ACCENT, true));
 
     // 6 — proof / references

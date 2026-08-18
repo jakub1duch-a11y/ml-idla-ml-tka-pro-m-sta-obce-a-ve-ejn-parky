@@ -168,15 +168,47 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
     }
 
-    const isBendy = /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
-    const allProductRefs = [product.image_url, ...(product.gallery_urls || [])]
-      .filter(Boolean)
-      .filter((url, index, all) => all.indexOf(url) === index);
-    const realProductRefs = allProductRefs.filter((url) => !/generated[_-]?image|copilot|gemini/i.test(String(url)));
-    const refs = (realProductRefs.length ? realProductRefs : allProductRefs).slice(0, 4);
+    const isBendy = !customMode && /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
     const linkedAssets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId }).catch(() => []);
     const sourcePhoto = (linkedAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)
       || (linkedAssets || []).find((item) => String(item.file_type || '').startsWith('image/') && item.asset_type !== 'generated_visualization' && item.file_url);
+
+    let customMasterUrl = '';
+    let customMasterAsset: any = null;
+    if (customMode) {
+      try {
+        const customMaster = await base44.asServiceRole.integrations.Core.GenerateImage({
+          prompt: `MASTER PRODUCT CONCEPT pro MLŽIDLA.cz. Vytvoř čistý, fotorealistický studiový produktový render jednoho kusu zakázkového mlžítka na světlém neutrálním pozadí. Žádní lidé, žádné město, zahrada ani dekorace. Návrh musí být reálně vyrobitelný z běžné nerezové trubky/profilu a odpovídat této výrobní specifikaci:\n\nNázev: ${clean(customSpec?.name)}\nDesign: ${short(customSpec?.design_description, 1200)}\nProfil: ${clean(customSpec?.primary_profile)}\nRozměry: ${clean(customSpec?.dimensions_summary)}\nOhýbání: ${clean(customSpec?.bend_strategy)}\nSvařování: ${clean(customSpec?.weld_strategy)}\nTrysky: ${clean(customSpec?.nozzle_strategy)}\nPřívod vody: ${clean(customSpec?.water_connection_strategy)}\n\nVÝROBNÍ PRAVIDLA: co nejméně dílů, ideálně jeden souvislý profil; ohyby pokud možno v jedné rovině; plynulé rádiusy; žádné nereálné ostré zlomy; minimum svarů; žádná dekorativní ramena bez funkce; trysky jako malé kovové komponenty přímo v konstrukci; připojení skryté a servisovatelné. Profesionální minimalistická linie, saténový nerez, přesné proporce. Tento obrázek bude MASTER reference pro další vizualizace, proto je důležitější výrobní přesnost než efektní stylizace.`,
+        });
+        customMasterUrl = customMaster?.url || '';
+        if (customMasterUrl) {
+          product.image_url = customMasterUrl;
+          product.gallery_urls = [customMasterUrl];
+          try {
+            customMasterAsset = await base44.asServiceRole.entities.OfferAsset.create({
+              inquiry_id: inquiryId,
+              inquiry_type: inquiryType,
+              file_url: customMasterUrl,
+              file_name: `${product.slug}-master-${Date.now()}.webp`,
+              file_type: 'image/webp',
+              asset_type: 'product_reference',
+              title: `MASTER koncept — ${product.name}`,
+              description: 'AI MASTER reference zakázkového výrobku vytvořená podle výrobní specifikace; před výrobou vyžaduje technické schválení.',
+              selected_for_offer: true,
+              generated_by_ai: true,
+            });
+          } catch (_) {}
+        }
+      } catch (masterError) {
+        console.warn('Custom MASTER generation failed', masterError);
+      }
+    }
+
+    const allProductRefs = [product.image_url, ...(product.gallery_urls || [])]
+      .filter(Boolean)
+      .filter((url, index, all) => all.indexOf(url) === index);
+    const realProductRefs = customMode ? allProductRefs : allProductRefs.filter((url) => !/generated[_-]?image|copilot|gemini/i.test(String(url)));
+    const refs = (realProductRefs.length ? realProductRefs : allProductRefs).slice(0, 4);
     const imageReferences = sourcePhoto?.file_url ? [sourcePhoto.file_url, ...refs].slice(0, 5) : refs;
     const sceneMode = sourcePhoto?.file_url
       ? `SCENE LOCK: PRVNÍ referenční obrázek je skutečná fotografie prostoru klienta. Zachovej jeho kompozici, perspektivu, architekturu, cesty, lavičky, zeleň, mobiliář, světlo a všechny existující prvky. Scénu nepřestavuj; pouze realisticky osaď vybraný produkt do vhodného místa.`

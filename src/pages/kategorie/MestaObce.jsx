@@ -6,14 +6,16 @@ import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import { trackFunnelStep } from '@/lib/ga4';
 
 const BENEFITS = [
-'Ochlazení okolního vzduchu až o 9 °C',
-'Bez chemie — bezpečné pro zdraví i životní prostředí',
-'Smart řízení dle teploty a pohybu',
-'Dotačně podporovatelné jako zelená infrastruktura',
-'Zakázková výroba dle identity místa',
-'Záruka 5 let, servis po celé ČR a SR'];
+'Pocitové ochlazení v horkých dnech typicky v řádu několika stupňů podle podmínek',
+'Jemná vodní mlha bez chemických přísad',
+'Smart řízení podle teploty, času a provozního režimu',
+'Nerezové provedení navržené pro dlouhodobý venkovní provoz',
+'Zakázková výroba a konfigurace podle identity místa',
+'Projektová podpora, instalace a servis pro veřejný prostor'];
 
 
 const USE_CASES = [
@@ -29,8 +31,14 @@ export default function MestaObce() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.mestOobce);
+    trackFunnelStep('cities', 'landing_view', 'Města a obce');
+    const preferredSlugs = ['city-cooling-zone', 'bendy-alej', 'aura-city-duo', 'mlzna-brana-gate', 'linea-avenue', 'ostrev-city-m'];
     base44.entities.Product.list().catch(() => []).then((p) => {
-      setProducts((p || []).slice(0, 6));
+      const all = p || [];
+      const selected = preferredSlugs
+        .map((slug) => all.find((product) => product.slug === slug))
+        .filter(Boolean);
+      setProducts(selected.length ? selected : all.filter((product) => product.featured).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -54,11 +62,11 @@ export default function MestaObce() {
               Ochlazení pro města,<br /><span style={{ fontStyle: 'italic' }}>která pečují o veřejný prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Mlžítka ochlazují vzduch na náměstích, promenádách, v parcích, pěších zónách i u vstupů veřejné správy až o 9 °C. Vytvářejí příjemnější místa pro setkávání, pracují bez chemie a s nízkou spotřebou vody.
+              Mlžítka a mlžné zóny zvyšují tepelný komfort na náměstích, promenádách, v parcích, pěších zónách i u veřejných budov. Řešení kombinujeme s úsporným Smart řízením podle teploty, času a skutečného provozu.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Probrat záměr <ArrowRight size={15} />
+              <a href="#poptavka" onClick={() => trackFunnelStep('cities', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+                Navrhnout řešení pro město <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)

@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { findPricingForProduct, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
 
 const AUDIENCES = ['city_public', 'residential', 'wellness_hospitality', 'architecture_design', 'custom'];
 
@@ -99,11 +100,19 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
     }
     if (!product) product = products[0];
 
+    // Ceník na MLŽNÉM DISKU je primární zdroj ceny. Katalog je jen bezpečný fallback.
+    const pricing = await findPricingForProduct(base44, product, inquiry.zprava || '');
+    const sheetUnitPrice = pricing.matched ? Number(pricing.offer_price_ex_vat || 0) : 0;
+    const catalogFallbackPrice = validatedCatalogFallback(product);
+    const unitPrice = sheetUnitPrice || catalogFallbackPrice;
+    const pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
+
     const isBendy = /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
-    const refs = [product.image_url, ...(product.gallery_urls || [])]
+    const allProductRefs = [product.image_url, ...(product.gallery_urls || [])]
       .filter(Boolean)
-      .filter((url, index, all) => all.indexOf(url) === index)
-      .slice(0, 4);
+      .filter((url, index, all) => all.indexOf(url) === index);
+    const realProductRefs = allProductRefs.filter((url) => !/generated[_-]?image|copilot|gemini/i.test(String(url)));
+    const refs = (realProductRefs.length ? realProductRefs : allProductRefs).slice(0, 4);
     const linkedAssets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId }).catch(() => []);
     const sourcePhoto = (linkedAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)
       || (linkedAssets || []).find((item) => String(item.file_type || '').startsWith('image/') && item.asset_type !== 'generated_visualization' && item.file_url);

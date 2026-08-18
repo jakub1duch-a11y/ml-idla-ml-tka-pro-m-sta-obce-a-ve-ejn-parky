@@ -169,12 +169,17 @@ export default function MestaObce() {
             <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Automatický start/stop<br /><span style={{ fontStyle: 'italic' }}>dle teploty a vlhkosti.</span>
             </h2>
-            <p className="text-white/70 leading-relaxed font-light max-w-xl">Monitoring přes webový dashboard pro správce města. Bezúdržbový provoz, 100% česká výroba a dodávka do 8 týdnů. SMART WIFI / Mobilní aplikace
-
-            </p>
+            <p className="text-white/70 leading-relaxed font-light max-w-xl">Smart řízení umožňuje nastavit provoz podle teploty, času a potřeb konkrétní lokality. Správce tak může omezit zbytečný chod systému a mít provoz pod kontrolou přes dostupné ovládání a automatizaci.</p>
           </motion.div>
         </div>
       </section>
+
+      <SegmentReferenceShowcase
+        segment="cities"
+        eyebrow="Ověřené realizace"
+        title="Veřejný prostor od náměstí po ZOO Praha."
+        referenceIds={['6a71d1ff57598752eed27bfb', '6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f']}
+      />
 
       {/* Produkty */}
       <section className="bg-slate-50 border-y border-slate-200 py-20">
@@ -216,7 +221,7 @@ export default function MestaObce() {
         <div className="p-10 rounded-2xl border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10 bg-slate-50">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro vaši obec.</h3>
-            <p className="text-slate-500 mb-6 text-sm">Konzultace zdarma · 3D vizualizace do 48 h · Pomoc s dotační žádostí</p>
+            <p className="text-slate-500 mb-6 text-sm">Pošlete lokalitu a stručný záměr. Připravíme první doporučení vhodného typu řešení, konfigurace a dalšího technického postupu.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>

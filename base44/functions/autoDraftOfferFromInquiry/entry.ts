@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
     }));
 
     const analysis = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]). Pokud text uvádí rozsah typu „1 nebo 3 kusy“, „1–3 kusy“, „jeden kus a tři kusy“, MUSÍ vzniknout samostatná cenová varianta pro každý uvedený počet. Pokud klient chce více různých produktů, každou produktovou alternativu uveď jako samostatnou variantu; nevymýšlej produkt, který není v katalogu. visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
 
 POPTÁVKA:
 Jméno: ${clean(inquiry.jmeno)}
@@ -84,6 +84,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
           confidence_note: { type: 'string' },
           requested_quantity: { type: 'integer' },
           requested_variants: { type: 'array', items: { type: 'string' } },
+          requested_quantities: { type: 'array', items: { type: 'integer' } },
           visualization_scenes: { type: 'array', items: { type: 'string' } },
         },
         required: ['product_id', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity'], 
@@ -116,14 +117,30 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
 
     const requestedQuantity = Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
     const requestedVariants = Array.isArray(analysis?.requested_variants) ? analysis.requested_variants.map(clean).filter(Boolean).slice(0, 4) : [];
+    const requestedQuantities = Array.isArray(analysis?.requested_quantities)
+      ? analysis.requested_quantities.map((value) => Math.max(1, Math.min(100, Number(value || 1)))).filter((value, index, all) => all.indexOf(value) === index).slice(0, 4)
+      : [];
     const visualizationScenes = Array.isArray(analysis?.visualization_scenes) && analysis.visualization_scenes.length
       ? analysis.visualization_scenes.map(clean).filter(Boolean).slice(0, 4)
       : [clean(analysis?.visual_scene)].filter(Boolean);
-    const variantLabels = requestedVariants.length ? requestedVariants : [`${requestedQuantity} ks ${product.name}`];
-    const variantSpecs = variantLabels.map((label) => {
+    // Pokud klient uvede více počtů (např. „nacenit 1 ks a 3 ks“), každý počet je samostatná cenová i vizuální varianta.
+    // Pokud LLM vrátí jen textové varianty, množství vytěžíme i z jejich názvů.
+    const quantityVariantsFromLabels = requestedVariants.map((label) => {
+      const match = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
+      return match ? Math.max(1, Math.min(100, Number(match[1]))) : null;
+    }).filter(Boolean) as number[];
+    const allRequestedQuantities = [...requestedQuantities, ...quantityVariantsFromLabels]
+      .filter((value, index, all) => all.indexOf(value) === index);
+    const variantLabels = requestedVariants.length
+      ? requestedVariants
+      : allRequestedQuantities.length > 1
+        ? allRequestedQuantities.map((quantity) => `${quantity} ks ${product.name}`)
+        : [`${requestedQuantity} ks ${product.name}`];
+    const variantSpecs = variantLabels.map((label, index) => {
       const quantityMatch = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
-      const quantity = quantityMatch ? Math.max(1, Number(quantityMatch[1])) : requestedQuantity;
-      return { label, quantity };
+      const quantity = quantityMatch ? Math.max(1, Number(quantityMatch[1])) : (allRequestedQuantities[index] || requestedQuantity);
+      const unitPrice = Number(product.price_from || 0);
+      return { label, quantity, unit_price: unitPrice, price: unitPrice > 0 ? unitPrice * quantity : 0 };
     });
 
     const generatedVisualizations: any[] = [];
@@ -137,7 +154,7 @@ ${sceneMode}
 
 Projekt klienta: ${short(inquiry.zprava, 2200)}
 Navržené prostředí: ${short(visualizationScenes[variantIndex] || visualizationScenes[0] || analysis?.visual_scene, 1200)}
-Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ. Fotografie musí vizuálně odpovídat konkrétnímu účelu a prostředí popsanému klientem (zahrada, park, náměstí, školka, sportoviště, terasa apod.) a počtu kusů dané varianty.
+Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ.
 Vybraný produkt: ${product.name}.
 ${productLock}
 

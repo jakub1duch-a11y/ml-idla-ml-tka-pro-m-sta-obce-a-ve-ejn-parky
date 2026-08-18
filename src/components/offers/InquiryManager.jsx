@@ -286,7 +286,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       let notebookSourceUrl = '';
       try {
         const sourcePackResponse = await base44.functions.invoke('generateOfferSourcePack', {
-          inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: selected.message },
+          inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
           product: selectedProduct,
           quote: { quote_number: quoteNumber, final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount), issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
           presentation_url: presentation?.presentation_url || '', quote_pdf_url: quoteDriveUrl, ar_url: arUrl, audience_variant: audienceVariant,
@@ -322,7 +322,16 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         projectOrder = { ...projectOrder, inquiry_pdf_url: inquiryArchive?.inquiry_pdf_url || '', drive_case_folder_id: inquiryArchive?.drive_case_folder_id || projectOrder.drive_case_folder_id, drive_case_folder_url: inquiryArchive?.drive_case_folder_url || projectOrder.drive_case_folder_url };
       } catch (archiveError) { console.warn('Inquiry PDF archive unavailable', archiveError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl });
+      try {
+        const generatedAssets = [
+          quoteDriveUrl && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: quoteDriveUrl, file_name: quote?.filename || `${quoteNumber}-nabidka.pdf`, file_type: 'application/pdf', asset_type: 'quote_pdf', title: 'Cenová nabídka PDF', selected_for_offer: true, generated_by_ai: false },
+          presentation?.presentation_url && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: presentation.presentation_url, file_name: `${quoteNumber}-prezentace`, file_type: 'application/vnd.google-apps.presentation', asset_type: 'presentation', title: 'Projektová prezentace', selected_for_offer: true, generated_by_ai: true },
+          presentation?.presentation_pdf_url && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: presentation.presentation_pdf_url, file_name: presentation.presentation_filename || `${quoteNumber}-prezentace.pdf`, file_type: 'application/pdf', asset_type: 'presentation_pdf', title: 'Projektová prezentace PDF', selected_for_offer: true, generated_by_ai: true },
+        ].filter(Boolean);
+        if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
+      } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
+
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, clientContent });
       if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${selectedProduct.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${selectedProduct.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }

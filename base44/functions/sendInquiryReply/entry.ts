@@ -43,7 +43,7 @@ const buildMessage = ({ to, bcc, fromEmail, subject, text, html, attachments }) 
     `From: ${encodeHeader('MLŽIDLA.cz by HolmTec')} <${fromEmail}>`,
     `Reply-To: ${fromEmail}`,
     `To: ${to}`,
-    `Bcc: ${bcc.join(', ')}`,
+    ...(bcc.length ? [`Bcc: ${bcc.join(', ')}`] : []),
     `Subject: ${encodeHeader(subject)}`,
     'MIME-Version: 1.0',
     `Content-Type: multipart/mixed; boundary="${outer}"`,
@@ -96,7 +96,9 @@ export default async function(req) {
       discount_percent: discountPercent = 0,
       previous_total: previousTotal = 0,
       new_total: newTotal = 0,
-      attachments = []
+      attachments = [],
+      test_email: testEmail = '',
+      is_test: isTest = false
     } = await req.json();
 
     if (!inquiryType || !inquiryId || !subject || !draftMessage) return Response.json({ error: 'Missing reply details' }, { status: 400 });
@@ -107,6 +109,14 @@ export default async function(req) {
     try { inquiry = await base44.asServiceRole.entities[entityName].get(inquiryId); } catch (_) { return Response.json({ error: 'Inquiry recipient not found' }, { status: 404 }); }
     if (!inquiry?.email) return Response.json({ error: 'Inquiry recipient not found' }, { status: 404 });
 
+    const normalizedTestEmail = String(testEmail || '').trim().toLowerCase();
+    if (isTest && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedTestEmail)) {
+      return Response.json({ error: 'Invalid test email address' }, { status: 400 });
+    }
+    const recipientEmail = isTest ? normalizedTestEmail : inquiry.email;
+    const messageSubject = isTest ? `[TEST MLŽIDLA] ${subject}` : subject;
+    const bccRecipients = isTest ? [] : FIXED_BCC;
+
     const externalAttachments = await Promise.all(attachments.slice(0, 5).map(async (file) => {
       const response = await fetch(file.file_url);
       if (!response.ok) throw new Error(`Attachment unavailable: ${file.file_name}`);
@@ -116,7 +126,7 @@ export default async function(req) {
     const presentationAttachment = presentationPdfBase64 ? [{ filename: presentationFilename || 'prezentace-mlzidla.pdf', content: Uint8Array.from(atob(presentationPdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const allAttachments = [...quoteAttachment, ...presentationAttachment, ...externalAttachments];
     const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber, projectSummary, emailType, discountPercent, previousTotal, newTotal });
-    const raw = buildMessage({ to: inquiry.email, bcc: FIXED_BCC, fromEmail: senderEmail, subject, text: message, html, attachments: allAttachments });
+    const raw = buildMessage({ to: recipientEmail, bcc: bccRecipients, fromEmail: senderEmail, subject: messageSubject, text: message, html, attachments: allAttachments });
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
     const sendResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
@@ -129,8 +139,10 @@ export default async function(req) {
       return Response.json({ error: `Message delivery failed: ${detail}` }, { status: 502 });
     }
 
-    await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'contacted' : 'v_reseni' });
-    return Response.json({ ok: true, sender_email: senderEmail, bcc: FIXED_BCC });
+    if (!isTest) {
+      await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'contacted' : 'v_reseni' });
+    }
+    return Response.json({ ok: true, sender_email: senderEmail, recipient_email: recipientEmail, is_test: Boolean(isTest), bcc: bccRecipients });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

@@ -228,10 +228,11 @@ export default async function(req) {
     const basePrice = Number(quote.base_price || 0);
     const installation = Number(quote.installation || 0);
     const discountPercent = Number(quote.discount_percent || 0);
+    const priceIsEstimate = Boolean(quote.price_is_estimate);
     const beforeDiscount = basePrice + installation;
     const calculatedFinal = beforeDiscount * (1 - discountPercent / 100);
     const finalTotal = Number(quote.final_total ?? calculatedFinal ?? product.price_from ?? 0);
-    const rows = [['Produkt / sestava', basePrice || Number(product.price_from || 0)], ['Instalace / uvedení do provozu', installation]].filter(([, price]) => price > 0);
+    const rows = [[priceIsEstimate ? 'Produkt / sestava — orientační cena od' : 'Produkt / sestava', basePrice || Number(product.price_from || 0)], ['Instalace / uvedení do provozu', installation]].filter(([, price]) => price > 0);
     rows.forEach(([label, price], index) => {
       if (index % 2 === 0) { doc.setFillColor(248, 250, 250); doc.rect(M, y, CW, 9, 'F'); }
       doc.setTextColor(...ink); doc.setFontSize(8); doc.text(label, M + 5, y + 5.8); doc.text(`${formatPrice(price)} Kč`, W - M - 5, y + 5.8, { align: 'right' }); y += 9;
@@ -241,10 +242,12 @@ export default async function(req) {
       doc.text(`-${formatPrice(beforeDiscount - finalTotal)} Kč`, W - M - 5, y + 5.8, { align: 'right' }); y += 9;
     }
     doc.setFillColor(...accent); doc.rect(M, y, CW, 14, 'F');
-    doc.setTextColor(...navy); doc.setFontSize(10); doc.text('CELKEM BEZ DPH', M + 5, y + 9.2);
+    doc.setTextColor(...navy); doc.setFontSize(10); doc.text(priceIsEstimate ? 'ORIENTAČNÍ CENA OD · BEZ DPH' : 'CELKEM BEZ DPH', M + 5, y + 9.2);
     doc.setFontSize(12.5); doc.text(finalTotal ? `${formatPrice(finalTotal)} Kč` : 'Cena dle potvrzené konfigurace', W - M - 5, y + 9.2, { align: 'right' }); y += 17;
     if (finalTotal) { doc.setTextColor(...muted); doc.setFontSize(7); doc.text(`DPH 21 %: ${formatPrice(finalTotal * 0.21)} Kč · Celkem s DPH: ${formatPrice(finalTotal * 1.21)} Kč`, W - M, y + 2, { align: 'right' }); }
-    y += 9;
+    y += 7;
+    if (priceIsEstimate) { doc.setTextColor(...muted); doc.setFontSize(6.6); doc.text(doc.splitTextToSize('Orientační kalkulace vychází z aktuální katalogové ceny od. Finální cena bude potvrzena podle počtu prvků, rozsahu dodávky, instalace a technického řešení projektu.', CW), M, y); y += 12; }
+    y += 2;
 
     doc.setTextColor(...navy); doc.setFontSize(8.2); doc.text('DALŠÍ KROK', M, y);
     y += 4;

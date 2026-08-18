@@ -106,7 +106,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
 
     let visualizationUrl = '';
     try {
-      const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage({
+      const imageParams: any = {
         prompt: `Vytvoř profesionální fotorealistickou KONCEPTUÁLNÍ vizualizaci pro obchodní nabídku MLŽIDLA.cz. Nejde o přesný zákres do fotografie lokality, ale o věrohodnou ukázku navrženého řešení podle textové poptávky.
 
 Projekt klienta: ${short(inquiry.zprava, 2200)}
@@ -116,7 +116,8 @@ ${productLock}
 
 Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
         existing_image_urls: refs,
-      });
+      };
+      const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage(imageParams);
       visualizationUrl = imageResult?.url || '';
     } catch (visualError) {
       console.warn('Auto visualization failed', visualError);

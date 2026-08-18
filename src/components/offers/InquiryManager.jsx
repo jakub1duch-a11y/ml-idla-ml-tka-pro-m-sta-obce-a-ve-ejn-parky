@@ -220,11 +220,36 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         : selectedProduct.slug === 'mlzna-brana-gate'
           ? 'https://mlzidla.cz/ar/gate'
           : `https://mlzidla.cz/produkt/${selectedProduct.slug}`;
+      const visualizationUrl = attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
+
+      let clientContent = {
+        project_goal: `Návrh řešení ${selectedProduct.name} pro ${selected.firma || selected.company || selected.name}.`,
+        solution_summary: selectedProduct.short_description || 'Minimalistické nerezové mlžení navržené pro konkrétní prostor.',
+        benefits: [],
+        next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti a finální rozsah realizace.',
+        presentation_title: `${selectedProduct.name} — návrh řešení`,
+      };
+      try {
+        const aiContent = await base44.integrations.Core.InvokeLLM({
+          prompt: `Připrav čistě klientský obsah obchodní nabídky MLŽIDLA.cz. Z následující poptávky vytěž pouze potvrzený účel projektu, potřeby klienta a přínosy navrženého produktu. Nezobrazuj interní komunikaci, instrukce obchodníkovi, ID, historii e-mailů ani interní nejistoty. Nevymýšlej technické parametry ani ceny. Piš česky, profesionálně a stručně. U produktu BENDY respektuj minimalistický čistý nerezový tvar bez výhonků, hadic a přídavných ramen.\n\nKlient: ${selected.name}\nOrganizace: ${selected.firma || selected.company || ''}\nPoptávka: ${selected.message || ''}\nProdukt: ${selectedProduct.name}\nTyp projektu: ${AUDIENCES.find((item) => item.value === audienceVariant)?.label || audienceVariant}`,
+          response_json_schema: {
+            type: 'object',
+            properties: {
+              project_goal: { type: 'string' },
+              solution_summary: { type: 'string' },
+              benefits: { type: 'array', items: { type: 'string' } },
+              next_step: { type: 'string' },
+              presentation_title: { type: 'string' },
+            },
+          },
+        });
+        if (aiContent?.project_goal) clientContent = { ...clientContent, ...aiContent };
+      } catch (aiError) { console.warn('Client-facing AI content unavailable', aiError); }
 
       const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
         product: selectedProduct,
         document_type: 'offer',
-        inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '' },
+        inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
         quote: { final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount) },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),

@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
     }));
 
     const analysis = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]) a všechny explicitně požadované počty současně vrať číselně v requested_quantities (např. [1,3]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]) a všechny explicitně požadované počty současně vrať číselně v requested_quantities (např. [1,3]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Vždy také odvoď people_context: kdo bude prostor přirozeně používat podle poptávky. Pokud jde o domov pro seniory, seniorskou zahradu, sociální nebo zdravotní zařízení, uveď starší dospělé osoby cca 65+ v přirozených situacích (chůze, posezení, rozhovor, případně doprovod/personál). U školy/školky uveď věkově odpovídající děti s dohledem dospělých, u sportoviště sportující návštěvníky, u náměstí běžné obyvatele a návštěvníky. Lidé mají podporovat měřítko, účel a atmosféru prostoru, nikdy nezakrývat produkt. Neimituj konkrétní skutečné osoby ani identitu klienta. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
 
 POPTÁVKA:
 Jméno: ${clean(inquiry.jmeno)}
@@ -87,6 +87,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
           requested_variants: { type: 'array', items: { type: 'string' } },
           requested_quantities: { type: 'array', items: { type: 'integer' } },
           visualization_scenes: { type: 'array', items: { type: 'string' } },
+          people_context: { type: 'string' },
         },
         required: ['product_id', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity'], 
       },
@@ -165,6 +166,8 @@ Navržené prostředí: ${short(visualizationScenes[variantIndex] || visualizati
 Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ.
 Vybraný produkt: ${product.name}.
 ${productLock}
+
+LIDÉ A REÁLNÉ UŽÍVÁNÍ PROSTORU: ${short(analysis?.people_context, 700) || 'Přidej několik přirozeně působících uživatelů odpovídajících účelu prostoru podle poptávky.'} Pokud poptávka zmiňuje domov pro seniory, seniory, pečovatelskou službu nebo obdobné zařízení, zobraz několik starších dospělých osob přibližně 65+, přirozeně oblečených, část při klidné chůzi a část při posezení či rozhovoru; lze přidat jednoho člena personálu nebo doprovodu. Osoby nesmí působit aranžovaně, nesmí překrývat konstrukci ani trysky a nesmí být dominantnější než návrh mlžítka. Nezobrazuj známé ani konkrétní skutečné osoby.
 
 PRODUCT IDENTITY CHECK: produkt musí být na první pohled totožný s MASTER referencemi. Pokud jsou reference fotografie produktu, dej geometrické a konstrukční přesnosti přednost před estetickou stylizací. Přesně dodrž počet ${variant.quantity} ks; jednotlivé kusy neslučuj, nezrcadli do nového tvaru a nevytvářej další kusy v pozadí. Trysky musí být malé kovové komponenty fyzicky osazené přímo do konstrukce. Nepřidávej viditelné hadice ani kabely, pokud nejsou součástí MASTER reference.
 

@@ -318,10 +318,11 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
         status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,
         supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz', supplier_contact_name: 'Ing. Radek Meduna', supplier_email: senderEmail, supplier_phone: '+420 774 700 390',
-        shared_token: prepared?.projectOrder?.shared_token || crypto.randomUUID(),
+        shared_token: projectOrderOverride?.shared_token || prepared?.projectOrder?.shared_token || crypto.randomUUID(),
       };
-      let projectOrder = prepared?.projectOrder?.id
-        ? await base44.entities.ProjectOrder.update(prepared.projectOrder.id, orderData)
+      const orderToUpdate = projectOrderOverride?.id ? projectOrderOverride : prepared?.projectOrder;
+      let projectOrder = orderToUpdate?.id
+        ? await base44.entities.ProjectOrder.update(orderToUpdate.id, orderData)
         : await base44.entities.ProjectOrder.create(orderData);
 
       let inquiryArchive = null;

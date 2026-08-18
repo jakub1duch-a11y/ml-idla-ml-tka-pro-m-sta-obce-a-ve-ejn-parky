@@ -10,7 +10,7 @@ const OFFERS = [
 
 
 export default function CollectionOffers() {
-  return <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+  return <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24 hidden">
     <div className="mb-10 max-w-3xl"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kolekce MLŽIDLA®</p><h2 className="mt-3 font-heading tracking-[-.02em] text-foreground text-4xl sm:text-4xl lg:text-4xl">Vyberte řešení podle charakteru místa.</h2><p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">Městský prostor, zahrada nebo atypická instalace. Každá kolekce vychází z jiného způsobu používání, ale drží stejný standard materiálu a zpracování.</p></div>
     <div className="mb-5"><AllProductsImageCard to="#catalog" image="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png" /></div>
     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">{OFFERS.map((offer) => <Link key={offer.title} to={`/${offer.slug}`} className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">

@@ -491,6 +491,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
             quoteContext={`${money(finalTotal)} Kč bez DPH · produkt ${money(basePrice)} Kč · instalace ${money(installation)} Kč · sleva ${Number(discount || 0)} %`}
             onPrepareOffer={prepareOffer}
             prepareBusy={busy === 'prepare'}
+            onAutoPrepareFromText={autoPrepareFromText}
+            autoPrepareBusy={busy === 'auto-offer'}
           />
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5">

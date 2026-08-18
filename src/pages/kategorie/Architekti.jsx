@@ -9,17 +9,17 @@ import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceSho
 import { trackFunnelStep } from '@/lib/ga4';
 
 const DOWNLOADS = [
-  { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech mlžných produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
-  { icon: Ruler, title: 'Zakázkové rozměry', desc: 'Každou mlžnou sochu neboli mlžítko vyrobíme na míru vašemu projektu. Výška, šířka, povrchová úprava — přesně dle specifikace.', tag: 'mlžítka na míru' },
-  { icon: FileText, title: 'Technická podpora', desc: 'Inženýr Holmtec je vám k dispozici od studie po realizaci. Konzultace zdarma, revize výkresů, dozor při montáži.', tag: 'Konzultace zdarma' },
+  { icon: Box, title: 'Projektové podklady', desc: '2D/3D a BIM podklady podle konkrétního produktu, technické listy, rozměry, kotvení a připojovací požadavky.', tag: 'DWG · 3D · BIM' },
+  { icon: Ruler, title: 'Zakázkové provedení', desc: 'Rozměry, geometrie, povrch a rozmístění trysek lze přizpůsobit návrhu a charakteru konkrétního prostoru.', tag: 'Výroba na míru' },
+  { icon: FileText, title: 'Technická konzultace', desc: 'Podpora od studie po realizační dokumentaci: stavební připravenost, napojení, kotvení, servisní přístup a Smart řízení.', tag: 'Projektová podpora' },
 ];
 
 const REASONS = [
-  '3D BIM modely pro Revit, ArchiCAD, SketchUp',
-  'Technické listy: zatížení, kotvení, přípojky',
-  'Vzorník povrchových úprav: Polished, Brushed, PVD',
-  'Konzultace s inženýrem — od studie po realizaci',
-  'Projektová dokumentace pro stavební povolení',
+  '2D/3D a BIM podklady podle konkrétního produktu',
+  'Technické listy: rozměry, kotvení, přípojky a provoz',
+  'Povrchové úpravy a materiálové varianty podle projektu',
+  'Konzultace od studie po realizační dokumentaci',
+  'Podklady pro koordinaci profesí a stavební připravenost',
 ];
 
 const GALLERY = [

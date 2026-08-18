@@ -100,6 +100,13 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
       .filter(Boolean)
       .filter((url, index, all) => all.indexOf(url) === index)
       .slice(0, 4);
+    const linkedAssets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId }).catch(() => []);
+    const sourcePhoto = (linkedAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)
+      || (linkedAssets || []).find((item) => String(item.file_type || '').startsWith('image/') && item.asset_type !== 'generated_visualization' && item.file_url);
+    const imageReferences = sourcePhoto?.file_url ? [sourcePhoto.file_url, ...refs].slice(0, 5) : refs;
+    const sceneMode = sourcePhoto?.file_url
+      ? `SCENE LOCK: PRVNÍ referenční obrázek je skutečná fotografie prostoru klienta. Zachovej jeho kompozici, perspektivu, architekturu, cesty, lavičky, zeleň, mobiliář, světlo a všechny existující prvky. Scénu nepřestavuj; pouze realisticky osaď vybraný produkt do vhodného místa.`
+      : `TEXT CONCEPT MODE: klient nedodal použitelnou fotografii prostoru. Vytvoř proto věrohodnou ilustrační projektovou scénu podle textové poptávky a jasně ji pojmi jako koncept, nikoli jako dokumentaci skutečného stavu.`;
     const productLock = isBendy
       ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. Malé kovové trysky jsou přímo v hlavní trubce. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
       : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej.`;
@@ -107,7 +114,9 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
     let visualizationUrl = '';
     try {
       const imageParams: any = {
-        prompt: `Vytvoř profesionální fotorealistickou KONCEPTUÁLNÍ vizualizaci pro obchodní nabídku MLŽIDLA.cz. Nejde o přesný zákres do fotografie lokality, ale o věrohodnou ukázku navrženého řešení podle textové poptávky.
+        prompt: `Vytvoř profesionální fotorealistickou vizualizaci pro obchodní nabídku MLŽIDLA.cz.
+
+${sceneMode}
 
 Projekt klienta: ${short(inquiry.zprava, 2200)}
 Navržené prostředí: ${short(analysis?.visual_scene, 1200)}
@@ -115,7 +124,7 @@ Vybraný produkt: ${product.name}.
 ${productLock}
 
 Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
-        existing_image_urls: refs,
+        existing_image_urls: imageReferences,
       };
       const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage(imageParams);
       visualizationUrl = imageResult?.url || '';
@@ -171,7 +180,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         file_type: 'image/webp',
         asset_type: 'generated_visualization',
         title: `AI koncept — ${product.name}`,
-        description: 'Automaticky vytvořená konceptuální vizualizace z textové poptávky. Před odesláním klientovi je určena ke kontrole.',
+        description: sourcePhoto?.file_url ? 'Automaticky vytvořená vizualizace z textové poptávky a fotografie prostoru. Před odesláním klientovi je určena ke kontrole.' : 'Automaticky vytvořená konceptuální vizualizace z textové poptávky. Před odesláním klientovi je určena ke kontrole.',
         selected_for_offer: true,
         generated_by_ai: true,
       });

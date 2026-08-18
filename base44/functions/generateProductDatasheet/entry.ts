@@ -205,21 +205,15 @@ export default async function(req) {
 
     // PAGE 1 - executive commercial offer
     await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
-    let y = 49;
+    let y = 48;
 
-    doc.setFillColor(247, 250, 250); doc.roundedRect(M, y, 88, 39, 2, 2, 'F');
-    doc.setFillColor(247, 250, 250); doc.roundedRect(M + 94, y, 88, 39, 2, 2, 'F');
-    doc.setTextColor(...accent); doc.setFontSize(6.8); doc.text('ŽADATEL / ODBĚRATEL', M + 5, y + 7);
-    doc.setTextColor(...ink); doc.setFontSize(9.5); doc.text(safe(inquiry.name) || '—', M + 5, y + 15);
-    doc.setTextColor(...muted); doc.setFontSize(7.0);
-    const applicant = [safe(inquiry.company), safe(inquiry.email), safe(inquiry.phone)].filter(Boolean);
-    doc.text(applicant.length ? applicant : ['Kontaktní údaje dle poptávky'], M + 5, y + 22);
-
-    doc.setTextColor(...accent); doc.setFontSize(6.8); doc.text('DODAVATEL', M + 99, y + 7);
-    doc.setTextColor(...ink); doc.setFontSize(9.2); doc.text('MLŽIDLA.cz by HolmTec', M + 99, y + 15);
-    doc.setTextColor(...muted); doc.setFontSize(7.0);
-    doc.text(['HolmTec s.r.o.', 'Ing. Radek Meduna · +420 774 700 390', 'meduna@holmtec.cz · info@mlzidla.cz'], M + 99, y + 22);
-    y += 47;
+    doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('PROJEKTOVÝ NÁVRH · CENOVÁ NABÍDKA', M, y);
+    doc.setTextColor(...navy); doc.setFontSize(19); doc.text(doc.splitTextToSize(projectTitle, 122), M, y + 9);
+    doc.setTextColor(...muted); doc.setFontSize(7.2);
+    const clientLine = [safe(inquiry.company), safe(inquiry.name)].filter(Boolean).join(' · ') || 'Projekt klienta';
+    doc.text(clientLine, M, y + 23);
+    doc.setTextColor(...petrol); doc.setFontSize(6.7); doc.text(audience.label.toUpperCase(), W - M, y + 23, { align: 'right' });
+    y += 29;
 
     doc.setTextColor(...accent); doc.setFontSize(6.8); doc.text(audience.label.toUpperCase(), M, y);
     doc.setTextColor(...navy); doc.setFontSize(17.5); doc.text(product.name, M, y + 9);

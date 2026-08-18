@@ -208,26 +208,39 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     URL.revokeObjectURL(url);
   };
 
-  const prepareOffer = async () => {
-    if (!selected || !selectedProduct) { setError('Nejdříve vyberte produkt pro nabídku.'); return; }
-    setError(''); setBusy('prepare'); setApprovedToSend(false);
+  const prepareOffer = async (options = {}) => {
+    const productForOffer = options.product || selectedProduct;
+    const basePriceForOffer = Number(options.basePrice ?? basePrice ?? 0);
+    const installationForOffer = Number(options.installation ?? installation ?? 0);
+    const discountForOffer = Number(options.discount ?? discount ?? 0);
+    const audienceForOffer = options.audienceVariant || audienceVariant;
+    const finalTotalForOffer = Math.round((basePriceForOffer + installationForOffer) * (1 - discountForOffer / 100));
+    const visualizationOverride = options.visualizationUrl || '';
+    const clientContentOverride = options.clientContent || null;
+    if (!selected || !productForOffer) { setError('Nejdříve vyberte produkt pro nabídku.'); return; }
+    if (options.product) setProductId(productForOffer.id);
+    if (options.basePrice !== undefined) setBasePrice(basePriceForOffer);
+    if (options.installation !== undefined) setInstallation(installationForOffer);
+    if (options.discount !== undefined) setDiscount(discountForOffer);
+    if (options.audienceVariant) setAudienceVariant(audienceForOffer);
+    setError(''); setBusy(options.auto ? 'auto-offer' : 'prepare'); setApprovedToSend(false);
     try {
       const issuedAt = new Date();
       const validUntil = new Date(issuedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
       const quoteNumber = prepared?.quoteNumber || `MLZ-${issuedAt.getFullYear()}-${String(Date.now()).slice(-6)}`;
-      const arUrl = selectedProduct.slug === 'mlzitko-bendy'
+      const arUrl = productForOffer.slug === 'mlzitko-bendy'
         ? 'https://mlzidla.cz/ar/bendy-single'
-        : selectedProduct.slug === 'mlzna-brana-gate'
+        : productForOffer.slug === 'mlzna-brana-gate'
           ? 'https://mlzidla.cz/ar/gate'
-          : `https://mlzidla.cz/produkt/${selectedProduct.slug}`;
-      const visualizationUrl = attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
+          : `https://mlzidla.cz/produkt/${productForOffer.slug}`;
+      const visualizationUrl = visualizationOverride || attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
 
-      let clientContent = {
-        project_goal: `Návrh řešení ${selectedProduct.name} pro ${selected.firma || selected.company || selected.name}.`,
-        solution_summary: selectedProduct.short_description || 'Minimalistické nerezové mlžení navržené pro konkrétní prostor.',
+      let clientContent = clientContentOverride || {
+        project_goal: `Návrh řešení ${productForOffer.name} pro ${selected.firma || selected.company || selected.name}.`,
+        solution_summary: productForOffer.short_description || 'Minimalistické nerezové mlžení navržené pro konkrétní prostor.',
         benefits: [],
         next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti a finální rozsah realizace.',
-        presentation_title: `${selectedProduct.name} — návrh řešení`,
+        presentation_title: `${productForOffer.name} — návrh řešení`,
       };
       try {
         const aiContent = await base44.integrations.Core.InvokeLLM({

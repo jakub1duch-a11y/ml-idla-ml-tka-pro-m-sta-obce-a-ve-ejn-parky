@@ -58,7 +58,7 @@ Deno.serve(async (req) => {
     }));
 
     const analysis = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. Vyber pouze existující produkt z katalogu níže. Pokud text zmiňuje BENDY nebo jednoduchý tvar J, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]). Pokud text uvádí rozsah typu „1 nebo 3 kusy“, „1–3 kusy“, „jeden kus a tři kusy“, MUSÍ vzniknout samostatná cenová varianta pro každý uvedený počet. Pokud klient chce více různých produktů, každou produktovou alternativu uveď jako samostatnou variantu; nevymýšlej produkt, který není v katalogu. visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, termíny nebo jednotkové ceny mimo katalog. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
 
 POPTÁVKA:
 Jméno: ${clean(inquiry.jmeno)}
@@ -137,7 +137,7 @@ ${sceneMode}
 
 Projekt klienta: ${short(inquiry.zprava, 2200)}
 Navržené prostředí: ${short(visualizationScenes[variantIndex] || visualizationScenes[0] || analysis?.visual_scene, 1200)}
-Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ.
+Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ. Fotografie musí vizuálně odpovídat konkrétnímu účelu a prostředí popsanému klientem (zahrada, park, náměstí, školka, sportoviště, terasa apod.) a počtu kusů dané varianty.
 Vybraný produkt: ${product.name}.
 ${productLock}
 

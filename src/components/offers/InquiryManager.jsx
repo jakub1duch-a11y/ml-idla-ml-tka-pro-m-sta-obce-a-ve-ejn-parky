@@ -7,6 +7,7 @@ import OfferVariantTechnicalPanel from '@/components/offers/OfferVariantTechnica
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 const errorMessage = (error) => error?.response?.data?.error || error?.message || 'Akci se nepodařilo dokončit.';
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
 const BCC = ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'];
 const AUDIENCES = [
   { value: 'city_public', label: 'Města / obce / náměstí / parky' },
@@ -33,6 +34,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
   const [attachments, setAttachments] = useState([]);
   const [audienceVariant, setAudienceVariant] = useState('city_public');
   const [senderEmail, setSenderEmail] = useState('meduna@holmtec.cz');
+  const [testEmail, setTestEmail] = useState('');
+  const [testSentTo, setTestSentTo] = useState('');
   const [approvedToSend, setApprovedToSend] = useState(false);
   const [prepared, setPrepared] = useState(null);
   const [followUpType, setFollowUpType] = useState('');
@@ -474,6 +477,52 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     }
   };
 
+  const sendTestEmail = async () => {
+    const recipient = testEmail.trim().toLowerCase();
+    if (!selected || !subject.trim() || !message.trim()) { setError('Nejdříve připravte předmět a text e-mailu.'); return; }
+    if (!isValidEmail(recipient)) { setError('Zadejte platnou testovací e-mailovou adresu.'); return; }
+    setError(''); setTestSentTo(''); setBusy('test-send');
+    try {
+      const actionDiscount = followUpType === 'action_discount';
+      const previousTotal = Number(latestOffer?.total_price || 0);
+      const newTotal = actionDiscount ? Math.round(previousTotal * (1 - Number(followUpDiscount || 0) / 100)) : 0;
+      const followUpValidUntil = actionDiscount
+        ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        : latestOffer?.valid_until ? new Date(latestOffer.valid_until) : null;
+      const validityLine = prepared ? `Cenová nabídka ${prepared.quoteNumber} je platná do ${prepared.validUntil.toLocaleDateString('cs-CZ')}.` : '';
+      const portalLine = prepared ? 'Interaktivní nabídku, prezentaci a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/muj-projekt' : '';
+      const testMessage = prepared
+        ? withSignature([message.trim(), validityLine, portalLine].filter(Boolean).join('\n\n'))
+        : message.trim();
+
+      await base44.functions.invoke('sendInquiryReply', {
+        inquiry_type: selected.type,
+        inquiry_id: selected.id,
+        subject,
+        message: testMessage,
+        sender_email: senderEmail,
+        quote_pdf_base64: prepared?.quote?.pdf_base64,
+        quote_filename: prepared?.quote?.filename,
+        presentation_pdf_base64: prepared?.presentation?.presentation_pdf_base64,
+        presentation_filename: prepared?.presentation?.presentation_filename,
+        presentation_url: prepared?.presentation?.presentation_url || latestOffer?.presentation_url || '',
+        quote_pdf_url: prepared?.quoteDriveUrl || latestOffer?.quote_pdf_url || '',
+        portal_url: prepared || latestOffer ? 'https://mlzidla.cz/muj-projekt' : '',
+        valid_until: prepared?.validUntil?.toISOString() || followUpValidUntil?.toISOString() || '',
+        quote_number: prepared?.quoteNumber || latestOffer?.quote_number || '',
+        project_summary: selected.message || '',
+        email_type: followUpType || 'offer',
+        discount_percent: actionDiscount ? Number(followUpDiscount || 0) : 0,
+        previous_total: actionDiscount ? previousTotal : 0,
+        new_total: actionDiscount ? newTotal : 0,
+        attachments: prepared ? attachments : [],
+        test_email: recipient,
+        is_test: true,
+      });
+      setTestSentTo(recipient);
+    } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
+  };
+
   const sendReply = async () => {
     if (!selected || !prepared || !approvedToSend || !subject || !message) return;
     setError(''); setBusy('send');
@@ -517,7 +566,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground"><span>{filteredInquiries.length} z {inquiries.length} poptávek</span>{searchQuery && <span>Hledá i v číslech nabídek</span>}</div>
           <div className="mt-4 space-y-2">{filteredInquiries.map((item) => {
             const linkedOffers = ordersByInquiry[item.id] || [];
-            return <button key={item.key} onClick={() => { setSelectedId(item.key); setError(''); setPrepared(null); setApprovedToSend(false); setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); setSubject(''); setMessage(''); }} className={`w-full border p-4 text-left transition ${item.key === selectedId ? 'border-secondary bg-secondary/10' : 'border-border hover:border-secondary/40'}`}>
+            return <button key={item.key} onClick={() => { setSelectedId(item.key); setError(''); setTestSentTo(''); setPrepared(null); setApprovedToSend(false); setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); setSubject(''); setMessage(''); }} className={`w-full border p-4 text-left transition ${item.key === selectedId ? 'border-secondary bg-secondary/10' : 'border-border hover:border-secondary/40'}`}>
               <strong className="block text-sm text-foreground">{item.name}</strong>
               <span className="mt-1 block text-xs text-muted-foreground">{item.email}</span>
               <span className="mt-2 block font-mono text-[10px] text-muted-foreground">ID: {item.id}</span>

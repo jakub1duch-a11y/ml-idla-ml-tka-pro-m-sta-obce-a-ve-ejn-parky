@@ -122,7 +122,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
       : `TEXT CONCEPT MODE: klient nedodal použitelnou fotografii prostoru. Vytvoř proto věrohodnou ilustrační projektovou scénu podle textové poptávky a jasně ji pojmi jako koncept, nikoli jako dokumentaci skutečného stavu.`;
     const productLock = isBendy
       ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. Malé kovové trysky jsou přímo v hlavní trubce. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
-      : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej.`;
+      : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej. Zachovej počet nosných trubek/profilů, typ ohybů, spoje, patku nebo kotvení a skutečné umístění trysek. Nevytvářej hybrid více různých výrobků.`;
 
     const requestedQuantity = Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
     const requestedVariants = Array.isArray(analysis?.requested_variants) ? analysis.requested_variants.map(clean).filter(Boolean).slice(0, 4) : [];
@@ -165,6 +165,8 @@ Navržené prostředí: ${short(visualizationScenes[variantIndex] || visualizati
 Varianta nabídky: ${variant.label}. Na scéně zobraz přesně ${variant.quantity} ks stejného vybraného produktu, pokud text varianty výslovně nepožaduje jiný katalogový typ.
 Vybraný produkt: ${product.name}.
 ${productLock}
+
+PRODUCT IDENTITY CHECK: produkt musí být na první pohled totožný s MASTER referencemi. Pokud jsou reference fotografie produktu, dej geometrické a konstrukční přesnosti přednost před estetickou stylizací. Přesně dodrž počet ${variant.quantity} ks; jednotlivé kusy neslučuj, nezrcadli do nového tvaru a nevytvářej další kusy v pozadí. Trysky musí být malé kovové komponenty fyzicky osazené přímo do konstrukce. Nepřidávej viditelné hadice ani kabely, pokud nejsou součástí MASTER reference.
 
 Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
         existing_image_urls: imageReferences,

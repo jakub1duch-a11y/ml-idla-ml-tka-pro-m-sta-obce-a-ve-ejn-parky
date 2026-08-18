@@ -243,11 +243,14 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       const issuedAt = new Date();
       const validUntil = new Date(issuedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
       const quoteNumber = prepared?.quoteNumber || `MLZ-${issuedAt.getFullYear()}-${String(Date.now()).slice(-6)}`;
-      const arUrl = productForOffer.slug === 'mlzitko-bendy'
-        ? 'https://mlzidla.cz/ar/bendy-single'
-        : productForOffer.slug === 'mlzna-brana-gate'
-          ? 'https://mlzidla.cz/ar/gate'
-          : `https://mlzidla.cz/produkt/${productForOffer.slug}`;
+      const isCustomOffer = Boolean(options.customProduct);
+      const arUrl = isCustomOffer
+        ? ''
+        : productForOffer.slug === 'mlzitko-bendy'
+          ? 'https://mlzidla.cz/ar/bendy-single'
+          : productForOffer.slug === 'mlzna-brana-gate'
+            ? 'https://mlzidla.cz/ar/gate'
+            : `https://mlzidla.cz/produkt/${productForOffer.slug}`;
       let approvedVisualizationAssets = [];
       try {
         approvedVisualizationAssets = (await base44.entities.VisualizationAsset.filter({ source_inquiry_id: selected.id, approved_for_presentation: true })) || [];
@@ -339,6 +342,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
         status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,
         supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz', supplier_contact_name: 'Ing. Radek Meduna', supplier_email: senderEmail, supplier_phone: '+420 774 700 390',
+        production_notes: options.customProduct ? [`CUSTOM KONCEPT — ${options.customProduct.name || productForOffer.name}`, options.customProduct.primary_profile && `Profil: ${options.customProduct.primary_profile}`, options.customProduct.dimensions_summary && `Rozměry: ${options.customProduct.dimensions_summary}`, options.customProduct.bend_strategy && `Ohýbání: ${options.customProduct.bend_strategy}`, options.customProduct.weld_strategy && `Svařování: ${options.customProduct.weld_strategy}`, options.customProduct.nozzle_strategy && `Trysky: ${options.customProduct.nozzle_strategy}`, Array.isArray(options.customProduct.manufacture_steps) && options.customProduct.manufacture_steps.length ? `Postup: ${options.customProduct.manufacture_steps.join(' → ')}` : ''].filter(Boolean).join('\n').slice(0, 3000) : (projectOrderOverride?.production_notes || ''),
+        special_requirements: options.customPricing?.warnings?.length ? options.customPricing.warnings.join(' ').slice(0, 2000) : (projectOrderOverride?.special_requirements || ''),
         shared_token: projectOrderOverride?.shared_token || prepared?.projectOrder?.shared_token || crypto.randomUUID(),
       };
       const orderToUpdate = projectOrderOverride?.id ? projectOrderOverride : prepared?.projectOrder;
@@ -367,7 +372,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null });
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null, customProduct: options.customProduct || null, customPricing: options.customPricing || null });
       if (!subject.trim()) setSubject(`Projektový návrh + cenová nabídka ${quoteNumber} | ${selected.firma || selected.company || productForOffer.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(`Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení pro daný prostor včetně projektové vizualizace a cenové nabídky. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je vizuální koncept osazení, cenová rekapitulace a projektová prezentace. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
@@ -610,7 +615,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
 
           <div className="mt-6 rounded-2xl border border-cyan-200 bg-cyan-50/50 p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-800">Automatická nabídka</p><h3 className="mt-1 font-heading text-xl text-slate-950">1 klik: návrh + cena + vizualizace + PDF</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-slate-600">Systém vytěží zadání, vybere existující produkt, načte cenu z MLŽNÉHO DISKU / Kalkulace 2026, použije reálné produktové reference, připraví vizualizaci, cenovou nabídku a prezentaci a uloží výstupy do složky projektu.</p></div>
+              <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-800">Automatická nabídka</p><h3 className="mt-1 font-heading text-xl text-slate-950">1 klik: návrh + cena + vizualizace + PDF</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-slate-600">Systém vytěží zadání a buď vybere existující produkt, nebo navrhne nový zakázkový tvar. U katalogu načte hotovou cenu; u nového výrobku sestaví jednoduchý výrobní plán z reálných sazeb MLŽNÉHO DISKU / Kalkulace 2026. Následně vytvoří MASTER produkt, realistickou vizualizaci, cenovou nabídku a prezentaci.</p></div>
               <button type="button" onClick={autoPrepareFromText} disabled={busy === 'auto-offer'} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#0e5b67] px-5 py-3 text-sm font-bold text-white disabled:opacity-50"><Sparkles size={16}/>{busy === 'auto-offer' ? 'Vytvářím…' : 'Vytvořit celou nabídku'}</button>
             </div>
           </div>

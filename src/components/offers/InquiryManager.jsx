@@ -3,6 +3,7 @@ import { CheckCircle2, ExternalLink, Eye, FileText, Search, Send, Sparkles, Uplo
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
+import OfferVariantTechnicalPanel from '@/components/offers/OfferVariantTechnicalPanel';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 const errorMessage = (error) => error?.response?.data?.error || error?.message || 'Akci se nepodařilo dokončit.';
@@ -539,6 +540,12 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
             prepareBusy={busy === 'prepare'}
             onAutoPrepareFromText={autoPrepareFromText}
             autoPrepareBusy={busy === 'auto-offer'}
+          />
+
+          <OfferVariantTechnicalPanel
+            inquiryId={selected.id}
+            onRegenerate={autoPrepareFromText}
+            regenerateBusy={busy === 'auto-offer'}
           />
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5">

@@ -110,7 +110,7 @@ export default async function(req) {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, audience_variant: audienceVariant = 'custom' } = body;
+    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom' } = body;
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
 
@@ -156,22 +156,23 @@ export default async function(req) {
     requests.push(background(s[0], DEEP), ...accentBar('a1', s[0], 0, 0, 720, 8));
     requests.push(...shapeText('t1a', s[0], `MLŽIDLA.cz  ·  by HolmTec\n${audience.eyebrow}`, 42, 38, 390, 48, 12, ACCENT, true));
     requests.push(...shapeText('t1b', s[0], audience.promise, 42, 112, 375, 105, 32, WHITE, true));
-    requests.push(...shapeText('t1c', s[0], `${product.name}\nNávrh řešení pro ${inquiry.company || inquiry.name || 'váš prostor'}`, 42, 245, 350, 74, 17, WHITE, false));
+    requests.push(...shapeText('t1c', s[0], `${aiContent.presentation_title || product.name}\nNávrh řešení pro ${inquiry.company || inquiry.name || 'váš prostor'}`, 42, 245, 350, 74, 17, WHITE, false));
     requests.push(...shapeText('t1d', s[0], `Nabídka ${quoteNumber} · platnost do ${dateCs(validUntil)}`, 42, 353, 420, 25, 11, ACCENT, true));
     if (product.image_url) requests.push(image('img1', s[0], product.image_url, 430, 58, 245, 265));
 
-    // 2 — customer need
+    // 2 — client project goal
     requests.push(background(s[1], WHITE), ...accentBar('a2', s[1], 0, 0, 12, 405, PETROL));
-    requests.push(...shapeText('t2a', s[1], 'Co řešíme', 48, 42, 300, 40, 26, PETROL, true));
-    requests.push(...shapeText('t2b', s[1], audience.problem, 48, 105, 610, 100, 20, INK, true));
-    requests.push(...shapeText('t2c', s[1], `Vaše zadání:\n${String(inquiry.message || 'Konkrétní požadavky budou upřesněny při konzultaci.').slice(0, 550)}`, 48, 240, 610, 115, 14, MUTED, false));
+    requests.push(...shapeText('t2a', s[1], 'Cíl projektu', 48, 42, 300, 40, 26, PETROL, true));
+    requests.push(...shapeText('t2b', s[1], aiContent.project_goal || inquiry.message || audience.problem, 48, 105, 610, 115, 20, INK, true));
+    requests.push(...shapeText('t2c', s[1], 'Návrh vychází z dodaných podkladů a je připraven jako klientský koncept pro rozhodnutí o dalším technickém dopracování.', 48, 255, 610, 80, 14, MUTED, false));
 
     // 3 — solution & benefits
     requests.push(background(s[2], LIGHT), ...accentBar('a3', s[2], 0, 0, 720, 8));
     requests.push(...shapeText('t3a', s[2], 'Navržené řešení', 48, 40, 330, 40, 25, PETROL, true));
     requests.push(...shapeText('t3b', s[2], product.name, 48, 92, 330, 50, 30, INK, true));
-    requests.push(...shapeText('t3c', s[2], product.short_description || 'Architektonické mlžení navržené pro konkrétní prostor.', 48, 150, 330, 85, 15, MUTED, false));
-    requests.push(...shapeText('t3d', s[2], audience.benefits.map((b) => `• ${b}`).join('\n\n'), 48, 245, 330, 125, 14, INK, false));
+    requests.push(...shapeText('t3c', s[2], aiContent.solution_summary || product.short_description || 'Architektonické mlžení navržené pro konkrétní prostor.', 48, 150, 330, 85, 15, MUTED, false));
+    const clientBenefits = Array.isArray(aiContent.benefits) && aiContent.benefits.length ? aiContent.benefits.slice(0, 4) : audience.benefits;
+    requests.push(...shapeText('t3d', s[2], clientBenefits.map((b) => `• ${b}`).join('\n\n'), 48, 245, 330, 125, 14, INK, false));
     if (product.image_url) requests.push(image('img3', s[2], product.image_url, 410, 75, 265, 275));
 
     // 4 — technical confidence
@@ -213,7 +214,7 @@ export default async function(req) {
     // 9 — next action
     requests.push(background(s[8], DEEP), ...accentBar('a9', s[8], 0, 0, 720, 8));
     requests.push(...shapeText('t9a', s[8], 'Jak chcete pokračovat?', 48, 48, 430, 45, 27, WHITE, true));
-    requests.push(...shapeText('t9b', s[8], '1. Potvrdit a objednat\n2. Požádat o prodloužení platnosti\n3. Uvést přibližný termín objednání\n4. Domluvit technické upřesnění nebo další vizualizaci', 48, 118, 440, 145, 17, WHITE, false));
+    requests.push(...shapeText('t9b', s[8], `${aiContent.next_step ? `${aiContent.next_step}\n\n` : ''}1. Potvrdit a objednat\n2. Požádat o prodloužení platnosti\n3. Uvést přibližný termín objednání\n4. Domluvit technické upřesnění nebo další vizualizaci`, 48, 112, 440, 155, 15, WHITE, false));
     requests.push(...shapeText('t9c', s[8], 'MLŽIDLA.cz by HolmTec\nIng. Radek Meduna\n+420 774 700 390\nmeduna@holmtec.cz · info@mlzidla.cz', 48, 280, 350, 95, 14, ACCENT, true));
     requests.push(image('portalqr', s[8], portalQrImageUrl, 510, 230, 115, 115));
     requests.push(...shapeText('t9d', s[8], 'Otevřít interaktivní nabídku a potvrdit další krok', 438, 350, 235, 30, 10, WHITE, false));

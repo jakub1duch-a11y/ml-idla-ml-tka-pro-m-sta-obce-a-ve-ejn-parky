@@ -384,9 +384,20 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         force: true,
       });
       const result = response.data || {};
-      const autoProduct = products.find((item) => item.id === result.product_id)
+      const catalogAutoProduct = products.find((item) => item.id === result.product_id)
         || products.find((item) => item.slug === result.product_slug);
-      if (!autoProduct) throw new Error('AI vybrala produkt, který není v aktuálním katalogu.');
+      const autoProduct = catalogAutoProduct || (result.product_mode === 'custom' && result.custom_product ? {
+        id: '',
+        slug: result.product_slug || `custom-${selected.id}`,
+        name: result.product_name || result.custom_product.name || 'Mlžítko na míru',
+        short_description: result.custom_product.design_description || 'Zakázkový minimalistický návrh mlžítka.',
+        description: result.custom_product.production_notes || result.custom_product.design_description || '',
+        material: result.custom_product.material || result.custom_product.pricing_basis || 'Nerez',
+        image_url: result.custom_product.master_image_url || result.custom_master_asset?.file_url || '',
+        gallery_urls: [result.custom_product.master_image_url || result.custom_master_asset?.file_url].filter(Boolean),
+        price_from: Number(result.product_price_from || 0),
+      } : null);
+      if (!autoProduct) throw new Error('Nepodařilo se určit katalogový ani zakázkový produkt pro nabídku.');
 
       const requestedQuantity = Math.max(1, Number(result.requested_quantity || 1));
       const rawVariants = Array.isArray(result.requested_variants) && result.requested_variants.length
@@ -405,7 +416,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           quantity,
           unit_price: variantUnitPrice,
           price: variantPrice,
-          price_status: variantPrice > 0 ? pricingSource : 'manual_required',
+          price_status: variantPrice > 0 ? 'catalog' : 'manual_required',
           pricing_label: variant.pricing_label || pricingLabel,
           visualization_url: result.visualization_assets?.[index]?.file_url || result.visualization_assets?.[index]?.url || '',
         };
@@ -413,7 +424,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       const primaryVariant = autoVariants[0];
       const autoPrice = Number(primaryVariant?.price || 0);
       const autoAudience = result.audience_variant || 'custom';
-      setProductId(autoProduct.id);
+      setProductId(autoProduct.id || '');
       setBasePrice(autoPrice);
       setInstallation(0);
       setDiscount(0);
@@ -478,9 +489,11 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           solution_summary: `${result.ai_content.solution_summary || ''}${autoVariants.length > 1 ? `\n\nCenové varianty: ${autoVariants.map((variant) => `${variant.label}: ${Number(variant.price || 0).toLocaleString('cs-CZ')} Kč bez DPH`).join(' · ')}` : ''}`,
         } : null,
         projectOrder: result.project_order || null,
-        priceIsEstimate: pricingSource === 'manual_required',
+        priceIsEstimate: pricingSource === 'manual_required' || pricingSource === 'custom_sheet_estimate',
         variantPricing: autoVariants,
         pricing: result.pricing || null,
+        customProduct: result.custom_product || null,
+        customPricing: result.custom_pricing || null,
         auto: true,
       });
       await onSent?.();

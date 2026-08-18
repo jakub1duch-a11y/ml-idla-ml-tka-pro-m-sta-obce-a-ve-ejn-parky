@@ -141,7 +141,8 @@ export default async function(req) {
     const quoteAttachment = quotePdfBase64 ? [{ filename: quoteFilename || 'nabidka-mlzidla.pdf', content: Uint8Array.from(atob(quotePdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const presentationAttachment = presentationPdfBase64 ? [{ filename: presentationFilename || 'prezentace-mlzidla.pdf', content: Uint8Array.from(atob(presentationPdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const allAttachments = [...quoteAttachment, ...presentationAttachment, ...externalAttachments];
-    const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber, projectSummary, emailType, discountPercent, previousTotal, newTotal, visualizationItems });
+    const smartPricing = await findSmartControlPricing(base44);
+    const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber, projectSummary, emailType, discountPercent, previousTotal, newTotal, visualizationItems, smartPricing });
     const raw = buildMessage({ to: recipientEmail, bcc: bccRecipients, fromEmail: senderEmail, subject: messageSubject, text: message, html, attachments: allAttachments });
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');

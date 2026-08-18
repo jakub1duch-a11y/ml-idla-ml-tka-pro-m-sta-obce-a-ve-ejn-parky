@@ -206,10 +206,11 @@ export default async function(req) {
 
     // 8 — commercial summary
     const price = quote.final_total ?? product.price_from;
+    const priceIsEstimate = Boolean(quote.price_is_estimate);
     requests.push(background(s[7], WHITE), ...accentBar('a8', s[7], 0, 0, 720, 8));
-    requests.push(...shapeText('t8a', s[7], 'Investice do řešení', 48, 44, 420, 45, 27, PETROL, true));
-    requests.push(...shapeText('t8b', s[7], price ? `${fmt(price)} Kč bez DPH` : 'Cena dle finální konfigurace', 48, 125, 540, 62, 32, INK, true));
-    requests.push(...shapeText('t8c', s[7], `Nabídka ${quoteNumber}\nVystaveno: ${dateCs(now)}\nPlatnost: do ${dateCs(validUntil)}\n\nRozsah a cena se řídí přiloženou PDF cenovou nabídkou. Před výrobou potvrdíme technické návaznosti, kotvení, rozvody a termín.`, 48, 210, 600, 135, 15, MUTED, false));
+    requests.push(...shapeText('t8a', s[7], priceIsEstimate ? 'Orientační investice' : 'Investice do řešení', 48, 44, 420, 45, 27, PETROL, true));
+    requests.push(...shapeText('t8b', s[7], price ? `${priceIsEstimate ? 'od ' : ''}${fmt(price)} Kč bez DPH` : 'Cena dle finální konfigurace', 48, 125, 540, 62, 32, INK, true));
+    requests.push(...shapeText('t8c', s[7], `Nabídka ${quoteNumber}\nVystaveno: ${dateCs(now)}\nPlatnost: do ${dateCs(validUntil)}\n\n${priceIsEstimate ? 'Uvedená částka je orientační katalogová cena od. Finální cena bude potvrzena podle počtu prvků, rozsahu dodávky, instalace a technického řešení. ' : ''}Rozsah a cena se řídí přiloženou PDF cenovou nabídkou. Před výrobou potvrdíme technické návaznosti, kotvení, rozvody a termín.`, 48, 210, 600, 135, 15, MUTED, false));
 
     // 9 — next action
     requests.push(background(s[8], DEEP), ...accentBar('a9', s[8], 0, 0, 720, 8));

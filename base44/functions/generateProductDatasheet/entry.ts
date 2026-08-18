@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { jsPDF } from 'npm:jspdf@4.0.0';
 import QRCode from 'npm:qrcode@1.5.4';
+import { findSmartControlPricing } from '../../shared/pricingSheet.ts';
 
 const toBase64 = (bytes) => {
   let binary = '';
@@ -186,6 +187,8 @@ export default async function(req) {
     const projectTitle = safe(aiContent.presentation_title) || `${safe(product.name)} — návrh řešení`;
     const solutionSummary = safe(aiContent.solution_summary) || safe(product.short_description) || audience.headline;
     const projectBenefits = Array.isArray(aiContent.benefits) ? aiContent.benefits.map(safe).filter(Boolean).slice(0, 3) : audience.benefits.slice(0, 3);
+    const smartPricing = await findSmartControlPricing(base44);
+    const smartVisualUrl = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5c4b99749_Smartmlzitka-ovladanizmobilu.jpg';
 
     if (documentType !== 'offer') {
       await addHeader(doc, { type: 'datasheet', quoteNumber, issued, validUntil });

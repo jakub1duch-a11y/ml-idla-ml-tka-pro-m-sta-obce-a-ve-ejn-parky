@@ -350,7 +350,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, approvedNozzleCalculations, clientContent, variantPricing: options.variantPricing || [] });
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, approvedNozzleCalculations, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null });
       if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${productForOffer.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${productForOffer.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
@@ -375,22 +375,26 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       const rawVariants = Array.isArray(result.requested_variants) && result.requested_variants.length
         ? result.requested_variants
         : [{ label: `${requestedQuantity} ks ${autoProduct.name}`, quantity: requestedQuantity }];
-      const catalogUnitPrice = Number(autoProduct.price_from || 0);
+      const pricingUnitPrice = Number(result.pricing?.unit_price ?? result.product_price_from ?? 0);
+      const pricingSource = result.pricing?.source || (pricingUnitPrice > 0 ? 'catalog' : 'manual_required');
+      const pricingLabel = result.pricing?.source_label || (pricingSource === 'catalog' ? 'Katalog produktu' : 'Ruční nacenění');
       const autoVariants = rawVariants.map((variant, index) => {
         const quantity = Math.max(1, Number(variant.quantity || requestedQuantity || 1));
-        const catalogPrice = catalogUnitPrice > 0 ? catalogUnitPrice * quantity : 0;
+        const variantUnitPrice = Number(variant.unit_price || pricingUnitPrice || 0);
+        const variantPrice = Number(variant.price || 0) || (variantUnitPrice > 0 ? variantUnitPrice * quantity : 0);
         return {
           ...variant,
           label: variant.label || `${quantity} ks ${autoProduct.name}`,
           quantity,
-          unit_price: catalogUnitPrice,
-          price: catalogPrice,
-          price_status: catalogUnitPrice > 0 ? 'catalog' : 'manual_required',
+          unit_price: variantUnitPrice,
+          price: variantPrice,
+          price_status: variantPrice > 0 ? pricingSource : 'manual_required',
+          pricing_label: variant.pricing_label || pricingLabel,
           visualization_url: result.visualization_assets?.[index]?.file_url || result.visualization_assets?.[index]?.url || '',
         };
       });
       const primaryVariant = autoVariants[0];
-      const autoPrice = Number(primaryVariant?.price || 0) || (Number(autoProduct.price_from || 0) * Number(primaryVariant?.quantity || requestedQuantity));
+      const autoPrice = Number(primaryVariant?.price || 0);
       const autoAudience = result.audience_variant || 'custom';
       setProductId(autoProduct.id);
       setBasePrice(autoPrice);
@@ -457,8 +461,9 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           solution_summary: `${result.ai_content.solution_summary || ''}${autoVariants.length > 1 ? `\n\nCenové varianty: ${autoVariants.map((variant) => `${variant.label}: ${Number(variant.price || 0).toLocaleString('cs-CZ')} Kč bez DPH`).join(' · ')}` : ''}`,
         } : null,
         projectOrder: result.project_order || null,
-        priceIsEstimate: !catalogUnitPrice,
+        priceIsEstimate: pricingSource === 'manual_required',
         variantPricing: autoVariants,
+        pricing: result.pricing || null,
         auto: true,
       });
       await onSent?.();
@@ -527,7 +532,16 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           <div className="mt-2 flex flex-wrap items-center gap-2"><span className="rounded-full bg-muted px-2.5 py-1 font-mono text-[10px] text-muted-foreground">Poptávka ID: {selected.id}</span>{selectedOffers.map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2.5 py-1 font-mono text-[10px] text-secondary">Nabídka: {offer.quote_number || offer.id}</span>)}</div>
           <p className="mt-3 text-sm text-muted-foreground">{selected.message}</p>
 
-          <div className="mt-7 grid gap-3 sm:grid-cols-2">
+          <div className="mt-6 rounded-2xl border border-cyan-200 bg-cyan-50/50 p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-800">Automatická nabídka</p><h3 className="mt-1 font-heading text-xl text-slate-950">1 klik: návrh + cena + vizualizace + PDF</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-slate-600">Systém vytěží zadání, vybere existující produkt, načte cenu z MLŽNÉHO DISKU / Kalkulace 2026, použije reálné produktové reference, připraví vizualizaci, cenovou nabídku a prezentaci a uloží výstupy do složky projektu.</p></div>
+              <button type="button" onClick={autoPrepareFromText} disabled={busy === 'auto-offer'} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#0e5b67] px-5 py-3 text-sm font-bold text-white disabled:opacity-50"><Sparkles size={16}/>{busy === 'auto-offer' ? 'Vytvářím…' : 'Vytvořit celou nabídku'}</button>
+            </div>
+          </div>
+
+          <details className="mt-5 rounded-2xl border border-border bg-background p-4">
+            <summary className="cursor-pointer text-sm font-semibold text-foreground">Ruční doladění nabídky</summary>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <label className="text-xs text-muted-foreground">Typ prezentace<select value={audienceVariant} onChange={(e) => { setAudienceVariant(e.target.value); resetPrepared(); }} className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm">{AUDIENCES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label>
             <label className="text-xs text-muted-foreground">Odesílat z<select value={senderEmail} onChange={(e) => { setSenderEmail(e.target.value); resetPrepared(); }} className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm"><option value="meduna@holmtec.cz">meduna@holmtec.cz</option><option value="info@mlzidla.cz">info@mlzidla.cz</option></select></label>
             <select value={productId} onChange={(event) => chooseProduct(event.target.value)} className="border border-border bg-background px-3 py-2.5 text-sm"><option value="">Vybrat produkt pro nabídku</option>{products.map((product) => <option key={product.id} value={product.id}>{product.name}</option>)}</select>
@@ -537,6 +551,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           </div>
           <p className="mt-3 text-sm font-bold text-secondary">Cena projektu po slevě: {money(finalTotal)} Kč bez DPH</p>
           <p className="mt-1 text-[11px] text-muted-foreground">Skrytá kopie bude vždy odeslána na: {BCC.join(', ')}</p>
+          </details>
 
           <OfferAICopilot
             inquiry={selected}
@@ -590,7 +605,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
                 {prepared.presentation?.presentation_pdf_url && <a href={prepared.presentation.presentation_pdf_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>PDF prezentace <ExternalLink size={12}/></a>}
                 {prepared.notebookSourceUrl && <a href={prepared.notebookSourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>Podklady / Notebook <ExternalLink size={12}/></a>}
               </div>
-              {prepared.variantPricing?.length > 0 && <div className="mt-4 rounded-xl border border-cyan-100 bg-white p-4"><p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Varianty nacenění podle poptávky</p><div className="mt-3 grid gap-3 sm:grid-cols-2">{prepared.variantPricing.map((variant, index) => <div key={`${variant.label}-${index}`} className="rounded-xl border border-slate-200 p-3"><div className="flex items-start justify-between gap-3"><div><p className="text-xs font-bold text-slate-800">{variant.label}</p><p className="mt-1 text-[10px] text-slate-500">{variant.quantity} ks · {variant.unit_price > 0 ? `${money(variant.unit_price)} Kč / ks` : 'jednotková cena k doplnění'}</p></div><span className={`rounded-full px-2 py-1 text-[9px] font-semibold ${index === 0 ? 'bg-cyan-100 text-cyan-800' : 'bg-slate-100 text-slate-500'}`}>{index === 0 ? 'Doporučená' : `Varianta ${index + 1}`}</span></div><p className="mt-3 text-sm font-bold text-[#0e5b67]">{variant.price_status === 'manual_required' || !Number(variant.price) ? 'K individuálnímu nacenění' : `${money(variant.price)} Kč bez DPH`}</p>{variant.visualization_url && <img src={variant.visualization_url} alt={`Vizualizace ${variant.label}`} className="mt-3 h-36 w-full rounded-lg object-cover"/>}</div>)}</div></div>}
+              {prepared.variantPricing?.length > 0 && <div className="mt-4 rounded-xl border border-cyan-100 bg-white p-4"><p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Varianty nacenění podle poptávky</p><div className="mt-3 grid gap-3 sm:grid-cols-2">{prepared.variantPricing.map((variant, index) => <div key={`${variant.label}-${index}`} className="rounded-xl border border-slate-200 p-3"><div className="flex items-start justify-between gap-3"><div><p className="text-xs font-bold text-slate-800">{variant.label}</p><p className="mt-1 text-[10px] text-slate-500">{variant.quantity} ks · {variant.unit_price > 0 ? `${money(variant.unit_price)} Kč / ks` : 'jednotková cena k doplnění'}</p></div><span className={`rounded-full px-2 py-1 text-[9px] font-semibold ${index === 0 ? 'bg-cyan-100 text-cyan-800' : 'bg-slate-100 text-slate-500'}`}>{index === 0 ? 'Doporučená' : `Varianta ${index + 1}`}</span></div><p className="mt-3 text-sm font-bold text-[#0e5b67]">{variant.price_status === 'manual_required' || !Number(variant.price) ? 'K individuálnímu nacenění' : `${money(variant.price)} Kč bez DPH`}</p>{variant.pricing_label && <p className="mt-1 text-[9px] leading-relaxed text-slate-400">Zdroj ceny: {variant.pricing_label}</p>}{variant.visualization_url && <img src={variant.visualization_url} alt={`Vizualizace ${variant.label}`} className="mt-3 h-36 w-full rounded-lg object-cover"/>}</div>)}</div></div>}
               {attachments.filter((item) => item.asset_type === 'generated_visualization').length > 0 && <div className="mt-4 grid gap-3 sm:grid-cols-2">{attachments.filter((item) => item.asset_type === 'generated_visualization').slice(0, 4).map((asset) => <div key={asset.id || asset.file_url} className="overflow-hidden rounded-xl border border-cyan-100 bg-white"><img src={asset.file_url} alt={asset.title || 'Vizualizace projektu'} className="h-48 w-full object-cover"/><p className="px-3 py-2 text-[11px] font-medium text-slate-600">{asset.title || 'Vizualizace varianty'}</p></div>)}</div>}
               {prepared.presentationWarning && <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">PDF nabídka byla připravena, ale prezentaci se nepodařilo dokončit: {prepared.presentationWarning}</p>}
               <p className="mt-3 text-xs leading-relaxed text-slate-600">Výstupy jsou klientské: bez interních poznámek, s projektovým shrnutím, vybranou vizualizací a cenou bez DPH. Před odesláním je můžete zkontrolovat a přegenerovat.</p>

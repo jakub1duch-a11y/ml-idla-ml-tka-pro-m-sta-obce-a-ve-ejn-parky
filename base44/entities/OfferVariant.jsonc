@@ -1,0 +1,98 @@
+{
+  "name": "OfferVariant",
+  "type": "object",
+  "properties": {
+    "inquiry_id": {
+      "type": "string",
+      "description": "ID zdrojov\u00e9 popt\u00e1vky"
+    },
+    "inquiry_type": {
+      "type": "string",
+      "enum": [
+        "poptavka",
+        "contact"
+      ]
+    },
+    "project_order_id": {
+      "type": "string",
+      "description": "Odkaz na ProjectOrder"
+    },
+    "label": {
+      "type": "string",
+      "description": "Klientsk\u00fd n\u00e1zev varianty"
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number",
+      "minimum": 1
+    },
+    "unit_price": {
+      "type": "number",
+      "description": "Jednotkov\u00e1 cena bez DPH p\u0159evzat\u00e1 z katalogu"
+    },
+    "total_price": {
+      "type": "number",
+      "description": "Celkov\u00e1 cena varianty bez DPH"
+    },
+    "price_status": {
+      "type": "string",
+      "enum": [
+        "catalog",
+        "manual_required"
+      ],
+      "default": "catalog"
+    },
+    "visualization_url": {
+      "type": "string",
+      "description": "Vizualizace odpov\u00eddaj\u00edc\u00ed p\u0159esn\u011b t\u00e9to variant\u011b"
+    },
+    "visualization_prompt": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "recommended": {
+      "type": "boolean",
+      "default": false
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "inquiry_id",
+    "label",
+    "product_name",
+    "quantity"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

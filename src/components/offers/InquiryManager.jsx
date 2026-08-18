@@ -298,16 +298,10 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         console.warn('Offer presentation unavailable', presentationError);
       }
 
-      let notebookSourceUrl = '';
-      try {
-        const sourcePackResponse = await base44.functions.invoke('generateOfferSourcePack', {
-          inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
-          product: productForOffer,
-          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
-          presentation_url: presentation?.presentation_url || '', quote_pdf_url: quoteDriveUrl, ar_url: arUrl, audience_variant: audienceForOffer,
-        });
-        notebookSourceUrl = sourcePackResponse.data?.source_url || '';
-      } catch (sourcePackError) { console.warn('NotebookLM source pack unavailable', sourcePackError); }
+      // NotebookLM is intentionally not part of the critical offer path.
+      // The customer-facing web portal + PDF are the primary presentation outputs;
+      // an external presentation is optional and must never block offer creation.
+      const notebookSourceUrl = '';
 
       const orderData = {
         inquiry_id: selected.id, inquiry_type: selected.type,
@@ -369,9 +363,23 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       if (!autoProduct) throw new Error('AI vybrala produkt, který není v aktuálním katalogu.');
 
       const requestedQuantity = Math.max(1, Number(result.requested_quantity || 1));
-      const autoVariants = Array.isArray(result.requested_variants) && result.requested_variants.length
+      const rawVariants = Array.isArray(result.requested_variants) && result.requested_variants.length
         ? result.requested_variants
-        : [{ label: `${requestedQuantity} ks ${autoProduct.name}`, quantity: requestedQuantity, price: Number(autoProduct.price_from || 0) * requestedQuantity }];
+        : [{ label: `${requestedQuantity} ks ${autoProduct.name}`, quantity: requestedQuantity }];
+      const catalogUnitPrice = Number(autoProduct.price_from || 0);
+      const autoVariants = rawVariants.map((variant, index) => {
+        const quantity = Math.max(1, Number(variant.quantity || requestedQuantity || 1));
+        const catalogPrice = catalogUnitPrice > 0 ? catalogUnitPrice * quantity : 0;
+        return {
+          ...variant,
+          label: variant.label || `${quantity} ks ${autoProduct.name}`,
+          quantity,
+          unit_price: catalogUnitPrice,
+          price: catalogPrice,
+          price_status: catalogUnitPrice > 0 ? 'catalog' : 'manual_required',
+          visualization_url: result.visualization_assets?.[index]?.file_url || result.visualization_assets?.[index]?.url || '',
+        };
+      });
       const primaryVariant = autoVariants[0];
       const autoPrice = Number(primaryVariant?.price || 0) || (Number(autoProduct.price_from || 0) * Number(primaryVariant?.quantity || requestedQuantity));
       const autoAudience = result.audience_variant || 'custom';
@@ -382,7 +390,11 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       setAudienceVariant(autoAudience);
 
       const returnedVisualAssets = Array.isArray(result.visualization_assets) && result.visualization_assets.length
-        ? result.visualization_assets
+        ? result.visualization_assets.map((asset, index) => ({
+            ...asset,
+            title: asset.title || `Vizualizace varianty — ${autoVariants[index]?.label || autoProduct.name}`,
+            description: asset.description || `Fotorealistická vizualizace odpovídající variantě ${autoVariants[index]?.label || autoProduct.name}. Počet výrobků musí odpovídat variantě nabídky.`,
+          }))
         : result.visualization_asset ? [result.visualization_asset] : (result.visualization_url ? [{
           inquiry_id: selected.id,
           inquiry_type: selected.type,
@@ -398,6 +410,32 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       const nextAttachments = [...attachments.filter((item) => !returnedUrls.has(item.file_url)), ...returnedVisualAssets];
       setAttachments(nextAttachments);
 
+      // Persist quantity/price/visual mapping separately so every offer variant has
+      // an auditable price source and its own matching visualization.
+      try {
+        const existingVariants = await base44.entities.OfferVariant.filter({ inquiry_id: selected.id });
+        await Promise.all(autoVariants.map(async (variant, index) => {
+          const payload = {
+            inquiry_id: selected.id,
+            inquiry_type: selected.type,
+            label: variant.label,
+            product_id: autoProduct.id,
+            product_slug: autoProduct.slug,
+            product_name: autoProduct.name,
+            quantity: variant.quantity,
+            unit_price: variant.unit_price,
+            total_price: variant.price,
+            price_status: variant.price_status,
+            visualization_url: variant.visualization_url || returnedVisualAssets[index]?.file_url || '',
+            visualization_prompt: `Ultrarealistická realizace podle textu poptávky. Přesně ${variant.quantity} ks produktu ${autoProduct.name}; konstrukci produktu neměnit.`,
+            recommended: index === 0,
+            sort_order: index,
+          };
+          const existing = (existingVariants || []).find((row) => Number(row.sort_order || 0) === index);
+          return existing?.id ? base44.entities.OfferVariant.update(existing.id, payload) : base44.entities.OfferVariant.create(payload);
+        }));
+      } catch (variantSaveError) { console.warn('Offer variants could not be persisted', variantSaveError); }
+
       await prepareOffer({
         product: autoProduct,
         basePrice: autoPrice,
@@ -410,7 +448,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           solution_summary: `${result.ai_content.solution_summary || ''}${autoVariants.length > 1 ? `\n\nCenové varianty: ${autoVariants.map((variant) => `${variant.label}: ${Number(variant.price || 0).toLocaleString('cs-CZ')} Kč bez DPH`).join(' · ')}` : ''}`,
         } : null,
         projectOrder: result.project_order || null,
-        priceIsEstimate: !Number(autoProduct.price_from || 0),
+        priceIsEstimate: !catalogUnitPrice,
         variantPricing: autoVariants,
         auto: true,
       });

@@ -189,6 +189,13 @@ export default function Architekti() {
         </div>
       </section>
 
+      <SegmentReferenceShowcase
+        segment="architects"
+        eyebrow="Reference pro projektanty"
+        title="Od autorského konceptu po provozní detail."
+        referenceIds={['6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f', '6a480c0da87022c6c9559115']}
+      />
+
       {/* Co nabízíme */}
       <section className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -221,9 +228,9 @@ export default function Architekti() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Materiály a povrchy</p>
         <h2 className="text-slate-900 text-3xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-          Nerez AISI 316<br /><span style={{ fontStyle: 'italic' }}>ve čtyřech úpravách.</span>
+          Nerezové provedení<br /><span style={{ fontStyle: 'italic' }}>pro konkrétní projekt.</span>
         </h2>
-        <p className="text-slate-500 max-w-2xl font-light mb-10">Vyberte povrchovou úpravu, která ladí s materiálovým konceptem vašeho projektu. Vzorník zašleme na vyžádání zdarma.</p>
+        <p className="text-slate-500 max-w-2xl font-light mb-10">Materiálovou jakost a povrch volíme podle konkrétního produktu, prostředí a požadavků projektu. K dispozici jsou broušené, leštěné i dekorativní varianty.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {FINISHES.map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -236,7 +243,7 @@ export default function Architekti() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
+      <section id="projektova-konzultace" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24" data-analytics-section="architects-consultation">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Proberme technické řešení vašeho návrhu.</h3>

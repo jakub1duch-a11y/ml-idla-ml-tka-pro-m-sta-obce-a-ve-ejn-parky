@@ -352,6 +352,68 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 
+  const autoPrepareFromText = async () => {
+    if (!selected?.id || busy) return;
+    if (selected.type !== 'poptavka') {
+      setError('Automatická nabídka z textu je zatím dostupná pro poptávky. Kontaktní zprávu můžete nejdříve převést na poptávku.');
+      return;
+    }
+    setError('');
+    setBusy('auto-offer');
+    try {
+      const response = await base44.functions.invoke('autoDraftOfferFromInquiry', {
+        inquiry_id: selected.id,
+        inquiry_type: selected.type,
+        force: true,
+      });
+      const result = response.data || {};
+      const autoProduct = products.find((item) => item.id === result.product_id)
+        || products.find((item) => item.slug === result.product_slug);
+      if (!autoProduct) throw new Error('AI vybrala produkt, který není v aktuálním katalogu.');
+
+      const autoPrice = Number(autoProduct.price_from || 0);
+      const autoAudience = result.audience_variant || 'custom';
+      setProductId(autoProduct.id);
+      setBasePrice(autoPrice);
+      setInstallation(0);
+      setDiscount(0);
+      setAudienceVariant(autoAudience);
+
+      const visualAsset = result.visualization_asset || (result.visualization_url ? {
+        inquiry_id: selected.id,
+        inquiry_type: selected.type,
+        file_url: result.visualization_url,
+        file_name: `${autoProduct.slug || 'mlzitko'}-auto-vizualizace.webp`,
+        file_type: 'image/webp',
+        asset_type: 'generated_visualization',
+        title: `AI koncept — ${autoProduct.name}`,
+        selected_for_offer: true,
+        generated_by_ai: true,
+      } : null);
+      const nextAttachments = visualAsset
+        ? [...attachments.filter((item) => item.file_url !== visualAsset.file_url), visualAsset]
+        : attachments;
+      setAttachments(nextAttachments);
+
+      await prepareOffer({
+        product: autoProduct,
+        basePrice: autoPrice,
+        installation: 0,
+        discount: 0,
+        audienceVariant: autoAudience,
+        visualizationUrl: result.visualization_url || '',
+        clientContent: result.ai_content || null,
+        projectOrder: result.project_order || null,
+        auto: true,
+      });
+      await onSent?.();
+    } catch (requestError) {
+      setError(errorMessage(requestError));
+    } finally {
+      setBusy('');
+    }
+  };
+
   const sendReply = async () => {
     if (!selected || !prepared || !approvedToSend || !subject || !message) return;
     setError(''); setBusy('send');

@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
+import { findSmartControlPricing } from '../../shared/pricingSheet.ts';
 
 const clean = (value: unknown) => String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -16,13 +17,16 @@ export default async function(req: Request) {
     const validUntil = quote.valid_until ? new Date(quote.valid_until) : new Date(issuedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
     const quoteNumber = quote.quote_number || `MLZ-${issuedAt.getFullYear()}-${String(Date.now()).slice(-6)}`;
     const gallery = (product.gallery_urls || []).filter(Boolean).slice(0, 10);
+    const smartPricing = await findSmartControlPricing(base44);
+    const waterManagementPrice = (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0);
 
     const content = `# MLŽIDLA.cz by HolmTec — zdrojový balíček obchodní nabídky\n\n` +
 `## Identifikace nabídky\n- Číslo nabídky: ${quoteNumber}\n- Vystaveno: ${issuedAt.toLocaleDateString('cs-CZ')}\n- Platnost do: ${validUntil.toLocaleDateString('cs-CZ')}\n- Cílová varianta prezentace: ${audienceVariant}\n\n` +
 `## Žadatel / odběratel\n- Jméno: ${clean(inquiry.name) || 'neuvedeno'}\n- Firma / organizace: ${clean(inquiry.company) || 'neuvedeno'}\n- E-mail: ${clean(inquiry.email) || 'neuvedeno'}\n- Telefon: ${clean(inquiry.phone) || 'neuvedeno'}\n- Zadání: ${clean(inquiry.message) || 'neuvedeno'}\n\n` +
 `## Dodavatel\n- MLŽIDLA.cz by HolmTec\n- HolmTec s.r.o.\n- Kontaktní osoba: Ing. Radek Meduna\n- Telefon: +420 774 700 390\n- E-mail: meduna@holmtec.cz / info@mlzidla.cz\n- Adresa: Horní Staré Město 698, 541 02 Trutnov\n- IČ: 27486893\n- DIČ: CZ27486893\n\n` +
-`## Vybraný produkt\n- Název: ${product.name}\n- Slug: ${product.slug || ''}\n- Stručný popis: ${clean(product.short_description)}\n- Materiál: ${clean(product.material)}\n- Výška / dosah: ${clean(product.coverage_area)}\n- Provozní tlak: ${clean(product.pressure)}\n- Spotřeba vody: ${clean(product.water_consumption)}\n- Mlžné trysky / kapka: ${clean(product.micron_size)}\n- Napájení / řízení: ${clean(product.power_supply)}\n\n` +
-`## Smart řízení\nVolitelné řízení přes Wi-Fi / aplikaci, časové harmonogramy a podle projektu senzory, snímače, měřiče průtoku a další moduly. Neuváděj neověřené funkce.\n\n` +
+`## Vybraný produkt\n- Název: ${product.name}\n- Slug: ${product.slug || ''}\n- Stručný popis: ${clean(product.short_description)}\n- Materiál: ${clean(product.material)}\n- Výška / dosah: ${clean(product.coverage_area)}\n- Napájení / řízení: ${clean(product.power_supply)}\n\n` +
+`## Smart řízení SUPLA — provozní vrstva mlžítek\nSUPLA prezentuj jako systém pro správu a automatizaci mlžítek, ne pouze jako aplikaci k ventilu. Umožňuje podle konfigurace vzdáleně řídit vodní větve a zóny, nastavit libovolné časové harmonogramy a cykly, používat automatické scénáře podle teploty a vlhkosti, sledovat spotřebu vody a stav provozu. Podle projektu lze doplnit integrační logiku s externím API počasí, například blokaci při dešti nebo nevhodných podmínkách. Funkci API počasí uváděj jako volitelnou projektovou integraci, nikoli jako standardní garantovanou funkci SUPLA.\n\n` +
+`### Smart varianty a ceny bez DPH\n- PEVEKO SMART SUPLA Wi‑Fi ventil: ${smartPricing.component_wifi_valve_ex_vat > 0 ? `${smartPricing.component_wifi_valve_ex_vat.toLocaleString('cs-CZ')} Kč` : 'dle ceníku'}\n- SUPLA ROW‑02 Wi‑Fi spínací modul: ${smartPricing.component_row02_ex_vat > 0 ? `${smartPricing.component_row02_ex_vat.toLocaleString('cs-CZ')} Kč` : 'dle ceníku'}\n- Měření a správa spotřeby vody — ENBRA + LIW‑01: ${waterManagementPrice > 0 ? `${waterManagementPrice.toLocaleString('cs-CZ')} Kč` : 'dle ceníku'}\n- Teplota a vlhkost — SUPLA THW‑01: ${smartPricing.component_thw01_ex_vat > 0 ? `${smartPricing.component_thw01_ex_vat.toLocaleString('cs-CZ')} Kč` : 'dle ceníku'}\n- Kompletní projektové SUPLA řízení: ${smartPricing.complete_supla_ex_vat > 0 ? `${smartPricing.complete_supla_ex_vat.toLocaleString('cs-CZ')} Kč` : 'dle konfigurace'}\n- Externí API počasí / nestandardní automatizační logika: individuální nacenění podle rozsahu integrace.\n\n` +
 `## Cena\n- Cena projektu bez DPH: ${quote.final_total ? `${Number(quote.final_total).toLocaleString('cs-CZ')} Kč` : 'dle potvrzené konfigurace'}\n- Cena produktu: ${quote.base_price ? `${Number(quote.base_price).toLocaleString('cs-CZ')} Kč` : 'neuvedeno'}\n- Instalace: ${quote.installation ? `${Number(quote.installation).toLocaleString('cs-CZ')} Kč` : 'neuvedeno'}\n- Sleva: ${quote.discount_percent ? `${quote.discount_percent} %` : '0 %'}\n\n` +
 `## Odkazy\n- PDF cenová nabídka: ${quotePdfUrl || 'bude doplněna'}\n- Google prezentace: ${presentationUrl || 'bude doplněna'}\n- AR / vizualizace: ${arUrl || 'není k dispozici'}\n- Zákaznický portál: https://mlzidla.cz/muj-projekt\n- Smart řízení: https://mlzidla.cz/smart-ovladani\n\n` +
 `## Produktové a realizační obrázky\n${[product.image_url, ...gallery].filter(Boolean).map((url, index) => `${index + 1}. ${url}`).join('\n') || 'Nejsou připojeny.'}\n\n` +

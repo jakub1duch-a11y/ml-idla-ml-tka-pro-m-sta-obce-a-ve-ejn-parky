@@ -104,6 +104,16 @@ export default function AdminAnalytics() {
         ['Odeslaný lead', 'funnel_architects_lead_submit'],
       ],
     },
+    {
+      title: 'Zahrady a rezidence · 28 dní',
+      rows: [
+        ['Landing page', 'funnel_residential_landing_view'],
+        ['Konzultace / CTA', 'funnel_residential_consultation_click'],
+        ['AI vizualizace', 'funnel_residential_visualizer_click'],
+        ['Zahradní kolekce', 'funnel_residential_catalog_click'],
+        ['Odeslaný lead', 'funnel_residential_lead_submit'],
+      ],
+    },
   ];
 
   return <div className="space-y-6 p-6">

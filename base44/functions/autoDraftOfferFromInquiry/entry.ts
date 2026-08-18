@@ -148,7 +148,6 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
     const variantSpecs = variantLabels.map((label, index) => {
       const quantityMatch = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
       const quantity = quantityMatch ? Math.max(1, Number(quantityMatch[1])) : (allRequestedQuantities[index] || requestedQuantity);
-      const unitPrice = Number(product.price_from || 0);
       return { label, quantity, unit_price: unitPrice, price: unitPrice > 0 ? unitPrice * quantity : 0 };
     });
 
@@ -200,7 +199,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       presentation_variant: audienceVariant,
       smart_control_included: false,
       status: 'draft',
-      total_price: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * requestedQuantity : 0,
+      total_price: unitPrice > 0 ? unitPrice * requestedQuantity : 0,
       sender_email: 'meduna@holmtec.cz',
       bcc_recipients: ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'],
       supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz',
@@ -270,11 +269,11 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
           quantity: variant.quantity,
           configuration: variant.quantity === 1 ? 'single' : variant.quantity === 2 ? 'duo' : variant.quantity === 3 ? 'trio' : 'custom',
           environment: audienceVariant,
-          unit_price: Number(product.price_from || 0),
-          products_subtotal: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * variant.quantity : 0,
-          total_price: Number(product.price_from || 0) > 0 ? Number(product.price_from || 0) * variant.quantity : 0,
-          price_status: Number(product.price_from || 0) > 0 ? 'complete' : 'missing_price',
-          line_items: Number(product.price_from || 0) > 0 ? [{ label: product.name, quantity: variant.quantity, unit: 'ks', unit_price: Number(product.price_from || 0), total: Number(product.price_from || 0) * variant.quantity, source: 'Product.price_from' }] : [],
+          unit_price: unitPrice,
+          products_subtotal: unitPrice > 0 ? unitPrice * variant.quantity : 0,
+          total_price: unitPrice > 0 ? unitPrice * variant.quantity : 0,
+          price_status: unitPrice > 0 ? 'complete' : 'missing_price',
+          line_items: unitPrice > 0 ? [{ label: product.name, quantity: variant.quantity, unit: 'ks', unit_price: unitPrice, total: unitPrice * variant.quantity, source: pricingSource === 'mlzny_disk' ? pricing.source : 'Product.price_from' }] : [],
           visualization_asset_ids: [visualizationAsset.id],
           primary_visualization_id: visualizationAsset.id,
           presentation_title: visual.label || variant.label,

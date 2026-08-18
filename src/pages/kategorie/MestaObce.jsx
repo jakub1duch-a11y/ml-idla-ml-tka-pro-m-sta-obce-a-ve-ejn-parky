@@ -76,6 +76,35 @@ export default function MestaObce() {
         </div>
       </section>
 
+      {/* Konverzní cesta pro města a obce */}
+      <section className="border-b border-slate-200 bg-white" data-analytics-section="cities-funnel">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              ['01', 'Popište místo', 'Lokalita, typ veřejného prostoru, přibližná plocha a co chcete zlepšit během horkých dnů.'],
+              ['02', 'Navrhneme variantu', 'Vybereme vhodnou konfiguraci, připravíme orientační rozmístění a doporučení pro Smart řízení.'],
+              ['03', 'Doplníme podklady', 'Technické řešení, stavební připravenost, nabídka, instalace a následný servis v jednom toku.'],
+            ].map(([number, heading, text]) => (
+              <div key={number} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <span className="font-mono text-[11px] tracking-widest text-slate-400">{number}</span>
+                <h2 className="mt-4 text-lg font-semibold text-slate-900">{heading}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 font-light">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('cities', 'visualizer_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
+              Vytvořit vizualizaci záměru <ArrowRight size={14} />
+            </Link>
+            <Link to="/reference" onClick={() => trackFunnelStep('cities', 'references_all_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+              Prohlédnout realizace
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Výhody */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -95,10 +124,10 @@ export default function MestaObce() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-              { val: '9 °C', label: 'Max. ochlazení' },
-              { val: '120+', label: 'Realizací' },
-              { val: '5 let', label: 'Záruka' },
-              { val: '0%', label: 'Chemie' }].
+              { val: 'Smart', label: 'Automatické řízení' },
+              { val: 'Nerez', label: 'Odolné provedení' },
+              { val: 'Na míru', label: 'Projektové řešení' },
+              { val: '0%', label: 'Chemické přísady' }].
               map((s) =>
               <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
                   <p className="font-heading text-slate-900 mb-1 text-4xl" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>

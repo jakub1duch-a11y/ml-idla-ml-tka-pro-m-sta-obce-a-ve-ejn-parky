@@ -135,7 +135,7 @@ async function getGa4(base44: any) {
       dimensionFilter: {
         filter: {
           fieldName: 'eventName',
-          inListFilter: { values: ['generate_lead','phone_click','email_click','cta_click','form_start','quick_inquiry_click','view_item','select_item','scroll_depth','section_view','video_start','video_complete','sign_up','visualization_complete','file_download'] },
+          inListFilter: { values: ['generate_lead','phone_click','email_click','cta_click','form_start','quick_inquiry_click','view_item','select_item','scroll_depth','section_view','video_start','video_complete','sign_up','visualization_complete','file_download','funnel_cities_landing_view','funnel_cities_consultation_click','funnel_cities_visualizer_click','funnel_cities_references_all_click','funnel_cities_reference_open','funnel_cities_lead_submit','funnel_architects_landing_view','funnel_architects_consultation_click','funnel_architects_visualizer_click','funnel_architects_downloads_click','funnel_architects_references_all_click','funnel_architects_reference_open','funnel_architects_lead_submit'] },
         },
       },
       orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],

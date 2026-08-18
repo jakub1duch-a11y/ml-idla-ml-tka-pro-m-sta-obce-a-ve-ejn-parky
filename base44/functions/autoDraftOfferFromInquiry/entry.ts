@@ -122,7 +122,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. U B
       ? `SCENE LOCK: PRVNÍ referenční obrázek je skutečná fotografie prostoru klienta. Zachovej jeho kompozici, perspektivu, architekturu, cesty, lavičky, zeleň, mobiliář, světlo a všechny existující prvky. Scénu nepřestavuj; pouze realisticky osaď vybraný produkt do vhodného místa.`
       : `TEXT CONCEPT MODE: klient nedodal použitelnou fotografii prostoru. Vytvoř proto věrohodnou ilustrační projektovou scénu podle textové poptávky a jasně ji pojmi jako koncept, nikoli jako dokumentaci skutečného stavu.`;
     const productLock = isBendy
-      ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. Malé kovové trysky jsou přímo v hlavní trubce. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
+      ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. U každého samostatného BENDY zobraz maximálně 2 malé reálné kovové trysky, pouze pokud jejich poloha odpovídá referenčním fotografiím skutečného produktu. Pokud je poloha trysek na referenci čitelná, kopíruj ji přesně. Nevymýšlej další trysky. Jemná mlha musí vycházet fyzicky pouze z otvorů těchto trysek a ve směru jejich skutečné orientace; žádná mlha nesmí vznikat z povrchu trubky, spojů, patky ani z volného prostoru. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
       : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej. Zachovej počet nosných trubek/profilů, typ ohybů, spoje, patku nebo kotvení a skutečné umístění trysek. Nevytvářej hybrid více různých výrobků.`;
 
     const requestedQuantity = Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
@@ -169,7 +169,7 @@ ${productLock}
 
 LIDÉ A REÁLNÉ UŽÍVÁNÍ PROSTORU: ${short(analysis?.people_context, 700) || 'Přidej několik přirozeně působících uživatelů odpovídajících účelu prostoru podle poptávky.'} Pokud poptávka zmiňuje domov pro seniory, seniory, pečovatelskou službu nebo obdobné zařízení, zobraz několik starších dospělých osob přibližně 65+, přirozeně oblečených, část při klidné chůzi a část při posezení či rozhovoru; lze přidat jednoho člena personálu nebo doprovodu. Osoby nesmí působit aranžovaně, nesmí překrývat konstrukci ani trysky a nesmí být dominantnější než návrh mlžítka. Nezobrazuj známé ani konkrétní skutečné osoby.
 
-PRODUCT IDENTITY CHECK: produkt musí být na první pohled totožný s MASTER referencemi. Pokud jsou reference fotografie produktu, dej geometrické a konstrukční přesnosti přednost před estetickou stylizací. Přesně dodrž počet ${variant.quantity} ks; jednotlivé kusy neslučuj, nezrcadli do nového tvaru a nevytvářej další kusy v pozadí. Trysky musí být malé kovové komponenty fyzicky osazené přímo do konstrukce. Nepřidávej viditelné hadice ani kabely, pokud nejsou součástí MASTER reference.
+PRODUCT IDENTITY CHECK: produkt musí být na první pohled totožný s MASTER referencemi. Pokud jsou reference fotografie produktu, dej geometrické a konstrukční přesnosti přednost před estetickou stylizací. Přesně dodrž počet ${variant.quantity} ks; jednotlivé kusy neslučuj, nezrcadli do nového tvaru a nevytvářej další kusy v pozadí. Trysky musí být malé kovové komponenty fyzicky osazené přímo do konstrukce a jejich poloha, počet a orientace se musí řídit skutečnými referencemi produktu. Mlha smí vycházet výhradně z trysek a musí začínat přesně v jejich ústí; vytvoř jemný krátký kužel mlhy, který se přirozeně rozptyluje do vzduchu. Nepřidávej viditelné hadice ani kabely, pokud nejsou součástí MASTER reference.
 
 Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
         existing_image_urls: imageReferences,
@@ -288,20 +288,6 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         });
         offerVariants.push(offerVariant);
 
-        await base44.asServiceRole.entities.NozzleCalculation.create({
-          inquiry_id: inquiryId,
-          project_order_id: order.id,
-          offer_variant_id: offerVariant.id,
-          variant_key: variantKey,
-          product_slug: product.slug || '',
-          product_name: product.name,
-          product_quantity: variant.quantity,
-          zone_count: 1,
-          calculation_rows: [],
-          calculation_status: 'needs_data',
-          approved_for_offer: false,
-          notes: 'Doplnit podle schválené technické tabulky trysek a skutečného tlaku/přívodu. AI nesmí hodnoty odhadovat.'
-        });
       } catch (dbError) {
         console.warn('Variant / visualization DB indexing failed', dbError);
       }

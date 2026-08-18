@@ -110,7 +110,7 @@ export default async function(req) {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom' } = body;
+    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], nozzle_calculations: nozzleCalculations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom' } = body;
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
 
@@ -175,8 +175,20 @@ export default async function(req) {
     requests.push(...shapeText('t3d', s[2], clientBenefits.map((b) => `• ${b}`).join('\n\n'), 48, 245, 330, 125, 14, INK, false));
     if (product.image_url) requests.push(image('img3', s[2], product.image_url, 410, 75, 265, 275));
 
-    // 4 — technical confidence
-    const specs = [product.coverage_area && `Výška / dosah: ${product.coverage_area}`, product.material && `Materiál: ${product.material}`, product.pressure && `Provozní tlak: ${product.pressure}`, product.water_consumption && `Spotřeba vody: ${product.water_consumption}`, product.micron_size && `Mlžné trysky: ${product.micron_size}`, product.power_supply && `Řízení: ${product.power_supply}`].filter(Boolean).join('\n\n');
+    // 4 — technical confidence + approved nozzle calculation
+    const approvedNozzleText = (Array.isArray(nozzleCalculations) ? nozzleCalculations : []).filter((item) => item?.approved_for_offer).map((item) => {
+      const parts = [
+        item.variant_key && `Varianta ${item.variant_key}`,
+        item.total_nozzles != null && `celkem ${item.total_nozzles} trysek`,
+        item.nozzles_per_product != null && `${item.nozzles_per_product} tr./produkt`,
+        item.flow_per_nozzle_l_min != null && `průtok 1 trysky ${item.flow_per_nozzle_l_min} l/min`,
+        item.total_flow_l_min != null && `celkový průtok ${item.total_flow_l_min} l/min`,
+        item.working_pressure_bar != null && `pracovní tlak ${item.working_pressure_bar} bar`,
+        item.zone_count != null && `${item.zone_count} zóna/zón`,
+      ].filter(Boolean);
+      return parts.join(' · ');
+    }).join('\n');
+    const specs = [product.coverage_area && `Výška / dosah: ${product.coverage_area}`, product.material && `Materiál: ${product.material}`, product.pressure && `Provozní tlak: ${product.pressure}`, product.water_consumption && `Spotřeba vody: ${product.water_consumption}`, product.micron_size && `Mlžné trysky: ${product.micron_size}`, product.power_supply && `Řízení: ${product.power_supply}`, approvedNozzleText && `SCHVÁLENÝ VÝPOČET TRYSEK\n${approvedNozzleText}`].filter(Boolean).join('\n\n');
     requests.push(background(s[3], WHITE), ...accentBar('a4', s[3], 0, 0, 720, 8));
     requests.push(...shapeText('t4a', s[3], 'Technicky čisté řešení', 48, 42, 460, 45, 25, PETROL, true));
     requests.push(...shapeText('t4b', s[3], specs || 'Přesná technická konfigurace bude potvrzena podle konkrétního místa instalace.', 48, 110, 610, 205, 15, INK, false));
@@ -200,7 +212,10 @@ export default async function(req) {
     requests.push(background(s[6], LIGHT), ...accentBar('a7', s[6], 0, 0, 14, 405, ACCENT));
     requests.push(...shapeText('t7a', s[6], 'Než objednáte, můžete řešení vidět ve svém prostoru.', 48, 38, 610, 70, 25, PETROL, true));
     requests.push(...shapeText('t7b', s[6], 'Z fotografie, náčrtu nebo dokumentace lze připravit více vizualizačních variant. U zakázkových řešení slouží vizualizace jako první krok k výběru směru, který se následně technicky dopracuje do vyrobitelné podoby.', 48, 118, 610, 105, 15, MUTED, false));
-    if (arCaptureUrl) requests.push(image('arcap', s[6], arCaptureUrl, 48, 225, 355, 145));
+    const presentationVisualUrl = (Array.isArray(approvedVisualizations) ? approvedVisualizations : []).find((item) => item?.approved_for_presentation && item?.is_primary_for_variant)?.image_url
+      || (Array.isArray(approvedVisualizations) ? approvedVisualizations : []).find((item) => item?.approved_for_presentation)?.image_url
+      || arCaptureUrl;
+    if (presentationVisualUrl) requests.push(image('arcap', s[6], presentationVisualUrl, 48, 225, 355, 145));
     if (arQrImageUrl) requests.push(image('arqr', s[6], arQrImageUrl, 465, 230, 100, 100));
     requests.push(...shapeText('t7c', s[6], arUrl ? `AR / vizualizace:\n${arUrl}` : 'AR nebo vizualizace bude připojena podle dostupného modelu a podkladů.', 430, 335, 245, 40, 11, INK, false));
 

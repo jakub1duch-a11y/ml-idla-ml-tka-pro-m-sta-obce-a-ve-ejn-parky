@@ -236,7 +236,13 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         : productForOffer.slug === 'mlzna-brana-gate'
           ? 'https://mlzidla.cz/ar/gate'
           : `https://mlzidla.cz/produkt/${productForOffer.slug}`;
-      const visualizationUrl = visualizationOverride || attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
+      let approvedVisualizationAssets = [];
+      let approvedNozzleCalculations = [];
+      try {
+        approvedVisualizationAssets = (await base44.entities.VisualizationAsset.filter({ source_inquiry_id: selected.id, approved_for_presentation: true })) || [];
+        approvedNozzleCalculations = (await base44.entities.NozzleCalculation.filter({ inquiry_id: selected.id, approved_for_offer: true })) || [];
+      } catch (technicalDataError) { console.warn('Approved technical offer data unavailable', technicalDataError); }
+      const visualizationUrl = visualizationOverride || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
 
       let clientContent = clientContentOverride || {
         project_goal: `Návrh řešení ${productForOffer.name} pro ${selected.firma || selected.company || selected.name}.`,
@@ -290,6 +296,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), price_is_estimate: priceIsEstimate },
           ar_url: arUrl,
           ar_capture_url: visualizationUrl,
+          approved_visualizations: approvedVisualizationAssets,
+          nozzle_calculations: approvedNozzleCalculations,
           ai_content: clientContent,
           audience_variant: audienceForOffer,
         });
@@ -342,7 +350,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, clientContent, variantPricing: options.variantPricing || [] });
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, approvedNozzleCalculations, clientContent, variantPricing: options.variantPricing || [] });
       if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${productForOffer.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${productForOffer.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }

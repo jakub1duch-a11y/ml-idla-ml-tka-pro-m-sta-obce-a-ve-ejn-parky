@@ -6,6 +6,8 @@ import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import { trackFunnelStep } from '@/lib/ga4';
 
 const USE_CASES = [
 { emoji: '🌿', title: 'Soukromé zahrady', desc: 'Mlžný prvek jako dominanta zahrady — chladivá mlha mezi zelení, klidná atmosféra i v letních vedrech.' },
@@ -20,8 +22,12 @@ export default function Outdoor() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.outdoor);
+    trackFunnelStep('residential', 'landing_view', 'Outdoor a zahrady');
+    const preferredSlugs = ['garden-cooling-set', 'aura-mlzitko', 'aura-garden-duo', 'mlzitko-bendy', 'mlzitko-mrak', 'mlzitko-volavka'];
     base44.entities.Product.list().catch(() => []).then((p) => {
-      setProducts((p || []).slice(0, 6));
+      const all = p || [];
+      const selected = preferredSlugs.map((slug) => all.find((product) => product.slug === slug)).filter(Boolean);
+      setProducts(selected.length ? selected : all.filter((product) => product.featured).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -46,8 +52,8 @@ export default function Outdoor() {
               Pro soukromé a rezidenční zahrady, terasy i venkovní wellness navrhujeme nerezová mlžítka jako přirozenou součást architektury. Tvar, rozměr i způsob řízení přizpůsobíme konkrétnímu prostoru.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Probrat záměr <ArrowRight size={15} />
+              <a href="#poptavka" onClick={() => trackFunnelStep('residential', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+                Navrhnout řešení pro zahradu <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)

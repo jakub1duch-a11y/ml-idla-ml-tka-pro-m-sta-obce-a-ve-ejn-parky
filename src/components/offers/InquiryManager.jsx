@@ -354,10 +354,6 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
 
   const autoPrepareFromText = async () => {
     if (!selected?.id || busy) return;
-    if (selected.type !== 'poptavka') {
-      setError('Automatická nabídka z textu je zatím dostupná pro poptávky. Kontaktní zprávu můžete nejdříve převést na poptávku.');
-      return;
-    }
     setError('');
     setBusy('auto-offer');
     try {

@@ -105,13 +105,13 @@ async function addHeader(doc, { type, quoteNumber, issued, validUntil }) {
   doc.setDrawColor(...border); doc.line(M, 40, W - M, 40);
 }
 
-function addFooter(doc, page, totalPages = 1) {
+function addFooter(doc) {
   const W = 210, M = 14;
-  const navy = [10, 22, 40], muted = [91, 108, 116], accent = [43, 191, 207];
-  doc.setDrawColor(213, 225, 226); doc.line(M, 279, W - M, 279);
-  doc.setTextColor(...navy); doc.setFontSize(6.8); doc.text('MLŽIDLA.cz by HolmTec · HolmTec s.r.o. · Horní Staré Město 698 · 541 02 Trutnov', M, 284);
-  doc.setTextColor(...muted); doc.setFontSize(6.5); doc.text('IČ 27486893 · DIČ CZ27486893 · +420 774 700 390 · meduna@holmtec.cz · info@mlzidla.cz · mlzidla.cz', M, 289);
-  doc.setTextColor(...accent); doc.text(`${page}/${totalPages}`, W - M, 289, { align: 'right' });
+  const navy = [13, 45, 56], muted = [103, 124, 131], accent = [43, 191, 207];
+  doc.setDrawColor(222, 232, 234); doc.line(M, 280, W - M, 280);
+  doc.setTextColor(...navy); doc.setFontSize(6.6); doc.text('MLŽIDLA® / HolmTec s.r.o. · Trutnov · Česká republika', M, 285);
+  doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text('+420 774 700 390 · meduna@holmtec.cz · info@mlzidla.cz', M, 290);
+  doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('mlzidla.cz', W - M, 290, { align: 'right' });
 }
 
 async function addQr(doc, url, x, y, size = 24) {
@@ -156,6 +156,8 @@ export default async function(req) {
       portal_url: requestedPortalUrl,
       ar_url: requestedArUrl,
       audience_variant: audienceVariant = 'custom',
+      visualization_urls: visualizationUrls = [],
+      ai_content: aiContent = {},
     } = await req.json();
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
@@ -179,6 +181,11 @@ export default async function(req) {
         ? 'https://mlzidla.cz/ar/gate'
         : `https://mlzidla.cz/produkt/${product.slug || ''}`);
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
+    const projectVisuals = Array.isArray(visualizationUrls) ? visualizationUrls.filter(Boolean).slice(0, 4) : [];
+    const primaryVisual = projectVisuals[0] || product.image_url || '';
+    const projectTitle = safe(aiContent.presentation_title) || `${safe(product.name)} — návrh řešení`;
+    const solutionSummary = safe(aiContent.solution_summary) || safe(product.short_description) || audience.headline;
+    const projectBenefits = Array.isArray(aiContent.benefits) ? aiContent.benefits.map(safe).filter(Boolean).slice(0, 3) : audience.benefits.slice(0, 3);
 
     if (documentType !== 'offer') {
       await addHeader(doc, { type: 'datasheet', quoteNumber, issued, validUntil });

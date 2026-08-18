@@ -268,7 +268,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
         valid_until: validUntil.toISOString(),
         portal_url: 'https://mlzidla.cz/muj-projekt',
         ar_url: arUrl,
-        audience_variant: audienceVariant,
+        audience_variant: audienceForOffer,
       });
       const quote = quoteResponse.data;
 
@@ -288,7 +288,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           ar_url: arUrl,
           ar_capture_url: visualizationUrl,
           ai_content: clientContent,
-          audience_variant: audienceVariant,
+          audience_variant: audienceForOffer,
         });
         presentation = presentationResponse.data;
       } catch (presentationError) {

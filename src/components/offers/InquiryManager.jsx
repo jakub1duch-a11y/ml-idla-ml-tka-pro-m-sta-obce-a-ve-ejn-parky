@@ -244,7 +244,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       };
       try {
         const aiContent = await base44.integrations.Core.InvokeLLM({
-          prompt: `Připrav čistě klientský obsah obchodní nabídky MLŽIDLA.cz. Z následující poptávky vytěž pouze potvrzený účel projektu, potřeby klienta a přínosy navrženého produktu. Nezobrazuj interní komunikaci, instrukce obchodníkovi, ID, historii e-mailů ani interní nejistoty. Nevymýšlej technické parametry ani ceny. Piš česky, profesionálně a stručně. U produktu BENDY respektuj minimalistický čistý nerezový tvar bez výhonků, hadic a přídavných ramen.\n\nKlient: ${selected.name}\nOrganizace: ${selected.firma || selected.company || ''}\nPoptávka: ${selected.message || ''}\nProdukt: ${selectedProduct.name}\nTyp projektu: ${AUDIENCES.find((item) => item.value === audienceVariant)?.label || audienceVariant}`,
+          prompt: `Připrav čistě klientský obsah obchodní nabídky MLŽIDLA.cz. Z následující poptávky vytěž pouze potvrzený účel projektu, potřeby klienta a přínosy navrženého produktu. Nezobrazuj interní komunikaci, instrukce obchodníkovi, ID, historii e-mailů ani interní nejistoty. Nevymýšlej technické parametry ani ceny. Piš česky, profesionálně a stručně. U produktu BENDY respektuj minimalistický čistý nerezový tvar bez výhonků, hadic a přídavných ramen.\n\nKlient: ${selected.name}\nOrganizace: ${selected.firma || selected.company || ''}\nPoptávka: ${selected.message || ''}\nProdukt: ${productForOffer.name}\nTyp projektu: ${AUDIENCES.find((item) => item.value === audienceForOffer)?.label || audienceForOffer}`,
           response_json_schema: {
             type: 'object',
             properties: {
@@ -260,10 +260,10 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       } catch (aiError) { console.warn('Client-facing AI content unavailable', aiError); }
 
       const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
-        product: selectedProduct,
+        product: productForOffer,
         document_type: 'offer',
         inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
-        quote: { final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount) },
+        quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),
         portal_url: 'https://mlzidla.cz/muj-projekt',
@@ -283,8 +283,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       try {
         const presentationResponse = await base44.functions.invoke('generateOfferPresentation', {
           inquiry: { id: selected.id, name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
-          product: selectedProduct,
-          quote: { quote_number: quoteNumber, final_total: finalTotal, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
+          product: productForOffer,
+          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
           ar_url: arUrl,
           ar_capture_url: visualizationUrl,
           ai_content: clientContent,
@@ -300,22 +300,22 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       try {
         const sourcePackResponse = await base44.functions.invoke('generateOfferSourcePack', {
           inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
-          product: selectedProduct,
-          quote: { quote_number: quoteNumber, final_total: finalTotal, base_price: Number(basePrice), installation: Number(installation), discount_percent: Number(discount), issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
-          presentation_url: presentation?.presentation_url || '', quote_pdf_url: quoteDriveUrl, ar_url: arUrl, audience_variant: audienceVariant,
+          product: productForOffer,
+          quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
+          presentation_url: presentation?.presentation_url || '', quote_pdf_url: quoteDriveUrl, ar_url: arUrl, audience_variant: audienceForOffer,
         });
         notebookSourceUrl = sourcePackResponse.data?.source_url || '';
       } catch (sourcePackError) { console.warn('NotebookLM source pack unavailable', sourcePackError); }
 
       const orderData = {
         inquiry_id: selected.id, inquiry_type: selected.type,
-        project_name: `${selectedProduct.name} — ${selected.firma || selected.company || selected.name}`,
+        project_name: `${productForOffer.name} — ${selected.firma || selected.company || selected.name}`,
         client_name: selected.name, client_email: selected.email, client_phone: selected.telefon || selected.phone || '', client_company: selected.firma || selected.company || '',
-        description: String(selected.message || '').slice(0, 2000), product_id: selectedProduct.id, product_slug: selectedProduct.slug, product_name: selectedProduct.name,
+        description: String(clientContent.project_goal || selected.message || '').slice(0, 2000), product_id: productForOffer.id, product_slug: productForOffer.slug, product_name: productForOffer.name,
         quote_number: quoteNumber, quote_pdf_url: quoteDriveUrl, presentation_url: presentation?.presentation_url || '', presentation_pdf_url: presentation?.presentation_pdf_url || '', notebook_source_url: notebookSourceUrl,
         drive_case_folder_id: presentation?.drive_case_folder_id || '', drive_case_folder_url: presentation?.drive_case_folder_url || '',
-        presentation_variant: audienceVariant, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
-        status: 'draft', total_price: finalTotal, sender_email: senderEmail, bcc_recipients: BCC,
+        presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
+        status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,
         supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz', supplier_contact_name: 'Ing. Radek Meduna', supplier_email: senderEmail, supplier_phone: '+420 774 700 390',
         shared_token: prepared?.projectOrder?.shared_token || crypto.randomUUID(),
       };
@@ -345,8 +345,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
       setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, clientContent });
-      if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${selectedProduct.name} | MLŽIDLA®`);
-      if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${selectedProduct.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
+      if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${productForOffer.name} | MLŽIDLA®`);
+      if (!message.trim()) setMessage(`Dobrý den,\n\nděkujeme za vaši poptávku. Na základě zaslaného zadání jsme připravili cenovou nabídku pro projekt „${productForOffer.name}“.\n\nV e-mailu najdete shrnutí vašeho zadání, cenovou nabídku a podle dostupných podkladů také projektovou prezentaci. Nabídku si můžete prohlédnout online, stáhnout jako PDF a v zákaznickém portálu ji také elektronicky potvrdit.\n\nPokud chcete před objednáním upravit rozsah, termín, způsob instalace nebo jiné části řešení, odpovězte prosím na tento e-mail. Rádi nabídku upravíme podle finálního zadání.\n\nV případě dotazů je vám k dispozici Ing. Radek Meduna, +420 774 700 390, meduna@holmtec.cz.`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 

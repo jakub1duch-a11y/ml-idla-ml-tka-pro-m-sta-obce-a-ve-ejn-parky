@@ -267,7 +267,7 @@ export default async function(req) {
     const smartCards = [
       { title: 'PEVEKO Wi‑Fi ventil', price: smartPricing.component_wifi_valve_ex_vat, tag: 'CHYTRÝ VENTIL', text: 'SMART SUPLA Wi‑Fi servomotorický kulový ventil DN25. Vzdálené otevření a uzavření vodní větve přes internet / aplikaci.' },
       { title: 'SUPLA + monitoring', price: smartPricing.complete_supla_ex_vat, tag: audienceVariant === 'city_public' ? 'DOPORUČENO PRO PROJEKT' : 'KOMPLETNÍ ŘÍZENÍ', text: 'Kompletní projektový celek: ventil, rozvaděč, Wi‑Fi řízení, konfigurace SUPLA, měření spotřeby, programování a uvedení do provozu.' },
-      { title: 'Senzory a data', price: (smartPricing.component_thw01_ex_vat || 0) + (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0), tag: 'VOLITELNÉ ROZŠÍŘENÍ', text: 'Teplota a vlhkost + elektronický vodoměr + odečet spotřeby. Rozšíření pro automatické scénáře a provozní přehled.' },
+      { title: 'Měření vody', price: (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0), tag: 'SPOTŘEBA A DATA', text: 'Elektronický vodoměr ENBRA + SUPLA LIW‑01. Přehled spotřeby vody v čase, podklad pro správu provozu a vyhodnocování sezóny.' },
     ];
     smartCards.forEach((card, i) => {
       const x = M + i * 61;
@@ -283,7 +283,7 @@ export default async function(req) {
     doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 43, 2, 2, 'F');
     doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('CO UMÍ APLIKACE SUPLA', M + 7, y + 8);
     doc.setTextColor(255, 255, 255); doc.setFontSize(7.2);
-    const smartFeatures = ['vzdálené zapnutí / vypnutí', 'časové harmonogramy a cykly', 'automatika podle teploty a vlhkosti', 'sledování spotřeby vody', 'více zón a lokalit podle projektu', 'ruční režim i centrální blokace'];
+    const smartFeatures = ['vzdálené zapnutí / vypnutí a správa zón', 'libovolné časové harmonogramy a cykly v aplikaci', `teplota + vlhkost přes THW‑01${smartPricing.component_thw01_ex_vat ? ` · ${formatPrice(smartPricing.component_thw01_ex_vat)} Kč` : ''}`, 'sledování spotřeby vody a historie provozu', 'volitelná logika podle externího API počasí', 'ruční režim, centrální blokace a sezónní odstavení'];
     smartFeatures.forEach((item, i) => doc.text(`• ${item}`, M + 7 + (i > 2 ? 86 : 0), y + 16 + (i % 3) * 7));
     doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(`Zdroj cen: ${smartPricing.source}. Ceny Smart prvků jsou volitelné a nejsou zahrnuté v základní ceně projektu, pokud není v nabídce uvedeno jinak.`, M, 243);
     addFooter(doc);
@@ -332,6 +332,7 @@ export default async function(req) {
       quote_number: quoteNumber,
       valid_until: validUntilDate.toISOString(),
       audience_variant: audienceVariant,
+      smart_pricing: smartPricing,
       portal_url: portalUrl,
       order_url: orderUrl,
       extension_url: extensionUrl,

@@ -309,8 +309,8 @@ export const SEO_PAGES = {
     canonicalPath: '/podpora',
   },
   mestOobce: {
-    title: 'Mlžítka pro města a obce — Ochlazení veřejných prostranství',
-    description: 'Certifikovaná mlžítka, mlžné brány a mlhoviště pro moderní města a obce. Boj proti městským tepelným ostrovům, dotační poradenství, nerezová konstrukce.',
+    title: 'Mlžítka pro města a obce | MLŽIDLA.cz',
+    description: 'Designová mlžítka a Smart Cooling pro náměstí, parky a veřejný prostor. Nerezové řešení na míru, reference a projektová podpora.',
     keywords: 'mlžítka pro obce, městské ochlazování, urbanismus, adaptace na sucho, ochlazení náměstí, tepelné ostrovy',
     canonicalPath: '/kategorie/mesta-obce',
   },
@@ -327,8 +327,8 @@ export const SEO_PAGES = {
     canonicalPath: '/kategorie/koupaliste',
   },
   architekti: {
-    title: 'Pro architekty a projektanty — 3D modely, DWG a technická dokumentace',
-    description: 'Kompletní podklady pro architektonické ateliéry a projektanty. Ke stažení: 2D/3D DWG výkresy, BIM modely, texty do zadávacích dokumentací a konzultace stavební připravenosti.',
+    title: 'Mlžítka pro architekty | BIM, DWG a 3D podklady',
+    description: 'Projektové podklady pro architekty a krajináře: 2D/3D, BIM dle produktu, technické listy, vizualizace a konzultace od studie po realizaci.',
     keywords: 'BIM modely mlžítka, DWG výkresy mlžná brána, podklady pro architekty, technická specifikace HolmTec',
     canonicalPath: '/kategorie/architekti',
   },

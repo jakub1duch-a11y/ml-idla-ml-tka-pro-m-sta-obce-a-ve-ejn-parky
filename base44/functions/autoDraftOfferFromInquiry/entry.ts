@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const products = await base44.asServiceRole.entities.Product.list('-updated_date', 200);
+    const products = await base44.asServiceRole.entities.Product.list();
     if (!products?.length) return Response.json({ error: 'Product catalog is empty' }, { status: 400 });
 
     const catalog = products.slice(0, 80).map((product) => ({

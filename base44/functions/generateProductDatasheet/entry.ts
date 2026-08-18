@@ -159,6 +159,7 @@ export default async function(req) {
       audience_variant: audienceVariant = 'custom',
       visualization_urls: visualizationUrls = [],
       ai_content: aiContent = {},
+      smart_scenarios: smartScenarios = [],
     } = await req.json();
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
@@ -286,8 +287,17 @@ export default async function(req) {
     doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 43, 2, 2, 'F');
     doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('CO UMÍ APLIKACE SUPLA', M + 7, y + 8);
     doc.setTextColor(255, 255, 255); doc.setFontSize(7.2);
-    const smartFeatures = ['vzdálené zapnutí / vypnutí a správa zón', 'libovolné časové harmonogramy a cykly v aplikaci', `teplota + vlhkost přes THW‑01${smartPricing.component_thw01_ex_vat ? ` · ${formatPrice(smartPricing.component_thw01_ex_vat)} Kč` : ''}`, 'sledování spotřeby vody a historie provozu', 'volitelná logika podle externího API počasí', 'ruční režim, centrální blokace a sezónní odstavení'];
-    smartFeatures.forEach((item, i) => doc.text(`• ${item}`, M + 7 + (i > 2 ? 86 : 0), y + 16 + (i % 3) * 7));
+    const selectedScenarios = Array.isArray(smartScenarios) && smartScenarios.length ? smartScenarios.slice(0, 6) : [
+      { label: 'Scénář A · Teplotní automatika', description: 'Aktivace mlžení pouze při překročení nastavené venkovní teploty.', value: '> 25 °C' },
+      { label: 'Scénář B · Časový plán', description: 'Provoz v definovaných intervalech během dne.', value: 'čas a cykly dle provozu' },
+      { label: 'Scénář C · Interaktivní sepnutí', description: 'Start mlžení po aktivaci bezkontaktním senzorem.', value: 'čas sepnutí dle projektu' },
+    ];
+    selectedScenarios.forEach((scenario, i) => {
+      const x = M + 7 + (i > 2 ? 86 : 0);
+      const sy = y + 15 + (i % 3) * 8;
+      doc.setTextColor(255, 255, 255); doc.setFontSize(6.5); doc.text(`• ${safe(scenario.label)}`, x, sy);
+      doc.setTextColor(190, 220, 224); doc.setFontSize(5.5); doc.text(doc.splitTextToSize(`${safe(scenario.value)} — ${safe(scenario.description)}`, 78), x + 3, sy + 3.7);
+    });
     doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(doc.splitTextToSize(`Zdroj cen: ${smartPricing.source}. Ceny Smart prvků jsou volitelné a nejsou zahrnuté v základní ceně projektu, pokud není v nabídce uvedeno jinak.`, CW), M, 263);
     addFooter(doc);
 

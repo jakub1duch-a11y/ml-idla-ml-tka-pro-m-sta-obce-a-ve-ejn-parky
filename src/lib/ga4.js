@@ -5,6 +5,7 @@ const GOOGLE_ADS_ID = 'AW-18276263329';
 // Google Ads conversion action label must come from the concrete Google Ads conversion action.
 // Keep empty until the real label is available — this prevents false/invalid conversion hits.
 const GOOGLE_ADS_CONVERSION_LABEL = 'RcQVCNuc79McEKHL5opE';
+const GOOGLE_ADS_PHONE_CONVERSION_LABEL = 'zqF5CKLzmsYcEKHL5opE';
 const CONSENT_STORAGE_KEY = 'cookie_consent';
 
 let initPromise = null;
@@ -82,6 +83,7 @@ function installGlobalListeners() {
     const href = anchor.getAttribute('href') || '';
     if (href.startsWith('tel:')) {
       void emit('phone_click', { contact_type: 'phone', page_path: window.location.pathname });
+      sendToGoogleAdsPhone();
       return;
     }
     if (href.startsWith('mailto:')) {
@@ -256,6 +258,15 @@ function sendToGoogleAds() {
   if (!GOOGLE_ADS_CONVERSION_LABEL) return;
   safeGtag('event', 'conversion', {
     send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
+  });
+}
+
+function sendToGoogleAdsPhone() {
+  if (!GOOGLE_ADS_PHONE_CONVERSION_LABEL) return;
+  safeGtag('event', 'conversion', {
+    send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_PHONE_CONVERSION_LABEL}`,
+    value: 1,
+    currency: 'CZK',
   });
 }
 

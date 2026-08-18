@@ -686,6 +686,24 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
             </div>
           </div>}
 
+          {(subject || message) && <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+              <label className="min-w-0 flex-1 text-xs font-semibold text-muted-foreground">Testovací e-mailová adresa
+                <input
+                  type="email"
+                  value={testEmail}
+                  onChange={(event) => { setTestEmail(event.target.value); setTestSentTo(''); }}
+                  placeholder="např. jakub@firma.cz"
+                  autoComplete="email"
+                  className="mt-1 w-full rounded-xl border border-border bg-background px-3 py-3 text-sm text-foreground outline-none transition focus:border-secondary"
+                />
+              </label>
+              <button type="button" onClick={sendTestEmail} disabled={busy === 'test-send' || !testEmail.trim() || !subject.trim() || !message.trim()} className="inline-flex items-center justify-center gap-2 rounded-full border border-secondary bg-white px-5 py-3 text-sm font-bold text-secondary transition hover:bg-secondary/5 disabled:opacity-40"><Send size={15}/>{busy === 'test-send' ? 'Odesílám test…' : 'Odeslat test'}</button>
+            </div>
+            <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">Test odešle aktuální verzi e-mailu na zadanou adresu. Pokud je připravená nabídka, připojí i stejné PDF, prezentaci a vybrané přílohy. Klientovi se nic neodešle a stav poptávky ani nabídky se nezmění.</p>
+            {testSentTo && <p className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">Testovací e-mail byl odeslán na {testSentTo}.</p>}
+          </div>}
+
           {followUpType && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={followUpApproved} onChange={(e) => setFollowUpApproved(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji follow-up zprávu k odeslání.</strong><br/><span className="text-xs text-slate-500">E-mail použije jednotnou profesionální šablonu MLŽIDLA®, shrnutí projektu, kontaktní kartu a firemní patičku.</span></span></label>}
           {prepared && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={approvedToSend} onChange={(e) => setApprovedToSend(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji tuto verzi nabídky k odeslání.</strong><br/><span className="text-xs text-slate-500">Bez tohoto potvrzení systém nabídku zákazníkovi neodešle.</span></span></label>}
 

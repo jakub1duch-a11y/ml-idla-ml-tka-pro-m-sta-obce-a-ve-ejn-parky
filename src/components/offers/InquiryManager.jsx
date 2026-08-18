@@ -406,6 +406,16 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           <p className="mt-3 text-sm font-bold text-secondary">Cena projektu po slevě: {money(finalTotal)} Kč bez DPH</p>
           <p className="mt-1 text-[11px] text-muted-foreground">Skrytá kopie bude vždy odeslána na: {BCC.join(', ')}</p>
 
+          <OfferAICopilot
+            inquiry={selected}
+            product={selectedProduct}
+            attachments={attachments}
+            onAttachmentsChange={setAttachments}
+            quoteContext={`${money(finalTotal)} Kč bez DPH · produkt ${money(basePrice)} Kč · instalace ${money(installation)} Kč · sleva ${Number(discount || 0)} %`}
+            onPrepareOffer={prepareOffer}
+            prepareBusy={busy === 'prepare'}
+          />
+
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-secondary">Follow-up klienta</p><h3 className="mt-1 font-heading text-xl text-foreground">Předdefinované profesionální šablony</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">Připomenutí poptávky, připomenutí poslední odeslané cenové nabídky nebo návrh jednorázového akčního zvýhodnění. Text můžete před odesláním vždy upravit.</p></div>

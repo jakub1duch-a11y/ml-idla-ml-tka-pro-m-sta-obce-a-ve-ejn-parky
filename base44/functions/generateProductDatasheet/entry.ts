@@ -196,7 +196,7 @@ export default async function(req) {
       doc.setTextColor(...navy); doc.setFontSize(23); doc.text(product.name, M, y); y += 10;
       if (product.short_description) { doc.setTextColor(...muted); doc.setFontSize(9.2); doc.text(doc.splitTextToSize(safe(product.short_description), CW), M, y); y += 17; }
       if (product.image_url) { const ok = await addRemoteImage(doc, product.image_url, M, y, CW, 72); if (ok) y += 81; }
-      const specs = [['Provozní tlak', product.pressure], ['Spotřeba vody', product.water_consumption], ['Materiál', product.material], ['Průměr kapky', product.micron_size], ['Dosah / plocha', product.coverage_area], ['Napájení a řízení', product.power_supply]].filter((item) => item[1]);
+      const specs = [['Materiál', product.material], ['Rozměr / dosah', product.coverage_area], ['Napájení a řízení', product.power_supply]].filter((item) => item[1]);
       if (specs.length) {
         doc.setFillColor(...pale); doc.rect(M, y, CW, 8, 'F'); doc.setTextColor(...petrol); doc.setFontSize(8); doc.text('TECHNICKÉ PARAMETRY', M + 5, y + 5.2); y += 8;
         specs.forEach(([name, value], i) => { if (i % 2) { doc.setFillColor(249, 251, 251); doc.rect(M, y, CW, 8, 'F'); } doc.setTextColor(...muted); doc.setFontSize(7.5); doc.text(name, M + 5, y + 5.1); doc.setTextColor(...ink); doc.text(doc.splitTextToSize(String(value), 105)[0], M + 70, y + 5.1); y += 8; });

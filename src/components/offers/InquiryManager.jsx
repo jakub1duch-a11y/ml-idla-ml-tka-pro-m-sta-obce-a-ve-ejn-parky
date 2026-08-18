@@ -432,7 +432,14 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
             <label className="inline-flex cursor-pointer items-center gap-2 border border-border px-4 py-2.5 text-sm font-bold text-foreground"><Upload size={15}/>Přidat vlastní soubor<input type="file" multiple className="hidden" onChange={uploadFiles}/></label>
           </div>
 
-          {mediaFiles.map((file) => <button key={file.id} onClick={() => setAttachments((current) => current.some((item) => item.file_url === file.file_url) ? current.filter((item) => item.file_url !== file.file_url) : [...current, file])} className={`mr-2 mt-2 inline-flex items-center gap-2 border px-3 py-2 text-xs ${attachments.some((item) => item.file_url === file.file_url) ? 'border-secondary text-secondary' : 'border-border text-muted-foreground'}`}><FileText size={13}/>{file.file_name}</button>)}
+          {mediaFiles.length > 0 && <div className="mt-3"><p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Knihovna příloh · kliknutím přidat do nabídky</p><div className="grid max-h-72 grid-cols-2 gap-2 overflow-y-auto pr-1 sm:grid-cols-3">{mediaFiles.map((file) => {
+            const chosen = attachments.some((item) => item.file_url === file.file_url);
+            const imageFile = String(file.file_type || '').startsWith('image/') || /\.(png|jpe?g|webp|gif)(\?|$)/i.test(String(file.file_url || ''));
+            return <button key={file.id} type="button" onClick={() => setAttachments((current) => chosen ? current.filter((item) => item.file_url !== file.file_url) : [...current, file])} className={`overflow-hidden rounded-xl border text-left transition ${chosen ? 'border-secondary ring-2 ring-secondary/10' : 'border-border hover:border-secondary/40'}`}>
+              <div className="flex aspect-[4/3] items-center justify-center bg-muted">{imageFile ? <img src={file.file_url} alt={file.file_name || 'Příloha'} className="h-full w-full object-cover"/> : <FileText size={24} className="text-muted-foreground"/>}</div>
+              <div className="flex items-center justify-between gap-2 px-2.5 py-2"><span className="min-w-0 truncate text-[10px] font-medium text-foreground">{file.file_name}</span>{chosen && <CheckCircle2 size={13} className="shrink-0 text-secondary"/>}</div>
+            </button>;
+          })}</div></div>}
 
           {prepared && (
             <div className="mt-6 rounded-2xl border border-cyan-200 bg-cyan-50/40 p-5">

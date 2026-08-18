@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
+import { findSmartControlPricing } from '../../shared/pricingSheet.ts';
 
 const DEEP = { red: 0.039, green: 0.086, blue: 0.157 };
 const PETROL = { red: 0.043, green: 0.282, blue: 0.376 };
@@ -110,9 +111,10 @@ export default async function(req) {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], nozzle_calculations: nozzleCalculations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom' } = body;
+    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom' } = body;
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
+    const smartPricing = await findSmartControlPricing(base44);
 
     let realizationImages = [];
     let realizationLabel = 'Produktové reference';
@@ -175,20 +177,8 @@ export default async function(req) {
     requests.push(...shapeText('t3d', s[2], clientBenefits.map((b) => `• ${b}`).join('\n\n'), 48, 245, 330, 125, 14, INK, false));
     if (product.image_url) requests.push(image('img3', s[2], product.image_url, 410, 75, 265, 275));
 
-    // 4 — technical confidence + approved nozzle calculation
-    const approvedNozzleText = (Array.isArray(nozzleCalculations) ? nozzleCalculations : []).filter((item) => item?.approved_for_offer).map((item) => {
-      const parts = [
-        item.variant_key && `Varianta ${item.variant_key}`,
-        item.total_nozzles != null && `celkem ${item.total_nozzles} trysek`,
-        item.nozzles_per_product != null && `${item.nozzles_per_product} tr./produkt`,
-        item.flow_per_nozzle_l_min != null && `průtok 1 trysky ${item.flow_per_nozzle_l_min} l/min`,
-        item.total_flow_l_min != null && `celkový průtok ${item.total_flow_l_min} l/min`,
-        item.working_pressure_bar != null && `pracovní tlak ${item.working_pressure_bar} bar`,
-        item.zone_count != null && `${item.zone_count} zóna/zón`,
-      ].filter(Boolean);
-      return parts.join(' · ');
-    }).join('\n');
-    const specs = [product.coverage_area && `Výška / dosah: ${product.coverage_area}`, product.material && `Materiál: ${product.material}`, product.pressure && `Provozní tlak: ${product.pressure}`, product.water_consumption && `Spotřeba vody: ${product.water_consumption}`, product.micron_size && `Mlžné trysky: ${product.micron_size}`, product.power_supply && `Řízení: ${product.power_supply}`, approvedNozzleText && `SCHVÁLENÝ VÝPOČET TRYSEK\n${approvedNozzleText}`].filter(Boolean).join('\n\n');
+    // 4 — technical confidence; only verified client-relevant data
+    const specs = [product.coverage_area && `Rozměr / dosah: ${product.coverage_area}`, product.material && `Materiál: ${product.material}`, product.power_supply && `Napájení / řízení: ${product.power_supply}`].filter(Boolean).join('\n\n');
     requests.push(background(s[3], WHITE), ...accentBar('a4', s[3], 0, 0, 720, 8));
     requests.push(...shapeText('t4a', s[3], 'Technicky čisté řešení', 48, 42, 460, 45, 25, PETROL, true));
     requests.push(...shapeText('t4b', s[3], specs || 'Přesná technická konfigurace bude potvrzena podle konkrétního místa instalace.', 48, 110, 610, 205, 15, INK, false));
@@ -198,8 +188,13 @@ export default async function(req) {
     requests.push(background(s[4], DEEP), ...accentBar('a5', s[4], 0, 0, 720, 8));
     requests.push(...shapeText('t5a', s[4], 'Smart řízení MLŽIDLA.cz', 48, 46, 500, 42, 27, WHITE, true));
     requests.push(...shapeText('t5b', s[4], 'Voda jen tehdy, když je potřeba.', 48, 104, 520, 50, 21, ACCENT, true));
-    requests.push(...shapeText('t5c', s[4], 'Wi-Fi / aplikace · časové harmonogramy · vzdálené ovládání\n\nPodle projektu lze doplnit senzory, snímače, měřiče průtoku a další moduly. Konkrétní rozsah se navrhuje podle způsobu provozu a požadované úrovně automatizace.', 48, 175, 610, 145, 16, WHITE, false));
-    requests.push(...shapeText('t5d', s[4], 'Cílem není více technologie. Cílem je jednodušší a úspornější provoz.', 48, 335, 610, 35, 12, ACCENT, true));
+    const smartPriceText = [
+      smartPricing.component_wifi_valve_ex_vat > 0 && `PEVEKO SMART SUPLA Wi‑Fi ventil: ${fmt(smartPricing.component_wifi_valve_ex_vat)} Kč bez DPH`,
+      smartPricing.complete_supla_ex_vat > 0 && `Kompletní SUPLA řízení + monitoring + uvedení do provozu: ${fmt(smartPricing.complete_supla_ex_vat)} Kč bez DPH`,
+      ((smartPricing.component_thw01_ex_vat || 0) + (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0)) > 0 && `Rozšíření senzory + měření spotřeby: ${fmt((smartPricing.component_thw01_ex_vat || 0) + (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0))} Kč bez DPH`,
+    ].filter(Boolean).join('\n');
+    requests.push(...shapeText('t5c', s[4], `Wi‑Fi / aplikace SUPLA · časové harmonogramy · vzdálené ovládání · automatika podle podmínek · monitoring spotřeby\n\n${smartPriceText || 'Cena Smart varianty se doplní z aktuálního projektového ceníku.'}`, 48, 170, 610, 155, 15, WHITE, false));
+    requests.push(...shapeText('t5d', s[4], audienceVariant === 'city_public' ? 'Pro tento typ projektu doporučujeme kompletní SUPLA řízení s monitoringem.' : 'Smart řízení lze přidat jako volitelnou vrstvu podle požadovaného komfortu obsluhy.', 48, 338, 610, 35, 12, ACCENT, true));
 
     // 6 — proof / references
     requests.push(background(s[5], WHITE), ...accentBar('a6', s[5], 0, 0, 720, 8));

@@ -2,8 +2,8 @@ import { base44 } from '@/api/base44Client';
 import { configureMetaPixel, trackMetaEvent, updateMetaConsent } from '@/lib/meta';
 
 const GOOGLE_ADS_ID = 'AW-18276263329';
-// Google Ads conversion action: „Žádost o nabídku (1)“.
-// Label verified from the Google Ads event snippet for account AW-18276263329.
+// Google Ads conversion action label must come from the concrete Google Ads conversion action.
+// Keep empty until the real label is available — this prevents false/invalid conversion hits.
 const GOOGLE_ADS_CONVERSION_LABEL = 'RcQVCNuc79McEKHL5opE';
 const CONSENT_STORAGE_KEY = 'cookie_consent';
 
@@ -264,7 +264,10 @@ function trackLead(leadType, productName, leadScore) {
     lead_type: leadType || 'kontakt',
     product_name: productName || 'nezadáno',
     lead_score: leadScore,
-  }).then(() => sendToGoogleAds());
+  }).then(() => {
+    // Google Ads conversion is reserved for commercial leads, not low-intent cooperation/newsletter actions.
+    if (Number(leadScore || 0) >= 75) sendToGoogleAds();
+  });
 }
 
 export function trackPageView(path, title) {

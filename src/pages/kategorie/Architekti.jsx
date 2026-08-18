@@ -258,7 +258,7 @@ export default function Architekti() {
               </a>
             </div>
           </div>
-          <CategoryInquiryForm category="Architekti" projectScope="private" />
+          <CategoryInquiryForm category="Architekti" projectScope="private" analyticsSegment="architects" />
         </div>
       </section>
       <B2BPortfolioNavigation current="Pro architekty" />

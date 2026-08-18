@@ -218,6 +218,137 @@ export async function findSmartControlPricing(base44: any): Promise<SmartControl
   }
 }
 
+export type CustomCostLine = {
+  rate_key: string;
+  quantity: number;
+  rationale?: string;
+};
+
+export type CustomConceptPricing = {
+  matched: boolean;
+  source: string;
+  material_basis: string;
+  hzm_percent: number;
+  base_cost_ex_vat: number;
+  hzm_amount: number;
+  offer_price_ex_vat: number;
+  vat_amount: number;
+  total_inc_vat: number;
+  line_items: Array<{ rate_key: string; label: string; unit: string; quantity: number; unit_price: number; total: number; rationale?: string }>;
+  warnings: string[];
+};
+
+const CUSTOM_RATE_COLUMNS: Record<string, { column: number; label: string; unit: string }> = {
+  material_jekl_70x70x3_m: { column: 5, label: 'Jekl 70×70×3, nerez 1.4301', unit: 'm' },
+  material_trubka_76_1x3_m: { column: 6, label: 'Trubka Ø76,1×3, nerez 1.4301', unit: 'm' },
+  material_trubka_60_3x3_6_m: { column: 7, label: 'Trubka Ø60,3×3,6, nerez 1.4301', unit: 'm' },
+  material_trubka_52x3_m: { column: 8, label: 'Trubka Ø52×3, nerez 1.4301', unit: 'm' },
+  material_trubka_42_4x3_6_m: { column: 9, label: 'Trubka Ø42,4×3,6, nerez 1.4301', unit: 'm' },
+  material_trubka_40x3_m: { column: 10, label: 'Trubka Ø40×3, nerez 1.4301', unit: 'm' },
+  material_trubka_33_7x3_m: { column: 11, label: 'Trubka Ø33,7×3, nerez 1.4301', unit: 'm' },
+  zatka_nerez_ks: { column: 12, label: 'Zátka nerez svařená', unit: 'ks' },
+  mlzici_tryska_ks: { column: 13, label: 'Mlžicí tryska M2', unit: 'ks' },
+  patka_uchyceni_ks: { column: 14, label: 'Patka a uchycení', unit: 'ks' },
+  napojeni_vody_ks: { column: 15, label: 'Napojení vody', unit: 'ks' },
+  privod_hadici_fitinky_ks: { column: 16, label: 'Přívod hadicí + fitinky', unit: 'ks' },
+  zatka_imbus_ks: { column: 17, label: 'Zátka IMBUS', unit: 'ks' },
+  ohybani_tech_priprava_ks: { column: 18, label: 'Ohýbání – technická příprava', unit: 'ks' },
+  serizeni_rad_ks: { column: 19, label: 'Seřízení ohýbání / rádiusu', unit: 'ks' },
+  ohybani_ks: { column: 20, label: 'Ohýbání', unit: 'ks' },
+  deleni_obrabeni_hod: { column: 21, label: 'Dělení / obrábění materiálu', unit: 'hod' },
+  svarovani_brus_hod: { column: 22, label: 'Ruční MIG/TIG svařování + brus', unit: 'hod' },
+  brouseni_satenovani_hod: { column: 23, label: 'Broušení / saténování', unit: 'hod' },
+  zavitovani_hod: { column: 24, label: 'Závitování', unit: 'hod' },
+  testovani_hod: { column: 25, label: 'Testování', unit: 'hod' },
+  brusivo_ks: { column: 26, label: 'Brusivo', unit: 'ks' },
+  doprava_materialu_ks: { column: 27, label: 'Doprava materiálu', unit: 'ks' },
+  montazni_vyjezd_ks: { column: 28, label: 'Montážní výjezd', unit: 'ks' },
+};
+
+export const CUSTOM_COST_KEYS = Object.keys(CUSTOM_RATE_COLUMNS);
+
+export async function estimateCustomConceptPricing(base44: any, costPlan: CustomCostLine[], options: { hzmPercent?: number; requires316L?: boolean } = {}): Promise<CustomConceptPricing> {
+  const hzmPercent = Number.isFinite(Number(options.hzmPercent)) ? Math.max(0, Math.min(80, Number(options.hzmPercent))) : 35;
+  const warnings: string[] = [];
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+    const rateRange = encodeURIComponent(`'${PRICING_SHEET_NAME}'!A1:AC6`);
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${PRICING_SPREADSHEET_ID}/values/${rateRange}?majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!response.ok) throw new Error(`Google Sheets ${response.status}: ${await response.text()}`);
+    const payload = await response.json();
+    const rows: any[][] = Array.isArray(payload?.values) ? payload.values : [];
+    const rateRow = rows[5] || []; // řádek „Sazba“ v Kalkulace 2026
+
+    const merged = new Map<string, CustomCostLine>();
+    for (const raw of Array.isArray(costPlan) ? costPlan : []) {
+      const key = String(raw?.rate_key || '').trim();
+      if (!CUSTOM_RATE_COLUMNS[key]) continue;
+      const quantity = Math.max(0, Number(raw?.quantity || 0));
+      if (!(quantity > 0)) continue;
+      const existing = merged.get(key);
+      merged.set(key, {
+        rate_key: key,
+        quantity: (existing?.quantity || 0) + quantity,
+        rationale: clean(raw?.rationale || existing?.rationale || ''),
+      });
+    }
+
+    const lineItems = Array.from(merged.values()).map((line) => {
+      const meta = CUSTOM_RATE_COLUMNS[line.rate_key];
+      const unitPrice = parseMoney(rateRow[meta.column]);
+      return {
+        rate_key: line.rate_key,
+        label: meta.label,
+        unit: meta.unit,
+        quantity: Math.round(line.quantity * 100) / 100,
+        unit_price: unitPrice,
+        total: Math.round(unitPrice * line.quantity),
+        rationale: line.rationale,
+      };
+    }).filter((line) => line.unit_price > 0 && line.quantity > 0);
+
+    const baseCost = lineItems.reduce((sum, line) => sum + line.total, 0);
+    if (!(baseCost > 0)) warnings.push('Výrobní plán neobsahuje žádné nacenitelné položky z tabulky Kalkulace 2026.');
+    if (options.requires316L) warnings.push('Kalkulační sazby materiálu v této tabulce vycházejí z nerezu 1.4301 / AISI 304. Požadavek na AISI 316L musí před finální nabídkou projít materiálovým přepočtem.');
+
+    const hzmAmount = Math.round(baseCost * hzmPercent / 100);
+    const rawOffer = baseCost + hzmAmount;
+    const offerPrice = rawOffer > 0 ? Math.ceil(rawOffer / 50) * 50 : 0;
+    const vatAmount = Math.round(offerPrice * 0.21);
+    const totalIncVat = offerPrice + vatAmount;
+
+    return {
+      matched: offerPrice > 0,
+      source: `Google Sheets: Mlžítko / ${PRICING_SHEET_NAME} / výrobní sazby`,
+      material_basis: 'nerez 1.4301 / AISI 304 dle aktuální tabulky Kalkulace 2026',
+      hzm_percent: hzmPercent,
+      base_cost_ex_vat: baseCost,
+      hzm_amount: hzmAmount,
+      offer_price_ex_vat: offerPrice,
+      vat_amount: vatAmount,
+      total_inc_vat: totalIncVat,
+      line_items: lineItems,
+      warnings,
+    };
+  } catch (error) {
+    return {
+      matched: false,
+      source: `Google Sheets: Mlžítko / ${PRICING_SHEET_NAME} / výrobní sazby`,
+      material_basis: 'nerez 1.4301 / AISI 304 dle aktuální tabulky Kalkulace 2026',
+      hzm_percent: hzmPercent,
+      base_cost_ex_vat: 0,
+      hzm_amount: 0,
+      offer_price_ex_vat: 0,
+      vat_amount: 0,
+      total_inc_vat: 0,
+      line_items: [],
+      warnings: [error?.message || String(error)],
+    };
+  }
+}
+
 export function validatedCatalogFallback(product: any) {
   const value = Number(product?.price_from || 0);
   // Hodnoty 0/1 Kč v katalogu jsou placeholdery, ne obchodní cena.

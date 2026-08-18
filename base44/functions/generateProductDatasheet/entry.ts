@@ -206,32 +206,7 @@ export default async function(req) {
       return Response.json({ pdf_base64: toBase64(output), filename: `MLZIDLA-${(product.slug || product.name).replace(/[^a-zA-Z0-9-_]/g, '-')}-technicky-list.pdf` });
     }
 
-    // PAGE 1 - executive commercial offer
-    await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
-    let y = 48;
-
-    doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('PROJEKTOVÝ NÁVRH · CENOVÁ NABÍDKA', M, y);
-    doc.setTextColor(...navy); doc.setFontSize(19); doc.text(doc.splitTextToSize(projectTitle, 122), M, y + 9);
-    doc.setTextColor(...muted); doc.setFontSize(7.2);
-    const clientLine = [safe(inquiry.company), safe(inquiry.name)].filter(Boolean).join(' · ') || 'Projekt klienta';
-    doc.text(clientLine, M, y + 23);
-    doc.setTextColor(...petrol); doc.setFontSize(6.7); doc.text(audience.label.toUpperCase(), W - M, y + 23, { align: 'right' });
-    y += 29;
-
-    doc.setTextColor(...accent); doc.setFontSize(6.8); doc.text(audience.label.toUpperCase(), M, y);
-    doc.setTextColor(...navy); doc.setFontSize(17.5); doc.text(product.name, M, y + 9);
-    doc.setTextColor(...muted); doc.setFontSize(8.3); doc.text(doc.splitTextToSize(safe(inquiry.project_goal) || audience.headline, 105), M, y + 16);
-    await addRemoteImage(doc, product.image_url, 133, y + 1, 61, 46);
-    y += 53;
-
-    doc.setFillColor(...petrol); doc.roundedRect(M, y, CW, 34, 2, 2, 'F');
-    doc.setTextColor(...accent); doc.setFontSize(7); doc.text('PROČ TOTO ŘEŠENÍ', M + 5, y + 7);
-    doc.setTextColor(255, 255, 255); doc.setFontSize(7.4);
-    audience.benefits.slice(0, 4).forEach((line, i) => doc.text(`• ${line}`, M + 5, y + 14 + i * 5.2));
-    y += 42;
-
-    doc.setFillColor(...navy); doc.rect(M, y, CW, 9, 'F');
-    doc.setTextColor(255, 255, 255); doc.setFontSize(7.5); doc.text('CENOVÁ KALKULACE', M + 5, y + 5.8); y += 9;
+    // A4 BOARD 1 — project proposal, visualization and investment
     const basePrice = Number(quote.base_price || 0);
     const installation = Number(quote.installation || 0);
     const discountPercent = Number(quote.discount_percent || 0);
@@ -239,77 +214,117 @@ export default async function(req) {
     const beforeDiscount = basePrice + installation;
     const calculatedFinal = beforeDiscount * (1 - discountPercent / 100);
     const finalTotal = Number(quote.final_total ?? calculatedFinal ?? product.price_from ?? 0);
-    const rows = [[priceIsEstimate ? 'Produkt / sestava — orientační cena od' : 'Produkt / sestava', basePrice || Number(product.price_from || 0)], ['Instalace / uvedení do provozu', installation]].filter(([, price]) => price > 0);
-    rows.forEach(([label, price], index) => {
-      if (index % 2 === 0) { doc.setFillColor(248, 250, 250); doc.rect(M, y, CW, 9, 'F'); }
-      doc.setTextColor(...ink); doc.setFontSize(8); doc.text(label, M + 5, y + 5.8); doc.text(`${formatPrice(price)} Kč`, W - M - 5, y + 5.8, { align: 'right' }); y += 9;
-    });
-    if (discountPercent > 0) {
-      doc.setTextColor(32, 145, 110); doc.setFontSize(8); doc.text(`Sleva ${discountPercent} %`, M + 5, y + 5.8);
-      doc.text(`-${formatPrice(beforeDiscount - finalTotal)} Kč`, W - M - 5, y + 5.8, { align: 'right' }); y += 9;
+
+    await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
+    let y = 48;
+    doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('PROJEKTOVÝ NÁVRH · INVESTIČNÍ NABÍDKA', M, y);
+    doc.setTextColor(...navy); doc.setFontSize(18.5); doc.text(doc.splitTextToSize(projectTitle, 150), M, y + 9);
+    const clientLine = [safe(inquiry.company), safe(inquiry.name)].filter(Boolean).join(' · ') || 'Projekt klienta';
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.text(clientLine, M, y + 22);
+    doc.setTextColor(...petrol); doc.text(audience.label.toUpperCase(), W - M, y + 22, { align: 'right' });
+
+    const visualY = 76;
+    const visualOk = await addRemoteImage(doc, primaryVisual, M, visualY, CW, 92);
+    if (!visualOk) {
+      doc.setFillColor(...pale); doc.roundedRect(M, visualY, CW, 92, 2, 2, 'F');
+      doc.setTextColor(...muted); doc.setFontSize(8); doc.text('Projektová vizualizace bude doplněna z podkladů projektu.', M + 8, visualY + 46);
     }
-    doc.setFillColor(...accent); doc.rect(M, y, CW, 14, 'F');
-    doc.setTextColor(...navy); doc.setFontSize(10); doc.text(priceIsEstimate ? 'ORIENTAČNÍ CENA OD · BEZ DPH' : 'CELKEM BEZ DPH', M + 5, y + 9.2);
-    doc.setFontSize(12.5); doc.text(finalTotal ? `${formatPrice(finalTotal)} Kč` : 'Cena dle potvrzené konfigurace', W - M - 5, y + 9.2, { align: 'right' }); y += 17;
-    if (finalTotal) { doc.setTextColor(...muted); doc.setFontSize(7); doc.text(`DPH 21 %: ${formatPrice(finalTotal * 0.21)} Kč · Celkem s DPH: ${formatPrice(finalTotal * 1.21)} Kč`, W - M, y + 2, { align: 'right' }); }
-    y += 7;
-    if (priceIsEstimate) { doc.setTextColor(...muted); doc.setFontSize(6.6); doc.text(doc.splitTextToSize('Orientační kalkulace vychází z aktuální katalogové ceny od. Finální cena bude potvrzena podle počtu prvků, rozsahu dodávky, instalace a technického řešení projektu.', CW), M, y); y += 12; }
-    y += 2;
+    doc.setFillColor(255, 255, 255); doc.roundedRect(M + 6, visualY + 72, 72, 14, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(6.4); doc.text('NÁVRH ŘEŠENÍ', M + 11, visualY + 78);
+    doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(product.name, M + 11, visualY + 83.5);
 
-    doc.setTextColor(...navy); doc.setFontSize(8.2); doc.text('DALŠÍ KROK', M, y);
-    y += 4;
-    drawButton(doc, M, y, 57, 'OBJEDNAT NABÍDKU', orderUrl, petrol);
-    drawButton(doc, M + 62, y, 57, 'PRODLOUŽIT PLATNOST', extensionUrl, [74, 91, 101]);
-    drawButton(doc, M + 124, y, 58, 'UVÉST TERMÍN OBJEDNÁNÍ', timingUrl, [238, 244, 245], navy);
-    y += 15;
-    doc.setTextColor(...muted); doc.setFontSize(6.7); doc.text(doc.splitTextToSize(`Objednávka se stává závaznou až po elektronickém potvrzení nabídky a obchodních podmínek v zákaznickém portálu. Po potvrzení navazuje výrobní příprava, upřesnění realizace a termínu. Nabídka je platná do ${validUntil}.`, CW), M, y);
+    y = 176;
+    doc.setFillColor(248, 250, 250); doc.roundedRect(M, y, 112, 48, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(6.5); doc.text('KONCEPT', M + 6, y + 8);
+    doc.setTextColor(...ink); doc.setFontSize(7.5); doc.text(doc.splitTextToSize(solutionSummary, 100), M + 6, y + 16);
+    doc.setTextColor(...muted); doc.setFontSize(6.5);
+    projectBenefits.slice(0, 2).forEach((line, i) => doc.text(doc.splitTextToSize(`• ${line}`, 100), M + 6, y + 31 + i * 7));
 
-    addFooter(doc, 1, 2);
+    doc.setFillColor(238, 248, 249); doc.roundedRect(M + 118, y, 64, 48, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(6.5); doc.text(priceIsEstimate ? 'ORIENTAČNÍ INVESTICE OD' : 'INVESTICE DO ŘEŠENÍ', M + 124, y + 8);
+    doc.setTextColor(...navy); doc.setFontSize(15); doc.text(finalTotal ? `${formatPrice(finalTotal)} Kč` : 'dle konfigurace', M + 124, y + 20);
+    doc.setTextColor(...muted); doc.setFontSize(6.3); doc.text('bez DPH', M + 124, y + 26);
+    if (finalTotal) doc.text(`s DPH ${formatPrice(finalTotal * 1.21)} Kč`, M + 124, y + 33);
+    doc.text(`platnost do ${validUntil}`, M + 124, y + 40);
 
-    // PAGE 2 - technical, Smart, terms, contacts
+    y = 232;
+    drawButton(doc, M, y, 56, 'OTEVŘÍT MŮJ PROJEKT', portalUrl, petrol);
+    drawButton(doc, M + 62, y, 55, 'POTVRDIT NABÍDKU', orderUrl, [13, 45, 56]);
+    drawButton(doc, M + 123, y, 59, 'UPŘESNIT / PRODLOUŽIT', extensionUrl, [238, 244, 245], navy);
+    doc.setTextColor(...muted); doc.setFontSize(6.4); doc.text(doc.splitTextToSize('Vizualizace je projektový návrh pro rozhodnutí o směru řešení. Finální umístění, kotvení a technické návaznosti se potvrzují před výrobou.', CW), M, y + 18);
+    addFooter(doc);
+
+    // A4 BOARD 2 — Smart control variants and verified pricing
     doc.addPage();
     await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
-    y = 52;
-    doc.setTextColor(...navy); doc.setFontSize(18); doc.text('Technické a projektové informace', M, y); y += 10;
+    y = 50;
+    doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('SMART ŘÍZENÍ MLŽIDLA®', M, y);
+    doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Ovládání navržené pro konkrétní provoz.', M, y + 10);
+    doc.setTextColor(...muted); doc.setFontSize(8); doc.text(doc.splitTextToSize('Od jednoduchého vzdáleného otevření vody po plně automatický systém SUPLA s časovými scénáři, teplotou, monitoringem spotřeby a správou v mobilní aplikaci.', 112), M, y + 20);
+    await addRemoteImage(doc, smartVisualUrl, 137, 49, 59, 48);
 
-    const specs = [['Provozní tlak', product.pressure], ['Spotřeba vody', product.water_consumption], ['Materiál', product.material], ['Mlžné trysky / kapka', product.micron_size], ['Výška / dosah', product.coverage_area], ['Napájení / řízení', product.power_supply]].filter((item) => item[1]);
-    if (specs.length) {
-      doc.setFillColor(...pale); doc.rect(M, y, CW, 8, 'F'); doc.setTextColor(...petrol); doc.setFontSize(8); doc.text('PARAMETRY PRODUKTU', M + 5, y + 5.2); y += 8;
-      specs.forEach(([label, value], i) => {
-        if (i % 2 === 1) { doc.setFillColor(248, 250, 250); doc.rect(M, y, CW, 10, 'F'); }
-        doc.setTextColor(...muted); doc.setFontSize(7.2); doc.text(label, M + 5, y + 6.2);
-        doc.setTextColor(...ink); doc.text(doc.splitTextToSize(String(value), 105)[0], M + 66, y + 6.2); y += 10;
-      });
-      y += 7;
+    y = 108;
+    const smartCards = [
+      { title: 'PEVEKO Wi‑Fi ventil', price: smartPricing.component_wifi_valve_ex_vat, tag: 'CHYTRÝ VENTIL', text: 'SMART SUPLA Wi‑Fi servomotorický kulový ventil DN25. Vzdálené otevření a uzavření vodní větve přes internet / aplikaci.' },
+      { title: 'SUPLA + monitoring', price: smartPricing.complete_supla_ex_vat, tag: audienceVariant === 'city_public' ? 'DOPORUČENO PRO PROJEKT' : 'KOMPLETNÍ ŘÍZENÍ', text: 'Kompletní projektový celek: ventil, rozvaděč, Wi‑Fi řízení, konfigurace SUPLA, měření spotřeby, programování a uvedení do provozu.' },
+      { title: 'Senzory a data', price: (smartPricing.component_thw01_ex_vat || 0) + (smartPricing.component_water_meter_ex_vat || 0) + (smartPricing.component_liw01_ex_vat || 0), tag: 'VOLITELNÉ ROZŠÍŘENÍ', text: 'Teplota a vlhkost + elektronický vodoměr + odečet spotřeby. Rozšíření pro automatické scénáře a provozní přehled.' },
+    ];
+    smartCards.forEach((card, i) => {
+      const x = M + i * 61;
+      doc.setFillColor(i === 1 ? 239 : 248, i === 1 ? 249 : 250, i === 1 ? 250 : 250); doc.setDrawColor(221, 231, 233); doc.roundedRect(x, y, 57, 72, 2, 2, 'FD');
+      doc.setTextColor(...accent); doc.setFontSize(5.5); doc.text(card.tag, x + 5, y + 8);
+      doc.setTextColor(...navy); doc.setFontSize(9.2); doc.text(doc.splitTextToSize(card.title, 47), x + 5, y + 17);
+      doc.setTextColor(...petrol); doc.setFontSize(10.5); doc.text(card.price ? `${formatPrice(card.price)} Kč` : 'cena dle projektu', x + 5, y + 33);
+      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(card.price ? 'bez DPH' : '', x + 5, y + 38);
+      doc.setTextColor(...ink); doc.setFontSize(6.2); doc.text(doc.splitTextToSize(card.text, 47), x + 5, y + 47);
+    });
+
+    y = 190;
+    doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 43, 2, 2, 'F');
+    doc.setTextColor(...accent); doc.setFontSize(6.5); doc.text('CO UMÍ APLIKACE SUPLA', M + 7, y + 8);
+    doc.setTextColor(255, 255, 255); doc.setFontSize(7.2);
+    const smartFeatures = ['vzdálené zapnutí / vypnutí', 'časové harmonogramy a cykly', 'automatika podle teploty a vlhkosti', 'sledování spotřeby vody', 'více zón a lokalit podle projektu', 'ruční režim i centrální blokace'];
+    smartFeatures.forEach((item, i) => doc.text(`• ${item}`, M + 7 + (i > 2 ? 86 : 0), y + 16 + (i % 3) * 7));
+    doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(`Zdroj cen: ${smartPricing.source}. Ceny Smart prvků jsou volitelné a nejsou zahrnuté v základní ceně projektu, pokud není v nabídce uvedeno jinak.`, M, 243);
+    addFooter(doc);
+
+    // A4 BOARD 3 — project information, visual variants and next step
+    doc.addPage();
+    await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
+    y = 50;
+    doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('PROJEKTOVÉ PODKLADY', M, y);
+    doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Řešení připravené k technickému dopracování.', M, y + 10);
+    doc.setTextColor(...muted); doc.setFontSize(7.5); doc.text(doc.splitTextToSize(safe(inquiry.project_goal) || audience.headline, CW), M, y + 21);
+
+    y = 82;
+    const boardVisuals = projectVisuals.length ? projectVisuals.slice(0, 3) : [primaryVisual].filter(Boolean);
+    if (boardVisuals.length === 1) {
+      await addRemoteImage(doc, boardVisuals[0], M, y, 112, 72);
+      await addRemoteImage(doc, product.image_url, M + 118, y, 64, 72);
+    } else {
+      for (let i = 0; i < boardVisuals.length; i += 1) await addRemoteImage(doc, boardVisuals[i], M + i * 61, y, 57, 70);
     }
 
-    doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 43, 2, 2, 'F');
-    doc.setTextColor(...accent); doc.setFontSize(7.4); doc.text('SMART ŘÍZENÍ MLŽIDLA.CZ', M + 6, y + 8);
-    doc.setTextColor(255, 255, 255); doc.setFontSize(10.5); doc.text('Voda jen tehdy, když je potřeba.', M + 6, y + 17);
-    doc.setTextColor(210, 228, 232); doc.setFontSize(7.5);
-    doc.text(doc.splitTextToSize('Volitelná inteligentní vrstva pro vzdálené ovládání, časové harmonogramy, senzory, snímače, měřiče průtoku a další moduly podle projektu.', CW - 12), M + 6, y + 25);
-    y += 51;
+    y = 162;
+    const specs = [['Materiál', product.material], ['Rozměr / dosah', product.coverage_area], ['Napájení / řízení', product.power_supply]].filter((item) => item[1]);
+    doc.setFillColor(...pale); doc.roundedRect(M, y, 88, 50, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(6.5); doc.text('OVĚŘENÉ PROJEKTOVÉ ÚDAJE', M + 6, y + 8);
+    let sy = y + 17;
+    specs.forEach(([label, value]) => { doc.setTextColor(...muted); doc.setFontSize(6.1); doc.text(label, M + 6, sy); doc.setTextColor(...ink); doc.text(doc.splitTextToSize(String(value), 50)[0], M + 35, sy); sy += 8; });
+    if (!specs.length) { doc.setTextColor(...muted); doc.setFontSize(6.4); doc.text(doc.splitTextToSize('Technické hodnoty, které nejsou ověřené v projektových podkladech nebo tabulkách, v nabídce záměrně neuvádíme.', 76), M + 6, sy); }
 
-    doc.setTextColor(...navy); doc.setFontSize(9); doc.text('ROZSAH A PODMÍNKY NABÍDKY', M, y); y += 7;
-    const conditions = [
-      `Platnost cenové nabídky: do ${validUntil}. O prodloužení lze požádat elektronicky v portálu.`,
-      'Cena se vztahuje na specifikaci uvedenou v této nabídce; změna rozsahu může změnit cenu a termín.',
-      'Přesné kotvení, rozměrové návaznosti, rozvody a režim řízení se potvrzují před výrobou podle místa instalace.',
-      'Elektronické odsouhlasení nabídky potvrzuje objednávku a souhlas s aktuálními obchodními podmínkami MLŽIDLA.cz / HolmTec.',
-      'Po přijetí objednávky navazuje výrobní příprava, potvrzení technických detailů a plán realizace nebo dodání.',
-      'Dodavatel: HolmTec s.r.o. · značka MLŽIDLA.cz · kontaktní osoba Ing. Radek Meduna.'
-    ];
-    conditions.forEach((line) => { doc.setTextColor(...muted); doc.setFontSize(7.5); const lines = doc.splitTextToSize(line, CW - 10); doc.text('•', M + 2, y); doc.text(lines, M + 8, y); y += Math.max(8, lines.length * 4 + 3); });
+    doc.setFillColor(248, 250, 250); doc.roundedRect(M + 94, y, 88, 50, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(6.5); doc.text('DALŠÍ KROK', M + 100, y + 8);
+    doc.setTextColor(...ink); doc.setFontSize(7.2); doc.text(doc.splitTextToSize(safe(aiContent.next_step) || 'Po odsouhlasení návrhu upřesníme umístění, kotvení, rozsah dodávky, Smart variantu a realizační návaznosti.', 76), M + 100, y + 17);
 
-    y += 2;
-    doc.setFillColor(247, 250, 250); doc.roundedRect(M, y, CW, 44, 2, 2, 'F');
-    doc.setTextColor(...petrol); doc.setFontSize(7.2); doc.text('INTERAKTIVNÍ NABÍDKA', M + 6, y + 8);
-    doc.setTextColor(...ink); doc.setFontSize(9); doc.text('Objednat · požádat o prodloužení · uvést plánovaný termín', M + 6, y + 17);
-    doc.setTextColor(...muted); doc.setFontSize(7.2); doc.text(doc.splitTextToSize('V portálu můžete nabídku projít, stáhnout PDF a prezentaci, potvrdit obchodní podmínky, závazně objednat nebo nám poslat orientační termín rozhodnutí.', 118), M + 6, y + 24);
-    await addQr(doc, portalUrl, W - M - 34, y + 7, 27);
-    doc.link(M, y, CW, 44, { url: portalUrl });
-
-    addFooter(doc, 2, 2);
+    y = 222;
+    doc.setFillColor(238, 248, 249); doc.roundedRect(M, y, CW, 40, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(7); doc.text('MŮJ PROJEKT', M + 7, y + 9);
+    doc.setTextColor(...ink); doc.setFontSize(8.5); doc.text('Nabídka, vizualizace a dokumenty na jednom místě.', M + 7, y + 18);
+    doc.setTextColor(...muted); doc.setFontSize(6.5); doc.text('Přihlášení číslem nabídky a ověřovacím kódem na klientský e-mail.', M + 7, y + 27);
+    await addQr(doc, portalUrl, W - M - 33, y + 6, 27);
+    doc.link(M, y, CW, 40, { url: portalUrl });
+    addFooter(doc);
     const output = new Uint8Array(doc.output('arraybuffer'));
     return Response.json({
       pdf_base64: toBase64(output),

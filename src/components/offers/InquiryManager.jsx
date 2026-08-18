@@ -21,6 +21,14 @@ const FOLLOW_UP_TEMPLATES = [
   { value: 'action_discount', label: 'Akční zvýhodnění · 30 dní' },
 ];
 const FOLLOW_UP_OFFER_STATUSES = ['sent', 'viewed', 'extension_requested', 'approved', 'expired'];
+const SMART_SCENARIO_PRESETS = [
+  { key: 'temperature', label: 'Scénář A · Teplotní automatika', description: 'Aktivace mlžení pouze při překročení nastavené venkovní teploty.', defaultValue: '> 25 °C' },
+  { key: 'schedule', label: 'Scénář B · Časový plán', description: 'Provoz v definovaných intervalech během dne pro úsporný a předvídatelný provoz.', defaultValue: 'např. 10:00–19:00 · cyklus 10/20 min' },
+  { key: 'interactive', label: 'Scénář C · Interaktivní sepnutí', description: 'Okamžitý start po aktivaci bezkontaktním senzorem kolemjdoucím.', defaultValue: 'např. 15 min po aktivaci' },
+  { key: 'humidity', label: 'Scénář D · Teplota + vlhkost', description: 'Spuštění jen při kombinaci vhodné teploty a relativní vlhkosti.', defaultValue: 'nastavení dle lokality' },
+  { key: 'weather_api', label: 'Scénář E · API počasí', description: 'Volitelná integrační logika podle předpovědi nebo aktuálního počasí — déšť, teplota, vítr a další podmínky.', defaultValue: 'individuální integrační logika' },
+  { key: 'water_monitoring', label: 'Scénář F · Monitoring vody', description: 'Měření spotřeby vody, historie provozu a vzdálený přehled v SUPLA.', defaultValue: 'ENBRA + LIW‑01' },
+];
 
 export default function InquiryManager({ inquiries, products, mediaFiles, projectOrders = [], onSent }) {
   const [selectedId, setSelectedId] = useState(inquiries[0]?.key || '');
@@ -44,6 +52,8 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
   const [searchQuery, setSearchQuery] = useState('');
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
+  const [smartScenarios, setSmartScenarios] = useState(() => Object.fromEntries(SMART_SCENARIO_PRESETS.map((item) => [item.key, ['temperature','schedule','interactive','water_monitoring'].includes(item.key)])));
+  const [smartScenarioValues, setSmartScenarioValues] = useState(() => Object.fromEntries(SMART_SCENARIO_PRESETS.map((item) => [item.key, item.defaultValue])));
 
   const normalizeSearch = (value) => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   const ordersByInquiry = useMemo(() => projectOrders.reduce((map, order) => {
@@ -284,6 +294,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           ...attachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
         ].filter((url, index, all) => url && all.indexOf(url) === index).slice(0, 4),
         ai_content: clientContent,
+        smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
       });
       const quote = quoteResponse.data;
 
@@ -305,6 +316,7 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           approved_visualizations: approvedVisualizationAssets,
           ai_content: clientContent,
           audience_variant: audienceForOffer,
+          smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
         });
         presentation = presentationResponse.data;
       } catch (presentationError) {
@@ -603,6 +615,11 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
           <p className="mt-3 text-sm font-bold text-secondary">Cena projektu po slevě: {money(finalTotal)} Kč bez DPH</p>
           <p className="mt-1 text-[11px] text-muted-foreground">Skrytá kopie bude vždy odeslána na: {BCC.join(', ')}</p>
           </details>
+
+          <div className="mt-6 rounded-2xl border border-cyan-200 bg-cyan-50/40 p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-700">Smart řízení nabídky</p><h3 className="mt-1 font-heading text-xl text-slate-950">Provozní scénáře a přidané moduly</h3><p className="mt-2 max-w-3xl text-xs leading-relaxed text-slate-600">Vyberte scénáře, které mají být součástí profesionální nabídky. Nastavení se propíše do PDF a prezentace jako doporučená provozní logika pro daný projekt.</p></div></div>
+            <div className="mt-4 grid gap-3 lg:grid-cols-2">{SMART_SCENARIO_PRESETS.map((scenario) => <div key={scenario.key} className={`rounded-xl border p-4 ${smartScenarios[scenario.key] ? 'border-cyan-300 bg-white' : 'border-slate-200 bg-white/60'}`}><label className="flex cursor-pointer items-start gap-3"><input type="checkbox" checked={Boolean(smartScenarios[scenario.key])} onChange={(e) => { setSmartScenarios((current) => ({ ...current, [scenario.key]: e.target.checked })); resetPrepared(); }} className="mt-1 h-4 w-4"/><span><strong className="text-sm text-slate-900">{scenario.label}</strong><span className="mt-1 block text-xs leading-relaxed text-slate-500">{scenario.description}</span></span></label>{smartScenarios[scenario.key] && <input value={smartScenarioValues[scenario.key] || ''} onChange={(e) => { setSmartScenarioValues((current) => ({ ...current, [scenario.key]: e.target.value })); resetPrepared(); }} className="mt-3 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700"/>}</div>)}</div>
+          </div>
 
           <OfferAICopilot
             inquiry={selected}

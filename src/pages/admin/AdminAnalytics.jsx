@@ -138,7 +138,7 @@ export default function AdminAnalytics() {
       <div className="rounded-xl border border-white/8 bg-white/3 p-5"><div className="flex items-center justify-between"><p className="text-sm font-semibold text-white">Meta Ads · 7 dní</p><StatusBadge ok={ads.available}>{ads.available ? 'aktivní' : 'nepřipojeno'}</StatusBadge></div>{ads.available ? <><p className="mt-5 text-3xl font-light text-white">{money(ads.total?.spend, adsCurrency)}</p><p className="text-xs text-white/35">CTR {pct(ads.total?.ctr)} · CPC {money(ads.total?.cpc, adsCurrency)} · leady {fmt(ads.total?.leads)} · CPL {ads.total?.leads ? money(ads.total?.cpl, adsCurrency) : '—'}</p></> : <p className="mt-5 text-sm leading-relaxed text-white/35">Po autorizaci se doplní spend, CTR, CPC, leady a CPL po kampaních.</p>}</div>
     </div>
 
-    <div className="grid gap-5 xl:grid-cols-2">
+    <div className="grid gap-5 xl:grid-cols-3">
       {funnelRows.map((funnel) => <div key={funnel.title} className="overflow-hidden rounded-xl border border-white/8 bg-white/3"><div className="flex items-center justify-between bg-white/5 px-4 py-3"><p className="font-mono text-[10px] uppercase tracking-widest text-white/45">{funnel.title}</p><span className="text-[10px] text-white/25">GA4 funnel</span></div><div className="divide-y divide-white/5">{funnel.rows.map(([label, eventName], index) => <div key={eventName} className="grid grid-cols-[34px_1fr_auto] items-center gap-3 px-4 py-3"><span className="font-mono text-[10px] text-white/20">{String(index + 1).padStart(2, '0')}</span><span className="text-sm text-white/65">{label}</span><span className="font-mono text-xs text-cyan">{eventCount(eventName)}</span></div>)}</div></div>)}
     </div>
 

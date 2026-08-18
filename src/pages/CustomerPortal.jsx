@@ -293,7 +293,7 @@ export default function CustomerPortal() {
 
             return (
               <div id={`offer-${project.id}`} key={project.id} className={`bg-slate-50 border rounded-2xl overflow-hidden transition-all ${isRequested ? 'border-cyan-400 ring-4 ring-cyan-100' : 'border-slate-200 hover:border-slate-300'}`}>
-                {isRequested && <div className="border-b border-cyan-200 bg-cyan-50 px-6 py-3 text-xs font-semibold text-cyan-900">{requestedAction === 'order' ? 'Otevřeli jste nabídku k elektronickému objednání. Zkontrolujte nabídku a níže potvrďte souhlas s podmínkami.' : requestedAction === 'extend' ? 'Otevřeli jste žádost o prodloužení platnosti této nabídky.' : requestedAction === 'timing' ? 'Otevřeli jste formulář pro doplnění plánovaného termínu.' : 'Otevřená nabídka z e-mailu.'}</div>}
+                {isRequested && <div className="border-b border-cyan-200 bg-cyan-50 px-6 py-3 text-xs font-semibold text-cyan-900">{requestedAction === 'order' ? 'Otevřeli jste nabídku k elektronickému objednání. Zkontrolujte nabídku a níže potvrďte souhlas s podmínkami.' : requestedAction === 'extend' ? 'Otevřeli jste žádost o prodloužení platnosti této nabídky.' : requestedAction === 'timing' ? 'Otevřeli jste formulář pro doplnění plánovaného termínu.' : 'Otevřená cenová nabídka.'}</div>}
                 {/* Header */}
                 <div className="p-6 border-b border-slate-200">
                   <div className="flex items-start justify-between gap-4 mb-3">

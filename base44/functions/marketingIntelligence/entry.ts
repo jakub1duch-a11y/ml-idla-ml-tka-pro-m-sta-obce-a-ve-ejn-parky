@@ -362,16 +362,36 @@ async function getGoogleAdsSetup(base44: any) {
       fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/keyEvents?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
       fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/googleAdsLinks?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
     ]);
-    const keyEvents = Array.isArray(keys.keyEvents) ? keys.keyEvents : [];
+    let keyEvents = Array.isArray(keys.keyEvents) ? keys.keyEvents : [];
     const googleAdsLinks = Array.isArray(links.googleAdsLinks) ? links.googleAdsLinks : [];
+    let generateLead = keyEvents.find((item: any) => item.eventName === 'generate_lead') || null;
+    let keyEventCreated = false;
+
+    // Self-healing setup: once analytics.edit is authorized, every analytics/report run
+    // makes sure the primary lead event exists as a GA4 Key event.
+    if (!generateLead) {
+      try {
+        generateLead = await fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/keyEvents`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ eventName: 'generate_lead', countingMethod: 'ONCE_PER_EVENT' }),
+        });
+        keyEventCreated = true;
+        keyEvents = [...keyEvents, generateLead];
+      } catch (setupError) {
+        console.warn('GA4 generate_lead Key event auto-setup skipped:', setupError?.message || setupError);
+      }
+    }
+
     return {
       available: true,
-      generateLeadKeyEvent: keyEvents.some((item: any) => item.eventName === 'generate_lead'),
+      generateLeadKeyEvent: Boolean(generateLead),
+      keyEventCreated,
       googleAdsLinked: googleAdsLinks.length > 0,
       googleAdsLinks: googleAdsLinks.map((item: any) => ({ customerId: item.customerId, adsPersonalizationEnabled: item.adsPersonalizationEnabled })),
     };
   } catch (error) {
-    return { available: false, generateLeadKeyEvent: false, googleAdsLinked: false, googleAdsLinks: [], error: error.message };
+    return { available: false, generateLeadKeyEvent: false, keyEventCreated: false, googleAdsLinked: false, googleAdsLinks: [], error: error.message };
   }
 }
 

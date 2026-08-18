@@ -266,16 +266,22 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
       } catch (driveError) { console.warn('Quote Drive archive unavailable', driveError); }
 
       let presentation = null;
+      let presentationWarning = '';
       try {
         const presentationResponse = await base44.functions.invoke('generateOfferPresentation', {
-          inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: selected.message },
+          inquiry: { id: selected.id, name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', message: clientContent.project_goal },
           product: selectedProduct,
           quote: { quote_number: quoteNumber, final_total: finalTotal, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString() },
           ar_url: arUrl,
+          ar_capture_url: visualizationUrl,
+          ai_content: clientContent,
           audience_variant: audienceVariant,
         });
         presentation = presentationResponse.data;
-      } catch (presentationError) { console.warn('Offer presentation unavailable', presentationError); }
+      } catch (presentationError) {
+        presentationWarning = errorMessage(presentationError);
+        console.warn('Offer presentation unavailable', presentationError);
+      }
 
       let notebookSourceUrl = '';
       try {

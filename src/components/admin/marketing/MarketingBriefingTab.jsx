@@ -188,6 +188,14 @@ export default function MarketingBriefingTab() {
             <div className="flex items-center gap-2 text-emerald-300"><TrendingUp size={15} /><p className="font-mono text-[10px] uppercase tracking-widest">Marketingový výkon</p></div>
             <div className="mt-4"><BriefList items={narrative?.performance_readout} /></div>
           </div>
+          <div className="rounded-xl border border-emerald-400/15 bg-emerald-400/5 p-5">
+            <div className="flex items-center gap-2 text-emerald-300"><CheckCircle2 size={15} /><p className="font-mono text-[10px] uppercase tracking-widest">Splnění úkolů</p></div>
+            <div className="mt-4"><BriefList items={narrative?.completion_summary} empty="Pro období není evidovaný pracovní stav." /></div>
+          </div>
+          <div className="rounded-xl border border-violet-400/15 bg-violet-400/5 p-5">
+            <div className="flex items-center gap-2 text-violet-300"><Target size={15} /><p className="font-mono text-[10px] uppercase tracking-widest">Očekávané výsledky</p></div>
+            <div className="mt-4"><BriefList items={narrative?.expected_outcomes} empty="Očekávaný dopad není pro období evidován." /></div>
+          </div>
         </div>
 
         {(work?.activeSections || []).length > 0 ? <div className="rounded-xl border border-white/8 bg-white/3 p-5">

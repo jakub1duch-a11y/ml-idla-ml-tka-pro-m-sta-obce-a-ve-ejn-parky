@@ -137,7 +137,11 @@ async function addRemoteImage(doc, url, x, y, w, h, options = {}) {
     const sourceH = Number(props?.height || 0);
     if (!(sourceW > 0 && sourceH > 0)) return false;
 
-    const fit = options.fit || 'contain';
+    const requestedFit = options.fit || 'contain';
+    const sourceAspect = sourceW / sourceH;
+    const frameAspect = w / h;
+    const aspectDelta = Math.abs(sourceAspect - frameAspect) / frameAspect;
+    const fit = requestedFit === 'smart' ? (aspectDelta <= 0.16 ? 'cover' : 'contain') : requestedFit;
     const alignX = options.alignX || 'center';
     const alignY = options.alignY || 'center';
     const bg = options.background || [247, 250, 250];
@@ -272,7 +276,7 @@ export default async function(req) {
     doc.setTextColor(...petrol); doc.text(audience.label.toUpperCase(), W - M, y + 22, { align: 'right' });
 
     const visualY = 76;
-    const visualOk = await addRemoteImage(doc, primaryVisual, M, visualY, CW, 92, { fit: projectVisuals.length ? 'cover' : 'contain', background: [243, 248, 249] });
+    const visualOk = await addRemoteImage(doc, primaryVisual, M, visualY, CW, 92, { fit: projectVisuals.length ? 'smart' : 'contain', background: [243, 248, 249] });
     if (!visualOk) {
       doc.setFillColor(...pale); doc.roundedRect(M, visualY, CW, 92, 2, 2, 'F');
       doc.setTextColor(...muted); doc.setFontSize(8); doc.text('Projektová vizualizace bude doplněna z podkladů projektu.', M + 8, visualY + 46);
@@ -359,10 +363,10 @@ export default async function(req) {
     y = 82;
     const boardVisuals = projectVisuals.length ? projectVisuals.slice(0, 3) : [primaryVisual].filter(Boolean);
     if (boardVisuals.length === 1) {
-      await addRemoteImage(doc, boardVisuals[0], M, y, 112, 72, { fit: 'cover', background: [243, 248, 249] });
+      await addRemoteImage(doc, boardVisuals[0], M, y, 112, 72, { fit: 'smart', background: [243, 248, 249] });
       await addRemoteImage(doc, product.image_url, M + 118, y, 64, 72, { fit: 'contain', background: [255, 255, 255] });
     } else {
-      for (let i = 0; i < boardVisuals.length; i += 1) await addRemoteImage(doc, boardVisuals[i], M + i * 61, y, 57, 70, { fit: 'cover', background: [243, 248, 249] });
+      for (let i = 0; i < boardVisuals.length; i += 1) await addRemoteImage(doc, boardVisuals[i], M + i * 61, y, 57, 70, { fit: 'smart', background: [243, 248, 249] });
     }
 
     y = 162;

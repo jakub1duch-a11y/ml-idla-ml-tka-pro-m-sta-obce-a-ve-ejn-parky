@@ -123,14 +123,50 @@ async function addQr(doc, url, x, y, size = 24) {
   } catch (_) {}
 }
 
-async function addRemoteImage(doc, url, x, y, w, h) {
+async function addRemoteImage(doc, url, x, y, w, h, options = {}) {
   if (!url) return false;
   try {
     const response = await fetch(url);
     if (!response.ok) return false;
     const bytes = new Uint8Array(await response.arrayBuffer());
     const mime = response.headers.get('content-type') || 'image/jpeg';
-    doc.addImage(`data:${mime};base64,${toBase64(bytes)}`, mime.includes('png') ? 'PNG' : 'JPEG', x, y, w, h, undefined, 'FAST');
+    const format = mime.includes('png') ? 'PNG' : 'JPEG';
+    const dataUrl = `data:${mime};base64,${toBase64(bytes)}`;
+    const props = doc.getImageProperties(dataUrl);
+    const sourceW = Number(props?.width || 0);
+    const sourceH = Number(props?.height || 0);
+    if (!(sourceW > 0 && sourceH > 0)) return false;
+
+    const fit = options.fit || 'contain';
+    const alignX = options.alignX || 'center';
+    const alignY = options.alignY || 'center';
+    const bg = options.background || [247, 250, 250];
+    const radius = Number(options.radius ?? 1.5);
+
+    // Vždy zachovat skutečný poměr stran. Nikdy neroztahovat fotografii
+    // na pevnou šířku i výšku současně – to byla příčina deformovaných PDF.
+    doc.setFillColor(...bg);
+    if (radius > 0) doc.roundedRect(x, y, w, h, radius, radius, 'F');
+    else doc.rect(x, y, w, h, 'F');
+
+    const scale = fit === 'cover'
+      ? Math.max(w / sourceW, h / sourceH)
+      : Math.min(w / sourceW, h / sourceH);
+    const drawW = sourceW * scale;
+    const drawH = sourceH * scale;
+    const dx = alignX === 'left' ? x : alignX === 'right' ? x + w - drawW : x + (w - drawW) / 2;
+    const dy = alignY === 'top' ? y : alignY === 'bottom' ? y + h - drawH : y + (h - drawH) / 2;
+
+    if (fit === 'cover') {
+      doc.saveGraphicsState();
+      doc.rect(x, y, w, h);
+      doc.clip();
+      doc.discardPath();
+      doc.addImage(dataUrl, format, dx, dy, drawW, drawH, undefined, 'FAST');
+      doc.restoreGraphicsState();
+    } else {
+      doc.addImage(dataUrl, format, dx, dy, drawW, drawH, undefined, 'FAST');
+    }
     return true;
   } catch (_) { return false; }
 }

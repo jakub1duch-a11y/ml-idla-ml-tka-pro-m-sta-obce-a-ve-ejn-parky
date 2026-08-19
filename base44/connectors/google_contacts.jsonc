@@ -1,0 +1,6 @@
+{
+  "type": "google_contacts",
+  "scopes": [
+    "https://www.googleapis.com/auth/contacts"
+  ]
+}

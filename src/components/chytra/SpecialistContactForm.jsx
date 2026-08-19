@@ -18,13 +18,13 @@ export default function SpecialistContactForm() {
     setError('');
     setSending(true);
     try {
-      await base44.entities.ContactInquiry.create({
+      const created = await base44.entities.ContactInquiry.create({
         name: form.name || 'Neuvedeno',
         email: form.email || 'neuvedeno@mlzidla.cz',
         message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
       });
       trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
-      trackContactFormSubmit('smart-specialista', 'Smart systém');
+      trackContactFormSubmit('smart-specialista', 'Smart systém', created?.id || '');
       setSent(true);
     } catch (_) {
       setError('Kontakt se nepodařilo odeslat. Zkuste to prosím znovu.');

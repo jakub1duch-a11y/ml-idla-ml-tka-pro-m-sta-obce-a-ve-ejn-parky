@@ -272,6 +272,13 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
     for (let variantIndex = 0; variantIndex < variantSpecs.length; variantIndex += 1) {
       const variant = variantSpecs[variantIndex];
       try {
+        const mistVariants = [
+          'Téměř bezvětří: jemná mlha zůstává krátce kompaktní u trysek a potom se měkce rozpouští do okolního vzduchu.',
+          'Lehký boční vánek zleva doprava: jednotlivé mlžné kužely se přirozeně stáčejí do strany, ale začínají přesně v ústí trysek.',
+          'Lehký boční vánek zprava doleva: jemná mlha je mírně nesymetrická a realisticky unášená větrem, bez dramatických oblaků.',
+          'Proměnlivý slabý vítr: část mlhy se drží u produktu, část je lehce odnášena do pobytové zóny; fyzikálně věrohodně a subtilně.',
+        ];
+        const mistBehavior = mistVariants[Math.floor(Math.random() * mistVariants.length)];
         const imageParams: any = {
         prompt: `Vytvoř profesionální ULTRAREALISTICKOU fotografickou vizualizaci pro obchodní nabídku MLŽIDLA.cz.
 
@@ -285,9 +292,9 @@ ${productLock}
 
 LIDÉ A REÁLNÉ UŽÍVÁNÍ PROSTORU: ${short(analysis?.people_context, 700) || 'Přidej několik přirozeně působících uživatelů odpovídajících účelu prostoru podle poptávky.'} Pokud poptávka zmiňuje domov pro seniory, seniory, pečovatelskou službu nebo obdobné zařízení, zobraz několik starších dospělých osob přibližně 65+, přirozeně oblečených, část při klidné chůzi a část při posezení či rozhovoru; lze přidat jednoho člena personálu nebo doprovodu. Osoby nesmí působit aranžovaně, nesmí překrývat konstrukci ani trysky a nesmí být dominantnější než návrh mlžítka. Nezobrazuj známé ani konkrétní skutečné osoby.
 
-PRODUCT IDENTITY CHECK: produkt musí být na první pohled totožný s MASTER referencemi. Pokud jsou reference fotografie produktu, dej geometrické a konstrukční přesnosti přednost před estetickou stylizací. Přesně dodrž počet ${variant.quantity} ks; jednotlivé kusy neslučuj, nezrcadli do nového tvaru a nevytvářej další kusy v pozadí. Trysky musí být malé kovové komponenty fyzicky osazené přímo do konstrukce a jejich poloha, počet a orientace se musí řídit skutečnými referencemi produktu. Mlha smí vycházet výhradně z trysek a musí začínat přesně v jejich ústí; vytvoř jemný krátký kužel mlhy, který se přirozeně rozptyluje do vzduchu. Nepřidávej viditelné hadice ani kabely, pokud nejsou součástí MASTER reference.
+PRODUCT IDENTITY CHECK: produkt musí být na první pohled totožný s MASTER referencemi. Pokud jsou reference fotografie produktu, dej geometrické a konstrukční přesnosti přednost před estetickou stylizací. Přesně dodrž počet ${variant.quantity} ks; jednotlivé kusy neslučuj, nezrcadli do nového tvaru a nevytvářej další kusy v pozadí. Trysky musí být malé kovové komponenty fyzicky osazené přímo do konstrukce a jejich poloha, počet a orientace se musí řídit skutečnými referencemi produktu. Mlha smí vycházet výhradně z trysek a musí začínat přesně v jejich ústí; vytvoř jemný krátký kužel mlhy, který se přirozeně rozptyluje do vzduchu. CHOVÁNÍ MLHY PRO TUTO VARIANTU: ${mistBehavior} Mlha musí respektovat gravitaci, proudění vzduchu a perspektivu scény; žádné symetrické CGI obláčky, žádná mléčná stěna ani kouřový efekt. Nepřidávej viditelné hadice ani kabely, pokud nejsou součástí MASTER reference.
 
-Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Přidej pouze jemnou realistickou mlhu z viditelných kovových trysek. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
+Architektonický styl: klidný, prémiový, realistický, český veřejný nebo zahradní prostor podle zadání. Prvek osaď bezpečně k pěší trase nebo pobytové zóně, ne jako překážku. Fotografie má působit jako skutečná realizace pořízená kvalitním fotoaparátem: přirozené materiály, fyzicky věrohodné stíny, správná perspektiva, žádný renderový plastový vzhled. Bez louží, bez grafických overlayů, bez textů, bez loga, bez nereálných světelných efektů. Výsledek má být použitelný jako vizuální návrh v klientské prezentaci.`,
         existing_image_urls: imageReferences,
       };
         const imageResult = await base44.asServiceRole.integrations.Core.GenerateImage(imageParams);

@@ -27,13 +27,13 @@ export default function ProductContactForm({ productName }) {
         form.smartVariant !== 'none' && `Smart řízení: ${smartLabel}`,
         form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'
       ].filter(Boolean).join(', ');
-      await base44.entities.ContactInquiry.create({
+      const created = await base44.entities.ContactInquiry.create({
         name: form.name,
         email: form.email,
         message: `[${productName}] ${form.message || 'Zájem o produkt'} | ${extras}`,
         description: form.phone ? `Tel: ${form.phone}` : ''
       });
-      trackContactFormSubmit('produkt', productName);
+      trackContactFormSubmit('produkt', productName, created?.id || '');
       setSent(true);
     } finally {
       setSending(false);

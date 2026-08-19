@@ -17,6 +17,7 @@ import AdminProductAnalytics from './AdminProductAnalytics';
 import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
 import AdminOffers from './AdminOffers';
+import AdminInstallPrompt from '@/components/admin/AdminInstallPrompt';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -141,6 +142,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-ink flex">
+      <AdminInstallPrompt user={user} />
       {showInstallCard && (
         <div className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-md rounded-2xl border border-cyan/20 bg-[#0d1117]/95 p-4 shadow-2xl backdrop-blur-xl md:bottom-6">
           <div className="flex items-start gap-3">

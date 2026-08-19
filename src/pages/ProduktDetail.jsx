@@ -20,6 +20,7 @@ import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
 import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
+import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -238,7 +239,18 @@ export default function ProduktDetail() {
         allImages={allImages}
         onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
-      
+
+
+      {/* ═══════ OÁZA SIGNATURE EXPERIENCE ═══════ */}
+      {product.slug === 'oaza-aura-bendy' && (
+        <OazaSignatureSection
+          product={product}
+          allImages={allImages}
+          onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
+          onPoptat={scrollToContact}
+          onShowSmart={() => handleTabClick(TABS[3])}
+        />
+      )}
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
       <div ref={tabsNavRef} className="sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">

@@ -55,12 +55,14 @@ Deno.serve(async (req) => {
       const visualizations = selectedAssets.filter((asset) => asset.asset_type === 'generated_visualization');
       const documents = selectedAssets.filter((asset) => asset.asset_type !== 'generated_visualization');
       const offerMessages = await base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []);
+      const extraCharges = await base44.asServiceRole.entities.ProjectExtraCharge.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []);
       return {
         ...project,
         offer_assets: selectedAssets,
         visualizations,
         documents,
         offer_messages: offerMessages || [],
+        extra_charges: (extraCharges || []).filter((charge) => charge.status !== 'draft' && charge.status !== 'cancelled'),
         primary_visualization_url: visualizations[0]?.file_url || '',
       };
     }));

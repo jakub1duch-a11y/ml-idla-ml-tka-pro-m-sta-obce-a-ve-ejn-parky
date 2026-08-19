@@ -527,13 +527,13 @@ function Gate70ContactForm() {
     setSending(true);
     try {
       const { base44: b44 } = await import('@/api/base44Client');
-      await b44.entities.ContactInquiry.create({
+      const created = await b44.entities.ContactInquiry.create({
         name: form.name,
         email: form.email,
         message: `[${form.variant}] ${form.message || 'Zájem o produkt GATE70'}`,
         description: form.phone ? `Tel: ${form.phone}` : ''
       });
-      trackContactFormSubmit('produkt-gate70', form.variant);
+      trackContactFormSubmit('produkt-gate70', form.variant, created?.id || '');
       setSent(true);
     } finally {
       setSending(false);

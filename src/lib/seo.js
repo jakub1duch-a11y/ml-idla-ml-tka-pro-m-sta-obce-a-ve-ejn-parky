@@ -77,6 +77,10 @@ function setJsonLd(data) {
   el.textContent = JSON.stringify(data);
 }
 
+function clearJsonLd() {
+  document.getElementById('json-ld-seo')?.remove();
+}
+
 const BREADCRUMB_HOME = {
   cs: 'Hlavní stránka',
   en: 'Home',
@@ -136,7 +140,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   document.documentElement.lang = localeConfig.htmlLang;
   document.title = fullTitle;
   setMeta('description', description);
-  if (keywords) setMeta('keywords', keywords);
+  setMeta('keywords', keywords || '');
   setMeta('robots', robots || 'index, follow');
 
   // Open Graph
@@ -169,6 +173,8 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
     setJsonLd(jsonLd);
   } else if (breadcrumbs) {
     setJsonLd(breadcrumbs);
+  } else {
+    clearJsonLd();
   }
 
   // Místní SEO značky
@@ -259,6 +265,48 @@ export const SEO_PAGES = {
     description: 'Katalog 2026 - Systémy HolmTec: OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70 a další. Zakázková výroba z nerezové oceli pro moderní architekturu.',
     keywords: 'mlžítka katalog, mlžné brány, designová mlžítka, mlžné skulptury, mlžné systémy, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70',
     canonicalPath: '/mlzidla-mlzitka',
+  },
+  mestskaKolekce: {
+    title: 'Městská mlžítka pro města, obce a veřejný prostor',
+    description: 'Nerezová městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, školy, hřiště a sportoviště. Projektová podpora, Smart řízení a servis.',
+    keywords: 'městská mlžítka, mlžítka pro města, mlžítka pro obce, ochlazování měst, městské ochlazování, mlžná zóna',
+    canonicalPath: '/mestske-mlzitka',
+  },
+  zahradniKolekce: {
+    title: 'Zahradní mlžítka pro zahrady, terasy a pergoly',
+    description: 'Designová nerezová zahradní mlžítka pro zahrady, terasy, pergoly a venkovní wellness. Nízkotlaké řešení na vodovodní řad a volitelné Smart ovládání.',
+    keywords: 'zahradní mlžítko, mlžítka na zahradu, mlžítko na terasu, zahradní mlžení, vodní mlha na zahradu, vodní mlha na terasu',
+    canonicalPath: '/zahradni-mlzitka',
+  },
+  zakazkovaKolekce: {
+    title: 'Zakázková mlžítka a mlžné sochy na míru',
+    description: 'Zakázková nerezová mlžítka, mlžné sochy a atypické mlžné instalace podle identity místa, architektonického návrhu nebo vlastního tvaru.',
+    keywords: 'zakázkové mlžítko, mlžítko na míru, mlžná socha, designové mlžítko, atypické mlžítko, mlžná instalace',
+    canonicalPath: '/zakazkova-mlzitka',
+  },
+  mlzitko: {
+    title: 'Mlžítko — designové nerezové mlžítko bez čerpadla',
+    description: 'Designová nerezová mlžítka a mlžné sochy pro města, zahrady a veřejný prostor. Nízkotlaké mlžení na vodovodní řad, Smart ovládání a výroba na míru.',
+    keywords: 'mlžítko, mlžítka, mlzitko, mlzitka, designové mlžítko, nerezové mlžítko',
+    canonicalPath: '/mlzitko',
+  },
+  mlhoviste: {
+    title: 'Mlhoviště pro města, zahrady a dětská hřiště',
+    description: 'Nerezová mlhoviště a mlžné zóny pro města, parky, dětská hřiště, zahrady a terasy. Nízkotlaké řešení, Smart řízení a zakázková výroba.',
+    keywords: 'mlhoviště, mlhoviste, mlhoviště na zahradu, dětské mlhoviště, mobilní mlhoviště, mlžná zóna',
+    canonicalPath: '/mlhoviste',
+  },
+  vodniMlha: {
+    title: 'Vodní mlha pro zahrady, terasy a veřejný prostor',
+    description: 'Vodní mlha pro ochlazení zahrad, teras, pergol, parků a veřejného prostoru. Princip, nízkotlaké mlžení, trysky, spotřeba a Smart řízení.',
+    keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu',
+    canonicalPath: '/vodni-mlha',
+  },
+  mlzneBrany: {
+    title: 'Mlžné brány pro města, parky a eventy',
+    description: 'Designové nerezové mlžné brány pro města, parky, sportoviště a eventy. Nízkotlaké mlžení, zakázkové rozměry, projektová podpora a Smart řízení.',
+    keywords: 'mlžná brána, mlžné brány, mlzna brana, mlžící brána, ochlazovací brána',
+    canonicalPath: '/mlzne-brany',
   },
   mlhoviste: {
     title: 'Mlhoviště pro dětská hřiště, terasy a veřejné prostory',

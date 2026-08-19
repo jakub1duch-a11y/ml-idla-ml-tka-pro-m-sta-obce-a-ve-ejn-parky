@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { CheckCircle2, ExternalLink, Eye, FileText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { CheckCircle2, ExternalLink, Eye, FileText, ReceiptText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
@@ -52,6 +52,10 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
   const [searchQuery, setSearchQuery] = useState('');
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
+  const [extraCharges, setExtraCharges] = useState([]);
+  const [extraChargeOfferId, setExtraChargeOfferId] = useState('');
+  const [extraChargeForm, setExtraChargeForm] = useState({ title: '', description: '', quantity: 1, unit: 'ks', unit_price_ex_vat: 0 });
+  const [extraChargeBusy, setExtraChargeBusy] = useState(false);
   const [smartScenarios, setSmartScenarios] = useState(() => Object.fromEntries(SMART_SCENARIO_PRESETS.map((item) => [item.key, ['temperature','schedule','interactive','water_monitoring'].includes(item.key)])));
   const [smartScenarioValues, setSmartScenarioValues] = useState(() => Object.fromEntries(SMART_SCENARIO_PRESETS.map((item) => [item.key, item.defaultValue])));
 
@@ -80,6 +84,52 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
   const total = Number(basePrice || 0) + Number(installation || 0);
   const finalTotal = Math.round(total * (1 - Number(discount || 0) / 100));
   const selectedProduct = products.find((item) => item.id === productId);
+
+  useEffect(() => {
+    let active = true;
+    const loadExtraCharges = async () => {
+      if (!selectedOffers.length) {
+        if (active) { setExtraCharges([]); setExtraChargeOfferId(''); }
+        return;
+      }
+      if (!extraChargeOfferId || !selectedOffers.some((offer) => offer.id === extraChargeOfferId)) setExtraChargeOfferId(selectedOffers[0].id);
+      const records = await base44.entities.ProjectExtraCharge.list('-created_date', 200).catch(() => []);
+      if (active) setExtraCharges((records || []).filter((charge) => selectedOffers.some((offer) => offer.id === charge.project_order_id)));
+    };
+    loadExtraCharges();
+    return () => { active = false; };
+  }, [selectedId, projectOrders]);
+
+  const createExtraCharge = async () => {
+    const offer = selectedOffers.find((item) => item.id === extraChargeOfferId);
+    const title = String(extraChargeForm.title || '').trim();
+    const quantity = Math.max(0, Number(extraChargeForm.quantity || 0));
+    const unitPrice = Math.max(0, Number(extraChargeForm.unit_price_ex_vat || 0));
+    if (!offer || !title || !(quantity > 0) || !(unitPrice >= 0)) return;
+    setExtraChargeBusy(true);
+    setError('');
+    try {
+      const created = await base44.entities.ProjectExtraCharge.create({
+        project_order_id: offer.id,
+        quote_number: offer.quote_number || '',
+        title,
+        description: String(extraChargeForm.description || '').trim(),
+        quantity,
+        unit: String(extraChargeForm.unit || 'ks').trim() || 'ks',
+        unit_price_ex_vat: unitPrice,
+        total_price_ex_vat: Math.round(quantity * unitPrice),
+        vat_rate: 21,
+        status: 'pending_customer_approval',
+        requires_customer_approval: true,
+      });
+      setExtraCharges((current) => [created, ...current]);
+      setExtraChargeForm({ title: '', description: '', quantity: 1, unit: 'ks', unit_price_ex_vat: 0 });
+    } catch (requestError) {
+      setError(errorMessage(requestError));
+    } finally {
+      setExtraChargeBusy(false);
+    }
+  };
 
   const resetPrepared = () => { setPrepared(null); setApprovedToSend(false); };
   const resetFollowUp = () => { setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); };

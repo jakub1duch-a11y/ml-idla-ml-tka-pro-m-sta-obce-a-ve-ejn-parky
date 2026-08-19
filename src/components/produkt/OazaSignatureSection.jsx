@@ -211,7 +211,40 @@ export default function OazaSignatureSection({
           )}
         </div>
 
-        <div className="mt-16 overflow-hidden rounded-[2rem] border border-[#0b4860]/15 bg-[#0b4860] p-6 text-white shadow-[0_24px_70px_rgba(11,72,96,.18)] sm:p-8 lg:p-10">
+        <div className="mt-16 rounded-[2rem] border border-cyan-900/10 bg-white p-6 shadow-[0_16px_48px_rgba(15,23,42,.06)] sm:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-cyan-50 px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-800">
+                <Wifi size={13} /> Smart řízení
+              </span>
+              <h2 className="mt-4 font-heading text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">OÁZA může mlžit jen tehdy, když to dává smysl.</h2>
+              <p className="mt-4 text-sm leading-6 text-slate-600">
+                Sestavu lze doplnit chytrým řízením vodní větve. Provozní režim se nastavuje podle lokality, času a způsobu používání prostoru, aby se mlžení nespouštělo zbytečně.
+              </p>
+              <button
+                type="button"
+                onClick={onShowSmart}
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#0b4860]/20 px-5 py-2.5 text-sm font-semibold text-[#0b4860] transition-colors hover:bg-cyan-50"
+              >
+                Zobrazit Smart konfiguraci <ArrowRight size={14} />
+              </button>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                ['Časové režimy', 'Provozní okna pro běžný den, víkend nebo sezónní režim.'],
+                ['Vzdálené ovládání', 'Možnost správy vodní větve podle zvolené chytré konfigurace.'],
+                ['Úspornější provoz', 'Voda se používá jen v časech, kdy má ochlazování skutečný význam.'],
+              ].map(([title, text]) => (
+                <div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
+                  <p className="mt-2 text-xs leading-5 text-slate-500">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 overflow-hidden rounded-[2rem] border border-[#0b4860]/15 bg-[#0b4860] p-6 text-white shadow-[0_24px_70px_rgba(11,72,96,.18)] sm:p-8 lg:p-10">
           <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.2em] text-cyan-200">Další krok</p>

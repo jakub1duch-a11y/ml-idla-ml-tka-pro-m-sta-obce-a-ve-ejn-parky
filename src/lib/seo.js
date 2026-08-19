@@ -5,7 +5,7 @@
 
 import { LOCALE_CONFIG, ROUTE_MAP, getLanguageAlternates, getRouteKeyFromPath } from './i18n.js';
 
-const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
+const SITE_NAME = 'MLŽIDLA.cz';
 const BASE_URL = 'https://mlzidla.cz';
 const DEFAULT_IMAGE = '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp';
 export const GOOGLE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Horn%C3%AD+Star%C3%A9+M%C4%9Bsto+698%2C+Trutnov';
@@ -359,14 +359,14 @@ export const SEO_PAGES = {
   },
   parkyHriste: {
     title: 'Mlhoviště pro parky a dětská hřiště — Bezpečné mlžení bez chemie',
-    description: 'Bezpečné mlžné systémy pro parky a hřiště. Používáme výhradně potravinářskou nerezovou ocel AISI 316L, provoz je hygienicky čistý a bezpečný pro nejmenší děti.',
+    description: 'Nerezové nízkotlaké mlžné systémy pro parky a dětská hřiště. Konstrukce z AISI 316L, provoz bez čerpadla a řešení navržené pro bezpečný a snadno udržovatelný veřejný prostor.',
     keywords: 'mlhoviště dětské hřiště, parkové mlžení, herní vodní prvky, bezpečné ochlazení dětí',
     canonicalPath: '/kategorie/parky-hriste',
   },
   koupaliste: {
     title: 'Mlhoviště pro koupaliště a aquaparky — Komfortní chladicí zóny',
-    description: 'Designové mlžné systémy LINEA CE70 a Y-ARMIST pro areály koupališť, aquaparků a bazénů. Zvyšují atraktivitu areálu a nabízejí rychlé osvěžení bez přehřívání.',
-    keywords: 'mlhoviště koupaliště, mlžení aquapark, chladicí zóna bazén, vysokotlaké trysky koupaliště',
+    description: 'Designové nízkotlaké mlžné systémy pro koupaliště, aquaparky a bazénové areály. Nerezové řešení bez čerpadla, napojené na běžný vodovodní řad, pro komfortní venkovní ochlazení.',
+    keywords: 'mlhoviště koupaliště, mlžení aquapark, chladicí zóna bazén, nízkotlaké mlžení koupaliště',
     canonicalPath: '/kategorie/koupaliste',
   },
   architekti: {
@@ -401,7 +401,7 @@ export const SEO_PAGES = {
   },
   deti: {
     title: 'Mlhoviště pro školy, školky a dětská hřiště — bezpečné mlžení',
-    description: 'Bezpečná mlhoviště pro základní školy, mateřské školky a dětská hřiště. Potravinářská nerez, jemná mlha bez tlakového rizika, certifikováno pro dětské prostory.',
+    description: 'Nízkotlaká mlhoviště pro základní školy, mateřské školy a dětská hřiště. Nerez AISI 316L, jemné mlžení bez čerpadla a řešení navržené pro dětské a veřejné prostory.'
     keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
     canonicalPath: '/kategorie/skoly-skolky-deti',
   },

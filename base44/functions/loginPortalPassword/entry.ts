@@ -113,7 +113,7 @@ Deno.serve(async (req) => {
     await base44.asServiceRole.entities.PortalSession.create({ email, token: sessionToken, expires_at: sessionExpiresAt });
     await base44.asServiceRole.entities.PortalAccount.update(account.id, {
       failed_attempts: 0,
-      locked_until: null,
+      locked_until: new Date(0).toISOString(),
       last_login_at: new Date().toISOString(),
     });
 

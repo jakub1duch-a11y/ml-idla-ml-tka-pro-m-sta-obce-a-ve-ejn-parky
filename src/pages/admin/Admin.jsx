@@ -43,7 +43,7 @@ export default function Admin() {
     const resolveAdmin = async () => {
       try {
         let u = await base44.auth.me();
-        if (u?.email?.toLowerCase() === 'jakub1duch@gmail.com' && u.role !== 'admin') {
+        if (['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(u?.email?.toLowerCase()) && u.role !== 'admin') {
           try {
             await base44.functions.invoke('bootstrapJakubAdmin', {});
             u = await base44.auth.me();
@@ -70,7 +70,7 @@ export default function Admin() {
 
   if (!user) return null;
 
-  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com'];
+  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'];
   const emailAllowed = !!user.email && (
     user.email.toLowerCase().endsWith('@mlzidla.cz') ||
     ADMIN_EMAIL_EXCEPTIONS.includes(user.email.toLowerCase())

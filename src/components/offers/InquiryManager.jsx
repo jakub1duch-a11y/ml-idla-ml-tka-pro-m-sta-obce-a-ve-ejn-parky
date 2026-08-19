@@ -239,6 +239,8 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     const audienceForOffer = options.audienceVariant || audienceVariant;
     const finalTotalForOffer = Math.round((basePriceForOffer + installationForOffer) * (1 - discountForOffer / 100));
     const visualizationOverride = options.visualizationUrl || '';
+    const visualizationOverrides = Array.isArray(options.visualizationUrls) ? options.visualizationUrls.filter(Boolean) : [];
+    const offerAttachments = Array.isArray(options.attachments) ? options.attachments : attachments;
     const clientContentOverride = options.clientContent || null;
     const projectOrderOverride = options.projectOrder || null;
     const priceIsEstimate = Boolean(options.priceIsEstimate);
@@ -265,7 +267,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       try {
         approvedVisualizationAssets = (await base44.entities.VisualizationAsset.filter({ source_inquiry_id: selected.id, approved_for_presentation: true })) || [];
       } catch (technicalDataError) { console.warn('Approved visualization data unavailable', technicalDataError); }
-      const visualizationUrl = visualizationOverride || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || attachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
+      const visualizationUrl = visualizationOverride || visualizationOverrides[0] || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || offerAttachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
 
       let clientContent = clientContentOverride || {
         project_goal: `Návrh řešení ${productForOffer.name} pro ${selected.firma || selected.company || selected.name}.`,
@@ -303,8 +305,9 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         audience_variant: audienceForOffer,
         visualization_urls: [
           visualizationUrl,
+          ...visualizationOverrides,
           ...approvedVisualizationAssets.map((item) => item.image_url).filter(Boolean),
-          ...attachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
+          ...offerAttachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
         ].filter((url, index, all) => url && all.indexOf(url) === index).slice(0, 4),
         ai_content: clientContent,
         smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
@@ -382,9 +385,16 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         if (generatedAssets.length) await Promise.all(generatedAssets.map((asset) => base44.entities.OfferAsset.create(asset)));
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, approvedVisualizationAssets, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null, customProduct: options.customProduct || null, customPricing: options.customPricing || null });
+      const generatedVisualizationUrls = [
+        visualizationUrl,
+        ...visualizationOverrides,
+        ...offerAttachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
+      ].filter((url, index, all) => url && all.indexOf(url) === index);
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, visualizationUrls: generatedVisualizationUrls, visualizationWarning: generatedVisualizationUrls.length === 0 ? 'Automatická nabídka je hotová, ale AI vizualizaci se tentokrát nepodařilo vytvořit. Nabídku lze dál zkontrolovat a odeslat; vizualizaci můžete přegenerovat samostatně v pokročilých nástrojích.' : '', approvedVisualizationAssets, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null, customProduct: options.customProduct || null, customPricing: options.customPricing || null });
       if (!subject.trim()) setSubject(`Projektový návrh + cenová nabídka ${quoteNumber} | ${selected.firma || selected.company || productForOffer.name} | MLŽIDLA®`);
-      if (!message.trim()) setMessage(`Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení pro daný prostor včetně projektové vizualizace a cenové nabídky. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je vizuální koncept osazení, cenová rekapitulace a projektová prezentace. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
+      if (!message.trim()) setMessage(visualizationUrl
+        ? `Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení pro daný prostor včetně orientační projektové vizualizace a cenové nabídky. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je AI koncept osazení, cenová rekapitulace a projektová prezentace. Vizualizace slouží jako návrhový podklad; přesné technické řešení potvrzujeme před realizací. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`
+        : `Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení a cenovou nabídku pro daný prostor. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je cenová rekapitulace a projektová prezentace. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít doplnit vizualizaci, upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 
@@ -499,6 +509,8 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         discount: 0,
         audienceVariant: autoAudience,
         visualizationUrl: result.visualization_url || '',
+        visualizationUrls: Array.isArray(result.visualization_urls) ? result.visualization_urls : returnedVisualAssets.map((item) => item.file_url).filter(Boolean),
+        attachments: nextAttachments,
         clientContent: result.ai_content ? {
           ...result.ai_content,
           solution_summary: `${result.ai_content.solution_summary || ''}${autoVariants.length > 1 ? `\n\nCenové varianty: ${autoVariants.map((variant) => `${variant.label}: ${Number(variant.price || 0).toLocaleString('cs-CZ')} Kč bez DPH`).join(' · ')}` : ''}`,
@@ -512,6 +524,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         auto: true,
       });
       await onSent?.();
+      window.setTimeout(() => document.getElementById('offer-review')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
     } catch (requestError) {
       setError(errorMessage(requestError));
     } finally {

@@ -158,6 +158,7 @@ async function getWorkSummary(base44: any, from: string, to: string) {
     ['ProjectOrder', 'Nabídky a obchodní případy'],
     ['OfferVariant', 'Varianty nabídek'],
     ['VisualizationAsset', 'AI vizualizace'],
+    ['WorkLog', 'Pracovní log'],
   ];
 
   const results = await Promise.all(definitions.map(async ([entity]) => {
@@ -172,8 +173,11 @@ async function getWorkSummary(base44: any, from: string, to: string) {
   const sections = definitions.map(([entity, label]) => {
     const source = results.find((result) => result.entity === entity);
     const rows = source?.rows || [];
-    const created = rows.filter((row: any) => inRange(recordDate(row, 'created_date'), from, to));
-    const updated = rows.filter((row: any) => {
+    const isWorkLog = entity === 'WorkLog';
+    const created = isWorkLog
+      ? rows.filter((row: any) => inRange(String(row.work_date || ''), from, to))
+      : rows.filter((row: any) => inRange(recordDate(row, 'created_date'), from, to));
+    const updated = isWorkLog ? [] : rows.filter((row: any) => {
       const updatedDate = recordDate(row, 'updated_date');
       const createdDate = recordDate(row, 'created_date');
       return inRange(updatedDate, from, to) && !inRange(createdDate, from, to);
@@ -184,17 +188,23 @@ async function getWorkSummary(base44: any, from: string, to: string) {
       .map((row: any) => ({
         id: row.id,
         label: workLabel(row),
-        action: inRange(recordDate(row, 'created_date'), from, to) ? 'created' : 'updated',
+        action: isWorkLog ? 'created' : (inRange(recordDate(row, 'created_date'), from, to) ? 'created' : 'updated'),
         status: row.status || (row.published === true ? 'published' : row.published === false ? 'draft' : ''),
+        description: isWorkLog ? row.description || '' : '',
+        expectedResult: isWorkLog ? row.expected_result || '' : '',
+        area: isWorkLog ? row.area || '' : '',
+        evidence: isWorkLog ? row.evidence || '' : '',
       }));
     return { entity, label, created: created.length, updated: updated.length, total: created.length + updated.length, items: touched, error: source?.error || '' };
   });
 
   const active = sections.filter((section) => section.total > 0);
+  const taskLog = sections.find((section) => section.entity === 'WorkLog')?.items || [];
   return {
     totalChanges: active.reduce((sum, section) => sum + section.total, 0),
     sections,
     activeSections: active,
+    taskLog,
   };
 }
 

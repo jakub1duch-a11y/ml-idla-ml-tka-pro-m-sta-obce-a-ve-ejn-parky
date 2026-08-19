@@ -114,11 +114,29 @@ export function resolveMediaUrl(url) {
   return MEDIA_MAP[url] || url;
 }
 
+const LIVE_PRODUCT_IMAGE_SLUGS = new Set([
+  'mlzitko-bendy',
+  'bendy-alej',
+  'bendy-back-to-back',
+  'bendy-field',
+  'bendy-arc',
+  'bendy-arc-2-0',
+  'bendy-arc-3-0',
+  'brana-bendy',
+]);
+
 export function normalizeProductMedia(product) {
   if (!product || typeof product !== 'object') return product;
+
+  // BENDY product thumbnails are managed live from the Product entity.
+  // Keep their current database URL instead of replacing it with an older
+  // pre-generated optimized asset from MEDIA_MAP, so product-image changes
+  // become visible immediately on the public catalogue.
+  const useLiveProductImage = LIVE_PRODUCT_IMAGE_SLUGS.has(product.slug);
+
   return {
     ...product,
-    image_url: resolveMediaUrl(product.image_url),
+    image_url: useLiveProductImage ? product.image_url : resolveMediaUrl(product.image_url),
     gallery_urls: Array.isArray(product.gallery_urls) ? product.gallery_urls.map(resolveMediaUrl) : product.gallery_urls,
     video_url: resolveMediaUrl(product.video_url),
   };

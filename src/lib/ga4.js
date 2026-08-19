@@ -254,10 +254,13 @@ async function emit(eventName, properties = {}) {
   void trackMetaEvent(eventName, properties);
 }
 
-function sendToGoogleAds() {
+function sendToGoogleAds({ transactionId = '', value = 1 } = {}) {
   if (!GOOGLE_ADS_CONVERSION_LABEL) return;
   safeGtag('event', 'conversion', {
     send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
+    value,
+    currency: 'CZK',
+    ...(transactionId ? { transaction_id: transactionId } : {}),
   });
 }
 
@@ -270,14 +273,19 @@ function sendToGoogleAdsPhone() {
   });
 }
 
-function trackLead(leadType, productName, leadScore) {
+function trackLead(leadType, productName, leadScore, leadId = '') {
+  const normalizedLeadId = String(leadId || '').trim();
   void emit('generate_lead', {
     lead_type: leadType || 'kontakt',
     product_name: productName || 'nezadáno',
     lead_score: leadScore,
+    ...(normalizedLeadId ? { lead_id: normalizedLeadId } : {}),
   }).then(() => {
-    // Google Ads conversion is reserved for commercial leads, not low-intent cooperation/newsletter actions.
-    if (Number(leadScore || 0) >= 75) sendToGoogleAds();
+    // Direct Google Ads conversion is the primary Ads source. The same lead ID is
+    // passed as transaction_id so accidental retries can be deduplicated by Ads.
+    if (Number(leadScore || 0) >= 75) {
+      sendToGoogleAds({ transactionId: normalizedLeadId, value: 1 });
+    }
   });
 }
 
@@ -294,21 +302,23 @@ export function trackCooperationFormSubmit() {
   trackLead('spolupráce', '', 60);
 }
 
-export function trackContactFormSubmit(formType, productName) {
-  trackLead(formType || 'kontakt', productName, 75);
+export function trackContactFormSubmit(formType, productName, leadId = '') {
+  trackLead(formType || 'kontakt', productName, 75, leadId);
 }
 
-export function trackInquirySubmitted(requestType, productInterest) {
-  trackLead(requestType || 'poptávka', productInterest, 100);
+export function trackInquirySubmitted(requestType, productInterest, leadId = '') {
+  trackLead(requestType || 'poptávka', productInterest, 100, leadId);
 }
 
-export function trackRentalInquiry(productName, eventType) {
+export function trackRentalInquiry(productName, eventType, leadId = '') {
+  const normalizedLeadId = String(leadId || '').trim();
   void emit('generate_lead', {
     lead_type: 'pronájem GO',
     product_name: productName || 'nezvoleno',
     event_type: eventType || 'event',
     lead_score: 85,
-  }).then(() => sendToGoogleAds());
+    ...(normalizedLeadId ? { lead_id: normalizedLeadId } : {}),
+  }).then(() => sendToGoogleAds({ transactionId: normalizedLeadId, value: 1 }));
 }
 
 export function trackThankYouPageView(source) {

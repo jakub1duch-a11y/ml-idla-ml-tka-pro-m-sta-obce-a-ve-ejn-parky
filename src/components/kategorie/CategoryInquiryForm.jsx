@@ -11,7 +11,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban', 
     e.preventDefault();
     setStatus('sending');
     try {
-      await base44.entities.ContactInquiry.create({
+      const created = await base44.entities.ContactInquiry.create({
         name: form.name,
         email: form.email,
         project_scope: projectScope,
@@ -24,7 +24,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban', 
         message: `[${category}] ${form.message}`,
         status: 'new',
       });
-      trackContactFormSubmit(`kategorie:${projectScope}`, category);
+      trackContactFormSubmit(`kategorie:${projectScope}`, category, created?.id || '');
       trackFunnelStep(analyticsSegment, 'lead_submit', category);
       setStatus('sent');
     } catch (_) {

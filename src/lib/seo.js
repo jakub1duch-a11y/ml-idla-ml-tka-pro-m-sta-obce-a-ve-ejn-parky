@@ -308,16 +308,10 @@ export const SEO_PAGES = {
     keywords: 'mlžná brána, mlžné brány, mlzna brana, mlžící brána, ochlazovací brána',
     canonicalPath: '/mlzne-brany',
   },
-  mlhoviste: {
-    title: 'Mlhoviště pro dětská hřiště, terasy a veřejné prostory',
-    description: 'Mlžné systémy - Mlhoviště START, PARK a ARENA pro hřiště, restaurační terasy a prostranství. Ochlazení až o 10 °C, bezpečné pro děti, nerezová ocel.',
-    keywords: 'mlhoviště, mlžná hřiště, mlžné systémy, terasy, vodní mlha pro děti, ochlazení prostranství',
-    canonicalPath: '/mlhoviste',
-  },
   jakToFunguje: {
-    title: 'Jak funguje mlžení? Princip evaporace a technologie HolmTec',
-    description: 'Vysvětlujeme fyziku vysokotlakého mlžení: kapičky 10–50 μm se odpařují ve vzduchu a absorbují teplo. Ochlazení až o 10 °C bez tvoření mokrých louží.',
-    keywords: 'jak funguje mlžení, evaporace mlha, vysokotlaká atomizace, ochlazení evaporací, fyzika mlžení, mlžná technika',
+    title: 'Jak funguje vodní mlha a nízkotlaké mlžení',
+    description: 'Jak funguje vodní mlha, evaporace, trysky a nízkotlaké mlžení na běžný vodovodní řad. Vysvětlení tlaku, průtoku, spotřeby a podmínek pro účinné ochlazení.',
+    keywords: 'jak funguje mlžení, vodní mlha, nízkotlaké mlžení, evaporace, mlžicí trysky, ochlazení vodní mlhou',
     canonicalPath: '/jak-to-funguje',
   },
   oNas: {

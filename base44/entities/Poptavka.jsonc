@@ -26,6 +26,38 @@
       "type": "string",
       "description": "Zdroj / typ slu\u017eby popt\u00e1vky"
     },
+    "request_type": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "other_product",
+        "custom_design"
+      ],
+      "default": "standard",
+      "description": "Typ po\u017eadavku z klientsk\u00e9ho port\u00e1lu"
+    },
+    "custom_shape": {
+      "type": "string",
+      "description": "Po\u017eadovan\u00fd tvar / p\u0159edstava vlastn\u00edho n\u00e1vrhu"
+    },
+    "attachment_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "P\u0159\u00edlohy dodan\u00e9 z\u00e1kazn\u00edkem"
+    },
+    "attachment_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "N\u00e1zvy p\u0159\u00edloh dodan\u00fdch z\u00e1kazn\u00edkem"
+    },
+    "source_project_order_id": {
+      "type": "string",
+      "description": "Projekt, ze kter\u00e9ho klient zalo\u017eil navazuj\u00edc\u00ed popt\u00e1vku"
+    },
     "zprava": {
       "type": "string",
       "description": "Zpr\u00e1va / popt\u00e1vka"

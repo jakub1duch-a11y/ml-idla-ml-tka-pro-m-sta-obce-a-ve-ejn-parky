@@ -3,6 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.43';
 const GA4_PROPERTY_ID = 'properties/496002660';
 const SEARCH_CONSOLE_SITE = 'sc-domain:mlzidla.cz';
 const TZ = 'Europe/Prague';
+const GRAPH_VERSION = 'v23.0';
 
 function num(value: unknown) {
   const parsed = Number(value);

@@ -40,6 +40,20 @@ export default function Admin() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [showInstallCard, setShowInstallCard] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+      const dismissed = localStorage.getItem('mlzidla-admin-install-dismissed');
+      const installed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+      if (!dismissed && !installed) setShowInstallCard(true);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
 
   useEffect(() => {
     const resolveAdmin = async () => {
@@ -71,6 +85,25 @@ export default function Admin() {
   );
 
   if (!user) return null;
+
+  const installAdminApp = async () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      if (choice?.outcome === 'accepted') {
+        localStorage.setItem('mlzidla-admin-installed', '1');
+        setShowInstallCard(false);
+      }
+      setInstallPrompt(null);
+      return;
+    }
+    setShowInstallCard(true);
+  };
+
+  const dismissInstall = () => {
+    localStorage.setItem('mlzidla-admin-install-dismissed', '1');
+    setShowInstallCard(false);
+  };
 
   const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'];
   const emailAllowed = !!user.email && (

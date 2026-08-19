@@ -1,9 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { AlertTriangle, BarChart3, CalendarDays, CheckCircle2, ClipboardCheck, Loader, RefreshCw, Search, Target, TrendingUp, Users, Zap } from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3, CalendarDays, CheckCircle2, ClipboardCheck, FileText, FolderOpen, Instagram, Loader, Megaphone, RefreshCw, Search, Target, TrendingUp, Users, Zap } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const fmt = (value = 0) => Math.round(Number(value) || 0).toLocaleString('cs-CZ');
 const pct = (value = 0) => `${Number(value || 0).toFixed(1).replace('.', ',')} %`;
+const money = (value = 0, currency = 'CZK') => {
+  try { return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency, maximumFractionDigits: 0 }).format(Number(value) || 0); }
+  catch (_) { return `${fmt(value)} ${currency}`; }
+};
 
 function dateInput(date) {
   const year = date.getFullYear();
@@ -94,6 +98,11 @@ export default function MarketingBriefingTab() {
   const narrative = data?.narrative || {};
   const search = data?.search || {};
   const googleAds = data?.googleAds || {};
+  const instagram = data?.instagram || {};
+  const facebook = data?.facebook || {};
+  const metaAds = data?.metaAds || {};
+  const drive = data?.drive || {};
+  const taskLog = work?.taskLog || [];
 
   const conversion = useMemo(() => {
     const sessions = Number(summary?.sessions || 0);

@@ -28,8 +28,29 @@ import { LOCALE_CONFIG, getLanguageAlternates, getRouteKeyFromPath } from '../sr
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, '..', 'dist');
 const BASE_URL = 'https://mlzidla.cz';
-const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
+const SITE_NAME = 'MLŽIDLA.cz';
 const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg';
+
+// Legacy and alias routes must not fall through to the generic SPA document.
+// Base44 does not expose per-path HTTP 301 rules in the app configuration, so
+// we emit exact static redirect documents with noindex + canonical + instant
+// meta/JS redirect. Static route files take precedence over the SPA fallback.
+const LEGACY_REDIRECTS = {
+  '/domu': '/',
+  '/hello-world': '/',
+  '/category/uncategorized': '/blog',
+  '/product-category/vodni-mlzitka': '/mlzidla-mlzitka',
+  '/mlzici-brany': '/mlzne-brany',
+  '/terms-privacy': '/gdpr',
+  '/faq': '/podpora',
+  '/technologie': '/jak-to-funguje',
+  '/chytra-mlzidla': '/smart-ovladani',
+  '/manualy': '/ke-stazeni',
+  '/kolekce/city': '/mestske-mlzitka',
+  '/kolekce/garden': '/zahradni-mlzitka',
+  '/kolekce/art': '/zakazkova-mlzitka',
+  '/mlzidla': '/mlzidla-mlzitka',
+};
 
 const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
 
@@ -89,4 +110,28 @@ for (const page of pagesToRender) {
   count++;
 }
 
-console.log(`[prerender-seo] wrote ${count} pre-rendered HTML file(s) with route-specific language, hreflang and meta tags.`);
+let redirectCount = 0;
+for (const [fromPath, toPath] of Object.entries(LEGACY_REDIRECTS)) {
+  const targetUrl = `${BASE_URL}${toPath === '/' ? '/' : toPath}`;
+  const outDir = join(distDir, fromPath.replace(/^\//, ''));
+  mkdirSync(outDir, { recursive: true });
+  const redirectHtml = `<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="${escapeAttr(targetUrl)}" />
+    <meta http-equiv="refresh" content="0;url=${escapeAttr(targetUrl)}" />
+    <title>Přesměrování | ${SITE_NAME}</title>
+    <script>window.location.replace(${JSON.stringify(targetUrl)});</script>
+  </head>
+  <body>
+    <p>Tato adresa byla přesunuta. <a href="${escapeAttr(targetUrl)}">Pokračovat na MLŽIDLA.cz</a>.</p>
+  </body>
+</html>`;
+  writeFileSync(join(outDir, 'index.html'), redirectHtml);
+  redirectCount++;
+}
+
+console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s) and ${redirectCount} legacy redirect document(s).`);

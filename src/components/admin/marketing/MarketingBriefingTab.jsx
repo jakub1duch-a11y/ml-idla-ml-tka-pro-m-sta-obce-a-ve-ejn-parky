@@ -153,7 +153,30 @@ export default function MarketingBriefingTab() {
           <Metric icon={BarChart3} label="Zobrazení" value={fmt(summary?.views)} note={`${fmt(summary?.newUsers)} nových uživatelů`} tone="text-violet-300" />
           <Metric icon={Target} label="Poptávky" value={fmt(leads?.total)} note={`lead / session ${pct(conversion)}`} tone="text-emerald-300" />
           <Metric icon={TrendingUp} label="Engagement" value={pct(Number(summary?.engagementRate || 0) * 100)} note="GA4 engagement rate" tone="text-amber-300" />
-          <Metric icon={ClipboardCheck} label="Odvedená práce" value={fmt(work?.totalChanges)} note="nové + upravené záznamy" tone="text-sky-300" />
+          <Metric icon={ClipboardCheck} label="Odvedená práce" value={fmt(work?.totalChanges)} note="evidované změny a úkoly" tone="text-sky-300" />
+        </div>
+
+        {taskLog.length > 0 ? <section className="rounded-2xl border border-white/8 bg-white/3 p-5" aria-label="Prezentace odvedené práce">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-sky-300">Prezentace odvedené práce</p><h4 className="mt-1 text-lg font-medium text-white">Úkol → provedení → očekávaný výsledek</h4></div>
+            <span className="text-xs text-white/30">{taskLog.length} evidovaných úkolů</span>
+          </div>
+          <div className="mt-5 grid gap-4 lg:grid-cols-2">{taskLog.map((task, index) => {
+            const status = task.status === 'completed' ? ['Dokončeno', 'text-emerald-300 border-emerald-400/25 bg-emerald-400/10'] : task.status === 'blocked' ? ['Blokováno', 'text-red-300 border-red-400/25 bg-red-400/10'] : ['Rozpracováno', 'text-amber-300 border-amber-400/25 bg-amber-400/10'];
+            return <article key={task.id || `${task.label}-${index}`} className="rounded-xl border border-white/8 bg-black/10 p-5">
+              <div className="flex items-start justify-between gap-4"><div className="flex min-w-0 items-start gap-3"><span className="font-mono text-xs text-white/20">{String(index + 1).padStart(2, '0')}</span><div className="min-w-0"><p className="font-medium text-white/85">{task.label}</p><p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-cyan/55">{task.area || 'web / marketing'}</p></div></div><span className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-mono ${status[1]}`}>{status[0]}</span></div>
+              {task.description ? <div className="mt-4"><p className="text-[10px] font-mono uppercase tracking-wider text-white/25">Provedená práce</p><p className="mt-1.5 text-sm leading-relaxed text-white/60">{task.description}</p></div> : null}
+              {task.expectedResult ? <div className="mt-4 rounded-lg border border-cyan/10 bg-cyan/5 p-3"><p className="text-[10px] font-mono uppercase tracking-wider text-cyan/60">Očekávaný výsledek</p><p className="mt-1.5 text-sm leading-relaxed text-white/65">{task.expectedResult}</p></div> : null}
+              {task.evidence ? <p className="mt-3 text-[10px] font-mono text-white/20">Evidence: {task.evidence}</p> : null}
+            </article>;
+          })}</div>
+        </section> : null}
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <Metric icon={Instagram} label="Instagram" value={instagram.available ? fmt(instagram.followers) : 'Nedostupné'} note={instagram.available ? `${fmt(instagram.periodPosts)} příspěvků · ${fmt(instagram.periodInteractions)} interakcí v období` : 'konektor nebo oprávnění není dostupné'} tone="text-fuchsia-300" />
+          <Metric icon={Activity} label="Facebook" value={facebook.available ? fmt(facebook.followers) : 'Nepřipojeno'} note={facebook.available ? `${fmt(facebook.periodPosts)} příspěvků · ${fmt(facebook.periodInteractions)} interakcí` : 'Facebook Pages konektor není autorizován'} tone="text-blue-300" />
+          <Metric icon={Megaphone} label="Meta Ads" value={metaAds.available ? money(metaAds.total?.spend, metaAds.account?.currency || 'CZK') : 'Nepřipojeno'} note={metaAds.available ? `${fmt(metaAds.total?.clicks)} kliků · ${fmt(metaAds.total?.leads)} leadů · CTR ${pct(metaAds.total?.ctr)}` : 'Meta Ads konektor není autorizován'} tone="text-orange-300" />
+          <Metric icon={FolderOpen} label="Google Drive" value={drive.available ? fmt(drive.totalModified) : 'Nedostupné'} note={drive.available ? `${fmt(drive.totalCreated)} nových souborů v období` : 'aktivita souborů není dostupná'} tone="text-sky-300" />
         </div>
 
         <div className="grid gap-5 xl:grid-cols-2">

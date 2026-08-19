@@ -1,0 +1,7 @@
+{
+  "type": "databricks",
+  "scopes": [
+    "all-apis",
+    "offline_access"
+  ]
+}

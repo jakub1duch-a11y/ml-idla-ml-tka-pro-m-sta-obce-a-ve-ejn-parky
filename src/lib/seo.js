@@ -134,7 +134,8 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   const imagePath = image || DEFAULT_IMAGE;
   const img = imagePath.startsWith('http') ? imagePath : `${BASE_URL}${imagePath}`;
   const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
-  const routeKey = canonicalPath ? getRouteKeyFromPath(canonicalPath) : null;
+  const resolvedCanonicalPath = canonicalPath || (typeof window !== 'undefined' ? window.location.pathname : '/');
+  const routeKey = resolvedCanonicalPath ? getRouteKeyFromPath(resolvedCanonicalPath) : null;
   const resolvedAlternates = alternates.length ? alternates : (routeKey ? getLanguageAlternates(routeKey) : []);
 
   document.documentElement.lang = localeConfig.htmlLang;
@@ -150,7 +151,7 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setOg('og:type', type);
   setOg('og:site_name', SITE_NAME);
   setOgLocale(locale);
-  if (canonicalPath) setOg('og:url', BASE_URL + normalizeCanonicalPath(canonicalPath));
+  setOg('og:url', BASE_URL + normalizeCanonicalPath(resolvedCanonicalPath));
 
   // Twitter
   setMeta('twitter:card', 'summary_large_image');
@@ -158,12 +159,12 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setMeta('twitter:description', description);
   setMeta('twitter:image', img);
 
-  if (canonicalPath) setCanonical(canonicalPath);
+  setCanonical(resolvedCanonicalPath);
   setLanguageAlternates(resolvedAlternates);
   
   // Kombinace vlastních a automatických JSON-LD strukturovaných dat.
   // Pokud stránka dodá vlastní @graph, zachováme ho a doplníme BreadcrumbList.
-  const breadcrumbs = generateBreadcrumbsJsonLd(canonicalPath, title, locale);
+  const breadcrumbs = generateBreadcrumbsJsonLd(resolvedCanonicalPath, title, locale);
   if (jsonLd && breadcrumbs) {
     const graph = jsonLd['@graph']
       ? [...jsonLd['@graph'], breadcrumbs]

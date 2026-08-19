@@ -93,7 +93,7 @@ async function addHeader(doc, { type, quoteNumber, issued, validUntil }) {
   const navy = [13, 45, 56], accent = [43, 191, 207], border = [222, 232, 234], pale = [247, 250, 250], muted = [103, 124, 131];
   doc.setFillColor(255, 255, 255); doc.rect(0, 0, W, 45, 'F');
   doc.setFillColor(...accent); doc.rect(0, 0, W, 2.2, 'F');
-  const logoOk = await addRemoteImage(doc, LOGO_URL, M, 8, 62, 20);
+  const logoOk = await addRemoteImage(doc, LOGO_URL, M, 8, 62, 20, { fit: 'contain', alignX: 'left', background: [255, 255, 255], radius: 0 });
   if (!logoOk) addBrand(doc, M, 9, false);
   doc.setFillColor(...pale); doc.setDrawColor(...border); doc.roundedRect(132, 7, 64, 27, 3, 3, 'FD');
   doc.setTextColor(...navy); doc.setFontSize(8.5); doc.text(type === 'offer' ? 'CENOVÁ NABÍDKA' : 'TECHNICKÝ LIST', 191, 13, { align: 'right' });
@@ -130,7 +130,7 @@ async function addRemoteImage(doc, url, x, y, w, h, options = {}) {
     if (!response.ok) return false;
     const bytes = new Uint8Array(await response.arrayBuffer());
     const mime = response.headers.get('content-type') || 'image/jpeg';
-    const format = mime.includes('png') ? 'PNG' : 'JPEG';
+    const format = mime.includes('png') ? 'PNG' : mime.includes('webp') ? 'WEBP' : 'JPEG';
     const dataUrl = `data:${mime};base64,${toBase64(bytes)}`;
     const props = doc.getImageProperties(dataUrl);
     const sourceW = Number(props?.width || 0);
@@ -162,10 +162,10 @@ async function addRemoteImage(doc, url, x, y, w, h, options = {}) {
       doc.rect(x, y, w, h);
       doc.clip();
       doc.discardPath();
-      doc.addImage(dataUrl, format, dx, dy, drawW, drawH, undefined, 'FAST');
+      doc.addImage(dataUrl, format, dx, dy, drawW, drawH, undefined, 'MEDIUM');
       doc.restoreGraphicsState();
     } else {
-      doc.addImage(dataUrl, format, dx, dy, drawW, drawH, undefined, 'FAST');
+      doc.addImage(dataUrl, format, dx, dy, drawW, drawH, undefined, 'MEDIUM');
     }
     return true;
   } catch (_) { return false; }
@@ -232,7 +232,7 @@ export default async function(req) {
       let y = 56;
       doc.setTextColor(...navy); doc.setFontSize(23); doc.text(product.name, M, y); y += 10;
       if (product.short_description) { doc.setTextColor(...muted); doc.setFontSize(9.2); doc.text(doc.splitTextToSize(safe(product.short_description), CW), M, y); y += 17; }
-      if (product.image_url) { const ok = await addRemoteImage(doc, product.image_url, M, y, CW, 72); if (ok) y += 81; }
+      if (product.image_url) { const ok = await addRemoteImage(doc, product.image_url, M, y, CW, 72, { fit: 'contain', background: [255, 255, 255] }); if (ok) y += 81; }
       const specs = [['Materiál', product.material], ['Rozměr / dosah', product.coverage_area], ['Napájení a řízení', product.power_supply]].filter((item) => item[1]);
       if (specs.length) {
         doc.setFillColor(...pale); doc.rect(M, y, CW, 8, 'F'); doc.setTextColor(...petrol); doc.setFontSize(8); doc.text('TECHNICKÉ PARAMETRY', M + 5, y + 5.2); y += 8;
@@ -272,7 +272,7 @@ export default async function(req) {
     doc.setTextColor(...petrol); doc.text(audience.label.toUpperCase(), W - M, y + 22, { align: 'right' });
 
     const visualY = 76;
-    const visualOk = await addRemoteImage(doc, primaryVisual, M, visualY, CW, 92);
+    const visualOk = await addRemoteImage(doc, primaryVisual, M, visualY, CW, 92, { fit: projectVisuals.length ? 'cover' : 'contain', background: [243, 248, 249] });
     if (!visualOk) {
       doc.setFillColor(...pale); doc.roundedRect(M, visualY, CW, 92, 2, 2, 'F');
       doc.setTextColor(...muted); doc.setFontSize(8); doc.text('Projektová vizualizace bude doplněna z podkladů projektu.', M + 8, visualY + 46);
@@ -309,7 +309,7 @@ export default async function(req) {
     doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('SMART ŘÍZENÍ MLŽIDLA®', M, y);
     doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Ovládání navržené pro konkrétní provoz.', M, y + 10);
     doc.setTextColor(...muted); doc.setFontSize(8); doc.text(doc.splitTextToSize('Od jednoduchého vzdáleného otevření vody po plně automatický systém SUPLA s časovými scénáři, teplotou, monitoringem spotřeby a správou v mobilní aplikaci.', 112), M, y + 20);
-    await addRemoteImage(doc, smartVisualUrl, 137, 49, 59, 48);
+    await addRemoteImage(doc, smartVisualUrl, 137, 49, 59, 48, { fit: 'contain', background: [255, 255, 255] });
 
     y = 106;
     const smartCards = [
@@ -359,10 +359,10 @@ export default async function(req) {
     y = 82;
     const boardVisuals = projectVisuals.length ? projectVisuals.slice(0, 3) : [primaryVisual].filter(Boolean);
     if (boardVisuals.length === 1) {
-      await addRemoteImage(doc, boardVisuals[0], M, y, 112, 72);
-      await addRemoteImage(doc, product.image_url, M + 118, y, 64, 72);
+      await addRemoteImage(doc, boardVisuals[0], M, y, 112, 72, { fit: 'cover', background: [243, 248, 249] });
+      await addRemoteImage(doc, product.image_url, M + 118, y, 64, 72, { fit: 'contain', background: [255, 255, 255] });
     } else {
-      for (let i = 0; i < boardVisuals.length; i += 1) await addRemoteImage(doc, boardVisuals[i], M + i * 61, y, 57, 70);
+      for (let i = 0; i < boardVisuals.length; i += 1) await addRemoteImage(doc, boardVisuals[i], M + i * 61, y, 57, 70, { fit: 'cover', background: [243, 248, 249] });
     }
 
     y = 162;

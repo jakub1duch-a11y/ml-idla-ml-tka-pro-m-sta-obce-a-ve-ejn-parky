@@ -30,7 +30,7 @@ const SMART_SCENARIO_PRESETS = [
   { key: 'water_monitoring', label: 'Scénář F · Monitoring vody', description: 'Měření spotřeby vody, historie provozu a vzdálený přehled v SUPLA.', defaultValue: 'ENBRA + LIW‑01' },
 ];
 
-export default function InquiryManager({ inquiries, products, mediaFiles, projectOrders = [], onSent }) {
+export default function InquiryManager({ inquiries, products, offerProfiles = [], mediaFiles, projectOrders = [], onSent }) {
   const [selectedId, setSelectedId] = useState(inquiries[0]?.key || '');
   const [productId, setProductId] = useState('');
   const [basePrice, setBasePrice] = useState(0);
@@ -83,7 +83,17 @@ export default function InquiryManager({ inquiries, products, mediaFiles, projec
 
   const resetPrepared = () => { setPrepared(null); setApprovedToSend(false); };
   const resetFollowUp = () => { setFollowUpType(''); setLatestOffer(null); setFollowUpApproved(false); };
-  const chooseProduct = (id) => { const product = products.find((item) => item.id === id); setProductId(id); setBasePrice(product?.price_from || 0); resetPrepared(); };
+  const chooseProduct = (id) => {
+    const product = products.find((item) => item.id === id);
+    const profile = offerProfiles.find((item) => item.product_id === id || item.product_slug === product?.slug);
+    // Centrální profil nabídky má přednost před veřejným price_from, kde historicky
+    // existovaly placeholdery 0/1 Kč. Projektové produkty zůstanou na 0 a obchodník
+    // doplní kalkulaci podle rozsahu.
+    setProductId(id);
+    setBasePrice(Number(profile?.unit_price_ex_vat || 0));
+    if (profile?.audience_variant) setAudienceVariant(profile.audience_variant);
+    resetPrepared();
+  };
 
   const findLatestOffer = async () => {
     if (!selected?.id) return null;

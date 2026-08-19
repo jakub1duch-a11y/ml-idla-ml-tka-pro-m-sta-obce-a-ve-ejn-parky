@@ -27,7 +27,7 @@ export default function Katalog() {
       title: 'Katalog — mlžítka, příslušenství a Smart systém | mlzidla.cz',
       description: 'Kompletní katalog mlžítek, příslušenství a modulů a přehled Smart systému pro chytré řízení mlžení.',
       keywords: 'katalog mlžítek, příslušenství mlžítek, smart systém mlžidla',
-      canonicalPath: '/katalog',
+      canonicalPath: '/mlzidla-mlzitka',
     });
   }, []);
 

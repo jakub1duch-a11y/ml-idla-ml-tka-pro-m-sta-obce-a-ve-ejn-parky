@@ -354,23 +354,39 @@ export default function CustomerPortal() {
   const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
   const focusedProject = projects.find((project) => project.quote_number === focusQuote) || projects[0] || null;
   const focusedStatus = focusedProject ? (STATUS_MAP[focusedProject.status] || STATUS_MAP.draft) : STATUS_MAP.draft;
+  const workspaceDocuments = projects.reduce((sum, project) => sum + Number(project.documents?.length || 0), 0);
+  const workspaceMessages = projects.reduce((sum, project) => sum + Number(project.offer_messages?.length || 0), 0);
+  const pendingExtras = projects.reduce((sum, project) => sum + Number((project.extra_charges || []).filter((charge) => charge.status === 'pending_customer_approval').length), 0);
 
   return (
-    <div className="min-h-screen bg-[#f4f7f7] pt-24 pb-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-5 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-[10px] font-mono text-slate-400 tracking-[.16em] uppercase">Klientský portál</p>
-            <div className="mt-1 flex items-center gap-2"><h1 className="text-2xl font-light text-slate-900">Můj projekt</h1><span className="hidden text-xs text-slate-400 sm:inline">· {email}</span></div>
+    <div className="min-h-screen bg-[#eef3f4] pt-20 pb-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Professional workspace shell */}
+        <header className="mb-6 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_70px_rgba(13,45,56,0.08)]">
+          <div className="flex flex-col gap-5 border-b border-slate-100 px-5 py-5 sm:px-7 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
+              <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">MLŽIDLA® Client Workspace</p><div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1"><h1 className="text-2xl font-light text-slate-950">Můj projekt</h1><span className="text-xs text-slate-400">{email}</span></div></div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
+              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
+            </div>
           </div>
-          <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); }}
-            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900">
-            Odhlásit se
-          </button>
-        </div>
+          <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Projekty / nabídky</p><p className="mt-1 text-2xl font-semibold text-slate-950">{projects.length}</p></div>
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Poptávky</p><p className="mt-1 text-2xl font-semibold text-slate-950">{inquiries.length}</p></div>
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Dokumenty</p><p className="mt-1 text-2xl font-semibold text-slate-950">{workspaceDocuments}</p></div>
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
+          </div>
+          <nav className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
+            {[['#overview','Přehled'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
+          </nav>
+        </header>
 
-        {focusedProject && <section className="mb-7 overflow-hidden rounded-[28px] bg-[#0d2d38] text-white shadow-xl shadow-slate-900/5">
+        {workspaceMessages > 0 && <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-xs text-cyan-900"><span><strong>{workspaceMessages}</strong> zpráv uložených v komunikaci k vašim nabídkám.</span><a href="#communication" className="font-semibold underline underline-offset-2">Otevřít komunikaci</a></div>}
+
+        {focusedProject && <section id="overview" className="mb-7 scroll-mt-28 overflow-hidden rounded-[28px] bg-[#0d2d38] text-white shadow-xl shadow-slate-900/5">
           <div className="grid lg:grid-cols-[1.05fr_.95fr]">
             <div className="flex flex-col justify-between p-6 sm:p-8 lg:p-10">
               <div>

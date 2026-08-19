@@ -23,7 +23,7 @@ export default function LocalizedInquiryForm({ locale, routeKey, sourcePath }) {
     setSending(true);
     setError('');
     try {
-      await base44.entities.Poptavka.create({
+      const created = await base44.entities.Poptavka.create({
         jmeno: form.name.trim(),
         email: form.email.trim(),
         telefon: form.phone.trim(),
@@ -32,7 +32,7 @@ export default function LocalizedInquiryForm({ locale, routeKey, sourcePath }) {
         zprava: `[${locale.toUpperCase()} international web]\nSource: ${sourcePath}\n\n${form.message.trim()}\n\nPrivacy acknowledgement: yes`,
         status: 'nova',
       });
-      trackInquirySubmitted(`international:${locale}`, routeKey);
+      trackInquirySubmitted(`international:${locale}`, routeKey, created?.id || '');
       setSent(true);
     } catch (_error) {
       setError(copy.error);

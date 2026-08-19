@@ -65,6 +65,9 @@ import Partnerstvi from '@/pages/Partnerstvi';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
+import Mlhoviste from '@/pages/Mlhoviste';
+import VodniMlha from '@/pages/VodniMlha';
+import MlzneBrany from '@/pages/MlzneBrany';
 import BendyARPrototype from '@/pages/BendyARPrototype';
 import GateARPrototype from '@/pages/GateARPrototype';
 import LocalizedLanding from '@/pages/LocalizedLanding';
@@ -107,6 +110,9 @@ const AuthenticatedApp = () => {
         <Route path="/kolekce/:collection" element={<CollectionDetail />} />
         <Route path="/brand-identity" element={<BrandIdentity />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
+        <Route path="/mlhoviste" element={<Mlhoviste />} />
+        <Route path="/vodni-mlha" element={<VodniMlha />} />
+        <Route path="/mlzne-brany" element={<MlzneBrany />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/mlzidla-mlzitka" replace />} />
@@ -161,6 +167,12 @@ const AuthenticatedApp = () => {
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
+        <Route path="/domu" element={<Navigate to="/" replace />} />
+        <Route path="/hello-world" element={<Navigate to="/" replace />} />
+        <Route path="/category/uncategorized" element={<Navigate to="/blog" replace />} />
+        <Route path="/product-category/vodni-mlzitka" element={<Navigate to="/mlzidla-mlzitka" replace />} />
+        <Route path="/mlzici-brany" element={<Navigate to="/mlzne-brany" replace />} />
+        <Route path="/terms-privacy" element={<Navigate to="/gdpr" replace />} />
       </Route>
       <Route path="/mlzidla" element={<Navigate to="/mlzidla-mlzitka" replace />} />
       <Route path="/mlzidla/produkt/:id" element={<Navigate to="/mlzidla-mlzitka" replace />} />

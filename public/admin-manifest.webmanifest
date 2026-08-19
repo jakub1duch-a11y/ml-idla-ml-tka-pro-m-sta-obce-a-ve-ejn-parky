@@ -1,0 +1,13 @@
+{
+  "name": "MLŽIDLA Admin",
+  "short_name": "MLŽIDLA Admin",
+  "description": "Soukromá administrační aplikace MLŽIDLA.cz pro správu poptávek, nabídek, follow-upů a webu.",
+  "start_url": "/admin",
+  "scope": "/admin",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity"],
+  "icons": []
+}

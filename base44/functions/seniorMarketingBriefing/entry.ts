@@ -461,7 +461,7 @@ async function buildSeniorNarrative(base44: any, input: any) {
     };
 
     const response = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní digitální marketingový ředitel a webový konzultant pro MLŽIDLA.cz / HolmTec. Zpracuj manažerský briefing za přesně zadané období. Piš profesionálně, konkrétně a věcně v češtině. Priorita je obchodní dopad, webový funnel, kvalita leadů, obsah, SEO a měření.\n\nPŘÍSNÁ PRAVIDLA:\n- Používej jen fakta z DATA. Nic nevymýšlej a žádné chybějící metriky nedopočítávej.\n- Odvedenou práci popisuj pouze podle zaznamenaných created/updated položek.\n- Rozlišuj výkon webu od odvedené práce.\n- Pokud není Ads nebo Search zdroj dostupný, stručně to označ, ale nedělej z toho falešný závěr o výkonu.\n- Doporučení musí být konkrétní a realizovatelná pro následující pracovní období.\n- executive_summary maximálně 3 věty.\n- delivered_work 3 až 8 bodů, performance_readout 2 až 5 bodů, risks maximálně 4 body, next_actions 3 až 5 bodů.\n\nDATA:\n${JSON.stringify(compact)}`,
+      prompt: `Jsi seniorní digitální marketingový ředitel a webový konzultant pro MLŽIDLA.cz / HolmTec. Zpracuj manažerský briefing za přesně zadané období. Piš profesionálně, konkrétně a věcně v češtině. Priorita je obchodní dopad, webový funnel, kvalita leadů, obsah, SEO, sociální sítě, reklamy a měření.\n\nPŘÍSNÁ PRAVIDLA:\n- Používej jen fakta z DATA. Nic nevymýšlej a žádné chybějící metriky nedopočítávej.\n- Odvedenou práci popisuj pouze podle zaznamenaných změn a taskLog.\n- Rozlišuj výkon webu od odvedené práce.\n- Pokud není Ads, Facebook nebo Search zdroj dostupný, stručně to označ, ale nedělej z toho falešný závěr o výkonu.\n- Očekávané výsledky popisuj jako očekávání, nikoli jako již dosažený efekt.\n- completion_summary uveď podle stavů completed / in_progress / blocked z taskLog.\n- Doporučení musí být konkrétní a realizovatelná pro následující pracovní období.\n- executive_summary maximálně 3 věty.\n- delivered_work 3 až 8 bodů, performance_readout 2 až 6 bodů, risks maximálně 4 body, next_actions 3 až 5 bodů, expected_outcomes 2 až 6 bodů.\n\nDATA:\n${JSON.stringify(compact)}`,
       response_json_schema: {
         type: 'object',
         properties: {
@@ -470,9 +470,11 @@ async function buildSeniorNarrative(base44: any, input: any) {
           performance_readout: { type: 'array', items: { type: 'string' } },
           risks: { type: 'array', items: { type: 'string' } },
           next_actions: { type: 'array', items: { type: 'string' } },
+          expected_outcomes: { type: 'array', items: { type: 'string' } },
+          completion_summary: { type: 'array', items: { type: 'string' } },
           conclusion: { type: 'string' },
         },
-        required: ['executive_summary','delivered_work','performance_readout','risks','next_actions','conclusion'],
+        required: ['executive_summary','delivered_work','performance_readout','risks','next_actions','expected_outcomes','completion_summary','conclusion'],
       },
     });
     return response;
@@ -492,15 +494,19 @@ export default async function(req: Request) {
     const { from, to } = normalizePeriod(body.dateFrom, body.dateTo);
     const period = { from, to, label: formatPeriodLabel(from, to) };
 
-    const [ga4, leads, search, googleAds, work] = await Promise.all([
+    const [ga4, leads, search, googleAds, instagram, facebook, metaAds, drive, work] = await Promise.all([
       getGa4(base44, from, to),
       getLeads(base44, from, to),
       getSearchConsole(base44, from, to),
       getGoogleAdsStatus(base44),
+      getInstagram(base44, from, to),
+      getFacebook(base44, from, to),
+      getMetaAds(base44, from, to),
+      getDriveActivity(base44, from, to),
       getWorkSummary(base44, from, to),
     ]);
 
-    const source = { period, ga4, leads, search, googleAds, work };
+    const source = { period, ga4, leads, search, googleAds, instagram, facebook, metaAds, drive, work };
     const narrative = await buildSeniorNarrative(base44, source);
 
     return Response.json({

@@ -57,7 +57,6 @@ import KeStazeni from '@/pages/KeStazeni';
 import OchranaZdravi from '@/pages/OchranaZdravi';
 import ServisUdrzba from '@/pages/ServisUdrzba';
 import VraceniZbozi from '@/pages/VraceniZbozi';
-import ChytraMlzidla from '@/pages/ChytraMlzidla';
 import Katalog from '@/pages/Katalog';
 import SmartOvladani from '@/pages/SmartOvladani';
 import Udrzitelnost from '@/pages/Udrzitelnost';
@@ -157,7 +156,7 @@ const AuthenticatedApp = () => {
         <Route path="/ochrana-zdravi" element={<OchranaZdravi />} />
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
-        <Route path="/chytra-mlzidla" element={<ChytraMlzidla />} />
+        <Route path="/chytra-mlzidla" element={<Navigate to="/smart-ovladani" replace />} />
         <Route path="/katalog" element={<Katalog />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />

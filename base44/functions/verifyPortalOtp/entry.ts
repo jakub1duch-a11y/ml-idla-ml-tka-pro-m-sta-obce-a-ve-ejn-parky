@@ -75,6 +75,10 @@ Deno.serve(async (req) => {
     const sessionExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
     await base44.asServiceRole.entities.PortalSession.create({ email, token: sessionToken, expires_at: sessionExpiresAt });
 
+    const portalAccounts = await base44.asServiceRole.entities.PortalAccount.filter({ email }).catch(() => []);
+    const portalAccount = portalAccounts?.[0] || null;
+    const passwordSetupRequired = !portalAccount?.password_hash || !portalAccount?.password_set_at;
+
     return Response.json({
       verified: true,
       email,
@@ -83,6 +87,7 @@ Deno.serve(async (req) => {
       inquiries: [...(contactInquiries || []), ...(poptavky || [])],
       projects,
       session_token: sessionToken,
+      password_setup_required: passwordSetupRequired,
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

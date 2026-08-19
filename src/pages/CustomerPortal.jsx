@@ -454,7 +454,7 @@ export default function CustomerPortal() {
                         <h3 className="mt-3 text-lg font-semibold text-slate-900">Doprava na místo, představení a vyzkoušení zdarma</h3>
                         <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-600">Při závazném objednání této nabídky do konce aktuálního měsíce získáte dopravu na místo a osobní představení řešení s možností vyzkoušení bez příplatku. Konkrétní rozsah návštěvy a přesný termín s vámi potvrdíme po přijetí objednávky.</p>
                       </div>
-                      <div className="shrink-0 rounded-2xl border border-white bg-white/90 px-5 py-4 text-center shadow-sm"><div className="text-3xl font-semibold text-slate-900">{promoDaysLeft}</div><div className="mt-1 text-[10px] uppercase tracking-widest text-slate-500">{promoDaysLeft === 1 ? 'den do konce akce' : promoDaysLeft >= 2 && promoDaysLeft <= 4 ? 'dny do konce akce' : 'dní do konce akce'}</div></div>
+                      <div className="shrink-0 rounded-2xl border border-white bg-white/90 px-5 py-4 text-center shadow-sm"><div className="text-[10px] font-bold uppercase tracking-widest text-emerald-700">Zbývá</div><div className="mt-1 text-3xl font-semibold text-slate-900">{promoDaysLeft}</div><div className="mt-1 text-[10px] uppercase tracking-widest text-slate-500">{promoDaysLeft === 1 ? 'den' : promoDaysLeft >= 2 && promoDaysLeft <= 4 ? 'dny' : 'dní'}</div></div>
                     </div>
                   </div>}
 

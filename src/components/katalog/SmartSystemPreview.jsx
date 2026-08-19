@@ -31,7 +31,7 @@ export default function SmartSystemPreview() {
             )}
           </ul>
           <div className="flex flex-wrap gap-4">
-            <Link to="/chytra-mlzidla"
+            <Link to="/smart-ovladani"
               onClick={() => trackQuickInquiryClick('Chytré řízení mlzidla.cz', 'katalog_smart_preview')}
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-800 transition-all">
               Zobrazit varianty <ArrowRight size={16} />

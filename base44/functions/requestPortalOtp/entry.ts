@@ -25,8 +25,9 @@ Deno.serve(async (req) => {
       }
     } else {
       const contactInquiries = await base44.asServiceRole.entities.ContactInquiry.filter({ email });
+      const poptavky = await base44.asServiceRole.entities.Poptavka.filter({ email }).catch(() => []);
       const projects = await base44.asServiceRole.entities.ProjectOrder.filter({ client_email: email });
-      hasAccessTarget = contactInquiries.length > 0 || projects.length > 0;
+      hasAccessTarget = contactInquiries.length > 0 || poptavky.length > 0 || projects.length > 0;
     }
 
     if (hasAccessTarget && email) {

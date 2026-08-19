@@ -41,6 +41,14 @@ export default function CustomerPortal() {
   const [messageSaved, setMessageSaved] = useState({});
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
+  const promoDaysLeft = (() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const endOfMonth = new Date(year, month + 1, 0);
+    const today = new Date(year, month, now.getDate());
+    return Math.max(0, Math.ceil((endOfMonth.getTime() - today.getTime()) / 86400000));
+  })();
 
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
@@ -429,6 +437,17 @@ export default function CustomerPortal() {
                 {/* Actions */}
                 <div className="px-6 py-4 border-t border-slate-200 space-y-3">
                   {orderConfirmed[project.id] && <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4"><div className="flex items-start gap-3"><CheckCircle size={18} className="mt-0.5 shrink-0 text-emerald-600"/><div><p className="text-sm font-semibold text-emerald-900">Objednávka byla úspěšně potvrzena.</p><p className="mt-1 text-xs leading-5 text-emerald-800">Potvrzení objednávky jsme připravili k projektu a odesíláme jej také na váš e-mail. Náš tým naváže technickým upřesněním a potvrzením dalšího harmonogramu.</p>{project.order_confirmation_pdf_url && <a href={project.order_confirmation_pdf_url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-2 text-xs font-semibold text-white"><Download size={13}/> Potvrzení objednávky PDF</a>}</div></div></div>}
+                  <div className="overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-cyan-50">
+                    <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-emerald-600 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">Akce do konce měsíce</span><span className="text-[11px] font-semibold text-emerald-700">Zbývá {promoDaysLeft} {promoDaysLeft === 1 ? 'den' : promoDaysLeft >= 2 && promoDaysLeft <= 4 ? 'dny' : 'dní'}</span></div>
+                        <h3 className="mt-3 text-lg font-semibold text-slate-900">Doprava na místo + osobní představení a vyzkoušení zdarma</h3>
+                        <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-600">Při objednání nabídky do konce aktuálního měsíce zajistíme dopravu na místo a osobní představení řešení s možností vyzkoušení bez příplatku. Konkrétní rozsah a termín potvrdíme spolu s objednávkou.</p>
+                      </div>
+                      <div className="shrink-0 rounded-2xl border border-white bg-white/80 px-5 py-4 text-center shadow-sm"><div className="text-3xl font-semibold text-slate-900">{promoDaysLeft}</div><div className="mt-1 text-[10px] uppercase tracking-widest text-slate-500">dní do konce akce</div></div>
+                    </div>
+                  </div>
+
                   <div className="rounded-xl border border-cyan-200 bg-cyan-50/60 p-4">
                     <p className="text-[10px] font-mono uppercase tracking-widest text-cyan-700">Orientační termín dodání</p>
                     <p className="mt-1 text-lg font-semibold text-slate-900">2–3 týdny od potvrzení objednávky</p>

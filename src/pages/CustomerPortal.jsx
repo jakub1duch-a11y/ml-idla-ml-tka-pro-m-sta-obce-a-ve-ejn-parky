@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const STATUS_MAP = {
@@ -39,6 +39,13 @@ export default function CustomerPortal() {
   const [messageBusy, setMessageBusy] = useState(null);
   const [messageForms, setMessageForms] = useState({});
   const [messageSaved, setMessageSaved] = useState({});
+  const [extraChargeBusy, setExtraChargeBusy] = useState(null);
+  const [extraChargeNotes, setExtraChargeNotes] = useState({});
+  const [newInquiryType, setNewInquiryType] = useState('other_product');
+  const [newInquiryForm, setNewInquiryForm] = useState({ product: '', shape: '', description: '' });
+  const [newInquiryFiles, setNewInquiryFiles] = useState([]);
+  const [newInquiryBusy, setNewInquiryBusy] = useState(false);
+  const [newInquirySent, setNewInquirySent] = useState(null);
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
   const promoCountdown = (() => {
@@ -179,6 +186,78 @@ export default function CustomerPortal() {
       setError('Zprávu se nepodařilo odeslat. Zkuste to prosím znovu.');
     } finally {
       setMessageBusy(null);
+    }
+  };
+
+  const respondExtraCharge = async (project, charge, action) => {
+    setExtraChargeBusy(charge.id);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('respondExtraCharge', {
+        charge_id: charge.id,
+        project_id: project.id,
+        session_token: sessionToken,
+        action,
+        note: extraChargeNotes[charge.id] || '',
+      });
+      const charges = res.data?.charges || [];
+      setProjects((current) => current.map((item) => item.id === project.id ? { ...item, extra_charges: charges } : item));
+    } catch (_error) {
+      setError('Reakci na příplatkovou položku se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setExtraChargeBusy(null);
+    }
+  };
+
+  const submitNewInquiry = async (event) => {
+    event.preventDefault();
+    const description = String(newInquiryForm.description || '').trim();
+    const product = String(newInquiryForm.product || '').trim();
+    const shape = String(newInquiryForm.shape || '').trim();
+    if (!description || (newInquiryType === 'other_product' && !product) || (newInquiryType === 'custom_design' && !shape)) return;
+    setNewInquiryBusy(true);
+    setError('');
+    setNewInquirySent(null);
+    try {
+      const uploaded = await Promise.all(newInquiryFiles.map(async (file) => {
+        const result = await base44.integrations.Core.UploadFile({ file });
+        return { name: file.name, url: result.file_url };
+      }));
+      const clientName = focusedProject?.client_name || inquiries[0]?.jmeno || inquiries[0]?.name || email;
+      const clientPhone = focusedProject?.client_phone || inquiries[0]?.telefon || inquiries[0]?.phone || '';
+      const clientCompany = focusedProject?.client_company || inquiries[0]?.firma || inquiries[0]?.company || '';
+      const inquiryProduct = newInquiryType === 'custom_design' ? `Vlastní návrh — ${shape}` : product;
+      const details = [
+        newInquiryType === 'custom_design' ? 'Typ požadavku: Vlastní návrh / atypické řešení' : 'Typ požadavku: Poptávka jiného produktu',
+        product ? `Produkt / směr: ${product}` : '',
+        shape ? `Požadovaný tvar / představa: ${shape}` : '',
+        '',
+        description,
+        uploaded.length ? `\nPřiložené soubory: ${uploaded.map((item) => item.name).join(', ')}` : '',
+      ].filter(Boolean).join('\n');
+      const created = await base44.entities.Poptavka.create({
+        jmeno: clientName,
+        email,
+        telefon: clientPhone,
+        firma: clientCompany,
+        produkt: inquiryProduct,
+        service_type: 'customer_portal',
+        request_type: newInquiryType,
+        custom_shape: shape,
+        attachment_urls: uploaded.map((item) => item.url),
+        attachment_names: uploaded.map((item) => item.name),
+        source_project_order_id: focusedProject?.id || '',
+        zprava: details,
+        status: 'nova',
+      });
+      setInquiries((current) => [created, ...current]);
+      setNewInquiryForm({ product: '', shape: '', description: '' });
+      setNewInquiryFiles([]);
+      setNewInquirySent(created.id);
+    } catch (_error) {
+      setError('Novou poptávku se nepodařilo odeslat. Zkontrolujte přílohy a zkuste to prosím znovu.');
+    } finally {
+      setNewInquiryBusy(false);
     }
   };
 

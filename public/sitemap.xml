@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url><loc>https://mlzidla.cz/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://mlzidla.cz/mlzidla-mlzitka</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://mlzidla.cz/mlzitko</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://mlzidla.cz/mestske-mlzitka</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://mlzidla.cz/zahradni-mlzitka</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/zakazkova-mlzitka</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/jak-to-funguje</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mlzidla.cz/vodni-mlha</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://mlzidla.cz/mlzne-brany</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/smart-ovladani</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/reference</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -14,7 +17,6 @@
   <url><loc>https://mlzidla.cz/o-nas</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mlzidla.cz/podpora</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://mlzidla.cz/ke-stazeni</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mlzidla.cz/katalog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/udrzitelnost</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mlzidla.cz/pronajem</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://mlzidla.cz/kategorie/mesta-obce</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>

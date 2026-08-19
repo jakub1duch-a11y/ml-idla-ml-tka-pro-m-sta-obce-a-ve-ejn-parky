@@ -236,6 +236,153 @@ async function getSearchConsole(base44: any, from: string, to: string) {
   }
 }
 
+async function getInstagram(base44: any, from: string, to: string) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
+    const profile = await fetchJson(`https://graph.instagram.com/me?fields=id,username,followers_count,media_count&access_token=${encodeURIComponent(accessToken)}`);
+    const media = await fetchJson(`https://graph.instagram.com/me/media?fields=id,caption,media_type,permalink,timestamp,like_count,comments_count&limit=50&access_token=${encodeURIComponent(accessToken)}`);
+    const posts = (media.data || [])
+      .filter((item: any) => {
+        const date = item.timestamp ? localDateString(new Date(item.timestamp)) : '';
+        return inRange(date, from, to);
+      })
+      .map((item: any) => ({
+        id: item.id,
+        caption: String(item.caption || '').slice(0, 220),
+        mediaType: item.media_type || '',
+        permalink: item.permalink || '',
+        timestamp: item.timestamp || '',
+        likes: num(item.like_count),
+        comments: num(item.comments_count),
+        interactions: num(item.like_count) + num(item.comments_count),
+      }))
+      .sort((a: any, b: any) => b.interactions - a.interactions);
+    return {
+      available: true,
+      username: profile.username || '',
+      followers: num(profile.followers_count),
+      mediaCount: num(profile.media_count),
+      periodPosts: posts.length,
+      periodInteractions: posts.reduce((sum: number, post: any) => sum + post.interactions, 0),
+      topPosts: posts.slice(0, 5),
+      insightsScope: false,
+      note: 'Základní Instagram Business data jsou dostupná. Reach a impressions vyžadují rozšířené insights oprávnění.',
+    };
+  } catch (error: any) {
+    return { available: false, error: error.message, followers: 0, periodPosts: 0, periodInteractions: 0, topPosts: [] };
+  }
+}
+
+async function getFacebook(base44: any, from: string, to: string) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('facebook_pages');
+    const accounts = await fetchJson(`https://graph.facebook.com/${GRAPH_VERSION}/me/accounts?fields=id,name,access_token,fan_count,followers_count&limit=50&access_token=${encodeURIComponent(accessToken)}`);
+    const pages = accounts.data || [];
+    const page = pages.find((item: any) => /ml[žz]|holm/i.test(item.name || '')) || pages[0];
+    if (!page) throw new Error('Nenalezena spravovaná Facebook stránka.');
+    const pageToken = page.access_token || accessToken;
+    const postsRaw = await fetchJson(`https://graph.facebook.com/${GRAPH_VERSION}/${page.id}/posts?fields=id,message,created_time,permalink_url,shares,reactions.limit(0).summary(true),comments.limit(0).summary(true)&limit=50&access_token=${encodeURIComponent(pageToken)}`);
+    const posts = (postsRaw.data || [])
+      .filter((item: any) => inRange(item.created_time ? localDateString(new Date(item.created_time)) : '', from, to))
+      .map((item: any) => ({
+        id: item.id,
+        message: String(item.message || '').slice(0, 220),
+        createdTime: item.created_time || '',
+        permalink: item.permalink_url || '',
+        reactions: num(item.reactions?.summary?.total_count),
+        comments: num(item.comments?.summary?.total_count),
+        shares: num(item.shares?.count),
+        interactions: num(item.reactions?.summary?.total_count) + num(item.comments?.summary?.total_count) + num(item.shares?.count),
+      }))
+      .sort((a: any, b: any) => b.interactions - a.interactions);
+    return {
+      available: true,
+      name: page.name || '',
+      followers: num(page.followers_count || page.fan_count),
+      periodPosts: posts.length,
+      periodInteractions: posts.reduce((sum: number, post: any) => sum + post.interactions, 0),
+      topPosts: posts.slice(0, 5),
+    };
+  } catch (error: any) {
+    return { available: false, error: error.message, followers: 0, periodPosts: 0, periodInteractions: 0, topPosts: [] };
+  }
+}
+
+function actionCount(actions: any[] = [], names: string[]) {
+  return actions.filter((action: any) => names.some((name) => String(action.action_type || '').includes(name)))
+    .reduce((sum: number, action: any) => sum + num(action.value), 0);
+}
+
+async function getMetaAds(base44: any, from: string, to: string) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('meta_ads');
+    const accounts = await fetchJson(`https://graph.facebook.com/${GRAPH_VERSION}/me/adaccounts?fields=id,name,currency,account_status&limit=25&access_token=${encodeURIComponent(accessToken)}`);
+    const account = accounts.data?.[0];
+    if (!account) throw new Error('Nenalezen Meta Ads účet.');
+    const report = await fetchJson(`https://graph.facebook.com/${GRAPH_VERSION}/${account.id}/insights?level=campaign&time_range=${encodeURIComponent(JSON.stringify({ since: from, until: to }))}&fields=campaign_name,spend,impressions,reach,clicks,ctr,cpc,actions&limit=100&access_token=${encodeURIComponent(accessToken)}`);
+    const campaigns = (report.data || []).map((row: any) => {
+      const leads = actionCount(row.actions || [], ['lead', 'contact', 'complete_registration']);
+      return {
+        campaign: row.campaign_name || '',
+        spend: num(row.spend), impressions: num(row.impressions), reach: num(row.reach), clicks: num(row.clicks),
+        ctr: num(row.ctr), cpc: num(row.cpc), leads, cpl: leads ? num(row.spend) / leads : 0,
+      };
+    }).sort((a: any, b: any) => b.spend - a.spend);
+    const total = campaigns.reduce((acc: any, campaign: any) => ({
+      spend: acc.spend + campaign.spend,
+      impressions: acc.impressions + campaign.impressions,
+      clicks: acc.clicks + campaign.clicks,
+      leads: acc.leads + campaign.leads,
+    }), { spend: 0, impressions: 0, clicks: 0, leads: 0 });
+    return {
+      available: true,
+      account: { name: account.name || '', currency: account.currency || 'CZK' },
+      total: {
+        ...total,
+        ctr: total.impressions ? total.clicks / total.impressions * 100 : 0,
+        cpc: total.clicks ? total.spend / total.clicks : 0,
+        cpl: total.leads ? total.spend / total.leads : 0,
+      },
+      campaigns: campaigns.slice(0, 10),
+    };
+  } catch (error: any) {
+    return { available: false, error: error.message, account: null, total: {}, campaigns: [] };
+  }
+}
+
+async function getDriveActivity(base44: any, from: string, to: string) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
+    const startProbe = new Date(`${from}T12:00:00Z`);
+    startProbe.setUTCDate(startProbe.getUTCDate() - 1);
+    const endProbe = new Date(`${to}T12:00:00Z`);
+    endProbe.setUTCDate(endProbe.getUTCDate() + 1);
+    const q = `trashed = false and modifiedTime >= '${startProbe.toISOString()}' and modifiedTime <= '${endProbe.toISOString()}'`;
+    const data = await fetchJson(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&orderBy=modifiedTime%20desc&pageSize=100&fields=${encodeURIComponent('files(id,name,mimeType,createdTime,modifiedTime,webViewLink)')}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const files = (data.files || [])
+      .filter((file: any) => inRange(file.modifiedTime ? localDateString(new Date(file.modifiedTime)) : '', from, to))
+      .map((file: any) => ({
+        id: file.id,
+        name: file.name || '',
+        mimeType: file.mimeType || '',
+        createdTime: file.createdTime || '',
+        modifiedTime: file.modifiedTime || '',
+        url: file.webViewLink || '',
+        createdInPeriod: inRange(file.createdTime ? localDateString(new Date(file.createdTime)) : '', from, to),
+      }));
+    return {
+      available: true,
+      totalModified: files.length,
+      totalCreated: files.filter((file: any) => file.createdInPeriod).length,
+      files: files.slice(0, 20),
+    };
+  } catch (error: any) {
+    return { available: false, error: error.message, totalModified: 0, totalCreated: 0, files: [] };
+  }
+}
+
 async function getGoogleAdsStatus(base44: any) {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');

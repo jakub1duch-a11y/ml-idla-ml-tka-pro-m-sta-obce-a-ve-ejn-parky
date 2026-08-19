@@ -413,6 +413,146 @@ async function getDriveActivity(base44: any, from: string, to: string) {
   }
 }
 
+async function getGoogleTasksActivity(base44: any, from: string, to: string) {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googletasks');
+    const listsRaw = await fetchJson('https://tasks.googleapis.com/tasks/v1/users/@me/lists?maxResults=100', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const lists = (listsRaw.items || []).slice(0, 20);
+    const allTasks: any[] = [];
+    for (const list of lists) {
+      try {
+        const tasksRaw = await fetchJson(`https://tasks.googleapis.com/tasks/v1/lists/${encodeURIComponent(list.id)}/tasks?maxResults=100&showCompleted=true&showHidden=true`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        for (const task of tasksRaw.items || []) {
+          const updatedDate = task.updated ? localDateString(new Date(task.updated)) : '';
+          const completedDate = task.completed ? localDateString(new Date(task.completed)) : '';
+          if (inRange(updatedDate, from, to) || inRange(completedDate, from, to)) {
+            allTasks.push({
+              id: task.id,
+              title: task.title || 'Úkol',
+              status: task.status || '',
+              list: list.title || 'Google Tasks',
+              updated: task.updated || '',
+              completed: task.completed || '',
+              due: task.due || '',
+            });
+          }
+        }
+      } catch (_) {}
+    }
+    allTasks.sort((a, b) => String(b.completed || b.updated).localeCompare(String(a.completed || a.updated)));
+    return {
+      available: true,
+      touched: allTasks.length,
+      completed: allTasks.filter((task) => task.status === 'completed').length,
+      active: allTasks.filter((task) => task.status !== 'completed').length,
+      tasks: allTasks.slice(0, 20),
+    };
+  } catch (error: any) {
+    return { available: false, error: error.message, touched: 0, completed: 0, active: 0, tasks: [] };
+  }
+}
+
+async function getExternalGoogleAdsSnapshot(base44: any, from: string, to: string) {
+  try {
+    const snapshots = await base44.asServiceRole.entities.MarketingDataSnapshot.filter({ source: 'hypd_google_ads' }).catch(() => []);
+    const candidates = (Array.isArray(snapshots) ? snapshots : [])
+      .filter((row: any) => String(row.period_from || '') <= from && String(row.period_to || '') >= to)
+      .sort((a: any, b: any) => String(b.created_date || '').localeCompare(String(a.created_date || '')));
+    const snapshot = candidates[0];
+    if (!snapshot) return { available: false, source: 'HYPD Google Ads', error: 'Pro zvolené období není synchronizovaný HYPD snapshot.' };
+
+    const rows = (snapshot.daily_rows || []).filter((row: any) => inRange(String(row.date || ''), from, to));
+    const total = rows.reduce((acc: any, row: any) => {
+      acc.spend += num(row.spend);
+      acc.impressions += num(row.impressions);
+      acc.clicks += num(row.clicks);
+      acc.conversions += num(row.conversions);
+      return acc;
+    }, { spend: 0, impressions: 0, clicks: 0, conversions: 0 });
+
+    const campaignMap = new Map<string, any>();
+    rows.forEach((row: any) => {
+      const key = String(row.campaign_id || row.campaign_name || 'campaign');
+      const current = campaignMap.get(key) || {
+        id: key, name: row.campaign_name || 'Kampaň', channel: row.channel || '', budgetDaily: num(row.budget_daily),
+        spend: 0, impressions: 0, clicks: 0, conversions: 0, budgetLostValues: [], rankLostValues: [],
+      };
+      current.spend += num(row.spend);
+      current.impressions += num(row.impressions);
+      current.clicks += num(row.clicks);
+      current.conversions += num(row.conversions);
+      if (Number.isFinite(Number(row.budget_lost_is))) current.budgetLostValues.push(num(row.budget_lost_is));
+      if (Number.isFinite(Number(row.rank_lost_is))) current.rankLostValues.push(num(row.rank_lost_is));
+      campaignMap.set(key, current);
+    });
+
+    const campaigns = Array.from(campaignMap.values()).map((campaign: any) => ({
+      id: campaign.id,
+      name: campaign.name,
+      channel: campaign.channel,
+      budgetDaily: campaign.budgetDaily,
+      spend: campaign.spend,
+      impressions: campaign.impressions,
+      clicks: campaign.clicks,
+      conversions: campaign.conversions,
+      ctr: campaign.impressions ? campaign.clicks / campaign.impressions * 100 : 0,
+      cpc: campaign.clicks ? campaign.spend / campaign.clicks : 0,
+      cpa: campaign.conversions ? campaign.spend / campaign.conversions : 0,
+      avgBudgetLostIs: campaign.budgetLostValues.length ? campaign.budgetLostValues.reduce((a: number, b: number) => a + b, 0) / campaign.budgetLostValues.length : 0,
+      avgRankLostIs: campaign.rankLostValues.length ? campaign.rankLostValues.reduce((a: number, b: number) => a + b, 0) / campaign.rankLostValues.length : 0,
+    })).sort((a: any, b: any) => b.spend - a.spend);
+
+    return {
+      available: true,
+      source: 'HYPD Google Ads',
+      syncedAt: snapshot.created_date || '',
+      coverage: { from: snapshot.period_from, to: snapshot.period_to },
+      account: { name: snapshot.account_name || '', id: snapshot.account_id || '', currency: snapshot.currency || 'CZK' },
+      summary: {
+        ...total,
+        ctr: total.impressions ? total.clicks / total.impressions * 100 : 0,
+        cpc: total.clicks ? total.spend / total.clicks : 0,
+        cpa: total.conversions ? total.spend / total.conversions : 0,
+      },
+      campaigns,
+    };
+  } catch (error: any) {
+    return { available: false, source: 'HYPD Google Ads', error: error.message, summary: {}, campaigns: [] };
+  }
+}
+
+async function getConnectorHealth(base44: any) {
+  const definitions = [
+    ['google_analytics', 'Google Analytics 4'],
+    ['google_search_console', 'Search Console'],
+    ['googledrive', 'Google Drive'],
+    ['googlesheets', 'Google Sheets'],
+    ['googletasks', 'Google Tasks'],
+    ['gmail', 'Gmail'],
+    ['instagram', 'Instagram Business'],
+    ['slackbot', 'Slack Bot'],
+    ['facebook_pages', 'Facebook Pages'],
+    ['meta_ads', 'Meta Ads'],
+  ];
+  const rows = await Promise.all(definitions.map(async ([type, label]) => {
+    try {
+      await base44.asServiceRole.connectors.getConnection(type);
+      return { type, label, connected: true };
+    } catch (error: any) {
+      return { type, label, connected: false, error: error.message || '' };
+    }
+  }));
+  return {
+    connected: rows.filter((row) => row.connected).length,
+    total: rows.length,
+    rows,
+  };
+}
+
 async function getGoogleAdsStatus(base44: any) {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');

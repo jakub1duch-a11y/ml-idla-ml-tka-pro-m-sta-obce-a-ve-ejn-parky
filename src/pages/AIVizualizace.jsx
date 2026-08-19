@@ -397,7 +397,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         `Kontakt získán přes AI vizualizér; GDPR informace potvrzena: ${leadProfile?.gdprAcknowledgedAt || 'ano'}`,
       ].filter(Boolean).join('\n\n');
 
-      await base44.entities.Poptavka.create({
+      const created = await base44.entities.Poptavka.create({
         jmeno: leadProfile?.name || '',
         email: leadProfile?.email || '',
         telefon: leadProfile?.phone || '',
@@ -406,7 +406,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         zprava: text,
         status: 'nova',
       });
-      trackInquirySubmitted('ai-vizualizace', selectedProduct?.name || requestedConcept || 'AI návrh projektu');
+      trackInquirySubmitted('ai-vizualizace', selectedProduct?.name || requestedConcept || 'AI návrh projektu', created?.id || '');
       if (leadProfile?.leadId) {
         try {
           await base44.entities.VisualizerLead.update(leadProfile.leadId, { inquiry_sent: true, last_visualization_url: resultUrl });

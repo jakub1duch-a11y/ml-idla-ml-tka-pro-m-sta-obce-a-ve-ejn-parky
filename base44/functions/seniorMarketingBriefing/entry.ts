@@ -447,8 +447,13 @@ async function buildSeniorNarrative(base44: any, input: any) {
       leads: { total: input.leads?.total || 0 },
       search: input.search?.available ? { topQueries: input.search.queries?.slice(0, 5) } : { available: false },
       googleAds: input.googleAds,
+      instagram: input.instagram?.available ? { username: input.instagram.username, followers: input.instagram.followers, periodPosts: input.instagram.periodPosts, periodInteractions: input.instagram.periodInteractions, topPosts: input.instagram.topPosts?.slice(0, 3) } : { available: false, error: input.instagram?.error },
+      facebook: input.facebook?.available ? { name: input.facebook.name, followers: input.facebook.followers, periodPosts: input.facebook.periodPosts, periodInteractions: input.facebook.periodInteractions, topPosts: input.facebook.topPosts?.slice(0, 3) } : { available: false, error: input.facebook?.error },
+      metaAds: input.metaAds?.available ? { account: input.metaAds.account, total: input.metaAds.total, campaigns: input.metaAds.campaigns?.slice(0, 5) } : { available: false, error: input.metaAds?.error },
+      drive: input.drive?.available ? { totalModified: input.drive.totalModified, totalCreated: input.drive.totalCreated, files: input.drive.files?.slice(0, 8) } : { available: false, error: input.drive?.error },
       work: {
         totalChanges: input.work?.totalChanges || 0,
+        taskLog: input.work?.taskLog || [],
         sections: (input.work?.activeSections || []).map((section: any) => ({
           label: section.label, created: section.created, updated: section.updated, items: section.items?.slice(0, 5),
         })),

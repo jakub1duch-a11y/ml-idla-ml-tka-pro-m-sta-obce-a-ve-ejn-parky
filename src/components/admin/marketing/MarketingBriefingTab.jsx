@@ -182,6 +182,17 @@ export default function MarketingBriefingTab() {
           })}</div>
         </section> : null}
 
+        <div className="grid gap-5 xl:grid-cols-2">
+          <div className="overflow-hidden rounded-xl border border-white/8">
+            <div className="flex items-center justify-between gap-3 bg-white/5 px-4 py-3"><div className="flex items-center gap-2"><Megaphone size={13} className="text-orange-300" /><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Google Ads · HYPD performance</p></div>{adsPerf.available ? <span className="font-mono text-[10px] text-white/25">{adsPerf.coverage?.from} → {adsPerf.coverage?.to}</span> : null}</div>
+            <div className="divide-y divide-white/5">{(adsPerf?.campaigns || []).slice(0, 6).map((campaign) => <div key={campaign.id} className="flex items-start justify-between gap-4 px-4 py-3"><div className="min-w-0"><p className="truncate text-sm text-white/65">{campaign.name}</p><p className="mt-1 font-mono text-[10px] text-white/25">{fmt(campaign.clicks)} kliků · CTR {pct(campaign.ctr)} · {fmt(campaign.conversions)} konverzí</p></div><span className="shrink-0 font-mono text-xs text-orange-300">{money(campaign.spend, adsPerf.account?.currency || 'CZK')}</span></div>)}{!adsPerf?.campaigns?.length ? <p className="px-4 py-4 text-sm text-white/25">{adsPerf.available ? 'Ve zvoleném období bez kampaní.' : 'HYPD snapshot pro toto období není synchronizovaný.'}</p> : null}</div>
+          </div>
+          <div className="overflow-hidden rounded-xl border border-white/8">
+            <div className="flex items-center justify-between gap-3 bg-white/5 px-4 py-3"><div className="flex items-center gap-2"><CheckCircle2 size={13} className="text-emerald-300" /><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Google Tasks · pracovní evidence</p></div>{tasks.available ? <span className="font-mono text-[10px] text-white/25">{fmt(tasks.completed)} dokončeno · {fmt(tasks.active)} aktivní</span> : null}</div>
+            <div className="divide-y divide-white/5">{(tasks?.tasks || []).slice(0, 8).map((task) => <div key={task.id} className="flex items-start justify-between gap-3 px-4 py-3"><div className="min-w-0"><p className="truncate text-sm text-white/60">{task.title}</p><p className="mt-1 text-[10px] font-mono text-white/25">{task.list || 'Google Tasks'}</p></div><span className={`shrink-0 text-[10px] font-mono ${task.status === 'completed' ? 'text-emerald-300' : 'text-amber-300'}`}>{task.status === 'completed' ? 'HOTOVO' : 'AKTIVNÍ'}</span></div>)}{!tasks?.tasks?.length ? <p className="px-4 py-4 text-sm text-white/25">{tasks.available ? 'V období bez změn úkolů.' : 'Google Tasks nejsou pro briefing dostupné.'}</p> : null}</div>
+          </div>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <Metric icon={Instagram} label="Instagram" value={instagram.available ? fmt(instagram.followers) : 'Nedostupné'} note={instagram.available ? `${fmt(instagram.periodPosts)} příspěvků · ${fmt(instagram.periodInteractions)} interakcí${instagram.insightsScope ? ` · reach ${fmt(instagram.periodReach)}` : ''}` : 'konektor nebo oprávnění není dostupné'} tone="text-fuchsia-300" />
           <Metric icon={Activity} label="Facebook" value={facebook.available ? fmt(facebook.followers) : 'Nepřipojeno'} note={facebook.available ? `${fmt(facebook.periodPosts)} příspěvků · ${fmt(facebook.periodInteractions)} interakcí` : 'Facebook Pages konektor není autorizován'} tone="text-blue-300" />

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Activity, AlertTriangle, BarChart3, CalendarDays, CheckCircle2, ClipboardCheck, FileText, FolderOpen, Instagram, Loader, Megaphone, RefreshCw, Search, Target, TrendingUp, Users, Zap } from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3, CalendarDays, CheckCircle2, ClipboardCheck, FolderOpen, Instagram, Loader, Megaphone, RefreshCw, Search, Target, TrendingUp, Users, Zap } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const fmt = (value = 0) => Math.round(Number(value) || 0).toLocaleString('cs-CZ');

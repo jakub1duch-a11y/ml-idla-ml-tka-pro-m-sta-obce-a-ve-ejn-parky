@@ -38,25 +38,25 @@ function Lightbox({ images, initialIndex, onClose }) {
   }, [images.length, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
-      <button onClick={onClose} aria-label="Zavřít galerii" className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-[#031d26]/96 p-3 backdrop-blur-2xl sm:p-6" onClick={onClose}>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(71,155,181,.16),transparent_35%),radial-gradient(circle_at_15%_80%,rgba(255,255,255,.05),transparent_28%)]" />
+      <button onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 sm:right-6 sm:top-6">
         <X size={18} />
       </button>
-      <div className="relative max-w-5xl w-full mx-6" onClick={(e) => e.stopPropagation()}>
-        <img src={images[idx]} alt={`Fotografie ${idx + 1}`} className="w-full max-h-[85vh] object-contain" />
-        {images.length > 1 &&
-        <>
-            <button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} aria-label="Předchozí fotografie" className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronLeft size={18} />
-            </button>
-            <button onClick={() => setIdx((i) => (i + 1) % images.length)} aria-label="Další fotografie" className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronRight size={18} />
-            </button>
-            <p className="text-center text-xs font-mono text-white/30 mt-4 tracking-widest">{idx + 1} / {images.length}</p>
-          </>
-        }
+      <div className="relative z-10 flex h-full w-full max-w-7xl flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
+        <div className="relative flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden rounded-[28px] border border-white/10 bg-black/15 p-2 sm:p-5">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.img key={images[idx]} src={images[idx]} alt={`Fotografie ${idx + 1}`} initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.01 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} className="max-h-[78vh] max-w-full object-contain" />
+          </AnimatePresence>
+          {images.length > 1 && <>
+            <button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} aria-label="Předchozí fotografie" className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/55 sm:left-5"><ChevronLeft size={19} /></button>
+            <button onClick={() => setIdx((i) => (i + 1) % images.length)} aria-label="Další fotografie" className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/55 sm:right-5"><ChevronRight size={19} /></button>
+          </>}
+        </div>
+        {images.length > 1 && <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>{images.slice(0, 12).map((src, i) => <button key={`${src}-${i}`} type="button" onClick={() => setIdx(i)} className={`relative aspect-[4/3] min-w-[72px] overflow-hidden rounded-xl border transition-all sm:min-w-[86px] ${idx === i ? 'border-white shadow-[0_0_0_2px_rgba(255,255,255,.15)]' : 'border-white/10 opacity-55 hover:opacity-90'}`}><img src={src} alt={`Náhled ${i + 1}`} className="h-full w-full object-cover" /></button>)}</div>}
+        <p className="mt-3 font-mono text-[10px] uppercase tracking-[.2em] text-white/45">{idx + 1} / {images.length}</p>
       </div>
-    </div>);
+    </motion.div>);
 }
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
@@ -211,7 +211,8 @@ export default function ProduktDetail() {
       </div>
     </div>);
 
-  const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
+  // Keep the gallery clean: one URL only once, with the product thumbnail first.
+  const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [

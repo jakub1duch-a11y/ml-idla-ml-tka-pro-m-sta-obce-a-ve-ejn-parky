@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, Check, Building2, ShieldCheck, Wrench, FileText, MapPin, Ruler, Droplets } from 'lucide-react';
-import { setSEO } from '@/lib/seo';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CollectionHero from '@/components/kolekce/CollectionHero';
 import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
 import { COLLECTIONS } from '@/components/kolekce/collectionData';
@@ -41,8 +41,11 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
   const isGarden = slug === 'garden';
 
   useEffect(() => {
-    setSEO({
-      title: isCity ? 'Městská mlžítka pro města, obce a veřejný prostor | MLŽIDLA®' : isGarden ? 'Zahradní mlžítka pro terasy, pergoly a zahrady | MLŽIDLA®' : `${collection.name} | MLŽIDLA®`,
+    if (isCity) setSEO(SEO_PAGES.mestskaKolekce);
+    else if (isGarden) setSEO(SEO_PAGES.zahradniKolekce);
+    else if (slug === 'art') setSEO(SEO_PAGES.zakazkovaKolekce);
+    else setSEO({
+      title: collection.name,
       description: collection.text,
       canonicalPath: canonicalPath || `/kolekce/${slug}`,
     });
@@ -107,7 +110,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/reference" className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-sm font-bold text-primary-foreground">Prohlédnout realizace <ArrowRight size={16} /></Link>
-              <Link to="/technologie" className="inline-flex items-center gap-2 border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground">Jak mlžítka fungují <ArrowRight size={16} /></Link>
+              <Link to="/jak-to-funguje" className="inline-flex items-center gap-2 border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground">Jak mlžítka fungují <ArrowRight size={16} /></Link>
               <Link to={isGarden ? '/podpora' : '/ke-stazeni'} className="inline-flex items-center gap-2 border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground">{isGarden ? 'Časté dotazy' : 'Technické podklady'} <ArrowRight size={16} /></Link>
             </div>
           </div>

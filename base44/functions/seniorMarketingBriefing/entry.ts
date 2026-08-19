@@ -609,10 +609,20 @@ async function buildSeniorNarrative(base44: any, input: any) {
       leads: { total: input.leads?.total || 0 },
       search: input.search?.available ? { topQueries: input.search.queries?.slice(0, 5) } : { available: false },
       googleAds: input.googleAds,
+      googleAdsPerformance: input.googleAdsPerformance?.available ? {
+        source: input.googleAdsPerformance.source,
+        syncedAt: input.googleAdsPerformance.syncedAt,
+        coverage: input.googleAdsPerformance.coverage,
+        account: input.googleAdsPerformance.account,
+        summary: input.googleAdsPerformance.summary,
+        campaigns: input.googleAdsPerformance.campaigns?.slice(0, 5),
+      } : { available: false, error: input.googleAdsPerformance?.error },
       instagram: input.instagram?.available ? { username: input.instagram.username, followers: input.instagram.followers, periodPosts: input.instagram.periodPosts, periodInteractions: input.instagram.periodInteractions, topPosts: input.instagram.topPosts?.slice(0, 3) } : { available: false, error: input.instagram?.error },
       facebook: input.facebook?.available ? { name: input.facebook.name, followers: input.facebook.followers, periodPosts: input.facebook.periodPosts, periodInteractions: input.facebook.periodInteractions, topPosts: input.facebook.topPosts?.slice(0, 3) } : { available: false, error: input.facebook?.error },
       metaAds: input.metaAds?.available ? { account: input.metaAds.account, total: input.metaAds.total, campaigns: input.metaAds.campaigns?.slice(0, 5) } : { available: false, error: input.metaAds?.error },
       drive: input.drive?.available ? { totalModified: input.drive.totalModified, totalCreated: input.drive.totalCreated, files: input.drive.files?.slice(0, 8) } : { available: false, error: input.drive?.error },
+      tasks: input.tasks?.available ? { touched: input.tasks.touched, completed: input.tasks.completed, active: input.tasks.active, tasks: input.tasks.tasks?.slice(0, 8) } : { available: false, error: input.tasks?.error },
+      connectorHealth: input.connectorHealth,
       work: {
         totalChanges: input.work?.totalChanges || 0,
         taskLog: input.work?.taskLog || [],
@@ -623,7 +633,7 @@ async function buildSeniorNarrative(base44: any, input: any) {
     };
 
     const response = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní digitální marketingový ředitel a webový konzultant pro MLŽIDLA.cz / HolmTec. Zpracuj manažerský briefing za přesně zadané období. Piš profesionálně, konkrétně a věcně v češtině. Priorita je obchodní dopad, webový funnel, kvalita leadů, obsah, SEO, sociální sítě, reklamy a měření.\n\nPŘÍSNÁ PRAVIDLA:\n- Používej jen fakta z DATA. Nic nevymýšlej a žádné chybějící metriky nedopočítávej.\n- Odvedenou práci popisuj pouze podle zaznamenaných změn a taskLog.\n- Rozlišuj výkon webu od odvedené práce.\n- Pokud není Ads, Facebook nebo Search zdroj dostupný, stručně to označ, ale nedělej z toho falešný závěr o výkonu.\n- Očekávané výsledky popisuj jako očekávání, nikoli jako již dosažený efekt.\n- completion_summary uveď podle stavů completed / in_progress / blocked z taskLog.\n- Doporučení musí být konkrétní a realizovatelná pro následující pracovní období.\n- executive_summary maximálně 3 věty.\n- delivered_work 3 až 8 bodů, performance_readout 2 až 6 bodů, risks maximálně 4 body, next_actions 3 až 5 bodů, expected_outcomes 2 až 6 bodů.\n\nDATA:\n${JSON.stringify(compact)}`,
+      prompt: `Jsi seniorní digitální marketingový ředitel a webový konzultant pro MLŽIDLA.cz / HolmTec. Zpracuj manažerský briefing za přesně zadané období. Piš profesionálně, konkrétně a věcně v češtině. Priorita je obchodní dopad, webový funnel, kvalita leadů, obsah, SEO, sociální sítě, reklamy a měření.\n\nPŘÍSNÁ PRAVIDLA:\n- Používej jen fakta z DATA. Nic nevymýšlej a žádné chybějící metriky nedopočítávej.\n- Odvedenou práci popisuj pouze podle zaznamenaných změn, taskLog a Google Tasks.\n- Rozlišuj výkon webu od odvedené práce.\n- googleAdsPerformance je synchronizovaný read-only HYPD snapshot. Uveď jeho zdroj a období pokrytí; neprezentuj ho jako živější data, než skutečně je.\n- Pokud není Ads, Facebook nebo Search zdroj dostupný, stručně to označ, ale nedělej z toho falešný závěr o výkonu.\n- Pokud Google Ads mají spend/kliky, ale nulové konverze, označ to jako bod k ověření měření nebo kvality trafficu — bez důkazu netvrď, že tracking je rozbitý.\n- Očekávané výsledky popisuj jako očekávání, nikoli jako již dosažený efekt.\n- completion_summary uveď podle stavů completed / in_progress / blocked z taskLog a doplň skutečně dokončené Google Tasks, pokud jsou k dispozici.\n- Doporučení musí být konkrétní a realizovatelná pro následující pracovní období.\n- executive_summary maximálně 3 věty.\n- delivered_work 3 až 8 bodů, performance_readout 2 až 7 bodů, risks maximálně 4 body, next_actions 3 až 5 bodů, expected_outcomes 2 až 6 bodů.\n\nDATA:\n${JSON.stringify(compact)}`,
       response_json_schema: {
         type: 'object',
         properties: {
@@ -656,19 +666,22 @@ export default async function(req: Request) {
     const { from, to } = normalizePeriod(body.dateFrom, body.dateTo);
     const period = { from, to, label: formatPeriodLabel(from, to) };
 
-    const [ga4, leads, search, googleAds, instagram, facebook, metaAds, drive, work] = await Promise.all([
+    const [ga4, leads, search, googleAds, googleAdsPerformance, instagram, facebook, metaAds, drive, tasks, connectorHealth, work] = await Promise.all([
       getGa4(base44, from, to),
       getLeads(base44, from, to),
       getSearchConsole(base44, from, to),
       getGoogleAdsStatus(base44),
+      getExternalGoogleAdsSnapshot(base44, from, to),
       getInstagram(base44, from, to),
       getFacebook(base44, from, to),
       getMetaAds(base44, from, to),
       getDriveActivity(base44, from, to),
+      getGoogleTasksActivity(base44, from, to),
+      getConnectorHealth(base44),
       getWorkSummary(base44, from, to),
     ]);
 
-    const source = { period, ga4, leads, search, googleAds, instagram, facebook, metaAds, drive, work };
+    const source = { period, ga4, leads, search, googleAds, googleAdsPerformance, instagram, facebook, metaAds, drive, tasks, connectorHealth, work };
     const narrative = await buildSeniorNarrative(base44, source);
 
     return Response.json({

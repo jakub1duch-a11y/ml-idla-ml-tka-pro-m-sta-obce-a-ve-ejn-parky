@@ -1,0 +1,105 @@
+{
+  "name": "ProjectExtraCharge",
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string",
+      "description": "ID projektu / cenov\u00e9 nab\u00eddky"
+    },
+    "quote_number": {
+      "type": "string",
+      "description": "\u010c\u00edslo nab\u00eddky"
+    },
+    "title": {
+      "type": "string",
+      "description": "N\u00e1zev p\u0159\u00edplatkov\u00e9 polo\u017eky"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "D\u016fvod a rozsah p\u0159\u00edplatku"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "unit": {
+      "type": "string",
+      "default": "ks"
+    },
+    "unit_price_ex_vat": {
+      "type": "number",
+      "default": 0
+    },
+    "total_price_ex_vat": {
+      "type": "number",
+      "default": 0
+    },
+    "vat_rate": {
+      "type": "number",
+      "default": 21
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_customer_approval",
+        "approved",
+        "declined",
+        "billed",
+        "cancelled"
+      ],
+      "default": "draft"
+    },
+    "requires_customer_approval": {
+      "type": "boolean",
+      "default": true
+    },
+    "customer_note": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "customer_approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "customer_declined_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by_name": {
+      "type": "string"
+    },
+    "billed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "project_order_id",
+    "title",
+    "total_price_ex_vat"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

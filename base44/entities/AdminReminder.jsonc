@@ -1,0 +1,100 @@
+{
+  "name": "AdminReminder",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1500
+    },
+    "reminder_type": {
+      "type": "string",
+      "enum": [
+        "follow_up",
+        "offer_expiry",
+        "inquiry",
+        "pricing",
+        "web",
+        "marketing",
+        "task",
+        "other"
+      ],
+      "default": "task"
+    },
+    "due_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "done",
+        "dismissed"
+      ],
+      "default": "open"
+    },
+    "project_order_id": {
+      "type": "string"
+    },
+    "inquiry_id": {
+      "type": "string"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "target_url": {
+      "type": "string"
+    },
+    "notify_push": {
+      "type": "boolean",
+      "default": true
+    },
+    "notify_email": {
+      "type": "boolean",
+      "default": false
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "title",
+    "due_at"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

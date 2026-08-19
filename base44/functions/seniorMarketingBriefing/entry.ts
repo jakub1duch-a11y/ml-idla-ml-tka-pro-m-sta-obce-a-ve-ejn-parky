@@ -251,22 +251,41 @@ async function getInstagram(base44: any, from: string, to: string) {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
     const profile = await fetchJson(`https://graph.instagram.com/me?fields=id,username,followers_count,media_count&access_token=${encodeURIComponent(accessToken)}`);
     const media = await fetchJson(`https://graph.instagram.com/me/media?fields=id,caption,media_type,permalink,timestamp,like_count,comments_count&limit=50&access_token=${encodeURIComponent(accessToken)}`);
-    const posts = (media.data || [])
-      .filter((item: any) => {
-        const date = item.timestamp ? localDateString(new Date(item.timestamp)) : '';
-        return inRange(date, from, to);
-      })
-      .map((item: any) => ({
+    const periodMedia = (media.data || []).filter((item: any) => {
+      const date = item.timestamp ? localDateString(new Date(item.timestamp)) : '';
+      return inRange(date, from, to);
+    });
+    const posts = [];
+    let insightsEnabled = false;
+    for (const item of periodMedia.slice(0, 20)) {
+      let insightMap: Record<string, number> = {};
+      for (const metricSet of ['reach,total_interactions,views,likes,comments,saved,shares', 'reach,total_interactions,saved,shares']) {
+        try {
+          const insightData = await fetchJson(`https://graph.instagram.com/${item.id}/insights?metric=${encodeURIComponent(metricSet)}&access_token=${encodeURIComponent(accessToken)}`);
+          insightMap = Object.fromEntries((insightData.data || []).map((metric: any) => [metric.name, num(metric.values?.[0]?.value ?? metric.value)]));
+          if (Object.keys(insightMap).length) insightsEnabled = true;
+          break;
+        } catch (_) {}
+      }
+      const likes = num(insightMap.likes) || num(item.like_count);
+      const comments = num(insightMap.comments) || num(item.comments_count);
+      const interactions = num(insightMap.total_interactions) || likes + comments + num(insightMap.saved) + num(insightMap.shares);
+      posts.push({
         id: item.id,
         caption: String(item.caption || '').slice(0, 220),
         mediaType: item.media_type || '',
         permalink: item.permalink || '',
         timestamp: item.timestamp || '',
-        likes: num(item.like_count),
-        comments: num(item.comments_count),
-        interactions: num(item.like_count) + num(item.comments_count),
-      }))
-      .sort((a: any, b: any) => b.interactions - a.interactions);
+        likes,
+        comments,
+        saved: num(insightMap.saved),
+        shares: num(insightMap.shares),
+        reach: num(insightMap.reach),
+        views: num(insightMap.views),
+        interactions,
+      });
+    }
+    posts.sort((a: any, b: any) => b.interactions - a.interactions);
     return {
       available: true,
       username: profile.username || '',
@@ -274,9 +293,10 @@ async function getInstagram(base44: any, from: string, to: string) {
       mediaCount: num(profile.media_count),
       periodPosts: posts.length,
       periodInteractions: posts.reduce((sum: number, post: any) => sum + post.interactions, 0),
+      periodReach: posts.reduce((sum: number, post: any) => sum + num(post.reach), 0),
       topPosts: posts.slice(0, 5),
-      insightsScope: false,
-      note: 'Základní Instagram Business data jsou dostupná. Reach a impressions vyžadují rozšířené insights oprávnění.',
+      insightsScope: insightsEnabled,
+      note: insightsEnabled ? 'Rozšířené Instagram insights jsou aktivní.' : 'Základní Instagram data jsou dostupná; reach a další insights čekají na rozšířené oprávnění.',
     };
   } catch (error: any) {
     return { available: false, error: error.message, followers: 0, periodPosts: 0, periodInteractions: 0, topPosts: [] };

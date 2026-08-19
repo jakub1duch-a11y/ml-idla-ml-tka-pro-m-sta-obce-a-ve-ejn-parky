@@ -16,6 +16,7 @@ import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
 import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
+import AdminOffers from './AdminOffers';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -27,6 +28,7 @@ const TABS = [
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
+  { id: 'offers', label: 'Nabídky', icon: BriefcaseBusiness },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
@@ -97,6 +99,7 @@ export default function Admin() {
     media: AdminMedia,
     marketing: AdminMarketing,
     poptavky: AdminPoptavky,
+    offers: AdminOffers,
     ar: AdminAR,
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,

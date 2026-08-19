@@ -23,10 +23,10 @@ export default function ObchodniNabidky() {
     const checkAccess = async () => {
       try {
         let user = await base44.auth.me();
-        if (user?.email?.toLowerCase() === 'jakub1duch@gmail.com' && user.role !== 'admin') {
+        if (['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(user?.email?.toLowerCase()) && user.role !== 'admin') {
           try { await base44.functions.invoke('bootstrapJakubAdmin', {}); user = await base44.auth.me(); } catch (_error) {}
         }
-        const allowedEmails = ['jakub1duch@gmail.com', 'meduna@holmtec.cz', 'kjuvideo@email.cz'];
+        const allowedEmails = ['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com', 'meduna@holmtec.cz', 'kjuvideo@email.cz'];
         const emailAllowed = user?.email && (user.email.toLowerCase().endsWith('@mlzidla.cz') || allowedEmails.includes(user.email.toLowerCase()));
         if (user?.role === 'admin' && emailAllowed) setAuthorized(true);
         else window.location.href = '/admin-login';

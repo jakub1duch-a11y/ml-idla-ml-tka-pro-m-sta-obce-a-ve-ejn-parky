@@ -1,6 +1,6 @@
 # Mlžítka, mlžné sochy a mlžné systémy — mlžidla.cz
 
-> Mlžidla.cz - Zakázkové mlžné sochy, mlžítka a venkovní chladicí mlžné systémy z nerezové oceli. Naše mlžítka ochlazují veřejné prostory, parky, náměstí, festivaly, zahrady a komerční prostory až o 9 °C pomocí jemné vodní mlhy (10–50 μm), aniž by zanechávaly vlhký povrch.
+> MLŽIDLA.cz by HolmTec navrhuje a vyrábí nerezová mlžítka, mlžné brány a venkovní chladicí prvky pro města, parky, náměstí, školy, sportoviště, gastro a zahrady. Hlavní produktové řady využívají nízkotlaké mlžení napojené na běžný vodovodní řad bez samostatného vysokotlakého čerpadla. Skutečný chladicí efekt a charakter mlhy závisí na konkrétním produktu, tlaku, průtoku, teplotě, vlhkosti a proudění vzduchu.
 
 ## Klíčové stránky
 
@@ -20,7 +20,7 @@
 
 ## Produkty
 
-Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product + FAQPage), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody, tlakem a rychlými odpověďmi pro investory, města a projektanty.
+Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://mlzidla.cz/produkt/{slug}` s technickými parametry, materiálem, spotřebou vody, tlakem a odpověďmi pro investory, města a projektanty. Parametry se řídí konkrétním produktovým listem; u aktuálních nízkotlakých řad je prioritou jednoduché napojení na vodovodní řad bez samostatné vysokotlaké technologie.
 
 ## Smart Cooling
 

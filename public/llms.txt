@@ -7,8 +7,11 @@
 - [Domů](https://mlzidla.cz/): Přehled značky Mlžidla.cz a hlavní produktové řady mlžítek.
 - [Smart Cooling](https://mlzidla.cz/smart-ovladani): Řízené ochlazovací body pro veřejný prostor — produkt, senzory, chytré ventily, provozní scénáře a data.
 - [Kolekce](https://mlzidla.cz/mlzidla-mlzitka): Celý katalog mlžných soch, mlžítek a mlžných systémů.
-- [Mlžiště](https://mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
-- [Jak to funguje](https://mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
+- [Mlžítko](https://mlzidla.cz/mlzitko): Přehled principu, konstrukce a použití designových nerezových mlžítek.
+- [Mlhoviště](https://mlzidla.cz/mlhoviste): Mlhoviště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
+- [Vodní mlha](https://mlzidla.cz/vodni-mlha): Praktické vysvětlení vodní mlhy, nízkotlakého mlžení a použití na zahradách, terasách a ve veřejném prostoru.
+- [Mlžné brány](https://mlzidla.cz/mlzne-brany): Nerezové průchozí mlžné brány pro města, parky, sportoviště a eventy.
+- [Jak to funguje](https://mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního a nízkotlakého mlžení.
 - [Poradce](https://mlzidla.cz/poradce): Interaktivní AI poradce a kalkulátor spotřeby vody a nákladů.
 - [Reference](https://mlzidla.cz/reference): Realizované projekty mlžítek a mlžidel po celé ČR a zahraničí.
 - [Blog](https://mlzidla.cz/blog): Články o technologii mlžení, inspiraci a realizacích.

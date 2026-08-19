@@ -430,6 +430,8 @@ function fallbackNarrative(input: any) {
     ],
     risks: input.ga4?.available ? [] : ['GA4 data nejsou dostupná; výkon nelze vyhodnotit bez odhadů.'],
     next_actions: ['Prioritizovat kanály a stránky, které přivádějí návštěvnost s obchodním záměrem.', 'Pravidelně kontrolovat generate_lead a návaznost na reálné poptávky v Base44.'],
+    expected_outcomes: (input.work?.taskLog || []).map((task: any) => task.expectedResult).filter(Boolean).slice(0, 6),
+    completion_summary: (input.work?.taskLog || []).map((task: any) => `${task.label}: ${task.status === 'completed' ? 'dokončeno' : task.status === 'blocked' ? 'blokováno' : 'rozpracováno'}.`).slice(0, 8),
     conclusion: 'Briefing je postaven pouze na dostupných měřených datech a zaznamenaných změnách v systému.',
   };
 }

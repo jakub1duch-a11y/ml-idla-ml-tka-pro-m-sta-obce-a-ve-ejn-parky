@@ -70,6 +70,22 @@ export default function Admin() {
         }
         setUser(u);
         if (!u) navigate('/admin-login', { replace: true });
+        const email = u?.email?.toLowerCase();
+        const allowed = u?.role === 'admin' && email && (email.endsWith('@mlzidla.cz') || ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(email));
+        if (allowed) {
+          let manifest = document.querySelector('link[data-mlzidla-admin-manifest]');
+          if (!manifest) {
+            manifest = document.createElement('link');
+            manifest.rel = 'manifest';
+            manifest.href = '/admin-manifest.webmanifest';
+            manifest.dataset.mlzidlaAdminManifest = '1';
+            document.head.appendChild(manifest);
+          }
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0d1117');
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/admin-sw.js', { scope: '/admin' }).catch(() => {});
+          }
+        }
       } catch (_error) {
         navigate('/admin-login', { replace: true });
       } finally {

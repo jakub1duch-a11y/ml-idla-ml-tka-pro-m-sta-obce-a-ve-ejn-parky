@@ -163,9 +163,31 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
     } else {
       pricing = await findPricingForProduct(base44, product, inquiry.zprava || '');
       const sheetUnitPrice = pricing.matched ? Number(pricing.offer_price_ex_vat || 0) : 0;
+      let offerProfile: any = null;
+      try {
+        const profiles = await base44.asServiceRole.entities.ProductOfferProfile.filter({ product_id: product.id });
+        offerProfile = profiles?.[0] || null;
+      } catch (_) {}
+      const profileUnitPrice = offerProfile?.offer_ready && ['ready', 'conditional'].includes(String(offerProfile?.pricing_status || ''))
+        ? Number(offerProfile?.unit_price_ex_vat || 0)
+        : 0;
       const catalogFallbackPrice = validatedCatalogFallback(product);
-      unitPrice = sheetUnitPrice || catalogFallbackPrice;
-      pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
+      unitPrice = sheetUnitPrice || profileUnitPrice || catalogFallbackPrice;
+      pricingSource = sheetUnitPrice > 0
+        ? 'mlzny_disk'
+        : profileUnitPrice > 0
+          ? (offerProfile?.pricing_mode === 'component_sum' ? 'component_sum' : offerProfile?.pricing_mode === 'per_module' ? 'per_module' : 'catalog')
+          : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
+      if (!sheetUnitPrice && profileUnitPrice > 0) {
+        pricing = {
+          matched: true,
+          sheet_key: offerProfile?.pricing_key || '',
+          sheet_spec: offerProfile?.price_note || '',
+          offer_price_ex_vat: profileUnitPrice,
+          source: offerProfile?.pricing_source || 'ProductOfferProfile',
+          note: offerProfile?.pricing_status === 'conditional' ? 'Cena je podmíněná potvrzením rozsahu projektu.' : '',
+        };
+      }
     }
 
     const isBendy = !customMode && /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);

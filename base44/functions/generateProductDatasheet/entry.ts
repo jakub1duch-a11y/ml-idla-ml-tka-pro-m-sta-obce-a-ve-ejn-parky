@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { jsPDF } from 'npm:jspdf@4.0.0';
 import QRCode from 'npm:qrcode@1.5.4';
-import { findSmartControlPricing } from '../../shared/pricingSheet.ts';
+import { findPricingForProduct, findSmartControlPricing, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
 
 const toBase64 = (bytes) => {
   let binary = '';
@@ -208,13 +208,24 @@ export default async function(req) {
     }
 
     // A4 BOARD 1 — project proposal, visualization and investment
-    const basePrice = Number(quote.base_price || 0);
+    // Pokud obchodník neposlal explicitní cenu, nabídka si ji ověří přímo proti
+    // centrální tabulce Kalkulace 2026. Hodnoty 0/1 Kč z katalogu jsou pouze
+    // placeholdery a nikdy se nesmí propsat do klientské nabídky.
+    let resolvedPricing = null;
+    try {
+      resolvedPricing = await findPricingForProduct(base44, product, inquiry.project_goal || inquiry.message || '');
+    } catch (_) {}
+    const sheetPrice = resolvedPricing?.matched ? Number(resolvedPricing.offer_price_ex_vat || 0) : 0;
+    const catalogFallback = validatedCatalogFallback(product);
+    const suppliedBasePrice = Number(quote.base_price || 0);
+    const basePrice = suppliedBasePrice > 0 ? suppliedBasePrice : (sheetPrice || catalogFallback || 0);
     const installation = Number(quote.installation || 0);
     const discountPercent = Number(quote.discount_percent || 0);
-    const priceIsEstimate = Boolean(quote.price_is_estimate);
+    const priceIsEstimate = Boolean(quote.price_is_estimate || (!sheetPrice && catalogFallback > 0));
     const beforeDiscount = basePrice + installation;
     const calculatedFinal = beforeDiscount * (1 - discountPercent / 100);
-    const finalTotal = Number(quote.final_total ?? calculatedFinal ?? product.price_from ?? 0);
+    const explicitFinalTotal = Number(quote.final_total || 0);
+    const finalTotal = explicitFinalTotal > 0 ? explicitFinalTotal : calculatedFinal;
 
     await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
     let y = 48;

@@ -1,0 +1,133 @@
+{
+  "name": "ProductOfferProfile",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "audience_variant": {
+      "type": "string",
+      "enum": [
+        "city_public",
+        "residential",
+        "wellness_hospitality",
+        "architecture_design",
+        "custom"
+      ]
+    },
+    "pricing_mode": {
+      "type": "string",
+      "enum": [
+        "sheet_exact",
+        "component_sum",
+        "per_module",
+        "accessory",
+        "project_manual",
+        "archived"
+      ]
+    },
+    "pricing_status": {
+      "type": "string",
+      "enum": [
+        "ready",
+        "conditional",
+        "manual_required",
+        "archived"
+      ]
+    },
+    "unit_price_ex_vat": {
+      "type": "number"
+    },
+    "total_inc_vat": {
+      "type": "number"
+    },
+    "pricing_source": {
+      "type": "string"
+    },
+    "pricing_key": {
+      "type": "string"
+    },
+    "price_note": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "offer_headline": {
+      "type": "string",
+      "maxLength": 240
+    },
+    "offer_summary": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "benefits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommended_configurations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "smart_recommended": {
+      "type": "boolean",
+      "default": true
+    },
+    "offer_ready": {
+      "type": "boolean",
+      "default": false
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_pricing_check": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "internal_notes": {
+      "type": "string",
+      "maxLength": 1500
+    }
+  },
+  "required": [
+    "product_id",
+    "product_slug",
+    "product_name",
+    "pricing_mode",
+    "pricing_status",
+    "offer_ready"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

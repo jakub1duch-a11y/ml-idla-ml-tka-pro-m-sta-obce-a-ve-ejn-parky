@@ -102,6 +102,9 @@ export default function MarketingBriefingTab() {
   const facebook = data?.facebook || {};
   const metaAds = data?.metaAds || {};
   const drive = data?.drive || {};
+  const adsPerf = data?.googleAdsPerformance || {};
+  const tasks = data?.tasks || {};
+  const connectorHealth = data?.connectorHealth || {};
   const taskLog = work?.taskLog || [];
 
   const conversion = useMemo(() => {
@@ -154,6 +157,13 @@ export default function MarketingBriefingTab() {
           <Metric icon={Target} label="Poptávky" value={fmt(leads?.total)} note={`lead / session ${pct(conversion)}`} tone="text-emerald-300" />
           <Metric icon={TrendingUp} label="Engagement" value={pct(Number(summary?.engagementRate || 0) * 100)} note="GA4 engagement rate" tone="text-amber-300" />
           <Metric icon={ClipboardCheck} label="Odvedená práce" value={fmt(work?.totalChanges)} note="evidované změny a úkoly" tone="text-sky-300" />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <Metric icon={Megaphone} label="Google Ads spend" value={adsPerf.available ? money(adsPerf.summary?.spend, adsPerf.account?.currency || 'CZK') : 'Bez snapshotu'} note={adsPerf.available ? `${fmt(adsPerf.summary?.impressions)} zobrazení · HYPD sync` : 'HYPD data nejsou pro zvolené období synchronizována'} tone="text-orange-300" />
+          <Metric icon={Activity} label="Google Ads kliky" value={adsPerf.available ? fmt(adsPerf.summary?.clicks) : '—'} note={adsPerf.available ? `CTR ${pct(adsPerf.summary?.ctr)} · CPC ${money(adsPerf.summary?.cpc, adsPerf.account?.currency || 'CZK')}` : 'čeká na synchronizaci'} tone="text-amber-300" />
+          <Metric icon={Target} label="Ads konverze" value={adsPerf.available ? fmt(adsPerf.summary?.conversions) : '—'} note={adsPerf.available ? (adsPerf.summary?.conversions ? `CPA ${money(adsPerf.summary?.cpa, adsPerf.account?.currency || 'CZK')}` : '0 konverzí · ověřit měření / kvalitu trafficu') : 'bez dat'} tone="text-emerald-300" />
+          <Metric icon={CheckCircle2} label="Datové zdroje" value={connectorHealth.total ? `${connectorHealth.connected}/${connectorHealth.total}` : '—'} note={`Google Tasks: ${tasks.available ? `${fmt(tasks.completed)} dokončeno` : 'nedostupné'}`} tone="text-cyan" />
         </div>
 
         {taskLog.length > 0 ? <section className="rounded-2xl border border-white/8 bg-white/3 p-5" aria-label="Prezentace odvedené práce">

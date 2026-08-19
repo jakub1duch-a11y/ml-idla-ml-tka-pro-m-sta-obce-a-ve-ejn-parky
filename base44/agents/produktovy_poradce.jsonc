@@ -19,6 +19,12 @@
       "allowed_operations": [
         "read"
       ]
+    },
+    {
+      "entity_name": "OfferVariant",
+      "allowed_operations": [
+        "read"
+      ]
     }
   ],
   "context_files": [],

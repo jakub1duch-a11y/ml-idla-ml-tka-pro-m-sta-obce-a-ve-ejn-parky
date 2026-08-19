@@ -141,6 +141,19 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-ink flex">
+      {showInstallCard && (
+        <div className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-md rounded-2xl border border-cyan/20 bg-[#0d1117]/95 p-4 shadow-2xl backdrop-blur-xl md:bottom-6">
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 rounded-xl bg-cyan/10 p-2 text-cyan"><Download size={18} /></div>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold text-white">Nainstalovat MLŽIDLA Admin</p>
+              <p className="mt-1 text-xs leading-relaxed text-white/50">Soukromá administrační aplikace pro správu poptávek, nabídek, upozornění a webu. Dostupná pouze administrátorům.</p>
+              <button onClick={installAdminApp} className="mt-3 rounded-xl bg-cyan px-3.5 py-2 text-xs font-bold text-[#071017] hover:opacity-90">Nainstalovat aplikaci</button>
+            </div>
+            <button onClick={dismissInstall} className="rounded-lg p-1.5 text-white/30 hover:bg-white/5 hover:text-white" aria-label="Zavřít nabídku instalace"><X size={16} /></button>
+          </div>
+        </div>
+      )}
       {/* Sidebar */}
       <div className="w-56 bg-[#0d1117] border-r border-white/8 flex flex-col shrink-0">
         <div className="px-5 py-6 border-b border-white/8">

@@ -273,16 +273,38 @@ export default function CustomerPortal() {
         {/* Tabs */}
         <div className="flex gap-4 mb-8 border-b border-slate-200">
           <button className="px-4 py-3 text-slate-900 font-medium border-b-2 border-slate-900">
-            Moje projekty ({projects.length})
+            Můj projekt ({projects.length + inquiries.length})
           </button>
         </div>
 
+        {inquiries.length > 0 && (
+          <section className="mb-8">
+            <div className="mb-4 flex items-end justify-between gap-4">
+              <div><p className="text-xs font-mono uppercase tracking-widest text-slate-400">Přijaté poptávky</p><h2 className="mt-1 text-xl font-medium text-slate-900">Vaše zadání</h2></div>
+              {projects.length === 0 && <span className="rounded-full bg-amber-50 px-3 py-1 text-[11px] font-semibold text-amber-700">Čeká na zpracování nabídky</span>}
+            </div>
+            <div className="space-y-3">
+              {inquiries.map((inquiry) => {
+                const inquiryTitle = inquiry.produkt || inquiry.product_id || inquiry.project_scope || 'Poptávka MLŽIDLA®';
+                const inquiryMessage = inquiry.zprava || inquiry.message || inquiry.description || '';
+                const inquiryStatus = inquiry.status || 'nova';
+                const statusLabel = ['nova','new'].includes(inquiryStatus) ? 'Přijata' : ['v_reseni','contacted','in_progress'].includes(inquiryStatus) ? 'V řešení' : 'Uzavřena';
+                return <article key={inquiry.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                  <div className="flex flex-wrap items-start justify-between gap-3"><div><span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-mono text-slate-500 ring-1 ring-slate-200">{statusLabel}</span><h3 className="mt-3 text-lg font-semibold text-slate-900">{inquiryTitle}</h3></div><span className="font-mono text-[10px] text-slate-400">ID: {inquiry.id}</span></div>
+                  {inquiryMessage && <p className="mt-3 whitespace-pre-line text-sm leading-6 text-slate-600">{inquiryMessage}</p>}
+                  <p className="mt-4 text-xs text-slate-400">Přijato {inquiry.created_date ? new Date(inquiry.created_date).toLocaleDateString('cs-CZ') : '—'}</p>
+                </article>;
+              })}
+            </div>
+          </section>
+        )}
+
         {/* Projects list */}
         <div className="space-y-4">
-          {projects.length === 0 && (
+          {projects.length === 0 && inquiries.length === 0 && (
             <div className="text-center py-16">
               <FileText size={48} className="mx-auto mb-4 text-slate-200" />
-              <p className="text-slate-500">Zatím žádné projekty</p>
+              <p className="text-slate-500">K tomuto e-mailu zatím neevidujeme žádnou poptávku ani nabídku.</p>
             </div>
           )}
 

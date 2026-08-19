@@ -56,14 +56,14 @@ export default function Kontakt() {
       form.message].
       filter(Boolean).join(' ');
 
-      await base44.entities.ContactInquiry.create({
+      const created = await base44.entities.ContactInquiry.create({
         name: form.name,
         email: form.email,
         message: msg,
         service_type: form.request_type || 'contact',
         status: 'new'
       });
-      trackInquirySubmitted(form.request_type || 'kontakt', form.product_interest);
+      trackInquirySubmitted(form.request_type || 'kontakt', form.product_interest, created?.id || '');
       navigate('/dekujeme?zdroj=kontakt');
     } finally {
       setSending(false);

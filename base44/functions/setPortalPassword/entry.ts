@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
       password_iterations: ITERATIONS,
       password_set_at: now,
       failed_attempts: 0,
-      locked_until: null,
+      locked_until: new Date(0).toISOString(),
       last_login_at: now,
     };
 

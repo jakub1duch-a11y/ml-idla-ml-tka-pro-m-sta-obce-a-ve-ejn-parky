@@ -401,7 +401,7 @@ export const SEO_PAGES = {
   },
   deti: {
     title: 'Mlhoviště pro školy, školky a dětská hřiště — bezpečné mlžení',
-    description: 'Nízkotlaká mlhoviště pro základní školy, mateřské školy a dětská hřiště. Nerez AISI 316L, jemné mlžení bez čerpadla a řešení navržené pro dětské a veřejné prostory.'
+    description: 'Nízkotlaká mlhoviště pro základní školy, mateřské školy a dětská hřiště. Nerez AISI 316L, jemné mlžení bez čerpadla a řešení navržené pro dětské a veřejné prostory.',
     keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
     canonicalPath: '/kategorie/skoly-skolky-deti',
   },

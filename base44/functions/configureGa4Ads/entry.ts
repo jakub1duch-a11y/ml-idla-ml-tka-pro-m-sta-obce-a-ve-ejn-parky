@@ -87,8 +87,8 @@ export default async function(req: Request) {
       needsEditScope,
       setupError,
       recommendation: googleAdsLinks.length
-        ? 'GA4 je propojeno s Google Ads. Importujte generate_lead jako webovou konverzi a nastavte ji jako primární pro bidding.'
-        : 'GA4 zatím nemá zjištěný Google Ads link. Propojte Google Ads účet s touto GA4 property a zapněte auto-tagging.',
+        ? 'GA4 je propojeno s Google Ads. Web posílá přímou Google Ads lead konverzi s vlastním conversion label a transaction_id; tuto přímou konverzi ponechte jako primární. generate_lead v GA4 používejte jako Key event pro analytiku a případný import do Ads nastavte pouze jako sekundární, aby se jeden lead nezapočítal dvakrát.'
+        : 'GA4 zatím nemá zjištěný Google Ads link. Propojte Google Ads účet s touto GA4 property, zapněte auto-tagging a po propojení ponechte pouze jeden primární zdroj lead konverze.',
     });
   } catch (error: any) {
     return Response.json({ error: error.message || 'GA4 Ads configuration failed.' }, { status: 500 });

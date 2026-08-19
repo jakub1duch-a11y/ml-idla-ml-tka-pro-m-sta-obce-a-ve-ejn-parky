@@ -130,7 +130,12 @@ function generateBreadcrumbsJsonLd(path, title, locale = 'cs') {
  * }} options
  */
 export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots, locale = 'cs', alternates = [] }) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+  // Nezdvojujeme značku v titulku u presetů, které už obsahují „MLŽIDLA.cz“.
+  // Je to důležité i pro Google Ads landing-page message match: reklamní a vstupní titulek má zůstat čistý a čitelný.
+  const normalizedTitle = String(title || '').trim();
+  const fullTitle = normalizedTitle
+    ? (normalizedTitle.toLowerCase().includes(SITE_NAME.toLowerCase()) ? normalizedTitle : `${normalizedTitle} | ${SITE_NAME}`)
+    : SITE_NAME;
   const imagePath = image || DEFAULT_IMAGE;
   const img = imagePath.startsWith('http') ? imagePath : `${BASE_URL}${imagePath}`;
   const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;

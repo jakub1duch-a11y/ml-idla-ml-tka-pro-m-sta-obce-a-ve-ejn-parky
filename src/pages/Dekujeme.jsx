@@ -16,7 +16,7 @@ export default function Dekujeme() {
   const zdroj = urlParams.get('zdroj') || 'kontakt';
 
   useEffect(() => {
-    setSEO({ title: 'Děkujeme za poptávku | Mlžidla.cz', description: 'Vaše poptávka byla úspěšně odeslána.' });
+    setSEO({ title: 'Děkujeme za poptávku', description: 'Vaše poptávka byla úspěšně odeslána.', canonicalPath: '/dekujeme', robots: 'noindex, follow' });
     trackThankYouPageView(zdroj);
   }, [zdroj]);
 

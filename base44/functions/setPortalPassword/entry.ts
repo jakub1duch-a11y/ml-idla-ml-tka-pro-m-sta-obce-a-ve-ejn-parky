@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const ITERATIONS = 120000;
+const ITERATIONS = 210000;
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
 
 const bytesToBase64Url = (bytes: Uint8Array) => {
@@ -61,20 +61,35 @@ Deno.serve(async (req) => {
     };
 
     const existing = await base44.asServiceRole.entities.PortalAccount.filter({ email });
-    if (existing?.[0]) {
-      await base44.asServiceRole.entities.PortalAccount.update(existing[0].id, {
+    const storedAccount = existing?.[0]
+      ? await base44.asServiceRole.entities.PortalAccount.update(existing[0].id, {
         ...accountData,
         locked_until: now,
-      });
-    } else {
-      await base44.asServiceRole.entities.PortalAccount.create(accountData);
+      })
+      : await base44.asServiceRole.entities.PortalAccount.create(accountData);
+
+    // Confirm the write before reporting success. This prevents the portal from
+    // claiming a password was saved when a transient entity write failed.
+    if (!storedAccount?.id) {
+      return Response.json({ error: 'account_write_failed' }, { status: 503 });
     }
 
-    await base44.asServiceRole.entities.PortalSession.update(session.id, {
-      expires_at: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(),
-    });
+    const renewedExpiry = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString();
+    try {
+      await base44.asServiceRole.entities.PortalSession.update(session.id, {
+        expires_at: renewedExpiry,
+      });
+    } catch (_sessionError) {
+      // A password is already stored. Recreate the verified session rather than
+      // making the client restart the complete OTP flow because of a session write.
+      await base44.asServiceRole.entities.PortalSession.create({
+        email,
+        token: sessionToken,
+        expires_at: renewedExpiry,
+      });
+    }
 
-    return Response.json({ ok: true, email, password_set: true, session_token: sessionToken });
+    return Response.json({ ok: true, email, password_set: true, session_token: sessionToken, expires_at: renewedExpiry });
   } catch (error) {
     console.error('setPortalPassword failed', error);
     return Response.json({ error: 'password_setup_failed' }, { status: 500 });

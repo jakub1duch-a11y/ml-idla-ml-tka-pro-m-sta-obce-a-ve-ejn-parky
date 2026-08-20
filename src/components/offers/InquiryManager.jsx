@@ -359,7 +359,10 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
             { key: 'order', label: 'Objednat a zadat do výroby', description: 'Potvrzení objednávky a předání projektu k výrobní přípravě.' }
           ],
           order_note: 'Po potvrzení objednávky vám zašleme pokyny, požadovanou zálohovou fakturu a upřesníme termín dodání. Zahájení výroby je navázáno na potvrzenou objednávku a splnění uvedených platebních podmínek.',
-          thank_you: 'Jsme rádi, že jste si vybrali mlžítka HolmTec, která navrhujeme a vyrábíme u nás v Trutnově.'
+          thank_you: 'Jsme rádi, že jste si vybrali mlžítka HolmTec, která navrhujeme a vyrábíme u nás v Trutnově.',
+          qr_mode: 'project_portal',
+          qr_label: 'Naskenujte QR kód a otevřete svůj projekt',
+          security_note: 'QR kód má používat neveřejný projektový odkaz / shared token, nikoli osobní údaje v URL.'
         },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),
@@ -666,7 +669,10 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
             { key: 'order', label: 'Objednat a zadat do výroby', description: 'Potvrzení objednávky a předání projektu k výrobní přípravě.' }
           ],
           order_note: 'Po potvrzení objednávky vám zašleme pokyny, požadovanou zálohovou fakturu a upřesníme termín dodání. Zahájení výroby je navázáno na potvrzenou objednávku a splnění uvedených platebních podmínek.',
-          thank_you: 'Jsme rádi, že jste si vybrali mlžítka HolmTec, která navrhujeme a vyrábíme u nás v Trutnově.'
+          thank_you: 'Jsme rádi, že jste si vybrali mlžítka HolmTec, která navrhujeme a vyrábíme u nás v Trutnově.',
+          qr_mode: 'project_portal',
+          qr_label: 'Naskenujte QR kód a otevřete svůj projekt',
+          security_note: 'QR kód má používat neveřejný projektový odkaz / shared token, nikoli osobní údaje v URL.'
         },
       });
       if (prepared.projectOrder?.id) await base44.entities.ProjectOrder.update(prepared.projectOrder.id, { status: 'sent', sender_email: senderEmail, bcc_recipients: BCC });

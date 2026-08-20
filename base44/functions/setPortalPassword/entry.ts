@@ -1,6 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const ITERATIONS = 210000;
+// Keep PBKDF2 strong while staying within the CPU budget of the Base44 edge runtime.
+// The iteration count is stored with each account, so it can be raised transparently later.
+const ITERATIONS = 120000;
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
 
 const bytesToBase64Url = (bytes: Uint8Array) => {
@@ -57,13 +59,15 @@ Deno.serve(async (req) => {
       password_iterations: ITERATIONS,
       password_set_at: now,
       failed_attempts: 0,
-      locked_until: new Date(0).toISOString(),
       last_login_at: now,
     };
 
     const existing = await base44.asServiceRole.entities.PortalAccount.filter({ email });
     if (existing?.[0]) {
-      await base44.asServiceRole.entities.PortalAccount.update(existing[0].id, accountData);
+      await base44.asServiceRole.entities.PortalAccount.update(existing[0].id, {
+        ...accountData,
+        locked_until: now,
+      });
     } else {
       await base44.asServiceRole.entities.PortalAccount.create(accountData);
     }
@@ -77,6 +81,7 @@ Deno.serve(async (req) => {
 
     return Response.json({ ok: true, email, password_set: true, session_token: sessionToken });
   } catch (error) {
-    return Response.json({ error: error?.message || 'password_setup_failed' }, { status: 500 });
+    console.error('setPortalPassword failed', error);
+    return Response.json({ error: 'password_setup_failed' }, { status: 500 });
   }
 });

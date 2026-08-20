@@ -168,16 +168,16 @@ export default function AuraCollectionLanding() {
             transition={{ duration: 0.7 }}
             className="relative z-10 px-6 py-16 sm:px-10 lg:px-14 xl:px-20"
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-sky-700">Kolekce AURA® · HolmTec</p>
-            <h1 className="mt-6 max-w-[720px] text-[clamp(3.5rem,8vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.075em]">
-              Kruh,<br />který ochladí prostor.
+            <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-sky-700">AURA® · future cooling object</p>
+            <h1 className="mt-6 max-w-[780px] text-[clamp(3.4rem,8vw,8.2rem)] font-medium leading-[0.82] tracking-[-0.075em]">
+              Chytré město<br />začíná mikroklimatem.
             </h1>
-            <p className="mt-8 max-w-xl text-base leading-7 text-slate-600 md:text-lg">
-              Jedna čistá geometrie pro zahradu i město. AURA® kombinuje nerezovou konstrukci, nízkotlakou vodní mlhu a čtyři základní konfigurace Single / Duo.
+            <p className="mt-8 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
+              AURA® je architektonické mlžítko pro parky, relaxační zóny, terasy a další pobytová místa, kde je potřeba vytvořit příjemnější mikroklima bez těžké techniky v prostoru. Čistý kruhový motiv propojuje design, nízkotlakou vodní mlhu a městský provoz.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <a href="#modely" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-sky-800">
-                Prohlédnout kolekci <ArrowRight size={16} />
+                Prohlédnout AURA řešení <ArrowRight size={16} />
               </a>
               <Link to="/poptavka" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3.5 text-sm font-semibold text-slate-900 backdrop-blur transition hover:border-slate-500">
                 Navrhnout AURA pro váš prostor
@@ -200,7 +200,7 @@ export default function AuraCollectionLanding() {
             <MistLayer />
             <div className="absolute bottom-6 right-6 rounded-2xl border border-white/70 bg-white/75 px-5 py-4 backdrop-blur-xl md:bottom-10 md:right-10">
               <p className="text-[10px] uppercase tracking-[.18em] text-slate-500">AURA system</p>
-              <p className="mt-1 text-sm font-medium text-slate-900">Garden · City · Single · Duo</p>
+              <p className="mt-1 text-sm font-medium text-slate-900">Garden · City · Single · Duo · Smart ready</p>
             </div>
           </motion.div>
         </div>
@@ -225,14 +225,38 @@ export default function AuraCollectionLanding() {
 
       <section className="bg-[#f7f8f6] px-6 py-20 sm:px-10 lg:px-14 lg:py-32" id="modely">
         <div className="mx-auto max-w-[1500px]">
-          <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-sky-700">Čtyři konfigurace</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-sky-700">Mikroklima jako městská infrastruktura</p>
           <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
             <h2 className="max-w-5xl text-5xl font-medium leading-[0.95] tracking-[-0.06em] sm:text-6xl lg:text-8xl">
-              Jedna forma. Dvě prostředí. Single nebo Duo.
+              Designový prvek pro místa, která se v létě přehřívají.
             </h2>
             <p className="max-w-xl text-base leading-7 text-slate-600 md:text-lg">
-              Konstrukce AURA zůstává vizuálně konzistentní. Volba Garden / City určuje provozní kontext; Single / Duo určuje počet prvků a prostorovou kompozici.
+              AURA® dává smysl tam, kde chcete zlepšit pobytový komfort a současně zachovat čistý architektonický výraz. Pro města funguje jako součást strategie adaptace veřejného prostoru na horko; pro terasy a rezidenční projekty jako kompaktní ochlazovací prvek bez vysokotlakého čerpadla.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-white px-6 py-20 sm:px-10 lg:px-14 lg:py-28">
+        <div className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-sky-700">AURA® pro chytré město</p>
+            <h2 className="mt-6 max-w-3xl text-5xl font-medium leading-[0.96] tracking-[-0.055em] sm:text-6xl">
+              Méně techniky na očích. Více komfortu v ulicích.
+            </h2>
+          </div>
+          <div className="grid gap-px overflow-hidden rounded-[28px] bg-slate-200 sm:grid-cols-2">
+            {[
+              ['Tepelně namáhané zóny', 'Parky, náměstí, promenády a další pobytová místa, kde povrchy a okolní zástavba zvyšují tepelnou zátěž.'],
+              ['Nízkotlaký provoz', 'AURA pracuje přímo z vodovodního řádu a nevyžaduje vysokotlaké čerpadlo.'],
+              ['Čistý architektonický výraz', 'Kruhová geometrie a nerezové provedení zapadají do moderního veřejného prostoru bez vizuálního přetížení.'],
+              ['Připraveno pro chytré řízení', 'Provoz lze navrhnout v návaznosti na časové, teplotní nebo projektové řízení podle potřeb konkrétní instalace.'],
+            ].map(([title, text]) => (
+              <article key={title} className="bg-white p-7 md:p-9">
+                <h3 className="text-xl font-medium tracking-[-0.03em] text-slate-950">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-500">{text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -250,7 +274,7 @@ export default function AuraCollectionLanding() {
           </div>
           <div>
             <p className="max-w-xl text-base leading-7 text-white/70 md:text-lg">
-              Pošlete nám fotografii nebo základní rozměry prostoru. Doporučíme vhodnou variantu AURA, počet prvků, rozmístění a způsob napojení.
+              Pošlete nám fotografii nebo základní rozměry prostoru. Doporučíme vhodnou variantu AURA, počet prvků, rozmístění a způsob napojení. Pro města připravíme řešení pro park, relaxační zónu nebo další veřejný prostor; pro gastro a hotely také mobilnější variantu AURA GO podle projektu.
             </p>
             <Link to="/poptavka" className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-sky-100">
               Nezávazná poptávka <ArrowRight size={16} />

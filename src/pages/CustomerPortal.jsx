@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff, LayoutDashboard, BriefcaseBusiness, Users, Inbox } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import { useAuth } from '@/lib/AuthContext';
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
@@ -18,6 +19,7 @@ const STATUS_MAP = {
 };
 
 export default function CustomerPortal() {
+  const { user: appUser } = useAuth();
   const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
   const [accessMode, setAccessMode] = useState('quote');
@@ -29,6 +31,9 @@ export default function CustomerPortal() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [resetPasswordRequested, setResetPasswordRequested] = useState(false);
+  const [adminOverview, setAdminOverview] = useState(null);
+  const [adminOverviewLoading, setAdminOverviewLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [inquiries, setInquiries] = useState([]);
@@ -53,6 +58,13 @@ export default function CustomerPortal() {
   const [newInquirySent, setNewInquirySent] = useState(null);
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
+  const isAdmin = appUser?.role === 'admin';
+  const passwordChecks = {
+    length: newPassword.length >= 10,
+    letter: /[A-Za-zÀ-ž]/.test(newPassword),
+    number: /\d/.test(newPassword),
+    matches: Boolean(confirmPassword) && newPassword === confirmPassword,
+  };
   const promoCountdown = (() => {
     const now = new Date();
     const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
@@ -75,6 +87,30 @@ export default function CustomerPortal() {
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
   }, []);
+
+  useEffect(() => {
+    if (!isAdmin || step !== 'login') return;
+    let active = true;
+    setAdminOverviewLoading(true);
+    Promise.all([
+      base44.entities.ProjectOrder.list('-created_date', 500),
+      base44.entities.Poptavka.list('-created_date', 500),
+      base44.entities.ContactInquiry.list('-created_date', 500),
+    ]).then(([orders = [], poptavky = [], contacts = []]) => {
+      if (!active) return;
+      setAdminOverview({
+        projects: orders.length,
+        inquiries: poptavky.length + contacts.length,
+        activeOffers: orders.filter((item) => ['sent', 'viewed', 'extension_requested'].includes(item.status)).length,
+        approvals: orders.filter((item) => ['approved', 'in_production', 'ready', 'delivered'].includes(item.status)).length,
+      });
+    }).catch(() => {
+      if (active) setAdminOverview(null);
+    }).finally(() => {
+      if (active) setAdminOverviewLoading(false);
+    });
+    return () => { active = false; };
+  }, [isAdmin, step]);
 
   useEffect(() => {
     const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
@@ -110,16 +146,16 @@ export default function CustomerPortal() {
         ? { quote_number: quoteNumber.trim().toUpperCase(), otp }
         : { email: email.trim().toLowerCase(), otp };
       const res = await base44.functions.invoke('verifyPortalOtp', payload);
-      const { inquiries, projects, session_token, email: verifiedEmail } = res.data;
+      const { inquiries, projects, session_token, email: verifiedEmail, password_setup_required: passwordSetupRequired } = res.data;
       setEmail(verifiedEmail || email);
       setInquiries(inquiries || []);
       const projectList = projects || [];
       const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
       setProjects(focusQuote ? [...projectList].sort((a, b) => (b.quote_number === focusQuote ? 1 : 0) - (a.quote_number === focusQuote ? 1 : 0)) : projectList);
       setSessionToken(session_token);
-      // Jednorázový kód se používá pro první přihlášení i bezpečnou obnovu hesla.
-      // Po ověření proto vždy necháme uživatele nastavit nové heslo.
-      setStep('passwordSetup');
+      // Nové heslo vyžadujeme jen při prvním přístupu nebo výslovné obnově.
+      // Odkaz s číslem nabídky tak stávající klienty nezdržuje povinným resetem.
+      setStep(passwordSetupRequired || resetPasswordRequested ? 'passwordSetup' : 'dashboard');
     } catch (e) {
       setError('Nesprávný nebo vypršelý ověřovací kód.');
     } finally {
@@ -157,16 +193,24 @@ export default function CustomerPortal() {
     e.preventDefault();
     setError('');
     if (newPassword.length < 10) { setError('Heslo musí mít alespoň 10 znaků.'); return; }
+    if (!passwordChecks.letter || !passwordChecks.number) { setError('Heslo musí obsahovat alespoň jedno písmeno a jednu číslici.'); return; }
     if (newPassword !== confirmPassword) { setError('Zadaná hesla se neshodují.'); return; }
     setLoading(true);
     try {
-      await base44.functions.invoke('setPortalPassword', { session_token: sessionToken, password: newPassword });
+      const res = await base44.functions.invoke('setPortalPassword', { session_token: sessionToken, password: newPassword });
+      if (res.data?.session_token) setSessionToken(res.data.session_token);
       setPassword('');
       setNewPassword('');
       setConfirmPassword('');
+      setResetPasswordRequested(false);
       setStep('dashboard');
     } catch (e) {
-      setError(e?.response?.data?.error === 'session_expired' ? 'Ověření vypršelo. Přihlaste se znovu jednorázovým kódem.' : 'Heslo se nepodařilo nastavit. Zkuste to prosím znovu.');
+      const code = e?.response?.data?.error;
+      setError(code === 'session_expired'
+        ? 'Ověření vypršelo. Přihlaste se znovu jednorázovým kódem.'
+        : code === 'password_policy'
+          ? 'Heslo musí mít alespoň 10 znaků a obsahovat písmeno i číslici.'
+          : 'Heslo se nepodařilo nastavit. Zkuste to prosím znovu.');
     } finally {
       setLoading(false);
     }
@@ -335,9 +379,12 @@ export default function CustomerPortal() {
             <label className="block text-xs font-semibold text-slate-600">Nové heslo *
               <div className="relative mt-1.5"><input type={showPassword ? 'text' : 'password'} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} minLength={10} maxLength={128} required autoComplete="new-password" placeholder="Minimálně 10 znaků" className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pr-11 text-sm text-slate-900 outline-none focus:border-cyan-400"/><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700" aria-label={showPassword ? 'Skrýt heslo' : 'Zobrazit heslo'}>{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div>
             </label>
-            <label className="block text-xs font-semibold text-slate-600">Heslo znovu *<input type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={10} maxLength={128} required autoComplete="new-password" placeholder="Zopakujte heslo" className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-cyan-400"/></label>
+            <label className="block text-xs font-semibold text-slate-600">Heslo znovu *<input type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={10} maxLength={128} required autoComplete="new-password" placeholder="Zopakujte heslo" aria-invalid={Boolean(confirmPassword) && !passwordChecks.matches} className={`mt-1.5 w-full rounded-xl border bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none ${confirmPassword && !passwordChecks.matches ? 'border-red-300 focus:border-red-400' : 'border-slate-200 focus:border-cyan-400'}`}/></label>
+            <div className="grid grid-cols-2 gap-2 text-[11px]">
+              {[['length', 'Alespoň 10 znaků'], ['letter', 'Písmeno'], ['number', 'Číslice'], ['matches', 'Hesla se shodují']].map(([key, label]) => <span key={key} className={`flex items-center gap-1.5 ${passwordChecks[key] ? 'text-emerald-700' : 'text-slate-400'}`}><CheckCircle size={12}/>{label}</span>)}
+            </div>
             <div className="rounded-xl bg-slate-50 px-4 py-3 text-[11px] leading-5 text-slate-500"><ShieldCheck size={13} className="mr-1 inline text-cyan-700"/> Heslo se neodesílá e-mailem a v databázi se neukládá v čitelné podobě. Jednorázový kód zůstává dostupný pro obnovu přístupu.</div>
-            <button type="submit" disabled={loading} className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:opacity-50">{loading ? <><Loader size={16} className="animate-spin"/> Ukládám heslo…</> : <><KeyRound size={16}/> Nastavit heslo a otevřít projekt</>}</button>
+            <button type="submit" disabled={loading || !passwordChecks.length || !passwordChecks.letter || !passwordChecks.number || !passwordChecks.matches} className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:cursor-not-allowed disabled:opacity-50">{loading ? <><Loader size={16} className="animate-spin"/> Ukládám heslo…</> : <><KeyRound size={16}/> Nastavit heslo a otevřít projekt</>}</button>
           </form>
         </div>
       </div>
@@ -346,8 +393,24 @@ export default function CustomerPortal() {
 
   if (step === 'login') {
     return (
-      <div className="min-h-screen bg-white pt-28 flex items-center justify-center px-4">
-        <div className="w-full max-w-md">
+      <div className="min-h-screen bg-[linear-gradient(180deg,#f7fafb_0%,#ffffff_48%,#eef5f6_100%)] px-4 pb-16 pt-28">
+        <div className="mx-auto w-full max-w-5xl">
+          {isAdmin && <section className="mb-8 overflow-hidden rounded-[28px] border border-[#1f5360] bg-[#0d2d38] text-white shadow-[0_24px_70px_rgba(13,45,56,0.18)]">
+            <div className="flex flex-col gap-5 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex items-start gap-4"><div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-[#61d5e5]"><LayoutDashboard size={22}/></div><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#8fe4ef]">Administrátorský přístup rozpoznán</p><h2 className="mt-2 text-2xl font-light">Řízení klientských projektů</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">Spravujte poptávky, nabídky, dokumenty a komunikaci v interním Sales Hubu. Níže můžete zároveň bezpečně otestovat klientský přístup.</p></div></div>
+              <div className="flex shrink-0 flex-wrap gap-2"><Link to="/obchodni-nabidky" className="inline-flex items-center gap-2 rounded-full bg-[#61d5e5] px-5 py-3 text-xs font-bold text-[#0d2d38]"><BriefcaseBusiness size={15}/> Otevřít Sales Hub</Link><Link to="/admin" className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold text-white"><LayoutDashboard size={15}/> Administrace</Link></div>
+            </div>
+            <div className="grid grid-cols-2 border-t border-white/10 sm:grid-cols-4">
+              {adminOverviewLoading ? <div className="col-span-full flex items-center gap-2 px-6 py-5 text-xs text-white/50"><Loader size={14} className="animate-spin"/> Načítám přehled…</div> : [
+                ['Poptávky', adminOverview?.inquiries ?? '—', Inbox],
+                ['Projekty', adminOverview?.projects ?? '—', Users],
+                ['Aktivní nabídky', adminOverview?.activeOffers ?? '—', FileText],
+                ['Objednáno', adminOverview?.approvals ?? '—', CheckCircle],
+              ].map(([label, value, Icon], index) => <div key={label} className={`px-5 py-4 ${index ? 'border-l border-white/10' : ''}`}><Icon size={14} className="text-[#61d5e5]"/><p className="mt-3 text-2xl font-semibold">{value}</p><p className="mt-1 text-[10px] uppercase tracking-wider text-white/40">{label}</p></div>)}
+            </div>
+          </section>}
+
+          <div className="mx-auto w-full max-w-md">
           <div className="text-center mb-8">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
             <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Klientský portál MLŽIDLA®</p>
@@ -376,8 +439,8 @@ export default function CustomerPortal() {
             {!otpSent ? (
               authMethod === 'password' ? <>
                 <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">E-mail *</label><input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="vas@email.cz" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/></div>
-                <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Heslo *</label><div className="relative"><input type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" placeholder="Vaše heslo" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700">{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div></div>
-                <p className="text-[11px] leading-5 text-slate-400">Při prvním přihlášení použijte jednorázový kód. Po ověření si nastavíte vlastní heslo.</p>
+                <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Heslo *</label><div className="relative"><input type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" placeholder="Vaše heslo" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700" aria-label={showPassword ? 'Skrýt heslo' : 'Zobrazit heslo'}>{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div></div>
+                <div className="flex items-start justify-between gap-3 text-[11px] leading-5 text-slate-400"><span>Při prvním přihlášení použijte jednorázový kód.</span><button type="button" onClick={() => { setResetPasswordRequested(true); setAuthMethod('otp'); setAccessMode('email'); setError(''); }} className="shrink-0 font-semibold text-cyan-700 hover:text-cyan-900">Zapomenuté heslo?</button></div>
               </> : accessMode === 'quote' ? <div>
                 <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Číslo cenové nabídky *</label>
                 <div className="relative">
@@ -411,10 +474,14 @@ export default function CustomerPortal() {
                   required
                   value={otp}
                   onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  aria-describedby="otp-help"
                   placeholder="000000"
                   maxLength={6}
                   className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none text-center text-2xl tracking-[0.5em] font-mono"
                 />
+                <p id="otp-help" className="mt-2 text-center text-[11px] text-slate-400">Kód má 6 číslic a platí 10 minut.</p>
                 <div className="mt-3 flex items-center justify-center gap-4">
                   <button type="button" disabled={loading} onClick={requestOtp} className="text-xs text-cyan-700 hover:text-cyan-900 disabled:opacity-50 transition-colors">
                     Poslat kód znovu
@@ -435,8 +502,9 @@ export default function CustomerPortal() {
             </button>
           </form>
 
-          <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400"><ShieldCheck size={13}/> První přihlášení ověříme jednorázovým kódem. Další přístupy můžete používat s vlastním heslem.</div>
+          <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400"><ShieldCheck size={13}/> Přístup je chráněný ověřovacím kódem a bezpečně uloženým heslem.</div>
           <p className="text-xs text-slate-400 text-center mt-3">Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a></p>
+          </div>
         </div>
       </div>
     );
@@ -461,7 +529,8 @@ export default function CustomerPortal() {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
-              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
+              {isAdmin && <Link to="/obchodni-nabidky" className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-xs font-semibold text-cyan-900">Sales Hub</Link>}
+              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>
           </div>
           <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">

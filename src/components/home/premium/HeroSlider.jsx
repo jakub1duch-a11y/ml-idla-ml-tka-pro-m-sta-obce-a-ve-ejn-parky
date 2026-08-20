@@ -44,7 +44,7 @@ export default function HeroSlider() {
       <div className="relative -mb-px h-[clamp(360px,56svh,500px)] bg-primary lg:absolute lg:inset-0 lg:mb-0 lg:h-full lg:max-h-none">
         <AnimatePresence mode="wait">
           <motion.img
-            key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68d05d7d0_videoframe_2595.png"
+            key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp"
             alt={slide.imageAlt}
             initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.025 }}
             animate={reduceMotion ? { opacity: 1, scale: 1, x: 0 } : { opacity: 1, scale: [1.02, 1.055, 1.02], x: [0, -6, 0] }}

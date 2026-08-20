@@ -19,7 +19,7 @@ const STATUS_MAP = {
 };
 
 const getFunctionErrorCode = (error) =>
-  error?.response?.data?.error || error?.data?.error || error?.error || '';
+  error?.response?.data?.error || error?.data?.error || error?.error || error?.message || '';
 
 export default function CustomerPortal() {
   const { user: appUser } = useAuth();
@@ -213,7 +213,13 @@ export default function CustomerPortal() {
     setLoading(true);
     try {
       const res = await base44.functions.invoke('setPortalPassword', { session_token: sessionToken, password: newPassword });
-      if (res.data?.session_token) setSessionToken(res.data.session_token);
+      const result = res?.data || res || {};
+      if (!result.ok || !result.password_set) {
+        const setupError = new Error(result.error || 'password_setup_failed');
+        setupError.error = result.error || 'password_setup_failed';
+        throw setupError;
+      }
+      if (result.session_token) setSessionToken(result.session_token);
       setPassword('');
       setNewPassword('');
       setConfirmPassword('');
@@ -225,9 +231,9 @@ export default function CustomerPortal() {
         ? 'Ověření vypršelo. Přihlaste se znovu jednorázovým kódem.'
         : code === 'password_policy'
           ? 'Heslo musí mít alespoň 10 znaků a obsahovat písmeno i číslici.'
-          : code === 'missing_session' || code === 'session_invalid'
-            ? 'Ověřená relace není platná. Nechte si poslat nový kód.'
-            : 'Heslo se nepodařilo uložit. Nechte si poslat nový kód a zkuste nastavení znovu.');
+          : code === 'missing_session' || code === 'session_invalid' || code === 'account_write_failed'
+            ? 'Ověřená relace nebo uložení účtu není platné. Nechte si poslat nový kód a zkuste nastavení znovu.'
+            : 'Heslo se nepodařilo uložit. Ověření zůstává aktivní jen omezenou dobu; nechte si poslat nový kód a zkuste to znovu.');
     } finally {
       setLoading(false);
     }

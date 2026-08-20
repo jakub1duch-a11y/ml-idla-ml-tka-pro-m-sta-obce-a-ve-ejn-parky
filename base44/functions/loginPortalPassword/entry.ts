@@ -84,7 +84,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'temporarily_locked' }, { status: 429 });
     }
 
-    const iterations = Math.max(100000, Number(account.password_iterations || 210000));
+    const iterations = Math.max(100000, Number(account.password_iterations || 120000));
     const calculated = await derivePasswordHash(password, base64UrlToBytes(account.password_salt), iterations);
     const expected = base64UrlToBytes(account.password_hash);
     const valid = equalBytes(calculated, expected);
@@ -113,7 +113,7 @@ Deno.serve(async (req) => {
     await base44.asServiceRole.entities.PortalSession.create({ email, token: sessionToken, expires_at: sessionExpiresAt });
     await base44.asServiceRole.entities.PortalAccount.update(account.id, {
       failed_attempts: 0,
-      locked_until: new Date(0).toISOString(),
+      locked_until: new Date().toISOString(),
       last_login_at: new Date().toISOString(),
     });
 

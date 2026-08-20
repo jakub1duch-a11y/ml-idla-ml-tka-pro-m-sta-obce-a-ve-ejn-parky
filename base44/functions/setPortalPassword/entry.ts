@@ -1,7 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-// Keep PBKDF2 strong while staying within the CPU budget of the Base44 edge runtime.
-// The iteration count is stored with each account, so it can be raised transparently later.
+// Strong PBKDF2 hashing within the Base44 edge CPU budget.
 const ITERATIONS = 120000;
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
 
@@ -81,7 +80,6 @@ Deno.serve(async (req) => {
 
     return Response.json({ ok: true, email, password_set: true, session_token: sessionToken });
   } catch (error) {
-    console.error('setPortalPassword failed', error);
-    return Response.json({ error: 'password_setup_failed' }, { status: 500 });
+    return Response.json({ error: error?.message || 'password_setup_failed' }, { status: 500 });
   }
 });

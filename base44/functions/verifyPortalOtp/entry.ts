@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const quoteNumber = normalizeQuote(body.quote_number);
     let email = normalizeEmail(body.email);
-    const otp = String(body.otp || '').trim();
+    const otp = String(body.otp || '').replace(/\D/g, '').slice(0, 6);
 
     if ((!email && !quoteNumber) || !otp) {
       return Response.json({ error: 'Email/quote number and code are required' }, { status: 400 });
@@ -72,7 +72,9 @@ Deno.serve(async (req) => {
       await base44.asServiceRole.entities.PortalSession.delete(session.id);
     }
     const sessionToken = crypto.randomUUID();
-    const sessionExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+    // A verified code must leave enough time to choose and confirm a password.
+    // Two hours also covers users switching between e-mail/SMS and the browser.
+    const sessionExpiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString();
     await base44.asServiceRole.entities.PortalSession.create({ email, token: sessionToken, expires_at: sessionExpiresAt });
 
     const portalAccounts = await base44.asServiceRole.entities.PortalAccount.filter({ email }).catch(() => []);

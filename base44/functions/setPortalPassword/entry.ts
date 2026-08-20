@@ -1,6 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-// Strong PBKDF2 hashing within the Base44 edge CPU budget.
 const ITERATIONS = 120000;
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
 
@@ -35,7 +34,7 @@ Deno.serve(async (req) => {
 
     if (!sessionToken) return Response.json({ error: 'missing_session' }, { status: 401 });
     if (password.length < 10 || password.length > 128 || !/[A-Za-zÀ-ž]/.test(password) || !/\d/.test(password)) {
-      return Response.json({ error: 'password_policy', message: 'Heslo musí mít alespoň 10 znaků, písmeno a číslici.' }, { status: 400 });
+      return Response.json({ error: 'password_policy' }, { status: 400 });
     }
 
     const sessions = await base44.asServiceRole.entities.PortalSession.filter({ token: sessionToken });
@@ -49,7 +48,7 @@ Deno.serve(async (req) => {
     if (!email) return Response.json({ error: 'session_invalid' }, { status: 401 });
 
     const salt = crypto.getRandomValues(new Uint8Array(16));
-    const hash = await derivePasswordHash(password, salt, ITERATIONS);
+    const hash = await derivePasswordHash(password, salt);
     const now = new Date().toISOString();
     const accountData = {
       email,
@@ -71,15 +70,13 @@ Deno.serve(async (req) => {
       await base44.asServiceRole.entities.PortalAccount.create(accountData);
     }
 
-    // Po úspěšném nastavení hesla ponecháme stejný token, ale prodloužíme
-    // ověřenou relaci na běžných 8 hodin. Klient tak není krátce po vstupu
-    // odhlášen při odeslání zprávy nebo potvrzení nabídky.
     await base44.asServiceRole.entities.PortalSession.update(session.id, {
       expires_at: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(),
     });
 
     return Response.json({ ok: true, email, password_set: true, session_token: sessionToken });
   } catch (error) {
-    return Response.json({ error: error?.message || 'password_setup_failed' }, { status: 500 });
+    console.error('setPortalPassword failed', error);
+    return Response.json({ error: 'password_setup_failed' }, { status: 500 });
   }
 });

@@ -110,14 +110,16 @@ export default function CustomerPortal() {
         ? { quote_number: quoteNumber.trim().toUpperCase(), otp }
         : { email: email.trim().toLowerCase(), otp };
       const res = await base44.functions.invoke('verifyPortalOtp', payload);
-      const { inquiries, projects, session_token, email: verifiedEmail, password_setup_required } = res.data;
+      const { inquiries, projects, session_token, email: verifiedEmail } = res.data;
       setEmail(verifiedEmail || email);
       setInquiries(inquiries || []);
       const projectList = projects || [];
       const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
       setProjects(focusQuote ? [...projectList].sort((a, b) => (b.quote_number === focusQuote ? 1 : 0) - (a.quote_number === focusQuote ? 1 : 0)) : projectList);
       setSessionToken(session_token);
-      setStep(password_setup_required ? 'passwordSetup' : 'dashboard');
+      // Jednorázový kód se používá pro první přihlášení i bezpečnou obnovu hesla.
+      // Po ověření proto vždy necháme uživatele nastavit nové heslo.
+      setStep('passwordSetup');
     } catch (e) {
       setError('Nesprávný nebo vypršelý ověřovací kód.');
     } finally {
@@ -323,9 +325,9 @@ export default function CustomerPortal() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><KeyRound size={24}/></div>
-            <p className="text-xs font-mono text-cyan-700 tracking-widest uppercase mb-2">První přihlášení</p>
-            <h1 className="text-3xl font-light text-slate-900">Nastavte si heslo</h1>
-            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-slate-500">E-mail jsme ověřili jednorázovým kódem. Teď si vytvořte vlastní heslo pro další přihlášení do Můj projekt.</p>
+            <p className="text-xs font-mono text-cyan-700 tracking-widest uppercase mb-2">Ověřený přístup</p>
+            <h1 className="text-3xl font-light text-slate-900">Nastavte nové heslo</h1>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-slate-500">E-mail jsme ověřili jednorázovým kódem. Nyní nastavte nové heslo pro další přihlášení do Můj projekt.</p>
           </div>
           <form onSubmit={setupPassword} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_20px_60px_rgba(13,45,56,0.08)] sm:p-8 space-y-4">
             {error && <div className="flex gap-3 rounded-xl border border-red-200 bg-red-50 p-4"><AlertCircle size={18} className="mt-0.5 shrink-0 text-red-500"/><p className="text-sm text-red-600">{error}</p></div>}
@@ -408,14 +410,19 @@ export default function CustomerPortal() {
                   type="text"
                   required
                   value={otp}
-                  onChange={e => setOtp(e.target.value)}
+                  onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                   placeholder="000000"
                   maxLength={6}
                   className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none text-center text-2xl tracking-[0.5em] font-mono"
                 />
-                <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(''); }} className="mt-3 text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1 mx-auto">
-                  <X size={12} /> {accessMode === 'quote' ? 'Zadat jiné číslo nabídky' : 'Změnit e-mail'}
-                </button>
+                <div className="mt-3 flex items-center justify-center gap-4">
+                  <button type="button" disabled={loading} onClick={requestOtp} className="text-xs text-cyan-700 hover:text-cyan-900 disabled:opacity-50 transition-colors">
+                    Poslat kód znovu
+                  </button>
+                  <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(''); }} className="text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1">
+                    <X size={12} /> {accessMode === 'quote' ? 'Zadat jiné číslo nabídky' : 'Změnit e-mail'}
+                  </button>
+                </div>
               </div>
             )}
 

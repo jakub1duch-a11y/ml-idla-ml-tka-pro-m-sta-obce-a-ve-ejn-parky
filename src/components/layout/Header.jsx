@@ -36,7 +36,7 @@ const INTERNATIONAL_NAV = {
   de: { products: 'Produkte', urban: 'Stadt', technology: 'Funktionsweise', smart: 'Smart-Steuerung', references: 'Referenzen', contact: 'Kontakt', quote: 'Angebot' },
   pl: { products: 'Produkty', urban: 'Dla miast', technology: 'Jak to działa', smart: 'Smart sterowanie', references: 'Realizacje', contact: 'Kontakt', quote: 'Wycena' },
   sk: { products: 'Produkty', urban: 'Pre mestá', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', contact: 'Kontakt', quote: 'Ponuka' },
-  it: { products: 'Prodotti', urban: 'Urbano', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', contact: 'Contatti', quote: 'Preventivo' },
+  it: { products: 'Prodotti', urban: 'Urbano', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', contact: 'Contatti', quote: 'Preventivo' }
 };
 
 const INFO_LINKS = [
@@ -106,7 +106,7 @@ export default function Header() {
       
 
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 text-white backdrop-blur-xl transition-all duration-500 ease-out to-hydro/90 ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-2xl shadow-primary/25' : 'shadow-sm'}`}>
-        <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
+        <div className="flex items-center justify-between lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16 max-w-8x2">
 
           {/* Logo */}
           <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">
@@ -121,8 +121,8 @@ export default function Header() {
                 type="button"
                 onClick={() => setMegaOpen((value) => !value)}
                 aria-expanded={megaOpen}
-                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}
-              >
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
+                
                 Produkty
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>

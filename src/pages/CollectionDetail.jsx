@@ -4,7 +4,6 @@ import { ArrowRight, Check, Building2, ShieldCheck, Wrench, FileText, MapPin, Ru
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CollectionHero from '@/components/kolekce/CollectionHero';
 import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
-import AuraCollectionLanding from '@/components/kolekce/AuraCollectionLanding';
 import { COLLECTIONS } from '@/components/kolekce/collectionData';
 import ContextLinks from '@/components/common/ContextLinks';
 
@@ -51,8 +50,6 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
       canonicalPath: canonicalPath || `/kolekce/${slug}`,
     });
   }, [collection, slug, canonicalPath, isCity, isGarden]);
-
-  if (slug === 'aura') return <AuraCollectionLanding />;
 
   return (
     <main className="bg-background pt-16">

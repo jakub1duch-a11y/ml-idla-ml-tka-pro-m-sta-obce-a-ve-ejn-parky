@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, Download, X } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
@@ -16,8 +16,6 @@ import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
 import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
-import AdminOffers from './AdminOffers';
-import AdminInstallPrompt from '@/components/admin/AdminInstallPrompt';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -29,7 +27,6 @@ const TABS = [
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
-  { id: 'offers', label: 'Nabídky', icon: BriefcaseBusiness },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
@@ -41,20 +38,6 @@ export default function Admin() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [installPrompt, setInstallPrompt] = useState(null);
-  const [showInstallCard, setShowInstallCard] = useState(false);
-
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault();
-      setInstallPrompt(event);
-      const dismissed = localStorage.getItem('mlzidla-admin-install-dismissed');
-      const installed = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-      if (!dismissed && !installed) setShowInstallCard(true);
-    };
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-  }, []);
 
   useEffect(() => {
     const resolveAdmin = async () => {
@@ -70,22 +53,6 @@ export default function Admin() {
         }
         setUser(u);
         if (!u) navigate('/admin-login', { replace: true });
-        const email = u?.email?.toLowerCase();
-        const allowed = u?.role === 'admin' && email && (email.endsWith('@mlzidla.cz') || ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(email));
-        if (allowed) {
-          let manifest = document.querySelector('link[data-mlzidla-admin-manifest]');
-          if (!manifest) {
-            manifest = document.createElement('link');
-            manifest.rel = 'manifest';
-            manifest.href = '/admin-manifest.webmanifest';
-            manifest.dataset.mlzidlaAdminManifest = '1';
-            document.head.appendChild(manifest);
-          }
-          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0d1117');
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/admin-sw.js', { scope: '/admin' }).catch(() => {});
-          }
-        }
       } catch (_error) {
         navigate('/admin-login', { replace: true });
       } finally {
@@ -102,25 +69,6 @@ export default function Admin() {
   );
 
   if (!user) return null;
-
-  const installAdminApp = async () => {
-    if (installPrompt) {
-      installPrompt.prompt();
-      const choice = await installPrompt.userChoice;
-      if (choice?.outcome === 'accepted') {
-        localStorage.setItem('mlzidla-admin-installed', '1');
-        setShowInstallCard(false);
-      }
-      setInstallPrompt(null);
-      return;
-    }
-    setShowInstallCard(true);
-  };
-
-  const dismissInstall = () => {
-    localStorage.setItem('mlzidla-admin-install-dismissed', '1');
-    setShowInstallCard(false);
-  };
 
   const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'];
   const emailAllowed = !!user.email && (
@@ -149,7 +97,6 @@ export default function Admin() {
     media: AdminMedia,
     marketing: AdminMarketing,
     poptavky: AdminPoptavky,
-    offers: AdminOffers,
     ar: AdminAR,
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,
@@ -158,20 +105,6 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-ink flex">
-      <AdminInstallPrompt user={user} />
-      {showInstallCard && (
-        <div className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-md rounded-2xl border border-cyan/20 bg-[#0d1117]/95 p-4 shadow-2xl backdrop-blur-xl md:bottom-6">
-          <div className="flex items-start gap-3">
-            <div className="mt-0.5 rounded-xl bg-cyan/10 p-2 text-cyan"><Download size={18} /></div>
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-white">Nainstalovat MLŽIDLA Admin</p>
-              <p className="mt-1 text-xs leading-relaxed text-white/50">Soukromá administrační aplikace pro správu poptávek, nabídek, upozornění a webu. Dostupná pouze administrátorům.</p>
-              <button onClick={installAdminApp} className="mt-3 rounded-xl bg-cyan px-3.5 py-2 text-xs font-bold text-[#071017] hover:opacity-90">Nainstalovat aplikaci</button>
-            </div>
-            <button onClick={dismissInstall} className="rounded-lg p-1.5 text-white/30 hover:bg-white/5 hover:text-white" aria-label="Zavřít nabídku instalace"><X size={16} /></button>
-          </div>
-        </div>
-      )}
       {/* Sidebar */}
       <div className="w-56 bg-[#0d1117] border-r border-white/8 flex flex-col shrink-0">
         <div className="px-5 py-6 border-b border-white/8">

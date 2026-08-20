@@ -21,7 +21,6 @@ import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
 import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
 import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
-import BendySingleExperience from '@/components/produkt/BendySingleExperience';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -252,11 +251,6 @@ export default function ProduktDetail() {
           onPoptat={scrollToContact}
           onShowSmart={() => handleTabClick(TABS[3])}
         />
-      )}
-
-      {/* ═══════ BENDY SINGLE® — 3D SCROLL EXPERIENCE ═══════ */}
-      {product.slug === 'mlzitko-bendy' && (
-        <BendySingleExperience product={product} onPoptat={scrollToContact} />
       )}
 
       {/* ═══════ STICKY TABS NAV ═══════ */}

@@ -348,6 +348,19 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         document_type: 'offer',
         inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
         quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate },
+        offer_final_page: {
+          portal_url: 'https://mlzidla.cz/muj-projekt',
+          title: 'Pokračujte v portálu Můj projekt',
+          intro: 'Na jednom místě získáte přehled objednávaných produktů, dokumentace a dalšího průběhu projektu.',
+          actions: [
+            { key: 'portal', label: 'Přihlásit se do Můj projekt', description: 'Přehled produktů, nabídky, dokumentace a stavu projektu.' },
+            { key: 'alternative', label: 'Poptat jiné řešení', description: 'Požádejte o jiný produkt, variantu nebo úpravu řešení.' },
+            { key: 'chat', label: 'Dotaz k nabídce', description: 'Navazující chat pro technické, obchodní a projektové dotazy.' },
+            { key: 'order', label: 'Objednat a zadat do výroby', description: 'Potvrzení objednávky a předání projektu k výrobní přípravě.' }
+          ],
+          order_note: 'Po potvrzení objednávky vám zašleme pokyny, požadovanou zálohovou fakturu a upřesníme termín dodání. Zahájení výroby je navázáno na potvrzenou objednávku a splnění uvedených platebních podmínek.',
+          thank_you: 'Jsme rádi, že jste si vybrali mlžítka HolmTec, která navrhujeme a vyrábíme u nás v Trutnově.'
+        },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),
         portal_url: 'https://mlzidla.cz/muj-projekt',
@@ -642,6 +655,19 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         presentation_url: prepared.presentation?.presentation_url || '', quote_pdf_url: prepared.quoteDriveUrl || '', portal_url: 'https://mlzidla.cz/muj-projekt',
         valid_until: prepared.validUntil.toISOString(), quote_number: prepared.quoteNumber, attachments,
         project_summary: selected.message || '', email_type: 'offer',
+        offer_final_page: {
+          portal_url: 'https://mlzidla.cz/muj-projekt',
+          title: 'Pokračujte v portálu Můj projekt',
+          intro: 'Na jednom místě získáte přehled objednávaných produktů, dokumentace a dalšího průběhu projektu.',
+          actions: [
+            { key: 'portal', label: 'Přihlásit se do Můj projekt', description: 'Přehled produktů, nabídky, dokumentace a stavu projektu.' },
+            { key: 'alternative', label: 'Poptat jiné řešení', description: 'Požádejte o jiný produkt, variantu nebo úpravu řešení.' },
+            { key: 'chat', label: 'Dotaz k nabídce', description: 'Navazující chat pro technické, obchodní a projektové dotazy.' },
+            { key: 'order', label: 'Objednat a zadat do výroby', description: 'Potvrzení objednávky a předání projektu k výrobní přípravě.' }
+          ],
+          order_note: 'Po potvrzení objednávky vám zašleme pokyny, požadovanou zálohovou fakturu a upřesníme termín dodání. Zahájení výroby je navázáno na potvrzenou objednávku a splnění uvedených platebních podmínek.',
+          thank_you: 'Jsme rádi, že jste si vybrali mlžítka HolmTec, která navrhujeme a vyrábíme u nás v Trutnově.'
+        },
       });
       if (prepared.projectOrder?.id) await base44.entities.ProjectOrder.update(prepared.projectOrder.id, { status: 'sent', sender_email: senderEmail, bcc_recipients: BCC });
       onSent(); setMessage(''); setSubject(''); setAttachments([]); setPrepared(null); setApprovedToSend(false);

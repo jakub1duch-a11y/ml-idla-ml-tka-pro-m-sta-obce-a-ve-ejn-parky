@@ -15,6 +15,7 @@ import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 import FadeIn from '@/components/common/FadeIn';
 import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
 import ManifestScrollSection from '@/components/home/ManifestScrollSection';
+import InteractiveBendyMistSection from '@/components/home/InteractiveBendyMistSection';
 
 export default function Home() {
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function Home() {
     <>
       <HeroSlider />
       <ManifestScrollSection />
+      <InteractiveBendyMistSection />
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><UrbanCoolingImpact /></FadeIn>

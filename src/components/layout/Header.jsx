@@ -106,7 +106,7 @@ export default function Header() {
       
 
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 text-white backdrop-blur-xl transition-all duration-500 ease-out to-hydro/90 ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-2xl shadow-primary/25' : 'shadow-sm'}`}>
-        <div className="flex items-center justify-between mx-auto lg:gap-8 px-6 h-16 lg:px-20 gap-4 max-w-4x1">
+        <div className="flex items-center justify-between mx-auto lg:gap-8 h-16 px-6 lg:px-50 max-w-7x1 gap-4">
 
           {/* Logo */}
           <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">

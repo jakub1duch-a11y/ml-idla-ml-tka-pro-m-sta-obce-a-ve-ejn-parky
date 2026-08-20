@@ -18,6 +18,9 @@ const STATUS_MAP = {
   delivered: { label: 'Doručeno', color: 'bg-emerald-50 text-emerald-600', icon: '✓✓' },
 };
 
+const getFunctionErrorCode = (error) =>
+  error?.response?.data?.error || error?.data?.error || error?.error || '';
+
 export default function CustomerPortal() {
   const { user: appUser } = useAuth();
   const [step, setStep] = useState('login');
@@ -131,7 +134,10 @@ export default function CustomerPortal() {
       await base44.functions.invoke('requestPortalOtp', payload);
       setOtpSent(true);
     } catch (e) {
-      setError('Chyba při odesílání kódu. Zkuste to znovu.');
+      const code = getFunctionErrorCode(e);
+      setError(code === 'rate_limited'
+        ? 'O nový kód jste požádali příliš brzy. Počkejte chvíli a zkuste to znovu.'
+        : 'Kód se nepodařilo odeslat. Zkontrolujte údaj a zkuste to znovu.');
     } finally {
       setLoading(false);
     }
@@ -157,7 +163,10 @@ export default function CustomerPortal() {
       // Odkaz s číslem nabídky tak stávající klienty nezdržuje povinným resetem.
       setStep(passwordSetupRequired || resetPasswordRequested ? 'passwordSetup' : 'dashboard');
     } catch (e) {
-      setError('Nesprávný nebo vypršelý ověřovací kód.');
+      const code = getFunctionErrorCode(e);
+      setError(code === 'invalid_or_expired'
+        ? 'Kód je nesprávný nebo vypršel. Nechte si poslat nový kód.'
+        : 'Ověření se nepodařilo dokončit. Zkuste to znovu.');
     } finally {
       setLoading(false);
     }
@@ -182,7 +191,7 @@ export default function CustomerPortal() {
       setPassword('');
       setStep('dashboard');
     } catch (e) {
-      const code = e?.response?.data?.error;
+      const code = getFunctionErrorCode(e);
       setError(code === 'temporarily_locked' ? 'Příliš mnoho neúspěšných pokusů. Přístup je na 15 minut dočasně uzamčen.' : 'Nesprávný e-mail nebo heslo. Pro první přihlášení nebo obnovu použijte jednorázový kód.');
     } finally {
       setLoading(false);
@@ -195,6 +204,12 @@ export default function CustomerPortal() {
     if (newPassword.length < 10) { setError('Heslo musí mít alespoň 10 znaků.'); return; }
     if (!passwordChecks.letter || !passwordChecks.number) { setError('Heslo musí obsahovat alespoň jedno písmeno a jednu číslici.'); return; }
     if (newPassword !== confirmPassword) { setError('Zadaná hesla se neshodují.'); return; }
+    if (!sessionToken) {
+      setError('Ověřená relace chybí. Nechte si poslat nový jednorázový kód.');
+      setStep('login');
+      setOtpSent(false);
+      return;
+    }
     setLoading(true);
     try {
       const res = await base44.functions.invoke('setPortalPassword', { session_token: sessionToken, password: newPassword });
@@ -205,12 +220,14 @@ export default function CustomerPortal() {
       setResetPasswordRequested(false);
       setStep('dashboard');
     } catch (e) {
-      const code = e?.response?.data?.error;
+      const code = getFunctionErrorCode(e);
       setError(code === 'session_expired'
         ? 'Ověření vypršelo. Přihlaste se znovu jednorázovým kódem.'
         : code === 'password_policy'
           ? 'Heslo musí mít alespoň 10 znaků a obsahovat písmeno i číslici.'
-          : 'Heslo se nepodařilo nastavit. Zkuste to prosím znovu.');
+          : code === 'missing_session' || code === 'session_invalid'
+            ? 'Ověřená relace není platná. Nechte si poslat nový kód.'
+            : 'Heslo se nepodařilo uložit. Nechte si poslat nový kód a zkuste nastavení znovu.');
     } finally {
       setLoading(false);
     }

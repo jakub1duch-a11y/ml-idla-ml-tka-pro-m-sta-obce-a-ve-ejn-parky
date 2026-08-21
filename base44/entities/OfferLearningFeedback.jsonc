@@ -1,0 +1,99 @@
+{
+  "name": "OfferLearningFeedback",
+  "type": "object",
+  "properties": {
+    "inquiry_id": {
+      "type": "string",
+      "description": "ID popt\u00e1vky"
+    },
+    "project_order_id": {
+      "type": "string",
+      "description": "ID nav\u00e1zan\u00e9 nab\u00eddky/projektu"
+    },
+    "feedback_type": {
+      "type": "string",
+      "enum": [
+        "user_requirement",
+        "critique",
+        "approved_pattern",
+        "rejected_pattern",
+        "result_outcome"
+      ],
+      "description": "Typ zp\u011btn\u00e9 vazby"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "visual_style",
+        "copy",
+        "technical_accuracy",
+        "pricing",
+        "product_geometry",
+        "presentation",
+        "workflow",
+        "conversion",
+        "other"
+      ],
+      "description": "Oblast, kter\u00e9 se zp\u011btn\u00e1 vazba t\u00fdk\u00e1"
+    },
+    "feedback_text": {
+      "type": "string",
+      "description": "Konkr\u00e9tn\u00ed po\u017eadavek, kritika nebo nau\u010den\u00e9 pravidlo"
+    },
+    "lesson": {
+      "type": "string",
+      "description": "Zobecn\u011bn\u00e9 pravidlo pou\u017eiteln\u00e9 p\u0159i dal\u0161\u00ed tvorb\u011b nab\u00eddek"
+    },
+    "priority": {
+      "type": "number",
+      "default": 3,
+      "description": "Priorita 1\u20135"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Zda se m\u00e1 pravidlo pou\u017e\u00edvat p\u0159i dal\u0161\u00edch nab\u00eddk\u00e1ch"
+    },
+    "source": {
+      "type": "string",
+      "default": "sales_hub",
+      "description": "Zdroj zp\u011btn\u00e9 vazby"
+    },
+    "result_label": {
+      "type": "string",
+      "description": "V\u00fdsledek, nap\u0159. schv\u00e1leno/objedn\u00e1no/odm\u00edtnuto"
+    },
+    "applied_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Kolikr\u00e1t bylo pravidlo pou\u017eito"
+    }
+  },
+  "required": [
+    "feedback_type",
+    "category",
+    "feedback_text"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

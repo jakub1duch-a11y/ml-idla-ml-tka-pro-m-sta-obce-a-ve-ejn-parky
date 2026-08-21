@@ -28,7 +28,7 @@ export default function OfferAICopilot({ inquiry, product, attachments = [], onA
   const [error, setError] = useState('');
 
   useEffect(() => {
-    setMessages([{ role: 'assistant', text: `Mám otevřenou poptávku ${inquiry?.name || 'klienta'}. Můžu připravit klientské shrnutí, návrh řešení, vizualizaci i strukturu prezentace.` }]);
+    setMessages([{ role: 'assistant', text: `Mám otevřenou poptávku ${inquiry?.name || 'klienta'}. Aktivní standard nabídky: Soběslav v1. Můžu připravit klientské shrnutí, návrh řešení, vizualizaci i strukturu prezentace.` }]);
     setSourceUrl('');
     setError('');
     if (!inquiry?.id) { setAssets([]); return; }

@@ -111,7 +111,7 @@ export default async function(req) {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom', smart_scenarios: smartScenarios = [] } = body;
+    const { inquiry = {}, product = {}, quote = {}, ar_capture_url: arCaptureUrl, ar_url: arUrl, approved_visualizations: approvedVisualizations = [], ai_content: aiContent = {}, audience_variant: audienceVariant = 'custom', smart_scenarios: smartScenarios = [], supla_ai_offer: suplaAiOffer = null } = body;
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
     const audience = AUDIENCE[audienceVariant] || AUDIENCE.custom;
     const smartPricing = await findSmartControlPricing(base44);
@@ -149,7 +149,7 @@ export default async function(req) {
     });
     const presentationId = pres.id;
     const initialPresentation = await driveJson(`https://slides.googleapis.com/v1/presentations/${presentationId}`, accessToken);
-    const s = Array.from({ length: 9 }, (_, i) => `offer_slide_${i + 1}`);
+    const s = Array.from({ length: suplaAiOffer?.ok ? 10 : 9 }, (_, i) => `offer_slide_${i + 1}`);
     const requests = [];
     (initialPresentation.slides || []).forEach((slide) => { if (slide?.objectId) requests.push({ deleteObject: { objectId: slide.objectId } }); });
     for (const id of s) requests.push({ createSlide: { objectId: id, slideLayoutReference: { predefinedLayout: 'BLANK' } } });
@@ -237,6 +237,15 @@ export default async function(req) {
     requests.push(...shapeText('t9c', s[8], 'MLŽIDLA.cz by HolmTec\nIng. Radek Meduna\n+420 774 700 390\nmeduna@holmtec.cz · info@mlzidla.cz', 48, 280, 350, 95, 14, ACCENT, true));
     requests.push(image('portalqr', s[8], portalQrImageUrl, 510, 230, 115, 115));
     requests.push(...shapeText('t9d', s[8], 'Otevřít interaktivní nabídku a potvrdit další krok', 438, 350, 235, 30, 10, WHITE, false));
+
+    if (suplaAiOffer?.ok && s[9]) {
+      requests.push(background(s[9], LIGHT), ...accentBar('a10', s[9], 0, 0, 720, 8));
+      requests.push(...shapeText('t10a', s[9], 'SUPPLA AI · vývoj a implementace', 48, 38, 560, 42, 25, PETROL, true));
+      requests.push(...shapeText('t10b', s[9], 'Tři fáze, systémová sazba, žádné AI odhady ceny.', 48, 86, 610, 38, 16, MUTED, false));
+      const phaseText = (suplaAiOffer.phases || []).slice(0, 3).map((phase) => `${phase.title}\n${phase.weeks_min}–${phase.weeks_max} týdny · ${phase.hours_min}–${phase.hours_max} h · ${fmt(phase.price_min_ex_vat)}–${fmt(phase.price_max_ex_vat)} Kč bez DPH\n${phase.scope}`).join('\n\n');
+      requests.push(...shapeText('t10c', s[9], phaseText, 48, 132, 610, 165, 12, INK, false));
+      requests.push(...shapeText('t10d', s[9], `Vývoj celkem: ${fmt(suplaAiOffer.software_total_min_ex_vat)}–${fmt(suplaAiOffer.software_total_max_ex_vat)} Kč bez DPH\nSystémová sazba programování: ${fmt(suplaAiOffer.hourly_rate_ex_vat)} Kč/h\nKompletní SUPLA HW: ${fmt(suplaAiOffer.complete_supla_hardware_ex_vat)} Kč bez DPH (samostatná položka)`, 48, 308, 610, 62, 14, PETROL, true));
+    }
 
     const slideRes = await fetch(`https://slides.googleapis.com/v1/presentations/${presentationId}:batchUpdate`, { method: 'POST', headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ requests }) });
     if (!slideRes.ok) throw new Error(`Slides generation failed ${slideRes.status}: ${await slideRes.text()}`);

@@ -15,7 +15,7 @@ export default function Logo({ size = 'md' }) {
     </svg>
     <span className="inline-flex items-baseline gap-2 whitespace-nowrap motion-safe:animate-[mlzWordmarkIn_.75s_cubic-bezier(.22,1,.36,1)_both]">
       <span className={`${wordSize} font-heading font-extrabold leading-none tracking-[0.06em]`}><span className="text-accent">MLŽ</span><span className="text-white">IDLA</span></span>
-      <span className={`${compact ? 'text-[9px]' : 'text-[11px]'} font-medium tracking-[0.08em] text-white/45 hidden`}>by HolmTec</span>
+      
     </span>
   </div>;
 }

@@ -240,11 +240,11 @@ export default async function(req) {
 
     if (suplaAiOffer?.ok && s[9]) {
       requests.push(background(s[9], LIGHT), ...accentBar('a10', s[9], 0, 0, 720, 8));
-      requests.push(...shapeText('t10a', s[9], 'SUPPLA AI · vývoj a implementace', 48, 38, 560, 42, 25, PETROL, true));
-      requests.push(...shapeText('t10b', s[9], 'Tři fáze, systémová sazba, žádné AI odhady ceny.', 48, 86, 610, 38, 16, MUTED, false));
-      const phaseText = (suplaAiOffer.phases || []).slice(0, 3).map((phase) => `${phase.title}\n${phase.weeks_min}–${phase.weeks_max} týdny · ${phase.hours_min}–${phase.hours_max} h · ${fmt(phase.price_min_ex_vat)}–${fmt(phase.price_max_ex_vat)} Kč bez DPH\n${phase.scope}`).join('\n\n');
+      requests.push(...shapeText('t10a', s[9], 'SUPPLA AI · Smart řízení mlžení', 48, 38, 560, 42, 25, PETROL, true));
+      requests.push(...shapeText('t10b', s[9], 'Cena z živé BOM kalkulace. Ne z délky projektu ani z AI odhadu.', 48, 86, 610, 38, 16, MUTED, false));
+      const phaseText = (suplaAiOffer.phases || []).slice(0, 3).map((phase) => `${phase.title} · ${phase.timing}\n${phase.scope}\n${phase.price_note}`).join('\n\n');
       requests.push(...shapeText('t10c', s[9], phaseText, 48, 132, 610, 165, 12, INK, false));
-      requests.push(...shapeText('t10d', s[9], `Vývoj celkem: ${fmt(suplaAiOffer.software_total_min_ex_vat)}–${fmt(suplaAiOffer.software_total_max_ex_vat)} Kč bez DPH\nSystémová sazba programování: ${fmt(suplaAiOffer.hourly_rate_ex_vat)} Kč/h\nKompletní SUPLA HW: ${fmt(suplaAiOffer.complete_supla_hardware_ex_vat)} Kč bez DPH (samostatná položka)`, 48, 308, 610, 62, 14, PETROL, true));
+      requests.push(...shapeText('t10d', s[9], `${suplaAiOffer.package_name}: ${fmt(suplaAiOffer.package_price_ex_vat)} Kč bez DPH\nTHW‑01 volitelně: +${fmt(suplaAiOffer.optional_thw01_ex_vat)} Kč bez DPH\n${suplaAiOffer.premium_package_name}: ${fmt(suplaAiOffer.premium_package_price_ex_vat)} Kč bez DPH`, 48, 308, 610, 62, 14, PETROL, true));
     }
 
     const slideRes = await fetch(`https://slides.googleapis.com/v1/presentations/${presentationId}:batchUpdate`, { method: 'POST', headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ requests }) });

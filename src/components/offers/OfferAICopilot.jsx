@@ -20,6 +20,10 @@ export default function OfferAICopilot({ inquiry, product, attachments = [], onA
   const [visualBusy, setVisualBusy] = useState(false);
   const [assets, setAssets] = useState([]);
   const [sourceUrl, setSourceUrl] = useState('');
+  const [learningFeedback, setLearningFeedback] = useState([]);
+  const [feedbackForm, setFeedbackForm] = useState({ feedback_type: 'critique', category: 'visual_style', feedback_text: '', priority: 4 });
+  const [feedbackBusy, setFeedbackBusy] = useState(false);
+  const [feedbackSaved, setFeedbackSaved] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -37,6 +41,9 @@ export default function OfferAICopilot({ inquiry, product, attachments = [], onA
         if (preferred?.file_url) setSourceUrl(preferred.file_url);
       })
       .catch(() => { if (active) setAssets([]); });
+    base44.entities.OfferLearningFeedback.list('-created_date', 250)
+      .then((rows) => { if (active) setLearningFeedback((rows || []).filter((item) => item.active !== false)); })
+      .catch(() => { if (active) setLearningFeedback([]); });
     return () => { active = false; };
   }, [inquiry?.id]);
 
@@ -50,9 +57,22 @@ export default function OfferAICopilot({ inquiry, product, attachments = [], onA
     });
   }, [assets, attachments]);
 
+  const activeLearningRules = useMemo(() => [...learningFeedback]
+    .sort((a, b) => Number(b.priority || 3) - Number(a.priority || 3))
+    .slice(0, 24), [learningFeedback]);
+  const learningContext = useMemo(() => activeLearningRules.length
+    ? activeLearningRules.map((item) => `- P${item.priority || 3} [${item.category || 'other'} / ${item.feedback_type || 'feedback'}] ${item.lesson || item.feedback_text}`).join('\n')
+    : '- Zatím nejsou uložená žádná aktivní naučená pravidla.', [activeLearningRules]);
+  const visualLearningContext = useMemo(() => activeLearningRules
+    .filter((item) => ['visual_style','product_geometry','presentation','technical_accuracy'].includes(item.category))
+    .slice(0, 12)
+    .map((item) => `- ${item.lesson || item.feedback_text}`)
+    .join('\n'), [activeLearningRules]);
+
   const contextPrompt = (request) => `Jsi AI obchodní a návrhový asistent značky MLŽIDLA.cz by HolmTec. Pracuješ pouze pro interní přípravu profesionální nabídky, ale všechny texty označené jako klientské musí být rovnou použitelné pro zákazníka.
 
 PRAVIDLA:
+- U technických produktových dat vždy dodrž: use null when unknown / do not infer. Neznámou hodnotu nehádej ani nedoplňuj z podobného produktu.
 - Nevymýšlej technické parametry, spotřebu, tlak, cenu ani reference, které nejsou v podkladech.
 - Nepiš klientovi interní poznámky, ID, workflow, zdroje e-mailu ani instrukce pro obchodníka.
 - Návrhy mlžítek musí být minimalistické, čisté, reálně vyrobitelné z nerezové trubky a bez zbytečné geometrie.
@@ -65,6 +85,9 @@ ORGANIZACE: ${inquiry?.firma || inquiry?.company || ''}
 POPTÁVKA: ${inquiry?.message || ''}
 VYBRANÝ PRODUKT: ${product?.name || inquiry?.product || 'zatím neurčen'}
 CENOVÝ KONTEXT: ${quoteContext || 'zatím bez ceny'}
+
+AKTIVNÍ NAUČENÁ PRAVIDLA Z HUB NABÍDEK:
+${learningContext}
 
 ÚKOL: ${request}`;
 
@@ -81,6 +104,35 @@ CENOVÝ KONTEXT: ${quoteContext || 'zatím bez ceny'}
       setError(errorMessage(e));
     } finally {
       setChatBusy(false);
+    }
+  };
+
+  const saveLearningFeedback = async () => {
+    const feedbackText = String(feedbackForm.feedback_text || '').trim();
+    if (!feedbackText || feedbackBusy) return;
+    setFeedbackBusy(true);
+    setFeedbackSaved(false);
+    setError('');
+    try {
+      const created = await base44.entities.OfferLearningFeedback.create({
+        inquiry_id: inquiry?.id || '',
+        feedback_type: feedbackForm.feedback_type,
+        category: feedbackForm.category,
+        feedback_text: feedbackText,
+        lesson: feedbackText,
+        priority: Number(feedbackForm.priority || 3),
+        active: true,
+        source: 'sales_hub',
+        applied_count: 0,
+      });
+      setLearningFeedback((current) => [created, ...current]);
+      setFeedbackForm((current) => ({ ...current, feedback_text: '' }));
+      setFeedbackSaved(true);
+      setMessages((current) => [...current, { role: 'assistant', text: 'Připomínku jsem uložil jako aktivní pravidlo. Při dalších návrzích v Hub nabídky ji budu zahrnovat do kontextu.' }]);
+    } catch (e) {
+      setError(errorMessage(e));
+    } finally {
+      setFeedbackBusy(false);
     }
   };
 
@@ -137,6 +189,9 @@ CENOVÝ KONTEXT: ${quoteContext || 'zatím bez ceny'}
 PRVNÍ obrázek je prostor klienta. Zachovej jeho kompozici, architekturu, cestu, lavičky, zeleň, perspektivu, denní dobu a všechny stávající prvky. Nepřestavuj místo. Do prostoru pouze realisticky osaď vybraný produkt podle dalších referenčních obrázků.
 
 ${productRule}
+
+NAUČENÁ VIZUÁLNÍ A TECHNICKÁ PRAVIDLA Z HUBU:
+${visualLearningContext || '- žádná další pravidla'}
 
 Projekt klienta: ${short(inquiry.message, 900)}
 Produkt: ${product.name}.
@@ -196,6 +251,18 @@ Umístění navrhni bezpečně v návaznosti na pěší trasu a pobytová místa
           </div>
           <div className="mt-4 flex flex-wrap gap-2">{QUICK_PROMPTS.map((prompt, index) => <button key={index} type="button" onClick={() => sendChat(prompt)} className="rounded-full border border-slate-200 px-3 py-1.5 text-[11px] font-semibold text-slate-600 hover:border-cyan-300 hover:text-cyan-800">{index === 0 ? 'Navrhnout řešení' : index === 1 ? 'Klientské shrnutí' : index === 2 ? 'Osnova prezentace' : 'Kontrola nabídky'}</button>)}</div>
           <div className="mt-4 flex gap-2"><textarea value={input} onChange={(e) => setInput(e.target.value)} rows={2} placeholder="Napište, co má AI připravit k této poptávce…" className="min-h-20 flex-1 rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 outline-none focus:border-cyan-400"/><button type="button" onClick={() => sendChat()} disabled={chatBusy || !input.trim()} className="self-end rounded-xl bg-[#0e5b67] p-3 text-white disabled:opacity-40" aria-label="Odeslat AI asistentovi"><Send size={17}/></button></div>
+
+          <div className="mt-5 rounded-xl border border-violet-200 bg-violet-50/60 p-4">
+            <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[.14em] text-violet-700">Learning loop</p><h4 className="mt-1 text-sm font-semibold text-slate-900">Učit Hub nabídky z vašich požadavků a kritiky</h4><p className="mt-1 text-[11px] leading-5 text-slate-600">Uložená pravidla se automaticky přidávají do kontextu AI textů i vizualizací. Technická fakta se z kritiky nikdy nedovozují — neznámé hodnoty zůstávají null.</p></div><span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-violet-700 ring-1 ring-violet-200">{activeLearningRules.length} aktivních</span></div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-3">
+              <select value={feedbackForm.feedback_type} onChange={(e) => setFeedbackForm((current) => ({ ...current, feedback_type: e.target.value }))} className="rounded-lg border border-violet-200 bg-white px-3 py-2 text-xs text-slate-700"><option value="critique">Kritika / oprava</option><option value="user_requirement">Požadavek</option><option value="approved_pattern">Schválený vzor</option><option value="rejected_pattern">Zakázaný vzor</option></select>
+              <select value={feedbackForm.category} onChange={(e) => setFeedbackForm((current) => ({ ...current, category: e.target.value }))} className="rounded-lg border border-violet-200 bg-white px-3 py-2 text-xs text-slate-700"><option value="visual_style">Vizuální styl</option><option value="product_geometry">Geometrie produktu</option><option value="technical_accuracy">Technická přesnost</option><option value="pricing">Ceny</option><option value="copy">Texty</option><option value="presentation">Prezentace</option><option value="workflow">Workflow</option><option value="conversion">Výsledek / konverze</option><option value="other">Ostatní</option></select>
+              <select value={feedbackForm.priority} onChange={(e) => setFeedbackForm((current) => ({ ...current, priority: Number(e.target.value) }))} className="rounded-lg border border-violet-200 bg-white px-3 py-2 text-xs text-slate-700"><option value={5}>Priorita 5 · kritické</option><option value={4}>Priorita 4 · vysoká</option><option value={3}>Priorita 3 · standard</option><option value={2}>Priorita 2 · nízká</option></select>
+            </div>
+            <textarea value={feedbackForm.feedback_text} onChange={(e) => { setFeedbackForm((current) => ({ ...current, feedback_text: e.target.value })); setFeedbackSaved(false); }} rows={3} placeholder="Např. Nabídky musí mít větší dominantní vizualizaci a méně technického textu na první straně." className="mt-2 w-full rounded-lg border border-violet-200 bg-white px-3 py-2.5 text-xs leading-5 text-slate-800 outline-none focus:border-violet-400"/>
+            <div className="mt-2 flex flex-wrap items-center gap-2"><button type="button" onClick={saveLearningFeedback} disabled={feedbackBusy || !feedbackForm.feedback_text.trim()} className="rounded-full bg-violet-700 px-4 py-2 text-[11px] font-bold text-white disabled:opacity-40">{feedbackBusy ? 'Ukládám pravidlo…' : 'Uložit jako dovednost'}</button>{feedbackSaved && <span className="text-[11px] font-semibold text-emerald-700">Uloženo a aktivní pro další generování.</span>}</div>
+            {activeLearningRules.length > 0 && <div className="mt-3 space-y-1 border-t border-violet-100 pt-3">{activeLearningRules.slice(0, 3).map((item) => <p key={item.id} className="text-[10px] leading-4 text-slate-500"><strong className="text-violet-700">P{item.priority || 3}</strong> · {item.lesson || item.feedback_text}</p>)}</div>}
+          </div>
           </div>
         </details>
 

@@ -520,33 +520,32 @@ export default async function(req) {
     doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(doc.splitTextToSize(`Zdroj cen: ${smartPricing.source}. Ceny Smart prvků jsou volitelné a nejsou zahrnuté v základní ceně projektu, pokud není v nabídce uvedeno jinak.`, CW), M, 263);
     addFooter(doc);
 
-    // Optional SUPPLA AI project module — prices are supplied only by the live pricing system.
+    // Optional SUPPLA AI / Smart control module — package price comes from the live BOM calculation.
     if (suplaAiOffer?.ok && Array.isArray(suplaAiOffer?.phases)) {
       doc.addPage();
       await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
       y = 49;
-      doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('SUPPLA AI · POKROČILÉ ŘÍZENÍ A AUTOMATIZACE', M, y);
-      doc.setTextColor(...navy); doc.setFontSize(18.5); doc.text('Vývoj systému rozdělený do kontrolovatelných fází.', M, y + 10);
-      doc.setTextColor(...muted); doc.setFontSize(7.2); doc.text(doc.splitTextToSize('Navržený systém propojuje SUPLA, MQTT/API komunikaci, provozní scénáře, dashboard a podle zadání také externí datové zdroje. Cena není odhadována AI — počítá se z aktuální systémové sazby práce.', CW), M, y + 21);
+      doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('SUPPLA AI · SMART ŘÍZENÍ A AUTOMATIZACE', M, y);
+      doc.setTextColor(...navy); doc.setFontSize(18.5); doc.text('Řízení mlžení jako hotový systémový balíček.', M, y + 10);
+      doc.setTextColor(...muted); doc.setFontSize(7.2); doc.text(doc.splitTextToSize('Cena se přebírá z živé BOM kalkulace komponent, kompletace, programování a marže. Délka projektu cenu sama o sobě neurčuje a AI ji neodhaduje.', CW), M, y + 21);
 
       let phaseY = 82;
       suplaAiOffer.phases.slice(0, 3).forEach((phase, index) => {
         doc.setFillColor(index === 1 ? 238 : 248, index === 1 ? 248 : 250, index === 1 ? 249 : 250);
         doc.roundedRect(M, phaseY, CW, 43, 2, 2, 'F');
-        doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text(`${safe(phase.title)} · ${Number(phase.weeks_min || 0)}–${Number(phase.weeks_max || 0)} týdny`, M + 6, phaseY + 8);
-        doc.setTextColor(...ink); doc.setFontSize(6.6); doc.text(doc.splitTextToSize(safe(phase.scope), 116), M + 6, phaseY + 17);
-        doc.setTextColor(...navy); doc.setFontSize(11.5); doc.text(`${formatPrice(phase.price_min_ex_vat)}–${formatPrice(phase.price_max_ex_vat)} Kč`, W - M - 6, phaseY + 18, { align: 'right' });
-        doc.setTextColor(...muted); doc.setFontSize(5.7); doc.text(`${Number(phase.hours_min || 0)}–${Number(phase.hours_max || 0)} h · bez DPH`, W - M - 6, phaseY + 26, { align: 'right' });
+        doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text(`${safe(phase.title)} · ${safe(phase.timing)}`, M + 6, phaseY + 8);
+        doc.setTextColor(...ink); doc.setFontSize(6.4); doc.text(doc.splitTextToSize(safe(phase.scope), 121), M + 6, phaseY + 17);
+        doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(doc.splitTextToSize(safe(phase.price_note), 121), M + 6, phaseY + 35);
         phaseY += 48;
       });
 
       y = 228;
       doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 38, 2, 2, 'F');
       doc.setTextColor(...accent); doc.setFontSize(6.1); doc.text('SYSTÉMOVÁ KALKULACE', M + 7, y + 8);
-      doc.setTextColor(255, 255, 255); doc.setFontSize(7.2); doc.text(`Vývoj celkem: ${formatPrice(suplaAiOffer.software_total_min_ex_vat)}–${formatPrice(suplaAiOffer.software_total_max_ex_vat)} Kč bez DPH`, M + 7, y + 17);
-      doc.setTextColor(190, 220, 224); doc.setFontSize(6.1); doc.text(`Systémová sazba programování: ${formatPrice(suplaAiOffer.hourly_rate_ex_vat)} Kč/h`, M + 7, y + 25);
-      if (Number(suplaAiOffer.complete_supla_hardware_ex_vat || 0) > 0) doc.text(`Kompletní SUPLA HW: ${formatPrice(suplaAiOffer.complete_supla_hardware_ex_vat)} Kč bez DPH · účtuje se samostatně dle rozsahu dodávky.`, M + 7, y + 32);
-      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(doc.splitTextToSize(`Technologický stack: ${safe(suplaAiOffer.tech_stack?.backend)} · ${safe(suplaAiOffer.tech_stack?.hardware_communication)} · ${safe(suplaAiOffer.tech_stack?.protocols)} · ${safe(suplaAiOffer.tech_stack?.frontend)}. Zdroj ceny: ${safe(suplaAiOffer.source)}.`, CW), M, 273);
+      doc.setTextColor(255, 255, 255); doc.setFontSize(9.5); doc.text(`${safe(suplaAiOffer.package_name)}: ${formatPrice(suplaAiOffer.package_price_ex_vat)} Kč bez DPH`, M + 7, y + 18);
+      doc.setTextColor(190, 220, 224); doc.setFontSize(5.9); doc.text(`THW‑01 volitelně +${formatPrice(suplaAiOffer.optional_thw01_ex_vat)} Kč · Premium ${formatPrice(suplaAiOffer.premium_package_price_ex_vat)} Kč bez DPH`, M + 7, y + 27);
+      doc.text(`Zdroj: ${safe(suplaAiOffer.source)} · marže v kalkulaci ${Number(suplaAiOffer.margin_percent || 0)} %`, M + 7, y + 34);
+      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(doc.splitTextToSize(`${safe(suplaAiOffer.architecture_note)} ${safe(suplaAiOffer.software_note)}`, CW), M, 273);
       addFooter(doc);
     }
 

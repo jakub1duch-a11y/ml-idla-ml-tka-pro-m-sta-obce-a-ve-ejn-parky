@@ -55,6 +55,17 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
   const [extraChargeBusy, setExtraChargeBusy] = useState(false);
   const [smartScenarios, setSmartScenarios] = useState(() => Object.fromEntries(SMART_SCENARIO_PRESETS.map((item) => [item.key, ['temperature','schedule','interactive','water_monitoring'].includes(item.key)])));
   const [smartScenarioValues, setSmartScenarioValues] = useState(() => Object.fromEntries(SMART_SCENARIO_PRESETS.map((item) => [item.key, item.defaultValue])));
+  const [suplaAiEnabled, setSuplaAiEnabled] = useState(false);
+  const [suplaAiPricing, setSuplaAiPricing] = useState(null);
+  const [suplaAiPricingError, setSuplaAiPricingError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    base44.functions.invoke('getSuplaAiOfferPricing', {})
+      .then((response) => { if (active) { setSuplaAiPricing(response.data || null); setSuplaAiPricingError(''); } })
+      .catch((requestError) => { if (active) setSuplaAiPricingError(errorMessage(requestError)); });
+    return () => { active = false; };
+  }, []);
 
   const normalizeSearch = (value) => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   const ordersByInquiry = useMemo(() => projectOrders.reduce((map, order) => {

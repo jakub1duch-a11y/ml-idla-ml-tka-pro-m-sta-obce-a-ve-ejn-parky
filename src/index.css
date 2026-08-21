@@ -310,3 +310,21 @@
   70% { box-shadow: 0 0 0 11px hsl(var(--accent) / 0); }
   100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0); }
 }
+
+/* MLŽIDLA motion logo — cooling mist signature */
+@keyframes mlzDrop {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+  46% { transform: translateY(-1.6px) scale(.98); opacity: .96; }
+  58% { transform: translateY(1px) scale(1.03); opacity: 1; }
+}
+
+@keyframes mlzMist {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(.92); opacity: .18; }
+  32% { transform: translate3d(-1.4px, -1.2px, 0) scale(1.06); opacity: .72; }
+  68% { transform: translate3d(1.7px, -2px, 0) scale(1.16); opacity: .34; }
+}
+
+@keyframes mlzWordmarkIn {
+  0% { opacity: 0; transform: translate3d(-5px, 2px, 0); filter: blur(3px); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}

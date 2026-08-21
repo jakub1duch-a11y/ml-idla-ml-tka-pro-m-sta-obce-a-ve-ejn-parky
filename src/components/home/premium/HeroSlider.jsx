@@ -1,167 +1,156 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Droplets, Gauge, Wifi, ThermometerSnowflake, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowDown, ArrowRight, Building2, Droplets, ShieldCheck, Sparkles, Wifi } from 'lucide-react';
 
-const SLIDES = [
-{
-  tag: 'ČESKÁ VÝROBA · 20 LET PRŮMYSLOVÉ ZKUŠENOSTI',
-  title: 'Nerezová mlžítka a mlžné brány bez vysokotlakého čerpadla',
-  titleMobile: 'Mlžítka bez vysokotlakého čerpadla',
-  desc: 'Nízkotlaká mlha přímo z běžného vodovodního řadu. Navrhujeme a vyrábíme nerezové mlžící systémy pro náměstí, parky, promenády, gastro, wellness i rezidenční prostory — bez samostatného vysokotlakého čerpadla.',
-  image: '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp',
-  imageAlt: 'Nerezová designová mlžítka pro města a obce',
-  cta1: { label: 'Prohlédnout česká mlžítka', to: '/mlzidla-mlzitka' },
-  cta2: { label: 'Vyžádat cenovou nabídku', to: '/poptavka' }
-}];
+const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp';
 
-
-
-const BENEFITS = [
-{ icon: ThermometerSnowflake, label: 'Chlazení až −10 °C' },
-{ icon: Gauge, label: 'Nízký tlak 2–7 BAR' },
-{ icon: Wifi, label: 'Chytré ovládání WiFi' },
-{ icon: Droplets, label: 'Nízká spotřeba vody' }];
-
+const FACTS = [
+  { icon: Droplets, label: 'Vodní mlha', value: 'Nízkotlaké řešení' },
+  { icon: ShieldCheck, label: 'Konstrukce', value: 'Nerezové provedení' },
+  { icon: Wifi, label: 'Řízení', value: 'Smart / Wi‑Fi' },
+  { icon: Building2, label: 'Použití', value: 'Veřejný prostor' },
+];
 
 export default function HeroSlider() {
-  const [index, setIndex] = useState(0);
+  const sectionRef = useRef(null);
   const reduceMotion = useReducedMotion();
-
-  const next = useCallback(() => setIndex((i) => (i + 1) % SLIDES.length), []);
-  const prev = () => setIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length);
-
-  useEffect(() => {
-    const t = setInterval(next, 6000);
-    return () => clearInterval(t);
-  }, [next]);
-
-  const slide = SLIDES[index];
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', reduceMotion ? '0%' : '10%']);
+  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduceMotion ? '0%' : '-8%']);
+  const glowY = useTransform(scrollYProgress, [0, 1], ['0%', reduceMotion ? '0%' : '24%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.72, 1], [1, 0.92, 0.12]);
 
   return (
-    <section className="relative overflow-hidden bg-primary lg:h-screen lg:min-h-[640px] lg:bg-background">
-      {/* Image + overlay block. Fixed height on mobile so the photo stays visible; full-bleed with text overlay on desktop. */}
-      <div className="relative -mb-px h-[clamp(360px,56svh,500px)] bg-primary lg:absolute lg:inset-0 lg:mb-0 lg:h-full lg:max-h-none">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={slide.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp"
-            alt={slide.imageAlt}
-            initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.025 }}
-            animate={reduceMotion ? { opacity: 1, scale: 1, x: 0 } : { opacity: 1, scale: [1.02, 1.055, 1.02], x: [0, -6, 0] }}
-            exit={{ opacity: 0 }}
-            transition={reduceMotion ? { opacity: { duration: 0.2 } } : { opacity: { duration: 0.55 }, scale: { duration: 16, repeat: Infinity, ease: 'easeInOut' }, x: { duration: 20, repeat: Infinity, ease: 'easeInOut' } }}
-            className="absolute inset-0 w-full h-full object-cover sm:object-center object-[50%_center]" />
-        </AnimatePresence>
+    <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#071d26] text-white">
+      <motion.div style={{ y: imageY, opacity }} className="absolute inset-0">
+        <img
+          src={HERO_IMAGE}
+          alt="Architektonické mlžítko MLŽIDLA® ve veřejném prostoru"
+          fetchPriority="high"
+          decoding="async"
+          className="h-full w-full object-cover object-center"
+        />
+      </motion.div>
 
-        {/* Mobile: layered vignette - subtle top wash + clear middle so the photo breathes + smooth ramp into the bottom text zone */}
-        <div
-          className="absolute inset-0 lg:hidden"
-          style={{
-            backgroundImage:
-            'linear-gradient(180deg, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0) 24%, hsl(var(--primary) / 0) 52%, hsl(var(--primary) / 0.5) 76%, hsl(var(--primary) / 0.93) 100%)'
-          }} />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,25,34,.93)_0%,rgba(5,25,34,.72)_42%,rgba(5,25,34,.22)_72%,rgba(5,25,34,.08)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,29,38,.32)_0%,rgba(7,29,38,.04)_42%,rgba(7,29,38,.74)_100%)]" />
 
-        {/* Mobile: soft side vignette for a more finished, premium framing */}
-        <div
-          className="absolute inset-0 lg:hidden"
-          style={{
-            backgroundImage:
-            'linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--primary) / 0) 18%, hsl(var(--primary) / 0) 82%, hsl(var(--primary) / 0.22) 100%)'
-          }} />
+      <motion.div style={{ y: glowY }} aria-hidden="true" className="pointer-events-none absolute -left-32 top-[22%] h-80 w-80 rounded-full bg-cyan-300/20 blur-[110px]" />
+      <motion.div
+        aria-hidden="true"
+        animate={reduceMotion ? undefined : { x: [0, 46, 0], y: [0, -24, 0], opacity: [0.12, 0.28, 0.12] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        className="pointer-events-none absolute right-[8%] top-[18%] h-52 w-52 rounded-full bg-white/15 blur-[88px]"
+      />
+      <motion.div
+        aria-hidden="true"
+        animate={reduceMotion ? undefined : { x: [0, -34, 0], scale: [1, 1.15, 1], opacity: [0.08, 0.2, 0.08] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        className="pointer-events-none absolute bottom-[12%] right-[25%] h-72 w-72 rounded-full bg-cyan-100/15 blur-[120px]"
+      />
 
-        {/* Desktop: full overlay for the complete text block */}
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-t via-primary/15 from-primary/65 to-primary/55" />
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/10" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.16)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
 
-        {/* Mobile: short tag + title directly on the image */}
-        <div className="absolute inset-x-0 bottom-0 px-4 py-4 sm:px-5 sm:py-5 lg:hidden">
-          <p className="mb-2 max-w-[36rem] font-mono text-[10px] font-semibold uppercase leading-[1.45] tracking-[0.13em] text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)] sm:text-xs sm:tracking-[0.18em]">{slide.tag}</p>
-          <h1 className="max-w-[16ch] font-heading text-[clamp(2rem,9vw,2.75rem)] font-semibold leading-[1.06] tracking-[-0.035em] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]">
-            {slide.titleMobile || slide.title}
-          </h1>
-        </div>
+      <motion.div style={{ y: copyY }} className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-between px-5 pb-7 pt-28 sm:px-8 sm:pb-9 lg:px-10 lg:pb-10 lg:pt-32">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.08fr_.92fr] lg:gap-16">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55 }}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-4 py-2 backdrop-blur-xl"
+            >
+              <Sparkles size={13} className="text-[#70dce9]" />
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-white/80">MLŽIDLA® · Cooling architecture</span>
+            </motion.div>
 
-        {/* Desktop: full text block over the image */}
-        <div className="hidden lg:flex absolute inset-0 items-center">
-          <div className="mx-auto w-full max-w-7xl py-24 px-20">
-            <div className="max-w-5xl">
-              <AnimatePresence mode="wait">
-                <motion.div key={index} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.6 }}>
-                  <p className="mb-4 font-mono font-semibold uppercase tracking-[0.3em] text-white/85 text-xs [text-shadow:0_1px_6px_rgba(0,0,0,0.3)]">{slide.tag}</p>
-                  <h1 className="mb-5 max-w-4xl font-heading font-semibold leading-[1.04] tracking-tight text-white text-7xl [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
-                    {slide.title}
-                  </h1>
-                  <p className="text-measure mb-8 text-lg font-medium leading-relaxed text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.3)]">{slide.desc}</p>
+            <motion.h1
+              initial={{ opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.08 }}
+              className="max-w-[13ch] font-heading text-[clamp(3rem,7vw,7rem)] font-medium leading-[.93] tracking-[-.055em] text-white"
+            >
+              Mlha jako součást architektury.
+            </motion.h1>
 
-                  <div className="mb-10 flex flex-wrap gap-3">
-                    <Link to={slide.cta1.to} className="min-h-12 items-center justify-center gap-2 rounded-full bg-accent px-7 py-4 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:shadow-xl btn-metallic-mist inline-flex">
-                      {slide.cta1.label} <ArrowRight size={16} />
-                    </Link>
-                    <Link to={slide.cta2.to} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/50 bg-primary/20 px-7 py-4 text-center text-sm font-semibold text-white transition-all hover:bg-white/10">
-                      {slide.cta2.label}
-                    </Link>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.18 }}
+              className="mt-7 max-w-2xl text-[clamp(1rem,1.35vw,1.22rem)] leading-8 text-white/72"
+            >
+              Navrhujeme a vyrábíme nerezová mlžítka a mlžné prvky pro města, parky, promenády a architektonické projekty. Nízkotlaká mlha bez samostatného vysokotlakého čerpadla, s možností chytrého řízení.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.28 }}
+              className="mt-8 flex flex-col gap-3 sm:flex-row"
+            >
+              <Link to="/mlzidla-mlzitka" className="btn-metallic-mist inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#61d5e5] px-7 py-4 text-sm font-bold text-[#082934] shadow-[0_16px_45px_rgba(97,213,229,.24)] transition hover:-translate-y-0.5">
+                Prohlédnout kolekce <ArrowRight size={16} />
+              </Link>
+              <Link to="/poptavka" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/22 bg-white/[.07] px-7 py-4 text-sm font-semibold text-white backdrop-blur-xl transition hover:bg-white/[.13]">
+                Navrhnout řešení
+              </Link>
+            </motion.div>
+          </div>
+
+          <motion.aside
+            initial={{ opacity: 0, x: 28 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.22 }}
+            className="hidden lg:block"
+          >
+            <div className="ml-auto max-w-md overflow-hidden rounded-[30px] border border-white/16 bg-[#0b2934]/50 p-2 shadow-[0_30px_90px_rgba(0,0,0,.24)] backdrop-blur-2xl">
+              <div className="rounded-[24px] border border-white/10 bg-white/[.06] p-6">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-[9px] uppercase tracking-[.18em] text-[#8fe4ef]">Systémový princip</p>
+                    <p className="mt-2 text-lg font-semibold">Voda · objekt · řízení</p>
                   </div>
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="grid grid-cols-4 gap-3">
-                {BENEFITS.map((b, i) =>
-                <motion.div
-                  key={b.label}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
-                  className="flex min-h-14 items-center gap-2">
-                    <b.icon size={20} className="text-white/90 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.35)]" />
-                    <span className="text-white/85 font-medium leading-tight text-sm text-right [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]">{b.label}</span>
-                  </motion.div>
-                )}
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[.06] text-[#8fe4ef]"><Droplets size={19}/></span>
+                </div>
+                <div className="mt-6 space-y-2.5">
+                  {FACTS.map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.45, delay: 0.36 + index * 0.07 }}
+                      className="grid grid-cols-[34px_1fr_auto] items-center gap-3 rounded-2xl border border-white/8 bg-black/10 px-3.5 py-3"
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/[.07] text-[#7cdce8]"><item.icon size={15}/></span>
+                      <span className="text-xs text-white/48">{item.label}</span>
+                      <strong className="text-right text-xs font-semibold text-white/88">{item.value}</strong>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="mt-5 border-t border-white/10 pt-5">
+                  <p className="text-[11px] leading-5 text-white/45">Každý projekt navrhujeme podle konkrétního prostoru, požadovaného účinku, hydrauliky a provozních podmínek.</p>
+                </div>
               </div>
             </div>
+          </motion.aside>
+        </div>
+
+        <div className="mt-12 grid gap-4 border-t border-white/12 pt-5 sm:grid-cols-[1fr_auto] sm:items-end">
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:max-w-3xl">
+            {FACTS.map((item) => (
+              <div key={item.label} className="rounded-2xl border border-white/10 bg-white/[.055] px-3 py-3 backdrop-blur-lg lg:hidden">
+                <item.icon size={15} className="text-[#7edce8]" />
+                <p className="mt-2 text-[9px] uppercase tracking-[.13em] text-white/38">{item.label}</p>
+                <p className="mt-1 text-[11px] font-semibold leading-4 text-white/82">{item.value}</p>
+              </div>
+            ))}
           </div>
+          <a href="#home-content" className="hidden items-center gap-2 text-[10px] font-mono uppercase tracking-[.16em] text-white/50 transition hover:text-white sm:inline-flex">
+            Objevte řešení <motion.span animate={reduceMotion ? undefined : { y: [0, 5, 0] }} transition={{ duration: 1.8, repeat: Infinity }}><ArrowDown size={14}/></motion.span>
+          </a>
         </div>
-
-        {/* Controls (desktop only, same as before) */}
-        {SLIDES.length > 1 && <div className="hidden lg:flex absolute bottom-8 right-8 z-20 items-center gap-3">
-          <button onClick={prev} aria-label="Předchozí snímek" className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all">
-            <ChevronLeft size={16} />
-          </button>
-          <button onClick={next} aria-label="Další snímek" className="w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all">
-            <ChevronRight size={16} />
-          </button>
-        </div>}
-
-        {SLIDES.length > 1 && <div className="hidden lg:flex absolute bottom-8 left-8 z-20 items-center gap-2">
-          {SLIDES.map((s, i) => <span key={s.title} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/40'}`} />)}
-        </div>}
-      </div>
-
-      {/* Mobile: description, CTAs and benefits live below the image on a solid background — fully readable, image stays uncluttered */}
-      <div className="relative z-10 -mt-px bg-primary px-4 pb-9 pt-5 sm:px-5 sm:pb-10 sm:pt-6 lg:hidden">
-        <p className="mb-6 font-medium leading-relaxed text-white/90 text-sm">{slide.desc}</p>
-
-        <div className="mb-6 grid grid-cols-1 gap-3">
-          <Link to={slide.cta1.to} className="min-h-12 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-center text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 btn-metallic-mist">
-            {slide.cta1.label} <ArrowRight size={16} />
-          </Link>
-          <Link to={slide.cta2.to} className="min-h-12 inline-flex items-center justify-center gap-2 rounded-full border border-white/50 bg-primary/20 px-6 py-3.5 text-center text-sm font-semibold text-white">
-            {slide.cta2.label}
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2.5">
-          {BENEFITS.map((b) =>
-          <div key={b.label} className="flex min-h-14 items-center gap-2 rounded-xl border border-white/10 bg-white/[.045] px-3 py-2.5">
-              <b.icon size={18} className="shrink-0 text-white/90" />
-              <span className="text-[11px] font-medium leading-[1.25] text-white/85 sm:text-xs">{b.label}</span>
-            </div>
-          )}
-        </div>
-
-        {SLIDES.length > 1 && <div className="mt-6 flex items-center justify-center gap-2">
-          {SLIDES.map((s, i) => <span key={s.title} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/40'}`} />)}
-        </div>}
-      </div>
-    </section>);
-
+      </motion.div>
+    </section>
+  );
 }

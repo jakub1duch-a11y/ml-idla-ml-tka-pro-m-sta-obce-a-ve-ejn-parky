@@ -71,6 +71,7 @@ import MlzneBrany from '@/pages/MlzneBrany';
 import BendyARPrototype from '@/pages/BendyARPrototype';
 import GateARPrototype from '@/pages/GateARPrototype';
 import LocalizedLanding from '@/pages/LocalizedLanding';
+import PpcLanding from '@/pages/PpcLanding';
 import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
 
 const LOCALIZED_ROUTES = Object.entries(ROUTE_MAP).flatMap(([routeKey, paths]) =>
@@ -136,6 +137,10 @@ const AuthenticatedApp = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
+        <Route path="/ppc/mlzitka-pro-mesta-obce" element={<PpcLanding variant="mesta" />} />
+        <Route path="/ppc/mlzitka-namesti-parky" element={<PpcLanding variant="parky" />} />
+        <Route path="/ppc/chytra-mlzitka" element={<PpcLanding variant="smart" />} />
+        <Route path="/ppc/chytry-ventil-automatizace" element={<PpcLanding variant="ventil" />} />
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />

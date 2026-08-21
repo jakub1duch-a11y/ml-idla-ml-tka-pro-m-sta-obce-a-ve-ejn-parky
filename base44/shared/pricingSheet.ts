@@ -209,8 +209,8 @@ export async function findSmartControlPricing(base44: any): Promise<SmartControl
       component_row02_ex_vat: findPrice('SUPLA ROW-02'),
       component_liw01_ex_vat: findPrice('SUPLA LIW-01'),
       component_thw01_ex_vat: findPrice('SUPLA THW-01'),
-      complete_supla_ex_vat: parseMoney(totalRow?.[5]),
-      complete_supla_inc_vat: parseMoney(vatTotalRow?.[5]),
+      complete_supla_ex_vat: parseMoney(totalRow?.[6]),
+      complete_supla_inc_vat: parseMoney(vatTotalRow?.[6]),
       margin_percent: parseMoney(marginRow?.[5]),
     };
   } catch (_) {

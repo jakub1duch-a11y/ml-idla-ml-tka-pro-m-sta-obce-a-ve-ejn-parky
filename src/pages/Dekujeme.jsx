@@ -16,7 +16,7 @@ export default function Dekujeme() {
   const zdroj = urlParams.get('zdroj') || 'kontakt';
 
   useEffect(() => {
-    setSEO({ title: 'Děkujeme za poptávku | Mlžidla.cz', description: 'Vaše poptávka byla úspěšně odeslána.' });
+    setSEO({ title: 'Děkujeme za poptávku', description: 'Vaše poptávka byla úspěšně odeslána.', canonicalPath: '/dekujeme', robots: 'noindex, follow' });
     trackThankYouPageView(zdroj);
   }, [zdroj]);
 
@@ -36,7 +36,7 @@ export default function Dekujeme() {
           Děkujeme za vaši {SOURCE_LABELS[zdroj] || 'poptávku'}!
         </h1>
         <p className="text-slate-500 leading-relaxed mb-10">
-          Ozveme se vám do 24 hodin s konzultací a nabídkou na míru. V naléhavém případě nám mezitím zavolejte.
+          Potvrzení jsme vám poslali také e-mailem. Náš technický tým projde zadání a ozve se s dalším postupem; v případě potřeby můžete kontaktovat Ing. Radka Medunu.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
@@ -44,9 +44,9 @@ export default function Dekujeme() {
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-slate-50 border border-slate-200 text-slate-900 text-sm font-medium hover:border-slate-300 transition-all">
             <Phone size={15} /> +420 774 700 390
           </a>
-          <a href="mailto:obchod1@holmtec.cz"
+          <a href="mailto:meduna@holmtec.cz"
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-slate-50 border border-slate-200 text-slate-900 text-sm font-medium hover:border-slate-300 transition-all">
-            <Mail size={15} /> obchod1@holmtec.cz
+            <Mail size={15} /> meduna@holmtec.cz
           </a>
         </div>
 

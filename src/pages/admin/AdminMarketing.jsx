@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, CalendarClock, Palette, Sparkles } from 'lucide-react';
+import { Loader, CalendarClock, Palette, Sparkles, Gauge } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ContentPlanForm from '@/components/admin/marketing/ContentPlanForm';
 import ContentPlanList from '@/components/admin/marketing/ContentPlanList';
 import BrandProfileTab from '@/components/admin/marketing/BrandProfileTab';
 import AiSuggestionsTab from '@/components/admin/marketing/AiSuggestionsTab';
 import InstagramConnectCard from '@/components/admin/marketing/InstagramConnectCard';
+import MarketingBriefingTab from '@/components/admin/marketing/MarketingBriefingTab';
 
 const SUBTABS = [
+  { id: 'briefing', label: 'Briefing', icon: Gauge },
   { id: 'plan', label: 'Plán obsahu', icon: CalendarClock },
   { id: 'brand', label: 'Brand styl', icon: Palette },
   { id: 'ai', label: 'AI doporučení', icon: Sparkles },
 ];
 
 export default function AdminMarketing() {
-  const [subtab, setSubtab] = useState('plan');
+  const [subtab, setSubtab] = useState('briefing');
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,6 +42,8 @@ export default function AdminMarketing() {
           );
         })}
       </div>
+
+      {subtab === 'briefing' && <MarketingBriefingTab />}
 
       {subtab === 'plan' && (
         <div className="space-y-6">

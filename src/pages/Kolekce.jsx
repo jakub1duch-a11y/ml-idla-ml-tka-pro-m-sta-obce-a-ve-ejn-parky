@@ -9,10 +9,10 @@ import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider'
 import CollectionOffers from '@/components/kolekce/CollectionOffers';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
+import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Search, Ruler, MoveHorizontal, Dumbbell, School, UtensilsCrossed, Waves } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
-import { trackQuickInquiryClick } from '@/lib/ga4';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const HEIGHT_OPTIONS = [
 { value: 'all', label: 'Všechny výšky' },
@@ -75,7 +75,7 @@ const CATEGORY_GROUPS = [
   id: 'mlhoviste',
   label: 'Mlhoviště a chladicí zóny',
   icon: Flame,
-  tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
+  tagline: 'Ochlazení otevřených prostorů až o 10 °C.',
   description: 'Systémy pro plošné ochlazení teras, hřišť, sportovního zázemí a průmyslových prostorů.',
   audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové provozy', 'Školy a školky'],
   usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny', 'Sklady a výrobní haly'],
@@ -88,24 +88,128 @@ const CATEGORY_GROUPS = [
 const audienceSegments = [
 { icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
 { icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžítek a mlžných instalací. Rychlá montáž a přenosnost.' },
-{ icon: Home, label: 'Rezidenční', desc: 'Mlžítka zahradní pro soukromé zahrady, terasy, wellness hotely, restaurační zahrádky... Individuální návrh a diskrétní mlžná instalace.' },
+{ icon: Home, label: 'Rezidenční', desc: 'Zahradní mlžítka pro soukromé zahrady, terasy, wellness hotely i restaurační zahrádky. Individuální návrh a diskrétní instalace.' },
 { icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
 { icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžítka - mlžná hřiště pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
+
+const SPACE_FILTERS = [
+  { value: 'all', label: 'Vše', icon: SlidersHorizontal },
+  { value: 'city', label: 'Města', icon: Building2 },
+  { value: 'garden', label: 'Zahrady', icon: Home },
+  { value: 'sport', label: 'Sportoviště', icon: Dumbbell },
+  { value: 'school', label: 'Školy & hřiště', icon: School },
+  { value: 'gastro', label: 'Gastro & hotel', icon: UtensilsCrossed }
+];
+
+function matchesSpace(product, filter) {
+  if (filter === 'all') return true;
+  const haystack = `${product.name || ''} ${product.slug || ''} ${product.short_description || ''} ${product.description || ''} ${product._categoryName || ''}`.toLowerCase();
+  const map = {
+    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'bendy-arc', 'bendy-back', 'bendy-alej', 'bendy-field'],
+    garden: ['zahrad', 'terasa', 'reziden', 'soukrom', 'garden'],
+    sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
+    school: ['škol', 'dětsk', 'hřiště'],
+    gastro: ['gastro', 'restaur', 'hotel', 'resort', 'terasa']
+  };
+  return map[filter].some((term) => haystack.includes(term));
+}
+
+const CITY_ORDER = [
+  'aura-city-single', 'aura-city-duo',
+  'bendy-arc', 'bendy-arc-2-0', 'bendy-arc-3-0', 'bendy-back-to-back', 'bendy-alej', 'bendy-field',
+  'city-arc-1', 'city-arc-2', 'city-arc-3', 'city-arc-4', 'city-arc-5', 'city-cooling-zone',
+  'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'brana-bendy', 'y-armist-j70', 'y-armist-tr60'
+];
+
+function sortCatalogProducts(items, spaceFilter) {
+  const list = [...items];
+  if (spaceFilter === 'city') {
+    return list.sort((a, b) => {
+      const ai = CITY_ORDER.indexOf(a.slug);
+      const bi = CITY_ORDER.indexOf(b.slug);
+      if (ai !== -1 || bi !== -1) return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+      return Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.name || '').localeCompare(b.name || '', 'cs');
+    });
+  }
+  return list.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.name || '').localeCompare(b.name || '', 'cs'));
+}
 
 
 // Fallback images by category
 const FALLBACK_IMAGES = {
   NATURE: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6993add8_Reference-mstoPolna.webp',
   'URBAN ART': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/58e5e3931_MestskabranaGATE.png',
-  GEOMETRY: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/03ba352a3_mlzitka-zahradni-hotely-restaurace.png',
-  DEFAULT: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9cf838258_MlzicisprchaaSMARTaplikace.png'
+  GEOMETRY: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
+  DEFAULT: '/media/optimized/9cf838258_MlzicisprchaaSMARTaplikace.webp'
 };
 
+const PRODUCT_CARD_META = {
+  'aura-mlzitko': { dims: [['Varianta', 'Garden Single'], ['Provoz', '2–5 bar']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Rezidence', Home]] },
+  'aura-garden-duo': { dims: [['Varianta', 'Garden Duo'], ['Rozteč', 'projektová']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Wellness', Home]] },
+  'aura-city-single': { dims: [['Varianta', 'City Single'], ['Provoz', '2–5 bar']], places: [['Náměstí', Building2], ['Park', Trees], ['Promenáda', Landmark]] },
+  'aura-city-duo': { dims: [['Varianta', 'City Duo'], ['Rozteč', 'projektová']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Veřejná zóna', Trees]] },
+  'mlzitko-bendy': { dims: [['Výška', '≈ 1 800 mm'], ['Průměr', 'Ø50 / Ø60,2 / Ø70 mm']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
+  'bendy-arc': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
+  'bendy-arc-2-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Sportoviště', Dumbbell]] },
+  'bendy-arc-3-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Park', Trees], ['Sportoviště', Dumbbell]] },
+  'bendy-back-to-back': { dims: [['Záběr', '360°'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Park', Trees], ['Resort', Home]] },
+  'bendy-alej': { dims: [['Počet', '5+ prvků'], ['Rozteč', 'projektová']], places: [['Promenáda', Landmark], ['Sportoviště', Dumbbell], ['Náměstí', Building2]] },
+  'bendy-field': { dims: [['Velikost', 'S / M / L'], ['Počet', '3–9 prvků']], places: [['Sportoviště', Dumbbell], ['Škola', School], ['Náměstí', Building2]] },
+  'city-arc-3': { dims: [['Šířka', '~3 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Promenáda', Landmark], ['Koupaliště', Waves]] },
+  'city-arc-4': { dims: [['Šířka', '~4 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Promenáda', Landmark], ['Koupaliště', Waves]] },
+  'city-arc-5': { dims: [['Šířka', '~5 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Sportoviště', Dumbbell], ['Koupaliště', Waves]] },
+  'linea-solo': { dims: [['Profil', '70 × 70 mm'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Gastro', UtensilsCrossed], ['Hotel', Home]] },
+  'linea-gate': { dims: [['Šířka', 'projektová'], ['Výška', 'projektová']], places: [['Vstupy', Landmark], ['Náměstí', Building2], ['Promenáda', Trees]] },
+  'linea-avenue': { dims: [['Počet', 'více prvků'], ['Rozteč', 'projektová']], places: [['Promenáda', Landmark], ['Park', Trees], ['Sportoviště', Dumbbell]] },
+  'garden-cooling-set': { dims: [['Sestava', 'na míru'], ['Instalace', 'snadná']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Rezidence', Home]] },
+  'city-cooling-zone': { dims: [['Rozsah', 'S / M / L'], ['Instalace', 'modulární']], places: [['Náměstí', Building2], ['Park', Trees], ['Škola', School]] },
+};
+
+function getCardMeta(product) {
+  const direct = PRODUCT_CARD_META[product.slug];
+  if (direct) return direct;
+  const category = (product._categoryName || '').toLowerCase();
+  const description = `${product.short_description || ''} ${product.description || ''}`.toLowerCase();
+  const places = [];
+  if (category.includes('urban') || description.includes('náměst')) places.push(['Město', Building2]);
+  if (description.includes('park')) places.push(['Park', Trees]);
+  if (description.includes('sport')) places.push(['Sportoviště', Dumbbell]);
+  if (description.includes('škol')) places.push(['Škola', School]);
+  if (description.includes('zahrad') || description.includes('terasa')) places.push(['Zahrada', Home]);
+  const uniquePlaces = places.filter((item, idx, arr) => arr.findIndex((x) => x[0] === item[0]) === idx).slice(0, 3);
+  return {
+    dims: [
+      ['Výška', product.coverage_area || 'projektová'],
+      ['Provedení', product.material?.includes('316') ? 'AISI 316L' : 'na míru'],
+    ],
+    places: uniquePlaces.length ? uniquePlaces : [['Veřejný prostor', Building2], ['Zahrada', Trees]],
+  };
+}
+
 function ProductCard({ product, i }) {
-  const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
-  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl mx-auto">
-    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" /><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" />{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary pl-1">Prohlédnout detail</p></div></Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 font-bold transition hover:bg-muted text-[hsl(var(--background))] text-sm bg-[hsl(var(--ring))]"><Zap size={13} /> Popsat projekt</Link>
+  const fallback = FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
+  const meta = getCardMeta(product);
+  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group mx-auto flex h-full w-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
+    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="flex flex-1 flex-col">
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted"><ProductHoverImage product={product} fallback={fallback} className="h-full w-full" overlay />{product.featured && <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary shadow-sm">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div>
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="min-h-[3.6rem] line-clamp-2 font-heading text-2xl leading-[1.2] text-foreground">{product.name}</h3>
+        <p className="mt-3 min-h-[2.75rem] line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
+
+        <div className="mt-5 grid grid-cols-2 gap-3 border-y border-slate-100 py-4">
+          {meta.dims.map(([label, value], idx) => {
+            const Icon = idx === 0 ? MoveHorizontal : Ruler;
+            return <div key={label} className="flex items-start gap-2.5"><span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-[#0b4860]"><Icon size={14} strokeWidth={1.7}/></span><span className="min-w-0"><span className="block text-[10px] font-mono uppercase tracking-wider text-slate-400">{label}</span><span className="mt-0.5 block text-xs font-semibold leading-snug text-slate-800">{value}</span></span></div>;
+          })}
+        </div>
+
+        <div className="mt-4 flex min-h-[44px] flex-wrap gap-2">
+          {meta.places.map(([label, Icon]) => <span key={label} className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-[11px] font-medium text-slate-600"><Icon size={12} strokeWidth={1.7} className="text-[#0b4860]"/>{label}</span>)}
+        </div>
+
+        <span className="mt-5 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground">Detail produktu <ArrowRight size={15} /></span>
+      </div>
+    </Link>
   </motion.article>;
 }
 
@@ -116,6 +220,7 @@ export default function Kolekce() {
   const [loading, setLoading] = useState(true);
   const [heightFilter, setHeightFilter] = useState('all');
   const [installFilter, setInstallFilter] = useState('all');
+  const [spaceFilter, setSpaceFilter] = useState('all');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [search, setSearch] = useState('');
 
@@ -138,9 +243,16 @@ export default function Kolekce() {
   }, []);
 
   const activeGroup = CATEGORY_GROUPS.find((g) => g.id === activeCategory);
-  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
+  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || spaceFilter !== 'all' || search.trim();
+  const clearFilters = () => {
+    setActiveCategory(null);
+    setHeightFilter('all');
+    setInstallFilter('all');
+    setSpaceFilter('all');
+    setSearch('');
+  };
 
-  const displayedProducts = products.
+  const displayedProducts = sortCatalogProducts(products.
   filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'].includes(p.name)).
   filter((p) => {
     if (activeGroup) {
@@ -149,6 +261,7 @@ export default function Kolekce() {
     }
     return true;
   }).
+  filter((p) => matchesSpace(p, spaceFilter)).
   filter((p) => heightFilter === 'all' || getHeightRange(p) === heightFilter).
   filter((p) => installFilter === 'all' || getInstallComplexity(p) === installFilter).
   filter((p) => {
@@ -157,7 +270,7 @@ export default function Kolekce() {
     return (p.name || '').toLowerCase().includes(q) ||
     (p.short_description || '').toLowerCase().includes(q) ||
     (p.description || '').toLowerCase().includes(q);
-  });
+  }), spaceFilter);
 
   return (
     <div className="min-h-screen bg-white">
@@ -169,6 +282,75 @@ export default function Kolekce() {
 
       {/* ── KATEGORIE (hover icon cards) ── */}
       <CategorySelector groups={CATEGORY_GROUPS} activeCategory={activeCategory} onSelect={setActiveCategory} />
+
+      {/* ── PRODUKTY (posunuto výš — hned pod výběrem kategorií) ── */}
+      <div id="catalog" className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Kompletní katalog</p><h2 className="mt-3 font-heading tracking-[-.02em] text-foreground text-4xl lg:text-5xl">
+            {activeGroup ? `${activeGroup.label}` : 'Všechna mlžítka a mlžné systémy'}
+          </h2><p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">Vyberte produkt podle prostoru a typu instalace. Filtry jsou navržené tak, aby se architekt, město i soukromý zákazník dostali k vhodné sestavě během několika sekund.</p></div>
+          {!loading && <span className="shrink-0 rounded-full border border-border bg-white px-4 py-2 font-mono text-xs text-muted-foreground shadow-sm">{displayedProducts.length} produktů</span>}
+        </div>
+
+        <div className="sticky top-[72px] z-30 mb-10 rounded-[1.5rem] border border-slate-200/80 bg-white/95 p-3 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-4">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
+            <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {
+                const active = spaceFilter === value;
+                return <button key={value} onClick={() => setSpaceFilter(value)} className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-all ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md shadow-slate-900/10' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950'}`}>
+                  <Icon size={15} strokeWidth={1.8}/>{label}
+                </button>;
+              })}
+            </div>
+
+            <div className="flex gap-2">
+              <label className="relative min-w-0 flex-1 xl:w-[280px] xl:flex-none">
+                <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-11 w-full rounded-full border border-slate-200 bg-slate-50/70 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-[#0b4860]/40 focus:bg-white focus:ring-4 focus:ring-[#0b4860]/5"/>
+              </label>
+              <button onClick={() => setShowAdvanced((v) => !v)} aria-expanded={showAdvanced} className={`inline-flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition ${showAdvanced || heightFilter !== 'all' || installFilter !== 'all' ? 'border-[#0b4860]/30 bg-[#0b4860]/5 text-[#0b4860]' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
+                <SlidersHorizontal size={16}/> <span className="hidden sm:inline">Filtry</span>
+              </button>
+            </div>
+          </div>
+
+          {showAdvanced && <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-3 grid gap-3 border-t border-slate-100 pt-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto]">
+            <label className="text-xs font-mono uppercase tracking-wider text-slate-400">
+              Výška
+              <select value={heightFilter} onChange={(e) => setHeightFilter(e.target.value)} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-sans font-medium normal-case tracking-normal text-slate-700 outline-none focus:border-[#0b4860]/40">
+                {HEIGHT_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            <label className="text-xs font-mono uppercase tracking-wider text-slate-400">
+              Instalace
+              <select value={installFilter} onChange={(e) => setInstallFilter(e.target.value)} className="mt-2 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm font-sans font-medium normal-case tracking-normal text-slate-700 outline-none focus:border-[#0b4860]/40">
+                {INSTALL_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            {hasAdvancedFilter && <button onClick={clearFilters} className="mt-auto inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-semibold text-slate-500 transition hover:border-slate-300 hover:text-slate-900"><X size={15}/> Zrušit filtry</button>}
+          </motion.div>}
+
+          {(spaceFilter !== 'all' || activeCategory || search.trim()) && <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <span className="font-mono uppercase tracking-wider text-slate-400">Aktivní:</span>
+            {spaceFilter !== 'all' && <span className="rounded-full bg-slate-100 px-3 py-1.5">{SPACE_FILTERS.find((f) => f.value === spaceFilter)?.label}</span>}
+            {activeGroup && <span className="rounded-full bg-slate-100 px-3 py-1.5">{activeGroup.label}</span>}
+            {search.trim() && <span className="rounded-full bg-slate-100 px-3 py-1.5">„{search.trim()}“</span>}
+            <button onClick={clearFilters} className="ml-auto inline-flex items-center gap-1 font-semibold text-[#0b4860] hover:underline"><X size={13}/> Vyčistit</button>
+          </div>}
+        </div>
+        {loading ?
+        <div className="flex justify-center py-24">
+            <Loader size={24} className="animate-spin text-slate-300" />
+          </div> :
+
+        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
+            {displayedProducts.length === 0 &&
+          <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
+          }
+          </div>
+        }
+      </div>
 
       {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
       <GatesSlider />
@@ -182,33 +364,6 @@ export default function Kolekce() {
       {/* ── VLASTNOSTI A VÝHODY ── */}
       <FeaturesBenefitsSection />
 
-      {/* ── PRODUKTY ── */}
-      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
-        <div className="flex items-center justify-between mb-10 lg:mb-12">
-          <p className="tracking-widest uppercase text-slate-400 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
-            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
-            {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
-          </p>
-          {activeCategory &&
-          <button onClick={() => setActiveCategory(null)} className="text-xs text-slate-400 hover:text-slate-900 transition-colors font-mono">
-              × Zobrazit vše
-            </button>
-          }
-        </div>
-        {loading ?
-        <div className="flex justify-center py-24">
-            <Loader size={24} className="animate-spin text-slate-300" />
-          </div> :
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-5">
-            {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
-            {displayedProducts.length === 0 &&
-          <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
-          }
-          </div>
-        }
-      </div>
-
       {/* ── ŽIVÁ UKÁZKA ── */}
       <LiveDemoSection />
 
@@ -217,7 +372,7 @@ export default function Kolekce() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou mlžítka a mlžné systémy určeny</p>
-            <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení podle prostoru a provozu.</h2>
+            <h2 className="font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">Řešení podle prostoru a provozu.</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {audienceSegments.map((seg, i) => {
@@ -228,7 +383,7 @@ export default function Kolekce() {
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3 bg-[hsl(var(--ring))] text-[hsl(var(--background))]">
                     <Icon size={16} className="text-[hsl(var(--card))]" />
                   </div>
-                  <h4 className="text-slate-900 mb-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{seg.label}</h4>
+                  <h4 className="mb-2 font-heading text-lg text-foreground">{seg.label}</h4>
                   <p className="text-slate-400 leading-relaxed text-sm">{seg.desc}</p>
                 </motion.div>);
 
@@ -238,25 +393,25 @@ export default function Kolekce() {
       </div>
 
       {/* ── CTA ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <div className="p-6 md:p-10 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[hsl(var(--secondary))]">
-          <div>
-            <p className="font-mono tracking-widest uppercase mb-2 text-lg text-[hsl(var(--background))]">NOVÝ KATALOG - KOLEKCE 2026</p>
-            <h3 className="text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-3xl font-semibold">Celá kolekce mlžítek v jednom PDF.</h3>
-            <p className="text-sm mt-1 text-[hsl(var(--background))]">Technické listy, výkresy, ceníky a referenční fotografie všech modelů mlžítek.</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF"
-            className="py-3.5 border border-slate-300 text-slate-900 text-sm font-medium rounded-full hover:bg-slate-100 transition-all whitespace-nowrap btn-metallic-mist px-7">Zaslat katalog na e-mail
+      
 
-            </a>
-            <Link to="/kontakt"
-            className="px-7 py-3.5 text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">Popsat projekt
 
-            </Link>
-          </div>
-        </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
     </div>);
 
 }

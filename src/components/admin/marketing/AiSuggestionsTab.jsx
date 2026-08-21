@@ -38,7 +38,8 @@ Na základě těchto dat navrhni 5 konkrétních, akčních marketingových dopo
           },
         },
       });
-      setSuggestions(res.suggestions || []);
+      const payload = /** @type {{ suggestions?: Array<{ title: string, description: string, priority: string }> }} */ (res);
+      setSuggestions(Array.isArray(payload?.suggestions) ? payload.suggestions : []);
     } finally {
       setLoading(false);
     }

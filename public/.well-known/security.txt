@@ -1,0 +1,3 @@
+Contact: mailto:security@mlzidla.cz
+Expires: 2027-01-01T00:00:00Z
+Preferred-Languages: en, cs

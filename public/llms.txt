@@ -1,13 +1,17 @@
 # Mlžítka, mlžné sochy a mlžné systémy — mlžidla.cz
 
-> Mlžidla.cz - Zakázkové mlžné sochy, mlžítka a venkovní chladicí mlžné systémy z nerezové oceli. Naše mlžítka ochlazují veřejné prostory, parky, náměstí, festivaly, zahrady a komerční prostory až o 9 °C pomocí jemné vodní mlhy (10–50 μm), aniž by zanechávaly vlhký povrch.
+> MLŽIDLA.cz by HolmTec navrhuje a vyrábí nerezová mlžítka, mlžné brány a venkovní chladicí prvky pro města, parky, náměstí, školy, sportoviště, gastro a zahrady. Hlavní produktové řady využívají nízkotlaké mlžení napojené na běžný vodovodní řad bez samostatného vysokotlakého čerpadla. Skutečný chladicí efekt a charakter mlhy závisí na konkrétním produktu, tlaku, průtoku, teplotě, vlhkosti a proudění vzduchu.
 
 ## Klíčové stránky
 
 - [Domů](https://mlzidla.cz/): Přehled značky Mlžidla.cz a hlavní produktové řady mlžítek.
+- [Smart Cooling](https://mlzidla.cz/smart-ovladani): Řízené ochlazovací body pro veřejný prostor — produkt, senzory, chytré ventily, provozní scénáře a data.
 - [Kolekce](https://mlzidla.cz/mlzidla-mlzitka): Celý katalog mlžných soch, mlžítek a mlžných systémů.
-- [Mlžiště](https://mlzidla.cz/mlhoviste): Mlžiště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
-- [Jak to funguje](https://mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního mlžení a technologie.
+- [Mlžítko](https://mlzidla.cz/mlzitko): Přehled principu, konstrukce a použití designových nerezových mlžítek.
+- [Mlhoviště](https://mlzidla.cz/mlhoviste): Mlhoviště a mlžné zóny na zakázku pro zahrady a veřejné prostory.
+- [Vodní mlha](https://mlzidla.cz/vodni-mlha): Praktické vysvětlení vodní mlhy, nízkotlakého mlžení a použití na zahradách, terasách a ve veřejném prostoru.
+- [Mlžné brány](https://mlzidla.cz/mlzne-brany): Nerezové průchozí mlžné brány pro města, parky, sportoviště a eventy.
+- [Jak to funguje](https://mlzidla.cz/jak-to-funguje): Fyzikální princip evaporačního a nízkotlakého mlžení.
 - [Poradce](https://mlzidla.cz/poradce): Interaktivní AI poradce a kalkulátor spotřeby vody a nákladů.
 - [Reference](https://mlzidla.cz/reference): Realizované projekty mlžítek a mlžidel po celé ČR a zahraničí.
 - [Blog](https://mlzidla.cz/blog): Články o technologii mlžení, inspiraci a realizacích.
@@ -16,7 +20,11 @@
 
 ## Produkty
 
-Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://www.mlzidla.cz/produkt/{slug}` se strukturovanými daty (schema.org Product), technickými parametry, materiálem (nerez AISI 304/316L), spotřebou vody a tlakem.
+Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, GATE 60, LINEA EL70, START, PARK, ARENA a BENDY 60. Každý produkt má vlastní stránku na `https://mlzidla.cz/produkt/{slug}` s technickými parametry, materiálem, spotřebou vody, tlakem a odpověďmi pro investory, města a projektanty. Parametry se řídí konkrétním produktovým listem; u aktuálních nízkotlakých řad je prioritou jednoduché napojení na vodovodní řad bez samostatné vysokotlaké technologie.
+
+## Smart Cooling
+
+Smart Cooling je koncept řízeného městského ochlazování. Propojuje konkrétní mlžítko, rozmístění v prostoru, hydrauliku, chytré ventily, časování, teplotní a další provozní podmínky a případná data o provozu. Cílem je spouštět systém pouze tehdy a tam, kde přináší smysluplný efekt. Typický výstup projektu: produkt + rozmístění + řízení + provozní scénář + servisní plán.
 
 ## Kontakt
 

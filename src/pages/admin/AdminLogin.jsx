@@ -5,12 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShieldCheck, Mail, Lock, Loader2 } from "lucide-react";
+import GoogleIcon from "@/components/GoogleIcon";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleGoogle = () => {
+    setError("");
+    base44.auth.loginWithProvider("google", `${window.location.origin}/admin`);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +49,10 @@ export default function AdminLogin() {
               {error}
             </div>
           }
+          <Button type="button" variant="outline" onClick={handleGoogle} className="mb-5 h-12 w-full border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white">
+            <GoogleIcon className="mr-2 h-5 w-5" /> Přihlásit přes Google
+          </Button>
+          <div className="relative mb-5"><div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10"/></div><div className="relative flex justify-center text-[10px] uppercase tracking-widest"><span className="bg-card_bg px-3 text-white/30">nebo heslem</span></div></div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-white/60">Email</Label>

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, Compass, Wifi, Wrench, Images, FileText } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
@@ -20,10 +18,11 @@ import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
+import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
+import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
+import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
-
-gsap.registerPlugin(ScrollToPlugin);
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 function Lightbox({ images, initialIndex, onClose }) {
@@ -39,35 +38,37 @@ function Lightbox({ images, initialIndex, onClose }) {
   }, [images.length, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center" onClick={onClose}>
-      <button onClick={onClose} aria-label="Zavřít galerii" className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-[#031d26]/96 p-3 backdrop-blur-2xl sm:p-6" onClick={onClose}>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(71,155,181,.16),transparent_35%),radial-gradient(circle_at_15%_80%,rgba(255,255,255,.05),transparent_28%)]" />
+      <button onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 sm:right-6 sm:top-6">
         <X size={18} />
       </button>
-      <div className="relative max-w-5xl w-full mx-6" onClick={(e) => e.stopPropagation()}>
-        <img src={images[idx]} alt={`Fotografie ${idx + 1}`} className="w-full max-h-[85vh] object-contain" />
-        {images.length > 1 &&
-        <>
-            <button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} aria-label="Předchozí fotografie" className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronLeft size={18} />
-            </button>
-            <button onClick={() => setIdx((i) => (i + 1) % images.length)} aria-label="Další fotografie" className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white hover:bg-black transition-all">
-              <ChevronRight size={18} />
-            </button>
-            <p className="text-center text-xs font-mono text-white/30 mt-4 tracking-widest">{idx + 1} / {images.length}</p>
-          </>
-        }
+      <div className="relative z-10 flex h-full w-full max-w-7xl flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
+        <div className="relative flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden rounded-[28px] border border-white/10 bg-black/15 p-2 sm:p-5">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.img key={images[idx]} src={images[idx]} alt={`Fotografie ${idx + 1}`} initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.01 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} className="max-h-[78vh] max-w-full object-contain" />
+          </AnimatePresence>
+          {images.length > 1 && <>
+            <button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} aria-label="Předchozí fotografie" className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/55 sm:left-5"><ChevronLeft size={19} /></button>
+            <button onClick={() => setIdx((i) => (i + 1) % images.length)} aria-label="Další fotografie" className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/55 sm:right-5"><ChevronRight size={19} /></button>
+          </>}
+        </div>
+        {images.length > 1 && <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>{images.slice(0, 12).map((src, i) => <button key={`${src}-${i}`} type="button" onClick={() => setIdx(i)} className={`relative aspect-[4/3] min-w-[72px] overflow-hidden rounded-xl border transition-all sm:min-w-[86px] ${idx === i ? 'border-white shadow-[0_0_0_2px_rgba(255,255,255,.15)]' : 'border-white/10 opacity-55 hover:opacity-90'}`}><img src={src} alt={`Náhled ${i + 1}`} className="h-full w-full object-cover" /></button>)}</div>}
+        <p className="mt-3 font-mono text-[10px] uppercase tracking-[.2em] text-white/45">{idx + 1} / {images.length}</p>
       </div>
-    </div>);
+    </motion.div>);
 }
 
 // ─── Tabs config ───────────────────────────────────────────────────────────────
 const TABS = [
-{ id: 'o-produktu', label: 'Příběh produktu' },
-{ id: 'technicke', label: 'Parametry' },
-{ id: 'benefity', label: 'Proč funguje' },
-{ id: 'instalace', label: 'Instalace a kotvení' },
-{ id: 'video', label: 'Video a galerie' },
-{ id: 'ke-stazeni', label: 'Dokumenty' }];
+  { id: 'o-produktu', label: 'Přehled', hint: 'Design a realizace', icon: Compass },
+  { id: 'technicke', label: 'Parametry', hint: 'Rozměry a provoz', icon: Ruler },
+  { id: 'benefity', label: 'Přínosy', hint: 'Komfort a provoz', icon: Sparkles },
+  { id: 'smart', label: 'Smart řízení', hint: 'Automatizace vody', icon: Wifi },
+  { id: 'instalace', label: 'Instalace', hint: 'Kotvení a příprava', icon: Wrench },
+  { id: 'video', label: 'Galerie', hint: 'Foto a video', icon: Images },
+  { id: 'ke-stazeni', label: 'Ke stažení', hint: 'Výkresy a podklady', icon: FileText }
+];
 
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -89,7 +90,27 @@ export default function ProduktDetail() {
   const [canScrollRight, setCanScrollRight] = useState(false);
 
   const handleReviewStats = (stats) => {
-    if (product) setSEO(getProductSEO(product, stats));
+    if (product) {
+      const baseSEO = getProductSEO(product, stats);
+      const faq = buildAnswers(product);
+      setSEO({
+        ...baseSEO,
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@graph': [
+            baseSEO.jsonLd,
+            {
+              '@type': 'FAQPage',
+              mainEntity: faq.map((item) => ({
+                '@type': 'Question',
+                name: item.q,
+                acceptedAnswer: { '@type': 'Answer', text: item.a }
+              }))
+            }
+          ]
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -109,7 +130,25 @@ export default function ProduktDetail() {
       const p = results[0];
       setProduct(p);
       trackProductView(p.name, p.slug, p.category_id);
-      setSEO(getProductSEO(p));
+      const baseSEO = getProductSEO(p);
+      const faq = buildAnswers(p);
+      setSEO({
+        ...baseSEO,
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@graph': [
+            baseSEO.jsonLd,
+            {
+              '@type': 'FAQPage',
+              mainEntity: faq.map((item) => ({
+                '@type': 'Question',
+                name: item.q,
+                acceptedAnswer: { '@type': 'Answer', text: item.a }
+              }))
+            }
+          ]
+        }
+      });
       const [related, nozzleResults, allProducts] = await Promise.all([
       p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
       base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
@@ -146,17 +185,17 @@ export default function ProduktDetail() {
     updateArrowVisibility();
   }, [product]);
 
-  const scrollToContact = () => {
-    if (contactRef.current) {
-      gsap.to(window, { duration: 0.9, scrollTo: { y: contactRef.current, offsetY: 80 }, ease: 'power2.inOut' });
-    }
+  const scrollToElement = (element, offset = 0) => {
+    if (!element) return;
+    const top = element.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
+
+  const scrollToContact = () => scrollToElement(contactRef.current, 80);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab.id);
-    if (tabsNavRef.current) {
-      gsap.to(window, { duration: 0.9, scrollTo: { y: tabsNavRef.current, offsetY: 64 }, ease: 'power2.inOut' });
-    }
+    scrollToElement(tabsNavRef.current, 64);
   };
 
   if (loading) return (
@@ -172,7 +211,8 @@ export default function ProduktDetail() {
       </div>
     </div>);
 
-  const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean);
+  // Keep the gallery clean: one URL only once, with the product thumbnail first.
+  const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [
@@ -200,42 +240,62 @@ export default function ProduktDetail() {
         allImages={allImages}
         onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
-      
+
+
+      {/* ═══════ OÁZA SIGNATURE EXPERIENCE ═══════ */}
+      {product.slug === 'oaza-aura-bendy' && (
+        <OazaSignatureSection
+          product={product}
+          allImages={allImages}
+          onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
+          onPoptat={scrollToContact}
+          onShowSmart={() => handleTabClick(TABS[3])}
+        />
+      )}
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
-      <div ref={tabsNavRef} className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row sm:items-center">
-          <div className="relative flex-1 min-w-0 order-1">
+      <div ref={tabsNavRef} className="sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 sm:px-6 lg:px-10">
+          <div className="flex shrink-0 items-center border-r border-slate-200 pr-3 sm:pr-5 lg:pr-6">
+            <Link to="/mlzidla-mlzitka" className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-2 text-xs font-mono uppercase tracking-widest text-slate-400 transition-colors hover:text-slate-900">
+              <ArrowLeft size={12} /> <span className="hidden xs:inline">Zpět</span>
+            </Link>
+            <span className="ml-2 hidden max-w-[180px] truncate font-heading text-sm font-medium text-slate-900 md:inline lg:max-w-[240px]">{product.name}</span>
+          </div>
+          <div className="relative min-w-0 flex-1">
             {canScrollLeft &&
             <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
-            className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-r from-white via-white/95 to-transparent lg:hidden">
+            className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-9 bg-gradient-to-r from-white via-white/95 to-transparent">
               <ChevronLeft size={16} className="text-slate-500" />
             </button>
             }
             <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-            className="flex gap-2 sm:gap-6 lg:gap-8 overflow-x-auto flex-row whitespace-nowrap py-3 sm:py-0 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-              {TABS.map((t) =>
-              <button key={t.id} onClick={() => handleTabClick(t)}
-              className={`relative py-2.5 px-4 sm:py-5 sm:px-0 text-sm font-medium whitespace-nowrap transition-colors shrink-0 rounded-full sm:rounded-none min-h-[44px] sm:min-h-0 flex items-center ${activeTab === t.id ? 'bg-slate-900 text-white sm:bg-transparent sm:text-slate-900' : 'bg-slate-100 text-slate-500 sm:bg-transparent hover:text-slate-700'}`}>
-                  {t.label}
-                  {activeTab === t.id &&
-                <motion.div layoutId="produkt-tab-underline" className="hidden sm:block absolute left-0 right-0 -bottom-px h-0.5 bg-slate-900" />
-                }
-                </button>
-              )}
+            className="flex gap-2 overflow-x-auto py-2.5 pr-2 [&::-webkit-scrollbar]:hidden sm:gap-2.5" style={{ scrollbarWidth: 'none' }}>
+              {TABS.map((t) => {
+                const Icon = t.icon;
+                const isActive = activeTab === t.id;
+                return (
+                  <button key={t.id} onClick={() => handleTabClick(t)}
+                    aria-pressed={isActive}
+                    className={`group relative flex min-w-[148px] shrink-0 items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all sm:min-w-[158px] ${isActive ? 'border-[#0b4860]/25 bg-[#eef8fb] text-[#0b4860] shadow-[0_8px_24px_rgba(11,72,96,.08)]' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'}`}>
+                    <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${isActive ? 'border-[#0b4860]/15 bg-white text-[#0b4860]' : 'border-slate-200 bg-slate-50 text-slate-500 group-hover:bg-white'}`}>
+                      <Icon size={16} strokeWidth={1.8} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[13px] font-semibold leading-tight">{t.label}</span>
+                      <span className={`mt-1 block text-[10px] leading-tight ${isActive ? 'text-[#0b4860]/65' : 'text-slate-400'}`}>{t.hint}</span>
+                    </span>
+                    {isActive && <motion.span layoutId="produkt-tab-marker" className="absolute inset-x-4 -bottom-[3px] h-[3px] rounded-full bg-[#0b4860]" />}
+                  </button>
+                );
+              })}
             </div>
             {canScrollRight &&
             <button type="button" onClick={() => scrollTabs(160)} aria-label="Posunout záložky vpravo"
-            className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-8 bg-gradient-to-l from-white via-white/95 to-transparent lg:hidden">
+            className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-9 bg-gradient-to-l from-white via-white/95 to-transparent">
               <ChevronRight size={16} className="text-slate-500" />
             </button>
             }
-          </div>
-          <div className="flex items-center gap-3 py-2.5 sm:py-4 border-t sm:border-t-0 sm:border-r border-slate-200 sm:pr-6 lg:pr-8 mr-2 shrink-0 order-2 sm:order-first">
-            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-1.5 text-xs font-mono tracking-widest text-slate-400 hover:text-slate-900 transition-colors uppercase">
-              <ArrowLeft size={12} /> Zpět
-            </Link>
-            <span className="hidden sm:inline text-sm font-heading font-medium text-slate-900 whitespace-nowrap">{product.name}</span>
           </div>
         </div>
       </div>
@@ -250,6 +310,7 @@ export default function ProduktDetail() {
             </>
           }
           {activeTab === 'benefity' && <BenefityTab product={product} />}
+          {activeTab === 'smart' && <SmartValveProductSection embedded product={product} onPoptat={scrollToContact} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
           {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}
           {activeTab === 'ke-stazeni' && <DownloadsTab product={product} />}
@@ -261,17 +322,20 @@ export default function ProduktDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           {nextTab ?
           <button onClick={() => handleTabClick(nextTab)}
-          className="inline-flex items-center gap-2 font-medium text-slate-600 hover:text-slate-900 transition-colors uppercase text-sm">
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-2 font-medium text-slate-600 transition-colors hover:text-slate-900 text-sm">
               Pokračovat: {nextTab.label} <ArrowRight size={15} />
             </button> :
-          <span />
+          <span className="text-sm text-slate-400">Máte vše potřebné k rozhodnutí?</span>
           }
-          
-
-
-          
+          <button type="button" onClick={scrollToContact}
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#0b4860] px-5 py-2.5 text-sm font-bold text-white shadow-[0_8px_22px_rgba(11,72,96,.16)] transition-all hover:bg-[#08394c]">
+            Poptat {product.name} <ArrowRight size={15} />
+          </button>
         </div>
       </div>
+
+      {/* ═══════ AEO / FAQ ═══════ */}
+      <ProductAEOSection product={product} />
 
       {/* ═══════ REVIEWS ═══════ */}
       <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />

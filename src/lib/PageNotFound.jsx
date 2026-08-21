@@ -1,12 +1,18 @@
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
+import { setSEO } from '@/lib/seo';
 
 
 export default function PageNotFound({}) {
     const location = useLocation();
     const pageName = location.pathname.substring(1);
+
+    useEffect(() => {
+        setSEO({ title: 'Stránka nenalezena', description: 'Požadovaná stránka nebyla nalezena.', robots: 'noindex, follow' });
+    }, [location.pathname]);
 
     const { data: authData, isFetched } = useQuery({
         queryKey: ['user'],

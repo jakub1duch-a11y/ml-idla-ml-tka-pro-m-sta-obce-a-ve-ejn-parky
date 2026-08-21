@@ -1,71 +1,61 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { AlertTriangle } from 'lucide-react';
+import { Building2, Leaf, ShieldCheck } from 'lucide-react';
 
 const ROWS = [
-  { label: 'Způsob uchycení', permanent: 'Chemické kotvy M10 do betonu', mobile: 'Zemní vrut do zahrady' },
-  { label: 'Přípojka vody', permanent: 'Závit R1"', mobile: 'Standardní zahradní hadice' },
-  { label: 'Vizuální prvek', permanent: 'Skrytá patka pod terénem', mobile: 'Viditelný vrut / rychlospojka' },
-  { label: 'Typické využití', permanent: 'Náměstí, admin. centra', mobile: 'Soukromé zahrady, trávníky' },
+  { label: 'Kotvení', permanent: 'Projektové kotvení podle podkladu', mobile: 'Zemní vrut nebo jiné sezónní řešení' },
+  { label: 'Napojení vody', permanent: 'Přípojka podle hydraulického návrhu', mobile: 'Jednodušší napojení podle konkrétního modelu' },
+  { label: 'Vedení', permanent: 'Skryté nebo integrované podle projektu', mobile: 'Důraz na rychlou montáž a demontáž' },
+  { label: 'Typické použití', permanent: 'Náměstí, parky, promenády, veřejné areály', mobile: 'Zahrady, terasy a sezónní instalace' },
 ];
 
 export default function InstallationComparisonSection() {
   return (
-    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100 bg-slate-50">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2">1. Trvalé kotvení (Profesionální)</h2>
-          <ul className="text-sm text-slate-500 space-y-1.5 list-disc list-inside">
-            <li>Ideální pro veřejná prostranství a náměstí.</li>
-            <li>Využívá skrytou patku pod úrovní terénu pro nerušený design.</li>
-          </ul>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-          <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight mb-2">2. Mobilní instalace (Zahradní)</h2>
-          <ul className="text-sm text-slate-500 space-y-1.5 list-disc list-inside">
-            <li>Optimální pro soukromé zahrady.</li>
-            <li>Umožňuje snadné přemístění a sezónní využití bez nutnosti betonáže.</li>
-          </ul>
-        </motion.div>
+    <section className="border-t border-border bg-muted/35 py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mb-10 max-w-3xl">
+          <p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Instalace</p>
+          <h2 className="mt-4 font-heading text-4xl tracking-[-.03em] text-foreground lg:text-5xl">Trvalé i sezónní řešení má vlastní logiku.</h2>
+          <p className="mt-5 text-base leading-7 text-muted-foreground">Kotvení, napojení a servisní přístup se nevolí jednou univerzální šablonou. Přizpůsobují se produktu, podkladu, provozu a požadované míře mobility.</p>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          <motion.article initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-3xl border border-border bg-card p-7 lg:p-8">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-secondary"><Building2 size={18} /></div>
+            <p className="mt-6 font-mono text-[10px] uppercase tracking-[.16em] text-secondary">01 / Trvalé kotvení</p>
+            <h3 className="mt-2 font-heading text-3xl">Veřejný a architektonický prostor</h3>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">Kotvení a přípojky se koordinují s projektem stavby, povrchy a servisním přístupem. Cílem je čistý detail a dlouhodobý provoz.</p>
+          </motion.article>
+
+          <motion.article initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }} className="rounded-3xl border border-border bg-card p-7 lg:p-8">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-secondary"><Leaf size={18} /></div>
+            <p className="mt-6 font-mono text-[10px] uppercase tracking-[.16em] text-secondary">02 / Sezónní instalace</p>
+            <h3 className="mt-2 font-heading text-3xl">Zahrada, terasa a flexibilní provoz</h3>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">U vybraných modelů lze použít rychlejší a přemístitelné kotvení. Přesný způsob závisí na konstrukci výrobku a podkladu.</p>
+          </motion.article>
+        </div>
+
+        <div className="mt-6 overflow-hidden rounded-3xl border border-border bg-card">
+          <div className="hidden grid-cols-[.7fr_1fr_1fr] border-b border-border bg-muted/50 px-6 py-4 text-xs font-semibold text-muted-foreground sm:grid">
+            <span>Parametr</span><span>Trvalá instalace</span><span>Sezónní / mobilní</span>
+          </div>
+          {ROWS.map((row) => (
+            <div key={row.label} className="grid gap-3 border-b border-border px-6 py-5 last:border-0 sm:grid-cols-[.7fr_1fr_1fr] sm:items-center">
+              <span className="font-mono text-[10px] uppercase tracking-[.12em] text-secondary">{row.label}</span>
+              <span className="text-sm text-foreground">{row.permanent}</span>
+              <span className="text-sm text-muted-foreground">{row.mobile}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex gap-4 rounded-2xl border border-border bg-background p-6">
+          <ShieldCheck size={19} className="mt-0.5 shrink-0 text-secondary" />
+          <div>
+            <h3 className="font-heading text-xl text-foreground">Použití konstrukce a bezpečnost</h3>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">Mlžítko je navržené jako chladicí a architektonický prvek. Pokud má být výrobek současně používán jako herní, lezecký, sedací nebo jinak zatěžovaný prvek, musí se takové použití řešit samostatně v návrhu a posouzení konkrétního projektu.</p>
+          </div>
+        </div>
       </div>
-
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="bg-white border border-slate-200 rounded-2xl overflow-hidden mb-8">
-        <p className="text-center text-xs font-mono tracking-widest uppercase text-slate-400 py-4 border-b border-slate-200">
-          Technické srovnání požadavků pro oba typy instalace
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
-          <div>
-            {ROWS.map((r) => (
-              <div key={r.label} className="flex items-center justify-between px-6 py-3 border-b border-slate-100 last:border-0">
-                <span className="text-xs text-slate-400">{r.label}</span>
-                <span className="text-sm text-slate-900 font-medium text-right">{r.permanent}</span>
-              </div>
-            ))}
-          </div>
-          <div>
-            {ROWS.map((r) => (
-              <div key={r.label} className="flex items-center justify-between px-6 py-3 border-b border-slate-100 last:border-0">
-                <span className="text-xs text-slate-400">{r.label}</span>
-                <span className="text-sm text-slate-900 font-medium text-right">{r.mobile}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="bg-red-50 border border-red-200 rounded-2xl p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle size={18} className="text-red-500" />
-          <h3 className="text-red-700 font-medium text-sm">Bezpečnost a normy</h3>
-        </div>
-        <div className="space-y-3 text-sm text-red-700/90">
-          <p><span className="font-medium">Není určeno jako herní prvek:</span> Mlžítko nesplňuje požadavky na zařízení dětských hřišť dle normy ČSN EN 1176.</p>
-          <p><span className="font-medium">Omezení konstrukce:</span> Zařízení je určeno výhradně k mlžení; konstrukce není dimenzována pro lezení nebo jiné zatěžování osobami.</p>
-          <p><span className="font-medium">Záruční podmínky:</span> Případné poškození způsobené nevhodným používáním (např. jako herní prvek) není kryto zárukou.</p>
-        </div>
-      </motion.div>
-    </div>
+    </section>
   );
 }

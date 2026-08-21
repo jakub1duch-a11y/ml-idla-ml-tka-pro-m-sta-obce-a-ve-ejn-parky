@@ -40,7 +40,7 @@ export default function AdminPoptavky() {
         id: c.id, entity: 'ContactInquiry', source: 'Kontakt', name: c.name, email: c.email, phone: '',
         company: '', product: c.product_id, message: c.message, status: c.status, created_date: c.created_date,
       })),
-    ].sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+    ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime());
     setItems(normalized);
     setLoading(false);
   };

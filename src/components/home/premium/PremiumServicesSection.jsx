@@ -14,17 +14,17 @@ const SERVICES = [
 
 export default function PremiumServicesSection() {
   return (
-    <section className="bg-background py-20 border-y border-border">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mb-14 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Jak spolupracujeme</p>
-            <h2 className="max-w-xl font-heading text-4xl tracking-tight text-foreground md:text-5xl">Od prvního nápadu po servis, který nikdy nespí</h2>
+    <section className="border-y border-border bg-background py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="mb-12 flex flex-col gap-5 text-center sm:mb-14 sm:text-left lg:flex-row lg:items-end lg:justify-between">
+          <div className="mx-auto sm:mx-0">
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:text-sm">Jak spolupracujeme</p>
+            <h2 className="mx-auto max-w-2xl font-heading text-[clamp(2rem,7vw,3.25rem)] font-semibold leading-[1.08] tracking-[-0.035em] text-foreground sm:mx-0">Od prvního nápadu po servis</h2>
           </div>
-          <p className="max-w-sm text-sm text-muted-foreground">Každý projekt provázíme od návrhu přes výrobu až po dlouhodobou péči — ať jde o jedno mlžítko na terase, nebo mlžnou bránu na náměstí.</p>
+          <p className="mx-auto max-w-xl text-base leading-7 text-muted-foreground sm:mx-0 sm:max-w-md sm:text-left">Každý projekt provázíme od návrhu přes výrobu až po dlouhodobou péči — ať jde o jedno mlžítko na terase, nebo mlžnou bránu na náměstí.</p>
         </div>
 
-        <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {SERVICES.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -34,18 +34,22 @@ export default function PremiumServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06, duration: 0.5 }}
-                className="border-t border-border pt-6">
-                <Icon size={26} className="mb-4 text-secondary" strokeWidth={1.6} />
-                <h3 className="mb-2 text-xl font-semibold text-foreground [font-family:'Plus_Jakarta_Sans',_sans-serif]">{service.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+                className="group flex h-full items-start gap-4 rounded-2xl border border-border bg-card px-5 py-6 text-left transition-colors duration-300 hover:border-secondary/40 sm:gap-5 sm:px-6 sm:py-7 lg:px-7 lg:py-8">
+                <div className="mt-0.5 flex size-14 shrink-0 items-center justify-center rounded-2xl border border-secondary/20 bg-secondary/5 text-secondary">
+                  <Icon className="size-7" strokeWidth={1.7} aria-hidden="true" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="mb-2 font-heading text-xl font-semibold leading-tight tracking-[-0.02em] text-foreground sm:text-[1.35rem]">{service.title}</h3>
+                  <p className="m-0 max-w-sm text-[0.95rem] leading-7 text-muted-foreground sm:text-base">{service.desc}</p>
+                </div>
               </motion.div>);
 
           })}
         </div>
 
-        <div className="mt-14 flex justify-center">
-          <Link to="/poptavka" className="btn-metallic-mist inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold">
-            Popsat váš projekt <ArrowRight size={16} />
+        <div className="mt-12 flex justify-center sm:mt-14">
+          <Link to="/poptavka" className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 px-7 py-3.5 text-base font-semibold">
+            Popsat váš projekt <ArrowRight size={17} aria-hidden="true" />
           </Link>
         </div>
       </div>

@@ -43,7 +43,7 @@ export default function PremiumHeroSection() {
         ) : (
           /* Fallback static image if video fails */
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg"
+            src="/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp"
             alt="Mlžné sochy v městském prostředí"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -90,7 +90,7 @@ export default function PremiumHeroSection() {
                 }}
               >
                 Nerezová mlžítka z <span className="text-cyan-300">české výroby</span>,<br />
-                která <span style={{ fontStyle: 'italic' }}>chladí bez čerpadla.</span>
+                s <span style={{ fontStyle: 'italic' }}>nízkotlakou mlhou bez vysokotlakého čerpadla.</span>
               </motion.h1>
 
               {/* Tagline */}

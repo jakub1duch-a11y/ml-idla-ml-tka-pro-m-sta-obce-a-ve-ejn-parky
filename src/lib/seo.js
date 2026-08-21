@@ -3,9 +3,11 @@
  * Open Graph and Twitter Card tags dynamically for each page/product.
  */
 
-const SITE_NAME = 'Mlžidla.cz - MLŽIDLA® / Mlžítka HolmTec';
+import { LOCALE_CONFIG, ROUTE_MAP, getLanguageAlternates, getRouteKeyFromPath } from './i18n.js';
+
+const SITE_NAME = 'MLŽIDLA.cz';
 const BASE_URL = 'https://mlzidla.cz';
-const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg';
+const DEFAULT_IMAGE = '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp';
 export const GOOGLE_MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Horn%C3%AD+Star%C3%A9+M%C4%9Bsto+698%2C+Trutnov';
 export const GOOGLE_MAPS_EMBED_URL = 'https://www.google.com/maps?q=Horn%C3%AD+Star%C3%A9+M%C4%9Bsto+698%2C+Trutnov&output=embed';
 
@@ -23,54 +25,128 @@ function setOg(property, content) {
   el.setAttribute('content', content);
 }
 
+function normalizeCanonicalPath(path) {
+  if (!path) return '/';
+  const rawPath = path.startsWith('http') ? new URL(path).pathname : path;
+  const cleanPath = rawPath.split('?')[0].split('#')[0] || '/';
+  return cleanPath === '/' ? '/' : cleanPath.replace(/\/+$/, '');
+}
+
 function setCanonical(path) {
+  const canonicalPath = normalizeCanonicalPath(path);
   let el = document.querySelector('link[rel="canonical"]');
   if (!el) { el = document.createElement('link'); el.setAttribute('rel', 'canonical'); document.head.appendChild(el); }
-  el.setAttribute('href', BASE_URL + path);
+  el.setAttribute('href', `${BASE_URL}${canonicalPath}`);
+}
+
+function setLanguageAlternates(alternates = []) {
+  document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => el.remove());
+  alternates.forEach(({ hreflang, path }) => {
+    if (!hreflang || !path) return;
+    const el = document.createElement('link');
+    el.setAttribute('rel', 'alternate');
+    el.setAttribute('hreflang', hreflang);
+    el.setAttribute('href', `${BASE_URL}${path}`);
+    document.head.appendChild(el);
+  });
+}
+
+function setOgLocale(locale = 'cs') {
+  const config = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
+  setOg('og:locale', config.ogLocale);
+  document.querySelectorAll('meta[property="og:locale:alternate"]').forEach((el) => el.remove());
+  Object.values(LOCALE_CONFIG)
+    .filter((item) => item.code !== locale)
+    .forEach((item) => {
+      const el = document.createElement('meta');
+      el.setAttribute('property', 'og:locale:alternate');
+      el.setAttribute('content', item.ogLocale);
+      document.head.appendChild(el);
+    });
 }
 
 function setJsonLd(data) {
   let el = document.getElementById('json-ld-seo');
-  if (!el) { el = document.createElement('script'); el.id = 'json-ld-seo'; el.type = 'application/ld+json'; document.head.appendChild(el); }
+  if (!el) {
+    const script = document.createElement('script');
+    script.id = 'json-ld-seo';
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+    el = script;
+  }
   el.textContent = JSON.stringify(data);
 }
 
-// Generuje automatické drobečkové schéma pro Google z aktuální cesty
-function generateBreadcrumbsJsonLd(path, title) {
-  if (!path || path === '/') return null;
-  const segments = path.split('/').filter(Boolean);
-  const items = [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Hlavní stránka",
-      "item": BASE_URL
-    }
-  ];
-  
-  if (segments.length === 1) {
-    items.push({
-      "@type": "ListItem",
-      "position": 2,
-      "name": title || segments[0],
-      "item": BASE_URL + path
-    });
-  }
-  
+function clearJsonLd() {
+  document.getElementById('json-ld-seo')?.remove();
+}
+
+const BREADCRUMB_HOME = {
+  cs: 'Hlavní stránka',
+  en: 'Home',
+  de: 'Startseite',
+  pl: 'Strona główna',
+  sk: 'Domov',
+  it: 'Home',
+};
+
+// Lokalizované drobečkové schéma pro Google.
+function generateBreadcrumbsJsonLd(path, title, locale = 'cs') {
+  if (!path || path === ROUTE_MAP.home[locale]) return null;
+  const homePath = ROUTE_MAP.home[locale] || '/';
   return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": items
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: BREADCRUMB_HOME[locale] || BREADCRUMB_HOME.en,
+        item: `${BASE_URL}${homePath === '/' ? '' : homePath}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: title || path.split('/').filter(Boolean).at(-1),
+        item: BASE_URL + path,
+      },
+    ],
   };
 }
 
-export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots }) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-  const img = image || DEFAULT_IMAGE;
+/**
+ * @param {{
+ *   title?: string,
+ *   description?: string,
+ *   keywords?: string,
+ *   image?: string,
+ *   canonicalPath?: string,
+ *   type?: string,
+ *   jsonLd?: any,
+ *   geo?: { placename?: string, region?: string },
+ *   robots?: string,
+ *   locale?: 'cs'|'en'|'de'|'pl'|'sk'|'it',
+ *   alternates?: Array<{hreflang: string, path: string}>
+ * }} options
+ */
+export function setSEO({ title, description, keywords, image, canonicalPath, type = 'website', jsonLd, geo, robots, locale = 'cs', alternates = [] }) {
+  // Nezdvojujeme značku v titulku u presetů, které už obsahují „MLŽIDLA.cz“.
+  // Je to důležité i pro Google Ads landing-page message match: reklamní a vstupní titulek má zůstat čistý a čitelný.
+  const normalizedTitle = String(title || '').trim();
+  const fullTitle = normalizedTitle
+    ? (normalizedTitle.toLowerCase().includes(SITE_NAME.toLowerCase()) ? normalizedTitle : `${normalizedTitle} | ${SITE_NAME}`)
+    : SITE_NAME;
+  const imagePath = image || DEFAULT_IMAGE;
+  const img = imagePath.startsWith('http') ? imagePath : `${BASE_URL}${imagePath}`;
+  const localeConfig = LOCALE_CONFIG[locale] || LOCALE_CONFIG.cs;
+  const resolvedCanonicalPath = canonicalPath || (typeof window !== 'undefined' ? window.location.pathname : '/');
+  const routeKey = resolvedCanonicalPath ? getRouteKeyFromPath(resolvedCanonicalPath) : null;
+  const resolvedAlternates = alternates.length ? alternates : (routeKey ? getLanguageAlternates(routeKey) : []);
 
+  document.documentElement.lang = localeConfig.htmlLang;
   document.title = fullTitle;
   setMeta('description', description);
-  if (keywords) setMeta('keywords', keywords);
+  setMeta('keywords', keywords || '');
   setMeta('robots', robots || 'index, follow');
 
   // Open Graph
@@ -79,8 +155,8 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setOg('og:image', img);
   setOg('og:type', type);
   setOg('og:site_name', SITE_NAME);
-  setOg('og:locale', 'cs_CZ');
-  if (canonicalPath) setOg('og:url', BASE_URL + canonicalPath);
+  setOgLocale(locale);
+  setOg('og:url', BASE_URL + normalizeCanonicalPath(resolvedCanonicalPath));
 
   // Twitter
   setMeta('twitter:card', 'summary_large_image');
@@ -88,14 +164,23 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   setMeta('twitter:description', description);
   setMeta('twitter:image', img);
 
-  if (canonicalPath) setCanonical(canonicalPath);
+  setCanonical(resolvedCanonicalPath);
+  setLanguageAlternates(resolvedAlternates);
   
-  // Kombinace vlastních a automatických JSON-LD strukturovaných dat
-  const breadcrumbs = generateBreadcrumbsJsonLd(canonicalPath, title);
-  if (jsonLd) {
+  // Kombinace vlastních a automatických JSON-LD strukturovaných dat.
+  // Pokud stránka dodá vlastní @graph, zachováme ho a doplníme BreadcrumbList.
+  const breadcrumbs = generateBreadcrumbsJsonLd(resolvedCanonicalPath, title, locale);
+  if (jsonLd && breadcrumbs) {
+    const graph = jsonLd['@graph']
+      ? [...jsonLd['@graph'], breadcrumbs]
+      : [jsonLd, breadcrumbs];
+    setJsonLd({ '@context': 'https://schema.org', '@graph': graph });
+  } else if (jsonLd) {
     setJsonLd(jsonLd);
   } else if (breadcrumbs) {
     setJsonLd(breadcrumbs);
+  } else {
+    clearJsonLd();
   }
 
   // Místní SEO značky
@@ -187,16 +272,52 @@ export const SEO_PAGES = {
     keywords: 'mlžítka katalog, mlžné brány, designová mlžítka, mlžné skulptury, mlžné systémy, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70',
     canonicalPath: '/mlzidla-mlzitka',
   },
+  mestskaKolekce: {
+    title: 'Městská mlžítka pro města, obce a veřejný prostor',
+    description: 'Nerezová městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, školy, hřiště a sportoviště. Projektová podpora, Smart řízení a servis.',
+    keywords: 'městská mlžítka, mlžítka pro města, mlžítka pro obce, ochlazování měst, městské ochlazování, mlžná zóna',
+    canonicalPath: '/mestske-mlzitka',
+  },
+  zahradniKolekce: {
+    title: 'Zahradní mlžítka pro zahrady, terasy a pergoly',
+    description: 'Designová nerezová zahradní mlžítka pro zahrady, terasy, pergoly a venkovní wellness. Nízkotlaké řešení na vodovodní řad a volitelné Smart ovládání.',
+    keywords: 'zahradní mlžítko, mlžítka na zahradu, mlžítko na terasu, zahradní mlžení, vodní mlha na zahradu, vodní mlha na terasu',
+    canonicalPath: '/zahradni-mlzitka',
+  },
+  zakazkovaKolekce: {
+    title: 'Zakázková mlžítka a mlžné sochy na míru',
+    description: 'Zakázková nerezová mlžítka, mlžné sochy a atypické mlžné instalace podle identity místa, architektonického návrhu nebo vlastního tvaru.',
+    keywords: 'zakázkové mlžítko, mlžítko na míru, mlžná socha, designové mlžítko, atypické mlžítko, mlžná instalace',
+    canonicalPath: '/zakazkova-mlzitka',
+  },
+  mlzitko: {
+    title: 'Mlžítko — designové nerezové mlžítko bez čerpadla',
+    description: 'Designová nerezová mlžítka a mlžné sochy pro města, zahrady a veřejný prostor. Nízkotlaké mlžení na vodovodní řad, Smart ovládání a výroba na míru.',
+    keywords: 'mlžítko, mlžítka, mlzitko, mlzitka, designové mlžítko, nerezové mlžítko',
+    canonicalPath: '/mlzitko',
+  },
   mlhoviste: {
-    title: 'Mlhoviště pro dětská hřiště, terasy a veřejné prostory',
-    description: 'Mlžné systémy - Mlhoviště START, PARK a ARENA pro hřiště, restaurační terasy a prostranství. Ochlazení až o 10 °C, bezpečné pro děti, nerezová ocel.',
-    keywords: 'mlhoviště, mlžná hřiště, mlžné systémy, terasy, vodní mlha pro děti, ochlazení prostranství',
+    title: 'Mlhoviště pro města, zahrady a dětská hřiště',
+    description: 'Nerezová mlhoviště a mlžné zóny pro města, parky, dětská hřiště, zahrady a terasy. Nízkotlaké řešení, Smart řízení a zakázková výroba.',
+    keywords: 'mlhoviště, mlhoviste, mlhoviště na zahradu, dětské mlhoviště, mobilní mlhoviště, mlžná zóna',
     canonicalPath: '/mlhoviste',
   },
+  vodniMlha: {
+    title: 'Vodní mlha pro zahrady, terasy a veřejný prostor',
+    description: 'Vodní mlha pro ochlazení zahrad, teras, pergol, parků a veřejného prostoru. Princip, nízkotlaké mlžení, trysky, spotřeba a Smart řízení.',
+    keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu',
+    canonicalPath: '/vodni-mlha',
+  },
+  mlzneBrany: {
+    title: 'Mlžné brány pro města, parky a eventy',
+    description: 'Designové nerezové mlžné brány pro města, parky, sportoviště a eventy. Nízkotlaké mlžení, zakázkové rozměry, projektová podpora a Smart řízení.',
+    keywords: 'mlžná brána, mlžné brány, mlzna brana, mlžící brána, ochlazovací brána',
+    canonicalPath: '/mlzne-brany',
+  },
   jakToFunguje: {
-    title: 'Jak funguje mlžení? Princip evaporace a technologie HolmTec',
-    description: 'Vysvětlujeme fyziku vysokotlakého mlžení: kapičky 10–50 μm se odpařují ve vzduchu a absorbují teplo. Ochlazení až o 10 °C bez tvoření mokrých louží.',
-    keywords: 'jak funguje mlžení, evaporace mlha, vysokotlaká atomizace, ochlazení evaporací, fyzika mlžení, mlžná technika',
+    title: 'Jak funguje vodní mlha a nízkotlaké mlžení',
+    description: 'Jak funguje vodní mlha, evaporace, trysky a nízkotlaké mlžení na běžný vodovodní řad. Vysvětlení tlaku, průtoku, spotřeby a podmínek pro účinné ochlazení.',
+    keywords: 'jak funguje mlžení, vodní mlha, nízkotlaké mlžení, evaporace, mlžicí trysky, ochlazení vodní mlhou',
     canonicalPath: '/jak-to-funguje',
   },
   oNas: {
@@ -236,26 +357,26 @@ export const SEO_PAGES = {
     canonicalPath: '/podpora',
   },
   mestOobce: {
-    title: 'Mlžítka pro města a obce — Ochlazení veřejných prostranství',
-    description: 'Certifikovaná mlžítka, mlžné brány a mlhoviště pro moderní města a obce. Boj proti městským tepelným ostrovům, dotační poradenství, nerezová konstrukce.',
+    title: 'Mlžítka pro města a obce | MLŽIDLA.cz',
+    description: 'Designová mlžítka a Smart Cooling pro náměstí, parky a veřejný prostor. Nerezové řešení na míru, reference a projektová podpora.',
     keywords: 'mlžítka pro obce, městské ochlazování, urbanismus, adaptace na sucho, ochlazení náměstí, tepelné ostrovy',
     canonicalPath: '/kategorie/mesta-obce',
   },
   parkyHriste: {
     title: 'Mlhoviště pro parky a dětská hřiště — Bezpečné mlžení bez chemie',
-    description: 'Bezpečné mlžné systémy pro parky a hřiště. Používáme výhradně potravinářskou nerezovou ocel AISI 316L, provoz je hygienicky čistý a bezpečný pro nejmenší děti.',
+    description: 'Nerezové nízkotlaké mlžné systémy pro parky a dětská hřiště. Konstrukce z AISI 316L, provoz bez čerpadla a řešení navržené pro bezpečný a snadno udržovatelný veřejný prostor.',
     keywords: 'mlhoviště dětské hřiště, parkové mlžení, herní vodní prvky, bezpečné ochlazení dětí',
     canonicalPath: '/kategorie/parky-hriste',
   },
   koupaliste: {
     title: 'Mlhoviště pro koupaliště a aquaparky — Komfortní chladicí zóny',
-    description: 'Designové mlžné systémy LINEA CE70 a Y-ARMIST pro areály koupališť, aquaparků a bazénů. Zvyšují atraktivitu areálu a nabízejí rychlé osvěžení bez přehřívání.',
-    keywords: 'mlhoviště koupaliště, mlžení aquapark, chladicí zóna bazén, vysokotlaké trysky koupaliště',
+    description: 'Designové nízkotlaké mlžné systémy pro koupaliště, aquaparky a bazénové areály. Nerezové řešení bez čerpadla, napojené na běžný vodovodní řad, pro komfortní venkovní ochlazení.',
+    keywords: 'mlhoviště koupaliště, mlžení aquapark, chladicí zóna bazén, nízkotlaké mlžení koupaliště',
     canonicalPath: '/kategorie/koupaliste',
   },
   architekti: {
-    title: 'Pro architekty a projektanty — 3D modely, DWG a technická dokumentace',
-    description: 'Kompletní podklady pro architektonické ateliéry a projektanty. Ke stažení: 2D/3D DWG výkresy, BIM modely, texty do zadávacích dokumentací a konzultace stavební připravenosti.',
+    title: 'Mlžítka pro architekty | BIM, DWG a 3D podklady',
+    description: 'Projektové podklady pro architekty a krajináře: 2D/3D, BIM dle produktu, technické listy, vizualizace a konzultace od studie po realizaci.',
     keywords: 'BIM modely mlžítka, DWG výkresy mlžná brána, podklady pro architekty, technická specifikace HolmTec',
     canonicalPath: '/kategorie/architekti',
   },
@@ -272,8 +393,8 @@ export const SEO_PAGES = {
     canonicalPath: '/kategorie/eventy',
   },
   outdoor: {
-    title: 'Mlžítka pro zahrady a venkovní prostory — Outdoor kolekce',
-    description: 'Designová mlžítka pro zahrady, terasy a venkovní posezení. Nerezové skulptury HolmTec, které osvěží soukromý outdoor prostor bez nutnosti klimatizace.',
+    title: 'Mlžítka na zahradu a terasu | MLŽIDLA.cz',
+    description: 'Designová mlžítka pro zahrady, terasy a venkovní wellness. Nerezové provedení, Smart ovládání, vizualizace a návrh vhodné konfigurace.',
     keywords: 'mlžítka zahrada, venkovní mlžení, zahradní mlžná skulptura, ochlazení terasy, outdoor mlžítka',
     canonicalPath: '/kategorie/outdoor-zahrady',
   },
@@ -285,7 +406,7 @@ export const SEO_PAGES = {
   },
   deti: {
     title: 'Mlhoviště pro školy, školky a dětská hřiště — bezpečné mlžení',
-    description: 'Bezpečná mlhoviště pro základní školy, mateřské školky a dětská hřiště. Potravinářská nerez, jemná mlha bez tlakového rizika, certifikováno pro dětské prostory.',
+    description: 'Nízkotlaká mlhoviště pro základní školy, mateřské školy a dětská hřiště. Nerez AISI 316L, jemné mlžení bez čerpadla a řešení navržené pro dětské a veřejné prostory.',
     keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
     canonicalPath: '/kategorie/skoly-skolky-deti',
   },

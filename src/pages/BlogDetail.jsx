@@ -21,12 +21,21 @@ const CATEGORY_LABELS = {
   inspirace: 'Inspirace',
   realizace: 'Realizace',
   technika: 'Technologie',
-  novinky: 'Novinky',
+  novinky: 'Novinky'
 };
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
   return new Date(dateStr).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function cleanArticleContent(content) {
+  if (!content) return '';
+  return content.
+  replace(/\*{1,3}(?=\S)|(?<=\S)\*{1,3}/g, '').
+  replace(/^\s*[✕✖❌×]\s*/gm, '').
+  replace(/\s+[✕✖❌×]\s*$/gm, '').
+  trim();
 }
 
 export default function BlogDetail() {
@@ -44,7 +53,7 @@ export default function BlogDetail() {
       const all = await base44.entities.BlogPost.list().catch(() => []);
       const found = (all || []).find((p) => p.slug === slug || p.id === slug);
 
-      if (!found) { setNotFound(true); return; }
+      if (!found) {setNotFound(true);return;}
 
       setPost(found);
       trackBlogPostView(found.title, found.slug || found.id, found.category);
@@ -60,8 +69,8 @@ export default function BlogDetail() {
   if (loading) return (
     <div className="min-h-screen bg-white flex items-center justify-center pt-28">
       <Loader size={28} className="animate-spin text-slate-300" />
-    </div>
-  );
+    </div>);
+
 
   if (notFound || !post) return (
     <div className="min-h-screen bg-white flex items-center justify-center pt-28">
@@ -69,45 +78,47 @@ export default function BlogDetail() {
         <p className="text-slate-400 text-lg mb-4">Článek nenalezen.</p>
         <Link to="/blog" className="text-slate-900 hover:underline">← Zpět na blog</Link>
       </div>
-    </div>
-  );
+    </div>);
+
 
   const ctaLabel = post.cta_label || 'Nezávazná poptávka';
   const ctaLink = post.cta_link || '/poptavka';
+  const cleanContent = cleanArticleContent(post.content);
 
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen bg-white">
       {/* Hero image */}
-      {post.image_url && (
-        <div className="relative h-72 lg:h-[460px] overflow-hidden">
+      {post.image_url &&
+      <div className="relative h-[420px] overflow-hidden sm:h-[500px] lg:h-[620px]">
           <img src={post.image_url} alt={post.title} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/88 via-[#041c28]/50 to-[#041c28]/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-[#041c28]/20" />
         </div>
-      )}
+      }
 
-      <div className="max-w-3xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Meta */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className={post.image_url ? '-mt-20 relative z-10 pb-4' : 'pt-8 pb-4'}>
-          <div className="flex flex-wrap items-center gap-3 mb-6">
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className={post.image_url ? '-mt-28 relative z-10 pb-6 max-w-5xl' : 'pt-24 pb-6 max-w-5xl'}>
+          <div className="flex flex-wrap items-center gap-3 mb-6 text-[hsl(var(--card))] bg-[hsl(var(--card))]">
             <span className="px-3 py-1.5 bg-slate-900 text-white rounded-full text-xs font-mono tracking-widest uppercase">
               {CATEGORY_LABELS[post.category] || post.category || 'Článek'}
             </span>
-            {post.published_date && (
-              <span className="text-xs font-mono text-slate-400">{formatDate(post.published_date)}</span>
+            {post.published_date &&
+            <span className="text-xs font-mono text-slate-400">{formatDate(post.published_date)}</span>
+            }
+            {(post.tags || []).map((t) =>
+            <span key={t} className="text-xs font-mono text-slate-400 border border-slate-200 rounded-full px-2.5 py-1">#{t}</span>
             )}
-            {(post.tags || []).map((t) => (
-              <span key={t} className="text-xs font-mono text-slate-400 border border-slate-200 rounded-full px-2.5 py-1">#{t}</span>
-            ))}
           </div>
 
-          <h1 className="font-heading font-normal text-[clamp(1.75rem,5vw,2.75rem)] text-slate-900 tracking-tight leading-[1.15] mb-4">
+          <h1 className="text-slate-900 tracking-[-.035em] leading-[1.03] mb-5 text-3xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
             {post.title}
           </h1>
-          {post.perex && (
-            <p className="text-slate-500 text-base sm:text-lg leading-relaxed font-normal mb-2 border-l-2 border-slate-300 pl-5">
+          {post.perex &&
+          <p className="max-w-3xl text-slate-600 text-base sm:text-lg lg:text-xl leading-relaxed font-normal mb-2 border-l-2 border-secondary pl-5">
               {post.perex}
             </p>
-          )}
+          }
         </motion.div>
 
         {/* Share */}
@@ -117,9 +128,9 @@ export default function BlogDetail() {
         <ArticleQuickLinks />
 
         {/* Content — supports technical images, expert quotes (blockquote), paragraphs */}
-        {post.content ? (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-            className="prose max-w-none pb-4 text-[15px] leading-[1.75] sm:text-base lg:text-[17px]
+        {post.content ?
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
+        className="prose prose-slate max-w-none pb-6 text-[15px] leading-[1.8] sm:text-base lg:text-[17px] lg:grid lg:grid-cols-12 lg:gap-x-10 [&>*]:lg:col-span-8 [&>*]:lg:col-start-3 [&>img]:lg:col-span-10 [&>img]:lg:col-start-2 [&>div]:lg:col-span-8 [&>div]:lg:col-start-3
               prose-headings:font-heading prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-slate-900
               prose-p:text-slate-600 prose-p:font-normal prose-p:leading-[1.75]
               prose-li:text-slate-600 prose-li:font-normal
@@ -130,15 +141,25 @@ export default function BlogDetail() {
               [&_img]:rounded-2xl [&_img]:my-8 [&_img]:w-full [&_img]:max-h-[520px] [&_img]:object-cover [&_img]:border [&_img]:border-slate-200
               [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:font-heading [&_h2]:font-normal [&_h2]:text-xl [&_h2]:leading-tight sm:[&_h2]:text-2xl lg:[&_h2]:text-[1.75rem]
               [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:font-heading [&_h3]:font-normal [&_h3]:text-lg [&_h3]:leading-snug sm:[&_h3]:text-xl lg:[&_h3]:text-2xl">
-            {/<\/?[a-z][\s\S]*>/i.test(post.content) ? (
-              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
-            ) : (
-              <ReactMarkdown>{post.content}</ReactMarkdown>
-            )}
-          </motion.div>
-        ) : (
-          <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
-        )}
+
+
+
+
+
+
+
+
+
+          
+            {/<\/?[a-z][\s\S]*>/i.test(cleanContent) ?
+          <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(cleanContent) }} /> :
+
+          <ReactMarkdown>{cleanContent}</ReactMarkdown>
+          }
+          </motion.div> :
+
+        <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
+        }
 
         <ArticleProductSlider />
         <ArticleLinkMap />
@@ -164,34 +185,34 @@ export default function BlogDetail() {
       </div>
 
       {/* Related */}
-      {related.length > 0 && (
-        <div className="bg-slate-50 border-t border-slate-200 py-16">
+      {related.length > 0 &&
+      <div className="bg-slate-50 border-t border-slate-200 py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-6">Mohlo by vás zajímat</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {related.map((r) => (
-                <Link key={r.id} to={`/blog/${r.slug || r.id}`}
-                  className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all bg-white">
-                  {r.image_url && (
-                    <div className="aspect-[4/3] overflow-hidden">
+              {related.map((r) =>
+            <Link key={r.id} to={`/blog/${r.slug || r.id}`}
+            className="group block rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all bg-white">
+                  {r.image_url &&
+              <div className="aspect-[4/3] overflow-hidden">
                       <img src={r.image_url} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
-                  )}
+              }
                   <div className="p-5">
                     <span className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">{CATEGORY_LABELS[r.category] || r.category}</span>
                     <h3 className="text-slate-900 font-light text-sm leading-snug group-hover:text-slate-600 transition-colors line-clamp-2">{r.title}</h3>
                   </div>
                 </Link>
-              ))}
+            )}
             </div>
           </div>
         </div>
-      )}
+      }
 
       {/* Instagram follow section */}
       <InstagramFeedSection />
 
       <LeadMagnetPopup />
-    </div>
-  );
+    </div>);
+
 }

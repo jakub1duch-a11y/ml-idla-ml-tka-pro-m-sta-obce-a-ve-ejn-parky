@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackContactFormSubmit } from '@/lib/ga4';
 
-const ANCHORING_PHOTO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/150f3566d_IMG_20260623_124103.jpg';
+const ANCHORING_PHOTO_URL = '/media/optimized/150f3566d_IMG_20260623_124103.webp';
 
 const SMART_VARIANTS = [
 { value: 'none', label: 'Bez smart řízení' },
@@ -20,21 +21,22 @@ export default function ProductContactForm({ productName }) {
   const submit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const smartLabel = SMART_VARIANTS.find((v) => v.value === form.smartVariant)?.label;
-    const extras = [
-    form.smartVariant !== 'none' && `Smart řízení: ${smartLabel}`,
-    form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'].
-    filter(Boolean).join(', ');
-    await base44.entities.ContactInquiry.create({
-      name: form.name,
-      email: form.email,
-      message: `[${productName}] ${form.message || 'Zájem o produkt'} | ${extras}`,
-      description: form.phone ? `Tel: ${form.phone}` : ''
-    }).catch(() => {});
-    setSent(true);
-    setSending(false);
-    if (typeof window !== 'undefined' && window.trackHolmTec) {
-      window.trackHolmTec('contact_form_submit', { product_name: productName, form_type: 'produkt' });
+    try {
+      const smartLabel = SMART_VARIANTS.find((v) => v.value === form.smartVariant)?.label;
+      const extras = [
+        form.smartVariant !== 'none' && `Smart řízení: ${smartLabel}`,
+        form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'
+      ].filter(Boolean).join(', ');
+      const created = await base44.entities.ContactInquiry.create({
+        name: form.name,
+        email: form.email,
+        message: `[${productName}] ${form.message || 'Zájem o produkt'} | ${extras}`,
+        description: form.phone ? `Tel: ${form.phone}` : ''
+      });
+      trackContactFormSubmit('produkt', productName, created?.id || '');
+      setSent(true);
+    } finally {
+      setSending(false);
     }
   };
 

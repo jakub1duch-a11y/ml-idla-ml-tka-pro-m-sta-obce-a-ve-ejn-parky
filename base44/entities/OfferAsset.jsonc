@@ -1,0 +1,93 @@
+{
+  "name": "OfferAsset",
+  "type": "object",
+  "properties": {
+    "inquiry_id": {
+      "type": "string",
+      "description": "ID zdrojov\u00e9 popt\u00e1vky"
+    },
+    "inquiry_type": {
+      "type": "string",
+      "enum": [
+        "poptavka",
+        "contact"
+      ]
+    },
+    "project_order_id": {
+      "type": "string",
+      "description": "Voliteln\u00fd odkaz na obchodn\u00ed nab\u00eddku"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL souboru nebo obr\u00e1zku"
+    },
+    "file_name": {
+      "type": "string",
+      "description": "Zobrazovan\u00fd n\u00e1zev souboru"
+    },
+    "file_type": {
+      "type": "string",
+      "description": "MIME typ nebo p\u0159\u00edpona"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "source_photo",
+        "source_document",
+        "product_reference",
+        "generated_visualization",
+        "quote_pdf",
+        "presentation",
+        "presentation_pdf",
+        "other"
+      ],
+      "default": "other"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "selected_for_offer": {
+      "type": "boolean",
+      "default": false
+    },
+    "generated_by_ai": {
+      "type": "boolean",
+      "default": false
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "inquiry_id",
+    "file_url",
+    "file_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import ContactSection from '@/components/home/ContactSection';
 import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
 import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 import FadeIn from '@/components/common/FadeIn';
+import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
 
 export default function Home() {
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Home() {
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
       <FadeIn><MistVideoShowcase /></FadeIn>
+      <AIProjectDesignerSection />
       <FadeIn><InstagramFeedSection /></FadeIn>
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>

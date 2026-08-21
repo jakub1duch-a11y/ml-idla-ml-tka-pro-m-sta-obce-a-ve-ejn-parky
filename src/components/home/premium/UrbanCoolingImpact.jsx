@@ -20,13 +20,13 @@ export default function UrbanCoolingImpact() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-primary py-24 text-primary-foreground">
+    <section className="relative overflow-hidden bg-primary py-16 text-primary-foreground sm:py-20 lg:py-24">
       <WindMistOverlay />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 sm:gap-14 lg:grid-cols-2 lg:gap-16">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-white/70">Dopad na veřejný prostor</p>
-            <h2 className="mb-5 font-heading text-4xl tracking-tight text-white md:text-5xl">Vraťte lidem důvod zůstat venku i v horku</h2>
+            <h2 className="mb-5 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-white md:text-4xl">Vraťte lidem důvod zůstat venku i v horku</h2>
             <p className="max-w-md text-base leading-relaxed text-white/80">Mlha snižuje teplotu ve svém okolí v řádu sekund. Je to vidět na náměstí i na terase — lidé se vrací tam, kde je jim příjemně.</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -43,9 +43,9 @@ export default function UrbanCoolingImpact() {
             </Link>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="mx-auto flex h-64 w-64 flex-col items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur">
-            <span className="font-heading text-7xl tabular-nums text-white">{temperature}°</span>
-            <span className="mt-2 font-mono text-xs uppercase tracking-widest text-white/60">pocitová teplota v mlze</span>
+          <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mx-auto flex h-56 w-56 flex-col items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 text-center backdrop-blur sm:h-64 sm:w-64">
+            <span className="font-heading text-6xl tabular-nums text-white sm:text-7xl">{temperature}°</span>
+            <span className="mt-2 max-w-[16rem] font-mono text-[10px] uppercase leading-4 tracking-[.14em] text-white/70 sm:text-xs sm:tracking-widest">POCITOVÁ TEPLOTA V MLZE</span>
           </motion.div>
         </div>
       </div>

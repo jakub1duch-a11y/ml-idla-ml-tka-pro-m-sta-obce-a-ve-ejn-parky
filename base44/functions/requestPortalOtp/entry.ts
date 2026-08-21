@@ -1,21 +1,39 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
+const normalizeQuote = (value: unknown) => String(value || '').trim().toUpperCase();
+const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const body = await req.json().catch(() => ({}));
-    const email = (body.email || '').trim().toLowerCase();
+    const quoteNumber = normalizeQuote(body.quote_number);
+    let email = normalizeEmail(body.email);
 
-    if (!email) return Response.json({ error: 'Email is required' }, { status: 400 });
+    if (!quoteNumber && !email) {
+      return Response.json({ error: 'Email or quote number is required' }, { status: 400 });
+    }
 
-    const inqs = await base44.asServiceRole.entities.ContactInquiry.filter({ email });
-    const projs = await base44.asServiceRole.entities.ProjectOrder.filter({ client_email: email });
+    let hasAccessTarget = false;
 
-    if (inqs.length > 0 || projs.length > 0) {
+    if (quoteNumber) {
+      const projects = await base44.asServiceRole.entities.ProjectOrder.filter({ quote_number: quoteNumber });
+      const project = projects?.[0];
+      if (project?.client_email) {
+        email = normalizeEmail(project.client_email);
+        hasAccessTarget = true;
+      }
+    } else {
+      const contactInquiries = await base44.asServiceRole.entities.ContactInquiry.filter({ email });
+      const poptavky = await base44.asServiceRole.entities.Poptavka.filter({ email }).catch(() => []);
+      const projects = await base44.asServiceRole.entities.ProjectOrder.filter({ client_email: email });
+      hasAccessTarget = contactInquiries.length > 0 || poptavky.length > 0 || projects.length > 0;
+    }
+
+    if (hasAccessTarget && email) {
       const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-      // Remove any previous pending codes for this email
       const existing = await base44.asServiceRole.entities.PortalOtp.filter({ email });
       for (const rec of existing) {
         await base44.asServiceRole.entities.PortalOtp.delete(rec.id);
@@ -25,25 +43,25 @@ Deno.serve(async (req) => {
 
       await base44.asServiceRole.integrations.Core.SendEmail({
         to: email,
-        subject: 'Ověřovací kód - HolmTec Můj Projekt',
+        subject: quoteNumber ? `Přístup k nabídce ${quoteNumber} | MLŽIDLA®` : 'Ověřovací kód | MLŽIDLA® Můj projekt',
         body: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#e2e8f0;padding:32px;border-radius:12px;">
-            <h1 style="color:#22d3ee;font-size:22px;margin:0;">Ověřovací kód</h1>
-            <p style="color:#64748b;font-size:13px;margin:6px 0 24px;">HolmTec — Můj Projekt</p>
-            <p style="line-height:1.7;">Váš ověřovací kód pro přístup k projektům:</p>
-            <div style="margin:24px 0;padding:16px;background:#131c27;border-radius:8px;border-left:3px solid #22d3ee;text-align:center;">
-              <p style="font-size:32px;font-weight:bold;letter-spacing:4px;color:#22d3ee;margin:0;">${otpCode}</p>
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d2d38;color:#e6f4f7;padding:32px;border-radius:18px;">
+            <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#61d5e5;margin-bottom:8px;">MLŽIDLA® by HolmTec</div>
+            <h1 style="font-size:24px;margin:0;color:#ffffff;">Přístup do Můj projekt</h1>
+            <p style="color:#a8c4ca;font-size:13px;line-height:1.7;margin:10px 0 24px;">${quoteNumber ? `Ověřujeme přístup k cenové nabídce <strong style="color:#ffffff;">${quoteNumber}</strong>.` : 'Ověřujeme přístup k vašim projektům a cenovým nabídkám.'}</p>
+            <div style="margin:24px 0;padding:18px;background:#113b47;border:1px solid #245966;border-radius:14px;text-align:center;">
+              <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8bcfda;margin-bottom:8px;">Ověřovací kód</div>
+              <p style="font-size:34px;font-weight:bold;letter-spacing:6px;color:#61d5e5;margin:0;">${otpCode}</p>
             </div>
-            <p style="line-height:1.7;color:#cbd5e1;">Kód platí 10 minut. Nezadávejte jej nikomu jinému.</p>
-            <p style="margin-top:24px;padding-top:20px;border-top:1px solid #1e2a3a;color:#475569;font-size:12px;">
-              HolmTec s.r.o. | Mlžné sochy & instalace | holmtec.cz
-            </p>
+            <p style="line-height:1.7;color:#cfe4e8;font-size:13px;">Kód platí 10 minut. Po ověření uvidíte dokumenty, vizualizace, stav nabídky a další kroky projektu.</p>
+            <p style="margin-top:24px;padding-top:20px;border-top:1px solid #24505c;color:#7998a0;font-size:11px;line-height:1.6;">Kód nikomu nepřeposílejte. Pokud jste o přístup nežádali, tento e-mail ignorujte.</p>
           </div>
         `,
       });
     }
 
-    return Response.json({ ok: true });
+    // Z bezpečnostních důvodů neprozrazujeme, zda číslo nabídky/e-mail existuje.
+    return Response.json({ ok: true, access_mode: quoteNumber ? 'quote' : 'email' });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

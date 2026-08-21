@@ -6,6 +6,8 @@ import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import { trackFunnelStep } from '@/lib/ga4';
 
 const USE_CASES = [
 { emoji: '🌿', title: 'Soukromé zahrady', desc: 'Mlžný prvek jako dominanta zahrady — chladivá mlha mezi zelení, klidná atmosféra i v letních vedrech.' },
@@ -20,15 +22,19 @@ export default function Outdoor() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.outdoor);
+    trackFunnelStep('residential', 'landing_view', 'Outdoor a zahrady');
+    const preferredSlugs = ['garden-cooling-set', 'aura-mlzitko', 'aura-garden-duo', 'mlzitko-bendy', 'mlzitko-mrak', 'mlzitko-volavka'];
     base44.entities.Product.list().catch(() => []).then((p) => {
-      setProducts((p || []).slice(0, 6));
+      const all = p || [];
+      const selected = preferredSlugs.map((slug) => all.find((product) => product.slug === slug)).filter(Boolean);
+      setProducts(selected.length ? selected : all.filter((product) => product.featured).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="min-h-screen bg-white">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/da5bb1cbb_mlzitko-mrak-oblak.MOV"
+        <video src="/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm"
         className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">
@@ -46,14 +52,42 @@ export default function Outdoor() {
               Pro soukromé a rezidenční zahrady, terasy i venkovní wellness navrhujeme nerezová mlžítka jako přirozenou součást architektury. Tvar, rozměr i způsob řízení přizpůsobíme konkrétnímu prostoru.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Probrat záměr <ArrowRight size={15} />
+              <a href="#poptavka" onClick={() => trackFunnelStep('residential', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+                Navrhnout řešení pro zahradu <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)
               </a>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 bg-white" data-analytics-section="residential-funnel">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              ['01', 'Pošlete fotografii nebo popis', 'Stačí terasa, zahrada nebo odpočinková zóna, přibližná plocha a způsob využití.'],
+              ['02', 'Vybereme vhodný model', 'Doporučíme SINGLE, DUO nebo sestavu a podle potřeby doplníme Smart ovládání.'],
+              ['03', 'Připravíme návrh', 'Dostanete vizuální představu, technické doporučení a podklady pro nezávaznou nabídku.'],
+            ].map(([number, heading, text]) => (
+              <div key={number} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <span className="font-mono text-[11px] tracking-widest text-slate-400">{number}</span>
+                <h2 className="mt-4 text-lg font-semibold text-slate-900">{heading}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 font-light">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('residential', 'visualizer_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
+              Vyzkoušet AI vizualizaci <ArrowRight size={14} />
+            </Link>
+            <Link to="/zahradni-mlzitka" onClick={() => trackFunnelStep('residential', 'catalog_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+              Zahradní kolekce
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -80,13 +114,13 @@ export default function Outdoor() {
               Ovládejte mlhu<br /><span style={{ fontStyle: 'italic' }}>z telefonu.</span>
             </h2>
             <p className="text-slate-500 leading-relaxed font-light mb-6">
-              Smart aplikace sleduje teplotu a vlhkost v reálném čase. Nastavte automatický start při 25 °C nebo spusťte mlžení jedním klepnutím — odkudkoliv.
+              Smart ovládání může řídit mlžení podle času, teploty a nastaveného provozního režimu. Systém tak nemusí běžet zbytečně a lze jej přizpůsobit běžnému rytmu zahrady nebo terasy.
             </p>
             <div className="grid grid-cols-3 gap-3">
               {[
-              { val: 'WiFi + BT', label: 'Dálkové ovládání' },
-              { val: '0,1–0,3 l/min', label: 'Spotřeba vody' },
-              { val: 'Auto', label: 'Start při 25 °C' }].
+              { val: 'WiFi', label: 'Dálkové ovládání' },
+              { val: 'Smart', label: 'Automatizace provozu' },
+              { val: 'Auto', label: 'Čas / teplota' }].
               map((s) =>
               <div key={s.label} className="text-center p-4 rounded-xl bg-white border border-slate-200">
                   <p className="text-slate-900 font-medium text-sm">{s.val}</p>
@@ -134,16 +168,23 @@ export default function Outdoor() {
         }
       </section>
 
-      <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24">
+      <SegmentReferenceShowcase
+        segment="residential"
+        eyebrow="Reálné instalace"
+        title="Inspirace ze zahrad a pobytových venkovních prostor."
+        referenceIds={['6a72947ef1579cba611a2f6b', '6a480c0da87022c6c9559115', '6a480e05664f948152611f5f']}
+      />
+
+      <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24" data-analytics-section="residential-inquiry">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme návrh pro vaši zahradu.</h3>
-            <p className="text-slate-500 text-sm mb-6">Konzultace a vizualizace zdarma · Odpovídáme do 24 h</p>
+            <p className="text-slate-500 text-sm mb-6">Pošlete základní informace o prostoru. Doporučíme vhodný produkt, konfiguraci a další postup pro návrh i cenovou nabídku.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>
           </div>
-          <CategoryInquiryForm category="Outdoor a zahrady" projectScope="private" />
+          <CategoryInquiryForm category="Outdoor a zahrady" projectScope="private" analyticsSegment="residential" />
         </div>
       </section>
       <B2BPortfolioNavigation current="Outdoor a zahrady" />

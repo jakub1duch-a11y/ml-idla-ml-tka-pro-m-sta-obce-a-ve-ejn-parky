@@ -5,19 +5,21 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Palette, Download, Mail, FileText, Box, Ruler } from 'lucide-react';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import { trackFunnelStep } from '@/lib/ga4';
 
 const DOWNLOADS = [
-  { icon: Box, title: 'BIM modely zdarma', desc: 'Revit, ArchiCAD, SketchUp. Kompletní 3D modely všech mlžných produktů včetně kotvicích detailů a technických parametrů.', tag: 'Revit · ArchiCAD · SketchUp' },
-  { icon: Ruler, title: 'Zakázkové rozměry', desc: 'Každou mlžnou sochu neboli mlžítko vyrobíme na míru vašemu projektu. Výška, šířka, povrchová úprava — přesně dle specifikace.', tag: 'mlžítka na míru' },
-  { icon: FileText, title: 'Technická podpora', desc: 'Inženýr Holmtec je vám k dispozici od studie po realizaci. Konzultace zdarma, revize výkresů, dozor při montáži.', tag: 'Konzultace zdarma' },
+  { icon: Box, title: 'Projektové podklady', desc: '2D/3D a BIM podklady podle konkrétního produktu, technické listy, rozměry, kotvení a připojovací požadavky.', tag: 'DWG · 3D · BIM' },
+  { icon: Ruler, title: 'Zakázkové provedení', desc: 'Rozměry, geometrie, povrch a rozmístění trysek lze přizpůsobit návrhu a charakteru konkrétního prostoru.', tag: 'Výroba na míru' },
+  { icon: FileText, title: 'Technická konzultace', desc: 'Podpora od studie po realizační dokumentaci: stavební připravenost, napojení, kotvení, servisní přístup a Smart řízení.', tag: 'Projektová podpora' },
 ];
 
 const REASONS = [
-  '3D BIM modely pro Revit, ArchiCAD, SketchUp',
-  'Technické listy: zatížení, kotvení, přípojky',
-  'Vzorník povrchových úprav: Polished, Brushed, PVD',
-  'Konzultace s inženýrem — od studie po realizaci',
-  'Projektová dokumentace pro stavební povolení',
+  '2D/3D a BIM podklady podle konkrétního produktu',
+  'Technické listy: rozměry, kotvení, přípojky a provoz',
+  'Povrchové úpravy a materiálové varianty podle projektu',
+  'Konzultace od studie po realizační dokumentaci',
+  'Podklady pro koordinaci profesí a stavební připravenost',
 ];
 
 const GALLERY = [
@@ -42,7 +44,10 @@ const FINISHES = [
 ];
 
 export default function Architekti() {
-  useEffect(() => { setSEO(SEO_PAGES.architekti); }, []);
+  useEffect(() => {
+    setSEO(SEO_PAGES.architekti);
+    trackFunnelStep('architects', 'landing_view', 'Pro architekty');
+  }, []);
   return (
     <div className="min-h-screen bg-white">
 
@@ -67,15 +72,47 @@ export default function Architekti() {
               Jsme technickým partnerem architektů, krajinářů a designérů. Připravíme BIM modely, technické listy, konzultaci i podklady potřebné od studie po realizaci.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="mailto:obchod1@holmtec.cz?subject=Architektonická spolupráce - poptávka podkladů"
+              <a href="#projektova-konzultace"
+                onClick={() => trackFunnelStep('architects', 'consultation_click', 'hero')}
                 className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Partnerský program <Download size={15} />
+                Konzultovat projekt <ArrowRight size={15} />
               </a>
-              <Link to="/poptavka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
-                BIM modely k dispozici
+              <Link to="/ke-stazeni"
+                onClick={() => trackFunnelStep('architects', 'downloads_click', 'hero')}
+                className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
+                Projektové podklady <Download size={15} />
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Konverzní cesta pro projektanty */}
+      <section className="border-b border-slate-200 bg-white" data-analytics-section="architects-funnel">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              ['01', 'Pošlete záměr', 'Typ prostoru, lokalita, fáze projektu a orientační rozsah. Stačí základní informace.'],
+              ['02', 'Doplníme podklady', 'Doporučíme vhodný produkt, konfiguraci, technické podklady a podle potřeby vizualizaci.'],
+              ['03', 'Koordinujeme řešení', 'Pomůžeme s napojením, kotvením, Smart řízením a návazností na realizační dokumentaci.'],
+            ].map(([number, heading, text]) => (
+              <div key={number} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <span className="font-mono text-[11px] tracking-widest text-slate-400">{number}</span>
+                <h2 className="mt-4 text-lg font-semibold text-slate-900">{heading}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 font-light">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('architects', 'visualizer_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
+              Otevřít AI vizualizaci <ArrowRight size={14} />
+            </Link>
+            <Link to="/ke-stazeni" onClick={() => trackFunnelStep('architects', 'downloads_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+              Projektové podklady <Download size={14} />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -152,6 +189,13 @@ export default function Architekti() {
         </div>
       </section>
 
+      <SegmentReferenceShowcase
+        segment="architects"
+        eyebrow="Reference pro projektanty"
+        title="Od autorského konceptu po provozní detail."
+        referenceIds={['6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f', '6a480c0da87022c6c9559115']}
+      />
+
       {/* Co nabízíme */}
       <section className="bg-slate-50 border-y border-slate-200 py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -184,9 +228,9 @@ export default function Architekti() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Materiály a povrchy</p>
         <h2 className="text-slate-900 text-3xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-          Nerez AISI 316<br /><span style={{ fontStyle: 'italic' }}>ve čtyřech úpravách.</span>
+          Nerezové provedení<br /><span style={{ fontStyle: 'italic' }}>pro konkrétní projekt.</span>
         </h2>
-        <p className="text-slate-500 max-w-2xl font-light mb-10">Vyberte povrchovou úpravu, která ladí s materiálovým konceptem vašeho projektu. Vzorník zašleme na vyžádání zdarma.</p>
+        <p className="text-slate-500 max-w-2xl font-light mb-10">Materiálovou jakost a povrch volíme podle konkrétního produktu, prostředí a požadavků projektu. K dispozici jsou broušené, leštěné i dekorativní varianty.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {FINISHES.map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
@@ -199,7 +243,7 @@ export default function Architekti() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
+      <section id="projektova-konzultace" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24" data-analytics-section="architects-consultation">
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Proberme technické řešení vašeho návrhu.</h3>
@@ -214,7 +258,7 @@ export default function Architekti() {
               </a>
             </div>
           </div>
-          <CategoryInquiryForm category="Architekti" projectScope="private" />
+          <CategoryInquiryForm category="Architekti" projectScope="private" analyticsSegment="architects" />
         </div>
       </section>
       <B2BPortfolioNavigation current="Pro architekty" />

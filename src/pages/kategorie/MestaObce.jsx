@@ -6,14 +6,16 @@ import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import { trackFunnelStep } from '@/lib/ga4';
 
 const BENEFITS = [
-'Ochlazení okolního vzduchu až o 9 °C',
-'Bez chemie — bezpečné pro zdraví i životní prostředí',
-'Smart řízení dle teploty a pohybu',
-'Dotačně podporovatelné jako zelená infrastruktura',
-'Zakázková výroba dle identity místa',
-'Záruka 5 let, servis po celé ČR a SR'];
+'Pocitové ochlazení v horkých dnech typicky v řádu několika stupňů podle podmínek',
+'Jemná vodní mlha bez chemických přísad',
+'Smart řízení podle teploty, času a provozního režimu',
+'Nerezové provedení navržené pro dlouhodobý venkovní provoz',
+'Zakázková výroba a konfigurace podle identity místa',
+'Projektová podpora, instalace a servis pro veřejný prostor'];
 
 
 const USE_CASES = [
@@ -29,8 +31,14 @@ export default function MestaObce() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.mestOobce);
+    trackFunnelStep('cities', 'landing_view', 'Města a obce');
+    const preferredSlugs = ['city-cooling-zone', 'bendy-alej', 'aura-city-duo', 'mlzna-brana-gate', 'linea-avenue', 'ostrev-city-m'];
     base44.entities.Product.list().catch(() => []).then((p) => {
-      setProducts((p || []).slice(0, 6));
+      const all = p || [];
+      const selected = preferredSlugs
+        .map((slug) => all.find((product) => product.slug === slug))
+        .filter(Boolean);
+      setProducts(selected.length ? selected : all.filter((product) => product.featured).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -54,17 +62,46 @@ export default function MestaObce() {
               Ochlazení pro města,<br /><span style={{ fontStyle: 'italic' }}>která pečují o veřejný prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Mlžítka ochlazují vzduch na náměstích, promenádách, v parcích, pěších zónách i u vstupů veřejné správy až o 9 °C. Vytvářejí příjemnější místa pro setkávání, pracují bez chemie a s nízkou spotřebou vody.
+              Mlžítka a mlžné zóny zvyšují tepelný komfort na náměstích, promenádách, v parcích, pěších zónách i u veřejných budov. Řešení kombinujeme s úsporným Smart řízením podle teploty, času a skutečného provozu.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Probrat záměr <ArrowRight size={15} />
+              <a href="#poptavka" onClick={() => trackFunnelStep('cities', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+                Navrhnout řešení pro město <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)
               </a>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Konverzní cesta pro města a obce */}
+      <section className="border-b border-slate-200 bg-white" data-analytics-section="cities-funnel">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              ['01', 'Popište místo', 'Lokalita, typ veřejného prostoru, přibližná plocha a co chcete zlepšit během horkých dnů.'],
+              ['02', 'Navrhneme variantu', 'Vybereme vhodnou konfiguraci, připravíme orientační rozmístění a doporučení pro Smart řízení.'],
+              ['03', 'Doplníme podklady', 'Technické řešení, stavební připravenost, nabídka, instalace a následný servis v jednom toku.'],
+            ].map(([number, heading, text]) => (
+              <div key={number} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <span className="font-mono text-[11px] tracking-widest text-slate-400">{number}</span>
+                <h2 className="mt-4 text-lg font-semibold text-slate-900">{heading}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 font-light">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('cities', 'visualizer_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
+              Vytvořit vizualizaci záměru <ArrowRight size={14} />
+            </Link>
+            <Link to="/reference" onClick={() => trackFunnelStep('cities', 'references_all_click', 'funnel')}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+              Prohlédnout realizace
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -87,10 +124,10 @@ export default function MestaObce() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-              { val: '9 °C', label: 'Max. ochlazení' },
-              { val: '120+', label: 'Realizací' },
-              { val: '5 let', label: 'Záruka' },
-              { val: '0%', label: 'Chemie' }].
+              { val: 'Smart', label: 'Automatické řízení' },
+              { val: 'Nerez', label: 'Odolné provedení' },
+              { val: 'Na míru', label: 'Projektové řešení' },
+              { val: '0%', label: 'Chemické přísady' }].
               map((s) =>
               <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
                   <p className="font-heading text-slate-900 mb-1 text-4xl" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
@@ -132,12 +169,17 @@ export default function MestaObce() {
             <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Automatický start/stop<br /><span style={{ fontStyle: 'italic' }}>dle teploty a vlhkosti.</span>
             </h2>
-            <p className="text-white/70 leading-relaxed font-light max-w-xl">Monitoring přes webový dashboard pro správce města. Bezúdržbový provoz, 100% česká výroba a dodávka do 8 týdnů. SMART WIFI / Mobilní aplikace
-
-            </p>
+            <p className="text-white/70 leading-relaxed font-light max-w-xl">Smart řízení umožňuje nastavit provoz podle teploty, času a potřeb konkrétní lokality. Správce tak může omezit zbytečný chod systému a mít provoz pod kontrolou přes dostupné ovládání a automatizaci.</p>
           </motion.div>
         </div>
       </section>
+
+      <SegmentReferenceShowcase
+        segment="cities"
+        eyebrow="Ověřené realizace"
+        title="Veřejný prostor od náměstí po ZOO Praha."
+        referenceIds={['6a71d1ff57598752eed27bfb', '6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f']}
+      />
 
       {/* Produkty */}
       <section className="bg-slate-50 border-y border-slate-200 py-20">
@@ -179,12 +221,12 @@ export default function MestaObce() {
         <div className="p-10 rounded-2xl border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10 bg-slate-50">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro vaši obec.</h3>
-            <p className="text-slate-500 mb-6 text-sm">Konzultace zdarma · 3D vizualizace do 48 h · Pomoc s dotační žádostí</p>
+            <p className="text-slate-500 mb-6 text-sm">Pošlete lokalitu a stručný záměr. Připravíme první doporučení vhodného typu řešení, konfigurace a dalšího technického postupu.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>
           </div>
-          <CategoryInquiryForm category="Města a obce" projectScope="urban" />
+          <CategoryInquiryForm category="Města a obce" projectScope="urban" analyticsSegment="cities" />
         </div>
       </section>
       <B2BPortfolioNavigation current="Města a obce" />

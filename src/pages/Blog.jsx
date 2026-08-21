@@ -50,17 +50,18 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background pt-16">
       {/* Header */}
-      <div className="text-white mb-4 bg-[hsl(var(--ring))]"><div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Blog MLŽIDLA</p>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-white tracking-tight mb-4">
-            O mlžení do hloubky
-          </h1>
-          <p className="text-white/70 max-w-xl text-lg">
-            Technologie, realizace a zkušenosti z městských prostranství, gastro a hotelových teras, wellness i rezidenčních zahrad.
-          </p>
-        </motion.div>
-      </div></div>
+      <section className="relative mb-8 min-h-[430px] overflow-hidden bg-primary text-white lg:min-h-[500px]">
+        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ccf06b29a_mlzidla-mlzitka-pro-mesta-obce.webp" alt="Mlžítka MLŽIDLA® ve veřejném prostoru" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/95 via-[#041c28]/76 to-[#041c28]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/55 via-transparent to-[#041c28]/15" />
+        <div className="relative mx-auto flex min-h-[430px] max-w-7xl items-center px-6 py-20 lg:min-h-[500px] lg:px-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
+            <p className="font-mono text-[11px] uppercase tracking-[.2em] text-cyan-300">Blog & novinky · MLŽIDLA®</p>
+            <h1 className="mt-4 font-heading text-4xl leading-[1.03] tracking-[-.03em] text-white sm:text-5xl lg:text-7xl">Inspirace, realizace a technologie mlžení.</h1>
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">Praktické zkušenosti z reálných instalací, nové produkty, technické principy a inspirace pro města, architekty, veřejný prostor i soukromé zahrady. Vše na jednom místě — od návrhu až po provoz.</p>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Audience segmentation */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-4">

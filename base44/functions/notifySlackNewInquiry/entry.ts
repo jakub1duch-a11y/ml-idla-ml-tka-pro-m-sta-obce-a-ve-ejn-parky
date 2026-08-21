@@ -2,9 +2,11 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 const SLACK_CHANNEL_ID = 'C0BG53VBBV1'; // #all-mlidlacz
 
-Deno.serve(async (req) => {
+export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me().catch(() => null);
+    if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
     const body = await req.json();
     const { event, data } = body;
 
@@ -52,4 +54,4 @@ Deno.serve(async (req) => {
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
-});
+}

@@ -11,11 +11,11 @@ const STEPS = [
 
 export default function ConceptToRealitySection() {
   return (
-    <section className="border-y border-border bg-background py-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mb-16 max-w-2xl">
+    <section className="border-y border-border bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-2xl sm:mb-14 lg:mb-16">
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Jak vzniká vaše mlžítko</p>
-          <h2 className="font-heading text-4xl tracking-tight text-foreground md:text-5xl">Od skici na papíře po mlhu na místě</h2>
+          <h2 className="font-heading text-[clamp(2rem,8vw,2.65rem)] leading-[1.08] tracking-[-0.035em] text-foreground md:text-5xl">Od skici na papíře po mlhu na místě</h2>
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -24,11 +24,11 @@ export default function ConceptToRealitySection() {
             return (
               <motion.div
                 key={step.num}
-                initial={{ opacity: 0, y: index % 2 === 0 ? 24 : 4 }}
-                whileInView={{ opacity: 1, y: index % 2 === 0 ? 12 : 0 }}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="relative rounded-2xl border border-border bg-card p-6">
+                transition={{ delay: index * 0.06, duration: 0.45 }}
+                className="relative rounded-2xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6">
                 <div className="mb-5 flex items-center justify-between">
                   <span className="font-heading text-3xl text-secondary">{step.num}</span>
                   <Icon size={22} className="text-muted-foreground" strokeWidth={1.6} />

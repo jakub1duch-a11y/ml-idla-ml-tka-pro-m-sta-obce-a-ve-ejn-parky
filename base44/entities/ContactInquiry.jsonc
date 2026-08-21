@@ -20,6 +20,10 @@
       ],
       "description": "Type of project"
     },
+    "service_type": {
+      "type": "string",
+      "description": "Source/service type of the inquiry"
+    },
     "message": {
       "type": "string",
       "description": "Project description"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Instagram, Search, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackNewsletterSignup } from '@/lib/ga4';
 
 export default function BlogNewsletterInline() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ export default function BlogNewsletterInline() {
     e.preventDefault();
     setSending(true);
     await base44.entities.NewsletterLead.create({ email, source: 'blog_article_inline' });
+    trackNewsletterSignup('blog_article_inline');
     setSending(false);
     setDone(true);
   };
@@ -47,7 +49,7 @@ export default function BlogNewsletterInline() {
           <p className="text-sm text-slate-500 font-light mb-4">Realizace, zákulisí výroby a novinky sledujte na Instagramu a Google.</p>
         </div>
         <div className="flex gap-3">
-          <a href="https://www.instagram.com/mlzidla.cz" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noopener noreferrer"
             className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm text-slate-700 hover:border-slate-300 transition-all">
             <Instagram size={15} /> Instagram
           </a>

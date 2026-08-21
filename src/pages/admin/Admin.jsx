@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
@@ -14,6 +14,8 @@ import AdminPages from './AdminPages';
 import AdminMedia from './AdminMedia';
 import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
+import AdminAR from './AdminAR';
+import AdminDatabricks from './AdminDatabricks';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -25,7 +27,9 @@ const TABS = [
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
+  { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'databricks', label: 'Databricks', icon: Database },
   { id: 'instagram', label: 'Instagram', icon: Instagram },
 ];
 
@@ -36,14 +40,26 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
-    base44.auth.me().then(u => {
-      setUser(u);
-      setLoading(false);
-      if (!u) navigate('/admin-login', { replace: true });
-    }).catch(() => {
-      setLoading(false);
-      navigate('/admin-login', { replace: true });
-    });
+    const resolveAdmin = async () => {
+      try {
+        let u = await base44.auth.me();
+        if (['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(u?.email?.toLowerCase()) && u.role !== 'admin') {
+          try {
+            await base44.functions.invoke('bootstrapJakubAdmin', {});
+            u = await base44.auth.me();
+          } catch (promotionError) {
+            console.warn('Admin bootstrap failed', promotionError);
+          }
+        }
+        setUser(u);
+        if (!u) navigate('/admin-login', { replace: true });
+      } catch (_error) {
+        navigate('/admin-login', { replace: true });
+      } finally {
+        setLoading(false);
+      }
+    };
+    resolveAdmin();
   }, [navigate]);
 
   if (loading) return (
@@ -54,7 +70,7 @@ export default function Admin() {
 
   if (!user) return null;
 
-  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz'];
+  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'];
   const emailAllowed = !!user.email && (
     user.email.toLowerCase().endsWith('@mlzidla.cz') ||
     ADMIN_EMAIL_EXCEPTIONS.includes(user.email.toLowerCase())
@@ -81,7 +97,9 @@ export default function Admin() {
     media: AdminMedia,
     marketing: AdminMarketing,
     poptavky: AdminPoptavky,
+    ar: AdminAR,
     analytics: AdminAnalytics,
+    databricks: AdminDatabricks,
     instagram: AdminInstagram,
   }[activeTab];
 
@@ -106,7 +124,11 @@ export default function Admin() {
             );
           })}
         </nav>
-        <div className="p-3 border-t border-white/8">
+        <div className="p-3 border-t border-white/8 space-y-1">
+          <button onClick={() => navigate('/obchodni-nabidky')}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
+            <BriefcaseBusiness size={16} /> Sales Hub
+          </button>
           <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">
             <LogOut size={16} /> Odhlásit

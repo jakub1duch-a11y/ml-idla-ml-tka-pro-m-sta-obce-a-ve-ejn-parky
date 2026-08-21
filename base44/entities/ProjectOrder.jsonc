@@ -4,60 +4,168 @@
   "properties": {
     "inquiry_id": {
       "type": "string",
-      "description": "Odkaz na ContactInquiry"
+      "description": "Odkaz na zdrojovou popt\u00e1vku"
+    },
+    "inquiry_type": {
+      "type": "string",
+      "enum": [
+        "contact",
+        "poptavka"
+      ]
     },
     "project_name": {
-      "type": "string",
-      "description": "N\u00e1zev projektu"
+      "type": "string"
     },
     "client_name": {
-      "type": "string",
-      "description": "Jm\u00e9no klienta"
+      "type": "string"
     },
     "client_email": {
-      "type": "string",
-      "description": "Email klienta"
+      "type": "string"
+    },
+    "client_phone": {
+      "type": "string"
+    },
+    "client_company": {
+      "type": "string"
     },
     "description": {
       "type": "string",
-      "description": "Popis projektu (max. 1000 znak\u016f)",
-      "maxLength": 1000
+      "maxLength": 2000
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
     },
     "quote_number": {
-      "type": "string",
-      "description": "\u010c\u00edslo nab\u00eddky (HT-YYYY-XXXXX)"
+      "type": "string"
     },
     "quote_pdf_url": {
+      "type": "string"
+    },
+    "inquiry_pdf_url": {
+      "type": "string"
+    },
+    "order_confirmation_pdf_url": {
+      "type": "string"
+    },
+    "drive_case_folder_id": {
+      "type": "string"
+    },
+    "drive_case_folder_url": {
+      "type": "string"
+    },
+    "presentation_url": {
+      "type": "string"
+    },
+    "presentation_pdf_url": {
+      "type": "string"
+    },
+    "notebook_source_url": {
+      "type": "string"
+    },
+    "presentation_variant": {
       "type": "string",
-      "description": "URL na PDF nab\u00eddku na Google Drive"
+      "enum": [
+        "city_public",
+        "residential",
+        "wellness_hospitality",
+        "architecture_design",
+        "custom"
+      ]
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ar_url": {
+      "type": "string"
+    },
+    "smart_control_included": {
+      "type": "boolean",
+      "default": false
+    },
+    "sender_email": {
+      "type": "string",
+      "enum": [
+        "meduna@holmtec.cz",
+        "info@mlzidla.cz"
+      ]
+    },
+    "bcc_recipients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "status": {
       "type": "string",
       "enum": [
         "draft",
+        "pending_approval",
         "sent",
+        "viewed",
+        "extension_requested",
         "approved",
+        "expired",
+        "rejected",
         "in_production",
         "ready",
         "delivered"
       ],
-      "default": "draft",
-      "description": "Stav projektu"
+      "default": "draft"
     },
     "approved_at": {
       "type": "string",
-      "format": "date-time",
-      "description": "Kdy byla nab\u00eddka odsouhlasena"
+      "format": "date-time"
+    },
+    "acceptance_terms_version": {
+      "type": "string"
+    },
+    "acceptance_name": {
+      "type": "string"
+    },
+    "acceptance_user_agent": {
+      "type": "string"
+    },
+    "validity_extension_requested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "validity_extension_note": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "estimated_order_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "estimated_order_window": {
+      "type": "string"
+    },
+    "customer_message": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "last_customer_action_at": {
+      "type": "string",
+      "format": "date-time"
     },
     "production_start_date": {
       "type": "string",
-      "format": "date",
-      "description": "Za\u010d\u00e1tek v\u00fdroby"
+      "format": "date"
     },
     "completion_date": {
       "type": "string",
-      "format": "date",
-      "description": "Pl\u00e1novan\u00fd term\u00edn hotovosti"
+      "format": "date"
     },
     "delivery_method": {
       "type": "string",
@@ -65,28 +173,34 @@
         "pickup",
         "delivery",
         "installation"
-      ],
-      "description": "Zp\u016fsob p\u0159ed\u00e1n\u00ed"
+      ]
     },
     "delivery_location": {
-      "type": "string",
-      "description": "M\u00edsto vyzvednut\u00ed/doru\u010den\u00ed/instalace"
+      "type": "string"
     },
     "total_price": {
-      "type": "number",
-      "description": "Celkov\u00e1 cena (bez DPH)"
+      "type": "number"
     },
     "production_notes": {
-      "type": "string",
-      "description": "Pozn\u00e1mky k pr\u016fb\u011bhu v\u00fdroby"
+      "type": "string"
     },
     "special_requirements": {
-      "type": "string",
-      "description": "Speci\u00e1ln\u00ed po\u017eadavky klienta"
+      "type": "string"
+    },
+    "supplier_name": {
+      "type": "string"
+    },
+    "supplier_contact_name": {
+      "type": "string"
+    },
+    "supplier_email": {
+      "type": "string"
+    },
+    "supplier_phone": {
+      "type": "string"
     },
     "shared_token": {
-      "type": "string",
-      "description": "Unik\u00e1tn\u00ed token pro ve\u0159ejn\u00fd p\u0159\u00edstup k projektu"
+      "type": "string"
     }
   },
   "required": [

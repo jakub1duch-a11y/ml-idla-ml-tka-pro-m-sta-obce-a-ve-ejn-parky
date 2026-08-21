@@ -8,11 +8,27 @@
     },
     "file_name": {
       "type": "string",
-      "description": "P\u016fvodn\u00ed n\u00e1zev souboru"
+      "description": "Standardizovan\u00fd zobrazovan\u00fd n\u00e1zev souboru"
     },
     "file_type": {
       "type": "string",
       "description": "MIME typ / p\u0159\u00edpona souboru"
+    },
+    "product_slug": {
+      "type": "string",
+      "description": "Slug produktu, ke kter\u00e9mu m\u00e9dium prim\u00e1rn\u011b pat\u0159\u00ed"
+    },
+    "media_group": {
+      "type": "string",
+      "description": "Produktov\u00e1 \u0159ada nebo tematick\u00e1 skupina m\u00e9dia"
+    },
+    "media_role": {
+      "type": "string",
+      "description": "Role m\u00e9dia: hero, gallery, realization, detail, render, video, reference, technology, unassigned"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Po\u0159ad\u00ed m\u00e9dia v r\u00e1mci produktu / skupiny"
     }
   },
   "required": [

@@ -1,0 +1,12 @@
+{
+  "type": "meta_ads",
+  "scopes": [
+    "public_profile",
+    "email",
+    "ads_read",
+    "ads_management",
+    "pages_show_list",
+    "pages_manage_ads",
+    "read_insights"
+  ]
+}

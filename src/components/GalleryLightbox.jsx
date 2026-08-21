@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function GalleryLightbox({ images, onClose, initialIndex = 0, location, productUsed }) {

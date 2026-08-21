@@ -2,9 +2,9 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const ADS = [
-  ['Města a obce','Ochlazení náměstí, promenád, parků a vstupů veřejné správy.','Navrhneme bezpečné městské mlžítko podle pohybu lidí, charakteru prostranství a provozních podmínek.','Řešit veřejný prostor','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png'],
-  ['Gastro, wellness a hotely','Více komfortu na terasách a v hotelových zahradách.','Jemná mlha prodlouží využití venkovního prostoru a nerezové provedení přirozeně naváže na architekturu provozu.','Navrhnout terasu','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg'],
-  ['Rezidence a zahrady','Mlžítko navržené pro konkrétní zahradu nebo terasu.','Přizpůsobíme tvar, rozměr i kotvení rezidenčnímu prostoru — od samostatného prvku po řešení integrované do zahrady.','Popsat vlastní záměr','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg']
+  ['Města a obce','Ochlazení náměstí, promenád, parků a vstupů veřejné správy.','Navrhneme bezpečné městské mlžítko podle pohybu lidí, charakteru prostranství a provozních podmínek.','Řešit veřejný prostor','/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp'],
+  ['Gastro, wellness a hotely','Více komfortu na terasách a v hotelových zahradách.','Jemná mlha prodlouží využití venkovního prostoru a nerezové provedení přirozeně naváže na architekturu provozu.','Navrhnout terasu','/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp'],
+  ['Rezidence a zahrady','Mlžítko navržené pro konkrétní zahradu nebo terasu.','Přizpůsobíme tvar, rozměr i kotvení rezidenčnímu prostoru — od samostatného prvku po řešení integrované do zahrady.','Popsat vlastní záměr','/media/optimized/68953132b_IMG_3524.webp']
 ];
 
 export default function BrandAdvertisingGuide() {

@@ -1,0 +1,1221 @@
+{
+  "images": [
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/66c02aadb_Screenshot_20260712_212842.jpg",
+      "output": "/media/optimized/66c02aadb_Screenshot_20260712_212842.webp",
+      "before": 96276,
+      "after": 64008,
+      "width": 459,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5401e0933_dac8b98065c5472b16bc1910348915a1.jpg",
+      "output": "/media/optimized/5401e0933_dac8b98065c5472b16bc1910348915a1.webp",
+      "before": 161151,
+      "after": 112684,
+      "width": 1024,
+      "height": 682
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg",
+      "output": "/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp",
+      "before": 208980,
+      "after": 165246,
+      "width": 1024,
+      "height": 682
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png",
+      "output": "/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp",
+      "before": 1029448,
+      "after": 88694,
+      "width": 860,
+      "height": 480
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3865c06a7_ana.jpg",
+      "output": "/media/optimized/3865c06a7_ana.webp",
+      "before": 198716,
+      "after": 148804,
+      "width": 1024,
+      "height": 845
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg",
+      "output": "/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp",
+      "before": 312918,
+      "after": 181992,
+      "width": 720,
+      "height": 960
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg",
+      "output": "/media/optimized/68953132b_IMG_3524.webp",
+      "before": 310655,
+      "after": 275896,
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
+      "output": "/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp",
+      "before": 132957,
+      "after": 77666,
+      "width": 772,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4d6333cb_generated_image.png",
+      "output": "/media/optimized/a4d6333cb_generated_image.webp",
+      "before": 137671,
+      "after": 74668,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/48d543124_generated_image.png",
+      "output": "/media/optimized/48d543124_generated_image.webp",
+      "before": 1761676,
+      "after": 156994,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3ffb5387e_mlzitkoprodomovsenioru-2.jpeg",
+      "output": "/media/optimized/3ffb5387e_mlzitkoprodomovsenioru-2.webp",
+      "before": 76588,
+      "after": 43436,
+      "width": 360,
+      "height": 480
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/596fefdec_MlnsochaMRKEV-mstoPoln.jpg",
+      "output": "/media/optimized/596fefdec_MlnsochaMRKEV-mstoPoln.webp",
+      "before": 213545,
+      "after": 163306,
+      "width": 818,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg",
+      "output": "/media/optimized/3f715c287_copilot_image_1782505642436.webp",
+      "before": 38215,
+      "after": 14658,
+      "width": 1024,
+      "height": 683
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg",
+      "output": "/media/optimized/fbcf274b1_FB_IMG_1782148331764.webp",
+      "before": 159198,
+      "after": 229234,
+      "width": 810,
+      "height": 1013
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg",
+      "output": "/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp",
+      "before": 129643,
+      "after": 80586,
+      "width": 819,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0f64f6136_mlzne_trysky.jpg",
+      "output": "/media/optimized/0f64f6136_mlzne_trysky.webp",
+      "before": 353939,
+      "after": 277690,
+      "width": 1600,
+      "height": 1600
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.jpg",
+      "output": "/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp",
+      "before": 127076,
+      "after": 76996,
+      "width": 1024,
+      "height": 691
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cfc837b23_image.png",
+      "output": "/media/optimized/cfc837b23_image.webp",
+      "before": 188039,
+      "after": 4302,
+      "width": 508,
+      "height": 333
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5c4b99749_Smartmlzitka-ovladanizmobilu.jpg",
+      "output": "/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp",
+      "before": 76557,
+      "after": 41232,
+      "width": 631,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/88c697962_generated_image.png",
+      "output": "/media/optimized/88c697962_generated_image.webp",
+      "before": 158782,
+      "after": 78842,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f436db8ab_generated_image.png",
+      "output": "/media/optimized/f436db8ab_generated_image.webp",
+      "before": 251710,
+      "after": 164394,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7016348c6_generated_image.png",
+      "output": "/media/optimized/7016348c6_generated_image.webp",
+      "before": 171046,
+      "after": 97736,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0549d625f_generated_image.png",
+      "output": "/media/optimized/0549d625f_generated_image.webp",
+      "before": 373031,
+      "after": 278140,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6eb8b2ea_generated_image.png",
+      "output": "/media/optimized/f6eb8b2ea_generated_image.webp",
+      "before": 274196,
+      "after": 181162,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56eb29c84_generated_image.png",
+      "output": "/media/optimized/56eb29c84_generated_image.webp",
+      "before": 148832,
+      "after": 75652,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bd29c555a_f16a9c3ea_generated_image.png",
+      "output": "/media/optimized/bd29c555a_f16a9c3ea_generated_image.webp",
+      "before": 256582,
+      "after": 172766,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4ba44ac78_generated_image.png",
+      "output": "/media/optimized/4ba44ac78_generated_image.webp",
+      "before": 223411,
+      "after": 145534,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/150f3566d_IMG_20260623_124103.jpg",
+      "output": "/media/optimized/150f3566d_IMG_20260623_124103.webp",
+      "before": 141089,
+      "after": 89662,
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/585985745_smartaplikacepromlzutka-nova.png",
+      "output": "/media/optimized/585985745_smartaplikacepromlzutka-nova.webp",
+      "before": 1029448,
+      "after": 88694,
+      "width": 860,
+      "height": 480
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg",
+      "output": "/media/optimized/a2d77392e_Mlnbranyaportaly.webp",
+      "before": 124302,
+      "after": 93094,
+      "width": 576,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9cf838258_MlzicisprchaaSMARTaplikace.png",
+      "output": "/media/optimized/9cf838258_MlzicisprchaaSMARTaplikace.webp",
+      "before": 1029448,
+      "after": 88694,
+      "width": 860,
+      "height": 480
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg",
+      "output": "/media/optimized/7a9bd010a_mlnbrnyaportaly-mlzidla.webp",
+      "before": 113758,
+      "after": 80442,
+      "width": 576,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg",
+      "output": "/media/optimized/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.webp",
+      "before": 243970,
+      "after": 222386,
+      "width": 1024,
+      "height": 576
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.jpg",
+      "output": "/media/optimized/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.webp",
+      "before": 14410,
+      "after": 8658,
+      "width": 620,
+      "height": 349
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/03ba352a3_mlzitka-zahradni-hotely-restaurace.png",
+      "output": "/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp",
+      "before": 2054829,
+      "after": 238684,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.jpg",
+      "output": "/media/optimized/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.webp",
+      "before": 90616,
+      "after": 50824,
+      "width": 576,
+      "height": 1024
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/cd22b84b0_1000000697.jpg",
+      "output": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
+      "before": 1921629,
+      "after": 244348,
+      "width": 1840,
+      "height": 2448,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1XRoTSquR6vFlm3MB5ItkEw9caP7SS6c0&sz=w1200",
+      "output": "/media/optimized/db-e6e5d71854-thumbnail.webp",
+      "before": 2089275,
+      "after": 134024,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1ye8lBRjTnc01oqbWgRVHIfQfz0RmXL92&sz=w1200",
+      "output": "/media/optimized/db-349ca3cbfc-thumbnail.webp",
+      "before": 2387065,
+      "after": 68774,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1g19kplCAJE32wxFesRj6KoMbWZP9QABy&sz=w1200",
+      "output": "/media/optimized/db-508b2b08d7-thumbnail.webp",
+      "before": 2067667,
+      "after": 124568,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1pNsS6BqLDCu3wCFw_WOryI6-sZU9uliU&sz=w1200",
+      "output": "/media/optimized/db-bdca53faa9-thumbnail.webp",
+      "before": 3630155,
+      "after": 167006,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1VlzZcQTOkLHrsJiKSGWDwmMJmUNMSEe3&sz=w1200",
+      "output": "/media/optimized/db-319ca57544-thumbnail.webp",
+      "before": 3663444,
+      "after": 138084,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1xke0z2mGdOh_VSVdY-aEg8IEJccE_CHr&sz=w1200",
+      "output": "/media/optimized/db-d325919fcc-thumbnail.webp",
+      "before": 1719780,
+      "after": 83942,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.jpg",
+      "output": "/media/optimized/db-377b5e7e28-3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp",
+      "before": 22065,
+      "after": 8094,
+      "width": 683,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91ce94feb_MlzitkoAURA.JPG",
+      "output": "/media/optimized/db-858b838106-91ce94feb_MlzitkoAURA.webp",
+      "before": 301108,
+      "after": 140590,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/442982da0_mlzitkoaura-vysic.jpg",
+      "output": "/media/optimized/db-dc9b5ec6e1-442982da0_mlzitkoaura-vysic.webp",
+      "before": 101465,
+      "after": 61500,
+      "width": 576,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ad39c3ee1_mlzitkoprodomovsenioru.jpeg",
+      "output": "/media/optimized/db-dad6fa84fb-ad39c3ee1_mlzitkoprodomovsenioru.webp",
+      "before": 107057,
+      "after": 61784,
+      "width": 360,
+      "height": 640,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f37d76dfe_generated_image.png",
+      "output": "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+      "before": 196441,
+      "after": 110222,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b9da23d56_generated_image.png",
+      "output": "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp",
+      "before": 132312,
+      "after": 64620,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d87c0cdb3_generated_image.png",
+      "output": "/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp",
+      "before": 240713,
+      "after": 147090,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4af832dea_generated_image.png",
+      "output": "/media/optimized/db-1eb118208f-4af832dea_generated_image.webp",
+      "before": 135448,
+      "after": 63070,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.jpg",
+      "output": "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+      "before": 32710,
+      "after": 11178,
+      "width": 683,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25f7cd749_volavka-rezidencnizahrady.jpg",
+      "output": "/media/optimized/db-d0e58a79d9-25f7cd749_volavka-rezidencnizahrady.webp",
+      "before": 303069,
+      "after": 230756,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a54a1faa7_Volavka_mlzitko.jpg",
+      "output": "/media/optimized/db-2accde7763-a54a1faa7_Volavka_mlzitko.webp",
+      "before": 289788,
+      "after": 217996,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/dda3e5142_mlzna-tryska-mlzidla.png",
+      "output": "/media/optimized/db-6d9a3b1fe5-dda3e5142_mlzna-tryska-mlzidla.webp",
+      "before": 1970970,
+      "after": 186558,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7750acf57_mlzna-tryska-mlzidla.png",
+      "output": "/media/optimized/db-5accb7e1f5-7750acf57_mlzna-tryska-mlzidla.webp",
+      "before": 1970970,
+      "after": 186558,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/607866493_images4.jpg",
+      "output": "/media/optimized/db-952f248814-607866493_images4.webp",
+      "before": 35924,
+      "after": 42540,
+      "width": 610,
+      "height": 503,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/85afbaef4_smartaplikacepromlzutka-nova.png",
+      "output": "/media/optimized/db-22e3d79c83-85afbaef4_smartaplikacepromlzutka-nova.webp",
+      "before": 1029448,
+      "after": 88694,
+      "width": 860,
+      "height": 480,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/4c13d4866_1000004418.png",
+      "output": "/media/optimized/db-ad208f4172-4c13d4866_1000004418.webp",
+      "before": 3526690,
+      "after": 262494,
+      "width": 1808,
+      "height": 1200,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/31478e4b3_bendymlzitko02.jpeg",
+      "output": "/media/optimized/db-323b5abc81-31478e4b3_bendymlzitko02.webp",
+      "before": 26778,
+      "after": 24960,
+      "width": 333,
+      "height": 600,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b47ae10f2_bendymlzitko.jpeg",
+      "output": "/media/optimized/db-9bb04eb6fe-b47ae10f2_bendymlzitko.webp",
+      "before": 12586,
+      "after": 16540,
+      "width": 194,
+      "height": 259,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fc2d57e81_C-MlzitkoLINEA_CE70_single1.jpg",
+      "output": "/media/optimized/db-f351ae794a-fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp",
+      "before": 357226,
+      "after": 222074,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.jpg",
+      "output": "/media/optimized/db-d46926d75f-bcb5c5f4d_C-MlzitkoLINEA_CE70_single.webp",
+      "before": 357226,
+      "after": 222074,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/edc3c46d8_BRACKETA_koupaliste.png",
+      "output": "/media/optimized/db-53153eac8d-edc3c46d8_BRACKETA_koupaliste.webp",
+      "before": 1835049,
+      "after": 127004,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84805a215_mlnprvek-mrak-mlzidla02.png",
+      "output": "/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp",
+      "before": 3177770,
+      "after": 421350,
+      "width": 1672,
+      "height": 941,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ad09f28ad_4ba76226-4e57-4242-bf1d-b9add4e0da7b.jpg",
+      "output": "/media/optimized/db-68273f5f2a-ad09f28ad_4ba76226-4e57-4242-bf1d-b9add4e0da7b.webp",
+      "before": 22261,
+      "after": 8108,
+      "width": 683,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.jpg",
+      "output": "/media/optimized/db-26362d070e-d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.webp",
+      "before": 312918,
+      "after": 181992,
+      "width": 720,
+      "height": 960,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c55aec790_Lzatko-mlzitko.png",
+      "output": "/media/optimized/db-54c72ac2af-c55aec790_Lzatko-mlzitko.webp",
+      "before": 690985,
+      "after": 98592,
+      "width": 1024,
+      "height": 1024,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://drive.google.com/thumbnail?id=1isiUlkBcCto3pxQO78fo6IZCruNWnwwk&sz=w1200",
+      "output": "/media/optimized/db-0ebea28aa0-thumbnail.webp",
+      "before": 3718072,
+      "after": 194774,
+      "width": 1024,
+      "height": 1536,
+      "source": "Product entity"
+    }
+  ],
+  "videos": [
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/0d9a4e147_mlznabranaGATE70-video.mp4",
+      "output": "/media/optimized/0d9a4e147_mlznabranaGATE70-video.webm",
+      "before": 2466954,
+      "after": 380319
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/feff82d99_Aura-mlzitko-video-01.MP4",
+      "output": "/media/optimized/feff82d99_Aura-mlzitko-video-01.webm",
+      "before": 1685304,
+      "after": 786992
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/e93fc3844_mist-animatedicon02.mp4",
+      "output": "/media/optimized/e93fc3844_mist-animatedicon02.webm",
+      "before": 99582,
+      "after": 145284
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2c4b0efa9_animatediconmist.mp4",
+      "output": "/media/optimized/2c4b0efa9_animatediconmist.webm",
+      "before": 81917,
+      "after": 108443
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.mov",
+      "output": "/media/optimized/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.webm",
+      "before": 7643935,
+      "after": 4610524
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/42cf4b972_Efektmlhy-mlznabrana-zivynahled.mov",
+      "output": "/media/optimized/42cf4b972_Efektmlhy-mlznabrana-zivynahled.webm",
+      "before": 7643935,
+      "after": 4610524
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV",
+      "output": "/media/optimized/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm",
+      "before": 5281799,
+      "after": 4067645
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV",
+      "output": "/media/optimized/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm",
+      "before": 3899052,
+      "after": 3264330
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV",
+      "output": "/media/optimized/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm",
+      "before": 4201298,
+      "after": 3616350
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV",
+      "output": "/media/optimized/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm",
+      "before": 4985206,
+      "after": 4408971
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/27d926a20_MlzitkavarealuZOOPraha-zivaukazka.mov",
+      "output": "/media/optimized/27d926a20_MlzitkavarealuZOOPraha-zivaukazka.webm",
+      "before": 39013047,
+      "after": 27360631
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c857caa78_Efektmlhy-mlznabrana-zivynahled.mov",
+      "output": "/media/optimized/c857caa78_Efektmlhy-mlznabrana-zivynahled.webm",
+      "before": 7643935,
+      "after": 4610524
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.mov",
+      "output": "/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm",
+      "before": 7215349,
+      "after": 3580049
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/aa11e932c_mlnbrnaGATE70.mp4",
+      "output": "/media/optimized/aa11e932c_mlnbrnaGATE70.webm",
+      "before": 6525698,
+      "after": 3190355
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/a4733f633_detailnamlhumlznebrany.MOV",
+      "output": "/media/optimized/a4733f633_detailnamlhumlznebrany.webm",
+      "before": 13911131,
+      "after": 3829639
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/37a6da879_mlzeni-mlznbrany-vakci.MOV",
+      "output": "/media/optimized/37a6da879_mlzeni-mlznbrany-vakci.webm",
+      "before": 11600206,
+      "after": 1851590
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/352fd3ef1_mlnbrnaGATE74-vakci.MOV",
+      "output": "/media/optimized/352fd3ef1_mlnbrnaGATE74-vakci.webm",
+      "before": 3633406,
+      "after": 840399
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b66409ed_mlnbrnaGATE74-vakci1.MOV",
+      "output": "/media/optimized/4b66409ed_mlnbrnaGATE74-vakci1.webm",
+      "before": 3633406,
+      "after": 840399
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV",
+      "output": "/media/optimized/ae9faa0a3_video-mlitkospiralavakci.webm",
+      "before": 20179540,
+      "after": 12161230
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eb7e87313_mlzidla-mlzitkaproparkyamesta03.MOV",
+      "output": "/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm",
+      "before": 6927174,
+      "after": 4444047
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9f0153e3a_ml_detailvparku_01.MOV",
+      "output": "/media/optimized/9f0153e3a_ml_detailvparku_01.webm",
+      "before": 65258888,
+      "after": 30279514
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.MOV",
+      "output": "/media/optimized/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.webm",
+      "before": 6954336,
+      "after": 6195868
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV",
+      "output": "/media/optimized/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm",
+      "before": 4985206,
+      "after": 4408971
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV",
+      "output": "/media/optimized/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm",
+      "before": 5281799,
+      "after": 4067645
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV",
+      "output": "/media/optimized/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm",
+      "before": 4201298,
+      "after": 3616350
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV",
+      "output": "/media/optimized/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm",
+      "before": 3899052,
+      "after": 3264330
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2d9d98473_Svaovnukzkazive.mov",
+      "output": "/media/optimized/2d9d98473_Svaovnukzkazive.webm",
+      "before": 12396197,
+      "after": 6509490
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/3c3e64d18_generated_video.mp4",
+      "output": "/media/optimized/3c3e64d18_generated_video.webm",
+      "before": 6428228,
+      "after": 3200637
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9eb62596b_generated_video.mp4",
+      "output": "/media/optimized/9eb62596b_generated_video.webm",
+      "before": 7118345,
+      "after": 3333280
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/e557b652c_generated_video.mp4",
+      "output": "/media/optimized/e557b652c_generated_video.webm",
+      "before": 11134733,
+      "after": 5317919
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/da5bb1cbb_mlzitko-mrak-oblak.MOV",
+      "output": "/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm",
+      "before": 15946270,
+      "after": 7509574
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/94c2b5f74_instalace-mlzitka-mrak.MOV",
+      "output": "/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm",
+      "before": 9376607,
+      "after": 8237237
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f0ba17112_generated_video.mp4",
+      "output": "/media/optimized/f0ba17112_generated_video.webm",
+      "before": 7191103,
+      "after": 3242871
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/c7c9d3e68_video_20260619_164025.mp4",
+      "output": "/media/optimized/c7c9d3e68_video_20260619_164025.webm",
+      "before": 47574053,
+      "after": 28955708
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/78cf9a6c8_KolekceBendy_20260812_121335_0000.mp4",
+      "output": "/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm",
+      "before": 24120256,
+      "after": 8470284
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/06d0df395_Zahradn-mlzitka.mp4",
+      "output": "/media/optimized/db-502997824c-06d0df395_Zahradn-mlzitka.webm",
+      "before": 3305063,
+      "after": 3521629,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/df874507a_mlzidlospiralavakci-video.MOV",
+      "output": "/media/optimized/db-9938e69714-df874507a_mlzidlospiralavakci-video.webm",
+      "before": 23081777,
+      "after": 11357402,
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eca0629b1_video-mlitkospiralavakci1.MOV",
+      "output": "/media/optimized/db-a135d5312d-eca0629b1_video-mlitkospiralavakci1.webm",
+      "before": 20179540,
+      "after": 12161230,
+      "source": "Product entity"
+    }
+  ],
+  "skippedTransparent": [
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png",
+      "width": 1024,
+      "height": 512,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/937e9976c_katalog.PNG",
+      "width": 304,
+      "height": 261,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c777d2b8d_facebook-instagram.PNG",
+      "width": 411,
+      "height": 245,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG",
+      "width": 371,
+      "height": 249,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/046393468_brandmarch.PNG",
+      "width": 674,
+      "height": 249,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d3908f8aa_firemnislozka.PNG",
+      "width": 345,
+      "height": 252,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/55ad64b81_laserstitky.PNG",
+      "width": 202,
+      "height": 270,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c9fd83e15_obalka.PNG",
+      "width": 460,
+      "height": 244,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png",
+      "width": 1024,
+      "height": 512,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/42ce8c67d_vizitka.PNG",
+      "width": 436,
+      "height": 245,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png",
+      "width": 572,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6b2d05df_mlidlo-mlzitkoAURA.png",
+      "width": 796,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png",
+      "width": 1024,
+      "height": 768,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2dcd39f66_MRKEV_rozkres1.png",
+      "width": 682,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png",
+      "width": 765,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png",
+      "width": 683,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/72a6bb588_mlnprvek-mrak-mlzidla02.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/eb03ffe38_file_00000000db9072469c9f2e9b61c49933.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png",
+      "width": 800,
+      "height": 640,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e1a4488cb_PEVEKO-SKPB-panel-Jabloshop-800x640.png",
+      "width": 800,
+      "height": 640,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/405edf0a8_L-Mltko_GATE_60V.png",
+      "width": 1024,
+      "height": 559,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e8e65d772_L-Mltko_GATE_60U.png",
+      "width": 1024,
+      "height": 559,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aa26eeb6a_Mltko_GATE_70U.png",
+      "width": 1024,
+      "height": 559,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f47023cbe_MlnbrnaGATE70V.png",
+      "width": 1024,
+      "height": 559,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60dab9091_mlnbrnaGATE70V2.png",
+      "width": 687,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6fb189c0_MlznabranaGate76.png",
+      "width": 1024,
+      "height": 559,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4333988f4_MlnbrnaGATE76V.png",
+      "width": 687,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22b4e3038_L-Mltko_GATE_60_3R.png",
+      "width": 1024,
+      "height": 559,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d8051fd30_WIFI_SMART_mlitka.png",
+      "width": 1376,
+      "height": 768,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/58e5e3931_MestskabranaGATE.png",
+      "width": 1024,
+      "height": 680,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/87830d99f_detail.PNG",
+      "width": 376,
+      "height": 512,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ee5759df9_foto-instalace-vyroba.png",
+      "width": 828,
+      "height": 656,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/881a6dd25_aplikaceloganaproduktu.PNG",
+      "width": 316,
+      "height": 112,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/742398fb8_d2d38c7f9_Copilot_20260507_020118.png",
+      "width": 1024,
+      "height": 683,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png",
+      "width": 765,
+      "height": 1024,
+      "format": "png"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4c8c44da_Gemini_Generated_Image_d421i6d421i6d421.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a73ab7232_Mltko-Bendy60-edited1.png",
+      "width": 768,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/080a7e429_MlzitkoY-ARMISTTR60_2.png",
+      "width": 685,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1668eda70_MlzitkoY-ARMISTTR60_1.png",
+      "width": 685,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56f93a8b2_MlzitkoY-ARMISTTR60.png",
+      "width": 685,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7bc7b6164_Y-ARMISTTR60.png",
+      "width": 686,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/625f54e91_MlzitkoY-ARMISTJ70_1.png",
+      "width": 1024,
+      "height": 768,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/93cd8ff63_MlzitkoY-ARMISTJ70_2.png",
+      "width": 674,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/95f7c7ca5_MlzitkoY-ARMISTJ70.png",
+      "width": 673,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91c5002dc_C-MlzitkoLINEA_CE70_single2.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ba9888b92_C-MlzitkoLINEA_CE70_double.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74c60312a_C-MlzitkoLINEA_CE70_single-1.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b4f4ca4a8_LINEACE70.png",
+      "width": 506,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/a01ebd4e8_volnytvar-motorkar-apli.png",
+      "width": 360,
+      "height": 540,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png",
+      "width": 360,
+      "height": 540,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9b46f2f7b_tepelnyostrov.png",
+      "width": 1024,
+      "height": 304,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/df5b375c0_Mlzitko-spirala2.png",
+      "width": 1024,
+      "height": 572,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e43641bae_mlzitko-spirala.png",
+      "width": 683,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    },
+    {
+      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/838f908c3_Mltkospirla-mlzidla.png",
+      "width": 683,
+      "height": 1024,
+      "format": "png",
+      "source": "Product entity"
+    }
+  ],
+  "failed": [],
+  "generatedAt": "2026-08-15T16:22:39.858Z",
+  "skippedAlreadyOptimized": [],
+  "changedFiles": 60,
+  "rewrittenRefs": 71
+}

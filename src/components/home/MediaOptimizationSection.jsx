@@ -51,7 +51,7 @@ const PORTFOLIO_EXAMPLES = [
   {
     title: 'Mlžné sochy na náměstí Trutnova',
     category: '4K Videodokumentace',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/518c8c2a3_mlzitka-pro-mesta.jpg',
+    image: '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp',
     stats: ['3x 4K kamery', 'Drone footage', '12min. finální film']
   },
   {

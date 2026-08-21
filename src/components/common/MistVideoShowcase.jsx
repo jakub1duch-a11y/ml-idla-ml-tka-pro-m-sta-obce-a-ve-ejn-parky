@@ -1,52 +1,54 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/5a2af0f9e_Efektmlhy-mlznabrana-zivynahled.mov';
+const HERO_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/cd51ba0aa_mlzitko-mrak-oblak.webm';
 
 const CLIPS = [
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV', caption: 'Mlžení zblízka' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV', caption: 'Jemná mlha v provozu' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV', caption: 'Mlžná brána v akci' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV', caption: 'Chladivý efekt naživo' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/8148cb378_instalace-mlzitka-mrak.MOV', caption: 'Instalace mlžítka Mrak' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2d9d98473_Svaovnukzkazive.mov', caption: 'Svařování u zákazníka' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b8e2893af_Ukazkasvarovanikotvicihptek.mov', caption: 'Svařování kotvících patek' }];
+{ url: '/media/optimized/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm', caption: 'Mlžení zblízka' },
+{ url: '/media/optimized/2dbc1232d_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm', caption: 'Jemná mlha v provozu' },
+{ url: '/media/optimized/858a3a3f3_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm', caption: 'Mlžná brána v akci' },
+{ url: '/media/optimized/ce13ff8ac_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm', caption: 'Chladivý efekt naživo' },
+{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/cd51ba0aa_mlzitko-mrak-oblak.webm', caption: 'Instalace mlžítka Mrak' },
+{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/fc20c7f11_svarovanimlzitekHolmTec-video.webm', caption: 'Svařování u zákazníka' },
+{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f8417df7f_svarovanimlzitekHolmTec-video02.webm', caption: 'Svařování kotvících patek' }];
 
 
 export default function MistVideoShowcase() {
   return (
-    <section className="bg-background py-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">Mlžení naživo</p>
-            <h2 className="max-w-lg font-heading text-4xl tracking-tight text-foreground md:text-5xl">Od svařování nerezu po první mlhu na místě</h2>
+            <h2 className="max-w-lg font-heading text-[clamp(2rem,8vw,2.4rem)] leading-[1.08] tracking-[-0.035em] text-foreground md:text-3xl">Od svařování nerezu po první mlhu na místě</h2>
           </div>
           <p className="max-w-sm text-sm text-muted-foreground">Krátké záběry přímo z dílny a instalací — tak, jak to u nás skutečně vypadá.</p>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-6 overflow-hidden rounded-3xl border border-border shadow-xl">
-          <video src={HERO_VIDEO} autoPlay muted loop playsInline className="aspect-video w-full object-cover" />
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }} className="mb-5 overflow-hidden rounded-2xl border border-border shadow-lg sm:mb-6 sm:rounded-3xl sm:shadow-xl">
+          <video src={HERO_VIDEO} autoPlay muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {CLIPS.map((clip, i) =>
           <motion.div
             key={clip.url}
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-            className="group relative overflow-hidden rounded-2xl border border-border">
+            transition={{ delay: Math.min(i * 0.04, 0.18), duration: 0.4 }}
+            className="group relative overflow-hidden rounded-xl border border-border bg-slate-950 shadow-sm sm:rounded-2xl">
             
               <video
               src={clip.url}
               muted
               loop
               playsInline
-              onMouseEnter={(e) => e.currentTarget.play()}
+              preload="none"
+              onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
               onMouseLeave={(e) => e.currentTarget.pause()}
-              className="aspect-square w-full object-cover" />
+              onClick={(e) => e.currentTarget.paused ? e.currentTarget.play().catch(() => {}) : e.currentTarget.pause()}
+              className="aspect-square w-full cursor-pointer object-cover" />
             
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
                 <p className="text-xs font-medium text-white">{clip.caption}</p>

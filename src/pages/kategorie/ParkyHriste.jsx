@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trees, CheckCircle, Loader } from 'lucide-react';
+import { ArrowRight, Trees, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
@@ -28,7 +28,7 @@ export default function ParkyHriste() {
   return (
     <div className="min-h-screen bg-white">
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/3c3e64d18_generated_video.mp4"
+        <video src="/media/optimized/3c3e64d18_generated_video.webm"
           className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">

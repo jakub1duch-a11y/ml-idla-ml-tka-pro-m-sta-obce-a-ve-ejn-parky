@@ -18,19 +18,19 @@ export default function ContactSection() {
     } catch (err) {
 
 
+
       // error
-    } finally {setSending(false);}
-  };
+    } finally {setSending(false);}};
 
   return (
-    <section className="py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+    <section className="bg-[hsl(var(--card))] py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }} className="mb-10 text-center sm:mb-12">
           
 
           
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-          className="font-heading font-light text-4xl lg:text-5xl text-slate-900 tracking-tight mb-3">
+          className="mb-3 font-heading text-[clamp(2rem,9vw,2.75rem)] font-light leading-[1.08] tracking-[-0.035em] text-slate-900 lg:text-5xl">
             Popište nám prostor.<br />Navrhneme řešení.
           </motion.h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
@@ -38,13 +38,13 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="mx-auto flex max-w-md flex-col justify-center gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-4">
           <Link to="/kontakt"
-          className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+          className="btn-metallic-mist inline-flex min-h-12 w-full items-center justify-center px-7 py-3.5 text-sm font-bold sm:w-auto">
             Popsat projekt <ArrowRight size={16} />
           </Link>
-          <Link to="/jak-to-funguje"
-          className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-slate-900 text-sm font-medium rounded-full border border-slate-200 hover:bg-slate-100 transition-all">
+          <Link to="/kalkulacka"
+          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-medium text-slate-900 transition-all hover:bg-slate-100 sm:w-auto">
             Kalkulačka nákladů
           </Link>
         </div>

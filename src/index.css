@@ -80,14 +80,24 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html, body, #root {
+    width: 100%;
+    max-width: 100%;
+  }
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
     font-family: var(--font-body);
     font-size: clamp(1rem, 0.97rem + 0.18vw, 1.075rem);
     font-weight: 400;
     line-height: 1.72;
     text-align: left;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-heading);
@@ -132,15 +142,37 @@
 /* Fade-in & Slide-up on scroll (GSAP ScrollTrigger) */
 .reveal-element {
   opacity: 0;
-  transform: translateY(40px) scale(0.98);
+  transform: translateY(28px) scale(0.992);
   transition-property: opacity, transform;
-  transition-duration: 0.9s;
-  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition-duration: 0.62s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 .reveal-element.is-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+@media (max-width: 640px) {
+  .reveal-element {
+    transform: translateY(18px);
+    transition-duration: 0.44s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-element,
+  .reveal-element.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Poptávka button hover effect */
@@ -199,6 +231,23 @@
   background-position: 100% 0%;
   transform: translateY(-1px);
 }
+
+/* Global secondary CTA — transparent, bordered, pill-shaped. Use for every secondary action. */
+.btn-secondary-outline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent !important;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease, transform .2s ease;
+}
+.btn-secondary-outline:hover {
+  background: rgba(255,255,255,.08) !important;
+  transform: translateY(-1px);
+}
 @keyframes mist-ring-pulse {
   0% { box-shadow: 0 0 0 0 rgba(43, 191, 207, 0.4); }
   70% { box-shadow: 0 0 0 9px rgba(43, 191, 207, 0); }
@@ -210,8 +259,72 @@
   transition: transform .2s ease, filter .2s ease;
 }
 .btn-inquiry-pulse:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+/* Subtle global photo watermark — public website only. */
+.mlz-photo-watermark-host {
+  position: relative !important;
+}
+.mlz-photo-watermark {
+  position: absolute;
+  right: clamp(8px, 1.2vw, 18px);
+  bottom: clamp(8px, 1.2vw, 16px);
+  z-index: 25;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: clamp(5px, .5vw, 8px);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  opacity: .28;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.28));
+}
+.mlz-photo-watermark-logo {
+  display: block;
+  width: clamp(48px, 5.5vw, 86px);
+  height: auto;
+  max-height: 24px;
+  object-fit: contain;
+  opacity: .82;
+}
+.mlz-photo-watermark-label {
+  font-family: var(--font-body);
+  font-size: clamp(7px, .52vw, 9px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+@media (max-width: 640px) {
+  .mlz-photo-watermark {
+    right: 8px;
+    bottom: 8px;
+    font-size: 8px;
+    letter-spacing: .055em;
+    opacity: .68;
+  }
+}
+
 @keyframes inquiry-pulse {
   0% { box-shadow: 0 0 0 0 hsl(var(--accent) / .55); }
   70% { box-shadow: 0 0 0 11px hsl(var(--accent) / 0); }
   100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0); }
+}
+
+/* MLŽIDLA motion logo — cooling mist signature */
+@keyframes mlzDrop {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+  46% { transform: translateY(-1.6px) scale(.98); opacity: .96; }
+  58% { transform: translateY(1px) scale(1.03); opacity: 1; }
+}
+
+@keyframes mlzMist {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(.92); opacity: .18; }
+  32% { transform: translate3d(-1.4px, -1.2px, 0) scale(1.06); opacity: .72; }
+  68% { transform: translate3d(1.7px, -2px, 0) scale(1.16); opacity: .34; }
+}
+
+@keyframes mlzWordmarkIn {
+  0% { opacity: 0; transform: translate3d(-5px, 2px, 0); filter: blur(3px); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
 }

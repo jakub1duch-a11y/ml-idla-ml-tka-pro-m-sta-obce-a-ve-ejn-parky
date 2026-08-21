@@ -37,7 +37,7 @@ export default function ReferenceHero() {
           </span>
           <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-200 aspect-[4/5] lg:aspect-[4/5]">
             <video
-              src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.mov"
+              src="/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm"
               autoPlay muted loop playsInline
               className="w-full h-full object-cover" />
           </div>

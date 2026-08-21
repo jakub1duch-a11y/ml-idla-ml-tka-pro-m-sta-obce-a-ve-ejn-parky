@@ -18,7 +18,6 @@ const AUDIENCES = [
 const FOLLOW_UP_TEMPLATES = [
   { value: 'inquiry_reminder', label: 'Připomenout poptávku' },
   { value: 'offer_reminder', label: 'Připomenout cenovou nabídku' },
-  { value: 'action_discount', label: 'Akční zvýhodnění · 30 dní' },
 ];
 const FOLLOW_UP_OFFER_STATUSES = ['sent', 'viewed', 'extension_requested', 'approved', 'expired'];
 const SMART_SCENARIO_PRESETS = [
@@ -35,7 +34,6 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
   const [productId, setProductId] = useState('');
   const [basePrice, setBasePrice] = useState(0);
   const [installation, setInstallation] = useState(0);
-  const [discount, setDiscount] = useState(0);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState([]);
@@ -46,7 +44,6 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
   const [approvedToSend, setApprovedToSend] = useState(false);
   const [prepared, setPrepared] = useState(null);
   const [followUpType, setFollowUpType] = useState('');
-  const [followUpDiscount, setFollowUpDiscount] = useState(5);
   const [latestOffer, setLatestOffer] = useState(null);
   const [followUpApproved, setFollowUpApproved] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -82,7 +79,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
   const selected = useMemo(() => inquiries.find((item) => item.key === selectedId), [inquiries, selectedId]);
   const selectedOffers = useMemo(() => selected ? (ordersByInquiry[selected.id] || []) : [], [ordersByInquiry, selected]);
   const total = Number(basePrice || 0) + Number(installation || 0);
-  const finalTotal = Math.round(total * (1 - Number(discount || 0) / 100));
+  const finalTotal = Math.round(total);
   const selectedProduct = products.find((item) => item.id === productId);
 
   useEffect(() => {
@@ -157,15 +154,12 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     if (!selected) return;
     setError(''); setBusy('followup-template'); setFollowUpApproved(false); resetPrepared();
     try {
-      const needsOffer = type === 'offer_reminder' || type === 'action_discount';
+      const needsOffer = type === 'offer_reminder';
       const offer = needsOffer ? await findLatestOffer() : null;
       if (needsOffer && !offer) throw new Error('K této poptávce zatím není uložená předchozí cenová nabídka.');
 
       const projectName = offer?.product_name || selected.product || 'váš projekt';
       const quoteNumber = offer?.quote_number || '';
-      const validUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-      const previousTotal = Number(offer?.total_price || 0);
-      const promoTotal = Math.round(previousTotal * (1 - Number(followUpDiscount || 0) / 100));
 
       if (type === 'inquiry_reminder') {
         setSubject('Navazujeme na vaši poptávku | MLŽIDLA®');
@@ -176,13 +170,6 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         const validityText = offer.valid_until ? new Date(offer.valid_until).toLocaleDateString('cs-CZ') : 'dle původní nabídky';
         setSubject(`Připomenutí cenové nabídky ${quoteNumber || ''} | MLŽIDLA®`.replace('  ', ' '));
         setMessage(`Dobrý den,\n\nnavazujeme na naši cenovou nabídku${quoteNumber ? ` ${quoteNumber}` : ''} k projektu „${projectName}“. Chtěli bychom ověřit, zda jste měli možnost nabídku projít a zda můžeme doplnit některé technické, cenové nebo realizační informace.\n\nPůvodní platnost nabídky: ${validityText}. Pokud je projekt stále aktuální, můžeme společně ověřit rozsah, termín realizace a případně nabídku aktualizovat podle současného zadání.\n\nStačí odpovědět na tento e-mail nebo nám zavolat. Rádi navážeme tam, kde jsme skončili.`);
-      }
-
-      if (type === 'action_discount') {
-        if (!(Number(followUpDiscount) > 0 && Number(followUpDiscount) < 100)) throw new Error('Pro akční follow-up nastavte slevu mezi 1 a 99 %.');
-        if (!(previousTotal > 0)) throw new Error('Poslední nabídka nemá uloženou cenu, ze které lze akční zvýhodnění vypočítat.');
-        setSubject(`Akční zvýhodnění k nabídce ${quoteNumber || ''} | MLŽIDLA®`.replace('  ', ' '));
-        setMessage(`Dobrý den,\n\nnavazujeme na dříve zaslanou nabídku${quoteNumber ? ` ${quoteNumber}` : ''} k projektu „${projectName}“. Pokud je projekt stále aktuální, rádi bychom vám jako podnět k dokončení rozhodnutí nabídli jednorázové zvýhodnění ${Number(followUpDiscount).toLocaleString('cs-CZ')} % z poslední nabídkové ceny.\n\nZvýhodnění navrhujeme s platností do ${validUntil.toLocaleDateString('cs-CZ')}. Pokud o něj budete mít zájem, stačí odpovědět na tento e-mail a připravíme aktualizovanou formální cenovou nabídku s novou cenou a platností.\n\nSoučasně rádi doplníme jakékoli technické informace nebo upravíme rozsah projektu, pokud se od posledního kontaktu něco změnilo.`);
       }
 
       setLatestOffer(offer);
@@ -197,13 +184,8 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     if (!selected || !followUpType || !followUpApproved || !subject || !message) return;
     setError(''); setBusy('followup-send');
     try {
-      const actionDiscount = followUpType === 'action_discount';
       const reminderOffer = followUpType === 'offer_reminder' ? latestOffer : null;
-      const previousTotal = Number(latestOffer?.total_price || 0);
-      const newTotal = actionDiscount ? Math.round(previousTotal * (1 - Number(followUpDiscount || 0) / 100)) : 0;
-      const validUntil = actionDiscount
-        ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-        : reminderOffer?.valid_until ? new Date(reminderOffer.valid_until) : null;
+      const validUntil = reminderOffer?.valid_until ? new Date(reminderOffer.valid_until) : null;
 
       await base44.functions.invoke('sendInquiryReply', {
         inquiry_type: selected.type,
@@ -213,9 +195,9 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         sender_email: senderEmail,
         project_summary: selected.message || '',
         email_type: followUpType,
-        discount_percent: actionDiscount ? Number(followUpDiscount || 0) : 0,
-        previous_total: actionDiscount ? previousTotal : 0,
-        new_total: actionDiscount ? newTotal : 0,
+        discount_percent: 0,
+        previous_total: 0,
+        new_total: 0,
         quote_number: reminderOffer?.quote_number || '',
         quote_pdf_url: reminderOffer?.quote_pdf_url || '',
         presentation_url: reminderOffer?.presentation_url || '',
@@ -285,9 +267,9 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     const productForOffer = options.product || selectedProduct;
     const basePriceForOffer = Number(options.basePrice ?? basePrice ?? 0);
     const installationForOffer = Number(options.installation ?? installation ?? 0);
-    const discountForOffer = Number(options.discount ?? discount ?? 0);
+    const discountForOffer = 0;
     const audienceForOffer = options.audienceVariant || audienceVariant;
-    const finalTotalForOffer = Math.round((basePriceForOffer + installationForOffer) * (1 - discountForOffer / 100));
+    const finalTotalForOffer = Math.round(basePriceForOffer + installationForOffer);
     const visualizationOverride = options.visualizationUrl || '';
     const visualizationOverrides = Array.isArray(options.visualizationUrls) ? options.visualizationUrls.filter(Boolean) : [];
     const offerAttachments = Array.isArray(options.attachments) ? options.attachments : attachments;
@@ -298,7 +280,6 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     if (options.product) setProductId(productForOffer.id);
     if (options.basePrice !== undefined) setBasePrice(basePriceForOffer);
     if (options.installation !== undefined) setInstallation(installationForOffer);
-    if (options.discount !== undefined) setDiscount(discountForOffer);
     if (options.audienceVariant) setAudienceVariant(audienceForOffer);
     setError(''); setBusy(options.auto ? 'auto-offer' : 'prepare'); setApprovedToSend(false);
     try {
@@ -518,7 +499,6 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       setProductId(autoProduct.id || '');
       setBasePrice(autoPrice);
       setInstallation(0);
-      setDiscount(0);
       setAudienceVariant(autoAudience);
 
       const returnedVisualAssets = Array.isArray(result.visualization_assets) && result.visualization_assets.length
@@ -604,12 +584,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     if (!isValidEmail(recipient)) { setError('Zadejte platnou testovací e-mailovou adresu.'); return; }
     setError(''); setTestSentTo(''); setBusy('test-send');
     try {
-      const actionDiscount = followUpType === 'action_discount';
-      const previousTotal = Number(latestOffer?.total_price || 0);
-      const newTotal = actionDiscount ? Math.round(previousTotal * (1 - Number(followUpDiscount || 0) / 100)) : 0;
-      const followUpValidUntil = actionDiscount
-        ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-        : latestOffer?.valid_until ? new Date(latestOffer.valid_until) : null;
+      const followUpValidUntil = latestOffer?.valid_until ? new Date(latestOffer.valid_until) : null;
       const validityLine = prepared ? `Cenová nabídka ${prepared.quoteNumber} je platná do ${prepared.validUntil.toLocaleDateString('cs-CZ')}.` : '';
       const portalLine = prepared ? 'Interaktivní nabídku, prezentaci a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/muj-projekt' : '';
       const testMessage = prepared
@@ -633,9 +608,9 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         quote_number: prepared?.quoteNumber || latestOffer?.quote_number || '',
         project_summary: selected.message || '',
         email_type: followUpType || 'offer',
-        discount_percent: actionDiscount ? Number(followUpDiscount || 0) : 0,
-        previous_total: actionDiscount ? previousTotal : 0,
-        new_total: actionDiscount ? newTotal : 0,
+        discount_percent: 0,
+        previous_total: 0,
+        new_total: 0,
         attachments: prepared ? attachments : [],
         test_email: recipient,
         is_test: true,
@@ -757,14 +732,13 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
             <select value={productId} onChange={(event) => chooseProduct(event.target.value)} className="border border-border bg-background px-3 py-2.5 text-sm"><option value="">Vybrat produkt pro nabídku</option>{products.map((product) => <option key={product.id} value={product.id}>{product.name}</option>)}</select>
             <input type="number" value={basePrice} onChange={(event) => { setBasePrice(Number(event.target.value) || 0); resetPrepared(); }} placeholder="Cena produktu bez DPH" className="border border-border bg-background px-3 py-2.5 text-sm"/>
             <label className="text-xs text-muted-foreground">Cena instalace bez DPH<input type="number" value={installation} onChange={(event) => { setInstallation(Number(event.target.value) || 0); resetPrepared(); }} placeholder="Např. 25 000 Kč" className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm"/></label>
-            <label className="text-xs text-muted-foreground">Sleva z celkové nabídky<input type="number" min="0" max="100" value={discount} onChange={(event) => { setDiscount(Number(event.target.value) || 0); resetPrepared(); }} placeholder="Např. 10 %" className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm"/></label>
           </div>
-          <p className="mt-3 text-sm font-bold text-secondary">Cena projektu po slevě: {money(finalTotal)} Kč bez DPH</p>
+          <p className="mt-3 text-sm font-bold text-secondary">Cena projektu: {money(finalTotal)} Kč bez DPH</p>
           <p className="mt-1 text-[11px] text-muted-foreground">Skrytá kopie bude vždy odeslána na: {BCC.join(', ')}</p>
           </details>
 
           <details className="mt-5 rounded-2xl border border-border bg-background p-4">
-            <summary className="cursor-pointer text-sm font-semibold text-foreground">Pokročilé nástroje · Smart řízení, AI studio, follow-up a vlastní přílohy</summary>
+            <summary className="cursor-pointer text-sm font-semibold text-foreground">Pokročilé nástroje · Smart řízení, AI asistent, Learning Hub, follow-up a vlastní přílohy</summary>
             <div className="mt-5">
           <div className="rounded-2xl border border-cyan-200 bg-cyan-50/40 p-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-700">Smart řízení nabídky</p><h3 className="mt-1 font-heading text-xl text-slate-950">Provozní scénáře a přidané moduly</h3><p className="mt-2 max-w-3xl text-xs leading-relaxed text-slate-600">Vyberte scénáře, které mají být součástí profesionální nabídky. Nastavení se propíše do PDF a prezentace jako doporučená provozní logika pro daný projekt.</p></div></div>
@@ -776,7 +750,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
             product={selectedProduct}
             attachments={attachments}
             onAttachmentsChange={setAttachments}
-            quoteContext={`${money(finalTotal)} Kč bez DPH · produkt ${money(basePrice)} Kč · instalace ${money(installation)} Kč · sleva ${Number(discount || 0)} %`}
+            quoteContext={`${money(finalTotal)} Kč bez DPH · produkt ${money(basePrice)} Kč · instalace ${money(installation)} Kč`}
             onPrepareOffer={prepareOffer}
             prepareBusy={busy === 'prepare'}
             onAutoPrepareFromText={autoPrepareFromText}
@@ -786,12 +760,10 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-secondary">Follow-up klienta</p><h3 className="mt-1 font-heading text-xl text-foreground">Předdefinované profesionální šablony</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">Připomenutí poptávky, připomenutí poslední odeslané cenové nabídky nebo návrh jednorázového akčního zvýhodnění. Text můžete před odesláním vždy upravit.</p></div>
-              <label className="w-full text-xs text-muted-foreground lg:w-40">Akční sleva %<input type="number" min="1" max="99" value={followUpDiscount} onChange={(e) => setFollowUpDiscount(Number(e.target.value) || 0)} className="mt-1 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground"/></label>
+              <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-secondary">Follow-up klienta</p><h3 className="mt-1 font-heading text-xl text-foreground">Předdefinované profesionální šablony</h3><p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted-foreground">Připomenutí poptávky nebo poslední odeslané cenové nabídky. Text můžete před odesláním vždy upravit.</p></div>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">{FOLLOW_UP_TEMPLATES.map((template) => <button key={template.value} type="button" onClick={() => applyFollowUpTemplate(template.value)} disabled={busy === 'followup-template'} className={`rounded-full border px-4 py-2.5 text-xs font-semibold transition ${followUpType === template.value ? 'border-secondary bg-secondary text-secondary-foreground' : 'border-border bg-white text-foreground hover:border-secondary/50'}`}>{busy === 'followup-template' ? 'Načítám…' : template.label}</button>)}</div>
             {latestOffer && <div className="mt-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-600"><strong className="text-slate-900">Poslední nabídka:</strong> {latestOffer.quote_number || 'bez čísla'} · {latestOffer.product_name || selected.product || 'projekt'}{latestOffer.total_price ? ` · ${money(latestOffer.total_price)} Kč bez DPH` : ''}{latestOffer.valid_until ? ` · původní platnost do ${new Date(latestOffer.valid_until).toLocaleDateString('cs-CZ')}` : ''}</div>}
-            {followUpType === 'action_discount' && latestOffer?.total_price > 0 && <div className="mt-3 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs leading-relaxed text-slate-700">Akční návrh: <strong>{money(latestOffer.total_price)} Kč</strong> → <strong className="text-cyan-800">{money(Math.round(Number(latestOffer.total_price) * (1 - Number(followUpDiscount || 0) / 100)))} Kč bez DPH</strong>. Platnost zvýhodnění bude 30 dní od odeslání. Původní PDF se nemění; po potvrzení zájmu se vystaví aktualizovaná formální nabídka.</div>}
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">

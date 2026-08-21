@@ -369,6 +369,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         ].filter((url, index, all) => url && all.indexOf(url) === index).slice(0, 4),
         ai_content: clientContent,
         smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
+        supla_ai_offer: suplaAiEnabled && suplaAiPricing?.ok ? suplaAiPricing : null,
       });
       const quote = quoteResponse.data;
 
@@ -391,6 +392,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           ai_content: clientContent,
           audience_variant: audienceForOffer,
           smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
+          supla_ai_offer: suplaAiEnabled && suplaAiPricing?.ok ? suplaAiPricing : null,
         });
         presentation = presentationResponse.data;
       } catch (presentationError) {

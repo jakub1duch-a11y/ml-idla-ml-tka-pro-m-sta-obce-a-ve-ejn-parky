@@ -54,7 +54,6 @@ export default function ObchodniNabidky() {
   const downloadOffer = async (product) => {
     setDownloading(product.id);
     const profile = profileFor(product);
-    const resolvedPrice = Number(profile?.unit_price_ex_vat || 0);
     const response = await base44.functions.invoke('generateProductDatasheet', {
       product,
       document_type: 'product_offer',

@@ -3,6 +3,7 @@ import { CheckCircle2, ExternalLink, Eye, FileText, ReceiptText, Search, Send, S
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
+import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 const errorMessage = (error) => error?.response?.data?.error || error?.message || 'Akci se nepodařilo dokončit.';
@@ -360,6 +361,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         valid_until: validUntil.toISOString(),
         portal_url: 'https://mlzidla.cz/muj-projekt',
         ar_url: arUrl,
+        offer_standard: SOBESLAV_OFFER_STANDARD,
         audience_variant: audienceForOffer,
         visualization_urls: [
           visualizationUrl,
@@ -387,6 +389,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           product: productForOffer,
           quote: { quote_number: quoteNumber, final_total: finalTotalForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), price_is_estimate: priceIsEstimate },
           ar_url: arUrl,
+          offer_standard: SOBESLAV_OFFER_STANDARD,
           ar_capture_url: visualizationUrl,
           approved_visualizations: approvedVisualizationAssets,
           ai_content: clientContent,

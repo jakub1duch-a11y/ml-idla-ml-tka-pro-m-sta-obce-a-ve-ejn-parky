@@ -24,13 +24,18 @@ export default function HeroSlider() {
   return (
     <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#071d26] text-white">
       <motion.div style={{ y: imageY, opacity }} className="absolute inset-0">
-        <img
-          src={HERO_IMAGE}
-          alt="Architektonické mlžítko MLŽIDLA® ve veřejném prostoru"
-          fetchPriority="high"
-          decoding="async"
+        <video
           className="h-full w-full object-cover object-center"
-        />
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={HERO_IMAGE}
+          aria-label="Motion vizualizace architektonického mlžení MLŽIDLA®"
+        >
+          <source src="/media/hero-motion.mp4" type="video/mp4" />
+        </video>
       </motion.div>
 
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,25,34,.93)_0%,rgba(5,25,34,.72)_42%,rgba(5,25,34,.22)_72%,rgba(5,25,34,.08)_100%)]" />

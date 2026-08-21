@@ -96,12 +96,16 @@ async function addHeader(doc, { type, quoteNumber, issued, validUntil }) {
   const logoOk = await addRemoteImage(doc, LOGO_URL, M, 8, 62, 20, { fit: 'contain', alignX: 'left', background: [255, 255, 255], radius: 0 });
   if (!logoOk) addBrand(doc, M, 9, false);
   doc.setFillColor(...pale); doc.setDrawColor(...border); doc.roundedRect(132, 7, 64, 27, 3, 3, 'FD');
-  doc.setTextColor(...navy); doc.setFontSize(8.5); doc.text(type === 'offer' ? 'CENOVÁ NABÍDKA' : 'TECHNICKÝ LIST', 191, 13, { align: 'right' });
+  const headerTitle = type === 'offer' ? 'CENOVÁ NABÍDKA' : type === 'product_offer' ? 'PRODUKTOVÁ NABÍDKA' : 'TECHNICKÝ LIST';
+  doc.setTextColor(...navy); doc.setFontSize(8.5); doc.text(headerTitle, 191, 13, { align: 'right' });
   doc.setTextColor(...muted); doc.setFontSize(6.4);
   if (type === 'offer') {
     doc.text(`Č. ${quoteNumber}`, 191, 19, { align: 'right' });
     doc.text(`Vystaveno ${issued}`, 191, 25, { align: 'right' });
     doc.text(`Platnost do ${validUntil}`, 191, 31, { align: 'right' });
+  } else if (type === 'product_offer') {
+    doc.text('MLŽIDLA® / HolmTec', 191, 20, { align: 'right' });
+    doc.text('Produktový obchodní podklad', 191, 27, { align: 'right' });
   }
   doc.setDrawColor(...border); doc.line(M, 40, W - M, 40);
 }
@@ -200,6 +204,7 @@ export default async function(req) {
       visualization_urls: visualizationUrls = [],
       ai_content: aiContent = {},
       smart_scenarios: smartScenarios = [],
+      offer_profile: offerProfile = {},
     } = await req.json();
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
@@ -231,6 +236,166 @@ export default async function(req) {
     const smartPricing = await findSmartControlPricing(base44);
     const smartVisualUrl = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5c4b99749_Smartmlzitka-ovladanizmobilu.jpg';
 
+    if (documentType === 'product_offer') {
+      const profile = offerProfile || {};
+      const productUrl = `https://mlzidla.cz/produkt/${product.slug || ''}`;
+      const gallery = [product.image_url, ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : [])]
+        .filter(Boolean)
+        .filter((url, index, all) => all.indexOf(url) === index)
+        .slice(0, 5);
+      let productPricing = null;
+      try { productPricing = await findPricingForProduct(base44, product, ''); } catch (_) {}
+      const profilePrice = Number(profile.unit_price_ex_vat || 0);
+      const sheetPrice = productPricing?.matched ? Number(productPricing.offer_price_ex_vat || 0) : 0;
+      const fallbackPrice = validatedCatalogFallback(product);
+      const pricingStatus = safe(profile.pricing_status) || (profilePrice || sheetPrice || fallbackPrice ? 'ready' : 'manual_required');
+      const verifiedPrice = pricingStatus === 'manual_required' ? 0 : (profilePrice || sheetPrice || fallbackPrice || 0);
+      const priceMode = safe(profile.pricing_mode);
+      const priceCaption = pricingStatus === 'manual_required'
+        ? 'PROJEKTOVÁ KALKULACE'
+        : priceMode === 'per_module'
+          ? 'CENA ZA STANDARDNÍ MODUL'
+          : pricingStatus === 'conditional'
+            ? 'CENOVÝ ZÁKLAD PRO PROJEKT'
+            : 'CENA STANDARDNÍHO PROVEDENÍ';
+      const profileBenefits = Array.isArray(profile.benefits) ? profile.benefits.map(safe).filter(Boolean) : [];
+      const benefits = (profileBenefits.length ? profileBenefits : audience.benefits).slice(0, 4);
+      const configurations = Array.isArray(profile.recommended_configurations) ? profile.recommended_configurations.map(safe).filter(Boolean).slice(0, 6) : [];
+      const offerHeadline = safe(profile.offer_headline) || safe(product.short_description) || audience.headline;
+      const offerSummary = safe(profile.offer_summary) || safe(product.description) || offerHeadline;
+      const priceNote = safe(profile.price_note);
+
+      await addHeader(doc, { type: 'product_offer', quoteNumber, issued, validUntil });
+      let y = 50;
+      doc.setTextColor(...accent); doc.setFontSize(6.2); doc.text('ARCHITEKTONICKÉ MLŽENÍ / PRODUKTOVÁ ŘADA', M, y);
+      doc.setTextColor(...navy); doc.setFontSize(24); doc.text(doc.splitTextToSize(safe(product.name), 150), M, y + 12);
+      doc.setTextColor(...muted); doc.setFontSize(8.2); doc.text(doc.splitTextToSize(offerHeadline, 150), M, y + 27);
+      const heroY = 88;
+      const heroUrl = gallery[0] || product.image_url || '';
+      const heroOk = await addRemoteImage(doc, heroUrl, M, heroY, CW, 103, { fit: gallery.length > 1 ? 'smart' : 'contain', background: [247, 250, 250] });
+      if (!heroOk) {
+        doc.setFillColor(...pale); doc.roundedRect(M, heroY, CW, 103, 2, 2, 'F');
+        doc.setTextColor(...muted); doc.setFontSize(8); doc.text('Produktová vizualizace není k dispozici.', M + 8, heroY + 52);
+      }
+      y = 199;
+      doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 43, 2, 2, 'F');
+      doc.setTextColor(...accent); doc.setFontSize(5.8); doc.text(priceCaption, M + 7, y + 8);
+      doc.setTextColor(255, 255, 255); doc.setFontSize(16);
+      doc.text(verifiedPrice > 0 ? `${formatPrice(verifiedPrice)} Kč` : 'Individuální nacenění', M + 7, y + 20);
+      doc.setTextColor(190, 220, 224); doc.setFontSize(6.2); doc.text(verifiedPrice > 0 ? 'bez DPH' : 'po technickém upřesnění konfigurace', M + 7, y + 28);
+      if (priceNote) doc.text(doc.splitTextToSize(priceNote, 96).slice(0, 2), M + 7, y + 35);
+      doc.setFillColor(255, 255, 255); doc.roundedRect(M + 122, y + 7, 53, 29, 2, 2, 'F');
+      doc.setTextColor(...petrol); doc.setFontSize(6); doc.text('STAV CENY', M + 128, y + 14);
+      doc.setTextColor(...ink); doc.setFontSize(7.3);
+      doc.text(pricingStatus === 'ready' ? 'Ověřená cena' : pricingStatus === 'conditional' ? 'Cena podmíněná rozsahem' : 'Projektová kalkulace', M + 128, y + 22);
+      doc.setTextColor(...muted); doc.setFontSize(5.7); doc.text('Neověřené hodnoty se nedopočítávají.', M + 128, y + 29);
+      y = 249;
+      drawButton(doc, M, y, 68, 'DETAIL PRODUKTU', productUrl, petrol);
+      drawButton(doc, M + 74, y, 68, 'NEZÁVAZNÁ POPTÁVKA', 'https://mlzidla.cz/poptavka', [13, 45, 56]);
+      await addQr(doc, productUrl, W - M - 29, y - 1, 24);
+      addFooter(doc);
+
+      doc.addPage();
+      await addHeader(doc, { type: 'product_offer', quoteNumber, issued, validUntil });
+      y = 50;
+      doc.setTextColor(...accent); doc.setFontSize(6.2); doc.text('DESIGN / TECHNIKA / KONFIGURACE', M, y);
+      doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Produkt v detailu.', M, y + 10);
+      doc.setTextColor(...muted); doc.setFontSize(7.4); doc.text(doc.splitTextToSize(offerSummary, CW), M, y + 21);
+      y = 82;
+      const page2Images = gallery.slice(1, 4);
+      if (page2Images.length) {
+        for (let i = 0; i < page2Images.length; i += 1) {
+          const count = Math.min(page2Images.length, 3);
+          const gap = 4;
+          const w = (CW - gap * (count - 1)) / count;
+          await addRemoteImage(doc, page2Images[i], M + i * (w + gap), y, w, 62, { fit: 'smart', background: [247, 250, 250] });
+        }
+      } else {
+        await addRemoteImage(doc, heroUrl, M, y, CW, 62, { fit: 'contain', background: [247, 250, 250] });
+      }
+      y = 153;
+      const specs = [
+        ['Materiál', product.material],
+        ['Pracovní tlak', product.pressure],
+        ['Spotřeba vody', product.water_consumption],
+        ['Velikost kapek', product.micron_size],
+        ['Dosah / plocha', product.coverage_area],
+        ['Napájení / řízení', product.power_supply],
+      ].filter((item) => safe(item[1]));
+      doc.setFillColor(...pale); doc.roundedRect(M, y, 89, 83, 2, 2, 'F');
+      doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text('OVĚŘENÉ TECHNICKÉ ÚDAJE', M + 6, y + 8);
+      let specY = y + 18;
+      if (specs.length) {
+        specs.slice(0, 6).forEach(([label, value]) => {
+          doc.setTextColor(...muted); doc.setFontSize(5.9); doc.text(label, M + 6, specY);
+          doc.setTextColor(...ink); doc.setFontSize(6.4); doc.text(doc.splitTextToSize(safe(value), 49)[0], M + 38, specY);
+          specY += 10;
+        });
+      } else {
+        doc.setTextColor(...muted); doc.setFontSize(6.2); doc.text(doc.splitTextToSize('Technické parametry, které nejsou potvrzené ve zdrojových datech, záměrně nezobrazujeme. Use null when unknown / do not infer.', 76), M + 6, specY);
+      }
+      doc.setFillColor(248, 250, 250); doc.roundedRect(M + 95, y, 87, 83, 2, 2, 'F');
+      doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text('HLAVNÍ PŘÍNOSY', M + 101, y + 8);
+      let benefitY = y + 18;
+      benefits.forEach((item) => {
+        doc.setFillColor(...accent); doc.circle(M + 104, benefitY - 1.7, 1.2, 'F');
+        doc.setTextColor(...ink); doc.setFontSize(6.4); doc.text(doc.splitTextToSize(item, 68), M + 109, benefitY);
+        benefitY += 13;
+      });
+      if (configurations.length) {
+        doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text('DOPORUČENÉ KONFIGURACE', M + 101, y + 62);
+        doc.setTextColor(...muted); doc.setFontSize(6); doc.text(doc.splitTextToSize(configurations.join(' · '), 70), M + 101, y + 71);
+      }
+      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text('Pozn.: Neznámé technické hodnoty zůstávají prázdné a nejsou odvozovány z podobných produktů.', M, 247);
+      addFooter(doc);
+
+      doc.addPage();
+      await addHeader(doc, { type: 'product_offer', quoteNumber, issued, validUntil });
+      y = 50;
+      doc.setTextColor(...accent); doc.setFontSize(6.2); doc.text('SMART COOLING / PROJEKTOVÁ PÉČE', M, y);
+      doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Od produktu k hotovému řešení.', M, y + 10);
+      doc.setTextColor(...muted); doc.setFontSize(7.4); doc.text(doc.splitTextToSize('Produkt lze doplnit o chytré řízení, měření spotřeby a projektovou přípravu. Konkrétní sestava se volí podle prostoru, provozu a požadované úrovně automatizace.', 116), M, y + 21);
+      await addRemoteImage(doc, smartVisualUrl, 139, 49, 57, 49, { fit: 'contain', background: [255, 255, 255] });
+      y = 108;
+      const smartItems = [
+        ['Wi-Fi ventil SUPLA', smartPricing.component_wifi_valve_ex_vat, 'Vzdálené otevření, uzavření a časové řízení vodní větve.'],
+        ['Měření spotřeby', Number(smartPricing.component_water_meter_ex_vat || 0) + Number(smartPricing.component_liw01_ex_vat || 0), 'Přehled spotřeby vody a provozních dat.'],
+        ['Teplota + vlhkost', smartPricing.component_thw01_ex_vat, 'Automatizace podle klimatických podmínek.'],
+        ['Kompletní SUPLA řízení', smartPricing.complete_supla_ex_vat, 'Projektové řízení, konfigurace a uvedení do provozu.'],
+      ];
+      smartItems.forEach((item, i) => {
+        const x = M + (i % 2) * 94;
+        const cy = y + Math.floor(i / 2) * 47;
+        doc.setFillColor(i === 3 ? 238 : 248, i === 3 ? 248 : 250, i === 3 ? 249 : 250); doc.roundedRect(x, cy, 88, 42, 2, 2, 'F');
+        doc.setTextColor(...navy); doc.setFontSize(8); doc.text(item[0], x + 5, cy + 10);
+        doc.setTextColor(...petrol); doc.setFontSize(9.5); doc.text(Number(item[1] || 0) > 0 ? `${formatPrice(item[1])} Kč` : 'dle projektu', x + 5, cy + 20);
+        doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(doc.splitTextToSize(item[2], 76), x + 5, cy + 29);
+      });
+      y = 210;
+      doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 50, 2, 2, 'F');
+      doc.setTextColor(...accent); doc.setFontSize(6.1); doc.text('PROJEKTOVÝ POSTUP', M + 7, y + 9);
+      const steps = ['01  Konzultace prostoru', '02  Volba produktu a konfigurace', '03  Vizualizace a technické upřesnění', '04  Nabídka, výroba a instalace'];
+      steps.forEach((step, i) => {
+        const x = M + 7 + (i % 2) * 86;
+        const sy = y + 19 + Math.floor(i / 2) * 13;
+        doc.setTextColor(255, 255, 255); doc.setFontSize(6.8); doc.text(step, x, sy);
+      });
+      doc.setTextColor(190, 220, 224); doc.setFontSize(5.9); doc.text('Technik projektu: Ing. Radek Meduna  |  +420 774 700 390  |  meduna@holmtec.cz', M + 7, y + 44);
+      await addQr(doc, 'https://mlzidla.cz/poptavka', W - M - 30, 264, 25);
+      doc.setTextColor(...petrol); doc.setFontSize(7); doc.text('Pošlete prostor nebo zadání.', M, 269);
+      doc.setTextColor(...muted); doc.setFontSize(6.1); doc.text('Vyhodnotíme vhodnou konfiguraci, vyrobitelnost a připravíme cenovou nabídku.', M, 276);
+      addFooter(doc);
+
+      const output = new Uint8Array(doc.output('arraybuffer'));
+      return Response.json({
+        pdf_base64: toBase64(output),
+        filename: `MLZIDLA-${(product.slug || product.name).replace(/[^a-zA-Z0-9-_]/g, '-')}-produktova-nabidka.pdf`,
+        product_slug: product.slug || '',
+        pricing_status: pricingStatus,
+        unit_price_ex_vat: verifiedPrice,
+      });
+    }
+
     if (documentType !== 'offer') {
       await addHeader(doc, { type: 'datasheet', quoteNumber, issued, validUntil });
       let y = 56;
@@ -260,7 +425,9 @@ export default async function(req) {
     const suppliedBasePrice = Number(quote.base_price || 0);
     const basePrice = suppliedBasePrice > 0 ? suppliedBasePrice : (sheetPrice || catalogFallback || 0);
     const installation = Number(quote.installation || 0);
-    const discountPercent = Number(quote.discount_percent || 0);
+    const requestedQuantity = Math.max(1, Number(quote.quantity || 1));
+    const requestedDiscountPercent = Number(quote.discount_percent || 0);
+    const discountPercent = [2, 3].includes(requestedQuantity) ? Math.max(0, requestedDiscountPercent) : 0;
     const priceIsEstimate = Boolean(quote.price_is_estimate || (!sheetPrice && catalogFallback > 0));
     const beforeDiscount = basePrice + installation;
     const calculatedFinal = beforeDiscount * (1 - discountPercent / 100);

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Bot, Check, FileImage, FileText, ImagePlus, Loader2, Send, Sparkles, UploadCloud } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { createOfferAttachmentName, SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
 const isImage = (file) => String(file?.file_type || '').startsWith('image/') || /\.(png|jpe?g|webp|gif)(\?|$)/i.test(String(file?.file_url || ''));
 const short = (value, max = 180) => String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -79,6 +80,9 @@ PRAVIDLA:
 - U BENDY zachovej jeden čistý plynulý profil; žádné výhonky, větve, přídavná ramena, hadice ani kabely vycházející z těla produktu.
 - Pokud něco není potvrzené, označ to jako bod k technickému upřesnění.
 - Piš česky, profesionálně, stručně a konkrétně.
+- Dodržuj závazný standard ${SOBESLAV_OFFER_STANDARD.source} v${SOBESLAV_OFFER_STANDARD.version}: ${SOBESLAV_OFFER_STANDARD.structure.join(', ')}.
+- Přílohy vždy označuj podle ${SOBESLAV_OFFER_STANDARD.attachmentRule}; fotografii nebo vizualizaci nezaměňuj za technický výkres či cenovou nabídku.
+- U více kusů vždy vyžádej nebo zkontroluj samostatné nacenění, projektovou cenu a úsporu v Kč i procentech.
 
 KLIENT: ${inquiry?.name || ''}
 ORGANIZACE: ${inquiry?.firma || inquiry?.company || ''}
@@ -142,14 +146,23 @@ ${learningContext}
     setError('');
     try {
       const result = await base44.integrations.Core.UploadFile({ file });
+      const isSourcePhoto = file.type?.startsWith('image/');
+      const typeLabel = isSourcePhoto ? 'FOTO_MISTA' : 'PODKLAD';
+      const standardizedName = createOfferAttachmentName({
+        clientName: inquiry?.firma || inquiry?.company || inquiry?.name,
+        type: typeLabel,
+        index: assets.filter((item) => item.asset_type === (isSourcePhoto ? 'source_photo' : 'source_document')).length + 1,
+        originalName: file.name,
+      });
       const asset = await base44.entities.OfferAsset.create({
         inquiry_id: inquiry.id,
         inquiry_type: inquiry.type,
         file_url: result.file_url,
-        file_name: file.name,
+        file_name: standardizedName,
         file_type: file.type || 'application/octet-stream',
-        asset_type: file.type?.startsWith('image/') ? 'source_photo' : 'source_document',
-        title: file.type?.startsWith('image/') ? 'Fotografie prostoru pro vizualizaci' : 'Projektový podklad',
+        asset_type: isSourcePhoto ? 'source_photo' : 'source_document',
+        title: isSourcePhoto ? 'Fotografie místa pro vizualizaci' : 'Projektový podklad',
+        description: `Původní název souboru: ${file.name}`,
         selected_for_offer: true,
         generated_by_ai: false,
       });

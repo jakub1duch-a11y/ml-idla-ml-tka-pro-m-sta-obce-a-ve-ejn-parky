@@ -97,6 +97,24 @@ Deno.serve(async (req) => {
       last_customer_action_at: approvedAt,
     });
 
+    try {
+      await base44.asServiceRole.entities.OfferLearningFeedback.create({
+        inquiry_id: project.inquiry_id || '',
+        project_order_id: project.id,
+        feedback_type: 'result_outcome',
+        category: 'conversion',
+        feedback_text: `Zákazník závazně objednal nabídku ${project.quote_number || project.id}.`,
+        lesson: 'Pozitivní obchodní výsledek evidovat jako podpůrný signál. Nevvozovat z jedné objednávky automaticky příčinu úspěchu ani technická pravidla.',
+        priority: 1,
+        active: true,
+        source: 'customer_portal',
+        result_label: 'approved_order',
+        applied_count: 0,
+      });
+    } catch (learningError) {
+      console.warn('Offer learning outcome could not be recorded', learningError);
+    }
+
     let archiveWarning = '';
     let orderPdfBytes: Uint8Array | null = null;
     let orderPdfFilename = '';

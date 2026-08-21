@@ -71,7 +71,6 @@ import MlzneBrany from '@/pages/MlzneBrany';
 import BendyARPrototype from '@/pages/BendyARPrototype';
 import GateARPrototype from '@/pages/GateARPrototype';
 import LocalizedLanding from '@/pages/LocalizedLanding';
-import PpcLanding from '@/pages/PpcLanding';
 import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
 
 const LOCALIZED_ROUTES = Object.entries(ROUTE_MAP).flatMap(([routeKey, paths]) =>

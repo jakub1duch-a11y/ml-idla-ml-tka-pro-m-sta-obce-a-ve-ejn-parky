@@ -381,9 +381,9 @@ export default async function(req) {
         doc.setTextColor(255, 255, 255); doc.setFontSize(6.8); doc.text(step, x, sy);
       });
       doc.setTextColor(190, 220, 224); doc.setFontSize(5.9); doc.text('Technik projektu: Ing. Radek Meduna  |  +420 774 700 390  |  meduna@holmtec.cz', M + 7, y + 44);
-      await addQr(doc, 'https://mlzidla.cz/poptavka', W - M - 30, 264, 25);
-      doc.setTextColor(...petrol); doc.setFontSize(7); doc.text('Pošlete prostor nebo zadání.', M, 269);
-      doc.setTextColor(...muted); doc.setFontSize(6.1); doc.text('Vyhodnotíme vhodnou konfiguraci, vyrobitelnost a připravíme cenovou nabídku.', M, 276);
+      await addQr(doc, 'https://mlzidla.cz/poptavka', W - M - 30, 246, 25);
+      doc.setTextColor(...petrol); doc.setFontSize(7); doc.text('Pošlete prostor nebo zadání.', M, 250);
+      doc.setTextColor(...muted); doc.setFontSize(6.1); doc.text('Vyhodnotíme vhodnou konfiguraci, vyrobitelnost a připravíme cenovou nabídku.', M, 258);
       addFooter(doc);
 
       const output = new Uint8Array(doc.output('arraybuffer'));

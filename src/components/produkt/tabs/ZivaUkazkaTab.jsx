@@ -36,9 +36,11 @@ export default function ZivaUkazkaTab({ product, allImages, onOpenLightbox }) {
               const featured = i === 0;
               const wide = i === 3 || i === 6;
               return (
-                <motion.button key={`${src}-${i}`} type="button" onClick={() => onOpenLightbox(i)} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .42, delay: Math.min(i * .035, .18) }} className={`group relative overflow-hidden rounded-[24px] border border-white/80 bg-white shadow-[0_14px_40px_rgba(8,47,63,.08)] ${featured ? 'col-span-2 row-span-2' : ''} ${wide ? 'col-span-2' : ''}`}>
-                  <img src={src} alt={`${product.name} – galerie ${i + 1}`} loading="lazy" decoding="async" className={`h-full w-full transition-transform duration-700 group-hover:scale-[1.035] ${featured ? 'object-contain bg-white p-5 sm:p-7' : 'object-cover'}`} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#062d3a]/35 via-transparent to-transparent opacity-70 transition-opacity group-hover:opacity-90" />
+                <motion.button key={`${src}-${i}`} type="button" onClick={() => onOpenLightbox(i)} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .42, delay: Math.min(i * .035, .18) }} className={`group relative overflow-hidden rounded-[24px] border border-white/80 bg-[#f7f9f9] shadow-[0_14px_40px_rgba(8,47,63,.08)] ${featured ? 'col-span-2 row-span-2' : ''} ${wide ? 'col-span-2' : ''}`}>
+                  <img src={src} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-10 blur-xl" />
+                  <div className="absolute inset-0 bg-white/[.74]" />
+                  <img src={src} alt={`${product.name} – galerie ${i + 1}`} loading="lazy" decoding="async" className={`relative h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.02] ${featured ? 'p-5 sm:p-7' : 'p-2.5 sm:p-3'}`} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#062d3a]/[.38] via-transparent to-transparent opacity-75 transition-opacity group-hover:opacity-90" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 text-left text-white">
                     <div><p className="font-mono text-[9px] uppercase tracking-[.18em] text-white/70">{featured ? 'Produktový pohled' : `Pohled ${i + 1}`}</p>{featured && <p className="mt-1 text-sm font-semibold">{product.name}</p>}</div>
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 bg-black/25 backdrop-blur-md transition-transform group-hover:scale-105"><Maximize2 size={14} /></span>

@@ -50,7 +50,7 @@ export default function HeroSlider() {
             transition={{ duration: .58, delay: .05 }}
             className="mt-4 max-w-[12ch] font-heading text-[clamp(3rem,7vw,6.7rem)] font-medium leading-[.94] tracking-[-.055em]"
           >
-            Mlha jako součást architektury.
+            Ochlazení, které patří do architektury.
           </motion.h1>
 
           <motion.p
@@ -59,7 +59,7 @@ export default function HeroSlider() {
             transition={{ duration: .5, delay: .12 }}
             className="mt-6 max-w-xl text-base leading-7 text-white/76 sm:text-lg"
           >
-            Nerezová mlžítka pro města, parky, promenády i zahrady. Navržená pro reálný prostor, s možností chytrého řízení.
+            Nerezová mlžítka pro města, parky, promenády, areály i zahrady. Jemná mlha zvyšuje komfort v horkých dnech a systém lze řídit podle času, teploty nebo provozu.
           </motion.p>
 
           <motion.div
@@ -69,10 +69,10 @@ export default function HeroSlider() {
             className="mt-7 flex flex-col gap-3 sm:flex-row"
           >
             <Link to="/mlzidla-mlzitka" className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#61d5e5] px-7 py-3.5 text-sm font-bold text-[#082934] transition hover:-translate-y-0.5">
-              Prohlédnout produkty <ArrowRight size={16} />
+              Prohlédnout mlžítka <ArrowRight size={16} />
             </Link>
             <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/24 bg-black/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/10">
-              Navrhnout řešení
+              Poptat řešení na míru
             </Link>
           </motion.div>
 

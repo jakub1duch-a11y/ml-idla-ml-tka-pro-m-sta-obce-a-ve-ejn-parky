@@ -3,13 +3,24 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageOff, Play, Video } from 'lucide-react';
 
 export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox }) {
-  const items = Array.isArray(mediaItems) ? mediaItems.filter((item) => item?.url) : [];
+  const [failedUrls, setFailedUrls] = useState(() => new Set());
+  const items = Array.isArray(mediaItems)
+    ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
+    : [];
   const [active, setActive] = useState(0);
   const reduceMotion = useReducedMotion();
   const touchStart = useRef(null);
   const activeItem = items[active];
+  const markFailed = (url) => setFailedUrls((current) => {
+    const next = new Set(current);
+    next.add(url);
+    return next;
+  });
 
-  useEffect(() => setActive(0), [productName]);
+  useEffect(() => {
+    setActive(0);
+    setFailedUrls(new Set());
+  }, [productName]);
   useEffect(() => {
     if (active > items.length - 1) setActive(0);
   }, [active, items.length]);
@@ -66,6 +77,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                   playsInline
                   preload="metadata"
                   className="h-full w-full bg-black object-contain"
+                  onError={() => markFailed(activeItem.url)}
                 />
               </motion.div>
             ) : (
@@ -81,7 +93,8 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.2 }}
                 className="absolute inset-0 h-full w-full cursor-zoom-in object-contain p-2 sm:p-3"
-                onClick={() => onOpenLightbox?.(active)}
+                onError={() => markFailed(activeItem.url)}
+                onClick={() => onOpenLightbox?.(activeItem.originalIndex)}
               />
             )}
           </AnimatePresence>
@@ -127,7 +140,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
               {item.type === 'video' ? (
                 <>
                   {item.poster ? (
-                    <img src={item.poster} alt="" loading="lazy" decoding="async" className="h-full w-full bg-white object-contain p-1" />
+                    <img src={item.poster} alt="" loading="lazy" decoding="async" className="h-full w-full bg-white object-contain p-1" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-slate-900 text-white"><Video size={18} /></div>
                   )}
@@ -145,6 +158,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                   loading="lazy"
                   decoding="async"
                   className="h-full w-full bg-white object-contain p-1"
+                  onError={() => markFailed(item.url)}
                 />
               )}
             </button>

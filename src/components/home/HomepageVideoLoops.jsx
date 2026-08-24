@@ -18,8 +18,11 @@ function classifyVideo(file) {
   if (group === 'OSTEV' || slug.includes('ostrev') || name.includes('ostev')) {
     return { key: 'ostrev', label: 'OSTREV', href: '/produkt/ostrev-mlzitko' };
   }
+  if (group === 'ZOO_PRAHA' || name.includes('zoo')) {
+    return { key: 'zoo', label: 'Realizace ZOO Praha', href: '/reference/mlzitka-pro-zoo-praha' };
+  }
   if (group === 'STEBLO' || slug.includes('bendy') || name.includes('steblo')) {
-    return { key: 'bendy', label: 'Městské mlžení', href: '/produkt/bendy-alej' };
+    return { key: 'bendy', label: 'BENDY / STÉBLO®', href: '/produkt/bendy-alej' };
   }
   if (group === 'MESTSKE_MLZENI') return { key: 'urban', label: 'Městské chlazení', href: '/mlzidla-mlzitka' };
   if (group === 'AURA_COLLECTION') return { key: 'aura', label: 'AURA kolekce', href: '/kolekce' };
@@ -47,7 +50,7 @@ export default function HomepageVideoLoops() {
       }))
       .filter((file) => isDirectVideo(file.resolvedUrl));
 
-    const preferredKeys = ['gate', 'ostrev', 'bendy', 'mist', 'urban', 'aura', 'general'];
+    const preferredKeys = ['zoo', 'gate', 'ostrev', 'bendy', 'mist', 'urban', 'aura', 'general'];
     const selected = [];
     for (const key of preferredKeys) {
       const match = candidates.find((file) => file.classification.key === key && !selected.some((item) => item.resolvedUrl === file.resolvedUrl));
@@ -66,7 +69,7 @@ export default function HomepageVideoLoops() {
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-teal-700">MLŽIDLA® · živé ukázky</p>
             <h2 className="mt-3 max-w-3xl font-heading text-3xl font-medium leading-tight tracking-[-.035em] text-slate-950 sm:text-4xl lg:text-5xl">
-              Mlha v pohybu. Bez textu, bez efektů navíc.
+              Skutečné realizace a produkty v provozu.
             </h2>
           </div>
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition hover:text-teal-700">

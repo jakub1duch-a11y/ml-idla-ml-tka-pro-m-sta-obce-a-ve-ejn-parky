@@ -6,8 +6,8 @@ const FEATURED_VIDEO = '/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta
 const FEATURED_POSTER = '/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp';
 
 const CLIPS = [
-  { url: '/media/optimized/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.webm', caption: 'STÉBLO® – mlžná alej pro veřejný prostor' },
-  { url: '/media/optimized/9f0153e3a_ml_detailvparku_01.webm', caption: 'STÉBLO® – detail mlžení v parku' },
+  { url: '/media/optimized/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.webm', caption: 'ZOO Praha – mlžítka v návštěvnickém prostoru' },
+  { url: '/media/optimized/9f0153e3a_ml_detailvparku_01.webm', caption: 'ZOO Praha – detail jemné mlhy v provozu' },
   { url: '/media/optimized/aa11e932c_mlnbrnaGATE70.webm', caption: 'GATE70 – průchozí mlžná brána' },
   { url: '/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm', caption: 'BENDY – zakřivený nerezový prvek v provozu' },
   { url: '/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm', caption: 'OSTREV – mlžný strom v reálné instalaci' },
@@ -86,13 +86,13 @@ export default function MistVideoShowcase() {
           <div className="relative bg-slate-950">
             <DeferredVideo src={FEATURED_VIDEO} poster={FEATURED_POSTER} autoPlayWhenVisible className="aspect-video w-full object-cover" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent px-5 pb-5 pt-16 sm:px-7 sm:pb-7">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-white/65">Hlavní video · STÉBLO®</p>
-              <h3 className="mt-1 max-w-2xl text-lg font-semibold text-white sm:text-2xl">Mlžná alej, která ochlazuje průchod a současně dotváří veřejný prostor</h3>
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-white/65">Realizace · ZOO Praha</p>
+              <h3 className="mt-1 max-w-2xl text-lg font-semibold text-white sm:text-2xl">Nerezová mlžítka pro ochlazení návštěvnických zón v areálu ZOO Praha</h3>
             </div>
           </div>
           <div className="flex flex-col gap-3 border-t border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
-            <p className="max-w-3xl text-sm leading-6 text-muted-foreground">STÉBLO® pracuje s opakováním štíhlých nerezových prvků v aleji. Vzniká čitelná trasa s jemnou mlhou vhodná pro promenády, parky a pobytové zóny.</p>
-            <Link to="/produkt/bendy-alej" className="shrink-0 text-sm font-semibold text-[#0b4860] transition-colors hover:text-[#08394c]">Detail STÉBLO® →</Link>
+            <p className="max-w-3xl text-sm leading-6 text-muted-foreground">Realizace v ZOO Praha ukazuje využití nerezových mlžných prvků v exponovaném veřejném prostoru. Jemná mlha zpříjemňuje pobyt návštěvníků v horkých dnech a současně pomáhá zlepšit místní mikroklima.</p>
+            <Link to="/reference/mlzitka-pro-zoo-praha" className="shrink-0 text-sm font-semibold text-[#0b4860] transition-colors hover:text-[#08394c]">Realizace ZOO Praha →</Link>
           </div>
         </motion.div>
 

@@ -59,7 +59,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
         onTouchEnd={onTouchEnd}
         className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-[0_12px_36px_rgba(15,23,42,.06)]"
       >
-        <div className="relative aspect-[4/3] w-full bg-white lg:aspect-[16/11]">
+        <div className={`relative w-full bg-white ${activeItem.type === 'video' ? 'aspect-video' : 'aspect-[4/3]'}`}> 
           <AnimatePresence mode="wait" initial={false}>
             {activeItem.type === 'video' ? (
               <motion.div
@@ -92,7 +92,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                className="absolute inset-0 h-full w-full cursor-zoom-in object-contain p-2 sm:p-3"
+                className="absolute inset-0 h-full w-full cursor-zoom-in object-contain p-1 sm:p-2"
                 onError={() => markFailed(activeItem.url)}
                 onClick={() => onOpenLightbox?.(activeItem.originalIndex)}
               />

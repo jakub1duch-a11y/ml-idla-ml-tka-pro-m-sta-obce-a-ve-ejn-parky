@@ -15,8 +15,7 @@ export default function LatestMarketingVisuals() {
         const selected = files
           .filter((file) =>
             file?.media_group === 'GENERAL' &&
-            file?.media_role === 'marketing' &&
-            /^marketing-Video-/i.test(file?.file_name || '') &&
+            file?.media_role === 'homepage_visual' &&
             String(file?.file_type || '').startsWith('image/') &&
             file?.file_url
           )

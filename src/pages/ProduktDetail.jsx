@@ -101,6 +101,7 @@ export default function ProduktDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  const [productMedia, setProductMedia] = useState([]);
   const [categories, setCategories] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -174,11 +175,13 @@ export default function ProduktDetail() {
           ]
         }
       });
-      const [related, nozzleResults, allProducts] = await Promise.all([
+      const [related, nozzleResults, allProducts, mediaFiles] = await Promise.all([
       p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
       base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
-      base44.entities.Product.list().catch(() => [])]
+      base44.entities.Product.list().catch(() => []),
+      base44.entities.MediaFile.filter({ product_slug: p.slug }).catch(() => [])]
       );
+      setProductMedia((mediaFiles || []).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
       const sameCategory = (related || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska');
       const fallback = (allProducts || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !sameCategory.some((item) => item.id === r.id));
       const similar = [...sameCategory, ...fallback].slice(0, 3);

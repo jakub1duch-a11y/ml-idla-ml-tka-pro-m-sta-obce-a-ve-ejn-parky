@@ -16,17 +16,49 @@ export default function AdminMedia() {
 
   useEffect(() => { load(); }, []);
 
+  // Automatické přiřazení známých produktových videí podle názvu souboru.
+  // Pokud název neznáme, soubor se bezpečně uloží jako NEZAŘAZENÉ a lze jej přiřadit ručně.
+  const inferMediaMeta = (fileName = '') => {
+    const name = fileName.toLowerCase();
+
+    const rules = [
+      { match: 'a912389b-814c-4922-8d8c-d71f9d9299f9', product_slug: 'y-armist-j70', media_group: 'Y-ARMIST', media_role: 'video' },
+      { match: '2fd97cdc-fc16-43b3-9cbd-f2ee2df7112a', product_slug: 'ostrev-mlzitko', media_group: 'OSTREV', media_role: 'video' },
+      { match: '6289d5ae-5b3d-431d-a492-6c6715db31d8', product_slug: 'bendy-alej', media_group: 'STEBLO', media_role: 'video' },
+      { match: '0a03edab-eaa0-4441-81a2-5a441952900b', product_slug: 'bendy-alej', media_group: 'STEBLO', media_role: 'video' },
+      { match: '8bb4e2b2-ac18-45a8-a168-469875a62f92', product_slug: 'bendy-alej', media_group: 'STEBLO', media_role: 'video' },
+      { match: 'b266039d-56cf-4df7-b37b-b7500928b599', product_slug: 'bendy-alej', media_group: 'STEBLO', media_role: 'video' },
+      { match: 'vid_20260802_154033_723', product_slug: 'mlzitko-bendy', media_group: 'BENDY', media_role: 'video' },
+      { match: '20b69394-a9b7-4bf1-8647-eca79925590c', product_slug: 'linea-solo', media_group: 'LINEA', media_role: 'video' },
+      { match: '25b2b26b-bd81-4748-b0e5-fa4a106993ed', product_slug: '', media_group: 'GENERAL', media_role: 'marketing' },
+    ];
+
+    const rule = rules.find((item) => name.includes(item.match));
+    return rule || { product_slug: '', media_group: 'NEZAŘAZENÉ', media_role: 'unassigned' };
+  };
+
   const handleUpload = async (e) => {
     const selected = Array.from(e.target.files || []);
     if (selected.length === 0) return;
     setUploading(true);
-    for (const file of selected) {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      await base44.entities.MediaFile.create({ file_url, file_name: file.name, file_type: file.type });
+    try {
+      let order = Date.now();
+      for (const file of selected) {
+        const { file_url } = await base44.integrations.Core.UploadFile({ file });
+        const meta = inferMediaMeta(file.name);
+        await base44.entities.MediaFile.create({
+          file_url,
+          file_name: file.name,
+          file_type: file.type,
+          ...meta,
+          sort_order: order++,
+        });
+      }
+    } finally {
+      setUploading(false);
+      if (inputRef.current) inputRef.current.value = '';
+      load();
     }
-    setUploading(false);
-    if (inputRef.current) inputRef.current.value = '';
-    load();
   };
 
   const handleDelete = async (id) => {

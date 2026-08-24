@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductClick } from '@/lib/ga4';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 export default function ProductFilterGrid() {
   const [products, setProducts] = useState([]);
@@ -51,15 +52,14 @@ export default function ProductFilterGrid() {
           {filtered.map((p, i) =>
         <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
               <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'} onClick={() => trackProductClick(p.name, p.slug, 'chytra_mlzidla')}
-            className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md transition-all h-full">
-                <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                  {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />}
-                </div>
-                <div className="p-5">
-                  <h3 className="text-slate-900 font-medium mb-1">{p.name}</h3>
-                  <p className="text-xs text-slate-400 mb-3 line-clamp-2">{p.short_description}</p>
-                  <div className="flex items-center gap-1 text-xs text-slate-900 font-medium">
-                    Detail produktu <ArrowRight size={12} />
+            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:border-slate-300 hover:shadow-md">
+                <ProductHoverImage product={p} className="aspect-[4/3] bg-slate-100" />
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="min-h-[2.6rem] line-clamp-2 font-medium leading-snug text-slate-900 mb-1">{p.name}</h3>
+                  <p className="min-h-[2rem] text-xs text-slate-400 mb-3 line-clamp-2">{p.short_description}</p>
+                  {p.coverage_area && <p className="-mt-2 mb-3 text-[11px] font-medium text-slate-500">Výška / dosah: {p.coverage_area}</p>}
+                  <div className="mt-auto flex items-center gap-1 text-xs text-slate-900 font-medium">
+                    Detail produktu <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </Link>

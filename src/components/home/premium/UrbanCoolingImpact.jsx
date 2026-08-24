@@ -5,11 +5,11 @@ import { ArrowRight, Building2, Heart, ShoppingBag, UsersRound, Wind } from 'luc
 import WindMistOverlay from '@/components/home/premium/WindMistOverlay';
 
 const BENEFITS = [
-{ Icon: Heart, text: 'Ruch se vrací na náměstí i do zahrádek' },
-{ Icon: UsersRound, text: 'Zábava pro děti, rodiče i návštěvníky' },
-{ Icon: Wind, text: 'Čistší a příjemnější vzduch v úmorných vedrech' },
-{ Icon: Building2, text: 'Vyšší komfort pro obyvatele i zvířata' },
-{ Icon: ShoppingBag, text: 'Delší návštěvy, vyšší tržby v okolních podnicích' }];
+{ Icon: Heart, text: 'Příjemnější pobyt na náměstích, terasách a promenádách' },
+{ Icon: UsersRound, text: 'Vyšší komfort pro návštěvníky všech věkových skupin' },
+{ Icon: Wind, text: 'Jemná mlha pomáhá vázat část polétavého prachu a pylu' },
+{ Icon: Building2, text: 'Vhodné pro veřejný prostor, areály i pobytové zóny' },
+{ Icon: ShoppingBag, text: 'Příjemnější mikroklima může podpořit delší pobyt návštěvníků' }];
 
 
 export default function UrbanCoolingImpact() {
@@ -26,8 +26,8 @@ export default function UrbanCoolingImpact() {
         <div className="grid items-center gap-12 sm:gap-14 lg:grid-cols-2 lg:gap-16">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-white/70">Dopad na veřejný prostor</p>
-            <h2 className="mb-5 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-white md:text-4xl">Vraťte lidem důvod zůstat venku i v horku</h2>
-            <p className="max-w-md text-base leading-relaxed text-white/80">Mlha snižuje teplotu ve svém okolí v řádu sekund. Je to vidět na náměstí i na terase — lidé se vrací tam, kde je jim příjemně.</p>
+            <h2 className="mb-5 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-white md:text-4xl">Zpříjemněte veřejný prostor i během horkých dnů</h2>
+            <p className="max-w-md text-base leading-relaxed text-white/80">Jemná vodní mlha rychle ochlazuje bezprostřední okolí mlžítka a vytváří příjemnější podmínky pro pobyt na náměstích, v parcích, areálech i na terasách.</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {BENEFITS.map((b, i) =>
@@ -45,7 +45,7 @@ export default function UrbanCoolingImpact() {
 
           <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mx-auto flex h-56 w-56 flex-col items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 text-center backdrop-blur sm:h-64 sm:w-64">
             <span className="font-heading text-6xl tabular-nums text-white sm:text-7xl">{temperature}°</span>
-            <span className="mt-2 max-w-[16rem] font-mono text-[10px] uppercase leading-4 tracking-[.14em] text-white/70 sm:text-xs sm:tracking-widest">POCITOVÁ TEPLOTA V MLZE</span>
+            <span className="mt-2 max-w-[16rem] font-mono text-[10px] uppercase leading-4 tracking-[.14em] text-white/70 sm:text-xs sm:tracking-widest">ILUSTRACE POCITOVÉHO OCHLAZENÍ</span>
           </motion.div>
         </div>
       </div>

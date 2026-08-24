@@ -67,7 +67,7 @@ export default function OProduktuTab({ product, onOpenLightbox }) {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">Krátké video</p>
             <div className="rounded-2xl overflow-hidden border border-slate-200 bg-black">
-              <video src={product.video_url} controls playsInline className="w-full aspect-video object-cover" />
+              <video src={product.video_url} controls playsInline preload="none" poster={product.image_url} className="w-full aspect-video object-cover" />
             </div>
           </motion.div>
         }

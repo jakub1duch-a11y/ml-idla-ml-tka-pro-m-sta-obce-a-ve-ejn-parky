@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Maximize2, ImageOff, Images } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2, ImageOff, Images, Grid3X3, Rows3 } from 'lucide-react';
 
 export default function ProductGalleryPanel({ images, productName, onOpenLightbox }) {
   const safeImages = Array.isArray(images) ? images.filter(Boolean) : [];
   const [active, setActive] = useState(0);
   const [ratios, setRatios] = useState({});
+  const [showAll, setShowAll] = useState(false);
   const reduceMotion = useReducedMotion();
   const thumbRefs = useRef([]);
   const touchStart = useRef(null);
 
-  useEffect(() => setActive(0), [productName]);
+  useEffect(() => {
+    setActive(0);
+    setShowAll(false);
+  }, [productName]);
   useEffect(() => {
     if (active > safeImages.length - 1) setActive(0);
     thumbRefs.current[active]?.scrollIntoView?.({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
@@ -39,7 +43,9 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
 
   const useContain = (src) => {
     const ratio = ratios[src];
-    return ratio && (ratio < 1.08 || ratio > 2.05);
+    // Produktové rendery GATE, AURA, YPSILON aj. bývají vyšší nebo velmi široké.
+    // V těchto případech je důležitější zobrazit celý výrobek než fotografii oříznout.
+    return !ratio || ratio < 1.18 || ratio > 1.92;
   };
 
   const handleStageKeyDown = (event) => {
@@ -73,26 +79,9 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
           aria-label={`Otevřít fotografii ${active + 1} z ${safeImages.length}`}
-          className="group relative aspect-[4/3] w-full cursor-zoom-in overflow-hidden bg-[#edf1f2] outline-none focus-visible:ring-2 focus-visible:ring-[#0b4860]/50"
+          className="group relative aspect-[4/3] w-full cursor-zoom-in overflow-hidden bg-[#f3f6f7] outline-none focus-visible:ring-2 focus-visible:ring-[#0b4860]/50 lg:aspect-[16/11]"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={`background-${safeImages[active]}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: reduceMotion ? 0 : .24 }}
-              className="absolute inset-0"
-            >
-              <img
-                src={safeImages[active]}
-                alt=""
-                aria-hidden="true"
-                className="h-full w-full scale-110 object-cover opacity-30 blur-2xl"
-              />
-              <div className="absolute inset-0 bg-[#071f29]/10" />
-            </motion.div>
-          </AnimatePresence>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(255,255,255,.98),rgba(236,242,244,.92)_58%,rgba(225,234,237,.96)_100%)]" />
 
           <AnimatePresence mode="wait" initial={false}>
             <motion.img
@@ -100,11 +89,14 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
               src={safeImages[active]}
               alt={`${productName} – fotografie ${active + 1} z ${safeImages.length}`}
               onLoad={(event) => rememberRatio(safeImages[active], event)}
-              initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.012 }}
+              loading={active === 0 ? 'eager' : 'lazy'}
+              fetchPriority={active === 0 ? 'high' : 'auto'}
+              decoding="async"
+              initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.008 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: reduceMotion ? 0 : .34, ease: [0.22, 1, 0.36, 1] }}
-              className={`absolute inset-0 h-full w-full ${useContain(safeImages[active]) ? 'object-contain p-3 sm:p-5' : 'object-cover'}`}
+              className={`absolute inset-0 h-full w-full ${useContain(safeImages[active]) ? 'object-contain p-4 sm:p-6 lg:p-7' : 'object-cover'}`} 
             />
           </AnimatePresence>
 
@@ -134,11 +126,18 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
 
         {safeImages.length > 1 && (
           <div className="border-t border-slate-100 bg-white p-3 sm:p-4">
-            <div className="mb-2.5 flex items-center justify-between">
-              <span className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-400">Galerie produktu</span>
-              <button type="button" onClick={openActive} className="text-[11px] font-semibold text-[#0b4860] transition-colors hover:text-[#08394c]">Zobrazit přes celou obrazovku</button>
+            <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-400">Galerie produktu · {safeImages.length} fotografií</span>
+              <div className="flex items-center gap-2">
+                {safeImages.length > 6 && (
+                  <button type="button" onClick={() => setShowAll((value) => !value)} className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-[11px] font-semibold text-slate-600 transition-colors hover:bg-slate-50">
+                    {showAll ? <><Rows3 size={12}/> Sbalit</> : <><Grid3X3 size={12}/> Všechny fotografie</>}
+                  </button>
+                )}
+                <button type="button" onClick={openActive} className="hidden text-[11px] font-semibold text-[#0b4860] transition-colors hover:text-[#08394c] sm:inline">Celá obrazovka</button>
+              </div>
             </div>
-            <div className="flex snap-x snap-mandatory gap-2.5 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+            <div className={showAll ? 'grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5' : 'flex snap-x snap-mandatory gap-2.5 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden'} style={showAll ? undefined : { scrollbarWidth: 'none' }}>
               {safeImages.map((img, i) => (
                 <button
                   ref={(node) => { thumbRefs.current[i] = node; }}
@@ -147,7 +146,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
                   onClick={() => setActive(i)}
                   aria-current={active === i ? 'true' : undefined}
                   aria-label={`Zobrazit fotografii ${i + 1} z ${safeImages.length}`}
-                  className={`relative aspect-[4/3] min-w-[96px] snap-start overflow-hidden rounded-xl border-2 bg-slate-100 transition-all duration-300 sm:min-w-[116px] ${active === i ? 'border-[#0b4860] shadow-[0_6px_16px_rgba(11,72,96,.13)]' : 'border-transparent opacity-75 hover:opacity-100'}`}
+                  className={`relative aspect-[4/3] ${showAll ? 'min-w-0' : 'min-w-[96px] snap-start sm:min-w-[116px]'} overflow-hidden rounded-xl border-2 bg-slate-100 transition-all duration-300 ${active === i ? 'border-[#0b4860] shadow-[0_6px_16px_rgba(11,72,96,.13)]' : 'border-transparent opacity-75 hover:opacity-100'}`}
                 >
                   <img
                     src={img}

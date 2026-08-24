@@ -442,7 +442,7 @@ export default function ProduktDetail() {
       }
 
       {lightbox &&
-      <Lightbox images={lightbox.images} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} />
+      <Lightbox images={lightbox.images} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} productName={product.name} />
       }
 
       <ProductStickyFooterBar product={product} show={showStickyBar} onPoptat={scrollToContact} />

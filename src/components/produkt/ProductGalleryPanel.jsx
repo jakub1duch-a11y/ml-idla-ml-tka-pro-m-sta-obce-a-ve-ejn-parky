@@ -127,7 +127,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
               {item.type === 'video' ? (
                 <>
                   {item.poster ? (
-                    <img src={item.poster} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                    <img src={item.poster} alt="" loading="lazy" decoding="async" className="h-full w-full bg-white object-contain p-1" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-slate-900 text-white"><Video size={18} /></div>
                   )}
@@ -144,7 +144,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                   alt={`${productName} – náhled ${index + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full bg-white object-contain p-1"
                 />
               )}
             </button>

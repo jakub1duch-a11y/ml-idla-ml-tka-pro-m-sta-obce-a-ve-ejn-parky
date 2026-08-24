@@ -211,8 +211,14 @@ export default function ProduktDetail() {
       </div>
     </div>);
 
-  // Keep the gallery clean: one URL only once, with the product thumbnail first.
-  const allImages = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
+  // Keep the product gallery visual-only: primary image first, no duplicate or video URLs.
+  const isGalleryImage = (url) => {
+    if (!url || typeof url !== 'string') return false;
+    return !/\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
+  };
+  const allImages = [product.image_url, ...(product.gallery_urls || [])]
+    .filter(isGalleryImage)
+    .filter((url, index, list) => list.indexOf(url) === index);
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [

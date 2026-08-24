@@ -42,7 +42,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
   };
 
   return (
-    <div className="space-y-3">
+    <div className="min-w-0 max-w-full space-y-3">
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
@@ -114,7 +114,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
       </div>
 
       {items.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+        <div className="flex w-full max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
           {items.map((item, index) => (
             <button
               key={`${item.type}-${item.url}-${index}`}

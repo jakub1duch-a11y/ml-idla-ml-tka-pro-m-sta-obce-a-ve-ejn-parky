@@ -239,14 +239,19 @@ export default function ProduktDetail() {
       </div>
     </div>);
 
-  // Keep the product gallery visual-only: primary image first, no duplicate or video URLs.
-  const isGalleryImage = (url) => {
-    if (!url || typeof url !== 'string') return false;
-    return !/\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
-  };
-  const allImages = [product.image_url, ...(product.gallery_urls || [])]
-    .filter(isGalleryImage)
+  // Sjednocená produktová galerie: fotografie i všechna videa přiřazená přes MediaFile.
+  const isVideoUrl = (url) => typeof url === 'string' && /\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
+  const imageUrls = [product.image_url, ...(product.gallery_urls || []), ...productMedia.filter((m) => m.file_url && !isVideoUrl(m.file_url) && String(m.file_type || '').startsWith('image/')).map((m) => m.file_url)]
+    .filter(Boolean)
     .filter((url, index, list) => list.indexOf(url) === index);
+  const videoUrls = [product.video_url, ...productMedia.filter((m) => m.file_url && (isVideoUrl(m.file_url) || String(m.file_type || '').startsWith('video/'))).map((m) => m.file_url)]
+    .filter(Boolean)
+    .filter((url, index, list) => list.indexOf(url) === index);
+  const allImages = imageUrls;
+  const allMedia = [
+    ...imageUrls.map((url) => ({ type: 'image', url })),
+    ...videoUrls.map((url) => ({ type: 'video', url, poster: product.image_url || imageUrls[0] }))
+  ];
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [

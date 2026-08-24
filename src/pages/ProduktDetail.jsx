@@ -79,10 +79,10 @@ function Lightbox({ mediaItems, initialIndex, onClose, productName }) {
             <button onClick={() => setIdx((i) => (i + 1) % mediaItems.length)} aria-label="Další médium" className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:right-5 sm:h-11 sm:w-11"><ChevronRight size={19} /></button>
           </>}
         </div>
-        {images.length > 1 && <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>{images.map((src, i) => <button key={`${src}-${i}`} type="button" onClick={() => setIdx(i)} aria-label={`Zobrazit fotografii ${i + 1} z ${images.length}`} className={`relative aspect-[4/3] min-w-[76px] overflow-hidden rounded-xl border transition-all sm:min-w-[92px] ${idx === i ? 'border-white opacity-100 ring-2 ring-white/15' : 'border-white/10 opacity-45 hover:opacity-85'}`}><img src={src} alt={`Náhled ${i + 1}`} className="h-full w-full object-cover" /></button>)}</div>}
+        {mediaItems.length > 1 && <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>{mediaItems.map((item, i) => <button key={`${item.type}-${item.url}-${i}`} type="button" onClick={() => setIdx(i)} aria-label={`Zobrazit ${item.type === 'video' ? 'video' : 'fotografii'} ${i + 1} z ${mediaItems.length}`} className={`relative aspect-[4/3] min-w-[76px] overflow-hidden rounded-xl border transition-all sm:min-w-[92px] ${idx === i ? 'border-white opacity-100 ring-2 ring-white/15' : 'border-white/10 opacity-45 hover:opacity-85'}`}>{item.type === 'video' ? <><img src={item.poster} alt={`Video náhled ${i + 1}`} className="h-full w-full object-cover" /><span className="absolute inset-x-1 bottom-1 rounded bg-black/65 px-1 py-0.5 text-center font-mono text-[8px] font-bold text-white">VIDEO</span></> : <img src={item.url} alt={`Náhled ${i + 1}`} className="h-full w-full object-cover" />}</button>)}</div>}
         <div className="mt-3 flex w-full items-center justify-between px-1">
           <p className="truncate text-xs text-white/55 sm:hidden">{productName}</p>
-          <p className="ml-auto font-mono text-[10px] uppercase tracking-[.2em] text-white/45">{idx + 1} / {images.length}</p>
+          <p className="ml-auto font-mono text-[10px] uppercase tracking-[.2em] text-white/45">{idx + 1} / {mediaItems.length}</p>
         </div>
       </div>
     </motion.div>);
@@ -280,8 +280,8 @@ export default function ProduktDetail() {
       <ProductHero
         product={product}
         categoryName={categoryName}
-        allImages={allImages}
-        onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
+        allMedia={allMedia}
+        onOpenLightbox={(i) => setLightbox({ mediaItems: allMedia, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
 
 
@@ -290,7 +290,7 @@ export default function ProduktDetail() {
         <OazaSignatureSection
           product={product}
           allImages={allImages}
-          onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
+          onOpenLightbox={(i) => setLightbox({ mediaItems: allImages.map((url) => ({ type: 'image', url })), idx: i })}
           onPoptat={scrollToContact}
           onShowSmart={() => handleTabClick(TABS[3])}
         />
@@ -345,7 +345,7 @@ export default function ProduktDetail() {
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-          {activeTab === 'o-produktu' && <OProduktuTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ images: customImages || allImages, idx: i })} />}
+          {activeTab === 'o-produktu' && <OProduktuTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ mediaItems: (customImages || allImages).map((url) => ({ type: 'image', url })), idx: i })} />}
           {activeTab === 'technicke' &&
           <>
               <SpecsTab product={product} techRows={techRows} />
@@ -355,7 +355,7 @@ export default function ProduktDetail() {
           {activeTab === 'benefity' && <BenefityTab product={product} />}
           {activeTab === 'smart' && <SmartValveProductSection embedded product={product} onPoptat={scrollToContact} />}
           {activeTab === 'instalace' && <InstallationTab product={product} />}
-          {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })} />}
+          {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ mediaItems: allImages.map((url) => ({ type: 'image', url })), idx: i })} />}
           {activeTab === 'ke-stazeni' && <DownloadsTab product={product} />}
         </motion.div>
       </AnimatePresence>
@@ -454,7 +454,7 @@ export default function ProduktDetail() {
       }
 
       {lightbox &&
-      <Lightbox images={lightbox.images} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} productName={product.name} />
+      <Lightbox mediaItems={lightbox.mediaItems} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} productName={product.name} />
       }
 
       <ProductStickyFooterBar product={product} show={showStickyBar} onPoptat={scrollToContact} />

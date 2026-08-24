@@ -109,9 +109,24 @@ const MEDIA_MAP = {
   "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eca0629b1_video-mlitkospiralavakci1.MOV": "/media/optimized/db-a135d5312d-eca0629b1_video-mlitkospiralavakci1.webm"
 };
 
+const ORIGINAL_MEDIA_MAP = Object.fromEntries(
+  Object.entries(MEDIA_MAP).map(([source, optimized]) => [optimized, source])
+);
+
 export function resolveMediaUrl(url) {
   if (!url || typeof url !== 'string') return url;
-  return MEDIA_MAP[url] || url;
+
+  // The generated /public/media/optimized files are not guaranteed to be
+  // present in every Base44/Vercel checkout. When an entity still contains
+  // one of those generated paths, fall back to the durable original media
+  // URL instead of rendering a broken product image/video.
+  if (url.startsWith('/media/optimized/')) {
+    return ORIGINAL_MEDIA_MAP[url] || url;
+  }
+
+  // Keep durable source URLs as-is. Converting them to MEDIA_MAP targets here
+  // can create broken thumbnails when the optimized asset was not deployed.
+  return url;
 }
 
 const LIVE_PRODUCT_IMAGE_SLUGS = new Set([

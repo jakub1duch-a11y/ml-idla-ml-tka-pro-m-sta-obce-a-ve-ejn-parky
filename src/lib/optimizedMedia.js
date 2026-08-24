@@ -151,7 +151,10 @@ export function normalizeProductMedia(product) {
 
   return {
     ...product,
-    image_url: useLiveProductImage ? product.image_url : resolveMediaUrl(product.image_url),
+    // Live BENDY records may themselves contain a stale generated
+    // /media/optimized path, so every main image must pass through the same
+    // durable-source fallback. Source URLs stay untouched by resolveMediaUrl.
+    image_url: resolveMediaUrl(product.image_url),
     gallery_urls: Array.isArray(product.gallery_urls) ? product.gallery_urls.map(resolveMediaUrl) : product.gallery_urls,
     video_url: resolveMediaUrl(product.video_url),
   };

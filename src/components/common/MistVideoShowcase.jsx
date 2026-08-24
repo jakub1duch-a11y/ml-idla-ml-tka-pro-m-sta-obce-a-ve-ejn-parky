@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const FEATURED_VIDEO = '/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm';
@@ -81,8 +82,18 @@ export default function MistVideoShowcase() {
           <p className="max-w-md text-sm leading-6 text-muted-foreground">Od městských alejí po zahradní instalace. Krátká videa ukazují skutečný charakter jemné mlhy, pohyb v prostoru i vzhled nerezových prvků za provozu.</p>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .42 }} className="mb-5 overflow-hidden rounded-2xl border border-border bg-slate-950 shadow-lg sm:mb-6 sm:rounded-3xl">
-          <DeferredVideo src={FEATURED_VIDEO} poster={FEATURED_POSTER} autoPlayWhenVisible className="aspect-video w-full object-cover" />
+        <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .42 }} className="mb-5 overflow-hidden rounded-2xl border border-border bg-white shadow-lg sm:mb-6 sm:rounded-3xl">
+          <div className="relative bg-slate-950">
+            <DeferredVideo src={FEATURED_VIDEO} poster={FEATURED_POSTER} autoPlayWhenVisible className="aspect-video w-full object-cover" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent px-5 pb-5 pt-16 sm:px-7 sm:pb-7">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-white/65">Hlavní video · STÉBLO®</p>
+              <h3 className="mt-1 max-w-2xl text-lg font-semibold text-white sm:text-2xl">Mlžná alej, která ochlazuje průchod a současně dotváří veřejný prostor</h3>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3 border-t border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+            <p className="max-w-3xl text-sm leading-6 text-muted-foreground">STÉBLO® pracuje s opakováním štíhlých nerezových prvků v aleji. Vzniká čitelná trasa s jemnou mlhou vhodná pro promenády, parky a pobytové zóny.</p>
+            <Link to="/produkt/bendy-alej" className="shrink-0 text-sm font-semibold text-[#0b4860] transition-colors hover:text-[#08394c]">Detail STÉBLO® →</Link>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 sm:gap-4">

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowRight, Building2, Droplets, ShieldCheck, Sparkles, Wifi } from 'lucide-react';
 
-const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp';
+const HERO_IMAGE = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
+const HERO_VIDEO = '/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm';
 
 const FACTS = [
   { icon: Droplets, label: 'Vodní mlha', value: 'Nízkotlaké řešení' },
@@ -34,7 +35,7 @@ export default function HeroSlider() {
           poster={HERO_IMAGE}
           aria-label="Motion vizualizace architektonického mlžení MLŽIDLA®"
         >
-          <source src="/media/hero-motion.mp4" type="video/mp4" />
+          <source src={HERO_VIDEO} type="video/webm" />
         </video>
       </motion.div>
 

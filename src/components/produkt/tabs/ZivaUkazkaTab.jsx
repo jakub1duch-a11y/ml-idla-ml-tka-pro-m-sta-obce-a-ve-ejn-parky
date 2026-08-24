@@ -26,7 +26,7 @@ export default function ZivaUkazkaTab({ product, allImages, onOpenLightbox }) {
 
         {product.video_url ? (
           <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .5 }} className="relative mb-10 overflow-hidden rounded-[30px] border border-white/70 bg-slate-950 shadow-[0_28px_90px_rgba(8,47,63,.18)]">
-            <video src={product.video_url} controls playsInline poster={product.image_url} className="aspect-video w-full object-cover" />
+            <video src={product.video_url} controls playsInline preload="none" poster={product.image_url} className="aspect-video w-full object-cover" />
             <div className="pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 text-[10px] font-semibold text-white backdrop-blur-md"><PlayCircle size={13} /> Video produktu</div>
           </motion.div>
         ) : (

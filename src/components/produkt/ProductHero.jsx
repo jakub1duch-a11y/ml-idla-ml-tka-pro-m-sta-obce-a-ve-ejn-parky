@@ -8,7 +8,7 @@ import ProductHeroMist from './ProductHeroMist';
 import ProductSignatureSystem from './ProductSignatureSystem';
 import ProductARQR from './ProductARQR';
 
-export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
+export default function ProductHero({ product, categoryName, allMedia, onOpenLightbox, onShowTechnical }) {
   const quickSpecs = [
   product.coverage_area && { icon: Ruler, label: 'Výška / dosah', value: product.coverage_area },
   product.micron_size && { icon: CloudFog, label: 'Mlžné trysky', value: product.micron_size },
@@ -38,7 +38,7 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.16fr_.84fr] gap-8 lg:gap-10 xl:gap-12 items-start">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <ProductGalleryPanel images={allImages} productName={product.name} onOpenLightbox={onOpenLightbox} />
+          <ProductGalleryPanel mediaItems={allMedia} productName={product.name} onOpenLightbox={onOpenLightbox} />
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>

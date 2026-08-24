@@ -36,14 +36,14 @@ export default function ProductHero({ product, categoryName, allImages, onOpenLi
         <span className="text-slate-700 font-medium">{product.name}</span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-8 lg:gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.16fr_.84fr] gap-8 lg:gap-10 xl:gap-12 items-start">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <ProductGalleryPanel images={allImages} productName={product.name} onOpenLightbox={onOpenLightbox} />
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
           {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
-          <h1 className="tracking-tight leading-[1.08] mb-5 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-4xl">
+          <h1 className="tracking-tight leading-[1.04] mb-5 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-[2.65rem]">
             {product.name}
           </h1>
           {product.short_description &&

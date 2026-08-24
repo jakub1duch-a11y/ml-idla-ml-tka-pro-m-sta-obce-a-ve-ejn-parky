@@ -23,14 +23,16 @@ export default function OProduktuTab({ product, onOpenLightbox }) {
         {realizaceImages.length > 0 &&
         <div className="mb-14">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">Fotogalerie — {product.name}</p>
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {realizaceImages.map((url, i) =>
             <motion.button key={url + i} type="button" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
             onClick={() => onOpenLightbox?.(i, realizaceImages)}
-            className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 group">
-                  <img src={url} alt={`${product.name} fotografie ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <span className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <Maximize2 size={14} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+            className="group relative aspect-[4/3] overflow-hidden rounded-[22px] border border-slate-200 bg-slate-100 shadow-[0_12px_34px_rgba(15,23,42,.06)]">
+                  <img src={url} alt={`${product.name} – realizace ${i + 1}`} loading={i > 2 ? 'lazy' : 'eager'} decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]" />
+                  <span className="absolute inset-0 bg-gradient-to-t from-[#031d26]/45 via-transparent to-transparent opacity-75 transition-opacity group-hover:opacity-95" />
+                  <span className="absolute bottom-3 left-3 rounded-full border border-white/20 bg-black/25 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[.14em] text-white backdrop-blur-md">Realizace {String(i + 1).padStart(2, '0')}</span>
+                  <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-md transition-transform group-hover:scale-105">
+                    <Maximize2 size={14} />
                   </span>
                 </motion.button>
             )}

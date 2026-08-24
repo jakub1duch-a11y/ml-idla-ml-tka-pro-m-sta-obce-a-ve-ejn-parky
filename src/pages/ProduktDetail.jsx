@@ -25,7 +25,7 @@ import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
-function Lightbox({ images, initialIndex, onClose, productName }) {
+function Lightbox({ mediaItems, initialIndex, onClose, productName }) {
   const [idx, setIdx] = useState(initialIndex);
   const touchStart = useRef(null);
 
@@ -34,15 +34,15 @@ function Lightbox({ images, initialIndex, onClose, productName }) {
     document.body.style.overflow = 'hidden';
     const h = (e) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % images.length);
-      if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + images.length) % images.length);
+      if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % mediaItems.length);
+      if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + mediaItems.length) % mediaItems.length);
     };
     window.addEventListener('keydown', h);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', h);
     };
-  }, [images.length, onClose]);
+  }, [mediaItems.length, onClose]);
 
   const onTouchStart = (event) => { touchStart.current = event.touches?.[0]?.clientX ?? null; };
   const onTouchEnd = (event) => {
@@ -51,8 +51,8 @@ function Lightbox({ images, initialIndex, onClose, productName }) {
     if (end == null) return;
     const delta = end - touchStart.current;
     touchStart.current = null;
-    if (Math.abs(delta) < 52 || images.length < 2) return;
-    setIdx((i) => delta > 0 ? (i - 1 + images.length) % images.length : (i + 1) % images.length);
+    if (Math.abs(delta) < 52 || mediaItems.length < 2) return;
+    setIdx((i) => delta > 0 ? (i - 1 + mediaItems.length) % mediaItems.length : (i + 1) % mediaItems.length);
   };
 
   return (
@@ -60,7 +60,7 @@ function Lightbox({ images, initialIndex, onClose, productName }) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(71,155,181,.14),transparent_36%),radial-gradient(circle_at_15%_80%,rgba(255,255,255,.04),transparent_28%)]" />
       <div className="absolute left-4 top-4 z-20 hidden max-w-[60%] sm:block sm:left-6 sm:top-6">
         <p className="truncate text-sm font-semibold text-white/90">{productName}</p>
-        <p className="mt-1 font-mono text-[9px] uppercase tracking-[.18em] text-white/45">Fotogalerie produktu</p>
+        <p className="mt-1 font-mono text-[9px] uppercase tracking-[.18em] text-white/45">Foto a video galerie produktu</p>
       </div>
       <button onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 sm:right-6 sm:top-6">
         <X size={18} />
@@ -68,11 +68,15 @@ function Lightbox({ images, initialIndex, onClose, productName }) {
       <div className="relative z-10 flex h-full w-full max-w-7xl flex-col items-center justify-center pt-12 sm:pt-10" onClick={(e) => e.stopPropagation()}>
         <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} className="relative flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-black/20 p-2 sm:rounded-[30px] sm:p-5">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.img key={images[idx]} src={images[idx]} alt={`${productName || 'Produkt'} – fotografie ${idx + 1}`} initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.01 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} className="max-h-[78vh] max-w-full object-contain" />
+            {mediaItems[idx]?.type === 'video' ? (
+              <motion.video key={mediaItems[idx].url} src={mediaItems[idx].url} poster={mediaItems[idx].poster} controls playsInline preload="metadata" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .22 }} className="max-h-[78vh] max-w-full object-contain" />
+            ) : (
+              <motion.img key={mediaItems[idx]?.url} src={mediaItems[idx]?.url} alt={`${productName || 'Produkt'} – fotografie ${idx + 1}`} initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.01 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} className="max-h-[78vh] max-w-full object-contain" />
+            )}
           </AnimatePresence>
-          {images.length > 1 && <>
-            <button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} aria-label="Předchozí fotografie" className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:left-5 sm:h-11 sm:w-11"><ChevronLeft size={19} /></button>
-            <button onClick={() => setIdx((i) => (i + 1) % images.length)} aria-label="Další fotografie" className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:right-5 sm:h-11 sm:w-11"><ChevronRight size={19} /></button>
+          {mediaItems.length > 1 && <>
+            <button onClick={() => setIdx((i) => (i - 1 + mediaItems.length) % mediaItems.length)} aria-label="Předchozí médium" className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:left-5 sm:h-11 sm:w-11"><ChevronLeft size={19} /></button>
+            <button onClick={() => setIdx((i) => (i + 1) % mediaItems.length)} aria-label="Další médium" className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:right-5 sm:h-11 sm:w-11"><ChevronRight size={19} /></button>
           </>}
         </div>
         {images.length > 1 && <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>{images.map((src, i) => <button key={`${src}-${i}`} type="button" onClick={() => setIdx(i)} aria-label={`Zobrazit fotografii ${i + 1} z ${images.length}`} className={`relative aspect-[4/3] min-w-[76px] overflow-hidden rounded-xl border transition-all sm:min-w-[92px] ${idx === i ? 'border-white opacity-100 ring-2 ring-white/15' : 'border-white/10 opacity-45 hover:opacity-85'}`}><img src={src} alt={`Náhled ${i + 1}`} className="h-full w-full object-cover" /></button>)}</div>}

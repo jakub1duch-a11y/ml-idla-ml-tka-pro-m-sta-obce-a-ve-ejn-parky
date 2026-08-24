@@ -68,7 +68,7 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
               />
             </AnimatePresence>
 
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#062d3a]/8 via-transparent to-white/10" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#062d3a]/[.08] via-transparent to-white/10" />
             <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/70 bg-[#062d3a]/80 px-3 py-1.5 text-[10px] font-semibold tracking-wide text-white shadow-lg backdrop-blur-md sm:left-4 sm:top-4"><Images size={12} /> {active + 1} / {safeImages.length}</span>
             <span className="absolute right-3 top-3 hidden items-center gap-1.5 rounded-full border border-white/80 bg-white/[.86] px-3 py-1.5 text-[10px] font-semibold text-[#0b4860] shadow-sm backdrop-blur-md sm:inline-flex sm:right-4 sm:top-4"><Sparkles size={11} /> Celý produkt bez ořezu</span>
             <span className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-[#062d3a]/[.82] text-white shadow-lg backdrop-blur-md transition-all duration-300 group-hover:scale-105 group-hover:bg-[#062d3a] sm:bottom-4 sm:right-4"><Maximize2 size={16} /></span>
@@ -83,9 +83,9 @@ export default function ProductGalleryPanel({ images, productName, onOpenLightbo
             const img = safeImages[index];
             return <button key={`${img}-${index}`} type="button" onClick={() => setActive(index)} aria-label={`Zobrazit fotografii ${index + 1}`} className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-[#f6f8f8] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#0b4860]/30 hover:shadow-[0_10px_26px_rgba(11,72,96,.08)]">
               <img src={img} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-10 blur-lg" />
-              <div className="absolute inset-0 bg-white/72" />
+              <div className="absolute inset-0 bg-white/[.72]" />
               <img src={img} alt={`${productName} – náhled fotografie ${index + 1}`} className="relative h-full w-full object-contain p-2.5 transition-transform duration-500 group-hover:scale-[1.02]" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#062d3a]/45 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#062d3a]/[.45] to-transparent" />
               <span className="absolute bottom-2.5 left-3 text-[10px] font-semibold uppercase tracking-[.13em] text-white">Pohled {index + 1}</span>
             </button>;
           })}</div>}

@@ -14,6 +14,7 @@ import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
 import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 import FadeIn from '@/components/common/FadeIn';
 import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
+import LatestMarketingVisuals from '@/components/home/LatestMarketingVisuals';
 
 export default function Home() {
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
+      <FadeIn><LatestMarketingVisuals /></FadeIn>
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><UrbanCoolingImpact /></FadeIn>

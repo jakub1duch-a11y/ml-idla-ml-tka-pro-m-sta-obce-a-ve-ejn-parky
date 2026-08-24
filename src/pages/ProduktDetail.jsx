@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Wav
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
+import { resolveMediaUrl } from '@/lib/optimizedMedia';
 import ProductReviews from '@/components/reviews/ProductReviews';
 import ProductHero from '@/components/produkt/ProductHero';
 import ProductStickyFooterBar from '@/components/produkt/ProductStickyFooterBar';
@@ -247,18 +248,18 @@ export default function ProduktDetail() {
   // (např. offer_visualization z nabídek) se nesmí automaticky propisovat
   // do detailu produktu. Zároveň nepouštíme Google Drive /view odkazy do
   // <video>, protože nejsou přímý stream a v prohlížeči se zobrazují chybně.
-  const PUBLIC_IMAGE_ROLES = new Set(['hero', 'gallery', 'realization', 'detail', 'reference']);
+  const PUBLIC_IMAGE_ROLES = new Set(['hero', 'main', 'gallery', 'realization', 'detail', 'reference']);
   const PUBLIC_VIDEO_ROLES = new Set(['video', 'hero']);
   const isDirectVideoUrl = (url) => typeof url === 'string' && /\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
   const uniqueUrls = (urls) => urls.filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
 
   const publicMediaImages = productMedia
     .filter((m) => m.file_url && PUBLIC_IMAGE_ROLES.has(String(m.media_role || '').toLowerCase()) && String(m.file_type || '').startsWith('image/'))
-    .map((m) => m.file_url);
+    .map((m) => resolveMediaUrl(m.file_url));
 
   const publicMediaVideos = productMedia
     .filter((m) => m.file_url && PUBLIC_VIDEO_ROLES.has(String(m.media_role || '').toLowerCase()) && isDirectVideoUrl(m.file_url))
-    .map((m) => m.file_url);
+    .map((m) => resolveMediaUrl(m.file_url));
 
   const imageUrls = uniqueUrls([product.image_url, ...(product.gallery_urls || []), ...publicMediaImages]);
   const videoUrls = uniqueUrls([product.video_url, ...publicMediaVideos].filter(isDirectVideoUrl));

@@ -243,14 +243,25 @@ export default function ProduktDetail() {
       </div>
     </div>);
 
-  // Sjednocená produktová galerie: fotografie i všechna videa přiřazená přes MediaFile.
-  const isVideoUrl = (url) => typeof url === 'string' && /\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
-  const imageUrls = [product.image_url, ...(product.gallery_urls || []), ...productMedia.filter((m) => m.file_url && !isVideoUrl(m.file_url) && String(m.file_type || '').startsWith('image/')).map((m) => m.file_url)]
-    .filter(Boolean)
-    .filter((url, index, list) => list.indexOf(url) === index);
-  const videoUrls = [product.video_url, ...productMedia.filter((m) => m.file_url && (isVideoUrl(m.file_url) || String(m.file_type || '').startsWith('video/'))).map((m) => m.file_url)]
-    .filter(Boolean)
-    .filter((url, index, list) => list.indexOf(url) === index);
+  // Veřejná produktová galerie má vlastní whitelist rolí. Interní výstupy
+  // (např. offer_visualization z nabídek) se nesmí automaticky propisovat
+  // do detailu produktu. Zároveň nepouštíme Google Drive /view odkazy do
+  // <video>, protože nejsou přímý stream a v prohlížeči se zobrazují chybně.
+  const PUBLIC_IMAGE_ROLES = new Set(['hero', 'gallery', 'realization', 'detail', 'reference']);
+  const PUBLIC_VIDEO_ROLES = new Set(['video', 'hero']);
+  const isDirectVideoUrl = (url) => typeof url === 'string' && /\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
+  const uniqueUrls = (urls) => urls.filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
+
+  const publicMediaImages = productMedia
+    .filter((m) => m.file_url && PUBLIC_IMAGE_ROLES.has(String(m.media_role || '').toLowerCase()) && String(m.file_type || '').startsWith('image/'))
+    .map((m) => m.file_url);
+
+  const publicMediaVideos = productMedia
+    .filter((m) => m.file_url && PUBLIC_VIDEO_ROLES.has(String(m.media_role || '').toLowerCase()) && isDirectVideoUrl(m.file_url))
+    .map((m) => m.file_url);
+
+  const imageUrls = uniqueUrls([product.image_url, ...(product.gallery_urls || []), ...publicMediaImages]);
+  const videoUrls = uniqueUrls([product.video_url, ...publicMediaVideos].filter(isDirectVideoUrl));
   const allImages = imageUrls;
   const allMedia = [
     ...imageUrls.map((url) => ({ type: 'image', url })),

@@ -269,8 +269,9 @@ export default function ProduktDetail() {
   const videoUrls = uniqueUrls([product.video_url, ...publicMediaVideos].filter((url) => url && isDirectVideoUrl(url)));
   const allImages = imageUrls;
   const allMedia = [
-    ...imageUrls.map((url) => ({ type: 'image', url })),
-    ...videoUrls.map((url) => ({ type: 'video', url, poster: product.image_url || imageUrls[0] }))
+    ...(imageUrls[0] ? [{ type: 'image', url: imageUrls[0] }] : []),
+    ...videoUrls.map((url) => ({ type: 'video', url, poster: product.image_url || imageUrls[0] })),
+    ...imageUrls.slice(1).map((url) => ({ type: 'image', url }))
   ];
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 

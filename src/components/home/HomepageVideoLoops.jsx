@@ -50,7 +50,7 @@ export default function HomepageVideoLoops() {
       }))
       .filter((file) => isDirectVideo(file.resolvedUrl));
 
-    const preferredKeys = ['zoo', 'gate', 'ostrev', 'bendy', 'mist', 'urban', 'aura', 'general'];
+    const preferredKeys = ['general', 'zoo', 'gate', 'ostrev', 'bendy', 'mist', 'urban', 'aura'];
     const selected = [];
     for (const key of preferredKeys) {
       const match = candidates.find((file) => file.classification.key === key && !selected.some((item) => item.resolvedUrl === file.resolvedUrl));
@@ -69,7 +69,7 @@ export default function HomepageVideoLoops() {
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-teal-700">MLŽIDLA® · živé ukázky</p>
             <h2 className="mt-3 max-w-3xl font-heading text-3xl font-medium leading-tight tracking-[-.035em] text-slate-950 sm:text-4xl lg:text-5xl">
-              Skutečné realizace a produkty v provozu.
+              Nové video: mlžítka v reálném provozu.
             </h2>
           </div>
           <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 transition hover:text-teal-700">

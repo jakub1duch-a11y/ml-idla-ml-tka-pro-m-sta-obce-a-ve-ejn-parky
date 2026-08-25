@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageOff, Play, Video } from 'lucide-react';
 
-export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox }) {
+export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox, focusUrl }) {
   const [failedUrls, setFailedUrls] = useState(() => new Set());
   const items = Array.isArray(mediaItems)
     ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
@@ -24,6 +24,12 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
   useEffect(() => {
     if (active > items.length - 1) setActive(0);
   }, [active, items.length]);
+
+  useEffect(() => {
+    if (!focusUrl) return;
+    const index = items.findIndex((item) => item.url === focusUrl);
+    if (index >= 0) setActive(index);
+  }, [focusUrl, items]);
 
   if (items.length === 0) {
     return (

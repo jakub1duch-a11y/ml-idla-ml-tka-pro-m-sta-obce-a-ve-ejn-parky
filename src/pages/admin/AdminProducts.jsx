@@ -148,6 +148,66 @@ export default function AdminProducts() {
             </div>
           </div>
         </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[.025] p-4 sm:p-5">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-white">
+                <Images size={16} className="text-cyan" />
+                <h3 className="text-sm font-semibold">Galerie produktu</h3>
+              </div>
+              <p className="mt-1 text-xs leading-5 text-white/35">Přidávejte fotografie, měňte pořadí a jedním kliknutím nastavte hlavní fotografii produktu.</p>
+            </div>
+            <label className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full border border-cyan/25 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan transition hover:bg-cyan/15">
+              {galleryUploading ? <Loader size={13} className="animate-spin" /> : <Plus size={13} />}
+              {galleryUploading ? 'Nahrávám…' : 'Nahrát fotografie'}
+              <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
+            </label>
+          </div>
+
+          <div className="mb-4 flex flex-col gap-2 sm:flex-row">
+            <div className="relative flex-1">
+              <Link2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25" />
+              <input
+                value={galleryUrl}
+                onChange={(e) => setGalleryUrl(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addGalleryUrl(); } }}
+                placeholder="Vložit URL fotografie"
+                className={`${inputCls} pl-9`}
+              />
+            </div>
+            <button type="button" onClick={addGalleryUrl} disabled={!galleryUrl.trim()} className="rounded-lg border border-white/10 px-4 py-2 text-xs font-semibold text-white/60 transition hover:border-white/25 hover:text-white disabled:opacity-30">Přidat URL</button>
+          </div>
+
+          {(form.gallery_urls || []).length ? (
+            <div className="grid gap-3 sm:grid-cols-2">
+              {(form.gallery_urls || []).map((url, index) => {
+                const isMain = form.image_url === url;
+                return (
+                  <div key={`${url}-${index}`} className={`overflow-hidden rounded-xl border ${isMain ? 'border-cyan/50 bg-cyan/[.05]' : 'border-white/10 bg-black/10'}`}>
+                    <div className="relative aspect-[4/3] bg-white/5">
+                      <img src={url} alt={`Galerie ${index + 1}`} className="h-full w-full object-contain" />
+                      <div className="absolute left-2 top-2 rounded-full bg-black/65 px-2 py-1 font-mono text-[9px] text-white/80">{index + 1}</div>
+                      {isMain && <div className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-cyan px-2 py-1 text-[9px] font-bold text-ink"><Star size={9} fill="currentColor" /> HLAVNÍ</div>}
+                    </div>
+                    <div className="flex items-center gap-1.5 border-t border-white/10 p-2">
+                      <button type="button" onClick={() => setGalleryAsMain(url)} className={`flex-1 rounded-lg px-2 py-2 text-[10px] font-semibold transition ${isMain ? 'bg-cyan/10 text-cyan' : 'bg-white/5 text-white/55 hover:text-white'}`}>{isMain ? 'Hlavní fotografie' : 'Nastavit jako hlavní'}</button>
+                      <button type="button" onClick={() => moveGalleryItem(index, -1)} disabled={index === 0} aria-label="Posunout vlevo" className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-white/45 hover:text-white disabled:opacity-20"><ArrowUp size={12} /></button>
+                      <button type="button" onClick={() => moveGalleryItem(index, 1)} disabled={index === (form.gallery_urls || []).length - 1} aria-label="Posunout vpravo" className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-white/45 hover:text-white disabled:opacity-20"><ArrowDown size={12} /></button>
+                      <button type="button" onClick={() => removeGalleryItem(index)} aria-label="Odebrat fotografii" className="flex h-8 w-8 items-center justify-center rounded-lg border border-red-400/15 text-red-300/60 hover:border-red-400/35 hover:text-red-300"><Trash2 size={12} /></button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="flex min-h-28 items-center justify-center rounded-xl border border-dashed border-white/10 text-center">
+              <div className="px-4 py-6 text-white/30">
+                <Images size={20} className="mx-auto mb-2" />
+                <p className="text-xs">Galerie je zatím prázdná.</p>
+              </div>
+            </div>
+          )}
+        </div>
         <div>
           <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">URL videa (zobrazí se v záložce Video, jen pokud je vyplněno)</label>
           <input value={form.video_url || ''} onChange={set('video_url')} placeholder="https://.../video.mp4" className={inputCls} />

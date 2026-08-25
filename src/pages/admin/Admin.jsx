@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
 import AdminReferences from './AdminReferences';
@@ -18,9 +17,11 @@ import AdminProductAnalytics from './AdminProductAnalytics';
 import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
 import AdminTasks from './AdminTasks';
+import AdminSystemDevelopment from './AdminSystemDevelopment';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
+  { id: 'development', label: 'Vývoj systému', icon: Activity },
   { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
@@ -38,10 +39,6 @@ const TABS = [
 
 export default function Admin() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setSEO({ title: 'Administrace MLŽIDLA®', robots: 'noindex, nofollow' });
-  }, []);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -96,6 +93,7 @@ export default function Admin() {
 
   const ActiveComponent = {
     dashboard: AdminDashboard,
+    development: AdminSystemDevelopment,
     tasks: AdminTasks,
     products: AdminProducts,
     'product-analytics': AdminProductAnalytics,

@@ -114,7 +114,7 @@ const AuthenticatedApp = () => {
         <Route path="/vodni-mlha" element={<VodniMlha />} />
         <Route path="/mlzne-brany" element={<MlzneBrany />} />
         <Route path="/kontakt" element={<Kontakt />} />
-        <Route path="/vyvoj-systemu" element={<Navigate to="/admin" replace />} />
+        <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/mlzidla-mlzitka" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />

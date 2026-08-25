@@ -31,6 +31,9 @@ export default function AdminMedia() {
       { match: 'vid_20260802_154033_723', product_slug: 'mlzitko-bendy', media_group: 'BENDY', media_role: 'video' },
       { match: '20b69394-a9b7-4bf1-8647-eca79925590c', product_slug: 'linea-solo', media_group: 'LINEA', media_role: 'video' },
       { match: '25b2b26b-bd81-4748-b0e5-fa4a106993ed', product_slug: '', media_group: 'GENERAL', media_role: 'marketing' },
+      { match: 'mlzitka-kolekce-nove-video', product_slug: '', media_group: 'MARKETING', media_role: 'video' },
+      { match: 'mlzitko-linea-steblo-video', product_slug: 'linea-solo', media_group: 'LINEA_STEBLO', media_role: 'video' },
+      { match: 'mlzitko-ostrev-video', product_slug: 'ostrev-mlzitko', media_group: 'OSTREV', media_role: 'video' },
     ];
 
     const rule = rules.find((item) => name.includes(item.match));

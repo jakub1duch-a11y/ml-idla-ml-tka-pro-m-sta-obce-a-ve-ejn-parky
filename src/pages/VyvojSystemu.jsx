@@ -39,12 +39,10 @@ export default function VyvojSystemu() {
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-sky-700">Transparentní přehled vývoje</p>
               <h1 className="mt-3 max-w-4xl text-4xl font-light leading-tight sm:text-6xl">Co se na systému MLŽIDLA.cz skutečně staví a rozvíjí.</h1>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">Měsíční souhrn dokončených změn napříč webem, produkty, médii, analytikou, marketingem, obchodními nabídkami a interní administrací. Hlavní metrika je jeden finální pracovní čas; potvrzená a odhadovaná část jsou pouze jeho rozpad.</p>
+              <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">Měsíční souhrn dokončených změn napříč webem, produkty, médii, analytikou, marketingem, obchodními nabídkami a interní administrací. V přehledu vždy uvádíme jeden finální pracovní čas a detail práce rozepisujeme do konkrétních činností a výstupů.</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 rounded-2xl border border-slate-200 bg-slate-950 p-5 text-white"><Clock3 size={18} className="text-cyan"/><div className="mt-5 text-4xl font-light">{fmt(total.actual + total.estimated)} h</div><div className="mt-1 text-xs text-white/50">finální pracovní čas</div></div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><div className="text-2xl font-light">{fmt(total.actual)} h</div><div className="mt-1 text-xs text-slate-500">potvrzená část</div></div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><div className="text-2xl font-light">{fmt(total.estimated)} h</div><div className="mt-1 text-xs text-slate-500">odhadovaná část</div></div>
               <div className="col-span-2 rounded-2xl border border-slate-200 bg-white p-4"><CheckCircle2 size={18} className="text-emerald-600"/><div className="mt-5 text-3xl font-light">{fmt(total.tasks)}</div><div className="mt-1 text-xs text-slate-500">dokončených evidovaných výstupů</div></div>
             </div>
           </div>
@@ -63,10 +61,8 @@ export default function VyvojSystemu() {
                   <h2 className="mt-3 text-2xl font-light">{item.title}</h2>
                   <p className="mt-4 text-sm leading-6 text-white/60">{item.summary}</p>
                   <div className="mt-8 grid grid-cols-2 gap-3">
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-3"><div className="text-2xl font-light">{fmt(item.actual_hours)} h</div><div className="mt-1 text-[11px] text-white/45">potvrzeno</div></div>
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-3"><div className="text-2xl font-light">{fmt(item.estimated_hours)} h</div><div className="mt-1 text-[11px] text-white/45">odhad ekvivalentu</div></div>
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-3"><div className="text-2xl font-light">{fmt(equivalent)} h</div><div className="mt-1 text-[11px] text-white/45">souhrnný pracovní ekvivalent</div></div>
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-3"><div className="text-2xl font-light">{fmt(item.completed_tasks)}</div><div className="mt-1 text-[11px] text-white/45">výstupů</div></div>
+                    <div className="col-span-2 rounded-xl border border-cyan/20 bg-cyan/10 p-4"><div className="text-3xl font-light">{fmt(equivalent)} h</div><div className="mt-1 text-[11px] text-white/55">finální pracovní čas</div></div>
+                    <div className="col-span-2 rounded-xl border border-white/10 bg-white/5 p-3"><div className="text-2xl font-light">{fmt(item.completed_tasks)}</div><div className="mt-1 text-[11px] text-white/45">dokončených výstupů</div></div>
                   </div>
                 </div>
                 <div className="p-6 lg:p-8">
@@ -76,8 +72,8 @@ export default function VyvojSystemu() {
                       <div className="mt-3 flex flex-wrap gap-2">{(item.areas || []).map((area) => <span key={area} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-600">{area}</span>)}</div>
                     </div>
                     <div>
-                      <div className="flex items-center gap-2 text-sm font-medium"><Cpu size={16}/> AI a koordinace</div>
-                      <div className="mt-3 grid grid-cols-2 gap-2"><div className="rounded-xl bg-violet-50 p-3"><div className="text-xl font-light">{fmt(item.ai_hours)} h</div><div className="text-[11px] text-violet-700/70">AI / konektory</div></div><div className="rounded-xl bg-sky-50 p-3"><div className="text-xl font-light">{fmt(item.input_hours)} h</div><div className="text-[11px] text-sky-700/70">zadávání / kontrola</div></div></div>
+                      <div className="flex items-center gap-2 text-sm font-medium"><Cpu size={16}/> Rozsah práce</div>
+                      <p className="mt-3 text-sm leading-6 text-slate-600">Vývoj zahrnuje návrh, zadávání, práci v ChatGPT, Base44 a dalších konektorech, kontrolu, iterace a dokončení konkrétních výstupů. V přehledu se vše promítá pouze do jednoho finálního pracovního času.</p>
                     </div>
                   </div>
                   <div className="mt-8 border-t border-slate-200 pt-6">
@@ -90,7 +86,7 @@ export default function VyvojSystemu() {
             </article>;
           })}
         </div>
-        <p className="mt-8 max-w-4xl text-xs leading-5 text-slate-500">Metodika: finální pracovní čas = potvrzený lidský čas + kvalifikovaný odhad práce tam, kde přesný timesheet neexistuje. AI/konektorová a zadávací část jsou pouze informativním rozpadem odhadované části a do finálního času se znovu nepřičítají.</p>
+        <p className="mt-8 max-w-4xl text-xs leading-5 text-slate-500">Metodika: v přehledech se zobrazuje pouze jeden finální pracovní čas za období. Detail jednotlivých činností zůstává rozepsaný v pracovních záznamech, aby bylo zřejmé, na čem se pracovalo a jaký výstup vznikl.</p>
       </section>
     </main>
   );

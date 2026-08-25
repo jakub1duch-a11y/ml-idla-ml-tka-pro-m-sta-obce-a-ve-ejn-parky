@@ -65,7 +65,7 @@ export default function AdminDashboard() {
 
   const jakubLogs = workLogs.filter((item) => !item.worker_name || item.worker_name.toLowerCase().includes('jakub'));
   const completedWork = jakubLogs.filter((item) => item.status === 'completed');
-  const recordedHours = jakubLogs.reduce((sum, item) => sum + (Number(item.actual_hours) || 0), 0);
+  const recordedHours = jakubLogs.reduce((sum, item) => sum + (Number(item.actual_hours) > 0 ? Number(item.actual_hours) : Number(item.estimated_hours) || 0), 0);
   const recordedDays = new Set(jakubLogs.filter((item) => item.work_date).map((item) => item.work_date)).size;
   const firstWorkDate = jakubLogs.length ? [...jakubLogs].filter((item) => item.work_date).sort((a, b) => String(a.work_date).localeCompare(String(b.work_date)))[0]?.work_date : null;
   const recentWork = [...jakubLogs].sort((a, b) => `${b.work_date || ''}${b.updated_date || ''}`.localeCompare(`${a.work_date || ''}${a.updated_date || ''}`)).slice(0, 8);
@@ -101,7 +101,7 @@ export default function AdminDashboard() {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Stavba systému MLŽIDLA.cz</p>
             <h3 className="mt-1 text-xl font-medium text-white">Dlouhodobý přehled práce · Jakub Duch</h3>
-            <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Souhrn odvedených změn, evidovaných hodin a oblastí vývoje systému. Hodiny se počítají pouze z ručně potvrzených hodnot ve WorkLogu; chybějící čas se automaticky neodhaduje.</p>
+            <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Souhrn odvedených změn, pracovních logů a oblastí vývoje systému. V přehledu se vždy zobrazuje jeden finální pracovní čas za zvolené období.</p>
           </div>
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-white/40">
             <CalendarDays size={12} /> od {firstWorkDate ? new Date(`${firstWorkDate}T00:00:00`).toLocaleDateString('cs-CZ') : 'prvního záznamu'}
@@ -109,7 +109,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-sky-300"><Clock size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Evidované hodiny</span></div><p className="mt-3 text-3xl font-light text-white">{recordedHours.toLocaleString('cs-CZ', { maximumFractionDigits: 1 })} h</p><p className="mt-1 text-xs text-white/30">jen potvrzený čas</p></div>
+          <div className="rounded-xl border border-cyan/20 bg-cyan/[.06] p-4"><div className="flex items-center gap-2 text-cyan"><Clock size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Finální pracovní čas</span></div><p className="mt-3 text-3xl font-light text-white">{recordedHours.toLocaleString('cs-CZ', { maximumFractionDigits: 1 })} h</p><p className="mt-1 text-xs text-white/30">jeden výsledný součet práce</p></div>
           <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-emerald-300"><CheckCircle2 size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Dokončeno</span></div><p className="mt-3 text-3xl font-light text-white">{completedWork.length}</p><p className="mt-1 text-xs text-white/30">evidovaných pracovních výstupů</p></div>
           <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-violet-300"><Hammer size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Celkem záznamů</span></div><p className="mt-3 text-3xl font-light text-white">{jakubLogs.length}</p><p className="mt-1 text-xs text-white/30">vývoj · obsah · marketing · integrace</p></div>
           <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-amber-300"><CalendarDays size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Aktivní dny</span></div><p className="mt-3 text-3xl font-light text-white">{recordedDays}</p><p className="mt-1 text-xs text-white/30">dní s evidovanou prací</p></div>

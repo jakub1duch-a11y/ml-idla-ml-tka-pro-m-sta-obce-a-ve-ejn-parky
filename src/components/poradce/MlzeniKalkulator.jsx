@@ -3,7 +3,7 @@ import { Droplets, ChevronDown, Clock3, Gauge, WalletCards, Sparkles } from 'luc
 
 const PRODUCTS = [
 { id: 'volavka', name: 'MLŽÍTKO VOLAVKA', flow: 40.5, range: '27–54 l/h', pressure: '2–8 bar' },
-{ id: 'brana-bendy', name: 'BRÁNA BENDY', flow: 35, range: '30–40 l/h', pressure: '2–8 bar' },
+{ id: 'brana-bendy', name: 'STÉBLO GATE', flow: 35, range: '30–40 l/h', pressure: '2–8 bar' },
 { id: 'aura', name: 'MLŽNÁ AURA', flow: 3, range: '2–4 l/h', pressure: '2–8 bar' },
 { id: 'gate', name: 'BRÁNA GATE', flow: 20, range: '15–25 l/h', pressure: '2–8 bar' },
 { id: 'bendy', name: 'MLŽÍTKO BENDY', flow: 210, range: '3,5 l/min', pressure: '2–8 bar' },

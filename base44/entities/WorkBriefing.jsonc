@@ -1,0 +1,108 @@
+{
+  "name": "WorkBriefing",
+  "type": "object",
+  "properties": {
+    "month": {
+      "type": "string",
+      "description": "YYYY-MM"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "estimated_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "ai_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "input_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "total_equivalent_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "completed_tasks": {
+      "type": "number",
+      "minimum": 0
+    },
+    "in_progress_tasks": {
+      "type": "number",
+      "minimum": 0
+    },
+    "blocked_tasks": {
+      "type": "number",
+      "minimum": 0
+    },
+    "top_areas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "top_tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "chatgpt",
+        "automation"
+      ],
+      "default": "chatgpt"
+    }
+  },
+  "required": [
+    "month",
+    "title",
+    "period_start",
+    "period_end"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

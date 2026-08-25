@@ -5,6 +5,7 @@ Disallow: /admin
 Disallow: /admin-login
 Disallow: /admin-logout
 Disallow: /admin-forgot-password
+Disallow: /vyvoj-systemu
 Disallow: /api/
 Disallow: /muj-projekt
 Disallow: /search-analytics

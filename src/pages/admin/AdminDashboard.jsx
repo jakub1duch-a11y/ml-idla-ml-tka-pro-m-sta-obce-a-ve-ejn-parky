@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search } from 'lucide-react';
+import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search, ClipboardCheck, Hammer, CalendarDays, CheckCircle2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState(null);
   const [search, setSearch] = useState(null);
   const [products, setProducts] = useState([]);
+  const [workLogs, setWorkLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,11 +27,13 @@ export default function AdminDashboard() {
       base44.functions.invoke('getAnalyticsData', { days: 28 }),
       base44.functions.invoke('getSearchConsoleQueries', { days: 28 }),
       base44.entities.Product.list(),
+      base44.entities.WorkLog.list('-work_date', 250).catch(() => []),
     ])
-      .then(([a, s, p]) => {
+      .then(([a, s, p, w]) => {
         setAnalytics(a.data);
         setSearch(s.data);
         setProducts(p);
+        setWorkLogs(w || []);
       })
       .catch(() => setError('Nelze načíst data — zkontrolujte připojení Google Analytics / Search Console.'))
       .finally(() => setLoading(false));
@@ -56,6 +59,20 @@ export default function AdminDashboard() {
     return name;
   };
 
+  const jakubLogs = workLogs.filter((item) => !item.worker_name || item.worker_name.toLowerCase().includes('jakub'));
+  const completedWork = jakubLogs.filter((item) => item.status === 'completed');
+  const recordedHours = jakubLogs.reduce((sum, item) => sum + (Number(item.hours) || 0), 0);
+  const recordedDays = new Set(jakubLogs.filter((item) => item.work_date).map((item) => item.work_date)).size;
+  const firstWorkDate = jakubLogs.length ? [...jakubLogs].filter((item) => item.work_date).sort((a, b) => String(a.work_date).localeCompare(String(b.work_date)))[0]?.work_date : null;
+  const recentWork = [...jakubLogs].sort((a, b) => `${b.work_date || ''}${b.updated_date || ''}`.localeCompare(`${a.work_date || ''}${a.updated_date || ''}`)).slice(0, 8);
+  const hoursByArea = Object.entries(jakubLogs.reduce((acc, item) => {
+    const key = item.area || 'ostatní';
+    if (!acc[key]) acc[key] = { hours: 0, tasks: 0 };
+    acc[key].hours += Number(item.hours) || 0;
+    acc[key].tasks += 1;
+    return acc;
+  }, {})).sort((a, b) => b[1].hours - a[1].hours || b[1].tasks - a[1].tasks);
+
   const cards = [
     { icon: Users, label: 'Návštěvy (28 dní)', value: totals.sessions.toLocaleString(), color: 'text-cyan' },
     { icon: MousePointerClick, label: 'Konverze', value: `${inquiries} (${conversionRate} %)`, color: 'text-emerald-400' },
@@ -66,6 +83,37 @@ export default function AdminDashboard() {
   return (
     <div className="p-6 space-y-6">
       <h2 className="text-white text-lg font-medium">Přehled</h2>
+
+      <section className="rounded-2xl border border-cyan/15 bg-gradient-to-br from-cyan/8 to-white/2 p-5 sm:p-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Stavba systému MLŽIDLA.cz</p>
+            <h3 className="mt-1 text-xl font-medium text-white">Dlouhodobý přehled práce · Jakub Duch</h3>
+            <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Souhrn odvedených změn, evidovaných hodin a oblastí vývoje systému. Hodiny se počítají pouze z ručně potvrzených hodnot ve WorkLogu; chybějící čas se automaticky neodhaduje.</p>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-white/40">
+            <CalendarDays size={12} /> od {firstWorkDate ? new Date(`${firstWorkDate}T00:00:00`).toLocaleDateString('cs-CZ') : 'prvního záznamu'}
+          </div>
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-sky-300"><Clock size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Evidované hodiny</span></div><p className="mt-3 text-3xl font-light text-white">{recordedHours.toLocaleString('cs-CZ', { maximumFractionDigits: 1 })} h</p><p className="mt-1 text-xs text-white/30">jen potvrzený čas</p></div>
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-emerald-300"><CheckCircle2 size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Dokončeno</span></div><p className="mt-3 text-3xl font-light text-white">{completedWork.length}</p><p className="mt-1 text-xs text-white/30">evidovaných pracovních výstupů</p></div>
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-violet-300"><Hammer size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Celkem záznamů</span></div><p className="mt-3 text-3xl font-light text-white">{jakubLogs.length}</p><p className="mt-1 text-xs text-white/30">vývoj · obsah · marketing · integrace</p></div>
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2 text-amber-300"><CalendarDays size={14}/><span className="font-mono text-[10px] uppercase tracking-widest">Aktivní dny</span></div><p className="mt-3 text-3xl font-light text-white">{recordedDays}</p><p className="mt-1 text-xs text-white/30">dní s evidovanou prací</p></div>
+        </div>
+
+        <div className="mt-5 grid gap-4 xl:grid-cols-[1.2fr_.8fr]">
+          <div className="overflow-hidden rounded-xl border border-white/8 bg-black/10">
+            <div className="flex items-center gap-2 border-b border-white/8 bg-white/[.025] px-4 py-3"><ClipboardCheck size={13} className="text-sky-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Poslední odvedená práce</p></div>
+            <div className="divide-y divide-white/5">{recentWork.length ? recentWork.map((item) => <div key={item.id} className="flex items-start justify-between gap-4 px-4 py-3"><div className="min-w-0"><p className="text-sm font-medium text-white/75">{item.title}</p><p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/35">{item.description}</p><p className="mt-1.5 font-mono text-[10px] uppercase tracking-wider text-cyan/55">{item.work_date} · {item.area}</p></div><span className="shrink-0 rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-white/45">{Number(item.hours) > 0 ? `${Number(item.hours).toLocaleString('cs-CZ')} h` : 'čas neuveden'}</span></div>) : <p className="px-4 py-5 text-sm text-white/30">Zatím nejsou evidované pracovní záznamy.</p>}</div>
+          </div>
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4">
+            <div className="flex items-center gap-2"><Hammer size={13} className="text-violet-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Práce podle oblastí</p></div>
+            <div className="mt-4 space-y-3">{hoursByArea.length ? hoursByArea.map(([area, stats]) => <div key={area} className="rounded-lg border border-white/7 bg-white/[.025] px-3 py-3"><div className="flex items-center justify-between gap-3"><span className="text-sm capitalize text-white/65">{area}</span><span className="font-mono text-xs text-cyan">{stats.hours > 0 ? `${stats.hours.toLocaleString('cs-CZ', { maximumFractionDigits: 1 })} h` : `${stats.tasks} úkolů`}</span></div><p className="mt-1 text-[10px] text-white/25">{stats.tasks} evidovaných změn</p></div>) : <p className="text-sm text-white/30">Bez dat.</p>}</div>
+          </div>
+        </div>
+      </section>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

@@ -54,29 +54,29 @@ export default function OazaSignatureSection({
     {
       key: 'bendy-left',
       eyebrow: '1. boční prvek',
-      title: 'BENDY Single®',
+      title: 'MLŽÍTKO BENDY®',
       description: 'Cílené mlžení podél pěší trasy, lavičky nebo okraje pobytové zóny.',
       image: bendyImage,
-      alt: 'BENDY Single – zakřivené nerezové mlžítko HolmTec',
+      alt: 'MLŽÍTKO BENDY – zakřivené nerezové mlžítko HolmTec',
       badge: '1×',
     },
     {
       key: 'aura-center',
       eyebrow: 'střed sestavy',
-      title: 'AURA Single®',
+      title: 'MLŽÍTKO AURA®',
       description: 'Kruhová hlavice tvoří vizuální střed a rovnoměrně rozprostírá jemnou mlhu kolem centrálního bodu.',
       image: auraImage,
-      alt: 'AURA Single – kruhové nerezové mlžítko HolmTec',
+      alt: 'MLŽÍTKO AURA – kruhové nerezové mlžítko HolmTec',
       badge: '1×',
       featured: true,
     },
     {
       key: 'bendy-right',
       eyebrow: '2. boční prvek',
-      title: 'BENDY Single®',
+      title: 'MLŽÍTKO BENDY®',
       description: 'Druhý obloukový prvek rozšiřuje ochlazovací zónu a vyvažuje celou kompozici.',
       image: bendyImage,
-      alt: 'Druhý BENDY Single v sestavě OÁZA',
+      alt: 'Druhé MLŽÍTKO BENDY v sestavě OÁZA',
       badge: '1×',
     },
   ];
@@ -108,7 +108,7 @@ export default function OazaSignatureSection({
             Jedna OÁZA. Tři nerezové prvky.
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-            OÁZA® kombinuje <strong className="font-semibold text-slate-900">1× AURA Single®</strong> a <strong className="font-semibold text-slate-900">2× BENDY Single®</strong> do jednoho čitelného ochlazovacího bodu pro zahrady, parky a pobytové zóny.
+            OÁZA® kombinuje <strong className="font-semibold text-slate-900">1× MLŽÍTKO AURA®</strong> a <strong className="font-semibold text-slate-900">2× MLŽÍTKO BENDY®</strong> do jednoho čitelného ochlazovacího bodu pro zahrady, parky a pobytové zóny.
           </p>
         </div>
 

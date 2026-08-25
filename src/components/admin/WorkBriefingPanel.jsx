@@ -67,7 +67,7 @@ export default function WorkBriefingPanel() {
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[.2em] text-violet-300">Pracovní briefing</p>
           <h3 className="mt-1 text-xl font-medium text-white">{monthLabel(period)} · práce, úkoly a AI procesy</h3>
-          <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Potvrzený lidský čas, kvalifikované odhady dokončených procesů, práce ChatGPT/konektorů a čas na zadávání, rozhodování a kontrolu. Odhad se u záznamu s potvrzeným časem nepřičítá podruhé.</p>
+          <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Hlavní metrika je jeden finální pracovní čas za zvolené období. Vzniká součtem potvrzeného času a kvalifikovaného odhadu procesů bez timesheetu; AI/konektory a zadávání jsou pouze informativní rozpad a nepřičítají se znovu.</p>
         </div>
         <div className="flex items-center gap-2">
           <ListFilter size={14} className="text-white/35" />
@@ -78,13 +78,12 @@ export default function WorkBriefingPanel() {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-5">
-        <Metric icon={Clock3} label="Potvrzený čas" value={`${fmt(totals.actual)} h`} note="skutečný lidský čas" />
-        <Metric icon={Sparkles} label="Odhad bez timesheetu" value={`${fmt(totals.estimated)} h`} note="pracovní ekvivalent" />
-        <Metric icon={Bot} label="AI / konektory" value={`${fmt(totals.ai)} h`} note="rozpad odhadované práce" />
-        <Metric icon={MessageSquareText} label="Zadání & kontrola" value={`${fmt(totals.input)} h`} note="promptování a rozhodování" />
-        <Metric icon={CheckCircle2} label="Souhrnný ekvivalent" value={`${fmt(equivalent)} h`} note={`${totals.completed} dokončených logů`} />
+      <div className="mt-5 grid gap-3 lg:grid-cols-[1.35fr_.65fr_.65fr]">
+        <div className="rounded-2xl border border-cyan/20 bg-cyan/[.08] p-5"><div className="flex items-center gap-2 text-cyan"><CheckCircle2 size={15}/><span className="font-mono text-[10px] uppercase tracking-widest">Finální pracovní čas</span></div><div className="mt-3 text-4xl font-light text-white">{fmt(equivalent)} h</div><div className="mt-1 text-xs text-white/35">jediný výsledný součet za období · {totals.completed} dokončených logů</div></div>
+        <Metric icon={Clock3} label="Potvrzená část" value={`${fmt(totals.actual)} h`} note="součást finálního času" />
+        <Metric icon={Sparkles} label="Odhadovaná část" value={`${fmt(totals.estimated)} h`} note="součást finálního času" />
       </div>
+      <div className="mt-3 flex flex-wrap gap-2 text-[10px] text-white/25"><span className="rounded-full border border-white/8 px-2.5 py-1">AI / konektory {fmt(totals.ai)} h</span><span className="rounded-full border border-white/8 px-2.5 py-1">zadání & kontrola {fmt(totals.input)} h</span><span>informativní rozpad, ne další čas</span></div>
 
       {briefing ? <div className="mt-4 rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2"><Layers3 size={13} className="text-cyan"/><span className="font-mono text-[10px] uppercase tracking-widest text-white/35">Měsíční shrnutí</span></div><p className="mt-2 text-sm leading-6 text-white/55">{briefing.summary}</p><div className="mt-3 flex flex-wrap gap-2">{(briefing.top_tools || []).map(x => <span key={x} className="rounded-full border border-white/8 px-2.5 py-1 font-mono text-[10px] text-white/35">{x}</span>)}</div></div> : null}
 

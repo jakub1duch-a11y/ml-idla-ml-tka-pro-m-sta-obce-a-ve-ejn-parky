@@ -39,12 +39,13 @@ export default function VyvojSystemu() {
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-sky-700">Transparentní přehled vývoje</p>
               <h1 className="mt-3 max-w-4xl text-4xl font-light leading-tight sm:text-6xl">Co se na systému MLŽIDLA.cz skutečně staví a rozvíjí.</h1>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">Měsíční souhrn dokončených změn napříč webem, produkty, médii, analytikou, marketingem, obchodními nabídkami a interní administrací. Potvrzený lidský čas vedeme odděleně od kvalifikovaného odhadu AI-asistované a konektorové práce.</p>
+              <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600">Měsíční souhrn dokončených změn napříč webem, produkty, médii, analytikou, marketingem, obchodními nabídkami a interní administrací. Hlavní metrika je jeden finální pracovní čas; potvrzená a odhadovaná část jsou pouze jeho rozpad.</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><Clock3 size={18} className="text-sky-700"/><div className="mt-5 text-3xl font-light">{fmt(total.actual)} h</div><div className="mt-1 text-xs text-slate-500">potvrzený lidský čas</div></div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><Sparkles size={18} className="text-violet-700"/><div className="mt-5 text-3xl font-light">{fmt(total.estimated)} h</div><div className="mt-1 text-xs text-slate-500">odhad pracovního ekvivalentu</div></div>
-              <div className="col-span-2 rounded-2xl border border-slate-200 bg-slate-950 p-4 text-white"><CheckCircle2 size={18} className="text-emerald-300"/><div className="mt-5 text-3xl font-light">{fmt(total.tasks)}</div><div className="mt-1 text-xs text-white/50">dokončených evidovaných výstupů</div></div>
+              <div className="col-span-2 rounded-2xl border border-slate-200 bg-slate-950 p-5 text-white"><Clock3 size={18} className="text-cyan"/><div className="mt-5 text-4xl font-light">{fmt(total.actual + total.estimated)} h</div><div className="mt-1 text-xs text-white/50">finální pracovní čas</div></div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><div className="text-2xl font-light">{fmt(total.actual)} h</div><div className="mt-1 text-xs text-slate-500">potvrzená část</div></div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><div className="text-2xl font-light">{fmt(total.estimated)} h</div><div className="mt-1 text-xs text-slate-500">odhadovaná část</div></div>
+              <div className="col-span-2 rounded-2xl border border-slate-200 bg-white p-4"><CheckCircle2 size={18} className="text-emerald-600"/><div className="mt-5 text-3xl font-light">{fmt(total.tasks)}</div><div className="mt-1 text-xs text-slate-500">dokončených evidovaných výstupů</div></div>
             </div>
           </div>
         </div>
@@ -89,7 +90,7 @@ export default function VyvojSystemu() {
             </article>;
           })}
         </div>
-        <p className="mt-8 max-w-4xl text-xs leading-5 text-slate-500">Metodika: potvrzený čas = ručně doložený lidský čas. Odhad pracovního ekvivalentu = kvalifikovaný odhad rozsahu realizace tam, kde přesný timesheet neexistuje. AI/konektorová a zadávací část jsou rozpadem tohoto odhadu a nepřičítají se podruhé.</p>
+        <p className="mt-8 max-w-4xl text-xs leading-5 text-slate-500">Metodika: finální pracovní čas = potvrzený lidský čas + kvalifikovaný odhad práce tam, kde přesný timesheet neexistuje. AI/konektorová a zadávací část jsou pouze informativním rozpadem odhadované části a do finálního času se znovu nepřičítají.</p>
       </section>
     </main>
   );

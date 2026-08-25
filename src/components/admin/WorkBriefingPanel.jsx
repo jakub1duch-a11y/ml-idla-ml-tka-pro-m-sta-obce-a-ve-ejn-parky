@@ -67,7 +67,7 @@ export default function WorkBriefingPanel() {
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[.2em] text-violet-300">Pracovní briefing</p>
           <h3 className="mt-1 text-xl font-medium text-white">{monthLabel(period)} · práce, úkoly a AI procesy</h3>
-          <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Hlavní metrika je jeden finální pracovní čas za zvolené období. Vzniká součtem potvrzeného času a kvalifikovaného odhadu procesů bez timesheetu; AI/konektory a zadávání jsou pouze informativní rozpad a nepřičítají se znovu.</p>
+          <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/35">Hlavní metrika je vždy jeden finální pracovní čas za zvolené období. Jednotlivé pracovní logy jsou rozepsané podrobněji podle konkrétních činností, výstupů, nástrojů a procesů.</p>
         </div>
         <div className="flex items-center gap-2">
           <ListFilter size={14} className="text-white/35" />
@@ -78,12 +78,9 @@ export default function WorkBriefingPanel() {
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 lg:grid-cols-[1.35fr_.65fr_.65fr]">
+      <div className="mt-5">
         <div className="rounded-2xl border border-cyan/20 bg-cyan/[.08] p-5"><div className="flex items-center gap-2 text-cyan"><CheckCircle2 size={15}/><span className="font-mono text-[10px] uppercase tracking-widest">Finální pracovní čas</span></div><div className="mt-3 text-4xl font-light text-white">{fmt(equivalent)} h</div><div className="mt-1 text-xs text-white/35">jediný výsledný součet za období · {totals.completed} dokončených logů</div></div>
-        <Metric icon={Clock3} label="Potvrzená část" value={`${fmt(totals.actual)} h`} note="součást finálního času" />
-        <Metric icon={Sparkles} label="Odhadovaná část" value={`${fmt(totals.estimated)} h`} note="součást finálního času" />
       </div>
-      <div className="mt-3 flex flex-wrap gap-2 text-[10px] text-white/25"><span className="rounded-full border border-white/8 px-2.5 py-1">AI / konektory {fmt(totals.ai)} h</span><span className="rounded-full border border-white/8 px-2.5 py-1">zadání & kontrola {fmt(totals.input)} h</span><span>informativní rozpad, ne další čas</span></div>
 
       {briefing ? <div className="mt-4 rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2"><Layers3 size={13} className="text-cyan"/><span className="font-mono text-[10px] uppercase tracking-widest text-white/35">Měsíční shrnutí</span></div><p className="mt-2 text-sm leading-6 text-white/55">{briefing.summary}</p><div className="mt-3 flex flex-wrap gap-2">{(briefing.top_tools || []).map(x => <span key={x} className="rounded-full border border-white/8 px-2.5 py-1 font-mono text-[10px] text-white/35">{x}</span>)}</div></div> : null}
 
@@ -94,7 +91,7 @@ export default function WorkBriefingPanel() {
             {filtered.map(item => {
               const hasActual = Number(item.actual_hours) > 0;
               const main = hasActual ? Number(item.actual_hours) : Number(item.estimated_hours) || 0;
-              return <div key={item.id} className="px-4 py-3"><div className="flex items-start justify-between gap-4"><div className="min-w-0"><p className="text-sm font-medium text-white/75">{item.title}</p><p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/35">{item.description}</p><div className="mt-2 flex flex-wrap gap-1.5"><Pill>{item.work_date}</Pill><Pill>{item.area}</Pill>{item.subtype ? <Pill>{item.subtype}</Pill> : null}{item.tool ? <Pill>{item.tool}</Pill> : null}</div></div><div className="shrink-0 text-right"><div className={`font-mono text-sm ${hasActual ? 'text-emerald-300' : 'text-violet-300'}`}>{fmt(main)} h</div><div className="mt-1 text-[9px] uppercase tracking-wider text-white/25">{hasActual ? 'potvrzeno' : 'odhad'}</div>{Number(item.ai_hours) > 0 ? <div className="mt-1 text-[9px] text-white/30">AI {fmt(item.ai_hours)} h · input {fmt(item.input_hours)} h</div> : null}</div></div></div>;
+              return <div key={item.id} className="px-4 py-3"><div className="flex items-start justify-between gap-4"><div className="min-w-0"><p className="text-sm font-medium text-white/75">{item.title}</p><p className="mt-1 text-xs leading-relaxed text-white/35">{item.description}</p><div className="mt-2 flex flex-wrap gap-1.5"><Pill>{item.work_date}</Pill><Pill>{item.area}</Pill>{item.subtype ? <Pill>{item.subtype}</Pill> : null}{item.tool ? <Pill>{item.tool}</Pill> : null}{item.connector ? <Pill>{item.connector}</Pill> : null}</div></div><div className="shrink-0 text-right"><div className="font-mono text-sm text-cyan">{fmt(main)} h</div><div className="mt-1 text-[9px] uppercase tracking-wider text-white/25">pracovní čas</div></div></div></div>;
             })}
           </div>
         </div>

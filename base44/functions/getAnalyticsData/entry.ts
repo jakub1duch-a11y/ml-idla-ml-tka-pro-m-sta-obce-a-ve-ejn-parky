@@ -156,7 +156,7 @@ Deno.serve(async (req) => {
           dimensionFilter: {
             andGroup: { expressions: [
               { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/produkt/' } } },
-              { filter: { fieldName: 'eventName', inListFilter: { values: ['view_item','select_item','quick_inquiry_click','cta_click','phone_click','email_click','video_start','video_complete','file_download','form_start','generate_lead'] } } }
+              { filter: { fieldName: 'eventName', inListFilter: { values: ['view_item','select_item','quick_inquiry_click','cta_click','phone_click','email_click','video_start','video_complete','file_download','form_start','generate_lead','product_media_select','product_lightbox_open'] } } }
             ] }
           },
           limit: 1000,

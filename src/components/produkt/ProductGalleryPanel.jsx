@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageOff, Play, Video, ZoomIn } from 'lucide-react';
+import { trackProductLightboxOpen, trackProductMediaSelect } from '@/lib/ga4';
 
 export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox, focusUrl }) {
   const [failedUrls, setFailedUrls] = useState(() => new Set());
@@ -109,7 +110,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                 transition={{ duration: reduceMotion ? 0 : 0.2 }}
                 className="absolute inset-0 h-full w-full cursor-none object-contain p-1 sm:p-2"
                 onError={() => markFailed(activeItem.url)}
-                onClick={() => onOpenLightbox?.(activeItem.originalIndex)}
+                onClick={() => { trackProductLightboxOpen(productName, activeItem.type); onOpenLightbox?.(activeItem.originalIndex); }}
               />
             )}
           </AnimatePresence>
@@ -127,7 +128,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
           {activeItem.type !== 'video' && (
             <button
               type="button"
-              onClick={() => onOpenLightbox?.(activeItem.originalIndex)}
+              onClick={() => { trackProductLightboxOpen(productName, activeItem.type); onOpenLightbox?.(activeItem.originalIndex); }}
               className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm transition hover:bg-white sm:hidden"
               aria-label="Zvětšit fotografii"
             >
@@ -168,7 +169,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
             <button
               key={`${item.type}-${item.url}-${index}`}
               type="button"
-              onClick={() => setActive(index)}
+              onClick={() => { trackProductMediaSelect(productName, item.type, index); setActive(index); }}
               aria-current={active === index ? 'true' : undefined}
               aria-label={`Zobrazit ${item.type === 'video' ? 'video' : 'fotografii'} ${index + 1}`}
               className={`relative aspect-[4/3] min-w-[92px] overflow-hidden rounded-xl border-2 bg-slate-100 transition sm:min-w-[108px] ${active === index ? 'border-[#0b4860] opacity-100' : 'border-transparent opacity-70 hover:opacity-100'}`}

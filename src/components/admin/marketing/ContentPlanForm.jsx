@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Loader, Sparkles, ImageIcon } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import MarketingPostPreview from './MarketingPostPreview';
 
 const inputCls = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all";
 const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png';
@@ -68,7 +69,8 @@ export default function ContentPlanForm({ onCreated }) {
   };
 
   return (
-    <form onSubmit={submit} className="p-5 rounded-xl bg-white/3 border border-white/8 space-y-4">
+    <form onSubmit={submit} className="grid gap-5 rounded-2xl border border-white/8 bg-white/3 p-5 xl:grid-cols-[1fr_420px]">
+      <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input required placeholder="Název příspěvku *" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputCls} />
         <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className={inputCls}>
@@ -102,6 +104,11 @@ export default function ContentPlanForm({ onCreated }) {
           className="px-5 py-3 rounded-xl bg-cyan text-ink text-sm font-medium hover:bg-cyan/90 transition-all disabled:opacity-50">
           {saving ? 'Ukládám...' : 'Uložit do plánu'}
         </button>
+      </div>
+      </div>
+      <div className="xl:sticky xl:top-4 xl:self-start">
+        <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-white/30">Náhled výstupu</p>
+        <MarketingPostPreview post={form} />
       </div>
     </form>
   );

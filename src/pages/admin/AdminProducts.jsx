@@ -219,9 +219,34 @@ export default function AdminProducts() {
             </div>
           )}
         </div>
-        <div>
-          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">URL videa (zobrazí se v záložce Video, jen pokud je vyplněno)</label>
-          <input value={form.video_url || ''} onChange={set('video_url')} placeholder="https://.../video.mp4" className={inputCls} />
+        <div className="rounded-2xl border border-white/10 bg-white/[.025] p-4 sm:p-5">
+          <div className="mb-3 flex items-center gap-2 text-white">
+            <Video size={16} className="text-cyan" />
+            <h3 className="text-sm font-semibold">Video produktu</h3>
+          </div>
+          <p className="mb-4 text-xs leading-5 text-white/35">Nahrajte produktové video přímo z počítače/telefonu, nebo vložte jeho URL. Po uložení se video zobrazí v detailu produktu.</p>
+
+          {form.video_url && (
+            <div className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-black/20">
+              <video src={form.video_url} controls playsInline preload="metadata" className="aspect-video w-full bg-black object-contain" />
+              <div className="flex items-center justify-between gap-3 border-t border-white/10 px-3 py-2">
+                <span className="truncate font-mono text-[10px] text-white/35">{form.video_url}</span>
+                <button type="button" onClick={() => setForm((f) => ({ ...f, video_url: '' }))} className="shrink-0 rounded-lg border border-red-400/15 px-2.5 py-1.5 text-[10px] font-semibold text-red-300/70 hover:border-red-400/35 hover:text-red-300">Odebrat</button>
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="relative flex-1">
+              <Link2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25" />
+              <input value={form.video_url || ''} onChange={set('video_url')} placeholder="https://.../video.mp4" className={`${inputCls} pl-9`} />
+            </div>
+            <label className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-cyan/25 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan transition hover:bg-cyan/15">
+              {videoUploading ? <Loader size={13} className="animate-spin" /> : <Upload size={13} />}
+              {videoUploading ? 'Nahrávám video…' : 'Nahrát video'}
+              <input type="file" accept="video/*" onChange={handleVideoUpload} className="hidden" />
+            </label>
+          </div>
         </div>
         <div className="grid grid-cols-3 gap-4">
           {[['coverage_area', 'Výška / rozměry'], ['water_consumption', 'Spotřeba vody'], ['pressure', 'Tlak'], ['micron_size', 'Trysky (μm)'], ['material', 'Materiál'], ['power_supply', 'Napájení']].map(([field, label]) =>

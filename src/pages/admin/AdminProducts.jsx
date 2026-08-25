@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader, Image, Images, ArrowUp, ArrowDown, Star, Link2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader, Image, Images, ArrowUp, ArrowDown, Star, Link2, Video, Upload } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
@@ -17,6 +17,7 @@ export default function AdminProducts() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [galleryUploading, setGalleryUploading] = useState(false);
+  const [videoUploading, setVideoUploading] = useState(false);
   const [galleryUrl, setGalleryUrl] = useState('');
 
   const load = () => {
@@ -71,6 +72,16 @@ export default function AdminProducts() {
     }
     e.target.value = '';
     setGalleryUploading(false);
+  };
+
+  const handleVideoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setVideoUploading(true);
+    const result = await base44.integrations.Core.UploadFile({ file }).catch(() => null);
+    if (result?.file_url) setForm((f) => ({ ...f, video_url: result.file_url }));
+    e.target.value = '';
+    setVideoUploading(false);
   };
 
   const removeGalleryItem = (index) => setForm((f) => ({ ...f, gallery_urls: (f.gallery_urls || []).filter((_, i) => i !== index) }));

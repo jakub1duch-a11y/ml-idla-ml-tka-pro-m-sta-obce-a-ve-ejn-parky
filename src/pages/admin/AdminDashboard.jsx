@@ -72,7 +72,7 @@ export default function AdminDashboard() {
   const hoursByArea = Object.entries(jakubLogs.reduce((acc, item) => {
     const key = item.area || 'ostatní';
     if (!acc[key]) acc[key] = { hours: 0, tasks: 0 };
-    acc[key].hours += Number(item.hours) || 0;
+    acc[key].hours += Number(item.actual_hours) > 0 ? Number(item.actual_hours) : Number(item.estimated_hours) || 0;
     acc[key].tasks += 1;
     return acc;
   }, {})).sort((a, b) => b[1].hours - a[1].hours || b[1].tasks - a[1].tasks);

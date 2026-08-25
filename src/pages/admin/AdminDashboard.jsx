@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search, ClipboardCheck, Hammer, CalendarDays, CheckCircle2 } from 'lucide-react';
+import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search, ClipboardCheck, Hammer, CalendarDays, CheckCircle2, ListTodo, UserRound, AlertTriangle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
@@ -17,6 +17,7 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState(null);
   const [products, setProducts] = useState([]);
   const [workLogs, setWorkLogs] = useState([]);
+  const [adminTasks, setAdminTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -28,12 +29,14 @@ export default function AdminDashboard() {
       base44.functions.invoke('getSearchConsoleQueries', { days: 28 }),
       base44.entities.Product.list(),
       base44.entities.WorkLog.list('-work_date', 250).catch(() => []),
+      base44.entities.AdminTask.list('-updated_date', 100).catch(() => []),
     ])
-      .then(([a, s, p, w]) => {
+      .then(([a, s, p, w, t]) => {
         setAnalytics(a.data);
         setSearch(s.data);
         setProducts(p);
         setWorkLogs(w || []);
+        setAdminTasks(t || []);
       })
       .catch(() => setError('Nelze načíst data — zkontrolujte připojení Google Analytics / Search Console.'))
       .finally(() => setLoading(false));
@@ -72,6 +75,12 @@ export default function AdminDashboard() {
     acc[key].tasks += 1;
     return acc;
   }, {})).sort((a, b) => b[1].hours - a[1].hours || b[1].tasks - a[1].tasks);
+
+  const activeTasks = adminTasks.filter((item) => !['completed','cancelled'].includes(item.status));
+  const completedTasks = adminTasks.filter((item) => item.status === 'completed');
+  const reviewTasks = adminTasks.filter((item) => item.status === 'review');
+  const overdueTasks = activeTasks.filter((item) => item.due_date && new Date(`${item.due_date}T23:59:59`) < new Date());
+  const recentTasks = [...activeTasks].sort((a,b) => String(b.updated_date || '').localeCompare(String(a.updated_date || ''))).slice(0, 6);
 
   const cards = [
     { icon: Users, label: 'Návštěvy (28 dní)', value: totals.sessions.toLocaleString(), color: 'text-cyan' },
@@ -112,6 +121,14 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-2"><Hammer size={13} className="text-violet-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Práce podle oblastí</p></div>
             <div className="mt-4 space-y-3">{hoursByArea.length ? hoursByArea.map(([area, stats]) => <div key={area} className="rounded-lg border border-white/7 bg-white/[.025] px-3 py-3"><div className="flex items-center justify-between gap-3"><span className="text-sm capitalize text-white/65">{area}</span><span className="font-mono text-xs text-cyan">{stats.hours > 0 ? `${stats.hours.toLocaleString('cs-CZ', { maximumFractionDigits: 1 })} h` : `${stats.tasks} úkolů`}</span></div><p className="mt-1 text-[10px] text-white/25">{stats.tasks} evidovaných změn</p></div>) : <p className="text-sm text-white/30">Bez dat.</p>}</div>
           </div>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-white/8 bg-white/3 p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-violet-300">Týmový workflow</p><h3 className="mt-1 text-lg font-medium text-white">Jakub Duch × Radek Meduna</h3><p className="mt-1 text-xs text-white/35">Aktivní úkoly, předávání, kontrola a stav dokončení v interním administračním systému.</p></div><div className="flex flex-wrap gap-2"><span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1.5 font-mono text-[10px] text-amber-300">{activeTasks.length} aktivních</span><span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 font-mono text-[10px] text-violet-300">{reviewTasks.length} ke kontrole</span><span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 font-mono text-[10px] text-emerald-300">{completedTasks.length} hotovo</span></div></div>
+        <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_280px]">
+          <div className="overflow-hidden rounded-xl border border-white/8 bg-black/10"><div className="flex items-center gap-2 border-b border-white/8 px-4 py-3"><ListTodo size={13} className="text-violet-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Aktuální pracovní fronta</p></div><div className="divide-y divide-white/5">{recentTasks.length ? recentTasks.map(task => <div key={task.id} className="flex items-start justify-between gap-4 px-4 py-3"><div className="min-w-0"><p className="text-sm font-medium text-white/70">{task.title}</p><p className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[10px] text-white/25"><span className="inline-flex items-center gap-1"><UserRound size={10}/>{task.assignee_name || task.assignee_email}</span><span>{task.area}</span>{task.due_date ? <span>{task.due_date}</span> : null}</p></div><span className={`shrink-0 rounded-full border px-2.5 py-1 font-mono text-[10px] ${task.status === 'review' ? 'border-violet-400/20 bg-violet-400/10 text-violet-300' : task.status === 'in_progress' ? 'border-amber-400/20 bg-amber-400/10 text-amber-300' : 'border-sky-400/20 bg-sky-400/10 text-sky-300'}`}>{task.status === 'review' ? 'KONTROLA' : task.status === 'in_progress' ? 'ROZPRACOVÁNO' : 'PLÁN'}</span></div>) : <p className="px-4 py-5 text-sm text-white/25">Bez aktivních úkolů.</p>}</div></div>
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2"><AlertTriangle size={13} className="text-red-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Kontrola termínů</p></div><p className="mt-4 text-3xl font-light text-white">{overdueTasks.length}</p><p className="mt-1 text-xs text-white/30">úkolů po termínu</p><p className="mt-4 text-xs leading-relaxed text-white/30">Detailní editace, předání druhému administrátorovi a komunikace jsou v sekci <strong className="text-white/55">Úkoly & tým</strong>.</p></div>
         </div>
       </section>
 

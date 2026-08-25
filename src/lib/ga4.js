@@ -378,6 +378,23 @@ export function trackQuickInquiryClick(productName, section) {
   });
 }
 
+export function trackProductMediaSelect(productName, mediaType, mediaIndex) {
+  void emit('product_media_select', {
+    product_name: productName || 'bez produktu',
+    media_type: mediaType || 'image',
+    media_index: Number(mediaIndex || 0),
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+  });
+}
+
+export function trackProductLightboxOpen(productName, mediaType) {
+  void emit('product_lightbox_open', {
+    product_name: productName || 'bez produktu',
+    media_type: mediaType || 'image',
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+  });
+}
+
 export function trackBlogPostView(title, slug, category) {
   void emit('blog_post_view', {
     post_title: title,

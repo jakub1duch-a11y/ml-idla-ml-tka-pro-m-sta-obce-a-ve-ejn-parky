@@ -8,7 +8,7 @@ const MODEL_URL = '/ar/bendy-single/bendy-single-ar-base-v1.glb';
 const PRODUCT = {
   id: '6a4278bb879c73a6842a9a88',
   slug: 'mlzitko-bendy',
-  name: 'BENDY SINGLE®',
+  name: 'MLŽÍTKO BENDY®',
   nominalHeightMm: 1800,
   arVersion: 'BENDY-SINGLE-AR-BASE-v1',
 };
@@ -132,7 +132,7 @@ export default function BendyARPrototype() {
       <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <Link to="/produkt/mlzitko-bendy" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-950">
-            <ArrowLeft size={16}/> Zpět na BENDY SINGLE®
+            <ArrowLeft size={16}/> Zpět na MLŽÍTKO BENDY®
           </Link>
           <span className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800">
             <TriangleAlert size={14}/> AR Base v1 · prototyp
@@ -145,7 +145,7 @@ export default function BendyARPrototype() {
               <model-viewer
                 ref={modelRef}
                 src={MODEL_URL}
-                alt="BENDY SINGLE® — prototypní 3D model mlžítka"
+                alt="MLŽÍTKO BENDY® — prototypní 3D model"
                 camera-controls=""
                 touch-action="pan-y"
                 auto-rotate=""
@@ -192,7 +192,7 @@ export default function BendyARPrototype() {
 
           <aside className="space-y-5">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">BENDY SINGLE® · 3D + AR kontrola</p>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">MLŽÍTKO BENDY® · 3D + AR kontrola</p>
               <h1 className="mt-3 font-heading text-4xl font-light tracking-tight text-[#0b4860]">Umístěte. Uložte. Poptávejte.</h1>
               <p className="mt-4 text-sm leading-relaxed text-slate-600">Model si prohlédněte ve 3D nebo ho vložte do prostoru přes AR. Potom uložte variantu, fotografii místa a poznámku. Poptávka už konfiguraci přenese automaticky.</p>
             </div>

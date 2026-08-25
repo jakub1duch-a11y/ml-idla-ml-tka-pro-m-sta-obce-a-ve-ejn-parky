@@ -6,7 +6,7 @@ const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
     title: 'Varianty kolekce BENDY®',
     items: [
-      { label: 'SINGLE', sub: '1 ks', slug: 'mlzitko-bendy' },
+      { label: 'MLŽÍTKO', sub: '1 ks', slug: 'mlzitko-bendy' },
       { label: 'ARC 1.0', sub: 'S / M / L', slug: 'bendy-arc' },
       { label: 'ARC 2.0', sub: 'S / M / L', slug: 'bendy-arc-2-0' },
       { label: 'ARC 3.0', sub: 'S / M / L', slug: 'bendy-arc-3-0' },
@@ -34,7 +34,7 @@ const FAMILY_VARIANTS = {
   'linea-solo': {
     title: 'Varianty kolekce LINEA®',
     items: [
-      { label: 'SOLO', sub: '1 prvek', slug: 'linea-solo' },
+      { label: 'MLŽÍTKO', sub: '1 prvek', slug: 'linea-solo' },
       { label: 'GATE', sub: '2 prvky', slug: 'linea-gate' },
       { label: 'AVENUE', sub: 'více prvků', slug: 'linea-avenue' },
     ],

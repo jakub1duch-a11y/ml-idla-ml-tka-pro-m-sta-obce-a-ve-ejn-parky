@@ -4,12 +4,12 @@ import { ArrowRight, Box, QrCode, ScanLine, Smartphone } from 'lucide-react';
 
 const AR_PRODUCTS = {
   'mlzitko-bendy': {
-    label: 'BENDY SINGLE®',
+    label: 'MLŽÍTKO BENDY®',
     qr: '/qr/bendy-single-ar.svg',
     url: '/ar/bendy-single',
     status: 'AR 1:1',
     title: 'Zobrazit BENDY ve vašem prostoru',
-    text: 'Naskenujte QR mobilem. Otevře se 3D model BENDY SINGLE® a na podporovaném telefonu jej můžete umístit do prostoru v měřítku 1:1.',
+    text: 'Naskenujte QR mobilem. Otevře se 3D model MLŽÍTKA BENDY® a na podporovaném telefonu jej můžete umístit do prostoru v měřítku 1:1.',
     ready: true,
   },
   'mlzna-brana-gate': {

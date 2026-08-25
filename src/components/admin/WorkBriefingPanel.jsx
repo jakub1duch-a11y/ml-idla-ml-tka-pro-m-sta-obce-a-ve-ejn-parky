@@ -97,7 +97,7 @@ export default function WorkBriefingPanel() {
         </div>
         <div className="space-y-4">
           <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2"><Wrench size={13} className="text-amber-300"/><span className="font-mono text-[10px] uppercase tracking-widest text-white/35">Podle oblasti</span></div><div className="mt-3 space-y-2">{byArea.map(([area, v]) => <div key={area} className="flex items-center justify-between rounded-lg border border-white/6 bg-white/[.02] px-3 py-2"><div><div className="text-xs capitalize text-white/55">{area}</div><div className="text-[10px] text-white/25">{v.count} procesů</div></div><div className="font-mono text-xs text-cyan">{fmt(v.equivalent)} h</div></div>)}</div></div>
-          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="font-mono text-[10px] uppercase tracking-widest text-white/35">Propojené AdminTask</div><div className="mt-3 grid grid-cols-2 gap-2"><Small label="Dokončeno" value={taskHours.completed}/><Small label="Skutečný čas" value={`${fmt(taskHours.actual)} h`}/><Small label="Plán / odhad" value={`${fmt(taskHours.estimated)} h`}/><Small label="Blokované logy" value={totals.blocked}/></div></div>
+          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="font-mono text-[10px] uppercase tracking-widest text-white/35">Propojené AdminTask</div><div className="mt-3 grid grid-cols-2 gap-2"><Small label="Dokončeno" value={taskHours.completed}/><Small label="Celkem úkolů" value={filteredTasks.length}/><Small label="Pracovní logy" value={filtered.length}/><Small label="Blokované logy" value={totals.blocked}/></div></div>
         </div>
       </div>
     </section>

@@ -121,7 +121,7 @@ Deno.serve(async (req) => {
     );
     const newUsersData = await newUsersRes.json();
 
-    // Product clicks (pageviews na /produkt/:slug)
+    // Product page performance + engagement events by product URL.
     const productClicksRes = await fetch(
       `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
       {
@@ -130,7 +130,7 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           dateRanges: [{ startDate, endDate }],
           dimensions: [{ name: 'pagePath' }],
-          metrics: [{ name: 'screenPageViews' }],
+          metrics: [{ name: 'screenPageViews' }, { name: 'totalUsers' }],
           dimensionFilter: {
             filter: {
               fieldName: 'pagePath',
@@ -138,11 +138,32 @@ Deno.serve(async (req) => {
             }
           },
           orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
-          limit: 10,
+          limit: 100,
         }),
       }
     );
     const productClicksData = await productClicksRes.json();
+
+    const productEventsRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'pagePath' }, { name: 'eventName' }],
+          metrics: [{ name: 'eventCount' }],
+          dimensionFilter: {
+            andGroup: { expressions: [
+              { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/produkt/' } } },
+              { filter: { fieldName: 'eventName', inListFilter: { values: ['view_item','select_item','quick_inquiry_click','cta_click','phone_click','email_click','video_start','video_complete','file_download','form_start','generate_lead'] } } }
+            ] }
+          },
+          limit: 1000,
+        }),
+      }
+    );
+    const productEventsData = await productEventsRes.json();
 
     const parseRows = (data, dimCount, metricCount) => {
       if (!data.rows) return [];

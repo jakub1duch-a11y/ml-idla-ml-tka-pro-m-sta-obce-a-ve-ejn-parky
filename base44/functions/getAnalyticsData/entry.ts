@@ -194,10 +194,20 @@ Deno.serve(async (req) => {
 
     const newUsers = newUsersData.rows?.[0]?.metricValues?.[0]?.value ? parseFloat(newUsersData.rows[0].metricValues[0].value) : 0;
 
-    const productClicks = parseRows(productClicksData, 1, 1).map(r => ({
+    const productClicks = parseRows(productClicksData, 1, 2).map(r => ({
       path: r.dims[0],
       views: r.metrics[0],
+      users: r.metrics[1],
     }));
+
+    const productEngagementMap = {};
+    parseRows(productEventsData, 2, 1).forEach(r => {
+      const path = r.dims[0];
+      const eventName = r.dims[1];
+      if (!productEngagementMap[path]) productEngagementMap[path] = { path };
+      productEngagementMap[path][eventName] = r.metrics[0];
+    });
+    const productEngagement = Object.values(productEngagementMap);
 
     const cities = parseRows(citiesData, 1, 1).map(r => ({
       city: r.dims[0] || 'Neznámé',
@@ -229,7 +239,7 @@ Deno.serve(async (req) => {
       console.log('Could not fetch inquiries:', e);
     }
 
-    return Response.json({ daily, pages, sources, productClicks, cities, avgSessionDuration, totals, newUsers, inquiries });
+    return Response.json({ daily, pages, sources, productClicks, productEngagement, cities, avgSessionDuration, totals, newUsers, inquiries });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

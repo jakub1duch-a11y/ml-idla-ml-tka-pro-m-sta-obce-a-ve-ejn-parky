@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, MapPin, Sun, CloudFog, BadgeCheck, ScanLine, Box } from 'lucide-react';
@@ -9,6 +9,14 @@ import ProductSignatureSystem from './ProductSignatureSystem';
 import ProductARQR from './ProductARQR';
 
 export default function ProductHero({ product, categoryName, allMedia, onOpenLightbox, onShowTechnical }) {
+  const [mrakSize, setMrakSize] = useState('0,8 m');
+  const isMrak = product.slug === 'mlzitko-mrak';
+  const mrakSizes = [
+    { value: '0,8 m', label: '0,8 m', note: 'kompaktní varianta' },
+    { value: '1,8 m', label: '1,8 m', note: 'výrazná varianta' },
+    { value: 'na míru 0,8–1,8 m', label: 'Na míru', note: 'výška 0,8–1,8 m' },
+  ];
+
   const quickSpecs = [
   product.coverage_area && { icon: Ruler, label: 'Výška / dosah', value: product.coverage_area },
   product.micron_size && { icon: CloudFog, label: 'Mlžné trysky', value: product.micron_size },
@@ -49,6 +57,36 @@ export default function ProductHero({ product, categoryName, allMedia, onOpenLig
           {product.short_description &&
             <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-6">{product.short_description}</p>
             }
+
+          {isMrak && (
+            <div className="mb-7 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_28px_rgba(15,23,42,.04)] sm:p-5">
+              <div className="mb-3 flex items-end justify-between gap-3">
+                <div>
+                  <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-slate-400">Varianta velikosti</p>
+                  <h2 className="mt-1 text-lg font-semibold text-slate-900">Vyberte výšku mlžítka MRAK</h2>
+                </div>
+                <span className="text-xs text-slate-400">Zakázková výroba</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {mrakSizes.map((size) => {
+                  const active = mrakSize === size.value;
+                  return (
+                    <button
+                      key={size.value}
+                      type="button"
+                      onClick={() => setMrakSize(size.value)}
+                      aria-pressed={active}
+                      className={`rounded-xl border px-3 py-3 text-left transition-all ${active ? 'border-[#0b4860] bg-[#0b4860]/[.06] shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+                    >
+                      <span className={`block text-sm font-bold ${active ? 'text-[#0b4860]' : 'text-slate-900'}`}>{size.label}</span>
+                      <span className="mt-1 block text-[10px] leading-4 text-slate-500">{size.note}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-3 text-xs leading-5 text-slate-500">Výšku a přesné provedení potvrdíme podle místa instalace. Konstrukce je vyráběna zakázkově v uvedeném rozsahu.</p>
+            </div>
+          )}
 
           <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {[
@@ -103,7 +141,7 @@ export default function ProductHero({ product, categoryName, allMedia, onOpenLig
               </Link>
             )}
             <Link
-                to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
+                to={`/kontakt?produkt=${encodeURIComponent(isMrak ? `${product.name} · ${mrakSize}` : product.name)}`}
                 onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
                 className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 

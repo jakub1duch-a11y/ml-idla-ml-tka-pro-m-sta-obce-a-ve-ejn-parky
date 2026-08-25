@@ -8,7 +8,7 @@ import ProductHeroMist from './ProductHeroMist';
 import ProductSignatureSystem from './ProductSignatureSystem';
 import ProductARQR from './ProductARQR';
 
-export default function ProductHero({ product, categoryName, allMedia, onOpenLightbox, onShowTechnical }) {
+export default function ProductHero({ product, categoryName, allMedia, variantImages = [], onOpenLightbox, onShowTechnical }) {
   const [mrakSize, setMrakSize] = useState('0,8 m');
   const isMrak = product.slug === 'mlzitko-mrak';
   const mrakSizes = [
@@ -16,6 +16,14 @@ export default function ProductHero({ product, categoryName, allMedia, onOpenLig
     { value: '1,8 m', label: '1,8 m', note: 'výrazná varianta' },
     { value: 'na míru 0,8–1,8 m', label: 'Na míru', note: 'výška 0,8–1,8 m' },
   ];
+
+  const selectedMrakVariantUrl = !isMrak
+    ? null
+    : mrakSize === '0,8 m'
+      ? variantImages[0] || null
+      : mrakSize === '1,8 m'
+        ? variantImages[1] || null
+        : null;
 
   const quickSpecs = [
   product.coverage_area && { icon: Ruler, label: 'Výška / dosah', value: product.coverage_area },
@@ -46,7 +54,7 @@ export default function ProductHero({ product, categoryName, allMedia, onOpenLig
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.16fr_.84fr] gap-8 lg:gap-10 xl:gap-12 items-start">
         <motion.div className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <ProductGalleryPanel mediaItems={allMedia} productName={product.name} onOpenLightbox={onOpenLightbox} />
+          <ProductGalleryPanel mediaItems={allMedia} productName={product.name} onOpenLightbox={onOpenLightbox} focusUrl={selectedMrakVariantUrl} />
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>

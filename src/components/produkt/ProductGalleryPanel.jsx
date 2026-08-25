@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ImageOff, Play, Video } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ImageOff, Play, Video, ZoomIn } from 'lucide-react';
 
 export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox, focusUrl }) {
   const [failedUrls, setFailedUrls] = useState(() => new Set());
@@ -8,6 +8,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
     ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
     : [];
   const [active, setActive] = useState(0);
+  const [zoomCursor, setZoomCursor] = useState({ visible: false, x: 0, y: 0 });
   const reduceMotion = useReducedMotion();
   const touchStart = useRef(null);
   const activeItem = items[active];
@@ -65,7 +66,15 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
         onTouchEnd={onTouchEnd}
         className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-[0_12px_36px_rgba(15,23,42,.06)]"
       >
-        <div className={`relative w-full bg-white ${activeItem.type === 'video' ? 'aspect-video' : 'aspect-[4/3]'}`}> 
+        <div
+          className={`relative w-full bg-white ${activeItem.type === 'video' ? 'aspect-video' : 'aspect-[4/3]'}`}
+          onMouseMove={(event) => {
+            if (activeItem.type === 'video') return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            setZoomCursor({ visible: true, x: event.clientX - rect.left, y: event.clientY - rect.top });
+          }}
+          onMouseLeave={() => setZoomCursor((current) => ({ ...current, visible: false }))}
+        > 
           <AnimatePresence mode="wait" initial={false}>
             {activeItem.type === 'video' ? (
               <motion.div
@@ -98,12 +107,33 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                className="absolute inset-0 h-full w-full cursor-zoom-in object-contain p-1 sm:p-2"
+                className="absolute inset-0 h-full w-full cursor-none object-contain p-1 sm:p-2"
                 onError={() => markFailed(activeItem.url)}
                 onClick={() => onOpenLightbox?.(activeItem.originalIndex)}
               />
             )}
           </AnimatePresence>
+
+          {activeItem.type !== 'video' && zoomCursor.visible && (
+            <div
+              className="pointer-events-none absolute z-20 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-[#0b4860]/90 text-white shadow-[0_8px_24px_rgba(15,23,42,.24)] backdrop-blur-sm sm:flex"
+              style={{ left: zoomCursor.x, top: zoomCursor.y }}
+              aria-hidden="true"
+            >
+              <ZoomIn size={20} strokeWidth={2} />
+            </div>
+          )}
+
+          {activeItem.type !== 'video' && (
+            <button
+              type="button"
+              onClick={() => onOpenLightbox?.(activeItem.originalIndex)}
+              className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm transition hover:bg-white sm:hidden"
+              aria-label="Zvětšit fotografii"
+            >
+              <ZoomIn size={13} /> Zvětšit
+            </button>
+          )}
 
           {items.length > 1 && (
             <>

@@ -248,13 +248,17 @@ export default function ProduktDetail() {
   // (např. offer_visualization z nabídek) se nesmí automaticky propisovat
   // do detailu produktu. Zároveň nepouštíme Google Drive /view odkazy do
   // <video>, protože nejsou přímý stream a v prohlížeči se zobrazují chybně.
-  const PUBLIC_IMAGE_ROLES = new Set(['hero', 'main', 'gallery', 'realization', 'detail', 'reference']);
+  const PUBLIC_IMAGE_ROLES = new Set(['hero', 'main', 'gallery', 'realization', 'detail', 'reference', 'variant']);
   const PUBLIC_VIDEO_ROLES = new Set(['video', 'hero']);
   const isDirectVideoUrl = (url) => typeof url === 'string' && /\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
   const uniqueUrls = (urls) => urls.filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
 
   const publicMediaImages = productMedia
     .filter((m) => m.file_url && PUBLIC_IMAGE_ROLES.has(String(m.media_role || '').toLowerCase()) && String(m.file_type || '').startsWith('image/'))
+    .map((m) => resolveMediaUrl(m.file_url));
+
+  const variantImages = productMedia
+    .filter((m) => m.file_url && String(m.media_role || '').toLowerCase() === 'variant' && String(m.file_type || '').startsWith('image/'))
     .map((m) => resolveMediaUrl(m.file_url));
 
   const publicMediaVideos = productMedia
@@ -293,6 +297,7 @@ export default function ProduktDetail() {
         product={product}
         categoryName={categoryName}
         allMedia={allMedia}
+        variantImages={variantImages}
         onOpenLightbox={(i) => setLightbox({ mediaItems: allMedia, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
 

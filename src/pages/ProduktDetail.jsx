@@ -250,7 +250,7 @@ export default function ProduktDetail() {
   // <video>, protože nejsou přímý stream a v prohlížeči se zobrazují chybně.
   const PUBLIC_IMAGE_ROLES = new Set(['hero', 'main', 'gallery', 'realization', 'detail', 'reference', 'variant']);
   const PUBLIC_VIDEO_ROLES = new Set(['video', 'hero']);
-  const isDirectVideoUrl = (url) => typeof url === 'string' && /\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url);
+  const isDirectVideoUrl = (url) => typeof url === 'string' && (/\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url) || /media\.base44\.com\/videos\//i.test(url) || /base44\.app\/api\/apps\/.*\/files\//i.test(url));
   const uniqueUrls = (urls) => urls.filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
 
   const publicMediaImages = productMedia
@@ -266,7 +266,7 @@ export default function ProduktDetail() {
     .map((m) => resolveMediaUrl(m.file_url));
 
   const imageUrls = uniqueUrls([product.image_url, ...(product.gallery_urls || []), ...publicMediaImages]);
-  const videoUrls = uniqueUrls([product.video_url, ...publicMediaVideos].filter(isDirectVideoUrl));
+  const videoUrls = uniqueUrls([product.video_url, ...publicMediaVideos].filter((url) => url && isDirectVideoUrl(url)));
   const allImages = imageUrls;
   const allMedia = [
     ...imageUrls.map((url) => ({ type: 'image', url })),

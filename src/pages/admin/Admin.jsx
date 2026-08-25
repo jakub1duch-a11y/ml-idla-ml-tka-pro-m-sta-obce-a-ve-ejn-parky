@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
@@ -16,9 +16,11 @@ import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
 import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
+import AdminTasks from './AdminTasks';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
+  { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
   { id: 'references', label: 'Reference', icon: ImageIcon },
@@ -89,6 +91,7 @@ export default function Admin() {
 
   const ActiveComponent = {
     dashboard: AdminDashboard,
+    tasks: AdminTasks,
     products: AdminProducts,
     'product-analytics': AdminProductAnalytics,
     references: AdminReferences,

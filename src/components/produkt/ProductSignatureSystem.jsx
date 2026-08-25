@@ -44,8 +44,8 @@ const FAMILY_VARIANTS = {
   'y-armist-tr60': {
     title: 'Varianty MLŽÍTKA Y-ARMIST',
     items: [
-      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60' },
-      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70' },
+      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png' },
+      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/93cd8ff63_MlzitkoY-ARMISTJ70_2.png' },
     ],
   },
   'y-armist-j70': { ref: 'y-armist-tr60' },
@@ -177,9 +177,12 @@ export default function ProductSignatureSystem({ product }) {
             {variants.items.map((item) => {
               const active = item.slug === product.slug;
               return (
-                <Link key={item.slug} to={`/produkt/${item.slug}`} className={`rounded-2xl border px-3 py-3 transition-colors ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50'}`}>
-                  <span className="block text-xs font-bold tracking-wide">{item.label}</span>
-                  <span className={`mt-1 block text-[10px] ${active ? 'text-white/70' : 'text-slate-500'}`}>{item.sub}</span>
+                <Link key={item.slug} to={`/produkt/${item.slug}`} className={`overflow-hidden rounded-2xl border transition-colors ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50'}`}>
+                  {item.image && <div className="aspect-[4/3] overflow-hidden bg-slate-100"><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-cover" loading="lazy" /></div>}
+                  <div className="px-3 py-3">
+                    <span className="block text-xs font-bold tracking-wide">{item.label}</span>
+                    <span className={`mt-1 block text-[10px] ${active ? 'text-white/70' : 'text-slate-500'}`}>{item.sub}</span>
+                  </div>
                 </Link>
               );
             })}

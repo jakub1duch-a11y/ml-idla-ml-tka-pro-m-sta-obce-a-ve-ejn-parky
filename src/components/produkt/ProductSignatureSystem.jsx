@@ -41,6 +41,14 @@ const FAMILY_VARIANTS = {
   },
   'linea-gate': { ref: 'linea-solo' },
   'linea-avenue': { ref: 'linea-solo' },
+  'y-armist-tr60': {
+    title: 'Varianty MLŽÍTKA Y-ARMIST',
+    items: [
+      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60' },
+      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70' },
+    ],
+  },
+  'y-armist-j70': { ref: 'y-armist-tr60' },
 };
 
 const FIELD_SIZES = [

@@ -118,7 +118,7 @@ const CITY_ORDER = [
   'aura-city-single', 'aura-city-duo',
   'bendy-arc', 'bendy-arc-2-0', 'bendy-arc-3-0', 'bendy-back-to-back', 'bendy-alej', 'bendy-field',
   'city-arc-1', 'city-arc-2', 'city-arc-3', 'city-arc-4', 'city-arc-5', 'city-cooling-zone',
-  'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'brana-bendy', 'y-armist-j70', 'y-armist-tr60'
+  'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'brana-bendy', 'y-armist-tr60'
 ];
 
 function sortCatalogProducts(items, spaceFilter) {
@@ -254,6 +254,7 @@ export default function Kolekce() {
 
   const displayedProducts = sortCatalogProducts(products.
   filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'].includes(p.name)).
+  filter((p) => !['garden-cooling-set', 'y-armist-j70'].includes(p.slug)).
   filter((p) => {
     if (activeGroup) {
       return activeGroup.dbCategories.includes(p._categoryName) ||

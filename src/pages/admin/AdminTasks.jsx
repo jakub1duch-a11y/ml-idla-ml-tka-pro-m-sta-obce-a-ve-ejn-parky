@@ -107,7 +107,13 @@ export default function AdminTasks({ embedded = false }) {
       work_date: task.completed_at ? task.completed_at.slice(0,10) : new Date().toISOString().slice(0,10),
       source: 'manual',
       worker_name: PEOPLE[task.assignee_email]?.name || task.assignee_name || task.assignee_email,
-      hours: Number(task.actual_hours),
+      actual_hours: Number(task.actual_hours),
+      estimated_hours: Number(task.estimated_hours) || 0,
+      ai_hours: task.source === 'chatgpt' ? Math.max(0, Number(task.estimated_hours) || 0) * 0.8 : 0,
+      input_hours: task.source === 'chatgpt' ? Math.max(0, Number(task.estimated_hours) || 0) * 0.2 : 0,
+      is_estimate: false,
+      tool: task.source === 'chatgpt' ? 'ChatGPT + Base44' : 'Admin Úkoly & tým',
+      connector: task.related_type || '',
       task_id: task.id,
     };
     if (existing) await base44.entities.WorkLog.update(existing.id, payload);

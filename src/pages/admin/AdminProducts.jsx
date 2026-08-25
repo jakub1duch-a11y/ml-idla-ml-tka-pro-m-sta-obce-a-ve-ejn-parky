@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader, Image } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader, Image, Images, ArrowUp, ArrowDown, Star, Link2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
-const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
+const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', gallery_urls: [], video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
 
 function slugify(str) {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -16,6 +16,8 @@ export default function AdminProducts() {
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [galleryUploading, setGalleryUploading] = useState(false);
+  const [galleryUrl, setGalleryUrl] = useState('');
 
   const load = () => {
     setLoading(true);
@@ -24,9 +26,9 @@ export default function AdminProducts() {
 
   useEffect(() => {load();}, []);
 
-  const startEdit = (p) => {setEditing(p);setForm(p || EMPTY);};
-  const startNew = () => {setEditing('new');setForm(EMPTY);};
-  const cancel = () => {setEditing(null);setForm(EMPTY);};
+  const startEdit = (p) => {setEditing(p);setForm({ ...EMPTY, ...(p || {}), gallery_urls: Array.isArray(p?.gallery_urls) ? p.gallery_urls : [] });setGalleryUrl('');};
+  const startNew = () => {setEditing('new');setForm(EMPTY);setGalleryUrl('');};
+  const cancel = () => {setEditing(null);setForm(EMPTY);setGalleryUrl('');};
 
   const set = (field) => (e) => {
     const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
@@ -47,6 +49,45 @@ export default function AdminProducts() {
     if (upload?.file_url) setForm((f) => ({ ...f, image_url: upload.file_url }));
     setUploading(false);
   };
+
+  const addGalleryUrl = () => {
+    const url = galleryUrl.trim();
+    if (!url) return;
+    setForm((f) => ({ ...f, gallery_urls: [...(f.gallery_urls || []), url].filter((item, index, arr) => arr.indexOf(item) === index) }));
+    setGalleryUrl('');
+  };
+
+  const handleGalleryUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setGalleryUploading(true);
+    const uploaded = [];
+    for (const file of files) {
+      const result = await base44.integrations.Core.UploadFile({ file }).catch(() => null);
+      if (result?.file_url) uploaded.push(result.file_url);
+    }
+    if (uploaded.length) {
+      setForm((f) => ({ ...f, gallery_urls: [...(f.gallery_urls || []), ...uploaded].filter((item, index, arr) => arr.indexOf(item) === index) }));
+    }
+    e.target.value = '';
+    setGalleryUploading(false);
+  };
+
+  const removeGalleryItem = (index) => setForm((f) => ({ ...f, gallery_urls: (f.gallery_urls || []).filter((_, i) => i !== index) }));
+
+  const moveGalleryItem = (index, direction) => setForm((f) => {
+    const items = [...(f.gallery_urls || [])];
+    const target = index + direction;
+    if (target < 0 || target >= items.length) return f;
+    [items[index], items[target]] = [items[target], items[index]];
+    return { ...f, gallery_urls: items };
+  });
+
+  const setGalleryAsMain = (url) => setForm((f) => ({
+    ...f,
+    image_url: url,
+    gallery_urls: [url, ...(f.gallery_urls || []).filter((item) => item !== url)]
+  }));
 
   const save = async () => {
     setSaving(true);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -39,9 +39,20 @@ const TABS = [
 
 export default function Admin() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const requestedTab = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(() => TABS.some((tab) => tab.id === requestedTab) ? requestedTab : 'dashboard');
+
+  useEffect(() => {
+    if (requestedTab && TABS.some((tab) => tab.id === requestedTab) && requestedTab !== activeTab) setActiveTab(requestedTab);
+  }, [requestedTab]);
+
+  const changeTab = (tabId) => {
+    setActiveTab(tabId);
+    setSearchParams(tabId === 'dashboard' ? {} : { tab: tabId }, { replace: true });
+  };
 
   useEffect(() => {
     const resolveAdmin = async () => {
@@ -121,7 +132,7 @@ export default function Admin() {
           {TABS.map(tab => {
             const Icon = tab.icon;
             return (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              <button key={tab.id} onClick={() => changeTab(tab.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
                 <Icon size={16} />
                 {tab.label}

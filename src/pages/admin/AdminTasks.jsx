@@ -91,6 +91,29 @@ export default function AdminTasks({ embedded = false }) {
     setForm({ ...EMPTY, ...task, tags: Array.isArray(task.tags) ? task.tags : [] });
   };
 
+  const syncCompletedWorkLog = async (task) => {
+    if (task.status !== 'completed' || !(Number(task.actual_hours) > 0)) return;
+    const areaMap = { products: 'web', offers: 'sales', admin: 'integration', other: 'integration' };
+    const workArea = areaMap[task.area] || task.area;
+    const allLogs = await base44.entities.WorkLog.list('-work_date', 500).catch(() => []);
+    const existing = (allLogs || []).find(log => log.task_id === task.id);
+    const payload = {
+      title: `Úkol: ${task.title}`,
+      area: ['web','analytics','marketing','seo','content','media','sales','integration','qa'].includes(workArea) ? workArea : 'integration',
+      description: task.result_summary || task.description || 'Dokončený interní úkol.',
+      status: 'completed',
+      expected_result: task.handoff_note || 'Dokončený výstup interního workflow.',
+      evidence: task.evidence || `AdminTask ${task.id}`,
+      work_date: task.completed_at ? task.completed_at.slice(0,10) : new Date().toISOString().slice(0,10),
+      source: 'manual',
+      worker_name: PEOPLE[task.assignee_email]?.name || task.assignee_name || task.assignee_email,
+      hours: Number(task.actual_hours),
+      task_id: task.id,
+    };
+    if (existing) await base44.entities.WorkLog.update(existing.id, payload);
+    else await base44.entities.WorkLog.create(payload);
+  };
+
   const save = async () => {
     if (!form.title.trim()) return;
     setSaving(true);
@@ -119,6 +142,8 @@ export default function AdminTasks({ embedded = false }) {
     if (editing !== 'new' && editing.assignee_email !== payload.assignee_email) {
       await base44.entities.AdminTaskComment.create({ task_id: editing.id, author_email: actorEmail, author_name: actor.name, kind: 'assignment', message: `Úkol předán: ${editing.assignee_name || editing.assignee_email} → ${assignee.name}` });
     }
+    const savedTask = { ...(editing === 'new' ? {} : editing), ...payload, id: saved?.id || editing?.id };
+    if (savedTask.id) await syncCompletedWorkLog(savedTask);
     setEditing(null); setForm(EMPTY); await load();
     if (saved?.id) setSelected(saved);
     setSaving(false);
@@ -127,8 +152,10 @@ export default function AdminTasks({ embedded = false }) {
   const quickStatus = async (task, status) => {
     const actorEmail = user?.email?.toLowerCase() || 'jakub1duch@gmail.com';
     const actor = PEOPLE[actorEmail] || { name: user?.full_name || actorEmail };
-    await base44.entities.AdminTask.update(task.id, { status, completed_at: status === 'completed' ? new Date().toISOString() : null });
+    const completed_at = status === 'completed' ? new Date().toISOString() : null;
+    await base44.entities.AdminTask.update(task.id, { status, completed_at });
     await base44.entities.AdminTaskComment.create({ task_id: task.id, author_email: actorEmail, author_name: actor.name, kind: 'status_change', message: `Stav změněn: ${STATUS[task.status]?.label || task.status} → ${STATUS[status]?.label || status}` });
+    await syncCompletedWorkLog({ ...task, status, completed_at });
     await load();
   };
 

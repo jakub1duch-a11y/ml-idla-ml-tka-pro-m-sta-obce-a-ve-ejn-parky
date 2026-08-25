@@ -41,6 +41,7 @@ const columns = [
       ['Servis a údržba', '/servis-udrzba'],
       ['Časté dotazy', '/faq'],
       ['O nás', '/o-nas'],
+      ['Vývoj systému', '/vyvoj-systemu'],
       ['Kontakt', '/kontakt'],
     ],
   },

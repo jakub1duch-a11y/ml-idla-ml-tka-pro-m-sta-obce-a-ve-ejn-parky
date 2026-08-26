@@ -6,14 +6,19 @@ const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
     title: 'Varianty kolekce BENDY®',
     eyebrow: 'BENDY® · jeden produkt, různé ohyby',
+    description: 'Základ výrobku zůstává stejný. Mění se rádius a délka ohybu podle požadovaného dosahu a charakteru prostoru.',
     items: [
       { label: 'BENDY SINGLE', sub: 'základní ohyb', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
-      { label: 'BENDY FIELD', sub: 'delší konec · výraznější rádius', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
+      { label: 'RADIUS S', sub: 'kompaktní ohyb', slug: 'mlzitko-bendy', variant: 'radius-s' },
+      { label: 'RADIUS M', sub: 'střední rádius', slug: 'mlzitko-bendy', variant: 'radius-m' },
+      { label: 'RADIUS L', sub: 'větší rádius · delší konec', slug: 'mlzitko-bendy', variant: 'radius-l' },
+      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
     ],
   },
   'mlzitko-steblo': {
     title: 'Varianty kolekce STÉBLO®',
     eyebrow: 'STÉBLO® · samostatná produktová rodina',
+    description: 'U STÉBLO® se nemění základní tvar výrobku. Varianty vznikají počtem a rozmístěním stejného prvku v prostoru.',
     items: [
       { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/486dbd1bb_mlzitko-steblo-katalog2.png' },
       { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
@@ -63,6 +68,24 @@ const FAMILY_VARIANTS = {
     ],
   },
   'y-armist-j70': { ref: 'y-armist-tr60' },
+  'mlzna-brana-gate': {
+    title: 'Varianty MLŽNÉ BRÁNY GATE®',
+    eyebrow: 'GATE® · tvar brány',
+    description: 'Dvě architektonické varianty stejné průchozí mlžné brány.',
+    items: [
+      { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight' },
+      { label: 'GATE V', sub: 'zakřivená varianta do V', slug: 'mlzna-brana-gate', variant: 'v' },
+    ],
+  },
+  'mlzitko-mrak': {
+    title: 'Varianty MLŽNÉHO MRAKU®',
+    eyebrow: 'MRAK® · varianty použití',
+    description: 'Různé siluety a měřítka stejného principu mlžného objektu pro veřejný prostor, zahrady a dětská hřiště.',
+    items: [
+      { label: 'MRAK CLASSIC', sub: 'základní varianta', slug: 'mlzitko-mrak' },
+      { label: 'MRAK PLAY', sub: 'varianta pro dětská hřiště', slug: 'mlzitko-mrak', variant: 'play' },
+    ],
+  },
 };
 
 const FIELD_SIZES = [
@@ -197,12 +220,13 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
 
       {variants && (
         <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,.045)] sm:p-5">
-          <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
               {variants.eyebrow && <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-[#0b4860]/60">{variants.eyebrow}</p>}
-              <div className="mt-1 flex items-center gap-2 text-sm font-semibold text-slate-900"><Ruler size={15} className="text-[#0b4860]"/> {variants.title}</div>
+              <div className="mt-1 flex items-center gap-2 text-base font-semibold text-slate-900"><Layers3 size={16} className="text-[#0b4860]"/> {variants.title}</div>
+              {variants.description && <p className="mt-2 text-xs leading-5 text-slate-500">{variants.description}</p>}
             </div>
-            <span className="text-[10px] text-slate-400">Kliknutím přepnete variantu</span>
+            <span className="shrink-0 rounded-full bg-slate-50 px-3 py-1.5 text-[10px] font-medium text-slate-500">{variants.items.length} variant{variants.items.length === 1 ? 'a' : variants.items.length < 5 ? 'y' : ''}</span>
           </div>
           <div className={`grid gap-3 ${variants.items.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-5'}`}>
             {variants.items.map((item) => {
@@ -210,7 +234,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
               const href = item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
               return (
                 <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>
-                  {item.image && <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}
+                  {item.image ? <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div> : <div className={`relative flex aspect-[4/5] items-center justify-center overflow-hidden ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><div className="absolute inset-x-[28%] top-[18%] bottom-[18%] rounded-full border-[3px] border-[#0b4860]/15"/><Ruler size={28} className="relative text-[#0b4860]/35"/>{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}
                   <div className="px-3.5 py-3.5">
                     <span className="block text-xs font-bold tracking-wide">{item.label}</span>
                     <span className={`mt-1 block text-[10px] leading-4 ${active ? 'text-white/75' : 'text-slate-500'}`}>{item.sub}</span>

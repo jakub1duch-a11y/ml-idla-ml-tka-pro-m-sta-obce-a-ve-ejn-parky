@@ -118,10 +118,23 @@ export default function CollectionProductGrid({ collection }) {
         <Link to="/mlzidla-mlzitka" className="btn-secondary-outline hidden rounded-full px-6 py-3 text-sm font-semibold text-foreground sm:inline-flex">Celý katalog <ArrowRight size={15} /></Link>
       </div>
 
-      <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {products.length > 0 && <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => <ProductCard key={product.id} product={product} />)}
-        {variantCards.map((variant) => <VariantCard key={`${variant.slug}-${variant.variant}`} variant={variant} />)}
-      </div>
+      </div>}
+
+      {variantCards.length > 0 && <div className={`${products.length ? 'mt-10' : ''} rounded-[2rem] border border-slate-200 bg-slate-50/70 p-4 sm:p-6 lg:p-8`}>
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-[#0b4860]/65">Varianty stejného produktu</p>
+            <h3 className="mt-2 font-heading text-2xl text-foreground sm:text-3xl">Vyberte geometrii, která odpovídá prostoru.</h3>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">Varianty nejsou vedené jako další samostatné produkty. Zachovávají produktovou rodinu a mění pouze definovanou geometrii nebo konfiguraci.</p>
+          </div>
+          <span className="w-fit rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[10px] font-semibold text-slate-500">{variantCards.length} variant</span>
+        </div>
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {variantCards.map((variant) => <VariantCard key={`${variant.slug}-${variant.variant}`} variant={variant} />)}
+        </div>
+      </div>}
 
       <div className="mt-7 sm:hidden"><Link to="/mlzidla-mlzitka" className="btn-secondary-outline inline-flex rounded-full px-6 py-3 text-sm font-semibold text-foreground">Celý katalog <ArrowRight size={15} /></Link></div>
     </section>

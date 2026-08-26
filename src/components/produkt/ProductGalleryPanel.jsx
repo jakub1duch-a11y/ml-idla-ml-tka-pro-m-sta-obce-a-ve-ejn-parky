@@ -9,7 +9,7 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
     ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
     : [];
   const [active, setActive] = useState(0);
-  const [zoomCursor, setZoomCursor] = useState({ visible: false, x: 0, y: 0 });
+  const [magnify, setMagnify] = useState({ visible: false, x: 50, y: 50 });
   const reduceMotion = useReducedMotion();
   const touchStart = useRef(null);
   const activeItem = items[active];
@@ -72,9 +72,11 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
           onMouseMove={(event) => {
             if (activeItem.type === 'video') return;
             const rect = event.currentTarget.getBoundingClientRect();
-            setZoomCursor({ visible: true, x: event.clientX - rect.left, y: event.clientY - rect.top });
+            const x = Math.min(100, Math.max(0, ((event.clientX - rect.left) / rect.width) * 100));
+            const y = Math.min(100, Math.max(0, ((event.clientY - rect.top) / rect.height) * 100));
+            setMagnify({ visible: true, x, y });
           }}
-          onMouseLeave={() => setZoomCursor((current) => ({ ...current, visible: false }))}
+          onMouseLeave={() => setMagnify((current) => ({ ...current, visible: false }))}
         > 
           <AnimatePresence mode="wait" initial={false}>
             {activeItem.type === 'video' ? (
@@ -108,20 +110,27 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                className="absolute inset-0 h-full w-full cursor-none object-contain p-1 sm:p-2"
+                className="absolute inset-0 h-full w-full cursor-zoom-in object-contain p-1 sm:p-2"
                 onError={() => markFailed(activeItem.url)}
                 onClick={() => { trackProductLightboxOpen(productName, activeItem.type); onOpenLightbox?.(activeItem.originalIndex); }}
               />
             )}
           </AnimatePresence>
 
-          {activeItem.type !== 'video' && zoomCursor.visible && (
+          {activeItem.type !== 'video' && magnify.visible && (
             <div
-              className="pointer-events-none absolute z-20 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-[#0b4860]/90 text-white shadow-[0_8px_24px_rgba(15,23,42,.24)] backdrop-blur-sm sm:flex"
-              style={{ left: zoomCursor.x, top: zoomCursor.y }}
+              className="pointer-events-none absolute z-20 hidden h-44 w-44 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-white shadow-[0_14px_40px_rgba(15,23,42,.28)] sm:block lg:h-52 lg:w-52"
+              style={{
+                left: `${magnify.x}%`,
+                top: `${magnify.y}%`,
+                backgroundImage: `url(${activeItem.url})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '230%',
+                backgroundPosition: `${magnify.x}% ${magnify.y}%`,
+              }}
               aria-hidden="true"
             >
-              <ZoomIn size={20} strokeWidth={2} />
+              <div className="absolute inset-0 rounded-full ring-1 ring-black/10" />
             </div>
           )}
 

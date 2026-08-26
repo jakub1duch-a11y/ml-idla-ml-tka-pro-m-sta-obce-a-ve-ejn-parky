@@ -9,12 +9,16 @@ const FAMILY_VARIANTS = {
     description: 'Základ výrobku zůstává stejný. Mění se rádius a délka ohybu podle požadovaného dosahu a charakteru prostoru.',
     items: [
       { label: 'BENDY SINGLE', sub: 'základní ohyb', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
-      { label: 'RADIUS S', sub: 'kompaktní ohyb', slug: 'mlzitko-bendy', variant: 'radius-s' },
-      { label: 'RADIUS M', sub: 'střední rádius', slug: 'mlzitko-bendy', variant: 'radius-m' },
-      { label: 'RADIUS L', sub: 'větší rádius · delší konec', slug: 'mlzitko-bendy', variant: 'radius-l' },
-      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
+      { label: 'BENDY RADIUS S', sub: 'kompaktní ohyb', slug: 'bendy-radius-s', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY RADIUS M', sub: 'střední rádius', slug: 'bendy-radius-m', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY RADIUS L', sub: 'větší rádius · delší konec', slug: 'bendy-radius-l', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'bendy-field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
     ],
   },
+  'bendy-radius-s': { ref: 'mlzitko-bendy' },
+  'bendy-radius-m': { ref: 'mlzitko-bendy' },
+  'bendy-radius-l': { ref: 'mlzitko-bendy' },
+  'bendy-field': { ref: 'mlzitko-bendy' },
   'mlzitko-steblo': {
     title: 'Varianty kolekce STÉBLO®',
     eyebrow: 'STÉBLO® · samostatná produktová rodina',
@@ -124,7 +128,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const mrakHeight = params.get('height') || '2500';
   const mrakSize = params.get('size') || 'standard';
   const variants = resolveVariantConfig(product.slug);
-  const isField = product.slug === 'mlzitko-bendy' && currentVariant === 'field';
+  const isField = product.slug === 'bendy-field';
   const isMrak = product.slug === 'mlzitko-mrak';
   const mrakHref = (patch = {}) => {
     const next = new URLSearchParams(location.search);

@@ -51,7 +51,7 @@ const FAMILY_VARIANTS = {
     eyebrow: 'LINEA® · samostatný produkt',
     description: 'LINEA je samostatná produktová řada. Není variantou ani přejmenovanou verzí produktu LINEA CE.',
     items: [
-      { label: 'LINEA', sub: 'samostatný produkt', slug: 'linea-mlzitko' },
+      { label: 'LINEA', sub: 'samostatný produkt', slug: 'linea-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6505aa131_generated_image.png' },
     ],
   },
   'linea-solo': {
@@ -59,21 +59,21 @@ const FAMILY_VARIANTS = {
     eyebrow: 'LINEA CE® · samostatný produkt',
     description: 'LINEA CE je samostatný výrobek s vlastním profilem, konstrukcí a produktovým detailem. Nezobrazujeme jej jako variantu LINEA.',
     items: [
-      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo' },
+      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91c5002dc_C-MlzitkoLINEA_CE70_single2.png' },
     ],
   },
   'linea-gate': {
     title: 'LINEA GATE®',
     eyebrow: 'LINEA GATE® · samostatná konfigurace',
     items: [
-      { label: 'LINEA GATE', sub: 'průchozí sestava', slug: 'linea-gate' },
+      { label: 'LINEA GATE', sub: 'průchozí sestava', slug: 'linea-gate', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ab84deeba_generated_image.png' },
     ],
   },
   'linea-avenue': {
     title: 'LINEA AVENUE®',
     eyebrow: 'LINEA AVENUE® · samostatná konfigurace',
     items: [
-      { label: 'LINEA AVENUE', sub: 'víceprvková alej', slug: 'linea-avenue' },
+      { label: 'LINEA AVENUE', sub: 'víceprvková alej', slug: 'linea-avenue', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3e9b011c_generated_image.png' },
     ],
   },
   'aura-mlzitko': {

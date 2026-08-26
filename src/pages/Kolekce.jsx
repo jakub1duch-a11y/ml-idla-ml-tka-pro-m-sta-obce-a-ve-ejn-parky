@@ -117,7 +117,7 @@ function matchesSpace(product, filter) {
 const CITY_ORDER = [
   'aura-mlzitko', 'aura-duo',
   'mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej',
-  'linea-solo', 'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'ostrev-city', 'ostrev-mlzitko', 'y-armist-tr60'
+  'linea-mlzitko', 'linea-solo', 'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'ostrev-city', 'ostrev-mlzitko', 'y-armist-tr60'
 ];
 
 function sortCatalogProducts(items, spaceFilter) {
@@ -154,7 +154,8 @@ const PRODUCT_CARD_META = {
   'city-arc-3': { dims: [['Šířka', '~3 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Promenáda', Landmark], ['Koupaliště', Waves]] },
   'city-arc-4': { dims: [['Šířka', '~4 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Promenáda', Landmark], ['Koupaliště', Waves]] },
   'city-arc-5': { dims: [['Šířka', '~5 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Sportoviště', Dumbbell], ['Koupaliště', Waves]] },
-  'linea-solo': { dims: [['Profil', '70 × 70 mm'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Gastro', UtensilsCrossed], ['Hotel', Home]] },
+  'linea-mlzitko': { dims: [['Produkt', 'LINEA'], ['Výška', '2–3 m']], places: [['Promenáda', Landmark], ['Park', Trees], ['Náměstí', Building2]] },
+  'linea-solo': { dims: [['Produkt', 'LINEA CE'], ['Profil', '70 × 70 mm']], places: [['Náměstí', Building2], ['Gastro', UtensilsCrossed], ['Hotel', Home]] },
   'linea-gate': { dims: [['Šířka', 'projektová'], ['Výška', 'projektová']], places: [['Vstupy', Landmark], ['Náměstí', Building2], ['Promenáda', Trees]] },
   'linea-avenue': { dims: [['Počet', 'více prvků'], ['Rozteč', 'projektová']], places: [['Promenáda', Landmark], ['Park', Trees], ['Sportoviště', Dumbbell]] },
   'garden-cooling-set': { dims: [['Sestava', 'na míru'], ['Instalace', 'snadná']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Rezidence', Home]] },

@@ -15,8 +15,22 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
   const mrakShape = query.get('variant') || 'obrys';
   const mrakHeight = query.get('height') || '2500';
   const mrakScale = query.get('size') || 'standard';
-  const mrakShapeLabels = { obrys: 'OBRYS', flow: 'FLOW', organik: 'ORGANIK' };
+  const mrakShapeLabels = { obrys: 'OBRYS', flow: 'FLOW', organik: 'ORGANIK', play: 'MRAK PLAY' };
   const mrakSizeLabels = { kompakt: 'KOMPAKT', standard: 'STANDARD', rozsireny: 'ROZŠÍŘENÝ' };
+  const variantFocusUrl = product.slug === 'mlzna-brana-gate'
+    ? (query.get('variant') === 'v'
+      ? 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png'
+      : query.get('variant') === 'straight'
+        ? 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png'
+        : null)
+    : isMrak
+      ? ({
+          obrys: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600',
+          flow: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600',
+          organik: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ef3414919_generated_image.png',
+          play: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81c84ca33_Mrakmlzitko-skolnizahrada.jpg',
+        }[mrakShape] || null)
+      : null;
   const mrakSelection = isMrak
     ? `${product.name} · ${mrakShapeLabels[mrakShape] || mrakShape.toUpperCase()} · ${mrakHeight} mm · ${mrakSizeLabels[mrakScale] || mrakScale}`
     : product.name;
@@ -41,7 +55,7 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.16fr_.84fr] gap-8 lg:gap-10 xl:gap-12 items-start">
         <motion.div className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <ProductGalleryPanel mediaItems={allMedia} productName={product.name} onOpenLightbox={onOpenLightbox} />
+          <ProductGalleryPanel mediaItems={allMedia} productName={product.name} onOpenLightbox={onOpenLightbox} focusUrl={variantFocusUrl} />
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>

@@ -745,7 +745,20 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <label className="text-xs text-muted-foreground">Typ prezentace<select value={audienceVariant} onChange={(e) => { setAudienceVariant(e.target.value); resetPrepared(); }} className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm">{AUDIENCES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label>
             <label className="text-xs text-muted-foreground">Odesílat z<select value={senderEmail} onChange={(e) => { setSenderEmail(e.target.value); resetPrepared(); }} className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm"><option value="meduna@holmtec.cz">meduna@holmtec.cz</option><option value="info@mlzidla.cz">info@mlzidla.cz</option></select></label>
-            <select value={productId} onChange={(event) => chooseProduct(event.target.value)} className="border border-border bg-background px-3 py-2.5 text-sm"><option value="">Vybrat produkt pro nabídku</option>{products.map((product) => <option key={product.id} value={product.id}>{product.name}</option>)}</select>
+            <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px] sm:items-start">
+              <select value={productId} onChange={(event) => chooseProduct(event.target.value)} className="border border-border bg-background px-3 py-2.5 text-sm"><option value="">Vybrat produkt pro nabídku</option>{products.map((product) => <option key={product.id} value={product.id}>{product.name}</option>)}</select>
+              {selectedProduct?.image_url && (
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                  <div className="aspect-[3/4] w-full bg-[linear-gradient(180deg,#fafafa_0%,#f1f4f5_100%)] p-3">
+                    <img src={selectedProduct.image_url} alt={`${selectedProduct.name} – náhled produktu`} className="h-full w-full object-contain" />
+                  </div>
+                  <div className="border-t border-slate-100 px-3 py-2.5">
+                    <p className="line-clamp-2 text-xs font-bold leading-snug text-slate-800">{selectedProduct.name}</p>
+                    <p className="mt-1 text-[9px] uppercase tracking-[.14em] text-slate-400">Vyšší produktový náhled</p>
+                  </div>
+                </div>
+              )}
+            </div>
             <input type="number" value={basePrice} onChange={(event) => { setBasePrice(Number(event.target.value) || 0); resetPrepared(); }} placeholder="Cena produktu bez DPH" className="border border-border bg-background px-3 py-2.5 text-sm"/>
             <label className="text-xs text-muted-foreground">Cena instalace bez DPH<input type="number" value={installation} onChange={(event) => { setInstallation(Number(event.target.value) || 0); resetPrepared(); }} placeholder="Např. 25 000 Kč" className="mt-1 w-full border border-border bg-background px-3 py-2.5 text-sm"/></label>
           </div>

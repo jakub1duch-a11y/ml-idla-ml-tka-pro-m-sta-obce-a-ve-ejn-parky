@@ -105,7 +105,7 @@ function matchesSpace(product, filter) {
   if (filter === 'all') return true;
   const haystack = `${product.name || ''} ${product.slug || ''} ${product.short_description || ''} ${product.description || ''} ${product._categoryName || ''}`.toLowerCase();
   const map = {
-    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'bendy-arc', 'bendy-back', 'bendy-alej', 'bendy-field'],
+    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'stéblo', 'bendy-back', 'bendy-alej', 'bendy-field'],
     garden: ['zahrad', 'terasa', 'reziden', 'soukrom', 'garden'],
     sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
     school: ['škol', 'dětsk', 'hřiště'],
@@ -115,10 +115,9 @@ function matchesSpace(product, filter) {
 }
 
 const CITY_ORDER = [
-  'aura-city-single', 'aura-city-duo',
-  'bendy-arc', 'bendy-arc-2-0', 'bendy-arc-3-0', 'bendy-back-to-back', 'bendy-alej', 'bendy-field',
-  'city-arc-1', 'city-arc-2', 'city-arc-3', 'city-arc-4', 'city-arc-5', 'city-cooling-zone',
-  'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'brana-bendy', 'y-armist-tr60'
+  'aura-mlzitko', 'aura-duo',
+  'mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej', 'bendy-field',
+  'linea-solo', 'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'ostrev-city', 'ostrev-mlzitko', 'y-armist-tr60'
 ];
 
 function sortCatalogProducts(items, spaceFilter) {
@@ -144,14 +143,12 @@ const FALLBACK_IMAGES = {
 };
 
 const PRODUCT_CARD_META = {
-  'aura-mlzitko': { dims: [['Varianta', 'AURA GARDEN'], ['Provoz', '2–5 bar']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Rezidence', Home]] },
-  'aura-garden-duo': { dims: [['Varianta', 'Garden Duo'], ['Rozteč', 'projektová']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Wellness', Home]] },
-  'aura-city-single': { dims: [['Varianta', 'AURA CITY'], ['Provoz', '2–5 bar']], places: [['Náměstí', Building2], ['Park', Trees], ['Promenáda', Landmark]] },
-  'aura-city-duo': { dims: [['Varianta', 'City Duo'], ['Rozteč', 'projektová']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Veřejná zóna', Trees]] },
-  'mlzitko-bendy': { dims: [['Výška', '≈ 1 800 mm'], ['Průměr', 'Ø50 / Ø60,2 / Ø70 mm']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
-  'bendy-arc': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
-  'bendy-arc-2-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Sportoviště', Dumbbell]] },
-  'bendy-arc-3-0': { dims: [['Velikosti', 'S / M / L'], ['Rádius', 'projektový']], places: [['Náměstí', Building2], ['Park', Trees], ['Sportoviště', Dumbbell]] },
+  'aura-mlzitko': { dims: [['Varianta', 'AURA SINGLE'], ['Provoz', 'nízkotlaký']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Rezidence', Home]] },
+  'aura-duo': { dims: [['Varianta', 'AURA DUO'], ['Rozteč', 'projektová']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Veřejná zóna', Trees]] },
+  'mlzitko-bendy': { dims: [['Konfigurace', 'SINGLE'], ['Profil', 'dle varianty']], places: [['Zahrada', Home], ['Terasa', UtensilsCrossed], ['Park', Trees]] },
+  'mlzitko-steblo': { dims: [['Konfigurace', 'SINGLE'], ['Tvar', 'organická křivka']], places: [['Zahrada', Home], ['Park', Trees], ['Promenáda', Landmark]] },
+  'mlzitko-2-stebla': { dims: [['Konfigurace', '2 prvky'], ['Rozteč', 'projektová']], places: [['Náměstí', Building2], ['Promenáda', Landmark], ['Park', Trees]] },
+  'brana-bendy': { dims: [['Konfigurace', 'GATE'], ['Počet', '2 stejné prvky']], places: [['Vstupy', Landmark], ['Náměstí', Building2], ['Promenáda', Trees]] },
   'bendy-back-to-back': { dims: [['Záběr', '360°'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Park', Trees], ['Resort', Home]] },
   'bendy-alej': { dims: [['Počet', '5+ prvků'], ['Rozteč', 'projektová']], places: [['Promenáda', Landmark], ['Sportoviště', Dumbbell], ['Náměstí', Building2]] },
   'bendy-field': { dims: [['Velikost', 'S / M / L'], ['Počet', '3–9 prvků']], places: [['Sportoviště', Dumbbell], ['Škola', School], ['Náměstí', Building2]] },

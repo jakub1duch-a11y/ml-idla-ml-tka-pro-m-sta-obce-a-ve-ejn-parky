@@ -17,11 +17,17 @@ const rawBase44 = createClient({
 // The website transparently resolves those URLs to optimized WebP/WebM files
 // generated in public/media/optimized. Transparent product cut-outs remain original.
 const productEntity = rawBase44.entities.Product;
+const HIDDEN_STANDALONE_PRODUCT_SLUGS = new Set(['bendy-field']);
+const hideStandaloneVariants = (result) => {
+  if (Array.isArray(result)) return result.filter((item) => !HIDDEN_STANDALONE_PRODUCT_SLUGS.has(item?.slug));
+  if (result && HIDDEN_STANDALONE_PRODUCT_SLUGS.has(result.slug)) return null;
+  return result;
+};
 const optimizedProductEntity = new Proxy(productEntity, {
   get(target, prop, receiver) {
     const value = Reflect.get(target, prop, receiver);
     if (typeof value !== 'function' || !['list', 'filter', 'get', 'getById'].includes(String(prop))) return value;
-    return async (...args) => normalizeProductResult(await value.apply(target, args));
+    return async (...args) => hideStandaloneVariants(normalizeProductResult(await value.apply(target, args)));
   },
 });
 

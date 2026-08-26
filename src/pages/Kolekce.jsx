@@ -105,7 +105,7 @@ function matchesSpace(product, filter) {
   if (filter === 'all') return true;
   const haystack = `${product.name || ''} ${product.slug || ''} ${product.short_description || ''} ${product.description || ''} ${product._categoryName || ''}`.toLowerCase();
   const map = {
-    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'stéblo', 'bendy-back', 'bendy-alej', 'bendy-field'],
+    city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'city', 'brána', 'gate', 'linea', 'stéblo', 'bendy-back', 'bendy-alej'],
     garden: ['zahrad', 'terasa', 'reziden', 'soukrom', 'garden'],
     sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
     school: ['škol', 'dětsk', 'hřiště'],

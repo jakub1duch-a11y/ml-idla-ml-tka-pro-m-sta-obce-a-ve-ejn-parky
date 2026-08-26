@@ -11,6 +11,24 @@ const orderProducts = (items, collection) => {
   return (collection.productSlugs || []).map((slug) => items.find((item) => item.slug === slug)).filter(Boolean);
 };
 
+const PRODUCT_VARIANTS = {
+  'mlzitko-bendy': [
+    { label: 'Single', href: '/produkt/mlzitko-bendy' },
+    { label: 'Radius S', href: '/produkt/mlzitko-bendy?variant=radius-s' },
+    { label: 'Radius M', href: '/produkt/mlzitko-bendy?variant=radius-m' },
+    { label: 'Radius L', href: '/produkt/mlzitko-bendy?variant=radius-l' },
+    { label: 'Field', href: '/produkt/mlzitko-bendy?variant=field' },
+  ],
+  'mlzitko-mrak': [
+    { label: 'Classic', href: '/produkt/mlzitko-mrak' },
+    { label: 'Play', href: '/produkt/mlzitko-mrak?variant=play' },
+  ],
+  'mlzna-brana-gate': [
+    { label: 'Straight', href: '/produkt/mlzna-brana-gate?variant=straight' },
+    { label: 'V', href: '/produkt/mlzna-brana-gate?variant=v' },
+  ],
+};
+
 const getType = (product) => {
   const name = product.name || '';
   if (/back-to-back/i.test(name)) return '360°';
@@ -21,10 +39,22 @@ const getType = (product) => {
   return 'Model';
 };
 
+const getFamily = (product) => {
+  const slug = product.slug || '';
+  if (slug === 'mlzitko-bendy') return 'BENDY®';
+  if (['mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej'].includes(slug)) return 'STÉBLO®';
+  if (slug === 'mlzitko-mrak') return 'MLŽNÝ MRAK®';
+  if (slug === 'mlzna-brana-gate') return 'GATE®';
+  return null;
+};
+
 function ProductCard({ product }) {
   const type = getType(product);
+  const family = getFamily(product);
+  const variants = PRODUCT_VARIANTS[product.slug] || [];
   return (
-    <Link to={`/produkt/${product.slug}`} className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
+    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
+      <Link to={`/produkt/${product.slug}`} className="block">
       <div className="relative bg-[linear-gradient(180deg,#fafbfb_0%,#eef1f2_100%)] p-3 sm:p-4">
         <div className="overflow-hidden rounded-2xl border border-white/80 bg-white shadow-[0_8px_24px_rgba(15,23,42,.045)]">
           <ProductHoverImage product={product} className="aspect-[4/5] bg-white" />
@@ -32,13 +62,18 @@ function ProductCard({ product }) {
         <div className="absolute left-6 top-6 rounded-full border border-black/10 bg-white/94 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-foreground backdrop-blur">{type}</div>
         {product.coverage_area && <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between gap-2 rounded-2xl border border-white/70 bg-white/90 px-3 py-2 text-[11px] text-foreground shadow-sm backdrop-blur"><span className="inline-flex items-center gap-1.5"><Ruler size={13} /> {product.coverage_area}</span><span className="hidden sm:inline-flex items-center gap-1.5 text-muted-foreground"><MapPin size={13} /> Katalogový model</span></div>}
       </div>
+      </Link>
       <div className="flex flex-1 flex-col p-6">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-secondary">Produkt kolekce</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-secondary">{family || 'Produkt kolekce'}</p>
+          {variants.length > 0 && <span className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-500">{variants.length} variant</span>}
+        </div>
         <h3 className="mt-2 min-h-[3.6rem] line-clamp-2 font-heading text-2xl leading-[1.2] text-foreground">{product.name}</h3>
         <p className="mt-3 min-h-[2.75rem] line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
-        <span className="btn-secondary-outline mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground transition-colors group-hover:border-secondary group-hover:text-secondary">Detail produktu <ArrowRight size={15} /></span>
+        {variants.length > 0 && <div className="mt-5 border-t border-slate-100 pt-4"><p className="mb-2 font-mono text-[9px] font-semibold uppercase tracking-[.15em] text-slate-400">Rychlá volba varianty</p><div className="flex flex-wrap gap-2">{variants.map((variant) => <Link key={variant.href} to={variant.href} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-600 transition hover:border-[#0b4860]/30 hover:bg-[#0b4860]/5 hover:text-[#0b4860]">{variant.label}</Link>)}</div></div>}
+        <Link to={`/produkt/${product.slug}`} className="btn-secondary-outline mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground transition-colors group-hover:border-secondary group-hover:text-secondary">Detail produktu <ArrowRight size={15} /></Link>
       </div>
-    </Link>
+    </article>
   );
 }
 

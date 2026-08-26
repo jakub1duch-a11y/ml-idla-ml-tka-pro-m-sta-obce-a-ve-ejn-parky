@@ -6,7 +6,7 @@ import GoIcon from '@/components/pronajem/GoIcon';
 const rentalOrder = (product) => {
   if (product.slug === 'mlzna-brana-gate') return 0;
   if (product.slug === 'bendy-brana' || product.slug === 'brana-bendy') return 1;
-  if (product.slug === 'aura-city-duo' || product.slug === 'aura-city-single') return 2;
+  if (product.slug === 'aura-duo' || product.slug === 'aura-mlzitko') return 2;
   if (product.slug === 'mlzici-tryska') return 9;
   return 3;
 };
@@ -14,8 +14,8 @@ const rentalOrder = (product) => {
 const EVENT_THUMBNAILS = {
   'mlzna-brana-gate': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png',
   'brana-bendy': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg',
-  'aura-city-duo': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/83e0506f1_generated_fd2118cd.png',
-  'aura-city-single': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/83e0506f1_generated_fd2118cd.png',
+  'aura-duo': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/83e0506f1_generated_fd2118cd.png',
+  'aura-mlzitko': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/83e0506f1_generated_fd2118cd.png',
 };
 
 const eventThumb = (product) => EVENT_THUMBNAILS[product.slug] || product.gallery_urls?.[1] || product.gallery_urls?.[0] || product.image_url;

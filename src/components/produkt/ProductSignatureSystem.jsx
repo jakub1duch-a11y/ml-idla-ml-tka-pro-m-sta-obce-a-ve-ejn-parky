@@ -52,9 +52,10 @@ const FAMILY_VARIANTS = {
 };
 
 const FIELD_SIZES = [
-  { label: 'S', sub: '3 prvky' },
-  { label: 'M', sub: '5 prvků' },
-  { label: 'L', sub: '7–9 prvků' },
+  { label: 'S', sub: '3 prvky', note: 'Kompaktní mlžiště pro menší náměstí, školy a sportoviště.' },
+  { label: 'M', sub: '5 prvků', note: 'Vyvážená sestava pro parky, promenády a frekventované veřejné plochy.' },
+  { label: 'L', sub: '7–9 prvků', note: 'Velkorysé víceprvkové ochlazení pro rozsáhlejší veřejný prostor.' },
+  { label: 'AVENUE', sub: '8 prvků v linii', note: 'Liniová městská alej pro promenády, pěší zóny a průchozí ochlazovací trasu.' },
 ];
 
 function resolveVariantConfig(slug) {
@@ -160,12 +161,18 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
 
       {isField && (
         <div>
-          <div className="mb-2 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400"><Layers3 size={14}/> Velikost mlžiště</div>
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="mb-3 flex items-end justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400"><Layers3 size={14}/> Varianty BENDY FIELD®</div>
+              <p className="mt-1.5 text-xs leading-relaxed text-slate-500">Zvolte rozsah sestavy podle velikosti prostoru. Přesné rozestupy, počet trysek a řízení se navrhují projektově.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
             {FIELD_SIZES.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-4 text-center">
-                <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-base font-bold text-slate-900">{item.label}</span>
-                <span className="mt-2 block text-xs font-semibold text-slate-700">{item.sub}</span>
+              <div key={item.label} className="rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-[0_8px_24px_rgba(15,23,42,.035)]">
+                <span className="inline-flex min-h-9 items-center justify-center rounded-full border border-[#0b4860]/15 bg-[#0b4860]/[.05] px-3 text-sm font-bold text-[#0b4860]">{item.label}</span>
+                <span className="mt-3 block text-sm font-semibold text-slate-900">{item.sub}</span>
+                <span className="mt-1.5 block text-[11px] leading-relaxed text-slate-500">{item.note}</span>
               </div>
             ))}
           </div>

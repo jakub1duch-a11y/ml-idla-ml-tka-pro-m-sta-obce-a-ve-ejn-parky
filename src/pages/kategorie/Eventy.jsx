@@ -17,7 +17,7 @@ const EVENT_SCENES = [
 const EVENT_PRODUCT_THUMBNAILS = {
   'mlzna-brana-gate': EVENT_SCENES[0].image,
   'brana-bendy': EVENT_SCENES[3].image,
-  'aura-city-duo': EVENT_SCENES[2].image,
+  'aura-duo': EVENT_SCENES[2].image,
   'linea-gate': EVENT_SCENES[1].image,
 };
 
@@ -45,7 +45,7 @@ export default function Eventy() {
   useEffect(() => {
     setSEO(SEO_PAGES.eventy);
     base44.entities.Product.list().catch(() => []).then(p => {
-      const preferred = ['mlzna-brana-gate', 'brana-bendy', 'aura-city-duo', 'linea-gate'];
+      const preferred = ['mlzna-brana-gate', 'brana-bendy', 'aura-duo', 'linea-gate'];
       const all = (p || []).filter((item) => item?.slug && !String(item.name || '').startsWith('ARCHIV'));
       const curated = preferred.map((slug) => all.find((item) => item.slug === slug)).filter(Boolean);
       setProducts(curated.length ? curated : all.slice(0, 4));

@@ -32,7 +32,7 @@ export default function MestaObce() {
   useEffect(() => {
     setSEO(SEO_PAGES.mestOobce);
     trackFunnelStep('cities', 'landing_view', 'Města a obce');
-    const preferredSlugs = ['bendy-field', 'bendy-alej', 'aura-duo', 'mlzna-brana-gate', 'linea-avenue', 'ostrev-city'];
+    const preferredSlugs = ['mlzitko-bendy', 'bendy-alej', 'aura-duo', 'mlzna-brana-gate', 'linea-avenue', 'ostrev-city'];
     base44.entities.Product.list().catch(() => []).then((p) => {
       const all = p || [];
       const selected = preferredSlugs

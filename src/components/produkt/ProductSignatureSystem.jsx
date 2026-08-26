@@ -106,9 +106,9 @@ const FAMILY_VARIANTS = {
     eyebrow: 'MRAK® · tvarová varianta',
     description: 'Základ produktu zůstává stejný. Volíte charakter obrysu, následně výšku a velikost podle měřítka prostoru.',
     items: [
-      { label: 'OBRYS', sub: 'čistý univerzální tvar', slug: 'mlzitko-mrak', variant: 'obrys' },
-      { label: 'FLOW', sub: 'plynulejší dynamický ohyb', slug: 'mlzitko-mrak', variant: 'flow' },
-      { label: 'ORGANIK', sub: 'měkčí organická linie', slug: 'mlzitko-mrak', variant: 'organik' },
+      { label: 'OBRYS', sub: 'čistý univerzální tvar', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
+      { label: 'FLOW', sub: 'plynulejší dynamický ohyb', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
+      { label: 'ORGANIK', sub: 'měkčí organická linie', slug: 'mlzitko-mrak', variant: 'organik', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ef3414919_generated_image.png' },
     ],
   },
 };

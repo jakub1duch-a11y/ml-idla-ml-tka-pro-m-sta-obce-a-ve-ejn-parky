@@ -46,16 +46,36 @@ const FAMILY_VARIANTS = {
   },
   'city-arc-4': { ref: 'city-arc-3' },
   'city-arc-5': { ref: 'city-arc-3' },
-  'linea-solo': {
-    title: 'Varianty kolekce LINEA®',
+  'linea-mlzitko': {
+    title: 'Produkt LINEA®',
+    eyebrow: 'LINEA® · samostatný produkt',
+    description: 'LINEA je samostatná produktová řada. Není variantou ani přejmenovanou verzí produktu LINEA CE.',
     items: [
-      { label: 'MLŽÍTKO', sub: '1 prvek', slug: 'linea-solo' },
-      { label: 'GATE', sub: '2 prvky', slug: 'linea-gate' },
-      { label: 'AVENUE', sub: 'více prvků', slug: 'linea-avenue' },
+      { label: 'LINEA', sub: 'samostatný produkt', slug: 'linea-mlzitko' },
     ],
   },
-  'linea-gate': { ref: 'linea-solo' },
-  'linea-avenue': { ref: 'linea-solo' },
+  'linea-solo': {
+    title: 'Produkt LINEA CE®',
+    eyebrow: 'LINEA CE® · samostatný produkt',
+    description: 'LINEA CE je samostatný výrobek s vlastním profilem, konstrukcí a produktovým detailem. Nezobrazujeme jej jako variantu LINEA.',
+    items: [
+      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo' },
+    ],
+  },
+  'linea-gate': {
+    title: 'LINEA GATE®',
+    eyebrow: 'LINEA GATE® · samostatná konfigurace',
+    items: [
+      { label: 'LINEA GATE', sub: 'průchozí sestava', slug: 'linea-gate' },
+    ],
+  },
+  'linea-avenue': {
+    title: 'LINEA AVENUE®',
+    eyebrow: 'LINEA AVENUE® · samostatná konfigurace',
+    items: [
+      { label: 'LINEA AVENUE', sub: 'víceprvková alej', slug: 'linea-avenue' },
+    ],
+  },
   'aura-mlzitko': {
     title: 'Varianty kolekce AURA®',
     items: [

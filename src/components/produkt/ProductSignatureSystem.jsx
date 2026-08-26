@@ -78,12 +78,13 @@ const FAMILY_VARIANTS = {
     ],
   },
   'mlzitko-mrak': {
-    title: 'Varianty MLŽNÉHO MRAKU®',
-    eyebrow: 'MRAK® · varianty použití',
-    description: 'Různé siluety a měřítka stejného principu mlžného objektu pro veřejný prostor, zahrady a dětská hřiště.',
+    title: 'Typ ohybu MLŽNÉHO MRAKU®',
+    eyebrow: 'MRAK® · tvarová varianta',
+    description: 'Základ produktu zůstává stejný. Volíte charakter obrysu, následně výšku a velikost podle měřítka prostoru.',
     items: [
-      { label: 'MRAK CLASSIC', sub: 'základní varianta', slug: 'mlzitko-mrak' },
-      { label: 'MRAK PLAY', sub: 'varianta pro dětská hřiště', slug: 'mlzitko-mrak', variant: 'play' },
+      { label: 'OBRYS', sub: 'čistý univerzální tvar', slug: 'mlzitko-mrak', variant: 'obrys' },
+      { label: 'FLOW', sub: 'plynulejší dynamický ohyb', slug: 'mlzitko-mrak', variant: 'flow' },
+      { label: 'ORGANIK', sub: 'měkčí organická linie', slug: 'mlzitko-mrak', variant: 'organik' },
     ],
   },
 };
@@ -93,6 +94,18 @@ const FIELD_SIZES = [
   { label: 'M', sub: '5 prvků', note: 'Vyvážená sestava pro parky, promenády a frekventované veřejné plochy.' },
   { label: 'L', sub: '7–9 prvků', note: 'Velkorysé víceprvkové ochlazení pro rozsáhlejší veřejný prostor.' },
   { label: 'AVENUE', sub: '8 prvků v linii', note: 'Liniová městská alej pro promenády, pěší zóny a průchozí ochlazovací trasu.' },
+];
+
+const MRAK_HEIGHTS = [
+  { value: '2200', label: '2200 mm', note: 'Kompaktní výška pro menší prostory a dětské zóny.' },
+  { value: '2500', label: '2500 mm', note: 'Univerzální standard pro většinu veřejných instalací.' },
+  { value: '2800', label: '2800 mm', note: 'Výraznější měřítko pro otevřená náměstí a promenády.' },
+];
+
+const MRAK_SIZES = [
+  { value: 'kompakt', label: 'KOMPAKT', note: 'Menší obrys a jemnější prostorový akcent.' },
+  { value: 'standard', label: 'STANDARD', note: 'Vyvážená velikost pro běžné městské a parkové použití.' },
+  { value: 'rozsireny', label: 'ROZŠÍŘENÝ', note: 'Větší obrys s výraznějším mlžným účinkem.' },
 ];
 
 function resolveVariantConfig(slug) {
@@ -106,9 +119,21 @@ const formatMm = (value) => String(value).replace('.', ',');
 
 export default function ProductSignatureSystem({ product, showSignatures = true }) {
   const location = useLocation();
-  const currentVariant = new URLSearchParams(location.search).get('variant');
+  const params = new URLSearchParams(location.search);
+  const currentVariant = params.get('variant');
+  const mrakHeight = params.get('height') || '2500';
+  const mrakSize = params.get('size') || 'standard';
   const variants = resolveVariantConfig(product.slug);
   const isField = product.slug === 'mlzitko-bendy' && currentVariant === 'field';
+  const isMrak = product.slug === 'mlzitko-mrak';
+  const mrakHref = (patch = {}) => {
+    const next = new URLSearchParams(location.search);
+    if (!next.get('variant')) next.set('variant', 'obrys');
+    if (!next.get('height')) next.set('height', '2500');
+    if (!next.get('size')) next.set('size', 'standard');
+    Object.entries(patch).forEach(([key, value]) => next.set(key, value));
+    return `/produkt/${product.slug}?${next.toString()}`;
+  };
   const isBendyArc = product.product_family === 'BENDY ARC' || ['bendy-arc','bendy-arc-2-0','bendy-arc-3-0'].includes(product.slug);
   const profileDiameters = product.profile_diameters_mm || [];
   const wallThicknesses = product.wall_thicknesses_mm || [];
@@ -218,6 +243,36 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
         </div>
       )}
 
+      {isMrak && (
+        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,.045)] sm:p-5">
+          <div className="mb-5">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-[#0b4860]/60">MRAK® · rozměrové varianty</p>
+            <div className="mt-1 flex items-center gap-2 text-base font-semibold text-slate-900"><MoveVertical size={16} className="text-[#0b4860]"/> Výška a velikost</div>
+            <p className="mt-2 text-xs leading-5 text-slate-500">Výška určuje měřítko instalace, velikost pak šířku a výraznost samotného obrysu. Přesné rozměry se potvrzují podle projektu.</p>
+          </div>
+          <div className="space-y-5">
+            <div>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.12em] text-slate-500">Výška</div>
+              <div className="grid grid-cols-3 gap-2.5">
+                {MRAK_HEIGHTS.map((item) => {
+                  const active = mrakHeight === item.value;
+                  return <Link key={item.value} to={mrakHref({ height: item.value })} className={`rounded-2xl border px-3 py-3 transition-all ${active ? 'border-[#0b4860] bg-[#0b4860]/[.06] shadow-sm' : 'border-slate-200 hover:border-[#0b4860]/30 hover:bg-slate-50'}`}><span className={`block text-sm font-bold ${active ? 'text-[#0b4860]' : 'text-slate-900'}`}>{item.label}</span><span className="mt-1 block text-[10px] leading-4 text-slate-500">{item.note}</span></Link>;
+                })}
+              </div>
+            </div>
+            <div>
+              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.12em] text-slate-500">Velikost mlžného mraku</div>
+              <div className="grid grid-cols-3 gap-2.5">
+                {MRAK_SIZES.map((item) => {
+                  const active = mrakSize === item.value;
+                  return <Link key={item.value} to={mrakHref({ size: item.value })} className={`rounded-2xl border px-3 py-3 transition-all ${active ? 'border-[#0b4860] bg-[#0b4860]/[.06] shadow-sm' : 'border-slate-200 hover:border-[#0b4860]/30 hover:bg-slate-50'}`}><span className={`block text-sm font-bold ${active ? 'text-[#0b4860]' : 'text-slate-900'}`}>{item.label}</span><span className="mt-1 block text-[10px] leading-4 text-slate-500">{item.note}</span></Link>;
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {variants && (
         <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,.045)] sm:p-5">
           <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -230,8 +285,8 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
           </div>
           <div className={`grid gap-3 ${variants.items.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-5'}`}>
             {variants.items.map((item) => {
-              const active = item.variant ? currentVariant === item.variant : item.slug === product.slug && !currentVariant;
-              const href = item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
+              const active = item.variant ? currentVariant === item.variant || (isMrak && !currentVariant && item.variant === 'obrys') : item.slug === product.slug && !currentVariant;
+              const href = isMrak && item.variant ? mrakHref({ variant: item.variant }) : item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
               return (
                 <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>
                   {item.image ? <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div> : <div className={`relative flex aspect-[4/5] items-center justify-center overflow-hidden ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><div className="absolute inset-x-[28%] top-[18%] bottom-[18%] rounded-full border-[3px] border-[#0b4860]/15"/><Ruler size={28} className="relative text-[#0b4860]/35"/>{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}

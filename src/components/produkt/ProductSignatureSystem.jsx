@@ -4,22 +4,28 @@ import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers
 
 const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
-    title: 'Varianty kolekce BENDY® / STÉBLO®',
+    title: 'Varianty kolekce BENDY®',
+    eyebrow: 'BENDY® · jeden produkt, různé ohyby',
     items: [
-      { label: 'BENDY SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY SINGLE', sub: 'základní ohyb', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY FIELD', sub: 'delší konec · výraznější rádius', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
+    ],
+  },
+  'mlzitko-steblo': {
+    title: 'Varianty kolekce STÉBLO®',
+    eyebrow: 'STÉBLO® · samostatná produktová rodina',
+    items: [
       { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/486dbd1bb_mlzitko-steblo-katalog2.png' },
       { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
       { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
-      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky STÉBLO® · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
-      { label: 'ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
-      { label: 'FIELD', sub: 'varianta ohybu · 3 / 5 / 7–9 prvků', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
+      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
+      { label: 'STÉBLO ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
     ],
   },
-  'mlzitko-steblo': { ref: 'mlzitko-bendy' },
-  'mlzitko-2-stebla': { ref: 'mlzitko-bendy' },
-  'brana-bendy': { ref: 'mlzitko-bendy' },
-  'bendy-back-to-back': { ref: 'mlzitko-bendy' },
-  'bendy-alej': { ref: 'mlzitko-bendy' },
+  'mlzitko-2-stebla': { ref: 'mlzitko-steblo' },
+  'brana-bendy': { ref: 'mlzitko-steblo' },
+  'bendy-back-to-back': { ref: 'mlzitko-steblo' },
+  'bendy-alej': { ref: 'mlzitko-steblo' },
 
   'city-arc-3': {
     title: 'Velikost CITY ARC®',
@@ -190,18 +196,24 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
       )}
 
       {variants && (
-        <div>
-          <div className="mb-2 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400"><Ruler size={14}/> {variants.title}</div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,.045)] sm:p-5">
+          <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              {variants.eyebrow && <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-[#0b4860]/60">{variants.eyebrow}</p>}
+              <div className="mt-1 flex items-center gap-2 text-sm font-semibold text-slate-900"><Ruler size={15} className="text-[#0b4860]"/> {variants.title}</div>
+            </div>
+            <span className="text-[10px] text-slate-400">Kliknutím přepnete variantu</span>
+          </div>
+          <div className={`grid gap-3 ${variants.items.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-5'}`}>
             {variants.items.map((item) => {
               const active = item.variant ? currentVariant === item.variant : item.slug === product.slug && !currentVariant;
               const href = item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
               return (
-                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} className={`overflow-hidden rounded-2xl border transition-colors ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50'}`}>
-                  {item.image && <div className="aspect-[4/5] overflow-hidden bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)] p-2"><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain" loading="lazy" /></div>}
-                  <div className="px-3 py-3">
+                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>
+                  {item.image && <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}
+                  <div className="px-3.5 py-3.5">
                     <span className="block text-xs font-bold tracking-wide">{item.label}</span>
-                    <span className={`mt-1 block text-[10px] ${active ? 'text-white/70' : 'text-slate-500'}`}>{item.sub}</span>
+                    <span className={`mt-1 block text-[10px] leading-4 ${active ? 'text-white/75' : 'text-slate-500'}`}>{item.sub}</span>
                   </div>
                 </Link>
               );

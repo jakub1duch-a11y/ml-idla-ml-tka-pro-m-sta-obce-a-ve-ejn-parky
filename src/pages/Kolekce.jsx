@@ -116,7 +116,7 @@ function matchesSpace(product, filter) {
 
 const CITY_ORDER = [
   'aura-mlzitko', 'aura-duo',
-  'mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej', 'bendy-field',
+  'mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej',
   'linea-solo', 'linea-gate', 'linea-avenue', 'mlzna-brana-gate', 'ostrev-city', 'ostrev-mlzitko', 'y-armist-tr60'
 ];
 
@@ -151,7 +151,6 @@ const PRODUCT_CARD_META = {
   'brana-bendy': { dims: [['Konfigurace', 'GATE'], ['Počet', '2 stejné prvky']], places: [['Vstupy', Landmark], ['Náměstí', Building2], ['Promenáda', Trees]] },
   'bendy-back-to-back': { dims: [['Záběr', '360°'], ['Výška', 'projektová']], places: [['Náměstí', Building2], ['Park', Trees], ['Resort', Home]] },
   'bendy-alej': { dims: [['Počet', '5+ prvků'], ['Rozteč', 'projektová']], places: [['Promenáda', Landmark], ['Sportoviště', Dumbbell], ['Náměstí', Building2]] },
-  'bendy-field': { dims: [['Velikost', 'S / M / L'], ['Počet', '3–9 prvků']], places: [['Sportoviště', Dumbbell], ['Škola', School], ['Náměstí', Building2]] },
   'city-arc-3': { dims: [['Šířka', '~3 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Promenáda', Landmark], ['Koupaliště', Waves]] },
   'city-arc-4': { dims: [['Šířka', '~4 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Promenáda', Landmark], ['Koupaliště', Waves]] },
   'city-arc-5': { dims: [['Šířka', '~5 000 mm'], ['Výška', '~2 200 mm']], places: [['Město', Building2], ['Sportoviště', Dumbbell], ['Koupaliště', Waves]] },

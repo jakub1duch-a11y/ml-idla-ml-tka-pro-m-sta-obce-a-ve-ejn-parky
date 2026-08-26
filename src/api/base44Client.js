@@ -17,7 +17,12 @@ const rawBase44 = createClient({
 // The website transparently resolves those URLs to optimized WebP/WebM files
 // generated in public/media/optimized. Transparent product cut-outs remain original.
 const productEntity = rawBase44.entities.Product;
-const HIDDEN_STANDALONE_PRODUCT_SLUGS = new Set();
+const HIDDEN_STANDALONE_PRODUCT_SLUGS = new Set([
+  'archived-bendy-radius-s-duplicate',
+  'archived-bendy-radius-m-duplicate',
+  'archived-bendy-radius-l-duplicate',
+  'archived-bendy-field-duplicate',
+]);
 const hideStandaloneVariants = (result) => {
   if (Array.isArray(result)) return result.filter((item) => !HIDDEN_STANDALONE_PRODUCT_SLUGS.has(item?.slug));
   if (result && HIDDEN_STANDALONE_PRODUCT_SLUGS.has(result.slug)) return null;

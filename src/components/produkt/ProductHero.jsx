@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Ruler, Droplets, Gauge, Zap, ShieldCheck, MapPin, Sun, CloudFog, BadgeCheck, ScanLine, Box } from 'lucide-react';
+import { ChevronRight, ArrowRight, FileText, ScanLine, Box } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
@@ -24,15 +24,6 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
       : mrakSize === '1,8 m'
         ? variantImages[1] || null
         : null;
-
-  const quickSpecs = [
-  product.coverage_area && { icon: Ruler, label: 'Výška / dosah', value: product.coverage_area },
-  product.micron_size && { icon: CloudFog, label: 'Mlžné trysky', value: product.micron_size },
-  product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
-  product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
-  product.power_supply && { icon: Zap, label: 'Napájení / řízení', value: product.power_supply },
-  product.material && { icon: BadgeCheck, label: 'Materiál', value: product.material }].
-  filter(Boolean).slice(0, 6);
 
   return (
     <div className="relative overflow-hidden">
@@ -96,49 +87,18 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
             </div>
           )}
 
-          <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {[
-              { icon: ShieldCheck, title: 'Bez vysokotlakého čerpadla', desc: 'Nízkotlaká mlha přímo z běžného vodovodního řadu — bez samostatné vysokotlaké technologie.' },
-              { icon: Sun, title: 'Příjemné ochlazení', desc: 'Jemná vodní mlha pomáhá lokálně ochladit prostor během horkých letních dnů.' },
-              { icon: CloudFog, title: 'Jemná mlha, ne déšť', desc: 'Správně zvolené trysky vytvářejí jemné mikrokapky pro komfortní osvěžení bez zbytečného smáčení okolí.' },
-              { icon: MapPin, title: 'Česká výroba HolmTec', desc: 'Nerezovou konstrukci vyrábíme a dokončujeme v ČR s důrazem na detail, servis a dlouhou životnost.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_28px_rgba(15,23,42,.04)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#0b4860]/25 hover:shadow-[0_14px_34px_rgba(15,23,42,.07)]">
-                <div className="flex items-start gap-3.5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0b4860]/[.06] text-[#0b4860]">
-                    <Icon size={19} strokeWidth={1.65} />
-                  </span>
-                  <span className="min-w-0">
-                    <strong className="block text-sm font-semibold leading-snug text-slate-900">{title}</strong>
-                    <span className="mt-1.5 block text-xs leading-relaxed text-slate-500">{desc}</span>
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {quickSpecs.length > 0 &&
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-              {quickSpecs.map((s) =>
-              <div key={s.label} className="flex min-h-[86px] items-start gap-2.5 p-3.5 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_24px_rgba(15,23,42,.04)]">
-                  <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
-                    <s.icon size={14} className="text-slate-500" strokeWidth={1.75} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[11px] font-medium text-slate-500 uppercase tracking-wide">{s.label}</span>
-                    <span className="block text-sm font-semibold leading-snug text-slate-900 line-clamp-2">{s.value}</span>
-                  </span>
-                </div>
-              )}
-            </div>
-            }
-
-          <ProductSignatureSystem product={product} />
+          <ProductSignatureSystem product={product} showSignatures={false} />
 
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
+                to={`/kontakt?produkt=${encodeURIComponent(isMrak ? `${product.name} · ${mrakSize}` : product.name)}`}
+                onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
+                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
+              Žádost o cenu <ArrowRight size={16} />
+            </Link>
+            <Link
                 to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
-                className="inline-flex items-center gap-2 rounded-full bg-[#0b4860] px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-[#08394c] hover:-translate-y-0.5 shadow-[0_10px_30px_rgba(11,72,96,.18)]">
+                className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/20 bg-white px-6 py-3.5 text-sm font-bold text-[#0b4860] transition-colors hover:bg-slate-50">
               Vizualizovat ve vašem prostoru <ScanLine size={16} />
             </Link>
             {(product.slug === 'mlzitko-bendy' || product.slug === 'mlzna-brana-gate') && (
@@ -148,18 +108,10 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
                 {product.slug === 'mlzitko-bendy' ? '3D / AR náhled' : 'GATE AR projekt'} <Box size={16} />
               </Link>
             )}
-            <Link
-                to={`/kontakt?produkt=${encodeURIComponent(isMrak ? `${product.name} · ${mrakSize}` : product.name)}`}
-                onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
-                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                
-              Rychlá poptávka <ArrowRight size={16} />
-            </Link>
             <button
                 type="button"
                 onClick={onShowTechnical}
                 className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-full hover:bg-slate-50 transition-colors">
-                
               Technické parametry <FileText size={14} />
             </button>
           </div>

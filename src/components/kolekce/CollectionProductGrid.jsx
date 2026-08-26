@@ -44,7 +44,9 @@ const PRODUCT_VARIANTS = {
     { label: 'Radius L', href: '/produkt/bendy-radius-l' },
   ],
   'mlzitko-mrak': [
-    { label: 'Classic', href: '/produkt/mlzitko-mrak' },
+    { label: 'Obrys', href: '/produkt/mlzitko-mrak?variant=obrys' },
+    { label: 'Flow', href: '/produkt/mlzitko-mrak?variant=flow' },
+    { label: 'Organik', href: '/produkt/mlzitko-mrak?variant=organik' },
     { label: 'Play', href: '/produkt/mlzitko-mrak?variant=play' },
   ],
   'mlzna-brana-gate': [

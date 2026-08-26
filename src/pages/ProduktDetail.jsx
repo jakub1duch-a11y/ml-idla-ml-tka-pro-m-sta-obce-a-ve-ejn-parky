@@ -150,6 +150,7 @@ export default function ProduktDetail() {
 
   useEffect(() => {
     if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
+    if (slug === 'bendy-field') {navigate('/produkt/mlzitko-bendy?variant=field', { replace: true });return;}
     setLoading(true);
     setNotFound(false);
     const urlParams = new URLSearchParams(window.location.search);

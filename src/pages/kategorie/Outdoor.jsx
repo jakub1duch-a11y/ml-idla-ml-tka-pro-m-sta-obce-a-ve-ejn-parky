@@ -23,7 +23,7 @@ export default function Outdoor() {
   useEffect(() => {
     setSEO(SEO_PAGES.outdoor);
     trackFunnelStep('residential', 'landing_view', 'Outdoor a zahrady');
-    const preferredSlugs = ['linea-avenue', 'aura-mlzitko', 'aura-garden-duo', 'mlzitko-bendy', 'mlzitko-mrak', 'mlzitko-volavka'];
+    const preferredSlugs = ['linea-avenue', 'aura-mlzitko', 'aura-duo', 'mlzitko-bendy', 'mlzitko-mrak', 'mlzitko-volavka'];
     base44.entities.Product.list().catch(() => []).then((p) => {
       const all = p || [];
       const selected = preferredSlugs.map((slug) => all.find((product) => product.slug === slug)).filter(Boolean);

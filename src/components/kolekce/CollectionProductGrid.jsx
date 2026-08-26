@@ -14,10 +14,34 @@ const orderProducts = (items, collection) => {
 const PRODUCT_VARIANTS = {
   'mlzitko-bendy': [
     { label: 'Single', href: '/produkt/mlzitko-bendy' },
-    { label: 'Radius S', href: '/produkt/mlzitko-bendy?variant=radius-s' },
-    { label: 'Radius M', href: '/produkt/mlzitko-bendy?variant=radius-m' },
-    { label: 'Radius L', href: '/produkt/mlzitko-bendy?variant=radius-l' },
-    { label: 'Field', href: '/produkt/mlzitko-bendy?variant=field' },
+    { label: 'Radius S', href: '/produkt/bendy-radius-s' },
+    { label: 'Radius M', href: '/produkt/bendy-radius-m' },
+    { label: 'Radius L', href: '/produkt/bendy-radius-l' },
+    { label: 'Field', href: '/produkt/bendy-field' },
+  ],
+  'bendy-radius-s': [
+    { label: 'Single', href: '/produkt/mlzitko-bendy' },
+    { label: 'Radius M', href: '/produkt/bendy-radius-m' },
+    { label: 'Radius L', href: '/produkt/bendy-radius-l' },
+    { label: 'Field', href: '/produkt/bendy-field' },
+  ],
+  'bendy-radius-m': [
+    { label: 'Single', href: '/produkt/mlzitko-bendy' },
+    { label: 'Radius S', href: '/produkt/bendy-radius-s' },
+    { label: 'Radius L', href: '/produkt/bendy-radius-l' },
+    { label: 'Field', href: '/produkt/bendy-field' },
+  ],
+  'bendy-radius-l': [
+    { label: 'Single', href: '/produkt/mlzitko-bendy' },
+    { label: 'Radius S', href: '/produkt/bendy-radius-s' },
+    { label: 'Radius M', href: '/produkt/bendy-radius-m' },
+    { label: 'Field', href: '/produkt/bendy-field' },
+  ],
+  'bendy-field': [
+    { label: 'Single', href: '/produkt/mlzitko-bendy' },
+    { label: 'Radius S', href: '/produkt/bendy-radius-s' },
+    { label: 'Radius M', href: '/produkt/bendy-radius-m' },
+    { label: 'Radius L', href: '/produkt/bendy-radius-l' },
   ],
   'mlzitko-mrak': [
     { label: 'Classic', href: '/produkt/mlzitko-mrak' },

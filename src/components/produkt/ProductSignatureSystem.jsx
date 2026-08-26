@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers3, MoveVertical } from 'lucide-react';
 
 const FAMILY_VARIANTS = {
@@ -12,7 +12,7 @@ const FAMILY_VARIANTS = {
       { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
       { label: 'BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
       { label: 'ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
-      { label: 'FIELD', sub: '3 / 5 / 7–9 prvků', slug: 'bendy-field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
+      { label: 'FIELD', sub: 'varianta ohybu · 3 / 5 / 7–9 prvků', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
     ],
   },
   'mlzitko-steblo': { ref: 'mlzitko-bendy' },
@@ -20,7 +20,7 @@ const FAMILY_VARIANTS = {
   'brana-bendy': { ref: 'mlzitko-bendy' },
   'bendy-back-to-back': { ref: 'mlzitko-bendy' },
   'bendy-alej': { ref: 'mlzitko-bendy' },
-  'bendy-field': { ref: 'mlzitko-bendy' },
+
   'city-arc-3': {
     title: 'Velikost CITY ARC®',
     items: [
@@ -76,8 +76,10 @@ function resolveVariantConfig(slug) {
 const formatMm = (value) => String(value).replace('.', ',');
 
 export default function ProductSignatureSystem({ product, showSignatures = true }) {
+  const location = useLocation();
+  const currentVariant = new URLSearchParams(location.search).get('variant');
   const variants = resolveVariantConfig(product.slug);
-  const isField = product.slug === 'bendy-field';
+  const isField = product.slug === 'mlzitko-bendy' && currentVariant === 'field';
   const isBendyArc = product.product_family === 'BENDY ARC' || ['bendy-arc','bendy-arc-2-0','bendy-arc-3-0'].includes(product.slug);
   const profileDiameters = product.profile_diameters_mm || [];
   const wallThicknesses = product.wall_thicknesses_mm || [];
@@ -192,9 +194,10 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
           <div className="mb-2 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400"><Ruler size={14}/> {variants.title}</div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
             {variants.items.map((item) => {
-              const active = item.slug === product.slug;
+              const active = item.variant ? currentVariant === item.variant : item.slug === product.slug && !currentVariant;
+              const href = item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
               return (
-                <Link key={item.slug} to={`/produkt/${item.slug}`} className={`overflow-hidden rounded-2xl border transition-colors ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50'}`}>
+                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} className={`overflow-hidden rounded-2xl border transition-colors ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50'}`}>
                   {item.image && <div className="aspect-[4/5] overflow-hidden bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)] p-2"><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain" loading="lazy" /></div>}
                   <div className="px-3 py-3">
                     <span className="block text-xs font-bold tracking-wide">{item.label}</span>

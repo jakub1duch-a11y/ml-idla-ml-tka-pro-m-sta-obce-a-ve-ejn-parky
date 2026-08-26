@@ -12,7 +12,7 @@ const FAMILY_VARIANTS = {
       { label: 'BENDY RADIUS S', sub: 'kompaktní ohyb', slug: 'bendy-radius-s', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
       { label: 'BENDY RADIUS M', sub: 'střední rádius', slug: 'bendy-radius-m', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
       { label: 'BENDY RADIUS L', sub: 'větší rádius · delší konec', slug: 'bendy-radius-l', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
-      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'bendy-field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
+      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'bendy-field', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0e00a3c23_generated_image.png' },
     ],
   },
   'bendy-radius-s': { ref: 'mlzitko-bendy' },
@@ -27,7 +27,7 @@ const FAMILY_VARIANTS = {
       { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/486dbd1bb_mlzitko-steblo-katalog2.png' },
       { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
       { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
-      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
+      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/8d9115025_BendyBack-to-Back00.png' },
       { label: 'STÉBLO ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
     ],
   },
@@ -59,7 +59,7 @@ const FAMILY_VARIANTS = {
     eyebrow: 'LINEA CE® · samostatný produkt',
     description: 'LINEA CE je samostatný výrobek s vlastním profilem, konstrukcí a produktovým detailem. Nezobrazujeme jej jako variantu LINEA.',
     items: [
-      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91c5002dc_C-MlzitkoLINEA_CE70_single2.png' },
+      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4a183deae_generated_image.png' },
     ],
   },
   'linea-gate': {
@@ -97,8 +97,8 @@ const FAMILY_VARIANTS = {
     eyebrow: 'GATE® · tvar brány',
     description: 'Dvě architektonické varianty stejné průchozí mlžné brány.',
     items: [
-      { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight' },
-      { label: 'GATE V', sub: 'zakřivená varianta do V', slug: 'mlzna-brana-gate', variant: 'v' },
+      { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png' },
+      { label: 'GATE V', sub: 'zakřivená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png' },
     ],
   },
   'mlzitko-mrak': {
@@ -311,9 +311,10 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
             {variants.items.map((item) => {
               const active = item.variant ? currentVariant === item.variant || (isMrak && !currentVariant && item.variant === 'obrys') : item.slug === product.slug && !currentVariant;
               const href = isMrak && item.variant ? mrakHref({ variant: item.variant }) : item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
+              const previewImage = item.image || product.image_url || product.gallery_urls?.[0] || null;
               return (
                 <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>
-                  {item.image ? <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div> : <div className={`relative flex aspect-[4/5] items-center justify-center overflow-hidden ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><div className="absolute inset-x-[28%] top-[18%] bottom-[18%] rounded-full border-[3px] border-[#0b4860]/15"/><Ruler size={28} className="relative text-[#0b4860]/35"/>{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}
+                  {previewImage ? <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={previewImage} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div> : <div className={`relative flex aspect-[4/5] items-center justify-center overflow-hidden ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><div className="absolute inset-x-[28%] top-[18%] bottom-[18%] rounded-full border-[3px] border-[#0b4860]/15"/><Ruler size={28} className="relative text-[#0b4860]/35"/>{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}
                   <div className="px-3.5 py-3.5">
                     <span className="block text-xs font-bold tracking-wide">{item.label}</span>
                     <span className={`mt-1 block text-[10px] leading-4 ${active ? 'text-white/75' : 'text-slate-500'}`}>{item.sub}</span>

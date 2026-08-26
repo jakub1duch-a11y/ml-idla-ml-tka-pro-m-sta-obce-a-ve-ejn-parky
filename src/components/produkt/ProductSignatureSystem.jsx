@@ -98,7 +98,7 @@ const FAMILY_VARIANTS = {
     description: 'Dvě architektonické varianty stejné průchozí mlžné brány.',
     items: [
       { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png' },
-      { label: 'GATE V', sub: 'zakřivená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png' },
+      { label: 'GATE V', sub: 'lomená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png' },
     ],
   },
   'mlzitko-mrak': {
@@ -109,6 +109,7 @@ const FAMILY_VARIANTS = {
       { label: 'OBRYS', sub: 'čistý univerzální tvar', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
       { label: 'FLOW', sub: 'plynulejší dynamický ohyb', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
       { label: 'ORGANIK', sub: 'měkčí organická linie', slug: 'mlzitko-mrak', variant: 'organik', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ef3414919_generated_image.png' },
+      { label: 'MRAK PLAY', sub: 'pro dětská hřiště a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81c84ca33_Mrakmlzitko-skolnizahrada.jpg' },
     ],
   },
 };

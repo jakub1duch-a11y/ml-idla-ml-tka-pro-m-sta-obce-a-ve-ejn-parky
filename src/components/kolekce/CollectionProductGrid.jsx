@@ -55,6 +55,10 @@ const PRODUCT_VARIANTS = {
 
 const getType = (product) => {
   const name = product.name || '';
+  if (/radius s/i.test(name)) return 'Radius S';
+  if (/radius m/i.test(name)) return 'Radius M';
+  if (/radius l/i.test(name)) return 'Radius L';
+  if (/\bfield\b/i.test(name)) return 'Field';
   if (/back-to-back/i.test(name)) return '360°';
   if (/alej|avenue/i.test(name)) return 'Alej';
   if (/gate|brána/i.test(name)) return 'Gate';
@@ -65,7 +69,7 @@ const getType = (product) => {
 
 const getFamily = (product) => {
   const slug = product.slug || '';
-  if (slug === 'mlzitko-bendy') return 'BENDY®';
+  if (['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l', 'bendy-field'].includes(slug)) return 'BENDY®';
   if (['mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej'].includes(slug)) return 'STÉBLO®';
   if (slug === 'mlzitko-mrak') return 'MLŽNÝ MRAK®';
   if (slug === 'mlzna-brana-gate') return 'GATE®';

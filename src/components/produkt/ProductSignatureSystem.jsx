@@ -10,7 +10,7 @@ const FAMILY_VARIANTS = {
       { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/486dbd1bb_mlzitko-steblo-katalog2.png' },
       { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
       { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
-      { label: 'BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
+      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky STÉBLO® · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
       { label: 'ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
       { label: 'FIELD', sub: 'varianta ohybu · 3 / 5 / 7–9 prvků', slug: 'mlzitko-bendy', variant: 'field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
     ],

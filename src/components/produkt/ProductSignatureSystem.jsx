@@ -4,20 +4,20 @@ import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers
 
 const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
-    title: 'Varianty kolekce BENDY®',
+    title: 'Varianty kolekce BENDY® / STÉBLO®',
     items: [
-      { label: 'MLŽÍTKO', sub: '1 ks', slug: 'mlzitko-bendy' },
-      { label: 'ARC 1.0', sub: 'S / M / L', slug: 'bendy-arc' },
-      { label: 'ARC 2.0', sub: 'S / M / L', slug: 'bendy-arc-2-0' },
-      { label: 'ARC 3.0', sub: 'S / M / L', slug: 'bendy-arc-3-0' },
-      { label: 'BACK-TO-BACK', sub: '2 ks · zády k sobě', slug: 'bendy-back-to-back' },
-      { label: 'ALEJ', sub: '5+ ks', slug: 'bendy-alej' },
-      { label: 'FIELD', sub: 'S / M / L', slug: 'bendy-field' },
+      { label: 'BENDY SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/486dbd1bb_mlzitko-steblo-katalog2.png' },
+      { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
+      { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
+      { label: 'BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74d8e4ced_generated_image.png' },
+      { label: 'ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
+      { label: 'FIELD', sub: '3 / 5 / 7–9 prvků', slug: 'bendy-field', image: '/media/products/bendy-field/bendy-field-preview.webp' },
     ],
   },
-  'bendy-arc': { ref: 'mlzitko-bendy' },
-  'bendy-arc-2-0': { ref: 'mlzitko-bendy' },
-  'bendy-arc-3-0': { ref: 'mlzitko-bendy' },
+  'mlzitko-steblo': { ref: 'mlzitko-bendy' },
+  'mlzitko-2-stebla': { ref: 'mlzitko-bendy' },
+  'brana-bendy': { ref: 'mlzitko-bendy' },
   'bendy-back-to-back': { ref: 'mlzitko-bendy' },
   'bendy-alej': { ref: 'mlzitko-bendy' },
   'bendy-field': { ref: 'mlzitko-bendy' },
@@ -41,6 +41,14 @@ const FAMILY_VARIANTS = {
   },
   'linea-gate': { ref: 'linea-solo' },
   'linea-avenue': { ref: 'linea-solo' },
+  'aura-mlzitko': {
+    title: 'Varianty kolekce AURA®',
+    items: [
+      { label: 'AURA SINGLE', sub: '1 kruhové mlžítko', slug: 'aura-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8cb34e2c3_generated_image.png' },
+      { label: 'AURA DUO', sub: '2 stejné prvky', slug: 'aura-duo', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/dbb1d0d0f_generated_image.png' },
+    ],
+  },
+  'aura-duo': { ref: 'aura-mlzitko' },
   'y-armist-tr60': {
     title: 'Varianty MLŽÍTKA Y-ARMIST',
     items: [
@@ -187,7 +195,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
               const active = item.slug === product.slug;
               return (
                 <Link key={item.slug} to={`/produkt/${item.slug}`} className={`overflow-hidden rounded-2xl border transition-colors ${active ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50'}`}>
-                  {item.image && <div className="aspect-[4/3] overflow-hidden bg-slate-100"><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-cover" loading="lazy" /></div>}
+                  {item.image && <div className="aspect-[4/5] overflow-hidden bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)] p-2"><img src={item.image} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain" loading="lazy" /></div>}
                   <div className="px-3 py-3">
                     <span className="block text-xs font-bold tracking-wide">{item.label}</span>
                     <span className={`mt-1 block text-[10px] ${active ? 'text-white/70' : 'text-slate-500'}`}>{item.sub}</span>

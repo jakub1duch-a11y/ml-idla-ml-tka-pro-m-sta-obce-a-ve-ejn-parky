@@ -66,7 +66,7 @@ function resolveVariantConfig(slug) {
 
 const formatMm = (value) => String(value).replace('.', ',');
 
-export default function ProductSignatureSystem({ product }) {
+export default function ProductSignatureSystem({ product, showSignatures = true }) {
   const variants = resolveVariantConfig(product.slug);
   const isField = product.slug === 'bendy-field';
   const isBendyArc = product.product_family === 'BENDY ARC' || ['bendy-arc','bendy-arc-2-0','bendy-arc-3-0'].includes(product.slug);
@@ -83,21 +83,23 @@ export default function ProductSignatureSystem({ product }) {
 
   return (
     <div className="mt-7 space-y-5">
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,.035)]">
-        <div className="grid grid-cols-1 divide-y divide-slate-200 sm:grid-cols-5 sm:divide-x sm:divide-y-0">
-          {signatures.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="flex items-center gap-3 px-4 py-4 sm:min-h-[108px] sm:flex-col sm:justify-center sm:px-3 sm:text-center">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0b4860]/[.055] text-[#0b4860]">
-                <Icon size={20} strokeWidth={1.6} />
-              </span>
-              <span className="min-w-0">
-                <p className="text-[12px] font-bold leading-tight text-slate-900">{label}</p>
-                <p className="mt-1 text-[10px] leading-snug text-slate-500 sm:line-clamp-2">{value}</p>
-              </span>
-            </div>
-          ))}
+      {showSignatures && (
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,.035)]">
+          <div className="grid grid-cols-1 divide-y divide-slate-200 sm:grid-cols-5 sm:divide-x sm:divide-y-0">
+            {signatures.map(({ icon: Icon, label, value }) => (
+              <div key={label} className="flex items-center gap-3 px-4 py-4 sm:min-h-[108px] sm:flex-col sm:justify-center sm:px-3 sm:text-center">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0b4860]/[.055] text-[#0b4860]">
+                  <Icon size={20} strokeWidth={1.6} />
+                </span>
+                <span className="min-w-0">
+                  <p className="text-[12px] font-bold leading-tight text-slate-900">{label}</p>
+                  <p className="mt-1 text-[10px] leading-snug text-slate-500 sm:line-clamp-2">{value}</p>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {hasProfileConfig && (
         <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">

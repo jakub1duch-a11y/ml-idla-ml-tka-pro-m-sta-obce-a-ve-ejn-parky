@@ -3,7 +3,8 @@ import { Images } from 'lucide-react';
 
 export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '' }) {
   const primary = product?.image_url || fallback;
-  const secondary = product?.gallery_urls?.find((url) => url && url !== primary);
+  const isBrokenLocalPath = (url) => typeof url === 'string' && (url.startsWith('/media/products/') || url.startsWith('/media/optimized/'));
+  const secondary = product?.gallery_urls?.find((url) => url && url !== primary && !isBrokenLocalPath(url));
   if (!primary) return <div className={`bg-muted ${className}`} />;
   return <div className={`relative overflow-hidden bg-white ${className}`}>
     <img src={primary} alt={alt || product?.name || ''} loading="lazy" decoding="async" className={`absolute inset-0 h-full w-full object-contain p-2.5 transition-all duration-700 sm:p-3 ${secondary ? 'opacity-100 scale-100 group-hover:opacity-0 group-hover:scale-[1.02]' : 'group-hover:scale-[1.03]'}`} />

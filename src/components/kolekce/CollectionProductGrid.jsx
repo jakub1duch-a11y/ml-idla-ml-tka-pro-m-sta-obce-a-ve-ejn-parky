@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Ruler, MapPin, Layers3 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { normalizeProductMedia } from '@/lib/optimizedMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 // Zachovává pořadí kolekce přesně podle productSlugs; varianty jednoho produktu
@@ -131,7 +132,7 @@ export default function CollectionProductGrid({ collection }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     setProducts([]);
-    base44.entities.Product.list().then((items) => setProducts(orderProducts(items || [], collection))).catch(() => setProducts([]));
+    base44.entities.Product.list().then((items) => setProducts(orderProducts((items || []).map(normalizeProductMedia), collection))).catch(() => setProducts([]));
   }, [collection]);
 
   const variantCards = collection.variantCards || [];

@@ -148,7 +148,7 @@ export default function AdminProducts() {
         <div>
           <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Hlavní fotografie</label>
           <div className="flex gap-3 items-start">
-            {form.image_url && <img src={form.image_url} alt="" className="w-20 h-14 object-cover rounded-lg border border-white/10" />}
+            {form.image_url && <div className="w-20 h-14 rounded-lg border border-white/10 bg-slate-200 overflow-hidden flex items-center justify-center shrink-0"><img src={form.image_url} alt="" className="w-full h-full object-contain" /></div>}
             <div className="flex-1 space-y-2">
               <input value={form.image_url} onChange={set('image_url')} placeholder="URL fotografie" className={inputCls} />
               <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all w-fit">
@@ -195,7 +195,7 @@ export default function AdminProducts() {
                 const isMain = form.image_url === url;
                 return (
                   <div key={`${url}-${index}`} className={`overflow-hidden rounded-xl border ${isMain ? 'border-cyan/50 bg-cyan/[.05]' : 'border-white/10 bg-black/10'}`}>
-                    <div className="relative aspect-[4/3] bg-white/5">
+                    <div className="relative aspect-[4/3] bg-slate-200">
                       <img src={url} alt={`Galerie ${index + 1}`} className="h-full w-full object-contain" />
                       <div className="absolute left-2 top-2 rounded-full bg-black/65 px-2 py-1 font-mono text-[9px] text-white/80">{index + 1}</div>
                       {isMain && <div className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-cyan px-2 py-1 text-[9px] font-bold text-ink"><Star size={9} fill="currentColor" /> HLAVNÍ</div>}
@@ -288,11 +288,22 @@ export default function AdminProducts() {
       <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div> :
 
       <div className="space-y-2">
-          {products.map((p) =>
-        <div key={p.id} className="flex items-center gap-4 p-4 rounded-xl bg-white/3 border border-white/8 hover:border-white/15 transition-all">
-              {p.image_url && <img src={p.image_url} alt={p.name} className="w-14 h-10 object-cover rounded-lg border border-white/10 shrink-0" />}
+          {(() => {
+            const VARIANT_PARENTS = { 'bendy-radius-s': 'mlzitko-bendy', 'bendy-radius-m': 'mlzitko-bendy', 'bendy-radius-l': 'mlzitko-bendy', 'bendy-field': 'mlzitko-bendy', 'linea-solo': 'linea-mlzitko', 'linea-gate': 'linea-mlzitko', 'linea-avenue': 'linea-mlzitko' };
+            const variantSlugs = Object.keys(VARIANT_PARENTS);
+            const grouped = [];
+            for (const p of products) {
+              if (variantSlugs.includes(p.slug)) continue;
+              grouped.push({ product: p, isVariant: false });
+              const variants = products.filter(v => VARIANT_PARENTS[v.slug] === p.slug);
+              for (const v of variants) grouped.push({ product: v, isVariant: true });
+            }
+            for (const p of products) { if (!grouped.find(g => g.product.id === p.id)) grouped.push({ product: p, isVariant: false }); }
+            return grouped.map(({ product: p, isVariant }) => (
+          <div key={p.id} className={`flex items-center gap-4 p-4 rounded-xl bg-white/3 border border-white/8 hover:border-white/15 transition-all ${isVariant ? 'ml-6 border-l-2 border-l-cyan/40 bg-white/[0.02]' : ''}`}>
+              {p.image_url && <div className="w-14 h-10 rounded-lg border border-white/10 shrink-0 bg-slate-200 overflow-hidden flex items-center justify-center"><img src={p.image_url} alt={p.name} className="w-full h-full object-contain" /></div>}
               <div className="flex-1 min-w-0">
-                <p className="text-white text-sm font-medium truncate">{p.name}</p>
+                <p className="text-white text-sm font-medium truncate flex items-center gap-2">{isVariant && <span className="text-[9px] font-mono text-cyan/60 border border-cyan/20 px-1.5 py-0.5 rounded">VARIANTA</span>}{p.name}</p>
                 <p className="text-white/35 text-xs font-mono truncate">/produkt/{p.slug}</p>
               </div>
               {p.featured && <span className="text-[10px] font-mono text-cyan border border-cyan/30 px-2 py-0.5 rounded-full">Featured</span>}
@@ -305,7 +316,8 @@ export default function AdminProducts() {
                 </button>
               </div>
             </div>
-        )}
+          ));
+          })()}
         </div>
       }
     </div>);

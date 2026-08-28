@@ -223,12 +223,6 @@
           "user_condition": {
             "role": "admin"
           }
-        },
-        {
-          "data.shared_token": {
-            "$exists": true,
-            "$ne": ""
-          }
         }
       ]
     },

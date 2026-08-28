@@ -1,0 +1,83 @@
+{
+  "name": "SuperAgentSession",
+  "type": "object",
+  "properties": {
+    "agent_key": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "current_intent": {
+      "type": "string"
+    },
+    "context_entity": {
+      "type": "string"
+    },
+    "context_id": {
+      "type": "string"
+    },
+    "context_label": {
+      "type": "string"
+    },
+    "filters": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "selected_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conversation_summary": {
+      "type": "string",
+      "description": "Kompaktn\u00ed pracovn\u00ed kontext konverzace bez citliv\u00fdch tajemstv\u00ed"
+    },
+    "last_message": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "closed"
+      ],
+      "default": "active"
+    },
+    "last_active_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "agent_key",
+    "user_email",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers3, MoveVertical } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
@@ -9,10 +10,10 @@ const FAMILY_VARIANTS = {
     description: 'Základ výrobku zůstává stejný. Mění se rádius a délka ohybu podle požadovaného dosahu a charakteru prostoru.',
     items: [
       { label: 'BENDY SINGLE', sub: 'základní ohyb', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
-      { label: 'BENDY RADIUS S', sub: 'kompaktní ohyb', slug: 'bendy-radius-s', image: '/media/products/bendy-radius-s/studio.webp' },
-      { label: 'BENDY RADIUS M', sub: 'střední rádius', slug: 'bendy-radius-m', image: '/media/products/bendy-radius-m/studio.webp' },
-      { label: 'BENDY RADIUS L', sub: 'větší rádius · delší konec', slug: 'bendy-radius-l', image: '/media/products/bendy-radius-l/studio.webp' },
-      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'bendy-field', image: '/media/products/bendy-field/studio.webp' },
+      { label: 'BENDY RADIUS S', sub: 'kompaktní ohyb', slug: 'bendy-radius-s', image: null },
+      { label: 'BENDY RADIUS M', sub: 'střední rádius', slug: 'bendy-radius-m', image: null },
+      { label: 'BENDY RADIUS L', sub: 'větší rádius · delší konec', slug: 'bendy-radius-l', image: null },
+      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'bendy-field', image: null },
     ],
   },
   'bendy-radius-s': { ref: 'mlzitko-bendy' },
@@ -149,6 +150,28 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const mrakHeight = params.get('height') || '2500';
   const mrakSize = params.get('size') || 'standard';
   const variants = resolveVariantConfig(product.slug);
+
+  const [variantImages, setVariantImages] = useState({});
+
+  useEffect(() => {
+    if (!variants || !variants.items) return;
+    const slugs = variants.items
+      .map((item) => item.slug)
+      .filter((slug) => slug && slug !== product.slug);
+    if (!slugs.length) return;
+    let active = true;
+    base44.entities.Product.filter({ slug: { $in: slugs } })
+      .then((results) => {
+        if (!active || !Array.isArray(results)) return;
+        const map = {};
+        (results || []).forEach((p) => {
+          if (p.slug && p.image_url) map[p.slug] = p.image_url;
+        });
+        setVariantImages(map);
+      })
+      .catch(() => {});
+    return () => { active = false; };
+  }, [product.slug, variants]);
   const isField = product.slug === 'bendy-field';
   const isMrak = product.slug === 'mlzitko-mrak';
   const mrakHref = (patch = {}) => {
@@ -312,7 +335,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
             {variants.items.map((item) => {
               const active = item.variant ? currentVariant === item.variant || (isMrak && !currentVariant && item.variant === 'obrys') : item.slug === product.slug && !currentVariant;
               const href = isMrak && item.variant ? mrakHref({ variant: item.variant }) : item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
-              const previewImage = item.image || product.image_url || product.gallery_urls?.[0] || null;
+              const previewImage = variantImages[item.slug] || item.image || product.image_url || product.gallery_urls?.[0] || null;
               return (
                 <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>
                   {previewImage ? <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={previewImage} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div> : <div className={`relative flex aspect-[4/5] items-center justify-center overflow-hidden ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><div className="absolute inset-x-[28%] top-[18%] bottom-[18%] rounded-full border-[3px] border-[#0b4860]/15"/><Ruler size={28} className="relative text-[#0b4860]/35"/>{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}

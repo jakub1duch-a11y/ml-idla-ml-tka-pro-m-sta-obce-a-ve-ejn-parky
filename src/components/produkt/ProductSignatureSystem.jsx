@@ -103,14 +103,13 @@ const FAMILY_VARIANTS = {
     ],
   },
   'mlzitko-mrak': {
-    title: 'Typ ohybu MLŽNÉHO MRAKU®',
-    eyebrow: 'MRAK® · tvarová varianta',
-    description: 'Základ produktu zůstává stejný. Volíte charakter obrysu, následně výšku a velikost podle měřítka prostoru.',
+    title: 'Typ MLŽNÉHO MRAKU®',
+    eyebrow: 'MRAK® · typ provedení',
+    description: 'Základ produktu zůstává stejný. Volíte typ provedení podle toho, kde má mlžný mrak fungovat — menší pro dětské hřiště, větší pro mlžiště a hřiště, nebo parkovou variantu pro otevřený prostor.',
     items: [
-      { label: 'OBRYS', sub: 'čistý univerzální tvar', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
-      { label: 'FLOW', sub: 'plynulejší dynamický ohyb', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
-      { label: 'ORGANIK', sub: 'měkčí organická linie', slug: 'mlzitko-mrak', variant: 'organik', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ef3414919_generated_image.png' },
-      { label: 'MRAK PLAY', sub: 'pro dětská hřiště a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81c84ca33_Mrakmlzitko-skolnizahrada.jpg' },
+      { label: 'Dětské hřiště', sub: 'menší · pro dětské mlžení a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81c84ca33_Mrakmlzitko-skolnizahrada.jpg' },
+      { label: 'Velký', sub: 'ideální pro mlžiště a hřiště', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
+      { label: 'Parkový', sub: 'parková promenáda a otevřený prostor', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
     ],
   },
 };
@@ -120,18 +119,6 @@ const FIELD_SIZES = [
   { label: 'M', sub: '5 prvků', note: 'Vyvážená sestava pro parky, promenády a frekventované veřejné plochy.' },
   { label: 'L', sub: '7–9 prvků', note: 'Velkorysé víceprvkové ochlazení pro rozsáhlejší veřejný prostor.' },
   { label: 'AVENUE', sub: '8 prvků v linii', note: 'Liniová městská alej pro promenády, pěší zóny a průchozí ochlazovací trasu.' },
-];
-
-const MRAK_HEIGHTS = [
-  { value: '2200', label: '2200 mm', note: 'Kompaktní výška pro menší prostory a dětské zóny.' },
-  { value: '2500', label: '2500 mm', note: 'Univerzální standard pro většinu veřejných instalací.' },
-  { value: '2800', label: '2800 mm', note: 'Výraznější měřítko pro otevřená náměstí a promenády.' },
-];
-
-const MRAK_SIZES = [
-  { value: 'kompakt', label: 'KOMPAKT', note: 'Menší obrys a jemnější prostorový akcent.' },
-  { value: 'standard', label: 'STANDARD', note: 'Vyvážená velikost pro běžné městské a parkové použití.' },
-  { value: 'rozsireny', label: 'ROZŠÍŘENÝ', note: 'Větší obrys s výraznějším mlžným účinkem.' },
 ];
 
 function resolveVariantConfig(slug) {
@@ -147,8 +134,6 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const currentVariant = params.get('variant');
-  const mrakHeight = params.get('height') || '2500';
-  const mrakSize = params.get('size') || 'standard';
   const variants = resolveVariantConfig(product.slug);
 
   const [variantImages, setVariantImages] = useState({});
@@ -177,8 +162,6 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const mrakHref = (patch = {}) => {
     const next = new URLSearchParams(location.search);
     if (!next.get('variant')) next.set('variant', 'obrys');
-    if (!next.get('height')) next.set('height', '2500');
-    if (!next.get('size')) next.set('size', 'standard');
     Object.entries(patch).forEach(([key, value]) => next.set(key, value));
     return `/produkt/${product.slug}?${next.toString()}`;
   };
@@ -287,36 +270,6 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
                 <span className="mt-1.5 block text-[11px] leading-relaxed text-slate-500">{item.note}</span>
               </div>
             ))}
-          </div>
-        </div>
-      )}
-
-      {isMrak && (
-        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_12px_34px_rgba(15,23,42,.045)] sm:p-5">
-          <div className="mb-5">
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-[#0b4860]/60">MRAK® · rozměrové varianty</p>
-            <div className="mt-1 flex items-center gap-2 text-base font-semibold text-slate-900"><MoveVertical size={16} className="text-[#0b4860]"/> Výška a velikost</div>
-            <p className="mt-2 text-xs leading-5 text-slate-500">Výška určuje měřítko instalace, velikost pak šířku a výraznost samotného obrysu. Přesné rozměry se potvrzují podle projektu.</p>
-          </div>
-          <div className="space-y-5">
-            <div>
-              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.12em] text-slate-500">Výška</div>
-              <div className="grid grid-cols-3 gap-2.5">
-                {MRAK_HEIGHTS.map((item) => {
-                  const active = mrakHeight === item.value;
-                  return <Link key={item.value} to={mrakHref({ height: item.value })} className={`rounded-2xl border px-3 py-3 transition-all ${active ? 'border-[#0b4860] bg-[#0b4860]/[.06] shadow-sm' : 'border-slate-200 hover:border-[#0b4860]/30 hover:bg-slate-50'}`}><span className={`block text-sm font-bold ${active ? 'text-[#0b4860]' : 'text-slate-900'}`}>{item.label}</span><span className="mt-1 block text-[10px] leading-4 text-slate-500">{item.note}</span></Link>;
-                })}
-              </div>
-            </div>
-            <div>
-              <div className="mb-2 text-[11px] font-semibold uppercase tracking-[.12em] text-slate-500">Velikost mlžného mraku</div>
-              <div className="grid grid-cols-3 gap-2.5">
-                {MRAK_SIZES.map((item) => {
-                  const active = mrakSize === item.value;
-                  return <Link key={item.value} to={mrakHref({ size: item.value })} className={`rounded-2xl border px-3 py-3 transition-all ${active ? 'border-[#0b4860] bg-[#0b4860]/[.06] shadow-sm' : 'border-slate-200 hover:border-[#0b4860]/30 hover:bg-slate-50'}`}><span className={`block text-sm font-bold ${active ? 'text-[#0b4860]' : 'text-slate-900'}`}>{item.label}</span><span className="mt-1 block text-[10px] leading-4 text-slate-500">{item.note}</span></Link>;
-                })}
-              </div>
-            </div>
           </div>
         </div>
       )}

@@ -13,10 +13,10 @@ function classifyVideo(file) {
 
   if (group === 'GATE' || slug === 'mlzna-brana-gate' || name.includes('gate')) {
     if (name.includes('efekt-mlhy')) return { key: 'mist', label: 'Jemná vodní mlha', href: '/technologie' };
-    return { key: 'gate', label: 'BRÁNA GATE', href: '/produkt/mlzna-brana-gate' };
+    return { key: 'gate', label: 'BRÁNA GATE', href: '/mlzne-brany' };
   }
   if (group === 'OSTEV' || slug.includes('ostrev') || name.includes('ostev')) {
-    return { key: 'ostrev', label: 'OSTREV', href: '/produkt/ostrev-mlzitko' };
+    return { key: 'ostrev', label: 'mlžítko Y-ARMIST', href: '/produkt/y-armist-tr60' };
   }
   if (group === 'ZOO_PRAHA' || name.includes('zoo')) {
     return { key: 'zoo', label: 'Realizace ZOO Praha', href: '/reference/mlzitka-pro-zoo-praha' };

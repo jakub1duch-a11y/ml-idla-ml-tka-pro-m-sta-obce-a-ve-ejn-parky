@@ -19,14 +19,8 @@ export default defineConfig({
   resolve: {
     // Force a single React copy across the app and all dependencies.
     // Fixes "Cannot read properties of null (reading 'useState')" / invalid hook call
-    // caused by Vite optimizing react and react-dom in split passes (mismatched
-    // dispatcher instance). Keeping them in one dep bundle avoids the null dispatcher.
+    // caused by duplicate React copies in the optimized dep graph.
     dedupe: ['react', 'react-dom', 'scheduler'],
-  },
-  optimizeDeps: {
-    // Bundle react, react-dom and scheduler together in a single optimization pass
-    // so they share one ReactSharedInternals instance.
-    include: ['react', 'react-dom', 'scheduler'],
   },
   build: {
     sourcemap: true,

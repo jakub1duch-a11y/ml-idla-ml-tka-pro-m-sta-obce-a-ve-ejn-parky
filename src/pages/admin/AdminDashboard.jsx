@@ -25,26 +25,28 @@ export default function AdminDashboard() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    Promise.all([
+    Promise.allSettled([
       base44.functions.invoke('getAnalyticsData', { days: 28 }),
       base44.functions.invoke('getSearchConsoleQueries', { days: 28 }),
       base44.entities.Product.list(),
-      base44.entities.WorkLog.list('-work_date', 250).catch(() => []),
-      base44.entities.AdminTask.list('-updated_date', 100).catch(() => []),
+      base44.entities.WorkLog.list('-work_date', 250),
+      base44.entities.AdminTask.list('-updated_date', 100),
     ])
       .then(([a, s, p, w, t]) => {
-        setAnalytics(a.data);
-        setSearch(s.data);
-        setProducts(p);
-        setWorkLogs(w || []);
-        setAdminTasks(t || []);
+        const hasAnalytics = a.status === 'fulfilled' && a.value?.data;
+        setAnalytics(hasAnalytics ? a.value.data : null);
+        setSearch(s.status === 'fulfilled' ? s.value?.data : null);
+        setProducts(p.status === 'fulfilled' ? p.value || [] : []);
+        setWorkLogs(w.status === 'fulfilled' ? w.value || [] : []);
+        setAdminTasks(t.status === 'fulfilled' ? t.value || [] : []);
+        if (!hasAnalytics) setError('Analytics a Search Console nejsou dostupné — zbytek přehledu funguje normálně.');
       })
-      .catch(() => setError('Nelze načíst data — zkontrolujte připojení Google Analytics / Search Console.'))
       .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-cyan/40" /></div>;
-  if (error) return <div className="p-6"><div className="p-6 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">{error}</div></div>;
+
+  const analyticsUnavailable = !analytics || !search;
 
   const totals = analytics?.totals || { sessions: 0, users: 0, pageviews: 0 };
   const inquiries = analytics?.inquiries || 0;
@@ -93,6 +95,12 @@ export default function AdminDashboard() {
   return (
     <div className="p-6 space-y-6">
       <h2 className="text-white text-lg font-medium">Přehled</h2>
+
+      {analyticsUnavailable && (
+        <div className="rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-xs text-amber-300">
+          {error || 'Analytics a Search Console nejsou dostupné — zbytek přehledu funguje normálně.'}
+        </div>
+      )}
 
       <WorkBriefingPanel />
 

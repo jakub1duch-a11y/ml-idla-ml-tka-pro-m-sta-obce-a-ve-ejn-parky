@@ -1,0 +1,90 @@
+{
+  "name": "SmartControlProfile",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "review_required",
+        "archived"
+      ],
+      "default": "active"
+    },
+    "unit_price_ex_vat": {
+      "type": "number"
+    },
+    "total_inc_vat": {
+      "type": "number"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "benefits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pricing_source": {
+      "type": "string"
+    },
+    "pricing_checked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "price_note": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "key",
+    "name",
+    "status",
+    "pricing_source"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

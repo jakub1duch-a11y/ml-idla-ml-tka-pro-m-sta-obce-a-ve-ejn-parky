@@ -1,0 +1,108 @@
+{
+  "name": "AIProviderConfig",
+  "type": "object",
+  "properties": {
+    "provider_key": {
+      "type": "string",
+      "description": "Stabiln\u00ed kl\u00ed\u010d poskytovatele, nap\u0159. chatgpt, claude, aura_build"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "provider_type": {
+      "type": "string",
+      "enum": [
+        "llm",
+        "design_builder",
+        "design_system",
+        "content_design"
+      ],
+      "description": "Typ poskytovatele"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unconfigured",
+        "bridge_ready",
+        "connected",
+        "active",
+        "blocked_requires_secret",
+        "blocked_plan",
+        "error"
+      ],
+      "default": "unconfigured"
+    },
+    "integration_mode": {
+      "type": "string",
+      "enum": [
+        "base44_native",
+        "external_api",
+        "workspace_handoff",
+        "figma_bridge",
+        "manual"
+      ],
+      "default": "manual"
+    },
+    "model_preferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "use_cases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "secret_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "paid_plan_may_be_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "priority": {
+      "type": "number",
+      "default": 100
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 3000
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "provider_key",
+    "display_name",
+    "provider_type",
+    "status",
+    "active"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

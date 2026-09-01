@@ -1,0 +1,119 @@
+{
+  "name": "BrandSystemVersion",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "review",
+        "active",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "name": {
+      "type": "string"
+    },
+    "logo_direction": {
+      "type": "string",
+      "description": "Sm\u011br moderniza\u010dn\u00edho faceliftu loga"
+    },
+    "primary_colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "secondary_colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "typography_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "visual_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "motion_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sound_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "brand_promises": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "template_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "figma_url": {
+      "type": "string"
+    },
+    "canva_note": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "active": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "key",
+    "version",
+    "status",
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

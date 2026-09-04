@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 
-const SPREADSHEET_ID = '1IcI8zsltInagTR8u5VntZEFOuUAbm5Dy-tjPbcfZbnU';
+const SPREADSHEET_ID = '1MS4i00ekY3Pf3fY-AsUdCT7GtNiCk5XPDr8CLiwym6M';
 const INQUIRIES_SHEET = 'Poptávky';
 const CLIENTS_SHEET = 'Klienti';
 

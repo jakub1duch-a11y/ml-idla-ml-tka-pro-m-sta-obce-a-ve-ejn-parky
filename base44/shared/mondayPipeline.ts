@@ -40,8 +40,18 @@ async function mondayGql(token: string, query: string, variables: Record<string,
   return { ok: res.ok, status: res.status, data };
 }
 
+function mondayErrorMessage(res: { ok: boolean; status: number; data: any }): string {
+  const errs = res?.data?.errors || res?.data?.data?.errors;
+  if (Array.isArray(errs) && errs.length) return errs.map((e: any) => e?.message || JSON.stringify(e)).join('; ');
+  if (!res.ok && res.data?.error_code) return `${res.data.error_code}: ${res.data.error_message || ''}`;
+  if (!res.ok) return `HTTP ${res.status}`;
+  return '';
+}
+
 export async function ensurePipelineGroups(token: string, boardId: number): Promise<Record<string, string>> {
-  const boardRes = await mondayGql(token, `query($b: [Int!]) { boards(ids: $b) { groups { id title } } }`, { b: [boardId] });
+  const boardRes = await mondayGql(token, `query($b: [ID!]) { boards(ids: $b) { groups { id title } } }`, { b: [String(boardId)] });
+  const boardErr = mondayErrorMessage(boardRes);
+  if (boardErr) throw new Error(`Monday boards query failed: ${boardErr}`);
   const existing = boardRes?.data?.data?.boards?.[0]?.groups || boardRes?.data?.boards?.[0]?.groups || [];
   const byTitle = new Map<string, string>(existing.map((g: any) => [String(g.title).toLowerCase(), String(g.id)]));
   const groups: Record<string, string> = {};
@@ -50,9 +60,11 @@ export async function ensurePipelineGroups(token: string, boardId: number): Prom
     if (found) { groups[stage.key] = found; continue; }
     const createRes = await mondayGql(
       token,
-      `mutation($b: Int!, $n: String!) { create_group(board_id: $b, group_name: $n) { id } }`,
-      { b: boardId, n: stage.title },
+      `mutation($b: ID!, $n: String!) { create_group(board_id: $b, group_name: $n) { id } }`,
+      { b: String(boardId), n: stage.title },
     );
+    const createErr = mondayErrorMessage(createRes);
+    if (createErr) throw new Error(`Monday create_group "${stage.title}" failed: ${createErr}`);
     const id = createRes?.data?.data?.create_group?.id || createRes?.data?.create_group?.id;
     if (id) groups[stage.key] = String(id);
   }
@@ -62,8 +74,8 @@ export async function ensurePipelineGroups(token: string, boardId: number): Prom
 export async function createItemInGroup(token: string, boardId: number, groupId: string, name: string): Promise<string | null> {
   const res = await mondayGql(
     token,
-    `mutation($b: Int!, $g: String!, $n: String!) { create_item(board_id: $b, group_id: $g, item_name: $n) { id } }`,
-    { b: boardId, g: groupId, n: name },
+    `mutation($b: ID!, $g: String!, $n: String!) { create_item(board_id: $b, group_id: $g, item_name: $n) { id } }`,
+    { b: String(boardId), g: groupId, n: name },
   );
   return res?.data?.data?.create_item?.id || res?.data?.create_item?.id || null;
 }

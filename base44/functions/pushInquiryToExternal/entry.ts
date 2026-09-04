@@ -73,7 +73,10 @@ export default async function (req) {
       const mondayItemId = inquiry?.monday_item_id;
       if (!mondayItemId) return Response.json({ ok: true, monday: { skipped: true, reason: 'inquiry has no monday_item_id' } });
 
-      const groups = await ensurePipelineGroups(token, boardId);
+      let groups: Record<string, string> = {};
+      try { groups = await ensurePipelineGroups(token, boardId); } catch (pipelineError) {
+        return Response.json({ ok: true, monday: { skipped: true, reason: `pipeline groups unavailable: ${pipelineError?.message || pipelineError}` } });
+      }
       const stageKey = mapProjectOrderStatusToStage(order.status);
       const groupId = groups[stageKey];
       if (!groupId) return Response.json({ ok: true, monday: { skipped: true, reason: `stage ${stageKey} group missing` } });

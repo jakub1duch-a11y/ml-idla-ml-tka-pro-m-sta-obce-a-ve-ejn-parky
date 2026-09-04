@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
 
 const SPREADSHEET_ID = '1MS4i00ekY3Pf3fY-AsUdCT7GtNiCk5XPDr8CLiwym6M';
 const INQUIRIES_SHEET = 'Poptávky';
@@ -15,48 +16,6 @@ const CLIENT_HEADERS = [
 
 const normalizeEmail = (value) => String(value || '').trim().toLowerCase();
 const normalizePhone = (value) => String(value || '').replace(/\D/g, '').replace(/^420/, '');
-
-async function ensureSheet(accessToken, title) {
-  const metaRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}?fields=sheets.properties`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  if (!metaRes.ok) throw new Error(`Sheets metadata failed: ${await metaRes.text()}`);
-  const meta = await metaRes.json();
-  const exists = (meta.sheets || []).some((sheet) => sheet?.properties?.title === title);
-  if (exists) return;
-  const createRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ requests: [{ addSheet: { properties: { title } } }] }),
-  });
-  if (!createRes.ok) throw new Error(`Create sheet ${title} failed: ${await createRes.text()}`);
-}
-
-async function ensureHeaders(accessToken, sheetName, headers) {
-  const range = `${sheetName}!A1:${String.fromCharCode(64 + headers.length)}1`;
-  const readRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  if (!readRes.ok) throw new Error(`Read headers ${sheetName} failed: ${await readRes.text()}`);
-  const data = await readRes.json();
-  if (Array.isArray(data.values?.[0]) && data.values[0].length) return;
-  const writeRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}?valueInputOption=RAW`, {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ values: [headers] }),
-  });
-  if (!writeRes.ok) throw new Error(`Write headers ${sheetName} failed: ${await writeRes.text()}`);
-}
-
-async function appendRow(accessToken, sheetName, width, row) {
-  const lastCol = String.fromCharCode(64 + width);
-  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(`${sheetName}!A:${lastCol}`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ values: [row] }),
-  });
-  if (!res.ok) throw new Error(`Append ${sheetName} failed: ${await res.text()}`);
-}
 
 async function inquiryAlreadySynced(accessToken, entityId) {
   if (!entityId) return false;
@@ -86,7 +45,7 @@ async function upsertClient(accessToken, client) {
   });
 
   if (index === -1) {
-    await appendRow(accessToken, CLIENTS_SHEET, CLIENT_HEADERS.length, [
+    await appendRow(accessToken, SPREADSHEET_ID, CLIENTS_SHEET, CLIENT_HEADERS.length, [
       client.timestamp, client.timestamp, client.jmeno, client.email, client.telefon,
       client.firma, client.produkt, client.zdroj, client.stav, 1
     ]);
@@ -151,22 +110,22 @@ export default async function(req) {
     };
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
-    await ensureSheet(accessToken, INQUIRIES_SHEET);
-    await ensureHeaders(accessToken, INQUIRIES_SHEET, INQUIRY_HEADERS);
+    await ensureSheet(accessToken, SPREADSHEET_ID, INQUIRIES_SHEET);
+    await ensureHeaders(accessToken, SPREADSHEET_ID, INQUIRIES_SHEET, INQUIRY_HEADERS);
 
     if (await inquiryAlreadySynced(accessToken, client.entityId)) {
       return Response.json({ ok: true, inquiry_id: client.entityId, duplicate_skipped: true });
     }
 
-    await appendRow(accessToken, INQUIRIES_SHEET, INQUIRY_HEADERS.length, [
+    await appendRow(accessToken, SPREADSHEET_ID, INQUIRIES_SHEET, INQUIRY_HEADERS.length, [
       client.timestamp, client.zdroj, client.jmeno, client.email, client.telefon,
       client.firma, client.produkt, client.zprava, client.stav, client.entityId
     ]);
 
     let clientResult = { skipped: true };
     try {
-      await ensureSheet(accessToken, CLIENTS_SHEET);
-      await ensureHeaders(accessToken, CLIENTS_SHEET, CLIENT_HEADERS);
+      await ensureSheet(accessToken, SPREADSHEET_ID, CLIENTS_SHEET);
+      await ensureHeaders(accessToken, SPREADSHEET_ID, CLIENTS_SHEET, CLIENT_HEADERS);
       clientResult = await upsertClient(accessToken, client);
     } catch (clientError) {
       console.warn('Klienti sync skipped:', clientError?.message || clientError);

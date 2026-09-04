@@ -586,6 +586,60 @@ export default async function(req) {
     await addQr(doc, portalUrl, W - M - 33, y + 6, 27);
     doc.link(M, y, CW, 40, { url: portalUrl });
     addFooter(doc);
+
+    // A4 BOARD 4 — cenové shrnutí, servis a podpis
+    doc.addPage();
+    await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
+    y = 50;
+    doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('CENOVÉ SHRNUTÍ · INVESTICE A SERVIS', M, y);
+    doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Přehled ceny řešení.', M, y + 10);
+    doc.setTextColor(...muted); doc.setFontSize(7.4); doc.text(doc.splitTextToSize('Tabulka shrnuje dodávku produktu, instalaci a uvedení do provozu. Servisní balíček je volitelný a lze jej domluvit individuálně.', CW), M, y + 21);
+
+    y = 84;
+    const tx = M, tw = CW, cPrice = tx + tw - 52, rh = 9;
+    doc.setFillColor(...navy); doc.roundedRect(tx, y, tw, rh, 2, 2, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFontSize(6.6); doc.text('POLOŽKA', tx + 6, y + 5.6);
+    doc.text('CENA BEZ DPH', cPrice + 46, y + 5.6, { align: 'right' });
+    y += rh;
+    const priceRows = [
+      [`${safe(product.name)} — dodávka`, basePrice, false],
+      ['Instalace a uvedení do provozu', installation, false],
+      ['Servisní balíček (volitelný)', 0, true],
+    ];
+    if (discountPercent > 0) priceRows.push([`Sleva ${discountPercent} %`, -(beforeDiscount * discountPercent / 100), false]);
+    priceRows.forEach((row, i) => {
+      if (i % 2) { doc.setFillColor(248, 250, 250); doc.rect(tx, y, tw, rh, 'F'); }
+      doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(doc.splitTextToSize(row[0], tw - 60)[0], tx + 6, y + 5.8);
+      doc.setTextColor(...petrol); doc.setFontSize(7.6);
+      doc.text(row[2] ? 'dle dohody' : (Number(row[1]) ? `${formatPrice(Math.abs(Number(row[1])))} Kč` : '—'), cPrice + 46, y + 5.8, { align: 'right' });
+      y += rh;
+    });
+    doc.setDrawColor(222, 232, 234); doc.line(tx, y, tx + tw, y);
+    y += 2;
+    const subtotalExVat = finalTotal;
+    const vatAmount = Math.round(subtotalExVat * 0.21);
+    const totalWithVat = Math.round(subtotalExVat * 1.21);
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.text('Mezisoučet bez DPH', tx + 6, y + 5.8); doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(`${formatPrice(subtotalExVat)} Kč`, cPrice + 46, y + 5.8, { align: 'right' }); y += 8;
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.text('DPH 21 %', tx + 6, y + 5.8); doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(`${formatPrice(vatAmount)} Kč`, cPrice + 46, y + 5.8, { align: 'right' }); y += 8;
+    doc.setFillColor(...navy); doc.roundedRect(tx, y, tw, 12, 2, 2, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFontSize(7.6); doc.text('CELKEM S DPH', tx + 6, y + 7.4);
+    doc.setTextColor(...accent); doc.setFontSize(11); doc.text(`${formatPrice(totalWithVat)} Kč`, cPrice + 46, y + 7.8, { align: 'right' });
+    y += 20;
+
+    doc.setFillColor(...pale); doc.roundedRect(tx, y, tw, 28, 2, 2, 'F');
+    doc.setTextColor(...petrol); doc.setFontSize(6.4); doc.text('SERVIS A ÚDRŽBA', tx + 6, y + 7);
+    doc.setTextColor(...ink); doc.setFontSize(6.8); doc.text(doc.splitTextToSize('Servisní balíček zahrnuje pravidelnou kontrolu trysek, čištění filtrů, revizi vodní větve a podporu Smart řízení. Rozsah a cena se domlouvají podle rozsahu instalace a provozu.', tw - 12), tx + 6, y + 14);
+    y += 36;
+
+    const sigY = y;
+    doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text('ZA MLŽIDLA®', tx + 4, sigY + 4);
+    doc.setDrawColor(...navy); doc.setLineWidth(0.3); doc.line(tx + 4, sigY + 22, tx + 80, sigY + 22);
+    doc.setTextColor(...ink); doc.setFontSize(9); doc.text('Ing. Radek Meduna', tx + 4, sigY + 29);
+    doc.setTextColor(...muted); doc.setFontSize(6.6); doc.text('Jednatel · MLŽIDLA® / HolmTec s.r.o.', tx + 4, sigY + 35);
+    doc.text('+420 774 700 390 · meduna@holmtec.cz', tx + 4, sigY + 40);
+    await addRemoteImage(doc, LOGO_URL, W - M - 56, sigY - 2, 56, 24, { fit: 'contain', alignX: 'right', background: [255, 255, 255], radius: 0 });
+    addFooter(doc);
+
     const output = new Uint8Array(doc.output('arraybuffer'));
     return Response.json({
       pdf_base64: toBase64(output),

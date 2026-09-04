@@ -1,12 +1,11 @@
-export const MESSAGE_SIGNATURE = `S pozdravem,
-tým technické podpory Mlžidla.cz
+export const MESSAGE_SIGNATURE = `S pozdravem a přáním klidného dne,
 
 Ing. Radek Meduna
+MLŽIDLA® · HolmTec s.r.o.
 Tel.: +420 774 700 390
-E-mail pro objednávku:
-- meduna@holmtec.cz
-- info@mlzidla.cz`;
+meduna@holmtec.cz · info@mlzidla.cz
+mlzidla.cz`;
 
-export const withSignature = (text = '') => text.includes('tým technické podpory Mlžidla.cz')
+export const withSignature = (text = '') => text.includes('Ing. Radek Meduna')
   ? text.trim()
   : `${text.trim()}\n\n${MESSAGE_SIGNATURE}`.trim();

@@ -1,8 +1,13 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import {
+  ensurePipelineGroups,
+  createItemInGroup,
+  moveItemToGroup,
+  postUpdate,
+  mapProjectOrderStatusToStage,
+} from '../../shared/mondayPipeline.ts';
 
-const MONDAY_API = 'https://api.monday.com/v2';
-
-function buildPayload(entityName, record) {
+function buildPayload(entityName: string, record: any) {
   const isContact = entityName === 'ContactInquiry' || (!('jmeno' in record) && 'name' in record);
   return {
     source: 'mlzidla.cz',
@@ -19,74 +24,22 @@ function buildPayload(entityName, record) {
   };
 }
 
-async function postJson(url, body, headers = {}) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...headers },
-    body: JSON.stringify(body),
-  });
+async function postJson(url: string, body: unknown, headers: Record<string, string> = {}) {
+  const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(body) });
   const text = await res.text();
   return { ok: res.ok, status: res.status, response: text.slice(0, 400) };
 }
 
-async function pushMake(payload) {
+async function pushMake(payload: any) {
   const url = process.env.MAKE_WEBHOOK_URL;
   if (!url) return { target: 'make', skipped: true, reason: 'MAKE_WEBHOOK_URL not set' };
   return { target: 'make', ...(await postJson(url, payload)) };
 }
 
-async function pushSidekick(payload) {
+async function pushSidekick(payload: any) {
   const url = process.env.SIDEKICK_WEBHOOK_URL;
   if (!url) return { target: 'sidekick', skipped: true, reason: 'SIDEKICK_WEBHOOK_URL not set' };
   return { target: 'sidekick', ...(await postJson(url, payload)) };
-}
-
-async function mondayGql(token, query, variables) {
-  const res = await fetch(MONDAY_API, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: token },
-    body: JSON.stringify({ query, variables }),
-  });
-  const data = await res.json().catch(() => null);
-  return { ok: res.ok, status: res.status, data };
-}
-
-async function pushMonday(payload) {
-  const token = process.env.MONDAY_API_TOKEN;
-  const boardId = process.env.MONDAY_BOARD_ID;
-  if (!token || !boardId) return { target: 'monday', skipped: true, reason: 'MONDAY_API_TOKEN / MONDAY_BOARD_ID not set' };
-
-  const itemName = [payload.company, payload.name, payload.product].filter(Boolean).join(' · ') || `Nová poptávka ${payload.inquiry_id || ''}`;
-  const detailBody = [
-    `Zdroj: ${payload.source}`,
-    `Typ: ${payload.entity_type}`,
-    `ID: ${payload.inquiry_id || ''}`,
-    `Vytvořeno: ${payload.created_date || ''}`,
-    `Jméno: ${payload.name || ''}`,
-    `E-mail: ${payload.email || ''}`,
-    `Telefon: ${payload.phone || ''}`,
-    `Firma: ${payload.company || ''}`,
-    `Produkt: ${payload.product || ''}`,
-    `Stav: ${payload.status || ''}`,
-    `Zpráva:`,
-    payload.message || '',
-  ].join('\n');
-
-  const createRes = await mondayGql(
-    token,
-    `mutation($b: Int!, $n: String!) { create_item(board_id: $b, item_name: $n) { id } }`,
-    { b: Number(boardId), n: itemName }
-  );
-  const itemId = createRes?.data?.data?.create_item?.id || createRes?.data?.create_item?.id;
-  if (!itemId) return { target: 'monday', ok: false, reason: 'create_item failed', response: createRes };
-
-  const updateRes = await mondayGql(
-    token,
-    `mutation($i: Int!, $b: String!) { create_update(item_id: $i, body: $b) { id } }`,
-    { i: Number(itemId), b: detailBody }
-  );
-
-  return { target: 'monday', ok: true, item_id: String(itemId), update_ok: Boolean(updateRes?.data?.data?.create_update?.id || updateRes?.data?.create_update?.id) };
 }
 
 export default async function (req) {
@@ -96,27 +49,82 @@ export default async function (req) {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
+    const action = body.action || 'create';
     const entityName = body.entity_name || body?.event?.entity_name || '';
     const entityId = body.entity_id || body?.event?.entity_id || body?.data?.id || '';
+
+    const token = process.env.MONDAY_API_TOKEN;
+    const boardId = Number(process.env.MONDAY_BOARD_ID);
+
+    // Přesun položky v Monday podle stavu ProjectOrder
+    if (action === 'move') {
+      if (!entityName || !entityId || !base44.asServiceRole.entities[entityName]) {
+        return Response.json({ error: 'entity_name and entity_id required' }, { status: 400 });
+      }
+      if (!token || !boardId) return Response.json({ ok: true, monday: { skipped: true, reason: 'Monday not configured' } });
+
+      const order = await base44.asServiceRole.entities[entityName].get(entityId);
+      const inquiryType = order.inquiry_type === 'contact' ? 'ContactInquiry' : 'Poptavka';
+      const inquiryId = order.inquiry_id;
+      if (!inquiryId || !base44.asServiceRole.entities[inquiryType]) {
+        return Response.json({ ok: true, monday: { skipped: true, reason: 'no inquiry linked' } });
+      }
+      const inquiry = await base44.asServiceRole.entities[inquiryType].get(inquiryId).catch(() => null);
+      const mondayItemId = inquiry?.monday_item_id;
+      if (!mondayItemId) return Response.json({ ok: true, monday: { skipped: true, reason: 'inquiry has no monday_item_id' } });
+
+      const groups = await ensurePipelineGroups(token, boardId);
+      const stageKey = mapProjectOrderStatusToStage(order.status);
+      const groupId = groups[stageKey];
+      if (!groupId) return Response.json({ ok: true, monday: { skipped: true, reason: `stage ${stageKey} group missing` } });
+
+      const moved = await moveItemToGroup(token, Number(mondayItemId), groupId);
+      return Response.json({ ok: true, action: 'move', stage: stageKey, moved, item_id: mondayItemId });
+    }
+
+    // Vytvoření položky v Monday (nová poptávka) + Make + Sidekick
     if (!entityName || !entityId || !base44.asServiceRole.entities[entityName]) {
       return Response.json({ error: 'entity_name and entity_id required' }, { status: 400 });
     }
-
     const record = await base44.asServiceRole.entities[entityName].get(entityId);
     const payload = buildPayload(entityName, record);
 
-    const [make, monday, sidekick] = await Promise.allSettled([
-      pushMake(payload),
-      pushMonday(payload),
-      pushSidekick(payload),
-    ]);
+    let mondayResult: any = { target: 'monday', skipped: true, reason: 'Monday not configured' };
+    if (token && boardId) {
+      const groups = await ensurePipelineGroups(token, boardId);
+      const groupId = groups.nove;
+      const itemName = [payload.company, payload.name, payload.product].filter(Boolean).join(' · ') || `Nová poptávka ${payload.inquiry_id || ''}`;
+      const itemId = groupId ? await createItemInGroup(token, boardId, groupId, itemName) : null;
+      if (itemId) {
+        const detailBody = [
+          `Zdroj: ${payload.source}`,
+          `Typ: ${payload.entity_type}`,
+          `ID: ${payload.inquiry_id || ''}`,
+          `Vytvořeno: ${payload.created_date || ''}`,
+          `Jméno: ${payload.name || ''}`,
+          `E-mail: ${payload.email || ''}`,
+          `Telefon: ${payload.phone || ''}`,
+          `Firma: ${payload.company || ''}`,
+          `Produkt: ${payload.product || ''}`,
+          `Stav: ${payload.status || ''}`,
+          `Zpráva:`,
+          payload.message || '',
+        ].join('\n');
+        await postUpdate(token, Number(itemId), detailBody).catch(() => {});
+        try { await base44.asServiceRole.entities[entityName].update(entityId, { monday_item_id: String(itemId) }); } catch (_) {}
+        mondayResult = { target: 'monday', ok: true, item_id: String(itemId), stage: 'nove' };
+      } else {
+        mondayResult = { target: 'monday', ok: false, reason: 'create_item failed' };
+      }
+    }
 
+    const [make, sidekick] = await Promise.allSettled([pushMake(payload), pushSidekick(payload)]);
     return Response.json({
       ok: true,
       inquiry_id: payload.inquiry_id,
       results: {
+        monday: mondayResult,
         make: make.status === 'fulfilled' ? make.value : { target: 'make', ok: false, reason: make.reason?.message },
-        monday: monday.status === 'fulfilled' ? monday.value : { target: 'monday', ok: false, reason: monday.reason?.message },
         sidekick: sidekick.status === 'fulfilled' ? sidekick.value : { target: 'sidekick', ok: false, reason: sidekick.reason?.message },
       },
     });

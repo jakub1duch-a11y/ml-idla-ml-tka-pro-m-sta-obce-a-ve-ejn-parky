@@ -71,6 +71,10 @@
       ],
       "default": "nova",
       "description": "Stav popt\u00e1vky"
+    },
+    "monday_item_id": {
+      "type": "string",
+      "description": "ID polo\u017eky v Monday.com propojen\u00e9 s touto popt\u00e1vkou"
     }
   },
   "required": [

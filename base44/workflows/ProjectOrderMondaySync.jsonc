@@ -1,0 +1,42 @@
+{
+  "name": "ProjectOrder \u2192 Monday f\u00e1ze",
+  "description": "P\u0159i zm\u011bn\u011b stavu ProjectOrder p\u0159esune propojenou polo\u017eku v Monday do odpov\u00eddaj\u00edc\u00ed skupiny f\u00e1ze zak\u00e1zky (Rozpracovan\u00e9 nab\u00eddky / Potvrzen\u00e9 nab\u00eddky / Objedn\u00e1vky / V\u00fdroba / Hotovo).",
+  "trigger": {
+    "condition": "${ (.trigger.changed_fields // []) | index(\"status\") != null }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "update"
+      ],
+      "entity_name": "ProjectOrder"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "project_order_monday_sync",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_monday": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "pushInquiryToExternal",
+            "args": {
+              "action": "move",
+              "entity_name": "ProjectOrder",
+              "entity_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "P\u0159esun polo\u017eky v Monday",
+            "description": "Podle stavu zak\u00e1zky"
+          }
+        }
+      }
+    ]
+  }
+}

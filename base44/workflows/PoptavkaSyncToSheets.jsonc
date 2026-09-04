@@ -1,6 +1,6 @@
 {
   "name": "Popt\u00e1vka \u2192 Google Sheets klienti",
-  "description": "Automaticky zapisuje novou webovou popt\u00e1vku do listu Popt\u00e1vky a aktualizuje deduplikovan\u00fd seznam Klienti.",
+  "description": "Automaticky zapisuje novou webovou popt\u00e1vku do listu Popt\u00e1vky, aktualizuje deduplikovan\u00fd seznam Klienti a odes\u00edl\u00e1 data do Monday, Make a Sidekick.",
   "trigger": {
     "condition": null,
     "config": {
@@ -15,7 +15,7 @@
     "document": {
       "dsl": "1.0.0",
       "name": "poptavka_sync_to_sheets_clients",
-      "version": "1.0",
+      "version": "1.1",
       "namespace": "base44"
     },
     "do": [
@@ -24,6 +24,19 @@
           "call": "invoke_backend_function",
           "with": {
             "function_name": "syncInquiryToSheets",
+            "args": {
+              "entity_name": "Poptavka",
+              "entity_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "push_external"
+        }
+      },
+      {
+        "push_external": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "pushInquiryToExternal",
             "args": {
               "entity_name": "Poptavka",
               "entity_id": "${ .trigger.entity_id }"

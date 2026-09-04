@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('./styles/brand-components.css');
 
 @tailwind base;
@@ -8,11 +8,11 @@
 @layer base {
   :root {
     --background: 195 57% 97%;
-    --foreground: 101 36% 48%;
+    --foreground: 216 60% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 101 36% 48%;
+    --card-foreground: 216 60% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 101 36% 48%;
+    --popover-foreground: 216 60% 10%;
     --primary: 213 65% 24%;
     --primary-foreground: 195 57% 97%;
     --secondary: 216 60% 10%;
@@ -27,7 +27,7 @@
     --input: 197 31% 87%;
     --ring: 213 65% 24%;
     --radius: 0px;
-    --font-heading: 'Space Grotesk', sans-serif;
+    --font-heading: 'Manrope', sans-serif;
     --font-body: 'Albert Sans', sans-serif;
     --font-reading: 'Albert Sans', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -43,14 +43,14 @@
     --brand-accent: #22D3EE;
     --brand-background: #F4FAFC;
     --brand-surface: #FFFFFF;
-    --brand-text: #6ba84f;
+    --brand-text: #0A1628;
     --brand-muted: #E7F4F8;
     --brand-muted-foreground: #5A6B78;
     --brand-border: #D3E2E8;
     --brand-destructive: #C2410C;
     --brand-cyan-dark: #06667a;
     --brand-stainless-strong: #94A3B8;
-    --brand-font-heading: 'Space Grotesk', sans-serif;
+    --brand-font-heading: 'Manrope', sans-serif;
     --brand-font-body: 'Albert Sans', sans-serif;
     --brand-font-heading-line-height: 1.1;
     --brand-font-heading-letter-spacing: -0.01em;

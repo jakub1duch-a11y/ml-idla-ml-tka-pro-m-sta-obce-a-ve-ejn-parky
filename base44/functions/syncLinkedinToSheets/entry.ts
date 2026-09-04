@@ -7,7 +7,7 @@ const OUTREACH_SHEET = 'Oslovování';
 const PROFILE_SHEET = 'Profil';
 
 const ACTIVITY_HEADERS = ['Datum', 'Typ', 'Nadpis / text', 'URL', 'Lajky', 'Komentáře', 'Dosah', 'Stav', 'ID příspěvku'];
-const OUTREACH_HEADERS = ['Datum', 'Jméno', 'Firma / pozice', 'LinkedIn URL', 'Typ kontaktu', 'Zpráva', 'Stav', 'Odpověď', 'Poznámka', 'ID záznamu'];
+const OUTREACH_HEADERS = ['Datum', 'Jméno', 'Firma / pozice', 'LinkedIn URL', 'Email', 'Telefon', 'Typ kontaktu', 'Zpráva / komentář', 'Stav', 'Odpověď', 'Poznámka', 'ID záznamu'];
 const PROFILE_HEADERS = ['Položka', 'Hodnota'];
 
 async function linkedinGet(url, accessToken) {
@@ -95,6 +95,8 @@ export default async function (req) {
         outreach.name || '',
         outreach.company || '',
         outreach.linkedin_url || '',
+        outreach.email || '',
+        outreach.phone || '',
         outreach.contact_type || 'zpráva',
         outreach.message || '',
         outreach.status || 'odesláno',
@@ -105,13 +107,74 @@ export default async function (req) {
       return Response.json({ ok: true, outreach_id: id, spreadsheet_id: spreadsheetId });
     }
 
+    // ── Sync interactions (comments/reactions on posts = responses from prospects) ──
+    if (action === 'sync_interactions') {
+      const profile = await linkedinGet('https://api.linkedin.com/v2/userinfo', linkedinToken);
+      const personId = profile.sub;
+
+      // Fetch recent posts
+      const sharesUrl = `https://api.linkedin.com/v2/shares?q=owners&owners=urn:li:person:${personId}&count=20`;
+      let shares;
+      try {
+        shares = await linkedinGet(sharesUrl, linkedinToken);
+      } catch (e) {
+        return Response.json({ ok: true, interactions: 0, note: 'No posts found' });
+      }
+
+      const elements = shares.elements || [];
+      const existingInteractions = await getExistingColumnValues(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'L');
+      let totalInteractions = 0;
+
+      for (const share of elements) {
+        const shareUrn = share.id ? `urn:li:share:${share.id}` : '';
+        const activityUrn = share.activity ? `urn:li:activity:${share.activity}` : '';
+        if (!shareUrn && !activityUrn) continue;
+
+        // Fetch comments on this post
+        try {
+          const commentUrl = activityUrn
+            ? `https://api.linkedin.com/v2/comments?q=actor&actor=${encodeURIComponent(activityUrn)}&count=50`
+            : `https://api.linkedin.com/v2/socialActions/${encodeURIComponent(shareUrn)}/comments`;
+          const commentsData = await linkedinGet(commentUrl, linkedinToken);
+          const comments = commentsData.elements || commentsData.values || [];
+
+          for (const comment of comments) {
+            const commentId = `CMT-${comment.id || comment.$id || Math.random().toString(36).slice(2)}`;
+            if (existingInteractions.has(commentId)) continue;
+
+            const commenterName = comment.actor?.name || comment['actor~']?.name || 'Neznámý';
+            const commentText = comment.message?.text || comment.text || comment.value || '';
+            const commenterUrl = comment.actor?.uri || '';
+
+            await appendRow(sheetsToken, spreadsheetId, OUTREACH_SHEET, OUTREACH_HEADERS.length, [
+              new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' }),
+              commenterName,
+              '',
+              commenterUrl,
+              '', '', // email, phone — not available via API
+              'komentář',
+              commentText.slice(0, 500),
+              'odpovědělo',
+              '',
+              `Auto-sync z příspěvku ${share.id || ''}`,
+              commentId,
+            ]);
+            totalInteractions += 1;
+          }
+        } catch (commentError) {
+          // Comments API may not be available — continue to next post
+        }
+      }
+
+      return Response.json({ ok: true, spreadsheet_id: spreadsheetId, interactions: totalInteractions, profile: profile.name || '' });
+    }
+
     // ── Update outreach reply ──
     if (action === 'update_outreach') {
-      const { outreach_id, reply, status } = body;
+      const { outreach_id, reply, status, email, phone } = body;
       if (!outreach_id) return Response.json({ error: 'outreach_id required' }, { status: 400 });
-      const existing = await getExistingColumnValues(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'J');
-      // Find the row number
-      const range = `${OUTREACH_SHEET}!J2:J`;
+      // Find the row number (column L = ID záznamu)
+      const range = `${OUTREACH_SHEET}!L2:L`;
       const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}`, {
         headers: { Authorization: `Bearer ${sheetsToken}` },
       });
@@ -121,8 +184,10 @@ export default async function (req) {
       const idx = rows.findIndex((r) => String(r?.[0] || '') === String(outreach_id));
       if (idx === -1) return Response.json({ error: 'not found' }, { status: 404 });
       const rowNumber = idx + 2;
-      if (reply) await updateCell(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'H', rowNumber, reply);
-      if (status) await updateCell(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'G', rowNumber, status);
+      if (reply) await updateCell(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'J', rowNumber, reply);
+      if (status) await updateCell(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'I', rowNumber, status);
+      if (email) await updateCell(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'E', rowNumber, email);
+      if (phone) await updateCell(sheetsToken, spreadsheetId, OUTREACH_SHEET, 'F', rowNumber, phone);
       return Response.json({ ok: true, updated: true, row: rowNumber });
     }
 

@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { SEO_PAGES, setSEO } from '@/lib/seo';
 import HeroSlider from '@/components/home/premium/HeroSlider';
+import IndustriesSection from '@/components/home/IndustriesSection';
+import CommercialIndustrialSection from '@/components/home/CommercialIndustrialSection';
+import CustomDesignSection from '@/components/home/CustomDesignSection';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
 import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
@@ -25,12 +28,15 @@ export default function Home() {
     <>
       <HeroSlider />
 
+      <FadeIn><IndustriesSection /></FadeIn>
       <FadeIn><HomepageVideoLoops /></FadeIn>
+      <FadeIn><CommercialIndustrialSection /></FadeIn>
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><UrbanCoolingImpact /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
+      <FadeIn><CustomDesignSection /></FadeIn>
       <FadeIn><MistVideoShowcase /></FadeIn>
       <AIProjectDesignerSection />
       <FadeIn><InstagramFeedSection /></FadeIn>

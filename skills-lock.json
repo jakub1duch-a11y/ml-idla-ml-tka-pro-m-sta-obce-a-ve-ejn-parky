@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "skills": {
+    "base44-cli": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": "skills/base44-cli/SKILL.md",
+      "computedHash": "f58389da02c707219771859744cb32e6ca0f5b8e648e837a3f36d72275fdd909"
+    },
+    "base44-remote-dev": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": "skills/base44-remote-dev/SKILL.md",
+      "computedHash": "6a727a0401d019b56c755226822bc39c82cc99c69af02d00f3e0236e4256eb2d"
+    },
+    "base44-sandbox": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": "skills/base44-sandbox/SKILL.md",
+      "computedHash": "1a1d2ebc5402ee03014a390fc6b4fed0c06e8335c189fdded9ce512d876a0785"
+    },
+    "base44-sdk": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": "skills/base44-sdk/SKILL.md",
+      "computedHash": "3a0eabb8e691c120f9c7414b50ff30f1c6eccd35d619cc452697b5ec7a9c77dc"
+    },
+    "base44-troubleshooter": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": "skills/base44-troubleshooter/SKILL.md",
+      "computedHash": "8330fa7749b8749242b6671aa47c75e70fa0a4aad4b8707d2b5a4223964e5130"
+    },
+    "otel-collector": {
+      "source": "dash0hq/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/otel-collector/SKILL.md",
+      "computedHash": "8451bf7efdc5d19695a2c9baf68588110a16c2d63949d474c90786aacab2f8b7"
+    },
+    "otel-instrumentation": {
+      "source": "dash0hq/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/otel-instrumentation/SKILL.md",
+      "computedHash": "6b2657f79f0b9966bbcdcc156a2c9ab0c7c9404e047862e61d3f5f9c28ce52b6"
+    },
+    "otel-ottl": {
+      "source": "dash0hq/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/otel-ottl/SKILL.md",
+      "computedHash": "e6c8093db0f2a0d0bdd6854c5f85eac76c105d8e220c6d5fc5c45232a62262e7"
+    },
+    "otel-semantic-conventions": {
+      "source": "dash0hq/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/otel-semantic-conventions/SKILL.md",
+      "computedHash": "fc4eab18cf24d51cfeff0e345e7883051db60d4e5da21b644ee47c094f019978"
+    },
+    "review-skills": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/review-skills/SKILL.md",
+      "computedHash": "2480ed62bf444b2b278db84dd7206070ee60059459f663b815c131f9574ce626"
+    },
+    "skill-creator": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/skill-creator/SKILL.md",
+      "computedHash": "254208ab978ff9fdae7e27481aab63f6949fa70e087e54a6e26f811cb662ae11"
+    },
+    "sync-cli-skill": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/sync-cli-skill/SKILL.md",
+      "computedHash": "f0ebd5509d1117600db6108af8e86bda0444ca93077db159a5037190afc2ff08"
+    },
+    "sync-sdk-skill": {
+      "source": "base44/skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/sync-sdk-skill/SKILL.md",
+      "computedHash": "999daea610b7a39356881002740e802ab118e51ad82645b2a4bebed7b42b2050"
+    }
+  }
+}

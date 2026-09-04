@@ -5,6 +5,7 @@ import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
 import NabidkovySuperAgentChat from '@/components/offers/NabidkovySuperAgentChat';
 import OfferDocumentEditor from '@/components/offers/OfferDocumentEditor';
+import OfferConceptPanel from '@/components/offers/OfferConceptPanel';
 import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
@@ -764,6 +765,10 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           <p className="text-sm font-semibold text-foreground">{selected.name} · {selected.email}</p>
           <div className="mt-2 flex flex-wrap items-center gap-2"><span className="rounded-full bg-muted px-2.5 py-1 font-mono text-[10px] text-muted-foreground">Poptávka ID: {selected.id}</span>{selectedOffers.map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2.5 py-1 font-mono text-[10px] text-secondary">Nabídka: {offer.quote_number || offer.id}</span>)}</div>
           <p className="mt-3 text-sm text-muted-foreground">{selected.message}</p>
+
+          <div className="mt-4">
+            <OfferConceptPanel inquiry={selected} onRefresh={refreshSalesData} />
+          </div>
 
           {selectedOffers.length > 0 && <details className="mt-5 rounded-2xl border border-amber-200 bg-amber-50/50 p-4 sm:p-5">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-amber-950"><span className="flex items-center gap-2"><ReceiptText size={16}/> Příplatkové účtování projektu</span><span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-amber-800 ring-1 ring-amber-200">{extraCharges.length} položek</span></summary>

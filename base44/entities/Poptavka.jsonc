@@ -72,6 +72,18 @@
       "default": "nova",
       "description": "Stav popt\u00e1vky"
     },
+    "offer_status": {
+      "type": "string",
+      "enum": [
+        "nova_poptavka",
+        "koncept",
+        "k_overeni",
+        "schvaleno",
+        "odeslano"
+      ],
+      "default": "nova_poptavka",
+      "description": "Stav AI workflow nab\u00eddky: NOV\u00c1 POPT\u00c1VKA \u2192 KONCEPT \u2192 K OV\u011a\u0158EN\u00cd \u2192 SCHV\u00c1LENO \u2192 ODESL\u00c1NO"
+    },
     "monday_item_id": {
       "type": "string",
       "description": "ID polo\u017eky v Monday.com propojen\u00e9 s touto popt\u00e1vkou"

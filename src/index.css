@@ -368,6 +368,14 @@
   68% { transform: translate3d(1.7px, -2px, 0) scale(1.16); opacity: .34; }
 }
 
+@media print {
+  body * { visibility: hidden; }
+  .print\:hidden { display: none !important; }
+  .mx-auto.max-w-4xl, .mx-auto.max-w-4xl * { visibility: visible; }
+  .mx-auto.max-w-4xl { position: absolute; left: 0; top: 0; width: 100%; max-width: 100% !important; }
+  .mx-auto.max-w-4xl > div:last-child { border: none !important; padding: 0 !important; }
+}
+
 @keyframes mlzWordmarkIn {
   0% { opacity: 0; transform: translate3d(-5px, 2px, 0); filter: blur(3px); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }

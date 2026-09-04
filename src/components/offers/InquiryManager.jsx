@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
 import NabidkovySuperAgentChat from '@/components/offers/NabidkovySuperAgentChat';
+import OfferDocumentEditor from '@/components/offers/OfferDocumentEditor';
 import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
@@ -832,7 +833,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
           {prepared && (
             <div id="offer-review" className="mt-6 scroll-mt-24 rounded-2xl border border-cyan-300 bg-cyan-50/50 p-5 sm:p-6">
-              <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900"><strong>Nabídka je připravená ke kontrole.</strong> {prepared.visualizationUrls?.length ? `Připojeno ${prepared.visualizationUrls.length} AI vizualizací.` : 'Vizualizaci lze případně doplnit před odesláním.'}</div>
+              <OfferDocumentEditor prepared={prepared} selected={selected} selectedProduct={selectedProduct} audiences={AUDIENCES} busy={busy === 'prepare' || busy === 'auto-offer'} onRegenerate={prepareOffer} downloadPreparedPdf={downloadPreparedPdf} />
               <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-mono uppercase tracking-widest text-cyan-800">Zkontrolovat a odeslat</p><p className="mt-1 text-sm font-semibold text-slate-950">{prepared.quoteNumber} · platnost do {prepared.validUntil.toLocaleDateString('cs-CZ')}</p></div><CheckCircle2 size={20} className="text-cyan-700"/></div>
               <div className="mt-4 flex flex-wrap gap-2">
                 {prepared.quoteDriveUrl ? <a href={prepared.quoteDriveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>PDF nabídka <ExternalLink size={12}/></a> : prepared.quote?.pdf_base64 && <button type="button" onClick={downloadPreparedPdf} className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>Stáhnout PDF nabídku</button>}

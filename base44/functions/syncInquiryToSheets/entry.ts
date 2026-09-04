@@ -152,9 +152,7 @@ export default async function(req) {
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
     await ensureSheet(accessToken, INQUIRIES_SHEET);
-    await ensureSheet(accessToken, CLIENTS_SHEET);
     await ensureHeaders(accessToken, INQUIRIES_SHEET, INQUIRY_HEADERS);
-    await ensureHeaders(accessToken, CLIENTS_SHEET, CLIENT_HEADERS);
 
     if (await inquiryAlreadySynced(accessToken, client.entityId)) {
       return Response.json({ ok: true, inquiry_id: client.entityId, duplicate_skipped: true });
@@ -164,7 +162,15 @@ export default async function(req) {
       client.timestamp, client.zdroj, client.jmeno, client.email, client.telefon,
       client.firma, client.produkt, client.zprava, client.stav, client.entityId
     ]);
-    const clientResult = await upsertClient(accessToken, client);
+
+    let clientResult = { skipped: true };
+    try {
+      await ensureSheet(accessToken, CLIENTS_SHEET);
+      await ensureHeaders(accessToken, CLIENTS_SHEET, CLIENT_HEADERS);
+      clientResult = await upsertClient(accessToken, client);
+    } catch (clientError) {
+      console.warn('Klienti sync skipped:', clientError?.message || clientError);
+    }
 
     return Response.json({ ok: true, inquiry_id: client.entityId, client: clientResult, duplicate_skipped: false });
   } catch (error) {

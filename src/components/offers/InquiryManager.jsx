@@ -3,6 +3,7 @@ import { CheckCircle2, ExternalLink, Eye, FileText, ReceiptText, Search, Send, S
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
+import NabidkovySuperAgentChat from '@/components/offers/NabidkovySuperAgentChat';
 import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
@@ -705,6 +706,8 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         </aside>
 
         <div className="border border-border p-5 lg:p-7">
+          <NabidkovySuperAgentChat inquiryId={selected?.id} inquiryType={selected?.type} />
+          <div className="mt-8 border-t border-border pt-6" />
           <p className="text-sm font-semibold text-foreground">{selected.name} · {selected.email}</p>
           <div className="mt-2 flex flex-wrap items-center gap-2"><span className="rounded-full bg-muted px-2.5 py-1 font-mono text-[10px] text-muted-foreground">Poptávka ID: {selected.id}</span>{selectedOffers.map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2.5 py-1 font-mono text-[10px] text-secondary">Nabídka: {offer.quote_number || offer.id}</span>)}</div>
           <p className="mt-3 text-sm text-muted-foreground">{selected.message}</p>

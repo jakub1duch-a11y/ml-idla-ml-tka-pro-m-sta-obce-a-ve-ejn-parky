@@ -149,6 +149,19 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
     }
   };
 
+  const loadInquiry = async () => {
+    if (!conversationId || busy) return;
+    setSending(true);
+    setError('');
+    try {
+      const conversation = await base44.agents.getConversation(conversationId);
+      await base44.agents.addMessage(conversation, { role: 'user', content: seedPrompt });
+    } catch (err) {
+      setError(err?.message || 'Poptávku se nepodařilo načíst.');
+      setSending(false);
+    }
+  };
+
   const reset = async () => {
     if (!confirm('Začít novou konverzaci? Stávající zůstane uložená v dashboardu.')) return;
     setLoading(true);
@@ -180,9 +193,16 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
               <h3 className="font-heading text-lg text-white">Asistovaná tvorba nabídky</h3>
             </div>
           </div>
-          <button type="button" onClick={reset} disabled={loading} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-2 text-[11px] font-semibold text-white/60 transition hover:border-white/30 hover:text-white disabled:opacity-40">
-            <RefreshCw size={12} /> Nová konverzace
-          </button>
+          <div className="flex items-center gap-2">
+            {inquiryId && (
+              <button type="button" onClick={loadInquiry} disabled={loading || busy} className="inline-flex items-center gap-2 rounded-full border border-cyan-300/40 bg-cyan-400/10 px-3 py-2 text-[11px] font-semibold text-cyan-200 transition hover:bg-cyan-400/20 disabled:opacity-40">
+                <Sparkles size={12} /> Načíst vybranou poptávku
+              </button>
+            )}
+            <button type="button" onClick={reset} disabled={loading} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-2 text-[11px] font-semibold text-white/60 transition hover:border-white/30 hover:text-white disabled:opacity-40">
+              <RefreshCw size={12} /> Nová konverzace
+            </button>
+          </div>
         </div>
 
         <div ref={scrollRef} className="max-h-[60vh] min-h-[280px] space-y-4 overflow-y-auto px-4 py-5 sm:px-7">

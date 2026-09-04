@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search, ClipboardCheck, Hammer, CalendarDays, CheckCircle2, ListTodo, UserRound, AlertTriangle } from 'lucide-react';
+import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search, ClipboardCheck, Hammer, CalendarDays, CheckCircle2, ListTodo, UserRound, AlertTriangle, Bot, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import WorkBriefingPanel from '@/components/admin/WorkBriefingPanel';
@@ -14,11 +15,16 @@ function formatDuration(seconds) {
 }
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);
   const [search, setSearch] = useState(null);
   const [products, setProducts] = useState([]);
   const [workLogs, setWorkLogs] = useState([]);
   const [adminTasks, setAdminTasks] = useState([]);
+  const [superAgentProfiles, setSuperAgentProfiles] = useState([]);
+  const [superAgentActions, setSuperAgentActions] = useState([]);
+  const [superAgentSessions, setSuperAgentSessions] = useState([]);
+  const [superAgentQuickActions, setSuperAgentQuickActions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -31,14 +37,22 @@ export default function AdminDashboard() {
       base44.entities.Product.list(),
       base44.entities.WorkLog.list('-work_date', 250),
       base44.entities.AdminTask.list('-updated_date', 100),
+      base44.entities.SuperAgentProfile.list('-updated_date', 20),
+      base44.entities.SuperAgentAction.list('-updated_date', 20),
+      base44.entities.SuperAgentSession.list('-last_active_at', 10),
+      base44.entities.SuperAgentQuickAction.list('sort_order', 30),
     ])
-      .then(([a, s, p, w, t]) => {
+      .then(([a, s, p, w, t, sap, saa, sas, saq]) => {
         const hasAnalytics = a.status === 'fulfilled' && a.value?.data;
         setAnalytics(hasAnalytics ? a.value.data : null);
         setSearch(s.status === 'fulfilled' ? s.value?.data : null);
         setProducts(p.status === 'fulfilled' ? p.value || [] : []);
         setWorkLogs(w.status === 'fulfilled' ? w.value || [] : []);
         setAdminTasks(t.status === 'fulfilled' ? t.value || [] : []);
+        setSuperAgentProfiles(sap.status === 'fulfilled' ? sap.value || [] : []);
+        setSuperAgentActions(saa.status === 'fulfilled' ? saa.value || [] : []);
+        setSuperAgentSessions(sas.status === 'fulfilled' ? sas.value || [] : []);
+        setSuperAgentQuickActions(saq.status === 'fulfilled' ? saq.value || [] : []);
         if (!hasAnalytics) setError('Analytics a Search Console nejsou dostupné — zbytek přehledu funguje normálně.');
       })
       .finally(() => setLoading(false));
@@ -84,6 +98,10 @@ export default function AdminDashboard() {
   const reviewTasks = adminTasks.filter((item) => item.status === 'review');
   const overdueTasks = activeTasks.filter((item) => item.due_date && new Date(`${item.due_date}T23:59:59`) < new Date());
   const recentTasks = [...activeTasks].sort((a,b) => String(b.updated_date || '').localeCompare(String(a.updated_date || ''))).slice(0, 6);
+  const primarySuperAgent = superAgentProfiles.find((item) => item.key === 'mlzidla_superagent' && item.active) || superAgentProfiles.find((item) => item.active) || null;
+  const activeSuperAgentActions = superAgentActions.filter((item) => ['proposed','awaiting_approval','approved','running'].includes(item.status));
+  const recentSuperAgentSessions = superAgentSessions.filter((item) => item.status === 'active').slice(0, 3);
+  const quickActions = superAgentQuickActions.filter((item) => item.active && (!primarySuperAgent || item.agent_key === primarySuperAgent.key)).slice(0, 4);
 
   const cards = [
     { icon: Users, label: 'Návštěvy (28 dní)', value: totals.sessions.toLocaleString(), color: 'text-cyan' },
@@ -103,6 +121,27 @@ export default function AdminDashboard() {
       )}
 
       <WorkBriefingPanel />
+
+      <section className="rounded-2xl border border-cyan/20 bg-gradient-to-br from-cyan/10 via-white/[.025] to-violet-400/[.04] p-5 sm:p-6">
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 text-cyan"><Bot size={16}/><p className="font-mono text-[10px] uppercase tracking-[.2em]">MLŽIDLA.cz SuperAgent</p></div>
+            <h3 className="mt-2 text-xl font-medium text-white">{primarySuperAgent?.name || 'Centrální AI operátor'}</h3>
+            <p className="mt-1 text-xs leading-relaxed text-white/40">{primarySuperAgent?.description || 'Jeden vstupní bod pro poptávky, nabídky, vizualizace, marketing, úkoly a interní workflow.'}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 font-mono text-[10px] text-emerald-300"><ShieldCheck size={11}/>{primarySuperAgent?.active ? 'AGENT AKTIVNÍ' : 'KONFIGURACE KONTROLA'}</span>
+              <span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 font-mono text-[10px] text-violet-300">{activeSuperAgentActions.length} akcí čeká / běží</span>
+              <span className="rounded-full border border-white/10 bg-white/[.03] px-3 py-1.5 font-mono text-[10px] text-white/45">{recentSuperAgentSessions.length} aktivní relace</span>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 xl:justify-end">
+            <button onClick={() => navigate('/obchodni-nabidky')} className="inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan/90"><Sparkles size={14}/> Otevřít SuperAgent <ArrowRight size={14}/></button>
+            <button onClick={() => navigate('/admin?tab=poptavky')} className="rounded-xl border border-white/10 bg-white/[.03] px-4 py-2.5 text-sm text-white/65 hover:bg-white/[.06]">Poptávky</button>
+            <button onClick={() => navigate('/admin?tab=tasks')} className="rounded-xl border border-white/10 bg-white/[.03] px-4 py-2.5 text-sm text-white/65 hover:bg-white/[.06]">Úkoly</button>
+          </div>
+        </div>
+        {quickActions.length > 0 && <div className="mt-5 grid gap-2 md:grid-cols-2 xl:grid-cols-4">{quickActions.map((action) => <button key={action.id} onClick={() => navigate(action.target_entity === 'AdminTask' ? '/admin?tab=tasks' : '/obchodni-nabidky')} className="rounded-xl border border-white/8 bg-black/10 p-3 text-left transition hover:border-cyan/20 hover:bg-cyan/[.04]"><p className="text-sm font-medium text-white/70">{action.label}</p><p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-white/30">{action.description || action.intent}</p></button>)}</div>}
+      </section>
 
       <section className="rounded-2xl border border-cyan/15 bg-gradient-to-br from-cyan/8 to-white/2 p-5 sm:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

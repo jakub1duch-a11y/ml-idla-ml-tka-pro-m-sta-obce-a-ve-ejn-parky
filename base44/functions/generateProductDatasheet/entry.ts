@@ -590,54 +590,79 @@ export default async function(req) {
     // A4 BOARD 4 — cenové shrnutí, servis a podpis
     doc.addPage();
     await addHeader(doc, { type: 'offer', quoteNumber, issued, validUntil });
-    y = 50;
+    y = 48;
     doc.setTextColor(...accent); doc.setFontSize(6.4); doc.text('CENOVÉ SHRNUTÍ · INVESTICE A SERVIS', M, y);
     doc.setTextColor(...navy); doc.setFontSize(19); doc.text('Přehled ceny řešení.', M, y + 10);
-    doc.setTextColor(...muted); doc.setFontSize(7.4); doc.text(doc.splitTextToSize('Tabulka shrnuje dodávku produktu, instalaci a uvedení do provozu. Servisní balíček je volitelný a lze jej domluvit individuálně.', CW), M, y + 21);
+    doc.setTextColor(...muted); doc.setFontSize(7.4); doc.text(doc.splitTextToSize('Tabulka shrnuje dodávku produktu, instalaci, uvedení do provozu a volitelný servisní balíček. Vše v jednom přehledu pro rozhodnutí i realizaci.', CW), M, y + 21);
 
-    y = 84;
-    const tx = M, tw = CW, cPrice = tx + tw - 52, rh = 9;
+    // Hlavní cenová tabulka — dodávka + instalace
+    y = 80;
+    const tx = M, tw = CW, cPrice = tx + tw - 48, rh = 8.5;
     doc.setFillColor(...navy); doc.roundedRect(tx, y, tw, rh, 2, 2, 'F');
-    doc.setTextColor(255, 255, 255); doc.setFontSize(6.6); doc.text('POLOŽKA', tx + 6, y + 5.6);
-    doc.text('CENA BEZ DPH', cPrice + 46, y + 5.6, { align: 'right' });
+    doc.setTextColor(255, 255, 255); doc.setFontSize(6.4); doc.text('POLOŽKA', tx + 6, y + 5.3);
+    doc.text('CENA BEZ DPH', cPrice + 42, y + 5.3, { align: 'right' });
     y += rh;
-    const priceRows = [
-      [`${safe(product.name)} — dodávka`, basePrice, false],
-      ['Instalace a uvedení do provozu', installation, false],
-      ['Servisní balíček (volitelný)', 0, true],
+    const deliveryRows = [
+      [`${safe(product.name)} — dodávka`, basePrice],
+      ['Instalace a uvedení do provozu', installation],
     ];
-    if (discountPercent > 0) priceRows.push([`Sleva ${discountPercent} %`, -(beforeDiscount * discountPercent / 100), false]);
-    priceRows.forEach((row, i) => {
+    if (discountPercent > 0) deliveryRows.push([`Sleva ${discountPercent} %`, -(beforeDiscount * discountPercent / 100)]);
+    deliveryRows.forEach((row, i) => {
       if (i % 2) { doc.setFillColor(248, 250, 250); doc.rect(tx, y, tw, rh, 'F'); }
-      doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(doc.splitTextToSize(row[0], tw - 60)[0], tx + 6, y + 5.8);
-      doc.setTextColor(...petrol); doc.setFontSize(7.6);
-      doc.text(row[2] ? 'dle dohody' : (Number(row[1]) ? `${formatPrice(Math.abs(Number(row[1])))} Kč` : '—'), cPrice + 46, y + 5.8, { align: 'right' });
+      doc.setTextColor(...ink); doc.setFontSize(7.2); doc.text(doc.splitTextToSize(row[0], tw - 56)[0], tx + 6, y + 5.5);
+      doc.setTextColor(...petrol); doc.setFontSize(7.4);
+      const val = Number(row[1]);
+      doc.text(val < 0 ? `− ${formatPrice(Math.abs(val))} Kč` : (val ? `${formatPrice(val)} Kč` : '—'), cPrice + 42, y + 5.5, { align: 'right' });
       y += rh;
     });
     doc.setDrawColor(222, 232, 234); doc.line(tx, y, tx + tw, y);
-    y += 2;
+    y += 1.5;
     const subtotalExVat = finalTotal;
     const vatAmount = Math.round(subtotalExVat * 0.21);
     const totalWithVat = Math.round(subtotalExVat * 1.21);
-    doc.setTextColor(...muted); doc.setFontSize(7); doc.text('Mezisoučet bez DPH', tx + 6, y + 5.8); doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(`${formatPrice(subtotalExVat)} Kč`, cPrice + 46, y + 5.8, { align: 'right' }); y += 8;
-    doc.setTextColor(...muted); doc.setFontSize(7); doc.text('DPH 21 %', tx + 6, y + 5.8); doc.setTextColor(...ink); doc.setFontSize(7.4); doc.text(`${formatPrice(vatAmount)} Kč`, cPrice + 46, y + 5.8, { align: 'right' }); y += 8;
-    doc.setFillColor(...navy); doc.roundedRect(tx, y, tw, 12, 2, 2, 'F');
-    doc.setTextColor(255, 255, 255); doc.setFontSize(7.6); doc.text('CELKEM S DPH', tx + 6, y + 7.4);
-    doc.setTextColor(...accent); doc.setFontSize(11); doc.text(`${formatPrice(totalWithVat)} Kč`, cPrice + 46, y + 7.8, { align: 'right' });
-    y += 20;
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.text('Mezisoučet bez DPH', tx + 6, y + 5.3); doc.setTextColor(...ink); doc.setFontSize(7.2); doc.text(`${formatPrice(subtotalExVat)} Kč`, cPrice + 42, y + 5.3, { align: 'right' }); y += 7.5;
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.text('DPH 21 %', tx + 6, y + 5.3); doc.setTextColor(...ink); doc.setFontSize(7.2); doc.text(`${formatPrice(vatAmount)} Kč`, cPrice + 42, y + 5.3, { align: 'right' }); y += 7.5;
+    doc.setFillColor(...navy); doc.roundedRect(tx, y, tw, 11, 2, 2, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFontSize(7.4); doc.text('CELKEM S DPH', tx + 6, y + 7);
+    doc.setTextColor(...accent); doc.setFontSize(11); doc.text(`${formatPrice(totalWithVat)} Kč`, cPrice + 42, y + 7.4, { align: 'right' });
+    y += 17;
 
-    doc.setFillColor(...pale); doc.roundedRect(tx, y, tw, 28, 2, 2, 'F');
-    doc.setTextColor(...petrol); doc.setFontSize(6.4); doc.text('SERVIS A ÚDRŽBA', tx + 6, y + 7);
-    doc.setTextColor(...ink); doc.setFontSize(6.8); doc.text(doc.splitTextToSize('Servisní balíček zahrnuje pravidelnou kontrolu trysek, čištění filtrů, revizi vodní větve a podporu Smart řízení. Rozsah a cena se domlouvají podle rozsahu instalace a provozu.', tw - 12), tx + 6, y + 14);
-    y += 36;
+    // Servisní balíčky — konkrétní cenové úrovně
+    doc.setTextColor(...accent); doc.setFontSize(6.2); doc.text('SERVIS A ÚDRŽBA · VOLITELNÉ BALÍČKY', M, y);
+    y += 5;
+    const servicePackages = [
+      { title: 'Základní servis', price: 4500, scope: 'Jarní a podzimní revize, kontrola trysek, čištění filtrů, revize vodní větve.' },
+      { title: 'Provozní servis', price: 9500, scope: '2× ročně revize + dálková podpora Smart řízení, diagnostika a vyhodnocení sezóny.' },
+      { title: 'Premium servis', price: 16500, scope: 'Celosezónní péče, priorita výjezdu, monitoring spotřeby, aktualizace scénářů SUPLA.' },
+    ];
+    const pkgW = (tw - 8) / 3;
+    servicePackages.forEach((pkg, i) => {
+      const px = tx + i * (pkgW + 4);
+      const featured = i === 1;
+      doc.setFillColor(featured ? 238 : 248, featured ? 248 : 250, featured ? 249 : 250); doc.setDrawColor(221, 231, 233); doc.roundedRect(px, y, pkgW, 34, 2, 2, 'FD');
+      doc.setTextColor(...accent); doc.setFontSize(5.4); doc.text(featured ? 'DOPORUČENO' : `BALÍČEK 0${i + 1}`, px + 4, y + 6);
+      doc.setTextColor(...navy); doc.setFontSize(7.8); doc.text(pkg.title, px + 4, y + 13);
+      doc.setTextColor(...petrol); doc.setFontSize(9); doc.text(`${formatPrice(pkg.price)} Kč`, px + 4, y + 22);
+      doc.setTextColor(...muted); doc.setFontSize(5.4); doc.text('bez DPH / rok', px + 4, y + 27);
+      doc.setTextColor(...ink); doc.setFontSize(5.3); doc.text(doc.splitTextToSize(pkg.scope, pkgW - 8), px + 4, y + 31);
+    });
+    y += 38;
+    doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text(doc.splitTextToSize('Servisní balíčky jsou volitelné a nejsou zahrnuty v celkové ceně řešení. Rozsah i cenu upravíme podle velikosti instalace a provozních požadavků.', tw), tx, y);
 
-    const sigY = y;
+    // Brand panel + podpis
+    y = 244;
+    doc.setFillColor(...navy); doc.roundedRect(M, y, CW, 31, 2, 2, 'F');
+    await addRemoteImage(doc, LOGO_URL, M + 8, y + 5, 58, 21, { fit: 'contain', alignX: 'left', background: [13, 45, 56], radius: 0 });
+    doc.setTextColor(...accent); doc.setFontSize(6); doc.text('MLŽIDLA® — ARCHITEKTONICKÉ MLŽENÍ', M + 74, y + 10);
+    doc.setTextColor(255, 255, 255); doc.setFontSize(7.4); doc.text(doc.splitTextToSize('Nerezová mlžítko a mlžné brány navržené a vyráběné v Trutnově. Ochlazení veřejných i soukromých prostor s důrazem na design, provoz a dlouhou životnost.', 104), M + 74, y + 16);
+    doc.setTextColor(190, 220, 224); doc.setFontSize(6); doc.text('mlzidla.cz  ·  HolmTec s.r.o.  ·  Trutnov', M + 74, y + 27);
+
+    const sigY = y + 35;
     doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text('ZA MLŽIDLA®', tx + 4, sigY + 4);
-    doc.setDrawColor(...navy); doc.setLineWidth(0.3); doc.line(tx + 4, sigY + 22, tx + 80, sigY + 22);
-    doc.setTextColor(...ink); doc.setFontSize(9); doc.text('Ing. Radek Meduna', tx + 4, sigY + 29);
-    doc.setTextColor(...muted); doc.setFontSize(6.6); doc.text('Jednatel · MLŽIDLA® / HolmTec s.r.o.', tx + 4, sigY + 35);
-    doc.text('+420 774 700 390 · meduna@holmtec.cz', tx + 4, sigY + 40);
-    await addRemoteImage(doc, LOGO_URL, W - M - 56, sigY - 2, 56, 24, { fit: 'contain', alignX: 'right', background: [255, 255, 255], radius: 0 });
+    doc.setDrawColor(...navy); doc.setLineWidth(0.3); doc.line(tx + 4, sigY + 18, tx + 80, sigY + 18);
+    doc.setTextColor(...ink); doc.setFontSize(9); doc.text('Ing. Radek Meduna', tx + 4, sigY + 25);
+    doc.setTextColor(...muted); doc.setFontSize(6.4); doc.text('Jednatel · MLŽIDLA® / HolmTec s.r.o.', tx + 4, sigY + 30);
+    doc.text('+420 774 700 390 · meduna@holmtec.cz', tx + 4, sigY + 35);
     addFooter(doc);
 
     const output = new Uint8Array(doc.output('arraybuffer'));

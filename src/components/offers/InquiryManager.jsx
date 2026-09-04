@@ -596,6 +596,53 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     }
   };
 
+  const loadAgentOffer = async () => {
+    if (!selected?.id || busy) return;
+    setError(''); setBusy('load-agent');
+    try {
+      const orders = await base44.entities.ProjectOrder.list('-created_date', 100);
+      const order = (orders || []).find((o) => o.inquiry_id === selected.id);
+      if (!order) throw new Error('Super Agent k této poptávce zatím nevytvořil nabídku. Nechte ji připravit v chatu výše a pak sem načtěte.');
+      const variants = await base44.entities.OfferVariant.filter({ inquiry_id: selected.id }).catch(() => []);
+      const product = products.find((p) => p.id === order.product_id) || products.find((p) => p.slug === order.product_slug) || selectedProduct;
+      if (order.product_id) setProductId(order.product_id);
+      setBasePrice(Number(order.total_price) || 0);
+      setInstallation(0);
+      if (order.presentation_variant) setAudienceVariant(order.presentation_variant);
+      const validUntil = order.valid_until ? new Date(order.valid_until) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+      const variantPricing = (variants || []).slice().sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0)).map((v) => ({
+        label: v.label,
+        quantity: v.quantity,
+        unit_price: v.unit_price,
+        price: v.total_price,
+        price_status: v.price_status,
+        pricing_label: '',
+        visualization_url: v.visualization_url || '',
+      }));
+      setPrepared({
+        projectOrder: order,
+        quoteNumber: order.quote_number || `MLZ-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
+        validUntil,
+        quote: { pdf_base64: null, final_total: Number(order.total_price) || 0 },
+        quoteDriveUrl: order.quote_pdf_url || '',
+        presentation: { presentation_url: order.presentation_url || '', presentation_pdf_url: order.presentation_pdf_url || '' },
+        clientContent: {
+          presentation_title: order.project_name || `${order.product_name || 'Návrh řešení'} — ${selected.firma || selected.company || selected.name}`,
+          project_goal: order.description || selected.message || '',
+          solution_summary: product?.short_description || '',
+          benefits: [],
+          next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti a finální rozsah realizace.',
+        },
+        variantPricing,
+        visualizationUrls: variantPricing.map((v) => v.visualization_url).filter(Boolean),
+        arUrl: order.ar_url || '',
+        approvedVisualizationAssets: [],
+      });
+      if (!subject.trim()) setSubject(`Projektový návrh + cenová nabídka ${order.quote_number || ''} | ${selected.firma || selected.company || order.product_name || ''} | MLŽIDLA®`.replace('  ', ' '));
+      window.setTimeout(() => document.getElementById('offer-review')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
+  };
+
   const sendTestEmail = async () => {
     const recipient = testEmail.trim().toLowerCase();
     if (!selected || !subject.trim() || !message.trim()) { setError('Nejdříve připravte předmět a text e-mailu.'); return; }
@@ -708,6 +755,11 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
         <div className="border border-border p-5 lg:p-7">
           <NabidkovySuperAgentChat inquiryId={selected?.id} inquiryType={selected?.type} />
+          <div className="mt-4">
+            <button type="button" onClick={loadAgentOffer} disabled={busy === 'load-agent'} className="inline-flex items-center gap-2 rounded-full border border-cyan-300 bg-cyan-50 px-4 py-2 text-xs font-bold text-cyan-900 transition hover:bg-cyan-100 disabled:opacity-50">
+              <FileText size={13} /> {busy === 'load-agent' ? 'Načítám nabídku…' : 'Načíst nabídku Super Agenta do editoru'}
+            </button>
+          </div>
           <div className="mt-8 border-t border-border pt-6" />
           <p className="text-sm font-semibold text-foreground">{selected.name} · {selected.email}</p>
           <div className="mt-2 flex flex-wrap items-center gap-2"><span className="rounded-full bg-muted px-2.5 py-1 font-mono text-[10px] text-muted-foreground">Poptávka ID: {selected.id}</span>{selectedOffers.map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2.5 py-1 font-mono text-[10px] text-secondary">Nabídka: {offer.quote_number || offer.id}</span>)}</div>

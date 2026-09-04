@@ -1,0 +1,262 @@
+/* ============================================================
+   MLŽIDLA® Brand Components — scoped classes from DESIGN_SYSTEM.md
+   Build every branded surface from these. Adapt SIZE + CONTENT only.
+   ============================================================ */
+
+/* --- Buttons · Primary · Default --- */
+.btn-brand-primary {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--brand-secondary);
+  background: var(--brand-accent);
+  border: none;
+  border-radius: var(--brand-radius-sm);
+  padding: 14px 26px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s ease, transform .1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-brand-primary:hover { background: var(--brand-primary); color: var(--brand-on-primary); }
+.btn-brand-primary:active { transform: translateY(1px); }
+
+/* --- Buttons · Primary · On dark --- */
+.btn-brand-primary-dark {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--brand-secondary);
+  background: var(--brand-accent);
+  border: none;
+  border-radius: var(--brand-radius-sm);
+  padding: 14px 26px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s ease, transform .1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-brand-primary-dark:hover { background: var(--brand-on-primary); }
+.btn-brand-primary-dark:active { transform: translateY(1px); }
+
+/* --- Buttons · Secondary · Solid navy --- */
+.btn-brand-secondary {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.01em;
+  font-size: 14px;
+  color: var(--brand-on-primary);
+  background: var(--brand-secondary);
+  border: none;
+  border-radius: var(--brand-radius-sm);
+  padding: 14px 26px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .2s ease, transform .1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-brand-secondary:hover { background: var(--brand-cyan-dark); }
+.btn-brand-secondary:active { transform: translateY(1px); }
+
+/* --- Buttons · Outline · Bordered --- */
+.btn-brand-outline {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.01em;
+  font-size: 14px;
+  color: var(--brand-text);
+  background: transparent;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  padding: 13px 25px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-brand-outline:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+.btn-brand-outline:active { transform: translateY(1px); }
+
+/* --- Buttons · Text link · Inline --- */
+.btn-brand-text {
+  font-family: var(--brand-font-body);
+  font-weight: var(--brand-font-weight-medium);
+  font-size: 14px;
+  color: var(--brand-text);
+  background: transparent;
+  border: none;
+  padding: 12px 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.btn-brand-text:hover { color: var(--brand-primary); }
+.btn-brand-text:active { opacity: .7; }
+
+/* --- Buttons · Text link · Accent link --- */
+.btn-brand-accent-link {
+  font-family: var(--brand-font-body);
+  font-weight: var(--brand-font-weight-semibold);
+  font-size: 14px;
+  color: var(--brand-primary);
+  background: transparent;
+  border: none;
+  padding: 12px 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: letter-spacing .2s ease, color .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-brand-accent-link:hover { color: var(--brand-cyan-dark); letter-spacing: 0.02em; }
+.btn-brand-accent-link:active { opacity: .7; }
+
+/* --- Buttons · Destructive · Delete --- */
+.btn-brand-destructive {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.01em;
+  font-size: 14px;
+  color: var(--brand-on-primary);
+  background: var(--brand-destructive);
+  border: none;
+  border-radius: var(--brand-radius-sm);
+  padding: 14px 26px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: filter .2s ease, transform .1s ease;
+}
+.btn-brand-destructive:hover { filter: brightness(1.1); }
+.btn-brand-destructive:active { transform: translateY(1px); }
+
+/* --- Buttons · Icon button · Symbol --- */
+.btn-brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-primary);
+  background: transparent;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+.btn-brand-icon:hover { border-color: var(--brand-accent); color: var(--brand-accent); }
+.btn-brand-icon:active { transform: translateY(1px); }
+
+/* --- Badges --- */
+.badge-brand-primary {
+  display: inline-flex;
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--brand-on-primary);
+  background: var(--brand-secondary);
+  border-radius: var(--brand-radius-sm);
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.badge-brand-secondary {
+  display: inline-flex;
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--brand-text);
+  background: var(--brand-muted);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  padding: 4px 11px;
+  white-space: nowrap;
+}
+.badge-brand-accent {
+  display: inline-flex;
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--brand-primary);
+  background: transparent;
+  border: 1px solid var(--brand-primary);
+  border-radius: var(--brand-radius-sm);
+  padding: 4px 11px;
+  white-space: nowrap;
+}
+
+/* --- Cards · Produkt --- */
+.card-brand-product {
+  font-family: var(--brand-font-body);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-lg);
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.card-brand-product:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
+.card-brand-product .media { height: 140px; background: linear-gradient(135deg, #0A1628 0%, #0B4F5C 60%, #22D3EE 130%); }
+.card-brand-product .body { padding: 22px; }
+.card-brand-product .eyebrow { font-family: var(--brand-font-body); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-primary); }
+.card-brand-product h3 { font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-bold); font-size: 20px; color: var(--brand-text); margin: 8px 0 6px; letter-spacing: var(--brand-font-heading-letter-spacing); }
+.card-brand-product p { font-size: 13.5px; color: var(--brand-muted-foreground); margin: 0 0 16px; }
+.card-brand-product .cta { display: inline-block; font-size: 13px; font-weight: var(--brand-font-weight-semibold); color: var(--brand-on-primary); background: var(--brand-primary); padding: 9px 16px; border-radius: var(--brand-radius-sm); }
+
+/* --- Cards · Reference --- */
+.card-brand-reference {
+  font-family: var(--brand-font-body);
+  background: var(--brand-secondary);
+  border-radius: var(--brand-radius-lg);
+  padding: 24px;
+  color: var(--brand-on-primary);
+  transition: transform .2s;
+}
+.card-brand-reference:hover { transform: translateY(-2px); }
+.card-brand-reference .tag { font-family: var(--brand-font-body); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-accent); }
+.card-brand-reference h3 { font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-bold); font-size: 22px; margin: 10px 0 8px; letter-spacing: var(--brand-font-heading-letter-spacing); }
+.card-brand-reference p { font-size: 13.5px; color: #B9CBD4; margin: 0 0 18px; line-height: 1.5; }
+.card-brand-reference .stat { font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-bold); font-size: 28px; color: var(--brand-accent); }
+.card-brand-reference .statlabel { font-size: 12px; color: #9DB3BD; }
+
+/* --- Cards · Benefit --- */
+.card-brand-benefit {
+  font-family: var(--brand-font-body);
+  background: var(--brand-muted);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-md);
+  padding: 22px;
+  transition: border-color .2s;
+}
+.card-brand-benefit:hover { border-color: var(--brand-primary); }
+.card-brand-benefit .ico { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: var(--brand-primary); }
+.card-brand-benefit .code { font-family: var(--brand-font-body); font-size: 11px; letter-spacing: .1em; color: var(--brand-muted-foreground); margin-top: 14px; }
+.card-brand-benefit h3 { font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-semibold); font-size: 16px; color: var(--brand-text); margin: 6px 0 6px; }
+.card-brand-benefit p { font-size: 13px; color: var(--brand-muted-foreground); margin: 0; line-height: 1.5; }
+
+/* --- Brand utility helpers --- */
+.text-brand-primary { color: var(--brand-primary); }
+.text-brand-accent { color: var(--brand-accent); }
+.text-brand-secondary { color: var(--brand-secondary); }
+.text-brand-on-primary { color: var(--brand-on-primary); }
+.text-brand-muted { color: var(--brand-muted-foreground); }
+.bg-brand-primary { background-color: var(--brand-primary); }
+.bg-brand-secondary { background-color: var(--brand-secondary); }
+.bg-brand-accent { background-color: var(--brand-accent); }
+.bg-brand-muted { background-color: var(--brand-muted); }
+.bg-brand-surface { background-color: var(--brand-surface); }
+.border-brand { border-color: var(--brand-border); }
+.font-brand-mono { font-family: var(--font-mono); }

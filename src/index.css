@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Albert+Sans:wght@300;400;500;600;700&family=Architects+Daughter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Albert+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('./styles/brand-components.css');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +7,97 @@
 
 @layer base {
   :root {
-    --background: 216 33% 97%;
-    --foreground: 213 60% 10%;
+    --background: 195 57% 97%;
+    --foreground: 101 36% 48%;
     --card: 0 0% 100%;
-    --card-foreground: 213 60% 10%;
-    --popover: 213 60% 10%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 213 60% 10%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 197 74% 40%;
+    --card-foreground: 101 36% 48%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 101 36% 48%;
+    --primary: 213 65% 24%;
+    --primary-foreground: 195 57% 97%;
+    --secondary: 216 60% 10%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 210 16% 91%;
-    --muted-foreground: 213 24% 30%;
-    --accent: 186 64% 49%;
-    --accent-foreground: 213 60% 10%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 210 18% 84%;
-    --input: 210 18% 84%;
-    --ring: 197 74% 40%;
-    --radius: 14px;
-    --font-heading: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --muted: 194 55% 94%;
+    --muted-foreground: 206 14% 41%;
+    --accent: 188 86% 53%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 17 88% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 197 31% 87%;
+    --input: 197 31% 87%;
+    --ring: 213 65% 24%;
+    --radius: 0px;
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Albert Sans', sans-serif;
     --font-reading: 'Albert Sans', sans-serif;
-    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --brand-white: 216 33% 97%;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-heading-line-height: 1.1;
+    --font-heading-letter-spacing: -0.01em;
+    --font-body-line-height: 1.55;
+    --brand-white: 195 57% 97%;
+  }
+  :root {
+    --brand-primary: #153863;
+    --brand-on-primary: #F4FAFC;
+    --brand-secondary: #0A1628;
+    --brand-accent: #22D3EE;
+    --brand-background: #F4FAFC;
+    --brand-surface: #FFFFFF;
+    --brand-text: #6ba84f;
+    --brand-muted: #E7F4F8;
+    --brand-muted-foreground: #5A6B78;
+    --brand-border: #D3E2E8;
+    --brand-destructive: #C2410C;
+    --brand-cyan-dark: #06667a;
+    --brand-stainless-strong: #94A3B8;
+    --brand-font-heading: 'Space Grotesk', sans-serif;
+    --brand-font-body: 'Albert Sans', sans-serif;
+    --brand-font-heading-line-height: 1.1;
+    --brand-font-heading-letter-spacing: -0.01em;
+    --brand-font-body-line-height: 1.55;
+    --brand-font-weight-regular: 400;
+    --brand-font-weight-medium: 500;
+    --brand-font-weight-semibold: 600;
+    --brand-font-weight-bold: 700;
+    --brand-sp-1: 8px;
+    --brand-sp-2: 14px;
+    --brand-sp-3: 22px;
+    --brand-sp-4: 32px;
+    --brand-sp-5: 52px;
+    --brand-sp-6: 88px;
+    --brand-radius-none: 0px;
+    --brand-radius-sm: 0px;
+    --brand-radius-md: 0px;
+    --brand-radius-lg: 0px;
+    --brand-radius-full: 10px;
+    --brand-radius: 0px;
+    --brand-shadow-none: none;
+    --brand-shadow-sm: 0px 1px 2px 0px rgba(10, 22, 40, 0.05);
+    --brand-shadow-md: 0 4px 12px rgba(10,22,40,0.08);
+    --brand-shadow-lg: 0 12px 32px rgba(10,22,40,0.12);
+    --brand-shadow: 0 4px 12px rgba(10,22,40,0.08);
   }
   .dark {
-    --background: 213 60% 7%;
-    --foreground: 210 25% 96%;
-    --card: 213 45% 11%;
-    --card-foreground: 210 25% 96%;
-    --popover: 213 45% 11%;
-    --popover-foreground: 210 25% 96%;
-    --primary: 186 64% 49%;
-    --primary-foreground: 213 60% 10%;
-    --secondary: 197 74% 40%;
+    --background: 216 60% 10%;
+    --foreground: 195 57% 97%;
+    --card: 213 65% 16%;
+    --card-foreground: 195 57% 97%;
+    --popover: 213 65% 16%;
+    --popover-foreground: 195 57% 97%;
+    --primary: 188 86% 53%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 213 65% 24%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 213 25% 18%;
-    --muted-foreground: 210 15% 70%;
-    --accent: 186 64% 49%;
-    --accent-foreground: 213 60% 10%;
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 213 22% 25%;
-    --input: 213 22% 25%;
-    --ring: 186 64% 49%;
-    --brand-white: 210 33% 98%;
+    --muted: 213 40% 20%;
+    --muted-foreground: 194 30% 70%;
+    --accent: 188 86% 53%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 17 88% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 213 30% 30%;
+    --input: 213 30% 30%;
+    --ring: 188 86% 53%;
+    --brand-white: 195 57% 97%;
   }
   .pulselab-theme {
     --background: 216 33% 97%;
@@ -92,18 +137,17 @@
     @apply bg-background text-foreground;
     overflow-x: hidden;
     font-family: var(--font-body);
-    font-size: clamp(1rem, 0.97rem + 0.18vw, 1.075rem);
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 1.72;
+    line-height: var(--font-body-line-height);
     text-align: left;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4, h5 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    font-weight: 600;
-    line-height: 1.14;
-    letter-spacing: -0.035em;
+    line-height: var(--font-heading-line-height);
+    letter-spacing: var(--font-heading-letter-spacing);
   }
   h1 { font-size: clamp(2rem, 5vw, 3.75rem); }
   h2 { font-size: clamp(1.6rem, 3.5vw, 2.75rem); }

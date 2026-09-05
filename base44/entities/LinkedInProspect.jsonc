@@ -1,0 +1,112 @@
+{
+  "name": "LinkedInProspect",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Jm\u00e9no a p\u0159\u00edjmen\u00ed kontaktu"
+    },
+    "role": {
+      "type": "string",
+      "description": "Pozice / role (architekt, starosta, m\u00edstostarosta, mana\u017eer ve\u0159ejn\u00fdch zak\u00e1zek...)"
+    },
+    "organization": {
+      "type": "string",
+      "description": "Organizace / firma / m\u011bsto / obec"
+    },
+    "linkedin_url": {
+      "type": "string",
+      "description": "URL LinkedIn profilu"
+    },
+    "email": {
+      "type": "string",
+      "description": "E-mail (pokud je zn\u00e1m)"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Telefon (pokud je zn\u00e1m)"
+    },
+    "segment": {
+      "type": "string",
+      "enum": [
+        "architekt",
+        "starosta",
+        "mistostarosta",
+        "manazer",
+        "projektant",
+        "rozvojove_odbory",
+        "jiny"
+      ],
+      "default": "jiny",
+      "description": "Segment p\u016fsoben\u00ed kontaktu"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "novy",
+        "ke_kontaktu",
+        "kontaktovano",
+        "odpovedel",
+        "schuzka",
+        "odmitnuto",
+        "archivovano"
+      ],
+      "default": "novy",
+      "description": "Stav sledov\u00e1n\u00ed kontaktu"
+    },
+    "outreach_message": {
+      "type": "string",
+      "description": "Vygenerovan\u00e1 kr\u00e1tk\u00e1 zpr\u00e1va pro osloven\u00ed"
+    },
+    "reference_used": {
+      "type": "string",
+      "enum": [
+        "zoo_praha",
+        "polna",
+        "jicin",
+        "jina"
+      ],
+      "default": "zoo_praha",
+      "description": "Kter\u00e1 reference byla v zpr\u00e1v\u011b pou\u017eita"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Intern\u00ed pozn\u00e1mky o kontaktu"
+    },
+    "last_contacted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum posledn\u00edho kontaktu"
+    },
+    "follow_up_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Pl\u00e1novan\u00fd term\u00edn follow-up"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
@@ -19,6 +19,7 @@ import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
 import AdminTasks from './AdminTasks';
 import AdminSystemDevelopment from './AdminSystemDevelopment';
+import AdminProspects from './AdminProspects';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -31,6 +32,7 @@ const TABS = [
   { id: 'pages', label: 'Stránky', icon: FileStack },
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
+  { id: 'prospects', label: 'Prospecting', icon: Users },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
@@ -118,6 +120,7 @@ export default function Admin() {
     pages: AdminPages,
     media: AdminMedia,
     marketing: AdminMarketing,
+    prospects: AdminProspects,
     poptavky: AdminPoptavky,
     ar: AdminAR,
     analytics: AdminAnalytics,

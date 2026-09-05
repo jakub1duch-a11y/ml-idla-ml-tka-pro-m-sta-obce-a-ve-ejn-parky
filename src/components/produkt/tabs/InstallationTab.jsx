@@ -92,7 +92,7 @@ export default function InstallationTab({ product }) {
             <div className="relative min-h-[360px] overflow-hidden bg-[radial-gradient(circle_at_70%_25%,rgba(65,194,215,.22),transparent_30%),linear-gradient(145deg,#082d3b,#03181f)] p-7 sm:p-9">
               <div className="absolute inset-x-10 bottom-14 h-px bg-white/20" />
               <div className="absolute bottom-14 left-[18%] h-44 w-5 rounded-t-full bg-gradient-to-r from-slate-500 via-white to-slate-600 shadow-[0_0_28px_rgba(255,255,255,.12)]" />
-              <div className="absolute bottom-[54px] left-[calc(18%-18px)] h-3 w-14 rounded bg-slate-400/70" />
+              <div className="absolute bottom-[54px] left-[calc(18%_-_18px)] h-3 w-14 rounded bg-slate-400/70" />
               <div className={'absolute bottom-10 left-[20%] h-2 rounded-full bg-cyan-300/80 shadow-[0_0_18px_rgba(103,232,249,.7)] ' + (selected.value === 'full_excavation' ? 'w-[62%]' : selected.value === 'prepared_water' ? 'w-20' : 'w-[48%] border border-dashed border-cyan-100')} />
               {selected.value === 'temporary_manhole' && <div className="absolute bottom-[26px] right-[16%] h-12 w-24 rounded-[50%] border-4 border-slate-500 bg-slate-800 shadow-xl" />}
               <div className="relative ml-auto max-w-xs rounded-2xl border border-white/10 bg-black/20 p-5 backdrop-blur">

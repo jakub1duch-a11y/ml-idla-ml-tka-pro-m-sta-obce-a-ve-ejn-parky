@@ -7,49 +7,49 @@ const INDUSTRIES = [
   {
     icon: Building2,
     title: 'Města a obce',
-    desc: 'Náměstí, promenády, ulice — ochlazení veřejného prostoru s důrazem na provoz a bezpečnost.',
+    desc: 'Náměstí, promenády, ulice — ochlazení, které zvedne komfort návštěvníků i provozuschopnost prostoru.',
     href: '/kategorie/mesta-obce',
   },
   {
     icon: Trees,
     title: 'Parky a hřiště',
-    desc: 'Mlžné ostrovy a aleje pro komfort obyvatel i návštěvníků v letních měsících.',
+    desc: 'Mlžné ostrovy a aleje, kde se i v horkém létě pobytí příjemně. Bezpečné i pro děti.',
     href: '/kategorie/parky-hriste',
   },
   {
     icon: Waves,
     title: 'Koupaliště a aquaparky',
-    desc: 'Ochlazení zón kolem bazénů a lehátek — příjemnější pobyt pro návštěvníky.',
+    desc: 'Ochlazení zón kolem bazénů a lehátek — delší pobyt a spokojenější návštěvníci.',
     href: '/kategorie/koupaliste',
   },
   {
     icon: UtensilsCrossed,
     title: 'Gastro a terasy',
-    desc: 'Restaurace, kavárny, hotelové terasy — komfort hostů i v největším horku.',
+    desc: 'Restaurace, kavárny, hotelové terasy — hosté zůstanou déle i v největším horku.',
     href: '/kategorie/komercni',
   },
   {
     icon: Sparkles,
     title: 'Wellness a hotely',
-    desc: 'Prémiový detail pro venkovní wellness zóny, bazény a odpočinkové prostory.',
+    desc: 'Prémiový detail pro venkovní wellness, bazény a odpočinkové zóny s pocitem oázy.',
     href: '/kategorie/komercni',
   },
   {
     icon: Calendar,
     title: 'Eventy a festivaly',
-    desc: 'Pronájem mobilních mlžných systémů pro festivaly, konference a venkovní akce.',
+    desc: 'Mobilní mlžné systémy na pronájem — festivaly, konference i venkovní akce se servisem.',
     href: '/kategorie/eventy',
   },
   {
     icon: PenTool,
     title: 'Architekti a developeři',
-    desc: 'Technicky čistý prvek pro koordinaci s projektovou dokumentací a vizualizacemi.',
+    desc: 'Technicky čistý prvek, který lze začlenit do projektové dokumentace a vizualizací.',
     href: '/kategorie/architekti',
   },
   {
     icon: Factory,
     title: 'Průmysl a venkovní prostory',
-    desc: 'Ochlazení pracovišť, hal a venkovních provozů — produktivita i v horkých dnech.',
+    desc: 'Ochlazení pracovišť, hal a venkovních provozů — produktivita a bezpečnost i v horkých dnech.',
     href: '/kategorie/komercni',
   },
 ];
@@ -67,7 +67,7 @@ export default function IndustriesSection() {
             transition={{ duration: reduceMotion ? 0 : 0.45 }}
             className="font-mono text-[11px] font-semibold uppercase tracking-[.2em] text-[#0B6B7A]"
           >
-            Kompletní řešení pro všechna odvětví
+            Řešení pro každé prostředí
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 18 }}
@@ -76,7 +76,7 @@ export default function IndustriesSection() {
             transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.05 }}
             className="mt-4 font-heading text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.02em] text-[#0A1628]"
           >
-            Jeden systém mlžení. Každé prostředí.
+            Jeden systém. Každé prostředí.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
@@ -85,8 +85,7 @@ export default function IndustriesSection() {
             transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.12 }}
             className="mt-5 text-base leading-7 text-[#5A6B78] sm:text-lg"
           >
-            Od náměstí po zahradu, od festivalu po průmyslovou halu. Navrhujeme, vyrábíme a instalujeme
-            nerezová mlžítka přizpůsobená konkrétnímu prostoru a provozu.
+            Od náměstí po zahradu, od festivalu po průmyslovou halu. Navrhujeme, vyrábíme a instalujeme nerezová mlžítka přesně pro váš prostor a provoz.
           </motion.p>
         </div>
 

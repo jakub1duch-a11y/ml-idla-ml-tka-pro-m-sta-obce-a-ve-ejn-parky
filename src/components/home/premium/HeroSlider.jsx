@@ -59,7 +59,7 @@ export default function HeroSlider() {
             transition={{ duration: .5, delay: .12 }}
             className="mt-6 max-w-xl text-base leading-7 text-white/76 sm:text-lg"
           >
-            Nerezová mlžítka pro města, parky, promenády, areály i zahrady. Jemná mlha zvyšuje komfort v horkých dnech a systém lze řídit podle času, teploty nebo provozu.
+            Nerezová mlžítka pro města, parky i zahrady. Jemná mlha ochladí až o 10 °C, běžný vodovodní řad stačí a chytré řízení spustí mlžení jen podle potřeby.
           </motion.p>
 
           <motion.div

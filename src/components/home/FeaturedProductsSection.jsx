@@ -33,11 +33,11 @@ export default function FeaturedProductsSection() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }} className="mb-8 sm:mb-10">
-          <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm">NAŠE PRODUKTY</p>
+          <p className="font-mono tracking-widest uppercase text-slate-400 mb-3 text-sm">NAŠE MLŽÍTKA</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-medium tracking-[-0.03em] text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-[clamp(2rem,8vw,2.4rem)] lg:text-3xl">
-              Oblíbené instalace
+              Nejvyhledávanější mlžítka
             </motion.h2>
             <Link to="/mlzidla-mlzitka" className="btn-metallic-mist inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-center text-sm font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5 sm:w-auto">Prohlédnout kolekce mlžítek
 

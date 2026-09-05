@@ -43,7 +43,7 @@ export default function CommercialIndustrialSection() {
               transition={{ duration: reduceMotion ? 0 : 0.45 }}
               className="font-mono text-[11px] font-semibold uppercase tracking-[.2em] text-[#22D3EE]"
             >
-              Špičková řešení pro komerční a průmyslové mlžení
+              Zakázková výroba bez kompromisů
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 18 }}
@@ -61,10 +61,8 @@ export default function CommercialIndustrialSection() {
               transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.12 }}
               className="mt-5 max-w-xl text-base leading-7 text-white/72 sm:text-lg"
             >
-              S využitím silných odborných znalostí v oblasti návrhu a vývoje se specializujeme na
-              vytváření zakázkových rozprašovacích nerezových mlžítek, přizpůsobených jedinečným
-              požadavkům zákazníků — což zajišťuje efektivitu a spolehlivost každého námi poskytovaného
-              řešení.
+              Navrhujeme a vyrábíme mlžítka na míru — přesně pro vaši lokalitu, prostor i zadání.
+              Od skici přes výrobu z nerezu až po instalaci a servis. Bez katalogových kompromisů.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 14 }}

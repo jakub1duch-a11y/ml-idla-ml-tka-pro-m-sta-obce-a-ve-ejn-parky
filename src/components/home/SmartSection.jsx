@@ -23,7 +23,7 @@ export default function SmartSection() {
             </div>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="mb-6 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-[hsl(var(--popover-foreground))] lg:text-4xl">
-              Chytré řízení, které spouští mlžení jen tehdy, kdy dává smysl
+              Chytré řízení, které mlží jen tehdy, když dává smysl
             </motion.h2>
             
 

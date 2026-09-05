@@ -34,7 +34,7 @@ export default function ContactSection() {
             Popište nám prostor.<br />Navrhneme řešení.
           </motion.h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Projdeme váš záměr, provozní podmínky i architekturu místa a doporučíme, co bude fungovat nejlépe.
+            Projdeme záměr, provoz i architekturu místa. Doporučíme, co bude fungovat nejlépe — a do 48 hodin pošleme návrh.
           </p>
         </motion.div>
 

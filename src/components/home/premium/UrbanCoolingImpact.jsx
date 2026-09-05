@@ -26,8 +26,8 @@ export default function UrbanCoolingImpact() {
         <div className="grid items-center gap-12 sm:gap-14 lg:grid-cols-2 lg:gap-16">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-white/70">Dopad na veřejný prostor</p>
-            <h2 className="mb-5 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-white md:text-4xl">Zpříjemněte veřejný prostor i během horkých dnů</h2>
-            <p className="max-w-md text-base leading-relaxed text-white/80">Jemná vodní mlha rychle ochlazuje bezprostřední okolí mlžítka a vytváří příjemnější podmínky pro pobyt na náměstích, v parcích, areálech i na terasách.</p>
+            <h2 className="mb-5 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-white md:text-4xl">Veřejný prostor, kde se pobyt i v horku</h2>
+            <p className="max-w-md text-base leading-relaxed text-white/80">Jemná mlha okamžitě ochlazuje okolí a prodlužuje pobyt návštěvníků na náměstích, v parcích i na terasách.</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {BENEFITS.map((b, i) =>

@@ -29,8 +29,8 @@ export default function PremiumOasisSection() {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="mb-16 grid items-center gap-8 sm:mb-20 sm:gap-10 lg:mb-24 lg:grid-cols-2 lg:gap-12">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h2 className="mb-4 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-foreground sm:mb-5 md:text-4xl">Ochlazení navržené jako součást prostoru.</h2>
-            <p className="text-measure font-body text-base leading-7 text-muted-foreground sm:text-lg sm:leading-relaxed">Jemná mlha pomáhá v horkých dnech snížit pocitovou teplotu až o 5–10 °C. Nízkotlaké řešení lze napojit na běžný vodovodní řad a doplnit o chytré řízení provozu.</p>
+            <h2 className="mb-4 font-heading text-[clamp(2rem,8vw,2.6rem)] leading-[1.08] tracking-[-0.035em] text-foreground sm:mb-5 md:text-4xl">Ochlazení, které do prostoru patří.</h2>
+            <p className="text-measure font-body text-base leading-7 text-muted-foreground sm:text-lg sm:leading-relaxed">Jemná mlha snižuje pocitovou teplotu až o 10 °C. Nízkotlaké řešení na běžný vodovodní řad, bez čerpadla, s chytrým řízením provozu.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
             <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/542c4e977_mlzitka-mesto-polna.webp" alt="Moderní nerezová mlžná brána instalovaná na náměstí" className="w-full rounded-2xl shadow-xl" />

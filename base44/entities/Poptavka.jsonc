@@ -1,79 +1,63 @@
 {
   "name": "Poptavka",
-  "type": "object",
   "properties": {
-    "jmeno": {
-      "type": "string",
-      "description": "Jm\u00e9no a p\u0159\u00edjmen\u00ed"
-    },
-    "email": {
-      "type": "string",
-      "description": "Email"
-    },
-    "telefon": {
-      "type": "string",
-      "description": "Telefon"
-    },
-    "firma": {
-      "type": "string",
-      "description": "Firma / organizace"
-    },
-    "produkt": {
-      "type": "string",
-      "description": "Z\u00e1jem o produkt"
-    },
-    "service_type": {
-      "type": "string",
-      "description": "Zdroj / typ slu\u017eby popt\u00e1vky"
-    },
-    "request_type": {
-      "type": "string",
-      "enum": [
-        "standard",
-        "other_product",
-        "custom_design"
-      ],
-      "default": "standard",
-      "description": "Typ po\u017eadavku z klientsk\u00e9ho port\u00e1lu"
-    },
-    "custom_shape": {
-      "type": "string",
-      "description": "Po\u017eadovan\u00fd tvar / p\u0159edstava vlastn\u00edho n\u00e1vrhu"
+    "attachment_names": {
+      "description": "N\u00e1zvy p\u0159\u00edloh dodan\u00fdch z\u00e1kazn\u00edkem",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
     },
     "attachment_urls": {
-      "type": "array",
+      "description": "P\u0159\u00edlohy dodan\u00e9 z\u00e1kazn\u00edkem",
       "items": {
         "type": "string"
       },
-      "description": "P\u0159\u00edlohy dodan\u00e9 z\u00e1kazn\u00edkem"
+      "type": "array"
     },
-    "attachment_names": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "N\u00e1zvy p\u0159\u00edloh dodan\u00fdch z\u00e1kazn\u00edkem"
+    "custom_shape": {
+      "description": "Po\u017eadovan\u00fd tvar / p\u0159edstava vlastn\u00edho n\u00e1vrhu",
+      "type": "string"
     },
-    "source_project_order_id": {
-      "type": "string",
-      "description": "Projekt, ze kter\u00e9ho klient zalo\u017eil navazuj\u00edc\u00ed popt\u00e1vku"
+    "email": {
+      "description": "Email",
+      "type": "string"
     },
-    "zprava": {
-      "type": "string",
-      "description": "Zpr\u00e1va / popt\u00e1vka"
+    "firma": {
+      "description": "Firma / organizace",
+      "type": "string"
     },
-    "status": {
-      "type": "string",
+    "installation_location": {
+      "description": "M\u011bsto nebo p\u0159esn\u00e9 m\u00edsto instalace",
+      "type": "string"
+    },
+    "installation_option": {
+      "description": "Po\u017eadovan\u00fd rozsah instalace",
       "enum": [
-        "nova",
-        "v_reseni",
-        "uzavrena"
+        "full_excavation",
+        "prepared_water",
+        "temporary_manhole",
+        "product_only",
+        "unsure"
       ],
-      "default": "nova",
-      "description": "Stav popt\u00e1vky"
+      "type": "string"
+    },
+    "jmeno": {
+      "description": "Jm\u00e9no a p\u0159\u00edjmen\u00ed",
+      "type": "string"
+    },
+    "monday_item_id": {
+      "description": "ID polo\u017eky v Monday.com propojen\u00e9 s touto popt\u00e1vkou",
+      "type": "string"
+    },
+    "needs_installation_quote": {
+      "default": false,
+      "description": "Z\u00e1kazn\u00edk po\u017eaduje nacenit instalaci",
+      "type": "boolean"
     },
     "offer_status": {
-      "type": "string",
+      "default": "nova_poptavka",
+      "description": "Stav AI workflow nab\u00eddky: NOV\u00c1 POPT\u00c1VKA \u2192 KONCEPT \u2192 K OV\u011a\u0158EN\u00cd \u2192 SCHV\u00c1LENO \u2192 ODESL\u00c1NO",
       "enum": [
         "nova_poptavka",
         "koncept",
@@ -81,12 +65,93 @@
         "schvaleno",
         "odeslano"
       ],
-      "default": "nova_poptavka",
-      "description": "Stav AI workflow nab\u00eddky: NOV\u00c1 POPT\u00c1VKA \u2192 KONCEPT \u2192 K OV\u011a\u0158EN\u00cd \u2192 SCHV\u00c1LENO \u2192 ODESL\u00c1NO"
+      "type": "string"
     },
-    "monday_item_id": {
-      "type": "string",
-      "description": "ID polo\u017eky v Monday.com propojen\u00e9 s touto popt\u00e1vkou"
+    "photo_count": {
+      "default": 0,
+      "description": "Po\u010det p\u0159ilo\u017een\u00fdch fotografi\u00ed prostoru",
+      "maximum": 5,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "produkt": {
+      "description": "Z\u00e1jem o produkt",
+      "type": "string"
+    },
+    "quantity": {
+      "default": 1,
+      "description": "Po\u017eadovan\u00fd po\u010det kus\u016f",
+      "minimum": 1,
+      "type": "integer"
+    },
+    "request_type": {
+      "default": "standard",
+      "description": "Typ po\u017eadavku z klientsk\u00e9ho port\u00e1lu",
+      "enum": [
+        "standard",
+        "other_product",
+        "custom_design"
+      ],
+      "type": "string"
+    },
+    "requested_visualization": {
+      "default": false,
+      "description": "Z\u00e1kazn\u00edk \u017e\u00e1d\u00e1 vizualizaci produktu ve sv\u00e9m prostoru",
+      "type": "boolean"
+    },
+    "service_type": {
+      "description": "Zdroj / typ slu\u017eby popt\u00e1vky",
+      "type": "string"
+    },
+    "source_project_order_id": {
+      "description": "Projekt, ze kter\u00e9ho klient zalo\u017eil navazuj\u00edc\u00ed popt\u00e1vku",
+      "type": "string"
+    },
+    "status": {
+      "default": "nova",
+      "description": "Stav popt\u00e1vky",
+      "enum": [
+        "nova",
+        "v_reseni",
+        "uzavrena"
+      ],
+      "type": "string"
+    },
+    "surface_type": {
+      "description": "Povrch v m\u00edst\u011b instalace",
+      "enum": [
+        "unknown",
+        "paving",
+        "asphalt",
+        "concrete",
+        "grass",
+        "gravel",
+        "other"
+      ],
+      "type": "string"
+    },
+    "telefon": {
+      "description": "Telefon",
+      "type": "string"
+    },
+    "trench_length_m": {
+      "description": "Odhad d\u00e9lky v\u00fdkopov\u00e9 trasy v metrech",
+      "minimum": 0,
+      "type": "number"
+    },
+    "water_connection_state": {
+      "description": "Stav a um\u00edst\u011bn\u00ed p\u0159\u00edvodu vody",
+      "enum": [
+        "unknown",
+        "ready_at_location",
+        "in_manhole",
+        "requires_route"
+      ],
+      "type": "string"
+    },
+    "zprava": {
+      "description": "Zpr\u00e1va / popt\u00e1vka",
+      "type": "string"
     }
   },
   "required": [
@@ -94,6 +159,7 @@
     "email",
     "zprava"
   ],
+  "type": "object",
   "rls": {
     "create": null,
     "read": {

@@ -8,6 +8,7 @@ import { setSEO, getProductSEO } from '@/lib/seo';
 import { resolveMediaUrl } from '@/lib/optimizedMedia';
 import ProductReviews from '@/components/reviews/ProductReviews';
 import ProductHero from '@/components/produkt/ProductHero';
+import ProductMotionSection from '@/components/produkt/ProductMotionSection';
 import ProductStickyFooterBar from '@/components/produkt/ProductStickyFooterBar';
 import OProduktuTab from '@/components/produkt/tabs/OProduktuTab';
 import SpecsTab from '@/components/produkt/tabs/SpecsTab';
@@ -302,6 +303,8 @@ export default function ProduktDetail() {
         onOpenLightbox={(i) => setLightbox({ mediaItems: allMedia, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
 
+      {/* ═══════ FILMOVÝ PRODUCT HERO ═══════ */}
+      {product.video_url && <ProductMotionSection product={product} />}
 
       {/* ═══════ OÁZA SIGNATURE EXPERIENCE ═══════ */}
       {product.slug === 'oaza-aura-bendy' && (
@@ -443,7 +446,7 @@ export default function ProduktDetail() {
               </motion.div>
             </div>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
-              <ProductContactForm productName={product.name} />
+              <ProductContactForm productName={product.name} product={product} />
             </motion.div>
           </div>
         </div>

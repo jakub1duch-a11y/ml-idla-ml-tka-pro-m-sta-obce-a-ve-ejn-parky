@@ -19,7 +19,7 @@ const STATUS_COLORS = {
   odeslano: 'bg-primary/10 text-primary border-primary/30',
 };
 
-export default function OfferConceptPanel({ inquiry, onRefresh }) {
+export default function OfferConceptPanel({ inquiry, onRefresh, onOrder }) {
   const [concept, setConcept] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -211,6 +211,7 @@ export default function OfferConceptPanel({ inquiry, onRefresh }) {
               visualizationUrl={concept.visualization_url}
               offerStatus={offerStatus}
               clientInfo={inquiry}
+              onOrder={onOrder}
             />
           ) : (
             <p className="text-sm text-muted-foreground">Načtěte koncept pomocí tlačítka „Vytvořit nabídku".</p>

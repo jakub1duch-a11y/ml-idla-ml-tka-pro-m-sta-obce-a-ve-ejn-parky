@@ -767,7 +767,17 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           <p className="mt-3 text-sm text-muted-foreground">{selected.message}</p>
 
           <div className="mt-4">
-            <OfferConceptPanel inquiry={selected} onRefresh={refreshSalesData} />
+            <OfferConceptPanel
+              inquiry={selected}
+              onRefresh={onSent}
+              onOrder={(mode) => {
+                if (mode === 'edit_order') {
+                  document.getElementById('offer-review')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                  autoPrepareFromText();
+                }
+              }}
+            />
           </div>
 
           {selectedOffers.length > 0 && <details className="mt-5 rounded-2xl border border-amber-200 bg-amber-50/50 p-4 sm:p-5">

@@ -9,7 +9,7 @@ import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
 import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
 import SmartSection from '@/components/home/SmartSection';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
-import ReferenceSection from '@/components/home/ReferenceSection';
+import ProjectGallerySection from '@/components/home/ProjectGallerySection';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import BlogSection from '@/components/home/BlogSection';
 import ContactSection from '@/components/home/ContactSection';
@@ -43,7 +43,7 @@ export default function Home() {
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>
       <FadeIn><ConceptToRealitySection /></FadeIn>
-      <FadeIn><ReferenceSection /></FadeIn>
+      <FadeIn><ProjectGallerySection /></FadeIn>
     </>
   );
 }

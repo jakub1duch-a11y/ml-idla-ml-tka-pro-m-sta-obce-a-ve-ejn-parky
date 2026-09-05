@@ -374,6 +374,17 @@
   .mx-auto.max-w-4xl, .mx-auto.max-w-4xl * { visibility: visible; }
   .mx-auto.max-w-4xl { position: absolute; left: 0; top: 0; width: 100%; max-width: 100% !important; }
   .mx-auto.max-w-4xl > div:last-child { border: none !important; padding: 0 !important; }
+  @page { size: A4; margin: 12mm; }
+  .fixed.inset-0.z-\[200\] { position: absolute !important; inset: 0 !important; background: white !important; }
+  .fixed.inset-0.z-\[200\] * { visibility: visible !important; color: #0A1628 !important; }
+  .fixed.inset-0.z-\[200\] .text-white { color: #0A1628 !important; }
+  .fixed.inset-0.z-\[200\] .text-slate-400 { color: #64748b !important; }
+  .fixed.inset-0.z-\[200\] .text-slate-500 { color: #64748b !important; }
+  .fixed.inset-0.z-\[200\] .text-slate-600 { color: #475569 !important; }
+  .fixed.inset-0.z-\[200\] .text-slate-700 { color: #334155 !important; }
+  .fixed.inset-0.z-\[200\] .text-slate-900 { color: #0A1628 !important; }
+  .fixed.inset-0.z-\[200\] .border-slate-200 { border-color: #e2e8f0 !important; }
+  .fixed.inset-0.z-\[200\] .border-slate-900 { border-color: #0A1628 !important; }
 }
 
 @keyframes mlzWordmarkIn {

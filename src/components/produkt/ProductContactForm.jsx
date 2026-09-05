@@ -86,12 +86,16 @@ export default function ProductContactForm({ productName, product }) {
   const addFiles = (event) => {
     const incoming = Array.from(event.target.files || []);
     const valid = incoming.filter((file) => (file.type.startsWith('image/') || file.type === 'application/pdf') && file.size <= MAX_FILE_SIZE);
-    if (valid.length !== incoming.length) {
-      setError('Přijímáme fotografie nebo PDF do 12 MB za soubor.');
-    } else {
-      setError('');
-    }
-    setFiles((current) => [...current, ...valid].slice(0, MAX_FILES));
+    setFiles((current) => {
+      if (current.length + valid.length > MAX_FILES) {
+        setError('Můžete přiložit nejvýše 5 souborů. Nadbytečné soubory jsme nepřidali.');
+      } else if (valid.length !== incoming.length) {
+        setError('Přijímáme fotografie nebo PDF do 12 MB za soubor.');
+      } else {
+        setError('');
+      }
+      return [...current, ...valid].slice(0, MAX_FILES);
+    });
     event.target.value = '';
   };
 
@@ -253,6 +257,11 @@ export default function ProductContactForm({ productName, product }) {
         </label>
         <label className="text-xs font-mono uppercase tracking-widest text-slate-400">Počet kusů
           <input required min="1" max="50" type="number" value={form.quantity} onChange={(event) => setForm((current) => ({ ...current, quantity: event.target.value }))} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-[#0b4860]" />
+        </label>
+        <label className="text-xs font-mono uppercase tracking-widest text-slate-400 sm:col-span-2">SMART řízení
+          <select value={form.smartVariant} onChange={(event) => setForm((current) => ({ ...current, smartVariant: event.target.value }))} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm normal-case tracking-normal text-slate-900 outline-none focus:border-[#0b4860]">
+            {SMART_VARIANTS.map((variant) => <option key={variant.value} value={variant.value}>{variant.label}</option>)}
+          </select>
         </label>
         {form.installationType === 'full_excavation' && (
           <label className="text-xs font-mono uppercase tracking-widest text-slate-400 sm:col-span-2">Odhad délky výkopu v metrech

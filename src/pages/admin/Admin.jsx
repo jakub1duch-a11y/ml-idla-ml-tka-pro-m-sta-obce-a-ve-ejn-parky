@@ -20,6 +20,7 @@ import AdminDatabricks from './AdminDatabricks';
 import AdminTasks from './AdminTasks';
 import AdminSystemDevelopment from './AdminSystemDevelopment';
 import AdminProspects from './AdminProspects';
+import AdminCRM from './AdminCRM';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -33,6 +34,7 @@ const TABS = [
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'prospects', label: 'Prospecting', icon: Users },
+  { id: 'crm', label: 'CRM Corporate', icon: BriefcaseBusiness },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
@@ -121,6 +123,7 @@ export default function Admin() {
     media: AdminMedia,
     marketing: AdminMarketing,
     prospects: AdminProspects,
+    crm: AdminCRM,
     poptavky: AdminPoptavky,
     ar: AdminAR,
     analytics: AdminAnalytics,

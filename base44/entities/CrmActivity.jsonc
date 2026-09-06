@@ -1,0 +1,121 @@
+{
+  "name": "CrmActivity",
+  "type": "object",
+  "properties": {
+    "contact_email": {
+      "type": "string",
+      "description": "E-mail kontaktu (kl\u00ed\u010d pro propojen\u00ed s klientem)"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Jm\u00e9no kontaktu"
+    },
+    "contact_company": {
+      "type": "string",
+      "description": "Firma / organizace kontaktu"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "call",
+        "email",
+        "meeting",
+        "note",
+        "task",
+        "visit",
+        "offer_sent",
+        "follow_up"
+      ],
+      "default": "note",
+      "description": "Typ aktivity"
+    },
+    "subject": {
+      "type": "string",
+      "description": "P\u0159edm\u011bt / n\u00e1zev aktivity"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detail aktivity / pozn\u00e1mka",
+      "maxLength": 3000
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "done",
+        "cancelled",
+        "overdue"
+      ],
+      "default": "planned",
+      "description": "Stav aktivity"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Pl\u00e1novan\u00fd term\u00edn"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Kdy byla aktivita dokon\u010dena"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "E-mail p\u0159i\u0159azen\u00e9 osoby (owner)"
+    },
+    "related_order_id": {
+      "type": "string",
+      "description": "Odkaz na ProjectOrder (deal)"
+    },
+    "related_inquiry_id": {
+      "type": "string",
+      "description": "Odkaz na Poptavku nebo ContactInquiry"
+    },
+    "related_inquiry_type": {
+      "type": "string",
+      "enum": [
+        "poptavka",
+        "contact"
+      ],
+      "description": "Typ zdrojov\u00e9 popt\u00e1vky"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Priorita aktivity"
+    }
+  },
+  "required": [
+    "contact_email",
+    "type",
+    "subject"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

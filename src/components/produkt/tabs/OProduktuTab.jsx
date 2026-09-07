@@ -49,10 +49,10 @@ export default function OProduktuTab({ product, onOpenLightbox }) {
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .08 }} className="grid grid-cols-2 gap-3">
             {[
-              { icon: Droplets, title: 'Jemná mlha', text: 'Ochlazení bez mokrého pocitu při správném návrhu.' },
-              { icon: ShieldCheck, title: 'Bez čerpadla', text: 'Nízkotlaký princip přímo z vodovodního řádu.' },
-              { icon: MapPin, title: 'Pro veřejný prostor', text: 'Města, parky, hřiště, sportoviště i areály.' },
-              { icon: Sparkles, title: 'Nerezový design', text: 'Čistý architektonický výraz a odolné provedení.' }
+              { icon: Droplets, title: 'Jemná vodní mlha', text: 'Charakter mlžení se ladí podle tlaku, počasí, osazení a provozního režimu.' },
+              { icon: ShieldCheck, title: 'Nízkotlaké řešení', text: 'U vhodných konfigurací lze využít běžný přívod vody; přesné podmínky potvrzuje technická specifikace.' },
+              { icon: MapPin, title: 'Návrh pro konkrétní místo', text: 'Počet prvků, orientace a provozní scénář přizpůsobujeme skutečnému prostoru a způsobu využití.' },
+              { icon: Sparkles, title: 'Nerezový design', text: 'Čistý architektonický výraz s materiálem a povrchem potvrzeným pro konkrétní produkt.' }
             ].map(({ icon: Icon, title, text }) => (
               <div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <Icon size={18} className="text-[#0b4860]" strokeWidth={1.8} />

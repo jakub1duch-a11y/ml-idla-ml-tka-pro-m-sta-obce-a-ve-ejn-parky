@@ -5,12 +5,31 @@ import { base44 } from '@/api/base44Client';
 
 export default function OProduktuTab({ product, onOpenLightbox }) {
   const [realizace, setRealizace] = useState([]);
+  const [galleryLabel, setGalleryLabel] = useState('Realizace produktu');
 
   useEffect(() => {
     if (!product?.name) return;
-    base44.entities.Realizace.filter({ product_used: product.name }).
-    then((res) => setRealizace((res || []).filter((r) => r.published !== false && r.image_url).slice(0, 6))).
-    catch(() => setRealizace([]));
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const exact = await base44.entities.Realizace.filter({ product_used: product.name });
+        const exactPublished = (exact || []).filter((r) => r.published !== false && r.image_url).slice(0, 6);
+        if (cancelled) return;
+        if (exactPublished.length) {
+          setRealizace(exactPublished);
+          setGalleryLabel(`Realizace produktu ${product.name}`);
+          return;
+        }
+        const featured = await base44.entities.Realizace.filter({ featured: true });
+        if (cancelled) return;
+        setRealizace((featured || []).filter((r) => r.published !== false && r.image_url).slice(0, 6));
+        setGalleryLabel('Vybrané realizace MLŽIDLA®');
+      } catch {
+        if (!cancelled) setRealizace([]);
+      }
+    };
+    load();
+    return () => { cancelled = true; };
   }, [product?.name]);
 
   const realizaceImages = realizace.map((r) => r.image_url);
@@ -22,7 +41,7 @@ export default function OProduktuTab({ product, onOpenLightbox }) {
 
         {realizaceImages.length > 0 &&
         <div className="mb-14">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">Fotogalerie — {product.name}</p>
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-5">{galleryLabel}</p>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {realizaceImages.map((url, i) =>
             <motion.button key={url + i} type="button" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}

@@ -391,3 +391,34 @@
   0% { opacity: 0; transform: translate3d(-5px, 2px, 0); filter: blur(3px); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
 }
+
+/* Homepage hero micro-interactions */
+.hero-mist-layer {
+  pointer-events: none;
+  position: absolute;
+  inset: auto -10% -12% -10%;
+  height: 42%;
+  opacity: .46;
+  filter: blur(28px);
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse at 18% 70%, rgba(218,255,255,.32), transparent 32%),
+    radial-gradient(ellipse at 48% 60%, rgba(158,234,240,.24), transparent 38%),
+    radial-gradient(ellipse at 78% 78%, rgba(255,255,255,.26), transparent 34%);
+  animation: heroMistFloat 14s ease-in-out infinite alternate;
+}
+.hero-mist-layer-b {
+  inset: 8% -18% auto -18%;
+  height: 38%;
+  opacity: .2;
+  filter: blur(38px);
+  animation-duration: 19s;
+  animation-direction: alternate-reverse;
+}
+@keyframes heroMistFloat {
+  from { transform: translate3d(-2%, 2%, 0) scale(1); }
+  to { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mist-layer { animation: none; }
+}

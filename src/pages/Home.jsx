@@ -1,23 +1,16 @@
 import React, { useEffect } from 'react';
 import { SEO_PAGES, setSEO } from '@/lib/seo';
-import HeroSlider from '@/components/home/premium/HeroSlider';
-import IndustriesSection from '@/components/home/IndustriesSection';
-import CommercialIndustrialSection from '@/components/home/CommercialIndustrialSection';
-import CustomDesignSection from '@/components/home/CustomDesignSection';
-import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
-import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
-import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
-import SmartSection from '@/components/home/SmartSection';
+import HeroDynamic from '@/components/home/HeroDynamic';
+import StatsBar from '@/components/home/StatsBar';
+import WhoForSection from '@/components/home/WhoForSection';
+import HowItWorksSteps from '@/components/home/HowItWorksSteps';
+import RecentReferences from '@/components/home/RecentReferences';
+import QuickInquiryForm from '@/components/home/QuickInquiryForm';
+import MobileStickyBar from '@/components/home/MobileStickyBar';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
-import ProjectGallerySection from '@/components/home/ProjectGallerySection';
-import InstagramFeedSection from '@/components/home/InstagramFeedSection';
+import FadeIn from '@/components/common/FadeIn';
 import BlogSection from '@/components/home/BlogSection';
 import ContactSection from '@/components/home/ContactSection';
-import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
-import MistVideoShowcase from '@/components/common/MistVideoShowcase';
-import FadeIn from '@/components/common/FadeIn';
-import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
-import HomepageVideoLoops from '@/components/home/HomepageVideoLoops';
 
 export default function Home() {
   useEffect(() => {
@@ -26,24 +19,16 @@ export default function Home() {
 
   return (
     <>
-      <HeroSlider />
-
-      <FadeIn><IndustriesSection /></FadeIn>
-      <FadeIn><HomepageVideoLoops /></FadeIn>
-      <FadeIn><CommercialIndustrialSection /></FadeIn>
-      <FadeIn><PremiumServicesSection /></FadeIn>
-      <FadeIn><PremiumOasisSection /></FadeIn>
-      <FadeIn><UrbanCoolingImpact /></FadeIn>
-      <FadeIn><SmartSection /></FadeIn>
-      <FadeIn><FeaturedProductsSection /></FadeIn>
-      <FadeIn><CustomDesignSection /></FadeIn>
-      <FadeIn><MistVideoShowcase /></FadeIn>
-      <AIProjectDesignerSection />
-      <FadeIn><InstagramFeedSection /></FadeIn>
+      <HeroDynamic />
+      <StatsBar />
+      <WhoForSection />
+      <FeaturedProductsSection />
+      <HowItWorksSteps />
+      <RecentReferences />
       <FadeIn><BlogSection /></FadeIn>
+      <QuickInquiryForm />
       <FadeIn><ContactSection /></FadeIn>
-      <FadeIn><ConceptToRealitySection /></FadeIn>
-      <FadeIn><ProjectGallerySection /></FadeIn>
+      <MobileStickyBar />
     </>
   );
 }

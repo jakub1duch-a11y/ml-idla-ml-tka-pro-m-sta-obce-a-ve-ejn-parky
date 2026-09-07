@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, BadgeCheck, Building2, FileText, ScanLine, Box } from 'lucide-react';
+import { ChevronRight, ArrowRight, BadgeCheck, Building2, FileText, ScanLine, Box, Clock, ShieldCheck } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
@@ -69,22 +69,34 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
 
           <ProductSignatureSystem product={product} showSignatures={false} />
 
-          <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-semibold text-slate-600">
+          {/* Cenový blok */}
+          <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            {product.price_from && Number(product.price_from) > 1 ? (
+              <>
+                <p className="text-2xl font-heading font-bold text-[#0b4860]">od {new Intl.NumberFormat('cs-CZ').format(product.price_from)} Kč <span className="text-sm font-normal text-slate-500">bez DPH</span></p>
+                <p className="mt-1 text-xs text-slate-400">bez instalace a dopravy · cena se upřesní v nabídkce</p>
+              </>
+            ) : (
+              <p className="text-lg font-heading font-semibold text-slate-700">cena na poptávku</p>
+            )}
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-semibold text-slate-600">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5"><Building2 size={13} className="text-[#0b4860]" /> Český návrh a výroba</span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5"><BadgeCheck size={13} className="text-[#0b4860]" /> HolmTec s.r.o. · technická podpora</span>
           </div>
 
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             <Link
-                to={`/kontakt?produkt=${encodeURIComponent(mrakSelection)}`}
+                to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`}
                 onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
                 className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-              Poptat cenu a řešení <ArrowRight size={16} />
+              Poptat s instalací <ArrowRight size={16} />
             </Link>
             <Link
                 to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
                 className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/20 bg-white px-6 py-3.5 text-sm font-bold text-[#0b4860] transition-colors hover:bg-slate-50">
-              Vizualizovat ve vašem prostoru <ScanLine size={16} />
+              Vizualizovat do mého prostoru <ScanLine size={16} />
             </Link>
             {(product.slug === 'mlzitko-bendy' || product.slug === 'mlzna-brana-gate') && (
               <Link
@@ -99,6 +111,13 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
                 className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-full hover:bg-slate-50 transition-colors">
               Technické parametry <FileText size={14} />
             </button>
+          </div>
+
+          {/* Trust line pod CTA */}
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500">
+            <span className="inline-flex items-center gap-1.5"><Clock size={13} className="text-[#0b4860]" /> Vizualizace zdarma do 48 h</span>
+            <span className="inline-flex items-center gap-1.5"><Building2 size={13} className="text-[#0b4860]" /> Česká výroba</span>
+            <span className="inline-flex items-center gap-1.5"><ShieldCheck size={13} className="text-[#0b4860]" /> Nerez AISI 316L</span>
           </div>
 
           <ProductARQR product={product} />

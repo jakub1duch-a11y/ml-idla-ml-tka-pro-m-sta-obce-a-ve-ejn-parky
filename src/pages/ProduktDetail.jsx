@@ -189,8 +189,9 @@ export default function ProduktDetail() {
       base44.entities.MediaFile.filter({ product_slug: p.slug }).catch(() => [])]
       );
       setProductMedia((mediaFiles || []).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
-      const sameCategory = (related || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska');
-      const fallback = (allProducts || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !sameCategory.some((item) => item.id === r.id));
+      const isArchived = (slug) => String(slug || '').startsWith('archived-');
+      const sameCategory = (related || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !isArchived(r.slug));
+      const fallback = (allProducts || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !isArchived(r.slug) && !sameCategory.some((item) => item.id === r.id));
       const similar = [...sameCategory, ...fallback].slice(0, 3);
       const nozzle = nozzleResults?.[0];
       setRelatedProducts(nozzle && nozzle.id !== p.id ? [...similar, nozzle] : similar);
@@ -285,6 +286,7 @@ export default function ProduktDetail() {
   product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Materiál a povrchové provedení se řídí specifikací daného produktu a prostředím konkrétní instalace.' },
   { label: 'Povrch', value: 'Broušený / kartáčovaný dle provedení', icon: Sparkles, desc: 'Konkrétní povrch potvrzujeme v nabídce a výrobní specifikaci daného projektu.' },
   product.power_supply && { label: 'Napájení & řízení', value: product.power_supply, icon: Zap, desc: 'Rozsah řízení a požadavky na napájení se odvíjejí od zvolené konfigurace a volitelných Smart prvků.' },
+  { label: 'Ovládání', value: 'manuálně, časovač nebo chytrý ventil (Bluetooth/Wi‑Fi) – volitelně', icon: Wifi, desc: 'Základní ovládání je manuální. Lze doplnit časovač nebo chytrý ventil s Bluetooth/Wi-Fi pro automatizaci podle teploty a času.' },
   { label: 'Výroba', value: 'Zakázková výroba v ČR', icon: Factory, desc: 'Termín výroby a dodání potvrzujeme v konkrétní cenové nabídce podle produktu, množství a aktuální kapacity.' }].
   filter(Boolean);
 
@@ -455,6 +457,32 @@ export default function ProduktDetail() {
           </div>
         </div>
       </section>
+
+      {/* ═══════ VHODNÉ PRO ═══════ */}
+      {categoryName && (
+        <section className="py-12 bg-slate-50 border-t border-slate-200">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">VHODNÉ PRO</p>
+            <div className="flex flex-wrap gap-2.5">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/20 bg-white px-4 py-2.5 text-sm font-semibold text-[#0b4860]">
+                <Compass size={14} /> {categoryName}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600">
+                Veřejné prostory
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600">
+                Zahrady a terasy
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600">
+                Parky a hřiště
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600">
+                Eventy a pronájmy
+              </span>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ═══════ RELATED + BACK ═══════ */}
       {relatedProducts.length > 0 &&

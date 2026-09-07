@@ -22,6 +22,7 @@ import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
 import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
+import ProductTrustSection from '@/components/produkt/ProductTrustSection';
 import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
@@ -277,14 +278,14 @@ export default function ProduktDetail() {
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [
-  product.coverage_area && { label: 'Výška', value: product.coverage_area, icon: Ruler, desc: 'Celková výška konstrukce ovlivňuje dosah a pokrytí mlžného oblaku v prostoru.' },
-  { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L', icon: Waves, desc: 'Nerezové trysky rozprašují vodu na mikrokapky, které se okamžitě odpaří — bez mokrého povrchu.' },
-  product.pressure && { label: 'Tlak', value: product.pressure, icon: Gauge, desc: 'Nízkotlaký provoz (2–7 BAR) umožňuje přímé napojení na běžný vodovodní řad bez čerpadla.' },
-  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets, desc: 'Reálná spotřeba při plynulém provozu — určuje i orientační provozní náklady.' },
-  product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Potravinářská nerez odolná korozi, vhodná pro celoroční venkovní provoz.' },
-  { label: 'Povrch', value: 'Broušený / kartáčovaný', icon: Sparkles, desc: 'Ruční broušený povrch potlačuje odlesky a otisky prstů, zachovává prémiový vzhled.' },
-  product.power_supply && { label: 'Napájení & řízení', value: product.power_supply, icon: Zap, desc: 'Elektronické řízení mlžení, kompatibilní se SMART moduly a časovači.' },
-  { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' }].
+  product.coverage_area && { label: 'Pokrytí / plocha', value: product.coverage_area, icon: Ruler, desc: 'Orientační rozsah se vztahuje ke konkrétnímu produktu; skutečný efekt ovlivňuje rozmístění, vítr, teplota a provozní režim.' },
+  { label: 'Trysky', value: product.micron_size ? `Nerezové trysky, ${product.micron_size} μm` : 'Nerezové mlžicí trysky', icon: Waves, desc: 'Trysky vytvářejí jemnou vodní mlhu. Výsledný charakter mlžení závisí na tlaku, počasí, osazení a nastavení systému.' },
+  product.pressure && { label: 'Provozní tlak', value: product.pressure, icon: Gauge, desc: 'Provozní tlak potvrzujeme podle konkrétní konfigurace, počtu trysek a dostupných parametrů přívodu vody.' },
+  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets, desc: 'Uvedená hodnota vychází z produktové specifikace; skutečná spotřeba závisí na době provozu a nastavení řízení.' },
+  product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Materiál a povrchové provedení se řídí specifikací daného produktu a prostředím konkrétní instalace.' },
+  { label: 'Povrch', value: 'Broušený / kartáčovaný dle provedení', icon: Sparkles, desc: 'Konkrétní povrch potvrzujeme v nabídce a výrobní specifikaci daného projektu.' },
+  product.power_supply && { label: 'Napájení & řízení', value: product.power_supply, icon: Zap, desc: 'Rozsah řízení a požadavky na napájení se odvíjejí od zvolené konfigurace a volitelných Smart prvků.' },
+  { label: 'Výroba', value: 'Zakázková výroba v ČR', icon: Factory, desc: 'Termín výroby a dodání potvrzujeme v konkrétní cenové nabídce podle produktu, množství a aktuální kapacity.' }].
   filter(Boolean);
 
   const contentTabs = TABS;
@@ -316,6 +317,9 @@ export default function ProduktDetail() {
           onShowSmart={() => handleTabClick(TABS[3])}
         />
       )}
+
+      {/* ═══════ DŮVĚRYHODNOST A TRANSPARENTNÍ PODMÍNKY ═══════ */}
+      <ProductTrustSection product={product} />
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
       <div ref={tabsNavRef} className="sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
@@ -415,17 +419,17 @@ export default function ProduktDetail() {
                 <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-white tracking-tight mb-4">
                   Váš prostor si zaslouží<br /><span className="[font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light text-[#70c1ff]">vlastní {product.name}.</span>
                 </h2>
-                <p className="text-sm normal-case text-left [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium mb-16 text-[hsl(var(--card))]">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
+                <p className="text-sm normal-case text-left [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium mb-16 text-[hsl(var(--card))]">Nezávazná konzultace · možnost vizualizace · technické podklady k projektu</p>
               </motion.div>
 
               {/* FAQ o poptávce a realizaci */}
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
               className="space-y-4 mb-8">
                 {[
-                { q: 'Jak dlouho trvá zpracování poptávky?', a: 'Ozveme se vám do 24 hodin s konzultací a předběžnou nabídkou.' },
-                { q: 'Jak probíhá realizace?', a: 'Konzultace → 3D vizualizace do 48 h → zakázková výroba (6–8 týdnů) → instalace na místě.' },
-                { q: 'Je konzultace a vizualizace zdarma?', a: 'Ano, nezávazně a bez skrytých poplatků.' },
-                { q: 'Poskytujete servis po instalaci?', a: 'Ano, včetně pravidelné údržby a rychlého záručního i pozáručního servisu.' }].
+                { q: 'Jak rychle se k poptávce vrátíte?', a: 'Poptávku projdeme a navážeme s vámi konkrétním dalším krokem. Termín zpracování závisí na rozsahu a kvalitě dodaných podkladů.' },
+                { q: 'Jak probíhá projekt?', a: 'Konzultace → návrh a případná vizualizace → potvrzení nabídky → výroba → dodání nebo výslovně objednaná instalace.' },
+                { q: 'Je instalace automaticky v ceně?', a: 'Ne. Pokud instalace není v cenové nabídce výslovně uvedena, cena je bez instalace. K dodávce předáváme instalační, provozní a servisní instrukce.' },
+                { q: 'Poskytujete servis po dodání?', a: 'Ano. Rozsah záručního a pozáručního servisu se řídí konkrétní dodávkou a dohodnutými podmínkami projektu.' }].
                 map((item) =>
                 <div key={item.q} className="border-b border-white/10 pb-4">
                     <p className="text-sm font-semibold text-white mb-1">{item.q}</p>
@@ -434,10 +438,10 @@ export default function ProduktDetail() {
                 )}
               </motion.div>
 
-              {/* Podpora 24/7 */}
+              {/* Projektová podpora */}
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
               className="bg-white/5 border border-white/15 rounded-2xl p-6">
-                <span className="inline-block px-3 py-1 bg-emerald-400/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-bold tracking-widest uppercase rounded-full mb-3">Podpora 24/7</span>
+                <span className="inline-block px-3 py-1 bg-emerald-400/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-bold tracking-widest uppercase rounded-full mb-3">Projektová podpora</span>
                 <p className="text-sm font-semibold text-white mb-3">Ing. Radek Meduna</p>
                 <div className="space-y-2 text-sm text-white/60 font-mono">
                   <a href="tel:+420774700390" className="flex items-center gap-2 hover:text-white transition-colors">Tel.: +420 774700390</a>

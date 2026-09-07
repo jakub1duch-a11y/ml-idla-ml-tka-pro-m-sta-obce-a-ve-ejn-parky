@@ -55,7 +55,7 @@ export default function HowItWorksSteps() {
               >
                 <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-cyan-100 opacity-0 blur-2xl transition group-hover:opacity-100" />
                 <div className="relative">
-                  <div className="mb-6 flex h-13 w-13 items-center justify-center rounded-2xl border border-slate-200 bg-white text-[#0b7280] shadow-sm">
+                  <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-white text-[#0b7280] shadow-sm">
                     <Icon size={23} />
                   </div>
                   <h3 className="font-heading text-xl font-semibold leading-tight text-slate-950">{step.title}</h3>

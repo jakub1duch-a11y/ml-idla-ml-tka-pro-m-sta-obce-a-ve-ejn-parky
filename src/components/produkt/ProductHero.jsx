@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, ScanLine, Box } from 'lucide-react';
+import { ChevronRight, ArrowRight, BadgeCheck, Building2, FileText, ScanLine, Box } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
 import ProductGalleryPanel from './ProductGalleryPanel';
 import ProductHeroMist from './ProductHeroMist';
@@ -69,12 +69,17 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
 
           <ProductSignatureSystem product={product} showSignatures={false} />
 
+          <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-semibold text-slate-600">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5"><Building2 size={13} className="text-[#0b4860]" /> Český návrh a výroba</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5"><BadgeCheck size={13} className="text-[#0b4860]" /> HolmTec s.r.o. · technická podpora</span>
+          </div>
+
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
                 to={`/kontakt?produkt=${encodeURIComponent(mrakSelection)}`}
                 onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
                 className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-              Žádost o cenu <ArrowRight size={16} />
+              Poptat cenu a řešení <ArrowRight size={16} />
             </Link>
             <Link
                 to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}

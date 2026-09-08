@@ -29,7 +29,7 @@ const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
   event: 'Event',
   soukromy: 'Soukromý',
-  prumyslovy: 'Průmyslový',
+  prumyslovy: 'Komerční prostor',
 };
 
 const isVideoFile = (url) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url || '');
@@ -54,6 +54,7 @@ export default function ProjectGallerySection() {
         const extras = all.filter((p) =>
           p.published !== false &&
           p.image_url &&
+          p.category !== 'prumyslovy' &&
           !ordered.includes(p) &&
           (p.featured || p.id !== '6a60d9d9702abda4e28159d3')
         ).slice(0, 6 - ordered.length);

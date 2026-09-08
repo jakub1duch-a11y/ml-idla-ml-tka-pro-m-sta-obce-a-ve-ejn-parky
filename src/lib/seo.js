@@ -248,20 +248,29 @@ export function getBlogPostSEO(post) {
 }
 
 export function getReferenceSEO(project) {
+  const isBendyJicin = project.id === '6a71d1ff57598752eed27bfb';
   const isBendyLineaGarden = project.id === '6a9fdf2f153be3ee13d70207';
-  const title = isBendyLineaGarden
-    ? 'BENDY + LINEA v rodinné zahradě – nízkotlaké mlžení'
-    : project.name;
-  const description = isBendyLineaGarden
-    ? 'Reálná realizace nízkotlakého mlžícího prostoru BENDY + LINEA v rodinné zahradě. Nerezová mlžítka, lokální ochlazení a monitoring provozu.'
-    : project.description;
-  const canonicalPath = isBendyLineaGarden
-    ? '/reference/bendy-linea-rodinna-zahrada'
-    : `/reference/${project.id}`;
+  const title = isBendyJicin
+    ? 'BENDY na Valdštejnově náměstí v Jičíně – realizace'
+    : isBendyLineaGarden
+      ? 'BENDY + LINEA v rodinné zahradě – nízkotlaké mlžení'
+      : project.name;
+  const description = isBendyJicin
+    ? 'Skutečná realizace nerezového mlžítka BENDY na Valdštejnově náměstí v Jičíně. Fotografie a videa pouze z této městské instalace.'
+    : isBendyLineaGarden
+      ? 'Reálná realizace nízkotlakého mlžícího prostoru BENDY + LINEA v rodinné zahradě. Nerezová mlžítka, lokální ochlazení a monitoring provozu.'
+      : project.description;
+  const canonicalPath = isBendyJicin
+    ? '/reference/bendy-jicinske-namesti'
+    : isBendyLineaGarden
+      ? '/reference/bendy-linea-rodinna-zahrada'
+      : `/reference/${project.id}`;
   return {
     title,
     description,
-    keywords: isBendyLineaGarden ? 'BENDY, LINEA, zahradní mlžítko, nízkotlaké mlžení, mlžení zahrady, ochlazení zahrady, MLŽIDLA.cz' : undefined,
+    keywords: isBendyJicin
+      ? 'BENDY Jičín, mlžítko Jičín, Valdštejnovo náměstí, městské mlžítko, ochlazení náměstí, MLŽIDLA.cz'
+      : isBendyLineaGarden ? 'BENDY, LINEA, zahradní mlžítko, nízkotlaké mlžení, mlžení zahrady, ochlazení zahrady, MLŽIDLA.cz' : undefined,
     image: project.image_url,
     canonicalPath,
     type: 'article',

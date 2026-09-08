@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers3, MoveVertical } from 'lucide-react';
+import { CloudFog, Droplets, Gauge, MapPin, ShieldCheck, Sparkles, Ruler, Layers3, MoveVertical, ArrowUpRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const FAMILY_VARIANTS = {
@@ -289,12 +289,34 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
                 : item.variant
                   ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}`
                   : `/produkt/${item.slug}`;
-              const previewImage = variantImages[item.slug] || item.image || product.image_url || product.gallery_urls?.[0] || null;
+              const isBendyConfiguration = product.slug === 'mlzitko-bendy' && Boolean(item.variant);
+              const previewImage = variantImages[item.slug] || item.image || (!isBendyConfiguration ? (product.image_url || product.gallery_urls?.[0]) : null);
               return (
-                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>
-                  {previewImage ? <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><img src={previewImage} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]" loading="lazy" />{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div> : <div className={`relative flex aspect-[4/5] items-center justify-center overflow-hidden ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fafafa_0%,#eef2f3_100%)]'}`}><div className="absolute inset-x-[28%] top-[18%] bottom-[18%] rounded-full border-[3px] border-[#0b4860]/15"/><Ruler size={28} className="relative text-[#0b4860]/35"/>{active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}</div>}
+                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-[22px] border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-[0_16px_36px_rgba(11,72,96,.16)]' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-1 hover:border-[#0b4860]/30 hover:shadow-[0_16px_36px_rgba(11,72,96,.09)]'}`}>
+                  {previewImage ? (
+                    <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fbfcfc_0%,#eef3f4_100%)]'}`}>
+                      <img src={previewImage} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.035]" loading="lazy" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031d26]/10 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                      {active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}
+                    </div>
+                  ) : (
+                    <div className={`relative flex aspect-[4/5] flex-col items-center justify-center overflow-hidden p-5 text-center ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fbfcfc_0%,#eef3f4_100%)]'}`}>
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(43,191,207,.10),transparent_33%)]" />
+                      <div className="relative flex items-end justify-center gap-2.5">
+                        {Array.from({ length: item.variant === 'single' ? 1 : item.variant === 'duo' || item.variant === 'back-to-back' ? 2 : 4 }).map((_, index) => (
+                          <span key={index} className={`block w-2.5 rounded-full bg-gradient-to-b from-slate-300 via-white to-slate-400 shadow-sm ${item.variant === 'alej' ? 'h-20' : index % 2 ? 'h-24' : 'h-28'}`} />
+                        ))}
+                      </div>
+                      <span className="relative mt-5 font-mono text-[9px] uppercase tracking-[.16em] text-slate-400">Schéma počtu prvků</span>
+                      <span className="relative mt-1 text-[10px] leading-relaxed text-slate-500">Schválenou vizualizaci konfigurace doplníme samostatně.</span>
+                      {active && <span className="absolute left-3 top-3 rounded-full bg-[#0b4860] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.12em] text-white">Vybráno</span>}
+                    </div>
+                  )}
                   <div className="px-3.5 py-3.5">
-                    <span className="block text-xs font-bold tracking-wide">{item.label}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="block text-xs font-bold tracking-wide">{item.label}</span>
+                      <ArrowUpRight size={14} className={`shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${active ? 'text-white/70' : 'text-slate-300'}`} />
+                    </div>
                     <span className={`mt-1 block text-[10px] leading-4 ${active ? 'text-white/75' : 'text-slate-500'}`}>{item.sub}</span>
                   </div>
                 </Link>

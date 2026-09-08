@@ -145,8 +145,12 @@ export default function AnchoringGallery() {
       <HiddenAnchorDiagram />
       <div className="grid gap-6 md:grid-cols-2">
         {OPTIONS.map((option) => (
-          <figure key={option.src} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <div className="aspect-[4/3] overflow-hidden bg-slate-100"><img src={option.src} alt={option.title} className="h-full w-full object-cover" loading="lazy" /></div>
+          <figure key={option.src} className="group overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_8px_28px_rgba(15,23,42,.035)] transition-all duration-300 hover:-translate-y-1 hover:border-[#0b4860]/25 hover:shadow-[0_18px_45px_rgba(11,72,96,.09)]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+              <img src={option.src} alt={option.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]" loading="lazy" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031d26]/55 via-transparent to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-85" />
+              <span className="absolute bottom-3 left-3 rounded-full border border-white/25 bg-black/20 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[.16em] text-white backdrop-blur-md">Kotvení · detail</span>
+            </div>
             <figcaption className="p-5"><h3 className="font-heading text-lg text-slate-900">{option.title}</h3><p className="mt-1 text-sm leading-relaxed text-slate-500">{option.text}</p></figcaption>
           </figure>
         ))}

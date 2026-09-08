@@ -203,7 +203,7 @@ export default function AIProjectDesignerSection() {
   };
 
   return (
-    <section className="border-y border-slate-200 bg-[#f5f6f3] py-16 text-slate-950 sm:py-20 lg:py-28">
+    <section className="border-y border-slate-200 bg-[#f5f6f3] py-12 text-slate-950 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-10 sm:gap-12 lg:grid-cols-[.82fr_1.18fr] lg:gap-20">
           <div className="lg:sticky lg:top-28">
@@ -213,15 +213,15 @@ export default function AIProjectDesignerSection() {
             </div>
 
             <h2 className="max-w-2xl font-heading text-[clamp(2rem,9vw,2.7rem)] font-medium leading-[1.04] tracking-[-.035em] text-slate-950 sm:text-5xl lg:text-6xl">
-              Od místa nebo symbolu
-              <span className="mt-1 block text-slate-500">k reálně vyrobitelnému mlžítku.</span>
+              Popište prostor.
+              <span className="mt-1 block text-slate-500">AI navrhne vhodné mlžení.</span>
             </h2>
 
             <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 lg:text-lg lg:leading-8">
-              Vyberte prostor, jednoduchý motiv nebo některý z našich produktů. Můžete také zadat vlastní symbol — například znak obce, rostlinu nebo lokální motiv. Návrh následně technicky ověříme pro skutečnou výrobu.
+              Stačí vybrat typ místa a stručně popsat zadání. Dostanete první doporučení produktu, rozsahu a dalšího postupu. Finální řešení vždy technicky ověří HolmTec.
             </p>
 
-            <div className="mt-9 grid gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            <div className="mt-7 hidden gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
               {outputs.map(({ icon: Icon, title, text }) => (
                 <div key={title} className="border-t border-slate-300 pt-4">
                   <Icon size={18} className="text-slate-700" />
@@ -231,7 +231,7 @@ export default function AIProjectDesignerSection() {
               ))}
             </div>
 
-            <div className="mt-8 overflow-hidden border border-slate-200 bg-white">
+            <div className="mt-8 hidden overflow-hidden border border-slate-200 bg-white">
               <div className="grid sm:grid-cols-[150px_1fr]">
                 <div className="relative min-h-[130px] bg-slate-100">
                   <img src={POLNA_IMAGE} alt="Zakázkové mlžítko MRKEV pro město Polná" className="absolute inset-0 h-full w-full object-cover" />
@@ -244,7 +244,7 @@ export default function AIProjectDesignerSection() {
               </div>
             </div>
 
-            <div className="mt-6 flex items-start gap-3 border-l-2 border-slate-900 pl-4">
+            <div className="mt-6 hidden items-start gap-3 border-l-2 border-slate-900 pl-4">
               <ShieldCheck size={17} className="mt-0.5 shrink-0 text-slate-700" />
               <p className="max-w-lg text-xs leading-5 text-slate-500">
                 Motiv není libovolná tenká grafická ikona. Převádíme jej do skutečné výrobní geometrie z nerezové trubky. Umíme ohýbat trubky až do vnějšího průměru Ø 74 mm. Konkrétní minimální rádius ohybu, napojení větví, stabilitu, trysky a kotvení vždy potvrzuje technický návrh HolmTec.
@@ -257,7 +257,7 @@ export default function AIProjectDesignerSection() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">Návrh projektu</p>
-                  <h3 className="mt-1 font-heading text-2xl font-medium tracking-tight text-slate-950 sm:text-3xl">Vyberte směr návrhu</h3>
+                  <h3 className="mt-1 font-heading text-2xl font-medium tracking-tight text-slate-950 sm:text-3xl">Rychlý AI návrh</h3>
                 </div>
                 <p className="text-xs text-slate-400">Stačí přibližné zadání.</p>
               </div>
@@ -269,7 +269,7 @@ export default function AIProjectDesignerSection() {
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">01</span>
                   Kde bude mlžítko
                 </legend>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {examples.map(({ icon: Icon, label }) => {
                     const active = selectedType === label;
                     return (
@@ -278,7 +278,7 @@ export default function AIProjectDesignerSection() {
                         type="button"
                         onClick={() => selectType(label)}
                         aria-pressed={active}
-                        className={`min-h-[82px] rounded-xl border px-3 py-3 text-left transition-colors sm:min-h-[86px] ${
+                        className={`min-h-[64px] rounded-xl border px-3 py-2.5 text-left transition-colors ${
                           active
                             ? 'border-slate-950 bg-slate-950 text-white'
                             : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50'
@@ -295,11 +295,11 @@ export default function AIProjectDesignerSection() {
               <fieldset className="mt-8">
                 <legend className="mb-2 flex items-center gap-3 text-xs font-semibold text-slate-700">
                   <span className="flex h-6 w-6 items-center justify-center bg-slate-950 font-mono text-[10px] text-white">02</span>
-                  Jak má návrh začít
+                  Produkt (volitelné)
                 </legend>
-                <p className="mb-5 max-w-2xl text-xs leading-5 text-slate-500">Začněte vlastním návrhem, vyberte některý z našich produktů, nebo se inspirujte přednastavenými tvary.</p>
+                <p className="mb-5 max-w-2xl text-xs leading-5 text-slate-500">Vyberte produkt, pokud už máte představu. Jinak výběr nechte na AI.</p>
 
-                <div className={`mb-4 rounded-2xl border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
+                <div className={`mb-4 hidden rounded-2xl border p-4 sm:p-5 ${selectedConcept === 'custom' ? 'border-slate-950 bg-slate-50 ring-1 ring-slate-950' : 'border-slate-200 bg-white'}`}>
                   <div className="flex items-start gap-3">
                     <div className={`flex h-9 w-9 shrink-0 items-center justify-center ${selectedConcept === 'custom' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-500'}`}><Shapes size={18} /></div>
                     <div className="min-w-0 flex-1">
@@ -337,7 +337,7 @@ export default function AIProjectDesignerSection() {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
+                <div className="hidden rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-5">
                   <div className="mb-3 flex items-center justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold text-slate-900">C · Tvary a inspirace</p>
@@ -402,7 +402,7 @@ export default function AIProjectDesignerSection() {
                   onKeyDown={(e) => {
                     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') start();
                   }}
-                  rows={5}
+                  rows={3}
                   placeholder="Např. promenáda u náměstí, délka cca 35 m, horké odpoledne, hodně pěších, chceme vytvořit dvě klidové ochlazovací zóny u laviček."
                   className="w-full resize-none rounded-2xl border border-slate-300 bg-white px-4 py-4 text-[15px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
                 />
@@ -421,18 +421,18 @@ export default function AIProjectDesignerSection() {
                   disabled={!value.trim() && !selectedType && !selectedConcept}
                   className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-35"
                 >
-                  Připravit návrh projektu <ArrowRight size={16} />
+                  Navrhnout řešení <ArrowRight size={16} />
                 </button>
                 <button
                   type="button"
                   onClick={visualize}
                   className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50"
                 >
-                  Vložit vlastní fotografii
+                  Přidat fotografii
                 </button>
               </div>
 
-              <div className="mt-6 grid gap-2 border-t border-slate-200 pt-5 text-[11px] text-slate-500 sm:grid-cols-3">
+              <div className="mt-5 hidden gap-2 border-t border-slate-200 pt-5 text-[11px] text-slate-500 sm:grid-cols-3">
                 <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Motiv nebo produkt</span>
                 <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Reálné výrobní proporce</span>
                 <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-slate-900" /> Kontrola týmem HolmTec</span>

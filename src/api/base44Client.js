@@ -23,16 +23,36 @@ const HIDDEN_STANDALONE_PRODUCT_SLUGS = new Set([
   'archived-bendy-radius-l-duplicate',
   'archived-bendy-field-duplicate',
 ]);
-const hideStandaloneVariants = (result) => {
-  if (Array.isArray(result)) return result.filter((item) => !HIDDEN_STANDALONE_PRODUCT_SLUGS.has(item?.slug));
-  if (result && HIDDEN_STANDALONE_PRODUCT_SLUGS.has(result.slug)) return null;
+
+// Varianty jsou součástí detailu hlavního produktu, ne veřejných výpisů produktů.
+// Přímý detail varianty ale musí zůstat dostupný (např. /produkt/bendy-radius-s).
+const isVariantProduct = (item) => {
+  const slug = String(item?.slug || '').toLowerCase();
+  const name = String(item?.name || '').toLowerCase();
+  return HIDDEN_STANDALONE_PRODUCT_SLUGS.has(slug) ||
+    /(?:^|-)radius-(?:s|m|l)(?:-|$)/.test(slug) ||
+    /\bradius\s*[sml]\b/.test(name);
+};
+
+const hideVariantsFromPublicLists = (result) => {
+  if (Array.isArray(result)) return result.filter((item) => !isVariantProduct(item));
   return result;
 };
+
 const optimizedProductEntity = new Proxy(productEntity, {
   get(target, prop, receiver) {
     const value = Reflect.get(target, prop, receiver);
     if (typeof value !== 'function' || !['list', 'filter', 'get', 'getById'].includes(String(prop))) return value;
-    return async (...args) => hideStandaloneVariants(normalizeProductResult(await value.apply(target, args)));
+    return async (...args) => {
+      const normalized = normalizeProductResult(await value.apply(target, args));
+      if (String(prop) === 'list') return hideVariantsFromPublicLists(normalized);
+      if (String(prop) === 'filter') {
+        const query = args?.[0] || {};
+        const exactSlugLookup = typeof query?.slug === 'string' && query.slug.length > 0;
+        return exactSlugLookup ? normalized : hideVariantsFromPublicLists(normalized);
+      }
+      return normalized;
+    };
   },
 });
 

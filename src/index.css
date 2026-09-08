@@ -391,3 +391,52 @@
   0% { opacity: 0; transform: translate3d(-5px, 2px, 0); filter: blur(3px); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
 }
+
+/* Notebook / tablet landscape tuning — cíleně pro 1024–1366 px. */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .product-detail-page {
+    --product-page-inline: clamp(22px, 2.2vw, 30px);
+  }
+  .product-detail-hero > img {
+    object-position: 58% center;
+  }
+  .product-detail-hero h1 {
+    max-width: 13ch;
+  }
+  .product-detail-hero p {
+    max-width: 58ch;
+  }
+  .product-reference-sheet {
+    font-size: 0.975rem;
+  }
+  .product-reference-sheet h2 {
+    text-wrap: balance;
+  }
+  .product-reference-sheet .grid {
+    min-width: 0;
+  }
+  .product-detail-tabs {
+    top: 56px;
+  }
+  .product-detail-tabs button {
+    min-height: 50px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-detail-hero {
+    min-height: 570px;
+  }
+  .product-detail-hero > img {
+    object-position: 62% center;
+  }
+  .product-detail-hero h1 {
+    max-width: 12ch;
+  }
+  .product-reference-sheet {
+    padding-top: 36px;
+  }
+  .product-detail-tabs {
+    top: 56px;
+  }
+}

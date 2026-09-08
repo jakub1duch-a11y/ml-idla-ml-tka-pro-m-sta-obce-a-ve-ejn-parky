@@ -60,9 +60,12 @@ export default function ProductHero({ product, categoryName, allMedia, variantIm
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
           {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
-          <h1 className="tracking-tight leading-[1.04] mb-5 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-[2.65rem]">
+          <h1 className="tracking-tight leading-[1.04] mb-3 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-[2.65rem]">
             {product.name}
           </h1>
+          {product.slug === 'mlzitko-bendy' && (
+            <p className="mb-4 text-base font-semibold tracking-tight text-[#0b4860]/75 sm:text-lg">Svěžest, která ladí s městem</p>
+          )}
           {product.short_description &&
             <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-6">{product.short_description}</p>
             }

@@ -82,7 +82,7 @@ const getFamily = (product) => {
 function ProductCard({ product }) {
   const type = getType(product);
   const family = getFamily(product);
-  const variants = PRODUCT_VARIANTS[product.slug] || [];
+  const variants = [];
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
       <Link to={`/produkt/${product.slug}`} className="block">
@@ -135,16 +135,16 @@ export default function CollectionProductGrid({ collection }) {
     base44.entities.Product.list().then((items) => setProducts(orderProducts((items || []).map(normalizeProductMedia), collection))).catch(() => setProducts([]));
   }, [collection]);
 
-  const variantCards = collection.variantCards || [];
+  const variantCards = [];
   if (!products.length && !variantCards.length) return null;
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
       <div className="mb-10 flex items-end justify-between gap-5">
         <div>
-          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-secondary">Produkty a varianty kolekce</p>
+          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-secondary">Produkty kolekce</p>
           <h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">{collection.name}</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">Každá karta jasně rozlišuje samostatný produkt od tvarové varianty stejného produktu. Katalogový náhled používá vyšší formát, aby byla dobře čitelná celá geometrie.</p>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">Přehled samostatných produktů kolekce. Každý produkt má vlastní detail, technické informace a možnost poptávky.</p>
         </div>
         <Link to="/mlzidla-mlzitka" className="btn-secondary-outline hidden rounded-full px-6 py-3 text-sm font-semibold text-foreground sm:inline-flex">Celý katalog <ArrowRight size={15} /></Link>
       </div>

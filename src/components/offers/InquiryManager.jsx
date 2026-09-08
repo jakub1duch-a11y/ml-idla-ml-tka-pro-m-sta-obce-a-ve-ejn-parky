@@ -382,10 +382,14 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       const quote = quoteResponse.data;
 
       let quoteDriveUrl = '';
+      let quoteDriveCaseFolderId = '';
+      let quoteDriveCaseFolderUrl = '';
       try {
         const savedQuote = await base44.functions.invoke('saveQuoteToDriveAuto', { pdf_base64: quote?.pdf_base64, filename: quote?.filename, quoteNumber, inquiryEmail: selected.email, inquiryName: selected.firma || selected.company || selected.name, issued_at: issuedAt.toISOString() });
         quoteDriveUrl = savedQuote.data?.drive_url || '';
-        if (!quoteDriveUrl) throw new Error('PDF se nepodařilo uložit na Mlžný disk.');
+        quoteDriveCaseFolderId = savedQuote.data?.drive_case_folder_id || '';
+        quoteDriveCaseFolderUrl = savedQuote.data?.drive_case_folder_url || '';
+        if (!quoteDriveUrl || !quoteDriveCaseFolderId || !quoteDriveCaseFolderUrl) throw new Error('PDF nebo složka případu se nepodařily uložit na Mlžný disk.');
       } catch (driveError) {
         console.error('Povinné uložení nabídky na Mlžný disk selhalo', driveError);
         throw new Error('Nabídka nebyla dokončena, protože se PDF nepodařilo uložit na sdílený Mlžný disk. Zkuste vytvoření nabídky znovu.');
@@ -424,7 +428,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         client_name: selected.name, client_email: selected.email, client_phone: selected.telefon || selected.phone || '', client_company: selected.firma || selected.company || '',
         description: String(clientContent.project_goal || selected.message || '').slice(0, 2000), product_id: productForOffer.id, product_slug: productForOffer.slug, product_name: productForOffer.name,
         quote_number: quoteNumber, quote_pdf_url: quoteDriveUrl, presentation_url: presentation?.presentation_url || '', presentation_pdf_url: presentation?.presentation_pdf_url || '', notebook_source_url: notebookSourceUrl,
-        drive_case_folder_id: presentation?.drive_case_folder_id || '', drive_case_folder_url: presentation?.drive_case_folder_url || '',
+        drive_case_folder_id: presentation?.drive_case_folder_id || quoteDriveCaseFolderId, drive_case_folder_url: presentation?.drive_case_folder_url || quoteDriveCaseFolderUrl,
         presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
         status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,
         customer_message: visualizationUrl
@@ -920,6 +924,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 {prepared.quoteDriveUrl ? <a href={prepared.quoteDriveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>PDF nabídka <ExternalLink size={12}/></a> : prepared.quote?.pdf_base64 && <button type="button" onClick={downloadPreparedPdf} className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>Stáhnout PDF nabídku</button>}
+                {prepared.projectOrder?.drive_case_folder_url && <a href={prepared.projectOrder.drive_case_folder_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><ExternalLink size={12}/>Otevřít případ na Mlžném disku</a>}
                 {prepared.presentation?.presentation_url && <a href={prepared.presentation.presentation_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>Google prezentace <ExternalLink size={12}/></a>}
                 {prepared.presentation?.presentation_pdf_url && <a href={prepared.presentation.presentation_pdf_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>PDF prezentace <ExternalLink size={12}/></a>}
                 {prepared.notebookSourceUrl && <a href={prepared.notebookSourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800"><FileText size={13}/>Podklady / Notebook <ExternalLink size={12}/></a>}

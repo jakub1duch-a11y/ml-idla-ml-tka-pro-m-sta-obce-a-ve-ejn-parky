@@ -69,6 +69,7 @@ import Mlhoviste from '@/pages/Mlhoviste';
 import VodniMlha from '@/pages/VodniMlha';
 import MlzneBrany from '@/pages/MlzneBrany';
 import BendyARPrototype from '@/pages/BendyARPrototype';
+import PrezentaceMlziciProstor from '@/pages/PrezentaceMlziciProstor';
 import GateARPrototype from '@/pages/GateARPrototype';
 import LocalizedLanding from '@/pages/LocalizedLanding';
 import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
@@ -175,6 +176,7 @@ const AuthenticatedApp = () => {
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
         <Route path="/pronajem" element={<Pronajem />} />
+        <Route path="/prezentace/mlzici-prostor-vysledky" element={<PrezentaceMlziciProstor />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
         <Route path="/domu" element={<Navigate to="/" replace />} />
         <Route path="/hello-world" element={<Navigate to="/" replace />} />

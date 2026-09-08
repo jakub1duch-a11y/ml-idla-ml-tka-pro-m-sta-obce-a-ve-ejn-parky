@@ -7,6 +7,7 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import { trackFunnelStep } from '@/lib/ga4';
 
 const BENEFITS = [
@@ -193,9 +194,7 @@ export default function MestaObce() {
               {products.map((p, i) =>
             <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                   <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
-                    <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                      {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
-                    </div>
+                    <ProductHoverImage product={p} alt={p.name} className="aspect-[4/3] bg-slate-100" />
                     <div className="p-5 flex items-center justify-between">
                       <div>
                         <p className="text-slate-900 font-medium">{p.name}</p>

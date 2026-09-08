@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { SEO_PAGES, setSEO } from '@/lib/seo';
 import HeroSlider from '@/components/home/premium/HeroSlider';
 import IndustriesSection from '@/components/home/IndustriesSection';
-import CommercialIndustrialSection from '@/components/home/CommercialIndustrialSection';
 import CustomDesignSection from '@/components/home/CustomDesignSection';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
@@ -13,8 +12,6 @@ import ProjectGallerySection from '@/components/home/ProjectGallerySection';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import BlogSection from '@/components/home/BlogSection';
 import ContactSection from '@/components/home/ContactSection';
-import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
-import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 import FadeIn from '@/components/common/FadeIn';
 import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
 import HomepageVideoLoops from '@/components/home/HomepageVideoLoops';
@@ -30,19 +27,16 @@ export default function Home() {
 
       <FadeIn><IndustriesSection /></FadeIn>
       <FadeIn><HomepageVideoLoops /></FadeIn>
-      <FadeIn><CommercialIndustrialSection /></FadeIn>
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><UrbanCoolingImpact /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
       <FadeIn><CustomDesignSection /></FadeIn>
-      <FadeIn><MistVideoShowcase /></FadeIn>
       <AIProjectDesignerSection />
       <FadeIn><InstagramFeedSection /></FadeIn>
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>
-      <FadeIn><ConceptToRealitySection /></FadeIn>
       <FadeIn><ProjectGallerySection /></FadeIn>
     </>
   );

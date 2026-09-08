@@ -24,21 +24,21 @@ export default function ProductReferenceSheet({ product, techRows = [], onPoptat
   ];
 
   return (
-    <section className="bg-white py-12 sm:py-14">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
-        <div className="mb-8 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
+    <section className="product-reference-sheet bg-white py-10 sm:py-12 xl:py-14">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-7 xl:px-10">
+        <div className="mb-7 flex flex-col justify-between gap-4 xl:flex-row xl:items-end">
           <div><p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-slate-400">{product.name}</p><h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Klíčové výhody</h2></div>
           <p className="max-w-xl text-sm leading-relaxed text-slate-500">Čistý design, funkční mlžení a projektové řešení podle konkrétního prostoru. Technické údaje níže vycházejí pouze z dat přiřazených tomuto produktu.</p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{benefits.map((item) => <MiniCard key={item.title} {...item}/>)}</div>
+        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">{benefits.map((item) => <MiniCard key={item.title} {...item}/>)}</div>
 
         <div className="mt-10">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-3"><div><h2 className="font-heading text-2xl font-semibold tracking-tight text-slate-950">Varianty</h2><p className="mt-1 text-xs text-slate-500">Pouze schválené konfigurace daného produktu. Geometrie prvku se svévolně nemění.</p></div></div>
           <ProductSignatureSystem product={product} showSignatures={false}/>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-[1.35fr_.65fr]">
+        <div className="mt-9 grid gap-5 xl:grid-cols-[1.35fr_.65fr]">
           <div>
             <div className="mb-4 flex items-end justify-between gap-3"><div><h2 className="font-heading text-2xl font-semibold tracking-tight text-slate-950">Technické parametry</h2><p className="mt-1 text-xs text-slate-500">Potvrzené údaje produktu bez univerzálních hodnot.</p></div></div>
             <div className="grid gap-px overflow-hidden rounded-[20px] border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3">
@@ -53,8 +53,8 @@ export default function ProductReferenceSheet({ product, techRows = [], onPoptat
           </div>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          <div className="lg:col-span-1"><h2 className="font-heading text-2xl font-semibold tracking-tight text-slate-950">Vhodné pro</h2><div className="mt-4 grid grid-cols-2 gap-2">{useCases.map(({icon:Icon,label}) => <div key={label} className="rounded-[16px] border border-slate-200 bg-[#fbfdfe] p-4 text-center"><Icon size={23} className="mx-auto text-[#39b9e6]"/><p className="mt-2 text-xs font-semibold text-slate-700">{label}</p></div>)}</div></div>
+        <div className="mt-9 grid gap-5 xl:grid-cols-3">
+          <div className="xl:col-span-1"><h2 className="font-heading text-2xl font-semibold tracking-tight text-slate-950">Vhodné pro</h2><div className="mt-4 grid grid-cols-2 gap-2">{useCases.map(({icon:Icon,label}) => <div key={label} className="rounded-[16px] border border-slate-200 bg-[#fbfdfe] p-4 text-center"><Icon size={23} className="mx-auto text-[#39b9e6]"/><p className="mt-2 text-xs font-semibold text-slate-700">{label}</p></div>)}</div></div>
 
           <button type="button" onClick={onShowInstallation} className="group text-left overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(11,72,96,.07)]"><div className="flex items-center justify-between"><h2 className="font-heading text-2xl font-semibold tracking-tight text-slate-950">Instalace</h2><ArrowRight size={17} className="text-[#39b9e6] transition-transform group-hover:translate-x-1"/></div><div className="mt-6 rounded-2xl bg-slate-50 p-5"><div className="mx-auto h-28 w-10 rounded-t-full bg-gradient-to-r from-slate-400 via-white to-slate-500"/><div className="mx-auto h-3 w-24 rounded bg-slate-400"/><div className="mx-auto mt-1 h-14 w-36 rounded-b-lg bg-slate-300"/></div><p className="mt-4 text-xs leading-relaxed text-slate-500">Skryté nebo přiznané kotvení, přívod vody a základ se navrhují podle produktu a podloží.</p></button>
 

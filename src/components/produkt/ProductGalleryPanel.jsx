@@ -10,9 +10,13 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
     : [];
   const [active, setActive] = useState(0);
   const [magnify, setMagnify] = useState({ visible: false, x: 50, y: 50 });
+  const [hoverPreview, setHoverPreview] = useState(false);
   const reduceMotion = useReducedMotion();
   const touchStart = useRef(null);
+  const hoverTimer = useRef(null);
+  const hoverVideoRef = useRef(null);
   const activeItem = items[active];
+  const previewVideo = items.find((item) => item.type === 'video');
   const markFailed = (url) => setFailedUrls((current) => {
     const next = new Set(current);
     next.add(url);
@@ -32,6 +36,25 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
     const index = items.findIndex((item) => item.url === focusUrl);
     if (index >= 0) setActive(index);
   }, [focusUrl, items]);
+
+  useEffect(() => () => {
+    if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
+  }, []);
+
+  const canHoverPreview = () => !reduceMotion && Boolean(previewVideo) && window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
+  const startHoverPreview = () => {
+    if (activeItem?.type === 'video' || !canHoverPreview()) return;
+    hoverTimer.current = window.setTimeout(() => setHoverPreview(true), 260);
+  };
+  const stopHoverPreview = () => {
+    if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = null;
+    setHoverPreview(false);
+    if (hoverVideoRef.current) {
+      hoverVideoRef.current.pause();
+      hoverVideoRef.current.currentTime = 0;
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -69,14 +92,18 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
       >
         <div
           className={`relative w-full bg-white ${activeItem.type === 'video' ? 'aspect-video' : 'aspect-[4/3]'}`}
+          onMouseEnter={startHoverPreview}
           onMouseMove={(event) => {
-            if (activeItem.type === 'video') return;
+            if (activeItem.type === 'video' || hoverPreview) return;
             const rect = event.currentTarget.getBoundingClientRect();
             const x = Math.min(100, Math.max(0, ((event.clientX - rect.left) / rect.width) * 100));
             const y = Math.min(100, Math.max(0, ((event.clientY - rect.top) / rect.height) * 100));
             setMagnify({ visible: true, x, y });
           }}
-          onMouseLeave={() => setMagnify((current) => ({ ...current, visible: false }))}
+          onMouseLeave={() => {
+            setMagnify((current) => ({ ...current, visible: false }));
+            stopHoverPreview();
+          }}
         > 
           <AnimatePresence mode="wait" initial={false}>
             {activeItem.type === 'video' ? (
@@ -110,14 +137,35 @@ export default function ProductGalleryPanel({ mediaItems, productName, onOpenLig
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                className="absolute inset-0 h-full w-full cursor-zoom-in object-contain p-1 sm:p-2"
+                className={`absolute inset-0 h-full w-full object-contain p-1 sm:p-2 ${previewVideo ? 'cursor-video-preview' : 'cursor-zoom-in'}`}
                 onError={() => markFailed(activeItem.url)}
                 onClick={() => { trackProductLightboxOpen(productName, activeItem.type); onOpenLightbox?.(activeItem.originalIndex); }}
               />
             )}
           </AnimatePresence>
 
-          {activeItem.type !== 'video' && magnify.visible && (
+          {activeItem.type !== 'video' && hoverPreview && previewVideo && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-[18] bg-black">
+              <video
+                ref={hoverVideoRef}
+                src={previewVideo.url}
+                poster={previewVideo.poster || activeItem.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover"
+                onError={() => stopHoverPreview()}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031d26]/55 via-transparent to-black/5" />
+              <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-[10px] font-semibold text-white backdrop-blur-md">
+                <Play size={12} fill="currentColor" /> Pohyb produktu · najeďte kurzorem
+              </div>
+            </motion.div>
+          )}
+
+          {activeItem.type !== 'video' && magnify.visible && !hoverPreview && (
             <div
               className="pointer-events-none absolute z-20 hidden h-44 w-44 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-white shadow-[0_14px_40px_rgba(15,23,42,.28)] sm:block lg:h-52 lg:w-52"
               style={{

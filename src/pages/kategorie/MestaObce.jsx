@@ -7,6 +7,7 @@ import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
+import MestaObceSmartControl from '@/components/kategorie/MestaObceSmartControl';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import { trackFunnelStep } from '@/lib/ga4';
 
@@ -158,22 +159,7 @@ export default function MestaObce() {
         </div>
       </section>
 
-      {/* Video - Smart řízení */}
-      <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
-        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
-        <div className="relative h-full flex items-end">
-          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
-            <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Smart řízení pro obce</p>
-            <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-              Automatický start/stop<br /><span style={{ fontStyle: 'italic' }}>dle teploty a vlhkosti.</span>
-            </h2>
-            <p className="text-white/70 leading-relaxed font-light max-w-xl">Smart řízení umožňuje nastavit provoz podle teploty, času a potřeb konkrétní lokality. Správce tak může omezit zbytečný chod systému a mít provoz pod kontrolou přes dostupné ovládání a automatizaci.</p>
-          </motion.div>
-        </div>
-      </section>
+      <MestaObceSmartControl />
 
       <SegmentReferenceShowcase
         segment="cities"

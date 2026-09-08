@@ -1,108 +1,57 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, ScanLine, Box } from 'lucide-react';
+import { ArrowRight, Play, Snowflake, Leaf, Users, ScanLine } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
-import ProductGalleryPanel from './ProductGalleryPanel';
-import ProductHeroMist from './ProductHeroMist';
-import ProductSignatureSystem from './ProductSignatureSystem';
-import ProductARQR from './ProductARQR';
 
-export default function ProductHero({ product, categoryName, allMedia, variantImages = [], onOpenLightbox, onShowTechnical }) {
+export default function ProductHero({ product, allMedia = [], onOpenLightbox }) {
   const location = useLocation();
-  const isMrak = product.slug === 'mlzitko-mrak';
+  const videoRef = useRef(null);
   const query = new URLSearchParams(location.search);
-  const mrakShape = query.get('variant') || 'obrys';
-  const mrakHeight = query.get('height') || '2500';
-  const mrakScale = query.get('size') || 'standard';
-  const mrakShapeLabels = { obrys: 'OBRYS', flow: 'FLOW', organik: 'ORGANIK', play: 'MRAK PLAY' };
-  const mrakSizeLabels = { kompakt: 'KOMPAKT', standard: 'STANDARD', rozsireny: 'ROZŠÍŘENÝ' };
-  const variantFocusUrl = product.slug === 'mlzna-brana-gate'
-    ? (query.get('variant') === 'v'
-      ? 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png'
-      : query.get('variant') === 'straight'
-        ? 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png'
-        : null)
-    : isMrak
-      ? ({
-          obrys: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600',
-          flow: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600',
-          organik: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ef3414919_generated_image.png',
-          play: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81c84ca33_Mrakmlzitko-skolnizahrada.jpg',
-        }[mrakShape] || null)
-      : null;
-  const mrakSelection = isMrak
-    ? `${product.name} · ${mrakShapeLabels[mrakShape] || mrakShape.toUpperCase()} · ${mrakHeight} mm · ${mrakSizeLabels[mrakScale] || mrakScale}`
-    : product.name;
+  const heroImage = allMedia.find((item) => item.type === 'image')?.url || product.image_url || product.gallery_urls?.[0];
+  const heroVideo = allMedia.find((item) => item.type === 'video')?.url || product.video_url;
+  const selectedName = product.slug === 'mlzitko-mrak' && query.get('variant') ? `${product.name} · ${query.get('variant')}` : product.name;
+  const tagline = product.slug === 'mlzitko-bendy'
+    ? 'Svěžest, která ladí s městem'
+    : product.short_description || 'Designové mlžítko pro příjemnější venkovní prostor';
+
+  const playVideo = () => {
+    if (!heroVideo) return;
+    const index = allMedia.findIndex((item) => item.type === 'video');
+    if (index >= 0) onOpenLightbox?.(index);
+  };
 
   return (
-    <div className="relative overflow-hidden">
-      <ProductHeroMist />
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-10">
-      <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-6 flex-wrap">
-        <Link to="/" className="hover:text-slate-700 transition-colors">Domů</Link>
-        <ChevronRight size={12} />
-        <Link to="/mlzidla-mlzitka" className="hover:text-slate-700 transition-colors">Produkty</Link>
-        {categoryName &&
-          <>
-            <ChevronRight size={12} />
-            <span>{categoryName}</span>
-          </>
-          }
-        <ChevronRight size={12} />
-        <span className="text-slate-700 font-medium">{product.name}</span>
-      </div>
+    <section className="relative min-h-[620px] overflow-hidden bg-[#0a2731] text-white lg:min-h-[690px]">
+      {heroImage && <img src={heroImage} alt={`${product.name} – hlavní vizualizace`} className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,17,23,.86)_0%,rgba(2,17,23,.64)_34%,rgba(2,17,23,.16)_64%,rgba(2,17,23,.04)_100%)]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.16fr_.84fr] gap-8 lg:gap-10 xl:gap-12 items-start">
-        <motion.div className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <ProductGalleryPanel mediaItems={allMedia} productName={product.name} onOpenLightbox={onOpenLightbox} focusUrl={variantFocusUrl} />
-        </motion.div>
+      <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-end px-5 pb-10 pt-28 sm:px-6 lg:min-h-[690px] lg:px-10 lg:pb-12">
+        <div className="max-w-2xl">
+          <p className="font-mono text-[11px] font-semibold uppercase tracking-[.28em] text-white/80">{product.name}</p>
+          <h1 className="mt-4 max-w-xl font-heading text-4xl font-semibold leading-[1.02] tracking-[-.045em] text-white sm:text-5xl lg:text-[4rem]">{tagline}</h1>
+          {product.short_description && product.short_description !== tagline && <p className="mt-4 max-w-xl text-base leading-relaxed text-white/82 sm:text-lg">{product.short_description}</p>}
 
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-          {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
-          <h1 className="tracking-tight leading-[1.04] mb-3 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-[2.65rem]">
-            {product.name}
-          </h1>
-          {product.slug === 'mlzitko-bendy' && (
-            <p className="mb-4 text-base font-semibold tracking-tight text-[#0b4860]/75 sm:text-lg">Svěžest, která ladí s městem</p>
-          )}
-          {product.short_description &&
-            <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-6">{product.short_description}</p>
-            }
-
-          <ProductSignatureSystem product={product} showSignatures={false} />
-
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link
-                to={`/kontakt?produkt=${encodeURIComponent(mrakSelection)}`}
-                onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
-                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-              Žádost o cenu <ArrowRight size={16} />
-            </Link>
-            <Link
-                to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
-                className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/20 bg-white px-6 py-3.5 text-sm font-bold text-[#0b4860] transition-colors hover:bg-slate-50">
-              Vizualizovat ve vašem prostoru <ScanLine size={16} />
-            </Link>
-            {(product.slug === 'mlzitko-bendy' || product.slug === 'mlzna-brana-gate') && (
-              <Link
-                  to={product.slug === 'mlzitko-bendy' ? '/ar/bendy-single' : '/ar/gate'}
-                  className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/20 bg-white px-6 py-3.5 text-sm font-bold text-[#0b4860] transition-colors hover:bg-slate-50">
-                {product.slug === 'mlzitko-bendy' ? '3D / AR náhled' : 'GATE AR projekt'} <Box size={16} />
-              </Link>
-            )}
-            <button
-                type="button"
-                onClick={onShowTechnical}
-                className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-full hover:bg-slate-50 transition-colors">
-              Technické parametry <FileText size={14} />
-            </button>
+          <div className="mt-7 flex flex-wrap gap-4 text-xs text-white/85">
+            <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Snowflake size={18}/></span>Příjemné ochlazení</span>
+            <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Leaf size={18}/></span>Čistý nerezový design</span>
+            <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Users size={18}/></span>Komfortnější venkovní prostor</span>
           </div>
 
-          <ProductARQR product={product} />
-        </motion.div>
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <Link to={`/kontakt?produkt=${encodeURIComponent(selectedName)}`} onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')} className="inline-flex min-h-[48px] items-center gap-2 rounded-lg bg-[#8bd9f4] px-6 text-sm font-bold text-[#073747] shadow-[0_12px_30px_rgba(63,181,218,.22)] transition hover:-translate-y-0.5 hover:bg-[#73cfee]">Chci návrh a cenovou nabídku <ArrowRight size={15}/></Link>
+            {heroVideo && <button type="button" onClick={playVideo} className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/30 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-black/35"><span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/50"><Play size={13} fill="currentColor"/></span>Přehrát video</button>}
+            <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/25 bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"><ScanLine size={15}/> Vizualizovat v prostoru</Link>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>);
 
+      <div className="pointer-events-none absolute bottom-7 right-8 hidden text-right lg:block">
+        <p className="font-heading text-2xl italic leading-tight text-white/90">Více než mlžítko.<br/>Lepší místo.</p>
+        <p className="mt-5 text-sm font-bold tracking-wide text-white">HolmTec</p>
+        <p className="text-[9px] uppercase tracking-[.2em] text-white/55">technologie pro lepší klima</p>
+      </div>
+      <video ref={videoRef} className="hidden" />
+    </section>
+  );
 }

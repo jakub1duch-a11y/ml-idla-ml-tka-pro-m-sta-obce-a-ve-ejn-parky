@@ -291,7 +291,7 @@ export default function ProduktDetail() {
   const nextTab = contentTabs[idx + 1];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="product-detail-page min-h-screen bg-white">
 
       {/* ═══════ HERO ═══════ */}
       <ProductHero
@@ -325,8 +325,8 @@ export default function ProduktDetail() {
       )}
 
       {/* ═══════ STICKY TABS NAV ═══════ */}
-      <div ref={tabsNavRef} className="sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 sm:px-6 lg:px-10">
+      <div ref={tabsNavRef} className="product-detail-tabs sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center gap-2 px-3 sm:px-5 lg:px-6 xl:px-10">
           <div className="flex shrink-0 items-center border-r border-slate-200 pr-3 sm:pr-5 lg:pr-6">
             <Link to="/mlzidla-mlzitka" className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-2 text-xs font-mono uppercase tracking-widest text-slate-400 transition-colors hover:text-slate-900">
               <ArrowLeft size={12} /> <span className="hidden xs:inline">Zpět</span>
@@ -348,7 +348,7 @@ export default function ProduktDetail() {
                 return (
                   <button key={t.id} onClick={() => handleTabClick(t)}
                     aria-pressed={isActive}
-                    className={`group relative flex min-w-[148px] shrink-0 items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all sm:min-w-[158px] ${isActive ? 'border-[#0b4860]/25 bg-[#eef8fb] text-[#0b4860] shadow-[0_8px_24px_rgba(11,72,96,.08)]' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'}`}>
+                    className={`group relative flex min-w-[138px] shrink-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all sm:min-w-[148px] lg:min-w-[136px] xl:min-w-[158px] xl:px-3.5 xl:py-3 ${isActive ? 'border-[#0b4860]/25 bg-[#eef8fb] text-[#0b4860] shadow-[0_8px_24px_rgba(11,72,96,.08)]' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'}`}>
                     <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${isActive ? 'border-[#0b4860]/15 bg-white text-[#0b4860]' : 'border-slate-200 bg-slate-50 text-slate-500 group-hover:bg-white'}`}>
                       <Icon size={16} strokeWidth={1.8} />
                     </span>

@@ -5,21 +5,16 @@ import { base44 } from '@/api/base44Client';
 
 const FAMILY_VARIANTS = {
   'mlzitko-bendy': {
-    title: 'Varianty kolekce BENDY®',
-    eyebrow: 'BENDY® · jeden produkt, různé ohyby',
-    description: 'Základ výrobku zůstává stejný. Mění se rádius a délka ohybu podle požadovaného dosahu a charakteru prostoru.',
+    title: 'Konfigurace BENDY®',
+    eyebrow: 'BENDY® · jeden produkt, více prostorových sestav',
+    description: 'Geometrie jednoho prvku BENDY zůstává zachovaná. Volí se pouze počet kusů a jejich rozmístění podle charakteru prostoru.',
     items: [
-      { label: 'BENDY SINGLE', sub: 'základní ohyb', slug: 'mlzitko-bendy', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
-      { label: 'BENDY RADIUS S', sub: 'kompaktní ohyb', slug: 'bendy-radius-s', image: null },
-      { label: 'BENDY RADIUS M', sub: 'střední rádius', slug: 'bendy-radius-m', image: null },
-      { label: 'BENDY RADIUS L', sub: 'větší rádius · delší konec', slug: 'bendy-radius-l', image: null },
-      { label: 'BENDY FIELD', sub: 'prodloužený ohyb · plošné sestavy', slug: 'bendy-field', image: null },
+      { label: 'BENDY SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-bendy', variant: 'single', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY DUO', sub: '2 stejné prvky v sestavě', slug: 'mlzitko-bendy', variant: 'duo', image: null },
+      { label: 'BENDY BACK-TO-BACK', sub: '2 stejné prvky zády k sobě', slug: 'mlzitko-bendy', variant: 'back-to-back', image: null },
+      { label: 'BENDY ALEJ', sub: 'více stejných prvků v linii', slug: 'mlzitko-bendy', variant: 'alej', image: null },
     ],
   },
-  'bendy-radius-s': { ref: 'mlzitko-bendy' },
-  'bendy-radius-m': { ref: 'mlzitko-bendy' },
-  'bendy-radius-l': { ref: 'mlzitko-bendy' },
-  'bendy-field': { ref: 'mlzitko-bendy' },
   'mlzitko-steblo': {
     title: 'Varianty kolekce STÉBLO®',
     eyebrow: 'STÉBLO® · samostatná produktová rodina',
@@ -134,7 +129,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const currentVariant = params.get('variant');
-  const variants = null;
+  const variants = resolveVariantConfig(product.slug);
 
   const [variantImages, setVariantImages] = useState({});
 
@@ -286,8 +281,14 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
           </div>
           <div className={`grid gap-3 ${variants.items.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-5'}`}>
             {variants.items.map((item) => {
-              const active = item.variant ? currentVariant === item.variant || (isMrak && !currentVariant && item.variant === 'obrys') : item.slug === product.slug && !currentVariant;
-              const href = isMrak && item.variant ? mrakHref({ variant: item.variant }) : item.variant ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}` : `/produkt/${item.slug}`;
+              const active = item.variant
+                ? currentVariant === item.variant || (product.slug === 'mlzitko-bendy' && !currentVariant && item.variant === 'single') || (isMrak && !currentVariant && item.variant === 'obrys')
+                : item.slug === product.slug && !currentVariant;
+              const href = isMrak && item.variant
+                ? mrakHref({ variant: item.variant })
+                : item.variant
+                  ? `/produkt/${item.slug}?variant=${encodeURIComponent(item.variant)}`
+                  : `/produkt/${item.slug}`;
               const previewImage = variantImages[item.slug] || item.image || product.image_url || product.gallery_urls?.[0] || null;
               return (
                 <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-2xl border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-md' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-0.5 hover:border-[#0b4860]/35 hover:shadow-md'}`}>

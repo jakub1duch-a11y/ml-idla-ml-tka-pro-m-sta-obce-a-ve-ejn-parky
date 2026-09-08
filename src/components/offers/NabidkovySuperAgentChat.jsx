@@ -92,7 +92,7 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
   const seedPrompt = useMemo(() => {
     if (!inquiryId) return 'Dobrý den, jsem připraven připravovat nabídky. Pošli mi ID poptávky a typ (poptavka / contact), nebo vyber poptávku vlevo a já na ni navážu.';
     const type = inquiryType === 'contact' ? 'contact' : 'poptavka';
-    return `Načti poptávku ID ${inquiryId} (typ: ${type}). Zhodnoť zadání, navrhni produkt a varianty, připrav kompletní návrh nabídky až po PDF a prezentaci. Po dokončení mi vypiš shrnutí a zeptej se, zda můžu nabídku odeslat klientovi.`;
+    return `Načti poptávku ID ${inquiryId} (typ: ${type}). Zvol jedno doporučené řešení, ověř cenu, připrav odpovídající projektové vizualizace, kompletní PDF nabídku a stručný koncept zprávy klientovi. Nabídku a případ vždy ulož na sdílený Mlžný disk. Nic klientovi automaticky neodesílej; výstup ponech jako koncept ke kontrole.`;
   }, [inquiryId, inquiryType]);
 
   useEffect(() => {

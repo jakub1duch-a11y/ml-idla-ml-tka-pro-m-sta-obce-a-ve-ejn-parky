@@ -134,7 +134,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const currentVariant = params.get('variant');
-  const variants = resolveVariantConfig(product.slug);
+  const variants = null;
 
   const [variantImages, setVariantImages] = useState({});
 

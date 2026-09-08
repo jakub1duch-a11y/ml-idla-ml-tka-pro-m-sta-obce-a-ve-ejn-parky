@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 function buildAnswers(product) {
   const pressure = product?.pressure || '2–7 BAR dle konkrétní konfigurace';
   const water = product?.water_consumption || 'podle počtu trysek a provozního režimu';
-  const coverage = product?.coverage_area || 'dle zvolené varianty a konkrétního rozmístění';
+  const height = product?.coverage_area || 'dle zvolené varianty';
   const control = product?.power_supply || 'volitelné chytré řízení, časování a senzory';
   const material = product?.material || 'nerezová ocel vhodná pro venkovní provoz';
 
@@ -31,8 +31,8 @@ function buildAnswers(product) {
       a: `Ano. Konstrukce využívá ${material}; výsledná specifikace, kotvení a zimní režim se vždy přizpůsobí konkrétní instalaci.`
     },
     {
-      q: 'Jak velký prostor může řešení obsloužit?',
-      a: `Orientační pokrytí je ${coverage}. Skutečný dosah ovlivňuje počet prvků, jejich orientace, tlak, vítr, teplota a provozní režim; přesný návrh proto potvrzujeme pro konkrétní místo.`
+      q: 'Jaká je výška a rozsah řešení?',
+      a: `Výška nebo rozměrová specifikace je ${height}. U městských realizací lze navrhnout jeden prvek, dvojici, bránu, alej nebo celé mlžiště.`
     }
   ];
 }

@@ -10,12 +10,6 @@ const SHARED_DOCS = [
 ];
 
 export default function DownloadsTab({ product }) {
-  const productDocs = (product.documents_urls || []).filter(Boolean).map((url, index) => ({
-    title: `Produktový dokument ${index + 1} — ${product.name}`,
-    desc: 'Dokument vložený přímo ke konkrétnímu produktu v katalogu.',
-    url
-  }));
-
   const emailFiles = [
     { title: `Technický list — ${product.name}`, desc: 'Kompletní parametry a výkresy k instalaci', subject: `Technický list — ${product.name}` },
     { title: 'Individuální cenová nabídka', desc: 'Nabídka na míru vašemu projektu', subject: `Cenová nabídka — ${product.name}` },
@@ -34,27 +28,8 @@ export default function DownloadsTab({ product }) {
           </p>
         </motion.div>
 
-        {productDocs.length > 0 && <div className="max-w-2xl space-y-4 mb-10">
-          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-3">Dokumentace tohoto produktu</p>
-          {productDocs.map((f, i) => (
-            <motion.a key={f.url} href={f.url} target="_blank" rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-              className="flex items-center justify-between gap-6 p-5 rounded-2xl border border-[#0b4860]/15 bg-[#eef8fb] hover:border-[#0b4860]/30 hover:shadow-sm transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center"><FileText size={20} className="text-[#0b4860]" /></div>
-                <div>
-                  <p className="text-slate-900 font-medium text-sm">{f.title}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">{f.desc}</p>
-                </div>
-              </div>
-              <Download size={18} className="text-[#0b4860] shrink-0" />
-            </motion.a>
-          ))}
-        </div>}
-
         <div className="max-w-2xl space-y-4 mb-10">
-          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">Obecná dokumentace systému</p>
-          <p className="mb-4 text-xs leading-5 text-slate-500">Tyto podklady popisují obecné principy přípravy, údržby a řízení. Přesné údaje pro konkrétní produkt potvrzuje jeho technický list a projektová nabídka.</p>
+          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-3">Sdílená dokumentace — ke stažení hned</p>
           {SHARED_DOCS.map((f, i) => (
             <motion.a key={f.title} href={f.url} target="_blank" rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}

@@ -197,25 +197,7 @@ export function getProductSEO(product, reviewStats) {
     name: product.name,
     description: product.short_description || product.description,
     image: [product.image_url, ...(product.gallery_urls || [])].filter(Boolean),
-    brand: { '@type': 'Brand', name: 'MLŽIDLA® / HolmTec' },
-    manufacturer: {
-      '@type': 'Organization',
-      name: 'HolmTec s.r.o.',
-      url: `${BASE_URL}/o-nas`,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Horní Staré Město 698',
-        postalCode: '541 02',
-        addressLocality: 'Trutnov',
-        addressCountry: 'CZ'
-      }
-    },
-    additionalProperty: [
-      product.material && { '@type': 'PropertyValue', name: 'Materiál', value: product.material },
-      product.pressure && { '@type': 'PropertyValue', name: 'Provozní tlak', value: product.pressure },
-      product.water_consumption && { '@type': 'PropertyValue', name: 'Spotřeba vody', value: product.water_consumption },
-      product.coverage_area && { '@type': 'PropertyValue', name: 'Pokrytí / plocha', value: product.coverage_area }
-    ].filter(Boolean)
+    brand: { '@type': 'Brand', name: 'HolmTec' }
   };
 
   if (product.price_from) {

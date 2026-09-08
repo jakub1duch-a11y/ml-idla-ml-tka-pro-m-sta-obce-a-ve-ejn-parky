@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Loader, Gauge } from 'lucide-react';
+import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
-
-const money = (v) => new Intl.NumberFormat('cs-CZ').format(Number(v || 0));
-const isArchived = (slug) => String(slug || '').startsWith('archived-');
-
-const getPressureLabel = (p) => {
-  const pr = String(p?.pressure || '').toLowerCase();
-  if (pr.includes('2') || pr.includes('3') || pr.includes('4') || pr.includes('5') || pr.includes('6') || pr.includes('7') || pr.includes('8')) return 'Nízkotlaké 2–8 bar';
-  if (pr.includes('bez') && pr.includes('čerpadla')) return 'Bez čerpadla';
-  if (pr) return p.pressure;
-  return null;
-};
 
 export default function FeaturedProductsSection() {
   const [products, setProducts] = useState([]);
@@ -23,9 +12,8 @@ export default function FeaturedProductsSection() {
   useEffect(() => {
     base44.entities.Product.list().
     then((items) => {
-      const all = (items || []).filter((p) => p.image_url && !isArchived(p.slug));
-      const featured = all.filter((p) => p.featured);
-      setProducts(featured.length >= 3 ? featured.slice(0, 6) : all.slice(0, 6));
+      const featured = (items || []).filter((p) => p.featured && p.image_url);
+      setProducts(featured.length >= 3 ? featured.slice(0, 6) : (items || []).filter((p) => p.image_url).slice(0, 6));
     }).
     catch(() => setProducts([])).
     finally(() => setLoading(false));
@@ -78,29 +66,15 @@ export default function FeaturedProductsSection() {
                     </span>
                 }
                 </div>
-                <div className="p-5">
-                   <div className="flex items-start justify-between gap-3">
-                     <div className="min-w-0">
-                       <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-xl sm:text-2xl">{product.name}</h3>
-                       {product.short_description &&
-                       <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-sm sm:text-base">{product.short_description}</p>
-                       }
-                     </div>
-                     <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
-                   </div>
-                   <div className="mt-3 flex flex-wrap items-center gap-2">
-                     {getPressureLabel(product) && (
-                       <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-600">
-                         <Gauge size={11} className="text-[#0b4860]" /> {getPressureLabel(product)}
-                       </span>
-                     )}
-                     {product.price_from && Number(product.price_from) > 1 ? (
-                       <span className="text-sm font-bold text-[#0b4860]">od {money(product.price_from)} Kč bez DPH</span>
-                     ) : (
-                       <span className="text-xs font-semibold text-slate-400">cena na poptávku</span>
-                     )}
-                   </div>
-                 </div>
+                <div className="p-5 flex items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-slate-900 font-medium group-hover:text-slate-600 transition-colors leading-tight text-2xl">{product.name}</h3>
+                    {product.short_description &&
+                  <p className="text-slate-400 mt-0.5 font-light line-clamp-1 text-base">{product.short_description}</p>
+                  }
+                  </div>
+                  <ArrowRight size={16} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
+                </div>
               </Link>
             </motion.div>
           )}

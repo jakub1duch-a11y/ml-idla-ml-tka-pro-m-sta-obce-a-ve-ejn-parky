@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Construction, Droplets, Info, PlugZap, ShieldCheck, Snowflake, TimerReset, Wrench } from 'lucide-react';
+import { ArrowRight, Check, Construction, Droplets, PlugZap, ShieldCheck, Snowflake, TimerReset, Wrench } from 'lucide-react';
 import AnchoringGallery from '@/components/produkt/AnchoringGallery';
 
 const OPTIONS = [
@@ -49,19 +49,11 @@ export default function InstallationTab({ product }) {
   return (
     <section className="py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
-        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 max-w-3xl">
+        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 max-w-3xl">
           <p className="mb-4 font-mono text-xs uppercase tracking-widest text-slate-400">Kotvení · přívod vody · rozsah prací</p>
           <h2 className="font-heading text-4xl font-light tracking-tight text-slate-900 lg:text-5xl">Tři cesty k instalaci.<br /><span className="text-slate-400">Vyberte podle připravenosti místa.</span></h2>
-          <p className="mt-5 text-base font-light leading-relaxed text-slate-500">Instalační část počítáme samostatně podle povrchu, přívodu vody, kotvení a požadovaného rozsahu prací.</p>
+          <p className="mt-5 text-base font-light leading-relaxed text-slate-500">Cena produktu zůstává stejná. Instalační část počítáme samostatně podle povrchu, přívodu vody, kotvení a požadovaného rozsahu prací.</p>
         </motion.div>
-
-        <div className="mb-10 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 sm:px-5">
-          <Info size={18} className="mt-0.5 shrink-0 text-amber-700" />
-          <div>
-            <p className="text-sm font-semibold text-slate-900">Pokud instalace není v nabídce výslovně uvedena, cena je bez instalace.</p>
-            <p className="mt-1 text-xs leading-5 text-slate-600 sm:text-sm">Produkt je dodán připravený pro montáž. Součástí dodávky jsou instalační, provozní a servisní instrukce podle konkrétního produktu a způsobu napojení.</p>
-          </div>
-        </div>
 
         <div className="grid gap-5 lg:grid-cols-3">
           {OPTIONS.map((option) => {

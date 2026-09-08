@@ -1,41 +1,49 @@
 import React, { useEffect } from 'react';
 import { SEO_PAGES, setSEO } from '@/lib/seo';
-import HeroDynamic from '@/components/home/HeroDynamic';
-import StatsBar from '@/components/home/StatsBar';
-import MicroclimateTrustSection from '@/components/home/MicroclimateTrustSection';
-import WhoForSection from '@/components/home/WhoForSection';
+import HeroSlider from '@/components/home/premium/HeroSlider';
+import IndustriesSection from '@/components/home/IndustriesSection';
+import CommercialIndustrialSection from '@/components/home/CommercialIndustrialSection';
+import CustomDesignSection from '@/components/home/CustomDesignSection';
+import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
+import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
+import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
+import SmartSection from '@/components/home/SmartSection';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
-import HowItWorksSteps from '@/components/home/HowItWorksSteps';
-import RecentReferences from '@/components/home/RecentReferences';
-import QuickInquiryForm from '@/components/home/QuickInquiryForm';
-import MobileStickyBar from '@/components/home/MobileStickyBar';
-import FadeIn from '@/components/common/FadeIn';
+import ProjectGallerySection from '@/components/home/ProjectGallerySection';
+import InstagramFeedSection from '@/components/home/InstagramFeedSection';
 import BlogSection from '@/components/home/BlogSection';
 import ContactSection from '@/components/home/ContactSection';
+import ConceptToRealitySection from '@/components/home/ConceptToRealitySection';
+import MistVideoShowcase from '@/components/common/MistVideoShowcase';
+import FadeIn from '@/components/common/FadeIn';
+import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
+import HomepageVideoLoops from '@/components/home/HomepageVideoLoops';
 
 export default function Home() {
   useEffect(() => {
-    setSEO({
-      ...SEO_PAGES.home,
-      title: 'MLŽIDLA.CZ | Architektonická mlžítka pro města i zahrady',
-      description: 'Nerezová mlžítka a mlžné systémy pro města, školy, parky, areály a zahrady. Návrh mikroklimatu, vizualizace, smart řízení a řešení na míru.',
-      canonicalPath: '/',
-    });
+    setSEO(SEO_PAGES.home);
   }, []);
 
   return (
     <>
-      <HeroDynamic />
-      <StatsBar />
-      <MicroclimateTrustSection />
-      <WhoForSection />
-      <FeaturedProductsSection />
-      <HowItWorksSteps />
-      <RecentReferences />
-      <QuickInquiryForm />
+      <HeroSlider />
+
+      <FadeIn><IndustriesSection /></FadeIn>
+      <FadeIn><HomepageVideoLoops /></FadeIn>
+      <FadeIn><CommercialIndustrialSection /></FadeIn>
+      <FadeIn><PremiumServicesSection /></FadeIn>
+      <FadeIn><PremiumOasisSection /></FadeIn>
+      <FadeIn><UrbanCoolingImpact /></FadeIn>
+      <FadeIn><SmartSection /></FadeIn>
+      <FadeIn><FeaturedProductsSection /></FadeIn>
+      <FadeIn><CustomDesignSection /></FadeIn>
+      <FadeIn><MistVideoShowcase /></FadeIn>
+      <AIProjectDesignerSection />
+      <FadeIn><InstagramFeedSection /></FadeIn>
       <FadeIn><BlogSection /></FadeIn>
       <FadeIn><ContactSection /></FadeIn>
-      <MobileStickyBar />
+      <FadeIn><ConceptToRealitySection /></FadeIn>
+      <FadeIn><ProjectGallerySection /></FadeIn>
     </>
   );
 }

@@ -165,6 +165,50 @@ Deno.serve(async (req) => {
     );
     const productEventsData = await productEventsRes.json();
 
+    // Reference page performance + engagement events by reference URL.
+    const referenceClicksRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'pagePath' }],
+          metrics: [{ name: 'screenPageViews' }, { name: 'totalUsers' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'pagePath',
+              stringFilter: { matchType: 'BEGINS_WITH', value: '/reference/' }
+            }
+          },
+          orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+          limit: 100,
+        }),
+      }
+    );
+    const referenceClicksData = await referenceClicksRes.json();
+
+    const referenceEventsRes = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'pagePath' }, { name: 'eventName' }],
+          metrics: [{ name: 'eventCount' }],
+          dimensionFilter: {
+            andGroup: { expressions: [
+              { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/reference/' } } },
+              { filter: { fieldName: 'eventName', inListFilter: { values: ['reference_view','cta_click','phone_click','email_click','video_start','video_complete','section_view','scroll_depth','form_start','generate_lead'] } } }
+            ] }
+          },
+          limit: 1000,
+        }),
+      }
+    );
+    const referenceEventsData = await referenceEventsRes.json();
+
     const parseRows = (data, dimCount, metricCount) => {
       if (!data.rows) return [];
       return data.rows.map(row => ({
@@ -209,6 +253,21 @@ Deno.serve(async (req) => {
     });
     const productEngagement = Object.values(productEngagementMap);
 
+    const referenceClicks = parseRows(referenceClicksData, 1, 2).map(r => ({
+      path: r.dims[0],
+      views: r.metrics[0],
+      users: r.metrics[1],
+    }));
+
+    const referenceEngagementMap = {};
+    parseRows(referenceEventsData, 2, 1).forEach(r => {
+      const path = r.dims[0];
+      const eventName = r.dims[1];
+      if (!referenceEngagementMap[path]) referenceEngagementMap[path] = { path };
+      referenceEngagementMap[path][eventName] = r.metrics[0];
+    });
+    const referenceEngagement = Object.values(referenceEngagementMap);
+
     const cities = parseRows(citiesData, 1, 1).map(r => ({
       city: r.dims[0] || 'Neznámé',
       sessions: r.metrics[0],
@@ -239,7 +298,7 @@ Deno.serve(async (req) => {
       console.log('Could not fetch inquiries:', e);
     }
 
-    return Response.json({ daily, pages, sources, productClicks, productEngagement, cities, avgSessionDuration, totals, newUsers, inquiries });
+    return Response.json({ daily, pages, sources, productClicks, productEngagement, referenceClicks, referenceEngagement, cities, avgSessionDuration, totals, newUsers, inquiries });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

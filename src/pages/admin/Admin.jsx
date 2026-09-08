@@ -15,6 +15,7 @@ import AdminPages from './AdminPages';
 import AdminMedia from './AdminMedia';
 import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
+import AdminReferenceAnalytics from './AdminReferenceAnalytics';
 import AdminAR from './AdminAR';
 import AdminDatabricks from './AdminDatabricks';
 import AdminTasks from './AdminTasks';
@@ -28,6 +29,7 @@ const TABS = [
   { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
+  { id: 'reference-analytics', label: 'Analýza realizací', icon: BarChart3 },
   { id: 'references', label: 'Reference', icon: ImageIcon },
   { id: 'blog', label: 'Blog', icon: Newspaper },
   { id: 'pages', label: 'Stránky', icon: FileStack },
@@ -117,6 +119,7 @@ export default function Admin() {
     tasks: AdminTasks,
     products: AdminProducts,
     'product-analytics': AdminProductAnalytics,
+    'reference-analytics': AdminReferenceAnalytics,
     references: AdminReferences,
     blog: AdminBlog,
     pages: AdminPages,

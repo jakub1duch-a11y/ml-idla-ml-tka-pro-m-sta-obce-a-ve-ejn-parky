@@ -248,12 +248,33 @@ export function getBlogPostSEO(post) {
 }
 
 export function getReferenceSEO(project) {
+  const isBendyLineaGarden = project.id === '6a9fdf2f153be3ee13d70207';
+  const title = isBendyLineaGarden
+    ? 'BENDY + LINEA v rodinné zahradě – nízkotlaké mlžení'
+    : project.name;
+  const description = isBendyLineaGarden
+    ? 'Reálná realizace nízkotlakého mlžícího prostoru BENDY + LINEA v rodinné zahradě. Nerezová mlžítka, lokální ochlazení a monitoring provozu.'
+    : project.description;
+  const canonicalPath = isBendyLineaGarden
+    ? '/reference/bendy-linea-rodinna-zahrada'
+    : `/reference/${project.id}`;
   return {
-    title: project.name,
-    description: project.description,
+    title,
+    description,
+    keywords: isBendyLineaGarden ? 'BENDY, LINEA, zahradní mlžítko, nízkotlaké mlžení, mlžení zahrady, ochlazení zahrady, MLŽIDLA.cz' : undefined,
     image: project.image_url,
-    canonicalPath: `/reference/${project.id}`,
-    type: 'article'
+    canonicalPath,
+    type: 'article',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      image: project.image_url,
+      mainEntityOfPage: `${BASE_URL}${canonicalPath}`,
+      author: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
+      publisher: { '@type': 'Organization', name: 'MLŽIDLA.cz' }
+    }
   };
 }
 

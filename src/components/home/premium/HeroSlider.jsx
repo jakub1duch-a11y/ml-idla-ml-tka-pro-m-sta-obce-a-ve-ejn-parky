@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Droplets, ShieldCheck, Wifi, Wind } from 'lucide-react';
-import HERO_VIDEO_DATA from '@/assets/heroVideoData';
 
 const HERO_IMAGE = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
-const HERO_VIDEO = HERO_VIDEO_DATA;
 
 const FACTS = [
   { icon: Droplets, label: 'Jemná vodní mlha' },
@@ -15,19 +13,44 @@ const FACTS = [
 
 export default function HeroSlider() {
   const reduceMotion = useReducedMotion();
+  const [videoSrc, setVideoSrc] = useState('');
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
+
+    let active = true;
+    const mobileQuery = window.matchMedia('(max-width: 639px)');
+
+    const loadVideo = async () => {
+      const module = mobileQuery.matches
+        ? await import('@/assets/heroVideoMobile')
+        : await import('@/assets/heroVideoDesktop');
+      if (active) setVideoSrc(module.default);
+    };
+
+    loadVideo();
+    mobileQuery.addEventListener('change', loadVideo);
+
+    return () => {
+      active = false;
+      mobileQuery.removeEventListener('change', loadVideo);
+    };
+  }, [reduceMotion]);
+
   return (
     <section className="relative isolate min-h-[78svh] overflow-hidden bg-[#071d26] text-white sm:min-h-[84svh]">
       <video
+        key={videoSrc || 'hero-poster'}
         className="absolute inset-0 h-full w-full object-cover object-center"
         autoPlay={!reduceMotion}
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         poster={HERO_IMAGE}
         aria-label="Požitek z ochlazení — jemná mlha z nerezových mlžítek MLŽIDLA® v horkém letním dni"
       >
-        <source src={HERO_VIDEO} type="video/webm" />
+        {videoSrc && <source src={videoSrc} type="video/webm" />}
       </video>
 
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,24,32,.88)_0%,rgba(4,24,32,.58)_42%,rgba(4,24,32,.12)_72%,rgba(4,24,32,.04)_100%)]" />

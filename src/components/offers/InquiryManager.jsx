@@ -382,7 +382,11 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       try {
         const savedQuote = await base44.functions.invoke('saveQuoteToDriveAuto', { pdf_base64: quote?.pdf_base64, filename: quote?.filename, quoteNumber, inquiryEmail: selected.email, inquiryName: selected.firma || selected.company || selected.name, issued_at: issuedAt.toISOString() });
         quoteDriveUrl = savedQuote.data?.drive_url || '';
-      } catch (driveError) { console.warn('Quote Drive archive unavailable', driveError); }
+        if (!quoteDriveUrl) throw new Error('PDF se nepodařilo uložit na Mlžný disk.');
+      } catch (driveError) {
+        console.error('Povinné uložení nabídky na Mlžný disk selhalo', driveError);
+        throw new Error('Nabídka nebyla dokončena, protože se PDF nepodařilo uložit na sdílený Mlžný disk. Zkuste vytvoření nabídky znovu.');
+      }
 
       let presentation = null;
       let presentationWarning = '';
@@ -420,6 +424,9 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         drive_case_folder_id: presentation?.drive_case_folder_id || '', drive_case_folder_url: presentation?.drive_case_folder_url || '',
         presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
         status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,
+        customer_message: visualizationUrl
+          ? `Dobrý den, na základě vašeho zadání jsme připravili doporučené řešení ${productForOffer.name}, reálnou projektovou vizualizaci a cenovou nabídku ${quoteNumber}. V příloze najdete kompletní PDF. Vizualizace je návrhový podklad; finální technické řešení před realizací ověříme. Pokud budete chtít upravit umístění nebo rozsah, rádi návrh dopracujeme. Ing. Radek Meduna, MLŽIDLA® / HolmTec`
+          : `Dobrý den, na základě vašeho zadání jsme připravili doporučené řešení ${productForOffer.name} a cenovou nabídku ${quoteNumber}. V příloze najdete kompletní PDF. Finální technické řešení před realizací ověříme. Pokud budete chtít upravit umístění nebo rozsah, rádi návrh dopracujeme. Ing. Radek Meduna, MLŽIDLA® / HolmTec`, 
         supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz', supplier_contact_name: 'Ing. Radek Meduna', supplier_email: senderEmail, supplier_phone: '+420 774 700 390',
         production_notes: options.customProduct ? [`CUSTOM KONCEPT — ${options.customProduct.name || productForOffer.name}`, options.customProduct.primary_profile && `Profil: ${options.customProduct.primary_profile}`, options.customProduct.dimensions_summary && `Rozměry: ${options.customProduct.dimensions_summary}`, options.customProduct.bend_strategy && `Ohýbání: ${options.customProduct.bend_strategy}`, options.customProduct.weld_strategy && `Svařování: ${options.customProduct.weld_strategy}`, options.customProduct.nozzle_strategy && `Trysky: ${options.customProduct.nozzle_strategy}`, Array.isArray(options.customProduct.manufacture_steps) && options.customProduct.manufacture_steps.length ? `Postup: ${options.customProduct.manufacture_steps.join(' → ')}` : ''].filter(Boolean).join('\n').slice(0, 3000) : (projectOrderOverride?.production_notes || ''),
         special_requirements: options.customPricing?.warnings?.length ? options.customPricing.warnings.join(' ').slice(0, 2000) : (projectOrderOverride?.special_requirements || ''),
@@ -456,11 +463,11 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         ...visualizationOverrides,
         ...offerAttachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
       ].filter((url, index, all) => url && all.indexOf(url) === index);
-      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, visualizationUrls: generatedVisualizationUrls, visualizationWarning: generatedVisualizationUrls.length === 0 ? 'Automatická nabídka je hotová, ale AI vizualizaci se tentokrát nepodařilo vytvořit. Nabídku lze dál zkontrolovat a odeslat; vizualizaci můžete přegenerovat samostatně v pokročilých nástrojích.' : '', approvedVisualizationAssets, clientContent, variantPricing: options.variantPricing || [], pricing: options.pricing || null, customProduct: options.customProduct || null, customPricing: options.customPricing || null });
-      if (!subject.trim()) setSubject(`Projektový návrh + cenová nabídka ${quoteNumber} | ${selected.firma || selected.company || productForOffer.name} | MLŽIDLA®`);
+      setPrepared({ projectOrder, quote, quoteDriveUrl, presentation, presentationWarning, notebookSourceUrl, inquiryArchive, quoteNumber, validUntil, arUrl, visualizationUrl, visualizationUrls: generatedVisualizationUrls, visualizationWarning: generatedVisualizationUrls.length === 0 ? 'Chybí vizualizace. Kompletní nabídka se má připravovat až s alespoň jednou projektovou vizualizací.' : '', approvedVisualizationAssets, clientContent, variantPricing: [], pricing: options.pricing || null, customProduct: options.customProduct || null, customPricing: options.customPricing || null });
+      if (!subject.trim()) setSubject(`Cenová nabídka ${quoteNumber} | ${selected.firma || selected.company || productForOffer.name} | MLŽIDLA®`);
       if (!message.trim()) setMessage(visualizationUrl
-        ? `Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení pro daný prostor včetně orientační projektové vizualizace a cenové nabídky. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je AI koncept osazení, cenová rekapitulace a projektová prezentace. Vizualizace slouží jako návrhový podklad; přesné technické řešení potvrzujeme před realizací. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`
-        : `Dobrý den,\n\nna základě vašeho zadání jsme připravili návrh řešení a cenovou nabídku pro daný prostor. Návrh vychází z charakteru místa, způsobu jeho užívání a zvoleného produktu ${productForOffer.name}.\n\nSoučástí podkladů je cenová rekapitulace a projektová prezentace. V zákaznickém portálu Můj projekt můžete vše projít na jednom místě, stáhnout dokumentaci a navázat dalším krokem.\n\nPokud budete chtít doplnit vizualizaci, upravit umístění, počet prvků, variantu řešení nebo rozsah realizace, zapracujeme změny do další verze návrhu.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
+        ? `Dobrý den,\n\nna základě vašeho zadání jsme připravili doporučené řešení ${productForOffer.name}, projektovou vizualizaci a kompletní cenovou nabídku ${quoteNumber}.\n\nV PDF najdete navržené řešení, vizualizaci, cenu a další postup. Vizualizace je návrhový podklad; finální technické řešení před realizací ověříme.\n\nPokud budete chtít upravit umístění nebo rozsah, rádi návrh dopracujeme.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`
+        : `Dobrý den,\n\nna základě vašeho zadání jsme připravili doporučené řešení ${productForOffer.name} a kompletní cenovou nabídku ${quoteNumber}.\n\nV PDF najdete navržené řešení, cenu a další postup. Finální technické řešení před realizací ověříme.\n\nPokud budete chtít upravit umístění nebo rozsah, rádi návrh dopracujeme.\n\nIng. Radek Meduna\nMLŽIDLA® / HolmTec`);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
 

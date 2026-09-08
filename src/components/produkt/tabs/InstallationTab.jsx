@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Construction, Droplets, PlugZap, ShieldCheck, Snowflake, TimerReset, Wrench } from 'lucide-react';
+import { ArrowRight, Check, Construction, Droplets, PlugZap, ShieldCheck, Snowflake, TimerReset, Wrench, Factory, Sparkles, CircleDot } from 'lucide-react';
 import AnchoringGallery from '@/components/produkt/AnchoringGallery';
 
 const OPTIONS = [
@@ -105,6 +105,42 @@ export default function InstallationTab({ product }) {
         </motion.div>
 
         <AnchoringGallery />
+
+        <section className="mb-16 overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_18px_55px_rgba(15,23,42,.055)]">
+          <div className="grid lg:grid-cols-[.82fr_1.18fr]">
+            <div className="border-b border-slate-200 bg-[linear-gradient(150deg,#f7fbfc,#eef6f8)] p-7 sm:p-9 lg:border-b-0 lg:border-r">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#0b4860]/10 bg-white px-3 py-1.5 font-mono text-[9px] uppercase tracking-[.18em] text-[#0b4860]/70"><Factory size={13}/> Výrobní princip</div>
+              <h3 className="mt-5 font-heading text-3xl font-light tracking-[-.035em] text-slate-950">Od nerezového profilu<br/><span className="text-slate-400">k hotovému mlžítku.</span></h3>
+              <p className="mt-4 text-sm leading-7 text-slate-500">Tato část zobrazuje procesní princip, nikoli výrobní výkres. Přesná geometrie, profil, počet trysek a způsob kotvení se vždy řídí konkrétním produktem a schváleným výrobním podkladem.</p>
+              {product?.image_url && (
+                <div className="group relative mt-7 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                  <img src={product.image_url} alt={`${product.name} – referenční geometrie produktu`} className="aspect-[4/3] w-full object-contain p-3 transition-transform duration-700 group-hover:scale-[1.025]" loading="lazy" />
+                  <div className="absolute bottom-3 left-3 rounded-full border border-white/70 bg-white/85 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.14em] text-[#0b4860] shadow-sm backdrop-blur">Referenční geometrie</div>
+                </div>
+              )}
+            </div>
+
+            <div className="p-7 sm:p-9">
+              <p className="font-mono text-[10px] uppercase tracking-[.2em] text-slate-400">Proces · schematicky</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {[
+                  ['01', 'Příprava materiálu', product?.material ? `Materiál dle produktu: ${product.material}` : 'Materiál se volí podle technické specifikace produktu.'],
+                  ['02', 'Tvarování podle podkladu', 'Geometrie výrobku se řídí schválenou referencí a výrobním výkresem; bez přidávání ramen nebo změny proporcí.'],
+                  ['03', 'Osazení funkčních prvků', 'Trysky, přípojky a další funkční prvky se osazují pouze v počtu a poloze určené konkrétním produktem.'],
+                  ['04', 'Povrchové dokončení', 'Nerezový povrch se dokončí v provedení definovaném pro daný výrobek.'],
+                  ['05', 'Výrobní kontrola', 'Před expedicí se ověřuje kompletnost sestavy a připravenost pro zvolený typ instalace.'],
+                  ['06', 'Montáž v místě', 'Kotvení, přívod vody a smart řízení se doplní podle projektové přípravy konkrétní lokality.']
+                ].map(([num, title, text], index) => (
+                  <motion.div key={num} whileHover={{ y: -3 }} className="group rounded-2xl border border-slate-200 bg-slate-50/70 p-4 transition-all hover:border-[#0b4860]/20 hover:bg-white hover:shadow-[0_12px_30px_rgba(11,72,96,.07)]">
+                    <div className="flex items-center justify-between"><span className="font-mono text-[10px] font-bold tracking-[.18em] text-cyan-700">{num}</span>{index === 3 ? <Sparkles size={15} className="text-slate-400"/> : <CircleDot size={14} className="text-slate-300"/>}</div>
+                    <h4 className="mt-3 text-sm font-semibold text-slate-950">{title}</h4>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{text}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         <div className="mb-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {[

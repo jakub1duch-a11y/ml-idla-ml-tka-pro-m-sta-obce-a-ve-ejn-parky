@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Building2, Trees, Waves, UtensilsCrossed, Sparkles, Calendar, PenTool, Factory, ArrowRight } from 'lucide-react';
+import { Building2, Trees, Waves, UtensilsCrossed, Sparkles, Calendar, PenTool, ArrowRight } from 'lucide-react';
 
 const INDUSTRIES = [
   {
@@ -46,12 +46,6 @@ const INDUSTRIES = [
     desc: 'Technicky čistý prvek, který lze začlenit do projektové dokumentace a vizualizací.',
     href: '/kategorie/architekti',
   },
-  {
-    icon: Factory,
-    title: 'Průmysl a venkovní prostory',
-    desc: 'Ochlazení pracovišť, hal a venkovních provozů — produktivita a bezpečnost i v horkých dnech.',
-    href: '/kategorie/komercni',
-  },
 ];
 
 export default function IndustriesSection() {
@@ -85,7 +79,7 @@ export default function IndustriesSection() {
             transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.12 }}
             className="mt-5 text-base leading-7 text-[#5A6B78] sm:text-lg"
           >
-            Od náměstí po zahradu, od festivalu po průmyslovou halu. Navrhujeme, vyrábíme a instalujeme nerezová mlžítka přesně pro váš prostor a provoz.
+            Od náměstí po zahradu, od festivalu po hotelovou terasu. Navrhujeme, vyrábíme a instalujeme nerezová mlžítka přesně pro váš prostor a způsob využití.
           </motion.p>
         </div>
 

@@ -23,6 +23,7 @@ import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
 import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
 import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
+import ProductReferenceSheet from '@/components/produkt/ProductReferenceSheet';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -303,8 +304,16 @@ export default function ProduktDetail() {
         onOpenLightbox={(i) => setLightbox({ mediaItems: allMedia, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
 
-      {/* ═══════ FILMOVÝ PRODUCT HERO ═══════ */}
-      {product.video_url && <ProductMotionSection product={product} />}
+      {/* ═══════ KOMPAKTNÍ PRODUKTOVÝ LIST — podle nové vizuální předlohy ═══════ */}
+      <ProductReferenceSheet
+        product={product}
+        techRows={techRows}
+        onPoptat={scrollToContact}
+        onShowInstallation={() => handleTabClick(TABS[4])}
+        onShowSmart={() => handleTabClick(TABS[3])}
+      />
+
+      {/* Filmový loop zůstává dostupný v galerii / hero tlačítku, aby hlavní detail zůstal kompaktní. */}
 
       {/* ═══════ OÁZA SIGNATURE EXPERIENCE ═══════ */}
       {product.slug === 'oaza-aura-bendy' && (

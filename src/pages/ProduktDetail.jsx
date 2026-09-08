@@ -278,15 +278,13 @@ export default function ProduktDetail() {
   const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
 
   const techRows = [
-  product.coverage_area && { label: 'Výška', value: product.coverage_area, icon: Ruler, desc: 'Celková výška konstrukce ovlivňuje dosah a pokrytí mlžného oblaku v prostoru.' },
-  { label: 'Trysky', value: product.micron_size ? `AISI 316L, ${product.micron_size} μm` : 'AISI 316L', icon: Waves, desc: 'Nerezové trysky rozprašují vodu na mikrokapky, které se okamžitě odpaří — bez mokrého povrchu.' },
-  product.pressure && { label: 'Tlak', value: product.pressure, icon: Gauge, desc: 'Nízkotlaký provoz (2–7 BAR) umožňuje přímé napojení na běžný vodovodní řad bez čerpadla.' },
-  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets, desc: 'Reálná spotřeba při plynulém provozu — určuje i orientační provozní náklady.' },
-  product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Potravinářská nerez odolná korozi, vhodná pro celoroční venkovní provoz.' },
-  { label: 'Povrch', value: 'Broušený / kartáčovaný', icon: Sparkles, desc: 'Ruční broušený povrch potlačuje odlesky a otisky prstů, zachovává prémiový vzhled.' },
-  product.power_supply && { label: 'Napájení & řízení', value: product.power_supply, icon: Zap, desc: 'Elektronické řízení mlžení, kompatibilní se SMART moduly a časovači.' },
-  { label: 'Výroba', value: 'Zakázková, 6–8 týdnů', icon: Factory, desc: 'Každý kus se vyrábí na zakázku v ČR dle rozměrů a požadavků konkrétní instalace.' }].
-  filter(Boolean);
+  product.coverage_area && { label: 'Rozměr / výška', value: product.coverage_area, icon: Ruler, desc: 'Hodnota převzatá z technických dat konkrétního produktu.' },
+  product.micron_size && { label: 'Trysky / mlha', value: product.micron_size, icon: Waves, desc: 'Počet, typ a osazení trysek se řídí technickou konfigurací konkrétního produktu.' },
+  product.pressure && { label: 'Provozní tlak', value: product.pressure, icon: Gauge, desc: 'Zobrazená hodnota je převzatá přímo z technických dat tohoto produktu.' },
+  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets, desc: 'Spotřeba vody uvedená u konkrétního produktu; výsledná spotřeba sestavy závisí na konfiguraci a režimu provozu.' },
+  product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Materiálové provedení podle technických dat tohoto výrobku.' },
+  product.power_supply && { label: 'Napájení / řízení', value: product.power_supply, icon: Zap, desc: 'Požadavky na napájení nebo řízení se řídí konkrétním produktem a zvolenou instalací.' },
+  { label: 'Výroba', value: 'Zakázková výroba HolmTec', icon: Factory, desc: 'Výrobní geometrie, povrch, kotvení a osazení se řídí schváleným výrobním podkladem konkrétního produktu.' }].filter(Boolean);
 
   const contentTabs = TABS;
   const idx = contentTabs.findIndex((t) => t.id === activeTab);

@@ -14,6 +14,7 @@ const referenceSlugs = {
   '6a480c0da87022c6c9559115': 'mlzitko-aura-domov-palata-praha-5',
   '6a72947ef1579cba611a2f6b': 'mlzitko-mrak-soukroma-zahrada',
   '6a71d1ff57598752eed27bfb': 'bendy-jicinske-namesti',
+  '6a9fdf2f153be3ee13d70207': 'bendy-linea-rodinna-zahrada',
   '6a6b8d1d553d8991f46cd6a3': 'mestska-mlzna-brana-gate',
   '6a450e035aef0b45b2a8728f': 'mesto-polna-mlzitko-mrkev'
 };

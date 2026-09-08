@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, MapPin, Loader } from 'lucide-react';
+import { ArrowRight, MapPin, Loader, Play } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 // Mapa známých ID referencí na jejich URL slugy ( stejné jako v ReferenceDetail )
@@ -17,13 +17,28 @@ const REFERENCE_SLUGS = {
 };
 
 const PROJECT_ORDER = [
+  '6a9fdf2f153be3ee13d70207', // NOVINKA — BENDY + LINEA, rodinná zahrada
   '6a42491409abbf575447aaeb', // ZOO Praha
   '6a450e035aef0b45b2a8728f', // Město Polná — MRKEV
   '6a71d1ff57598752eed27bfb', // Bendy Jičín
   '6a480e05664f948152611f5f', // MŠ Šiškova — MRAK
-  '6a6b8d1d553d8991f46cd6a3', // Městská brána GATE
   '6a72947ef1579cba611a2f6b', // Soukromá zahrada MRAK
 ];
+
+const FEATURED_BENDY_LINEA_ID = '6a9fdf2f153be3ee13d70207';
+
+const getYouTubeId = (url) => {
+  if (!url) return null;
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?/]+)/i);
+  return match?.[1] || null;
+};
+
+const getProjectYouTubeUrls = (project) => {
+  if (!project) return [];
+  return [project.video_url, ...(project.gallery_urls || [])]
+    .filter((url) => getYouTubeId(url))
+    .filter((url, index, all) => all.indexOf(url) === index);
+};
 
 const CATEGORY_LABELS = {
   mestsky: 'Městský prostor',
@@ -77,6 +92,8 @@ export default function ProjectGallerySection() {
   if (!projects.length) return null;
 
   const [hero, ...rest] = projects;
+  const bendyLinea = projects.find((project) => project.id === FEATURED_BENDY_LINEA_ID);
+  const bendyLineaVideos = getProjectYouTubeUrls(bendyLinea).slice(0, 3);
 
   return (
     <section className="relative overflow-hidden bg-[#061f2b] py-16 text-white sm:py-20 lg:py-28">
@@ -103,6 +120,49 @@ export default function ProjectGallerySection() {
             Všechny realizace <ArrowRight size={16} />
           </Link>
         </div>
+
+        {bendyLinea && bendyLineaVideos.length > 0 && (
+          <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-5 sm:p-7 lg:p-8">
+            <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[.16em] text-[#22D3EE]">
+                  <Play size={12} /> Nová realizace · video
+                </div>
+                <h3 className="mt-4 font-heading text-2xl leading-tight sm:text-3xl lg:text-4xl">{bendyLinea.name}</h3>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
+                  {bendyLinea.description}
+                </p>
+              </div>
+              <Link
+                to={buildLink(bendyLinea)}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-[#22D3EE]/60 hover:bg-white/[0.05]"
+              >
+                Detail realizace <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className="mt-7 grid gap-4 md:grid-cols-3">
+              {bendyLineaVideos.map((url, index) => {
+                const videoId = getYouTubeId(url);
+                return (
+                  <div key={videoId} className="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                    <div className="aspect-video">
+                      <iframe
+                        className="h-full w-full"
+                        src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                        title={`${bendyLinea.name} — video ${index + 1}`}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Magazine grid */}
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">

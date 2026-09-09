@@ -15,6 +15,7 @@ import ContactSection from '@/components/home/ContactSection';
 import FadeIn from '@/components/common/FadeIn';
 import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
 import HomepageVideoLoops from '@/components/home/HomepageVideoLoops';
+import FieldMediaSection from '@/components/home/FieldMediaSection';
 
 export default function Home() {
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function Home() {
       <FadeIn><UrbanCoolingImpact /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
+      <FieldMediaSection />
       <FadeIn><CustomDesignSection /></FadeIn>
       <AIProjectDesignerSection />
       <FadeIn><InstagramFeedSection /></FadeIn>

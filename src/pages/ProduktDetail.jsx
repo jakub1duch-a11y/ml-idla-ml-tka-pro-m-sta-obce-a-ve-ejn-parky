@@ -76,7 +76,7 @@ export default function ProduktDetail() {
       <PdVariants product={product} />
       <PdSpecs product={product} />
       <PdDetail product={product} />
-      <PdHowItWorks />
+      <PdHowItWorks product={product} />
       <PdTabs product={product} />
       <PdReferences product={product} />
       <PdClosingCta product={product} />

@@ -6,6 +6,7 @@ import CustomDesignSection from '@/components/home/CustomDesignSection';
 import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
 import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
 import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
+import MicroclimateExplainerSection from '@/components/home/MicroclimateExplainerSection';
 import SmartSection from '@/components/home/SmartSection';
 import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
 import ProjectGallerySection from '@/components/home/ProjectGallerySection';
@@ -31,6 +32,7 @@ export default function Home() {
       <FadeIn><PremiumServicesSection /></FadeIn>
       <FadeIn><PremiumOasisSection /></FadeIn>
       <FadeIn><UrbanCoolingImpact /></FadeIn>
+      <FadeIn><MicroclimateExplainerSection /></FadeIn>
       <FadeIn><SmartSection /></FadeIn>
       <FadeIn><FeaturedProductsSection /></FadeIn>
       <FieldMediaSection />

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Box, Ruler, FileText, Layers, PenTool, Mail } from 'lucide-react';
+import { ArrowRight, Download, Box, Ruler, Layers, Mail } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';

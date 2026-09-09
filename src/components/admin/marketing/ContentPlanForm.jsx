@@ -71,6 +71,15 @@ export default function ContentPlanForm({ onCreated }) {
   return (
     <form onSubmit={submit} className="grid gap-5 rounded-2xl border border-white/8 bg-white/3 p-5 xl:grid-cols-[1fr_420px]">
       <div className="space-y-4">
+      <div className="rounded-xl border border-white/10 bg-white/[0.025] p-4">
+        <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Video workflow</p>
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {['01 · Výběr záběrů', '02 · Střih videa', '03 · Zvuk + hudba', '04 · Export + web'].map((step) => (
+            <div key={step} className="rounded-lg border border-white/10 bg-black/10 px-3 py-2 text-xs text-white/70">{step}</div>
+          ))}
+        </div>
+        <p className="mt-3 text-xs leading-5 text-white/40">Střih videa je samostatný povinný krok před publikací: krátké dynamické záběry, rytmické hard-cuty, titulky pouze na klíčových místech a finální kontrola zvuku.</p>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input required placeholder="Název příspěvku *" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputCls} />
         <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className={inputCls}>

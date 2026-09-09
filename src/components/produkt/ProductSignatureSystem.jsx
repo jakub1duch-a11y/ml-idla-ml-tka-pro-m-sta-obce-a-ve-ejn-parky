@@ -292,7 +292,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
               const isBendyConfiguration = product.slug === 'mlzitko-bendy' && Boolean(item.variant);
               const previewImage = variantImages[item.slug] || item.image || (!isBendyConfiguration ? (product.image_url || product.gallery_urls?.[0]) : null);
               return (
-                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-[22px] border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-[0_16px_36px_rgba(11,72,96,.16)]' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-1 hover:border-[#0b4860]/30 hover:shadow-[0_16px_36px_rgba(11,72,96,.09)]'}`}>
+                <Link key={`${item.slug}-${item.variant || 'default'}`} to={href} rel={item.variant ? 'nofollow' : undefined} aria-current={active ? 'page' : undefined} className={`group overflow-hidden rounded-[22px] border transition-all duration-300 ${active ? 'border-[#0b4860] bg-[#0b4860] text-white shadow-[0_16px_36px_rgba(11,72,96,.16)]' : 'border-slate-200 bg-white text-slate-800 hover:-translate-y-1 hover:border-[#0b4860]/30 hover:shadow-[0_16px_36px_rgba(11,72,96,.09)]'}`}>
                   {previewImage ? (
                     <div className={`relative aspect-[4/5] overflow-hidden p-2.5 ${active ? 'bg-white' : 'bg-[linear-gradient(180deg,#fbfcfc_0%,#eef3f4_100%)]'}`}>
                       <img src={previewImage} alt={`${item.label} – ${item.sub}`} className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.035]" loading="lazy" />

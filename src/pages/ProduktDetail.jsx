@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
@@ -18,6 +18,7 @@ import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 export default function ProduktDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -37,7 +38,8 @@ export default function ProduktDetail() {
           title: `${p.name} – nerezové mlžítko | MLŽIDLA.cz`,
           description: p.short_description || `${p.name} — nerezové mlžítko pro veřejný prostor, česká výroba HolmTec.`,
           image: p.image_url,
-          robots: 'index, follow',
+          canonicalPath: `/produkt/${p.slug}`,
+          robots: new URLSearchParams(location.search).has('variant') ? 'noindex, follow' : 'index, follow',
           jsonLd: {
             '@context': 'https://schema.org',
             '@type': 'Product',
@@ -46,13 +48,14 @@ export default function ProduktDetail() {
             image: p.image_url,
             brand: { '@type': 'Brand', name: 'MLŽIDLA' },
             manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-            ...(p.price_from ? { offers: { '@type': 'Offer', price: p.price_from, priceCurrency: 'CZK' } } : {}),
+            url: `https://mlzidla.cz/produkt/${p.slug}`,
+            ...(p.price_from ? { offers: { '@type': 'Offer', price: p.price_from, priceCurrency: 'CZK', url: `https://mlzidla.cz/produkt/${p.slug}` } } : {}),
           },
         });
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
-  }, [slug, navigate]);
+  }, [slug, navigate, location.search]);
 
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center bg-white">

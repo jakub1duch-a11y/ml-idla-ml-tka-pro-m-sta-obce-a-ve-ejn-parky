@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Layers, Droplets, Cpu } from 'lucide-react';
+import { useHomepageMedia } from '@/lib/publicHomepageMedia';
 
 const PROCESS = [
   {
@@ -26,6 +27,8 @@ const PROCESS = [
 
 export default function CustomDesignSection() {
   const reduceMotion = useReducedMotion();
+  const installationImage = useHomepageMedia('real_installation');
+  const mountingImage = useHomepageMedia('mounting_detail');
   return (
     <section className="relative bg-[#F4FAFC] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
@@ -72,6 +75,40 @@ export default function CustomDesignSection() {
               <p className="relative mt-2 text-sm leading-6 text-[#5A6B78]">{item.desc}</p>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <motion.figure
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: reduceMotion ? 0 : 0.5 }}
+            className="overflow-hidden rounded-sm border border-[#D3E2E8] bg-white"
+          >
+            <div className="aspect-[16/10] overflow-hidden bg-[#E7F4F8]">
+              {installationImage && <img src={installationImage} alt="Skutečný vyrobený nerezový mlžicí prvek před instalací" loading="lazy" className="h-full w-full object-cover" />}
+            </div>
+            <figcaption className="px-6 py-5">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#0B6B7A]">Výroba a příprava</p>
+              <p className="mt-2 text-sm leading-6 text-[#5A6B78]">Reálný výrobek, čisté nerezové provedení a kontrola konstrukce před montáží.</p>
+            </figcaption>
+          </motion.figure>
+
+          <motion.figure
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.08 }}
+            className="overflow-hidden rounded-sm border border-[#D3E2E8] bg-white"
+          >
+            <div className="aspect-[16/10] overflow-hidden bg-[#E7F4F8]">
+              {mountingImage && <img src={mountingImage} alt="Detail kotevní patky a napojení vody mlžítka" loading="lazy" className="h-full w-full object-cover" />}
+            </div>
+            <figcaption className="px-6 py-5">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#0B6B7A]">Kotvení a napojení</p>
+              <p className="mt-2 text-sm leading-6 text-[#5A6B78]">Technický detail patky a přívodu vody pro přesné posouzení způsobu instalace.</p>
+            </figcaption>
+          </motion.figure>
         </div>
 
         <motion.div

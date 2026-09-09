@@ -1,0 +1,95 @@
+// Prezentační konfigurace detailu produktu.
+// Neobsahuje výrobní parametry ani ceny — ty se vždy čtou z entity Product.
+// Cílem je sjednotit UX a současně zabránit záměně produktu za prostorovou konfiguraci.
+
+const DEFAULT_CONFIG = {
+  tagline: 'Architektonické mlžítko pro příjemnější venkovní prostor',
+  intro: 'Čistý design, funkční mlžení a projektové řešení podle konkrétního prostoru.',
+  benefits: [
+    ['Nízkotlaké mlžení', 'Provozní řešení se navrhuje podle konkrétní instalace.'],
+    ['Nerezová konstrukce', 'Odolné provedení určené pro dlouhodobé venkovní použití.'],
+    ['Čisté kotvení', 'Kotvení a přívod vody lze integrovat s důrazem na vzhled prostoru.'],
+    ['Chytré řízení', 'Volitelné časové, teplotní nebo senzorické řízení podle projektu.'],
+    ['Servisní řešení', 'Montáž a servis se řeší podle produktu, lokality a způsobu provozu.'],
+  ],
+  useCases: ['Městský prostor', 'Parky a zeleň', 'Pobytové zóny', 'Komerční areály'],
+};
+
+const CONFIG = {
+  'mlzitko-bendy': {
+    tagline: 'Svěžest, která ladí s městem',
+    intro: 'Sochařská nerezová forma BENDY® kombinuje výrazný design s funkčním ochlazením a možností různých prostorových sestav.',
+    benefits: [
+      ['Ikonický ohyb', 'Charakteristická geometrie BENDY® zůstává zachována v každé schválené sestavě.'],
+      ['Nízkotlaké mlžení', 'Provozní tlak a osazení trysek vychází z technických dat produktu.'],
+      ['Nerezové provedení', 'Materiál a profil odpovídají konkrétní výrobní specifikaci.'],
+      ['Chytré řízení', 'Volitelné časové, teplotní nebo senzorické řízení podle projektu.'],
+      ['Variabilní osazení', 'Single, Duo, Back-to-Back nebo Alej mění počet a rozmístění, nikoli geometrii prvku.'],
+    ],
+    useCases: ['Náměstí', 'Parky', 'Promenády', 'Rezidenční zahrady'],
+  },
+  'linea-mlzitko': {
+    tagline: 'Minimalistická linie pro moderní veřejný prostor',
+    intro: 'LINEA® pracuje s čistou vertikální geometrií a přirozeně zapadá do současné architektury i liniových veřejných prostor.',
+    benefits: [
+      ['Čistá linie', 'Minimalistický profil nechává vyniknout prostoru a architektuře.'],
+      ['Jemné mlžení', 'Trysky a provozní hodnoty se řídí konkrétní technickou konfigurací.'],
+      ['Nerezová konstrukce', 'Materiálové provedení vychází z dat konkrétního produktu.'],
+      ['Liniové osazení', 'Produkt lze projektově rozmístit do delších pěších a pobytových tras.'],
+      ['Smart řízení', 'Volitelná automatizace podle času, teploty nebo provozní logiky.'],
+    ],
+    useCases: ['Náměstí', 'Promenády', 'Parky', 'Vstupní zóny'],
+  },
+  'aura-mlzitko': {
+    tagline: 'Jemná forma pro zahrady a rezidenční prostor',
+    intro: 'AURA® je designové zahradní mlžítko pro terasy, zahrady a rezidenční zóny s nízkotlakým provozem.',
+    benefits: [
+      ['Jemný design', 'Forma je navržená tak, aby přirozeně doplnila zahradu a terasu.'],
+      ['Nízkotlaký provoz', 'Produkt pracuje přímo s tlakem vodovodního řádu podle své technické konfigurace.'],
+      ['Nerez AISI 316L', 'Odolný materiál pro venkovní rezidenční použití.'],
+      ['Rezidenční komfort', 'Jemná mlha vytváří příjemnější mikroklima v pobytové části zahrady.'],
+      ['Volitelné řízení', 'Manuální nebo smart spouštění podle zvoleného projektu.'],
+    ],
+    useCases: ['Zahrady', 'Terasy', 'Rezidence', 'Hotelové zahrady'],
+  },
+  'mlzna-brana-gate': {
+    tagline: 'Průchozí mlžná brána s architektonickým efektem',
+    intro: 'GATE® propojuje ochlazení při průchodu s výraznou architektonickou formou pro veřejné a komerční prostory.',
+    useCases: ['Promenády', 'Vstupní zóny', 'Eventy', 'Městské areály'],
+  },
+  'y-armist-tr60': {
+    tagline: 'Ikonická Y forma pro moderní veřejný prostor',
+    intro: 'Y-ARMIST spojuje výraznou siluetu, nerezové provedení a jemné mlžení v jednom architektonickém prvku.',
+    useCases: ['Náměstí', 'Parky', 'Dětské zóny', 'Architektonické projekty'],
+  },
+  'mlzitko-steblo': {
+    tagline: 'Štíhlé mlžítko inspirované přírodou',
+    intro: 'STÉBLO® pracuje s lehkou organickou siluetou a umožňuje citlivé začlenění do zeleně, promenád i veřejného prostoru.',
+    useCases: ['Parky', 'Zahrady', 'Promenády', 'Veřejná zeleň'],
+  },
+  'mlzitko-mrak': {
+    tagline: 'Mlžný oblak pro hravá a pobytová místa',
+    intro: 'MLŽNÝ MRAK® vytváří prostorový efekt jemné vodní mlhy pro parky, hřiště, školní areály a veřejná prostranství.',
+    useCases: ['Dětská hřiště', 'Parky', 'Školní areály', 'Veřejný prostor'],
+  },
+  'mlzna-spirála': {
+    tagline: 'Skulpturální spirála s mlžným efektem',
+    intro: 'MLŽNÁ SPIRÁLA kombinuje nerezovou sochařskou formu s ochlazením a možností výrazného večerního působení.',
+    useCases: ['Parky', 'Náměstí', 'Eventy', 'Zážitkové instalace'],
+  },
+  'ostrev-mlzitko': {
+    tagline: 'Organické stromové mlžítko se sedmi rameny',
+    intro: 'OSTREV je výrazná vícearmenná mlžná socha pro rovnoměrné osvěžení větších veřejných a pobytových prostor.',
+    useCases: ['Města', 'Parky', 'Školy', 'Sportoviště'],
+  },
+};
+
+export function getProductDetailConfig(product) {
+  const custom = CONFIG[product?.slug] || {};
+  return {
+    ...DEFAULT_CONFIG,
+    ...custom,
+    benefits: custom.benefits || DEFAULT_CONFIG.benefits,
+    useCases: custom.useCases || DEFAULT_CONFIG.useCases,
+  };
+}

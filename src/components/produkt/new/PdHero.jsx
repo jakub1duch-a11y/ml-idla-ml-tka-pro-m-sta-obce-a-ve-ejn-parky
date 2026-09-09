@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { VIDEO_ASSETS, BENDY_SLUGS } from '@/lib/newMedia';
+import { getProductDetailConfig } from '@/lib/productDetailConfig';
 
 function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
@@ -11,6 +12,7 @@ function isVideo(url) {
 export default function PdHero({ product }) {
   const [lightbox, setLightbox] = useState(null);
   const isBendy = BENDY_SLUGS.includes(product.slug);
+  const detailConfig = getProductDetailConfig(product);
 
   const media = [
     ...(product.image_url ? [{ type: 'image', url: product.image_url }] : []),
@@ -25,20 +27,18 @@ export default function PdHero({ product }) {
     ...(product.gallery_urls || []).filter(Boolean).filter((u) => !isVideo(u)).map((u) => ({ type: 'image', url: u })),
   ].filter(Boolean);
 
-  const trustItems = ['Vizualizace zdarma do 48 h', 'Česká výroba', 'Nerez'];
+  const trustItems = ['Vizualizace konkrétního prostoru', 'Česká výroba HolmTec', product.material || 'Technické řešení na míru'];
 
   return (
     <section className="border-b border-[#EAF5FB] bg-white pt-24 lg:pt-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-12 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-16">
         <div className="flex flex-col justify-center">
-          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Moderní mlžítko</p>
-          <h1 className="mt-4 font-heading text-4xl leading-[1.08] text-[#0D2F4F] lg:text-5xl xl:text-6xl">{product.name}</h1>
-          {product.short_description && (
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-[#0D2F4F]/65 lg:text-lg">{product.short_description}</p>
-          )}
+          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">{product.name}</p>
+          <h1 className="mt-4 max-w-xl font-heading text-4xl leading-[1.05] tracking-[-.035em] text-[#0D2F4F] lg:text-5xl xl:text-6xl">{detailConfig.tagline}</h1>
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-[#0D2F4F]/65 lg:text-lg">{detailConfig.intro || product.short_description}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              to={`/ai-vizualizace?produkt=${product.slug}`}
+              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
               className="inline-flex items-center gap-2 bg-[#0B5EA8] px-7 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#094d8a]"
             >
               Vizualizovat do mého prostoru

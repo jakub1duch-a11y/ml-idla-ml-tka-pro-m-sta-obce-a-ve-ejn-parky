@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, Play, Snowflake, Leaf, Users, ScanLine } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
+import { getProductDetailConfig } from '@/lib/productDetailConfig';
 
 export default function ProductHero({ product, allMedia = [], onOpenLightbox }) {
   const location = useLocation();
@@ -10,9 +11,8 @@ export default function ProductHero({ product, allMedia = [], onOpenLightbox }) 
   const heroImage = allMedia.find((item) => item.type === 'image')?.url || product.image_url || product.gallery_urls?.[0];
   const heroVideo = allMedia.find((item) => item.type === 'video')?.url || product.video_url;
   const selectedName = product.slug === 'mlzitko-mrak' && query.get('variant') ? `${product.name} · ${query.get('variant')}` : product.name;
-  const tagline = product.slug === 'mlzitko-bendy'
-    ? 'Svěžest, která ladí s městem'
-    : product.short_description || 'Designové mlžítko pro příjemnější venkovní prostor';
+  const detailConfig = getProductDetailConfig(product);
+  const tagline = detailConfig.tagline || product.short_description || 'Designové mlžítko pro příjemnější venkovní prostor';
 
   const playVideo = () => {
     if (!heroVideo) return;
@@ -30,7 +30,7 @@ export default function ProductHero({ product, allMedia = [], onOpenLightbox }) 
         <div className="max-w-2xl">
           <p className="font-mono text-[11px] font-semibold uppercase tracking-[.28em] text-white/80">{product.name}</p>
           <h1 className="mt-4 max-w-xl font-heading text-[2.45rem] font-semibold leading-[1.02] tracking-[-.045em] text-white sm:text-5xl lg:text-[3.25rem] xl:text-[4rem]">{tagline}</h1>
-          {product.short_description && product.short_description !== tagline && <p className="mt-4 max-w-xl text-base leading-relaxed text-white/82 sm:text-lg">{product.short_description}</p>}
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-white/82 sm:text-lg">{detailConfig.intro || product.short_description}</p>
 
           <div className="mt-6 flex flex-wrap gap-x-4 gap-y-3 text-xs text-white/85 lg:max-w-[720px]">
             <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Snowflake size={18}/></span>Příjemné ochlazení</span>

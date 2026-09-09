@@ -93,3 +93,39 @@ export function getProductDetailConfig(product) {
     useCases: custom.useCases || DEFAULT_CONFIG.useCases,
   };
 }
+
+const SPATIAL_CONFIGS = {
+  'mlzitko-bendy': [
+    ['Single', '1 samostatný prvek', 'Solitérní osazení se zachovanou geometrií BENDY®.'],
+    ['Duo', '2 stejné prvky', 'Dvojice identických prvků rozmístěná podle konkrétního prostoru.'],
+    ['Back-to-Back', '2 prvky zády k sobě', 'Oboustranná sestava bez změny základní geometrie výrobku.'],
+    ['Alej', 'více prvků v linii', 'Opakování stejného výrobku v liniové sestavě.'],
+  ],
+  'mlzitko-steblo': [
+    ['Single', '1 samostatný prvek', 'Samostatné STÉBLO® jako lehký solitér.'],
+    ['Dvojice', '2 stejné prvky', 'Dva prvky pro širší pobytovou nebo průchozí zónu.'],
+    ['Gate', '2 prvky proti sobě', 'Průchozí sestava vytvořená dvěma identickými prvky.'],
+    ['Alej', 'více prvků v linii', 'Opakovaná řada stejného produktu v prostoru.'],
+  ],
+  'mlzitko-mrak': [
+    ['Dětské hřiště', 'kompaktní provedení', 'Konfigurace pro dětské a školní areály.'],
+    ['Velký', 'větší mlžná zóna', 'Konfigurace pro mlžiště a větší pobytové plochy.'],
+    ['Parkový', 'otevřený prostor', 'Řešení určené pro parkové a promenádní prostředí.'],
+  ],
+  'mlzna-brana-gate': [
+    ['Straight', 'rovná horní linie', 'Průchozí brána s rovnou horní geometrií.'],
+    ['V', 'lomená horní linie', 'Průchozí varianta se schválenou V geometrií.'],
+  ],
+  'y-armist-tr60': [
+    ['TUBE', 'kulatý profil', 'Varianta Y-ARMIST s kulatým trubkovým profilem.'],
+    ['JEKL', 'hranatý profil', 'Varianta Y-ARMIST s hranatým profilem.'],
+  ],
+};
+
+export function getProductSpatialConfigurations(product) {
+  return SPATIAL_CONFIGS[product?.slug] || [
+    ['Solitér', '1 produkt', 'Samostatné osazení podle charakteru místa.'],
+    ['Dvojice', '2 produkty', 'Dva stejné prvky rozmístěné podle projektu.'],
+    ['Sestava', 'více produktů', 'Víceprvkové osazení navržené pro konkrétní prostor.'],
+  ];
+}

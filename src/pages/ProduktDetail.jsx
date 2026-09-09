@@ -1,459 +1,85 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ChevronLeft, ChevronRight, X, Loader, Ruler, Waves, Gauge, Droplets, Layers, Sparkles, Zap, Factory, Compass, Wifi, Wrench, Images, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
-import { resolveMediaUrl } from '@/lib/optimizedMedia';
-import ProductReviews from '@/components/reviews/ProductReviews';
-import ProductHero from '@/components/produkt/ProductHero';
-import ProductStickyFooterBar from '@/components/produkt/ProductStickyFooterBar';
-import OProduktuTab from '@/components/produkt/tabs/OProduktuTab';
-import SpecsTab from '@/components/produkt/tabs/SpecsTab';
-import BenefityTab from '@/components/produkt/tabs/BenefityTab';
-import InstallationTab from '@/components/produkt/tabs/InstallationTab';
-import ZivaUkazkaTab from '@/components/produkt/tabs/ZivaUkazkaTab';
-import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
-import ProductContactForm from '@/components/produkt/ProductContactForm';
-import GateComparisonTable from '@/components/produkt/GateComparisonTable';
-import RelatedProductCard from '@/components/produkt/RelatedProductCard';
-import SmartValveProductSection from '@/components/produkt/SmartValveProductSection';
-import ProductAEOSection, { buildAnswers } from '@/components/produkt/ProductAEOSection';
-import OazaSignatureSection from '@/components/produkt/OazaSignatureSection';
-import ProductReferenceSheet from '@/components/produkt/ProductReferenceSheet';
+import { isArchived } from '@/lib/newMedia';
+import PdHero from '@/components/produkt/new/PdHero';
+import PdBenefits from '@/components/produkt/new/PdBenefits';
+import PdVariants from '@/components/produkt/new/PdVariants';
+import PdSpecs from '@/components/produkt/new/PdSpecs';
+import PdDetail from '@/components/produkt/new/PdDetail';
+import PdHowItWorks from '@/components/produkt/new/PdHowItWorks';
+import PdTabs from '@/components/produkt/new/PdTabs';
+import PdReferences from '@/components/produkt/new/PdReferences';
+import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 
-const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
-
-// ─── Lightbox ────────────────────────────────────────────────────────────────
-function Lightbox({ mediaItems, initialIndex, onClose, productName }) {
-  const [idx, setIdx] = useState(initialIndex);
-  const touchStart = useRef(null);
-
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const h = (e) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % mediaItems.length);
-      if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + mediaItems.length) % mediaItems.length);
-    };
-    window.addEventListener('keydown', h);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', h);
-    };
-  }, [mediaItems.length, onClose]);
-
-  const onTouchStart = (event) => { touchStart.current = event.touches?.[0]?.clientX ?? null; };
-  const onTouchEnd = (event) => {
-    if (touchStart.current == null) return;
-    const end = event.changedTouches?.[0]?.clientX;
-    if (end == null) return;
-    const delta = end - touchStart.current;
-    touchStart.current = null;
-    if (Math.abs(delta) < 52 || mediaItems.length < 2) return;
-    setIdx((i) => delta > 0 ? (i - 1 + mediaItems.length) % mediaItems.length : (i + 1) % mediaItems.length);
-  };
-
-  return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-[#02161d]/97 p-2 backdrop-blur-2xl sm:p-6" onClick={onClose}>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(71,155,181,.14),transparent_36%),radial-gradient(circle_at_15%_80%,rgba(255,255,255,.04),transparent_28%)]" />
-      <div className="absolute left-4 top-4 z-20 hidden max-w-[60%] sm:block sm:left-6 sm:top-6">
-        <p className="truncate text-sm font-semibold text-white/90">{productName}</p>
-        <p className="mt-1 font-mono text-[9px] uppercase tracking-[.18em] text-white/45">Foto a video galerie produktu</p>
-      </div>
-      <button onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 sm:right-6 sm:top-6">
-        <X size={18} />
-      </button>
-      <div className="relative z-10 flex h-full w-full max-w-7xl flex-col items-center justify-center pt-12 sm:pt-10" onClick={(e) => e.stopPropagation()}>
-        <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} className="relative flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-black/20 p-2 sm:rounded-[30px] sm:p-5">
-          <AnimatePresence mode="wait" initial={false}>
-            {mediaItems[idx]?.type === 'video' ? (
-              <motion.video key={mediaItems[idx].url} src={mediaItems[idx].url} poster={mediaItems[idx].poster} controls playsInline preload="metadata" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .22 }} className="max-h-[78vh] max-w-full object-contain" />
-            ) : (
-              <motion.img key={mediaItems[idx]?.url} src={mediaItems[idx]?.url} alt={`${productName || 'Produkt'} – fotografie ${idx + 1}`} initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.01 }} transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }} className="max-h-[78vh] max-w-full object-contain" />
-            )}
-          </AnimatePresence>
-          {mediaItems.length > 1 && <>
-            <button onClick={() => setIdx((i) => (i - 1 + mediaItems.length) % mediaItems.length)} aria-label="Předchozí médium" className="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:left-5 sm:h-11 sm:w-11"><ChevronLeft size={19} /></button>
-            <button onClick={() => setIdx((i) => (i + 1) % mediaItems.length)} aria-label="Další médium" className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/60 sm:right-5 sm:h-11 sm:w-11"><ChevronRight size={19} /></button>
-          </>}
-        </div>
-        {mediaItems.length > 1 && <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>{mediaItems.map((item, i) => <button key={`${item.type}-${item.url}-${i}`} type="button" onClick={() => setIdx(i)} aria-label={`Zobrazit ${item.type === 'video' ? 'video' : 'fotografii'} ${i + 1} z ${mediaItems.length}`} className={`relative aspect-[4/3] min-w-[76px] overflow-hidden rounded-xl border transition-all sm:min-w-[92px] ${idx === i ? 'border-white opacity-100 ring-2 ring-white/15' : 'border-white/10 opacity-45 hover:opacity-85'}`}>{item.type === 'video' ? <><img src={item.poster} alt={`Video náhled ${i + 1}`} className="h-full w-full object-cover" /><span className="absolute inset-x-1 bottom-1 rounded bg-black/65 px-1 py-0.5 text-center font-mono text-[8px] font-bold text-white">VIDEO</span></> : <img src={item.url} alt={`Náhled ${i + 1}`} className="h-full w-full object-cover" />}</button>)}</div>}
-        <div className="mt-3 flex w-full items-center justify-between px-1">
-          <p className="truncate text-xs text-white/55 sm:hidden">{productName}</p>
-          <p className="ml-auto font-mono text-[10px] uppercase tracking-[.2em] text-white/45">{idx + 1} / {mediaItems.length}</p>
-        </div>
-      </div>
-    </motion.div>);
-}
-
-// ─── Tabs config ───────────────────────────────────────────────────────────────
-const TABS = [
-  { id: 'o-produktu', label: 'Přehled', hint: 'Design a realizace', icon: Compass },
-  { id: 'technicke', label: 'Parametry', hint: 'Rozměry a provoz', icon: Ruler },
-  { id: 'benefity', label: 'Přínosy', hint: 'Komfort a provoz', icon: Sparkles },
-  { id: 'smart', label: 'Smart řízení', hint: 'Automatizace vody', icon: Wifi },
-  { id: 'instalace', label: 'Instalace', hint: 'Kotvení a příprava', icon: Wrench },
-  { id: 'video', label: 'Galerie', hint: 'Foto a video', icon: Images },
-  { id: 'ke-stazeni', label: 'Ke stažení', hint: 'Výkresy a podklady', icon: FileText }
-];
-
-
-// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ProduktDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const [productMedia, setProductMedia] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [lightbox, setLightbox] = useState(null);
-  const [activeTab, setActiveTab] = useState('o-produktu');
-  const [showStickyBar, setShowStickyBar] = useState(false);
-  const tabsNavRef = useRef(null);
-  const contactRef = useRef(null);
-  const tabsScrollRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const handleReviewStats = (stats) => {
-    if (product) {
-      const baseSEO = getProductSEO(product, stats);
-      const faq = buildAnswers(product);
-      setSEO({
-        ...baseSEO,
-        jsonLd: {
-          '@context': 'https://schema.org',
-          '@graph': [
-            baseSEO.jsonLd,
-            {
-              '@type': 'FAQPage',
-              mainEntity: faq.map((item) => ({
-                '@type': 'Question',
-                name: item.q,
-                acceptedAnswer: { '@type': 'Answer', text: item.a }
-              }))
-            }
-          ]
-        }
-      });
-    }
-  };
 
   useEffect(() => {
-    base44.entities.ProductCategory.list().then(setCategories).catch(() => []);
-  }, []);
-
-  useEffect(() => {
-    if (slug === 'gate70') {navigate('/gate70', { replace: true });return;}
+    if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
     setLoading(true);
     setNotFound(false);
-    const urlParams = new URLSearchParams(window.location.search);
-    const requestedTab = urlParams.get('tab');
-    setActiveTab(TABS.some((t) => t.id === requestedTab) ? requestedTab : 'o-produktu');
-    base44.entities.Product.filter({ slug }).
-    then(async (results) => {
-      if (!results || results.length === 0) {setNotFound(true);return;}
-      const p = results[0];
-      setProduct(p);
-      trackProductView(p.name, p.slug, p.category_id);
-      const baseSEO = getProductSEO(p);
-      const faq = buildAnswers(p);
-      setSEO({
-        ...baseSEO,
-        jsonLd: {
-          '@context': 'https://schema.org',
-          '@graph': [
-            baseSEO.jsonLd,
-            {
-              '@type': 'FAQPage',
-              mainEntity: faq.map((item) => ({
-                '@type': 'Question',
-                name: item.q,
-                acceptedAnswer: { '@type': 'Answer', text: item.a }
-              }))
-            }
-          ]
-        }
-      });
-      const [related, nozzleResults, allProducts, mediaFiles] = await Promise.all([
-      p.category_id ? base44.entities.Product.filter({ category_id: p.category_id }).catch(() => []) : [],
-      base44.entities.Product.filter({ slug: 'mlzici-tryska' }).catch(() => []),
-      base44.entities.Product.list().catch(() => []),
-      base44.entities.MediaFile.filter({ product_slug: p.slug }).catch(() => [])]
-      );
-      setProductMedia((mediaFiles || []).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
-      const sameCategory = (related || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska');
-      const fallback = (allProducts || []).filter((r) => r.id !== p.id && r.slug !== 'mlzici-tryska' && !sameCategory.some((item) => item.id === r.id));
-      const similar = [...sameCategory, ...fallback].slice(0, 3);
-      const nozzle = nozzleResults?.[0];
-      setRelatedProducts(nozzle && nozzle.id !== p.id ? [...similar, nozzle] : similar);
-    }).
-    catch(() => setNotFound(true)).
-    finally(() => setLoading(false));
-  }, [slug]);
-
-  useEffect(() => {
-    const onScroll = () => setShowStickyBar(window.scrollY > 520);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const updateArrowVisibility = () => {
-    const el = tabsScrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  };
-
-  const scrollTabs = (amount) => {
-    tabsScrollRef.current?.scrollBy({ left: amount, behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    updateArrowVisibility();
-  }, [product]);
-
-  const scrollToElement = (element, offset = 0) => {
-    if (!element) return;
-    const top = element.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
-  };
-
-  const scrollToContact = () => scrollToElement(contactRef.current, 80);
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab.id);
-    scrollToElement(tabsNavRef.current, 64);
-  };
+    base44.entities.Product.filter({ slug })
+      .then((results) => {
+        if (!results || results.length === 0) { setNotFound(true); return; }
+        const p = results[0];
+        if (isArchived(p.slug)) { setNotFound(true); return; }
+        setProduct(p);
+        trackProductView(p.name, p.slug, p.category_id);
+        setSEO({
+          title: `${p.name} – nerezové mlžítko | MLŽIDLA.cz`,
+          description: p.short_description || `${p.name} — nerezové mlžítko pro veřejný prostor, česká výroba HolmTec.`,
+          image: p.image_url,
+          robots: 'index, follow',
+          jsonLd: {
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: p.name,
+            description: p.short_description,
+            image: p.image_url,
+            brand: { '@type': 'Brand', name: 'MLŽIDLA' },
+            manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
+            ...(p.price_from ? { offers: { '@type': 'Offer', price: p.price_from, priceCurrency: 'CZK' } } : {}),
+          },
+        });
+      })
+      .catch(() => setNotFound(true))
+      .finally(() => setLoading(false));
+  }, [slug, navigate]);
 
   if (loading) return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <Loader size={28} className="animate-spin text-slate-300" />
-    </div>);
+    <div className="flex min-h-screen items-center justify-center bg-white">
+      <Loader className="animate-spin text-[#0B5EA8]/40" size={28} />
+    </div>
+  );
 
   if (notFound || !product) return (
-    <div className="min-h-screen bg-white flex items-center justify-center pt-28">
+    <div className="flex min-h-screen items-center justify-center bg-white pt-28">
       <div className="text-center">
-        <p className="text-slate-400 mb-4 text-lg">Produkt nenalezen.</p>
-        <Link to="/mlzidla-mlzitka" className="text-slate-900 hover:underline">← Zpět na mlžítka</Link>
+        <p className="mb-4 text-lg text-[#0D2F4F]/40">Produkt nenalezen.</p>
+        <Link to="/mlzidla-mlzitka" className="text-[#0B5EA8] hover:underline">← Zpět na katalog</Link>
       </div>
-    </div>);
-
-  // Veřejná produktová galerie má vlastní whitelist rolí. Interní výstupy
-  // (např. offer_visualization z nabídek) se nesmí automaticky propisovat
-  // do detailu produktu. Zároveň nepouštíme Google Drive /view odkazy do
-  // <video>, protože nejsou přímý stream a v prohlížeči se zobrazují chybně.
-  const PUBLIC_IMAGE_ROLES = new Set(['hero', 'main', 'gallery', 'realization', 'detail', 'reference', 'variant']);
-  const PUBLIC_VIDEO_ROLES = new Set(['video', 'hero']);
-  const isDirectVideoUrl = (url) => typeof url === 'string' && (/\.(mp4|webm|mov|m4v|m3u8)(\?|#|$)/i.test(url) || /media\.base44\.com\/videos\//i.test(url) || /base44\.app\/api\/apps\/.*\/files\//i.test(url));
-  const uniqueUrls = (urls) => urls.filter(Boolean).filter((url, index, list) => list.indexOf(url) === index);
-
-  const publicMediaImages = productMedia
-    .filter((m) => m.file_url && PUBLIC_IMAGE_ROLES.has(String(m.media_role || '').toLowerCase()) && String(m.file_type || '').startsWith('image/'))
-    .map((m) => resolveMediaUrl(m.file_url));
-
-  const variantImages = productMedia
-    .filter((m) => m.file_url && String(m.media_role || '').toLowerCase() === 'variant' && String(m.file_type || '').startsWith('image/'))
-    .map((m) => resolveMediaUrl(m.file_url));
-
-  const publicMediaVideos = productMedia
-    .filter((m) => m.file_url && PUBLIC_VIDEO_ROLES.has(String(m.media_role || '').toLowerCase()) && isDirectVideoUrl(m.file_url))
-    .map((m) => resolveMediaUrl(m.file_url));
-
-  const imageUrls = uniqueUrls([product.image_url, ...(product.gallery_urls || []), ...publicMediaImages]);
-  const videoUrls = uniqueUrls([product.video_url, ...publicMediaVideos].filter((url) => url && isDirectVideoUrl(url)));
-  const allImages = imageUrls;
-  const allMedia = [
-    ...(imageUrls[0] ? [{ type: 'image', url: imageUrls[0] }] : []),
-    ...videoUrls.map((url) => ({ type: 'video', url, poster: product.image_url || imageUrls[0] })),
-    ...imageUrls.slice(1).map((url) => ({ type: 'image', url }))
-  ];
-  const categoryName = categories.find((c) => c.id === product.category_id)?.name || '';
-
-  const techRows = [
-  product.coverage_area && { label: 'Rozměr / výška', value: product.coverage_area, icon: Ruler, desc: 'Hodnota převzatá z technických dat konkrétního produktu.' },
-  product.micron_size && { label: 'Trysky / mlha', value: product.micron_size, icon: Waves, desc: 'Počet, typ a osazení trysek se řídí technickou konfigurací konkrétního produktu.' },
-  product.pressure && { label: 'Provozní tlak', value: product.pressure, icon: Gauge, desc: 'Zobrazená hodnota je převzatá přímo z technických dat tohoto produktu.' },
-  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets, desc: 'Spotřeba vody uvedená u konkrétního produktu; výsledná spotřeba sestavy závisí na konfiguraci a režimu provozu.' },
-  product.material && { label: 'Materiál', value: product.material, icon: Layers, desc: 'Materiálové provedení podle technických dat tohoto výrobku.' },
-  product.power_supply && { label: 'Napájení / řízení', value: product.power_supply, icon: Zap, desc: 'Požadavky na napájení nebo řízení se řídí konkrétním produktem a zvolenou instalací.' },
-  { label: 'Výroba', value: 'Zakázková výroba HolmTec', icon: Factory, desc: 'Výrobní geometrie, povrch, kotvení a osazení se řídí schváleným výrobním podkladem konkrétního produktu.' }].filter(Boolean);
-
-  const contentTabs = TABS;
-  const idx = contentTabs.findIndex((t) => t.id === activeTab);
-  const nextTab = contentTabs[idx + 1];
+    </div>
+  );
 
   return (
-    <div className="product-detail-page min-h-screen bg-white">
-
-      {/* ═══════ HERO ═══════ */}
-      <ProductHero
-        product={product}
-        categoryName={categoryName}
-        allMedia={allMedia}
-        variantImages={variantImages}
-        onOpenLightbox={(i) => setLightbox({ mediaItems: allMedia, idx: i })}
-        onShowTechnical={() => handleTabClick(TABS[1])} />
-
-      {/* ═══════ KOMPAKTNÍ PRODUKTOVÝ LIST — podle nové vizuální předlohy ═══════ */}
-      <ProductReferenceSheet
-        product={product}
-        techRows={techRows}
-        onPoptat={scrollToContact}
-        onShowInstallation={() => handleTabClick(TABS[4])}
-        onShowSmart={() => handleTabClick(TABS[3])}
-      />
-
-      {/* Filmový loop zůstává dostupný v galerii / hero tlačítku, aby hlavní detail zůstal kompaktní. */}
-
-      {/* ═══════ OÁZA SIGNATURE EXPERIENCE ═══════ */}
-      {product.slug === 'oaza-aura-bendy' && (
-        <OazaSignatureSection
-          product={product}
-          allImages={allImages}
-          onOpenLightbox={(i) => setLightbox({ mediaItems: allImages.map((url) => ({ type: 'image', url })), idx: i })}
-          onPoptat={scrollToContact}
-          onShowSmart={() => handleTabClick(TABS[3])}
-        />
-      )}
-
-      {/* ═══════ STICKY TABS NAV ═══════ */}
-      <div ref={tabsNavRef} className="product-detail-tabs sticky top-16 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center gap-2 px-3 sm:px-5 lg:px-6 xl:px-10">
-          <div className="flex shrink-0 items-center border-r border-slate-200 pr-3 sm:pr-5 lg:pr-6">
-            <Link to="/mlzidla-mlzitka" className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-2 text-xs font-mono uppercase tracking-widest text-slate-400 transition-colors hover:text-slate-900">
-              <ArrowLeft size={12} /> <span className="hidden xs:inline">Zpět</span>
-            </Link>
-            <span className="ml-2 hidden max-w-[180px] truncate font-heading text-sm font-medium text-slate-900 md:inline lg:max-w-[240px]">{product.name}</span>
-          </div>
-          <div className="relative min-w-0 flex-1">
-            {canScrollLeft &&
-            <button type="button" onClick={() => scrollTabs(-160)} aria-label="Posunout záložky vlevo"
-            className="absolute left-0 top-0 bottom-0 z-10 flex items-center justify-center w-9 bg-gradient-to-r from-white via-white/95 to-transparent">
-              <ChevronLeft size={16} className="text-slate-500" />
-            </button>
-            }
-            <div ref={tabsScrollRef} onScroll={updateArrowVisibility}
-            className="flex gap-2 overflow-x-auto py-2.5 pr-2 [&::-webkit-scrollbar]:hidden sm:gap-2.5" style={{ scrollbarWidth: 'none' }}>
-              {TABS.map((t) => {
-                const Icon = t.icon;
-                const isActive = activeTab === t.id;
-                return (
-                  <button key={t.id} onClick={() => handleTabClick(t)}
-                    aria-pressed={isActive}
-                    className={`group relative flex min-w-[138px] shrink-0 items-center gap-2.5 rounded-2xl border px-3 py-2.5 text-left transition-all sm:min-w-[148px] lg:min-w-[136px] xl:min-w-[158px] xl:px-3.5 xl:py-3 ${isActive ? 'border-[#0b4860]/25 bg-[#eef8fb] text-[#0b4860] shadow-[0_8px_24px_rgba(11,72,96,.08)]' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'}`}>
-                    <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${isActive ? 'border-[#0b4860]/15 bg-white text-[#0b4860]' : 'border-slate-200 bg-slate-50 text-slate-500 group-hover:bg-white'}`}>
-                      <Icon size={16} strokeWidth={1.8} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[13px] font-semibold leading-tight">{t.label}</span>
-                      <span className={`mt-1 block text-[10px] leading-tight ${isActive ? 'text-[#0b4860]/65' : 'text-slate-400'}`}>{t.hint}</span>
-                    </span>
-                    {isActive && <motion.span layoutId="produkt-tab-marker" className="absolute inset-x-4 -bottom-[3px] h-[3px] rounded-full bg-[#0b4860]" />}
-                  </button>
-                );
-              })}
-            </div>
-            {canScrollRight &&
-            <button type="button" onClick={() => scrollTabs(160)} aria-label="Posunout záložky vpravo"
-            className="absolute right-0 top-0 bottom-0 z-10 flex items-center justify-center w-9 bg-gradient-to-l from-white via-white/95 to-transparent">
-              <ChevronRight size={16} className="text-slate-500" />
-            </button>
-            }
-          </div>
-        </div>
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-          {activeTab === 'o-produktu' && <OProduktuTab product={product} onOpenLightbox={(i, customImages) => setLightbox({ mediaItems: (customImages || allImages).map((url) => ({ type: 'image', url })), idx: i })} />}
-          {activeTab === 'technicke' &&
-          <>
-              <SpecsTab product={product} techRows={techRows} />
-              {GATE_SLUGS.includes(product.slug) && <GateComparisonTable />}
-            </>
-          }
-          {activeTab === 'benefity' && <BenefityTab product={product} />}
-          {activeTab === 'smart' && <SmartValveProductSection embedded product={product} onPoptat={scrollToContact} />}
-          {activeTab === 'instalace' && <InstallationTab product={product} />}
-          {activeTab === 'video' && <ZivaUkazkaTab product={product} allImages={allImages} onOpenLightbox={(i) => setLightbox({ mediaItems: allImages.map((url) => ({ type: 'image', url })), idx: i })} />}
-          {activeTab === 'ke-stazeni' && <DownloadsTab product={product} />}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* ═══════ TAB FOOTER NAV ═══════ */}
-      <div className="border-t border-slate-200 bg-slate-50 py-6">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          {nextTab ?
-          <button onClick={() => handleTabClick(nextTab)}
-          className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-2 font-medium text-slate-600 transition-colors hover:text-slate-900 text-sm">
-              Pokračovat: {nextTab.label} <ArrowRight size={15} />
-            </button> :
-          <span className="text-sm text-slate-400">Máte vše potřebné k rozhodnutí?</span>
-          }
-          <button type="button" onClick={scrollToContact}
-            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#0b4860] px-5 py-2.5 text-sm font-bold text-white shadow-[0_8px_22px_rgba(11,72,96,.16)] transition-all hover:bg-[#08394c]">
-            Poptat {product.name} <ArrowRight size={15} />
-          </button>
-        </div>
-      </div>
-
-      {/* ═══════ AEO / FAQ ═══════ */}
-      <ProductAEOSection product={product} />
-
-      {/* ═══════ REVIEWS ═══════ */}
-      <ProductReviews productId={product.id} onStatsLoaded={handleReviewStats} />
-
-      {/* ═══════ INLINE CONTACT FORM — zjednodušená konverzní sekce ═══════ */}
-      <section ref={contactRef} className="border-t border-cyan-100 bg-[linear-gradient(180deg,#f2fbfe_0%,#ffffff_100%)] py-14 sm:py-16">
-        <div className="mx-auto max-w-6xl px-5 lg:px-10">
-          <div className="grid gap-8 lg:grid-cols-[.82fr_1.18fr] lg:items-start">
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-2">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-cyan-700">Udělejme váš prostor příjemnější</p>
-              <h2 className="mt-3 font-heading text-4xl font-semibold tracking-[-.04em] text-slate-950">Chci návrh a cenovou nabídku</h2>
-              <p className="mt-4 max-w-lg text-sm leading-7 text-slate-600">Stačí základní kontakt a krátká informace o projektu. Technické detaily, kotvení, počet kusů a smart řízení doplníme společně až podle konkrétního místa.</p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-                {['Konzultace zdarma','Návrh řešení na míru','Možnost vizualizace v prostoru'].map((item) => <div key={item} className="rounded-xl border border-cyan-100 bg-white px-4 py-3 text-xs font-semibold text-slate-700 shadow-sm">{item}</div>)}
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .08 }}>
-              <ProductContactForm productName={product.name} product={product} />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════ RELATED + BACK ═══════ */}
-      {relatedProducts.length > 0 &&
-      <section className="py-20 bg-white border-t border-slate-200">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Mohlo by vás zajímat</p>
-            <h2 className="font-heading font-semibold text-3xl text-slate-900 tracking-tight mb-10">Podobné produkty</h2>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {relatedProducts.map((r, i) =>
-            <motion.div key={r.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                  <RelatedProductCard product={r} index={i} />
-                </motion.div>
-            )}
-            </div>
-            <div className="mt-10 flex justify-center">
-              <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
-                <ArrowLeft size={14} /> Zpět na celou kolekci
-              </Link>
-            </div>
-          </div>
-        </section>
-      }
-
-      {lightbox &&
-      <Lightbox mediaItems={lightbox.mediaItems} initialIndex={lightbox.idx} onClose={() => setLightbox(null)} productName={product.name} />
-      }
-
-      <ProductStickyFooterBar product={product} show={showStickyBar} onPoptat={scrollToContact} />
-    </div>);
+    <div className="min-h-screen bg-white">
+      <PdHero product={product} />
+      <PdBenefits product={product} />
+      <PdVariants product={product} />
+      <PdSpecs product={product} />
+      <PdDetail product={product} />
+      <PdHowItWorks />
+      <PdTabs product={product} />
+      <PdReferences product={product} />
+      <PdClosingCta product={product} />
+    </div>
+  );
 }

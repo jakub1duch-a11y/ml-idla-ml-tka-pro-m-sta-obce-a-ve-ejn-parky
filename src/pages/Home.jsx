@@ -1,47 +1,37 @@
 import React, { useEffect } from 'react';
-import { SEO_PAGES, setSEO } from '@/lib/seo';
-import HeroSlider from '@/components/home/premium/HeroSlider';
-import IndustriesSection from '@/components/home/IndustriesSection';
-import CustomDesignSection from '@/components/home/CustomDesignSection';
-import PremiumServicesSection from '@/components/home/premium/PremiumServicesSection';
-import PremiumOasisSection from '@/components/home/premium/PremiumOasisSection';
-import UrbanCoolingImpact from '@/components/home/premium/UrbanCoolingImpact';
-import MicroclimateExplainerSection from '@/components/home/MicroclimateExplainerSection';
-import SmartSection from '@/components/home/SmartSection';
-import FeaturedProductsSection from '@/components/home/FeaturedProductsSection';
-import ProjectGallerySection from '@/components/home/ProjectGallerySection';
-import InstagramFeedSection from '@/components/home/InstagramFeedSection';
-import BlogSection from '@/components/home/BlogSection';
-import ContactSection from '@/components/home/ContactSection';
-import FadeIn from '@/components/common/FadeIn';
-import AIProjectDesignerSection from '@/components/home/AIProjectDesignerSection';
-import HomepageVideoLoops from '@/components/home/HomepageVideoLoops';
-import FieldMediaSection from '@/components/home/FieldMediaSection';
+import { setSEO } from '@/lib/seo';
+import HomeHero from '@/components/home/new/HomeHero';
+import ReferencesStrip from '@/components/home/new/ReferencesStrip';
+import ProKohoSection from '@/components/home/new/ProKohoSection';
+import MistInOperation from '@/components/home/new/MistInOperation';
+import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
+import CooperationSteps from '@/components/home/new/CooperationSteps';
+import ReferenceCards from '@/components/home/new/ReferenceCards';
+import FinancingSection from '@/components/home/new/FinancingSection';
+import HomeInquiryForm from '@/components/home/new/HomeInquiryForm';
+import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 
 export default function Home() {
   useEffect(() => {
-    setSEO(SEO_PAGES.home);
+    setSEO({
+      title: 'MLŽIDLA — nerezová mlžítka pro města, obce a veřejný prostor',
+      description: 'Návrh, výroba v Trutnově a instalace mlžících soch pro veřejný prostor. Lokální ochlazení 2–8 °C, provoz bez elektřiny nebo se smart řízením.',
+      robots: 'index, follow',
+    });
   }, []);
 
   return (
     <>
-      <HeroSlider />
-
-      <FadeIn><IndustriesSection /></FadeIn>
-      <FadeIn><HomepageVideoLoops /></FadeIn>
-      <FadeIn><PremiumServicesSection /></FadeIn>
-      <FadeIn><PremiumOasisSection /></FadeIn>
-      <FadeIn><UrbanCoolingImpact /></FadeIn>
-      <FadeIn><MicroclimateExplainerSection /></FadeIn>
-      <FadeIn><SmartSection /></FadeIn>
-      <FadeIn><FeaturedProductsSection /></FadeIn>
-      <FieldMediaSection />
-      <FadeIn><CustomDesignSection /></FadeIn>
-      <AIProjectDesignerSection />
-      <FadeIn><InstagramFeedSection /></FadeIn>
-      <FadeIn><BlogSection /></FadeIn>
-      <FadeIn><ContactSection /></FadeIn>
-      <FadeIn><ProjectGallerySection /></FadeIn>
+      <HomeHero />
+      <ReferencesStrip />
+      <ProKohoSection />
+      <MistInOperation />
+      <FeaturedMlzitka />
+      <CooperationSteps />
+      <ReferenceCards />
+      <FinancingSection />
+      <HomeInquiryForm />
+      <MobileStickyBar />
     </>
   );
 }

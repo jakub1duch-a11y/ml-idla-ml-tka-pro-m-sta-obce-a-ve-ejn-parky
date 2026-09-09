@@ -13,7 +13,7 @@ const FACTS = [
 
 export default function HeroSlider() {
   const reduceMotion = useReducedMotion();
-  const [videoSrc, setVideoSrc] = useState('');
+  const [videoSrc, setVideoSrc] = useState('https://d2ol7oe51mr4n9.cloudfront.net/user_3ICzICGuGqUOkZZLkzO15YACs1y/d6371ed3-a512-4360-9e72-dc0f8e80b1ff.mp4');
 
   useEffect(() => {
     if (reduceMotion) return undefined;
@@ -22,10 +22,7 @@ export default function HeroSlider() {
     const mobileQuery = window.matchMedia('(max-width: 639px)');
 
     const loadVideo = async () => {
-      const module = mobileQuery.matches
-        ? await import('@/assets/heroVideoMobile')
-        : await import('@/assets/heroVideoDesktop');
-      if (active) setVideoSrc(module.default);
+      if (active) setVideoSrc('https://d2ol7oe51mr4n9.cloudfront.net/user_3ICzICGuGqUOkZZLkzO15YACs1y/d6371ed3-a512-4360-9e72-dc0f8e80b1ff.mp4');
     };
 
     loadVideo();

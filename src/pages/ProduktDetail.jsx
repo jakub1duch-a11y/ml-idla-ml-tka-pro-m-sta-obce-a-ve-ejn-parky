@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
-import { setSEO, getProductSEO } from '@/lib/seo';
+import { setSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import PdHero from '@/components/produkt/new/PdHero';
 import PdBenefits from '@/components/produkt/new/PdBenefits';

@@ -4,7 +4,7 @@ import { Building2, Trees, TrainFront, Trophy, Hotel, Sparkles, HeartPulse, MapP
 
 const CITY_ITEMS = [
   { icon: Building2, title: 'Náměstí & centrum města', text: 'Lokální ochlazovací body pro pěší zóny, tržiště a frekventovaná pobytová místa.', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
-  { icon: Trees, title: 'Parky & promenády', text: 'Mlžné ostrovy a liniové prvky u laviček, pěších tras, nábřeží a městské zeleně.', image: '/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webp' },
+  { icon: Trees, title: 'Parky & promenády', text: 'Mlžné ostrovy a liniové prvky u laviček, pěších tras, nábřeží a městské zeleně.', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp' },
   { icon: TrainFront, title: 'Nádraží & dopravní uzly', text: 'Ochlazení čekacích a přednádražních prostorů v místech s vysokou koncentrací lidí.' },
   { icon: Trophy, title: 'Sportoviště', text: 'Ochlazovací zóny pro sportovce, diváky a doprovod u tribun, hřišť a běžeckých tras.' },
   { icon: Hotel, title: 'Hotely & resorty', text: 'Venkovní vstupy, nádvoří, terasy a zahrady jako příjemnější součást hospitality prostoru.' },
@@ -30,12 +30,13 @@ export default function UseCaseExperience({ variant = 'city' }) {
   const items = variant === 'garden' ? GARDEN_ITEMS : CITY_ITEMS;
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [36, -36]);
+  const ySecondary = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [-24, 32]);
   const rotate = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [-2, 2]);
 
   return (
     <section ref={ref} className="relative overflow-hidden border-y border-slate-200 bg-white py-20 sm:py-24">
       <motion.div style={{ y, rotate }} className="pointer-events-none absolute -right-24 top-8 h-72 w-72 rounded-full bg-cyan-100/40 blur-3xl" />
-      <motion.div style={{ y: useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [-24, 32]) }} className="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-teal-100/35 blur-3xl" />
+      <motion.div style={{ y: ySecondary }} className="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-teal-100/35 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-[.78fr_1.22fr] lg:items-end">

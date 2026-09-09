@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { NoPumpIcon, TemperatureDropIcon, MistMotionIcon, GroundScrewIcon, AtmosphereIcon, SmartAutomationIcon } from "./BenefitIcons";
+import { useHomepageMedia } from '@/lib/publicHomepageMedia';
 
 const APPLICATIONS = [
 { icon: NoPumpIcon, num: "01", title: "Bez vysokotlakého čerpadla", desc: "Nízkotlaká mlha přímo z běžného vodovodního řadu — bez samostatné vysokotlaké technologie." },
@@ -24,6 +25,7 @@ const ADVANTAGES = [
 const DEVICE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png';
 
 export default function PremiumOasisSection() {
+  const gardenImage = useHomepageMedia('garden');
   return (
     <section className="relative overflow-hidden bg-background pb-14 pt-16 sm:pb-16 sm:pt-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
@@ -33,7 +35,7 @@ export default function PremiumOasisSection() {
             <p className="text-measure font-body text-base leading-7 text-muted-foreground sm:text-lg sm:leading-relaxed">Jemná mlha snižuje pocitovou teplotu až o 10 °C. Nízkotlaké řešení na běžný vodovodní řad, bez čerpadla, s chytrým řízením provozu.</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="relative">
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/542c4e977_mlzitka-mesto-polna.webp" alt="Moderní nerezová mlžná brána instalovaná na náměstí" className="w-full rounded-2xl shadow-xl" />
+            <img src={gardenImage || "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/542c4e977_mlzitka-mesto-polna.webp"} alt="Nerezové mlžítko v zelené zahradě a odpočinkové zóně" className="w-full rounded-2xl shadow-xl" />
           </motion.div>
         </div>
 

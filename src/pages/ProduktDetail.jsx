@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
-import { setSEO } from '@/lib/seo';
+import { setSEO, getProductSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import PdHero from '@/components/produkt/new/PdHero';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
@@ -18,7 +18,6 @@ import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 export default function ProduktDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -38,8 +37,7 @@ export default function ProduktDetail() {
           title: `${p.name} – nerezové mlžítko | MLŽIDLA.cz`,
           description: p.short_description || `${p.name} — nerezové mlžítko pro veřejný prostor, česká výroba HolmTec.`,
           image: p.image_url,
-          canonicalPath: `/produkt/${p.slug}`,
-          robots: new URLSearchParams(location.search).has('variant') ? 'noindex, follow' : 'index, follow',
+          robots: 'index, follow',
           jsonLd: {
             '@context': 'https://schema.org',
             '@type': 'Product',
@@ -48,14 +46,13 @@ export default function ProduktDetail() {
             image: p.image_url,
             brand: { '@type': 'Brand', name: 'MLŽIDLA' },
             manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-            url: `https://mlzidla.cz/produkt/${p.slug}`,
-            ...(p.price_from ? { offers: { '@type': 'Offer', price: p.price_from, priceCurrency: 'CZK', url: `https://mlzidla.cz/produkt/${p.slug}` } } : {}),
+            ...(p.price_from ? { offers: { '@type': 'Offer', price: p.price_from, priceCurrency: 'CZK' } } : {}),
           },
         });
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
-  }, [slug, navigate, location.search]);
+  }, [slug, navigate]);
 
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center bg-white">
@@ -79,7 +76,7 @@ export default function ProduktDetail() {
       <PdVariants product={product} />
       <PdSpecs product={product} />
       <PdDetail product={product} />
-      <PdHowItWorks product={product} />
+      <PdHowItWorks />
       <PdTabs product={product} />
       <PdReferences product={product} />
       <PdClosingCta product={product} />

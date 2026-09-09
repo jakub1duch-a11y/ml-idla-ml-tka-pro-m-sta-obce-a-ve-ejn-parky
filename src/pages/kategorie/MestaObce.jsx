@@ -21,10 +21,14 @@ const BENEFITS = [
 
 
 const USE_CASES = [
-{ emoji: '🏛️', title: 'Náměstí a pěší zóny', desc: 'Dominantní mlžné prvky, které ochladí stovky procházejících a stávají se ikonou místa.' },
-{ emoji: '🚌', title: 'Zastávky MHD', desc: 'Kompaktní mlžné stojany u čekáren snižují pocit tepla při čekání na spoj.' },
-{ emoji: '🌳', title: 'Revitalizace prostranství', desc: 'Mlžné sochy jako součást nového urbanistického konceptu — funkce i estetika v jednom.' },
-{ emoji: '🏃', title: 'Sportovní areály', desc: 'Ochlazení tribun, hřišť a běžeckých zón pro komfort sportovců i diváků.' }];
+{ emoji: '🏛️', title: 'Náměstí a centrum města', desc: 'Ochlazovací body pro frekventovaná místa, pěší zóny, tržiště a pobytové části centra.' },
+{ emoji: '🌳', title: 'Parky a promenády', desc: 'Mlžné ostrovy a liniové prvky podél pěších tras, laviček, nábřeží a městské zeleně.' },
+{ emoji: '🚉', title: 'Nádraží a dopravní uzly', desc: 'Lokální ochlazení čekacích a přednádražních prostorů, kde se v horku soustřeďuje více lidí.' },
+{ emoji: '🏃', title: 'Sportoviště', desc: 'Ochlazovací zóny pro sportovce, návštěvníky a doprovod v areálech, u tribun a podél tras.' },
+{ emoji: '🏨', title: 'Hotely a resorty', desc: 'Venkovní vstupy, nádvoří, terasy a zahrady jako příjemnější součást městského hospitality prostoru.' },
+{ emoji: '♨️', title: 'Lázně a wellness areály', desc: 'Jemná mlha pro promenády, odpočinkové zahrady a klidové zóny s důrazem na architekturu místa.' },
+{ emoji: '❤️', title: 'Domovy seniorů', desc: 'Pobytové zahrady, terasy a pěší trasy s možností klidného lokálního ochlazení v horkých dnech.' },
+{ emoji: '🏫', title: 'Veřejné instituce a školy', desc: 'Vstupní prostory, dvory, školní zahrady a další veřejné plochy s pravidelným pohybem lidí.' }];
 
 
 export default function MestaObce() {
@@ -64,7 +68,7 @@ export default function MestaObce() {
               Ochlazení pro města,<br /><span style={{ fontStyle: 'italic' }}>která pečují o veřejný prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Mlžítka a mlžné zóny zvyšují tepelný komfort na náměstích, promenádách, v parcích, pěších zónách i u veřejných budov. Řešení kombinujeme s úsporným Smart řízením podle teploty, času a skutečného provozu.
+              Mlžítka a mlžné zóny zvyšují tepelný komfort na náměstích, promenádách, v parcích, centrech měst, na sportovištích i u nádraží a veřejných budov. Ochlazujeme vzduch kolem vás. Dýchejte lépe. Provoz lze doplnit Smart řízením podle teploty, času a skutečného využití místa.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" onClick={() => trackFunnelStep('cities', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -145,7 +149,7 @@ export default function MestaObce() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde mlžítka instalujeme</p>
         <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-          Typická místa<br /><span style={{ fontStyle: 'italic' }}>ve vaší obci.</span>
+          Místa, kde lidé<br /><span style={{ fontStyle: 'italic' }}>potřebují úlevu od horka.</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {USE_CASES.map((u, i) =>

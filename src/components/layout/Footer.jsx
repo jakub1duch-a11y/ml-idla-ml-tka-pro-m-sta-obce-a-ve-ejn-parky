@@ -144,12 +144,17 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-4 py-7 text-xs text-white/42 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
+          <div>
+            <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
+            <p className="mt-1 text-white/30">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
+            <p className="mt-1 text-white/30"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white/60">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white/60">+420 774 700 390</a></p>
+          </div>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link to="/gdpr" className="transition-colors hover:text-white/75">GDPR</Link>
-            <Link to="/gdpr" className="transition-colors hover:text-white/75">Cookies</Link>
             <Link to="/obchodni-podminky" className="transition-colors hover:text-white/75">Obchodní podmínky</Link>
-            <Link to="/udrzitelnost" className="transition-colors hover:text-white/75">Udržitelnost</Link>
+            <Link to="/gdpr" className="transition-colors hover:text-white/75">GDPR</Link>
+            <Link to="/ke-stazeni" className="transition-colors hover:text-white/75">Ke stažení</Link>
+            <Link to="/podpora" className="transition-colors hover:text-white/75">Podpora</Link>
+            <Link to="/partnerstvi" className="transition-colors hover:text-white/75">Partnerství</Link>
           </div>
         </div>
       </div>

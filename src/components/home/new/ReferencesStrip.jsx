@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44';
+import { base44 } from '@/api/base44Client';
 
 const FALLBACK_REFS = [
   'ZOO Praha',

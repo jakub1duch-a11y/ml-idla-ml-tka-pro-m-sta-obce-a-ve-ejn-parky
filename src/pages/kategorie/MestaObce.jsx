@@ -8,6 +8,8 @@ import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
 import MestaObceSmartControl from '@/components/kategorie/MestaObceSmartControl';
+import CoDostaneRadaMesta from '@/components/kategorie/CoDostaneRadaMesta';
+import PilotMereniRozsireni from '@/components/kategorie/PilotMereniRozsireni';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import { trackFunnelStep } from '@/lib/ga4';
 
@@ -21,14 +23,14 @@ const BENEFITS = [
 
 
 const USE_CASES = [
-{ emoji: '🏛️', title: 'Náměstí a centrum města', desc: 'Ochlazovací body pro frekventovaná místa, pěší zóny, tržiště a pobytové části centra.' },
-{ emoji: '🌳', title: 'Parky a promenády', desc: 'Mlžné ostrovy a liniové prvky podél pěších tras, laviček, nábřeží a městské zeleně.' },
-{ emoji: '🚉', title: 'Nádraží a dopravní uzly', desc: 'Lokální ochlazení čekacích a přednádražních prostorů, kde se v horku soustřeďuje více lidí.' },
-{ emoji: '🏃', title: 'Sportoviště', desc: 'Ochlazovací zóny pro sportovce, návštěvníky a doprovod v areálech, u tribun a podél tras.' },
-{ emoji: '🏨', title: 'Hotely a resorty', desc: 'Venkovní vstupy, nádvoří, terasy a zahrady jako příjemnější součást městského hospitality prostoru.' },
-{ emoji: '♨️', title: 'Lázně a wellness areály', desc: 'Jemná mlha pro promenády, odpočinkové zahrady a klidové zóny s důrazem na architekturu místa.' },
-{ emoji: '❤️', title: 'Domovy seniorů', desc: 'Pobytové zahrady, terasy a pěší trasy s možností klidného lokálního ochlazení v horkých dnech.' },
-{ emoji: '🏫', title: 'Veřejné instituce a školy', desc: 'Vstupní prostory, dvory, školní zahrady a další veřejné plochy s pravidelným pohybem lidí.' }];
+{ title: 'Náměstí a centrum města', desc: 'Ochlazovací body pro frekventovaná místa, pěší zóny, tržiště a pobytové části centra.' },
+{ title: 'Parky a promenády', desc: 'Mlžné ostrovy a liniové prvky podél pěších tras, laviček, nábřeží a městské zeleně.' },
+{ title: 'Nádraží a dopravní uzly', desc: 'Lokální ochlazení čekacích a přednádražních prostorů, kde se v horku soustřeďuje více lidí.' },
+{ title: 'Sportoviště', desc: 'Ochlazovací zóny pro sportovce, návštěvníky a doprovod v areálech, u tribun a podél tras.' },
+{ title: 'Hotely a resorty', desc: 'Venkovní vstupy, nádvoří, terasy a zahrady jako příjemnější součást městského hospitality prostoru.' },
+{ title: 'Lázně a wellness areály', desc: 'Jemná mlha pro promenády, odpočinkové zahrady a klidové zóny s důrazem na architekturu místa.' },
+{ title: 'Domovy seniorů', desc: 'Pobytové zahrady, terasy a pěší trasy s možností klidného lokálního ochlazení v horkých dnech.' },
+{ title: 'Veřejné instituce a školy', desc: 'Vstupní prostory, dvory, školní zahrady a další veřejné plochy s pravidelným pohybem lidí.' }];
 
 
 export default function MestaObce() {
@@ -53,8 +55,9 @@ export default function MestaObce() {
 
       {/* Hero */}
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4"
-        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+        <video src="https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/825fc9c6e_bendy_jicin_namesti_mlha.mp4"
+        poster="https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/774e88bcb_v2_jicin_bendy.jpg"
+        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata" />
         <div className="absolute bg-gradient-to-t from-slate-900 via-slate-900/20 to-slate-900/60 inset-0" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
@@ -145,6 +148,8 @@ export default function MestaObce() {
         </div>
       </section>
 
+      <CoDostaneRadaMesta />
+
       {/* Kde se hodí */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde mlžítka instalujeme</p>
@@ -155,7 +160,7 @@ export default function MestaObce() {
           {USE_CASES.map((u, i) =>
           <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
           className="p-6 rounded-2xl bg-white border border-slate-200">
-              <span className="mb-3 block text-4xl">{u.emoji}</span>
+              <span className="mb-3 block h-1.5 w-6 bg-[#0B5EA8]" />
               <h3 className="text-slate-900 font-medium mb-2 text-base">{u.title}</h3>
               <p className="leading-relaxed font-light text-slate-900 text-sm">{u.desc}</p>
             </motion.div>
@@ -164,6 +169,8 @@ export default function MestaObce() {
       </section>
 
       <MestaObceSmartControl />
+
+      <PilotMereniRozsireni />
 
       <SegmentReferenceShowcase
         segment="cities"

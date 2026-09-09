@@ -91,7 +91,7 @@ export default function HeroSlider() {
           poster={HERO_IMAGE}
           aria-label="Nerezové mlžítko v letním prostoru s jemnou vodní mlhou"
         >
-          {videoSrc && <source src={videoSrc} type="video/webm" />}
+          {videoSrc && <source src={videoSrc} type="video/mp4" />}
         </video>
 
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,29,38,.05)_0%,rgba(7,29,38,.12)_45%,rgba(7,29,38,.72)_100%)]" />

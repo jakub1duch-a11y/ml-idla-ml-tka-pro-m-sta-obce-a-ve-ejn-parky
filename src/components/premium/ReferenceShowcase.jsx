@@ -34,6 +34,22 @@ const referenceSlugs = {
 };
 const referencePath = (project) => `/reference/${referenceSlugs[project.id] || project.id}`;
 
+const JICIN_ID = '6a71d1ff57598752eed27bfb';
+const JICIN_IMAGES = [
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/1db590bd1_realizace-IMG_5040.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/9dc93a791_realizace-IMG_5039.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/5c7fc888a_realizace-IMG_5035.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/add2a849f_realizace-IMG_5036.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/1938f53e2_realizace-IMG_4983.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/b60f1bf04_realizace-IMG_4989.jpg',
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/ff7aaa73f_realizace-IMG_4974.jpg',
+];
+const projectPhotos = (project) => project.id === JICIN_ID
+  ? JICIN_IMAGES
+  : [project.image_url, ...(Array.isArray(project.gallery_urls) ? project.gallery_urls : [])];
+const projectCover = (project) => project.id === JICIN_ID ? JICIN_IMAGES[0] : project.image_url;
+
 const isImage = (url) => String(url || '').match(/\.(png|jpe?g|webp|avif|gif)(\?|$)/i);
 
 export default function ReferenceShowcase() {
@@ -62,7 +78,7 @@ export default function ReferenceShowcase() {
   }, [active, projects]);
 
   const openLightbox = (project, startIndex = 0) => {
-    const photos = [project.image_url, ...(Array.isArray(project.gallery_urls) ? project.gallery_urls : [])]
+    const photos = projectPhotos(project)
       .filter((url) => url && isImage(url))
       .filter((url, index, all) => all.indexOf(url) === index);
     if (!photos.length) return;
@@ -105,14 +121,14 @@ export default function ReferenceShowcase() {
       ) : (
         <div className="mt-7 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {visible.map((project) => {
-            const galleryPhotos = [project.image_url, ...(Array.isArray(project.gallery_urls) ? project.gallery_urls : [])]
+            const galleryPhotos = projectPhotos(project)
               .filter((url) => url && isImage(url))
               .filter((url, index, all) => all.indexOf(url) === index);
             const hasVideo = Boolean(project.video_url);
             return (
               <article key={project.id} className="group flex flex-col overflow-hidden border border-border bg-card transition hover:-translate-y-1 hover:shadow-xl">
                 <div className="relative aspect-[4/3] cursor-pointer overflow-hidden bg-muted" onClick={() => openLightbox(project)}>
-                  {project.image_url && <img src={project.image_url} alt={project.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />}
+                  {projectCover(project) && <img src={projectCover(project)} alt={project.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
                   {hasVideo && <span className="absolute right-3 top-3 inline-flex items-center gap-1 bg-primary px-2.5 py-1 text-[10px] font-bold text-primary-foreground"><Play size={11} /> VIDEO</span>}
                   {galleryPhotos.length > 1 && (

@@ -12,9 +12,11 @@ export default function AutoPlayVideoPreview({
   muted = true,
   label = 'Video produktu',
   showBadge = true,
+  showLoadingBackground = true,
   onClick,
 }) {
   const ref = useRef(null);
+  const previewId = useRef(`video-preview-${Math.random().toString(36).slice(2)}`);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -33,15 +35,24 @@ export default function AutoPlayVideoPreview({
 
     const play = () => {
       if (reducedMotion || saveData) return;
+      window.dispatchEvent(new CustomEvent('mlzidla:video-preview-play', { detail: { id: previewId.current } }));
       const promise = video.play();
       if (promise?.then) {
         promise.then(() => setPlaying(true)).catch(() => setPlaying(false));
       }
     };
 
+    const pauseForOtherPreview = (event) => {
+      if (event.detail?.id !== previewId.current) pause();
+    };
+    window.addEventListener('mlzidla:video-preview-play', pauseForOtherPreview);
+
     if (!('IntersectionObserver' in window)) {
       play();
-      return pause;
+      return () => {
+        window.removeEventListener('mlzidla:video-preview-play', pauseForOtherPreview);
+        pause();
+      };
     }
 
     const observer = new IntersectionObserver(
@@ -55,8 +66,9 @@ export default function AutoPlayVideoPreview({
     observer.observe(video);
     return () => {
       observer.disconnect();
+      window.removeEventListener('mlzidla:video-preview-play', pauseForOtherPreview);
       pause();
-    };
+    }; 
   }, [src, threshold]);
 
   if (!src || failed) return null;
@@ -85,7 +97,7 @@ export default function AutoPlayVideoPreview({
         onError={() => setFailed(true)}
         className={`h-full w-full object-cover transition-opacity duration-500 ${ready ? 'opacity-100' : 'opacity-0'} ${videoClassName}`}
       />
-      {!ready && <div className="absolute inset-0 bg-[linear-gradient(135deg,#e9f5fa,#d7ebf4)]" />}
+      {!ready && showLoadingBackground && <div className="absolute inset-0 bg-[linear-gradient(135deg,#e9f5fa,#d7ebf4)]" />}
       {showBadge && !controls && (
         <span className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-black/38 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">
           <Play size={11} fill="currentColor" /> {playing ? 'Přehrává se' : 'Video'}

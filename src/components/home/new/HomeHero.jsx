@@ -1,111 +1,82 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
+import { ArrowRight, PlayCircle, Sparkles, Wifi, Building2, Trees } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 
-const ZOO_ID = '6a42491409abbf575447aaeb';
-
-const CATEGORY_ICONS = {
-  Mesta: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 20V8l8-4 8 4v12" />
-      <path d="M8 20v-5h3v5M14 20v-5h3v5M2 20h20" />
-    </svg>
-  ),
-  Parky: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 21V7M12 11 7 7M12 14l5-5M12 7l3-4M5 21h14M7 21v-4h10v4" />
-    </svg>
-  ),
-  Promenady: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="8" cy="9" r="3" />
-      <circle cx="16" cy="9" r="3" />
-      <path d="M2 20c.7-3 2.7-5 6-5s5.3 2 6 5M10 20c.6-2.6 2.6-4 6-4 2.8 0 4.8 1.3 6 4" />
-    </svg>
-  ),
-  Sportoviste: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m12 3 2.4 5.2L20 9l-4 4 .9 5.7-4.9-2.7-4.9 2.7L8 13l-4-4 5.6-.8z" />
-    </svg>
-  ),
-};
-
-const CATEGORIES = [
-  { label: 'Města', Icon: CATEGORY_ICONS.Mesta },
-  { label: 'Parky', Icon: CATEGORY_ICONS.Parky },
-  { label: 'Promenády', Icon: CATEGORY_ICONS.Promenady },
-  { label: 'Sportoviště', Icon: CATEGORY_ICONS.Sportoviste },
+const TRUST = [
+  { icon: Building2, label: 'Města a veřejný prostor' },
+  { icon: Trees, label: 'Parky a promenády' },
+  { icon: Wifi, label: 'Smart řízení' },
 ];
 
 export default function HomeHero() {
-  const [bgImage, setBgImage] = useState(VIDEO_ASSETS.heroJicin.poster);
-
-  useEffect(() => {
-    let mounted = true;
-    base44.entities.Realizace.get(ZOO_ID)
-      .then((ref) => { if (mounted && ref?.image_url) setBgImage(ref.image_url); })
-      .catch(() => {});
-    return () => { mounted = false; };
-  }, []);
-
   return (
-    <section className="hbp">
-      <div className="hbp-content">
-        <div className="hbp-brand">
-          <svg viewBox="0 0 100 100" fill="none">
-            <path d="M18 82C18 45 45 18 74 18" stroke="currentColor" strokeWidth="9" strokeLinecap="round" />
-            <path d="M18 72C18 35 45 8 74 8" stroke="currentColor" strokeWidth="9" strokeLinecap="round" opacity=".45" />
-            <path d="M18 92C18 55 45 28 74 28" stroke="currentColor" strokeWidth="9" strokeLinecap="round" opacity=".22" />
-            <circle cx="76" cy="20" r="9" fill="currentColor" />
-          </svg>
-          <span>MLŽIDLA.CZ</span>
-        </div>
-
-        <h1 className="hbp-headline">
-          Ochlazujeme <span>vzduch</span><br />kolem vás
-        </h1>
-
-        <p className="hbp-subhead">
-          Města <b>•</b> parky <b>•</b> promenády <b>•</b> sportoviště
-        </p>
-
-        <div className="hbp-actions">
-          <Link to="/poptavka" className="hbp-primary">
-            POPTAT ŘEŠENÍ
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h13" />
-              <path d="m13 6 6 6-6 6" />
-            </svg>
-          </Link>
-          <Link to="/mlzidla-mlzitka" className="hbp-secondary">
-            Prohlédnout produkty
-          </Link>
-        </div>
-
-        <div className="hbp-baseband">
-          {CATEGORIES.map(({ label, Icon }) => (
-            <div key={label} className="hbp-category">
-              {Icon}
-              <span>{label}</span>
+    <section className="relative overflow-hidden bg-[#f6fafb] text-[#0b2d38]">
+      <div className="mx-auto grid min-h-[760px] max-w-[1500px] lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative z-20 flex items-center px-6 pb-14 pt-28 sm:px-10 lg:px-14 lg:py-28 xl:px-20">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#0b7c89]/15 bg-white px-3 py-2 text-[11px] font-semibold uppercase tracking-[.18em] text-[#0b7c89] shadow-sm">
+              <Sparkles size={14} /> Architektonické mlžení pro města i zahrady
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="hbp-visual hbp-animate" aria-hidden="true">
-        <img src={bgImage} alt="Mlžítka pro veřejný prostor — reálná instalace" />
-        <div className="hbp-ring" />
-        <div className="hbp-arch" />
-        <div className="hbp-nozzles">
-          <i /><i /><i /><i /><i /><i />
+            <h1 className="mt-7 max-w-[11ch] font-heading text-[clamp(3.4rem,7vw,7.8rem)] font-medium leading-[.88] tracking-[-.065em] text-[#0b2d38]">
+              MLŽIDLA — chytré chlazení prostoru.
+            </h1>
+
+            <p className="mt-7 max-w-xl text-base leading-7 text-[#48636d] sm:text-lg">
+              Nerezová mlžítka a mlžné prvky pro náměstí, parky, promenády, sportoviště, gastro i soukromé zahrady. Od návrhu a vizualizace po řízení, realizaci a servis.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#0b2d38] px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#123f4d]">
+                Navrhnout řešení <ArrowRight size={16} />
+              </Link>
+              <Link to="/mlzidla-mlzitka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#bfd0d5] bg-white px-6 py-3.5 text-sm font-semibold text-[#0b2d38] transition hover:border-[#8fb7c1] hover:bg-[#edf6f8]">
+                Prohlédnout produkty
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-2 sm:grid-cols-3">
+              {TRUST.map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-2.5 border-t border-[#d9e7ea] pt-4 text-xs font-medium text-[#4f6871]">
+                  <Icon size={15} className="shrink-0 text-[#0b7c89]" />
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="hbp-guide hbp-guide-top">Ø 3200</div>
-        <div className="hbp-guide hbp-guide-bottom">STAINLESS STEEL</div>
-        <div className="hbp-guide hbp-guide-left">MISTING ARCH</div>
-        <div className="hbp-marker hbp-m1" />
-        <div className="hbp-marker hbp-m2" />
-        <div className="hbp-marker hbp-m3" />
+
+        <div className="relative min-h-[520px] overflow-hidden bg-[#0b2d38] lg:min-h-full">
+          <video
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={VIDEO_ASSETS.heroJicin.poster}
+            aria-label="Reálná realizace mlžítka BENDY na náměstí v Jičíně"
+          >
+            <source src={VIDEO_ASSETS.heroJicin.src} type="video/mp4" />
+          </video>
+
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,27,35,.04)_0%,rgba(5,27,35,.12)_48%,rgba(5,27,35,.78)_100%)]" />
+          <div className="absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-[#f6fafb] via-[#f6fafb]/30 to-transparent lg:block" />
+
+          <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-4 rounded-3xl border border-white/15 bg-[#071f28]/62 p-5 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#9ce5ec]">Reálná realizace</p>
+                <h2 className="mt-2 font-heading text-2xl font-medium">BENDY · Jičínské náměstí</h2>
+                <p className="mt-1 max-w-lg text-sm leading-6 text-white/70">Video z provozu. Skutečný produkt, skutečný veřejný prostor.</p>
+              </div>
+              <Link to="/reference/bendy-jicinske-namesti" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-white transition hover:text-[#9ce5ec]">
+                <PlayCircle size={18} /> Detail realizace
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

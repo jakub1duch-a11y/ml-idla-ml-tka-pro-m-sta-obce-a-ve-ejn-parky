@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Images, Loader, MapPin, Play, Sparkles, Video, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
+import { getStudioMedia } from '@/lib/studioMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const DRIVE_FILE_RE = /drive\.google\.com\/file\/d\/([^/?#]+)/i;
@@ -91,7 +92,9 @@ export default function PdMediaGallery({ product }) {
   }, [product.id, product.name, product.slug]);
 
   const groups = useMemo(() => {
+    const studioMedia = getStudioMedia(product);
     const productPhotos = clean([
+      studioMedia && { type: 'image', url: studioMedia, title: `${product.name} — studiový náhled`, badge: 'Studio' },
       product.image_url && { type: 'image', url: product.image_url, title: `${product.name} — produkt`, badge: 'Produkt' },
       ...(product.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url, i) => ({ type: 'image', url, title: `${product.name} — fotografie ${i + 1}`, badge: 'Produkt' })),
     ]);

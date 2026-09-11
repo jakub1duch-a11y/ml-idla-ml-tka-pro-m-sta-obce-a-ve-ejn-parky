@@ -1,12 +1,14 @@
 import React from 'react';
 import { Images } from 'lucide-react';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
+import { getStudioMedia } from '@/lib/studioMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const isDirectVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
 
 export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '' }) {
-  const primary = product?.image_url || fallback;
+  const studioMedia = getStudioMedia(product);
+  const primary = studioMedia || product?.image_url || fallback;
   const isBrokenLocalPath = (url) => typeof url === 'string' && (url.startsWith('/media/products/') || url.startsWith('/media/optimized/'));
   const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls : [];
   const videoUrl = isDirectVideo(product?.video_url)

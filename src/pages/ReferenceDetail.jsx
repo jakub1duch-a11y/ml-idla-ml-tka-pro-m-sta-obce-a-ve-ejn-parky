@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, X, ChevronLeft, ChevronRight, ArrowRight, Loader, ZoomIn, PlayCircle, ShieldCheck, Droplets, Wrench } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Loader, ZoomIn, PlayCircle, ShieldCheck, Droplets, Wrench } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackReferenceView } from '@/lib/ga4';
 import { setSEO, getReferenceSEO } from '@/lib/seo';
 import SiteButton from '@/components/ui/SiteButton';
+import GalleryLightbox from '@/components/GalleryLightbox';
 
 const CATEGORY_LABELS = { mestsky: 'Městský prostor', event: 'Event', soukromy: 'Soukromý', prumyslovy: 'Průmyslový' };
 const ZOO_ID = '6a42491409abbf575447aaeb';
@@ -27,11 +28,6 @@ const JICIN_VIDEOS = [
   'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f2c556c74_Bendy-mlzitko-jicin.MOV',
 ];
 
-function Lightbox({ images, initialIndex, onClose }) {
-  const [idx, setIdx] = useState(initialIndex);
-  useEffect(() => {const h = (e) => {if (e.key === 'Escape') onClose();if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + images.length) % images.length);if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % images.length);};window.addEventListener('keydown', h);return () => window.removeEventListener('keydown', h);}, [onClose, images.length]);
-  return <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center" onClick={onClose}><button onClick={onClose} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white z-10"><X size={18} /></button><div className="relative max-w-6xl w-full mx-6" onClick={(e) => e.stopPropagation()}><AnimatePresence mode="wait"><motion.img key={idx} src={images[idx]} alt="Realizace MLŽIDLA®" initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="w-full max-h-[82vh] object-contain rounded-2xl" /></AnimatePresence>{images.length > 1 && <><button onClick={() => setIdx((i) => (i - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/70 text-white flex items-center justify-center"><ChevronLeft /></button><button onClick={() => setIdx((i) => (i + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/70 text-white flex items-center justify-center"><ChevronRight /></button></>}</div></div>;
-}
 function isYouTubeUrl(url) {return /(?:youtube\.com\/watch\?v=|youtu\.be\/)/i.test(url || '');}
 function getYouTubeId(url) {const match = (url || '').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/i);return match?.[1] || '';}
 function isVideoFile(url) {return /\.(mp4|webm|mov|ogg)(\?|$)/i.test(url || '') || isYouTubeUrl(url);}
@@ -100,5 +96,5 @@ export default function ReferenceDetail({ fixedId }) {
  <VideoSlider videos={videos} />
  {allImages.length > 1 && <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">Fotogalerie</p><h2 className="font-heading text-3xl lg:text-5xl mb-10">{isZoo ? 'Mlžítka v areálu ZOO Praha' : 'Fotografie z realizace'}</h2><div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[170px] md:auto-rows-[220px]">{allImages.slice(0, 16).map((img, i) => <motion.button key={img} onClick={() => setLightbox(i)} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className={`group relative overflow-hidden rounded-xl bg-slate-100 ${i === 0 ? 'col-span-2 row-span-2' : i === 5 ? 'col-span-2' : ''}`}><img src={img} alt={isZoo ? `ZOO Praha – realizace mlžítek ${i + 1}` : ''} loading="lazy" className="w-full h-full object-cover transition duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" /></motion.button>)}</div></section>}
  <section className="bg-[#062d3b] py-16 lg:py-20"><div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-[1fr_auto] gap-8 items-end"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-cyan mb-4">Podobný projekt</p><h2 className="font-heading text-4xl lg:text-5xl text-white max-w-3xl">Navrhneme mlžítka pro váš veřejný prostor, park nebo návštěvnický areál.</h2><p className="mt-5 text-white/60 max-w-xl">Od prvního návrhu přes technické řešení až po výrobu, instalaci a servis.</p></div><div className="flex flex-wrap gap-3"><SiteButton to="/poptavka">Poptat řešení <ArrowRight size={18} /></SiteButton><SiteButton to="/mestske-mlzitka" variant="secondary" className="text-white">Městská mlžítka</SiteButton></div></div></section>
- {lightbox !== null && <Lightbox images={allImages} initialIndex={lightbox} onClose={() => setLightbox(null)} />}</div>;
+ {lightbox !== null && <GalleryLightbox images={allImages} initialIndex={lightbox} onClose={() => setLightbox(null)} title={project.name} subtitle={isZoo ? 'ZOO Praha · Troja' : project.location} productUsed={project.product_used || 'Fotogalerie realizace'} />}</div>;
 }

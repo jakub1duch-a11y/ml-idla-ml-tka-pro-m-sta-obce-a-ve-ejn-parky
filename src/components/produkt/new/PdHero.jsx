@@ -37,6 +37,10 @@ export default function PdHero({ product }) {
   const [active, setActive] = useState(0);
   const isBendy = BENDY_SLUGS.includes(product.slug);
   const detailConfig = getProductDetailConfig(product);
+  const heroBackground = product.hero_background_url;
+  const heroProduct = product.hero_product_image_url;
+  const hasVerifiedComposite = Boolean(product.hero_visual_verified && heroBackground && heroProduct);
+  const heroProductIsPhoto = Boolean(heroProduct && /\.(jpe?g|webp)(\?|#|$)/i.test(heroProduct));
 
   const media = useMemo(() => [
     ...(product.image_url ? [{ type: 'image', url: product.image_url }] : []),
@@ -59,6 +63,7 @@ export default function PdHero({ product }) {
   }, [product.slug]);
 
   const hero = media[active] || media[0];
+  const showVerifiedComposite = hasVerifiedComposite && active === 0;
   const prev = () => setActive((i) => (i - 1 + media.length) % media.length);
   const next = () => setActive((i) => (i + 1) % media.length);
 
@@ -97,7 +102,39 @@ export default function PdHero({ product }) {
             exit={{ opacity: 0.35, scale: 1.01 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
           >
-            {hero?.type === 'video' ? (
+            {showVerifiedComposite ? (
+              <>
+                <img
+                  src={heroBackground}
+                  alt={`${product.name} – vizualizace prostředí`}
+                  fetchPriority="high"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_42%,rgba(255,255,255,.18),transparent_34%),linear-gradient(180deg,rgba(3,31,48,.02),rgba(3,31,48,.12))]" />
+                {heroProductIsPhoto ? (
+                  <>
+                    <img
+                      src={heroProduct}
+                      alt={`${product.name} – referenční produkt`}
+                      className="absolute inset-0 h-full w-full object-cover object-center lg:hidden"
+                    />
+                    <div className="absolute right-[4%] top-[16%] hidden h-[56%] w-[44%] overflow-hidden rounded-[30px] border border-white/55 bg-white/75 shadow-[0_28px_80px_rgba(2,25,42,.22)] backdrop-blur-sm lg:block xl:right-[5%] xl:h-[60%] xl:w-[46%]">
+                      <img src={heroProduct} alt={`${product.name} – referenční produkt`} className="h-full w-full object-cover object-center" />
+                      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/30" />
+                    </div>
+                  </>
+                ) : (
+                  <img
+                    src={heroProduct}
+                    alt={`${product.name} – referenční produkt`}
+                    className="absolute right-[-3%] top-[9%] h-[54%] w-[68%] object-contain object-center drop-shadow-[0_28px_32px_rgba(0,30,45,.28)] sm:right-[0%] sm:h-[58%] sm:w-[62%] lg:right-[1%] lg:top-[12%] lg:h-[68%] lg:w-[58%] xl:right-[2%] xl:h-[72%] xl:w-[60%]"
+                    style={{ objectPosition: product.hero_focal_position || 'center bottom' }}
+                  />
+                )}
+                <div className="pointer-events-none absolute right-[5%] top-[25%] h-44 w-[48%] rounded-full bg-white/25 blur-3xl lg:h-56" />
+                <div className="pointer-events-none absolute bottom-[18%] right-[3%] h-28 w-[52%] rounded-full bg-[#dff8ff]/35 blur-3xl" />
+              </>
+            ) : hero?.type === 'video' ? (
               <video
                 src={hero.url}
                 poster={hero.poster}
@@ -155,13 +192,21 @@ export default function PdHero({ product }) {
                 </Link>
               </div>
 
-              <div className="mt-6 flex items-center gap-5 text-xs font-semibold text-white/80 lg:text-[#0D2F4F]/62">
-                <span className="inline-flex items-center gap-2"><Leaf size={15} className="text-[#36B77C]" /> České řešení</span>
-                <span className="hidden sm:inline-flex items-center gap-2"><Sparkles size={15} className="text-[#0BA4F5]" /> Návrh na míru</span>
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-white/80 lg:text-[#0D2F4F]/62">
+                <span className="inline-flex items-center gap-2"><Leaf size={15} className="text-[#36B77C]" /> Český návrh a výroba</span>
+                {hasVerifiedComposite && <span className="inline-flex items-center gap-2"><ShieldCheck size={15} className="text-[#0BA4F5]" /> Produkt podle ověřené reference</span>}
+                <span className="hidden sm:inline-flex items-center gap-2"><Sparkles size={15} className="text-[#0BA4F5]" /> Návrh pro konkrétní prostor</span>
               </div>
             </div>
 
-            <div className="pointer-events-none absolute right-5 top-28 hidden lg:block xl:right-10 xl:top-32">
+            <div className="pointer-events-none absolute right-5 top-28 hidden max-w-[300px] space-y-3 lg:block xl:right-10 xl:top-32">
+              {hasVerifiedComposite && (
+                <div className="rounded-[22px] border border-white/45 bg-[#062d3d]/72 px-4 py-3 text-white shadow-[0_18px_50px_rgba(10,35,66,.12)] backdrop-blur-2xl">
+                  <p className="font-mono text-[9px] font-bold uppercase tracking-[.18em] text-[#79dcff]">Transparentní vizualizace</p>
+                  <p className="mt-1 text-xs font-semibold">Produkt: referenční podklad</p>
+                  <p className="mt-0.5 text-[10px] leading-relaxed text-white/65">Prostředí: {product.hero_environment || 'návrhová vizualizace'}</p>
+                </div>
+              )}
               <div className="rounded-[26px] border border-white/40 bg-white/58 px-5 py-4 shadow-[0_18px_50px_rgba(10,35,66,.10)] backdrop-blur-2xl">
                 <div className="flex items-center gap-4">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E4F8FF] text-[#0BA4F5]"><Wifi size={23}/></span>

@@ -10,6 +10,7 @@ import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdVariants from '@/components/produkt/new/PdVariants';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdSmartControl from '@/components/produkt/new/PdSmartControl';
+import PdTechSheet from '@/components/produkt/new/PdTechSheet';
 import PdDetail from '@/components/produkt/new/PdDetail';
 import PdHowItWorks from '@/components/produkt/new/PdHowItWorks';
 import PdTabs from '@/components/produkt/new/PdTabs';
@@ -65,6 +66,7 @@ export default function ProduktDetail() {
       <PdVariants product={product} />
       <PdSpecs product={product} />
       <PdSmartControl product={product} />
+      <PdTechSheet product={product} />
       <PdDetail product={product} />
       <PdHowItWorks />
       <PdTabs product={product} />

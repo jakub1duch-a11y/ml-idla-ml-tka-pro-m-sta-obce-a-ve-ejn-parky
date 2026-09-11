@@ -22,6 +22,8 @@ import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
 import ProductVisualShowcase from '@/components/produkt/ProductVisualShowcase';
 import ProductVariantsSection from '@/components/produkt/ProductVariantsSection';
+import ProductTechnicalDetailSection from '@/components/produkt/ProductTechnicalDetailSection';
+import ProductUseCaseGallery from '@/components/produkt/ProductUseCaseGallery';
 import { getProductVisuals } from '@/components/produkt/productVisuals';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
@@ -206,6 +208,12 @@ export default function ProduktDetail() {
 
       <ProductVisualShowcase slug={product.slug} />
       <ProductVariantsSection variants={getProductVisuals(product.slug)?.variants} />
+      {getProductVisuals(product.slug) &&
+      <>
+          <ProductTechnicalDetailSection />
+          <ProductUseCaseGallery onOpenLightbox={(i, images) => setLightbox({ images, idx: i })} />
+        </>
+      }
       
 
       {/* ═══════ STICKY TABS NAV ═══════ */}

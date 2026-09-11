@@ -7,8 +7,41 @@ const IMG = {
   lineaPrague: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c4c1b47a8_file_000000002440821082cc47cf9c186371.png',
   lineaPlaza: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1cb5f9b18_file_000000005c8081f5ad3ec61cc9e1c7cb.png',
   lineaPraguePortrait: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/512446aa1_file_00000000ada8822fab4c3e868219c559.png',
-  lineaSquare: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/de905f415_generated_image.png'
+  lineaSquare: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/de905f415_generated_image.png',
+  anchorDetail: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6fed4704e_06_Detail_skryte_patky_a_privodu_vody.png',
+  spiralAnchor: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/20aa9f5f9_09_Vizualizace_Mlzna_spirala_skryta_patka.png',
+  kidsPool: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/63f7ce7ec_file_00000000817481f4a65e35df068e49fc.png',
+  kidChild: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/97764c6a5_Bendymlznabrana.jpg',
+  gatesStreet: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/dae0f65d1_Mlznebrany-gatemlznabrana.jpg',
+  mistField: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/61b270214_Sportovisteamlznehristemlhoviste.jpg',
+  trutnov: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aff0ffe26_2026-08-31_Trutnov_Krakonosovo-namesti_04_Vizualizace_3x-LINEA.png'
 };
+
+// Technická sekce — skrytá patka a přívod vody (společná pro produkty s pevnou instalací).
+export const ANCHOR_TECHNICAL = {
+  eyebrow: 'Technický detail',
+  title: 'Skrytá patka, přívod vody pod povrchem.',
+  intro: 'V dlažbě zůstane vidět jen štíhlá nerezová trubka. Kotvení, přívod vody i ovládání jsou schované pod povrchem — bez viditelných rozvodů a bez překážky v pěší trase.',
+  image: IMG.anchorDetail,
+  alt: 'Řez instalací mlžítka: skrytá patka v betonu, přívod vody pod povrchem, detail trysky M2 a síly stěny 3 mm',
+  secondaryImage: IMG.spiralAnchor,
+  secondaryAlt: 'Vizualizace mlžné spirály se skrytou patkou v dlažbě',
+  facts: [
+    ['Profil trubky', 'max. Ø70 mm, síla stěny 3 mm'],
+    ['Trysky', 'M2 nerez, 4–6 ks dle výšky'],
+    ['Kotvení', 'Skrytá patka v betonovém bloku'],
+    ['Přívod vody', 'Pod povrchem, napojení v šachtě']
+  ]
+};
+
+export const USE_CASE_GALLERY = [
+  { image: IMG.kidsPool, title: 'Koupaliště a brouzdaliště', alt: 'Děti se ochlazují u mlžítek u brouzdaliště' },
+  { image: IMG.kidChild, title: 'Hřiště a školky', alt: 'Dítě si hraje pod mlžítkem na hřišti' },
+  { image: IMG.trutnov, title: 'Náměstí a městské trasy', alt: 'Vizualizace tří mlžítek LINEA na Krakonošově náměstí v Trutnově' },
+  { image: IMG.gatesStreet, title: 'Průchozí mlžné brány', alt: 'Cyklisté projíždějí mlžnými bránami v městské alej' },
+  { image: IMG.mistField, title: 'Mlžiště a sportoviště', alt: 'Mlžiště se širokým mlžným oblakem u sportovního areálu' },
+  { image: IMG.lineaPlaza, title: 'Moderní plazy a areály', alt: 'Mlžítko LINEA na moderní městské plaze' }
+];
 
 export const LINEA_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/91d5c8d84_IMG_20260830_183249.mp4';
 

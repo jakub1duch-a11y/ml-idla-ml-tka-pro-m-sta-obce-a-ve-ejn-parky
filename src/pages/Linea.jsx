@@ -4,6 +4,8 @@ import { setSEO } from '@/lib/seo';
 import LineaHero from '@/components/linea/LineaHero';
 import LineaGallery from '@/components/linea/LineaGallery';
 import ProductVariantsSection from '@/components/produkt/ProductVariantsSection';
+import ProductTechnicalDetailSection from '@/components/produkt/ProductTechnicalDetailSection';
+import ProductUseCaseGallery from '@/components/produkt/ProductUseCaseGallery';
 import { LINEA_VARIANTS } from '@/components/produkt/productVisuals';
 
 export default function Linea() {
@@ -18,6 +20,8 @@ export default function Linea() {
       <LineaHero />
       <ProductVariantsSection variants={LINEA_VARIANTS} />
       <LineaGallery />
+      <ProductTechnicalDetailSection />
+      <ProductUseCaseGallery />
       <section className="bg-primary text-primary-foreground">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-16 lg:flex-row lg:items-end lg:px-8 lg:py-20">
           <div>

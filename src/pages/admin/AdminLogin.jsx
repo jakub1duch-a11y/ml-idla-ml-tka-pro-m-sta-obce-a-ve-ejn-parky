@@ -6,16 +6,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShieldCheck, Mail, Lock, Loader2 } from "lucide-react";
 import GoogleIcon from "@/components/GoogleIcon";
+import { safeReturnTo } from "@/lib/authReturnTo";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const dest = safeReturnTo(new URLSearchParams(window.location.search).get("returnTo")) || "/admin";
 
   const handleGoogle = () => {
     setError("");
-    base44.auth.loginWithProvider("google", `${window.location.origin}/admin`);
+    base44.auth.loginWithProvider("google", `${window.location.origin}${dest}`);
   };
 
   const handleSubmit = async (e) => {
@@ -24,7 +26,7 @@ export default function AdminLogin() {
     setLoading(true);
     try {
       await base44.auth.loginViaEmailPassword(email, password);
-      window.location.href = "/admin";
+      window.location.href = dest;
     } catch (err) {
       setError(err.message || "Neplatný email nebo heslo");
     } finally {

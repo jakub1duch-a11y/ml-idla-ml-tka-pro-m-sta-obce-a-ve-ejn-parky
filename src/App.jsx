@@ -72,6 +72,7 @@ import BendyARPrototype from '@/pages/BendyARPrototype';
 import PrezentaceMlziciProstor from '@/pages/PrezentaceMlziciProstor';
 import GateARPrototype from '@/pages/GateARPrototype';
 import LocalizedLanding from '@/pages/LocalizedLanding';
+import OAuthConsent from '@/pages/OAuthConsent';
 import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
 
 const LOCALIZED_ROUTES = Object.entries(ROUTE_MAP).flatMap(([routeKey, paths]) =>
@@ -192,6 +193,7 @@ const AuthenticatedApp = () => {
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/admin-logout" element={<AdminLogout />} />
       <Route path="/admin-forgot-password" element={<AdminForgotPassword />} />
+      <Route path="/oauth/consent" element={<OAuthConsent />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

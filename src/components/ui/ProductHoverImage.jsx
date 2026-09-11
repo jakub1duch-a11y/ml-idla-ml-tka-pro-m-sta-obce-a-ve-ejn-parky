@@ -5,10 +5,16 @@ import { getStudioMedia } from '@/lib/studioMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const isDirectVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
-const isBrokenLocalPath = (url) => typeof url === 'string' && (url.startsWith('/media/products/') || url.startsWith('/media/optimized/'));
+const isBrokenLocalPath = (url) => typeof url === 'string' && (
+  url.startsWith('/media/studio/')
+  || url.startsWith('/media/products/')
+  || url.startsWith('/media/optimized/')
+);
+const isUsableImage = (url) => typeof url === 'string' && url.length > 0 && !isBrokenLocalPath(url);
 
 const VIEW_STYLES = {
   studio: 'object-contain p-2.5 sm:p-3',
+  product: 'object-contain p-2.5 sm:p-3',
   real: 'object-cover',
   viz: 'object-cover',
   video: '',
@@ -16,6 +22,7 @@ const VIEW_STYLES = {
 
 const VIEW_LABELS = {
   studio: 'Studio',
+  product: 'Produkt',
   real: 'Realizace',
   viz: 'Vizualizace',
   video: 'Video',
@@ -27,7 +34,9 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
   const views = useMemo(() => {
     const studioMedia = getStudioMedia(product);
-    const primary = studioMedia || product?.image_url || fallback;
+    const productImage = isUsableImage(product?.image_url) ? product.image_url : '';
+    const fallbackImage = isUsableImage(fallback) ? fallback : '';
+    const primary = studioMedia || productImage || fallbackImage;
     const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls : [];
     const videoUrl = isDirectVideo(product?.video_url)
       ? product.video_url
@@ -35,9 +44,10 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
     const list = [];
 
-    // 1. Studio / product render
+    // 1. Verified studio image, otherwise the original product image in a studio frame.
     if (primary) {
-      list.push({ type: 'studio', url: primary, label: VIEW_LABELS.studio });
+      const type = studioMedia ? 'studio' : 'product';
+      list.push({ type, url: primary, label: VIEW_LABELS[type] });
     }
 
     // 2. Real photos from gallery (distinct from primary, non-video, non-broken)

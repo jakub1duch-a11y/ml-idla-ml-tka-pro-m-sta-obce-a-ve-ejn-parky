@@ -1,0 +1,10 @@
+{
+  "name": "NoopTemp",
+  "type": "object",
+  "properties": {
+    "x": {
+      "type": "string"
+    }
+  },
+  "required": []
+}

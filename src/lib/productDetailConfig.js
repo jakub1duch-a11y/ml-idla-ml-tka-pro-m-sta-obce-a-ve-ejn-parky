@@ -16,6 +16,18 @@ const DEFAULT_CONFIG = {
 };
 
 const CONFIG = {
+  'teepee': {
+    tagline: 'Mobilní mlžná zóna pro městské slavnosti, festivaly a eventy',
+    intro: 'TEEPEE je samostojící nerezové mlžítko pro rychlé sezónní nasazení na náměstích, festivalech, eventech a v gastro zónách. Přináší jemnou nízkotlakou mlhu bez nutnosti trvalého betonování a lze jej doplnit chytrým řízením.',
+    benefits: [
+      ['Rychlá instalace', 'Samostojící konstrukce je navržená pro rychlé sezónní nebo dočasné nasazení.'],
+      ['Bez betonování', 'Podle konkrétního řešení lze TEEPEE instalovat bez trvalého zásahu do povrchu.'],
+      ['Nízkotlaká mlha', 'Jemné kapky 50–100 μm využívají dostupný tlak vody podle konfigurace.'],
+      ['Smart řízení', 'Volitelně Wi‑Fi ventil nebo SUPLA pro časové a provozní scénáře.'],
+      ['Nerez AISI 316L', 'Odolná konstrukce pro městské akce, veřejný prostor a sezónní provoz.'],
+    ],
+    useCases: ['Městské slavnosti', 'Festivaly', 'Eventy', 'Náměstí', 'Gastro zóny'],
+  },
   'mlzitko-bendy': {
     tagline: 'Svěžest, která ladí s městem',
     intro: 'Sochařská nerezová forma BENDY® kombinuje výrazný design s funkčním ochlazením a možností různých prostorových sestav.',
@@ -95,6 +107,11 @@ export function getProductDetailConfig(product) {
 }
 
 const SPATIAL_CONFIGS = {
+  'teepee': [
+    ['Event', 'mobilní samostojící instalace', 'Rychlá konfigurace pro festivaly, slavnosti a krátkodobé akce.'],
+    ['Sezónní', 'delší provoz bez trvalého betonování', 'Řešení pro letní gastro zóny, náměstí a dočasné pobytové plochy.'],
+    ['Smart', 'TEEPEE + chytré řízení', 'Doplnění o Wi‑Fi ventil nebo SUPLA podle požadovaného provozního scénáře.'],
+  ],
   'mlzitko-bendy': [
     ['Single', '1 samostatný prvek', 'Solitérní osazení se zachovanou geometrií BENDY®.'],
     ['Duo', '2 stejné prvky', 'Dvojice identických prvků rozmístěná podle konkrétního prostoru.'],

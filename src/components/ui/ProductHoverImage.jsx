@@ -36,6 +36,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
         videoClassName="object-cover"
         threshold={0.58}
         showBadge
+        showLoadingBackground={false}
       />
     ) : secondary ? (
       <>

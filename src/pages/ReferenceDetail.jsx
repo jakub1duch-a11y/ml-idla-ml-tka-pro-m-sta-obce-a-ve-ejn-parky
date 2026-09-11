@@ -11,7 +11,8 @@ const CATEGORY_LABELS = { mestsky: 'Městský prostor', event: 'Event', soukromy
 const ZOO_ID = '6a42491409abbf575447aaeb';
 const JICIN_ID = '6a71d1ff57598752eed27bfb';
 const JICIN_IMAGES = [
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/7a3025dd5_realizace-IMG_5068.jpg',
+  // Schválené fotografie pouze z Valdštejnova náměstí v Jičíně.
+  // Původní hlavní fotografie IMG_5068 byla na žádost odstraněna.
   'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
   'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/1db590bd1_realizace-IMG_5040.jpg',
   'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/9dc93a791_realizace-IMG_5039.jpg',

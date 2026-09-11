@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Volume2, VolumeX, Droplets, Layers3, SlidersHorizontal } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 
-const STATS = [
-  { value: '2–8 °C', label: 'lokální ochlazení vzduchu' },
-  { value: '50–100 µm', label: 'kapky — bez zamokření dlažby' },
-  { value: '5–10 l/h', label: 'spotřeba vody na prvek' },
+const BENEFITS = [
+  { icon: Droplets, title: 'Jemná vodní mlha', text: 'Osvěžení vzniká přímo v prostoru, kde se lidé pohybují.' },
+  { icon: Layers3, title: 'Součást architektury', text: 'Nerezový prvek navrhujeme jako přirozenou součást náměstí, parku nebo zahrady.' },
+  { icon: SlidersHorizontal, title: 'Řízení podle provozu', text: 'Systém lze doplnit o chytré ovládání a scénáře podle konkrétního projektu.' },
 ];
 
 export default function MistInOperation() {
@@ -13,48 +13,70 @@ export default function MistInOperation() {
   const videoRef = useRef(null);
 
   const toggleMute = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = !v.muted;
-    setMuted(v.muted);
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setMuted(video.muted);
   };
 
   return (
-    <section className="bg-[#EAF5FB] py-20 lg:py-28">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:gap-16 lg:px-10">
-        <div className="relative overflow-hidden">
-          <video
-            ref={videoRef}
-            src={VIDEO_ASSETS.montage2026.src}
-            poster={VIDEO_ASSETS.montage2026.poster}
-            className="aspect-video w-full object-cover"
-            autoPlay muted loop playsInline preload="metadata"
-          />
-          <button
-            onClick={toggleMute}
-            aria-label={muted ? 'Zapnout zvuk' : 'Vypnout zvuk'}
-            className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
-          >
-            {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-          </button>
-        </div>
-
-        <div className="flex flex-col justify-center">
-          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Vidět mlhu v provozu</p>
-          <h2 className="mt-4 font-heading text-3xl leading-tight text-[#0D2F4F] lg:text-4xl">
-            Jemná mlha, která ochladí prostor bez zamokření.
-          </h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {STATS.map((s) => (
-              <div key={s.label} className="border border-[#0B5EA8]/15 bg-white p-5">
-                <p className="font-heading text-2xl font-bold text-[#0B5EA8] lg:text-3xl">{s.value}</p>
-                <p className="mt-2 text-xs leading-relaxed text-[#0D2F4F]/60">{s.label}</p>
-              </div>
-            ))}
+    <section className="bg-[#eaf5f7] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-16">
+          <div className="relative overflow-hidden rounded-[2rem] bg-[#0b2d38] shadow-[0_24px_70px_rgba(11,45,56,.16)]">
+            <video
+              ref={videoRef}
+              src={VIDEO_ASSETS.montage2026.src}
+              poster={VIDEO_ASSETS.montage2026.poster}
+              className="aspect-video w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Sestřih realizací MLŽIDLA"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071f28]/55 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 rounded-full border border-white/15 bg-black/35 px-3 py-2 font-mono text-[10px] uppercase tracking-[.16em] text-white/85 backdrop-blur-md">
+              Realizace MLŽIDLA · video
+            </div>
+            <button
+              type="button"
+              onClick={toggleMute}
+              aria-label={muted ? 'Zapnout zvuk videa' : 'Vypnout zvuk videa'}
+              className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60"
+            >
+              {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+            </button>
           </div>
-          <p className="mt-5 text-xs leading-relaxed text-[#0D2F4F]/50">
-            Účinek závisí na teplotě, vlhkosti a stínění konkrétního místa.
-          </p>
+
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[.2em] text-[#0b7c89]">Mlžení v reálném provozu</p>
+            <h2 className="mt-4 max-w-xl font-heading text-3xl leading-tight tracking-[-.035em] text-[#0b2d38] sm:text-4xl lg:text-5xl">
+              Ochlazení prostoru, které nemusí rušit architekturu.
+            </h2>
+            <p className="mt-5 max-w-xl text-sm leading-7 text-[#516b74] sm:text-base">
+              Způsob mlžení, umístění prvků i řízení řešíme podle konkrétního prostoru. Nejdřív návrh a vizualizace, potom technické upřesnění a realizace.
+            </p>
+
+            <div className="mt-8 space-y-4">
+              {BENEFITS.map(({ icon: Icon, title, text }) => (
+                <div key={title} className="grid grid-cols-[44px_1fr] gap-4 border-t border-[#bcd5da] pt-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#0b7c89]">
+                    <Icon size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-base font-semibold text-[#0b2d38]">{title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-[#5b727a]">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-6 text-xs leading-5 text-[#617980]">
+              Konkrétní technické parametry uvádíme vždy podle vybraného produktu a projektu; neověřené hodnoty nedopočítáváme odhadem.
+            </p>
+          </div>
         </div>
       </div>
     </section>

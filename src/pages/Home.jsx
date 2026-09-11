@@ -15,8 +15,10 @@ import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 export default function Home() {
   useEffect(() => {
     setSEO({
-      title: 'MLŽIDLA — nerezová mlžítka pro města, obce a veřejný prostor',
-      description: 'Návrh, výroba v Trutnově a instalace mlžících soch pro veřejný prostor. Lokální ochlazení 2–8 °C, provoz bez elektřiny nebo se smart řízením.',
+      title: 'Mlžítka, mlžné brány a mlhoviště pro města i zahrady',
+      description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, parky, zahrady, terasy a pergoly. Projektová podpora, výroba HolmTec a Smart řízení.',
+      keywords: 'mlžítka, mlžná brána, mlhoviště, vodní mlha na terasu, zahradní mlžítko, městské mlžítko',
+      canonicalPath: '/',
       robots: 'index, follow',
     });
   }, []);

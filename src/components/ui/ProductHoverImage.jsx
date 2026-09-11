@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Images, Play } from 'lucide-react';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
@@ -98,6 +98,37 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     }
   }, [views.length, activeView]);
 
+  const containerRef = useRef(null);
+
+  // On touch devices, auto-advance preview when card scrolls into view
+  useEffect(() => {
+    if (views.length <= 1) return;
+    // Only on mobile viewport or touch devices — skip desktop with hover
+    if (window.matchMedia('(hover: hover)').matches && window.innerWidth >= 768) return;
+    const el = containerRef.current;
+    if (!el) return;
+    let triggered = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.65) {
+          if (!triggered) {
+            triggered = true;
+            const nextIdx = views.findIndex((v, i) => i > 0 && v.type !== 'video');
+            if (nextIdx !== -1) setActiveView(nextIdx);
+          }
+        } else if (!entry.isIntersecting || entry.intersectionRatio < 0.25) {
+          if (triggered) {
+            triggered = false;
+            setActiveView(0);
+          }
+        }
+      },
+      { threshold: [0, 0.25, 0.65, 1.0] }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [views]);
+
   if (views.length === 0) return <div className={`bg-muted ${className}`} />;
 
   const current = views[activeView] || views[0];
@@ -106,6 +137,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
   return (
     <div
+      ref={containerRef}
       className={`relative overflow-hidden bg-slate-200 ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

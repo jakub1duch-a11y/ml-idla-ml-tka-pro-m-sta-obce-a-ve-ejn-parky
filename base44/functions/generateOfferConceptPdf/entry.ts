@@ -2,6 +2,14 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { jsPDF } from 'npm:jspdf@4.2.1';
 import { clean, fetchSuplaPricing } from '../../shared/suplaPricing.ts';
 import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
+import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
+
+const OFFERS_SPREADSHEET_ID = '1MS4i00ekY3Pf3fY-AsUdCT7GtNiCk5XPDr8CLiwym6M';
+const OFFERS_SHEET = 'Nabídky';
+const OFFER_HEADERS = [
+  'Datum', 'Číslo nabídky', 'Klient', 'Email', 'Firma', 'Projekt', 'Produkt',
+  'Mezisoučet bez DPH', 'DPH 21%', 'Celkem s DPH', 'Stav', 'PDF URL', 'Drive URL', 'ID projektu'
+];
 
 const short = (value: unknown, max = 2000) => clean(value).slice(0, max);
 
@@ -568,13 +576,40 @@ export default async function(req: Request): Promise<Response> {
       console.warn('Google Drive upload failed', driveError?.message || driveError);
     }
 
+    // Sync to shared Google Sheet — business overview of all generated offers
+    let sheetSynced = false;
+    try {
+      const { accessToken: sheetsToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+      await ensureSheet(sheetsToken, OFFERS_SPREADSHEET_ID, OFFERS_SHEET);
+      await ensureHeaders(sheetsToken, OFFERS_SPREADSHEET_ID, OFFERS_SHEET, OFFER_HEADERS);
+      await appendRow(sheetsToken, OFFERS_SPREADSHEET_ID, OFFERS_SHEET, OFFER_HEADERS.length, [
+        new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' }),
+        quoteNum,
+        clean(order.client_name) || '—',
+        clean(order.client_email) || '',
+        clean(order.client_company) || '',
+        clean(order.project_name) || 'Návrh řešení',
+        clean(order.product_name) || '',
+        Math.round(baseTotal),
+        Math.round(baseTotal * 0.21),
+        Math.round(baseTotal * 1.21),
+        'Koncept',
+        pdfUrl || '',
+        driveUrl || '',
+        order.id || '',
+      ]);
+      sheetSynced = true;
+    } catch (sheetError) {
+      console.warn('Google Sheets sync failed', sheetError?.message || sheetError);
+    }
+
     if (pdfUrl) {
-      return Response.json({ ok: true, pdf_url: pdfUrl, drive_url: driveUrl, drive_folder_url: driveFolderUrl, quote_number: quoteNum });
+      return Response.json({ ok: true, pdf_url: pdfUrl, drive_url: driveUrl, drive_folder_url: driveFolderUrl, quote_number: quoteNum, sheet_synced: sheetSynced });
     }
 
     // Base64 fallback
     const base64 = toBase64(new Uint8Array(pdfBytes));
-    return Response.json({ ok: true, pdf_base64: base64, drive_url: driveUrl, drive_folder_url: driveFolderUrl, filename: `koncept-${quoteNum}.pdf`, quote_number: quoteNum });
+    return Response.json({ ok: true, pdf_base64: base64, drive_url: driveUrl, drive_folder_url: driveFolderUrl, filename: `koncept-${quoteNum}.pdf`, quote_number: quoteNum, sheet_synced: sheetSynced });
   } catch (error) {
     console.error('PDF gen error:', error?.message || String(error));
     return Response.json({ error: error?.message || String(error) }, { status: 500 });

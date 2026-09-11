@@ -39,17 +39,13 @@ export default function PdClosingCta({ product }) {
         <div className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between border-t border-[#0B5EA8]/15 bg-white/95 px-6 py-3 backdrop-blur-md lg:hidden">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/45">{product.name}</p>
-            {product.price_from ? (
-              <p className="font-heading text-sm font-bold text-[#0D2F4F]">od {product.price_from.toLocaleString('cs-CZ')} Kč bez DPH</p>
-            ) : (
-              <p className="font-heading text-sm font-bold text-[#0D2F4F]">projektová cena</p>
-            )}
+            <p className="font-heading text-sm font-bold text-[#0D2F4F]">Zjistit cenu</p>
           </div>
           <Link
             to={`/poptavka?produkt=${product.slug}`}
             className="bg-[#0B5EA8] px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white"
           >
-            Poptat
+            Zjistit cenu
           </Link>
         </div>
       )}

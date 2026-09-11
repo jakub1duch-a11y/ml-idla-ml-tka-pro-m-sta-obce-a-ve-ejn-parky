@@ -65,17 +65,13 @@ export default function FeaturedMlzitka() {
                   {p.short_description && (
                     <p className="mt-1.5 line-clamp-1 text-sm text-[#0D2F4F]/55">{p.short_description}</p>
                   )}
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
                     <span className="border border-[#0B5EA8]/20 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide text-[#0B5EA8]">
                       nízkotlaké 2–8 bar / bez čerpadla
                     </span>
-                    {p.price_from ? (
-                      <span className="font-heading text-sm font-semibold text-[#0D2F4F]">
-                        od {p.price_from.toLocaleString('cs-CZ')} Kč bez DPH
-                      </span>
-                    ) : (
-                      <span className="font-heading text-sm font-semibold text-[#0D2F4F]/60">projektová cena</span>
-                    )}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0D2F4F] px-4 py-2 text-xs font-semibold text-white transition-colors group-hover:bg-[#0B5EA8]">
+                      Zjistit cenu <ArrowRight size={13} />
+                    </span>
                   </div>
                 </div>
               </Link>

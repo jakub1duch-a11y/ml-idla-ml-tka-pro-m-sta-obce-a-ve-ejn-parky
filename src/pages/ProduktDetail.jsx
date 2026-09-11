@@ -16,6 +16,7 @@ import PdTabs from '@/components/produkt/new/PdTabs';
 import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
+import PdDescription from '@/components/produkt/new/PdDescription';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -74,6 +75,7 @@ export default function ProduktDetail() {
   return (
     <div className="min-h-screen bg-white">
       <PdHero product={product} />
+      <PdDescription product={product} />
       <PdBenefits product={product} />
       <PdVariants product={product} />
       <PdSpecs product={product} />

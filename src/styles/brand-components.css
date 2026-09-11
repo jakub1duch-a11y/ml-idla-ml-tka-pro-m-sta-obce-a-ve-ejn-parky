@@ -89,6 +89,28 @@
 .btn-brand-outline:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
 .btn-brand-outline:active { transform: translateY(1px); }
 
+/* --- Buttons · Outline · On dark --- */
+.btn-brand-outline-dark {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.01em;
+  font-size: 14px;
+  color: var(--brand-on-primary);
+  background: transparent;
+  border: 1px solid rgba(244, 250, 252, 0.35);
+  border-radius: var(--brand-radius-sm);
+  padding: 13px 25px;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color .2s ease, color .2s ease;
+}
+.btn-brand-outline-dark:hover { border-color: var(--brand-accent); color: var(--brand-accent); }
+.btn-brand-outline-dark:active { transform: translateY(1px); }
+
 /* --- Buttons · Text link · Inline --- */
 .btn-brand-text {
   font-family: var(--brand-font-body);

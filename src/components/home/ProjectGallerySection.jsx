@@ -26,6 +26,9 @@ const PROJECT_ORDER = [
 ];
 
 const FEATURED_BENDY_LINEA_ID = '6a9fdf2f153be3ee13d70207';
+const JICIN_ID = '6a71d1ff57598752eed27bfb';
+const JICIN_COVER = 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg';
+const projectCover = (project) => project?.id === JICIN_ID ? JICIN_COVER : project?.image_url;
 
 const getYouTubeId = (url) => {
   if (!url) return null;
@@ -223,7 +226,7 @@ export default function ProjectGallerySection() {
                 className="group relative block h-full min-h-[260px] overflow-hidden rounded-2xl bg-slate-800"
               >
                 <img
-                  src={project.image_url}
+                  src={projectCover(project)}
                   alt={project.name}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"

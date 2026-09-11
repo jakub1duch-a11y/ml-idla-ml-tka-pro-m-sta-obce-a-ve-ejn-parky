@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Images, Loader, MapPin, Play, Sparkles, Video, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const isVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
@@ -29,7 +30,15 @@ function MediaCard({ item, onOpen }) {
     >
       <div className="aspect-[4/3] overflow-hidden bg-[#DCECF4]">
         {video ? (
-          <video src={item.url} poster={item.poster} preload="metadata" muted playsInline className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
+          <AutoPlayVideoPreview
+            src={item.url}
+            poster={item.poster}
+            label={item.title || 'Video produktu'}
+            className="h-full w-full"
+            videoClassName="transition-transform duration-500 group-hover:scale-[1.025]"
+            threshold={0.55}
+            showBadge={false}
+          />
         ) : (
           <img src={item.url} alt={item.alt || item.title || 'MLŽIDLA'} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
         )}
@@ -50,6 +59,11 @@ export default function PdMediaGallery({ product }) {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('photos');
   const [lightbox, setLightbox] = useState(null);
+  const [featuredVideoIndex, setFeaturedVideoIndex] = useState(0);
+
+  useEffect(() => {
+    setFeaturedVideoIndex(0);
+  }, [product.id]);
 
   useEffect(() => {
     let cancelled = false;
@@ -108,6 +122,7 @@ export default function PdMediaGallery({ product }) {
 
   const items = groups[activeTab] || [];
   const allEmpty = tabs.every((t) => t.count === 0);
+  const featuredVideo = groups.videos[featuredVideoIndex] || groups.videos[0];
 
   if (loading) return <section className="bg-[#F7FBFD] py-16"><div className="mx-auto flex max-w-7xl justify-center px-6"><Loader className="animate-spin text-[#0B5EA8]/40" /></div></section>;
   if (allEmpty) return null;
@@ -123,6 +138,54 @@ export default function PdMediaGallery({ product }) {
           </div>
           <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">U reálných realizací zobrazujeme pouze média přiřazená ke konkrétnímu produktu. Vizualizace jsou označené samostatně.</p>
         </div>
+
+        {featuredVideo && (
+          <div className="mt-9 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white shadow-[0_22px_70px_rgba(10,35,66,.10)]">
+            <div className="grid lg:grid-cols-[1.45fr_.55fr]">
+              <div className="relative aspect-video min-h-0 bg-[#061923] lg:aspect-auto lg:min-h-[420px]">
+                <AutoPlayVideoPreview
+                  key={featuredVideo.url}
+                  src={featuredVideo.url}
+                  poster={featuredVideo.poster}
+                  controls
+                  loop
+                  label={featuredVideo.title || `${product.name} – video`}
+                  className="absolute inset-0 h-full w-full"
+                  videoClassName="object-cover"
+                  threshold={0.4}
+                  showBadge={false}
+                />
+                <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/20 bg-black/42 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-white backdrop-blur-md">Video produktu · autoplay bez zvuku</div>
+              </div>
+
+              <div className="flex flex-col p-5 sm:p-6 lg:p-7">
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#0B97E8]">V provozu</p>
+                <h3 className="mt-2 font-heading text-2xl font-bold leading-tight text-[#0A2342]">{featuredVideo.title}</h3>
+                {featuredVideo.meta && <p className="mt-2 flex items-center gap-1.5 text-xs text-[#0D2F4F]/55"><MapPin size={13}/>{featuredVideo.meta}</p>}
+                <p className="mt-4 text-sm leading-6 text-[#0D2F4F]/58">Video se spustí automaticky ve chvíli, kdy se dostane do zorného pole. Při odscrollování se pozastaví, takže stránka zůstává rychlá a neruší zvukem.</p>
+
+                {groups.videos.length > 1 && (
+                  <div className="mt-6 space-y-2">
+                    <p className="font-mono text-[9px] font-semibold uppercase tracking-[.14em] text-[#0D2F4F]/38">Další videa</p>
+                    {groups.videos.slice(0, 5).map((videoItem, index) => (
+                      <button
+                        key={videoItem.url}
+                        type="button"
+                        onClick={() => setFeaturedVideoIndex(index)}
+                        className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition ${featuredVideoIndex === index ? 'border-[#0BA4F5]/45 bg-[#EAF7FD]' : 'border-[#DDE9EF] bg-white hover:border-[#0BA4F5]/25 hover:bg-[#F7FBFD]'}`}
+                      >
+                        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${featuredVideoIndex === index ? 'bg-[#0BA4F5] text-white' : 'bg-[#EAF5FB] text-[#0B5EA8]'}`}><Play size={12} fill="currentColor"/></span>
+                        <span className="min-w-0"><span className="block truncate text-xs font-semibold text-[#0A2342]">{videoItem.title}</span>{videoItem.meta && <span className="mt-0.5 block truncate text-[10px] text-[#0D2F4F]/40">{videoItem.meta}</span>}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                <button type="button" onClick={() => setLightbox({ items: groups.videos, index: featuredVideoIndex })} className="mt-auto pt-6 text-left text-xs font-bold text-[#0B5EA8] hover:text-[#073A67]">Otevřít video přes celou obrazovku →</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-8 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {tabs.map(({ id, label, icon: Icon, count }) => (

@@ -76,6 +76,36 @@
         "type": "string"
       },
       "description": "Soubory ke sta\u017een\u00ed k produktu (technick\u00e9 listy, manu\u00e1ly, cen\u00edky) \u2014 URL adresy"
+    },
+    "hero_background_url": {
+      "type": "string",
+      "description": "AI nebo fotografick\u00e9 prost\u0159ed\u00ed pro novou hero sekci; nesm\u00ed m\u011bnit geometrii produktu."
+    },
+    "hero_product_image_url": {
+      "type": "string",
+      "description": "Ov\u011b\u0159en\u00e1 referen\u010dn\u00ed fotografie nebo render skute\u010dn\u00e9ho produktu pou\u017e\u00edvan\u00fd jako nem\u011bnn\u00e1 vrstva v hero sekci."
+    },
+    "hero_visual_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "True pouze kdy\u017e je pou\u017eit\u00e1 produktov\u00e1 vrstva ov\u011b\u0159en\u00e1 proti MASTER referenci a geometrie produktu nebyla AI zm\u011bn\u011bna."
+    },
+    "hero_focal_position": {
+      "type": "string",
+      "description": "CSS object-position / kompozi\u010dn\u00ed um\u00edst\u011bn\u00ed produktov\u00e9 vrstvy v hero sekci, nap\u0159. center bottom nebo 72% center."
+    },
+    "hero_environment": {
+      "type": "string",
+      "description": "Stru\u010dn\u00fd popis prost\u0159ed\u00ed hero vizualizace."
+    },
+    "hero_generated_by": {
+      "type": "string",
+      "description": "Zdroj hero prost\u0159ed\u00ed, nap\u0159. Base44 AI nebo Higgsfield."
+    },
+    "hero_updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum posledn\u00ed aktualizace hero vizualizace."
     }
   },
   "required": [

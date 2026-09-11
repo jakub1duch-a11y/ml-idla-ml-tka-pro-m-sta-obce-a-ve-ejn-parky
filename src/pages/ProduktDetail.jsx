@@ -12,6 +12,7 @@ import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdDetail from '@/components/produkt/new/PdDetail';
 import PdHowItWorks from '@/components/produkt/new/PdHowItWorks';
 import PdTabs from '@/components/produkt/new/PdTabs';
+import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 
@@ -78,6 +79,7 @@ export default function ProduktDetail() {
       <PdDetail product={product} />
       <PdHowItWorks />
       <PdTabs product={product} />
+      <PdMediaGallery product={product} />
       <PdReferences product={product} />
       <PdClosingCta product={product} />
     </div>

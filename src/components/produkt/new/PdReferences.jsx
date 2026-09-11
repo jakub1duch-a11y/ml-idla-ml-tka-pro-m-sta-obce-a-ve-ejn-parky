@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 export default function PdReferences({ product }) {
   const [refs, setRefs] = useState([]);
@@ -60,9 +61,11 @@ export default function PdReferences({ product }) {
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((p) => (
                 <Link key={p.id} to={`/produkt/${p.slug}`} className="group block overflow-hidden border border-[#EAF5FB] transition-all hover:border-[#0B5EA8]/30">
-                  <div className="aspect-[4/3] overflow-hidden bg-[#EAF5FB]">
-                    {p.image_url && <img src={p.image_url} alt={p.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />}
-                  </div>
+                  <ProductHoverImage
+                    product={p}
+                    alt={p.name + ' – produktový náhled'}
+                    className="aspect-[4/3] bg-[#EAF5FB]"
+                  />
                   <div className="flex items-center justify-between p-4">
                     <div>
                       <h3 className="font-heading text-sm font-semibold text-[#0D2F4F]">{p.name}</h3>

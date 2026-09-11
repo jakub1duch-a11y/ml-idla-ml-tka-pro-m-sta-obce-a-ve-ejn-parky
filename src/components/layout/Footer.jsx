@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
@@ -143,18 +143,35 @@ export default function Footer() {
           </form>
         </div>
 
-        <div className="flex flex-col gap-4 py-7 text-xs text-white/42 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-5 py-7 text-xs text-white/42 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
             <p className="mt-1 text-white/30">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
             <p className="mt-1 text-white/30"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white/60">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white/60">+420 774 700 390</a></p>
           </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link to="/obchodni-podminky" className="transition-colors hover:text-white/75">Obchodní podmínky</Link>
-            <Link to="/gdpr" className="transition-colors hover:text-white/75">GDPR</Link>
-            <Link to="/ke-stazeni" className="transition-colors hover:text-white/75">Ke stažení</Link>
-            <Link to="/podpora" className="transition-colors hover:text-white/75">Podpora</Link>
-            <Link to="/partnerstvi" className="transition-colors hover:text-white/75">Partnerství</Link>
+
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            <div
+              className="inline-flex items-center gap-3 rounded-xl border border-white/12 bg-white/[.045] px-3.5 py-2.5 text-left"
+              aria-label="Bezpečnost webu prověřena pomocí Bitdefender Link Checker"
+              title="Nezávislá kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství."
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300/20 bg-emerald-300/10 text-emerald-200">
+                <ShieldCheck size={17} strokeWidth={1.8} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[11px] font-semibold tracking-[.02em] text-white/82">Bezpečnost webu</span>
+                <span className="mt-0.5 block text-[10px] leading-4 text-white/42">Kontrola odkazu: Bitdefender Link Checker</span>
+              </span>
+            </div>
+
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              <Link to="/obchodni-podminky" className="transition-colors hover:text-white/75">Obchodní podmínky</Link>
+              <Link to="/gdpr" className="transition-colors hover:text-white/75">GDPR</Link>
+              <Link to="/ke-stazeni" className="transition-colors hover:text-white/75">Ke stažení</Link>
+              <Link to="/podpora" className="transition-colors hover:text-white/75">Podpora</Link>
+              <Link to="/partnerstvi" className="transition-colors hover:text-white/75">Partnerství</Link>
+            </div>
           </div>
         </div>
       </div>

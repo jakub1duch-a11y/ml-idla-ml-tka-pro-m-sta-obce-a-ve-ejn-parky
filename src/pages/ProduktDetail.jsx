@@ -36,22 +36,7 @@ export default function ProduktDetail() {
         if (isArchived(p.slug)) { setNotFound(true); return; }
         setProduct(p);
         trackProductView(p.name, p.slug, p.category_id);
-        setSEO({
-          title: `${p.name} – nerezové mlžítko | MLŽIDLA.cz`,
-          description: p.short_description || `${p.name} — nerezové mlžítko pro veřejný prostor, česká výroba HolmTec.`,
-          image: p.image_url,
-          robots: 'index, follow',
-          jsonLd: {
-            '@context': 'https://schema.org',
-            '@type': 'Product',
-            name: p.name,
-            description: p.short_description,
-            image: p.image_url,
-            brand: { '@type': 'Brand', name: 'MLŽIDLA' },
-            manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-            ...(p.price_from ? { offers: { '@type': 'Offer', price: p.price_from, priceCurrency: 'CZK' } } : {}),
-          },
-        });
+        setSEO({ ...getProductSEO(p), robots: 'index, follow' });
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));

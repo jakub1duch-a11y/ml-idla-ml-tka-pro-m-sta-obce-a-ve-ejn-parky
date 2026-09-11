@@ -4,6 +4,7 @@ import HomeHero from '@/components/home/new/HomeHero';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
+import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
 import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
 import ReferenceCards from '@/components/home/new/ReferenceCards';
@@ -26,6 +27,7 @@ export default function Home() {
       <ReferencesStrip />
       <ProKohoSection />
       <MistInOperation />
+      <SmartControlTeaser />
       <FeaturedMlzitka />
       <CooperationSteps />
       <ReferenceCards />

@@ -7,7 +7,7 @@ const MODELS = [
   {
     name: 'GATE70-U',
     tag: 'Rovná brána',
-    desc: 'Pravoúhlý tvar z kulaté nerezové trubky Ø76 mm. Nejčistší řešení pro vstupy, cyklostezky a průchozí zóny.',
+    desc: 'Pravoúhlý tvar z kulaté nerezové trubky Ø70 mm. Nejčistší řešení pro vstupy, cyklostezky a průchozí zóny.',
     image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
     path: '/gate70'
   },

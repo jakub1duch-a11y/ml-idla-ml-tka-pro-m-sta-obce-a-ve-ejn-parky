@@ -10,6 +10,7 @@ const PRODUCT_LINKS = [
 { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cfc837b23_image.png', featured: true },
 { label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/kolekce/city', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png' },
 { label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/kolekce/garden', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg', crop: 'garden' },
+{ label: 'LINEA', sub: 'Kulatá trubka nebo hranatý jekl', path: '/linea', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/512446aa1_file_00000000ada8822fab4c3e868219c559.png' },
 { label: 'Mlžné brány', sub: 'Vstupy, náměstí a koupaliště', path: '/mlzne-brany', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
 { label: 'Autorská kolekce', sub: 'Instalace na míru', path: '/kolekce/art', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' },
 { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }];

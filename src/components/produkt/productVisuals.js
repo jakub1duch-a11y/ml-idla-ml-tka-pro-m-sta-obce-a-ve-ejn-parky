@@ -1,85 +1,83 @@
+// Pravidlo pro všechny vizualizace: průměr trubky mlžítka max. Ø70 mm (kulatá) / 70×70 mm (jekl).
+const IMG = {
+  bendyHero: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ded6a5d3f_generated_image.png',
+  nozzleDetail: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a937054fe_generated_image.png',
+  install: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9e7d7a670_generated_image.png',
+  ostrevHero: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2a6c23aa2_generated_image.png',
+  lineaPrague: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c4c1b47a8_file_000000002440821082cc47cf9c186371.png',
+  lineaPlaza: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1cb5f9b18_file_000000005c8081f5ad3ec61cc9e1c7cb.png',
+  lineaPraguePortrait: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/512446aa1_file_00000000ada8822fab4c3e868219c559.png',
+  lineaSquare: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/de905f415_generated_image.png'
+};
+
+export const LINEA_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/91d5c8d84_IMG_20260830_183249.mp4';
+
+export const LINEA_VARIANTS = [
+  {
+    key: 'round',
+    name: 'LINEA R — kulatá trubka',
+    profile: 'Ø 60–70 mm',
+    desc: 'Klasický nerezový sloup z kulaté trubky. Měkčí silueta, která přirozeně zapadne do historických náměstí i parků.',
+    image: IMG.lineaPraguePortrait,
+    alt: 'LINEA s kulatou trubkou Ø70 mm na pražském náměstí',
+    points: ['Broušený povrch AISI 316L', '3–6 trysek dle výšky', 'Skryté kotvení na patce']
+  },
+  {
+    key: 'square',
+    name: 'LINEA Q — hranatý jekl',
+    profile: '60×60 až 70×70 mm',
+    desc: 'Čtvercový profil s ostrou linkou pro současnou architekturu, administrativní areály a nové městské plochy.',
+    image: IMG.lineaSquare,
+    alt: 'LINEA s hranatým jeklovým profilem 70×70 mm na moderním náměstí',
+    points: ['Ostré hrany, čistý detail svarů', 'Trysky v ose profilu', 'Kombinovatelná do řad a bran']
+  }
+];
+
 const BENDY = {
   eyebrow: 'Městské mlžení BENDY',
-  headline: 'Jeden ohnutý nerezový profil. Celé náměstí o několik stupňů chladnější.',
+  headline: 'Jeden ohnutý nerezový profil Ø70 mm. Celé náměstí o několik stupňů chladnější.',
   intro: 'BENDY je subtilní mlžný sloup s charakteristickým ohybem. Ve veřejném prostoru nepůsobí jako technika, ale jako městský prvek — a přitom ochladí procházející o několik stupňů, bez mokré dlažby.',
-  hero: {
-    url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ded6a5d3f_generated_image.png',
-    alt: 'Mlžný sloup BENDY chladí lidi na městském náměstí v horkém dni',
-    caption: 'Ochlazování městského prostoru',
-    captionNote: 'Mlžná zóna v průchozí trase — lidé jí projdou a mlha se odpaří ve vzduchu.'
-  },
+  hero: { url: IMG.bendyHero, alt: 'Mlžný sloup BENDY chladí lidi na městském náměstí v horkém dni', caption: 'Ochlazování městského prostoru', captionNote: 'Mlžná zóna v průchozí trase — lidé jí projdou a mlha se odpaří ve vzduchu.' },
   cards: [
-    {
-      icon: 'droplets',
-      title: 'Detail mlžení',
-      desc: 'Trysky rozprášují vodu na mikrokapky 50–100 μm. Ty se odpaří dřív, než dopadnou — povrch zůstává suchý a bezpečný.',
-      image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bf329bbee_generated_image.png',
-      alt: 'Detail nerezové mlžící trysky na profilu BENDY s jemnou mlhou'
-    },
-    {
-      icon: 'users',
-      title: 'Lidé v mlžné zóně',
-      desc: 'Zóna o průměru několika metrů, do které se lidé sami vracejí. Bez chemie, bez hluku, bez rizika uklouznutí.',
-      image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ded6a5d3f_generated_image.png',
-      alt: 'Lidé se ochlazují v mlžné zóně na městském náměstí'
-    },
-    {
-      icon: 'wrench',
-      title: 'Instalace BENDY',
-      desc: 'Skryté kotvení do betonové patky, napojení na vodovodní řad v šachtě a kompaktní řídicí box. Instalace zvládnutá v jednom dni.',
-      image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/92714af00_generated_image.png',
-      alt: 'Technici instalují nerezový mlžný sloup BENDY na městské promenádě'
-    }
+    { icon: 'droplets', title: 'Detail mlžení', desc: 'Trubka Ø70 mm, trysky rozprášují vodu na mikrokapky 50–100 μm. Ty se odpaří dřív, než dopadnou — povrch zůstává suchý.', image: IMG.nozzleDetail, alt: 'Detail nerezové mlžící trysky na trubce Ø70 mm' },
+    { icon: 'users', title: 'Lidé v mlžné zóně', desc: 'Zóna o průměru několika metrů, do které se lidé sami vracejí. Bez chemie, bez hluku, bez rizika uklouznutí.', image: IMG.bendyHero, alt: 'Lidé se ochlazují v mlžné zóně na městském náměstí' },
+    { icon: 'wrench', title: 'Instalace BENDY', desc: 'Skryté kotvení do betonové patky, napojení na vodovodní řad v šachtě a kompaktní řídicí box. Instalace v jednom dni.', image: IMG.install, alt: 'Technici instalují štíhlý nerezový mlžný sloup BENDY na promenádě' }
   ]
 };
 
 const OSTREV = {
   eyebrow: 'Městské mlžení OSTŘEV',
   headline: 'Skulpturální mlžný prvek, který v parku vypadá jako strom.',
-  intro: 'OSTŘEV rozvádí mlhu do několika větví, takže mlžný oblak je širší a jemnější. Nerezová socha, která ochlazuje pobytové plochy parků, promenád a školních areálů.',
-  hero: {
-    url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2a6c23aa2_generated_image.png',
-    alt: 'Skulpturální nerezové mlžítko OSTŘEV chladí lidi v městském parku',
-    caption: 'Pobytová mlžná zóna',
-    captionNote: 'Široký mlžný oblak nad lavičkami — chlazení tam, kde lidé skutečně sedí.'
-  },
+  intro: 'OSTŘEV rozvádí mlhu do několika větví z trubek do Ø70 mm, takže mlžný oblak je širší a jemnější. Nerezová socha, která ochlazuje pobytové plochy parků, promenád a školních areálů.',
+  hero: { url: IMG.ostrevHero, alt: 'Skulpturální nerezové mlžítko OSTŘEV chladí lidi v městském parku', caption: 'Pobytová mlžná zóna', captionNote: 'Široký mlžný oblak nad lavičkami — chlazení tam, kde lidé skutečně sedí.' },
   cards: [
-    {
-      icon: 'droplets',
-      title: 'Detail větvení',
-      desc: 'Každá větev nese vlastní trysky. Mlha se rozprostře do většího objemu vzduchu a klesá pomaleji.',
-      image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bf329bbee_generated_image.png',
-      alt: 'Detail nerezové mlžící trysky na větvi mlžítka OSTŘEV'
-    },
-    {
-      icon: 'users',
-      title: 'Lidé pod OSTŘEVEM',
-      desc: 'Přirozené místo k zastavení: rodiny, děti i senioři zůstávají v mlžné zóně delší dobu než u průchozích prvků.',
-      image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2a6c23aa2_generated_image.png',
-      alt: 'Lidé odpočívají v mlžné zóně pod mlžítkem OSTŘEV'
-    },
-    {
-      icon: 'wrench',
-      title: 'Instalace a napojení',
-      desc: 'Zemní patka, přívod vody v šachtě a volitelné smart řízení podle teploty a času. Vše řešíme podle dokumentace místa.',
-      image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/92714af00_generated_image.png',
-      alt: 'Instalace nerezového mlžného prvku se skrytým kotvením'
-    }
+    { icon: 'droplets', title: 'Detail větvení', desc: 'Každá větev nese vlastní trysky. Mlha se rozprostře do většího objemu vzduchu a klesá pomaleji.', image: IMG.nozzleDetail, alt: 'Detail nerezové mlžící trysky na větvi mlžítka OSTŘEV' },
+    { icon: 'users', title: 'Lidé pod OSTŘEVEM', desc: 'Přirozené místo k zastavení: rodiny, děti i senioři zůstávají v mlžné zóně delší dobu než u průchozích prvků.', image: IMG.ostrevHero, alt: 'Lidé odpočívají v mlžné zóně pod mlžítkem OSTŘEV' },
+    { icon: 'wrench', title: 'Instalace a napojení', desc: 'Zemní patka, přívod vody v šachtě a volitelné smart řízení podle teploty a času. Vše podle dokumentace místa.', image: IMG.install, alt: 'Instalace nerezového mlžného prvku se skrytým kotvením' }
   ]
 };
 
+const LINEA = {
+  eyebrow: 'Městské mlžení LINEA',
+  headline: 'Přímá linka nerezu. Dvě varianty profilu, jeden účinek.',
+  intro: 'LINEA je minimalistický mlžný sloup do Ø70 mm, který lze osadit jako kulatou trubku nebo hranatý jekl. Do historického centra i na moderní plazu — vždy jako tichý, čistý prvek, který v horku ochladí průchozí trasu.',
+  hero: { url: IMG.lineaPrague, alt: 'Mlžítko LINEA chladí návštěvníky Staroměstského náměstí', caption: 'Ochlazování městského prostoru', captionNote: 'Kulatá trubka Ø70 mm s trojicí trysek v průchozí zóně náměstí.' },
+  cards: [
+    { icon: 'droplets', title: 'Detail trysek', desc: 'Precizní nerezové trysky v ose profilu. Mikrokapky 50–100 μm se odpaří ve vzduchu, dlažba zůstává suchá.', image: IMG.nozzleDetail, alt: 'Detail mlžící trysky na nerezové trubce Ø70 mm' },
+    { icon: 'users', title: 'Lidé v mlžné zóně', desc: 'Sloup stojí přímo v pěší trase — ochlazení bez zastavení, bez mokrého oblečení.', image: IMG.lineaPlaza, alt: 'Mlžítko LINEA na moderní městské plaze' },
+    { icon: 'wrench', title: 'Instalace LINEA', desc: 'Patka v dlažbě, přívod vody v šachtě a řídicí box. Sloupy lze řadit do alejí i bran.', image: IMG.install, alt: 'Instalace nerezového mlžného sloupu na promenádě' }
+  ],
+  variants: LINEA_VARIANTS,
+  pageLink: '/linea'
+};
+
+export const LINEA_VISUALS = LINEA;
+
 export const PRODUCT_VISUALS = {
-  'mlzitko-bendy': BENDY,
-  'bendy-field': BENDY,
-  'bendy-radius-s': BENDY,
-  'bendy-radius-m': BENDY,
-  'bendy-radius-l': BENDY,
-  'bendy-alej': BENDY,
-  'bendy-back-to-back': BENDY,
-  'mlzitko-bendy-field': BENDY,
-  'mlzny-sloupost-ostrev': OSTREV,
-  'ostrev-city': OSTREV,
-  'ostrev-mlzitko': OSTREV
+  'mlzitko-bendy': BENDY, 'bendy-field': BENDY, 'bendy-radius-s': BENDY, 'bendy-radius-m': BENDY, 'bendy-radius-l': BENDY,
+  'bendy-alej': BENDY, 'bendy-back-to-back': BENDY, 'mlzitko-bendy-field': BENDY,
+  'mlzny-sloupost-ostrev': OSTREV, 'ostrev-city': OSTREV, 'ostrev-mlzitko': OSTREV,
+  'linea-mlzitko': LINEA, 'linea-solo': LINEA, 'linea-avenue': LINEA, 'linea-gate': LINEA, 'linea-el70': LINEA
 };
 
 export const getProductVisuals = (slug) => PRODUCT_VISUALS[slug] || null;

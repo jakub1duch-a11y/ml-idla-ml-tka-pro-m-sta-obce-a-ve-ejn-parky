@@ -63,6 +63,7 @@ import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
 import MlzneBrany from '@/pages/MlzneBrany';
+import Linea from '@/pages/Linea';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -133,6 +134,7 @@ const AuthenticatedApp = () => {
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
         <Route path="/mlzne-brany" element={<MlzneBrany />} />
+        <Route path="/linea" element={<Linea />} />
       </Route>
       <Route path="/mlzidla" element={<Mlzidla />} />
       <Route path="/mlzidla/produkt/:id" element={<MlzidlaProdukt />} />

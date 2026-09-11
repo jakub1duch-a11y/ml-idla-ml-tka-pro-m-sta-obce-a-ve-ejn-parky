@@ -29,16 +29,16 @@ const CONFIG = {
     useCases: ['Náměstí', 'Parky', 'Promenády', 'Rezidenční zahrady'],
   },
   'linea-mlzitko': {
-    tagline: 'Minimalistická linie pro moderní veřejný prostor',
-    intro: 'LINEA® pracuje s čistou vertikální geometrií a přirozeně zapadá do současné architektury i liniových veřejných prostor.',
+    tagline: 'Vyšší minimalistická linie pro český veřejný prostor',
+    intro: 'LINEA® je štíhlé vertikální mlžítko pro náměstí, promenády a pěší zóny. U této městské varianty zůstává spodní část zcela čistá: kotvení i přívod vody jsou skryté pod povrchem a všechny tři trysky jsou soustředěné pouze v horní části.',
     benefits: [
-      ['Čistá linie', 'Minimalistický profil nechává vyniknout prostoru a architektuře.'],
-      ['Jemné mlžení', 'Trysky a provozní hodnoty se řídí konkrétní technickou konfigurací.'],
-      ['Nerezová konstrukce', 'Materiálové provedení vychází z dat konkrétního produktu.'],
-      ['Liniové osazení', 'Produkt lze projektově rozmístit do delších pěších a pobytových tras.'],
+      ['Vyšší městská proporce', 'Štíhlý vertikální prvek je navržený přibližně ve výšce 2,7–3,0 m podle konkrétního projektu a měřítka prostoru.'],
+      ['3 trysky pouze nahoře', 'Celkem tři mlžicí trysky jsou umístěné jen v horní části sloupu, střídavě po stranách. Spodní část zůstává bez trysek a armatur.'],
+      ['Skrytá patka', 'Kotvení a přívod vody jsou integrovány pod dlažbou nebo finálním povrchem bez viditelné příruby a kotevních šroubů.'],
+      ['Nerezová konstrukce', 'Čisté provedení z nerezové oceli pro dlouhodobé použití ve veřejném prostoru.'],
       ['Smart řízení', 'Volitelná automatizace podle času, teploty nebo provozní logiky.'],
     ],
-    useCases: ['Náměstí', 'Promenády', 'Parky', 'Vstupní zóny'],
+    useCases: ['Česká náměstí', 'Promenády', 'Pěší zóny', 'Parky'],
   },
   'aura-mlzitko': {
     tagline: 'Jemná forma pro zahrady a rezidenční prostor',

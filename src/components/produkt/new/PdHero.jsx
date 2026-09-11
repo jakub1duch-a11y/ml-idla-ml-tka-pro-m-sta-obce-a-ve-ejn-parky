@@ -42,21 +42,30 @@ export default function PdHero({ product }) {
   const hasVerifiedComposite = Boolean(product.hero_visual_verified && heroBackground && heroProduct);
   const heroProductIsPhoto = Boolean(heroProduct && /\.(jpe?g|webp)(\?|#|$)/i.test(heroProduct));
 
-  const media = useMemo(() => [
-    ...(product.image_url ? [{ type: 'image', url: product.image_url }] : []),
-    ...(isBendy
-      ? [
-          { type: 'video', url: VIDEO_ASSETS.heroJicin.src, poster: VIDEO_ASSETS.heroJicin.poster },
-          { type: 'video', url: VIDEO_ASSETS.realizaceKlip.src, poster: VIDEO_ASSETS.realizaceKlip.poster },
-        ]
-      : product.video_url && isVideo(product.video_url)
-        ? [{ type: 'video', url: product.video_url, poster: product.image_url }]
+  const media = useMemo(() => {
+    const items = [
+      ...(product.image_url ? [{ type: 'image', url: product.image_url }] : []),
+      ...(product.video_url && isVideo(product.video_url)
+        ? [{ type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} – video` }]
         : []),
-    ...(product.gallery_urls || [])
-      .filter(Boolean)
-      .filter((u) => !isVideo(u))
-      .map((u) => ({ type: 'image', url: u })),
-  ].filter(Boolean), [product, isBendy]);
+      ...(product.gallery_urls || [])
+        .filter(Boolean)
+        .filter(isVideo)
+        .map((url, index) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} – video ${index + 1}` })),
+      ...(isBendy
+        ? [
+            { type: 'video', url: VIDEO_ASSETS.heroJicin.src, poster: VIDEO_ASSETS.heroJicin.poster, title: 'BENDY – realizace Jičín' },
+            { type: 'video', url: VIDEO_ASSETS.realizaceKlip.src, poster: VIDEO_ASSETS.realizaceKlip.poster, title: 'BENDY – ukázka realizace' },
+          ]
+        : []),
+      ...(product.gallery_urls || [])
+        .filter(Boolean)
+        .filter((u) => !isVideo(u))
+        .map((url) => ({ type: 'image', url })),
+    ].filter(Boolean);
+
+    return [...new Map(items.map((item) => [item.url, item])).values()];
+  }, [product, isBendy]);
 
   useEffect(() => {
     setActive(0);

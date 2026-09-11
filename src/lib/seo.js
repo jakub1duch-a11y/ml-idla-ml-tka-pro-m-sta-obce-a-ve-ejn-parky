@@ -190,14 +190,79 @@ export function setSEO({ title, description, keywords, image, canonicalPath, typ
   }
 }
 
+const isPublicImage = (url) => (
+  typeof url === 'string'
+  && url.length > 0
+  && !url.startsWith('/media/studio/')
+  && !url.startsWith('/media/products/')
+  && !url.startsWith('/media/optimized/')
+);
+
+function getProductSearchContext(product) {
+  const source = [product?.slug, product?.name, product?.short_description, product?.description]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  if (/(gate|brána|brana)/.test(source)) {
+    return {
+      primaryKeyword: 'mlžná brána',
+      useCase: 'pro města, parky a veřejný prostor',
+      keywords: 'mlžná brána, mlžné brány, mlžící brána, ochlazovací brána, veřejný prostor',
+    };
+  }
+
+  if (/(aura|zahrad|terasa|pergola|rezidenc|garden)/.test(source)) {
+    return {
+      primaryKeyword: 'zahradní mlžítko',
+      useCase: 'pro zahrady, terasy a pergoly',
+      keywords: 'zahradní mlžítko, mlžítko na zahradu, mlžítko na terasu, vodní mlha na terasu, mlžení pergoly',
+    };
+  }
+
+  if (/(mrak|spir|teepee|mrkev|škol|skolk|dět|hřišt)/.test(source)) {
+    return {
+      primaryKeyword: 'mlhoviště',
+      useCase: 'pro parky, školy a dětská hřiště',
+      keywords: 'mlhoviště, mlžítko do parku, mlhoviště pro děti, mlžítko na hřiště, veřejné mlžení',
+    };
+  }
+
+  return {
+    primaryKeyword: 'nerezové mlžítko',
+    useCase: 'pro města, parky a veřejný prostor',
+    keywords: 'městské mlžítko, mlžítko pro města, nerezové mlžítko, ochlazení města, veřejné mlžení',
+  };
+}
+
 export function getProductSEO(product, reviewStats) {
+  const search = getProductSearchContext(product);
+  const canonicalPath = '/produkt/' + product.slug;
+  const images = [
+    product.hero_visual_verified ? product.hero_product_image_url : null,
+    product.image_url,
+    ...(product.gallery_urls || []),
+  ].filter(isPublicImage);
+
+  const additionalProperty = [
+    product.material && { '@type': 'PropertyValue', name: 'Materiál', value: product.material },
+    product.coverage_area && { '@type': 'PropertyValue', name: 'Rozměr nebo pokrytí', value: product.coverage_area },
+    product.pressure && { '@type': 'PropertyValue', name: 'Provozní tlak', value: product.pressure },
+  ].filter(Boolean);
+
+  const materialText = product.material ? ' V provedení ' + product.material + '.' : '';
+  const description = product.name + ' je ' + search.primaryKeyword + ' ' + search.useCase + '.' + materialText + ' Prohlédněte technické parametry, varianty a podklady pro projekt.';
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
-    description: product.short_description || product.description,
-    image: [product.image_url, ...(product.gallery_urls || [])].filter(Boolean),
-    brand: { '@type': 'Brand', name: 'HolmTec' }
+    description,
+    image: images,
+    url: BASE_URL + canonicalPath,
+    category: search.primaryKeyword,
+    brand: { '@type': 'Brand', name: 'HolmTec' },
+    manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
+    ...(additionalProperty.length ? { additionalProperty } : {}),
   };
 
   if (product.price_from) {
@@ -206,7 +271,7 @@ export function getProductSEO(product, reviewStats) {
       priceCurrency: 'CZK',
       price: product.price_from,
       availability: 'https://schema.org/InStock',
-      url: `${BASE_URL}/produkt/${product.slug}`
+      url: BASE_URL + canonicalPath,
     };
   }
 
@@ -214,17 +279,18 @@ export function getProductSEO(product, reviewStats) {
     jsonLd.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: reviewStats.average,
-      reviewCount: reviewStats.count
+      reviewCount: reviewStats.count,
     };
   }
 
   return {
-    title: product.name,
-    description: product.short_description || product.description,
-    image: product.image_url,
-    canonicalPath: `/produkt/${product.slug}`,
+    title: product.name + ' – ' + search.primaryKeyword + ' ' + search.useCase,
+    description,
+    keywords: search.keywords + ', ' + product.name + ', HolmTec, MLŽIDLA.cz',
+    image: images[0] || product.image_url,
+    canonicalPath,
     type: 'product',
-    jsonLd
+    jsonLd,
   };
 }
 

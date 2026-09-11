@@ -1,0 +1,168 @@
+{
+  "name": "VisualizationAsset",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Intern\u00ed n\u00e1zev vizualizace"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL fin\u00e1ln\u00ed vizualizace"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Voliteln\u00fd optimalizovan\u00fd n\u00e1hled"
+    },
+    "product_slug": {
+      "type": "string",
+      "description": "P\u0159esn\u00fd slug MASTER produktu"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "N\u00e1zev produktu pro \u010ditelnost"
+    },
+    "configuration": {
+      "type": "string",
+      "enum": [
+        "single",
+        "duo",
+        "trio",
+        "alej",
+        "field",
+        "gate",
+        "custom"
+      ],
+      "description": "Prostorov\u00e1 konfigurace produktu"
+    },
+    "quantity": {
+      "type": "integer",
+      "description": "P\u0159esn\u00fd po\u010det kus\u016f produktu zobrazen\u00fd na vizualizaci",
+      "minimum": 1
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "rezidencni_zahrada",
+        "maly_mestsky_park",
+        "mestsky_park",
+        "namesti",
+        "promenada",
+        "skola_skolka",
+        "sportoviste",
+        "hriste",
+        "gastro_terasa",
+        "hotel_wellness",
+        "koupaliste",
+        "event",
+        "custom"
+      ],
+      "description": "Typ prost\u0159ed\u00ed"
+    },
+    "scene_description": {
+      "type": "string",
+      "description": "Popis konkr\u00e9tn\u00ed sc\u00e9ny a rozm\u00edst\u011bn\u00ed"
+    },
+    "source_inquiry_id": {
+      "type": "string",
+      "description": "ID popt\u00e1vky, pro kterou byla vizualizace vytvo\u0159ena"
+    },
+    "offer_variant_key": {
+      "type": "string",
+      "description": "Kl\u00ed\u010d varianty nab\u00eddky, nap\u0159. A-1ks nebo B-3ks"
+    },
+    "generation_prompt": {
+      "type": "string",
+      "description": "Prompt pou\u017eit\u00fd pro generov\u00e1n\u00ed / regeneraci"
+    },
+    "reference_image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Referen\u010dn\u00ed fotografie MASTER produktu pou\u017eit\u00e9 p\u0159i generov\u00e1n\u00ed"
+    },
+    "material": {
+      "type": "string",
+      "description": "Materi\u00e1l v\u00fdrobku, typicky nerez"
+    },
+    "profile_diameter_mm": {
+      "type": "number",
+      "description": "Pr\u016fm\u011br profilu konstrukce v mm"
+    },
+    "nozzle_reference": {
+      "type": "string",
+      "description": "Pozn\u00e1mka k re\u00e1ln\u00e9mu typu a osazen\u00ed trysek"
+    },
+    "is_master_geometry_locked": {
+      "type": "boolean",
+      "default": true,
+      "description": "Geometrie produktu mus\u00ed odpov\u00eddat schv\u00e1len\u00e9mu MASTER produktu"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "generated",
+        "needs_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "draft",
+      "description": "Stav schv\u00e1len\u00ed vizualizace"
+    },
+    "approved_for_presentation": {
+      "type": "boolean",
+      "default": false,
+      "description": "Sm\u00ed se pou\u017e\u00edt v klientsk\u00e9 nab\u00eddce/prezentaci"
+    },
+    "is_primary_for_variant": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hlavn\u00ed vizualizace konkr\u00e9tn\u00ed varianty nab\u00eddky"
+    },
+    "quality_score": {
+      "type": "number",
+      "description": "Intern\u00ed sk\u00f3re kvality 0-100"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Po\u0159ad\u00ed v nab\u00eddce/prezentaci"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Pozn\u00e1mky ke spr\u00e1vnosti v\u00fdrobku nebo sc\u00e9ny"
+    }
+  },
+  "required": [
+    "title",
+    "image_url",
+    "product_slug",
+    "quantity",
+    "environment",
+    "approval_status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

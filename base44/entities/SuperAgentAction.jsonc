@@ -1,0 +1,102 @@
+{
+  "name": "SuperAgentAction",
+  "type": "object",
+  "properties": {
+    "agent_key": {
+      "type": "string",
+      "description": "Agent, kter\u00fd akci navrhl nebo provedl"
+    },
+    "requested_by_email": {
+      "type": "string"
+    },
+    "intent": {
+      "type": "string",
+      "description": "Rozpoznan\u00fd z\u00e1m\u011br u\u017eivatele"
+    },
+    "action_type": {
+      "type": "string",
+      "description": "Typ akce, nap\u0159. analyze_inquiry, create_offer, generate_visualization, create_task, prepare_marketing"
+    },
+    "target_entity": {
+      "type": "string"
+    },
+    "target_id": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Lidsky \u010diteln\u00e9 shrnut\u00ed akce"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Strukturovan\u00e1 data akce"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "awaiting_approval",
+        "approved",
+        "running",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "default": "proposed"
+    },
+    "result_summary": {
+      "type": "string"
+    },
+    "evidence_url": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "approved_by_email": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "agent_key",
+    "intent",
+    "action_type",
+    "summary",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

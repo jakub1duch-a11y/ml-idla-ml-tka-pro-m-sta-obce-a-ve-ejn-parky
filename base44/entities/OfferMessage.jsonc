@@ -1,0 +1,87 @@
+{
+  "name": "OfferMessage",
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string",
+      "description": "ID nab\u00eddky / projektu"
+    },
+    "quote_number": {
+      "type": "string",
+      "description": "\u010c\u00edslo cenov\u00e9 nab\u00eddky"
+    },
+    "sender_type": {
+      "type": "string",
+      "enum": [
+        "customer",
+        "team"
+      ],
+      "description": "Kdo zpr\u00e1vu odeslal"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "sender_email": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 3000
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "question",
+        "solution_change",
+        "technical",
+        "delivery",
+        "other"
+      ],
+      "default": "question"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "portal",
+        "email",
+        "admin"
+      ],
+      "default": "portal"
+    },
+    "read_by_team": {
+      "type": "boolean",
+      "default": false
+    },
+    "read_by_customer": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "project_order_id",
+    "sender_type",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

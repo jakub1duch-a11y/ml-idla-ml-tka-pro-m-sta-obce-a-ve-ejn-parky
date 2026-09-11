@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string"
+    },
+    "quote_number": {
+      "type": "string"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "portal",
+        "alternative_solution",
+        "chat",
+        "order_to_production"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "opened",
+        "submitted",
+        "approved",
+        "declined"
+      ],
+      "default": "new"
+    },
+    "message": {
+      "type": "string"
+    },
+    "created_from_offer": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "action_type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "user"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "name": "OfferPortalAction"
+}

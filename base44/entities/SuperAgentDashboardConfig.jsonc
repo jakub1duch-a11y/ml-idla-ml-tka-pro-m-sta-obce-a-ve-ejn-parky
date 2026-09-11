@@ -1,0 +1,83 @@
+{
+  "name": "SuperAgentDashboardConfig",
+  "type": "object",
+  "properties": {
+    "agent_key": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "show_chat": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_quick_actions": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_pending_approvals": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_recent_sessions": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_recent_actions": {
+      "type": "boolean",
+      "default": true
+    },
+    "approval_statuses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recent_actions_limit": {
+      "type": "number",
+      "default": 8
+    },
+    "recent_sessions_limit": {
+      "type": "number",
+      "default": 5
+    },
+    "default_welcome": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "agent_key",
+    "title",
+    "active"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

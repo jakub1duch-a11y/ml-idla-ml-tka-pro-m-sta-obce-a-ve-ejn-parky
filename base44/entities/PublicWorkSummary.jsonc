@@ -1,0 +1,76 @@
+{
+  "name": "PublicWorkSummary",
+  "type": "object",
+  "properties": {
+    "month": {
+      "type": "string",
+      "description": "YYYY-MM"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "actual_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "estimated_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "ai_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "input_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "completed_tasks": {
+      "type": "number",
+      "minimum": 0
+    },
+    "areas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "updated_label": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "month",
+    "title",
+    "summary"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

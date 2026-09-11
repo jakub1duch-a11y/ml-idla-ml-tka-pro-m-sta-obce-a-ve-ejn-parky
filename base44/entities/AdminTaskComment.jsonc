@@ -1,0 +1,64 @@
+{
+  "name": "AdminTaskComment",
+  "type": "object",
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "ID AdminTask"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "description": "Koment\u00e1\u0159 nebo p\u0159ed\u00e1vac\u00ed zpr\u00e1va k \u00fakolu"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "comment",
+        "status_change",
+        "assignment",
+        "review",
+        "system"
+      ],
+      "default": "comment"
+    },
+    "attachment_url": {
+      "type": "string"
+    },
+    "attachment_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "author_email",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

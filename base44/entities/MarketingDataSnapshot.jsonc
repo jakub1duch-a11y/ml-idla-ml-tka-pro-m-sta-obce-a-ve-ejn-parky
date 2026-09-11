@@ -1,0 +1,128 @@
+{
+  "name": "MarketingDataSnapshot",
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "hypd_google_ads",
+        "hypd_meta_ads",
+        "hypd_ga4"
+      ],
+      "description": "Extern\u00ed analytick\u00fd zdroj snapshotu"
+    },
+    "account_name": {
+      "type": "string"
+    },
+    "account_id": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "period_from": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_to": {
+      "type": "string",
+      "format": "date"
+    },
+    "spend": {
+      "type": "number"
+    },
+    "impressions": {
+      "type": "number"
+    },
+    "clicks": {
+      "type": "number"
+    },
+    "conversions": {
+      "type": "number"
+    },
+    "ctr": {
+      "type": "number"
+    },
+    "cpc": {
+      "type": "number"
+    },
+    "cpa": {
+      "type": "number"
+    },
+    "daily_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "campaign_id": {
+            "type": "string"
+          },
+          "campaign_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "budget_daily": {
+            "type": "number"
+          },
+          "spend": {
+            "type": "number"
+          },
+          "impressions": {
+            "type": "number"
+          },
+          "clicks": {
+            "type": "number"
+          },
+          "conversions": {
+            "type": "number"
+          },
+          "budget_lost_is": {
+            "type": "number"
+          },
+          "rank_lost_is": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "source",
+    "period_from",
+    "period_to"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

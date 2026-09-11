@@ -1,0 +1,173 @@
+{
+  "name": "AdminTask",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "N\u00e1zev \u00fakolu"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detail zad\u00e1n\u00ed, o\u010dek\u00e1van\u00fd v\u00fdstup a kontext"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "backlog",
+        "planned",
+        "in_progress",
+        "waiting",
+        "review",
+        "completed",
+        "cancelled"
+      ],
+      "default": "backlog"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "area": {
+      "type": "string",
+      "enum": [
+        "web",
+        "products",
+        "media",
+        "marketing",
+        "seo",
+        "analytics",
+        "sales",
+        "offers",
+        "integration",
+        "qa",
+        "admin",
+        "other"
+      ],
+      "default": "other"
+    },
+    "assignee_email": {
+      "type": "string",
+      "description": "Aktu\u00e1ln\u011b odpov\u011bdn\u00e1 osoba"
+    },
+    "assignee_name": {
+      "type": "string"
+    },
+    "creator_email": {
+      "type": "string",
+      "description": "Kdo \u00fakol zalo\u017eil"
+    },
+    "creator_name": {
+      "type": "string"
+    },
+    "reviewer_email": {
+      "type": "string",
+      "description": "Kdo m\u00e1 \u00fakol schv\u00e1lit nebo p\u0159evz\u00edt"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "planned_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Odhad pouze pro pl\u00e1nov\u00e1n\u00ed, ne skute\u010dn\u00fd odpracovan\u00fd \u010das"
+    },
+    "actual_hours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Potvrzen\u00fd skute\u010dn\u00fd \u010das k \u00fakolu"
+    },
+    "related_type": {
+      "type": "string",
+      "description": "Typ souvisej\u00edc\u00edho objektu, nap\u0159. Product, ProjectOrder, MarketingPost"
+    },
+    "related_id": {
+      "type": "string"
+    },
+    "related_label": {
+      "type": "string"
+    },
+    "related_url": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "handoff_note": {
+      "type": "string",
+      "description": "Aktu\u00e1ln\u00ed p\u0159ed\u00e1vac\u00ed pozn\u00e1mka mezi Jakubem a Medunou"
+    },
+    "result_summary": {
+      "type": "string",
+      "description": "Co bylo skute\u010dn\u011b dokon\u010deno"
+    },
+    "evidence": {
+      "type": "string",
+      "description": "URL, checkpoint, commit, soubor nebo jin\u00fd d\u016fkaz"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "chatgpt",
+        "base44",
+        "automation"
+      ],
+      "default": "manual"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "status",
+    "priority",
+    "area",
+    "assignee_email",
+    "creator_email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

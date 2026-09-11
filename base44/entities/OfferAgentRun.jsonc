@@ -1,0 +1,129 @@
+{
+  "name": "OfferAgentRun",
+  "type": "object",
+  "properties": {
+    "inquiry_id": {
+      "type": "string"
+    },
+    "inquiry_type": {
+      "type": "string",
+      "enum": [
+        "poptavka",
+        "contact",
+        "manual"
+      ]
+    },
+    "project_order_id": {
+      "type": "string"
+    },
+    "run_status": {
+      "type": "string",
+      "enum": [
+        "intake",
+        "needs_input",
+        "solution",
+        "pricing",
+        "visualization",
+        "document",
+        "qa",
+        "pending_approval",
+        "approved",
+        "sent",
+        "failed"
+      ],
+      "default": "intake"
+    },
+    "selected_product_slugs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pricing_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "smart_profile_key": {
+      "type": "string"
+    },
+    "source_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "visualization_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "offer_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "qa_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "qa_passed": {
+      "type": "boolean",
+      "default": false
+    },
+    "approval_required": {
+      "type": "boolean",
+      "default": true
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "send_allowed": {
+      "type": "boolean",
+      "default": false
+    },
+    "last_error": {
+      "type": "string",
+      "maxLength": 3000
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 5000
+    }
+  },
+  "required": [
+    "inquiry_type",
+    "run_status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

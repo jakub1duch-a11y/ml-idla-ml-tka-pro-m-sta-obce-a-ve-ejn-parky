@@ -1,0 +1,133 @@
+{
+  "name": "ProjectPayment",
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string",
+      "description": "ID projektu / nab\u00eddky"
+    },
+    "inquiry_number": {
+      "type": "string",
+      "description": "\u010c\u00edslo p\u0159\u00edpadu POPT-YYYYMMDD-###"
+    },
+    "quote_number": {
+      "type": "string",
+      "description": "\u010c\u00edslo schv\u00e1len\u00e9 cenov\u00e9 nab\u00eddky"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string",
+      "description": "E-mail klienta pro bezpe\u010dn\u00e9 zobrazen\u00ed v port\u00e1lu"
+    },
+    "payment_type": {
+      "type": "string",
+      "enum": [
+        "deposit",
+        "final"
+      ],
+      "description": "Z\u00e1lohov\u00e1 nebo kone\u010dn\u00e1 faktura"
+    },
+    "invoice_number": {
+      "type": "string"
+    },
+    "invoice_url": {
+      "type": "string",
+      "description": "Odkaz na PDF faktury"
+    },
+    "amount_ex_vat": {
+      "type": "number",
+      "minimum": 0
+    },
+    "vat_rate": {
+      "type": "number",
+      "default": 21
+    },
+    "amount_inc_vat": {
+      "type": "number",
+      "minimum": 0
+    },
+    "deposit_percent": {
+      "type": "number",
+      "default": 50,
+      "minimum": 0,
+      "maximum": 100
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "issued",
+        "sent",
+        "paid",
+        "cancelled"
+      ],
+      "default": "draft"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "paid_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "payment_reference": {
+      "type": "string"
+    },
+    "production_release_required": {
+      "type": "boolean",
+      "default": false,
+      "description": "U 50% v\u00fdrobn\u00ed z\u00e1lohy mus\u00ed b\u00fdt true"
+    },
+    "production_released_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Vypln\u00ed se po potvrzen\u00ed \u00fahrady v\u00fdrobn\u00ed z\u00e1lohy"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "project_order_id",
+    "client_email",
+    "payment_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.client_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

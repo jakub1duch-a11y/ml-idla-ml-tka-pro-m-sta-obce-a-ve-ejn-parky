@@ -1,0 +1,90 @@
+{
+  "name": "WorkLog",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "N\u00e1zev odveden\u00e9ho \u00fakolu"
+    },
+    "area": {
+      "type": "string",
+      "enum": [
+        "web",
+        "analytics",
+        "marketing",
+        "seo",
+        "content",
+        "media",
+        "sales",
+        "integration",
+        "qa"
+      ],
+      "description": "Oblast pr\u00e1ce"
+    },
+    "description": {
+      "type": "string",
+      "description": "Co bylo provedeno a pro\u010d"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "in_progress",
+        "blocked"
+      ],
+      "default": "completed"
+    },
+    "expected_result": {
+      "type": "string",
+      "description": "O\u010dek\u00e1van\u00fd obchodn\u00ed nebo provozn\u00ed dopad"
+    },
+    "evidence": {
+      "type": "string",
+      "description": "Checkpoint, soubor, URL nebo jin\u00fd d\u016fkaz zm\u011bny"
+    },
+    "work_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum, ke kter\u00e9mu pr\u00e1ce pat\u0159\u00ed"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "chatgpt",
+        "base44",
+        "automation"
+      ],
+      "default": "base44"
+    }
+  },
+  "required": [
+    "title",
+    "area",
+    "description",
+    "status",
+    "work_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

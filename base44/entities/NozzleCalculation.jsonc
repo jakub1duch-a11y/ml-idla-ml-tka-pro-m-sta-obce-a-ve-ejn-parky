@@ -1,0 +1,158 @@
+{
+  "name": "NozzleCalculation",
+  "type": "object",
+  "properties": {
+    "inquiry_id": {
+      "type": "string",
+      "description": "ID zdrojov\u00e9 popt\u00e1vky"
+    },
+    "project_order_id": {
+      "type": "string",
+      "description": "ID obchodn\u00ed nab\u00eddky / ProjectOrder"
+    },
+    "offer_variant_id": {
+      "type": "string",
+      "description": "ID konkr\u00e9tn\u00ed OfferVariant"
+    },
+    "variant_key": {
+      "type": "string",
+      "description": "Kl\u00ed\u010d varianty nab\u00eddky, nap\u0159. A-1ks"
+    },
+    "product_slug": {
+      "type": "string",
+      "description": "Slug produktu"
+    },
+    "product_name": {
+      "type": "string",
+      "description": "N\u00e1zev produktu"
+    },
+    "product_quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Po\u010det kus\u016f produktu ve variant\u011b"
+    },
+    "nozzles_per_product": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Po\u010det trysek na jeden kus produktu"
+    },
+    "total_nozzles": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Celkov\u00fd po\u010det trysek ve variant\u011b"
+    },
+    "nozzle_type": {
+      "type": "string",
+      "description": "Typ / ozna\u010den\u00ed pou\u017eit\u00e9 ml\u017en\u00e9 trysky"
+    },
+    "flow_per_nozzle_l_min": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Pr\u016ftok jedn\u00e9 trysky v l/min p\u0159i zadan\u00e9m tlaku"
+    },
+    "total_flow_l_min": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Celkov\u00fd pr\u016ftok varianty v l/min"
+    },
+    "working_pressure_bar": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Uva\u017eovan\u00fd provozn\u00ed tlak v bar"
+    },
+    "available_pressure_bar": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Dostupn\u00fd tlak na m\u00edst\u011b, pokud je zn\u00e1m"
+    },
+    "supply_pipe_diameter_mm": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Uva\u017eovan\u00fd pr\u016fm\u011br p\u0159\u00edvodu vody"
+    },
+    "zone_count": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "Po\u010det samostatn\u011b \u0159\u00edzen\u00fdch z\u00f3n"
+    },
+    "calculation_rows": {
+      "type": "array",
+      "description": "\u0158\u00e1dky v\u00fdpo\u010dtov\u00e9 tabulky trysek",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "source_table_url": {
+      "type": "string",
+      "description": "Odkaz na zdrojovou tabulku / Google Sheet / technick\u00fd podklad"
+    },
+    "source_table_name": {
+      "type": "string",
+      "description": "N\u00e1zev zdrojov\u00e9 tabulky"
+    },
+    "calculation_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "needs_data",
+        "calculated",
+        "reviewed",
+        "approved"
+      ],
+      "default": "draft"
+    },
+    "approved_for_offer": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string",
+      "description": "Technick\u00e9 pozn\u00e1mky k v\u00fdpo\u010dtu"
+    }
+  },
+  "required": [
+    "inquiry_id",
+    "product_slug",
+    "product_quantity"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

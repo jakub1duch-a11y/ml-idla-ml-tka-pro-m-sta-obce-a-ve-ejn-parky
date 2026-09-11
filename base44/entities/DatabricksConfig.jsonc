@@ -1,0 +1,110 @@
+{
+  "name": "DatabricksConfig",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "default": "primary"
+    },
+    "workspace_host": {
+      "type": "string",
+      "description": "Databricks workspace URL, without path"
+    },
+    "catalog": {
+      "type": "string",
+      "default": "mlzidla"
+    },
+    "raw_schema": {
+      "type": "string",
+      "default": "raw"
+    },
+    "core_schema": {
+      "type": "string",
+      "default": "core"
+    },
+    "analytics_schema": {
+      "type": "string",
+      "default": "analytics"
+    },
+    "ai_schema": {
+      "type": "string",
+      "default": "ai"
+    },
+    "warehouse_id": {
+      "type": "string"
+    },
+    "connection_status": {
+      "type": "string",
+      "enum": [
+        "unconfigured",
+        "awaiting_oauth",
+        "connected",
+        "ready",
+        "error"
+      ],
+      "default": "unconfigured"
+    },
+    "bootstrap_status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "running",
+        "ready",
+        "error"
+      ],
+      "default": "not_started"
+    },
+    "sync_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "sync_entities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "Product",
+        "ContactInquiry",
+        "Poptavka",
+        "Realizace",
+        "MarketingPost"
+      ]
+    },
+    "last_sync_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_error": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "key"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

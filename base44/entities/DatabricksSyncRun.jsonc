@@ -1,0 +1,77 @@
+{
+  "name": "DatabricksSyncRun",
+  "type": "object",
+  "properties": {
+    "run_type": {
+      "type": "string",
+      "enum": [
+        "bootstrap",
+        "sync",
+        "healthcheck"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "running",
+        "success",
+        "partial",
+        "error"
+      ]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "records_count": {
+      "type": "number",
+      "default": 0
+    },
+    "warehouse_id": {
+      "type": "string"
+    },
+    "catalog": {
+      "type": "string"
+    },
+    "details": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_type",
+    "status",
+    "started_at"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

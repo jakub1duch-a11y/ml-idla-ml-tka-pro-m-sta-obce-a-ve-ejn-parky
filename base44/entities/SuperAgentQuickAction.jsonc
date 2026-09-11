@@ -1,0 +1,79 @@
+{
+  "name": "SuperAgentQuickAction",
+  "type": "object",
+  "properties": {
+    "agent_key": {
+      "type": "string",
+      "description": "Kl\u00ed\u010d agenta"
+    },
+    "key": {
+      "type": "string",
+      "description": "Stabiln\u00ed kl\u00ed\u010d rychl\u00e9 akce"
+    },
+    "label": {
+      "type": "string",
+      "description": "Kr\u00e1tk\u00fd n\u00e1zev tla\u010d\u00edtka"
+    },
+    "description": {
+      "type": "string",
+      "description": "Co akce ud\u011bl\u00e1"
+    },
+    "icon": {
+      "type": "string",
+      "description": "N\u00e1zev ikony pro UI"
+    },
+    "intent": {
+      "type": "string",
+      "description": "Intent p\u0159edan\u00fd agentovi"
+    },
+    "target_entity": {
+      "type": "string",
+      "description": "Prim\u00e1rn\u00ed entita akce"
+    },
+    "prompt_template": {
+      "type": "string",
+      "description": "V\u00fdchoz\u00ed instrukce pro agenta"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "agent_key",
+    "key",
+    "label",
+    "intent",
+    "active"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

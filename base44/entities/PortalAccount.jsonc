@@ -1,0 +1,63 @@
+{
+  "name": "PortalAccount",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Normalizovan\u00fd e-mail z\u00e1kazn\u00edka"
+    },
+    "password_hash": {
+      "type": "string",
+      "description": "PBKDF2-SHA256 hash hesla"
+    },
+    "password_salt": {
+      "type": "string",
+      "description": "N\u00e1hodn\u00e1 s\u016fl v base64url"
+    },
+    "password_iterations": {
+      "type": "number",
+      "default": 210000
+    },
+    "password_set_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "failed_attempts": {
+      "type": "number",
+      "default": 0
+    },
+    "locked_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_login_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

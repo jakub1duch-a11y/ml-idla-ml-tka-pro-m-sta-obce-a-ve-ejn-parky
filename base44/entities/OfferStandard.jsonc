@@ -1,0 +1,106 @@
+{
+  "name": "OfferStandard",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Stabiln\u00ed kl\u00ed\u010d standardu nab\u00eddky"
+    },
+    "name": {
+      "type": "string",
+      "description": "N\u00e1zev \u0161ablony / standardu"
+    },
+    "version": {
+      "type": "string",
+      "description": "Verze standardu"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Ur\u010duje v\u00fdchoz\u00ed standard pro nov\u00e9 nab\u00eddky"
+    },
+    "reference_url": {
+      "type": "string",
+      "description": "Odkaz na schv\u00e1len\u00fd vzor nab\u00eddky"
+    },
+    "reference_title": {
+      "type": "string",
+      "description": "N\u00e1zev vzorov\u00e9ho dokumentu"
+    },
+    "document_structure": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Povinn\u00e9 kapitoly PDF nab\u00eddky v po\u0159ad\u00ed"
+    },
+    "visual_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Vizu\u00e1ln\u00ed pravidla a rozvr\u017een\u00ed"
+    },
+    "copy_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pravidla t\u00f3nu a obsahu"
+    },
+    "pricing_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pravidla cenov\u00e9 rekapitulace a variant"
+    },
+    "attachment_naming_rule": {
+      "type": "string",
+      "description": "Pravidlo n\u00e1zv\u016f p\u0159ipojen\u00fdch soubor\u016f"
+    },
+    "attachment_examples": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "P\u0159\u00edklady spr\u00e1vn\u00fdch n\u00e1zv\u016f soubor\u016f"
+    },
+    "required_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Kontroly p\u0159ed odesl\u00e1n\u00edm nab\u00eddky"
+    }
+  },
+  "required": [
+    "key",
+    "name",
+    "version",
+    "active",
+    "reference_url"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

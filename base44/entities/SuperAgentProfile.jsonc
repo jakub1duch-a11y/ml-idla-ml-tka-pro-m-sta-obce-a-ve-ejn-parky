@@ -1,0 +1,107 @@
+{
+  "name": "SuperAgentProfile",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Stabiln\u00ed identifik\u00e1tor agenta, nap\u0159. mlzidla_superagent"
+    },
+    "name": {
+      "type": "string",
+      "description": "Zobrazovan\u00fd n\u00e1zev agenta"
+    },
+    "description": {
+      "type": "string",
+      "description": "\u00da\u010del a rozsah agenta"
+    },
+    "version": {
+      "type": "string",
+      "description": "Verze konfigurace"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "audiences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Podporovan\u00e9 c\u00edlov\u00e9 skupiny"
+    },
+    "allowed_entities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Entity, ze kter\u00fdch sm\u00ed agent \u010d\u00edst nebo nad nimi pracovat"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schopnosti agenta"
+    },
+    "approval_required_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Akce vy\u017eaduj\u00edc\u00ed schv\u00e1len\u00ed u\u017eivatele"
+    },
+    "core_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Nem\u011bnn\u00e1 provozn\u00ed a produktov\u00e1 pravidla"
+    },
+    "knowledge_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Prim\u00e1rn\u00ed zdroje znalost\u00ed"
+    },
+    "default_language": {
+      "type": "string",
+      "default": "cs"
+    },
+    "tone": {
+      "type": "string",
+      "description": "V\u00fdchoz\u00ed styl odpov\u011bd\u00ed"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "key",
+    "name",
+    "version",
+    "active"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

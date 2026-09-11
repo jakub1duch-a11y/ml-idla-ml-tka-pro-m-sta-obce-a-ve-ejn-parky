@@ -20,6 +20,7 @@ import MistFogEffect from '@/components/produkt/MistFogEffect';
 import ProductContactForm from '@/components/produkt/ProductContactForm';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 import RelatedProductCard from '@/components/produkt/RelatedProductCard';
+import ProductVisualShowcase from '@/components/produkt/ProductVisualShowcase';
 
 const GATE_SLUGS = ['gate70', 'linea-el70', 'mlzna-brana-gate', 'bendy-brana'];
 
@@ -200,6 +201,8 @@ export default function ProduktDetail() {
         allImages={allImages}
         onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
         onShowTechnical={() => handleTabClick(TABS[1])} />
+
+      <ProductVisualShowcase slug={product.slug} />
       
 
       {/* ═══════ STICKY TABS NAV ═══════ */}

@@ -5,7 +5,13 @@ import { base44 } from '@/api/base44Client';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
+const DRIVE_FILE_RE = /drive\.google\.com\/file\/d\/([^/?#]+)/i;
 const isVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
+const isDriveVideo = (url) => typeof url === 'string' && DRIVE_FILE_RE.test(url);
+const drivePreviewUrl = (url) => {
+  const id = typeof url === 'string' ? url.match(DRIVE_FILE_RE)?.[1] : null;
+  return id ? `https://drive.google.com/file/d/${id}/preview` : url;
+};
 const clean = (items) => [...new Map(items.filter((x) => x?.url).map((x) => [x.url, x])).values()];
 
 function matchesProduct(realization, product) {
@@ -30,15 +36,22 @@ function MediaCard({ item, onOpen }) {
     >
       <div className="aspect-[4/3] overflow-hidden bg-[#DCECF4]">
         {video ? (
-          <AutoPlayVideoPreview
-            src={item.url}
-            poster={item.poster}
-            label={item.title || 'Video produktu'}
-            className="h-full w-full"
-            videoClassName="transition-transform duration-500 group-hover:scale-[1.025]"
-            threshold={0.55}
-            showBadge={false}
-          />
+          isDriveVideo(item.url) ? (
+            <div className="relative h-full w-full bg-[#061923]">
+              {item.poster ? <img src={item.poster} alt={item.title || 'Video produktu'} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" /> : null}
+              <div className="absolute inset-0 bg-black/18" />
+            </div>
+          ) : (
+            <AutoPlayVideoPreview
+              src={item.url}
+              poster={item.poster}
+              label={item.title || 'Video produktu'}
+              className="h-full w-full"
+              videoClassName="transition-transform duration-500 group-hover:scale-[1.025]"
+              threshold={0.55}
+              showBadge={false}
+            />
+          )
         ) : (
           <img src={item.url} alt={item.alt || item.title || 'MLŽIDLA'} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
         )}
@@ -143,26 +156,37 @@ export default function PdMediaGallery({ product }) {
           <div className="mt-9 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white shadow-[0_22px_70px_rgba(10,35,66,.10)]">
             <div className="grid lg:grid-cols-[1.45fr_.55fr]">
               <div className="relative aspect-video min-h-0 bg-[#061923] lg:aspect-auto lg:min-h-[420px]">
-                <AutoPlayVideoPreview
-                  key={featuredVideo.url}
-                  src={featuredVideo.url}
-                  poster={featuredVideo.poster}
-                  controls
-                  loop
-                  label={featuredVideo.title || `${product.name} – video`}
-                  className="absolute inset-0 h-full w-full"
-                  videoClassName="object-cover"
-                  threshold={0.4}
-                  showBadge={false}
-                />
-                <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/20 bg-black/42 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-white backdrop-blur-md">Video produktu · autoplay bez zvuku</div>
+                {isDriveVideo(featuredVideo.url) ? (
+                  <iframe
+                    key={featuredVideo.url}
+                    src={drivePreviewUrl(featuredVideo.url)}
+                    title={featuredVideo.title || `${product.name} – video`}
+                    allow="autoplay; fullscreen"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full border-0 bg-black"
+                  />
+                ) : (
+                  <AutoPlayVideoPreview
+                    key={featuredVideo.url}
+                    src={featuredVideo.url}
+                    poster={featuredVideo.poster}
+                    controls
+                    loop
+                    label={featuredVideo.title || `${product.name} – video`}
+                    className="absolute inset-0 h-full w-full"
+                    videoClassName="object-cover"
+                    threshold={0.4}
+                    showBadge={false}
+                  />
+                )}
+                <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/20 bg-black/42 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-white backdrop-blur-md">{isDriveVideo(featuredVideo.url) ? 'TV reportáž · přehrát' : 'Video produktu · autoplay bez zvuku'}</div>
               </div>
 
               <div className="flex flex-col p-5 sm:p-6 lg:p-7">
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#0B97E8]">V provozu</p>
                 <h3 className="mt-2 font-heading text-2xl font-bold leading-tight text-[#0A2342]">{featuredVideo.title}</h3>
                 {featuredVideo.meta && <p className="mt-2 flex items-center gap-1.5 text-xs text-[#0D2F4F]/55"><MapPin size={13}/>{featuredVideo.meta}</p>}
-                <p className="mt-4 text-sm leading-6 text-[#0D2F4F]/58">Video se spustí automaticky ve chvíli, kdy se dostane do zorného pole. Při odscrollování se pozastaví, takže stránka zůstává rychlá a neruší zvukem.</p>
+                <p className="mt-4 text-sm leading-6 text-[#0D2F4F]/58">{isDriveVideo(featuredVideo.url) ? 'Pusťte si reportáž přímo v detailu produktu. Video je vložené z ověřeného zdroje na Google Drive.' : 'Video se spustí automaticky ve chvíli, kdy se dostane do zorného pole. Při odscrollování se pozastaví, takže stránka zůstává rychlá a neruší zvukem.'}</p>
 
                 {groups.videos.length > 1 && (
                   <div className="mt-6 space-y-2">
@@ -248,7 +272,13 @@ function GalleryLightbox({ items, initial, productName, onClose }) {
       <div className="relative w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
         <AnimatePresence mode="wait">
           {item.type === 'video' ? (
-            <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="mx-auto max-h-[80vh] w-full rounded-2xl bg-black object-contain" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
+            isDriveVideo(item.url) ? (
+              <motion.div key={item.url} className="mx-auto aspect-video max-h-[80vh] w-full overflow-hidden rounded-2xl bg-black" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <iframe src={drivePreviewUrl(item.url)} title={item.title || productName} allow="autoplay; fullscreen" allowFullScreen className="h-full w-full border-0" />
+              </motion.div>
+            ) : (
+              <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="mx-auto max-h-[80vh] w-full rounded-2xl bg-black object-contain" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
+            )
           ) : (
             <motion.img key={item.url} src={item.url} alt={item.alt || item.title || productName} className="mx-auto max-h-[80vh] w-full rounded-2xl object-contain" initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} />
           )}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Images, Play } from 'lucide-react';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
@@ -81,6 +81,23 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     setActiveView(idx);
   }, []);
 
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback((e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      if (dx < 0 && activeView < views.length - 1) setActiveView((v) => v + 1);
+      else if (dx > 0 && activeView > 0) setActiveView((v) => v - 1);
+    }
+  }, [views.length, activeView]);
+
   if (views.length === 0) return <div className={`bg-muted ${className}`} />;
 
   const current = views[activeView] || views[0];
@@ -92,6 +109,8 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       className={`relative overflow-hidden bg-slate-200 ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Render all views stacked, toggle opacity for crossfade */}
       {views.map((view, idx) => {
@@ -138,15 +157,17 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
       {/* Interactive view switcher dots */}
       {showDots && (
-        <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5">
+        <div className="absolute bottom-1.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-0.5">
           {views.map((view, idx) => (
             <button
               key={`dot-${idx}`}
               type="button"
               aria-label={`Zobrazit: ${view.label}`}
               onClick={(e) => selectView(e, idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeView ? 'w-5 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/80'}`}
-            />
+              className="flex h-8 items-center justify-center px-1.5 sm:h-5"
+            >
+              <span className={`block h-1.5 rounded-full transition-all duration-300 ${idx === activeView ? 'w-5 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/80'}`} />
+            </button>
           ))}
         </div>
       )}

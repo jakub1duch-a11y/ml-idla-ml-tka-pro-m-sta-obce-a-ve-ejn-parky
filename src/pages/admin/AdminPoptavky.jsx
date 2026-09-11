@@ -57,6 +57,8 @@ export default function AdminPoptavky() {
   const [expanded, setExpanded] = useState(null);
   const [view, setView] = useState('dashboard'); // dashboard | board | list | studio
   const [printingItem, setPrintingItem] = useState(null);
+  const [preparingConcept, setPreparingConcept] = useState(null);
+  const [generatingPdf, setGeneratingPdf] = useState(null);
 
   const load = async () => {
     setLoading(true);
@@ -143,6 +145,42 @@ export default function AdminPoptavky() {
       window.print();
       setPrintingItem(null);
     }, 300);
+  };
+
+  const prepareConcept = async (item) => {
+    setPreparingConcept(item.id);
+    try {
+      const inquiryType = item.entity === 'ContactInquiry' ? 'contact' : 'poptavka';
+      await base44.functions.invoke('prepareOfferConcept', { inquiry_id: item.id, inquiry_type: inquiryType });
+      await load();
+    } catch (e) {
+      console.error('Concept preparation failed', e);
+    } finally {
+      setPreparingConcept(null);
+    }
+  };
+
+  const downloadConceptPdf = async (item) => {
+    setGeneratingPdf(item.id);
+    try {
+      const inquiryType = item.entity === 'ContactInquiry' ? 'contact' : 'poptavka';
+      const response = await base44.functions.invoke('generateOfferConceptPdf', { inquiry_id: item.id, inquiry_type: inquiryType });
+      const result = response?.data || response;
+      if (result?.pdf_url) {
+        window.open(result.pdf_url, '_blank');
+      } else if (result?.pdf_base64) {
+        const binary = atob(result.pdf_base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      }
+    } catch (e) {
+      console.error('PDF generation failed', e);
+    } finally {
+      setGeneratingPdf(null);
+    }
   };
 
   // Board card
@@ -431,6 +469,16 @@ export default function AdminPoptavky() {
                               {opt.label}
                             </button>
                           ))}
+                          <button onClick={() => prepareConcept(item)} disabled={preparingConcept === item.id}
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-50">
+                            {preparingConcept === item.id ? <Loader size={11} className="animate-spin" /> : <Sparkles size={11} />}
+                            {preparingConcept === item.id ? 'Připravuji…' : 'Připravit koncept'}
+                          </button>
+                          <button onClick={() => downloadConceptPdf(item)} disabled={generatingPdf === item.id}
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-50">
+                            {generatingPdf === item.id ? <Loader size={11} className="animate-spin" /> : <FileText size={11} />}
+                            {generatingPdf === item.id ? 'Generuji PDF…' : 'PDF koncept'}
+                          </button>
                           <button onClick={() => printA4(item)} className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-white/15 text-white/50 hover:text-white">
                             <Printer size={11} /> Tisk A4
                           </button>

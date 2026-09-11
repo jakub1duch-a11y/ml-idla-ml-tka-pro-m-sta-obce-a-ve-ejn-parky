@@ -39,6 +39,11 @@ export default function AutoPlayVideoPreview({
       }
     };
 
+    if (!('IntersectionObserver' in window)) {
+      play();
+      return pause;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && entry.intersectionRatio >= threshold) play();

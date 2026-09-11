@@ -269,6 +269,54 @@
 .card-brand-benefit h3 { font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-semibold); font-size: 16px; color: var(--brand-text); margin: 6px 0 6px; }
 .card-brand-benefit p { font-size: 13px; color: var(--brand-muted-foreground); margin: 0; line-height: 1.5; }
 
+/* --- Hero organic blobs --- */
+.brand-hero-blob {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(40, 167, 160, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 8px 32px rgba(10, 22, 40, 0.12);
+  pointer-events: none;
+}
+.brand-hero-blob-tr {
+  top: -60px;
+  right: -80px;
+  width: 280px;
+  height: 200px;
+  border-radius: 58% 42% 54% 46% / 55% 48% 52% 45%;
+  padding: 40px 60px 30px 40px;
+}
+.brand-hero-blob-bl {
+  bottom: -50px;
+  left: -60px;
+  width: 240px;
+  height: 180px;
+  border-radius: 46% 54% 42% 58% / 52% 45% 55% 48%;
+  padding: 30px 40px;
+}
+.brand-hero-blob-text {
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+.brand-hero-blob-divider {
+  width: 28px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 6px 0;
+}
+
 /* --- Brand utility helpers --- */
 .text-brand-primary { color: var(--brand-primary); }
 .text-brand-accent { color: var(--brand-accent); }

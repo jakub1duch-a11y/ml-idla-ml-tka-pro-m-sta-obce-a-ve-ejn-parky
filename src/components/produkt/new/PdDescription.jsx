@@ -4,8 +4,6 @@ import { getProductDetailConfig } from '@/lib/productDetailConfig';
 export default function PdDescription({ product }) {
   const detailConfig = getProductDetailConfig(product);
   const intro = detailConfig.intro || product.short_description;
-  const fullDesc = product.description;
-  const hasFullDesc = fullDesc && fullDesc !== intro && fullDesc !== product.short_description;
 
   const techTags = [
     product.material,
@@ -33,13 +31,7 @@ export default function PdDescription({ product }) {
           {/* Right: Description body */}
           <div className="text-[15px] leading-[1.75] text-[#0A1628]/70 lg:text-base">
             {intro && <p className="font-medium text-[#0A1628]">{intro}</p>}
-            {hasFullDesc && (
-              <div
-                className="mt-4 space-y-4 [&_a]:text-[#153863] [&_a]:underline [&_h2]:font-heading [&_h2]:font-semibold [&_h2]:text-[#0A1628] [&_h2]:text-lg [&_h2]:mt-6 [&_h3]:font-heading [&_h3]:font-medium [&_h3]:text-[#0A1628] [&_h3]:text-base [&_h3]:mt-4 [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_li]:text-[#0A1628]/70"
-                dangerouslySetInnerHTML={{ __html: fullDesc }}
-              />
-            )}
-            {!hasFullDesc && !intro && (
+            {!intro && (
               <p>Česká zakázková výroba nerezových mlžítek pro veřejný prostor. Každý projekt je originál navržený na míru prostoru, rozpočtu a záměru.</p>
             )}
           </div>

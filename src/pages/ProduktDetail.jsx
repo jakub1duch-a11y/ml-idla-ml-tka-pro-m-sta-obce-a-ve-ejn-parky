@@ -19,6 +19,7 @@ import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdDescription from '@/components/produkt/new/PdDescription';
+import PdStory from '@/components/produkt/new/PdStory';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdLineProducts from '@/components/produkt/new/PdLineProducts';
 import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
@@ -70,6 +71,7 @@ export default function ProduktDetail() {
       <PdFamilyNav product={product} />
       <PdDescription product={product} />
       <PdBenefits product={product} />
+      <PdStory product={product} />
       <PdMediaGallery product={product} />
       <PdSpecs product={product} />
       <PdWireframe product={product} />

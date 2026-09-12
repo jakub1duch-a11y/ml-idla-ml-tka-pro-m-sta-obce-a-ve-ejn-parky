@@ -9,11 +9,12 @@ const STEPS = [
   { icon: Sparkles, title: 'Uvidíte výsledek', text: 'Vizualizace s mlhou v reálném měřítku vašeho místa.' },
 ];
 
-// Pozadí = prázdný prostor BEZ mlžítka. Mlžítko je vidět pouze na displeji mobilu.
+// Pozadí = prázdný prostor BEZ mlžítka. Na displeji mobilu je TEN SAMÝ prostor, ale už s mlžítkem.
 const EMPTY_SPACE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae1d9572f_generated_image.png';
+const AR_SPACE_WITH_PRODUCT = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/253a5b826_generated_image.png';
 
 export default function PdArPromo({ product }) {
-  const screenPhoto = product.hero_product_image_url || product.image_url;
+  const screenPhoto = AR_SPACE_WITH_PRODUCT;
   const scenePhoto = EMPTY_SPACE;
 
   return (

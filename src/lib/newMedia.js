@@ -2,6 +2,11 @@
 // Všechna videa: autoplay / muted / loop / playsinline, poster = jpg
 
 export const VIDEO_ASSETS = {
+  // NEW HERO — promo pro městské ochlazování
+  heroCityPromo: {
+    src: 'https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/cb467bdec_mlznesochyproobceamesta.mp4',
+    poster: '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp',
+  },
   // V1 — Hero: BENDY na náměstí v Jičíně (18 s, 832×464)
   heroJicin: {
     src: 'https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/825fc9c6e_bendy_jicin_namesti_mlha.mp4',

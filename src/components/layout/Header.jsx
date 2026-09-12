@@ -16,11 +16,11 @@ const PRODUCT_LINKS = [
 { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }];
 
 
-const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Kombinace mlžítek — mlžiště na míru', path: '/poptavka' };
+const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Návrh, zpracování a mlžiště na míru', path: '/zakazkova-mlzitka' };
 
 
 const USAGE_LINKS = [
-{ icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-cyan' },
+{ icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-cyan' },
 { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-secondary' },
 { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-secondary' },
 { icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/kategorie/outdoor-zahrady', color: 'text-accent' },
@@ -127,7 +127,8 @@ export default function Header() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/jak-to-funguje" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
+            <Link to="/mlzitka-pro-mesta-obce" className="px-4 py-2.5 rounded-full text-sm font-medium transition-all text-cyan-100 hover:text-white hover:bg-white/10">Pro města</Link>
+            <Link to="/jak-to-funguje" className="px-4 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
             <Link to="/smart-ovladani" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Chytré ovládání</Link>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>

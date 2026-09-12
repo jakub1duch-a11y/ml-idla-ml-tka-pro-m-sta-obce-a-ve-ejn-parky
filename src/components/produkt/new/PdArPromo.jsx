@@ -9,12 +9,12 @@ const STEPS = [
   { icon: Sparkles, title: 'Uvidíte výsledek', text: 'Vizualizace s mlhou v reálném měřítku vašeho místa.' },
 ];
 
-const isPhoto = (u) => typeof u === 'string' && /\.(jpe?g|png|webp)(\?|#|$)/i.test(u);
+// Pozadí = prázdný prostor BEZ mlžítka. Mlžítko je vidět pouze na displeji mobilu.
+const EMPTY_SPACE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae1d9572f_generated_image.png';
 
 export default function PdArPromo({ product }) {
-  const gallery = (product.gallery_urls || []).filter(isPhoto);
-  const screenPhoto = product.hero_product_image_url || product.image_url || gallery[0];
-  const scenePhoto = gallery.find((u) => /\.jpe?g(\?|#|$)/i.test(u)) || product.hero_background_url || product.image_url;
+  const screenPhoto = product.hero_product_image_url || product.image_url;
+  const scenePhoto = EMPTY_SPACE;
 
   return (
     <div className="relative overflow-hidden border border-white/10 bg-[#0A1628]">
@@ -66,9 +66,7 @@ export default function PdArPromo({ product }) {
 
         {/* Reálná fotografie prostoru + mobil se skutečnou fotografií produktu */}
         <div className="relative min-h-[360px] overflow-hidden lg:min-h-full">
-          {scenePhoto && (
-            <img src={scenePhoto} alt={`${product.name} – reálný prostor realizace`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-          )}
+          <img src={scenePhoto} alt="Prázdný prostor před instalací" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[#0A1628]/45" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,22,40,.9)_0%,rgba(10,22,40,.35)_45%,rgba(10,22,40,.1)_100%)]" />
 

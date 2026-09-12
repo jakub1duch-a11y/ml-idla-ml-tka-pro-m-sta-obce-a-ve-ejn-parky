@@ -30,8 +30,8 @@ export default function PdTechSheet({ product }) {
 
   const [nozzles, setNozzles] = useState(defaultNozzles);
   const [hoursDay, setHoursDay] = useState(DEFAULT_HOURS_DAY);
-  const [seasonDays, setSeasonDays] = useState(DEFAULT_SEASON_DAYS);
-  const [waterPrice, setWaterPrice] = useState(WATER_PRICE_CZK_M3);
+  const seasonDays = DEFAULT_SEASON_DAYS;
+  const waterPrice = WATER_PRICE_CZK_M3;
 
   const litersHour = nozzles * FLOW_PER_NOZZLE_LH;
   const litersDay = litersHour * hoursDay;
@@ -131,132 +131,79 @@ export default function PdTechSheet({ product }) {
           </p>
         </div>
 
-        {/* 3. Kalkulačka provozních nákladů na vodu */}
-        <div>
-          <div className="mb-4 flex items-center gap-2.5">
-            <Calculator size={18} className="text-[#0B5EA8]" />
-            <h3 className="font-heading text-lg text-[#0D2F4F]">Spotřeba vody a provozní náklady</h3>
+        {/* 3. Zjednodušený výpočet nákladů na vodu */}
+        <div className="relative overflow-hidden border-2 border-[#22D3EE] bg-[#0A1628] p-6 sm:p-9">
+          <div className="flex items-center gap-2.5">
+            <Calculator size={18} className="text-[#22D3EE]" />
+            <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#22D3EE]">Kolik stojí provoz</p>
           </div>
+          <h3 className="mt-4 font-heading text-2xl font-semibold tracking-[-.02em] text-white sm:text-3xl">
+            Náklady na vodu za celou sezónu
+          </h3>
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-            {/* Vstupy */}
-            <div className="rounded-xl border border-[#EAF5FB] bg-white p-5">
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/50">Zadání parametrů</p>
-
-              {/* Počet trysek */}
-              <div className="flex items-center justify-between py-3 border-b border-[#EAF5FB]">
-                <div>
-                  <span className="block text-sm font-medium text-[#0D2F4F]">Počet trysek</span>
-                  <span className="text-xs text-[#0D2F4F]/45">standard: {FLOW_PER_NOZZLE_LH} l/h na trysku při 4 bar</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setNozzles((n) => Math.max(1, n - 1))}
-                    className="flex h-8 w-8 items-center justify-center border border-[#EAF5FB] text-[#0D2F4F]/60 transition-colors hover:border-[#0B5EA8] hover:text-[#0B5EA8]"
-                    aria-label="Snížit počet trysek"
-                  >
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-8 text-center font-mono text-base font-semibold text-[#0D2F4F]">{nozzles}</span>
-                  <button
-                    onClick={() => setNozzles((n) => Math.min(32, n + 1))}
-                    className="flex h-8 w-8 items-center justify-center border border-[#EAF5FB] text-[#0D2F4F]/60 transition-colors hover:border-[#0B5EA8] hover:text-[#0B5EA8]"
-                    aria-label="Zvýšit počet trysek"
-                  >
-                    <Plus size={14} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Hodiny denně */}
-              <NumberRow
-                label="Provozní hodiny / den"
-                hint="standard: 8 h (denní peak)"
-                value={hoursDay}
-                onChange={setHoursDay}
-                min={1}
-                max={24}
-              />
-
-              {/* Dny v sezóně */}
-              <NumberRow
-                label="Dny v sezóně"
-                hint="standard: 90 dní (letní sezóna)"
-                value={seasonDays}
-                onChange={setSeasonDays}
-                min={1}
-                max={365}
-              />
-
-              {/* Cena vody */}
-              <NumberRow
-                label="Cena vody (Kč/m³)"
-                hint="standard: 33 Kč/m³ (český municipální průměr)"
-                value={waterPrice}
-                onChange={setWaterPrice}
-                min={1}
-                max={200}
-              />
-            </div>
-
-            {/* Výsledky */}
-            <div className="rounded-xl border border-[#0B5EA8] bg-[#0D2F4F] p-5 text-white">
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-wide text-white/50">Výpočet provozních nákladů (pouze voda)</p>
-
-              <div className="space-y-3">
-                <ResultRow label="Spotřeba za hodinu" value={`${litersHour} l/h`} />
-                <ResultRow label={`Spotřeba za den (${hoursDay} h)`} value={`${formatCZK(litersDay)} l`} />
-                <ResultRow label={`Spotřeba za sezónu (${seasonDays} dní)`} value={`${formatCZK(litersSeason)} l`} />
-              </div>
-
-              <div className="my-4 border-t border-white/15" />
-
-              <div className="space-y-3">
-                <ResultRow label="Náklady za den (voda)" value={`${formatCZK(costDay)} Kč`} accent />
-                <ResultRow label={`Náklady za sezónu (voda)`} value={`${formatCZK(costSeason)} Kč`} accent bold />
-              </div>
-
-              <p className="mt-5 text-[11px] leading-relaxed text-white/40">
-                Orientační výpočet zohledňuje pouze spotřebu vody. Neobsahuje elektrickou energii, údržbu ani investiční náklady.
-                Skutečná spotřeba se liší dle typu trysky, provozního tlaku a počasí.
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+            {/* Dva vstupy — nic víc */}
+            <div className="space-y-6">
+              <Stepper label="Počet trysek" value={nozzles} onChange={(v) => setNozzles(Math.min(32, Math.max(1, v)))} suffix="ks" />
+              <Stepper label="Provoz denně" value={hoursDay} onChange={(v) => setHoursDay(Math.min(24, Math.max(1, v)))} suffix="h" />
+              <p className="font-mono text-[10px] leading-relaxed tracking-[.1em] text-white/40">
+                PEVNÉ HODNOTY: {FLOW_PER_NOZZLE_LH} l/h na trysku · {seasonDays} dní sezóna · {waterPrice} Kč/m³
               </p>
             </div>
+
+            {/* Jedno hlavní číslo */}
+            <div className="border border-white/12 bg-white/[.04] p-6 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-[.16em] text-white/50">Voda za sezónu</p>
+              <p className="mt-3 font-heading text-[clamp(2.75rem,9vw,4.5rem)] font-bold leading-none text-[#22D3EE]">
+                {formatCZK(costSeason)} <span className="text-2xl">Kč</span>
+              </p>
+              <div className="mt-6 grid grid-cols-2 divide-x divide-white/12 border-t border-white/12 pt-5">
+                <div>
+                  <p className="font-heading text-lg font-bold text-white">{formatCZK(costDay)} Kč</p>
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[.12em] text-white/45">za den</p>
+                </div>
+                <div>
+                  <p className="font-heading text-lg font-bold text-white">{formatCZK(litersSeason / 1000)} m³</p>
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[.12em] text-white/45">vody za sezónu</p>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <p className="mt-7 text-[11px] leading-relaxed text-white/40">
+            Orientační výpočet pouze pro spotřebu vody — bez elektřiny, údržby a investice. Skutečná spotřeba se liší podle typu trysky, tlaku a počasí.
+          </p>
         </div>
       </div>
     </section>
   );
 }
 
-function NumberRow({ label, hint, value, onChange, min, max }) {
+function Stepper({ label, value, onChange, suffix }) {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-[#EAF5FB] last:border-b-0">
-      <div>
-        <span className="block text-sm font-medium text-[#0D2F4F]">{label}</span>
-        <span className="text-xs text-[#0D2F4F]/45">{hint}</span>
+    <div>
+      <p className="font-mono text-[10px] uppercase tracking-[.14em] text-white/50">{label}</p>
+      <div className="mt-2 flex items-center gap-4">
+        <button
+          type="button"
+          onClick={() => onChange(value - 1)}
+          aria-label={`Snížit: ${label}`}
+          className="flex h-11 w-11 items-center justify-center border border-white/25 text-white transition hover:border-[#22D3EE] hover:text-[#22D3EE]"
+        >
+          <Minus size={16} />
+        </button>
+        <span className="min-w-[4.5rem] text-center font-heading text-3xl font-bold text-white">
+          {value}<span className="ml-1 text-sm font-semibold text-white/50">{suffix}</span>
+        </span>
+        <button
+          type="button"
+          onClick={() => onChange(value + 1)}
+          aria-label={`Zvýšit: ${label}`}
+          className="flex h-11 w-11 items-center justify-center border border-white/25 text-white transition hover:border-[#22D3EE] hover:text-[#22D3EE]"
+        >
+          <Plus size={16} />
+        </button>
       </div>
-      <input
-        type="number"
-        value={value}
-        min={min}
-        max={max}
-        onChange={(e) => {
-          const v = parseInt(e.target.value, 10);
-          if (!isNaN(v)) onChange(Math.min(max, Math.max(min, v)));
-        }}
-        className="w-20 border border-[#EAF5FB] bg-[#F8FCFE] px-3 py-1.5 text-center font-mono text-sm font-semibold text-[#0D2F4F] outline-none focus:border-[#0B5EA8]"
-      />
-    </div>
-  );
-}
-
-function ResultRow({ label, value, accent, bold }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className={`text-xs ${accent ? 'text-white/60' : 'text-white/45'}`}>{label}</span>
-      <span className={`font-mono text-sm ${bold ? 'text-[#22D3EE] font-bold text-base' : accent ? 'text-[#22D3EE] font-semibold' : 'text-white'}`}>
-        {value}
-      </span>
     </div>
   );
 }

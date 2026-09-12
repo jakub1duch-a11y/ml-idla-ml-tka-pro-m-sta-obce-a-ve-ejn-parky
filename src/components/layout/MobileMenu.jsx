@@ -94,9 +94,9 @@ export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: .18 }}
-          className="fixed inset-0 z-40 flex h-[100dvh] flex-col bg-[#f8fafb] lg:hidden"
+          className="fixed inset-0 z-40 flex h-[100dvh] flex-col overflow-hidden bg-[#f5f9fa] lg:hidden"
         >
-          <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro px-5">
+          <div className="relative z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[linear-gradient(110deg,rgba(7,31,40,.98),rgba(12,58,70,.96),rgba(12,96,105,.9))] px-5 shadow-[0_12px_40px_rgba(8,44,55,.14)] backdrop-blur-xl">
             <Link to="/" onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
             <div className="flex items-center gap-2">
               <LanguageSwitcher mobile onNavigate={onClose} />
@@ -104,14 +104,18 @@ export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' 
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-7 pt-5 sm:px-5">
+          <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 pb-7 pt-5 sm:px-5">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+              <div className="absolute -right-20 top-10 h-52 w-52 rounded-full bg-cyan-200/20 blur-3xl" />
+              <div className="absolute -left-24 top-[34%] h-64 w-64 rounded-full bg-white/70 blur-3xl" />
+            </div>
             <div className="mx-auto max-w-xl">
               <div className="px-1 pb-4">
                 <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Hlavní navigace</p>
                 <h2 className="mt-1 font-heading text-2xl font-medium tracking-[-.03em] text-slate-950">Kam chcete pokračovat?</h2>
               </div>
 
-              <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
+              <div className="overflow-hidden rounded-[24px] border border-white/80 bg-white/88 shadow-[0_14px_40px_rgba(13,45,56,.08)] backdrop-blur-xl">
                 <button
                   type="button"
                   onClick={() => setCollectionsOpen((value) => !value)}
@@ -171,14 +175,14 @@ export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' 
                 </Link>
               </motion.div>
 
-              <div className="mt-4 grid grid-cols-2 gap-2">
+              <div className="mt-4 grid grid-cols-2 gap-2.5">
                 <Link to="/smart-ovladani" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Smart řízení <ArrowRight size={13} className="text-slate-300"/></Link>
                 <Link to="/kontakt" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Kontakt <ArrowRight size={13} className="text-slate-300"/></Link>
               </div>
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-slate-200 bg-white px-4 py-3 pb-[max(.75rem,env(safe-area-inset-bottom))] sm:px-5">
+          <div className="relative z-20 shrink-0 border-t border-white/70 bg-white/90 px-4 py-3 pb-[max(.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_36px_rgba(13,45,56,.06)] backdrop-blur-xl sm:px-5">
             <div className="mx-auto flex max-w-xl gap-2">
               <Link to="/poptavka" onClick={onClose} className="btn-metallic-mist flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold"><Sparkles size={15}/>Popsat projekt<ArrowRight size={15}/></Link>
             </div>

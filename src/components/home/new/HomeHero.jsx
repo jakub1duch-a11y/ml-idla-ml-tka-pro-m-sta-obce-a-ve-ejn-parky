@@ -40,22 +40,22 @@ export default function HomeHero() {
 
   return (
     <section className="relative overflow-hidden bg-[#f6fafb] text-[#0b2d38]">
-      <div className="mx-auto grid min-h-[760px] max-w-[1500px] lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative z-20 flex items-center px-6 pb-14 pt-28 sm:px-10 lg:px-14 lg:py-28 xl:px-20">
+      <div className="mx-auto grid max-w-[1500px] lg:min-h-[760px] lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative z-20 flex items-center px-5 pb-10 pt-24 sm:px-10 sm:pb-14 sm:pt-28 lg:px-14 lg:py-28 xl:px-20">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#0b7c89]/15 bg-white px-3 py-2 text-[11px] font-semibold uppercase tracking-[.18em] text-[#0b7c89] shadow-sm">
               <Sparkles size={14} /> Architektonické mlžení pro města i zahrady
             </div>
 
-            <h1 className="mt-7 max-w-[11ch] font-heading text-[clamp(3.4rem,7vw,7.8rem)] font-medium leading-[.88] tracking-[-.065em] text-[#0b2d38]">
+            <h1 className="mt-6 max-w-[11ch] font-heading text-[3rem] font-medium leading-[.92] tracking-[-.045em] text-[#0b2d38] sm:mt-7 sm:text-[clamp(3.8rem,7vw,7.8rem)] sm:leading-[.88] sm:tracking-[-.065em]">
               MLŽIDLA — chytré chlazení prostoru.
             </h1>
 
-            <p className="mt-7 max-w-xl text-base leading-7 text-[#48636d] sm:text-lg">
+            <p className="mt-5 max-w-xl text-[15px] leading-7 text-[#48636d] sm:mt-7 sm:text-lg">
               Nerezová mlžítka a mlžné prvky pro náměstí, parky, promenády, sportoviště, gastro i soukromé zahrady. Od návrhu a vizualizace po řízení, realizaci a servis.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-7 grid gap-2.5 sm:mt-8 sm:flex sm:flex-wrap sm:gap-3">
               <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#0b2d38] px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#123f4d]">
                 Navrhnout řešení <ArrowRight size={16} />
               </Link>
@@ -75,7 +75,7 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="relative min-h-[520px] overflow-hidden bg-[#0b2d38] lg:min-h-full">
+        <div className="relative min-h-[430px] overflow-hidden bg-[#0b2d38] sm:min-h-[520px] lg:min-h-full">
           <img
             src={VIDEO_ASSETS.heroCityPromo.poster}
             alt="Mlžítka pro ochlazování městského prostoru"
@@ -106,8 +106,8 @@ export default function HomeHero() {
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,27,35,.04)_0%,rgba(5,27,35,.12)_48%,rgba(5,27,35,.78)_100%)]" />
           <div className="absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-[#f6fafb] via-[#f6fafb]/30 to-transparent lg:block" />
 
-          <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8 lg:p-10">
-            <div className="flex flex-col gap-4 rounded-3xl border border-white/15 bg-[#071f28]/62 p-5 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between">
+          <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-3 rounded-[22px] border border-white/15 bg-[#071f28]/64 p-4 text-white backdrop-blur-md sm:gap-4 sm:rounded-3xl sm:p-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#9ce5ec]">Městské ochlazování</p>
                 <h2 className="mt-2 font-heading text-2xl font-medium">MLŽIDLA · prostor, voda, klima</h2>

@@ -33,7 +33,7 @@ export default function CatalogProductCard({ product }) {
         )}
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2">
           <Link to={`/produkt/${product.slug}`} className="cta">Detail produktu →</Link>
-          <Link to={`/poptavka?produkt=${product.slug}`} className="btn-brand-accent-link !p-0">Zjistit cenu <ArrowRight size={14} /></Link>
+          <Link to={`/poptavka?produkt=${product.slug}`} className="btn-brand-accent-link !p-0">Získat návrh a cenu <ArrowRight size={14} /></Link>
         </div>
       </div>
     </article>

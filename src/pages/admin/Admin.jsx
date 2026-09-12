@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2 } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
@@ -22,10 +22,12 @@ import AdminTasks from './AdminTasks';
 import AdminSystemDevelopment from './AdminSystemDevelopment';
 import AdminProspects from './AdminProspects';
 import AdminCRM from './AdminCRM';
+import AdminTerminal from './AdminTerminal';
 import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimalizatorChat';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
+  { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
   { id: 'development', label: 'Vývoj systému', icon: Activity },
   { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
@@ -117,6 +119,7 @@ export default function Admin() {
 
   const ActiveComponent = {
     dashboard: AdminDashboard,
+    terminal: AdminTerminal,
     development: AdminSystemDevelopment,
     tasks: AdminTasks,
     products: AdminProducts,

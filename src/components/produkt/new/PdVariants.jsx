@@ -1,36 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, ScanLine } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { getProductSpatialConfigurations } from '@/lib/productDetailConfig';
+import PdArPromo from '@/components/produkt/new/PdArPromo';
 
 export default function PdVariants({ product }) {
   const variants = getProductSpatialConfigurations(product);
+  const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const glowY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [50, -50]);
 
   return (
-    <section className="bg-[#EAF5FB] py-16 lg:py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Produkt ≠ konfigurace</p>
-            <h2 className="mt-4 font-heading text-3xl leading-tight tracking-[-.03em] text-[#0D2F4F] lg:text-4xl">Konfigurace v prostoru</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#0D2F4F]/60">U prostorových sestav zachováváme schválenou geometrii produktu. Mění se pouze počet kusů, rozmístění nebo výrobcem definovaná varianta konkrétního produktu.</p>
-          </div>
-          <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-[44px] items-center gap-2 self-start border border-[#0B5EA8]/20 bg-white px-5 text-sm font-semibold text-[#0B5EA8] transition hover:border-[#0B5EA8]/40 lg:self-auto"><ScanLine size={16}/> Vyzkoušet v mém prostoru</Link>
+    <section ref={ref} className="relative overflow-hidden bg-[#0D2338] py-16 lg:py-24">
+      {/* technický blueprint grid + mlžný glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[.16]"
+        style={{
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.5) 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+          maskImage: 'radial-gradient(120% 80% at 20% 0%, black 20%, transparent 78%)',
+          WebkitMaskImage: 'radial-gradient(120% 80% at 20% 0%, black 20%, transparent 78%)',
+        }}
+      />
+      <motion.div style={{ y: glowY }} aria-hidden="true" className="pointer-events-none absolute -right-32 top-10 h-[420px] w-[420px] rounded-full bg-[#22D3EE]/12 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="max-w-3xl">
+          <p className="font-mono text-[11px] uppercase tracking-[.2em] text-[#22D3EE]">// Produkt ≠ konfigurace</p>
+          <h2 className="mt-4 font-heading text-4xl font-semibold leading-[1.03] tracking-[-.035em] text-white lg:text-[3.4rem]">
+            Jeden tvar,<br />nekonečně prostorů.
+          </h2>
+          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-white/65">
+            Geometrie produktu zůstává schválená a nemění se. Co se mění, je počet kusů, rozmístění v prostoru a výrobcem definovaná varianta — a právě to rozhoduje, jak bude mlha ve vašem místě fungovat.
+          </p>
         </div>
 
-        <div className={`mt-10 grid gap-5 ${variants.length >= 4 ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-3'}`}>
+        <div className={`mt-12 grid gap-4 ${variants.length >= 4 ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-3'}`}>
           {variants.map(([title, sub, desc], i) => (
-            <div key={`${title}-${i}`} className="group border border-[#0B5EA8]/15 bg-white p-7 transition-all hover:-translate-y-1 hover:border-[#0B5EA8]/35 hover:shadow-[0_18px_45px_rgba(11,94,168,.08)]">
-              <span className="font-mono text-sm text-[#0B5EA8]">0{i + 1}</span>
-              <h3 className="mt-5 font-heading text-xl font-semibold text-[#0D2F4F]">{title}</h3>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-[.12em] text-[#0B5EA8]/65">{sub}</p>
-              <p className="mt-4 text-sm leading-relaxed text-[#0D2F4F]/60">{desc}</p>
-            </div>
+            <motion.div
+              key={`${title}-${i}`}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: reduceMotion ? 0 : 0.5, delay: (i % 4) * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={reduceMotion ? undefined : { y: -6 }}
+              className="group border border-white/12 bg-white/[.04] p-7 backdrop-blur-sm transition-colors hover:border-[#22D3EE]/45 hover:bg-white/[.07]"
+            >
+              <span className="font-mono text-sm text-[#22D3EE]">0{i + 1}</span>
+              <h3 className="mt-5 font-heading text-xl font-semibold text-white">{title}</h3>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-[.12em] text-white/45">{sub}</p>
+              <p className="mt-4 text-sm leading-relaxed text-white/60">{desc}</p>
+              <div className="mt-6 h-px w-8 bg-[#22D3EE] transition-all duration-500 group-hover:w-20" />
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-8 flex justify-end">
-          <Link to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[#0B5EA8] hover:text-[#0D2F4F]">Navrhnout vhodnou konfiguraci <ArrowRight size={15}/></Link>
+        <div className="mt-12">
+          <PdArPromo product={product} />
         </div>
       </div>
     </section>

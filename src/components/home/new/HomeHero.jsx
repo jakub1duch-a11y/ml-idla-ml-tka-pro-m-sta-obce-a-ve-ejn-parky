@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PlayCircle, Sparkles, Wifi, Building2, Trees } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
@@ -10,6 +10,8 @@ const TRUST = [
 ];
 
 export default function HomeHero() {
+  const [videoReady, setVideoReady] = useState(false);
+
   return (
     <section className="relative overflow-hidden bg-[#f6fafb] text-[#0b2d38]">
       <div className="mx-auto grid min-h-[760px] max-w-[1500px] lg:grid-cols-[0.9fr_1.1fr]">
@@ -48,17 +50,26 @@ export default function HomeHero() {
         </div>
 
         <div className="relative min-h-[520px] overflow-hidden bg-[#0b2d38] lg:min-h-full">
+          <img
+            src={VIDEO_ASSETS.heroCityPromo.poster}
+            alt="Mlžítka pro ochlazování městského prostoru"
+            fetchPriority="high"
+            decoding="async"
+            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-0' : 'opacity-100'}`}
+          />
           <video
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
-            poster={VIDEO_ASSETS.heroJicin.poster}
-            aria-label="Reálná realizace mlžítka BENDY na náměstí v Jičíně"
+            preload="auto"
+            poster={VIDEO_ASSETS.heroCityPromo.poster}
+            onLoadedData={() => setVideoReady(true)}
+            onCanPlay={() => setVideoReady(true)}
+            aria-label="Promo video MLŽIDLA pro městské ochlazování"
           >
-            <source src={VIDEO_ASSETS.heroJicin.src} type="video/mp4" />
+            <source src={VIDEO_ASSETS.heroCityPromo.src} type="video/mp4" />
           </video>
 
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,27,35,.04)_0%,rgba(5,27,35,.12)_48%,rgba(5,27,35,.78)_100%)]" />
@@ -67,12 +78,12 @@ export default function HomeHero() {
           <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8 lg:p-10">
             <div className="flex flex-col gap-4 rounded-3xl border border-white/15 bg-[#071f28]/62 p-5 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#9ce5ec]">Reálná realizace</p>
-                <h2 className="mt-2 font-heading text-2xl font-medium">BENDY · Jičínské náměstí</h2>
-                <p className="mt-1 max-w-lg text-sm leading-6 text-white/70">Video z provozu. Skutečný produkt, skutečný veřejný prostor.</p>
+                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#9ce5ec]">Městské ochlazování</p>
+                <h2 className="mt-2 font-heading text-2xl font-medium">MLŽIDLA · prostor, voda, klima</h2>
+                <p className="mt-1 max-w-lg text-sm leading-6 text-white/70">Promo sekvence architektonických mlžných prvků pro města, parky a veřejný prostor.</p>
               </div>
-              <Link to="/reference/bendy-jicinske-namesti" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-white transition hover:text-[#9ce5ec]">
-                <PlayCircle size={18} /> Detail realizace
+              <Link to="/reference" className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-white transition hover:text-[#9ce5ec]">
+                <PlayCircle size={18} /> Prohlédnout realizace
               </Link>
             </div>
           </div>

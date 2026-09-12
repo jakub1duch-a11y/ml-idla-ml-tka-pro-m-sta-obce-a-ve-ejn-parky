@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Newspaper, Calculator, PlayCircle } from 'lucide-react';
+import { X, ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Newspaper, Calculator, PlayCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -176,8 +176,13 @@ export default function Header() {
               </Link>
             </div>
             <Link to={inquiryPath} className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-2 px-3 py-2">{locale === 'cs' ? 'Popsat projekt' : internationalCopy.quote}</Link>
-            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
-              {mobileOpen ? <X size={23} /> : <Menu size={23} />}
+            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="group lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
+              {mobileOpen ? <X size={22} /> : (
+                <span className="flex w-[22px] flex-col gap-[5px]" aria-hidden="true">
+                  <span className="h-[1.5px] w-[22px] rounded-full bg-current transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <span className="h-[1.5px] w-[15px] self-end rounded-full bg-current transition-all duration-200 group-hover:w-[22px]" />
+                </span>
+              )}
             </button>
           </div>
         </div>

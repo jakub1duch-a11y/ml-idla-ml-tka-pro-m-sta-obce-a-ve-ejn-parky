@@ -118,7 +118,7 @@ function rows(data: any, dimensions: string[], metrics: string[]) {
 async function getGa4(base44: any) {
   const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
   const propertyId = await resolveGa4Property(accessToken);
-  const run = (body: Record<string, unknown>) => run( propertyId, body);
+  const run = (body: Record<string, unknown>) => gaRun(accessToken, propertyId, body);
   const commonMetrics = [
     { name: 'sessions' },
     { name: 'activeUsers' },

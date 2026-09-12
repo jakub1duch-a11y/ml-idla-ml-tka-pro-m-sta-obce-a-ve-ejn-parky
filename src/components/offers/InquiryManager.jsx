@@ -31,6 +31,7 @@ const SMART_SCENARIO_PRESETS = [
   { key: 'humidity', label: 'Scénář D · Teplota + vlhkost', description: 'Spuštění jen při kombinaci vhodné teploty a relativní vlhkosti.', defaultValue: 'nastavení dle lokality' },
   { key: 'weather_api', label: 'Scénář E · API počasí', description: 'Volitelná integrační logika podle předpovědi nebo aktuálního počasí — déšť, teplota, vítr a další podmínky.', defaultValue: 'individuální integrační logika' },
   { key: 'water_monitoring', label: 'Scénář F · Monitoring vody', description: 'Měření spotřeby vody, historie provozu a vzdálený přehled v SUPLA.', defaultValue: 'ENBRA + LIW‑01' },
+  { key: 'garden_9zone', label: 'Zahradní varianta · 9zónový ventil', description: 'Volitelné 9zónové zavlažovací rozbočení pro soukromé zahrady a kombinaci mlžení se závlahou. Není vhodné pro městské instalace ani veřejný prostor.', defaultValue: 'pouze zahrada · konfigurace dle kompatibility' },
 ];
 
 export default function InquiryManager({ inquiries, products, offerProfiles = [], mediaFiles, projectOrders = [], onSent }) {
@@ -376,7 +377,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           ...offerAttachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
         ].filter((url, index, all) => url && all.indexOf(url) === index).slice(0, 4),
         ai_content: clientContent,
-        smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
+        smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key] && (item.key !== 'garden_9zone' || audienceForOffer === 'residential')).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
         supla_ai_offer: suplaAiEnabled && suplaAiPricing?.ok ? suplaAiPricing : null,
       });
       const quote = quoteResponse.data;
@@ -408,7 +409,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           approved_visualizations: approvedVisualizationAssets,
           ai_content: clientContent,
           audience_variant: audienceForOffer,
-          smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key]).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
+          smart_scenarios: SMART_SCENARIO_PRESETS.filter((item) => smartScenarios[item.key] && (item.key !== 'garden_9zone' || audienceForOffer === 'residential')).map((item) => ({ ...item, value: smartScenarioValues[item.key] || item.defaultValue })),
           supla_ai_offer: suplaAiEnabled && suplaAiPricing?.ok ? suplaAiPricing : null,
         });
         presentation = presentationResponse.data;
@@ -856,7 +857,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
             <div className="mt-5">
           <div className="rounded-2xl border border-cyan-200 bg-cyan-50/40 p-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-700">Smart řízení nabídky</p><h3 className="mt-1 font-heading text-xl text-slate-950">Provozní scénáře a přidané moduly</h3><p className="mt-2 max-w-3xl text-xs leading-relaxed text-slate-600">Vyberte scénáře, které mají být součástí profesionální nabídky. Nastavení se propíše do PDF a prezentace jako doporučená provozní logika pro daný projekt.</p></div></div>
-            <div className="mt-4 grid gap-3 lg:grid-cols-2">{SMART_SCENARIO_PRESETS.map((scenario) => <div key={scenario.key} className={`rounded-xl border p-4 ${smartScenarios[scenario.key] ? 'border-cyan-300 bg-white' : 'border-slate-200 bg-white/60'}`}><label className="flex cursor-pointer items-start gap-3"><input type="checkbox" checked={Boolean(smartScenarios[scenario.key])} onChange={(e) => { setSmartScenarios((current) => ({ ...current, [scenario.key]: e.target.checked })); resetPrepared(); }} className="mt-1 h-4 w-4"/><span><strong className="text-sm text-slate-900">{scenario.label}</strong><span className="mt-1 block text-xs leading-relaxed text-slate-500">{scenario.description}</span></span></label>{smartScenarios[scenario.key] && <input value={smartScenarioValues[scenario.key] || ''} onChange={(e) => { setSmartScenarioValues((current) => ({ ...current, [scenario.key]: e.target.value })); resetPrepared(); }} className="mt-3 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700"/>}</div>)}</div>
+            <div className="mt-4 grid gap-3 lg:grid-cols-2">{SMART_SCENARIO_PRESETS.filter((scenario) => scenario.key !== 'garden_9zone' || audienceVariant === 'residential').map((scenario) => <div key={scenario.key} className={`rounded-xl border p-4 ${smartScenarios[scenario.key] ? 'border-cyan-300 bg-white' : 'border-slate-200 bg-white/60'}`}><label className="flex cursor-pointer items-start gap-3"><input type="checkbox" checked={Boolean(smartScenarios[scenario.key])} onChange={(e) => { setSmartScenarios((current) => ({ ...current, [scenario.key]: e.target.checked })); resetPrepared(); }} className="mt-1 h-4 w-4"/><span><strong className="text-sm text-slate-900">{scenario.label}</strong><span className="mt-1 block text-xs leading-relaxed text-slate-500">{scenario.description}</span></span></label>{smartScenarios[scenario.key] && <input value={smartScenarioValues[scenario.key] || ''} onChange={(e) => { setSmartScenarioValues((current) => ({ ...current, [scenario.key]: e.target.value })); resetPrepared(); }} className="mt-3 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700"/>}</div>)}</div>
 
             <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-5">
               <label className="flex cursor-pointer items-start gap-3">

@@ -17,11 +17,11 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Co je potřeba připravit před instalací mlžítek?',
-        a: 'Před instalací je nutné zajistit přívod vody (min. 3 bar, ideálně 4–6 bar), zdroj elektrické energie 230 V pro čerpadlo a řídící jednotku, a připravit základy dle výkresové dokumentace, kterou dodáváme.',
+        a: 'Základem je přívod pitné vody v místě instalace a připravenost kotvení podle zvoleného řešení. Většina našich nízkotlakých mlžítek pracuje přímo z vodovodního řadu bez samostatného vysokotlakého čerpadla. Elektrické napájení je potřeba jen pro zvolené chytré ovládání nebo další aktivní prvky.',
       },
       {
         q: 'Mohu si mlžítka nainstalovat sám?',
-        a: 'Jednodušší modely (START, PARK) jsou navrženy tak, aby je zvládl instalovat zkušený řemeslník. Pro složitější mlžné sochy a systémy s vysokotlakým čerpadlem doporučujeme naši servisní instalaci — zajistíme správné nastavení tlaku, tryskového systému a řídící elektroniky.',
+        a: 'U jednodušších typových prvků lze instalaci provést podle dodané technické dokumentace zkušenou realizační firmou. U městských, dětských a atypických instalací doporučujeme naši montáž nebo technický dohled — ověříme kotvení, přívod vody, trysky i nastavení chytrého řízení.',
       },
       {
         q: 'Na jaký typ povrchu lze mlžítka instalovat?',
@@ -40,7 +40,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'Jak často je potřeba mlžítka servisovat?',
-        a: 'Doporučujeme základní servis jednou ročně — vždy na začátku nebo konci sezóny. Servis zahrnuje kontrolu a čištění trysek, kontrolu tlakového čerpadla, filtrů a elektrické části. Nabízíme roční servisní smlouvy.',
+        a: 'Doporučujeme základní kontrolu minimálně jednou ročně, ideálně před hlavní sezónou. Servis zahrnuje kontrolu a čištění trysek, filtrů, přívodu vody, ventilů a případného chytrého řízení. U veřejných instalací lze nastavit pravidelný servisní režim.',
       },
       {
         q: 'Jak čistit trysky mlžítek?',
@@ -48,7 +48,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Co dělat, když mlžítko přestane mlžit?',
-        a: 'Nejprve zkontrolujte přívod vody a tlak (min. 3 bar). Poté zkontrolujte filtr před čerpadlem — může být ucpaný. Dále ověřte, zda je čerpadlo v provozu a zda řídící jednotka signalizuje chybu. Pokud problém přetrvává, kontaktujte náš servis.',
+        a: 'Nejprve zkontrolujte přívod vody, uzavírací nebo chytrý ventil a filtr. Poté ověřte, zda nejsou zanesené jednotlivé trysky. Pokud používáte SUPLA nebo TUYA, zkontrolujte také stav ovládání a nastavený scénář. Pokud problém přetrvává, kontaktujte servis.',
       },
       {
         q: 'Jak připravit mlžítko na zimu?',
@@ -71,11 +71,11 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Padá voda na zem a tvoří se louže?',
-        a: 'Ne. Trysky rozptylují kapičky o velikosti 10–50 μm, které se okamžitě odpaří ve vzduchu (evaporativní chlazení). Za normálních podmínek (teplota nad 20 °C, nízká vzdušná vlhkost) se voda zcela odpaří a na zemi nezůstávají louže ani mokré povrchy.',
+        a: 'Správně navržené mlžení vytváří velmi jemné kapky přibližně 50–100 μm a je nastavené tak, aby se velká část vody odpařila ve vzduchu. Výsledný efekt závisí na teplotě, vlhkosti, větru, počtu trysek a jejich umístění. Návrh proto vždy přizpůsobujeme konkrétnímu prostoru.',
       },
       {
         q: 'Jaký tlak vody je potřeba pro mlžítka?',
-        a: 'Standardní přívod z vodovodní sítě (3–6 bar) postačí pro systémy s interním vysokotlakým čerpadlem. Čerpadlo zvýší tlak na 50–70 bar, který je potřebný pro správnou atomizaci kapének. Systémy bez vlastního čerpadla vyžadují min. 4 bar vstupního tlaku.',
+        a: 'Naše hlavní produktové řady jsou navržené jako nízkotlaké řešení napojené přímo na vodovodní síť bez vysokotlakého čerpadla. Konkrétní požadovaný tlak ověřujeme podle počtu trysek, délky rozvodů a místních podmínek. Před realizací doporučujeme změřit dostupný tlak a průtok.',
       },
       {
         q: 'Lze použít dešťovou nebo recyklovanou vodu?',
@@ -83,7 +83,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Jaká je spotřeba elektrické energie?',
-        a: 'Vysokotlaké čerpadlo má příkon typicky 300–900 W podle výkonu. Řídící jednotka s displejem spotřebuje cca 10–20 W. Celkový roční provoz při průměrném využití (3–4 hodiny denně, 120 dnů v roce) odpovídá spotřebě běžného vysavače.',
+        a: 'Samotné nízkotlaké mlžítko nevyžaduje elektrický příkon čerpadla. Elektřina je potřeba pouze pro zvolené ovládání, například Wi‑Fi ventil SUPLA nebo TUYA a případné doplňkové prvky. Díky tomu zůstává provoz technicky jednoduchý a energeticky úsporný.',
       },
     ],
   },
@@ -147,14 +147,21 @@ export default function Podpora() {
 
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Nejčastější dotazy</p>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4" style={{ letterSpacing: '-0.03em' }}>
-            Nejčastější dotazy
-          </h1>
-          <p className="text-slate-500 max-w-xl leading-relaxed font-light">
-            Odpovědi na nejčastější otázky ohledně instalace, údržby a provozu mlžných systémů, mlžítek - Mlžidla.cz. Nenašli jste odpověď? Kontaktujte nás.
-          </p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid gap-8 rounded-[2rem] border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-cyan-50/50 p-7 shadow-sm lg:grid-cols-[1.3fr_.7fr] lg:p-10">
+          <div>
+            <p className="text-xs font-mono tracking-widest uppercase text-cyan-700 mb-4">Podpora MLŽIDLA.cz</p>
+            <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4" style={{ letterSpacing: '-0.03em' }}>
+              Odpovědi, servis a technická pomoc na jednom místě.
+            </h1>
+            <p className="text-slate-500 max-w-2xl leading-relaxed font-light">
+              Rychlá orientace pro investory, správce, architekty i realizační firmy. Instalace, údržba, spotřeba vody, chytré ovládání i příprava místa bez zbytečného technického balastu.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <Link to="/servis-udrzba" className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-md"><Wrench size={19} className="mb-3 text-cyan-700" /><p className="font-semibold text-slate-900">Servis a údržba</p><p className="mt-1 text-xs leading-relaxed text-slate-500">Sezónní kontrola, čištění a řešení provozních stavů.</p></Link>
+            <Link to="/ke-stazeni" className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-md"><Package size={19} className="mb-3 text-cyan-700" /><p className="font-semibold text-slate-900">Dokumentace</p><p className="mt-1 text-xs leading-relaxed text-slate-500">Manuály, podklady a technické informace pro projekt.</p></Link>
+            <Link to="/smart-ovladani" className="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-md"><Droplets size={19} className="mb-3 text-cyan-700" /><p className="font-semibold text-slate-900">Chytré ovládání</p><p className="mt-1 text-xs leading-relaxed text-slate-500">SUPLA / TUYA, časové scénáře a řízení provozu.</p></Link>
+          </div>
         </motion.div>
 
         {/* Category anchors */}

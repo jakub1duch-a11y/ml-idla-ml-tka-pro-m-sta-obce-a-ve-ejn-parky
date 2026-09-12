@@ -41,7 +41,7 @@ Deno.serve(async (req) => {
 
     // Daily sessions + users
     const dailyRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
 
     // Top pages
     const pagesRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
 
     // Traffic sources
     const sourcesRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
 
     // Summary totals (incl. average session duration)
     const summaryRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -114,7 +114,7 @@ Deno.serve(async (req) => {
 
     // Top cities by sessions
     const citiesRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -131,7 +131,7 @@ Deno.serve(async (req) => {
 
     // New users (first-time visitors)
     const newUsersRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -145,7 +145,7 @@ Deno.serve(async (req) => {
 
     // Product page performance + engagement events by product URL.
     const productClicksRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -167,7 +167,7 @@ Deno.serve(async (req) => {
     const productClicksData = await productClicksRes.json();
 
     const productEventsRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -189,7 +189,7 @@ Deno.serve(async (req) => {
 
     // Reference page performance + engagement events by reference URL.
     const referenceClicksRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
@@ -211,7 +211,7 @@ Deno.serve(async (req) => {
     const referenceClicksData = await referenceClicksRes.json();
 
     const referenceEventsRes = await fetch(
-      `https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`,
+      `https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`,
       {
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },

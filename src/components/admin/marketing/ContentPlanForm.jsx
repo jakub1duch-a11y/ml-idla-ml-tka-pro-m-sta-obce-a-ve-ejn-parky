@@ -9,6 +9,7 @@ const BRAND_REFERENCE_URL = '/media/optimized/3865c06a7_ana.webp';
 
 export default function ContentPlanForm({ onCreated }) {
   const [form, setForm] = useState({ title: '', platform: 'instagram', caption: '', image_url: '', scheduled_date: '' });
+  const [productFocus, setProductFocus] = useState('');
   const [generatingText, setGeneratingText] = useState(false);
   const [generatingImage, setGeneratingImage] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -34,7 +35,7 @@ export default function ContentPlanForm({ onCreated }) {
     setGeneratingImage(true);
     try {
       const generateImageParams = /** @type {import('@base44/sdk').GenerateImageParams & { existing_image_urls?: string[] }} */ ({
-        prompt: `Prémiový Instagram reklamní vizuál pro českou značku MLŽIDLA® k tématu: ${form.title}. Použij přesné dodané logo MLŽIDLA jako čistý podpis značky. Zachovej identitu Deep Steel #0D2D38, Ocean Teal #0E5B67, Mist Aqua #61D5E5 a čistou bílou. Nerezové mlžítko integrované do moderního evropského veřejného prostoru, detail jemné ultra-fine vodní mlhy, lidé přirozeně zažívající úlevu od horka, realistická nerezová ocel, prémiová Apple/DJI cinematic estetika. Přidej elegantní zaoblené CTA tlačítko v Mist Aqua s přesným českým textem „VYŽÁDAT NABÍDKU“ a malou adresou „MLZIDLA.CZ/POPTAVKA“. Udržuj text i logo v bezpečné zóně, vysoký kontrast, bez dalších log a bez dalších nápisů. Čtvercová kompozice pro Instagram feed.`,
+        prompt: `Prémiový Instagram vizuál pro MLŽIDLA.cz k tématu: ${form.title}. Zvolený produkt: ${productFocus || 'urči podle tématu'}. Zachovej skutečnou geometrii, proporce, počet ramen a trubek, umístění trysek, AISI 316L, patku a ukotvení podle schválené reference. Nevymýšlej nové prvky ani varianty. Umísti produkt do moderního českého městského prostoru s lidmi pro měřítko a jemnou realistickou mlhou 50–100 μm. Použij Deep Steel #0D2D38, Ocean Teal #0E5B67, Mist Aqua #61D5E5, tlumenou přírodní zelenou #6F8F72 a bílou. Zelená má evokovat stromy, stín a úlevu ve veřejném prostoru, ne neověřené ekologické tvrzení. Zachovej přirozené světlo, kontakt se zemí a bezpečný prostor pro přesný nadpis a logo. Negeneruj dlouhé texty ani falešné logo; typografii vloží administrace. Portrétní kompozice 4:5 pro Instagram carousel.`,
         existing_image_urls: [BRAND_LOGO_URL, BRAND_REFERENCE_URL],
       });
       const res = await base44.integrations.Core.GenerateImage(generateImageParams);
@@ -82,6 +83,14 @@ export default function ContentPlanForm({ onCreated }) {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input required placeholder="Název příspěvku *" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputCls} />
+        <select value={productFocus} onChange={(e) => setProductFocus(e.target.value)} className={inputCls} aria-label="Produkt pro vizuál">
+          <option value="">Produkt podle tématu</option>
+          <option value="LINEA kulaté">LINEA kulaté</option>
+          <option value="OSTŘEV">OSTŘEV</option>
+          <option value="MRKEV">MRKEV</option>
+          <option value="BENDY">BENDY</option>
+          <option value="BRÁNA GATE">BRÁNA GATE</option>
+        </select>
         <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className={inputCls}>
           <option value="instagram">Instagram</option>
           <option value="facebook">Facebook</option>
@@ -89,6 +98,8 @@ export default function ContentPlanForm({ onCreated }) {
           <option value="blog">Blog</option>
         </select>
       </div>
+
+      <p className="-mt-2 text-[11px] leading-5 text-white/35">Výběr produktu řídí vizuální prompt. AI musí zachovat reálné proporce, trysky, patku i materiál podle reference.</p>
 
       <div className="flex gap-2">
         <button type="button" onClick={generateCaption} disabled={generatingText || !form.title}

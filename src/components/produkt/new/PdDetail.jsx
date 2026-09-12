@@ -8,10 +8,12 @@ const isVideo = (u) => /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(u || '');
  * s tenkými grafickými odkazovými linkami a mono popisy, plus dva výřezy detailu.
  */
 export default function PdDetail({ product }) {
-  const photos = useMemo(
-    () => [product.image_url, ...(product.gallery_urls || [])].filter(Boolean).filter((u) => !isVideo(u)),
-    [product]
-  );
+  // Preferujeme reálné fotografie realizací (.jpg) před rendery a studiovými náhledy.
+  const photos = useMemo(() => {
+    const all = [...new Set([...(product.gallery_urls || []), product.image_url].filter(Boolean))].filter((u) => !isVideo(u));
+    const score = (u) => (/generated_image|studio|render/i.test(u) ? 0 : /\.(jpe?g)(\?|#|$)/i.test(u) ? 2 : 1);
+    return all.sort((a, b) => score(b) - score(a));
+  }, [product]);
   const main = photos[0];
   if (!main) return null;
 
@@ -90,7 +92,7 @@ export default function PdDetail({ product }) {
                   src={crop.url}
                   alt={`${product.name} — výřez: ${crop.label}`}
                   loading="lazy"
-                  className="aspect-[16/9] w-full scale-[1.9] object-cover transition-transform duration-700 hover:scale-[2.1]"
+                  className="aspect-[16/9] w-full object-cover transition-transform duration-700 hover:scale-[1.08]"
                   style={{ objectPosition: crop.position }}
                 />
                 <span className="absolute left-3 top-3 border border-[#22D3EE]/40 bg-[#0A1628]/80 px-2 py-1 font-mono text-[10px] uppercase tracking-[.14em] text-[#22D3EE] backdrop-blur-sm">

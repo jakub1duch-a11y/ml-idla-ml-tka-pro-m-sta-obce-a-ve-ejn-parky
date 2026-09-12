@@ -22,6 +22,7 @@ export default function AiSuggestionsTab({ onPlanCreated }) {
       ]);
       const res = await base44.integrations.Core.InvokeLLM({
         prompt: `Jsi seniorní marketingový stratég pro MLŽIDLA.cz. Navrhni 6 konkrétních akcí, které lze opravdu vykonat v Marketing Hubu. Vybírej mezi platformami instagram, facebook, google_ads a blog. U každé navrhni realistický formát, stručný finální text/caption, CTA a vizuální prompt. Nevymýšlej neověřené technické hodnoty. Produkty v katalogu: ${products.length}. Poptávky za 30 dní: ${inquiries.length}. Existující marketingové položky: ${posts.length}. Preferuj akce s přímou vazbou na poptávky, produktové návštěvy, reálné reference, smart řízení a sezónní B2B příležitosti.`,
+        model: 'gemini_3_flash',
         response_json_schema: { type:'object', properties:{ suggestions:{ type:'array', items:{ type:'object', properties:{ title:{type:'string'}, description:{type:'string'}, priority:{type:'string',enum:['vysoká','střední','nízká']}, platform:{type:'string',enum:['instagram','facebook','google_ads','blog']}, post_format:{type:'string'}, caption:{type:'string'}, cta_label:{type:'string'}, cta_url:{type:'string'}, visual_prompt:{type:'string'} }, required:['title','description','priority','platform','caption'] } } }, required:['suggestions'] }
       });
       setSuggestions(Array.isArray(res?.suggestions) ? res.suggestions : []);

@@ -8,8 +8,9 @@ export default async function (req) {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
-    const { realizaceId, caption, imageUrl } = await req.json();
+    const { realizaceId, caption, imageUrl, confirmed = false } = await req.json();
     if (!realizaceId) return Response.json({ error: 'Chybí ID realizace' }, { status: 400 });
+    if (!confirmed) return Response.json({ error: 'Publikace vyžaduje výslovné potvrzení administrátora.' }, { status: 400 });
 
     const realizace = await base44.asServiceRole.entities.Realizace.get(realizaceId);
     if (!realizace) return Response.json({ error: 'Realizace nenalezena' }, { status: 404 });

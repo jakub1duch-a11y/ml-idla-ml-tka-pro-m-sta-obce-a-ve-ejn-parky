@@ -21,7 +21,8 @@ export default function ContentPlanForm({ onCreated }) {
     setGeneratingText(true);
     try {
       const res = await base44.integrations.Core.InvokeLLM({
-        prompt: `Jsi seniorní creative director značky MLŽIDLA® pro Instagram @mlzidla. Vytvoř profesionální český reklamní caption k tématu: "${form.title}". Cílová skupina: architekti, města, obce, hotely a prémiová gastronomie. Struktura: silný scroll-stopping hook; 2–3 konkrétní přínosy (ochlazení prostoru, nerezová odolnost, nízká spotřeba, instalace bez čerpadla podle kontextu); krátký důkaz nebo scénář využití; jasná výzva k návštěvě https://mlzidla.cz a hlavní CTA k nezávazné poptávce na https://mlzidla.cz/poptavka. Tón prémiový, věcný a sebevědomý, bez prázdných superlativů. Použij přirozené odstavce a zakonči 5–7 relevantními hashtagy včetně #mlzidla, #ochlazenimesta a #mestskaarchitektura.`, 
+        prompt: `Jsi seniorní creative director značky MLŽIDLA® pro Instagram @mlzidla. Vytvoř profesionální český reklamní caption k tématu: "${form.title}". Cílová skupina: architekti, města, obce, hotely a prémiová gastronomie. Struktura: silný scroll-stopping hook; 2–3 konkrétní přínosy (ochlazení prostoru, nerezová odolnost, nízká spotřeba, instalace bez čerpadla podle kontextu); krátký důkaz nebo scénář využití; jasná výzva k návštěvě https://mlzidla.cz a hlavní CTA k nezávazné poptávce na https://mlzidla.cz/poptavka. Tón prémiový, věcný a sebevědomý, bez prázdných superlativů. Použij přirozené odstavce a zakonči 5–7 relevantními hashtagy včetně #mlzidla, #ochlazenimesta a #mestskaarchitektura.`,
+        model: 'gemini_3_flash',
       });
       const caption = typeof res === 'string' ? res : JSON.stringify(res, null, 2);
       setForm((f) => ({ ...f, caption }));

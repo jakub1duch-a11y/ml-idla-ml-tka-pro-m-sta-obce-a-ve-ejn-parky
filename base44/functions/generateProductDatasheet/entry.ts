@@ -17,12 +17,12 @@ const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d6
 const AUDIENCE = {
   city_public: {
     label: 'Města · obce · náměstí · parky',
-    headline: 'Ochlazení veřejného prostoru s důrazem na provoz, bezpečnost a dlouhou životnost.',
+    headline: 'Ochlazovací zóna jako přirozená součást architektury — místo, kde lidé mohou v horku zůstat déle a veřejný prostor dál žije.',
     benefits: [
-      'Reprezentativní architektonický prvek pro veřejný prostor.',
-      'Nízkotlaký provoz bez vysokotlakého čerpadla.',
-      'Možnost Smart řízení, harmonogramů, senzorů a kontroly spotřeby.',
-      'Projektové kotvení, servisní přístup a řešení vhodné pro dlouhodobý provoz.'
+      'Funkční městská socha / architektonický chladicí objekt, pokud to charakter projektu umožňuje.',
+      'Lokální osvěžení pobytové zóny bez vysokotlakého čerpadla.',
+      'Možnost Smart řízení SUPLA, harmonogramů, senzorů a kontroly spotřeby.',
+      'Projektové začlenění, servisní přístup a řešení připravené pro dlouhodobý provoz.'
     ]
   },
   residential: {
@@ -59,10 +59,10 @@ const AUDIENCE = {
     label: 'Zakázkový projekt',
     headline: 'Řešení navržené podle konkrétního prostoru, funkce a požadovaného vizuálního charakteru.',
     benefits: [
-      'Návrh vyrobitelného tvaru podle zadání zákazníka.',
+      'Návrh vyrobitelného tvaru podle zadání zákazníka a charakteru místa.',
+      'Možnost pojmout prvek jako funkční nerezovou sochu s reálnou chladicí funkcí.',
       'Více vizualizačních variant pro výběr směru před výrobou.',
-      'Technické dopracování kotvení, rozvodů, trysek a řízení.',
-      'Možnost návaznosti na Smart systém, senzory a další moduly.'
+      'Technické dopracování kotvení, rozvodů, trysek a Smart řízení.'
     ]
   }
 };
@@ -347,7 +347,7 @@ export default async function(req) {
         doc.setTextColor(...petrol); doc.setFontSize(6.2); doc.text('DOPORUČENÉ KONFIGURACE', M + 101, y + 62);
         doc.setTextColor(...muted); doc.setFontSize(6); doc.text(doc.splitTextToSize(configurations.join(' · '), 70), M + 101, y + 71);
       }
-      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text('Pozn.: Neznámé technické hodnoty zůstávají prázdné a nejsou odvozovány z podobných produktů.', M, 247);
+      doc.setTextColor(...muted); doc.setFontSize(5.8); doc.text('Pozn.: Neznámé technické hodnoty zůstávají prázdné a nejsou odvozovány z podobných produktů. Use null when unknown / do not infer.', M, 247);
       addFooter(doc);
 
       doc.addPage();
@@ -384,7 +384,7 @@ export default async function(req) {
       doc.setTextColor(190, 220, 224); doc.setFontSize(5.9); doc.text('Technik projektu: Ing. Radek Meduna  |  +420 774 700 390  |  meduna@holmtec.cz', M + 7, y + 44);
       await addQr(doc, 'https://mlzidla.cz/poptavka', W - M - 30, 246, 25);
       doc.setTextColor(...petrol); doc.setFontSize(7); doc.text('Pošlete prostor nebo zadání.', M, 250);
-      doc.setTextColor(...muted); doc.setFontSize(6.1); doc.text('Vyhodnotíme vhodnou konfiguraci, vyrobitelnost a připravíme cenovou nabídku.', M, 258);
+      doc.setTextColor(...muted); doc.setFontSize(6.1); doc.text('Vyhodnotíme vhodnou konfiguraci, vyrobitelnost a připravíme cenovou nabídku k vašemu schválení. Nic se neodesílá automaticky.', M, 258);
       addFooter(doc);
 
       const output = new Uint8Array(doc.output('arraybuffer'));

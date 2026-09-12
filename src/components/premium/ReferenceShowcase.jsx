@@ -88,6 +88,22 @@ export default function ReferenceShowcase() {
   const lightboxNext = () => setLightbox((current) => current ? { ...current, index: (current.index + 1) % current.photos.length } : current);
   const lightboxPrev = () => setLightbox((current) => current ? { ...current, index: (current.index - 1 + current.photos.length) % current.photos.length } : current);
 
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setLightbox(null);
+      if (event.key === 'ArrowRight') lightboxNext();
+      if (event.key === 'ArrowLeft') lightboxPrev();
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [lightbox]);
+
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
       <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
@@ -171,21 +187,37 @@ export default function ReferenceShowcase() {
         </div>
       )}
 
-      {/* Lightbox */}
+      {/* Modern lightbox */}
       {lightbox && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#041c28]/95 backdrop-blur-sm" onClick={() => setLightbox(null)}>
-          <button type="button" onClick={() => setLightbox(null)} className="absolute right-5 top-5 inline-flex items-center justify-center rounded-full bg-white/10 p-2.5 text-white transition hover:bg-white/20" aria-label="Zavřít"><X size={22} /></button>
-          <button type="button" onClick={(e) => { e.stopPropagation(); lightboxPrev(); }} className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 md:left-8" aria-label="Předchozí"><ChevronLeft size={24} /></button>
-          <button type="button" onClick={(e) => { e.stopPropagation(); lightboxNext(); }} className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 md:right-8" aria-label="Další"><ChevronRight size={24} /></button>
-          <div className="flex max-h-[88vh] max-w-5xl flex-col items-center" onClick={(e) => e.stopPropagation()}>
-            <img src={lightbox.photos[lightbox.index]} alt={`${lightbox.project.name} — foto ${lightbox.index + 1}`} className="max-h-[78vh] w-auto max-w-full object-contain" />
-            <div className="mt-4 flex items-center justify-between gap-6 text-white">
-              <div className="text-left">
-                <p className="font-heading text-lg">{lightbox.project.name}</p>
-                <p className="text-sm text-white/70">{CATEGORY_TAGLINE[lightbox.project.category] || ''}</p>
-              </div>
-              <span className="font-mono text-sm text-white/60">{lightbox.index + 1} / {lightbox.photos.length}</span>
+        <div className="fixed inset-0 z-[100] bg-[#031722]/96 backdrop-blur-xl" onClick={() => setLightbox(null)} role="dialog" aria-modal="true" aria-label={`Galerie: ${lightbox.project.name}`}>
+          <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between border-b border-white/10 bg-black/15 px-4 py-3 text-white md:px-7">
+            <div className="min-w-0">
+              <p className="truncate font-heading text-base md:text-lg">{lightbox.project.name}</p>
+              <p className="hidden text-xs text-white/55 sm:block">{CATEGORY_TAGLINE[lightbox.project.category] || ''}</p>
             </div>
+            <div className="ml-4 flex items-center gap-3">
+              <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/70">{lightbox.index + 1} / {lightbox.photos.length}</span>
+              <button type="button" onClick={() => setLightbox(null)} className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/8 text-white transition hover:bg-white/15" aria-label="Zavřít galerii"><X size={20} /></button>
+            </div>
+          </div>
+
+          <button type="button" onClick={(e) => { e.stopPropagation(); lightboxPrev(); }} className="absolute left-3 top-1/2 z-20 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/25 text-white shadow-lg backdrop-blur transition hover:bg-white/15 md:left-6 md:h-12 md:w-12" aria-label="Předchozí fotografie"><ChevronLeft size={24} /></button>
+          <button type="button" onClick={(e) => { e.stopPropagation(); lightboxNext(); }} className="absolute right-3 top-1/2 z-20 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/25 text-white shadow-lg backdrop-blur transition hover:bg-white/15 md:right-6 md:h-12 md:w-12" aria-label="Další fotografie"><ChevronRight size={24} /></button>
+
+          <div className="flex h-full flex-col items-center justify-center px-4 pb-24 pt-20 md:px-20" onClick={(e) => e.stopPropagation()}>
+            <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+              <img src={lightbox.photos[lightbox.index]} alt={`${lightbox.project.name} — foto ${lightbox.index + 1}`} className="max-h-full max-w-full select-none object-contain shadow-2xl" draggable="false" />
+            </div>
+
+            {lightbox.photos.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 z-20 flex max-w-[92vw] -translate-x-1/2 gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-black/35 p-2 shadow-xl backdrop-blur-xl md:bottom-5">
+                {lightbox.photos.map((photo, index) => (
+                  <button key={photo} type="button" onClick={() => setLightbox((current) => current ? { ...current, index } : current)} className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-xl border transition md:h-16 md:w-24 ${index === lightbox.index ? 'border-cyan-300 ring-2 ring-cyan-300/30' : 'border-white/10 opacity-60 hover:opacity-100'}`} aria-label={`Zobrazit fotografii ${index + 1}`}>
+                    <img src={photo} alt="" className="h-full w-full object-cover" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

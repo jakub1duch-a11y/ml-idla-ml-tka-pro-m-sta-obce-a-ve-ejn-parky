@@ -314,7 +314,8 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       try {
         approvedVisualizationAssets = (await base44.entities.VisualizationAsset.filter({ source_inquiry_id: selected.id, approved_for_presentation: true })) || [];
       } catch (technicalDataError) { console.warn('Approved visualization data unavailable', technicalDataError); }
-      const visualizationUrl = visualizationOverride || visualizationOverrides[0] || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || offerAttachments.find((item) => item.asset_type === 'generated_visualization' && item.file_url)?.file_url || '';
+      // Automatická nabídka smí použít pouze vizualizaci schválenou pro prezentaci.
+      const visualizationUrl = visualizationOverride || visualizationOverrides[0] || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || '';
       if (options.auto && !visualizationUrl) {
         throw new Error('Kompletní automatická nabídka vyžaduje alespoň jednu projektovou vizualizaci. Vizualizaci se nepodařilo vytvořit — spusťte vytvoření nabídky znovu.');
       }
@@ -731,7 +732,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           security_note: 'QR kód má používat neveřejný projektový odkaz / shared token, nikoli osobní údaje v URL.'
         },
       });
-      if (prepared.projectOrder?.id) await base44.entities.ProjectOrder.update(prepared.projectOrder.id, { status: 'sent', sender_email: senderEmail, bcc_recipients: BCC });
+      if (prepared.projectOrder?.id) await base44.entities.ProjectOrder.update(prepared.projectOrder.id, { status: 'pending_approval', sender_email: senderEmail, bcc_recipients: BCC });
       onSent(); setMessage(''); setSubject(''); setAttachments([]); setPrepared(null); setApprovedToSend(false);
     } catch (requestError) { setError(errorMessage(requestError)); } finally { setBusy(''); }
   };
@@ -985,13 +986,13 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
             {testSentTo && <p className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">Testovací e-mail byl odeslán na {testSentTo}.</p>}
           </div>}
 
-          {followUpType && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={followUpApproved} onChange={(e) => setFollowUpApproved(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji follow-up zprávu k odeslání.</strong><br/><span className="text-xs text-slate-500">E-mail použije jednotnou profesionální šablonu MLŽIDLA®, shrnutí projektu, kontaktní kartu a firemní patičku.</span></span></label>}
-          {prepared && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={approvedToSend} onChange={(e) => setApprovedToSend(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji tuto verzi nabídky k odeslání.</strong><br/><span className="text-xs text-slate-500">Bez tohoto potvrzení systém nabídku zákazníkovi neodešle.</span></span></label>}
+          {followUpType && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={followUpApproved} onChange={(e) => setFollowUpApproved(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji vytvoření follow-up konceptu v Gmailu.</strong><br/><span className="text-xs text-slate-500">E-mail použije jednotnou profesionální šablonu MLŽIDLA®, shrnutí projektu, kontaktní kartu a firemní patičku.</span></span></label>}
+          {prepared && <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700"><input type="checkbox" checked={approvedToSend} onChange={(e) => setApprovedToSend(e.target.checked)} className="mt-0.5 h-4 w-4"/><span><strong>Schvaluji tuto verzi nabídky k vytvoření konceptu v Gmailu.</strong><br/><span className="text-xs text-slate-500">Systém vytvoří pouze koncept s přílohami; zákazníkovi se nic neodešle.</span></span></label>}
 
           {error && <p role="alert" className="mt-3 border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{error}</p>}
           <div className="mt-4 flex flex-wrap gap-3">
-            {followUpType && <button onClick={sendFollowUp} disabled={busy === 'followup-send' || !followUpApproved || !subject || !message} className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground disabled:opacity-40"><Send size={15}/>{busy === 'followup-send' ? 'Odesílám…' : 'Schválit a odeslat follow-up'}</button>}
-            <button onClick={sendReply} disabled={busy === 'send' || !prepared || !approvedToSend || !subject || !message} className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-sm font-bold text-white disabled:opacity-40"><Send size={15}/>{busy === 'send' ? 'Odesílám…' : 'Schválit a odeslat nabídku'}</button>
+            {followUpType && <button onClick={sendFollowUp} disabled={busy === 'followup-send' || !followUpApproved || !subject || !message} className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground disabled:opacity-40"><Send size={15}/>{busy === 'followup-send' ? 'Vytvářím koncept…' : 'Schválit a vytvořit follow-up koncept'}</button>}
+            <button onClick={sendReply} disabled={busy === 'send' || !prepared || !approvedToSend || !subject || !message} className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-sm font-bold text-white disabled:opacity-40"><Send size={15}/>{busy === 'send' ? 'Vytvářím koncept…' : 'Schválit a vytvořit koncept Gmailu'}</button>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ const INDUSTRIES = [
     icon: Building2,
     title: 'Města a obce',
     desc: 'Náměstí, promenády, ulice — ochlazení, které zvedne komfort návštěvníků i provozuschopnost prostoru.',
-    href: '/kategorie/mesta-obce',
+    href: '/mlzitka-pro-mesta-obce',
   },
   {
     icon: Trees,

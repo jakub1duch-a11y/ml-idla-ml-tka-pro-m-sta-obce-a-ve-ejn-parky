@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PlayCircle, Sparkles, Wifi, Building2, Trees } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
@@ -11,6 +11,32 @@ const TRUST = [
 
 export default function HomeHero() {
   const [videoReady, setVideoReady] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const saveData = connection?.saveData;
+    const slowNetwork = ['slow-2g', '2g'].includes(connection?.effectiveType);
+
+    if (reducedMotion || saveData || slowNetwork) return undefined;
+
+    let timeoutId;
+    let idleId;
+    const startVideo = () => setShouldLoadVideo(true);
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(startVideo, { timeout: 650 });
+    } else {
+      timeoutId = window.setTimeout(startVideo, 180);
+    }
+
+    return () => {
+      if (idleId) window.cancelIdleCallback?.(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-[#f6fafb] text-[#0b2d38]">
@@ -57,20 +83,25 @@ export default function HomeHero() {
             decoding="async"
             className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-0' : 'opacity-100'}`}
           />
-          <video
-            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster={VIDEO_ASSETS.heroCityPromo.poster}
-            onLoadedData={() => setVideoReady(true)}
-            onCanPlay={() => setVideoReady(true)}
-            aria-label="Promo video MLŽIDLA pro městské ochlazování"
-          >
-            <source src={VIDEO_ASSETS.heroCityPromo.src} type="video/mp4" />
-          </video>
+          {shouldLoadVideo && !videoFailed && (
+            <video
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={VIDEO_ASSETS.heroCityPromo.poster}
+              onPlaying={() => setVideoReady(true)}
+              onError={() => {
+                setVideoFailed(true);
+                setVideoReady(false);
+              }}
+              aria-label="Promo video MLŽIDLA pro městské ochlazování"
+            >
+              <source src={VIDEO_ASSETS.heroCityPromo.src} type="video/mp4" />
+            </video>
+          )}
 
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,27,35,.04)_0%,rgba(5,27,35,.12)_48%,rgba(5,27,35,.78)_100%)]" />
           <div className="absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-[#f6fafb] via-[#f6fafb]/30 to-transparent lg:block" />

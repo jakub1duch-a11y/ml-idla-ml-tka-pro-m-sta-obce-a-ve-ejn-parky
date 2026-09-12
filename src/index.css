@@ -112,6 +112,10 @@
 }
 
 @layer utilities {
+  /* Prémiově architektonická typografie — nadpisy nesmí být stažené do sebe. */
+  h1, h2, h3 {
+    letter-spacing: 0.04em !important;
+  }
   .text-measure {
     max-width: 60ch;
   }

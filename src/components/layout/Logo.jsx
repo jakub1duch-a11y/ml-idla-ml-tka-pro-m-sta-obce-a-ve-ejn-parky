@@ -9,7 +9,7 @@ export default function Logo({ size = 'md' }) {
       <img
         src={LOGO_URL}
         alt="MLŽIDLA — mlžné oblouky a mlžítka"
-        className={`${compact ? 'h-10' : 'h-14'} w-auto shrink-0 bg-[#F4FAFC] px-2.5 py-1 object-contain transition-transform duration-700 ease-out motion-safe:group-hover/mlz-logo:scale-[1.03]`}
+        className={`${compact ? 'h-12' : 'h-16'} w-auto shrink-0 bg-[#F4FAFC] px-1.5 py-0.5 object-contain transition-transform duration-700 ease-out motion-safe:group-hover/mlz-logo:scale-[1.03]`}
       />
     </span>
   );

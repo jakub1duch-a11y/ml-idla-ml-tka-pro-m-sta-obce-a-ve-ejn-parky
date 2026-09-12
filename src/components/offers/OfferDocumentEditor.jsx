@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { CheckCircle2, Download, ExternalLink, FileText, Loader2, RefreshCw, Sparkles } from 'lucide-react';
+import KalkulatorRadekChat from '@/components/offers/KalkulatorRadekChat';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 
@@ -110,6 +111,10 @@ export default function OfferDocumentEditor({ prepared, selected, selectedProduc
   const updateBenefit = (i, value) => setContent((c) => { const next = [...(c.benefits || [])]; next[i] = value; return { ...c, benefits: next }; });
   const addBenefit = () => setContent((c) => ({ ...c, benefits: [...(c.benefits || []), ''] }));
   const removeBenefit = (i) => setContent((c) => ({ ...c, benefits: (c.benefits || []).filter((_, idx) => idx !== i) }));
+  const applyRadek = ({ price, ...fields }) => {
+    setContent((c) => ({ ...c, ...Object.fromEntries(Object.entries(fields).filter(([, v]) => v != null && v !== '')) }));
+    if (Number(price) > 0) setPriceInput(Number(price));
+  };
 
   const regenerate = () => {
     if (!onRegenerate) return;
@@ -137,6 +142,8 @@ export default function OfferDocumentEditor({ prepared, selected, selectedProduc
             <p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-800">Editor nabídky</p>
             <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-200">{prepared?.quoteNumber || '—'}</span>
           </div>
+
+          <KalkulatorRadekChat inquiry={selected} product={selectedProduct} current={{ ...content, price: priceInput }} onApply={applyRadek} />
 
           <div>
             <label className={labelCls}>Název nabídky</label>

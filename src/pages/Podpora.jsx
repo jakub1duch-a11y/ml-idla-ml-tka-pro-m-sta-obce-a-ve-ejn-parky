@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail } from 'lucide-react';
+import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail, MessageCircle, Sparkles, ShieldCheck } from 'lucide-react';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 const FAQ_SECTIONS = [
@@ -214,6 +214,31 @@ export default function Podpora() {
             </div>
           </motion.section>
         ))}
+
+        {/* WhatsApp Business AI support */}
+        <motion.section
+          id="whatsapp-ai"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="overflow-hidden rounded-[2rem] border border-cyan-200 bg-gradient-to-br from-cyan-950 via-slate-900 to-slate-950 p-8 text-white lg:p-10"
+        >
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
+            <div>
+              <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] text-cyan-300"><MessageCircle size={14} /> WhatsApp Business podpora</p>
+              <h2 className="mt-4 max-w-2xl font-heading text-3xl font-light tracking-tight lg:text-4xl">Rychlá pomoc k mlžítku přímo ve WhatsAppu.</h2>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70">Připravili jsme podporu pro otázky k instalaci, údržbě, tryskám, filtraci, zimování a chytrému ovládání. Při obchodních nebo technických rozhodnutích odpověď vždy ověří náš tým.</p>
+              <div className="mt-6 flex flex-wrap gap-3 text-xs text-white/75">
+                <span className="flex items-center gap-2"><Sparkles size={14} className="text-cyan-300" /> AI orientace v problému</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-cyan-300" /> předání člověku</span>
+              </div>
+              <a href="https://wa.me/420774700390?text=Dobr%C3%BD%20den%2C%20pot%C5%99ebuji%20poradit%20s%20ml%C5%BE%C3%ADtkem." target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-200">Otevřít WhatsApp Business <ArrowRight size={15} /></a>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              {['Instalace a příprava místa', 'Čištění trysek a filtrů', 'SUPLA / TUYA a scénáře', 'Zimování a servis'].map((label) => <div key={label} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">{label}</div>)}
+            </div>
+          </div>
+        </motion.section>
 
         <ReviewsSection />
 

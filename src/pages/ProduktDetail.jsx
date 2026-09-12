@@ -9,6 +9,7 @@ import PdHero from '@/components/produkt/new/PdHero';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdVariants from '@/components/produkt/new/PdVariants';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
+import PdWireframe from '@/components/produkt/new/PdWireframe';
 import PdSmartControl from '@/components/produkt/new/PdSmartControl';
 import PdTechSheet from '@/components/produkt/new/PdTechSheet';
 import PdDetail from '@/components/produkt/new/PdDetail';
@@ -71,6 +72,7 @@ export default function ProduktDetail() {
       <PdBenefits product={product} />
       <PdMediaGallery product={product} />
       <PdSpecs product={product} />
+      <PdWireframe product={product} />
       <PdTechSheet product={product} />
       <PdVariants product={product} />
       <PdSmartControl product={product} />

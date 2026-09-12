@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ScanLine, Camera, Sparkles, ArrowRight } from 'lucide-react';
 
-const AR_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ba542cee6_generated_image.png';
-
 const STEPS = [
   { icon: Camera, title: 'Vyfoťte prostor', text: 'Terasu, náměstí nebo zahradu tak, jak dnes vypadá.' },
-  { icon: ScanLine, title: 'Umístíme mlžítko', text: 'Do fotografie vložíme přesnou geometrii vybraného produktu.' },
-  { icon: Sparkles, title: 'Uvidíte výsledek', text: 'Dostanete vizualizaci s mlhou v reálném měřítku vašeho místa.' },
+  { icon: ScanLine, title: 'Vložíme produkt', text: 'Do fotografie umístíme skutečnou geometrii výrobku.' },
+  { icon: Sparkles, title: 'Uvidíte výsledek', text: 'Vizualizace s mlhou v reálném měřítku vašeho místa.' },
 ];
 
+const isPhoto = (u) => typeof u === 'string' && /\.(jpe?g|png|webp)(\?|#|$)/i.test(u);
+
 export default function PdArPromo({ product }) {
+  const gallery = (product.gallery_urls || []).filter(isPhoto);
+  const screenPhoto = product.hero_product_image_url || product.image_url || gallery[0];
+  const scenePhoto = gallery.find((u) => /\.jpe?g(\?|#|$)/i.test(u)) || product.hero_background_url || product.image_url;
+
   return (
     <div className="relative overflow-hidden border border-white/10 bg-[#0A1628]">
       <div className="grid lg:grid-cols-[1.05fr_1fr]">
@@ -23,7 +27,7 @@ export default function PdArPromo({ product }) {
             Uvidíte {product.name} u sebe.<br /><span className="text-[#22D3EE]">Ještě než ho vyrobíme.</span>
           </h3>
           <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-white/70">
-            Stačí fotografie z mobilu. Do vašeho prostoru vložíme skutečnou geometrii produktu a uvidíte, jak mlha vypadá právě u vás — na dlažbě, v trávě nebo pod pergolou.
+            Stačí fotografie z mobilu. Do vašeho prostoru vložíme skutečnou geometrii produktu — bez úprav tvaru — a uvidíte, jak mlha vypadá právě u vás.
           </p>
 
           <ol className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -60,18 +64,34 @@ export default function PdArPromo({ product }) {
           </div>
         </div>
 
-        <div className="relative min-h-[320px] overflow-hidden lg:min-h-full">
-          <motion.img
-            src={AR_IMAGE}
-            alt="Ruka s mobilem zobrazuje mlžítko umístěné do reálného prostoru"
-            loading="lazy"
-            initial={{ scale: 1.08, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
+        {/* Reálná fotografie prostoru + mobil se skutečnou fotografií produktu */}
+        <div className="relative min-h-[360px] overflow-hidden lg:min-h-full">
+          {scenePhoto && (
+            <img src={scenePhoto} alt={`${product.name} – reálný prostor realizace`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          )}
+          <div className="absolute inset-0 bg-[#0A1628]/45" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,22,40,.9)_0%,rgba(10,22,40,.35)_45%,rgba(10,22,40,.1)_100%)]" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 28, rotate: -4 }}
+            whileInView={{ opacity: 1, y: 0, rotate: -4 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,22,40,.85)_0%,rgba(10,22,40,.25)_38%,rgba(10,22,40,0)_100%)] lg:bg-[linear-gradient(90deg,rgba(10,22,40,1)_0%,rgba(10,22,40,.35)_28%,rgba(10,22,40,0)_65%)]" />
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-1/2 top-1/2 h-[70%] max-h-[380px] w-[46%] max-w-[210px] -translate-x-1/2 -translate-y-1/2 rounded-[26px] border-[3px] border-[#0A1628] bg-[#0A1628] p-1.5 shadow-[0_30px_70px_rgba(0,0,0,.55)]"
+          >
+            <div className="relative h-full w-full overflow-hidden rounded-[20px] bg-[#0A1628]">
+              {screenPhoto && (
+                <img src={screenPhoto} alt={`${product.name} – náhled produktu na mobilu`} loading="lazy" className="h-full w-full object-cover" />
+              )}
+              <span className="absolute left-2 top-2 inline-flex items-center gap-1 bg-[#22D3EE] px-1.5 py-0.5 font-mono text-[8px] font-bold tracking-[.1em] text-[#0A1628]">AR</span>
+              <div className="absolute inset-3 border border-[#22D3EE]/70" />
+              <div className="absolute inset-x-0 bottom-0 bg-[#0A1628]/80 px-2 py-1.5 backdrop-blur-sm">
+                <p className="font-mono text-[8px] tracking-[.12em] text-[#22D3EE]">UMÍSTĚNO VE VAŠEM PROSTORU</p>
+              </div>
+            </div>
+            <span className="absolute left-1/2 top-2.5 h-1 w-8 -translate-x-1/2 rounded-full bg-white/20" />
+          </motion.div>
+
           <motion.span
             animate={{ opacity: [0.35, 1, 0.35] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}

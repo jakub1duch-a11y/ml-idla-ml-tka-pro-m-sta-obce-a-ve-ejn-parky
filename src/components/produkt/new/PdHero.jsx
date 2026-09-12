@@ -34,11 +34,14 @@ export default function PdHero({ product }) {
   const heroProductIsPhoto = Boolean(heroProduct && /\.(jpe?g|webp)(\?|#|$)/i.test(heroProduct));
 
   const media = useMemo(() => {
+    const ownVideo = product.video_url && isVideo(product.video_url)
+      ? [{ type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} – video` }]
+      : [];
     const items = [
+      // BENDY: hero startuje reálným videem výrobku, ne statickou fotografií
+      ...(isBendy ? ownVideo : []),
       ...(product.image_url ? [{ type: 'image', url: product.image_url }] : []),
-      ...(product.video_url && isVideo(product.video_url)
-        ? [{ type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} – video` }]
-        : []),
+      ...(isBendy ? [] : ownVideo),
       ...(product.gallery_urls || [])
         .filter(Boolean)
         .filter(isVideo)
@@ -63,7 +66,7 @@ export default function PdHero({ product }) {
   }, [product.slug]);
 
   const hero = media[active] || media[0];
-  const showVerifiedComposite = hasVerifiedComposite && active === 0;
+  const showVerifiedComposite = hasVerifiedComposite && active === 0 && hero?.type === 'image';
   const prev = () => setActive((i) => (i - 1 + media.length) % media.length);
   const next = () => setActive((i) => (i + 1) % media.length);
 

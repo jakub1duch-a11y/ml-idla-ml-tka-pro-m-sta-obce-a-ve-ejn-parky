@@ -381,9 +381,10 @@ async function getMetaAds(base44: any) {
 async function getGoogleAdsSetup(base44: any) {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+    const propertyId = await resolveGa4Property(accessToken);
     const [keys, links] = await Promise.all([
-      fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/keyEvents?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
-      fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/googleAdsLinks?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
+      fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${propertyId}/keyEvents?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
+      fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${propertyId}/googleAdsLinks?pageSize=100`, { headers: { Authorization: `Bearer ${accessToken}` } }),
     ]);
     let keyEvents = Array.isArray(keys.keyEvents) ? keys.keyEvents : [];
     const googleAdsLinks = Array.isArray(links.googleAdsLinks) ? links.googleAdsLinks : [];
@@ -394,7 +395,7 @@ async function getGoogleAdsSetup(base44: any) {
     // makes sure the primary lead event exists as a GA4 Key event.
     if (!generateLead) {
       try {
-        generateLead = await fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${GA4_PROPERTY_ID}/keyEvents`, {
+        generateLead = await fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${propertyId}/keyEvents`, {
           method: 'POST',
           headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({ eventName: 'generate_lead', countingMethod: 'ONCE_PER_EVENT' }),

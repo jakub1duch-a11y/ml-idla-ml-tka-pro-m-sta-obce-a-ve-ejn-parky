@@ -13,7 +13,7 @@ const USE_CASES = [
 
 
 const B2G_LINKS = [
-{ label: 'Města a obce', path: '/kategorie/mesta-obce' },
+{ label: 'Města a obce', path: '/mlzitka-pro-mesta-obce' },
 { label: 'Komerční prostory', path: '/kategorie/komercni' },
 { label: 'Eventy & festivaly', path: '/kategorie/eventy' },
 { label: 'Pro architekty', path: '/kategorie/architekti' }];

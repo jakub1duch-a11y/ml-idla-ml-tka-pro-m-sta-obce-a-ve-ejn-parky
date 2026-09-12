@@ -693,7 +693,17 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         discount_percent: 0,
         previous_total: 0,
         new_total: 0,
-        attachments: prepared ? attachments : [],
+        attachments: prepared ? [
+          ...attachments,
+          ...(prepared.approvedVisualizationAssets || []).map((item) => ({
+            ...item,
+            asset_type: 'generated_visualization',
+            file_url: item.file_url || item.image_url,
+            file_name: item.file_name || item.title || 'schvalena-vizualizace.webp',
+            approved_for_presentation: true,
+            approval_status: 'approved',
+          })),
+        ] : [],
         test_email: recipient,
         is_test: true,
       });
@@ -713,7 +723,18 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         quote_pdf_base64: prepared.quote?.pdf_base64, quote_filename: prepared.quote?.filename,
         presentation_pdf_base64: prepared.presentation?.presentation_pdf_base64, presentation_filename: prepared.presentation?.presentation_filename,
         presentation_url: prepared.presentation?.presentation_url || '', quote_pdf_url: prepared.quoteDriveUrl || '', portal_url: 'https://mlzidla.cz/muj-projekt',
-        valid_until: prepared.validUntil.toISOString(), quote_number: prepared.quoteNumber, attachments,
+        valid_until: prepared.validUntil.toISOString(), quote_number: prepared.quoteNumber,
+        attachments: [
+          ...attachments,
+          ...(prepared.approvedVisualizationAssets || []).map((item) => ({
+            ...item,
+            asset_type: 'generated_visualization',
+            file_url: item.file_url || item.image_url,
+            file_name: item.file_name || item.title || 'schvalena-vizualizace.webp',
+            approved_for_presentation: true,
+            approval_status: 'approved',
+          })),
+        ],
         project_summary: selected.message || '', email_type: 'offer',
         offer_final_page: {
           portal_url: 'https://mlzidla.cz/muj-projekt',

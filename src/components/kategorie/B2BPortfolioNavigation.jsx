@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PORTFOLIO = [
-  ['Města a obce', '/kategorie/mesta-obce'], ['Parky a hřiště', '/kategorie/parky-hriste'], ['Koupaliště & aquaparky', '/kategorie/koupaliste'], ['Outdoor a zahrady', '/kategorie/outdoor-zahrady'], ['Art instalace na míru', '/kategorie/art-instalace'], ['Školy a školky', '/kategorie/skoly-skolky-deti'], ['Pro architekty', '/kategorie/architekti'], ['Komerční prostory', '/kategorie/komercni'], ['Eventy & festivaly', '/kategorie/eventy']
+  ['Města a obce', '/mlzitka-pro-mesta-obce'], ['Parky a hřiště', '/kategorie/parky-hriste'], ['Koupaliště & aquaparky', '/kategorie/koupaliste'], ['Outdoor a zahrady', '/kategorie/outdoor-zahrady'], ['Art instalace na míru', '/kategorie/art-instalace'], ['Školy a školky', '/kategorie/skoly-skolky-deti'], ['Pro architekty', '/kategorie/architekti'], ['Komerční prostory', '/kategorie/komercni'], ['Eventy & festivaly', '/kategorie/eventy']
 ];
 
 export default function B2BPortfolioNavigation({ current }) {

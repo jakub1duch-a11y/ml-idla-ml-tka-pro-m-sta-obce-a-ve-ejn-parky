@@ -20,6 +20,7 @@ import Kolekce from '@/pages/Kolekce';
 import CollectionDetail from '@/pages/CollectionDetail';
 import BrandIdentity from '@/pages/BrandIdentity';
 import Kontakt from '@/pages/Kontakt';
+import Connect from '@/pages/Connect';
 import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
@@ -116,6 +117,7 @@ const AuthenticatedApp = () => {
         <Route path="/vodni-mlha" element={<VodniMlha />} />
         <Route path="/mlzne-brany" element={<MlzneBrany />} />
         <Route path="/kontakt" element={<Kontakt />} />
+        <Route path="/connect" element={<Connect />} />
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/mlzidla-mlzitka" replace />} />

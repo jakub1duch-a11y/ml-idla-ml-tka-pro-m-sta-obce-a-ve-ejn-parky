@@ -42,6 +42,7 @@ const columns = [
       ['Časté dotazy', '/faq'],
       ['O nás', '/o-nas'],
       ['Kontakt', '/kontakt'],
+      ['Připojit AI asistenta', '/connect'],
     ],
   },
 ];

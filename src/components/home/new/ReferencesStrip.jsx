@@ -27,8 +27,14 @@ export default function ReferencesStrip() {
   }, []);
 
   return (
-    <section className="border-b border-[#EAF5FB] bg-white py-10">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section className="relative overflow-hidden border-b border-[#EAF5FB] bg-[#fbfdfe] py-10">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-16 -top-20 h-56 w-56 rounded-full bg-cyan-200/20 blur-[72px]" />
+        <div className="absolute -right-20 top-2 h-52 w-52 rounded-full bg-sky-100/35 blur-[80px]" />
+        <div className="absolute left-[18%] top-[-20%] h-44 w-[70%] rounded-[50%] bg-white/65 blur-[56px]" />
+        <div className="animate-mist-drift absolute left-[8%] top-[44%] h-20 w-[84%] rounded-[50%] bg-cyan-100/10 blur-[34px] [animation-duration:18s]" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
         <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[.2em] text-[#0D2F4F]/50">
           Důvěřují nám veřejné instituce
         </p>

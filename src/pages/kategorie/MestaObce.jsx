@@ -12,6 +12,8 @@ import CoDostaneRadaMesta from '@/components/kategorie/CoDostaneRadaMesta';
 import PilotMereniRozsireni from '@/components/kategorie/PilotMereniRozsireni';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import { trackFunnelStep } from '@/lib/ga4';
+import { VIDEO_ASSETS } from '@/lib/newMedia';
+import MunicipalProjectStudio, { MunicipalCustomProduction, MunicipalPageNav } from '@/components/kategorie/MunicipalProjectStudio';
 
 const BENEFITS = [
 'Pocitové ochlazení v horkých dnech typicky v řádu několika stupňů podle podmínek',
@@ -55,8 +57,8 @@ export default function MestaObce() {
 
       {/* Hero */}
       <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/825fc9c6e_bendy_jicin_namesti_mlha.mp4"
-        poster="https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/774e88bcb_v2_jicin_bendy.jpg"
+        <video src={VIDEO_ASSETS.heroJicin.src}
+        poster={VIDEO_ASSETS.heroJicin.poster}
         className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata" />
         <div className="absolute bg-gradient-to-t from-slate-900 via-slate-900/20 to-slate-900/60 inset-0" />
         <div className="relative h-full flex items-end">
@@ -65,17 +67,17 @@ export default function MestaObce() {
               <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
                 <Building2 size={18} className="text-white" />
               </div>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Mlžítka pro Města a Obce</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Městská mlžítka · návrh · výroba · servis</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Ochlazení pro města,<br /><span style={{ fontStyle: 'italic' }}>která pečují o veřejný prostor.</span>
+              Mlžítka pro města,<br /><span style={{ fontStyle: 'italic' }}>navržená pro konkrétní místo.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Mlžítka a mlžné zóny zvyšují tepelný komfort na náměstích, promenádách, v parcích, centrech měst, na sportovištích i u nádraží a veřejných budov. Ochlazujeme vzduch kolem vás. Dýchejte lépe. Provoz lze doplnit Smart řízením podle teploty, času a skutečného využití místa.
+              Návrh, vizualizace, zakázkové zpracování a česká výroba nerezových mlžítek pro náměstí, parky, školy, sportoviště i dopravní uzly. Od prvního záměru po Smart řízení, instalaci a servis.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" onClick={() => trackFunnelStep('cities', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Navrhnout řešení pro město <ArrowRight size={15} />
+                Připravit městský návrh <ArrowRight size={15} />
               </a>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 Zavolat (+420774700390)
@@ -85,8 +87,10 @@ export default function MestaObce() {
         </div>
       </section>
 
+      <MunicipalPageNav />
+
       {/* Konverzní cesta pro města a obce */}
-      <section className="border-b border-slate-200 bg-white" data-analytics-section="cities-funnel">
+      <section id="prinos" className="scroll-mt-32 border-b border-slate-200 bg-white" data-analytics-section="cities-funnel">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
@@ -150,6 +154,8 @@ export default function MestaObce() {
 
       <CoDostaneRadaMesta />
 
+      <MunicipalCustomProduction />
+
       {/* Kde se hodí */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde mlžítka instalujeme</p>
@@ -172,12 +178,16 @@ export default function MestaObce() {
 
       <PilotMereniRozsireni />
 
+      <MunicipalProjectStudio />
+
+      <div id="realizace" className="scroll-mt-28">
       <SegmentReferenceShowcase
         segment="cities"
         eyebrow="Ověřené realizace"
         title="Veřejný prostor od náměstí po ZOO Praha."
         referenceIds={['6a71d1ff57598752eed27bfb', '6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f']}
       />
+      </div>
 
       {/* Produkty */}
       <section className="bg-slate-50 border-y border-slate-200 py-20">

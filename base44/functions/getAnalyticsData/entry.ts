@@ -34,6 +34,7 @@ Deno.serve(async (req) => {
     const days = body.days || 28;
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+    const propertyId = await resolveGa4Property(accessToken);
 
     const endDate = 'today';
     const startDate = `${days}daysAgo`;

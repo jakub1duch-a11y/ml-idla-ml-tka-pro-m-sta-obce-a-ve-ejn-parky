@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Bot, Loader2, Mic, Send } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Bot, Loader2, Mic, Send, Volume2, VolumeX } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import useVoiceInput from '@/hooks/useVoiceInput';
 
@@ -7,7 +7,33 @@ export default function TerminalAdvisorChat({ context }) {
   const [messages, setMessages] = useState([{ role: 'assistant', text: 'Jsem AI poradce terminálu. Zeptejte se na poptávky, priority dne nebo doporučení k projektu — můžete i mluvit.' }]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const speechRef = useRef(null);
   const { listening, supported, toggle } = useVoiceInput((text, isFinal) => { setInput(text); if (isFinal) setTimeout(() => send(text), 150); });
+
+  useEffect(() => () => { window.speechSynthesis?.cancel(); }, []);
+
+  const speak = (text) => {
+    if (!('speechSynthesis' in window) || !text) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(String(text).replace(/[*_#\`]/g, ''));
+    const voices = window.speechSynthesis.getVoices();
+    utterance.voice = voices.find((voice) => voice.lang?.toLowerCase().startsWith('cs')) || voices.find((voice) => voice.lang?.toLowerCase().startsWith('sk')) || voices[0];
+    utterance.lang = utterance.voice?.lang || 'cs-CZ';
+    utterance.rate = 0.94;
+    utterance.pitch = 0.82;
+    utterance.volume = 0.9;
+    utterance.onstart = () => setSpeaking(true);
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
+    speechRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const stopSpeaking = () => {
+    window.speechSynthesis?.cancel();
+    setSpeaking(false);
+  };
 
   const send = async (value = input) => {
     const request = String(value || '').trim();
@@ -29,7 +55,12 @@ DOTAZ: ${request}`,
 
   return (
     <div className="rounded-2xl border border-white/8 bg-white/3 p-5">
-      <p className="mb-4 flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-white/40"><Bot size={13} /> AI poradce</p>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-white/40"><Bot size={13} /> AI poradce · hlasový režim</p>
+        <button type="button" onClick={speaking ? stopSpeaking : () => speak(messages[messages.length - 1]?.text)} className="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-2 py-1 text-[10px] text-white/45 hover:border-cyan/30 hover:text-cyan" aria-label={speaking ? 'Zastavit hlas' : 'Přečíst poslední odpověď'}>
+          {speaking ? <VolumeX size={12} /> : <Volume2 size={12} />} {speaking ? 'Zastavit hlas' : 'Přečíst'}
+        </button>
+      </div>
       <div className="max-h-[300px] space-y-2 overflow-y-auto pr-1">
         {messages.map((m, i) => (
           <div key={i} className={`rounded-xl px-3 py-2 text-xs leading-5 ${m.role === 'assistant' ? 'bg-white/5 text-white/70' : 'ml-6 bg-cyan/10 text-white'}`}>

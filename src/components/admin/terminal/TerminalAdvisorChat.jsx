@@ -41,16 +41,18 @@ export default function TerminalAdvisorChat({ context }) {
     setInput('');
     setBusy(true);
     setMessages((m) => [...m, { role: 'user', text: request }]);
-    const response = await base44.integrations.Core.InvokeLLM({
-      prompt: `Jsi AI poradce interního terminálu MLŽIDLA.cz by HolmTec. Odpovídej česky, stručně a konkrétně. Nevymýšlej technické parametry, ceny ani termíny, které nejsou v kontextu.
-
-AKTUÁLNÍ STAV:
-${context}
-
-DOTAZ: ${request}`,
-    });
-    setMessages((m) => [...m, { role: 'assistant', text: typeof response === 'string' ? response : JSON.stringify(response) }]);
-    setBusy(false);
+    try {
+      const response = await base44.integrations.Core.InvokeLLM({
+        prompt: `Jsi AI poradce interního terminálu MLŽIDLA.cz by HolmTec. Odpovídej česky, stručně a konkrétně. Nevymýšlej technické parametry, ceny ani termíny, které nejsou v kontextu.\n\nAKTUÁLNÍ STAV:\n${context}\n\nDOTAZ: ${request}`,
+      });
+      const text = typeof response === 'string' ? response : JSON.stringify(response);
+      setMessages((m) => [...m, { role: 'assistant', text }]);
+      speak(text);
+    } catch (_error) {
+      setMessages((m) => [...m, { role: 'assistant', text: 'Nepodařilo se načíst odpověď. Zkuste to prosím znovu.' }]);
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (

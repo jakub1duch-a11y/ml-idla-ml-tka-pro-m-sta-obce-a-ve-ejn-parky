@@ -117,6 +117,8 @@ function rows(data: any, dimensions: string[], metrics: string[]) {
 
 async function getGa4(base44: any) {
   const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+  const propertyId = await resolveGa4Property(accessToken);
+  const run = (body: Record<string, unknown>) => run( propertyId, body);
   const commonMetrics = [
     { name: 'sessions' },
     { name: 'activeUsers' },
@@ -127,29 +129,29 @@ async function getGa4(base44: any) {
   ];
 
   const [todayRaw, yesterdayRaw, dayBeforeRaw, monthRaw, sourcesRaw, pagesRaw, devicesRaw, eventsRaw, trendRaw, yesterdaySourcesRaw, yesterdayPagesRaw, yesterdayEventsRaw] = await Promise.all([
-    gaRun(accessToken, { dateRanges: [{ startDate: 'today', endDate: 'today' }], metrics: commonMetrics }),
-    gaRun(accessToken, { dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }], metrics: commonMetrics }),
-    gaRun(accessToken, { dateRanges: [{ startDate: '2daysAgo', endDate: '2daysAgo' }], metrics: commonMetrics }),
-    gaRun(accessToken, { dateRanges: [{ startDate: monthStart(), endDate: 'today' }], metrics: commonMetrics }),
-    gaRun(accessToken, {
+    run( { dateRanges: [{ startDate: 'today', endDate: 'today' }], metrics: commonMetrics }),
+    run( { dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }], metrics: commonMetrics }),
+    run( { dateRanges: [{ startDate: '2daysAgo', endDate: '2daysAgo' }], metrics: commonMetrics }),
+    run( { dateRanges: [{ startDate: monthStart(), endDate: 'today' }], metrics: commonMetrics }),
+    run( {
       dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }],
       dimensions: [{ name: 'sessionSourceMedium' }],
       metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'activeUsers' }],
       orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 12,
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }],
       dimensions: [{ name: 'pagePath' }],
       metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }, { name: 'averageSessionDuration' }],
       orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }], limit: 12,
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }],
       dimensions: [{ name: 'deviceCategory' }],
       metrics: [{ name: 'sessions' }, { name: 'activeUsers' }, { name: 'engagementRate' }],
       orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }],
       dimensions: [{ name: 'eventName' }],
       metrics: [{ name: 'eventCount' }, { name: 'totalUsers' }],
@@ -161,25 +163,25 @@ async function getGa4(base44: any) {
       },
       orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: '6daysAgo', endDate: 'today' }],
       dimensions: [{ name: 'date' }],
       metrics: [{ name: 'sessions' }, { name: 'activeUsers' }, { name: 'screenPageViews' }],
       orderBys: [{ dimension: { dimensionName: 'date' } }],
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }],
       dimensions: [{ name: 'sessionSourceMedium' }],
       metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'activeUsers' }],
       orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 8,
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }],
       dimensions: [{ name: 'pagePath' }],
       metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }, { name: 'averageSessionDuration' }],
       orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }], limit: 8,
     }),
-    gaRun(accessToken, {
+    run( {
       dateRanges: [{ startDate: 'yesterday', endDate: 'yesterday' }],
       dimensions: [{ name: 'eventName' }],
       metrics: [{ name: 'eventCount' }, { name: 'totalUsers' }],

@@ -94,8 +94,8 @@ async function fetchJson(url: string, init: RequestInit = {}) {
   return data;
 }
 
-async function gaRun(accessToken: string, body: Record<string, unknown>) {
-  return fetchJson(`https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`, {
+async function gaRun(accessToken: string, propertyId: string, body: Record<string, unknown>) {
+  return fetchJson(`https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(body),

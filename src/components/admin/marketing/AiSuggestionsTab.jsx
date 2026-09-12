@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Loader, Sparkles, CalendarPlus, ListTodo, Send, WandSparkles } from 'lucide-react';
+import { Loader, Sparkles, CalendarPlus, ListTodo, Send, WandSparkles, ImageIcon } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import MarketingPostPreview from './MarketingPostPreview';
 
@@ -11,6 +11,17 @@ export default function AiSuggestionsTab({ onPlanCreated }) {
   const [loading, setLoading] = useState(false);
   const [busy, setBusy] = useState('');
   const [message, setMessage] = useState('');
+  const [visuals, setVisuals] = useState({});
+
+  const makeVisual = async (s, i) => {
+    setBusy(`img-${i}`); setMessage('');
+    try {
+      const res = await base44.integrations.Core.GenerateImage({
+        prompt: `Prémiový realistický marketingový vizuál MLŽIDLA® pro ${PLATFORM[s.platform] || s.platform}. Téma: ${s.title}. ${s.visual_prompt || s.description}. Nerezová konstrukce AISI 316L se zachovanou reálnou geometrií, jemná mlha 50–100 μm, moderní český veřejný prostor, lidé pro měřítko, přirozené světlo. Paleta Deep Steel #0D2D38, Ocean Teal #0E5B67, Mist Aqua #61D5E5. Bez textu a bez loga. ${s.platform === 'instagram' ? 'Portrétní kompozice 4:5.' : 'Široká kompozice 16:9.'}`,
+      });
+      setVisuals((v) => ({ ...v, [i]: res.url }));
+    } finally { setBusy(''); }
+  };
 
   const generate = async () => {
     setLoading(true); setMessage('');
@@ -29,11 +40,11 @@ export default function AiSuggestionsTab({ onPlanCreated }) {
     } finally { setLoading(false); }
   };
 
-  const makePost = (s) => ({ title:s.title, platform:s.platform || 'blog', post_format:s.post_format || (s.platform==='instagram'?'feed':s.platform==='blog'?'article':'feed'), caption:s.caption || s.description, image_url:'', video_url:'', status:'draft', ai_generated:true, cta_label:s.cta_label || 'Zjistit více', cta_url:s.cta_url || 'https://mlzidla.cz/poptavka', visual_prompt:s.visual_prompt || '', marketing_recommendation:s.description, source_type:'ai_recommendation' });
+  const makePost = (s, image = '') => ({ title:s.title, platform:s.platform || 'blog', post_format:s.post_format || (s.platform==='instagram'?'feed':s.platform==='blog'?'article':'feed'), caption:s.caption || s.description, image_url:image, video_url:'', status:'draft', ai_generated:true, cta_label:s.cta_label || 'Zjistit více', cta_url:s.cta_url || 'https://mlzidla.cz/poptavka', visual_prompt:s.visual_prompt || '', marketing_recommendation:s.description, source_type:'ai_recommendation' });
 
   const plan = async (s, i) => {
     setBusy(`plan-${i}`); setMessage('');
-    try { await base44.entities.MarketingPost.create(makePost(s)); setMessage('Návrh byl vložen do Plánu obsahu.'); onPlanCreated?.(); }
+    try { await base44.entities.MarketingPost.create(makePost(s, visuals[i] || '')); setMessage('Návrh byl vložen do Plánu obsahu.'); onPlanCreated?.(); }
     finally { setBusy(''); }
   };
 
@@ -48,8 +59,8 @@ export default function AiSuggestionsTab({ onPlanCreated }) {
   const publish = async (s, i) => {
     setBusy(`pub-${i}`); setMessage('');
     try {
-      const post = await base44.entities.MarketingPost.create(makePost(s));
-      if (s.platform === 'instagram') {
+      const post = await base44.entities.MarketingPost.create(makePost(s, visuals[i] || ''));
+      if (s.platform === 'instagram' && !visuals[i]) {
         setMessage('Instagram potřebuje před přímou publikací obrazový asset. Návrh byl uložen do Plánu obsahu k doplnění vizuálu.');
         onPlanCreated?.();
       } else {

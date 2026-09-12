@@ -96,6 +96,8 @@ function mapRows(data: any, dimensions: string[], metrics: string[]) {
 async function getGa4(base44: any, from: string, to: string) {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+    const propertyId = await resolveGa4Property(accessToken);
+    const runGa = (body: Record<string, unknown>) => gaRun(accessToken, propertyId, body);
     const metrics = [
       { name: 'sessions' }, { name: 'activeUsers' }, { name: 'screenPageViews' },
       { name: 'newUsers' }, { name: 'averageSessionDuration' }, { name: 'engagementRate' },

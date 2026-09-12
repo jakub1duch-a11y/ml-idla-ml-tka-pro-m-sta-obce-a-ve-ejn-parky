@@ -1,8 +1,10 @@
 import React from 'react';
 import { Instagram, Facebook, Search, FileText, ExternalLink, Play, MoreHorizontal } from 'lucide-react';
 
+const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png';
+
 const META = {
-  instagram: { label: 'Instagram', icon: Instagram, accent: 'text-fuchsia-300', aspect: 'aspect-square' },
+  instagram: { label: 'Instagram', icon: Instagram, accent: 'text-fuchsia-300', aspect: 'aspect-[4/5]' },
   facebook: { label: 'Facebook', icon: Facebook, accent: 'text-blue-300', aspect: 'aspect-[1.91/1]' },
   google_ads: { label: 'Google Ads', icon: Search, accent: 'text-emerald-300', aspect: 'aspect-[1.91/1]' },
   blog: { label: 'Web / článek', icon: FileText, accent: 'text-cyan', aspect: 'aspect-[16/9]' },
@@ -37,9 +39,9 @@ export default function MarketingPostPreview({ post, compact = false }) {
   }
 
   return <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b1117] shadow-xl">
-    <div className="flex items-center justify-between px-4 py-3"><div className="flex items-center gap-2"><div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan/20 bg-cyan/10"><span className="text-[10px] font-black text-cyan">MLŽ</span></div><div><p className="text-xs font-semibold text-white">mlzidla</p><p className="text-[10px] text-white/35">MLŽIDLA® / HolmTec</p></div></div><MoreHorizontal size={16} className="text-white/30"/></div>
-    <div className={`${meta.aspect} relative overflow-hidden bg-white/5`}>
-      {media ? (isVideo ? <><video src={media} muted playsInline className="h-full w-full object-cover"/><div className="absolute inset-0 flex items-center justify-center"><div className="rounded-full bg-black/45 p-3 text-white"><Play size={18} fill="currentColor"/></div></div></> : <img src={media} alt="" className="h-full w-full object-cover"/>) : <div className="flex h-full items-center justify-center bg-gradient-to-br from-white/5 to-cyan/5"><Icon size={28} className={meta.accent}/></div>}
+    <div className="flex items-center justify-between px-4 py-3"><div className="flex items-center gap-2"><div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan/20 bg-cyan/10"><img src={BRAND_LOGO_URL} alt="MLŽIDLA.cz" className="h-5 w-5 object-contain" /></div><div><p className="text-xs font-semibold text-white">mlzidla</p><p className="text-[10px] text-white/35">MLŽIDLA® / HolmTec</p></div></div><MoreHorizontal size={16} className="text-white/30"/></div>
+    <div className={`${meta.aspect} relative overflow-hidden bg-gradient-to-br from-[#0D2D38] via-[#0E5B67] to-[#6F8F72]`}>
+      {media ? (isVideo ? <><video src={media} muted playsInline className="h-full w-full object-cover"/><div className="absolute inset-0 flex items-center justify-center"><div className="rounded-full bg-black/45 p-3 text-white"><Play size={18} fill="currentColor"/></div></div></> : <img src={media} alt="" className="h-full w-full object-cover"/>) : <div className="flex h-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#0D2D38] via-[#0E5B67] to-[#6F8F72]"><img src={BRAND_LOGO_URL} alt="MLŽIDLA.cz" className="h-14 w-40 object-contain" /><Icon size={24} className={meta.accent}/></div>}
     </div>
     <div className="p-4"><div className="flex items-center gap-3 text-white/70"><Icon size={17} className={meta.accent}/><span className="text-[11px] font-mono uppercase tracking-wider">{meta.label}</span></div><p className={`mt-3 text-sm leading-5 text-white/75 ${compact ? 'line-clamp-3' : 'line-clamp-5'}`}>{caption}</p>{post.hashtags?.length ? <p className="mt-2 line-clamp-2 text-xs text-cyan/70">{post.hashtags.slice(0,7).map(x=>`#${x}`).join(' ')}</p> : null}</div>
   </div>;

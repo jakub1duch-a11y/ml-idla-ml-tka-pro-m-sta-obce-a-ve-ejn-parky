@@ -109,27 +109,27 @@ async function getGa4(base44: any, from: string, to: string) {
     ];
 
     const [summaryRaw, sourcesRaw, pagesRaw, eventsRaw, trendRaw] = await Promise.all([
-      gaRun(accessToken, { dateRanges: [{ startDate: from, endDate: to }], metrics }),
-      gaRun(accessToken, {
+      runGa( { dateRanges: [{ startDate: from, endDate: to }], metrics }),
+      runGa( {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'sessionSourceMedium' }],
         metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'activeUsers' }],
         orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 10,
       }),
-      gaRun(accessToken, {
+      runGa( {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'pagePath' }],
         metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }, { name: 'averageSessionDuration' }],
         orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }], limit: 10,
       }),
-      gaRun(accessToken, {
+      runGa( {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'eventName' }],
         metrics: [{ name: 'eventCount' }, { name: 'totalUsers' }],
         dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: eventNames } } },
         orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
       }),
-      gaRun(accessToken, {
+      runGa( {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'date' }],
         metrics: [{ name: 'sessions' }, { name: 'activeUsers' }, { name: 'screenPageViews' }],

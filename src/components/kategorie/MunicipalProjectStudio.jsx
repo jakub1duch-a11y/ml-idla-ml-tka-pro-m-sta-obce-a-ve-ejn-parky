@@ -13,7 +13,6 @@ import {
   Route,
   School,
   Settings2,
-  ShieldCheck,
   Sparkles,
   Trees,
   Wrench,
@@ -350,7 +349,7 @@ export default function MunicipalProjectStudio() {
                   <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('cities', 'visualizer_click', scenario.id)} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0b2d38] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#124350]">
                     Vytvořit vizualizaci místa <ArrowRight size={14} />
                   </Link>
-                  <a href="#poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-slate-250 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                  <a href="#poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                     Konzultovat variantu
                   </a>
                 </div>
@@ -387,7 +386,7 @@ export default function MunicipalProjectStudio() {
               >
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-[#0b7c89] shadow-sm"><Check size={16} /></span>
                 <h3 className="mt-5 font-heading text-xl font-medium text-slate-900">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-550">{text}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-500">{text}</p>
               </motion.article>
             ))}
           </div>
@@ -413,7 +412,7 @@ export default function MunicipalProjectStudio() {
           </div>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/podpora" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-slate-250 bg-white px-5 py-3 text-sm font-semibold text-slate-700">Další časté dotazy</Link>
+            <Link to="/podpora" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700">Další časté dotazy</Link>
             <Link to="/poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0b2d38] px-5 py-3 text-sm font-semibold text-white">Popsat městský projekt <ArrowRight size={14} /></Link>
           </div>
         </div>

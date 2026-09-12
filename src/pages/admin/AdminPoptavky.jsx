@@ -2,7 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Loader, Mail, Phone, Building2, Package, MessageSquare, CheckCircle, Clock, AlertCircle,
   FileText, Printer, Sparkles, Eye, Send, Inbox, FolderOpen, ArrowRight, X, Wand2, Image as ImageIcon,
+  Table2, ExternalLink,
 } from 'lucide-react';
+
+const CLIENTS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1EvZ7JRpOHQoBZRG-ZJhC_x8fxm2_D8aj4pfZTv7iEto/edit';
 import { base44 } from '@/api/base44Client';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
 
@@ -254,7 +257,11 @@ export default function AdminPoptavky() {
           <h2 className="text-white text-xl font-heading font-medium">Poptávky & nabídky</h2>
           <p className="text-white/40 text-xs mt-1">Přehledná správa poptávek, stav nabídek a tvorba vizualizací</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <a href={CLIENTS_SHEET_URL} target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border border-emerald-400/30 bg-emerald-400/10 text-emerald-300 hover:bg-emerald-400/20 transition-all">
+            <Table2 size={13} /> Tabulka klientů <ExternalLink size={11} />
+          </a>
           {[
             { id: 'dashboard', label: 'Dashboard', icon: Inbox },
             { id: 'board', label: 'Tabule nabídek', icon: FolderOpen },

@@ -1,7 +1,8 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
 
-const SPREADSHEET_ID = '1MS4i00ekY3Pf3fY-AsUdCT7GtNiCk5XPDr8CLiwym6M';
+// Tabulka na sdíleném disku MLZNY DISK
+const SPREADSHEET_ID = '1EvZ7JRpOHQoBZRG-ZJhC_x8fxm2_D8aj4pfZTv7iEto';
 const INQUIRIES_SHEET = 'Poptávky';
 const CLIENTS_SHEET = 'Klienti';
 

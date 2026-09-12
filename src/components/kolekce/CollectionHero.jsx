@@ -26,7 +26,7 @@ export default function CollectionHero({ collection }) {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/poptavka" className="inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground transition hover:-translate-y-0.5">
-              {isCity ? 'Navrhnout řešení pro město' : isGarden ? 'Vybrat mlžítko pro zahradu' : 'Nezávazná poptávka'} <ArrowRight size={16} />
+              {isCity ? 'Získat návrh a cenu' : isGarden ? 'Získat návrh a cenu' : 'Získat návrh a cenu'} <ArrowRight size={16} />
             </Link>
             <Link to={isCity || isGarden ? '/reference' : '/mlzidla-mlzitka#catalog'} className="inline-flex items-center gap-2 border border-white/35 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10">
               {isCity || isGarden ? 'Prohlédnout realizace' : 'Prohlédnout produkty'} <ArrowRight size={16} />

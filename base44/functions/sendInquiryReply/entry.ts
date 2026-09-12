@@ -128,7 +128,13 @@ export default async function(req) {
     const messageSubject = isTest ? `[TEST MLŽIDLA] ${subject}` : subject;
     const bccRecipients = isTest ? [] : FIXED_BCC;
 
-    const visualizationItems = (attachments || []).filter((file) => file?.asset_type === 'generated_visualization' && file?.file_url).slice(0, 3);
+    // Do klientského konceptu se smějí dostat pouze vizualizace výslovně schválené obchodníkem.
+    const visualizationItems = (attachments || []).filter((file) => (
+      file?.asset_type === 'generated_visualization'
+      && file?.file_url
+      && (file?.approval_status === 'approved' || file?.approved_for_presentation === true)
+      && file?.approved_for_presentation !== false
+    )).slice(0, 3);
     const prioritizedAttachmentInputs = [
       ...visualizationItems,
       ...(attachments || []).filter((file) => file?.asset_type !== 'generated_visualization' && file?.file_url),
@@ -146,20 +152,36 @@ export default async function(req) {
     const raw = buildMessage({ to: recipientEmail, bcc: bccRecipients, fromEmail: senderEmail, subject: messageSubject, text: message, html, attachments: allAttachments });
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-    const sendResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+    // Bezpečnostní pravidlo MLŽIDLA: běžná nabídka se nikdy neposílá přímo.
+    // Uloží se do Gmailu jako koncept k ruční kontrole a odeslání.
+    const gmailEndpoint = isTest
+      ? 'https://gmail.googleapis.com/gmail/v1/users/me/messages/send'
+      : 'https://gmail.googleapis.com/gmail/v1/users/me/drafts';
+    const gmailPayload = isTest ? { raw: base64Url(raw) } : { message: { raw: base64Url(raw) } };
+    const gmailResponse = await fetch(gmailEndpoint, {
       method: 'POST',
       headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ raw: base64Url(raw) })
+      body: JSON.stringify(gmailPayload)
     });
-    if (!sendResponse.ok) {
-      const detail = await sendResponse.text();
-      return Response.json({ error: `Message delivery failed: ${detail}` }, { status: 502 });
+    if (!gmailResponse.ok) {
+      const detail = await gmailResponse.text();
+      return Response.json({ error: `${isTest ? 'Testovací e-mail' : 'Gmail koncept'} se nepodařilo vytvořit: ${detail}` }, { status: 502 });
     }
+    const gmailResult = await gmailResponse.json().catch(() => ({}));
 
     if (!isTest) {
-      await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'contacted' : 'v_reseni' });
+      await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'in_progress' : 'v_reseni' });
     }
-    return Response.json({ ok: true, sender_email: senderEmail, recipient_email: recipientEmail, is_test: Boolean(isTest), bcc: bccRecipients });
+    return Response.json({
+      ok: true,
+      mode: isTest ? 'test_sent' : 'gmail_draft',
+      draft_id: isTest ? '' : (gmailResult?.id || gmailResult?.message?.id || ''),
+      sender_email: senderEmail,
+      recipient_email: recipientEmail,
+      is_test: Boolean(isTest),
+      bcc: bccRecipients,
+      approved_visualizations: visualizationItems.length,
+    });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

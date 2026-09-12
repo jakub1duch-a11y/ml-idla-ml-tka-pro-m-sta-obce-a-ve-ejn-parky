@@ -44,13 +44,13 @@
     --brand-accent: #61D5E5;
     --brand-background: #F4FAFC;
     --brand-surface: #FFFFFF;
-    --brand-text: #0A1628;
+    --brand-text: #0D2D38;
     --brand-muted: #E7F4F8;
     --brand-muted-foreground: #5A6B78;
     --brand-border: #D3E2E8;
     --brand-destructive: #C2410C;
-    --brand-cyan-dark: #06667a;
-    --brand-stainless-strong: #94A3B8;
+    --brand-cyan-dark: #0E5B67;
+    --brand-stainless-strong: #94A3B8; /* brushed stainless reference */
     --brand-font-heading: 'Space Grotesk', sans-serif;
     --brand-font-body: 'Albert Sans', sans-serif;
     --brand-font-heading-line-height: 1.1;

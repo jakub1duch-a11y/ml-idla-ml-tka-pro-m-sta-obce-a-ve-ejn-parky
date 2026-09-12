@@ -5,19 +5,26 @@ import TerminalInquiries from '@/components/admin/terminal/TerminalInquiries';
 import TerminalTasks from '@/components/admin/terminal/TerminalTasks';
 import TerminalAdvisorChat from '@/components/admin/terminal/TerminalAdvisorChat';
 import TerminalCalculator from '@/components/admin/terminal/TerminalCalculator';
+import TerminalCommandCenter from '@/components/admin/terminal/TerminalCommandCenter';
 
 export default function AdminTerminal() {
   const [inquiries, setInquiries] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [agentData, setAgentData] = useState({ runs: [], sessions: [], activities: [], profiles: [], integrations: [] });
 
   const load = useCallback(async () => {
-    const [poptavky, contacts, adminTasks, me] = await Promise.all([
+    const [poptavky, contacts, adminTasks, me, runs, sessions, activities, profiles, integrations] = await Promise.all([
       base44.entities.Poptavka.list('-created_date', 25),
       base44.entities.ContactInquiry.list('-created_date', 25),
       base44.entities.AdminTask.list('-created_date', 60),
       base44.auth.me().catch(() => null),
+      base44.entities.OfferAgentRun.list('-created_date', 30).catch(() => []),
+      base44.entities.SuperAgentSession.list('-last_active_at', 20).catch(() => []),
+      base44.entities.CrmActivity.list('-created_date', 30).catch(() => []),
+      base44.entities.SuperAgentProfile.list('-created_date', 20).catch(() => []),
+      base44.entities.SuperAgentIntegration.list('-sort_order', 20).catch(() => []),
     ]);
     const merged = [
       ...(poptavky || []).map((p) => ({ id: p.id, entity: 'Poptavka', name: p.jmeno, email: p.email, phone: p.telefon, company: p.firma, message: p.zprava, status: p.status, created_date: p.created_date })),
@@ -26,6 +33,7 @@ export default function AdminTerminal() {
     setInquiries(merged);
     setTasks((adminTasks || []).filter((t) => !['completed', 'cancelled'].includes(t.status)));
     setUser(me);
+    setAgentData({ runs: runs || [], sessions: sessions || [], activities: activities || [], profiles: (profiles || []).filter((profile) => profile.active !== false), integrations: (integrations || []).filter((integration) => integration.active !== false) });
     setLoading(false);
   }, []);
 
@@ -53,7 +61,9 @@ ${taskLines || '- žádné'}`;
         <p className="text-white/40 text-xs mt-1">Poptávky, úkoly, AI poradce a AI kalkulátor na jedné obrazovce — s hlasovým ovládáním.</p>
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-2">
+      <TerminalCommandCenter inquiries={inquiries} tasks={tasks} {...agentData} />
+
+      <div className="mt-5 grid gap-5 xl:grid-cols-2">
         <TerminalInquiries items={inquiries} />
         <TerminalTasks tasks={tasks} user={user} onChange={load} />
         <TerminalAdvisorChat context={context} />

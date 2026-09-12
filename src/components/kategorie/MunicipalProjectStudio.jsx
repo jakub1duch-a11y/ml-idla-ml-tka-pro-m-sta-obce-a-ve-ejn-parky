@@ -13,6 +13,7 @@ import {
   Route,
   School,
   Settings2,
+  ShieldCheck,
   Sparkles,
   Trees,
   Wrench,
@@ -24,6 +25,7 @@ const PAGE_LINKS = [
   ['Řešení na míru', '#zakazkova-vyroba'],
   ['Návrhové studio', '#navrhove-studio'],
   ['Realizace', '#realizace'],
+  ['Bezpečný provoz', '#bezpecny-provoz'],
   ['Podklady', '#podklady'],
   ['Poptávka', '#poptavka'],
 ];
@@ -355,6 +357,19 @@ export default function MunicipalProjectStudio() {
                 </div>
               </motion.div>
             </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      <section id="bezpecny-provoz" className="scroll-mt-28 border-y border-slate-200 bg-[#f7fbfc] py-12 lg:py-14">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="grid items-center gap-6 rounded-[28px] border border-[#d9ecef] bg-white p-6 shadow-[0_18px_60px_rgba(11,45,56,.06)] md:grid-cols-[auto_1fr] md:p-8">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e8f6f8] text-[#0b7c89]"><ShieldCheck size={22} /></span>
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0b7c89]">Bezpečný provoz</p>
+              <h2 className="mt-2 font-heading text-2xl font-medium tracking-[-.025em] text-[#0b2d38] md:text-3xl">Ochlazení s jasným provozním režimem.</h2>
+              <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-600">U městských instalací počítáme s kontrolou technického stavu, pravidelnou údržbou a sezónním uvedením do provozu. Vodní část navrhujeme podle konkrétního napojení a provozních podmínek tak, aby se minimalizovala provozní a hygienická rizika. Konkrétní požadavky se vždy ověřují pro danou instalaci.</p>
+            </div>
           </div>
         </div>
       </section>

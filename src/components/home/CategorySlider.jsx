@@ -6,7 +6,7 @@ const categories = [
   title: 'Mlžné sochy pro veřejný prostor',
   desc: 'Zakázkové mlžítko MRKEV zdobí náměstí města Polná — spojuje lokální identitu s příjemným ochlazením pro chodce v horkých letních dnech.',
   image: '/media/optimized/596fefdec_MlnsochaMRKEV-mstoPoln.webp',
-  path: '/kategorie/mesta-obce'
+  path: '/mlzitka-pro-mesta-obce'
 },
 {
   tag: 'Parky a hřiště',

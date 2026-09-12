@@ -86,7 +86,7 @@ PRAVIDLA:
 - Piš česky, profesionálně, stručně a konkrétně.
 - Dodržuj závazný standard ${SOBESLAV_OFFER_STANDARD.source} v${SOBESLAV_OFFER_STANDARD.version}: ${SOBESLAV_OFFER_STANDARD.structure.join(', ')}.
 - Přílohy vždy označuj podle ${SOBESLAV_OFFER_STANDARD.attachmentRule}; fotografii nebo vizualizaci nezaměňuj za technický výkres či cenovou nabídku.
-- U více kusů vždy vyžádej nebo zkontroluj samostatné nacenění, projektovou cenu a úsporu v Kč i procentech.
+- U více kusů vždy vyžádej nebo zkontroluj samostatné nacenění a projektovou cenu. Úsporu v Kč nebo procentech uváděj pouze tehdy, když je skutečně potvrzená ve zdrojových cenových podkladech.
 
 KLIENT: ${inquiry?.name || ''}
 ORGANIZACE: ${inquiry?.firma || inquiry?.company || ''}

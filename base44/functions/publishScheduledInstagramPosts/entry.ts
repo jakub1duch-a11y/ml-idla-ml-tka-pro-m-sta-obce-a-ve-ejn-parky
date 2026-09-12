@@ -7,13 +7,13 @@ export default async function(req) {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
-    const { dryRun = false } = await req.json();
+    const { dryRun = true, confirmed = false } = await req.json();
     const duePosts = await base44.asServiceRole.entities.MarketingPost.filter({
       platform: 'instagram',
       status: 'scheduled',
       scheduled_date: { $lte: new Date().toISOString() },
     });
-    if (dryRun) return Response.json({ ok: true, due: duePosts.length, dryRun: true });
+    if (dryRun || !confirmed) return Response.json({ ok: true, due: duePosts.length, dryRun: true, requiresConfirmation: true });
     if (duePosts.length === 0) return Response.json({ ok: true, published: 0, failed: [] });
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');

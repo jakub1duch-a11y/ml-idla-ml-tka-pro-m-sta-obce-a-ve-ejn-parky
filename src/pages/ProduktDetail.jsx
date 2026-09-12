@@ -20,6 +20,8 @@ import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdDescription from '@/components/produkt/new/PdDescription';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdLineProducts from '@/components/produkt/new/PdLineProducts';
+import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
+import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -62,6 +64,7 @@ export default function ProduktDetail() {
 
   return (
     <div className="min-h-screen bg-white">
+      <PdScrollProgress />
       <PdHero product={product} />
       <PdFamilyNav product={product} />
       <PdDescription product={product} />
@@ -75,6 +78,7 @@ export default function ProduktDetail() {
       <PdHowItWorks />
       <PdTabs product={product} />
       <PdReferences product={product} />
+      <PdCollectionContext product={product} />
       <PdLineProducts product={product} />
       <PdClosingCta product={product} />
     </div>

@@ -10,6 +10,7 @@ const BRAND_REFERENCE_URL = '/media/optimized/3865c06a7_ana.webp';
 export default function ContentPlanForm({ onCreated }) {
   const [form, setForm] = useState({ title: '', platform: 'instagram', caption: '', image_url: '', scheduled_date: '' });
   const [productFocus, setProductFocus] = useState('');
+  const [visualMode, setVisualMode] = useState('Produkt v prostoru');
   const [generatingText, setGeneratingText] = useState(false);
   const [generatingImage, setGeneratingImage] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -64,6 +65,8 @@ export default function ContentPlanForm({ onCreated }) {
       ai_generated: aiUsed,
     });
     setForm({ title: '', platform: 'instagram', caption: '', image_url: '', scheduled_date: '' });
+    setProductFocus('');
+    setVisualMode('Produkt v prostoru');
     setAiUsed(false);
     setSaving(false);
     onCreated();
@@ -91,6 +94,13 @@ export default function ContentPlanForm({ onCreated }) {
           <option value="BENDY">BENDY</option>
           <option value="BRÁNA GATE">BRÁNA GATE</option>
         </select>
+        <select value={visualMode} onChange={(e) => setVisualMode(e.target.value)} className={inputCls} aria-label="Typ vizuálu">
+          <option>Produkt v prostoru</option>
+          <option>Fotogalerie výroby</option>
+          <option>Montáž a instalace</option>
+          <option>Detail rukou / řemeslo</option>
+          <option>Carousel mix · titulní náhled</option>
+        </select>
         <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className={inputCls}>
           <option value="instagram">Instagram</option>
           <option value="facebook">Facebook</option>
@@ -99,7 +109,7 @@ export default function ContentPlanForm({ onCreated }) {
         </select>
       </div>
 
-      <p className="-mt-2 text-[11px] leading-5 text-white/35">Výběr produktu řídí vizuální prompt. AI musí zachovat reálné proporce, trysky, patku i materiál podle reference.</p>
+      <p className="-mt-2 text-[11px] leading-5 text-white/35">Produkt a typ vizuálu řídí generování: realistická výroba, montáž, ruce i titulní náhled fotogalerie. AI musí zachovat reálné proporce, trysky, patku, ukotvení a materiál podle schválené reference.</p>
 
       <div className="flex gap-2">
         <button type="button" onClick={generateCaption} disabled={generatingText || !form.title}
@@ -108,7 +118,7 @@ export default function ContentPlanForm({ onCreated }) {
         </button>
         <button type="button" onClick={generateImage} disabled={generatingImage || !form.title}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-40">
-          {generatingImage ? <Loader size={12} className="animate-spin" /> : <ImageIcon size={12} />} Vytvořit reklamní vizuál
+          {generatingImage ? <Loader size={12} className="animate-spin" /> : <ImageIcon size={12} />} Vytvořit vizuál / fotogalerii
         </button>
       </div>
 

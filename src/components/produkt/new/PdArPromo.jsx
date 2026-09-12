@@ -12,6 +12,8 @@ const STEPS = [
 // Pozadí = prázdný prostor BEZ mlžítka. Na displeji mobilu je TEN SAMÝ prostor, ale už s mlžítkem.
 const EMPTY_SPACE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae1d9572f_generated_image.png';
 const AR_SPACE_WITH_PRODUCT = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/253a5b826_generated_image.png';
+// Mobil: jedna fotorealistická fotografie — ruka s mobilem v prázdném prostoru, produkt pouze na displeji.
+const AR_MOBILE_PHOTO = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1239b5eb3_generated_image.png';
 
 export default function PdArPromo({ product }) {
   const screenPhoto = AR_SPACE_WITH_PRODUCT;
@@ -65,8 +67,20 @@ export default function PdArPromo({ product }) {
           </div>
         </div>
 
-        {/* Reálná fotografie prostoru + mobil se skutečnou fotografií produktu */}
-        <div className="relative min-h-[360px] overflow-hidden lg:min-h-full">
+        {/* Mobil: fotorealistický AR záběr (ruka s mobilem) */}
+        <div className="relative overflow-hidden lg:hidden">
+          <img src={AR_MOBILE_PHOTO} alt={`${product.name} – AR náhled v reálném prostoru na mobilu`} loading="lazy" className="block h-auto w-full object-cover" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(10,22,40,.85)_0%,rgba(10,22,40,0)_100%)]" />
+          <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 border border-[#22D3EE]/50 bg-[#0A1628]/70 px-2.5 py-1 font-mono text-[10px] tracking-[.14em] text-[#22D3EE] backdrop-blur-md">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE]" /> AR NÁHLED
+          </span>
+          <p className="absolute inset-x-0 bottom-0 bg-[#0A1628]/80 px-4 py-2.5 font-mono text-[10px] tracking-[.12em] text-[#22D3EE] backdrop-blur-sm">
+            NA DISPLEJI: VÁŠ PROSTOR S PRODUKTEM
+          </p>
+        </div>
+
+        {/* Desktop: reálná fotografie prostoru + mobil se skutečnou fotografií produktu */}
+        <div className="relative hidden min-h-[360px] overflow-hidden lg:block lg:min-h-full">
           <img src={scenePhoto} alt="Prázdný prostor před instalací" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[#0A1628]/45" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,22,40,.9)_0%,rgba(10,22,40,.35)_45%,rgba(10,22,40,.1)_100%)]" />

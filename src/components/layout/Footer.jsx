@@ -29,7 +29,7 @@ const columns = [
     title: 'Inspirace',
     links: [
       ['Reference', '/reference'],
-      ['Města a obce', '/kategorie/mesta-obce'],
+      ['Města a obce', '/mlzitka-pro-mesta-obce'],
       ['Parky a hřiště', '/kategorie/parky-hriste'],
       ['Blog & novinky', '/blog'],
     ],

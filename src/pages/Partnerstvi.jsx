@@ -14,7 +14,7 @@ const BENEFITS = [
 ];
 
 const USAGE_LINKS = [
-  { icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-slate-600' },
+  { icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-slate-600' },
   { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-500' },
   { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-blue-500' },
   { icon: Flower2, label: 'Outdoor a zahrady', path: '/kategorie/outdoor-zahrady', color: 'text-green-500' },

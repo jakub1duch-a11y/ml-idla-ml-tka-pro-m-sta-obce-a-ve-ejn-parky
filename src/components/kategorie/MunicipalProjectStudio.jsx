@@ -10,7 +10,6 @@ import {
   FileCheck2,
   Gauge,
   Map,
-  Park,
   Route,
   School,
   Settings2,

@@ -10,7 +10,7 @@ const errorMessage = (error) => error?.response?.data?.error || error?.message |
 const QUICK_PROMPTS = [
   'Navrhni nejlepší řešení této poptávky ve 3 stručných variantách a doporuč jednu.',
   'Připrav klientské shrnutí projektu bez interních poznámek a bez vymyšlených parametrů.',
-  'Navrhni osnovu profesionální prezentace pro klienta v 8–10 slidech.',
+  'Navrhni osnovu profesionální prezentace pro klienta v 8–10 slidech; u města začni lidmi, komfortem a živým veřejným prostorem, produkt a techniku přesuň až do další vrstvy.',
   'Zkontroluj, co ještě chybí k bezpečné a profesionální cenové nabídce.',
 ];
 
@@ -28,7 +28,7 @@ export default function OfferAICopilot({ inquiry, product, attachments = [], onA
   const [error, setError] = useState('');
 
   useEffect(() => {
-    setMessages([{ role: 'assistant', text: `Mám otevřenou poptávku ${inquiry?.name || 'klienta'}. Aktivní standard nabídky: Soběslav v1. Můžu připravit klientské shrnutí, návrh řešení, vizualizaci i strukturu prezentace.` }]);
+    setMessages([{ role: 'assistant', text: `Mám otevřenou poptávku ${inquiry?.name || 'klienta'}. Aktivní standard nabídky: MLŽIDLA Offer System v${SOBESLAV_OFFER_STANDARD.version}. Připravím klientské shrnutí, návrh řešení, vizualizaci i strukturu prezentace, ale nic automaticky neodešlu.` }]);
     setSourceUrl('');
     setError('');
     if (!inquiry?.id) { setAssets([]); return; }
@@ -74,8 +74,12 @@ export default function OfferAICopilot({ inquiry, product, attachments = [], onA
 
 PRAVIDLA:
 - U technických produktových dat vždy dodrž: use null when unknown / do not infer. Neznámou hodnotu nehádej ani nedoplňuj z podobného produktu.
-- Nevymýšlej technické parametry, spotřebu, tlak, cenu ani reference, které nejsou v podkladech.
+- Nevymýšlej technické parametry, spotřebu, tlak, cenu, účinek, termín ani reference, které nejsou v podkladech.
+- Nabídku nikdy automaticky neodesílej. Připrav pouze PDF, prezentaci a koncept zprávy k ručnímu schválení.
 - Nepiš klientovi interní poznámky, ID, workflow, zdroje e-mailu ani instrukce pro obchodníka.
+- U městských nabídek nezačínej technikou. Vysvětli nejdřív hodnotu pro lidi a veřejný prostor: komfort, možnost delšího pobytu, živější místo a architektonické začlenění. Formuluj přínosy jako možnost/potenciál, nikdy jako garantovaný ekonomický výsledek.
+- Pokud charakter produktu a projektu odpovídá, můžeš produkt popsat jako funkční městskou sochu nebo architektonický chladicí objekt, ale bez přehnaných tvrzení.
+- 9zónový zahradní ventil / zavlažovací rozbočení je volitelná varianta pouze pro rezidenční zahrady a zavlažování. Pro města, obce a veřejný prostor jej nenabízej ani nedoporučuj.
 - Návrhy mlžítek musí být minimalistické, čisté, reálně vyrobitelné z nerezové trubky a bez zbytečné geometrie.
 - U BENDY zachovej jeden čistý plynulý profil; žádné výhonky, větve, přídavná ramena, hadice ani kabely vycházející z těla produktu.
 - Pokud něco není potvrzené, označ to jako bod k technickému upřesnění.

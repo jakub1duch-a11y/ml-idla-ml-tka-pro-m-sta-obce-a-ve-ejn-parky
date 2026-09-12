@@ -368,7 +368,7 @@ export default function MunicipalProjectStudio() {
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0b7c89]">Bezpečný provoz</p>
               <h2 className="mt-2 font-heading text-2xl font-medium tracking-[-.025em] text-[#0b2d38] md:text-3xl">Ochlazení s jasným provozním režimem.</h2>
-              <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-600">U městských instalací počítáme s kontrolou technického stavu, pravidelnou údržbou a sezónním uvedením do provozu. Vodní část navrhujeme podle konkrétního napojení a provozních podmínek tak, aby se minimalizovala provozní a hygienická rizika. Konkrétní požadavky se vždy ověřují pro danou instalaci.</p>
+              <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-600">U městských instalací počítáme s kontrolou technického stavu, pravidelnou údržbou a sezónním uvedením do provozu. Součástí dodávky jsou provozní dokumenty a manuály včetně doporučeného postupu pro zahájení sezóny, kontrolu po odstávce a bezpečné spuštění mlžítek. Vodní část navrhujeme podle konkrétního napojení a provozních podmínek tak, aby se minimalizovala provozní a hygienická rizika. Konkrétní požadavky se vždy ověřují pro danou instalaci.</p>
             </div>
           </div>
         </div>

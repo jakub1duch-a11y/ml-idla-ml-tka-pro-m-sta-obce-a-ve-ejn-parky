@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, Loader2, Send, Sparkles, RefreshCw, ChevronDown, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ReactMarkdown from 'react-markdown';
+import { OFFER_AGENT_CONFIG, buildOfferAgentSeedPrompt } from '@/lib/offer-agent-config';
 
-const AGENT_NAME = 'nabidkovy_super_agent';
+const AGENT_NAME = OFFER_AGENT_CONFIG.key;
 
 function safeParse(value) {
   if (value && typeof value === 'object') return value;
@@ -89,11 +90,10 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
   const [error, setError] = useState('');
   const scrollRef = useRef(null);
 
-  const seedPrompt = useMemo(() => {
-    if (!inquiryId) return 'Dobrý den, jsem připraven připravovat nabídky. Pošli mi ID poptávky a typ (poptavka / contact), nebo vyber poptávku vlevo a já na ni navážu.';
-    const type = inquiryType === 'contact' ? 'contact' : 'poptavka';
-    return `Načti poptávku ID ${inquiryId} (typ: ${type}). Zvol jedno doporučené řešení, ověř cenu, připrav odpovídající projektové vizualizace, kompletní PDF nabídku a stručný koncept zprávy klientovi. Nabídku a případ vždy ulož na sdílený Mlžný disk. Nic klientovi automaticky neodesílej; výstup ponech jako koncept ke kontrole.`;
-  }, [inquiryId, inquiryType]);
+  const seedPrompt = useMemo(
+    () => buildOfferAgentSeedPrompt({ inquiryId, inquiryType }),
+    [inquiryId, inquiryType]
+  );
 
   useEffect(() => {
     let active = true;
@@ -105,7 +105,7 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
         const existing = (conversations || [])[0];
         const conversation = existing
           ? existing
-          : await base44.agents.createConversation({ agent_name: AGENT_NAME, metadata: { name: 'Tvorba nabídky', description: 'Super Agent — nabídky MLŽIDLA' } });
+          : await base44.agents.createConversation({ agent_name: AGENT_NAME, metadata: { name: OFFER_AGENT_CONFIG.displayName, description: 'Řízená tvorba nabídek MLŽIDLA / HolmTec · schválení před odesláním', config_version: OFFER_AGENT_CONFIG.version } });
         if (!active) return;
         setConversationId(conversation.id);
         setMessages(Array.isArray(conversation.messages) ? conversation.messages : []);
@@ -167,7 +167,7 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
     setLoading(true);
     setError('');
     try {
-      const conversation = await base44.agents.createConversation({ agent_name: AGENT_NAME, metadata: { name: 'Tvorba nabídky', description: 'Super Agent — nabídky MLŽIDLA' } });
+      const conversation = await base44.agents.createConversation({ agent_name: AGENT_NAME, metadata: { name: OFFER_AGENT_CONFIG.displayName, description: 'Řízená tvorba nabídek MLŽIDLA / HolmTec · schválení před odesláním', config_version: OFFER_AGENT_CONFIG.version } });
       setConversationId(conversation.id);
       setMessages([]);
       if (seedPrompt) await base44.agents.addMessage(conversation, { role: 'user', content: seedPrompt });
@@ -235,7 +235,7 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
               {busy ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
             </button>
           </div>
-          <p className="mt-2 text-[10px] leading-relaxed text-white/35">Agent připraví návrh, PDF i prezentaci. Nabídku klientovi odešle až po tvém explicitním schválení („ano, odeslat“).</p>
+          <p className="mt-2 text-[10px] leading-relaxed text-white/35">Agent připraví návrh, vizualizace, PDF i koncept e-mailu. Automatické odesílání zákazníkovi je vypnuté; po schválení zůstává komunikace připravená jako koncept.</p>
         </div>
       </div>
     </section>

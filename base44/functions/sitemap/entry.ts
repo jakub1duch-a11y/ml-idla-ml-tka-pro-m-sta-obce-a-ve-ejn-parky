@@ -20,7 +20,7 @@ const STATIC_PAGES = [
   { loc: '/poptavka', priority: '0.9', changefreq: 'monthly' },
   { loc: '/kontakt', priority: '0.8', changefreq: 'monthly' },
   { loc: '/podpora', priority: '0.6', changefreq: 'monthly' },
-  { loc: '/kategorie/mesta-obce', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/mlzitka-pro-mesta-obce', priority: '0.85', changefreq: 'monthly' },
   { loc: '/kategorie/parky-hriste', priority: '0.7', changefreq: 'monthly' },
   { loc: '/kategorie/koupaliste', priority: '0.7', changefreq: 'monthly' },
   { loc: '/kategorie/architekti', priority: '0.7', changefreq: 'monthly' },

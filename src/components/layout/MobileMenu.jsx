@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
+  Building2,
   Calculator,
   ChevronDown,
   Cpu,
@@ -28,6 +29,7 @@ const INTERNATIONAL_MOBILE_COPY = {
 
 const PRIMARY_LINKS = [
   { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', icon: Grid2X2 },
+  { label: 'Pro města a obce', sub: 'Návrh, výroba a podklady pro veřejný prostor', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
   { label: 'Realizace', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
   { label: 'Technologie', sub: 'Jak funguje nízkotlaké mlžení', path: '/jak-to-funguje', icon: Cpu },
   { label: 'Blog', sub: 'Inspirace, projekty a novinky', path: '/blog', icon: Newspaper },

@@ -1,6 +1,27 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.43';
 
-const GA4_PROPERTY_ID = 'properties/496002660';
+const SITE_HOST = 'mlzidla.cz';
+
+async function resolveGa4Property(accessToken: string) {
+  const headers = { Authorization: `Bearer ${accessToken}` };
+  const summariesResponse = await fetch('https://analyticsadmin.googleapis.com/v1beta/accountSummaries?pageSize=200', { headers });
+  const summaries = await summariesResponse.json().catch(() => ({}));
+  if (!summariesResponse.ok) throw new Error(summaries?.error?.message || 'Unable to list GA4 properties.');
+
+  const properties = (summaries.accountSummaries || []).flatMap((account: any) => account.propertySummaries || []);
+  for (const property of properties) {
+    const streamsResponse = await fetch(`https://analyticsadmin.googleapis.com/v1beta/${property.property}/dataStreams?pageSize=100`, { headers });
+    if (!streamsResponse.ok) continue;
+    const streams = await streamsResponse.json().catch(() => ({}));
+    const matchesSite = (streams.dataStreams || []).some((stream: any) =>
+      stream.type === 'WEB_DATA_STREAM' &&
+      String(stream.webStreamData?.defaultUri || '').toLowerCase().includes(SITE_HOST)
+    );
+    if (matchesSite) return property.property;
+  }
+
+  throw new Error(`GA4 property with a WEB stream for ${SITE_HOST} was not found for the connected Google account.`);
+}
 const SEARCH_CONSOLE_SITE = 'sc-domain:mlzidla.cz';
 const TZ = 'Europe/Prague';
 const GRAPH_VERSION = 'v23.0';
@@ -51,8 +72,8 @@ async function fetchJson(url: string, init: RequestInit = {}) {
   return data;
 }
 
-async function gaRun(accessToken: string, body: Record<string, unknown>) {
-  return fetchJson(`https://analyticsdata.googleapis.com/v1beta/${GA4_PROPERTY_ID}:runReport`, {
+async function gaRun(accessToken: string, propertyId: string, body: Record<string, unknown>) {
+  return fetchJson(`https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(body),

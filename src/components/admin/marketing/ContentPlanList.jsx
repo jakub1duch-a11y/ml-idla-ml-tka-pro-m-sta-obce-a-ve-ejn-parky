@@ -23,12 +23,18 @@ export default function ContentPlanList({ posts, onChange }) {
   const setStatus = async (id, status) => { await base44.entities.MarketingPost.update(id, { status }); onChange(); };
   const remove = async (id) => { if (!confirm('Smazat tuto marketingovou položku?')) return; await base44.entities.MarketingPost.delete(id); onChange(); };
   const publishNow = async (post) => {
-    setError(''); setPublishingId(post.id);
+    setError('');
+    if (post.platform !== 'instagram') {
+      setError('Přímé publikování je nyní ověřené pouze pro Instagram. Ostatní kanály zůstávají jako koncept k ručnímu schválení.');
+      return;
+    }
+    const approved = window.confirm(`Opravdu publikovat „${post.title}“ na Instagram @mlzidla? Tuto akci nelze vzít zpět.`);
+    if (!approved) return;
+    setPublishingId(post.id);
     try {
-      if (post.platform === 'instagram') await base44.functions.invoke('publishInstagramPost', { postId: post.id });
-      else await base44.entities.MarketingPost.update(post.id, { status: 'published', published_at: new Date().toISOString() });
+      await base44.functions.invoke('publishInstagramPost', { postId: post.id, confirmed: true });
       onChange();
-    } catch (err) { setError(err?.response?.data?.error?.error_message || 'Publikace se nezdařila. U kanálu bez přímého publisheru byla zachována bezpečná kontrola stavu.'); }
+    } catch (err) { setError(err?.response?.data?.error?.error_message || err?.response?.data?.error || 'Publikace se nezdařila. Příspěvek zůstal bezpečně uložen jako koncept.'); }
     finally { setPublishingId(null); }
   };
 

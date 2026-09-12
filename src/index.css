@@ -7,25 +7,26 @@
 
 @layer base {
   :root {
-    --background: 195 57% 97%;
-    --foreground: 216 60% 10%;
+    /* MLŽIDLA.cz Brand System 2.1 — Deep Steel / Ocean Teal / Mist Aqua */
+    --background: 195 50% 97%;
+    --foreground: 193 62% 14%;
     --card: 0 0% 100%;
-    --card-foreground: 216 60% 10%;
+    --card-foreground: 193 62% 14%;
     --popover: 0 0% 100%;
-    --popover-foreground: 216 60% 10%;
-    --primary: 213 65% 24%;
-    --primary-foreground: 195 57% 97%;
-    --secondary: 216 60% 10%;
+    --popover-foreground: 193 62% 14%;
+    --primary: 193 62% 14%;
+    --primary-foreground: 195 50% 97%;
+    --secondary: 187 76% 23%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 194 55% 94%;
-    --muted-foreground: 206 14% 41%;
-    --accent: 188 86% 53%;
+    --muted: 195 48% 94%;
+    --muted-foreground: 198 16% 40%;
+    --accent: 187 70% 64%;
     --accent-foreground: 0 0% 9%;
     --destructive: 17 88% 40%;
     --destructive-foreground: 0 0% 100%;
     --border: 197 31% 87%;
     --input: 197 31% 87%;
-    --ring: 213 65% 24%;
+    --ring: 187 76% 23%;
     --radius: 0px;
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Albert Sans', sans-serif;
@@ -37,10 +38,10 @@
     --brand-white: 195 57% 97%;
   }
   :root {
-    --brand-primary: #153863;
+    --brand-primary: #0D2D38;
     --brand-on-primary: #F4FAFC;
-    --brand-secondary: #0A1628;
-    --brand-accent: #22D3EE;
+    --brand-secondary: #0E5B67;
+    --brand-accent: #61D5E5;
     --brand-background: #F4FAFC;
     --brand-surface: #FFFFFF;
     --brand-text: #0A1628;

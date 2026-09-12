@@ -8,7 +8,7 @@ import ReferenceShowcase from '@/components/premium/ReferenceShowcase';
 const HERO_IMAGE = '/assets/reference-zoo-hero.webp';
 
 const sectors = [
-  { Icon: Building2, label: 'Města', path: '/kategorie/mesta-obce' },
+  { Icon: Building2, label: 'Města', path: '/mlzitka-pro-mesta-obce' },
   { Icon: Trees, label: 'Parky', path: '/kategorie/parky-hriste' },
   { Icon: Hotel, label: 'Hotely', path: '/kategorie/komercni' },
   { Icon: Utensils, label: 'Restaurace', path: '/kategorie/komercni' },

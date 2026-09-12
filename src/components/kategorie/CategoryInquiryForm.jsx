@@ -59,7 +59,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban', 
       {status === 'error' ? <p className="sm:col-span-2 text-sm text-red-700">Poptávku se nepodařilo odeslat. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.</p> : null}
       <button type="submit" disabled={status === 'sending'}
         className="btn-inquiry-pulse sm:col-span-2 justify-center rounded-full bg-primary px-8 py-4 text-sm font-bold text-primary-foreground disabled:opacity-60">
-        {status === 'sending' ? <Loader size={16} className="animate-spin" /> : <>Odeslat nezávaznou poptávku <ArrowRight size={15} /></>}
+        {status === 'sending' ? <Loader size={16} className="animate-spin" /> : <>Získat návrh a cenu <ArrowRight size={15} /></>}
       </button>
       <p className="sm:col-span-2 text-[11px] leading-relaxed text-slate-400">Odesláním získáme podklady pro první technické doporučení. Nejde o závaznou objednávku.</p>
     </form>

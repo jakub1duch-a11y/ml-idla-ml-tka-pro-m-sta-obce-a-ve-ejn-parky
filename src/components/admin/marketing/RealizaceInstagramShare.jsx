@@ -36,9 +36,11 @@ export default function RealizaceInstagramShare({ onPublished }) {
 
   const publish = async () => {
     if (!selectedId) return;
+    const approved = window.confirm(`Opravdu publikovat realizaci „${selected?.name || ''}“ na Instagram @mlzidla? Tuto akci nelze vzít zpět.`);
+    if (!approved) return;
     setState((s) => ({ ...s, publishing: true, error: '', success: '' }));
     try {
-      await base44.functions.invoke('publishRealizaceToInstagram', { realizaceId: selectedId, caption, imageUrl: photo });
+      await base44.functions.invoke('publishRealizaceToInstagram', { realizaceId: selectedId, caption, imageUrl: photo, confirmed: true });
       setState((s) => ({ ...s, publishing: false, success: 'Příspěvek byl publikován na Instagram.' }));
       onPublished?.();
     } catch (error) {
@@ -51,7 +53,7 @@ export default function RealizaceInstagramShare({ onPublished }) {
   return (
     <div className="mb-8 rounded-2xl border border-white/8 bg-white/3 p-5">
       <h3 className="flex items-center gap-2 text-sm font-medium text-white"><Sparkles size={14} className="text-cyan" /> Sdílet realizaci na profil</h3>
-      <p className="mt-1 text-xs text-white/40">Vyberte úspěšnou realizaci, upravte text a publikujte přímo do feedu @mlzidla.</p>
+      <p className="mt-1 text-xs text-white/40">Vyberte realizaci, upravte text a před publikací potvrďte finální podobu. Bez potvrzení se nic neodešle.</p>
 
       <div className="mt-4 grid gap-4 md:grid-cols-[200px_1fr]">
         <div className="space-y-2 max-h-[260px] overflow-y-auto pr-1">

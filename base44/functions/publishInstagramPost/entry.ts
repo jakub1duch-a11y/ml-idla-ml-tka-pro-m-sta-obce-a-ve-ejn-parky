@@ -7,8 +7,9 @@ export default async function(req) {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
-    const { postId } = await req.json();
+    const { postId, confirmed = false } = await req.json();
     if (!postId) return Response.json({ error: 'Missing postId' }, { status: 400 });
+    if (!confirmed) return Response.json({ error: 'Publikace vyžaduje výslovné potvrzení administrátora.' }, { status: 400 });
     const post = await base44.asServiceRole.entities.MarketingPost.get(postId);
     if (!post) return Response.json({ error: 'Příspěvek nenalezen' }, { status: 404 });
     if (!post.image_url) return Response.json({ error: 'Příspěvek musí mít obrázek' }, { status: 400 });

@@ -8,7 +8,7 @@ const GROUPS = [
     ['Zahradní mlžítka', '/zahradni-mlzitka'], ['Zakázková mlžítka', '/zakazkova-mlzitka'],
   ]},
   { title: 'Řešení podle využití', links: [
-    ['Města a obce', '/kategorie/mesta-obce'], ['Parky a hřiště', '/kategorie/parky-hriste'],
+    ['Města a obce', '/mlzitka-pro-mesta-obce'], ['Parky a hřiště', '/kategorie/parky-hriste'],
     ['Koupaliště', '/kategorie/koupaliste'], ['Outdoor a zahrady', '/kategorie/outdoor-zahrady'],
     ['Architekti', '/kategorie/architekti'], ['Komerční prostory', '/kategorie/komercni'],
     ['Eventy', '/kategorie/eventy'], ['Art instalace', '/kategorie/art-instalace'],

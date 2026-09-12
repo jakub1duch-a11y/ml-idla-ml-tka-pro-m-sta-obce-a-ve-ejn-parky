@@ -317,6 +317,24 @@
   margin: 6px 0;
 }
 
+/* --- Catalog · Family tiles (kolekce) --- */
+.fam-tile {
+  display: block;
+  width: 100%;
+  font-family: var(--brand-font-body);
+  background: var(--brand-surface);
+  color: var(--brand-secondary);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-md);
+  padding: 22px;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, color .2s ease, transform .2s ease;
+}
+.fam-tile:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
+.fam-tile-active { background: var(--brand-secondary); color: var(--brand-on-primary); border-color: var(--brand-secondary); }
+.fam-tile-active:hover { border-color: var(--brand-accent); }
+.fam-tile:focus-visible { outline: 2px solid var(--brand-accent); outline-offset: 3px; }
+
 /* --- Brand utility helpers --- */
 .text-brand-primary { color: var(--brand-primary); }
 .text-brand-accent { color: var(--brand-accent); }

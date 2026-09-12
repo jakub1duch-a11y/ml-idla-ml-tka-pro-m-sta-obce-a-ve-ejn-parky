@@ -1,85 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Loader, Ruler, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
-import ProductHoverImage from '@/components/ui/ProductHoverImage';
+import { FAMILIES, getFamily, sortByStructure } from '@/lib/productFamilies';
+import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
 
 export default function FeaturedMlzitka() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    base44.entities.Product.list('-created_date', 50)
-      .then((all) => {
-        const list = (all || []).filter((p) => p.featured && !isArchived(p.slug)).slice(0, 6);
-        setProducts(list);
-      })
-      .catch(() => {})
+    base44.entities.Product.list('name', 200)
+      .then((all) => setProducts((all || []).filter((p) => !isArchived(p.slug))))
       .finally(() => setLoading(false));
   }, []);
+
+  const familyTiles = useMemo(() => FAMILIES.map((f) => {
+    const inFamily = sortByStructure(products.filter((p) => getFamily(p).id === f.id));
+    const cover = inFamily.find((p) => p.featured && p.image_url) || inFamily.find((p) => p.image_url);
+    return { ...f, count: inFamily.length, cover: cover?.image_url };
+  }), [products]);
+
+  const featured = useMemo(() => sortByStructure(products.filter((p) => p.featured)).slice(0, 6), [products]);
 
   return (
     <section className="bg-white py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Doporučená mlžítka</p>
-            <h2 className="mt-4 font-heading text-3xl leading-tight text-[#0D2F4F] lg:text-4xl">
-              Produkty s technickými podklady pro váš projekt.
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#0D2F4F]/60">
-              Základní přehled materiálu, rozměru a použití — pro rychlé porovnání klientem i architektem.
-            </p>
+            <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">// Produktové kolekce</p>
+            <h2 className="mt-4 font-heading text-3xl font-semibold text-[#0A1628] lg:text-4xl">Čtyři kolekce nerezových mlžítek.</h2>
+            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[#5A6B78]">Od sériových mlžítek PRIME přes průchozí brány a mlžiště až po autorské plastiky CREATIVE. Všechno z jedné české dílny, s řízením SUPLA a technickými listy pro projektanty.</p>
           </div>
-          <Link
-            to="/mlzidla-mlzitka"
-            className="inline-flex items-center gap-2 font-heading text-sm font-semibold text-[#0B5EA8] transition-colors hover:text-[#0D2F4F]"
-          >
-            Celý katalog <span aria-hidden="true">→</span>
-          </Link>
+          <Link to="/mlzidla-mlzitka" className="btn-brand-accent-link shrink-0">Celý katalog →</Link>
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-16"><Loader className="animate-spin text-[#0B5EA8]/40" size={28} /></div>
+          <div className="flex justify-center py-16"><Loader className="animate-spin text-[#D3E2E8]" size={28} /></div>
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((p) => (
-              <Link
-                key={p.id}
-                to={`/produkt/${p.slug}`}
-                className="group block overflow-hidden border border-[#EAF5FB] bg-white transition-all hover:border-[#0B5EA8]/30"
-              >
-                <ProductHoverImage
-                  product={p}
-                  alt={p.name + ' – produktový náhled'}
-                  className="aspect-[4/3] bg-[#EAF5FB]"
-                />
-                <div className="p-5">
-                  <h3 className="font-heading text-lg font-semibold text-[#0D2F4F]">{p.name}</h3>
-                  {p.short_description && (
-                    <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-[#0D2F4F]/55">{p.short_description}</p>
-                  )}
-                  <div className="mt-4 grid grid-cols-2 gap-2 border-y border-[#EAF5FB] py-3">
-                    <span className="inline-flex min-w-0 items-center gap-1.5 text-[11px] font-medium text-[#0D2F4F]/70">
-                      <ShieldCheck size={14} className="shrink-0 text-[#0B5EA8]" />
-                      <span className="truncate">{p.material?.includes('316') ? 'Nerez AISI 316L' : (p.material || 'Projektové provedení')}</span>
-                    </span>
-                    <span className="inline-flex min-w-0 items-center gap-1.5 text-[11px] font-medium text-[#0D2F4F]/70">
-                      <Ruler size={14} className="shrink-0 text-[#0B5EA8]" />
-                      <span className="truncate">{p.coverage_area || 'Rozměr na míru'}</span>
-                    </span>
+          <>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {familyTiles.map((f) => (
+                <Link key={f.id} to="/mlzidla-mlzitka#catalog" className="card-brand-reference group flex flex-col overflow-hidden !p-0">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#153863]">
+                    {f.cover && <img src={f.cover} alt={f.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/20 to-transparent" />
+                    <span className="absolute left-5 top-5 font-mono text-[11px] tracking-[.14em] text-[#22D3EE]">// {f.code}</span>
                   </div>
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-                    <span className="font-mono text-[10px] uppercase tracking-wide text-[#0B5EA8]">Produktový detail</span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0D2F4F] px-4 py-2 text-xs font-semibold text-white transition-colors group-hover:bg-[#0B5EA8]">
-                      Zobrazit model <ArrowRight size={13} />
-                    </span>
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="tag">{f.label}</div>
+                    <h3 className="!text-xl">{f.title}</h3>
+                    <p className="flex-1">{f.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="stat !text-2xl">{f.count}</span>
+                      <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#22D3EE]">Otevřít <ArrowRight size={14} /></span>
+                    </div>
+                    <div className="statlabel">produktů v kolekci</div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-16 flex items-end justify-between gap-4">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">// Výběr produktů</p>
+                <h3 className="mt-3 font-heading text-2xl font-semibold text-[#0A1628]">Nejčastěji poptávaná mlžítka</h3>
+              </div>
+            </div>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((p) => <CatalogProductCard key={p.id} product={p} />)}
+            </div>
+          </>
         )}
       </div>
     </section>

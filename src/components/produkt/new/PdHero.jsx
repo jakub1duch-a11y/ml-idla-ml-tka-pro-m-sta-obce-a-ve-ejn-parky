@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { VIDEO_ASSETS, BENDY_SLUGS } from '@/lib/newMedia';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
+import { getLine, getFamily } from '@/lib/productFamilies';
 
 function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
@@ -81,8 +82,9 @@ export default function PdHero({ product }) {
         <div className="relative z-10 flex flex-col justify-center px-5 py-12 sm:px-7 sm:py-16 lg:px-10 lg:py-24">
           <div className="flex items-center gap-3">
             <span className="h-px w-12 bg-[#22D3EE]" />
-            <p className="font-mono text-[11px] uppercase tracking-[.24em] text-[#22D3EE]">{product.name}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[.24em] text-[#22D3EE]">{getFamily(product).label} · {getLine(product).label}</p>
           </div>
+          <p className="mt-4 font-heading text-sm font-semibold uppercase tracking-[.08em] text-white/60">{product.name}</p>
 
           <h1 className="mt-5 max-w-[12ch] font-heading text-[clamp(2.25rem,9vw,4rem)] font-bold leading-[.95] tracking-[-.03em] text-white">
             {detailConfig.tagline}

@@ -18,6 +18,8 @@ import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdDescription from '@/components/produkt/new/PdDescription';
+import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
+import PdLineProducts from '@/components/produkt/new/PdLineProducts';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -61,17 +63,19 @@ export default function ProduktDetail() {
   return (
     <div className="min-h-screen bg-white">
       <PdHero product={product} />
+      <PdFamilyNav product={product} />
       <PdDescription product={product} />
       <PdBenefits product={product} />
-      <PdVariants product={product} />
+      <PdMediaGallery product={product} />
       <PdSpecs product={product} />
-      <PdSmartControl product={product} />
       <PdTechSheet product={product} />
+      <PdVariants product={product} />
+      <PdSmartControl product={product} />
       <PdDetail product={product} />
       <PdHowItWorks />
       <PdTabs product={product} />
-      <PdMediaGallery product={product} />
       <PdReferences product={product} />
+      <PdLineProducts product={product} />
       <PdClosingCta product={product} />
     </div>
   );

@@ -59,10 +59,11 @@ export default async function(req: Request) {
     const body = await req.json().catch(() => ({}));
     const ensure = Boolean(body.ensure);
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('google_analytics');
+    const propertyId = await resolveGa4Property(accessToken);
 
     const [keyEventData, adsLinkData] = await Promise.all([
-      getAdmin(accessToken, `${GA4_PROPERTY_ID}/keyEvents?pageSize=100`),
-      getAdmin(accessToken, `${GA4_PROPERTY_ID}/googleAdsLinks?pageSize=100`),
+      getAdmin(accessToken, `${propertyId}/keyEvents?pageSize=100`),
+      getAdmin(accessToken, `${propertyId}/googleAdsLinks?pageSize=100`),
     ]);
 
     let keyEvents = Array.isArray(keyEventData.keyEvents) ? keyEventData.keyEvents : [];
@@ -74,7 +75,7 @@ export default async function(req: Request) {
 
     if (ensure && !generateLead) {
       try {
-        generateLead = await postAdmin(accessToken, `${GA4_PROPERTY_ID}/keyEvents`, {
+        generateLead = await postAdmin(accessToken, `${propertyId}/keyEvents`, {
           eventName: PRIMARY_KEY_EVENT,
           countingMethod: 'ONCE_PER_EVENT',
         });
@@ -88,7 +89,7 @@ export default async function(req: Request) {
 
     return Response.json({
       ok: true,
-      propertyId: GA4_PROPERTY_ID,
+      propertyId: propertyId,
       primaryEvent: PRIMARY_KEY_EVENT,
       keyEventReady: Boolean(generateLead),
       keyEventCreated: created,

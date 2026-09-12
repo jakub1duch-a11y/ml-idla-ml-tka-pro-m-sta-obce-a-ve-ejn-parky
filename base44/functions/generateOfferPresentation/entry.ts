@@ -14,10 +14,10 @@ const SHARED_DRIVE_NAMES = ['MLZNY DISK', 'MLŽNÝ DISK'];
 const AUDIENCE = {
   city_public: {
     eyebrow: 'MĚSTA · OBCE · NÁMĚSTÍ · PARKY',
-    problem: 'Horké veřejné plochy potřebují řešení, které zlepší pobytový komfort a současně respektuje architekturu, provoz a správu města.',
-    promise: 'Více komfortu ve veřejném prostoru. Méně technického balastu.',
-    benefits: ['lokální ochlazení pobytových zón', 'reprezentativní nerezový prvek', 'nízkotlaký provoz bez vysokotlakého čerpadla', 'Smart harmonogramy, senzory a kontrola provozu'],
-    proof: 'Řešení je vhodné pro náměstí, parky, pěší zóny, hřiště a další veřejné prostory, kde je důležitá dlouhá životnost, servisovatelnost a vizuální kvalita.'
+    problem: 'V horkých dnech může přehřátý veřejný prostor ztrácet pobytovou kvalitu. Cílem je vytvořit lokální místo pro osvěžení, odpočinek a další městský život bez narušení architektury.',
+    promise: 'Ochlazení pro lidi. Více života pro město.',
+    benefits: ['lokální osvěžení a vyšší pobytový komfort', 'architektonicky integrovaný prvek / funkční městská socha', 'provoz bez vysokotlakého čerpadla', 'Smart SUPLA: harmonogramy, senzory a kontrola provozu'],
+    proof: 'Řešení může podpořit příjemnější pobyt na náměstích, v parcích, pěších zónách a dalších veřejných prostorech. Konkrétní účinek, provozní režim a technická konfigurace se potvrzují podle místa a projektu.'
   },
   residential: {
     eyebrow: 'ZAHRADA · TERASA · VENKOVNÍ WELLBEING',
@@ -168,9 +168,9 @@ export default async function(req) {
     requests.push(...shapeText('t2b', s[1], aiContent.project_goal || inquiry.message || audience.problem, 48, 105, 610, 115, 20, INK, true));
     requests.push(...shapeText('t2c', s[1], 'Návrh vychází z dodaných podkladů a je připraven jako klientský koncept pro rozhodnutí o dalším technickém dopracování.', 48, 255, 610, 80, 14, MUTED, false));
 
-    // 3 — solution & benefits
+    // 3 — solution & benefits. U městských projektů je produktem až druhá vrstva příběhu: nejprve lidé, komfort a kvalita místa.
     requests.push(background(s[2], LIGHT), ...accentBar('a3', s[2], 0, 0, 720, 8));
-    requests.push(...shapeText('t3a', s[2], 'Navržené řešení', 48, 40, 330, 40, 25, PETROL, true));
+    requests.push(...shapeText('t3a', s[2], audienceVariant === 'city_public' ? 'Ochlazovací zóna jako součást místa' : 'Navržené řešení', 48, 40, 360, 40, 25, PETROL, true));
     requests.push(...shapeText('t3b', s[2], product.name, 48, 92, 330, 50, 30, INK, true));
     requests.push(...shapeText('t3c', s[2], aiContent.solution_summary || product.short_description || 'Architektonické mlžení navržené pro konkrétní prostor.', 48, 150, 330, 85, 15, MUTED, false));
     const clientBenefits = Array.isArray(aiContent.benefits) && aiContent.benefits.length ? aiContent.benefits.slice(0, 4) : audience.benefits;
@@ -181,7 +181,7 @@ export default async function(req) {
     const specs = [product.coverage_area && `Rozměr / dosah: ${product.coverage_area}`, product.material && `Materiál: ${product.material}`, product.power_supply && `Napájení / řízení: ${product.power_supply}`].filter(Boolean).join('\n\n');
     requests.push(background(s[3], WHITE), ...accentBar('a4', s[3], 0, 0, 720, 8));
     requests.push(...shapeText('t4a', s[3], 'Technicky čisté řešení', 48, 42, 460, 45, 25, PETROL, true));
-    requests.push(...shapeText('t4b', s[3], specs || 'Přesná technická konfigurace bude potvrzena podle konkrétního místa instalace.', 48, 110, 610, 205, 15, INK, false));
+    requests.push(...shapeText('t4b', s[3], specs || 'Přesná technická konfigurace bude potvrzena podle konkrétního místa instalace. Technické hodnoty, které nejsou potvrzené ve zdrojových podkladech, nejsou doplňovány odhadem.', 48, 110, 610, 205, 15, INK, false));
     requests.push(...shapeText('t4c', s[3], audience.proof, 48, 325, 610, 50, 12, MUTED, false));
 
     // 5 — Smart control

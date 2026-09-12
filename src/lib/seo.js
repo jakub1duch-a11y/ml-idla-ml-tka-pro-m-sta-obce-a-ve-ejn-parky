@@ -453,10 +453,62 @@ export const SEO_PAGES = {
     canonicalPath: '/podpora',
   },
   mestOobce: {
-    title: 'Mlžítka pro města a obce | MLŽIDLA.cz',
-    description: 'Designová mlžítka a Smart Cooling pro náměstí, parky a veřejný prostor. Nerezové řešení na míru, reference a projektová podpora.',
-    keywords: 'mlžítka pro obce, městské ochlazování, urbanismus, adaptace na sucho, ochlazení náměstí, tepelné ostrovy',
-    canonicalPath: '/kategorie/mesta-obce',
+    title: 'Mlžítka pro města a obce – návrh a výroba',
+    description: 'Městská mlžítka, mlhoviště a mlžné brány pro náměstí, parky, školy a veřejný prostor. Vizualizace, zakázková výroba, Smart řízení, instalace a servis.',
+    keywords: 'mlžítka pro města, mlžítka pro obce, městská mlžítka, městské mlhoviště, ochlazování měst, ochlazení veřejného prostoru, mlžné brány, zakázková výroba',
+    canonicalPath: '/mlzitka-pro-mesta-obce',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Service',
+          name: 'Návrh a zakázková výroba mlžítek pro města a obce',
+          serviceType: 'Městská mlžítka, mlhoviště a mlžné brány',
+          description: 'Návrh, vizualizace, zakázková výroba, instalace, Smart řízení a servis mlžných prvků pro veřejný prostor.',
+          provider: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: BASE_URL },
+          areaServed: { '@type': 'Country', name: 'Česká republika' },
+          audience: { '@type': 'Audience', audienceType: 'Města, obce, architekti a projektanti' },
+          url: BASE_URL + '/mlzitka-pro-mesta-obce',
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Co potřebujete pro první návrh?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Stačí fotografie nebo situační výkres místa, přibližné rozměry, očekávaný způsob využití a informace o dostupnosti vody a elektřiny.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Lze řešení přizpůsobit architektuře města?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ano. Zakázkové zpracování může řešit rozměry, konfiguraci, kotvení, návaznost na mobiliář i barevné a povrchové pojetí. Každé technické rozhodnutí následně potvrzuje projektová dokumentace.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Co obdrží obec před rozhodnutím?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Podle fáze projektu připravíme situační doporučení, variantu řešení, vizualizaci, technické požadavky a podklady pro cenovou nabídku.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Jak se řeší provoz a údržba?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Součástí návrhu může být Smart řízení, provozní režimy, vzdálená správa a plán servisu včetně přípravy na zimní období.',
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
   parkyHriste: {
     title: 'Mlhoviště pro parky a dětská hřiště — Bezpečné mlžení bez chemie',

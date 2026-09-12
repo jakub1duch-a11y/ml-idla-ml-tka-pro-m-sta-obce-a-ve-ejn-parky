@@ -147,7 +147,8 @@ const AuthenticatedApp = () => {
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
-        <Route path="/kategorie/mesta-obce" element={<MestaObce />} />
+        <Route path="/mlzitka-pro-mesta-obce" element={<MestaObce />} />
+        <Route path="/kategorie/mesta-obce" element={<Navigate to="/mlzitka-pro-mesta-obce" replace />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
         <Route path="/kategorie/koupaliste" element={<Koupaliste />} />
         <Route path="/kategorie/architekti" element={<Architekti />} />

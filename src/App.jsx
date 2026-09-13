@@ -75,6 +75,10 @@ import PrezentaceMlziciProstor from '@/pages/PrezentaceMlziciProstor';
 import GateARPrototype from '@/pages/GateARPrototype';
 import LocalizedLanding from '@/pages/LocalizedLanding';
 import OAuthConsent from '@/pages/OAuthConsent';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
 import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
 
 const LOCALIZED_ROUTES = Object.entries(ROUTE_MAP).flatMap(([routeKey, paths]) =>
@@ -195,6 +199,10 @@ const AuthenticatedApp = () => {
       </Route>
       <Route path="/mlzidla" element={<Navigate to="/mlzidla-mlzitka" replace />} />
       <Route path="/mlzidla/produkt/:id" element={<Navigate to="/mlzidla-mlzitka" replace />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/admin-logout" element={<AdminLogout />} />

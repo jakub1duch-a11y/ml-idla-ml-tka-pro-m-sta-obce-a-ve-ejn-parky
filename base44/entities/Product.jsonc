@@ -26,6 +26,10 @@
       "type": "string",
       "description": "Main product image"
     },
+    "image_alt": {
+      "type": "string",
+      "description": "Popisn\u00fd alt text hlavn\u00edho produktu pro p\u0159\u00edstupnost, SEO a AEO"
+    },
     "gallery_urls": {
       "type": "array",
       "items": {
@@ -76,6 +80,44 @@
         "type": "string"
       },
       "description": "Soubory ke sta\u017een\u00ed k produktu (technick\u00e9 listy, manu\u00e1ly, cen\u00edky) \u2014 URL adresy"
+    },
+    "seo_title": {
+      "type": "string",
+      "description": "Voliteln\u00fd SEO title produktu"
+    },
+    "seo_description": {
+      "type": "string",
+      "description": "Voliteln\u00fd meta description produktu do cca 155 znak\u016f"
+    },
+    "location_context": {
+      "type": "string",
+      "description": "Lokalitn\u00ed/segmentov\u00fd kontext produktu, nap\u0159. m\u011bsta, \u0161koly, parky, zahrady"
+    },
+    "use_cases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ov\u011b\u0159en\u00e9 p\u0159\u00edle\u017eitosti pou\u017eit\u00ed produktu pro intern\u00ed prolinkov\u00e1n\u00ed a AEO"
+    },
+    "faq_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "answer"
+        ]
+      },
+      "description": "FAQ produktu pro AEO a FAQPage structured data; odpov\u011bdi mus\u00ed vych\u00e1zet z ov\u011b\u0159en\u00fdch technick\u00fdch \u00fadaj\u016f"
     },
     "hero_background_url": {
       "type": "string",

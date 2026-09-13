@@ -1,0 +1,89 @@
+{
+  "name": "MisterTelemetry",
+  "type": "object",
+  "properties": {
+    "device_id": {
+      "type": "string"
+    },
+    "project_order_id": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "misting_hours": {
+      "type": "number",
+      "minimum": 0
+    },
+    "cycle_count": {
+      "type": "number",
+      "minimum": 0
+    },
+    "estimated_water_l": {
+      "type": "number",
+      "minimum": 0
+    },
+    "temperature_avg_c": {
+      "type": "number"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "supla",
+        "manual",
+        "estimated"
+      ],
+      "default": "manual"
+    },
+    "source_quality": {
+      "type": "string",
+      "enum": [
+        "live",
+        "verified",
+        "estimated"
+      ],
+      "default": "estimated"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "device_id",
+    "project_order_id",
+    "client_email",
+    "period_start",
+    "period_end"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

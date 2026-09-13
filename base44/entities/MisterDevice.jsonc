@@ -1,0 +1,96 @@
+{
+  "name": "MisterDevice",
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "device_name": {
+      "type": "string"
+    },
+    "serial_number": {
+      "type": "string"
+    },
+    "installation_location": {
+      "type": "string"
+    },
+    "installed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "handover_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "control_mode": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "timer",
+        "smart",
+        "supla"
+      ],
+      "default": "manual"
+    },
+    "supla_connection_status": {
+      "type": "string",
+      "enum": [
+        "not_connected",
+        "pending",
+        "connected",
+        "error"
+      ],
+      "default": "not_connected"
+    },
+    "supla_device_id": {
+      "type": "string"
+    },
+    "supla_channel_id": {
+      "type": "string"
+    },
+    "last_telemetry_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 3000
+    }
+  },
+  "required": [
+    "project_order_id",
+    "client_email",
+    "product_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

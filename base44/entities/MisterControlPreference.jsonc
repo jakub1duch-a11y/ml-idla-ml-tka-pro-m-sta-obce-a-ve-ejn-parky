@@ -1,0 +1,93 @@
+{
+  "name": "MisterControlPreference",
+  "type": "object",
+  "properties": {
+    "device_id": {
+      "type": "string"
+    },
+    "project_order_id": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "recommend_only",
+        "manual_confirm",
+        "scheduled"
+      ],
+      "default": "recommend_only"
+    },
+    "prompt": {
+      "type": "string",
+      "maxLength": 3000
+    },
+    "temperature_from_c": {
+      "type": "number"
+    },
+    "time_from": {
+      "type": "string"
+    },
+    "time_to": {
+      "type": "string"
+    },
+    "weekdays": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "max_daily_minutes": {
+      "type": "number",
+      "minimum": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "saved",
+        "pending_device_sync",
+        "active",
+        "error"
+      ],
+      "default": "draft"
+    },
+    "last_applied_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "device_id",
+    "project_order_id",
+    "client_email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

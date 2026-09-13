@@ -1,0 +1,119 @@
+{
+  "name": "ProductionOrder",
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string"
+    },
+    "inquiry_id": {
+      "type": "string"
+    },
+    "quote_number": {
+      "type": "string"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "order_source": {
+      "type": "string",
+      "enum": [
+        "portal",
+        "email",
+        "admin"
+      ],
+      "default": "admin"
+    },
+    "source_reference": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "awaiting_review",
+        "confirmed",
+        "awaiting_deposit",
+        "deposit_paid",
+        "in_production",
+        "ready",
+        "handover_planned",
+        "completed",
+        "cancelled"
+      ],
+      "default": "awaiting_review"
+    },
+    "total_price_ex_vat": {
+      "type": "number",
+      "minimum": 0
+    },
+    "deposit_amount_ex_vat": {
+      "type": "number",
+      "minimum": 0
+    },
+    "final_amount_ex_vat": {
+      "type": "number",
+      "minimum": 0
+    },
+    "deposit_payment_id": {
+      "type": "string"
+    },
+    "final_payment_id": {
+      "type": "string"
+    },
+    "production_start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "planned_handover_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_handover_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "signature_name": {
+      "type": "string",
+      "default": "Ing. Radek Meduna"
+    },
+    "production_notes": {
+      "type": "string",
+      "maxLength": 5000
+    }
+  },
+  "required": [
+    "project_order_id",
+    "client_name",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -25,6 +25,7 @@ import PdLineProducts from '@/components/produkt/new/PdLineProducts';
 import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
 import PdFaq from '@/components/produkt/new/PdFaq';
 import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
+import PdTeepeeRental from '@/components/produkt/new/PdTeepeeRental';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -74,6 +75,7 @@ export default function ProduktDetail() {
       <PdBenefits product={product} />
       <PdStory product={product} />
       <PdMediaGallery product={product} />
+      <PdTeepeeRental product={product} />
       <PdSpecs product={product} />
       <PdWireframe product={product} />
       <PdTechSheet product={product} />

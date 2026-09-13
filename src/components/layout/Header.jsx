@@ -11,7 +11,7 @@ import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
 const PRODUCT_LINKS = [
 { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', image: '/media/optimized/cfc837b23_image.webp', featured: true },
 { label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
-{ label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/zahradni-mlzitka', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
+{ label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/rezidencni-mlzeni', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
 { label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: '/media/optimized/68953132b_IMG_3524.webp' },
 { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }];
 
@@ -23,7 +23,7 @@ const USAGE_LINKS = [
 { icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-cyan' },
 { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-secondary' },
 { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-secondary' },
-{ icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/kategorie/outdoor-zahrady', color: 'text-accent' },
+{ icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/rezidencni-mlzeni', color: 'text-accent' },
 { icon: Sparkles, label: 'Autorské instalace', path: '/kategorie/art-instalace', color: 'text-accent' },
 { icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-secondary' },
 { icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-secondary' },

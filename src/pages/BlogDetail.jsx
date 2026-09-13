@@ -132,7 +132,7 @@ export default function BlogDetail() {
       {/* Hero s overlay nadpisem */}
       {hasImage && (
         <div className="relative h-[460px] overflow-hidden sm:h-[540px] lg:h-[640px]">
-          <img src={post.image_url} alt={post.title} className="w-full h-full object-cover" />
+          <img src={post.image_url} alt={post.image_alt || post.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/95 via-[#041c28]/40 to-[#041c28]/20" />
           <div className="absolute inset-0 flex items-end">
             <div className="mx-auto w-full max-w-7xl px-6 pb-10 sm:pb-14 lg:px-10 lg:pb-16">
@@ -245,6 +245,35 @@ export default function BlogDetail() {
 
         <ArticleProductSlider />
         <ArticleLinkMap />
+
+        {Array.isArray(post.related_product_slugs) && post.related_product_slugs.length > 0 && (
+          <section className="mx-auto my-10 max-w-4xl rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8" aria-labelledby="related-products-heading">
+            <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#0B6B7A]">Související produkty</p>
+            <h2 id="related-products-heading" className="mt-2 font-heading text-2xl text-slate-900">Produkty zmíněné v článku</h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {post.related_product_slugs.map((productSlug) => (
+                <Link key={productSlug} to={`/produkt/${productSlug}`} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:border-[#0B6B7A] hover:text-[#0B6B7A]">
+                  Detail produktu: {productSlug.replace(/-/g, ' ')}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {Array.isArray(post.faq_items) && post.faq_items.some((item) => item?.question && item?.answer) && (
+          <section id="faq" className="mx-auto my-12 max-w-4xl" aria-labelledby="article-faq-heading">
+            <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#0B6B7A]">FAQ · stručné odpovědi</p>
+            <h2 id="article-faq-heading" className="mt-2 font-heading text-2xl text-slate-900 sm:text-3xl">Časté otázky k tématu</h2>
+            <div className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
+              {post.faq_items.filter((item) => item?.question && item?.answer).map((item, index) => (
+                <details key={`${item.question}-${index}`} className="py-5">
+                  <summary className="cursor-pointer list-none pr-6 font-semibold text-slate-900">{item.question}</summary>
+                  <p className="mt-3 leading-7 text-slate-600">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Safety notice */}
         <ArticleSafetyNotice />

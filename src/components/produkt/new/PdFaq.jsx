@@ -1,9 +1,17 @@
 import React from 'react';
 
 export default function PdFaq({ product }) {
-  const items = Array.isArray(product?.faq_items)
+  const explicitItems = Array.isArray(product?.faq_items)
     ? product.faq_items.filter((item) => item?.question && item?.answer)
     : [];
+  const derivedItems = [
+    product?.material && { question: `Z jakého materiálu je ${product.name}?`, answer: `${product.name} má v technických údajích uveden materiál: ${product.material}.` },
+    product?.pressure && { question: `Jaký provozní tlak vyžaduje ${product.name}?`, answer: `U produktu ${product.name} je uveden provozní tlak ${product.pressure}. Finální nastavení se potvrzuje podle konkrétní konfigurace a místa instalace.` },
+    product?.water_consumption && { question: `Jaká je spotřeba vody u ${product.name}?`, answer: `Uvedená spotřeba vody je ${product.water_consumption}. Skutečná spotřeba závisí na počtu trysek, tlaku a provozním režimu.` },
+    product?.micron_size && { question: `Jak jemnou mlhu vytváří ${product.name}?`, answer: `Technický údaj pro tento produkt je ${product.micron_size}.` },
+    product?.power_supply && { question: `Potřebuje ${product.name} elektrické napájení?`, answer: `Pro tento produkt je uvedeno: ${product.power_supply}. Přesné zapojení se potvrzuje podle zvoleného řízení.` },
+  ].filter(Boolean);
+  const items = explicitItems.length ? explicitItems : derivedItems.slice(0, 5);
 
   if (!items.length) return null;
 

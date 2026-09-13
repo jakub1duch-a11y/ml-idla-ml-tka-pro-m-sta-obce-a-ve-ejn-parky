@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
 
 const SLOGAN = 'Samostojná mlžná trojnožka';
 
@@ -20,6 +21,7 @@ export default function ProductHero({ slug = 'teepee', product: given, slogan = 
 
   return (
     <section className="relative flex min-h-[78vh] items-end overflow-hidden bg-[#0A1628] text-white">
+      <TechnicalBlueprintBackground product={product} theme="dark" autoRotate />
       {product.video_url ? (
         <video src={product.video_url} poster={poster} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover" />
       ) : (

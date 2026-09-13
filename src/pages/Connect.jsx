@@ -24,6 +24,16 @@ const CLIENTS = [
     ],
   },
   {
+    id: 'gemini',
+    label: 'Gemini',
+    steps: [
+      'Nainstalujte Gemini CLI (např. příkazem npm install -g @google/gemini-cli) — MCP servery se připojují zde, ne ve webové aplikaci Gemini.',
+      'Otevřete konfigurační soubor ~/.gemini/settings.json.',
+      'Do sekce „mcpServers“ přidejte položku (např. „mlzidla“), jejíž „httpUrl“ je adresa serveru výše, a soubor uložte.',
+      'Spusťte gemini a příkazem /mcp ověřte, že se server i jeho nástroje načetly.',
+    ],
+  },
+  {
     id: 'cursor',
     label: 'Cursor',
     steps: [
@@ -56,7 +66,7 @@ export default function Connect() {
   useEffect(() => {
     setSEO({
       title: 'Připojení AI asistenta | MLŽIDLA®',
-      description: 'Jak připojit Claude, ChatGPT, Cursor nebo vlastního AI klienta k datům MLŽIDLA®.',
+      description: 'Jak připojit Claude, ChatGPT, Gemini, Cursor nebo vlastního AI klienta k datům MLŽIDLA®.',
     });
   }, []);
 
@@ -74,7 +84,7 @@ export default function Connect() {
         <p className="font-mono text-[11px] uppercase tracking-[.2em] text-primary">// AI konektor</p>
         <h1 className="mt-4 font-heading text-4xl tracking-[-.03em] text-secondary">Připojte svého AI asistenta</h1>
         <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
-          Připojte Claude, ChatGPT, Cursor nebo jiného AI klienta a pracujte s daty MLŽIDLA® přímo v konverzaci.
+          Připojte Claude, ChatGPT, Gemini, Cursor nebo jiného AI klienta a pracujte s daty MLŽIDLA® přímo v konverzaci.
           Stačí zkopírovat adresu serveru a vložit ji do svého klienta.
         </p>
 

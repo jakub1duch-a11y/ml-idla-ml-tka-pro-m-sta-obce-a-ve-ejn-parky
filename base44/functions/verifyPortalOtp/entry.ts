@@ -90,6 +90,13 @@ Deno.serve(async (req) => {
       projects,
       session_token: sessionToken,
       password_setup_required: passwordSetupRequired,
+    }, {
+      headers: {
+        'Cache-Control': 'no-store',
+        'Pragma': 'no-cache',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'no-referrer',
+      },
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

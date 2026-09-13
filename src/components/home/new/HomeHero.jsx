@@ -1,133 +1,214 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowRight, PlayCircle, Building2, Trees, Wifi } from 'lucide-react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Building2, Trees, Wifi, Droplets, ThermometerSnowflake } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
-import HeroMistDots from '@/components/home/new/HeroMistDots';
 
-const TRUST = [
-  { icon: Building2, label: 'Města a veřejný prostor' },
-  { icon: Trees, label: 'Parky a promenády' },
-  { icon: Wifi, label: 'Smart řízení' },
-];
-
-const fadeUp = (delay) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
-});
+const clamp = (n, min = 0, max = 1) => Math.min(max, Math.max(min, n));
 
 export default function HomeHero() {
-  const [videoReady, setVideoReady] = useState(false);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
   const sectionRef = useRef(null);
-  const reduceMotion = useReducedMotion();
+  const videoRef = useRef(null);
+  const rafRef = useRef(null);
+  const targetTimeRef = useRef(0);
+  const currentTimeRef = useRef(0);
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
-  const textY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -60]);
-  const mediaY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 90]);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduceMotion ? 1 : 1.08]);
+  const reduceMotion = useReducedMotion();
+  const [duration, setDuration] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const [allowVideo, setAllowVideo] = useState(false);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.18, 0.30], [1, 1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.30], [0, -36]);
+
+  const cityOpacity = useTransform(scrollYProgress, [0.20, 0.34, 0.52, 0.62], [0, 1, 1, 0]);
+  const cityY = useTransform(scrollYProgress, [0.20, 0.40, 0.62], [34, 0, -30]);
+
+  const techOpacity = useTransform(scrollYProgress, [0.50, 0.64, 0.78, 0.86], [0, 1, 1, 0]);
+  const techY = useTransform(scrollYProgress, [0.50, 0.68, 0.86], [34, 0, -28]);
+
+  const ctaOpacity = useTransform(scrollYProgress, [0.78, 0.90, 1], [0, 1, 1]);
+  const ctaY = useTransform(scrollYProgress, [0.78, 0.93], [34, 0]);
+
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1.02, 1.08]);
 
   useEffect(() => {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const slowNetwork = ['slow-2g', '2g'].includes(connection?.effectiveType);
-    if (reduceMotion || connection?.saveData || slowNetwork) return undefined;
-
-    let timeoutId;
-    let idleId;
-    const startVideo = () => setShouldLoadVideo(true);
-    if ('requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(startVideo, { timeout: 650 });
-    } else {
-      timeoutId = window.setTimeout(startVideo, 180);
-    }
-    return () => {
-      if (idleId) window.cancelIdleCallback?.(idleId);
-      if (timeoutId) window.clearTimeout(timeoutId);
-    };
+    const slow = ['slow-2g', '2g'].includes(connection?.effectiveType);
+    setAllowVideo(!reduceMotion && !connection?.saveData && !slow);
   }, [reduceMotion]);
 
+  useEffect(() => {
+    if (!allowVideo || !duration || videoFailed) return undefined;
+
+    const unsubscribe = scrollYProgress.on('change', (progress) => {
+      const safeDuration = Math.max(0, duration - 0.06);
+      targetTimeRef.current = clamp(progress) * safeDuration;
+    });
+
+    const tick = () => {
+      const video = videoRef.current;
+      if (video && Number.isFinite(video.duration) && video.readyState >= 2) {
+        const target = targetTimeRef.current;
+        const current = currentTimeRef.current;
+        const delta = target - current;
+        const next = Math.abs(delta) < 0.012 ? target : current + delta * 0.16;
+
+        if (Math.abs(next - video.currentTime) > 0.01) {
+          try {
+            video.currentTime = next;
+            currentTimeRef.current = next;
+          } catch {
+            // Browser can temporarily reject seeks while media state changes.
+          }
+        }
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      unsubscribe();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [allowVideo, duration, videoFailed, scrollYProgress]);
+
+  const sectionClass = useMemo(
+    () => (allowVideo ? 'relative h-[300svh] sm:h-[340vh]' : 'relative h-[100svh] min-h-[700px]'),
+    [allowVideo]
+  );
+
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-secondary text-secondary-foreground">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(21,56,99,.55)_0%,transparent_60%)]" />
-      <HeroMistDots />
+    <section ref={sectionRef} className={`${sectionClass} bg-[#071725] text-white`} aria-label="HolmTec městské ochlazování">
+      <div className="sticky top-0 h-[100svh] min-h-[680px] overflow-hidden bg-[#071725]">
+        <motion.div style={{ scale: reduceMotion ? 1 : mediaScale }} className="absolute inset-0 will-change-transform">
+          <img
+            src={VIDEO_ASSETS.heroCityPromo.poster}
+            alt="HolmTec mlžná zóna pro ochlazování městského prostoru"
+            fetchPriority="high"
+            decoding="async"
+            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-0' : 'opacity-100'}`}
+          />
 
-      <div className="relative mx-auto grid max-w-[1500px] lg:min-h-[780px] lg:grid-cols-[0.95fr_1.05fr]">
-        <motion.div style={{ y: textY }} className="relative z-20 flex items-center px-5 pb-12 pt-24 sm:px-10 sm:pb-16 sm:pt-28 lg:px-14 lg:py-28 xl:px-20">
-          <div className="max-w-2xl">
-            <motion.p {...fadeUp(0)} className="font-mono text-[11px] uppercase tracking-[.22em] text-accent">
-              Architektonické mlžení pro města i zahrady
-            </motion.p>
-
-            <motion.h1 {...fadeUp(0.08)} className="mt-6 max-w-[12ch] font-heading text-[2.9rem] font-bold leading-[1.02] tracking-[-.035em] text-white sm:text-[clamp(3.6rem,6.4vw,6.4rem)] sm:leading-[.98]">
-              Mlha, která <span className="text-accent">chladí</span> váš prostor.
-            </motion.h1>
-
-            <motion.p {...fadeUp(0.16)} className="mt-6 max-w-xl text-[15px] leading-7 text-white/70 sm:text-lg">
-              Nerezová mlžítka a mlžné prvky pro náměstí, parky, promenády, sportoviště, gastro i soukromé zahrady. Od návrhu a vizualizace po řízení, realizaci a servis.
-            </motion.p>
-
-            <motion.div {...fadeUp(0.24)} className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
-              <Link to="/poptavka" className="btn-brand-primary-dark justify-center">
-                Navrhnout řešení <ArrowRight size={16} />
-              </Link>
-              <Link to="/mlzidla-mlzitka" className="btn-brand-outline-dark">
-                Prohlédnout produkty
-              </Link>
-            </motion.div>
-
-            <motion.div {...fadeUp(0.32)} className="mt-12 grid gap-2 sm:grid-cols-3">
-              {TRUST.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2.5 border-t border-white/12 pt-4 text-xs font-medium text-white/60">
-                  <Icon size={15} className="shrink-0 text-accent" />
-                  <span>{label}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
+          {allowVideo && !videoFailed && (
+            <video
+              ref={videoRef}
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+              muted
+              playsInline
+              preload="auto"
+              poster={VIDEO_ASSETS.heroCityPromo.poster}
+              aria-label="Scroll animace městské mlžné zóny HolmTec"
+              onLoadedMetadata={(event) => {
+                const media = event.currentTarget;
+                setDuration(media.duration || 0);
+                try {
+                  media.currentTime = 0.01;
+                  currentTimeRef.current = 0.01;
+                } catch {
+                  currentTimeRef.current = 0;
+                }
+              }}
+              onCanPlay={() => setVideoReady(true)}
+              onError={() => {
+                setVideoFailed(true);
+                setVideoReady(false);
+              }}
+            >
+              <source src={VIDEO_ASSETS.heroCityPromo.src} type="video/mp4" />
+            </video>
+          )}
         </motion.div>
 
-        <div className="relative min-h-[420px] overflow-hidden sm:min-h-[520px] lg:min-h-full">
-          <motion.div style={{ y: mediaY, scale: mediaScale }} className="absolute inset-0 will-change-transform">
-            <img
-              src={VIDEO_ASSETS.heroCityPromo.poster}
-              alt="Mlžítka pro ochlazování městského prostoru"
-              fetchpriority="high"
-              decoding="async"
-              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-0' : 'opacity-100'}`}
-            />
-            {shouldLoadVideo && !videoFailed && (
-              <video
-                className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
-                autoPlay muted loop playsInline preload="metadata"
-                poster={VIDEO_ASSETS.heroCityPromo.poster}
-                onPlaying={() => setVideoReady(true)}
-                onError={() => { setVideoFailed(true); setVideoReady(false); }}
-                aria-label="Promo video MLŽIDLA pro městské ochlazování"
-              >
-                <source src={VIDEO_ASSETS.heroCityPromo.src} type="video/mp4" />
-              </video>
-            )}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,17,28,.92)_0%,rgba(5,17,28,.66)_34%,rgba(5,17,28,.16)_68%,rgba(5,17,28,.32)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,16,27,.24)_0%,rgba(4,16,27,.06)_42%,rgba(4,16,27,.72)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_44%_at_76%_46%,rgba(90,204,234,.18)_0%,transparent_68%)]" />
+
+        <div className="pointer-events-none absolute -left-[12vw] top-[16%] h-[46vw] w-[46vw] max-h-[650px] max-w-[650px] rounded-full border border-cyan-200/15 bg-cyan-200/[0.035] blur-[1px]" />
+        <div className="pointer-events-none absolute right-[8%] top-[10%] h-40 w-40 rounded-full border border-white/10 bg-white/[0.025] backdrop-blur-[2px] sm:h-64 sm:w-64" />
+
+        <div className="absolute left-0 right-0 top-0 z-40 h-[3px] bg-white/10">
+          <motion.div style={{ width: progressWidth }} className="h-full bg-cyan-300" />
+        </div>
+
+        <div className="relative z-20 mx-auto h-full max-w-[1500px] px-5 sm:px-10 lg:px-14 xl:px-20">
+          <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute left-5 top-[18%] max-w-3xl sm:left-10 sm:top-[20%] lg:left-14 xl:left-20">
+            <p className="font-mono text-[10px] uppercase tracking-[.24em] text-cyan-300 sm:text-xs">HolmTec · městské ochlazování</p>
+            <h1 className="mt-5 max-w-[11ch] font-heading text-[clamp(3.15rem,8.8vw,8.4rem)] font-bold leading-[.88] tracking-[-.055em] text-white">
+              Město, které <span className="text-cyan-300">dýchá.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/72 sm:text-xl sm:leading-8">
+              Architektonická mlžítka a mlžné zóny pro příjemnější veřejný prostor v horkých dnech.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/poptavka" className="btn-brand-primary-dark pointer-events-auto justify-center">
+                Navrhnout mlžnou zónu <ArrowRight size={16} />
+              </Link>
+              <span className="inline-flex items-center rounded-full border border-white/15 bg-black/20 px-4 py-2 text-xs text-white/60 backdrop-blur-md">
+                Scrollujte pro příběh ↓
+              </span>
+            </div>
           </motion.div>
 
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.15)_0%,rgba(10,22,40,.2)_45%,rgba(10,22,40,.9)_100%)]" />
-          <div className="absolute inset-y-0 left-0 hidden w-40 bg-gradient-to-r from-secondary via-secondary/50 to-transparent lg:block" />
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-secondary to-transparent lg:hidden" />
+          <motion.div style={{ opacity: cityOpacity, y: cityY }} className="absolute left-5 top-[26%] max-w-xl sm:left-10 lg:left-14 xl:left-20">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-[#071725]/55 px-3 py-1.5 text-xs text-cyan-200 backdrop-blur-lg">
+              <Building2 size={14} /> Veřejný prostor
+            </div>
+            <h2 className="mt-5 font-heading text-[clamp(2.6rem,6vw,5.7rem)] font-bold leading-[.95] tracking-[-.045em]">
+              Osvěžení přímo tam, kde je potřeba.
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-7 text-white/68 sm:text-lg">
+              Jemná vodní mlha vytváří lokální komfortní zónu na náměstích, promenádách, v parcích a u frekventovaných pěších tras.
+            </p>
+            <div className="mt-7 grid max-w-lg grid-cols-2 gap-2 sm:grid-cols-3">
+              {[['Náměstí', Building2], ['Parky', Trees], ['Smart řízení', Wifi]].map(([label, Icon]) => (
+                <div key={label} className="flex items-center gap-2 border-t border-white/15 pt-3 text-xs font-medium text-white/65">
+                  <Icon size={14} className="text-cyan-300" /> {label}
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
-          <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-8 lg:p-10">
-            <motion.div {...fadeUp(0.4)} className="flex flex-col gap-3 border border-white/12 bg-secondary/70 p-4 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:p-5">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">Městské ochlazování</p>
-                <h2 className="mt-2 font-heading text-xl font-bold tracking-[-.02em] sm:text-2xl">MLŽIDLA · prostor, voda, klima</h2>
-                <p className="mt-1 max-w-lg text-sm leading-6 text-white/65">Promo sekvence architektonických mlžných prvků pro města, parky a veřejný prostor.</p>
+          <motion.div style={{ opacity: techOpacity, y: techY }} className="absolute bottom-[19%] right-5 max-w-xl text-left sm:right-10 lg:right-14 xl:right-20">
+            <p className="font-mono text-[10px] uppercase tracking-[.22em] text-cyan-300 sm:text-xs">Voda · klima · řízení</p>
+            <h2 className="mt-4 font-heading text-[clamp(2.3rem,5vw,4.9rem)] font-bold leading-[.96] tracking-[-.04em]">
+              Chytré mlžení bez zbytečné složitosti.
+            </h2>
+            <p className="mt-5 text-base leading-7 text-white/68 sm:text-lg">
+              Nízkotlaký systém napojený na vodovodní řad může doplnit automatické řízení podle času, teploty nebo bezkontaktního senzoru.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2 text-xs text-white/70">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/20 px-3 py-2 backdrop-blur"><Droplets size={14} className="text-cyan-300" /> jemná mlha</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/20 px-3 py-2 backdrop-blur"><ThermometerSnowflake size={14} className="text-cyan-300" /> ochlazení prostoru</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/20 px-3 py-2 backdrop-blur"><Wifi size={14} className="text-cyan-300" /> SUPLA / smart</span>
+            </div>
+          </motion.div>
+
+          <motion.div style={{ opacity: ctaOpacity, y: ctaY }} className="absolute inset-x-5 bottom-[10%] sm:inset-x-10 lg:inset-x-14 xl:inset-x-20">
+            <div className="max-w-2xl border border-white/15 bg-[#071725]/68 p-5 backdrop-blur-xl sm:p-7">
+              <p className="font-mono text-[10px] uppercase tracking-[.23em] text-cyan-300">Od návrhu po realizaci</p>
+              <h2 className="mt-3 font-heading text-3xl font-bold tracking-[-.035em] sm:text-5xl">Vytvořme příjemnější místo.</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-white/65 sm:text-base">Pošlete nám prostor. Navrhneme vhodný typ mlžení, rozmístění prvků a další postup.</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to="/poptavka" className="btn-brand-primary-dark pointer-events-auto justify-center">Nezávazně poptat <ArrowRight size={16} /></Link>
+                <Link to="/reference" className="btn-brand-outline-dark pointer-events-auto">Prohlédnout realizace</Link>
               </div>
-              <Link to="/reference" className="btn-brand-accent-link shrink-0 !text-white hover:!text-accent">
-                <PlayCircle size={18} /> Prohlédnout realizace
-              </Link>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
+
+        {!allowVideo && (
+          <div className="absolute bottom-4 right-4 z-30 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[10px] text-white/55 backdrop-blur">
+            Statická verze pro úsporu dat / omezení pohybu
+          </div>
+        )}
       </div>
     </section>
   );

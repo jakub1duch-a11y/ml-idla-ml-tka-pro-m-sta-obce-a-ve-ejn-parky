@@ -23,6 +23,7 @@ import PdStory from '@/components/produkt/new/PdStory';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdLineProducts from '@/components/produkt/new/PdLineProducts';
 import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
+import PdFaq from '@/components/produkt/new/PdFaq';
 import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
 
 export default function ProduktDetail() {
@@ -81,6 +82,7 @@ export default function ProduktDetail() {
       <PdDetail product={product} />
       <PdHowItWorks />
       <PdTabs product={product} />
+      <PdFaq product={product} />
       <PdReferences product={product} />
       <PdCollectionContext product={product} />
       <PdLineProducts product={product} />

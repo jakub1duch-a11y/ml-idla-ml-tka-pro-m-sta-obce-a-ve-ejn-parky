@@ -12,7 +12,7 @@ export const LINES = {
   teepee: { label: 'TEEPEE', family: 'prime', slugs: ['teepee'], tagline: 'Samostojící mlžiště pro eventy a slavnosti.' },
   spirala: { label: 'SPIRÁLA', family: 'prime', slugs: ['mlzna-spirála'], tagline: 'Skulpturální spirála mlhy.' },
   lizatko: { label: 'LÍZÁTKO', family: 'prime', slugs: ['mlzitko-lizatko'], tagline: 'Kruhové halo pro školky a hřiště.' },
-  kruh: { label: 'KRUH', family: 'prime', slugs: ['mlzitko-kruh'], tagline: 'Kruhový prvek pro průchozí zóny.' },
+  kruh: { label: 'KRUH', family: 'gates', slugs: ['mlzitko-kruh'], tagline: 'Kruhový mlžný portál pro průchozí zóny a veřejný prostor.' },
   mrkev: { label: 'MRKEV', family: 'prime', slugs: ['mlzitko-mrkev'], tagline: 'Hravá plastika z Polné.' },
   gate: { label: 'BRÁNA GATE', family: 'gates', slugs: ['mlzna-brana-gate', 'city-arc-3', 'city-arc-4', 'city-arc-5'], tagline: 'Průchozí mlžná brána pro náměstí a vjezdy.' },
   sestavy: { label: 'Sestavy & aleje', family: 'gates', slugs: ['brana-bendy', 'linea-gate', 'mlzitko-2-stebla', 'bendy-back-to-back', 'bendy-alej', 'linea-avenue', 'mlzitko-bendy-field', 'city-cooling-zone'], tagline: 'Brány, aleje a mlžiště z více prvků.' },

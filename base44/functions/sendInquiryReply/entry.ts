@@ -107,9 +107,7 @@ export default async function(req) {
       discount_percent: discountPercent = 0,
       previous_total: previousTotal = 0,
       new_total: newTotal = 0,
-      attachments = [],
-      test_email: testEmail = '',
-      is_test: isTest = false
+      attachments = []
     } = await req.json();
 
     if (!inquiryType || !inquiryId || !subject || !draftMessage) return Response.json({ error: 'Missing reply details' }, { status: 400 });
@@ -120,13 +118,9 @@ export default async function(req) {
     try { inquiry = await base44.asServiceRole.entities[entityName].get(inquiryId); } catch (_) { return Response.json({ error: 'Inquiry recipient not found' }, { status: 404 }); }
     if (!inquiry?.email) return Response.json({ error: 'Inquiry recipient not found' }, { status: 404 });
 
-    const normalizedTestEmail = String(testEmail || '').trim().toLowerCase();
-    if (isTest && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedTestEmail)) {
-      return Response.json({ error: 'Invalid test email address' }, { status: 400 });
-    }
-    const recipientEmail = isTest ? normalizedTestEmail : inquiry.email;
-    const messageSubject = isTest ? `[TEST MLŽIDLA] ${subject}` : subject;
-    const bccRecipients = isTest ? [] : FIXED_BCC;
+    const recipientEmail = inquiry.email;
+    const messageSubject = subject;
+    const bccRecipients = FIXED_BCC;
 
     // Do klientského konceptu se smějí dostat pouze vizualizace výslovně schválené obchodníkem.
     const visualizationItems = (attachments || []).filter((file) => (
@@ -152,33 +146,27 @@ export default async function(req) {
     const raw = buildMessage({ to: recipientEmail, bcc: bccRecipients, fromEmail: senderEmail, subject: messageSubject, text: message, html, attachments: allAttachments });
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-    // Bezpečnostní pravidlo MLŽIDLA: běžná nabídka se nikdy neposílá přímo.
-    // Uloží se do Gmailu jako koncept k ruční kontrole a odeslání.
-    const gmailEndpoint = isTest
-      ? 'https://gmail.googleapis.com/gmail/v1/users/me/messages/send'
-      : 'https://gmail.googleapis.com/gmail/v1/users/me/drafts';
-    const gmailPayload = isTest ? { raw: base64Url(raw) } : { message: { raw: base64Url(raw) } };
-    const gmailResponse = await fetch(gmailEndpoint, {
+    // HARD SAFETY RULE: Tato funkce NIKDY neposílá e-mail. Vždy pouze vytvoří Gmail koncept.
+    // Label_10 = Gmail štítek „Připravené nabídky“ na připojeném účtu.
+    const gmailResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/drafts', {
       method: 'POST',
       headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(gmailPayload)
+      body: JSON.stringify({ message: { raw: base64Url(raw), labelIds: ['Label_10'] } })
     });
     if (!gmailResponse.ok) {
       const detail = await gmailResponse.text();
-      return Response.json({ error: `${isTest ? 'Testovací e-mail' : 'Gmail koncept'} se nepodařilo vytvořit: ${detail}` }, { status: 502 });
+      return Response.json({ error: `Gmail koncept se nepodařilo vytvořit: ${detail}` }, { status: 502 });
     }
     const gmailResult = await gmailResponse.json().catch(() => ({}));
 
-    if (!isTest) {
-      await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'in_progress' : 'v_reseni' });
-    }
+    await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'in_progress' : 'v_reseni' });
     return Response.json({
       ok: true,
-      mode: isTest ? 'test_sent' : 'gmail_draft',
-      draft_id: isTest ? '' : (gmailResult?.id || gmailResult?.message?.id || ''),
+      mode: 'gmail_draft_only',
+      draft_id: gmailResult?.id || gmailResult?.message?.id || '',
       sender_email: senderEmail,
       recipient_email: recipientEmail,
-      is_test: Boolean(isTest),
+      label: 'Připravené nabídky',
       bcc: bccRecipients,
       approved_visualizations: visualizationItems.length,
     });

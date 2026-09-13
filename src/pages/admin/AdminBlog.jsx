@@ -3,7 +3,7 @@ import { Plus, Loader, Pencil, Trash2, Eye, EyeOff, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import BlogPostForm from '@/components/admin/BlogPostForm';
 
-const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', tags: '', published: false, cta_label: '', cta_link: '' };
+const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', image_alt: '', seo_title: '', seo_description: '', location_context: '', faq_text: '', related_product_slugs: '', tags: '', published: false, cta_label: '', cta_link: '' };
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
@@ -25,7 +25,10 @@ export default function AdminBlog() {
     setForm({
       title: post.title || '', slug: post.slug || '', category: post.category || '',
       audience: post.audience || 'oboji',
-      perex: post.perex || '', content: post.content || '', image_url: post.image_url || '',
+      perex: post.perex || '', content: post.content || '', image_url: post.image_url || '', image_alt: post.image_alt || '',
+      seo_title: post.seo_title || '', seo_description: post.seo_description || '', location_context: post.location_context || '',
+      faq_text: (post.faq_items || []).map((item) => `${item.question} | ${item.answer}`).join('\n'),
+      related_product_slugs: (post.related_product_slugs || []).join(', '),
       tags: (post.tags || []).join(', '), published: !!post.published,
       cta_label: post.cta_label || '', cta_link: post.cta_link || '',
     });
@@ -37,7 +40,9 @@ export default function AdminBlog() {
       title: `${post.title} (kopie)`,
       slug: `${post.slug || ''}-kopie-${Date.now()}`,
       category: post.category, audience: post.audience || 'oboji',
-      perex: post.perex, content: post.content, image_url: post.image_url,
+      perex: post.perex, content: post.content, image_url: post.image_url, image_alt: post.image_alt,
+      seo_title: post.seo_title, seo_description: post.seo_description, location_context: post.location_context,
+      faq_items: post.faq_items || [], related_product_slugs: post.related_product_slugs || [],
       tags: post.tags || [], published: false,
       cta_label: post.cta_label, cta_link: post.cta_link,
     });
@@ -46,8 +51,16 @@ export default function AdminBlog() {
 
   const handleSave = async () => {
     setSaving(true);
+    const faq_items = (form.faq_text || '').split('\n').map((line) => {
+      const [question, ...answerParts] = line.split('|');
+      return { question: (question || '').trim(), answer: answerParts.join('|').trim() };
+    }).filter((item) => item.question && item.answer);
+    const related_product_slugs = (form.related_product_slugs || '').split(',').map((slug) => slug.trim()).filter(Boolean);
+    const { faq_text, related_product_slugs: relatedProductSlugsInput, ...persistedForm } = form;
     const payload = {
-      ...form,
+      ...persistedForm,
+      faq_items,
+      related_product_slugs,
       tags: form.tags.split(',').map(t => t.trim()).filter(Boolean),
       published_date: form.published ? new Date().toISOString().slice(0, 10) : undefined,
     };

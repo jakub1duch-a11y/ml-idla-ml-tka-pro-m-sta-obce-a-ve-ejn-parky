@@ -26,6 +26,8 @@ import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
 import PdFaq from '@/components/produkt/new/PdFaq';
 import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
 import PdTeepeeRental from '@/components/produkt/new/PdTeepeeRental';
+import PdTeepeeStudio from '@/components/produkt/new/PdTeepeeStudio';
+import ProductHero from '@/components/ProductHero';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -69,8 +71,9 @@ export default function ProduktDetail() {
   return (
     <div className="min-h-screen bg-white">
       <PdScrollProgress />
-      <PdHero product={product} />
+      {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
       <PdFamilyNav product={product} />
+      <PdTeepeeStudio product={product} />
       <PdDescription product={product} />
       <PdBenefits product={product} />
       <PdStory product={product} />

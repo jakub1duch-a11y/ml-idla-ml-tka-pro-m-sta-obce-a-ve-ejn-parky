@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CalendarDays, MapPin, Wrench, PlayCircle, ArrowRight, Droplets, Truck, ShieldCheck } from 'lucide-react';
+import { TEEPEE_NOZZLE_URL } from '@/components/produkt/new/PdTeepeeStudio';
 
 const FALLBACKS = [
   'https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/f0a31cb3f_08_teepee_brno_landscape.jpg',
@@ -65,10 +66,10 @@ export default function PdTeepeeRental({ product }) {
 
         <div className="mt-14 grid overflow-hidden rounded-[28px] border border-white/10 bg-white/[.035] lg:grid-cols-[.9fr_1.1fr]">
           <div className="relative min-h-[420px] overflow-hidden bg-white">
-            <img src={detailSource} alt={`${product.name} – detail horní části konstrukce a mlžicích bodů`} loading="lazy" className="absolute inset-0 h-full w-full origin-top object-cover object-top scale-[1.55]" />
+            <img src={TEEPEE_NOZZLE_URL} alt={`${product.name} – detail mlžné hlavy a trysek na vrcholu konstrukce`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#061f2b]/80 to-transparent p-6 pt-24">
-              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-200">Detail konstrukce</p>
-              <p className="mt-2 max-w-md text-sm leading-6 text-white/75">Zvětšený výřez z ověřené fotografie produktu. Finální provedení trysky a její počet se řídí konkrétní konfigurací TEEPEE.</p>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-200">Detail mlžné hlavy</p>
+              <p className="mt-2 max-w-md text-sm leading-6 text-white/75">Vizualizace vrcholu konstrukce podle ověřené fotografie. Finální provedení trysky a její počet se řídí konkrétní konfigurací TEEPEE.</p>
             </div>
           </div>
           <div className="p-7 sm:p-10 lg:p-12">

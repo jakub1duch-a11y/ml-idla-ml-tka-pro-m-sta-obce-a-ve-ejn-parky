@@ -570,10 +570,45 @@ export const SEO_PAGES = {
     canonicalPath: '/kategorie/koupaliste',
   },
   architekti: {
-    title: 'Mlžítka pro architekty | BIM, DWG a 3D podklady',
-    description: 'Projektové podklady pro architekty a krajináře: 2D/3D, BIM dle produktu, technické listy, vizualizace a konzultace od studie po realizaci.',
-    keywords: 'BIM modely mlžítka, DWG výkresy mlžná brána, podklady pro architekty, technická specifikace HolmTec',
+    title: 'Mlžítka pro architekty | 2D/3D, BIM a technické podklady',
+    description: 'Projektové podklady pro architekty a krajináře: 2D/3D, BIM dle produktu, technické listy, vizualizace, reference a konzultace od studie po realizaci.',
+    keywords: 'BIM modely mlžítka, DWG výkresy mlžná brána, podklady pro architekty, technická specifikace HolmTec, mlžítka pro krajináře',
     canonicalPath: '/kategorie/architekti',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Service',
+          name: 'Projektová podpora pro architekty a krajináře',
+          serviceType: 'Technické podklady a návrh mlžných prvků do veřejného prostoru',
+          description: 'Technické listy, 2D/3D podklady, BIM dle konkrétního produktu, vizualizace, reference a konzultace pro začlenění mlžítek do projektu.',
+          provider: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },
+          areaServed: { '@type': 'Country', name: 'Česká republika' },
+          audience: { '@type': 'Audience', audienceType: 'Architekti, krajinářští architekti a projektanti' },
+          url: BASE_URL + '/kategorie/architekti',
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Jaké podklady jsou k mlžítkům dostupné pro projekt?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Podle konkrétního produktu poskytujeme technické listy, 2D/3D podklady, výkresy a u vybraných produktů BIM podklady. Dostupnost se ověřuje vždy pro zvolený model.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'Lze připravit vizualizaci mlžítka přímo do navrhovaného prostoru?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Ano. Pro studii lze připravit návrhovou vizualizaci v konkrétním prostředí. Geometrie produktu se ověřuje proti referenčnímu podkladu a technické parametry se potvrzují podle zvoleného modelu.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'Kde najdu realizace a lokalitní reference?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Realizace jsou propojené z produktových detailů a z referenční sekce webu. U jednotlivých realizací uvádíme lokalitu, použitý produkt a dostupná média.' },
+            },
+          ],
+        },
+      ],
+    },
   },
   komercni: {
     title: 'Mlžení pro komerční prostory — restaurace, obchodní centra, výrobní haly',

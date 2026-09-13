@@ -1,0 +1,41 @@
+{
+  "name": "BlogPostView",
+  "type": "object",
+  "properties": {
+    "post_id": {
+      "type": "string",
+      "description": "ID \u010dl\u00e1nku"
+    },
+    "post_slug": {
+      "type": "string",
+      "description": "Slug \u010dl\u00e1nku"
+    },
+    "session_key": {
+      "type": "string",
+      "description": "N\u00e1hodn\u00fd identifik\u00e1tor relace pro omezen\u00ed duplicitn\u00edho zapo\u010dten\u00ed v jednom prohl\u00ed\u017ee\u010di"
+    },
+    "viewed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u010cas zapo\u010dten\u00ed p\u0159e\u010dten\u00ed"
+    }
+  },
+  "required": [
+    "post_id",
+    "post_slug"
+  ],
+  "rls": {
+    "create": null,
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

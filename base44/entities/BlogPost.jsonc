@@ -46,6 +46,59 @@
       "type": "string",
       "description": "Popisn\u00fd alt text tituln\u00edho obr\u00e1zku pro p\u0159\u00edstupnost, SEO a AEO"
     },
+    "content_images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "photo",
+              "visualization",
+              "diagram"
+            ],
+            "default": "visualization"
+          }
+        },
+        "required": [
+          "url",
+          "alt"
+        ]
+      },
+      "description": "Dopl\u0148kov\u00e9 fotografie a vizualizace zobrazovan\u00e9 uvnit\u0159 detailu \u010dl\u00e1nku"
+    },
+    "related_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "url"
+        ]
+      },
+      "description": "Kontextov\u00e9 intern\u00ed odkazy souvisej\u00edc\u00ed s t\u00e9matem \u010dl\u00e1nku"
+    },
     "seo_title": {
       "type": "string",
       "description": "Voliteln\u00fd SEO title; pokud chyb\u00ed, pou\u017eije se title"
@@ -103,11 +156,11 @@
     },
     "cta_label": {
       "type": "string",
-      "description": "Text tla\u010d\u00edtka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku (nap\u0159. 'Nez\u00e1vazn\u00e1 kalkulace realizace')"
+      "description": "Text tla\u010d\u00edtka prodejn\u00ed v\u00fdzvy na konci \u010dl\u00e1nku (legacy; na detailu blogu se ji\u017e nezobrazuje)"
     },
     "cta_link": {
       "type": "string",
-      "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy (nap\u0159. /poptavka nebo /kalkulacka)"
+      "description": "C\u00edlov\u00e1 str\u00e1nka prodejn\u00ed v\u00fdzvy (legacy; na detailu blogu se ji\u017e nezobrazuje)"
     },
     "instagram_posted": {
       "type": "boolean",

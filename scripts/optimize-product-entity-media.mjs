@@ -56,7 +56,7 @@ async function optimize(url) {
     const before = await download(url,temp);
     if (isVideo(url)) {
       const outName = `db-${base}.webm`, out = path.join(OUT_DIR,outName);
-      await ffmpeg(['-y','-i',temp,'-map_metadata','-1','-vf',"scale='min(1920,iw)':-2",'-c:v','libvpx-vp9','-crf','36','-b:v','0','-row-mt','1','-deadline','realtime','-cpu-used','6','-c:a','libopus','-b:a','96k',out]);
+      await ffmpeg(['-y','-i',temp,'-map_metadata','-1','-vf',"scale='min(1920,iw)':-2",'-c:v','libvpx-vp9','-crf','30','-b:v','0','-row-mt','1','-deadline','good','-cpu-used','4','-c:a','libopus','-b:a','128k',out]);
       const after=(await fs.stat(out)).size, output=`/media/optimized/${outName}`;
       mapped.set(url,output); manifest.videos=(manifest.videos||[]).filter(x=>x.url!==url); manifest.videos.push({url,output,before,after,source:'Product entity'}); return output;
     }
@@ -66,7 +66,7 @@ async function optimize(url) {
     }
     if ((meta.format||'').toLowerCase()==='webp') { mapped.set(url,url); return url; }
     const outName=`db-${base}.webp`, out=path.join(OUT_DIR,outName);
-    await sharp(temp).rotate().resize({width:2200,height:2200,fit:'inside',withoutEnlargement:true}).webp({quality:82,effort:4,smartSubsample:true}).toFile(out);
+    await sharp(temp).rotate().resize({width:2400,height:2400,fit:'inside',withoutEnlargement:true}).webp({quality:88,effort:5,smartSubsample:true}).toFile(out);
     const after=(await fs.stat(out)).size, output=`/media/optimized/${outName}`;
     mapped.set(url,output); manifest.images=(manifest.images||[]).filter(x=>x.url!==url); manifest.images.push({url,output,before,after,width:meta.width,height:meta.height,source:'Product entity'}); return output;
   } catch(e) {

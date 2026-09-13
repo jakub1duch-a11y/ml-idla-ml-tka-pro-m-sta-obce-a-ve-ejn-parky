@@ -18,6 +18,7 @@ import {
 import { VIDEO_ASSETS, BENDY_SLUGS } from '@/lib/newMedia';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
 import { getLine, getFamily } from '@/lib/productFamilies';
+import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
 
 function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
@@ -79,6 +80,8 @@ export default function PdHero({ product }) {
 
   return (
     <section className="relative overflow-hidden bg-[#0A1628]">
+      <TechnicalBlueprintBackground product={product} theme="dark" autoRotate />
+      {/* Každý produkt má 2 nenápadné technické blueprint varianty, které se pomalu střídají. */}
       {/* Desktop: two-column — text left, media right */}
       <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-[1fr_1.1fr] lg:items-stretch">
         {/* Text column */}

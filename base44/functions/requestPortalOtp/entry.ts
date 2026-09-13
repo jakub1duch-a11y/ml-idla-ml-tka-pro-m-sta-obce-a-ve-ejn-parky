@@ -3,6 +3,12 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 const normalizeQuote = (value: unknown) => String(value || '').trim().toUpperCase();
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
 
+function generateOtpCode() {
+  const random = new Uint32Array(1);
+  crypto.getRandomValues(random);
+  return String(100000 + (random[0] % 900000));
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -31,10 +37,23 @@ Deno.serve(async (req) => {
     }
 
     if (hasAccessTarget && email) {
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      // Brání opakovanému rozesílání kódů a současně zachovává jednotnou
+      // odpověď bez prozrazení, zda účet / nabídka existuje.
+      const existing = await base44.asServiceRole.entities.PortalOtp.filter({ email });
+      const latestCreatedAt = (existing || [])
+        .map((rec) => new Date(rec.created_date || 0).getTime())
+        .filter(Number.isFinite)
+        .sort((a, b) => b - a)[0] || 0;
+      const resendCooldownMs = 60 * 1000;
+      if (latestCreatedAt && Date.now() - latestCreatedAt < resendCooldownMs) {
+        return Response.json({ ok: true, access_mode: quoteNumber ? 'quote' : 'email' }, {
+          headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' },
+        });
+      }
+
+      const otpCode = generateOtpCode();
       const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-      const existing = await base44.asServiceRole.entities.PortalOtp.filter({ email });
       for (const rec of existing) {
         await base44.asServiceRole.entities.PortalOtp.delete(rec.id);
       }
@@ -61,7 +80,9 @@ Deno.serve(async (req) => {
     }
 
     // Z bezpečnostních důvodů neprozrazujeme, zda číslo nabídky/e-mail existuje.
-    return Response.json({ ok: true, access_mode: quoteNumber ? 'quote' : 'email' });
+    return Response.json({ ok: true, access_mode: quoteNumber ? 'quote' : 'email' }, {
+      headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' },
+    });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

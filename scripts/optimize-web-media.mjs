@@ -76,7 +76,7 @@ async function processImage(url) {
       if (!manifest.skippedTransparent.some(x => x.url === url)) manifest.skippedTransparent.push({ url, width: meta.width, height: meta.height, format: meta.format });
       return;
     }
-    await sharp(input).rotate().resize({ width: 2200, height: 2200, fit: 'inside', withoutEnlargement: true }).webp({ quality: 82, effort: 4, smartSubsample: true }).toFile(output);
+    await sharp(input).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true }).webp({ quality: 88, effort: 5, smartSubsample: true }).toFile(output);
     const stat = await fs.stat(output);
     map.set(url, `/media/optimized/${outputName}`);
     manifest.images = manifest.images.filter(x => x.url !== url);
@@ -92,7 +92,7 @@ async function processVideo(url) {
   const output = path.join(OUT_DIR, outputName);
   try {
     const before = await download(url, input);
-    await run(ffmpegPath, ['-y','-i',input,'-map_metadata','-1','-vf',"scale='min(1920,iw)':-2",'-c:v','libvpx-vp9','-crf','36','-b:v','0','-row-mt','1','-deadline','realtime','-cpu-used','6','-c:a','libopus','-b:a','96k',output]);
+    await run(ffmpegPath, ['-y','-i',input,'-map_metadata','-1','-vf',"scale='min(1920,iw)':-2",'-c:v','libvpx-vp9','-crf','30','-b:v','0','-row-mt','1','-deadline','good','-cpu-used','4','-c:a','libopus','-b:a','128k',output]);
     const stat = await fs.stat(output);
     map.set(url, `/media/optimized/${outputName}`);
     manifest.videos = manifest.videos.filter(x => x.url !== url);

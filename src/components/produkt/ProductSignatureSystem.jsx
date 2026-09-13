@@ -9,7 +9,7 @@ const FAMILY_VARIANTS = {
     eyebrow: 'BENDY® · jeden produkt, více prostorových sestav',
     description: 'Geometrie jednoho prvku BENDY zůstává zachovaná. Volí se pouze počet kusů a jejich rozmístění podle charakteru prostoru.',
     items: [
-      { label: 'BENDY SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-bendy', variant: 'single', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/18399510e_generated_image.png' },
+      { label: 'BENDY SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-bendy', variant: 'single', image: '/media/optimized/18399510e_generated_image.webp' },
       { label: 'BENDY DUO', sub: '2 stejné prvky v sestavě', slug: 'mlzitko-bendy', variant: 'duo', image: null },
       { label: 'BENDY BACK-TO-BACK', sub: '2 stejné prvky zády k sobě', slug: 'mlzitko-bendy', variant: 'back-to-back', image: null },
       { label: 'BENDY ALEJ', sub: 'více stejných prvků v linii', slug: 'mlzitko-bendy', variant: 'alej', image: null },
@@ -24,7 +24,7 @@ const FAMILY_VARIANTS = {
       { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
       { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
       { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/8d9115025_BendyBack-to-Back00.png' },
-      { label: 'STÉBLO ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f948bad15_generated_image.png' },
+      { label: 'STÉBLO ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: '/media/optimized/f948bad15_generated_image.webp' },
     ],
   },
   'mlzitko-2-stebla': { ref: 'mlzitko-steblo' },
@@ -47,7 +47,7 @@ const FAMILY_VARIANTS = {
     eyebrow: 'LINEA® · samostatný produkt',
     description: 'LINEA je samostatná produktová řada. Není variantou ani přejmenovanou verzí produktu LINEA CE.',
     items: [
-      { label: 'LINEA', sub: 'samostatný produkt', slug: 'linea-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6505aa131_generated_image.png' },
+      { label: 'LINEA', sub: 'samostatný produkt', slug: 'linea-mlzitko', image: '/media/optimized/6505aa131_generated_image.webp' },
     ],
   },
   'linea-solo': {
@@ -55,28 +55,28 @@ const FAMILY_VARIANTS = {
     eyebrow: 'LINEA CE® · samostatný produkt',
     description: 'LINEA CE je samostatný výrobek s vlastním profilem, konstrukcí a produktovým detailem. Nezobrazujeme jej jako variantu LINEA.',
     items: [
-      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4a183deae_generated_image.png' },
+      { label: 'LINEA CE', sub: 'samostatný produkt', slug: 'linea-solo', image: '/media/optimized/4a183deae_generated_image.webp' },
     ],
   },
   'linea-gate': {
     title: 'LINEA GATE®',
     eyebrow: 'LINEA GATE® · samostatná konfigurace',
     items: [
-      { label: 'LINEA GATE', sub: 'průchozí sestava', slug: 'linea-gate', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ab84deeba_generated_image.png' },
+      { label: 'LINEA GATE', sub: 'průchozí sestava', slug: 'linea-gate', image: '/media/optimized/ab84deeba_generated_image.webp' },
     ],
   },
   'linea-avenue': {
     title: 'LINEA AVENUE®',
     eyebrow: 'LINEA AVENUE® · samostatná konfigurace',
     items: [
-      { label: 'LINEA AVENUE', sub: 'víceprvková alej', slug: 'linea-avenue', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3e9b011c_generated_image.png' },
+      { label: 'LINEA AVENUE', sub: 'víceprvková alej', slug: 'linea-avenue', image: '/media/optimized/e3e9b011c_generated_image.webp' },
     ],
   },
   'aura-mlzitko': {
     title: 'Varianty kolekce AURA®',
     items: [
-      { label: 'AURA SINGLE', sub: '1 kruhové mlžítko', slug: 'aura-mlzitko', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8cb34e2c3_generated_image.png' },
-      { label: 'AURA DUO', sub: '2 stejné prvky', slug: 'aura-duo', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/dbb1d0d0f_generated_image.png' },
+      { label: 'AURA SINGLE', sub: '1 kruhové mlžítko', slug: 'aura-mlzitko', image: '/media/optimized/8cb34e2c3_generated_image.webp' },
+      { label: 'AURA DUO', sub: '2 stejné prvky', slug: 'aura-duo', image: '/media/optimized/dbb1d0d0f_generated_image.webp' },
     ],
   },
   'aura-duo': { ref: 'aura-mlzitko' },
@@ -93,7 +93,7 @@ const FAMILY_VARIANTS = {
     eyebrow: 'GATE® · tvar brány',
     description: 'Dvě architektonické varianty stejné průchozí mlžné brány.',
     items: [
-      { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png' },
+      { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight', image: '/media/optimized/bec7f86a9_generated_image.webp' },
       { label: 'GATE V', sub: 'lomená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png' },
     ],
   },
@@ -102,7 +102,7 @@ const FAMILY_VARIANTS = {
     eyebrow: 'MRAK® · typ provedení',
     description: 'Základ produktu zůstává stejný. Volíte typ provedení podle toho, kde má mlžný mrak fungovat — menší pro dětské hřiště, větší pro mlžiště a hřiště, nebo parkovou variantu pro otevřený prostor.',
     items: [
-      { label: 'Dětské hřiště', sub: 'menší · pro dětské mlžení a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81c84ca33_Mrakmlzitko-skolnizahrada.jpg' },
+      { label: 'Dětské hřiště', sub: 'menší · pro dětské mlžení a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp' },
       { label: 'Velký', sub: 'ideální pro mlžiště a hřiště', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
       { label: 'Parkový', sub: 'parková promenáda a otevřený prostor', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
     ],

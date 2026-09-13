@@ -1,15 +1,15 @@
 import { Building2, Trees, TrainFront, Trophy, Hotel, Sparkles, HeartPulse, MapPinned, House, UtensilsCrossed, Waves, Leaf } from 'lucide-react';
 
 const IMG = {
-  station: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2cc053413_generated_image.png',
-  sport: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/401d9b665_generated_image.png',
-  hotel: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/90b78861c_generated_image.png',
-  spa: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2dc166259_generated_image.png',
-  senior: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0c1220416_generated_image.png',
-  gastro: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c9e1f85d5_generated_image.png',
-  pool: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c643e53a5_generated_image.png',
-  residence: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/87d7a4fe6_generated_image.png',
-  institution: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c5a4bb176_generated_image.png',
+  station: '/media/optimized/2cc053413_generated_image.webp',
+  sport: '/media/optimized/401d9b665_generated_image.webp',
+  hotel: '/media/optimized/90b78861c_generated_image.webp',
+  spa: '/media/optimized/2dc166259_generated_image.webp',
+  senior: '/media/optimized/0c1220416_generated_image.webp',
+  gastro: '/media/optimized/c9e1f85d5_generated_image.webp',
+  pool: '/media/optimized/c643e53a5_generated_image.webp',
+  residence: '/media/optimized/87d7a4fe6_generated_image.webp',
+  institution: '/media/optimized/c5a4bb176_generated_image.webp',
 };
 
 export const CITY_ITEMS = [

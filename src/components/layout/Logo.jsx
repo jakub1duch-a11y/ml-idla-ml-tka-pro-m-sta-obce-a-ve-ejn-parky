@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/be5670d83_generated_9a2cc224.png';
+const LOGO_URL = '/media/optimized/be5670d83_generated_9a2cc224.webp';
 
 export default function Logo({ size = 'md' }) {
   const compact = size === 'sm';

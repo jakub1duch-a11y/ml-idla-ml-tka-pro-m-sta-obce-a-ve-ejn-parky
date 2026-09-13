@@ -8,7 +8,7 @@ import {
 import { TemperatureChart, SatisfactionChart } from '@/components/prezentace/PresentationCharts';
 import { setSEO } from '@/lib/seo';
 
-const HERO_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e44ee7c54_generated_image.png';
+const HERO_IMG = '/media/optimized/e44ee7c54_generated_image.webp';
 
 const SLIDES = [
   { id: 'uvod', label: 'Úvod' },

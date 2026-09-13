@@ -84,12 +84,12 @@ const productOptions = [
   {
     key: 'product-bendy',
     label: 'BENDY®',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+    image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
   },
   {
     key: 'product-aura',
     label: 'AURA®',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.jpg',
+    image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
   },
   {
     key: 'product-gate',
@@ -104,12 +104,12 @@ const productOptions = [
   {
     key: 'product-ostrev',
     label: 'OSTREV',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+    image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   },
   {
     key: 'product-linea',
     label: 'LINEA',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.jpg',
+    image: '/media/optimized/ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp',
   },
 ];
 

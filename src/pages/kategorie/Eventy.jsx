@@ -10,8 +10,8 @@ import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigatio
 const EVENT_SCENES = [
   { title: 'Festivaly', kicker: 'Chill-out / vstupní zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png' },
   { title: 'Veletrhy', kicker: 'Expozice / stánek', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG' },
-  { title: 'Firemní akce', kicker: 'Letní event / hospitality', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/83e0506f1_generated_fd2118cd.png' },
-  { title: 'Oslavy a rodinné dny', kicker: 'Pobytová zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.jpg' },
+  { title: 'Firemní akce', kicker: 'Letní event / hospitality', image: '/media/optimized/83e0506f1_generated_fd2118cd.webp' },
+  { title: 'Oslavy a rodinné dny', kicker: 'Pobytová zóna', image: '/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp' },
 ];
 
 const EVENT_PRODUCT_THUMBNAILS = {

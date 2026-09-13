@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, Building2, Trees, Wifi, Droplets, TimerReset, ThermometerSun, ShieldCheck, Gauge, Sparkles, CheckCircle2 } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
-const CITY_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.jpg';
+const CITY_IMAGE = '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp';
 const BENDY_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a73ab7232_Mltko-Bendy60-edited1.png';
 const SMART_IMAGE = 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/d584008b5_Smartmlzitka-ovladanizmobilu.jpg';
 const VALVE_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png';

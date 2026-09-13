@@ -10,10 +10,10 @@ const STEPS = [
 ];
 
 // Pozadí = prázdný prostor BEZ mlžítka. Na displeji mobilu je TEN SAMÝ prostor, ale už s mlžítkem.
-const EMPTY_SPACE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae1d9572f_generated_image.png';
-const AR_SPACE_WITH_PRODUCT = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/253a5b826_generated_image.png';
+const EMPTY_SPACE = '/media/optimized/ae1d9572f_generated_image.webp';
+const AR_SPACE_WITH_PRODUCT = '/media/optimized/253a5b826_generated_image.webp';
 // Mobil: jedna fotorealistická fotografie — ruka s mobilem v prázdném prostoru, produkt pouze na displeji.
-const AR_MOBILE_PHOTO = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1239b5eb3_generated_image.png';
+const AR_MOBILE_PHOTO = '/media/optimized/1239b5eb3_generated_image.webp';
 
 export default function PdArPromo({ product }) {
   const screenPhoto = AR_SPACE_WITH_PRODUCT;

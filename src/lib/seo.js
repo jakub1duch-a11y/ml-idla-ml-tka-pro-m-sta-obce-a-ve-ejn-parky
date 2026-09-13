@@ -248,25 +248,31 @@ export function getProductSEO(product, reviewStats) {
     product.material && { '@type': 'PropertyValue', name: 'Materiál', value: product.material },
     product.coverage_area && { '@type': 'PropertyValue', name: 'Rozměr nebo pokrytí', value: product.coverage_area },
     product.pressure && { '@type': 'PropertyValue', name: 'Provozní tlak', value: product.pressure },
+    product.water_consumption && { '@type': 'PropertyValue', name: 'Spotřeba vody', value: product.water_consumption },
+    product.micron_size && { '@type': 'PropertyValue', name: 'Velikost kapek', value: product.micron_size },
+    product.power_supply && { '@type': 'PropertyValue', name: 'Napájení', value: product.power_supply },
   ].filter(Boolean);
 
   const materialText = product.material ? ' V provedení ' + product.material + '.' : '';
-  const description = product.name + ' je ' + search.primaryKeyword + ' ' + search.useCase + '.' + materialText + ' Prohlédněte technické parametry, varianty a podklady pro projekt.';
-  const jsonLd = {
-    '@context': 'https://schema.org',
+  const fallbackDescription = product.name + ' je ' + search.primaryKeyword + ' ' + search.useCase + '.' + materialText + ' Prohlédněte technické parametry, varianty, realizace a podklady pro projekt.';
+  const description = product.seo_description || fallbackDescription;
+  const productSchema = {
     '@type': 'Product',
+    '@id': `${BASE_URL}${canonicalPath}#product`,
     name: product.name,
     description,
     image: images,
     url: BASE_URL + canonicalPath,
     category: search.primaryKeyword,
-    brand: { '@type': 'Brand', name: 'HolmTec' },
-    manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
+    brand: { '@type': 'Brand', name: 'MLŽIDLA®' },
+    manufacturer: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },
+    ...(product.location_context ? { areaServed: product.location_context } : {}),
+    ...(Array.isArray(product.use_cases) && product.use_cases.length ? { audience: product.use_cases.map((name) => ({ '@type': 'Audience', audienceType: name })) } : {}),
     ...(additionalProperty.length ? { additionalProperty } : {}),
   };
 
   if (product.price_from) {
-    jsonLd.offers = {
+    productSchema.offers = {
       '@type': 'Offer',
       priceCurrency: 'CZK',
       price: product.price_from,
@@ -276,40 +282,81 @@ export function getProductSEO(product, reviewStats) {
   }
 
   if (reviewStats?.count && reviewStats?.average) {
-    jsonLd.aggregateRating = {
+    productSchema.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: reviewStats.average,
       reviewCount: reviewStats.count,
     };
   }
 
+  const faqItems = Array.isArray(product.faq_items)
+    ? product.faq_items.filter((item) => item?.question && item?.answer)
+    : [];
+  const graph = [productSchema];
+  if (faqItems.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${BASE_URL}${canonicalPath}#faq`,
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    });
+  }
+
   return {
-    title: product.name + ' – ' + search.primaryKeyword + ' ' + search.useCase,
+    title: product.seo_title || (product.name + ' – ' + search.primaryKeyword + ' ' + search.useCase),
     description,
     keywords: search.keywords + ', ' + product.name + ', HolmTec, MLŽIDLA.cz',
     image: images[0] || product.image_url,
     canonicalPath,
     type: 'product',
-    jsonLd,
+    jsonLd: { '@context': 'https://schema.org', '@graph': graph },
   };
 }
 
 export function getBlogPostSEO(post) {
+  const canonicalPath = `/blog/${post.slug || post.id}`;
+  const description = post.seo_description || post.perex;
+  const faqItems = Array.isArray(post.faq_items)
+    ? post.faq_items.filter((item) => item?.question && item?.answer)
+    : [];
+  const article = {
+    '@type': 'BlogPosting',
+    '@id': `${BASE_URL}${canonicalPath}#article`,
+    headline: post.seo_title || post.title,
+    description,
+    image: post.image_url ? [post.image_url] : undefined,
+    datePublished: post.published_date,
+    mainEntityOfPage: `${BASE_URL}${canonicalPath}`,
+    author: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },
+    publisher: { '@type': 'Organization', name: 'MLŽIDLA.cz', url: BASE_URL },
+    ...(post.location_context ? { contentLocation: { '@type': 'Place', name: post.location_context } } : {}),
+    ...(Array.isArray(post.tags) && post.tags.length ? { keywords: post.tags.join(', ') } : {}),
+    ...(Array.isArray(post.related_product_slugs) && post.related_product_slugs.length ? {
+      about: post.related_product_slugs.map((slug) => ({ '@type': 'Product', url: `${BASE_URL}/produkt/${slug}` })),
+    } : {}),
+  };
+  const graph = [article];
+  if (faqItems.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${BASE_URL}${canonicalPath}#faq`,
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    });
+  }
   return {
-    title: post.title,
-    description: post.perex,
+    title: post.seo_title || post.title,
+    description,
     image: post.image_url,
-    canonicalPath: `/blog/${post.slug || post.id}`,
+    canonicalPath,
     type: 'article',
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: post.title,
-      description: post.perex,
-      image: post.image_url,
-      datePublished: post.published_date,
-      author: { '@type': 'Organization', name: 'HolmTec' }
-    }
+    jsonLd: { '@context': 'https://schema.org', '@graph': graph },
   };
 }
 

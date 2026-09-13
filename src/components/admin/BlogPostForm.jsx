@@ -97,6 +97,36 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
         placeholder="Perex — krátký úvodní text (zobrazí se i ve výsledcích vyhledávání)"
         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-none" />
 
+      <div className="rounded-xl border border-cyan/15 bg-cyan/[.03] p-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-mono text-cyan/80 tracking-widest uppercase">SEO + AEO</p>
+          <span className="text-[10px] text-white/30">Jasná entita · lokalita · FAQ · interní odkazy</span>
+        </div>
+        <div>
+          <input value={form.seo_title || ''} onChange={(e) => setForm(f => ({ ...f, seo_title: e.target.value }))}
+            placeholder="SEO title — ideálně do 60 znaků"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+          <p className="mt-1 text-right text-[10px] text-white/30">{(form.seo_title || '').length}/60</p>
+        </div>
+        <div>
+          <textarea value={form.seo_description || ''} onChange={(e) => setForm(f => ({ ...f, seo_description: e.target.value }))} rows={2}
+            placeholder="Meta description — stručná a konkrétní odpověď, ideálně do 155 znaků"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-none" />
+          <p className="mt-1 text-right text-[10px] text-white/30">{(form.seo_description || '').length}/155</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input value={form.location_context || ''} onChange={(e) => setForm(f => ({ ...f, location_context: e.target.value }))}
+            placeholder="Lokalita / kontext, např. Jičín, městské náměstí"
+            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+          <input value={form.related_product_slugs || ''} onChange={(e) => setForm(f => ({ ...f, related_product_slugs: e.target.value }))}
+            placeholder="Produkty — slugs oddělené čárkou"
+            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+        </div>
+        <textarea value={form.faq_text || ''} onChange={(e) => setForm(f => ({ ...f, faq_text: e.target.value }))} rows={4}
+          placeholder={'FAQ pro AEO — jeden řádek = Otázka | Odpověď\nNapř. Jaká je spotřeba vody? | Podle konfigurace produktu...'}
+          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-y" />
+      </div>
+
       <div>
         <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Titulní obrázek (náhled ve vyhledávání)</p>
         <div className="flex items-center gap-3">
@@ -114,6 +144,9 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
             <input type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} />
           </label>
         </div>
+        <input value={form.image_alt || ''} onChange={(e) => setForm(f => ({ ...f, image_alt: e.target.value }))}
+          placeholder="ALT obrázku — popište věcně, co je na snímku a případně lokalitu / produkt"
+          className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
       </div>
 
       <div>

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Droplets, Ruler, ShieldCheck, Wifi } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import { base44 } from '@/api/base44Client';
 
 const FEATURES = [
   { icon: Building2, title: 'Veřejný prostor', text: 'Mlžné brány pro náměstí, parky, pěší zóny, sportovní areály, eventy a návštěvnicky vytížená místa.' },
@@ -11,6 +12,12 @@ const FEATURES = [
 ];
 
 export default function MlzneBrany() {
+  const [kruh, setKruh] = useState(null);
+
+  useEffect(() => {
+    base44.entities.Product.filter({ slug: 'mlzitko-kruh' }).then((items) => setKruh(items?.[0] || null)).catch(() => setKruh(null));
+  }, []);
+
   useEffect(() => {
     setSEO({
       title: 'Mlžné brány pro města, parky a eventy',
@@ -66,6 +73,27 @@ export default function MlzneBrany() {
           ))}
         </div>
       </section>
+
+      {kruh && (
+        <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-10 lg:pb-24">
+          <div className="grid overflow-hidden border border-border bg-white lg:grid-cols-[1.1fr_.9fr]">
+            <div className="relative min-h-[360px] bg-slate-100">
+              <img src={kruh.image_url} alt="MLŽÍTKO KRUH — kruhový mlžný portál" className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+              <div className="absolute bottom-5 left-5 rounded-full border border-white/30 bg-black/25 px-4 py-2 text-xs font-semibold uppercase tracking-[.16em] text-white backdrop-blur-sm">KRUH · mlžný portál</div>
+            </div>
+            <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
+              <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">MLŽNÉ BRÁNY A PORTÁLY</p>
+              <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">KRUH — průchozí mlžný portál pro městský prostor.</h2>
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground">Kruhová nerezová geometrie vytváří výrazný průchozí bod pro náměstí, promenády, parky a další pobytové zóny. Produkt zobrazujeme pouze podle ověřené referenční geometrie; prostředí a vizualizace se mohou měnit, konstrukce produktu nikoli.</p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link to="/produkt/mlzitko-kruh" className="btn-brand-primary inline-flex items-center gap-2">Detail KRUH <ArrowRight size={16} /></Link>
+                <Link to="/ai-vizualizace?produkt=MLŽÍTKO%20KRUH&slug=mlzitko-kruh" className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-semibold text-foreground">Vizualizovat v prostoru <ArrowRight size={15} /></Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="border-y border-border bg-slate-50">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-2 lg:px-10 lg:py-24">

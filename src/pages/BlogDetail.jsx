@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Loader, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader, Clock, Eye } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO } from '@/lib/seo';
 import { trackBlogPostView } from '@/lib/ga4';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
-import ArticleQuickLinks from '@/components/blog/ArticleQuickLinks';
 import ArticleSafetyNotice from '@/components/blog/ArticleSafetyNotice';
 import ShareButtons from '@/components/blog/ShareButtons';
 import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
@@ -82,6 +81,7 @@ export default function BlogDetail() {
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [viewCount, setViewCount] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -96,6 +96,25 @@ export default function BlogDetail() {
       setPost(found);
       trackBlogPostView(found.title, found.slug || found.id, found.category);
       setSEO(getBlogPostSEO(found));
+
+      // Veřejné počítadlo čtenosti je oddělené od článku, takže není nutné povolit
+      // anonymní zápis do BlogPost. V rámci jedné relace započítáme článek jen jednou.
+      try {
+        const storageKey = `mlzidla_blog_view_${found.id}`;
+        if (!window.sessionStorage.getItem(storageKey)) {
+          await base44.entities.BlogPostView.create({
+            post_id: found.id,
+            post_slug: found.slug || found.id,
+            viewed_date: new Date().toISOString(),
+          });
+          window.sessionStorage.setItem(storageKey, '1');
+        }
+        const views = await base44.entities.BlogPostView.filter({ post_id: found.id });
+        setViewCount(Array.isArray(views) ? views.length : 0);
+      } catch (_) {
+        // Článek musí zůstat čitelný i při dočasně nedostupné analytice.
+        setViewCount(0);
+      }
 
       const rel = (all || []).filter((p) => p.published && p.category === found.category && p.id !== found.id).slice(0, 3);
       setRelated(rel);
@@ -119,8 +138,6 @@ export default function BlogDetail() {
     </div>);
 
 
-  const ctaLabel = post.cta_label || 'Nezávazná poptávka';
-  const ctaLink = post.cta_link || '/poptavka';
   const cleanContent = cleanArticleContent(post.content);
   const readingTime = estimateReadingTime(post.content);
   const hasImage = Boolean(post.image_url);
@@ -152,6 +169,7 @@ export default function BlogDetail() {
                     </span>
                   )}
                   <span className="text-xs font-mono text-white/50">· {readingTime} min čtení</span>
+                  {viewCount > 0 && <span className="inline-flex items-center gap-1.5 text-xs font-mono text-white/50"><Eye size={12} /> {viewCount.toLocaleString('cs-CZ')} přečtení</span>}
                 </div>
                 <h1 className="mt-5 font-heading text-3xl leading-[1.06] tracking-[-0.035em] text-white sm:text-4xl lg:text-[3.25rem]">
                   {post.title}
@@ -185,6 +203,7 @@ export default function BlogDetail() {
                 </span>
               )}
               <span className="text-xs font-mono text-slate-400">· {readingTime} min čtení</span>
+              {viewCount > 0 && <span className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-400"><Eye size={12} /> {viewCount.toLocaleString('cs-CZ')} přečtení</span>}
               {(post.tags || []).map((t) =>
                 <span key={t} className="text-xs font-mono text-slate-400 border border-slate-200 rounded-full px-2.5 py-1">#{t}</span>
               )}
@@ -214,9 +233,6 @@ export default function BlogDetail() {
           <ShareButtons title={post.title} />
         </div>
 
-        {/* Internal links to configurator / inquiry */}
-        <ArticleQuickLinks />
-
         {/* Content */}
         {post.content ?
         <motion.div
@@ -243,8 +259,25 @@ export default function BlogDetail() {
         <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
         }
 
-        <ArticleProductSlider />
-        <ArticleLinkMap />
+        {Array.isArray(post.content_images) && post.content_images.some((item) => item?.url) && (
+          <section className="mx-auto my-10 max-w-5xl" aria-labelledby="article-gallery-heading">
+            <div className="mb-5">
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#0B6B7A]">Fotografie a vizualizace</p>
+              <h2 id="article-gallery-heading" className="mt-2 font-heading text-2xl text-slate-900 sm:text-3xl">Obrazový kontext k tématu</h2>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {post.content_images.filter((item) => item?.url).map((item, index) => (
+                <figure key={`${item.url}-${index}`} className={index === 0 ? 'sm:col-span-2' : ''}>
+                  <img src={item.url} alt={item.alt || `${post.title} — doprovodný obrázek ${index + 1}`} loading="lazy" className="aspect-[16/10] w-full rounded-2xl border border-slate-200 object-cover" />
+                  {item.caption && <figcaption className="mt-2 text-sm leading-relaxed text-slate-500">{item.caption}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <ArticleProductSlider relatedSlugs={post.related_product_slugs} />
+        <ArticleLinkMap post={post} />
 
         {Array.isArray(post.related_product_slugs) && post.related_product_slugs.length > 0 && (
           <section className="mx-auto my-10 max-w-4xl rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8" aria-labelledby="related-products-heading">
@@ -281,13 +314,10 @@ export default function BlogDetail() {
         {/* Newsletter */}
         <BlogNewsletterInline />
 
-        {/* Back + sales CTA */}
-        <div className="py-10 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {/* Zpět na přehled — prodejní CTA na detailu blogu záměrně nezobrazujeme. */}
+        <div className="py-10 border-t border-slate-200">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors font-mono">
             <ArrowLeft size={14} /> Zpět na blog
-          </Link>
-          <Link to={ctaLink} className="btn-metallic-mist px-6 py-3 text-sm font-bold">
-            {ctaLabel} <ArrowRight size={14} />
           </Link>
         </div>
 

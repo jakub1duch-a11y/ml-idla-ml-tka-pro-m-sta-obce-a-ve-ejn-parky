@@ -289,9 +289,17 @@ export function getProductSEO(product, reviewStats) {
     };
   }
 
-  const faqItems = Array.isArray(product.faq_items)
+  const explicitFaqItems = Array.isArray(product.faq_items)
     ? product.faq_items.filter((item) => item?.question && item?.answer)
     : [];
+  const derivedFaqItems = [
+    product.material && { question: `Z jakého materiálu je ${product.name}?`, answer: `${product.name} má v technických údajích uveden materiál: ${product.material}.` },
+    product.pressure && { question: `Jaký provozní tlak vyžaduje ${product.name}?`, answer: `U produktu ${product.name} je uveden provozní tlak ${product.pressure}. Finální nastavení se vždy potvrzuje podle konkrétní konfigurace a místa instalace.` },
+    product.water_consumption && { question: `Jaká je spotřeba vody u ${product.name}?`, answer: `Uvedená spotřeba vody je ${product.water_consumption}. Skutečná spotřeba závisí na počtu trysek, tlaku a provozním režimu.` },
+    product.micron_size && { question: `Jak jemnou mlhu vytváří ${product.name}?`, answer: `Technický údaj pro tento produkt je ${product.micron_size}.` },
+    product.power_supply && { question: `Potřebuje ${product.name} elektrické napájení?`, answer: `Pro tento produkt je uvedeno: ${product.power_supply}. Přesné zapojení se potvrzuje podle zvoleného řízení.` },
+  ].filter(Boolean);
+  const faqItems = explicitFaqItems.length ? explicitFaqItems : derivedFaqItems.slice(0, 5);
   const graph = [productSchema];
   if (faqItems.length) {
     graph.push({
@@ -390,12 +398,16 @@ export function getReferenceSEO(project) {
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Article',
+      '@id': `${BASE_URL}${canonicalPath}#realizace`,
       headline: title,
       description,
       image: project.image_url,
       mainEntityOfPage: `${BASE_URL}${canonicalPath}`,
-      author: { '@type': 'Organization', name: 'HolmTec s.r.o.' },
-      publisher: { '@type': 'Organization', name: 'MLŽIDLA.cz' }
+      ...(project.location ? { contentLocation: { '@type': 'Place', name: project.location } } : {}),
+      ...(project.product_used ? { about: { '@type': 'Product', name: project.product_used } } : {}),
+      ...(project.client ? { mentions: { '@type': 'Organization', name: project.client } } : {}),
+      author: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },
+      publisher: { '@type': 'Organization', name: 'MLŽIDLA.cz', url: BASE_URL }
     }
   };
 }

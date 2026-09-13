@@ -265,12 +265,24 @@ export default function BlogDetail() {
               <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#0B6B7A]">Fotografie a vizualizace</p>
               <h2 id="article-gallery-heading" className="mt-2 font-heading text-2xl text-slate-900 sm:text-3xl">Obrazový kontext k tématu</h2>
             </div>
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2 [perspective:1400px]">
               {post.content_images.filter((item) => item?.url).map((item, index) => (
-                <figure key={`${item.url}-${index}`} className={index === 0 ? 'sm:col-span-2' : ''}>
-                  <img src={item.url} alt={item.alt || `${post.title} — doprovodný obrázek ${index + 1}`} loading="lazy" className="aspect-[16/10] w-full rounded-2xl border border-slate-200 object-cover" />
+                <motion.figure
+                  key={`${item.url}-${index}`}
+                  initial={{ opacity: 0, y: 24, rotateX: 5 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  whileHover={reduceMotion ? undefined : { y: -6, rotateX: 2.5, rotateY: index % 2 === 0 ? -2.5 : 2.5, scale: 1.015 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.42, ease: 'easeOut' }}
+                  className={`${index === 0 ? 'sm:col-span-2' : ''} group [transform-style:preserve-3d]`}
+                >
+                  <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm transition-shadow duration-300 group-hover:shadow-xl">
+                    <img src={item.url} alt={item.alt || `${post.title} — doprovodný obrázek ${index + 1}`} loading="lazy" className="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-slate-950/0 via-white/0 to-cyan-100/0 opacity-0 transition-opacity duration-500 group-hover:opacity-20" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
                   {item.caption && <figcaption className="mt-2 text-sm leading-relaxed text-slate-500">{item.caption}</figcaption>}
-                </figure>
+                </motion.figure>
               ))}
             </div>
           </section>

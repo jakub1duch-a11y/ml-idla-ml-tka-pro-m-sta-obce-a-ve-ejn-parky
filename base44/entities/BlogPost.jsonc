@@ -42,6 +42,48 @@
       "type": "string",
       "description": "Cover image URL"
     },
+    "image_alt": {
+      "type": "string",
+      "description": "Popisn\u00fd alt text tituln\u00edho obr\u00e1zku pro p\u0159\u00edstupnost, SEO a AEO"
+    },
+    "seo_title": {
+      "type": "string",
+      "description": "Voliteln\u00fd SEO title; pokud chyb\u00ed, pou\u017eije se title"
+    },
+    "seo_description": {
+      "type": "string",
+      "description": "Voliteln\u00fd meta description do cca 155 znak\u016f; pokud chyb\u00ed, pou\u017eije se perex"
+    },
+    "location_context": {
+      "type": "string",
+      "description": "Lokalitn\u00ed kontext \u010dl\u00e1nku nebo realizace, nap\u0159. Ji\u010d\u00edn, Poln\u00e1, Trutnov"
+    },
+    "faq_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "answer"
+        ]
+      },
+      "description": "FAQ pro AEO a FAQPage structured data; pouze ov\u011b\u0159en\u00e9 odpov\u011bdi z \u010dl\u00e1nku a technick\u00fdch dat"
+    },
+    "related_product_slugs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Slugs produkt\u016f pro intern\u00ed prolinkov\u00e1n\u00ed z \u010dl\u00e1nku"
+    },
     "published": {
       "type": "boolean",
       "default": false,

@@ -102,7 +102,7 @@ function BlueprintSvg({ product, variant, theme }) {
   );
 }
 
-export default function TechnicalBlueprintBackground({ product, theme = 'dark', className = '', autoRotate = true }) {
+export default function TechnicalBlueprintBackground({ product, theme = 'dark', className = '', autoRotate = true, showBase = true }) {
   const [variant, setVariant] = useState(0);
   const reduceMotion = useReducedMotion();
   const key = useMemo(() => `${product?.slug || product?.name || 'product'}-${variant}`, [product, variant]);
@@ -119,7 +119,7 @@ export default function TechnicalBlueprintBackground({ product, theme = 'dark', 
 
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
-      <div className={theme === 'light' ? 'absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,.98),rgba(244,249,250,.94)_58%,rgba(236,246,248,.9))]' : 'absolute inset-0 bg-[radial-gradient(circle_at_45%_42%,rgba(11,55,73,.42),rgba(10,22,40,.94)_68%)]'} />
+      {showBase && <div className={theme === 'light' ? 'absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,.98),rgba(244,249,250,.94)_58%,rgba(236,246,248,.9))]' : 'absolute inset-0 bg-[radial-gradient(circle_at_45%_42%,rgba(11,55,73,.42),rgba(10,22,40,.94)_68%)]'} />}
       <AnimatePresence mode="sync">
         <motion.div
           key={key}

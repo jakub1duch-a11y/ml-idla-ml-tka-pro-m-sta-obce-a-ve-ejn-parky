@@ -176,14 +176,47 @@ export default function Header() {
               </Link>
             </div>
             <Link to={inquiryPath} className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-2 px-3 py-2">{locale === 'cs' ? 'Popsat projekt' : internationalCopy.quote}</Link>
-            <button onClick={toggleMobileMenu} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'} className="group lg:hidden flex items-center justify-center w-10 h-10 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors">
-              {mobileOpen ? <X size={22} /> : (
-                <span className="flex w-[22px] flex-col gap-[5px]" aria-hidden="true">
-                  <span className="h-[1.5px] w-[22px] rounded-full bg-current transition-transform duration-200 group-hover:translate-x-0.5" />
-                  <span className="h-[1.5px] w-[15px] self-end rounded-full bg-current transition-all duration-200 group-hover:w-[22px]" />
-                </span>
-              )}
-            </button>
+            <motion.button
+              type="button"
+              onClick={toggleMobileMenu}
+              aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'}
+              aria-expanded={mobileOpen}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 520, damping: 30 }}
+              className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70"
+            >
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
+                animate={{
+                  width: mobileOpen ? 22 : 22,
+                  y: mobileOpen ? 0 : -4,
+                  rotate: mobileOpen ? 45 : 0,
+                  x: mobileOpen ? 0 : 0,
+                }}
+                whileHover={!mobileOpen ? { x: 1.5 } : { rotate: 48 }}
+                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }}
+              />
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
+                animate={{
+                  width: mobileOpen ? 22 : 15,
+                  y: mobileOpen ? 0 : 4,
+                  rotate: mobileOpen ? -45 : 0,
+                  x: mobileOpen ? 0 : 3.5,
+                }}
+                whileHover={!mobileOpen ? { width: 22, x: 0 } : { rotate: -48 }}
+                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }}
+              />
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-1 rounded-full border border-white/0"
+                animate={{ borderColor: mobileOpen ? 'rgba(255,255,255,.14)' : 'rgba(255,255,255,0)' }}
+                transition={{ duration: .22 }}
+              />
+            </motion.button>
           </div>
         </div>
 

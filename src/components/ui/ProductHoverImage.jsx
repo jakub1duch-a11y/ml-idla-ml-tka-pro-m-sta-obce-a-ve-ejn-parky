@@ -30,6 +30,7 @@ const VIEW_LABELS = {
 
 export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '' }) {
   const [activeView, setActiveView] = useState(0);
+  const resolvedAlt = alt || product?.image_alt || product?.name || 'Mlžítko MLŽIDLA®';
   const [hovered, setHovered] = useState(false);
 
   const views = useMemo(() => {
@@ -181,7 +182,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
           <img
             key={`view-${idx}`}
             src={view.url}
-            alt={isActive ? (alt || product?.name || '') : ''}
+            alt={isActive ? resolvedAlt : ''}
             loading={idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
             className={`absolute inset-0 h-full w-full transition-all duration-500 ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}

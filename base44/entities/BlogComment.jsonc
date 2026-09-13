@@ -12,7 +12,14 @@
     },
     "email": {
       "type": "string",
-      "description": "Email komentuj\u00edc\u00edho (nezve\u0159ej\u0148uje se)"
+      "description": "Email komentuj\u00edc\u00edho (nezve\u0159ej\u0148uje se)",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "comment": {
       "type": "string",

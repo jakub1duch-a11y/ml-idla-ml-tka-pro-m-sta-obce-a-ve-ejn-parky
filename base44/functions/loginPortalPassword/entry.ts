@@ -124,6 +124,13 @@ Deno.serve(async (req) => {
       projects: data.projects,
       session_token: sessionToken,
       password_setup_required: false,
+    }, {
+      headers: {
+        'Cache-Control': 'no-store',
+        'Pragma': 'no-cache',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'no-referrer',
+      },
     });
   } catch (error) {
     return Response.json({ error: error?.message || 'login_failed' }, { status: 500 });

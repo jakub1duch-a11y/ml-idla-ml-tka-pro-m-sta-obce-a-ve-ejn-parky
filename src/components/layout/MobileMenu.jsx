@@ -90,17 +90,42 @@ export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' 
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: .18 }}
+          initial={{ opacity: 0, y: -10, scale: .992, filter: 'blur(5px)' }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -8, scale: .994, filter: 'blur(4px)' }}
+          transition={{ type: 'spring', stiffness: 340, damping: 34, mass: .72 }}
           className="fixed inset-0 z-40 flex h-[100dvh] flex-col overflow-hidden bg-[#f5f9fa] lg:hidden"
         >
           <div className="relative z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[linear-gradient(110deg,rgba(7,31,40,.98),rgba(12,58,70,.96),rgba(12,96,105,.9))] px-5 shadow-[0_12px_40px_rgba(8,44,55,.14)] backdrop-blur-xl">
             <Link to="/" onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
             <div className="flex items-center gap-2">
               <LanguageSwitcher mobile onNavigate={onClose} />
-              <button onClick={onClose} aria-label="Zavřít menu" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"><X size={20}/></button>
+              <motion.button
+                type="button"
+                onClick={onClose}
+                aria-label="Zavřít menu"
+                whileHover={{ scale: 1.05, rotate: 2 }}
+                whileTap={{ scale: .92 }}
+                transition={{ type: 'spring', stiffness: 520, damping: 28 }}
+                className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-md transition-colors duration-300 hover:border-white/20 hover:bg-white/[.14] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70"
+              >
+                <motion.span
+                  aria-hidden="true"
+                  className="absolute h-[1.5px] w-[21px] rounded-full bg-current"
+                  initial={{ rotate: 38, scaleX: .7 }}
+                  animate={{ rotate: 45, scaleX: 1 }}
+                  whileHover={{ rotate: 49 }}
+                  transition={{ type: 'spring', stiffness: 560, damping: 31, mass: .5 }}
+                />
+                <motion.span
+                  aria-hidden="true"
+                  className="absolute h-[1.5px] w-[21px] rounded-full bg-current"
+                  initial={{ rotate: -38, scaleX: .7 }}
+                  animate={{ rotate: -45, scaleX: 1 }}
+                  whileHover={{ rotate: -49 }}
+                  transition={{ type: 'spring', stiffness: 560, damping: 31, mass: .5 }}
+                />
+              </motion.button>
             </div>
           </div>
 

@@ -59,6 +59,10 @@ export default function CustomerPortal() {
   const [newInquiryFiles, setNewInquiryFiles] = useState([]);
   const [newInquiryBusy, setNewInquiryBusy] = useState(false);
   const [newInquirySent, setNewInquirySent] = useState(null);
+  const [contactProfile, setContactProfile] = useState({ name: '', email: '', phone: '', source: 'manual' });
+  const [contactProfileReady, setContactProfileReady] = useState(false);
+  const [contactProfileBusy, setContactProfileBusy] = useState(false);
+  const [contactProfileMessage, setContactProfileMessage] = useState('');
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
   const isAdmin = appUser?.role === 'admin';
@@ -90,6 +94,19 @@ export default function CustomerPortal() {
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
   }, []);
+
+  useEffect(() => {
+    if (step !== 'dashboard' || contactProfileReady) return;
+    const project = projects[0] || null;
+    const inquiry = inquiries.find((item) => item.contact_source) || inquiries[0] || null;
+    setContactProfile({
+      name: project?.client_name || inquiry?.jmeno || inquiry?.name || '',
+      email: project?.client_email || inquiry?.email || email,
+      phone: project?.client_phone || inquiry?.telefon || inquiry?.phone || '',
+      source: inquiry?.contact_source || 'manual',
+    });
+    setContactProfileReady(true);
+  }, [step, projects, inquiries, email, contactProfileReady]);
 
   useEffect(() => {
     if (!isAdmin || step !== 'login') return;
@@ -380,6 +397,52 @@ export default function CustomerPortal() {
     }
   };
 
+  const saveContactProfile = async (event) => {
+    event.preventDefault();
+    if (!sessionToken || !contactProfile.name.trim() || !contactProfile.email.trim()) return;
+    setContactProfileBusy(true);
+    setContactProfileMessage('');
+    setError('');
+    try {
+      const response = await base44.functions.invoke('updatePortalContact', {
+        session_token: sessionToken,
+        name: contactProfile.name,
+        email: contactProfile.email,
+        phone: contactProfile.phone,
+      });
+      const result = response?.data || response || {};
+      if (!result.ok) throw new Error(result.error || 'update_failed');
+      setEmail(result.email);
+      setContactProfile((current) => ({ ...current, name: result.name, email: result.email, phone: result.phone }));
+      setInquiries((current) => current.map((item) => ({
+        ...item,
+        email: result.email,
+        name: result.name,
+        jmeno: result.name,
+        phone: result.phone,
+        telefon: result.phone,
+        contact_confirmed_by_user: true,
+        contact_confirmed_at: result.confirmed_at,
+      })));
+      setProjects((current) => current.map((item) => ({
+        ...item,
+        client_name: result.name,
+        client_email: result.email,
+        client_phone: result.phone,
+      })));
+      setContactProfileMessage('Kontaktní osoba projektu byla aktualizována.');
+    } catch (updateError) {
+      const code = getFunctionErrorCode(updateError);
+      setError(code === 'email_already_used'
+        ? 'Tento e-mail už používá jiný klientský účet.'
+        : code === 'session_expired'
+          ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
+          : 'Kontaktní údaje se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setContactProfileBusy(false);
+    }
+  };
+
   const generateShareUrl = (token) => {
     const url = `${window.location.origin}/project/${token}`;
     setShareUrl(url);
@@ -553,7 +616,7 @@ export default function CustomerPortal() {
             <div className="flex flex-wrap items-center gap-2">
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
               {isAdmin && <Link to="/obchodni-nabidky" className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-xs font-semibold text-cyan-900">Sales Hub</Link>}
-              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
+              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>
           </div>
           <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">
@@ -563,9 +626,39 @@ export default function CustomerPortal() {
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
           </div>
           <nav className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
-            {[['#overview','Přehled'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
+            {[['#overview','Přehled'],['#contact-profile','Kontakt'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
           </nav>
         </header>
+
+        <section id="contact-profile" className="mb-6 scroll-mt-28 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
+          <form onSubmit={saveContactProfile} className="grid gap-5 p-5 sm:p-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Kontaktní osoba projektu</p>
+              <h2 className="mt-2 text-xl font-semibold text-slate-950">Údaje pro nabídku a další komunikaci</h2>
+              <p className="mt-2 text-xs leading-5 text-slate-500">
+                Zdroj kontaktu: <strong className="text-slate-700">{contactProfile.source === 'google_account' ? 'Google účet' : 'ručně vyplněno'}</strong>. Údaje můžete kdykoli upravit.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <label className="text-[11px] font-semibold text-slate-600">Jméno kontaktní osoby *
+                <input required autoComplete="name" value={contactProfile.name} onChange={(event) => setContactProfile((current) => ({ ...current, name: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
+              </label>
+              <label className="text-[11px] font-semibold text-slate-600">E-mail *
+                <input required autoComplete="email" type="email" value={contactProfile.email} onChange={(event) => setContactProfile((current) => ({ ...current, email: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
+              </label>
+              <label className="text-[11px] font-semibold text-slate-600">Telefon
+                <input autoComplete="tel" value={contactProfile.phone} onChange={(event) => setContactProfile((current) => ({ ...current, phone: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
+              </label>
+              <div className="sm:col-span-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-[10px] leading-4 text-slate-400">Změna e-mailu upraví také e-mail používaný pro další přihlášení k tomuto projektu.</p>
+                <button type="submit" disabled={contactProfileBusy} className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-5 text-xs font-bold text-white disabled:opacity-50">
+                  {contactProfileBusy ? <><Loader size={14} className="animate-spin" /> Ukládám…</> : <><ShieldCheck size={14} /> Uložit kontakt</>}
+                </button>
+              </div>
+              {contactProfileMessage && <p className="sm:col-span-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">{contactProfileMessage}</p>}
+            </div>
+          </form>
+        </section>
 
         {workspaceMessages > 0 && <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-xs text-cyan-900"><span><strong>{workspaceMessages}</strong> zpráv uložených v komunikaci k vašim nabídkám.</span><a href="#communication" className="font-semibold underline underline-offset-2">Otevřít komunikaci</a></div>}
 

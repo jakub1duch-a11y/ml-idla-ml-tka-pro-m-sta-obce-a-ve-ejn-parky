@@ -1,6 +1,6 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback, useMemo, useState } from 'react';
 import ReactQuill from 'react-quill';
-import { Loader, Upload, X } from 'lucide-react';
+import { ImageIcon, Loader, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const CATEGORIES = [
@@ -26,6 +26,9 @@ function slugify(str) {
 
 export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, uploadingCover, setUploadingCover }) {
   const quillRef = useRef(null);
+  const [uploadingContent, setUploadingContent] = useState(false);
+  const [generatingVisuals, setGeneratingVisuals] = useState(false);
+  const [visualError, setVisualError] = useState('');
 
   const imageHandler = useCallback(() => {
     const input = document.createElement('input');
@@ -64,6 +67,77 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
     const { file_url } = await base44.integrations.Core.UploadFile({ file });
     setForm(f => ({ ...f, image_url: file_url }));
     setUploadingCover(false);
+  };
+
+  const handleContentUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploadingContent(true);
+    setVisualError('');
+    try {
+      const uploaded = [];
+      for (const file of files) {
+        const { file_url } = await base44.integrations.Core.UploadFile({ file });
+        uploaded.push({
+          url: file_url,
+          alt: `${form.title || 'Článek MLŽIDLA®'} — doprovodná fotografie`,
+          caption: '',
+          kind: 'photo',
+        });
+      }
+      setForm((f) => ({ ...f, content_images: [...(f.content_images || []), ...uploaded] }));
+    } catch (error) {
+      setVisualError(error?.message || 'Nahrání obrázků se nepodařilo.');
+    } finally {
+      setUploadingContent(false);
+      e.target.value = '';
+    }
+  };
+
+  const updateContentImage = (index, patch) => {
+    setForm((f) => ({
+      ...f,
+      content_images: (f.content_images || []).map((item, itemIndex) => itemIndex === index ? { ...item, ...patch } : item),
+    }));
+  };
+
+  const removeContentImage = (index) => {
+    setForm((f) => ({ ...f, content_images: (f.content_images || []).filter((_, itemIndex) => itemIndex !== index) }));
+  };
+
+  const generateContentVisuals = async () => {
+    if (!form.title || generatingVisuals) return;
+    setGeneratingVisuals(true);
+    setVisualError('');
+    try {
+      const referenceUrls = [form.image_url, ...(form.content_images || []).map((item) => item?.url)].filter(Boolean).slice(0, 3);
+      const variants = [
+        'široký kontext prostoru a způsob využití',
+        'detail jemné vodní mlhy, materiálu a atmosféry bez vymyšlených technických detailů',
+        'doplňkový architektonický pohled, který vysvětluje téma článku bez textových nápisů',
+      ];
+      const created = [];
+      for (let index = 0; index < variants.length; index += 1) {
+        const params = {
+          prompt: `Fotorealistická doprovodná vizualizace pro odborný článek MLŽIDLA.cz „${form.title}“. Kontext článku: ${form.perex || 'mlžítka, veřejný nebo rezidenční prostor a vodní mlha'}. Záběr: ${variants[index]}. Pokud je na referenční fotografii konkrétní produkt HolmTec/MLŽIDLA®, zachovej absolutně přesně jeho geometrii, počet ramen, trubek, trysek, ohybů, patku a proporce; měň pouze prostředí, světlo, mlhu, lidi, kompozici a úhel. Pokud ověřená produktová reference není k dispozici, nevymýšlej nový produkt ani jeho konstrukci — zobraz raději prostředí, mikroklima, detail mlhy nebo neutrální architektonický kontext. Žádná falešná loga, žádné texty v obraze, žádné neověřené technické hodnoty. Přirozené české nebo evropské prostředí, realistická nerez, jemná vodní mlha a lidé pouze tam, kde pomáhají měřítku. Kompozice 16:10 vhodná do odborného webového článku.`,
+          ...(referenceUrls.length ? { existing_image_urls: referenceUrls } : {}),
+        };
+        const result = await base44.integrations.Core.GenerateImage(params);
+        if (result?.url) {
+          created.push({
+            url: result.url,
+            alt: `${form.title} — vizualizace ${index + 1}`,
+            caption: '',
+            kind: 'visualization',
+          });
+        }
+      }
+      setForm((f) => ({ ...f, content_images: [...(f.content_images || []), ...created] }));
+    } catch (error) {
+      setVisualError(error?.response?.data?.error || error?.message || 'Generování vizualizací se nepodařilo.');
+    } finally {
+      setGeneratingVisuals(false);
+    }
   };
 
   return (

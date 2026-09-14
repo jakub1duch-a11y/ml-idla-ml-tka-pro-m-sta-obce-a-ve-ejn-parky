@@ -1,6 +1,7 @@
 ---
 name: mlzidla-scrollcraft-astra
-description: Navrhovat a upravovat web MLŽIDLA.cz podle principů Astra/Scrollcraft: vrstvená prostorová kompozice, scroll-depth, řízená typografie, motion graphics, reference-first design a obchodní filtr Pain–Person–Promise. Použít při redesignu homepage, hero sekcí, produktových landing pages, smart řízení, realizací a kampaní.
+description: Navrhovat a upravovat web MLŽIDLA.cz podle principů Astra/Scrollcraft: vrstvená prostorová kompozice, scroll-depth, řízená typografie, motion graphics, reference-first design, vysoká čitelnost, přehledná navigace a obchodní filtr Pain–Person–Promise. Použít při redesignu homepage, hero sekcí, produktových landing pages, smart řízení, realizací, footeru, mobilní navigace a kampaní.
+version: 1.1
 ---
 
 # MLŽIDLA Scrollcraft / Astra
@@ -85,6 +86,49 @@ Zkontroluj:
 
 Pokud některý bod neprojde, návrh není hotový.
 
+## 9. Čitelnost, kontrast a hierarchie textu
+
+- Na tmavých plochách nepoužívej důležité texty s příliš nízkou opacity. Primární obsah drž přibližně na white/80–100, sekundární text typicky alespoň white/65–75; dekorativní metadata mohou být slabší.
+- Na světlém pozadí preferuj slate-950/slate-900 pro nadpisy a slate-600 až slate-700 pro běžný text. Vyhýbej se slate-400 u delších odstavců.
+- Delší odstavce drž přibližně do 60–68 znaků na řádek, na mobilu zhruba 34–42 znaků.
+- CTA, důležité hodnoty a stavové informace nesmí spoléhat jen na barvu; podpor je ikonou, štítkem nebo textem.
+- Při překryvu textu přes foto nebo video vždy používej lokální gradient/backdrop vrstvu; nespoléhej na konkrétní jas jediné fotografie.
+
+## 10. Navigace, mobil a footer
+
+- Desktop navigaci drž na 5–7 hlavních položkách. Sekundární obsah seskup do logických menu místo řady samostatných položek.
+- Mobilní navigace musí mít jasné skupiny: Produkty, Použití, Technologie / Smart, Inspirace / Reference, Podpora / Kontakt.
+- Dotykové cíle minimálně 44 × 44 px a dostatečné mezery mezi akcemi.
+- Footer má fungovat jako orientační mapa webu: produkty, řešení, inspirace, podpora, kontakt a důvěryhodnost.
+- Bezpečnostní značení udržuj malé a věcné. Používej kompaktní ShieldCheck ikonu a text typu „Zabezpečené připojení / Kontrola odkazu“ bez dojmu neexistující certifikace nebo partnerství.
+- Ve footeru nepoužívej klíčové kontaktní a právní údaje s kontrastem, který je na mobilu obtížně čitelný.
+
+## 11. Animace funkce mlžítka a PEVEKO / SUPLA
+
+Interaktivní technické animace musí vysvětlovat skutečný tok systému, ne jen dekorovat stránku:
+
+1. vodovodní řád / přívod vody;
+2. filtrace;
+3. PEVEKO nebo jiný projektově zvolený chytrý ventil;
+4. volitelný snímač průtoku / stavové měření;
+5. řídicí logika SUPLA / scénář času, teploty nebo senzoru;
+6. mlžítko;
+7. jemná mlha a ochlazovaná pobytová zóna.
+
+Pro prezentaci ventilu PEVEKO používej jen funkce ověřené pro konkrétní sestavu. Nezobrazuj záložní napájení, senzory, vzdálený dohled nebo automatické havarijní uzavření jako univerzální vlastnost všech variant. Animace má umožnit stav OTEVŘENO / ZAVŘENO, směr průtoku, aktivní zónu a vazbu na příkaz ze smart řízení. U reduced-motion zobraz statické schéma se stejnou informační hodnotou.
+
+## 12. Implementační priorita
+
+Při úpravách MLŽIDLA.cz postupuj v tomto pořadí:
+1. čitelnost a kontrast;
+2. informační hierarchie a navigace;
+3. mobilní ergonomie;
+4. produktová pravdivost;
+5. interaktivita a motion;
+6. dekorativní efekty.
+
+Efekt, který snižuje čitelnost nebo výkon, se nepoužije ani tehdy, když působí vizuálně atraktivně.
+
 ## Zdroj metodiky
 
-Principy byly odvozeny z workflow prezentovaného ve videu „GPT-6 Astra Kills AI Website Slop“ / ukázkách Astra webdesignu: reference-first návrh, Scrollcraft, vrstvení, scroll depth, typografie, spacing a filtr Pain–Person–Promise. Pro MLŽIDLA jsou rozšířeny o ochranu produktové věrnosti, výkon, přístupnost a obchodní CTA.
+Principy byly odvozeny z workflow prezentovaného ve videu „GPT-6 Astra Kills AI Website Slop“ / ukázkách Astra webdesignu: reference-first návrh, Scrollcraft, vrstvení, scroll depth, typografie, spacing a filtr Pain–Person–Promise. Pro MLŽIDLA jsou rozšířeny o ochranu produktové věrnosti, výkon, přístupnost, čitelnost, navigační ergonomii, technické animace a obchodní CTA.

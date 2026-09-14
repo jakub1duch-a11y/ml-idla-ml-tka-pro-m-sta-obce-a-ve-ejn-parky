@@ -15,6 +15,22 @@
     "message": {
       "type": "string",
       "maxLength": 4000
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "ai",
+        "image",
+        "summary",
+        "system"
+      ],
+      "default": "text",
+      "description": "Typ zpr\u00e1vy \u2014 b\u011b\u017en\u00e1, odpov\u011b\u010f AI, vygenerovan\u00fd vizu\u00e1l, z\u00e1pis sch\u016fzky, syst\u00e9mov\u00e1"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL vygenerovan\u00e9ho vizu\u00e1lu / ikony"
     }
   },
   "required": [

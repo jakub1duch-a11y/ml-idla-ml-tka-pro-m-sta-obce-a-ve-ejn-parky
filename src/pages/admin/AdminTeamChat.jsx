@@ -1,23 +1,51 @@
-import React, { useState } from 'react';
-import { Hash, MessagesSquare } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Hash, MessagesSquare, Video, FileText, Download, Sparkles } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 import TeamThread from '@/components/admin/team/TeamThread';
+import VideoCall from '@/components/admin/team/VideoCall';
+import MeetingNotes from '@/components/admin/team/MeetingNotes';
+import { chatToText, downloadText } from '@/lib/teamAi';
 
 const CHANNELS = [
   { id: 'general', label: 'Obecné', hint: 'Denní koordinace týmu' },
   { id: 'sales', label: 'Obchod & poptávky', hint: 'Nabídky, klienti, follow-up' },
   { id: 'production', label: 'Výroba & montáže', hint: 'Dílna, instalace, servis' },
   { id: 'marketing', label: 'Marketing', hint: 'Web, sociální sítě, obsah' },
+  { id: 'design', label: 'Design & ikony', hint: 'Návrhy vizuálů s AI (@AI)' },
 ];
 
 export default function AdminTeamChat() {
   const [active, setActive] = useState('general');
+  const [user, setUser] = useState(null);
+  const [inCall, setInCall] = useState(false);
+  const [panel, setPanel] = useState('chat'); // chat | notes
   const channel = CHANNELS.find((c) => c.id === active);
+
+  useEffect(() => { base44.auth.me().then(setUser); }, []);
+
+  const exportChat = async () => {
+    const messages = await base44.entities.TeamMessage.filter({ channel: channel.id }, 'created_date', 1000);
+    downloadText(`chat-${channel.id}-${new Date().toISOString().slice(0, 10)}.txt`, chatToText(channel.label, messages || []));
+  };
+
+  const ToolBtn = ({ onClick, active: on, Icon, children }) => (
+    <button onClick={onClick} className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-mono transition ${on ? 'border-cyan/30 bg-cyan/10 text-cyan' : 'border-white/10 text-white/50 hover:text-white'}`}>
+      <Icon size={12} /> {children}
+    </button>
+  );
 
   return (
     <div className="flex h-[calc(100vh-56px)] flex-col p-4 md:h-screen md:p-6">
-      <div className="mb-4">
-        <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Interní komunikace</p>
-        <h2 className="mt-1 text-xl font-medium text-white">Týmový chat</h2>
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Interní komunikace</p>
+          <h2 className="mt-1 text-xl font-medium text-white">Týmový chat</h2>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <ToolBtn onClick={() => setInCall((v) => !v)} active={inCall} Icon={Video}>{inCall ? 'Hovor běží' : 'Videohovor'}</ToolBtn>
+          <ToolBtn onClick={() => setPanel(panel === 'notes' ? 'chat' : 'notes')} active={panel === 'notes'} Icon={FileText}>Zápisy</ToolBtn>
+          <ToolBtn onClick={exportChat} Icon={Download}>Export chatu</ToolBtn>
+        </div>
       </div>
       <div className="flex gap-2 overflow-x-auto pb-1 md:hidden">
         {CHANNELS.map((c) => (
@@ -28,7 +56,7 @@ export default function AdminTeamChat() {
         ))}
       </div>
       <div className="mt-3 grid min-h-0 flex-1 gap-4 md:grid-cols-[220px_1fr]">
-        <div className="hidden overflow-hidden rounded-xl border border-white/8 md:block">
+        <div className="hidden overflow-hidden rounded-xl border border-white/8 md:flex md:flex-col">
           <div className="flex items-center gap-2 bg-white/5 px-4 py-3"><MessagesSquare size={13} className="text-cyan" /><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Kanály</p></div>
           <div className="p-2 space-y-1">
             {CHANNELS.map((c) => (
@@ -39,10 +67,21 @@ export default function AdminTeamChat() {
               </button>
             ))}
           </div>
+          <div className="mt-auto border-t border-white/8 p-3 text-[11px] leading-relaxed text-white/35">
+            <p className="flex items-center gap-1 text-violet-200"><Sparkles size={11} /> AI asistent</p>
+            <p className="mt-1">Začněte zprávu <span className="font-mono text-white/60">@AI</span> — poradí, doporučí nebo navrhne ikonu či vizuál.</p>
+          </div>
         </div>
         <div className="flex min-h-0 flex-col rounded-xl border border-white/8 bg-white/3 p-4">
-          <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-white/30">#{channel.label} · {channel.hint}</p>
-          <TeamThread channel={channel.id} />
+          {inCall && user && <VideoCall room={`chat:${channel.id}`} user={user} onEnd={() => setInCall(false)} />}
+          {panel === 'notes' ? (
+            <MeetingNotes channel={channel.id} channelLabel={channel.label} userName={user?.full_name || user?.email} />
+          ) : (
+            <>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-white/30">#{channel.label} · {channel.hint}</p>
+              <TeamThread channel={channel.id} placeholder="Napiš zprávu týmu… (nebo @AI navrhni ikonu / poraď)" />
+            </>
+          )}
         </div>
       </div>
     </div>

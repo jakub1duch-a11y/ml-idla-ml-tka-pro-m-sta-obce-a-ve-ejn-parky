@@ -1,0 +1,62 @@
+{
+  "name": "CallSignal",
+  "type": "object",
+  "properties": {
+    "room": {
+      "type": "string",
+      "description": "Identifik\u00e1tor videom\u00edstnosti, nap\u0159. chat:general"
+    },
+    "from_email": {
+      "type": "string"
+    },
+    "from_name": {
+      "type": "string"
+    },
+    "to_email": {
+      "type": "string",
+      "description": "C\u00edlov\u00fd \u00fa\u010dastn\u00edk; pr\u00e1zdn\u00e9 = v\u0161em v m\u00edstnosti"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "join",
+        "offer",
+        "answer",
+        "candidate",
+        "leave"
+      ]
+    },
+    "payload": {
+      "type": "string",
+      "description": "JSON serializovan\u00fd SDP nebo ICE kandid\u00e1t",
+      "maxLength": 20000
+    }
+  },
+  "required": [
+    "room",
+    "from_email",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

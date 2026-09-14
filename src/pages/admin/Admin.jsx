@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles, PlugZap } from 'lucide-react';
 import AdminTeamChat from './AdminTeamChat';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 import InstallAppButton from '@/components/admin/team/InstallAppButton';
@@ -27,6 +27,7 @@ import AdminSystemDevelopment from './AdminSystemDevelopment';
 import AdminProspects from './AdminProspects';
 import AdminCRM from './AdminCRM';
 import AdminTerminal from './AdminTerminal';
+import AdminIntegrations from './AdminIntegrations';
 import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimalizatorChat';
 import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 
@@ -35,6 +36,7 @@ const TABS = [
   { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
   { id: 'chat', label: 'Týmový chat', icon: MessagesSquare },
   { id: 'development', label: 'Vývoj systému', icon: Activity },
+  { id: 'integrations', label: 'Integrace', icon: PlugZap },
   { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'ai-optimalizace', label: 'AI optimalizace', icon: Wand2 },
@@ -129,6 +131,7 @@ export default function Admin() {
     terminal: AdminTerminal,
     chat: AdminTeamChat,
     development: AdminSystemDevelopment,
+    integrations: AdminIntegrations,
     tasks: AdminTasks,
     products: AdminProducts,
     'ai-optimalizace': ProduktovyOptimalizatorChat,

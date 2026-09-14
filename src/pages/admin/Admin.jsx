@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles } from 'lucide-react';
 import AdminTeamChat from './AdminTeamChat';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 import InstallAppButton from '@/components/admin/team/InstallAppButton';
@@ -28,6 +28,7 @@ import AdminProspects from './AdminProspects';
 import AdminCRM from './AdminCRM';
 import AdminTerminal from './AdminTerminal';
 import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimalizatorChat';
+import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -37,6 +38,7 @@ const TABS = [
   { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
   { id: 'ai-optimalizace', label: 'AI optimalizace', icon: Wand2 },
+  { id: 'brand-visuals', label: 'AI ikony & vizuály', icon: Sparkles },
   { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
   { id: 'reference-analytics', label: 'Analýza realizací', icon: BarChart3 },
   { id: 'references', label: 'Reference', icon: ImageIcon },
@@ -130,6 +132,7 @@ export default function Admin() {
     tasks: AdminTasks,
     products: AdminProducts,
     'ai-optimalizace': ProduktovyOptimalizatorChat,
+    'brand-visuals': BrandIconStudio,
     'product-analytics': AdminProductAnalytics,
     'reference-analytics': AdminReferenceAnalytics,
     references: AdminReferences,

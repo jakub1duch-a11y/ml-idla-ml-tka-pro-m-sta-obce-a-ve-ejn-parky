@@ -6,6 +6,7 @@ import {
   useScroll,
   useReducedMotion,
   useMotionValueEvent,
+  useTransform,
 } from 'framer-motion';
 import { ArrowRight, PlayCircle, Building2, Trees, Wifi } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
@@ -57,6 +58,13 @@ export default function HomeHero() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
+
+  // Astra/Scrollcraft principle: keep copy, product imagery and ambient background
+  // on distinct depth planes moving at slightly different speeds.
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '7%']);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1.03, 1.1]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-5%']);
+  const panelY = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);
 
   useEffect(() => {
     if (reduceMotion || typeof window === 'undefined') return undefined;
@@ -115,14 +123,17 @@ export default function HomeHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[300vh] bg-secondary text-secondary-foreground"
+      className="relative min-h-[220vh] bg-secondary text-secondary-foreground lg:min-h-[300vh]"
       aria-label="HolmTec městské ochlazování"
     >
       <div className="sticky top-0 h-[100svh] min-h-[680px] overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(21,56,99,.55)_0%,transparent_60%)]" />
         <HeroMistDots />
 
-        <div className="absolute inset-0">
+        <motion.div
+          className="absolute -inset-y-[7%] inset-x-0 will-change-transform"
+          style={reduceMotion ? undefined : { y: backgroundY, scale: backgroundScale }}
+        >
           <img
             src={VIDEO_ASSETS.heroCityPromo.poster}
             alt="Mlžné zóny HolmTec pro ochlazování městského prostoru"
@@ -166,7 +177,7 @@ export default function HomeHero() {
 
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.18)_0%,rgba(10,22,40,.22)_40%,rgba(10,22,40,.88)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,21,37,.88)_0%,rgba(9,21,37,.58)_34%,rgba(9,21,37,.10)_62%,rgba(9,21,37,.20)_100%)]" />
-        </div>
+        </motion.div>
 
         <div className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-[1400px] px-5 pt-5 sm:px-8 lg:px-12">
           <div className="h-1 w-full overflow-hidden rounded-full bg-white/15">
@@ -177,7 +188,10 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="relative z-20 mx-auto flex h-full w-full max-w-[1500px] items-center px-5 sm:px-8 lg:px-12 xl:px-20">
+        <motion.div
+          className="relative z-20 mx-auto flex h-full w-full max-w-[1500px] items-center px-5 sm:px-8 lg:px-12 xl:px-20"
+          style={reduceMotion ? undefined : { y: contentY }}
+        >
           <div className="grid w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div className="max-w-2xl self-center pt-24 sm:pt-28">
               <AnimatePresence mode="wait">
@@ -224,10 +238,13 @@ export default function HomeHero() {
               </div>
             </div>
 
-            <div className="hidden lg:flex lg:justify-end lg:pb-14">
+            <motion.div
+              className="hidden lg:flex lg:justify-end lg:pb-14"
+              style={reduceMotion ? undefined : { y: panelY }}
+            >
               <div className="w-full max-w-md rounded-3xl border border-white/[0.12] bg-white/[0.08] p-5 text-white backdrop-blur-xl">
                 <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">
-                  Hero animace
+                  MLŽIDLA v prostoru
                 </p>
                 <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-.03em]">
                   Profesionální osvěžení a městské ochlazování
@@ -245,9 +262,9 @@ export default function HomeHero() {
                   Zobrazit produkty
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-5 sm:px-8 sm:pb-8 lg:px-12 lg:pb-10">
           <div className="mx-auto flex max-w-[1400px] flex-col gap-3 border border-white/[0.12] bg-secondary/[0.55] p-4 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between sm:p-5">

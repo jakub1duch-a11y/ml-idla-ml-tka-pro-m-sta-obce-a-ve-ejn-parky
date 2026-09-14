@@ -199,6 +199,9 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
         <textarea value={form.faq_text || ''} onChange={(e) => setForm(f => ({ ...f, faq_text: e.target.value }))} rows={4}
           placeholder={'FAQ pro AEO — jeden řádek = Otázka | Odpověď\nNapř. Jaká je spotřeba vody? | Podle konfigurace produktu...'}
           className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-y" />
+        <textarea value={form.related_links_text || ''} onChange={(e) => setForm(f => ({ ...f, related_links_text: e.target.value }))} rows={3}
+          placeholder={'Vlastní interní odkazy — jeden řádek = Název | /cesta | volitelný popis\nNapř. Chytré ovládání | /smart-ovladani | Automatické řízení mlžení'}
+          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-y" />
       </div>
 
       <div>
@@ -223,6 +226,52 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
           className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
       </div>
 
+      <div className="rounded-xl border border-white/10 bg-white/[.025] p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-mono text-white/50 tracking-widest uppercase">Fotografie a vizualizace v článku</p>
+            <p className="mt-1 text-xs leading-5 text-white/35">Pro kvalitní detail článku používejte ideálně 2–4 doprovodné vizuály. U produktů musí být zachována přesná geometrie podle reference.</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-xs text-white/70 transition hover:bg-white/5">
+              {uploadingContent ? <Loader size={13} className="animate-spin" /> : <Upload size={13} />}
+              Nahrát obrázky
+              <input type="file" accept="image/*" multiple className="hidden" onChange={handleContentUpload} />
+            </label>
+            <button type="button" onClick={generateContentVisuals} disabled={generatingVisuals || !form.title}
+              className="inline-flex items-center gap-2 rounded-full border border-cyan/25 bg-cyan/[.06] px-3 py-2 text-xs font-semibold text-cyan disabled:opacity-40">
+              {generatingVisuals ? <Loader size={13} className="animate-spin" /> : <Sparkles size={13} />}
+              Vygenerovat 3 vizualizace
+            </button>
+          </div>
+        </div>
+        {visualError && <p className="mt-3 text-xs text-rose-300">{visualError}</p>}
+        {(form.content_images || []).length > 0 ? (
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {(form.content_images || []).map((item, index) => (
+              <div key={`${item.url}-${index}`} className="overflow-hidden rounded-xl border border-white/10 bg-black/10">
+                <div className="relative aspect-[16/10] bg-white/5">
+                  {item.url ? <img src={item.url} alt={item.alt || ''} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-white/20"><ImageIcon size={24} /></div>}
+                  <button type="button" onClick={() => removeContentImage(index)} className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white/80 hover:text-white" aria-label="Odstranit obrázek"><X size={13} /></button>
+                </div>
+                <div className="space-y-2 p-3">
+                  <select value={item.kind || 'visualization'} onChange={(e) => updateContentImage(index, { kind: e.target.value })}
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white focus:outline-none">
+                    <option value="photo" className="bg-ink">Fotografie</option>
+                    <option value="visualization" className="bg-ink">Vizualizace</option>
+                    <option value="diagram" className="bg-ink">Schéma / diagram</option>
+                  </select>
+                  <input value={item.alt || ''} onChange={(e) => updateContentImage(index, { alt: e.target.value })} placeholder="ALT text *"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-white/25 focus:outline-none" />
+                  <input value={item.caption || ''} onChange={(e) => updateContentImage(index, { caption: e.target.value })} placeholder="Popisek obrázku"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-white/25 focus:outline-none" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : <p className="mt-4 text-xs text-white/25">Zatím nejsou přidané žádné doprovodné vizuály.</p>}
+      </div>
+
       <div>
         <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Obsah článku — vkládejte nadpisy a obrázky přímo do textu</p>
         <div className="bg-white rounded-xl overflow-hidden">
@@ -230,13 +279,6 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
             onChange={(html) => setForm(f => ({ ...f, content: html }))}
             modules={modules} className="text-slate-900" />
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input value={form.cta_label || ''} onChange={(e) => setForm(f => ({ ...f, cta_label: e.target.value }))}
-          placeholder="Text prodejní CTA (např. Nezávazná kalkulace realizace)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
-        <input value={form.cta_link || ''} onChange={(e) => setForm(f => ({ ...f, cta_link: e.target.value }))}
-          placeholder="Odkaz CTA (např. /poptavka)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
       </div>
 
       <label className="flex items-center gap-2 text-sm text-white/60">

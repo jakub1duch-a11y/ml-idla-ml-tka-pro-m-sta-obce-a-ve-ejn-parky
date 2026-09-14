@@ -324,20 +324,72 @@ export function getProductSEO(product, reviewStats) {
   };
 }
 
+function stripArticleText(value = '') {
+  return String(value)
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[[^\]]+\]\([^)]*\)/g, (match) => match.replace(/^\[|\]\([^)]*\)$/g, ''))
+    .replace(/[#*_>`|\-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export function getBlogFaqItems(post) {
+  const explicit = Array.isArray(post?.faq_items)
+    ? post.faq_items.filter((item) => item?.question && item?.answer)
+    : [];
+  if (explicit.length) return explicit;
+
+  const summary = String(post?.perex || '').trim() || stripArticleText(post?.content || '').slice(0, 320);
+  const title = String(post?.title || 'tématu článku').trim();
+  const followUpByCategory = {
+    novinky: {
+      question: 'Kde najdu související produkty nebo další novinky?',
+      answer: 'Navazující odkazy a související produkty jsou uvedené pod článkem. Další aktuality najdete v sekci Blog a novinky.',
+    },
+    technika: {
+      question: 'Kde najdu další technické informace k tématu?',
+      answer: 'Navazující technické stránky a související produkty jsou uvedené pod článkem podle jeho tématu.',
+    },
+    realizace: {
+      question: 'Kde najdu další realizace a související projekty?',
+      answer: 'Další realizace najdete v sekci Reference; související odkazy k tomuto projektu jsou uvedené také pod článkem.',
+    },
+    inspirace: {
+      question: 'Kde najdu další inspiraci pro podobný prostor?',
+      answer: 'Další inspiraci najdete v blogu, referencích a v tematických odkazech uvedených pod článkem.',
+    },
+  };
+  return [
+    {
+      question: `Co je hlavním tématem článku „${title}“?`,
+      answer: summary || `Článek shrnuje hlavní souvislosti tématu „${title}“ a navazující možnosti řešení.`,
+    },
+    followUpByCategory[post?.category] || {
+      question: 'Kde najdu další související informace?',
+      answer: 'Navazující obsah, produkty a další relevantní stránky jsou uvedené v odkazech pod článkem.',
+    },
+  ];
+}
+
 export function getBlogPostSEO(post) {
   const canonicalPath = `/blog/${post.slug || post.id}`;
   const description = post.seo_description || post.perex;
-  const faqItems = Array.isArray(post.faq_items)
-    ? post.faq_items.filter((item) => item?.question && item?.answer)
+  const faqItems = getBlogFaqItems(post);
+  const contentImages = Array.isArray(post.content_images)
+    ? post.content_images.filter((item) => item?.url).map((item) => item.url)
     : [];
+  const images = [post.image_url, ...contentImages].filter(Boolean);
   const article = {
-    '@type': 'BlogPosting',
+    '@type': post.category === 'novinky' ? 'NewsArticle' : 'BlogPosting',
     '@id': `${BASE_URL}${canonicalPath}#article`,
     headline: post.seo_title || post.title,
     description,
-    image: post.image_url ? [post.image_url] : undefined,
+    image: images.length ? images : undefined,
     datePublished: post.published_date,
+    dateModified: post.updated_date || post.published_date,
     mainEntityOfPage: `${BASE_URL}${canonicalPath}`,
+    inLanguage: 'cs-CZ',
     author: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },
     publisher: { '@type': 'Organization', name: 'MLŽIDLA.cz', url: BASE_URL },
     ...(post.location_context ? { contentLocation: { '@type': 'Place', name: post.location_context } } : {}),

@@ -8,6 +8,7 @@ import {
 const CLIENTS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1EvZ7JRpOHQoBZRG-ZJhC_x8fxm2_D8aj4pfZTv7iEto/edit';
 import { base44 } from '@/api/base44Client';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
+import TeamThread from '@/components/admin/team/TeamThread';
 
 const BUCKETS = {
   nove: { label: 'Nové', color: 'text-cyan border-cyan/30 bg-cyan/10', icon: AlertCircle, match: (s) => s === 'nova' || s === 'new' },
@@ -493,6 +494,11 @@ export default function AdminPoptavky() {
                             className="ml-auto inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-cyan text-ink hover:bg-cyan/90 transition-all">
                             Odpovědět <ArrowRight size={11} />
                           </a>
+                        </div>
+
+                        <div className="rounded-lg border border-white/8 bg-black/10 p-3">
+                          <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-white/30">Interní komentáře k poptávce</p>
+                          <TeamThread channel={`inquiry:${item.id}`} placeholder="Interní poznámka pro tým (klient ji nevidí)…" compact />
                         </div>
                       </div>
                     )}

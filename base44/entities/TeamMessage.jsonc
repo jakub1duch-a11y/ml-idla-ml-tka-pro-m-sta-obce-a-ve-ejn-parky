@@ -1,0 +1,47 @@
+{
+  "name": "TeamMessage",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "description": "Kan\u00e1l chatu (general, sales, production, marketing) nebo vl\u00e1kno objektu ve tvaru inquiry:<id>"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 4000
+    }
+  },
+  "required": [
+    "channel",
+    "author_email",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

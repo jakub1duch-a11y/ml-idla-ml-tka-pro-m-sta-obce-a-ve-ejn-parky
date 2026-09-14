@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare } from 'lucide-react';
+import AdminTeamChat from './AdminTeamChat';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
+import InstallAppButton from '@/components/admin/team/InstallAppButton';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
@@ -28,6 +31,7 @@ import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimaliza
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
   { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
+  { id: 'chat', label: 'Týmový chat', icon: MessagesSquare },
   { id: 'development', label: 'Vývoj systému', icon: Activity },
   { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
@@ -120,6 +124,7 @@ export default function Admin() {
   const ActiveComponent = {
     dashboard: AdminDashboard,
     terminal: AdminTerminal,
+    chat: AdminTeamChat,
     development: AdminSystemDevelopment,
     tasks: AdminTasks,
     products: AdminProducts,
@@ -141,9 +146,10 @@ export default function Admin() {
   }[activeTab];
 
   return (
-    <div className="min-h-screen bg-ink flex">
+    <div className="min-h-screen bg-ink flex flex-col md:flex-row">
+      <AdminMobileNav tabs={TABS} activeTab={activeTab} onChange={changeTab} />
       {/* Sidebar */}
-      <div className="w-56 bg-[#0d1117] border-r border-white/8 flex flex-col shrink-0">
+      <div className="hidden w-56 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
         <div className="px-5 py-6 border-b border-white/8">
           <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-1">Admin</p>
           <p className="text-white text-sm font-medium truncate">{user.full_name || user.email}</p>
@@ -162,6 +168,7 @@ export default function Admin() {
           })}
         </nav>
         <div className="p-3 border-t border-white/8 space-y-1">
+          <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />
           <button onClick={() => navigate('/obchodni-nabidky')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
             <BriefcaseBusiness size={16} /> Sales Hub
@@ -174,10 +181,13 @@ export default function Admin() {
       </div>
 
       {/* Main */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 min-w-0 overflow-auto">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
           <ActiveComponent />
         </motion.div>
+        <div className="p-4 md:hidden">
+          <InstallAppButton className="w-full flex items-center justify-center gap-2 rounded-xl border border-cyan/20 bg-cyan/10 px-3 py-3 text-sm text-cyan" />
+        </div>
       </div>
     </div>
   );

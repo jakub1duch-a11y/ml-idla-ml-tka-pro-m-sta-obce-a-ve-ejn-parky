@@ -6,6 +6,7 @@ import LocalizedFooter from './LocalizedFooter';
 import { getLocaleFromPath } from '@/lib/i18n';
 import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
+import ReturningVisitorEmailPopup from '@/components/common/ReturningVisitorEmailPopup';
 
 export default function SiteLayout() {
   const location = useLocation();
@@ -19,6 +20,7 @@ export default function SiteLayout() {
       </main>
       {locale === 'cs' ? <Footer /> : <LocalizedFooter locale={locale} />}
       {locale === 'cs' && <NotificationPrompt />}
+      {locale === 'cs' && <ReturningVisitorEmailPopup />}
       <CookieConsent locale={locale} />
     </div>
   );

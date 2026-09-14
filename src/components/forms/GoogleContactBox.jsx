@@ -35,7 +35,7 @@ export default function GoogleContactBox({ checked, onCheckedChange, onApply, co
     const signInWithGoogle = () => {
       const returnUrl = new URL(window.location.href);
       returnUrl.searchParams.set('google_contact', '1');
-      base44.auth.loginWithProvider('google', returnUrl.toString());
+      base44.auth.loginWithProvider('google', `${returnUrl.pathname}${returnUrl.search}${returnUrl.hash}`);
     };
     const continueManually = () => document.getElementById(contactFieldsId)?.querySelector('input')?.focus();
 

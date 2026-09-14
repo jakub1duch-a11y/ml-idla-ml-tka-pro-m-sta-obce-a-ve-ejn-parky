@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const sourceDir = join(rootDir, 'dist');
-const publishDir = join(rootDir, 'mlzidla');
+const publishDir = join(rootDir, 'src', 'mlzidla');
 
 if (!existsSync(sourceDir)) {
   throw new Error('[render-publish] dist directory does not exist after build.');
@@ -19,4 +19,4 @@ if (!existsSync(sourceDir)) {
 rmSync(publishDir, { recursive: true, force: true });
 cpSync(sourceDir, publishDir, { recursive: true });
 
-console.log('[render-publish] copied dist -> mlzidla for Render static-site publishing.');
+console.log('[render-publish] copied dist -> src/mlzidla for Render static-site publishing.');

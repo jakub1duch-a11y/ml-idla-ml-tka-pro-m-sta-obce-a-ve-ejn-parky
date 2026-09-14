@@ -712,7 +712,7 @@ export default function CustomerPortal() {
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
           </div>
           <nav className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
-            {[['#overview','Přehled'],['#contact-profile','Kontakt'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
+            {[['#overview','Přehled'],['#contact-profile','Kontakt'],['#email-preferences','Upozornění'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
           </nav>
         </header>
 
@@ -743,6 +743,78 @@ export default function CustomerPortal() {
               </div>
               {contactProfileMessage && <p className="sm:col-span-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">{contactProfileMessage}</p>}
               {error && <p className="sm:col-span-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700">{error}</p>}
+            </div>
+          </form>
+        </section>
+
+        <section id="email-preferences" className="mb-6 scroll-mt-28 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
+          <form onSubmit={saveEmailPreferences} className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[.72fr_1.28fr]">
+            <div>
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-800">
+                <BellRing size={20} />
+              </div>
+              <p className="mt-4 font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">E-mailová upozornění</p>
+              <h2 className="mt-2 text-xl font-semibold text-slate-950">Co vám můžeme posílat</h2>
+              <p className="mt-2 text-xs leading-5 text-slate-500">
+                Toto nastavení platí pro obchodní novinky a doporučení. Servisní zprávy přímo k vaší poptávce nebo nabídce zůstávají oddělené.
+              </p>
+            </div>
+
+            <div>
+              {!emailPreferencesReady ? (
+                <div className="flex min-h-40 items-center justify-center gap-2 text-xs text-slate-500">
+                  <Loader size={15} className="animate-spin" /> Načítám nastavení…
+                </div>
+              ) : (
+                <>
+                  <label className="flex cursor-pointer items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <span>
+                      <span className="block text-sm font-semibold text-slate-900">Chci dostávat e-mailová upozornění</span>
+                      <span className="mt-1 block text-[11px] leading-5 text-slate-500">Zapnutí je dobrovolné a můžete ho zde kdykoli zrušit.</span>
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={emailPreferences.enabled}
+                      onChange={(event) => {
+                        setEmailPreferences((current) => ({ ...current, enabled: event.target.checked }));
+                        setEmailPreferencesMessage('');
+                        setEmailPreferencesError('');
+                      }}
+                      className="mt-1 h-5 w-5 shrink-0 accent-cyan-700"
+                    />
+                  </label>
+
+                  <fieldset disabled={!emailPreferences.enabled || emailPreferencesBusy} className="mt-4 disabled:opacity-50">
+                    <legend className="text-xs font-semibold text-slate-700">Vyberte témata</legend>
+                    <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                      {EMAIL_TOPIC_OPTIONS.map((option) => (
+                        <label key={option.value} className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 p-3 transition hover:border-cyan-300">
+                          <input
+                            type="checkbox"
+                            checked={emailPreferences.topics.includes(option.value)}
+                            onChange={() => toggleEmailPreferenceTopic(option.value)}
+                            className="mt-0.5 h-4 w-4 shrink-0 accent-cyan-700"
+                          />
+                          <span>
+                            <span className="block text-xs font-semibold text-slate-900">{option.label}</span>
+                            <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">{option.description}</span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div aria-live="polite">
+                      {emailPreferencesMessage && <p className="text-xs font-semibold text-emerald-700">{emailPreferencesMessage}</p>}
+                      {emailPreferencesError && <p className="text-xs font-semibold text-rose-700">{emailPreferencesError}</p>}
+                    </div>
+                    <button type="submit" disabled={emailPreferencesBusy} className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-5 text-xs font-bold text-white disabled:opacity-50">
+                      {emailPreferencesBusy ? <><Loader size={14} className="animate-spin" /> Ukládám…</> : 'Uložit nastavení'}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </form>
         </section>

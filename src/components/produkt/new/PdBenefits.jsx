@@ -23,7 +23,7 @@ export default function PdBenefits({ product }) {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#153863]">// Proč {product.name}</p>
             <h2 className="mt-3 max-w-2xl font-heading text-3xl font-bold leading-[1.02] tracking-[-.02em] text-[#0A1628] sm:text-4xl lg:text-5xl">
-              Technologie, která dává smysl v prostoru.
+              Konstrukce připravená pro dlouhou životnost
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-6 text-[#5A6B78]">

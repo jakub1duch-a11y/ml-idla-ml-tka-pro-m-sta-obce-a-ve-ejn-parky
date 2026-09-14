@@ -63,6 +63,7 @@ import SmartOvladani from '@/pages/SmartOvladani';
 import PpcLanding from '@/pages/PpcLanding';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
+import RedesignSpoluprace from '@/pages/RedesignSpoluprace';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
@@ -184,6 +185,7 @@ const AuthenticatedApp = () => {
         <Route path="/ppc/chytry-ventil-automatizace" element={<PpcLanding variant="ventil" />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />
+        <Route path="/spoluprace" element={<RedesignSpoluprace />} />
         <Route path="/manualy" element={<Navigate to="/ke-stazeni" replace />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />

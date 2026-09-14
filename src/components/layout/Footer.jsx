@@ -59,8 +59,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6 pt-16 lg:px-8 lg:pt-20">
+    <footer className="relative overflow-hidden bg-[#071A2F] text-primary-foreground">
+      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-cyan/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-hydro/10 blur-3xl" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1500px] px-6 pt-16 lg:px-8 lg:pt-20">
         <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.15fr_2fr] lg:gap-16">
           <div className="max-w-md">
             <Link to="/" className="inline-flex" aria-label="MLŽIDLA.cz — domů">
@@ -163,10 +165,14 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-5 py-7 text-xs text-white/42 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+          <div className="max-w-3xl">
             <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
+            <p className="mt-1 text-white/36"><strong className="font-medium text-white/55">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
             <p className="mt-1 text-white/30">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
             <p className="mt-1 text-white/30"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white/60">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white/60">+420 774 700 390</a></p>
+            <p className="mt-3 max-w-2xl border-l border-cyan/35 pl-3 text-[11px] leading-5 text-white/34">
+              <strong className="font-medium text-white/52">Tvůrce / autor designu: Jakub Duch</strong> — web design, webové prezentace, e-shopy, terminály pro firemní správu a OpenAI agents.
+            </p>
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:items-end">

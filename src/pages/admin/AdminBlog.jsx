@@ -3,7 +3,7 @@ import { Plus, Loader, Pencil, Trash2, Eye, EyeOff, Copy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import BlogPostForm from '@/components/admin/BlogPostForm';
 
-const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', image_alt: '', seo_title: '', seo_description: '', location_context: '', faq_text: '', related_product_slugs: '', tags: '', published: false, cta_label: '', cta_link: '' };
+const EMPTY_FORM = { title: '', slug: '', category: '', audience: 'oboji', perex: '', content: '', image_url: '', image_alt: '', content_images: [], seo_title: '', seo_description: '', location_context: '', faq_text: '', related_product_slugs: '', related_links_text: '', tags: '', published: false };
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
@@ -26,11 +26,12 @@ export default function AdminBlog() {
       title: post.title || '', slug: post.slug || '', category: post.category || '',
       audience: post.audience || 'oboji',
       perex: post.perex || '', content: post.content || '', image_url: post.image_url || '', image_alt: post.image_alt || '',
+      content_images: Array.isArray(post.content_images) ? post.content_images : [],
       seo_title: post.seo_title || '', seo_description: post.seo_description || '', location_context: post.location_context || '',
       faq_text: (post.faq_items || []).map((item) => `${item.question} | ${item.answer}`).join('\n'),
       related_product_slugs: (post.related_product_slugs || []).join(', '),
+      related_links_text: (post.related_links || []).map((item) => `${item.label} | ${item.url}${item.description ? ` | ${item.description}` : ''}`).join('\n'),
       tags: (post.tags || []).join(', '), published: !!post.published,
-      cta_label: post.cta_label || '', cta_link: post.cta_link || '',
     });
     setEditing(post.id);
   };
@@ -41,10 +42,10 @@ export default function AdminBlog() {
       slug: `${post.slug || ''}-kopie-${Date.now()}`,
       category: post.category, audience: post.audience || 'oboji',
       perex: post.perex, content: post.content, image_url: post.image_url, image_alt: post.image_alt,
+      content_images: post.content_images || [],
       seo_title: post.seo_title, seo_description: post.seo_description, location_context: post.location_context,
-      faq_items: post.faq_items || [], related_product_slugs: post.related_product_slugs || [],
+      faq_items: post.faq_items || [], related_product_slugs: post.related_product_slugs || [], related_links: post.related_links || [],
       tags: post.tags || [], published: false,
-      cta_label: post.cta_label, cta_link: post.cta_link,
     });
     loadPosts();
   };
@@ -56,11 +57,29 @@ export default function AdminBlog() {
       return { question: (question || '').trim(), answer: answerParts.join('|').trim() };
     }).filter((item) => item.question && item.answer);
     const related_product_slugs = (form.related_product_slugs || '').split(',').map((slug) => slug.trim()).filter(Boolean);
-    const { faq_text, related_product_slugs: relatedProductSlugsInput, ...persistedForm } = form;
+    const related_links = (form.related_links_text || '').split('\n').map((line) => {
+      const [label, url, ...descriptionParts] = line.split('|');
+      return { label: (label || '').trim(), url: (url || '').trim(), description: descriptionParts.join('|').trim() };
+    }).filter((item) => item.label && item.url);
+    const fallbackFaq = faq_items.length ? faq_items : [
+      {
+        question: `Co je hlavním tématem článku „${form.title}“?`,
+        answer: (form.perex || '').trim() || `Článek shrnuje hlavní souvislosti tématu „${form.title}“ a navazující možnosti řešení.`,
+      },
+      {
+        question: form.category === 'novinky' ? 'Kde najdu související produkty nebo další novinky?' : 'Kde najdu další související informace?',
+        answer: form.category === 'novinky'
+          ? 'Navazující odkazy a související produkty jsou uvedené pod článkem. Další aktuality najdete v sekci Blog a novinky.'
+          : 'Navazující obsah, produkty a další relevantní stránky jsou uvedené v odkazech pod článkem.',
+      },
+    ];
+    const { faq_text, related_product_slugs: relatedProductSlugsInput, related_links_text: relatedLinksInput, ...persistedForm } = form;
     const payload = {
       ...persistedForm,
-      faq_items,
+      content_images: (form.content_images || []).filter((item) => item?.url && item?.alt),
+      faq_items: fallbackFaq,
       related_product_slugs,
+      related_links,
       tags: form.tags.split(',').map(t => t.trim()).filter(Boolean),
       published_date: form.published ? new Date().toISOString().slice(0, 10) : undefined,
     };

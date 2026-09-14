@@ -25,8 +25,12 @@ Deno.serve(async (req) => {
 
     const currentEmail = normalizeEmail(session.email);
     if (email !== currentEmail) {
-      const conflictingAccounts = await base44.asServiceRole.entities.PortalAccount.filter({ email }).catch(() => []);
-      if ((conflictingAccounts || []).some((account: any) => account.id)) {
+      const [conflictingAccounts, conflictingInquiries, conflictingProjects] = await Promise.all([
+        base44.asServiceRole.entities.PortalAccount.filter({ email }).catch(() => []),
+        base44.asServiceRole.entities.Poptavka.filter({ email }).catch(() => []),
+        base44.asServiceRole.entities.ProjectOrder.filter({ client_email: email }).catch(() => []),
+      ]);
+      if ([conflictingAccounts, conflictingInquiries, conflictingProjects].some((records) => (records || []).length > 0)) {
         return Response.json({ error: 'email_already_used' }, { status: 409 });
       }
     }

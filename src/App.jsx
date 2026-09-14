@@ -60,6 +60,7 @@ import ServisUdrzba from '@/pages/ServisUdrzba';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import Katalog from '@/pages/Katalog';
 import SmartOvladani from '@/pages/SmartOvladani';
+import ChytreReseniProProstor from '@/pages/ChytreReseniProProstor';
 import PpcLanding from '@/pages/PpcLanding';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
@@ -179,6 +180,7 @@ const AuthenticatedApp = () => {
         <Route path="/chytra-mlzidla" element={<Navigate to="/smart-ovladani" replace />} />
         <Route path="/katalog" element={<Katalog />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
+        <Route path="/chytre-reseni-pro-prostor" element={<ChytreReseniProProstor />} />
         <Route path="/ppc/mlzitka-pro-mesta-obce" element={<PpcLanding variant="mesta" />} />
         <Route path="/ppc/mlzitka-namesti-parky" element={<PpcLanding variant="parky" />} />
         <Route path="/ppc/chytra-mlzitka" element={<PpcLanding variant="smart" />} />

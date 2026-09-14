@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff, LayoutDashboard, BriefcaseBusiness, Users, Inbox } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff, LayoutDashboard, BriefcaseBusiness, Users, Inbox, BellRing } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { useAuth } from '@/lib/AuthContext';
+import { EMAIL_TOPIC_OPTIONS, sanitizeEmailTopics } from '@/lib/emailPreferences';
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
@@ -63,6 +64,11 @@ export default function CustomerPortal() {
   const [contactProfileReady, setContactProfileReady] = useState(false);
   const [contactProfileBusy, setContactProfileBusy] = useState(false);
   const [contactProfileMessage, setContactProfileMessage] = useState('');
+  const [emailPreferences, setEmailPreferences] = useState({ enabled: false, topics: [] });
+  const [emailPreferencesReady, setEmailPreferencesReady] = useState(false);
+  const [emailPreferencesBusy, setEmailPreferencesBusy] = useState(false);
+  const [emailPreferencesMessage, setEmailPreferencesMessage] = useState('');
+  const [emailPreferencesError, setEmailPreferencesError] = useState('');
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
   const isAdmin = appUser?.role === 'admin';
@@ -107,6 +113,32 @@ export default function CustomerPortal() {
     });
     setContactProfileReady(true);
   }, [step, projects, inquiries, email, contactProfileReady]);
+
+  useEffect(() => {
+    if (step !== 'dashboard' || !sessionToken || emailPreferencesReady) return;
+    let active = true;
+
+    base44.functions.invoke('saveEmailPreferences', {
+      action: 'get',
+      session_token: sessionToken,
+    }).then((response) => {
+      if (!active) return;
+      const result = response?.data || response || {};
+      setEmailPreferences({
+        enabled: Boolean(result.marketing_consent && result.status === 'active'),
+        topics: sanitizeEmailTopics(result.topics),
+      });
+      setEmailPreferencesReady(true);
+    }).catch(() => {
+      if (!active) return;
+      setEmailPreferencesError('Nastavení upozornění se nepodařilo načíst.');
+      setEmailPreferencesReady(true);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [emailPreferencesReady, sessionToken, step]);
 
   useEffect(() => {
     if (!isAdmin || step !== 'login') return;

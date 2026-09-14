@@ -5,6 +5,7 @@ import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, New
 import AdminTeamChat from './AdminTeamChat';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 import InstallAppButton from '@/components/admin/team/InstallAppButton';
+import AdminCallDock from '@/components/admin/team/AdminCallDock';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
@@ -189,6 +190,9 @@ export default function Admin() {
           <InstallAppButton className="w-full flex items-center justify-center gap-2 rounded-xl border border-cyan/20 bg-cyan/10 px-3 py-3 text-sm text-cyan" />
         </div>
       </div>
+      {activeTab !== 'chat' && (
+        <AdminCallDock user={user} contextLabel={TABS.find((t) => t.id === activeTab)?.label || 'Administrace'} />
+      )}
     </div>
   );
 }

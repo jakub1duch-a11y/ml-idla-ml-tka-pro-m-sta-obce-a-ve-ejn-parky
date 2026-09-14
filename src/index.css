@@ -72,7 +72,7 @@
     --brand-radius-md: 16px;
     --brand-radius-lg: 24px;
     --brand-radius-full: 999px;
-    --brand-radius: 0px;
+    --brand-radius: 16px;
     --brand-shadow-none: none;
     --brand-shadow-sm: 0px 1px 2px 0px rgba(10, 22, 40, 0.05);
     --brand-shadow-md: 0 4px 12px rgba(10,22,40,0.08);
@@ -203,8 +203,8 @@
 }
 
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #0A1628; }
-::-webkit-scrollbar-thumb { background: #1A85B0; border-radius: 2px; }
+::-webkit-scrollbar-track { background: #071A2F; }
+::-webkit-scrollbar-thumb { background: #00B7FF; border-radius: 999px; }
 
 /* Fade-in & Slide-up on scroll (GSAP ScrollTrigger) */
 .reveal-element {

@@ -104,10 +104,10 @@
   .pulselab-theme {
     --background: 216 33% 97%;
     --brand-white: 216 33% 97%;
-    --font-heading: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Manrope', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Inter', monospace;
     font-family: var(--font-body);
   }
 }

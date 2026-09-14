@@ -1,0 +1,6 @@
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://base44.com https://*.base44.com https://base44.app https://*.base44.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https: wss:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://scrimba.com https://base44.com https://*.base44.com https://base44.app https://*.base44.app; frame-ancestors 'self' https://base44.com https://*.base44.com https://base44.app https://*.base44.app; worker-src 'self' blob:; manifest-src 'self'; form-action 'self' https://base44.com https://*.base44.com https://base44.app https://*.base44.app; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(self), microphone=(self), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), autoplay=(self), clipboard-read=(self), clipboard-write=(self), display-capture=(self), fullscreen=(self), xr-spatial-tracking=(self)

@@ -10,6 +10,7 @@ import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdVariants from '@/components/produkt/new/PdVariants';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdWireframe from '@/components/produkt/new/PdWireframe';
+import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
 import PdSmartControl from '@/components/produkt/new/PdSmartControl';
 import PdTechSheet from '@/components/produkt/new/PdTechSheet';
 import PdDetail from '@/components/produkt/new/PdDetail';
@@ -81,6 +82,7 @@ export default function ProduktDetail() {
       <PdTeepeeRental product={product} />
       <PdSpecs product={product} />
       <PdWireframe product={product} />
+      <PdInstallationPrep product={product} />
       <PdTechSheet product={product} />
       <PdVariants product={product} />
       <PdSmartControl product={product} />

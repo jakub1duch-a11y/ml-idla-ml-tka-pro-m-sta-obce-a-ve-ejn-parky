@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Loader } from 'lucide-react';
+import { ArrowRight, Eye, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
@@ -29,15 +29,24 @@ function formatDate(dateStr) {
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
+  const [viewCounts, setViewCounts] = useState({});
   const [loading, setLoading] = useState(true);
   const [audience, setAudience] = useState('all');
   const [category, setCategory] = useState(() => new URLSearchParams(window.location.search).get('sekce') === 'videa' ? 'videa' : 'all');
 
   useEffect(() => {
     setSEO(SEO_PAGES.blog);
-    base44.entities.BlogPost.list('-published_date').
-    then((items) => setPosts((items || []).filter((p) => p.published))).
-    finally(() => setLoading(false));
+    Promise.all([
+      base44.entities.BlogPost.list('-published_date'),
+      base44.entities.BlogPostView.list('-viewed_date', 5000).catch(() => []),
+    ]).then(([items, views]) => {
+      setPosts((items || []).filter((p) => p.published));
+      const counts = (views || []).reduce((map, view) => {
+        if (view?.post_id) map[view.post_id] = (map[view.post_id] || 0) + 1;
+        return map;
+      }, {});
+      setViewCounts(counts);
+    }).finally(() => setLoading(false));
   }, []);
 
   const visible = posts.filter((p) => {
@@ -113,6 +122,7 @@ export default function Blog() {
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{CATEGORY_LABELS[featured.category] || featured.category || 'Článek'}</span>
                       {featured.published_date && <><span className="w-1 h-1 rounded-full bg-slate-200" /><span className="font-mono text-[hsl(var(--ring))] text-sm">{formatDate(featured.published_date)}</span></>}
+                      <span className="inline-flex items-center gap-1 text-xs font-mono text-slate-400"><Eye size={12} /> {(viewCounts[featured.id] || 0).toLocaleString('cs-CZ')} přečtení</span>
                     </div>
                     <h2 className="text-slate-900 tracking-tight mb-3 leading-snug group-hover:text-slate-600 transition-colors text-xl [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{featured.title}</h2>
                     <p className="text-slate-500 font-light leading-relaxed text-base">{featured.perex}</p>
@@ -142,7 +152,10 @@ export default function Blog() {
                           </div>
                           <h3 className="text-slate-900 leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">{post.title}</h3>
                         </div>
-                        {post.published_date && <p className="text-xs font-mono mt-2 text-[hsl(var(--ring))]">{formatDate(post.published_date)}</p>}
+                        <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-mono text-[hsl(var(--ring))]">
+                          {post.published_date && <span>{formatDate(post.published_date)}</span>}
+                          <span className="inline-flex items-center gap-1 text-slate-400"><Eye size={11} /> {(viewCounts[post.id] || 0).toLocaleString('cs-CZ')}</span>
+                        </div>
                       </div>
                     </Link>
                   </motion.div>
@@ -166,7 +179,10 @@ export default function Blog() {
                   <div className="p-6">
                     <span className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">{CATEGORY_LABELS[post.category] || post.category}</span>
                     <h3 className="text-slate-900 leading-snug group-hover:text-slate-600 transition-colors line-clamp-2 mb-2 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium text-xl">{post.title}</h3>
-                    {post.published_date && <p className="text-xs font-mono text-[hsl(var(--ring))]">{formatDate(post.published_date)}</p>}
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[hsl(var(--ring))]">
+                      {post.published_date && <span>{formatDate(post.published_date)}</span>}
+                      <span className="inline-flex items-center gap-1 text-slate-400"><Eye size={11} /> {(viewCounts[post.id] || 0).toLocaleString('cs-CZ')} přečtení</span>
+                    </div>
                   </div>
                 </Link>
               </motion.div>

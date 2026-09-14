@@ -64,7 +64,7 @@ export default function Footer() {
         <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.15fr_2fr] lg:gap-16">
           <div className="max-w-md">
             <Link to="/" className="inline-flex" aria-label="MLŽIDLA.cz — domů">
-              <Logo size="sm" />
+              <Logo size="lg" variant="full" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-6 text-white/62">
               Česká mlžítka a mlžné systémy pro města, architekturu a zahrady. Od návrhu a výroby po instalaci, řízení a servis.

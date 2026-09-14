@@ -656,6 +656,7 @@ export default function CustomerPortal() {
                 </button>
               </div>
               {contactProfileMessage && <p className="sm:col-span-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">{contactProfileMessage}</p>}
+              {error && <p className="sm:col-span-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700">{error}</p>}
             </div>
           </form>
         </section>

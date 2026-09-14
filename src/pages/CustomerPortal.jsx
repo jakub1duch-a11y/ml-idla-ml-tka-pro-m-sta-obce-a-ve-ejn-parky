@@ -475,6 +475,60 @@ export default function CustomerPortal() {
     }
   };
 
+  const toggleEmailPreferenceTopic = (topic) => {
+    setEmailPreferencesMessage('');
+    setEmailPreferencesError('');
+    setEmailPreferences((current) => ({
+      ...current,
+      topics: current.topics.includes(topic)
+        ? current.topics.filter((item) => item !== topic)
+        : [...current.topics, topic],
+    }));
+  };
+
+  const saveEmailPreferences = async (event) => {
+    event.preventDefault();
+    if (!sessionToken) return;
+    if (emailPreferences.enabled && emailPreferences.topics.length === 0) {
+      setEmailPreferencesError('Vyberte alespoň jedno téma, nebo upozornění vypněte.');
+      return;
+    }
+
+    setEmailPreferencesBusy(true);
+    setEmailPreferencesMessage('');
+    setEmailPreferencesError('');
+    try {
+      const response = await base44.functions.invoke('saveEmailPreferences', {
+        action: 'save',
+        session_token: sessionToken,
+        marketing_consent: emailPreferences.enabled,
+        topics: emailPreferences.topics,
+        source: 'customer_portal_preferences',
+      });
+      const result = response?.data || response || {};
+      if (!result.ok) throw new Error(result.error || 'save_failed');
+      setEmailPreferences({
+        enabled: result.status === 'active',
+        topics: sanitizeEmailTopics(result.topics),
+      });
+      if (result.status === 'active') {
+        localStorage.setItem('mz_email_prompt_subscribed_v1', String(Date.now() + 365 * 24 * 60 * 60 * 1000));
+        setEmailPreferencesMessage('Výběr e-mailových upozornění byl uložen.');
+      } else {
+        localStorage.removeItem('mz_email_prompt_subscribed_v1');
+        localStorage.setItem('mz_email_prompt_dismissed_until_v1', String(Date.now() + 30 * 24 * 60 * 60 * 1000));
+        setEmailPreferencesMessage('E-mailová upozornění byla vypnuta.');
+      }
+    } catch (preferenceError) {
+      const code = getFunctionErrorCode(preferenceError);
+      setEmailPreferencesError(code === 'session_expired'
+        ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
+        : 'Nastavení upozornění se nepodařilo uložit.');
+    } finally {
+      setEmailPreferencesBusy(false);
+    }
+  };
+
   const generateShareUrl = (token) => {
     const url = `${window.location.origin}/project/${token}`;
     setShareUrl(url);

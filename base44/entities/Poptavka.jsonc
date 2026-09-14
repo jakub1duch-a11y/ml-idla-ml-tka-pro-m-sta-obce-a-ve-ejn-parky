@@ -27,6 +27,52 @@
       "description": "Firma / organizace",
       "type": "string"
     },
+    "contact_source": {
+      "default": "manual",
+      "description": "Zdroj kontaktn\u00edch \u00fadaj\u016f",
+      "enum": [
+        "manual",
+        "google_account"
+      ],
+      "type": "string"
+    },
+    "use_google_contact": {
+      "default": false,
+      "description": "U\u017eivatel zvolil p\u0159edvypln\u011bn\u00ed kontaktu z Google \u00fa\u010dtu",
+      "type": "boolean"
+    },
+    "google_contact_email": {
+      "description": "Serverem ov\u011b\u0159en\u00fd e-mail p\u0159ihl\u00e1\u0161en\u00e9ho Google \u00fa\u010dtu",
+      "type": "string"
+    },
+    "google_contact_name": {
+      "description": "Jm\u00e9no z p\u0159ihl\u00e1\u0161en\u00e9ho Google \u00fa\u010dtu",
+      "type": "string"
+    },
+    "google_profile_image_url": {
+      "description": "Profilov\u00fd obr\u00e1zek p\u0159ihl\u00e1\u0161en\u00e9ho Google \u00fa\u010dtu",
+      "type": "string"
+    },
+    "contact_confirmed_by_user": {
+      "default": false,
+      "description": "U\u017eivatel potvrdil spr\u00e1vnost fin\u00e1ln\u00edch kontaktn\u00edch \u00fadaj\u016f",
+      "type": "boolean"
+    },
+    "contact_confirmed_at": {
+      "description": "Datum potvrzen\u00ed kontaktn\u00edch \u00fadaj\u016f",
+      "format": "date-time",
+      "type": "string"
+    },
+    "privacy_contact_consent": {
+      "default": false,
+      "description": "Souhlas se zpracov\u00e1n\u00edm kontaktu pro popt\u00e1vku a nab\u00eddku",
+      "type": "boolean"
+    },
+    "privacy_contact_consent_at": {
+      "description": "Datum souhlasu se zpracov\u00e1n\u00edm kontaktn\u00edch \u00fadaj\u016f",
+      "format": "date-time",
+      "type": "string"
+    },
     "installation_location": {
       "description": "M\u011bsto nebo p\u0159esn\u00e9 m\u00edsto instalace",
       "type": "string"

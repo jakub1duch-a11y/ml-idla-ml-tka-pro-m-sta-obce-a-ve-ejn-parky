@@ -114,6 +114,12 @@ export default function ONas() {
                 <a href={`tel:${COMPANY.phone.replace(/\s/g, '')}`} className="hover:text-[#0B5EA8]">{COMPANY.phone}</a>
               </div>
             </div>
+
+            <div className="mt-9 rounded-2xl border border-[#D6EAF3] bg-[#F5FAFD] p-5">
+              <p className="font-mono text-[10px] uppercase tracking-[.16em] text-[#0878E8]">Web a digitální prezentace</p>
+              <p className="mt-3 text-sm font-semibold text-[#071A2F]">Provozovatel webu: HolmTec s.r.o. · MLŽIDLA.cz</p>
+              <p className="mt-2 text-sm leading-6 text-[#071A2F]/65"><strong className="font-semibold text-[#071A2F]/80">Tvůrce / autor designu: Jakub Duch</strong> — web design, webové prezentace, e-shopy, terminály pro firemní správu a OpenAI agents.</p>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <img src={IMAGES.logo} alt="Logo na nerezovém produktu" className="aspect-square w-full object-cover" />

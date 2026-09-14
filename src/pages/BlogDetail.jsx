@@ -322,21 +322,6 @@ export default function BlogDetail() {
         {/* Comments */}
         <BlogCommentsSection postId={post.id} />
 
-        {/* FAQ uzavírá obsahovou část každého článku i novinky. */}
-        {faqItems.length > 0 && (
-          <section id="faq" className="mx-auto my-12 max-w-4xl border-t border-slate-200 pt-10" aria-labelledby="article-faq-heading">
-            <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#0B6B7A]">FAQ · stručné odpovědi</p>
-            <h2 id="article-faq-heading" className="mt-2 font-heading text-2xl text-slate-900 sm:text-3xl">Časté otázky k tématu</h2>
-            <div className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
-              {faqItems.map((item, index) => (
-                <details key={`${item.question}-${index}`} className="py-5">
-                  <summary className="cursor-pointer list-none pr-6 font-semibold text-slate-900">{item.question}</summary>
-                  <p className="mt-3 leading-7 text-slate-600">{item.answer}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-        )}
       </div>
 
       {/* Related */}
@@ -392,6 +377,24 @@ export default function BlogDetail() {
 
       {/* Instagram follow section */}
       <InstagramFeedSection />
+
+      {/* FAQ je poslední obsahová sekce detailu článku / novinky. */}
+      {faqItems.length > 0 && (
+        <section id="faq" className="border-t border-slate-200 bg-white py-14 sm:py-16" aria-labelledby="article-faq-heading">
+          <div className="mx-auto max-w-4xl px-6 lg:px-8">
+            <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#0B6B7A]">FAQ · stručné odpovědi</p>
+            <h2 id="article-faq-heading" className="mt-2 font-heading text-2xl text-slate-900 sm:text-3xl">Časté otázky k tématu</h2>
+            <div className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
+              {faqItems.map((item, index) => (
+                <details key={`${item.question}-${index}`} className="py-5">
+                  <summary className="cursor-pointer list-none pr-6 font-semibold text-slate-900">{item.question}</summary>
+                  <p className="mt-3 leading-7 text-slate-600">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <LeadMagnetPopup />
     </div>

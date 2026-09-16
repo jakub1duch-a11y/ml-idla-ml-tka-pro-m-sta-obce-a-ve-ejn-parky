@@ -6,6 +6,8 @@ import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
+const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
+const isLineaProduct = (product) => product?.slug === 'linea-mlzitko' || /(?:^|\s)LINEA(?:®|\s|$)/i.test(product?.name || '');
 const DRIVE_FILE_RE = /drive\.google\.com\/file\/d\/([^/?#]+)/i;
 const TECHNICAL_MEDIA_RE = /(1000008748|technick|schema|schéma|edraw|vykres|výkres|montaz|montáž|instalac)/i;
 const GARDEN_TEST_RE = /(1000008852|1000008768)/i;
@@ -68,7 +70,7 @@ function MediaCard({ item, onOpen }) {
         ) : (
           <img src={item.url} alt={item.alt || item.title || 'MLŽIDLA'} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
         )}
-        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/22 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,20,31,.34)_0%,rgba(4,20,31,0)_42%,rgba(10,35,66,.48)_100%)] transition-opacity duration-500 group-hover:opacity-80" />
         {video && <span className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/92 text-[#0A2342] shadow-lg"><Play size={16} fill="currentColor" /></span>}
         {item.badge && <span className="absolute right-4 top-4 rounded-full border border-white/35 bg-black/28 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">{item.badge}</span>}
       </div>
@@ -128,8 +130,9 @@ export default function PdMediaGallery({ product }) {
       r.project_sheet_url && { type: 'image', url: r.project_sheet_url, title: `${r.name || product.name} — projektový návrh`, meta: r.location, badge: 'Návrh' },
     ]));
 
+    const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
     const videos = clean([
-      product.video_url && { type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} v akci`, badge: 'Video' },
+      resolvedProductVideo && { type: 'video', url: resolvedProductVideo, poster: product.image_url, title: `${product.name} — ochlazení v městském prostoru`, badge: 'Hero video' },
       ...(product.gallery_urls || []).filter(isVideo).map((url, i) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} — video ${i + 1}`, badge: 'Video' })),
       ...realizations.filter((r) => r.video_url).map((r) => ({ type: 'video', url: r.video_url, poster: r.image_url, title: `${r.name || product.name} — video`, meta: r.location, badge: 'Realizace' })),
     ]);

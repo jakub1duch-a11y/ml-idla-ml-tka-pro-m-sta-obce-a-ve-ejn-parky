@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
+import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
@@ -27,6 +28,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
+      <V3EditorialBridge />
       <ReferencesStrip />
       <ProKohoSection />
       <MistInOperation />

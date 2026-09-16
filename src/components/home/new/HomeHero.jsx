@@ -8,7 +8,7 @@ import {
   useMotionValueEvent,
   useTransform,
 } from 'framer-motion';
-import { ArrowRight, PlayCircle, Building2, Trees, Wifi } from 'lucide-react';
+import { ArrowRight, Building2, Trees, Wifi, Sparkles } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 import HeroMistDots from '@/components/home/new/HeroMistDots';
 
@@ -20,9 +20,9 @@ const TRUST = [
 
 const STEPS = [
   {
-    kicker: 'Městské ochlazování',
-    title: 'Město, které dýchá.',
-    body: 'Profesionální mlžné zóny HolmTec pro náměstí, promenády a veřejný prostor. Jemné osvěžení, které zlepšuje pobyt venku během horkých dnů.',
+    kicker: 'MLŽIDLA® · Urban cooling',
+    title: 'Ochlazení, které patří do architektury.',
+    body: 'Nerezová mlžítka a mlžné brány pro města, parky, promenády, areály i zahrady. Navrhujeme je jako součást prostoru — funkční, odolné a vizuálně čisté.',
   },
   {
     kicker: 'Architektonické řešení',
@@ -250,16 +250,23 @@ export default function HomeHero() {
                   Profesionální osvěžení a městské ochlazování
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/70">
-                  Scroll řídí průběh scény, přes video se vrství text, benefity a CTA.
-                  Výsledkem je klidný, prémiový a srozumitelný úvod do značky HolmTec.
+                  Od prvního návrhu přes výrobu až po instalaci a smart řízení. Každý projekt stavíme kolem skutečného prostoru, reálného provozu a věrné geometrie produktu.
                 </p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-medium text-white/80">
+                    <Sparkles size={14} className="text-accent" /> český návrh a výroba
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-medium text-white/80">
+                    veřejný prostor · rezidence
+                  </span>
+                </div>
 
                 <Link
                   to="/mlzidla-mlzitka"
                   className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white"
                 >
-                  <PlayCircle size={18} />
-                  Zobrazit produkty
+                  Zobrazit produkty <ArrowRight size={16} />
                 </Link>
               </div>
             </motion.div>

@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
-import { publishInstagramImage } from '../../shared/instagram.ts';
+import { publishInstagramImage, publishInstagramVideo } from '../../shared/instagram.ts';
 
 export default async function(req) {
   try {
@@ -12,11 +12,13 @@ export default async function(req) {
     if (!confirmed) return Response.json({ error: 'Publikace vyžaduje výslovné potvrzení administrátora.' }, { status: 400 });
     const post = await base44.asServiceRole.entities.MarketingPost.get(postId);
     if (!post) return Response.json({ error: 'Příspěvek nenalezen' }, { status: 404 });
-    if (!post.image_url) return Response.json({ error: 'Příspěvek musí mít obrázek' }, { status: 400 });
+    if (!post.image_url && !post.video_url) return Response.json({ error: 'Příspěvek musí mít obrázek nebo video' }, { status: 400 });
     if (post.status === 'published') return Response.json({ success: true, alreadyPublished: true });
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
-    const published = await publishInstagramImage(accessToken, post.image_url, post.caption || '');
-    await base44.asServiceRole.entities.MarketingPost.update(postId, { status: 'published' });
+    const published = post.video_url
+      ? await publishInstagramVideo(accessToken, post.video_url, post.caption || '')
+      : await publishInstagramImage(accessToken, post.image_url, post.caption || '');
+    await base44.asServiceRole.entities.MarketingPost.update(postId, { status: 'published', published_at: new Date().toISOString(), publish_error: '' });
     return Response.json({ success: true, media_id: published.id });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

@@ -12,6 +12,7 @@ import GlobalPhotoWatermark from '@/components/GlobalPhotoWatermark';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
 import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
+import MestskeOchlazovani from '@/pages/MestskeOchlazovani';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
@@ -158,6 +159,7 @@ const AuthenticatedApp = () => {
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
+        <Route path="/mestske-ochlazovani-verejneho-prostoru" element={<MestskeOchlazovani />} />
         <Route path="/mlzitka-pro-mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/mesta-obce" element={<Navigate to="/mlzitka-pro-mesta-obce" replace />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />

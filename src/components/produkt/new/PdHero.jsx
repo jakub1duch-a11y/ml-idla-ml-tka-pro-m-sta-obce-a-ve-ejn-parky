@@ -24,6 +24,9 @@ function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
 }
 
+const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
+const isLineaProduct = (product) => product?.slug === 'linea-mlzitko' || /(?:^|\s)LINEA(?:®|\s|$)/i.test(product?.name || '');
+
 export default function PdHero({ product }) {
   const [lightbox, setLightbox] = useState(null);
   const [active, setActive] = useState(0);
@@ -36,8 +39,9 @@ export default function PdHero({ product }) {
   const heroProductIsPhoto = Boolean(heroProduct && /\.(jpe?g|webp)(\?|#|$)/i.test(heroProduct));
 
   const media = useMemo(() => {
-    const ownVideo = product.video_url && isVideo(product.video_url)
-      ? [{ type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} – video` }]
+    const resolvedVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
+    const ownVideo = resolvedVideo && isVideo(resolvedVideo)
+      ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení městského prostoru` }]
       : [];
     const items = [
       // BENDY: hero startuje reálným videem výrobku, ne statickou fotografií
@@ -188,8 +192,9 @@ export default function PdHero({ product }) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Mobile gradient for readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-transparent to-transparent lg:hidden" />
+          {/* Lokální gradienty drží čitelnost a propojují video s textovou vrstvou. */}
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.08)_0%,rgba(10,22,40,.02)_45%,rgba(10,22,40,.88)_100%)] lg:hidden" />
+          <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(10,22,40,.78)_0%,rgba(10,22,40,.18)_20%,rgba(10,22,40,0)_54%,rgba(34,211,238,.08)_100%)] lg:block" />
 
           {/* Samostatná přední vrstva jemné mlhy */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-[-12%] bottom-[-12%] z-[3] h-[34%] opacity-55 blur-2xl" style={{ background: 'radial-gradient(ellipse at 28% 70%, rgba(255,255,255,.72), transparent 42%), radial-gradient(ellipse at 72% 58%, rgba(155,232,242,.6), transparent 38%)' }} />

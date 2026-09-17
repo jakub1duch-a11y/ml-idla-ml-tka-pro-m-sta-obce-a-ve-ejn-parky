@@ -4,3 +4,69 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(self), microphone=(self), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), autoplay=(self), clipboard-read=(self), clipboard-write=(self), display-capture=(self), fullscreen=(self), xr-spatial-tracking=(self)
+
+/admin*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/admin-login
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/admin-logout
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/admin-forgot-password
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/obchodni-nabidky
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/muj-projekt
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/login
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/register
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/forgot-password
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/reset-password
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/oauth/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/api/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/search-analytics
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/dekujeme
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/prezentace/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.pdf
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.doc
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.docx
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.xls
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.xlsx
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.ppt
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
+/*.pptx
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet

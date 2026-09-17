@@ -15,5 +15,6 @@
     "Nikdy nezobrazuj SUPLA token v odpov\u011bdi ani v logu.",
     "Pokud nen\u00ed nastaven SUPLA_API_TOKEN, vra\u0165 jasn\u00fd n\u00e1vod k dopln\u011bn\u00ed tajn\u00e9 prom\u011bnn\u00e9.",
     "MCP rozhran\u00ed poskytuj p\u0159es tools/list a tools/call; neprov\u00e1d\u011bj automatick\u00e9 pl\u00e1novan\u00e9 sp\u00edn\u00e1n\u00ed."
-  ]
+  ],
+  "allow_anonymous_access": false
 }

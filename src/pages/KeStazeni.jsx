@@ -156,14 +156,10 @@ export default function KeStazeni() {
                       <p className="text-slate-400 text-xs font-light truncate">{product.short_description}</p>
                     )}
                   </div>
-                  <button onClick={() => generatePDF(product)} disabled={generatingId === product.id}
-                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-mono rounded-full hover:bg-slate-100 transition-all disabled:opacity-50">
-                    {generatingId === product.id ? (
-                      <><Loader size={12} className="animate-spin" /> Generuji…</>
-                    ) : (
-                      <><Download size={12} /> Vyžádat</>
-                    )}
-                  </button>
+                  <a href={`mailto:obchod1@holmtec.cz?subject=${encodeURIComponent(`Žádost o produktový datasheet — ${product.name}`)}`}
+                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-mono rounded-full hover:bg-slate-100 transition-all">
+                    <Download size={12} /> Vyžádat
+                  </a>
                 </motion.div>
               ))}
             </div>

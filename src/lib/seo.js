@@ -271,15 +271,8 @@ export function getProductSEO(product, reviewStats) {
     ...(additionalProperty.length ? { additionalProperty } : {}),
   };
 
-  if (product.price_from) {
-    productSchema.offers = {
-      '@type': 'Offer',
-      priceCurrency: 'CZK',
-      price: product.price_from,
-      availability: 'https://schema.org/InStock',
-      url: BASE_URL + canonicalPath,
-    };
-  }
+  // Ceny se u zakázkových mlžítek nezveřejňují ve veřejných strukturovaných datech.
+  // Patří do interních nabídek a klientského portálu, ne do Google indexu.
 
   if (reviewStats?.count && reviewStats?.average) {
     productSchema.aggregateRating = {

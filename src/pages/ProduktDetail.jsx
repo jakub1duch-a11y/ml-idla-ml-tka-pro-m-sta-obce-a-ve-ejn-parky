@@ -70,7 +70,7 @@ export default function ProduktDetail() {
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="product-detail-page min-h-screen bg-white">
       <PdScrollProgress />
       {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
       <PdFamilyNav product={product} />

@@ -19,6 +19,8 @@ import PdTabs from '@/components/produkt/new/PdTabs';
 import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
+import PdSectionNav from '@/components/produkt/new/PdSectionNav';
+import PdUseCases from '@/components/produkt/new/PdUseCases';
 import PdDescription from '@/components/produkt/new/PdDescription';
 import PdStory from '@/components/produkt/new/PdStory';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
@@ -72,25 +74,29 @@ export default function ProduktDetail() {
   return (
     <div className="product-detail-page min-h-screen bg-white">
       <PdScrollProgress />
-      {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
+      <div id="prehled" className="scroll-mt-28">
+        {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
+      </div>
+      <PdSectionNav product={product} />
       <PdFamilyNav product={product} />
       <PdTeepeeStudio product={product} />
       <PdDescription product={product} />
-      <PdBenefits product={product} />
+      <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
       <PdStory product={product} />
+      <PdUseCases product={product} />
       <PdMediaGallery product={product} />
       <PdTeepeeRental product={product} />
-      <PdSpecs product={product} />
+      <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
       <PdWireframe product={product} />
-      <PdInstallationPrep product={product} />
+      <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
       <PdTechSheet product={product} />
-      <PdVariants product={product} />
+      <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
       <PdSmartControl product={product} />
       <PdDetail product={product} />
-      <PdHowItWorks />
+      <PdHowItWorks product={product} />
       <PdTabs product={product} />
       <PdFaq product={product} />
-      <PdReferences product={product} />
+      <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
       <PdCollectionContext product={product} />
       <PdLineProducts product={product} />
       <PdClosingCta product={product} />

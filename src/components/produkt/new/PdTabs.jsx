@@ -18,7 +18,7 @@ const TABS = [
 
 export default function PdTabs({ product }) {
   const [active, setActive] = useState('instalace');
-  const documents = product.documents_urls || [];
+  const documents = [];
   const tab = TABS.find((t) => t.id === active);
 
   return (
@@ -53,7 +53,7 @@ export default function PdTabs({ product }) {
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-[#0D2F4F]/50">Dokumenty k tomuto produktu připravíme na vyžádání.</p>
+              <p className="text-sm text-[#0D2F4F]/50">Technické dokumenty, výkresy a cenové podklady připravíme na vyžádání podle konkrétního projektu.</p>
             )
           ) : (
             <ul className="space-y-3">

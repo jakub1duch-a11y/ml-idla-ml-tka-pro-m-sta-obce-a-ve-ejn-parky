@@ -104,7 +104,7 @@ export default function PdHero({ product }) {
 
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/55">
             <span className="inline-flex items-center gap-2"><Leaf size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> Český návrh a výroba</span>
-            <span className="inline-flex items-center gap-2"><ShieldCheck size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> Nerez AISI 316L</span>
+            <span className="inline-flex items-center gap-2"><ShieldCheck size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> {product.material || 'Nerezové provedení'}</span>
             <span className="inline-flex items-center gap-2"><Sparkles size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> Návrh na míru</span>
           </div>
 

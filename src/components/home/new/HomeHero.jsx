@@ -21,23 +21,23 @@ const TRUST = [
 const STEPS = [
   {
     kicker: 'MLŽIDLA® · Urban cooling',
-    title: 'Ochlazení, které patří do architektury.',
-    body: 'Nerezová mlžítka a mlžné brány pro města, parky, promenády, areály i zahrady. Navrhujeme je jako součást prostoru — funkční, odolné a vizuálně čisté.',
+    title: 'MLŽIDLA — chytré chlazení prostoru.',
+    body: 'Nerezová mlžítka a mlžné brány pro města, parky, hřiště, gastro zahrádky i soukromé terasy. Navrhujeme je podle konkrétního místa, provozu a technických možností napojení.',
   },
   {
     kicker: 'Architektonické řešení',
-    title: 'Mlha jako součást veřejného prostoru.',
-    body: 'Nerezová mlžítka a mlžné prvky navrhujeme tak, aby byly funkční, odolné a přirozeně zapadly do moderní architektury města.',
+    title: 'Čistý nerezový prvek místo rušivé technologie.',
+    body: 'Tvar, kotvení i umístění řešíme tak, aby mlžítko nepůsobilo jako doplněk navíc, ale jako promyšlená součást prostoru.',
   },
   {
     kicker: 'Chytré ovládání',
-    title: 'Řízení podle času, teploty i provozu.',
-    body: 'Napojení na chytré ventily, senzory a scénáře ovládání pomáhá držet komfort i efektivní provoz bez zbytečné spotřeby.',
+    title: 'Ovládání podle času, teploty i provozu.',
+    body: 'Mlžení lze doplnit o chytrý ventil, ruční ovládání nebo provozní scénáře. Konkrétní funkce vždy potvrzujeme podle zvolené konfigurace.',
   },
   {
     kicker: 'Návrh a realizace',
-    title: 'Od vizualizace po hotové řešení.',
-    body: 'Pomůžeme s návrhem, výrobou, osazením do prostoru i s přípravou podkladů pro poptávku a rozhodování.',
+    title: 'Od fotografie prostoru k jasnému návrhu.',
+    body: 'Pomůžeme připravit vizualizaci, technické podklady, varianty řešení a další krok pro poptávku nebo schvalování projektu.',
   },
 ];
 
@@ -123,7 +123,7 @@ export default function HomeHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[220vh] bg-secondary text-secondary-foreground lg:min-h-[300vh]"
+      className="relative min-h-[205vh] bg-secondary text-secondary-foreground lg:min-h-[280vh]"
       aria-label="HolmTec městské ochlazování"
     >
       <div className="sticky top-0 h-[100svh] min-h-[680px] overflow-hidden">
@@ -175,8 +175,8 @@ export default function HomeHero() {
             </video>
           )}
 
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.18)_0%,rgba(10,22,40,.22)_40%,rgba(10,22,40,.88)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,21,37,.88)_0%,rgba(9,21,37,.58)_34%,rgba(9,21,37,.10)_62%,rgba(9,21,37,.20)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,20,.24)_0%,rgba(7,24,20,.34)_42%,rgba(7,24,20,.9)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,24,20,.9)_0%,rgba(7,24,20,.66)_36%,rgba(7,24,20,.18)_64%,rgba(7,24,20,.28)_100%)]" />
         </motion.div>
 
         <div className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-[1400px] px-5 pt-5 sm:px-8 lg:px-12">
@@ -210,7 +210,7 @@ export default function HomeHero() {
                     {activeContent.title}
                   </h1>
 
-                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/[0.72] sm:text-lg">
+                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/[0.86] sm:text-lg">
                     {activeContent.body}
                   </p>
                 </motion.div>
@@ -229,7 +229,7 @@ export default function HomeHero() {
                 {TRUST.map(({ icon: Icon, label }) => (
                   <div
                     key={label}
-                    className="flex items-center gap-2.5 border-t border-white/[0.12] pt-4 text-xs font-medium text-white/60"
+                    className="flex items-center gap-2.5 border-t border-white/[0.18] pt-4 text-xs font-semibold text-white/78"
                   >
                     <Icon size={15} className="shrink-0 text-accent" />
                     <span>{label}</span>
@@ -247,17 +247,17 @@ export default function HomeHero() {
                   MLŽIDLA v prostoru
                 </p>
                 <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-.03em]">
-                  Profesionální osvěžení a městské ochlazování
+                  Návrh, výroba a řízení v jednom procesu
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-white/70">
-                  Od prvního návrhu přes výrobu až po instalaci a smart řízení. Každý projekt stavíme kolem skutečného prostoru, reálného provozu a věrné geometrie produktu.
+                <p className="mt-3 text-sm leading-6 text-white/82">
+                  Každý projekt stavíme kolem skutečného prostoru, reálného provozu a ověřené geometrie produktu. Nejasné technické údaje označujeme k potvrzení.
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-medium text-white/80">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/12 px-3 py-2 text-[11px] font-semibold text-white/88">
                     <Sparkles size={14} className="text-accent" /> český návrh a výroba
                   </span>
-                  <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-medium text-white/80">
+                  <span className="inline-flex items-center rounded-full border border-white/20 bg-white/12 px-3 py-2 text-[11px] font-semibold text-white/88">
                     veřejný prostor · rezidence
                   </span>
                 </div>
@@ -280,10 +280,10 @@ export default function HomeHero() {
                 HolmTec · mlžné systémy
               </p>
               <h3 className="mt-2 font-heading text-xl font-bold tracking-[-.02em] sm:text-2xl">
-                Mlha, která zpříjemňuje pobyt ve městě
+Chytré mlžení pro města, zahrady a veřejné prostory
               </h3>
-              <p className="mt-1 max-w-2xl text-sm leading-6 text-white/65">
-                Pro veřejný prostor, parky, promenády, hřiště, gastro i rezidenční použití.
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-white/82">
+                Čisté nerezové tvary, skryté kotvení a ovládání podle provozu.
               </p>
             </div>
 

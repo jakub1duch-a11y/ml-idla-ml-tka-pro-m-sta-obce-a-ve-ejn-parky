@@ -109,13 +109,6 @@ const FAMILY_VARIANTS = {
   },
 };
 
-const FIELD_SIZES = [
-  { label: 'S', sub: '3 prvky', note: 'Kompaktní mlžiště pro menší náměstí, školy a sportoviště.' },
-  { label: 'M', sub: '5 prvků', note: 'Vyvážená sestava pro parky, promenády a frekventované veřejné plochy.' },
-  { label: 'L', sub: '7–9 prvků', note: 'Velkorysé víceprvkové ochlazení pro rozsáhlejší veřejný prostor.' },
-  { label: 'AVENUE', sub: '8 prvků v linii', note: 'Liniová městská alej pro promenády, pěší zóny a průchozí ochlazovací trasu.' },
-];
-
 function resolveVariantConfig(slug) {
   const own = FAMILY_VARIANTS[slug];
   if (!own) return null;
@@ -152,7 +145,6 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
       .catch(() => {});
     return () => { active = false; };
   }, [product.slug, variants]);
-  const isField = product.slug === 'bendy-field';
   const isMrak = product.slug === 'mlzitko-mrak';
   const mrakHref = (patch = {}) => {
     const next = new URLSearchParams(location.search);
@@ -246,26 +238,6 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
             ))}
           </div>
           <p className="mt-2 text-[11px] leading-relaxed text-slate-500">Rozměry S / M / L a rádius ohybu doplníme po potvrzení výrobních parametrů jednotlivých verzí.</p>
-        </div>
-      )}
-
-      {isField && (
-        <div>
-          <div className="mb-3 flex items-end justify-between gap-3">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400"><Layers3 size={14}/> Varianty BENDY FIELD®</div>
-              <p className="mt-1.5 text-xs leading-relaxed text-slate-500">Zvolte rozsah sestavy podle velikosti prostoru. Přesné rozestupy, počet trysek a řízení se navrhují projektově.</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-            {FIELD_SIZES.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-[0_8px_24px_rgba(15,23,42,.035)]">
-                <span className="inline-flex min-h-9 items-center justify-center rounded-full border border-[#0b4860]/15 bg-[#0b4860]/[.05] px-3 text-sm font-bold text-[#0b4860]">{item.label}</span>
-                <span className="mt-3 block text-sm font-semibold text-slate-900">{item.sub}</span>
-                <span className="mt-1.5 block text-[11px] leading-relaxed text-slate-500">{item.note}</span>
-              </div>
-            ))}
-          </div>
         </div>
       )}
 

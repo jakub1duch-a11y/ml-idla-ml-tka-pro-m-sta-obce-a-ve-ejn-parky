@@ -27,6 +27,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
+      <HiggsfieldCityPromo />
       <ReferencesStrip />
       <ProKohoSection />
       <MistInOperation />

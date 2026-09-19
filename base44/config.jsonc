@@ -1,6 +1,5 @@
 {
   "name": "untitled",
-  "agentSkillsDir": "./agent-skills",
   "site": {
     "installCommand": "npm install",
     "buildCommand": "npm run build",

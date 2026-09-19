@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff, LayoutDashboard, BriefcaseBusiness, Users, Inbox, BellRing } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff, LayoutDashboard, BriefcaseBusiness, Users, Inbox } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { useAuth } from '@/lib/AuthContext';
-import { EMAIL_TOPIC_OPTIONS, sanitizeEmailTopics } from '@/lib/emailPreferences';
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
@@ -60,15 +59,6 @@ export default function CustomerPortal() {
   const [newInquiryFiles, setNewInquiryFiles] = useState([]);
   const [newInquiryBusy, setNewInquiryBusy] = useState(false);
   const [newInquirySent, setNewInquirySent] = useState(null);
-  const [contactProfile, setContactProfile] = useState({ name: '', email: '', phone: '', source: 'manual' });
-  const [contactProfileReady, setContactProfileReady] = useState(false);
-  const [contactProfileBusy, setContactProfileBusy] = useState(false);
-  const [contactProfileMessage, setContactProfileMessage] = useState('');
-  const [emailPreferences, setEmailPreferences] = useState({ enabled: false, topics: [] });
-  const [emailPreferencesReady, setEmailPreferencesReady] = useState(false);
-  const [emailPreferencesBusy, setEmailPreferencesBusy] = useState(false);
-  const [emailPreferencesMessage, setEmailPreferencesMessage] = useState('');
-  const [emailPreferencesError, setEmailPreferencesError] = useState('');
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
   const isAdmin = appUser?.role === 'admin';
@@ -100,45 +90,6 @@ export default function CustomerPortal() {
   useEffect(() => {
     setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
   }, []);
-
-  useEffect(() => {
-    if (step !== 'dashboard' || contactProfileReady) return;
-    const project = projects[0] || null;
-    const inquiry = inquiries.find((item) => item.contact_source) || inquiries[0] || null;
-    setContactProfile({
-      name: project?.client_name || inquiry?.jmeno || inquiry?.name || '',
-      email: project?.client_email || inquiry?.email || email,
-      phone: project?.client_phone || inquiry?.telefon || inquiry?.phone || '',
-      source: inquiry?.contact_source || 'manual',
-    });
-    setContactProfileReady(true);
-  }, [step, projects, inquiries, email, contactProfileReady]);
-
-  useEffect(() => {
-    if (step !== 'dashboard' || !sessionToken || emailPreferencesReady) return;
-    let active = true;
-
-    base44.functions.invoke('saveEmailPreferences', {
-      action: 'get',
-      session_token: sessionToken,
-    }).then((response) => {
-      if (!active) return;
-      const result = response?.data || response || {};
-      setEmailPreferences({
-        enabled: Boolean(result.marketing_consent && result.status === 'active'),
-        topics: sanitizeEmailTopics(result.topics),
-      });
-      setEmailPreferencesReady(true);
-    }).catch(() => {
-      if (!active) return;
-      setEmailPreferencesError('Nastavení upozornění se nepodařilo načíst.');
-      setEmailPreferencesReady(true);
-    });
-
-    return () => {
-      active = false;
-    };
-  }, [emailPreferencesReady, sessionToken, step]);
 
   useEffect(() => {
     if (!isAdmin || step !== 'login') return;
@@ -429,106 +380,6 @@ export default function CustomerPortal() {
     }
   };
 
-  const saveContactProfile = async (event) => {
-    event.preventDefault();
-    if (!sessionToken || !contactProfile.name.trim() || !contactProfile.email.trim()) return;
-    setContactProfileBusy(true);
-    setContactProfileMessage('');
-    setError('');
-    try {
-      const response = await base44.functions.invoke('updatePortalContact', {
-        session_token: sessionToken,
-        name: contactProfile.name,
-        email: contactProfile.email,
-        phone: contactProfile.phone,
-      });
-      const result = response?.data || response || {};
-      if (!result.ok) throw new Error(result.error || 'update_failed');
-      setEmail(result.email);
-      setContactProfile((current) => ({ ...current, name: result.name, email: result.email, phone: result.phone }));
-      setInquiries((current) => current.map((item) => ({
-        ...item,
-        email: result.email,
-        name: result.name,
-        jmeno: result.name,
-        phone: result.phone,
-        telefon: result.phone,
-        contact_confirmed_by_user: true,
-        contact_confirmed_at: result.confirmed_at,
-      })));
-      setProjects((current) => current.map((item) => ({
-        ...item,
-        client_name: result.name,
-        client_email: result.email,
-        client_phone: result.phone,
-      })));
-      setContactProfileMessage('Kontaktní osoba projektu byla aktualizována.');
-    } catch (updateError) {
-      const code = getFunctionErrorCode(updateError);
-      setError(code === 'email_already_used'
-        ? 'Tento e-mail už používá jiný klientský účet.'
-        : code === 'session_expired'
-          ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
-          : 'Kontaktní údaje se nepodařilo uložit. Zkuste to prosím znovu.');
-    } finally {
-      setContactProfileBusy(false);
-    }
-  };
-
-  const toggleEmailPreferenceTopic = (topic) => {
-    setEmailPreferencesMessage('');
-    setEmailPreferencesError('');
-    setEmailPreferences((current) => ({
-      ...current,
-      topics: current.topics.includes(topic)
-        ? current.topics.filter((item) => item !== topic)
-        : [...current.topics, topic],
-    }));
-  };
-
-  const saveEmailPreferences = async (event) => {
-    event.preventDefault();
-    if (!sessionToken) return;
-    if (emailPreferences.enabled && emailPreferences.topics.length === 0) {
-      setEmailPreferencesError('Vyberte alespoň jedno téma, nebo upozornění vypněte.');
-      return;
-    }
-
-    setEmailPreferencesBusy(true);
-    setEmailPreferencesMessage('');
-    setEmailPreferencesError('');
-    try {
-      const response = await base44.functions.invoke('saveEmailPreferences', {
-        action: 'save',
-        session_token: sessionToken,
-        marketing_consent: emailPreferences.enabled,
-        topics: emailPreferences.topics,
-        source: 'customer_portal_preferences',
-      });
-      const result = response?.data || response || {};
-      if (!result.ok) throw new Error(result.error || 'save_failed');
-      setEmailPreferences({
-        enabled: result.status === 'active',
-        topics: sanitizeEmailTopics(result.topics),
-      });
-      if (result.status === 'active') {
-        localStorage.setItem('mz_email_prompt_subscribed_v1', String(Date.now() + 365 * 24 * 60 * 60 * 1000));
-        setEmailPreferencesMessage('Výběr e-mailových upozornění byl uložen.');
-      } else {
-        localStorage.removeItem('mz_email_prompt_subscribed_v1');
-        localStorage.setItem('mz_email_prompt_dismissed_until_v1', String(Date.now() + 30 * 24 * 60 * 60 * 1000));
-        setEmailPreferencesMessage('E-mailová upozornění byla vypnuta.');
-      }
-    } catch (preferenceError) {
-      const code = getFunctionErrorCode(preferenceError);
-      setEmailPreferencesError(code === 'session_expired'
-        ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
-        : 'Nastavení upozornění se nepodařilo uložit.');
-    } finally {
-      setEmailPreferencesBusy(false);
-    }
-  };
-
   const generateShareUrl = (token) => {
     const url = `${window.location.origin}/project/${token}`;
     setShareUrl(url);
@@ -702,7 +553,7 @@ export default function CustomerPortal() {
             <div className="flex flex-wrap items-center gap-2">
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
               {isAdmin && <Link to="/obchodni-nabidky" className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-xs font-semibold text-cyan-900">Sales Hub</Link>}
-              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); setEmailPreferencesReady(false); setEmailPreferences({ enabled: false, topics: [] }); setEmailPreferencesMessage(''); setEmailPreferencesError(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
+              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>
           </div>
           <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">
@@ -712,112 +563,9 @@ export default function CustomerPortal() {
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
           </div>
           <nav className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
-            {[['#overview','Přehled'],['#contact-profile','Kontakt'],['#email-preferences','Upozornění'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
+            {[['#overview','Přehled'],['#inquiries','Poptávky'],['#offers','Nabídky'],['#communication','Komunikace'],['#new-inquiry','Nová poptávka']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
           </nav>
         </header>
-
-        <section id="contact-profile" className="mb-6 scroll-mt-28 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
-          <form onSubmit={saveContactProfile} className="grid gap-5 p-5 sm:p-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Kontaktní osoba projektu</p>
-              <h2 className="mt-2 text-xl font-semibold text-slate-950">Údaje pro nabídku a další komunikaci</h2>
-              <p className="mt-2 text-xs leading-5 text-slate-500">
-                Zdroj kontaktu: <strong className="text-slate-700">{contactProfile.source === 'google_account' ? 'Google účet' : 'ručně vyplněno'}</strong>. Údaje můžete kdykoli upravit.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <label className="text-[11px] font-semibold text-slate-600">Jméno kontaktní osoby *
-                <input required autoComplete="name" value={contactProfile.name} onChange={(event) => setContactProfile((current) => ({ ...current, name: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
-              </label>
-              <label className="text-[11px] font-semibold text-slate-600">E-mail *
-                <input required autoComplete="email" type="email" value={contactProfile.email} onChange={(event) => setContactProfile((current) => ({ ...current, email: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
-              </label>
-              <label className="text-[11px] font-semibold text-slate-600">Telefon
-                <input autoComplete="tel" value={contactProfile.phone} onChange={(event) => setContactProfile((current) => ({ ...current, phone: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
-              </label>
-              <div className="sm:col-span-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-[10px] leading-4 text-slate-400">Změna e-mailu upraví také e-mail používaný pro další přihlášení k tomuto projektu.</p>
-                <button type="submit" disabled={contactProfileBusy} className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-5 text-xs font-bold text-white disabled:opacity-50">
-                  {contactProfileBusy ? <><Loader size={14} className="animate-spin" /> Ukládám…</> : <><ShieldCheck size={14} /> Uložit kontakt</>}
-                </button>
-              </div>
-              {contactProfileMessage && <p className="sm:col-span-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">{contactProfileMessage}</p>}
-              {error && <p className="sm:col-span-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700">{error}</p>}
-            </div>
-          </form>
-        </section>
-
-        <section id="email-preferences" className="mb-6 scroll-mt-28 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
-          <form onSubmit={saveEmailPreferences} className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[.72fr_1.28fr]">
-            <div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-800">
-                <BellRing size={20} />
-              </div>
-              <p className="mt-4 font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">E-mailová upozornění</p>
-              <h2 className="mt-2 text-xl font-semibold text-slate-950">Co vám můžeme posílat</h2>
-              <p className="mt-2 text-xs leading-5 text-slate-500">
-                Toto nastavení platí pro obchodní novinky a doporučení. Servisní zprávy přímo k vaší poptávce nebo nabídce zůstávají oddělené.
-              </p>
-            </div>
-
-            <div>
-              {!emailPreferencesReady ? (
-                <div className="flex min-h-40 items-center justify-center gap-2 text-xs text-slate-500">
-                  <Loader size={15} className="animate-spin" /> Načítám nastavení…
-                </div>
-              ) : (
-                <>
-                  <label className="flex cursor-pointer items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <span>
-                      <span className="block text-sm font-semibold text-slate-900">Chci dostávat e-mailová upozornění</span>
-                      <span className="mt-1 block text-[11px] leading-5 text-slate-500">Zapnutí je dobrovolné a můžete ho zde kdykoli zrušit.</span>
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={emailPreferences.enabled}
-                      onChange={(event) => {
-                        setEmailPreferences((current) => ({ ...current, enabled: event.target.checked }));
-                        setEmailPreferencesMessage('');
-                        setEmailPreferencesError('');
-                      }}
-                      className="mt-1 h-5 w-5 shrink-0 accent-cyan-700"
-                    />
-                  </label>
-
-                  <fieldset disabled={!emailPreferences.enabled || emailPreferencesBusy} className="mt-4 disabled:opacity-50">
-                    <legend className="text-xs font-semibold text-slate-700">Vyberte témata</legend>
-                    <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                      {EMAIL_TOPIC_OPTIONS.map((option) => (
-                        <label key={option.value} className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 p-3 transition hover:border-cyan-300">
-                          <input
-                            type="checkbox"
-                            checked={emailPreferences.topics.includes(option.value)}
-                            onChange={() => toggleEmailPreferenceTopic(option.value)}
-                            className="mt-0.5 h-4 w-4 shrink-0 accent-cyan-700"
-                          />
-                          <span>
-                            <span className="block text-xs font-semibold text-slate-900">{option.label}</span>
-                            <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">{option.description}</span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </fieldset>
-
-                  <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div aria-live="polite">
-                      {emailPreferencesMessage && <p className="text-xs font-semibold text-emerald-700">{emailPreferencesMessage}</p>}
-                      {emailPreferencesError && <p className="text-xs font-semibold text-rose-700">{emailPreferencesError}</p>}
-                    </div>
-                    <button type="submit" disabled={emailPreferencesBusy} className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-5 text-xs font-bold text-white disabled:opacity-50">
-                      {emailPreferencesBusy ? <><Loader size={14} className="animate-spin" /> Ukládám…</> : 'Uložit nastavení'}
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          </form>
-        </section>
 
         {workspaceMessages > 0 && <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-xs text-cyan-900"><span><strong>{workspaceMessages}</strong> zpráv uložených v komunikaci k vašim nabídkám.</span><a href="#communication" className="font-semibold underline underline-offset-2">Otevřít komunikaci</a></div>}
 

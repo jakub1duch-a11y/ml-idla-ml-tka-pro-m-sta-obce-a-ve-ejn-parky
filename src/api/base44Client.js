@@ -22,8 +22,6 @@ const HIDDEN_STANDALONE_PRODUCT_SLUGS = new Set([
   'archived-bendy-radius-m-duplicate',
   'archived-bendy-radius-l-duplicate',
   'archived-bendy-field-duplicate',
-  'bendy-field',
-  'mlzitko-bendy-field',
 ]);
 
 // Varianty jsou součástí detailu hlavního produktu, ne veřejných výpisů produktů.
@@ -51,7 +49,6 @@ const optimizedProductEntity = new Proxy(productEntity, {
       if (String(prop) === 'filter') {
         const query = args?.[0] || {};
         const exactSlugLookup = typeof query?.slug === 'string' && query.slug.length > 0;
-        if (exactSlugLookup && HIDDEN_STANDALONE_PRODUCT_SLUGS.has(String(query.slug).toLowerCase())) return [];
         return exactSlugLookup ? normalized : hideVariantsFromPublicLists(normalized);
       }
       return normalized;

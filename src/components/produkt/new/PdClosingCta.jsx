@@ -25,26 +25,17 @@ export default function PdClosingCta({ product }) {
         <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-7 lg:px-10">
           <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#22D3EE]">// Poptávka</p>
           <h2 className="mt-4 font-heading text-3xl font-bold leading-tight tracking-[-.02em] text-white lg:text-5xl">
-            Poptat řešení pro váš prostor
+            Poptat {product.name}
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/60">
-            Pro {product.name} připravíme doporučení, vizualizaci v prostoru a nezávaznou cenovou nabídku.
+            Připravíme návrh, vizualizaci v prostoru a nabídku s variantami — do 48 hodin.
           </p>
-          <p className="mt-5 font-heading text-xl italic text-[#9BE8F2]">Dobře dýchat.</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              to={`/poptavka?produkt=${product.slug}`}
-              className="btn-brand-primary-dark"
-            >
-              Poptat produkt <ArrowRight size={16} />
-            </Link>
-            <Link
-              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
-              className="btn-brand-outline-dark"
-            >
-              Chci vizualizaci ve svém prostoru
-            </Link>
-          </div>
+          <Link
+            to={`/poptavka?produkt=${product.slug}`}
+            className="btn-brand-primary-dark mt-8"
+          >
+            Poptat {product.name} <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
 

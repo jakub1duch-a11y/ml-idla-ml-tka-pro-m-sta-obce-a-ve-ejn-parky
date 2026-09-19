@@ -24,24 +24,19 @@ function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
 }
 
-const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
-const isLineaProduct = (product) => product?.slug === 'linea-mlzitko' || /(?:^|\s)LINEA(?:®|\s|$)/i.test(product?.name || '');
-
 export default function PdHero({ product }) {
   const [lightbox, setLightbox] = useState(null);
   const [active, setActive] = useState(0);
   const isBendy = BENDY_SLUGS.includes(product.slug);
   const detailConfig = getProductDetailConfig(product);
-  const heroDisplayName = product.name.replace(/^MLŽÍTKO\s+/i, '');
   const heroBackground = product.hero_background_url;
   const heroProduct = product.hero_product_image_url;
   const hasVerifiedComposite = Boolean(product.hero_visual_verified && heroBackground && heroProduct);
   const heroProductIsPhoto = Boolean(heroProduct && /\.(jpe?g|webp)(\?|#|$)/i.test(heroProduct));
 
   const media = useMemo(() => {
-    const resolvedVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
-    const ownVideo = resolvedVideo && isVideo(resolvedVideo)
-      ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení městského prostoru` }]
+    const ownVideo = product.video_url && isVideo(product.video_url)
+      ? [{ type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} – video` }]
       : [];
     const items = [
       // BENDY: hero startuje reálným videem výrobku, ne statickou fotografií
@@ -97,29 +92,28 @@ export default function PdHero({ product }) {
           </div>
           <p className="mt-4 font-heading text-sm font-semibold uppercase tracking-[.08em] text-white/60">{product.name}</p>
 
-          <h1 className="mt-5 max-w-[13ch] font-heading text-[clamp(2.25rem,9vw,4rem)] font-bold leading-[.95] tracking-[-.03em] text-white">
-            Nerezové mlžítko pro prostor, kde chcete zůstat
+          <h1 className="mt-5 max-w-[12ch] font-heading text-[clamp(2.25rem,9vw,4rem)] font-bold leading-[.95] tracking-[-.03em] text-white">
+            {detailConfig.tagline}
           </h1>
-          <p className="mt-5 max-w-xl text-sm leading-6 text-white/65 sm:text-base">{detailConfig.tagline}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/55">
             <span className="inline-flex items-center gap-2"><Leaf size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> Český návrh a výroba</span>
-            <span className="inline-flex items-center gap-2"><ShieldCheck size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> {product.material || 'Nerezové provedení'}</span>
+            <span className="inline-flex items-center gap-2"><ShieldCheck size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> Nerez AISI 316L</span>
             <span className="inline-flex items-center gap-2"><Sparkles size={14} strokeWidth={1.5} className="text-[#22D3EE]" /> Návrh na míru</span>
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              to={`/poptavka?produkt=${product.slug}`}
+              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
               className="btn-brand-primary-dark"
             >
-              Poptat produkt <ArrowRight size={16} />
+              Vizualizovat produkt <ArrowRight size={16} />
             </Link>
             <Link
-              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
+              to={`/poptavka?produkt=${product.slug}`}
               className="btn-brand-outline-dark"
             >
-              Chci vizualizaci ve svém prostoru <ExternalLink size={14} />
+              Poptat řešení <ExternalLink size={14} />
             </Link>
           </div>
         </div>
@@ -143,32 +137,22 @@ export default function PdHero({ product }) {
                     className="absolute inset-0 h-full w-full object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/40 via-transparent to-transparent" />
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-1/2 z-[1] -translate-y-1/2 text-center">
-                    <motion.p
-                      className="font-heading text-[clamp(4rem,12vw,9rem)] font-black uppercase leading-[.78] tracking-[-.07em] text-white/24"
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: .7, ease: 'easeOut' }}
-                    >
-                      {heroDisplayName}
-                    </motion.p>
-                  </div>
                   {heroProductIsPhoto ? (
                     <img
                       src={heroProduct}
                       alt={`${product.name} – referenční produkt`}
-                      className="absolute inset-0 z-[2] h-full w-full object-cover object-center lg:hidden"
+                      className="absolute inset-0 h-full w-full object-cover object-center lg:hidden"
                     />
                   ) : (
                     <img
                       src={heroProduct}
                       alt={`${product.name} – referenční produkt`}
-                      className="absolute right-[2%] top-[10%] z-[2] h-[60%] w-[60%] object-contain object-center drop-shadow-[0_20px_28px_rgba(0,20,35,.3)]"
+                      className="absolute right-[2%] top-[10%] h-[60%] w-[60%] object-contain object-center drop-shadow-[0_20px_28px_rgba(0,20,35,.3)]"
                       style={{ objectPosition: product.hero_focal_position || 'center bottom' }}
                     />
                   )}
                   {heroProductIsPhoto && (
-                    <div className="absolute right-[4%] top-[14%] z-[2] hidden h-[50%] w-[42%] overflow-hidden border border-white/20 bg-white/80 shadow-[0_20px_60px_rgba(0,15,30,.25)] backdrop-blur-sm lg:block">
+                    <div className="absolute right-[4%] top-[14%] hidden h-[50%] w-[42%] overflow-hidden border border-white/20 bg-white/80 shadow-[0_20px_60px_rgba(0,15,30,.25)] backdrop-blur-sm lg:block">
                       <img src={heroProduct} alt={`${product.name} – referenční produkt`} className="h-full w-full object-cover object-center" />
                     </div>
                   )}
@@ -192,12 +176,8 @@ export default function PdHero({ product }) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Lokální gradienty drží čitelnost a propojují video s textovou vrstvou. */}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.08)_0%,rgba(10,22,40,.02)_45%,rgba(10,22,40,.88)_100%)] lg:hidden" />
-          <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(10,22,40,.78)_0%,rgba(10,22,40,.18)_20%,rgba(10,22,40,0)_54%,rgba(34,211,238,.08)_100%)] lg:block" />
-
-          {/* Samostatná přední vrstva jemné mlhy */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-[-12%] bottom-[-12%] z-[3] h-[34%] opacity-55 blur-2xl" style={{ background: 'radial-gradient(ellipse at 28% 70%, rgba(255,255,255,.72), transparent 42%), radial-gradient(ellipse at 72% 58%, rgba(155,232,242,.6), transparent 38%)' }} />
+          {/* Mobile gradient for readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-transparent to-transparent lg:hidden" />
 
           {/* Gallery button */}
           {hero && (

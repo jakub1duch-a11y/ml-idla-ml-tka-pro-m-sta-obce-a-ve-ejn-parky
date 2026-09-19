@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PlayCircle, Wifi, ShieldCheck, Droplets, BatteryCharging } from 'lucide-react';
-import PevekoValveFlow from '@/components/smart-ovladani/PevekoValveFlow';
 
 const IMG_VALVE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png';
 const IMG_PANEL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e1a4488cb_PEVEKO-SKPB-panel-Jabloshop-800x640.png';
@@ -34,9 +33,7 @@ export default function SmartValveMediaSection() {
         <figure className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50"><img src={IMG_PANEL} alt="Ovládací panel chytrého ventilu PEVEKO" className="aspect-[5/4] h-full w-full object-contain p-4 sm:p-6" loading="lazy" decoding="async"/><figcaption className="border-t border-slate-200 px-5 py-4 text-sm text-slate-500">Ovládací a stavový panel ventilové sestavy.</figcaption></figure>
       </div>
 
-      <div className="mt-8"><PevekoValveFlow /></div>
-
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{FEATURES.map(({icon:Icon,title,text})=><div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-5"><Icon size={22} className="text-secondary" strokeWidth={1.6}/><h3 className="mt-4 font-heading text-xl text-foreground">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">{text}</p></div>)}</div>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{FEATURES.map(({icon:Icon,title,text})=><div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-5"><Icon size={22} className="text-secondary" strokeWidth={1.6}/><h3 className="mt-4 font-heading text-xl text-foreground">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p></div>)}</div>
     </div>
   </section>;
 }

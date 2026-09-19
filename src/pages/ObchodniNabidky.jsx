@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FileText, LockKeyhole, MessageCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
-import { setSEO } from '@/lib/seo';
 import InquiryManager from '@/components/offers/InquiryManager';
 
 const formatPrice = (value) => new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(value);
@@ -17,15 +16,6 @@ export default function ObchodniNabidky() {
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState('');
-
-  useEffect(() => {
-    setSEO({
-      title: 'Interní obchodní centrum',
-      description: 'Interní stránka pro nabídky, ceny, poptávky a obchodní dokumenty MLŽIDLA.cz.',
-      canonicalPath: '/obchodni-nabidky',
-      robots: 'noindex, nofollow, noarchive, nosnippet',
-    });
-  }, []);
 
   useEffect(() => {
     if (isLoadingAuth) return;

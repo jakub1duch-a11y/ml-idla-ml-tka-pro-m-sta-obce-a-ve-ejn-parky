@@ -105,8 +105,8 @@ export default function Header() {
 
       
 
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#071A2F]/94 text-white backdrop-blur-2xl transition-all duration-500 ease-out ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
-        <div className="mx-auto flex h-[68px] max-w-[1500px] items-center justify-between gap-4 px-5 sm:px-6 lg:gap-8 lg:px-8">
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 text-white backdrop-blur-xl transition-all duration-500 ease-out to-hydro/90 ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-2xl shadow-primary/25' : 'shadow-sm'}`}>
+        <div className="flex items-center justify-between max-w-7xl lg:px-8 mx-auto gap-4 lg:gap-8 px-6 h-16">
 
           {/* Logo */}
           <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">
@@ -172,10 +172,10 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-2">
               <LanguageSwitcher />
               <Link to={inquiryPath}
-              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
-            <Link to={inquiryPath} className="mr-1 inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-cyan/35 bg-cyan/12 px-3.5 py-2 text-[11px] font-bold text-white lg:hidden">{locale === 'cs' ? 'Popsat projekt' : internationalCopy.quote}</Link>
+            <Link to={inquiryPath} className="lg:hidden whitespace-nowrap rounded-full bg-primary text-[11px] font-bold text-primary-foreground mr-2 px-3 py-2">{locale === 'cs' ? 'Popsat projekt' : internationalCopy.quote}</Link>
             <motion.button
               type="button"
               onClick={toggleMobileMenu}

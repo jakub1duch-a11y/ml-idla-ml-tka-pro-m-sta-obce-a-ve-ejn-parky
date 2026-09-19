@@ -6,9 +6,8 @@ import {
   useScroll,
   useReducedMotion,
   useMotionValueEvent,
-  useTransform,
 } from 'framer-motion';
-import { ArrowRight, Building2, Trees, Wifi, Sparkles } from 'lucide-react';
+import { ArrowRight, PlayCircle, Building2, Trees, Wifi } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 import HeroMistDots from '@/components/home/new/HeroMistDots';
 
@@ -20,24 +19,24 @@ const TRUST = [
 
 const STEPS = [
   {
-    kicker: 'MLŽIDLA® · Urban cooling',
-    title: 'MLŽIDLA — chytré chlazení prostoru.',
-    body: 'Nerezová mlžítka a mlžné brány pro města, parky, hřiště, gastro zahrádky i soukromé terasy. Navrhujeme je podle konkrétního místa, provozu a technických možností napojení.',
+    kicker: 'Městské ochlazování',
+    title: 'Město, které dýchá.',
+    body: 'Profesionální mlžné zóny HolmTec pro náměstí, promenády a veřejný prostor. Jemné osvěžení, které zlepšuje pobyt venku během horkých dnů.',
   },
   {
     kicker: 'Architektonické řešení',
-    title: 'Čistý nerezový prvek místo rušivé technologie.',
-    body: 'Tvar, kotvení i umístění řešíme tak, aby mlžítko nepůsobilo jako doplněk navíc, ale jako promyšlená součást prostoru.',
+    title: 'Mlha jako součást veřejného prostoru.',
+    body: 'Nerezová mlžítka a mlžné prvky navrhujeme tak, aby byly funkční, odolné a přirozeně zapadly do moderní architektury města.',
   },
   {
     kicker: 'Chytré ovládání',
-    title: 'Ovládání podle času, teploty i provozu.',
-    body: 'Mlžení lze doplnit o chytrý ventil, ruční ovládání nebo provozní scénáře. Konkrétní funkce vždy potvrzujeme podle zvolené konfigurace.',
+    title: 'Řízení podle času, teploty i provozu.',
+    body: 'Napojení na chytré ventily, senzory a scénáře ovládání pomáhá držet komfort i efektivní provoz bez zbytečné spotřeby.',
   },
   {
     kicker: 'Návrh a realizace',
-    title: 'Od fotografie prostoru k jasnému návrhu.',
-    body: 'Pomůžeme připravit vizualizaci, technické podklady, varianty řešení a další krok pro poptávku nebo schvalování projektu.',
+    title: 'Od vizualizace po hotové řešení.',
+    body: 'Pomůžeme s návrhem, výrobou, osazením do prostoru i s přípravou podkladů pro poptávku a rozhodování.',
   },
 ];
 
@@ -58,13 +57,6 @@ export default function HomeHero() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
-
-  // Astra/Scrollcraft principle: keep copy, product imagery and ambient background
-  // on distinct depth planes moving at slightly different speeds.
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '7%']);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1.03, 1.1]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-5%']);
-  const panelY = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);
 
   useEffect(() => {
     if (reduceMotion || typeof window === 'undefined') return undefined;
@@ -123,17 +115,14 @@ export default function HomeHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[205vh] bg-secondary text-secondary-foreground lg:min-h-[280vh]"
+      className="relative min-h-[300vh] bg-secondary text-secondary-foreground"
       aria-label="HolmTec městské ochlazování"
     >
       <div className="sticky top-0 h-[100svh] min-h-[680px] overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(21,56,99,.55)_0%,transparent_60%)]" />
         <HeroMistDots />
 
-        <motion.div
-          className="absolute -inset-y-[7%] inset-x-0 will-change-transform"
-          style={reduceMotion ? undefined : { y: backgroundY, scale: backgroundScale }}
-        >
+        <div className="absolute inset-0">
           <img
             src={VIDEO_ASSETS.heroCityPromo.poster}
             alt="Mlžné zóny HolmTec pro ochlazování městského prostoru"
@@ -175,9 +164,9 @@ export default function HomeHero() {
             </video>
           )}
 
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,24,20,.24)_0%,rgba(7,24,20,.34)_42%,rgba(7,24,20,.9)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,24,20,.9)_0%,rgba(7,24,20,.66)_36%,rgba(7,24,20,.18)_64%,rgba(7,24,20,.28)_100%)]" />
-        </motion.div>
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.18)_0%,rgba(10,22,40,.22)_40%,rgba(10,22,40,.88)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,21,37,.88)_0%,rgba(9,21,37,.58)_34%,rgba(9,21,37,.10)_62%,rgba(9,21,37,.20)_100%)]" />
+        </div>
 
         <div className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-[1400px] px-5 pt-5 sm:px-8 lg:px-12">
           <div className="h-1 w-full overflow-hidden rounded-full bg-white/15">
@@ -188,10 +177,7 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <motion.div
-          className="relative z-20 mx-auto flex h-full w-full max-w-[1500px] items-center px-5 sm:px-8 lg:px-12 xl:px-20"
-          style={reduceMotion ? undefined : { y: contentY }}
-        >
+        <div className="relative z-20 mx-auto flex h-full w-full max-w-[1500px] items-center px-5 sm:px-8 lg:px-12 xl:px-20">
           <div className="grid w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div className="max-w-2xl self-center pt-24 sm:pt-28">
               <AnimatePresence mode="wait">
@@ -210,7 +196,7 @@ export default function HomeHero() {
                     {activeContent.title}
                   </h1>
 
-                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/[0.86] sm:text-lg">
+                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/[0.72] sm:text-lg">
                     {activeContent.body}
                   </p>
                 </motion.div>
@@ -229,7 +215,7 @@ export default function HomeHero() {
                 {TRUST.map(({ icon: Icon, label }) => (
                   <div
                     key={label}
-                    className="flex items-center gap-2.5 border-t border-white/[0.18] pt-4 text-xs font-semibold text-white/78"
+                    className="flex items-center gap-2.5 border-t border-white/[0.12] pt-4 text-xs font-medium text-white/60"
                   >
                     <Icon size={15} className="shrink-0 text-accent" />
                     <span>{label}</span>
@@ -238,40 +224,30 @@ export default function HomeHero() {
               </div>
             </div>
 
-            <motion.div
-              className="hidden lg:flex lg:justify-end lg:pb-14"
-              style={reduceMotion ? undefined : { y: panelY }}
-            >
+            <div className="hidden lg:flex lg:justify-end lg:pb-14">
               <div className="w-full max-w-md rounded-3xl border border-white/[0.12] bg-white/[0.08] p-5 text-white backdrop-blur-xl">
                 <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">
-                  MLŽIDLA v prostoru
+                  Hero animace
                 </p>
                 <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-.03em]">
-                  Návrh, výroba a řízení v jednom procesu
+                  Profesionální osvěžení a městské ochlazování
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-white/82">
-                  Každý projekt stavíme kolem skutečného prostoru, reálného provozu a ověřené geometrie produktu. Nejasné technické údaje označujeme k potvrzení.
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Scroll řídí průběh scény, přes video se vrství text, benefity a CTA.
+                  Výsledkem je klidný, prémiový a srozumitelný úvod do značky HolmTec.
                 </p>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/12 px-3 py-2 text-[11px] font-semibold text-white/88">
-                    <Sparkles size={14} className="text-accent" /> český návrh a výroba
-                  </span>
-                  <span className="inline-flex items-center rounded-full border border-white/20 bg-white/12 px-3 py-2 text-[11px] font-semibold text-white/88">
-                    veřejný prostor · rezidence
-                  </span>
-                </div>
 
                 <Link
                   to="/mlzidla-mlzitka"
                   className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white"
                 >
-                  Zobrazit produkty <ArrowRight size={16} />
+                  <PlayCircle size={18} />
+                  Zobrazit produkty
                 </Link>
               </div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-5 sm:px-8 sm:pb-8 lg:px-12 lg:pb-10">
           <div className="mx-auto flex max-w-[1400px] flex-col gap-3 border border-white/[0.12] bg-secondary/[0.55] p-4 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between sm:p-5">
@@ -280,10 +256,10 @@ export default function HomeHero() {
                 HolmTec · mlžné systémy
               </p>
               <h3 className="mt-2 font-heading text-xl font-bold tracking-[-.02em] sm:text-2xl">
-Chytré mlžení pro města, zahrady a veřejné prostory
+                Mlha, která zpříjemňuje pobyt ve městě
               </h3>
-              <p className="mt-1 max-w-2xl text-sm leading-6 text-white/82">
-                Čisté nerezové tvary, skryté kotvení a ovládání podle provozu.
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-white/65">
+                Pro veřejný prostor, parky, promenády, hřiště, gastro i rezidenční použití.
               </p>
             </div>
 

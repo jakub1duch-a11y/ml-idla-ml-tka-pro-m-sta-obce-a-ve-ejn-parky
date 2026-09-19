@@ -803,20 +803,6 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           <div className="mt-2 flex flex-wrap items-center gap-2"><span className="rounded-full bg-muted px-2.5 py-1 font-mono text-[10px] text-muted-foreground">Poptávka ID: {selected.id}</span>{selectedOffers.map((offer) => <span key={offer.id} className="rounded-full border border-secondary/20 bg-secondary/5 px-2.5 py-1 font-mono text-[10px] text-secondary">Nabídka: {offer.quote_number || offer.id}</span>)}</div>
           <p className="mt-3 text-sm text-muted-foreground">{selected.message}</p>
 
-          <div className="mt-4 rounded-2xl border border-cyan-100 bg-cyan-50/60 p-4">
-            <p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-800">Kontaktní údaje</p>
-            <div className="mt-3 grid gap-3 text-xs text-slate-600 sm:grid-cols-2">
-              <div><span className="block text-[10px] uppercase tracking-wider text-slate-400">Jméno</span><strong className="mt-1 block text-slate-900">{selected.name || '—'}</strong></div>
-              <div><span className="block text-[10px] uppercase tracking-wider text-slate-400">E-mail</span><strong className="mt-1 block text-slate-900">{selected.email || '—'}</strong></div>
-              <div><span className="block text-[10px] uppercase tracking-wider text-slate-400">Telefon</span><strong className="mt-1 block text-slate-900">{selected.telefon || selected.phone || '—'}</strong></div>
-              <div><span className="block text-[10px] uppercase tracking-wider text-slate-400">Zdroj kontaktu</span><strong className="mt-1 block text-slate-900">{selected.contact_source === 'google_account' ? 'Google účet' : 'Ručně vyplněno'}</strong></div>
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2 text-[10px]">
-              <span className={`rounded-full px-2.5 py-1 font-semibold ${selected.contact_confirmed_by_user ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>Kontakt {selected.contact_confirmed_by_user ? 'potvrzen uživatelem' : 'bez samostatného potvrzení'}</span>
-              {selected.contact_confirmed_at && <span className="rounded-full bg-white px-2.5 py-1 text-slate-500 ring-1 ring-slate-200">Potvrzeno {new Date(selected.contact_confirmed_at).toLocaleString('cs-CZ')}</span>}
-            </div>
-          </div>
-
           <div className="mt-4">
             <OfferConceptPanel
               inquiry={selected}

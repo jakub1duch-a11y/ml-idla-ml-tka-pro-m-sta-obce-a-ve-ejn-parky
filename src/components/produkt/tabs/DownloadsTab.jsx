@@ -3,14 +3,18 @@ import { motion } from 'framer-motion';
 import { FileText, Download, Ruler, Layers3, Wrench, Mail, ArrowUpRight } from 'lucide-react';
 
 const SHARED_DOCS = [
-  { icon: Wrench, title: 'Přípravné práce pro instalaci', desc: 'Stavební přípravu, výkopy, betonáž a rozvod vody posíláme podle konkrétního projektu.', subject: 'Přípravné práce pro instalaci mlžítka' },
-  { icon: Ruler, title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat, průřezů a napojení poskytujeme pro ověřený produkt a lokalitu.', subject: 'Detaily ocelového mlžítka' },
-  { icon: Layers3, title: 'Manuál údržby trysky typ M', desc: 'Servisní postup připravíme podle použité trysky a konfigurace.', subject: 'Manuál údržby trysky typ M' },
-  { icon: FileText, title: 'Chytré ovládání — prospekt', desc: 'Podklady k SUPLA řízení a automatizaci pošleme podle rozsahu projektu.', subject: 'Chytré ovládání mlžítka' },
+  { icon: Wrench, title: 'Přípravné práce pro instalaci', desc: 'Obecný podklad: stavební příprava, výkopy, betonáž a rozvod vody.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/b704ccfab_Ppravnprceproinstalacimltka.pdf' },
+  { icon: Ruler, title: 'Detaily ocelového mlžítka', desc: 'Obecný technický podklad k patám a průřezům. Měřítko 1:10.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/f23bec143_DETAILY_OCELOVEHO_MLZITKA.pdf' },
+  { icon: Layers3, title: 'Manuál údržby trysky typ M', desc: 'Obecný servisní postup demontáže a čištění mlžicí trysky.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/6fcaf7525_tryska.pdf' },
+  { icon: FileText, title: 'Chytré ovládání — prospekt', desc: 'Obecný přehled smart řízení, automatizace a provozních scénářů.', url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/681f0619c_Chytreovladani.pdf' },
 ];
 
 export default function DownloadsTab({ product }) {
-  const productDocs = [];
+  const productDocs = (product.documents_urls || []).filter(Boolean).map((url, index) => ({
+    title: `Dokument produktu ${index + 1}`,
+    desc: `Podklad přiřazený přímo k produktu ${product.name}.`,
+    url,
+  }));
 
   const emailFiles = [
     { title: `Technický list — ${product.name}`, desc: 'Produktový technický podklad na vyžádání.', subject: `Technický list — ${product.name}` },
@@ -44,12 +48,12 @@ export default function DownloadsTab({ product }) {
             )}
 
             <div>
-              <div className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Sdílená dokumentace</p><h3 className="mt-1 text-xl font-semibold text-slate-950">Technické podklady na vyžádání</h3><p className="mt-2 text-xs leading-relaxed text-slate-500">Dokumenty, výkresy a cenové podklady neposkytujeme jako veřejné soubory. Pošleme jen relevantní podklady pro konkrétní produkt a projekt.</p></div>
+              <div className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-slate-400">Sdílená dokumentace</p><h3 className="mt-1 text-xl font-semibold text-slate-950">Obecné technické podklady</h3><p className="mt-2 text-xs leading-relaxed text-slate-500">Tyto dokumenty popisují obecné principy a nemusí přesně odpovídat geometrii, rozměrům nebo konfiguraci tohoto produktu.</p></div>
               <div className="grid gap-3 sm:grid-cols-2">
                 {SHARED_DOCS.map((f, i) => {
                   const Icon = f.icon;
                   return (
-                    <motion.a key={f.title} href={`mailto:obchod1@holmtec.cz?subject=${encodeURIComponent(f.subject)}`} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .04 }} whileHover={{ y: -3 }} className="group rounded-[22px] border border-slate-200 bg-white p-5 transition-all hover:border-[#0b4860]/20 hover:shadow-[0_14px_34px_rgba(11,72,96,.06)]">
+                    <motion.a key={f.title} href={f.url} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .04 }} whileHover={{ y: -3 }} className="group rounded-[22px] border border-slate-200 bg-white p-5 transition-all hover:border-[#0b4860]/20 hover:shadow-[0_14px_34px_rgba(11,72,96,.06)]">
                       <div className="flex items-center justify-between"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-[#0b4860]"><Icon size={18}/></span><ArrowUpRight size={15} className="text-slate-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"/></div>
                       <h4 className="mt-4 text-sm font-semibold text-slate-950">{f.title}</h4><p className="mt-1.5 text-xs leading-relaxed text-slate-500">{f.desc}</p>
                     </motion.a>

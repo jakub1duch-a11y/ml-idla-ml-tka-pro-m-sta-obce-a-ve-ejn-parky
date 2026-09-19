@@ -2,7 +2,7 @@
 // Odpovídá struktuře sdíleného disku MLŽNÝ DISK / 01_PRODUKTOVY_KATALOG
 
 export const LINES = {
-  bendy: { label: 'BENDY®', family: 'prime', slugs: ['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l'], tagline: 'Ikonický ohyb. Zahrada, terasa i náměstí.' },
+  bendy: { label: 'BENDY®', family: 'prime', slugs: ['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l', 'bendy-field'], tagline: 'Ikonický ohyb. Zahrada, terasa i náměstí.' },
   steblo: { label: 'STÉBLO®', family: 'prime', slugs: ['mlzitko-steblo'], tagline: 'Organická silueta pro městský prostor.' },
   aura: { label: 'AURA', family: 'prime', slugs: ['aura-mlzitko', 'aura-duo'], tagline: 'Designové mlžítko pro zahrady a areály.' },
   linea: { label: 'LINEA', family: 'prime', slugs: ['linea-mlzitko', 'linea-solo'], tagline: 'Minimalistický nerezový sloup.' },
@@ -15,7 +15,7 @@ export const LINES = {
   kruh: { label: 'KRUH', family: 'gates', slugs: ['mlzitko-kruh'], tagline: 'Kruhový mlžný portál pro průchozí zóny a veřejný prostor.' },
   mrkev: { label: 'MRKEV', family: 'prime', slugs: ['mlzitko-mrkev'], tagline: 'Hravá plastika z Polné.' },
   gate: { label: 'BRÁNA GATE', family: 'gates', slugs: ['mlzna-brana-gate', 'city-arc-3', 'city-arc-4', 'city-arc-5'], tagline: 'Průchozí mlžná brána pro náměstí a vjezdy.' },
-  sestavy: { label: 'Sestavy & aleje', family: 'gates', slugs: ['brana-bendy', 'linea-gate', 'mlzitko-2-stebla', 'bendy-back-to-back', 'bendy-alej', 'linea-avenue', 'city-cooling-zone'], tagline: 'Brány, aleje a mlžiště z více prvků.' },
+  sestavy: { label: 'Sestavy & aleje', family: 'gates', slugs: ['brana-bendy', 'linea-gate', 'mlzitko-2-stebla', 'bendy-back-to-back', 'bendy-alej', 'linea-avenue', 'mlzitko-bendy-field', 'city-cooling-zone'], tagline: 'Brány, aleje a mlžiště z více prvků.' },
   animal: { label: 'ANIMAL', family: 'creative', slugs: ['mlzitko-kapr', 'mlzitko-pav', 'mlzitko-volavka'], tagline: 'Autorské tvary inspirované zvířaty.' },
   flora: { label: 'FLORA', family: 'creative', slugs: ['mlzitko-kvet-4'], tagline: 'Květy a listy z nerezu.' },
   funny: { label: 'FUNNY', family: 'creative', slugs: ['mlzitko-slunce'], tagline: 'Hravé motivy pro děti.' },

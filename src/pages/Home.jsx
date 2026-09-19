@@ -35,8 +35,8 @@ export default function Home() {
             <h2 id="city-network" className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">Městská síť ochlazovacích míst. Od prvního pilotu po celé území.</h2>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">Spojíme návrh zón, modulární produkty, pilotní sezónu, servis a možnost rozšíření do jednoho srozumitelného řešení. Mlha zůstává tam, kde má: v prostoru, ne na zemi.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="/mestske-ochlazovani" className="rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200">Navrhnout síť ochlazovacích míst</a>
-              <a href="/poptavka" className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">Popsat konkrétní prostor</a>
+              <a href="/poptavka" className="rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200">Navrhnout síť ochlazovacích míst</a>
+              <a href="/kontakt" className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">Popsat konkrétní prostor</a>
             </div>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">

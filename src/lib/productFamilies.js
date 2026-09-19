@@ -2,7 +2,7 @@
 // Odpovídá struktuře sdíleného disku MLŽNÝ DISK / 01_PRODUKTOVY_KATALOG
 
 export const LINES = {
-  bendy: { label: 'BENDY®', family: 'prime', slugs: ['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l', 'bendy-field'], tagline: 'Ikonický ohyb. Zahrada, terasa i náměstí.' },
+  bendy: { label: 'BENDY®', family: 'prime', slugs: ['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l'], tagline: 'Ikonický ohyb. Zahrada, terasa i náměstí.' },
   steblo: { label: 'STÉBLO®', family: 'prime', slugs: ['mlzitko-steblo'], tagline: 'Organická silueta pro městský prostor.' },
   aura: { label: 'AURA', family: 'prime', slugs: ['aura-mlzitko', 'aura-duo'], tagline: 'Designové mlžítko pro zahrady a areály.' },
   linea: { label: 'LINEA', family: 'prime', slugs: ['linea-mlzitko', 'linea-solo'], tagline: 'Minimalistický nerezový sloup.' },

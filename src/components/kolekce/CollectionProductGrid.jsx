@@ -18,31 +18,22 @@ const PRODUCT_VARIANTS = {
     { label: 'Radius S', href: '/produkt/bendy-radius-s' },
     { label: 'Radius M', href: '/produkt/bendy-radius-m' },
     { label: 'Radius L', href: '/produkt/bendy-radius-l' },
-    { label: 'Field', href: '/produkt/bendy-field' },
   ],
   'bendy-radius-s': [
     { label: 'Single', href: '/produkt/mlzitko-bendy' },
     { label: 'Radius M', href: '/produkt/bendy-radius-m' },
     { label: 'Radius L', href: '/produkt/bendy-radius-l' },
-    { label: 'Field', href: '/produkt/bendy-field' },
   ],
   'bendy-radius-m': [
     { label: 'Single', href: '/produkt/mlzitko-bendy' },
     { label: 'Radius S', href: '/produkt/bendy-radius-s' },
     { label: 'Radius L', href: '/produkt/bendy-radius-l' },
-    { label: 'Field', href: '/produkt/bendy-field' },
   ],
   'bendy-radius-l': [
     { label: 'Single', href: '/produkt/mlzitko-bendy' },
     { label: 'Radius S', href: '/produkt/bendy-radius-s' },
     { label: 'Radius M', href: '/produkt/bendy-radius-m' },
     { label: 'Field', href: '/produkt/bendy-field' },
-  ],
-  'bendy-field': [
-    { label: 'Single', href: '/produkt/mlzitko-bendy' },
-    { label: 'Radius S', href: '/produkt/bendy-radius-s' },
-    { label: 'Radius M', href: '/produkt/bendy-radius-m' },
-    { label: 'Radius L', href: '/produkt/bendy-radius-l' },
   ],
   'mlzitko-mrak': [
     { label: 'Obrys', href: '/produkt/mlzitko-mrak?variant=obrys' },
@@ -72,7 +63,7 @@ const getType = (product) => {
 
 const getFamily = (product) => {
   const slug = product.slug || '';
-  if (['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l', 'bendy-field'].includes(slug)) return 'BENDY®';
+  if (['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l'].includes(slug)) return 'BENDY®';
   if (['mlzitko-steblo', 'mlzitko-2-stebla', 'brana-bendy', 'bendy-back-to-back', 'bendy-alej'].includes(slug)) return 'STÉBLO®';
   if (slug === 'mlzitko-mrak') return 'MLŽNÝ MRAK®';
   if (slug === 'mlzna-brana-gate') return 'GATE®';

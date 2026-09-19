@@ -33,7 +33,6 @@ const PRODUCT_VARIANTS = {
     { label: 'Single', href: '/produkt/mlzitko-bendy' },
     { label: 'Radius S', href: '/produkt/bendy-radius-s' },
     { label: 'Radius M', href: '/produkt/bendy-radius-m' },
-    { label: 'Field', href: '/produkt/bendy-field' },
   ],
   'mlzitko-mrak': [
     { label: 'Obrys', href: '/produkt/mlzitko-mrak?variant=obrys' },

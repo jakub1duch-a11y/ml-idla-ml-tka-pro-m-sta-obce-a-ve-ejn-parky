@@ -11,6 +11,7 @@ import ReferenceCards from '@/components/home/new/ReferenceCards';
 import FinancingSection from '@/components/home/new/FinancingSection';
 import HomeInquiryForm from '@/components/home/new/HomeInquiryForm';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
+import HiggsfieldCityPromo from '@/components/home/HiggsfieldCityPromo';
 
 export default function Home() {
   useEffect(() => {

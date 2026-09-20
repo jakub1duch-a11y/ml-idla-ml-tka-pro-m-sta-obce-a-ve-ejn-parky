@@ -4,9 +4,9 @@ import { ArrowRight, Building2, Trees, Wifi, Droplets, TimerReset, ThermometerSu
 import { setSEO } from '@/lib/seo';
 
 const CITY_IMAGE = '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp';
-const BENDY_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a73ab7232_Mltko-Bendy60-edited1.png';
-const SMART_IMAGE = 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/d584008b5_Smartmlzitka-ovladanizmobilu.jpg';
-const VALVE_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png';
+const BENDY_IMAGE = '/media/optimized/a2d77392e_Mlnbranyaportaly.webp';
+const SMART_IMAGE = '/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp';
+const VALVE_IMAGE = '/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp';
 const SMART_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/feff82d99_Aura-mlzitko-video-01.MP4';
 
 const configs = {
@@ -14,7 +14,7 @@ const configs = {
     path: '/ppc/mlzitka-pro-mesta-obce',
     eyebrow: 'PPC · města a obce',
     title: 'Mlžítka pro města a obce',
-    lead: 'Architektonické ochlazení veřejného prostoru bez vysokotlakého čerpadla. Návrh, výroba, instalace i smart řízení v jednom projektu.',
+    lead: 'Architektonické ochlazování veřejných prostorů s přímým napojením na běžný vodovodní řád. Návrh, výroba, instalace i chytré řízení SUPLA v jednom projektu.',
     image: CITY_IMAGE,
     intent: 'Městská mlžítka pro město nebo obec',
     icon: Building2,
@@ -29,7 +29,7 @@ const configs = {
     image: BENDY_IMAGE,
     intent: 'Mlžítka pro náměstí a parky',
     icon: Trees,
-    points: ['SINGLE, DUO i víceprvkové sestavy', 'Citlivé začlenění do architektury místa', 'Nízkotlaký provoz z vodovodního řadu', 'Možnost automatizovaného spouštění'],
+    points: ['SINGLE, DUO i víceprvkové sestavy', 'Citlivé začlenění do architektury místa', 'Nízkotlaký provoz z vodovodního řádu', 'Možnost automatizovaného spouštění'],
     useCases: ['Náměstí', 'Městské parky', 'Pěší zóny', 'Nábřeží', 'Hřiště', 'Odpočinkové zóny']
   },
   smart: {
@@ -60,7 +60,7 @@ const configs = {
 const BENEFITS = [
   { icon: ThermometerSun, title: 'Spouštění podle podmínek', text: 'Teplota, časový plán nebo senzor mohou rozhodnout, kdy se systém aktivuje.' },
   { icon: TimerReset, title: 'Úsporný provoz', text: 'Systém neběží zbytečně mimo nastavené časy a provozní podmínky.' },
-  { icon: Gauge, title: 'Bez vysokotlakého čerpadla', text: 'Vybrané systémy pracují přímo s dostupným tlakem vodovodního řadu.' },
+  { icon: Gauge, title: 'Přímo z vodovodního řádu', text: 'Vybrané systémy pracují se standardním tlakem 3–6 barů podle podmínek místa.' },
   { icon: ShieldCheck, title: 'Projektové řešení', text: 'Hydrauliku, počet trysek, zóny, kotvení a řízení ověřujeme pro konkrétní místo.' }
 ];
 
@@ -82,7 +82,7 @@ export default function PpcLanding({ variant = 'mesta' }) {
 
   return <main className="bg-white text-slate-950">
     <section className="relative min-h-[720px] overflow-hidden bg-[#082f3f]">
-      {cfg.video ? <video src={cfg.video} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover opacity-45"/> : <img src={cfg.image} alt={cfg.title} className="absolute inset-0 h-full w-full object-cover opacity-55"/>}
+      {cfg.video ? <video src={cfg.video} poster={cfg.image} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover object-center"/> : <img src={cfg.image} alt={cfg.title} className="absolute inset-0 h-full w-full object-cover object-center" loading="eager" fetchPriority="high"/>}
       <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/98 via-[#082f3f]/84 to-[#041c28]/25"/>
       <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/70 via-transparent to-transparent"/>
       <div className="relative mx-auto flex min-h-[720px] max-w-7xl items-end px-6 pb-16 pt-28 lg:px-10 lg:pb-20">

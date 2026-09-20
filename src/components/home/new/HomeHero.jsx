@@ -1,299 +1,101 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useReducedMotion,
-  useMotionValueEvent,
-  useTransform,
-} from 'framer-motion';
-import { ArrowRight, Building2, Trees, Wifi, Sparkles } from 'lucide-react';
-import { VIDEO_ASSETS } from '@/lib/newMedia';
-import HeroMistDots from '@/components/home/new/HeroMistDots';
+import { ArrowRight, Play, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
-const TRUST = [
-  { icon: Building2, label: 'Města a veřejný prostor' },
-  { icon: Trees, label: 'Parky a promenády' },
-  { icon: Wifi, label: 'Smart řízení' },
+const benefits = [
+  { icon: Wind, text: 'Snižuje pocitovou teplotu o 5–10 °C' },
+  { icon: Droplets, text: 'Váže prach a pyl pro čistší vzduch' },
+  { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
+  { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' },
 ];
 
-const STEPS = [
+const tiles = [
   {
-    kicker: 'MLŽIDLA® · chytré mlžení prostoru',
-    title: 'Proměňujeme atmosféru míst.',
-    body: 'Nerezová mlžítka, chytré mlžné brány a vodní mlha na veřejná prostranství vytvářejí příjemnější mikroklima pro města, parky, sportoviště, gastro i zahrady.',
+    title: 'Parky',
+    text: 'Příjemné klima pro relax',
+    image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
+    link: '/mestske-mlzitka',
   },
   {
-    kicker: 'Architektonické řešení',
-    title: 'Mikroklima pro náměstí, parky a sportoviště.',
-    body: 'Mlžítka pro města navrhujeme podle pohybu lidí, stínu, mobiliáře a dostupného napojení na běžný vodovodní řád.'
+    title: 'Náměstí',
+    text: 'Bod setkávání občanů',
+    image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
+    link: '/mlzne-brany',
   },
   {
-    kicker: 'Chytré ovládání',
-    title: 'Chytré řízení SUPLA v mobilu.',
-    body: 'Automatizace podle teploty, času, počasí nebo provozního režimu pomáhá spravovat jednu mlžnou zónu i více bodů ve veřejném prostoru.'
+    title: 'Restaurace',
+    text: 'Delší pobyt hostů',
+    image: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
+    link: '/chytre-reseni-pro-prostor',
   },
   {
-    kicker: 'Návrh a realizace',
-    title: 'Od vizualizace po hotové řešení.',
-    body: 'Pomůžeme s návrhem, výrobou, osazením do prostoru i s přípravou podkladů pro poptávku a rozhodování.',
+    title: 'Soukromé zahrady',
+    text: 'Svěžest u vás doma',
+    image: '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
+    link: '/zahradni-mlzitka',
   },
 ];
 
 export default function HomeHero() {
-  const sectionRef = useRef(null);
-  const videoRef = useRef(null);
-  const rafRef = useRef(null);
-
-  const reduceMotion = useReducedMotion();
-
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
-  const [videoDuration, setVideoDuration] = useState(0);
-  const [activeStep, setActiveStep] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Astra/Scrollcraft principle: keep copy, product imagery and ambient background
-  // on distinct depth planes moving at slightly different speeds.
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '7%']);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1.03, 1.1]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-5%']);
-  const panelY = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);
-
-  useEffect(() => {
-    if (reduceMotion || typeof window === 'undefined') return undefined;
-
-    const nav = typeof navigator !== 'undefined' ? navigator : null;
-    const connection = nav?.connection || nav?.mozConnection || nav?.webkitConnection;
-    const slowNetwork = ['slow-2g', '2g'].includes(connection?.effectiveType);
-    const saveData = Boolean(connection?.saveData);
-
-    if (slowNetwork || saveData) return undefined;
-
-    if ('requestIdleCallback' in window) {
-      const idleId = window.requestIdleCallback(
-        () => setShouldLoadVideo(true),
-        { timeout: 800 },
-      );
-
-      return () => window.cancelIdleCallback?.(idleId);
-    }
-
-    const timeoutId = window.setTimeout(() => setShouldLoadVideo(true), 200);
-    return () => window.clearTimeout(timeoutId);
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const clamped = Math.max(0, Math.min(1, latest));
-    const nextStep = Math.min(STEPS.length - 1, Math.floor(clamped * STEPS.length));
-    setActiveStep(nextStep);
-
-    const video = videoRef.current;
-    if (!video || !videoReady || !videoDuration || reduceMotion) return;
-
-    const targetTime = clamped * Math.max(videoDuration - 0.05, 0);
-
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-
-    rafRef.current = requestAnimationFrame(() => {
-      try {
-        if (Math.abs(video.currentTime - targetTime) > 0.03) {
-          video.currentTime = targetTime;
-        }
-      } catch {
-        // Some browsers can temporarily reject seeks while media state changes.
-      }
-    });
-  });
-
-  const activeContent = STEPS[activeStep] ?? STEPS[0];
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-[220vh] bg-secondary text-secondary-foreground lg:min-h-[300vh]"
-      aria-label="HolmTec městské ochlazování"
-    >
-      <div className="sticky top-0 h-[100svh] min-h-[680px] overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(21,56,99,.55)_0%,transparent_60%)]" />
-        <HeroMistDots />
+    <section className="relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
+      <div className="relative min-h-[82svh] overflow-hidden">
+        <img
+          src="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp"
+          alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-80"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.26),transparent_32%),linear-gradient(90deg,rgba(0,0,0,.86)_0%,rgba(0,0,0,.54)_44%,rgba(0,0,0,.22)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
-        <motion.div
-          className="absolute -inset-y-[7%] inset-x-0 will-change-transform"
-          style={reduceMotion ? undefined : { y: backgroundY, scale: backgroundScale }}
-        >
-          <img
-            src={VIDEO_ASSETS.heroCityPromo.poster}
-            alt="Mlžné zóny HolmTec pro ochlazování městského prostoru"
-            fetchPriority="high"
-            decoding="async"
-            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
-              videoReady ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-
-          {shouldLoadVideo && !videoFailed && !reduceMotion && (
-            <video
-              ref={videoRef}
-              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
-                videoReady ? 'opacity-100' : 'opacity-0'
-              }`}
-              muted
-              playsInline
-              preload="metadata"
-              poster={VIDEO_ASSETS.heroCityPromo.poster}
-              aria-label="Promo video MLŽIDLA pro městské ochlazování"
-              onLoadedMetadata={(event) => {
-                const media = event.currentTarget;
-                setVideoDuration(Number.isFinite(media.duration) ? media.duration : 0);
-                media.pause();
-                try {
-                  media.currentTime = 0;
-                } catch {
-                  // Ignore browsers that defer seeking until media is fully ready.
-                }
-              }}
-              onCanPlay={() => setVideoReady(true)}
-              onError={() => {
-                setVideoFailed(true);
-                setVideoReady(false);
-              }}
-            >
-              <source src={VIDEO_ASSETS.heroCityPromo.src} type="video/mp4" />
-            </video>
-          )}
-
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.18)_0%,rgba(10,22,40,.22)_40%,rgba(10,22,40,.88)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,21,37,.88)_0%,rgba(9,21,37,.58)_34%,rgba(9,21,37,.10)_62%,rgba(9,21,37,.20)_100%)]" />
-        </motion.div>
-
-        <div className="absolute inset-x-0 top-0 z-30 mx-auto w-full max-w-[1400px] px-5 pt-5 sm:px-8 lg:px-12">
-          <div className="h-1 w-full overflow-hidden rounded-full bg-white/15">
-            <motion.div
-              className="h-full rounded-full bg-accent"
-              style={{ scaleX: scrollYProgress, transformOrigin: '0% 50%' }}
-            />
+        <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
+          <div className="max-w-3xl">
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.22em] text-[#26C6E9]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
+            <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(4rem,9vw,8.6rem)] font-black leading-[.86] tracking-[-.085em] text-white">
+              Město se nadechne.
+            </h1>
+            <p className="mt-7 max-w-2xl text-xl leading-8 text-white/82 sm:text-2xl">
+              Chytrá nerezová mlžítka pro města, obce i soukromé prostory. Příjemnější klima, čistší vzduch a místa, kde se lidé chtějí zdržet.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <Link to="/mlzidla-mlzitka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
+                Zobrazit produkty <ArrowRight size={17} />
+              </Link>
+              <Link to="/reference" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/8 px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/28"><Play size={15} fill="currentColor" /></span>
+                Přehrát video
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <motion.div
-          className="relative z-20 mx-auto flex h-full w-full max-w-[1500px] items-center px-5 sm:px-8 lg:px-12 xl:px-20"
-          style={reduceMotion ? undefined : { y: contentY }}
-        >
-          <div className="grid w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div className="max-w-2xl self-center pt-24 sm:pt-28">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeStep}
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -18 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <p className="font-mono text-[11px] uppercase tracking-[.22em] text-accent">
-                    {activeContent.kicker}
-                  </p>
-
-                  <h1 className="mt-6 max-w-[12ch] font-heading text-[2.8rem] font-bold leading-[1.02] tracking-[-.04em] text-white sm:text-[clamp(3.5rem,6.2vw,6.2rem)] sm:leading-[.98]">
-                    {activeContent.title}
-                  </h1>
-
-                  <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/[0.72] sm:text-lg">
-                    {activeContent.body}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
-                <Link to="/poptavka" className="btn-brand-primary-dark justify-center">
-                  Navrhnout řešení <ArrowRight size={16} />
-                </Link>
-                <Link to="/reference" className="btn-brand-outline-dark">
-                  Prohlédnout realizace
-                </Link>
-              </div>
-
-              <div className="mt-12 grid gap-2 sm:grid-cols-3">
-                {TRUST.map(({ icon: Icon, label }) => (
-                  <div
-                    key={label}
-                    className="flex items-center gap-2.5 border-t border-white/[0.12] pt-4 text-xs font-medium text-white/60"
-                  >
-                    <Icon size={15} className="shrink-0 text-accent" />
-                    <span>{label}</span>
+          <aside className="hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
+            <div className="space-y-4">
+              {benefits.map(({ icon: Icon, text }) => (
+                <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[#26C6E9]">
+                    <Icon size={20} />
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <motion.div
-              className="hidden lg:flex lg:justify-end lg:pb-14"
-              style={reduceMotion ? undefined : { y: panelY }}
-            >
-              <div className="w-full max-w-md rounded-3xl border border-white/[0.12] bg-white/[0.08] p-5 text-white backdrop-blur-xl">
-                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">
-                  MLŽIDLA v prostoru
-                </p>
-                <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-.03em]">
-                  Více svěžesti v každém dni
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-white/70">
-                  Od prvního návrhu přes výrobu až po instalaci a SUPLA řízení. Každý projekt stavíme kolem skutečného prostoru, reálného provozu a čisté geometrie produktu.
-                </p>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-medium text-white/80">
-                    <Sparkles size={14} className="text-accent" /> český návrh a výroba
-                  </span>
-                  <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-medium text-white/80">
-                    veřejný prostor · rezidence
-                  </span>
+                  <p className="text-sm font-bold leading-6 text-white/86">{text}</p>
                 </div>
-
-                <Link
-                  to="/mlzidla-mlzitka"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-white"
-                >
-                  Zobrazit produkty <ArrowRight size={16} />
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-5 sm:px-8 sm:pb-8 lg:px-12 lg:pb-10">
-          <div className="mx-auto flex max-w-[1400px] flex-col gap-3 border border-white/[0.12] bg-secondary/[0.55] p-4 text-white backdrop-blur-md sm:flex-row sm:items-end sm:justify-between sm:p-5">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">
-                HolmTec · mlžné systémy
-              </p>
-              <h3 className="mt-2 font-heading text-xl font-bold tracking-[-.02em] sm:text-2xl">
-Mikroklima pro města, sportoviště i zahrady
-              </h3>
-              <p className="mt-1 max-w-2xl text-sm leading-6 text-white/65">
-Mlžítka pro města, ochlazování náměstí, osvěžení na sportovištích a rezidenční SMART komfort v jednom směru.
-              </p>
+              ))}
             </div>
+          </aside>
+        </div>
+      </div>
 
-            <Link
-              to="/kontakt"
-              className="btn-brand-accent-link shrink-0 !text-white hover:!text-accent"
-            >
-              Kontaktovat tým <ArrowRight size={16} />
+      <div className="relative z-20 mx-auto -mt-16 max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {tiles.map((tile) => (
+            <Link key={tile.title} to={tile.link} className="group relative min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)]">
+              <img src={tile.image} alt={`${tile.title} — MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover opacity-82 transition duration-500 group-hover:scale-[1.05]" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/24 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
+                <p className="mt-1 text-sm font-semibold text-white/76">{tile.text}</p>
+              </div>
             </Link>
-          </div>
+          ))}
         </div>
       </div>
     </section>

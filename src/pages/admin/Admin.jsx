@@ -61,7 +61,7 @@ export default function Admin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSEO({ title: 'Administrace MLŽIDLA®', robots: 'noindex, nofollow' });
+    setSEO({ title: 'Administrace MLŽIDLA®', robots: 'noindex, nofollow, noarchive, nosnippet' });
   }, []);
   const [searchParams, setSearchParams] = useSearchParams();
   const [user, setUser] = useState(null);

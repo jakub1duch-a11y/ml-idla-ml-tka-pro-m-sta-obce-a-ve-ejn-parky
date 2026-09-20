@@ -144,7 +144,7 @@ export default function PrezentaceMlziciProstor() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 border-t border-[#D3E2E8] pt-6">
           {[
-            { label: 'Typ systému', value: 'Nízkotlaké mlžení z vodovodního řádu' },
+            { label: 'Typ systému', value: 'Řízené mlžení prostoru 60 bar' },
             { label: 'Lokalita', value: 'Jičínské náměstí' },
             { label: 'Období provozu', value: 'Květen — září 2026' },
             { label: 'Počet trysek', value: '24 × AISI 316L' },

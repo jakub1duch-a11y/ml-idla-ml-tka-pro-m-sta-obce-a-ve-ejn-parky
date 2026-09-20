@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { loadClientPortalData } from '../../shared/clientPortal.ts';
 
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
 
@@ -100,7 +101,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'invalid_credentials' }, { status: 401 });
     }
 
-    const data = await loadPortalData(base44, email);
+    const data = await loadClientPortalData(base44, email);
     if (!data.inquiries.length && !data.projects.length) {
       return Response.json({ error: 'invalid_credentials' }, { status: 401 });
     }

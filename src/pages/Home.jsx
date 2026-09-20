@@ -8,7 +8,6 @@ import MistInOperation from '@/components/home/new/MistInOperation';
 import HomepageVisualShowcase from '@/components/home/new/HomepageVisualShowcase';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
-import SmartUseCasesExperience from '@/components/home/new/SmartUseCasesExperience';
 import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
 import ReferenceCards from '@/components/home/new/ReferenceCards';
@@ -37,7 +36,6 @@ export default function Home() {
       <ProKohoSection />
       <MistInOperation />
       <SmartControlTeaser />
-      <SmartUseCasesExperience compact />
       <FeaturedMlzitka />
       <CooperationSteps />
       <ReferenceCards />

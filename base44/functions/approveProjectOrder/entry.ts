@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { jsPDF } from 'npm:jspdf@4.0.0';
 import { ensureOfferCaseFolders, uploadBytes, moveCaseToClosedOrders } from '../../shared/offerDrive.ts';
+import { clientProjectView } from '../../shared/clientPortal.ts';
 
 const toBase64 = (bytes: Uint8Array) => { let binary = ''; bytes.forEach((byte) => { binary += String.fromCharCode(byte); }); return btoa(binary); };
 async function loadFont(doc: any) {
@@ -181,7 +182,7 @@ Deno.serve(async (req) => {
     }
 
     await base44.asServiceRole.entities.PortalSession.delete(session.id);
-    return Response.json({ ok: true, project: updated, archive_warning: archiveWarning || undefined, email_warning: emailWarning || undefined });
+    return Response.json({ ok: true, project: clientProjectView(updated), archive_warning: archiveWarning || undefined, email_warning: emailWarning || undefined });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

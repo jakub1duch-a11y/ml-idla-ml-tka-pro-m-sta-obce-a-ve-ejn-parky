@@ -2,13 +2,13 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { Images, Play } from 'lucide-react';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
+import { getOptimizedMediaUrl, getOriginalMediaUrl } from '@/lib/optimizedMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const isDirectVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
 const isBrokenLocalPath = (url) => typeof url === 'string' && (
   url.startsWith('/media/studio/')
   || url.startsWith('/media/products/')
-  || url.startsWith('/media/optimized/')
 );
 const isUsableImage = (url) => typeof url === 'string' && url.length > 0 && !isBrokenLocalPath(url);
 
@@ -35,10 +35,10 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
   const views = useMemo(() => {
     const studioMedia = getStudioMedia(product);
-    const productImage = isUsableImage(product?.image_url) ? product.image_url : '';
-    const fallbackImage = isUsableImage(fallback) ? fallback : '';
+    const productImage = isUsableImage(product?.image_url) ? getOptimizedMediaUrl(product.image_url) : '';
+    const fallbackImage = isUsableImage(fallback) ? getOptimizedMediaUrl(fallback) : '';
     const primary = studioMedia || productImage || fallbackImage;
-    const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls : [];
+    const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls.map(getOptimizedMediaUrl) : [];
     const videoUrl = isDirectVideo(product?.video_url)
       ? product.video_url
       : gallery.find((url) => isDirectVideo(url));
@@ -60,8 +60,9 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     });
 
     // 3. Visualization (AI hero environment)
-    if (product?.hero_background_url && product.hero_background_url !== primary && !isBrokenLocalPath(product.hero_background_url)) {
-      list.push({ type: 'viz', url: product.hero_background_url, label: VIEW_LABELS.viz });
+    const heroBackground = getOptimizedMediaUrl(product?.hero_background_url);
+    if (heroBackground && heroBackground !== primary && !isBrokenLocalPath(heroBackground)) {
+      list.push({ type: 'viz', url: heroBackground, label: VIEW_LABELS.viz });
     }
 
     // 4. Video
@@ -186,6 +187,12 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
             loading={idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
             className={`absolute inset-0 h-full w-full transition-all duration-500 ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}
+            onError={(event) => {
+              const original = getOriginalMediaUrl(view.url);
+              if (original && original !== view.url && event.currentTarget.src !== original) {
+                event.currentTarget.src = original;
+              }
+            }}
           />
         );
       })}

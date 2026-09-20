@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import { FAMILIES, getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
+import { mergePortalGateProducts } from '@/lib/portalGateProducts';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import CollectionOffers from '@/components/kolekce/CollectionOffers';
 import FamilyNav from '@/components/kolekce/FamilyNav';
@@ -51,7 +52,10 @@ export default function Kolekce() {
 
   useEffect(() => {
     base44.entities.Product.list('name', 200)
-      .then((list) => setProducts((list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug))))
+      .then((list) => {
+        const visibleProducts = (list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug));
+        setProducts(mergePortalGateProducts(visibleProducts));
+      })
       .finally(() => setLoading(false));
   }, []);
 

@@ -119,7 +119,7 @@ export default function OfferConceptPresentation({ concept, product, pricing, vi
         <div className="h-1.5 bg-cyan-400" />
         <header className="flex items-end justify-between gap-4 border-b border-slate-100 px-6 py-6 lg:px-10">
           <div>
-            <div className="text-xl font-extrabold tracking-wide text-[#0d2d38]">MLŽIDLA® <span className="text-xs font-semibold text-slate-400">by HolmTec</span></div>
+            <div className="flex items-center gap-3"><img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png" alt="MLŽIDLA.cz" className="h-10 w-auto max-w-[190px] object-contain" /><span className="sr-only">MLŽIDLA® by HolmTec</span></div>
             <div className="mt-1 text-[10px] uppercase tracking-[.16em] text-cyan-700">Projektový návrh · cenová nabídka</div>
           </div>
           <div className="text-right text-[10px] uppercase tracking-[.12em] text-slate-400">Architektonické mlžení</div>

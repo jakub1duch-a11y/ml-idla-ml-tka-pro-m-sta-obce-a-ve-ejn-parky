@@ -88,23 +88,44 @@ export default function Footer() {
               </Link>
             </div>
 
-            <a
-              href="https://mlzidla-vizualizator-prostoru.duchjakubghost.chatgpt.site"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-7 flex min-h-20 items-center gap-4 rounded-2xl border border-cyan/25 bg-white/[.045] p-4 transition-colors hover:border-cyan/60 hover:bg-white/[.08] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
-              aria-label="Aplikace Vizualizátor prostoru — soukromý náhled, otevře se v novém okně"
-            >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan/15 text-cyan">
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><path d="m7 15 3-4 3 3 2-2 3 4M15 7h.01" /></svg>
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Aplikace</span>
-                <span className="mt-1 block text-sm font-semibold text-white">Vizualizátor prostoru</span>
-                <span className="mt-1 block text-xs leading-5 text-white/68">Soukromý náhled · fotografie vašeho prostoru</span>
-              </span>
-              <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <a
+                href="https://mlzidla-vizualizator-prostoru.duchjakubghost.chatgpt.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex min-h-20 items-center gap-4 rounded-2xl border border-cyan/25 bg-white/[.045] p-4 transition-colors hover:border-cyan/60 hover:bg-white/[.08] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+                aria-label="Aplikace Vizualizátor prostoru — soukromý náhled, otevře se v novém okně"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan/15 text-cyan">
+                  <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><path d="m7 15 3-4 3 3 2-2 3 4M15 7h.01" /></svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Aplikace</span>
+                  <span className="mt-1 block text-sm font-semibold text-white">Vizualizátor prostoru</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/68">Soukromý náhled · fotografie vašeho prostoru</span>
+                </span>
+                <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+
+              <a
+                href="https://www.holmtec.cz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex min-h-20 items-center gap-4 rounded-2xl border border-white/12 bg-white/[.035] p-4 transition-colors hover:border-white/28 hover:bg-white/[.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+                aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně"
+              >
+                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[.06] text-[10px] font-black tracking-[-.04em] text-white">
+                  HT
+                  <motion.span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-cyan shadow-[0_0_18px_rgba(38,198,233,.85)]" animate={{ scale: [1, 1.28, 1], opacity: [0.78, 1, 0.78] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-white/45">Výroba a zázemí</span>
+                  <span className="mt-1 block text-sm font-semibold text-white">HolmTec.cz</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/62">Česká výroba, ohýbání nerezu a technické zázemí MLŽIDLA®</span>
+                </span>
+                <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+            </div>
 
             <div className="mt-7 flex items-center gap-4">
               <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram" className="text-white/55 transition-colors hover:text-cyan"><Instagram size={18} /></a>

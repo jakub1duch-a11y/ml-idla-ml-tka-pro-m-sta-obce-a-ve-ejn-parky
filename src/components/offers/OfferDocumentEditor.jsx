@@ -20,7 +20,7 @@ function DocumentPreview({ content, finalTotal, validUntil, quoteNumber, clientL
       <div className="h-1.5 bg-cyan-400" />
       <div className="flex items-end justify-between gap-3 border-b border-slate-100 px-5 py-4">
         <div>
-          <div className="flex items-center gap-3"><img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png" alt="MLŽIDLA.cz" className="h-9 w-auto max-w-[175px] object-contain" /><span className="sr-only">MLŽIDLA® by HolmTec</span></div>
+          <div className="text-base font-extrabold tracking-wide text-[#0d2d38]">MLŽIDLA® <span className="text-[10px] font-semibold text-slate-400">by HolmTec</span></div>
           <div className="mt-1 text-[9px] uppercase tracking-[.16em] text-cyan-700">Projektový návrh · cenová nabídka</div>
         </div>
         <div className="text-right text-[9px] uppercase tracking-[.12em] text-slate-400">Architektonické mlžení</div>

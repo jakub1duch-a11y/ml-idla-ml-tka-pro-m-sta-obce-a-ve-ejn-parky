@@ -6,7 +6,13 @@ import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
+const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
+const isLineaProduct = (product) => product?.slug === 'linea-mlzitko' || /(?:^|\s)LINEA(?:®|\s|$)/i.test(product?.name || '');
 const DRIVE_FILE_RE = /drive\.google\.com\/file\/d\/([^/?#]+)/i;
+const TECHNICAL_MEDIA_RE = /(1000008748|technick|schema|schéma|edraw|vykres|výkres|montaz|montáž|instalac)/i;
+const GARDEN_TEST_RE = /(1000008852|1000008768)/i;
+const FLOWER_SCULPTURE_RE = /(1000008416|1000008415)/i;
+const EDITORIAL_ONLY_RE = /(1000008842|1000008248)/i;
 const isVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
 const isDriveVideo = (url) => typeof url === 'string' && DRIVE_FILE_RE.test(url);
 const drivePreviewUrl = (url) => {
@@ -14,6 +20,14 @@ const drivePreviewUrl = (url) => {
   return id ? `https://drive.google.com/file/d/${id}/preview` : url;
 };
 const clean = (items) => [...new Map(items.filter((x) => x?.url).map((x) => [x.url, x])).values()];
+const isTechnicalMedia = (url) => typeof url === 'string' && TECHNICAL_MEDIA_RE.test(url);
+const isGardenTest = (url) => typeof url === 'string' && GARDEN_TEST_RE.test(url);
+const isFlowerSculptureProduct = (product) => /květ|kvet|socha|art/i.test(`${product.name || ''} ${product.slug || ''}`);
+const isAllowedProductMedia = (url, product) => {
+  if (typeof url !== 'string' || EDITORIAL_ONLY_RE.test(url) || isTechnicalMedia(url)) return false;
+  if (FLOWER_SCULPTURE_RE.test(url) && !isFlowerSculptureProduct(product)) return false;
+  return true;
+};
 
 function matchesProduct(realization, product) {
   const used = (realization.product_used || '').toLocaleLowerCase('cs-CZ');
@@ -56,7 +70,7 @@ function MediaCard({ item, onOpen }) {
         ) : (
           <img src={item.url} alt={item.alt || item.title || 'MLŽIDLA'} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
         )}
-        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/22 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,20,31,.34)_0%,rgba(4,20,31,0)_42%,rgba(10,35,66,.48)_100%)] transition-opacity duration-500 group-hover:opacity-80" />
         {video && <span className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/92 text-[#0A2342] shadow-lg"><Play size={16} fill="currentColor" /></span>}
         {item.badge && <span className="absolute right-4 top-4 rounded-full border border-white/35 bg-black/28 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">{item.badge}</span>}
       </div>
@@ -95,8 +109,15 @@ export default function PdMediaGallery({ product }) {
     const studioMedia = getStudioMedia(product);
     const productPhotos = clean([
       studioMedia && { type: 'image', url: studioMedia, title: `${product.name} — studiový náhled`, badge: 'Studio' },
-      product.image_url && { type: 'image', url: product.image_url, title: `${product.name} — produkt`, badge: 'Produkt' },
-      ...(product.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url, i) => ({ type: 'image', url, title: `${product.name} — fotografie ${i + 1}`, badge: 'Produkt' })),
+      product.image_url && { type: 'image', url: product.image_url, title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : `${product.name} — produkt`, badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
+      ...(product.gallery_urls || [])
+        .filter((url) => url && !isVideo(url) && isAllowedProductMedia(url, product))
+        .map((url, i) => ({
+          type: 'image',
+          url,
+          title: isGardenTest(url) ? 'Reálné testování v zahradě' : `${product.name} — fotografie ${i + 1}`,
+          badge: isGardenTest(url) ? 'Reálné testování' : 'Produkt',
+        })),
     ]);
 
     const realizationPhotos = clean(realizations.flatMap((r) => [
@@ -109,8 +130,9 @@ export default function PdMediaGallery({ product }) {
       r.project_sheet_url && { type: 'image', url: r.project_sheet_url, title: `${r.name || product.name} — projektový návrh`, meta: r.location, badge: 'Návrh' },
     ]));
 
+    const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
     const videos = clean([
-      product.video_url && { type: 'video', url: product.video_url, poster: product.image_url, title: `${product.name} v akci`, badge: 'Video' },
+      resolvedProductVideo && { type: 'video', url: resolvedProductVideo, poster: product.image_url, title: `${product.name} — ochlazení v městském prostoru`, badge: 'Hero video' },
       ...(product.gallery_urls || []).filter(isVideo).map((url, i) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} — video ${i + 1}`, badge: 'Video' })),
       ...realizations.filter((r) => r.video_url).map((r) => ({ type: 'video', url: r.video_url, poster: r.image_url, title: `${r.name || product.name} — video`, meta: r.location, badge: 'Realizace' })),
     ]);
@@ -123,10 +145,11 @@ export default function PdMediaGallery({ product }) {
     };
   }, [product, realizations]);
 
+  const hasGardenTest = groups.photos.some((item) => item.badge === 'Reálné testování');
   const tabs = [
-    { id: 'photos', label: 'Fotografie produktu', icon: Images, count: groups.photos.length },
+    { id: 'photos', label: hasGardenTest ? 'Reálné testování v zahradě' : 'Reálné fotografie produktu', icon: Images, count: groups.photos.length },
     { id: 'realizations', label: 'Reálné realizace', icon: MapPin, count: groups.realizations.length },
-    { id: 'visualizations', label: 'Vizualizace', icon: Sparkles, count: groups.visualizations.length },
+    { id: 'visualizations', label: 'Vizualizace umístění', icon: Sparkles, count: groups.visualizations.length },
     { id: 'videos', label: 'Videa', icon: Video, count: groups.videos.length },
   ];
 
@@ -149,10 +172,10 @@ export default function PdMediaGallery({ product }) {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-[#0B97E8] sm:text-[11px]">Produkt v detailu</p>
-            <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">Fotografie, realizace, vizualizace a videa.</h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — od produktu přes skutečné instalace až po návrhy pro konkrétní prostor.</p>
+            <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">Vhodné pro zahrady, parky i veřejný prostor</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — reálné fotografie a realizace držíme odděleně od návrhových vizualizací.</p>
           </div>
-          <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">U reálných realizací zobrazujeme pouze média přiřazená ke konkrétnímu produktu. Vizualizace jsou označené samostatně.</p>
+          <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">Technická schémata patří do sekce „Příprava a instalace“. Vizualizace umístění jsou vždy označené samostatně.</p>
         </div>
 
         {featuredVideo && (

@@ -2,12 +2,15 @@ import React, { useRef, useState } from 'react';
 import { ArrowRight, CheckCircle2, Loader, Paperclip, Trash2, UploadCloud } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackContactFormSubmit } from '@/lib/ga4';
+import GoogleContactBox from '@/components/forms/GoogleContactBox';
 
 const MAX_FILES = 3;
 const MAX_FILE_SIZE = 12 * 1024 * 1024;
 
 export default function ProductContactForm({ productName, product }) {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', gdpr: false });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', gdpr: false, contactConfirmed: false });
+  const [useGoogleContact, setUseGoogleContact] = useState(false);
+  const [googleContact, setGoogleContact] = useState({ email: '', name: '', imageUrl: '' });
   const [files, setFiles] = useState([]);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -22,6 +25,11 @@ export default function ProductContactForm({ productName, product }) {
     event.target.value = '';
   };
 
+  const applyGoogleContact = (contact) => {
+    setGoogleContact(contact);
+    setForm((values) => ({ ...values, name: contact.name || values.name, email: contact.email || values.email }));
+  };
+
   const submit = async (event) => {
     event.preventDefault();
     setSending(true);
@@ -32,7 +40,7 @@ export default function ProductContactForm({ productName, product }) {
         return { name: file.name, url: result.file_url };
       }));
 
-      const created = await base44.entities.Poptavka.create({
+      const response = await base44.functions.invoke('submitPoptavka', {
         jmeno: form.name,
         email: form.email,
         telefon: form.phone,
@@ -40,13 +48,18 @@ export default function ProductContactForm({ productName, product }) {
         zprava: form.message || `Mám zájem o návrh a cenovou nabídku pro ${productName}.`,
         request_type: 'standard',
         service_type: 'product_quote',
-        status: 'nova',
-        offer_status: 'nova_poptavka',
+        use_google_contact: useGoogleContact,
+        google_contact_email: googleContact.email,
+        google_contact_name: googleContact.name,
+        google_profile_image_url: googleContact.imageUrl,
+        contact_confirmed_by_user: form.contactConfirmed,
+        privacy_contact_consent: form.gdpr,
         attachment_names: uploaded.map((item) => item.name),
         attachment_urls: uploaded.map((item) => item.url),
         photo_count: uploaded.filter((item) => /\.(avif|gif|heic|jpeg|jpg|png|webp)$/i.test(item.name)).length,
         requested_visualization: uploaded.some((item) => /\.(avif|gif|heic|jpeg|jpg|png|webp)$/i.test(item.name))
       });
+      const created = response?.data?.inquiry || response?.inquiry;
 
       trackContactFormSubmit('produkt_zjednodusena', productName, created?.id || '');
       setSent(true);
@@ -74,7 +87,14 @@ export default function ProductContactForm({ productName, product }) {
         <p className="mt-2 text-sm leading-relaxed text-slate-500">Stačí kontakt. Rozměry, instalaci a smart řízení s vámi dořešíme následně.</p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <GoogleContactBox
+        checked={useGoogleContact}
+        onCheckedChange={setUseGoogleContact}
+        onApply={applyGoogleContact}
+        contactFieldsId="product-contact-fields"
+      />
+
+      <div id="product-contact-fields" className="grid gap-3 sm:grid-cols-2">
         <label className="text-[11px] font-semibold text-slate-600">Jméno *<input required value={form.name} onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="Jméno a příjmení" /></label>
         <label className="text-[11px] font-semibold text-slate-600">E-mail *<input required type="email" value={form.email} onChange={(e) => setForm((v) => ({ ...v, email: e.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="jmeno@firma.cz" /></label>
         <label className="text-[11px] font-semibold text-slate-600 sm:col-span-2">Telefon<input value={form.phone} onChange={(e) => setForm((v) => ({ ...v, phone: e.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="+420 000 000 000" /></label>
@@ -89,7 +109,10 @@ export default function ProductContactForm({ productName, product }) {
 
       {files.length > 0 && <div className="mt-3 space-y-2">{files.map((file, index) => <div key={file.name + file.lastModified} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2"><Paperclip size={13} className="text-cyan-700"/><span className="min-w-0 flex-1 truncate text-xs text-slate-600">{file.name}</span><button type="button" onClick={() => setFiles((current) => current.filter((_, i) => i !== index))} aria-label={`Odebrat ${file.name}`} className="text-slate-400 hover:text-rose-600"><Trash2 size={13}/></button></div>)}</div>}
 
-      <label className="mt-4 flex items-start gap-2.5 text-[11px] leading-relaxed text-slate-500"><input required type="checkbox" checked={form.gdpr} onChange={(e) => setForm((v) => ({ ...v, gdpr: e.target.checked }))} className="mt-0.5 h-4 w-4 rounded border-slate-300"/><span>Souhlasím se zpracováním údajů pro vyřízení poptávky.</span></label>
+      <div className="mt-4 space-y-3">
+        <label className="flex items-start gap-2.5 text-[11px] leading-relaxed text-slate-500"><input required type="checkbox" checked={form.contactConfirmed} onChange={(e) => setForm((v) => ({ ...v, contactConfirmed: e.target.checked }))} className="mt-0.5 h-4 w-4 rounded border-slate-300"/><span>Potvrzuji, že uvedené kontaktní údaje jsou správné.</span></label>
+        <label className="flex items-start gap-2.5 text-[11px] leading-relaxed text-slate-500"><input required type="checkbox" checked={form.gdpr} onChange={(e) => setForm((v) => ({ ...v, gdpr: e.target.checked }))} className="mt-0.5 h-4 w-4 rounded border-slate-300"/><span>Souhlasím, aby MLŽIDLA.cz použila uvedené kontaktní údaje pro zpracování poptávky, přípravu návrhu a zaslání nabídky.</span></label>
+      </div>
       {error && <p className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">{error}</p>}
 
       <button type="submit" disabled={sending} className="mt-5 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-[#86d7f4] px-5 text-sm font-bold text-[#073747] transition hover:bg-[#6ccbed] disabled:opacity-60">

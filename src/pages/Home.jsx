@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
-import CityNetworkSection from '@/components/home/new/CityNetworkSection';
+import ReferencesStrip from '@/components/home/new/ReferencesStrip';
+import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
+import SmartUseCasesExperience from '@/components/home/new/SmartUseCasesExperience';
 import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
 import ReferenceCards from '@/components/home/new/ReferenceCards';
@@ -15,9 +17,9 @@ import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 export default function Home() {
   useEffect(() => {
     setSEO({
-      title: 'Městské ochlazování | Mlžidla.cz – výroba, pronájem, servis',
-      description: 'Navrhneme městské ochlazování od první zóny po celou síť ochlazovacích míst. Modulární mlžítka, mlžné brány a mlhoviště z nerezu AISI 316L, Smart řízení a servis.',
-      keywords: 'městské ochlazování, ochlazovací místa, mlžítka pro města, mlžné brány, mlhoviště, městský tepelný ostrov, Smart mlžení, AISI 316L',
+      title: 'Mlžítka, mlžné brány a mlhoviště pro města i zahrady',
+      description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, parky, zahrady, terasy a pergoly. Projektová podpora, výroba HolmTec a Smart řízení.',
+      keywords: 'mlžítka, mlžná brána, mlhoviště, vodní mlha na terasu, zahradní mlžítko, městské mlžítko',
       canonicalPath: '/',
       robots: 'index, follow',
     });
@@ -26,10 +28,12 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-      <CityNetworkSection />
+      <V3EditorialBridge />
+      <ReferencesStrip />
       <ProKohoSection />
       <MistInOperation />
       <SmartControlTeaser />
+      <SmartUseCasesExperience compact />
       <FeaturedMlzitka />
       <CooperationSteps />
       <ReferenceCards />

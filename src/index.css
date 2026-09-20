@@ -1,5 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Albert+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap');
 @import url('./styles/brand-components.css');
+@import url('./styles/brand-logo-system.css');
+@import url('./styles/mobile-premium.css');
 
 @tailwind base;
 @tailwind components;
@@ -7,52 +9,53 @@
 
 @layer base {
   :root {
-    /* MLŽIDLA® Brand System 3.0 — Deep Navy / Steel Blue / Signal Cyan (workspace Brand) */
-    --background: 195 57% 97%;
-    --foreground: 216 60% 10%;
+    /* MLŽIDLA® Brand System 3.1 — Deep Ink / Ocean Blue / Fresh Cyan / Mist Blue */
+    --background: 203 67% 98%;
+    --foreground: 212 74% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 216 60% 10%;
+    --card-foreground: 212 74% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 216 60% 10%;
-    --primary: 213 65% 24%;
-    --primary-foreground: 195 57% 97%;
-    --secondary: 216 60% 10%;
+    --popover-foreground: 212 74% 11%;
+    --primary: 210 74% 17%;
+    --primary-foreground: 203 67% 98%;
+    --secondary: 212 74% 11%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 194 55% 94%;
-    --muted-foreground: 206 14% 41%;
-    --accent: 188 86% 53%;
-    --accent-foreground: 0 0% 9%;
+    --muted: 200 75% 95%;
+    --muted-foreground: 208 18% 42%;
+    --accent: 197 100% 50%;
+    --accent-foreground: 212 74% 11%;
     --destructive: 17 88% 40%;
     --destructive-foreground: 0 0% 100%;
-    --border: 197 31% 87%;
-    --input: 197 31% 87%;
-    --ring: 213 65% 24%;
-    --radius: 0px;
-    --font-heading: 'Space Grotesk', sans-serif;
-    --font-body: 'Albert Sans', sans-serif;
-    --font-reading: 'Albert Sans', sans-serif;
+    --border: 199 55% 90%;
+    --input: 199 55% 90%;
+    --ring: 197 100% 50%;
+    --radius: 14px;
+    --font-heading: 'Manrope', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-reading: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-heading-line-height: 1.1;
     --font-heading-letter-spacing: -0.01em;
     --font-body-line-height: 1.55;
-    --brand-white: 195 57% 97%;
+    --brand-white: 203 67% 98%;
   }
   :root {
-    --brand-primary: #153863;
-    --brand-on-primary: #F4FAFC;
-    --brand-secondary: #0A1628;
-    --brand-accent: #22D3EE;
-    --brand-background: #F4FAFC;
+    --brand-primary: #0B2A4A;
+    --brand-on-primary: #F5FAFD;
+    --brand-secondary: #071A2F;
+    --brand-accent: #00B7FF;
+    --brand-background: #F5FAFD;
     --brand-surface: #FFFFFF;
-    --brand-text: #0A1628;
-    --brand-muted: #E7F4F8;
-    --brand-muted-foreground: #5A6B78;
-    --brand-border: #D3E2E8;
+    --brand-text: #071A2F;
+    --brand-muted: #EAF6FC;
+    --brand-muted-foreground: #607789;
+    --brand-border: #D6EAF3;
     --brand-destructive: #C2410C;
-    --brand-cyan-dark: #06667a;
+    --brand-cyan-dark: #007ACB;
     --brand-stainless-strong: #94A3B8; /* brushed stainless reference */
-    --brand-font-heading: 'Space Grotesk', sans-serif;
-    --brand-font-body: 'Albert Sans', sans-serif;
+    --brand-font-heading: 'Manrope', 'Inter', sans-serif;
+    --brand-font-body: 'Inter', sans-serif;
+    --brand-font-script: 'Caveat', cursive;
     --brand-font-heading-line-height: 1.1;
     --brand-font-heading-letter-spacing: -0.01em;
     --brand-font-body-line-height: 1.55;
@@ -67,11 +70,11 @@
     --brand-sp-5: 52px;
     --brand-sp-6: 88px;
     --brand-radius-none: 0px;
-    --brand-radius-sm: 0px;
-    --brand-radius-md: 0px;
-    --brand-radius-lg: 0px;
-    --brand-radius-full: 10px;
-    --brand-radius: 0px;
+    --brand-radius-sm: 10px;
+    --brand-radius-md: 16px;
+    --brand-radius-lg: 24px;
+    --brand-radius-full: 999px;
+    --brand-radius: 16px;
     --brand-shadow-none: none;
     --brand-shadow-sm: 0px 1px 2px 0px rgba(10, 22, 40, 0.05);
     --brand-shadow-md: 0 4px 12px rgba(10,22,40,0.08);
@@ -98,15 +101,15 @@
     --border: 213 30% 30%;
     --input: 213 30% 30%;
     --ring: 188 86% 53%;
-    --brand-white: 195 57% 97%;
+    --brand-white: 203 67% 98%;
   }
   .pulselab-theme {
     --background: 216 33% 97%;
     --brand-white: 216 33% 97%;
-    --font-heading: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Manrope', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Inter', monospace;
     font-family: var(--font-body);
   }
 }
@@ -133,6 +136,7 @@
   html {
     overflow-x: clip;
     scroll-behavior: smooth;
+    scroll-padding-top: 88px;
   }
   body {
     @apply bg-background text-foreground;
@@ -161,6 +165,25 @@
   button, input, textarea, select {
     font-family: var(--font-body);
   }
+
+  ::selection {
+    background: rgba(0, 183, 255, .22);
+    color: #071A2F;
+  }
+
+  a, button, [role='button'] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role='button']:focus-visible {
+    outline: 2px solid #00B7FF;
+    outline-offset: 3px;
+  }
 }
 
 @keyframes drip {
@@ -182,8 +205,8 @@
 }
 
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #0A1628; }
-::-webkit-scrollbar-thumb { background: #1A85B0; border-radius: 2px; }
+::-webkit-scrollbar-track { background: #071A2F; }
+::-webkit-scrollbar-thumb { background: #00B7FF; border-radius: 999px; }
 
 /* Fade-in & Slide-up on scroll (GSAP ScrollTrigger) */
 .reveal-element {
@@ -264,10 +287,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #0A1628 0%, #1A85B0 62%, #2BBFCF 100%);
+  background: linear-gradient(135deg, #071A2F 0%, #0878E8 58%, #00B7FF 100%);
   background-size: 220% 220%;
   color: #ffffff;
-  border: 1px solid rgba(43, 191, 207, 0.55);
+  border: 1px solid rgba(0, 183, 255, 0.55);
   border-radius: 999px;
   overflow: hidden;
   transition: background-position 0.6s ease, box-shadow 0.3s ease, transform 0.2s ease;
@@ -295,9 +318,9 @@
   transform: translateY(-1px);
 }
 @keyframes mist-ring-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(43, 191, 207, 0.4); }
-  70% { box-shadow: 0 0 0 9px rgba(43, 191, 207, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(43, 191, 207, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(0, 183, 255, 0.38); }
+  70% { box-shadow: 0 0 0 9px rgba(0, 183, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 183, 255, 0); }
 }
 .btn-inquiry-pulse {
   border: 2px solid hsl(var(--accent));
@@ -399,8 +422,8 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #22D3EE;
-  box-shadow: 0 0 12px 3px rgba(34, 211, 238, .45);
+  background: #00B7FF;
+  box-shadow: 0 0 12px 3px rgba(0, 183, 255, .42);
   animation: heroMistDot 7s ease-in-out infinite;
   pointer-events: none;
 }

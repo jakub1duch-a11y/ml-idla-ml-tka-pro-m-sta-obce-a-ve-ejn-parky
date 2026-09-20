@@ -48,19 +48,8 @@ export function getProductSchema(product) {
       '@type': 'Brand',
       name: 'Mlžidla.cz',
     },
-    ...(product.price ? {
-      offers: {
-        '@type': 'Offer',
-        url: product.url,
-        priceCurrency: 'CZK',
-        price: product.price,
-        availability: 'https://schema.org/InStock',
-        seller: {
-          '@type': 'Organization',
-          name: 'HolmTec',
-        },
-      },
-    } : {}),
+    // Veřejné produktové schema záměrně neobsahuje ceny ani nabídky.
+    // Zakázkové ceny patří pouze do interní nabídky a klientského portálu.
     aggregateRating: product.rating && {
       '@type': 'AggregateRating',
       ratingValue: product.rating.value,

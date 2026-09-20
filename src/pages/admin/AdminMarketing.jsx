@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Loader, CalendarClock, Palette, Sparkles, Gauge, Megaphone, CheckCircle2, Clock3, Layers3 } from 'lucide-react';
+import { Loader, CalendarClock, Palette, Sparkles, Gauge, Megaphone, CheckCircle2, Clock3, Layers3, ImageIcon } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ContentPlanForm from '@/components/admin/marketing/ContentPlanForm';
 import ContentPlanList from '@/components/admin/marketing/ContentPlanList';
@@ -8,11 +8,13 @@ import AiSuggestionsTab from '@/components/admin/marketing/AiSuggestionsTab';
 import InstagramConnectCard from '@/components/admin/marketing/InstagramConnectCard';
 import MarketingBriefingTab from '@/components/admin/marketing/MarketingBriefingTab';
 import MarketingConnectorHealth from '@/components/admin/marketing/MarketingConnectorHealth';
+import ThumbnailDirectorTab from '@/components/admin/marketing/ThumbnailDirectorTab';
 
 const SUBTABS = [
   { id:'briefing', label:'Briefing', sub:'Výkon, práce a priority', icon:Gauge },
   { id:'plan', label:'Plán obsahu', sub:'Náhledy, editace a publikace', icon:CalendarClock },
   { id:'brand', label:'Brand styl', sub:'Pravidla značky a vizuálů', icon:Palette },
+  { id:'thumbnails', label:'Miniatury', sub:'A/B/C koncepty a 50% test', icon:ImageIcon },
   { id:'ai', label:'AI doporučení', sub:'Akce → plán → úkol → provedení', icon:Sparkles },
 ];
 
@@ -32,11 +34,12 @@ export default function AdminMarketing(){
 
     <MarketingConnectorHealth />
 
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">{SUBTABS.map(t=>{const Icon=t.icon;const active=subtab===t.id;return <button key={t.id} onClick={()=>setSubtab(t.id)} className={`rounded-2xl border p-4 text-left transition ${active?'border-cyan/30 bg-cyan/10 shadow-[0_14px_40px_rgba(34,211,238,.08)]':'border-white/8 bg-white/[.025] hover:border-white/15 hover:bg-white/[.04]'}`}><div className="flex items-center justify-between"><div className={`flex h-9 w-9 items-center justify-center rounded-xl ${active?'bg-cyan text-slate-950':'bg-white/5 text-white/45'}`}><Icon size={16}/></div>{active?<span className="rounded-full bg-cyan/15 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-cyan">aktivní</span>:null}</div><p className={`mt-4 text-sm font-semibold ${active?'text-white':'text-white/65'}`}>{t.label}</p><p className="mt-1 text-xs leading-5 text-white/30">{t.sub}</p></button>})}</div>
+    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">{SUBTABS.map(t=>{const Icon=t.icon;const active=subtab===t.id;return <button key={t.id} onClick={()=>setSubtab(t.id)} className={`rounded-2xl border p-4 text-left transition ${active?'border-cyan/30 bg-cyan/10 shadow-[0_14px_40px_rgba(34,211,238,.08)]':'border-white/8 bg-white/[.025] hover:border-white/15 hover:bg-white/[.04]'}`}><div className="flex items-center justify-between"><div className={`flex h-9 w-9 items-center justify-center rounded-xl ${active?'bg-cyan text-slate-950':'bg-white/5 text-white/45'}`}><Icon size={16}/></div>{active?<span className="rounded-full bg-cyan/15 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-cyan">aktivní</span>:null}</div><p className={`mt-4 text-sm font-semibold ${active?'text-white':'text-white/65'}`}>{t.label}</p><p className="mt-1 text-xs leading-5 text-white/30">{t.sub}</p></button>})}</div>
 
     {subtab==='briefing'&&<MarketingBriefingTab/>}
     {subtab==='plan'&&<div className="space-y-6"><InstagramConnectCard/><div><div className="mb-3"><p className="font-mono text-[10px] uppercase tracking-widest text-cyan">Composer</p><h3 className="mt-1 text-lg font-medium text-white">Nový marketingový výstup</h3></div><ContentPlanForm onCreated={loadPosts}/></div><div><div className="mb-3"><p className="font-mono text-[10px] uppercase tracking-widest text-white/30">Content board</p><h3 className="mt-1 text-lg font-medium text-white">Naplánované a vytvořené akce</h3></div>{loading?<div className="flex justify-center py-16"><Loader size={22} className="animate-spin text-cyan/40"/></div>:<ContentPlanList posts={posts} onChange={loadPosts}/>}</div></div>}
     {subtab==='brand'&&<BrandProfileTab/>}
+    {subtab==='thumbnails'&&<ThumbnailDirectorTab/>}
     {subtab==='ai'&&<AiSuggestionsTab onPlanCreated={()=>{setSubtab('plan');loadPosts();}}/>}
   </div>;
 }

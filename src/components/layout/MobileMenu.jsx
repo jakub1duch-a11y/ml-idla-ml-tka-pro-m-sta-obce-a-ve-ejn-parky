@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
   Building2,
+  Trees,
+  Palette,
+  Tent,
   Calculator,
   ChevronDown,
   Cpu,
@@ -26,6 +29,13 @@ const INTERNATIONAL_MOBILE_COPY = {
   sk: { products: 'Produkty', city: 'Systémy pre mestá', garden: 'Systémy do záhrady', custom: 'Na mieru', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', about: 'O HolmTec', faq: 'FAQ', contact: 'Kontakt', quote: 'Požiadať o ponuku' },
   it: { products: 'Prodotti', city: 'Nebulizzazione urbana', garden: 'Nebulizzazione giardino', custom: 'Soluzioni su misura', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', about: 'Chi siamo', faq: 'FAQ', contact: 'Contatti', quote: 'Richiedi preventivo' },
 };
+
+const MOBILE_USE_LINKS = [
+  { label: 'Města', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
+  { label: 'Zahrady', path: '/rezidencni-mlzeni', icon: Trees },
+  { label: 'Architekti', path: '/kategorie/architekti', icon: Palette },
+  { label: 'Eventy', path: '/kategorie/eventy', icon: Tent },
+];
 
 const PRIMARY_LINKS = [
   { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', icon: Grid2X2 },
@@ -171,6 +181,18 @@ export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' 
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-4">
+                  <p className="mb-3 font-mono text-[9px] font-semibold uppercase tracking-[.18em] text-slate-500">Použití</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {MOBILE_USE_LINKS.map(({ label, path, icon: Icon }) => (
+                      <Link key={path} to={path} onClick={onClose} className="group flex min-h-12 items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3 text-[13px] font-semibold text-slate-800 transition hover:border-cyan-300 hover:bg-cyan-50">
+                        <Icon size={16} className="shrink-0 text-secondary" />
+                        <span>{label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
 
                 {PRIMARY_LINKS.map((item, index) => {
                   const Icon = item.icon;

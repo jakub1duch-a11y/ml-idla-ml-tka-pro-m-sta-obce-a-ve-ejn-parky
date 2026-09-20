@@ -8,10 +8,10 @@ import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 
 const STATIC_DOCS = [
   { title: 'Produktový katalog 2026', desc: 'Kompletní přehled všech mlžítek, mlžných bran a mlhovišť HolmTec.', category: 'Katalog', icon: FileText, url: null },
-  { title: 'Přípravné práce pro instalaci mlžítka', desc: 'Stavební příprava, výkopy, betonáž, rozvod vody a elektroinstalace pro chytrý ventil.', category: 'Instalace', icon: Wrench, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/b704ccfab_Ppravnprceproinstalacimltka.pdf' },
-  { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat (DET.1–3), průřezy a šachta nášlapného ventilu. Měřítko 1:10.', category: 'Výkres', icon: FileText, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/f23bec143_DETAILY_OCELOVEHO_MLZITKA.pdf' },
-  { title: 'Manuál údržby mlžící trysky typ M', desc: '5 komponentů trysky, postup demontáže a čištění od vodního kamene. Klíč č. 14.', category: 'Manuál', icon: Wrench, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/6fcaf7525_tryska.pdf' },
-  { title: 'Chytré ovládání — produktový prospekt', desc: 'Funkce Smart App, Supla Cloud, senzory, automatizace a plánování cyklů mlžení.', category: 'Smart', icon: BookOpen, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/681f0619c_Chytreovladani.pdf' },
+  { title: 'Přípravné práce pro instalaci mlžítka', desc: 'Stavební příprava, výkopy, betonáž, rozvod vody a elektroinstalace pro chytrý ventil.', category: 'Instalace', icon: Wrench, url: null },
+  { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat, průřezy a šachta nášlapného ventilu pro konkrétní projekt.', category: 'Výkres', icon: FileText, url: null },
+  { title: 'Manuál údržby mlžící trysky typ M', desc: 'Servisní postup demontáže a čištění trysky připravíme podle použité konfigurace.', category: 'Manuál', icon: Wrench, url: null },
+  { title: 'Chytré ovládání — produktový prospekt', desc: 'Funkce Smart App, Supla Cloud, senzory, automatizace a plánování cyklů mlžení.', category: 'Smart', icon: BookOpen, url: null },
   { title: 'Technický list — Mlžítka', desc: 'Rozměry, materiálové provedení, spotřeba vody a tlakové parametry.', category: 'Technický list', icon: FileText, url: null },
   { title: 'Manuál zazimování', desc: 'Postup přípravy systému na zimní období a ochrany před mrazem.', category: 'Manuál', icon: Shield, url: null },
   { title: 'Certifikát AISI 316L', desc: 'Materiálový certifikát pro potravinářský nerez AISI 316L.', category: 'Certifikát', icon: Shield, url: null },
@@ -83,7 +83,7 @@ export default function KeStazeni() {
         {/* Info banner */}
         <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-10 text-sm text-slate-500 font-light">
           <Info size={16} className="text-slate-400 mt-0.5 shrink-0" />
-          Stálé dokumenty jsou dostupné na vyžádání e-mailem. Produktové datasheets lze vygenerovat a stáhnout okamžitě ve formátu PDF.
+          Projektové dokumenty, technické výkresy, ceníky a interní podklady neposkytujeme jako veřejně indexovatelné soubory. Pošleme je na vyžádání podle konkrétního produktu a účelu použití.
         </div>
 
         {/* Static docs */}
@@ -133,7 +133,7 @@ export default function KeStazeni() {
         <div>
           <div className="mb-6">
             <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Produktové datasheets (PDF)</h2>
-            <p className="text-sm text-slate-400 font-light">Generujte profesionální technické listy pro konkrétní produkt přímo z naší databáze.</p>
+            <p className="text-sm text-slate-400 font-light">Produktové datasheets a cenové podklady připravujeme na vyžádání, aby se nezveřejňovaly neaktuální ceny ani interní technické dokumenty.</p>
           </div>
 
           {loadingProducts ? (
@@ -156,14 +156,10 @@ export default function KeStazeni() {
                       <p className="text-slate-400 text-xs font-light truncate">{product.short_description}</p>
                     )}
                   </div>
-                  <button onClick={() => generatePDF(product)} disabled={generatingId === product.id}
-                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-mono rounded-full hover:bg-slate-100 transition-all disabled:opacity-50">
-                    {generatingId === product.id ? (
-                      <><Loader size={12} className="animate-spin" /> Generuji…</>
-                    ) : (
-                      <><Download size={12} /> PDF</>
-                    )}
-                  </button>
+                  <a href={`mailto:obchod1@holmtec.cz?subject=${encodeURIComponent(`Žádost o produktový datasheet — ${product.name}`)}`}
+                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-mono rounded-full hover:bg-slate-100 transition-all">
+                    <Download size={12} /> Vyžádat
+                  </a>
                 </motion.div>
               ))}
             </div>

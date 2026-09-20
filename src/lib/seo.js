@@ -254,7 +254,7 @@ export function getProductSEO(product, reviewStats) {
   ].filter(Boolean);
 
   const materialText = product.material ? ' V provedení ' + product.material + '.' : '';
-  const fallbackDescription = product.name + ' je ' + search.primaryKeyword + ' ' + search.useCase + '.' + materialText + ' Prohlédněte technické parametry, varianty, realizace a podklady pro projekt.';
+  const fallbackDescription = 'Designové nerezové mlžítko pro ochlazení zahrad, parků a veřejných prostor jemnou vodní mlhou.' + materialText;
   const description = product.seo_description || fallbackDescription;
   const productSchema = {
     '@type': 'Product',
@@ -271,15 +271,8 @@ export function getProductSEO(product, reviewStats) {
     ...(additionalProperty.length ? { additionalProperty } : {}),
   };
 
-  if (product.price_from) {
-    productSchema.offers = {
-      '@type': 'Offer',
-      priceCurrency: 'CZK',
-      price: product.price_from,
-      availability: 'https://schema.org/InStock',
-      url: BASE_URL + canonicalPath,
-    };
-  }
+  // Ceny se u zakázkových mlžítek nezveřejňují ve veřejných strukturovaných datech.
+  // Patří do interních nabídek a klientského portálu, ne do Google indexu.
 
   if (reviewStats?.count && reviewStats?.average) {
     productSchema.aggregateRating = {
@@ -314,7 +307,7 @@ export function getProductSEO(product, reviewStats) {
   }
 
   return {
-    title: product.seo_title || (product.name + ' – ' + search.primaryKeyword + ' ' + search.useCase),
+    title: product.seo_title || (product.name + ' – nerezové mlžítko pro zahrady a města'),
     description,
     keywords: search.keywords + ', ' + product.name + ', HolmTec, MLŽIDLA.cz',
     image: images[0] || product.image_url,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
@@ -59,14 +59,16 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6 pt-16 lg:px-8 lg:pt-20">
+    <footer className="relative overflow-hidden bg-[#071A2F] text-primary-foreground">
+      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-cyan/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-hydro/10 blur-3xl" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1500px] px-6 pt-16 lg:px-8 lg:pt-20">
         <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.15fr_2fr] lg:gap-16">
           <div className="max-w-md">
             <Link to="/" className="inline-flex" aria-label="MLŽIDLA.cz — domů">
-              <Logo size="sm" />
+              <Logo size="lg" variant="full" />
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-6 text-white/62">
+            <p className="mt-5 max-w-sm text-sm leading-6 text-white/72">
               Česká mlžítka a mlžné systémy pro města, architekturu a zahrady. Od návrhu a výroby po instalaci, řízení a servis.
             </p>
 
@@ -99,7 +101,7 @@ export default function Footer() {
               <span className="min-w-0 flex-1">
                 <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Aplikace</span>
                 <span className="mt-1 block text-sm font-semibold text-white">Vizualizátor prostoru</span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">Soukromý náhled · fotografie vašeho prostoru</span>
+                <span className="mt-1 block text-xs leading-5 text-white/68">Soukromý náhled · fotografie vašeho prostoru</span>
               </span>
               <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
@@ -120,7 +122,7 @@ export default function Footer() {
                     <Link
                       key={label}
                       to={to}
-                      className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/62 transition-colors hover:text-white"
+                      className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white"
                     >
                       <span>{label}</span>
                       <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-60" />
@@ -137,7 +139,7 @@ export default function Footer() {
             <p className="max-w-2xl font-heading text-2xl leading-tight text-white sm:text-3xl">
               20 let zkušeností. Jedno promyšlené klima pro váš prostor.
             </p>
-            <p className="mt-2 text-sm text-white/52">Nové realizace, produktové novinky a technologie bez zbytečného spamu.</p>
+            <p className="mt-2 text-sm text-white/66">Nové realizace, produktové novinky a technologie bez zbytečného spamu.</p>
           </div>
 
           <form onSubmit={subscribe} className="flex w-full max-w-md md:w-[360px]">
@@ -162,25 +164,30 @@ export default function Footer() {
           </form>
         </div>
 
-        <div className="flex flex-col gap-5 py-7 text-xs text-white/42 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-3xl">
             <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
-            <p className="mt-1 text-white/30">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
-            <p className="mt-1 text-white/30"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white/60">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white/60">+420 774 700 390</a></p>
+            <p className="mt-1 text-white/58"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
+            <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
+            <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
+            <p className="mt-3 max-w-2xl border-l border-cyan/35 pl-3 text-[11px] leading-5 text-white/52">
+              <strong className="font-medium text-white/72">Tvůrce / autor designu: Jakub Duch</strong> — web design, webové prezentace, e-shopy, terminály pro firemní správu a OpenAI agents.
+            </p>
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
             <div
-              className="inline-flex items-center gap-3 rounded-xl border border-white/12 bg-white/[.045] px-3.5 py-2.5 text-left"
-              aria-label="Bezpečnost webu prověřena pomocí Bitdefender Link Checker"
-              title="Nezávislá kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství."
+              className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[.05] px-3 py-1.5 text-left"
+              aria-label="Zabezpečené připojení a kontrola odkazu"
+              title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství."
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300/20 bg-emerald-300/10 text-emerald-200">
-                <ShieldCheck size={17} strokeWidth={1.8} />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 bg-emerald-300/10 text-emerald-200">
+                <ShieldCheck size={13} strokeWidth={1.9} />
               </span>
-              <span className="min-w-0">
-                <span className="block text-[11px] font-semibold tracking-[.02em] text-white/82">Bezpečnost webu</span>
-                <span className="mt-0.5 block text-[10px] leading-4 text-white/42">Kontrola odkazu: Bitdefender Link Checker</span>
+              <span className="flex min-w-0 items-center gap-1.5">
+                <LockKeyhole size={11} className="shrink-0 text-white/62" aria-hidden="true" />
+                <span className="text-[10px] font-semibold tracking-[.02em] text-white/82">Zabezpečené připojení</span>
+                <span className="hidden text-[10px] text-white/52 sm:inline">· kontrola odkazu</span>
               </span>
             </div>
 

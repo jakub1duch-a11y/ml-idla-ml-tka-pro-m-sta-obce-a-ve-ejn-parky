@@ -23,9 +23,9 @@ export default function PdDetail({ product }) {
   ];
 
   const callouts = [
-    { x: '26%', y: '22%', side: 'right', title: 'Mlžící hlava', text: product.micron_size || 'Mikro-trysky, jemná mlha 50–100 µm' },
-    { x: '58%', y: '52%', side: 'left', title: 'Materiál konstrukce', text: product.material || 'Nerezová ocel AISI 316L, TIG svary' },
-    { x: '40%', y: '84%', side: 'right', title: 'Kotvení', text: 'Patka do betonu / zemní vrut, přípojka vody' },
+    { x: '26%', y: '22%', side: 'right', title: 'Mlžící část', text: product.micron_size || 'Osazení trysek podle schválené technické konfigurace produktu.' },
+    { x: '58%', y: '52%', side: 'left', title: 'Materiál konstrukce', text: product.material || 'Nerezové provedení podle technické specifikace produktu.' },
+    { x: '40%', y: '84%', side: 'right', title: 'Kotvení a přívod', text: 'Řešení se navrhuje podle výrobku, podloží a připravenosti konkrétního místa.' },
   ];
 
   return (
@@ -103,9 +103,9 @@ export default function PdDetail({ product }) {
 
             <dl className="divide-y divide-white/10 border border-white/12 bg-white/[.03]">
               {[
-                ['Materiál', product.material || 'Nerez AISI 316L'],
-                ['Trysky', product.micron_size || 'Jemná mlha 50–100 µm'],
-                ['Povrch', 'Saténově broušený, svařovaný TIG'],
+                ['Materiál', product.material || 'Dle technické specifikace produktu'],
+                ['Trysky', product.micron_size || 'Dle schválené konfigurace'],
+                ['Provedení', 'Finální povrch a detaily podle výrobní specifikace'],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-baseline justify-between gap-4 px-4 py-3">
                   <dt className="font-mono text-[10px] uppercase tracking-[.12em] text-white/45">{k}</dt>

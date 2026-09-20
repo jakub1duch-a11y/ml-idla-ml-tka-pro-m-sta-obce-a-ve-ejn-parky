@@ -9,6 +9,78 @@
     "source": {
       "type": "string",
       "description": "Odkud lead poch\u00e1z\u00ed, nap\u0159. blog_popup"
+    },
+    "name": {
+      "type": "string",
+      "description": "Jm\u00e9no z ov\u011b\u0159en\u00e9ho \u00fa\u010dtu, pokud je dostupn\u00e9"
+    },
+    "topics": {
+      "type": "array",
+      "description": "V\u00fdslovn\u011b vybran\u00e1 t\u00e9mata e-mailov\u00fdch upozorn\u011bn\u00ed",
+      "items": {
+        "type": "string",
+        "enum": [
+          "offers",
+          "news_products",
+          "studies",
+          "personalized_settings"
+        ]
+      }
+    },
+    "marketing_consent": {
+      "type": "boolean",
+      "description": "Aktivn\u00ed v\u00fdslovn\u00fd souhlas se zas\u00edl\u00e1n\u00edm vybran\u00fdch e-mailov\u00fdch upozorn\u011bn\u00ed"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "unsubscribed"
+      ],
+      "description": "Aktu\u00e1ln\u00ed stav odb\u011bru"
+    },
+    "consent_version": {
+      "type": "string",
+      "description": "Verze textu souhlasu"
+    },
+    "consent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u010cas ud\u011blen\u00ed nebo obnoven\u00ed souhlasu"
+    },
+    "consent_revoked_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u010cas odvol\u00e1n\u00ed souhlasu"
+    },
+    "identity_source": {
+      "type": "string",
+      "enum": [
+        "signed_in_account",
+        "customer_portal"
+      ],
+      "description": "Zp\u016fsob ov\u011b\u0159en\u00ed e-mailov\u00e9 adresy"
+    },
+    "verified_account": {
+      "type": "boolean",
+      "description": "E-mail byl p\u0159evzat z ov\u011b\u0159en\u00e9 u\u017eivatelsk\u00e9 nebo port\u00e1lov\u00e9 relace"
+    },
+    "account_user_id": {
+      "type": "string",
+      "description": "Intern\u00ed identifik\u00e1tor p\u0159ihl\u00e1\u0161en\u00e9ho \u00fa\u010dtu, je-li dostupn\u00fd"
+    },
+    "portal_manageable": {
+      "type": "boolean",
+      "description": "Preference lze spravovat v port\u00e1lu M\u016fj projekt"
+    },
+    "page_view_count_at_signup": {
+      "type": "number",
+      "description": "Po\u010det evidovan\u00fdch zobrazen\u00ed str\u00e1nek p\u0159i aktivaci"
+    },
+    "last_preferences_update_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Posledn\u00ed zm\u011bna preferenc\u00ed"
     }
   },
   "required": [

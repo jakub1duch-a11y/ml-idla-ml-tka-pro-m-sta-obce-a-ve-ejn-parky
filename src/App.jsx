@@ -12,6 +12,7 @@ import GlobalPhotoWatermark from '@/components/GlobalPhotoWatermark';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
 import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
+import MestskeOchlazovani from '@/pages/MestskeOchlazovani';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
@@ -60,9 +61,11 @@ import ServisUdrzba from '@/pages/ServisUdrzba';
 import VraceniZbozi from '@/pages/VraceniZbozi';
 import Katalog from '@/pages/Katalog';
 import SmartOvladani from '@/pages/SmartOvladani';
+import ChytreReseniProProstor from '@/pages/ChytreReseniProProstor';
 import PpcLanding from '@/pages/PpcLanding';
 import Udrzitelnost from '@/pages/Udrzitelnost';
 import Partnerstvi from '@/pages/Partnerstvi';
+import RedesignSpoluprace from '@/pages/RedesignSpoluprace';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
@@ -156,6 +159,7 @@ const AuthenticatedApp = () => {
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
+        <Route path="/mestske-ochlazovani-verejneho-prostoru" element={<MestskeOchlazovani />} />
         <Route path="/mlzitka-pro-mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/mesta-obce" element={<Navigate to="/mlzitka-pro-mesta-obce" replace />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
@@ -178,12 +182,14 @@ const AuthenticatedApp = () => {
         <Route path="/chytra-mlzidla" element={<Navigate to="/smart-ovladani" replace />} />
         <Route path="/katalog" element={<Katalog />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
+        <Route path="/chytre-reseni-pro-prostor" element={<ChytreReseniProProstor />} />
         <Route path="/ppc/mlzitka-pro-mesta-obce" element={<PpcLanding variant="mesta" />} />
         <Route path="/ppc/mlzitka-namesti-parky" element={<PpcLanding variant="parky" />} />
         <Route path="/ppc/chytra-mlzitka" element={<PpcLanding variant="smart" />} />
         <Route path="/ppc/chytry-ventil-automatizace" element={<PpcLanding variant="ventil" />} />
         <Route path="/udrzitelnost" element={<Udrzitelnost />} />
         <Route path="/partnerstvi" element={<Partnerstvi />} />
+        <Route path="/spoluprace" element={<RedesignSpoluprace />} />
         <Route path="/manualy" element={<Navigate to="/ke-stazeni" replace />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />

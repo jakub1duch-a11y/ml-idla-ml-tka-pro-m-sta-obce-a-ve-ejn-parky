@@ -12,6 +12,8 @@ Disallow: /admin-logout
 Disallow: /admin-forgot-password
 Disallow: /obchodni-nabidky
 Disallow: /muj-projekt
+Disallow: /klient
+Disallow: /klient-prihlaseni
 Disallow: /login
 Disallow: /register
 Disallow: /forgot-password

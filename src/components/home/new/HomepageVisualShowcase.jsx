@@ -5,30 +5,30 @@ import { ArrowRight, Building2, Trees, Home, Landmark, Sparkles, Droplets } from
 
 const useCases = [
   {
-    icon: Trees,
-    title: 'Parky',
-    text: 'Příjemnější mikroklima pro odpočinek, lavičky a pěší trasy.',
-    image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
-    link: '/poptavka',
-  },
-  {
     icon: Landmark,
-    title: 'Náměstí',
-    text: 'Ochlazení pobytových zón, městských akcí a míst, kde se lidé setkávají.',
-    image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
-    link: '/mestske-mlzitka',
+    title: 'LINEA',
+    text: 'Sloupové mlžítko pro čistou architekturu náměstí, promenád a veřejných vstupů.',
+    image: '/media/optimized/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.webp',
+    link: '/produkt/linea-mlzitko',
   },
   {
-    icon: Building2,
-    title: 'Restaurace a areály',
-    text: 'Komfort pro hosty, venkovní provoz a čekací zóny.',
-    image: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
-    link: '/chytre-reseni-pro-prostor',
+    icon: Sparkles,
+    title: 'STÉBLO',
+    text: 'Organický nerezový prvek pro jemnou vodní mlhu v zahradách, parcích a pobytových zónách.',
+    image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
+    link: '/zahradni-mlzitka',
+  },
+  {
+    icon: Trees,
+    title: 'MLŽNÉ HŘIŠTĚ',
+    text: 'Osvěžení na sportovištích, školních zahradách a veřejných herních místech.',
+    image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
+    link: '/kategorie/skoly-skolky-deti',
   },
   {
     icon: Home,
-    title: 'Soukromé zahrady',
-    text: 'Diskrétní mlžení pro terasy, posezení a rezidenční zahrady.',
+    title: 'AURA',
+    text: 'Kruhové mlžítko pro rezidenční zahrady, terasy a reprezentativní klidové zóny.',
     image: '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
     link: '/zahradni-mlzitka',
   },
@@ -86,8 +86,8 @@ export default function HomepageVisualShowcase() {
         <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-10">
           <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[.22em] text-[#0B8EC5]">// Kde mlžení pomáhá</p>
-              <h2 id="usecases-title" className="mt-3 font-heading text-3xl font-bold tracking-[-.045em] text-[#07131D] sm:text-4xl lg:text-5xl">Prostor, kde se lidé chtějí zdržet.</h2>
+              <p className="font-mono text-[11px] uppercase tracking-[.22em] text-[#0B8EC5]">// Nové produktové vizualizace</p>
+              <h2 id="usecases-title" className="mt-3 font-heading text-3xl font-bold tracking-[-.045em] text-[#07131D] sm:text-4xl lg:text-5xl">Skutečná mlžítka v profesionální prezentaci.</h2>
             </div>
             <Link to="/poptavka" className="inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0B8EC5] sm:self-auto">
               Navrhnout řešení <ArrowRight size={16} />
@@ -97,7 +97,7 @@ export default function HomepageVisualShowcase() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {useCases.map(({ icon: Icon, title, text, image, link }) => (
               <Link key={title} to={link} className="group relative min-h-[360px] overflow-hidden rounded-[1.6rem] bg-[#07131D] shadow-[0_24px_70px_rgba(7,19,29,.14)]">
-                <img src={image} alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" loading="lazy" />
+                <img src={image} alt={`${title} — reálný produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/26 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/18 bg-black/28 text-[#26C6E9] backdrop-blur-md">

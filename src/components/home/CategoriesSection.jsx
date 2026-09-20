@@ -17,8 +17,8 @@ const categories = [
 {
   id: 'mlhoviste',
   label: 'Mlhoviště & chladicí zóny',
-  tagline: 'Až −9 °C. Komfort bez mokra.',
-  desc: 'Plošné ochlazení teras, hřišť, sportovišť a průmyslových prostorů. Průmyslové čerpadlo 70 bar.',
+  tagline: 'Mikroklima pro pobyt venku.',
+  desc: 'Vodní mlha pro terasy, hřiště, sportoviště a veřejná prostranství. Návrh přizpůsobíme prostoru, vodovodnímu napojení a provoznímu režimu.',
   image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq',
   link: '/mlhoviste',
   count: '4 produkty',

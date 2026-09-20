@@ -90,15 +90,17 @@ export default function HomeHero() {
 
       <div className="relative z-20 mx-auto -mt-16 max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {tiles.map((tile) => (
-            <Link key={tile.title} to={tile.link} className="group relative min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)]">
-              <img src={tile.image} alt={`${tile.title} — MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/24 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
-                <p className="mt-1 text-sm font-semibold text-white/76">{tile.text}</p>
-              </div>
-            </Link>
+          {tiles.map((tile, index) => (
+            <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
+              <Link to={tile.link} className="group relative block min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)]">
+                <img src={tile.image} alt={`${tile.title} — MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/24 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
+                  <p className="mt-1 text-sm font-semibold text-white/76">{tile.text}</p>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

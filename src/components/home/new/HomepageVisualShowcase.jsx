@@ -125,11 +125,11 @@ export default function HomepageVisualShowcase() {
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-3">
-              {products.map((product) => (
-                <article key={product.name} className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[.045]">
-                  <div className="relative aspect-[4/5] overflow-hidden">
-                    <img src={product.image} alt={`${product.name} — ${product.label}`} className="h-full w-full object-cover" loading="lazy" />
+            <div className="-mx-5 flex gap-4 overflow-x-auto px-5 pb-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 xl:grid-cols-3">
+              {products.map((product, index) => (
+                <motion.article key={product.name} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.22 }} transition={{ duration: 0.48, delay: index * 0.035 }} className="group w-[78vw] shrink-0 overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[.045] transition duration-500 hover:-translate-y-1 hover:border-[#26C6E9]/45 sm:w-auto">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-[#0B2034]">
+                    <img src={product.image} alt={`${product.name} — ${product.label}`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" loading="lazy" decoding="async" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#071A2F] via-transparent to-transparent" />
                     <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/18 bg-black/25 px-3 py-2 text-[10px] font-bold uppercase tracking-[.16em] text-white/82 backdrop-blur-md"><Sparkles size={13} className="text-[#26C6E9]" /> {product.label}</span>
                   </div>
@@ -137,7 +137,7 @@ export default function HomepageVisualShowcase() {
                     <h3 className="font-heading text-2xl font-bold tracking-[-.04em]">{product.name}</h3>
                     <p className="mt-2 text-sm leading-6 text-white/64">{product.text}</p>
                   </div>
-                </article>
+                </motion.article>
               ))}
             </div>
           </div>

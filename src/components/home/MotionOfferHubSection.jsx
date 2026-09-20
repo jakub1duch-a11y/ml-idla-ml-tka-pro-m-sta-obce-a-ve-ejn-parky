@@ -58,15 +58,15 @@ export default function MotionOfferHubSection() {
               Nabídka, která působí jako architektonická prezentace.
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, delay: 0.12 }} className="mt-6 max-w-2xl text-base leading-8 text-slate-600">
-              Sales Hub spojuje poptávku, technické zadání, vizualizace, produktové fotografie, video, PDF nabídku a klientský portál do jednoho prémiového procesu. Technická data se do nabídky propisují pouze ze zdrojů; neznámé parametry zůstávají prázdné a nedopočítávají se odhadem.
+              Klientské CRM propojuje poptávku, vizualizace, cenovou nabídku, dokumenty a další kroky projektu do jednoho bezpečného pracovního prostoru. Technická data vycházejí pouze z ověřených podkladů; neznámé parametry se nedopočítávají odhadem.
             </motion.p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link to="/poptavka" className="btn-metallic-mist inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-6 py-3 text-sm font-bold text-white shadow-[0_16px_45px_rgba(13,45,56,.18)]">
                 Začít návrh nabídky <ArrowRight size={15} />
               </Link>
-              <Link to="/obchodni-nabidky" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-[#0d2d38] backdrop-blur hover:border-cyan-300">
-                Otevřít Sales Hub
+              <Link to="/muj-projekt" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-[#0d2d38] backdrop-blur hover:border-cyan-300">
+                Přihlásit do klientského CRM
               </Link>
             </div>
 
@@ -81,8 +81,8 @@ export default function MotionOfferHubSection() {
               <div className="rounded-[28px] bg-[#0d2d38] p-5 text-white sm:p-6">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#70dce9]">Live offer cockpit</p>
-                    <h3 className="mt-2 text-2xl font-light">Hub nabídky MLŽIDLA®</h3>
+                    <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#70dce9]">Client project workspace</p>
+                    <h3 className="mt-2 text-2xl font-light">Klientské CRM MLŽIDLA®</h3>
                   </div>
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[.07] text-[#70dce9]"><Layers3 size={21}/></span>
                 </div>

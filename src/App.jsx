@@ -133,6 +133,8 @@ const AuthenticatedApp = () => {
         <Route path="/produkt2/:slug" element={<Navigate to="/mlzidla-mlzitka" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />
+        <Route path="/klient" element={<CustomerPortal />} />
+        <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
         <Route path="/ai-vizualizace" element={<AIVizualizace />} />
         <Route path="/ar/bendy-single" element={<BendyARPrototype />} />

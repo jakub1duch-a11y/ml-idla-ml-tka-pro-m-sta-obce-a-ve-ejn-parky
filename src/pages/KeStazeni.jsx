@@ -27,40 +27,20 @@ const CATEGORY_COLORS = {
   'Výkres': 'text-sky-600 bg-sky-50 border-sky-200',
 };
 
-function downloadBlob(base64, filename) {
-  const bytes = atob(base64);
-  const arr = new Uint8Array(bytes.length);
-  for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
-  const blob = new Blob([arr], { type: 'application/pdf' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
-}
-
 export default function KeStazeni() {
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  const [generatingId, setGeneratingId] = useState(null);
   const [filter, setFilter] = useState('vse');
 
   useEffect(() => {
     setSEO({
-      title: 'Ke stažení — Instalační manuály a technická dokumentace',
-      description: 'Stáhněte si technické listy, instalační manuály, produktové PDF a certifikáty mlžných systémů HolmTec. Dokumentace pro architekty, instalatéry i koncové uživatele.',
-      keywords: 'ke stažení, instalační manuál mlžítko, technický list mlhoviště PDF, katalog mlžných systémů PDF, certifikát mlžné sochy',
+      title: 'Technické podklady k mlžítkům — dokumentace na vyžádání',
+      description: 'Vyžádejte si technické podklady pro mlžítka, chytré mlžné brány, vodní mlhu na veřejná prostranství a rezidenční instalace se SUPLA řízením.',
+      keywords: 'technické podklady mlžítka, mlžítka pro města, chytré mlžné brány, vodní mlha na veřejná prostranství, SUPLA ovládání mlžení',
       canonicalPath: '/ke-stazeni',
     });
     base44.entities.Product.list().then((res) => setProducts(res || [])).finally(() => setLoadingProducts(false));
   }, []);
-
-  const generatePDF = async (product) => {
-    setGeneratingId(product.id);
-    const response = await base44.functions.invoke('generateProductDatasheet', { product });
-    const { pdf_base64, filename } = response.data;
-    downloadBlob(pdf_base64, filename);
-    setGeneratingId(null);
-  };
 
   const filteredDocs = filter === 'vse' ? STATIC_DOCS : STATIC_DOCS.filter(d => d.category === filter);
   const categories = ['vse', ...new Set(STATIC_DOCS.map(d => d.category))];
@@ -73,10 +53,10 @@ export default function KeStazeni() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Dokumentace</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4">
-            Ke stažení<br /><span className="text-slate-400 font-extralight">manuály a technická dokumentace</span>
+Technické podklady<br /><span className="text-slate-400 font-extralight">na vyžádání podle projektu</span>
           </h1>
           <p className="text-slate-500 text-lg font-light max-w-2xl">
-            Technické listy, instalační návody, manuály pro Smart ovládání a produktové datasheets generované přímo z databáze produktů.
+Podklady pro mlžítka, chytré mlžné brány, vodní mlhu na veřejná prostranství a SUPLA řízení připravujeme podle konkrétního produktu, místa instalace a účelu použití.
           </p>
         </motion.div>
 
@@ -89,7 +69,7 @@ export default function KeStazeni() {
         {/* Static docs */}
         <div className="mb-14">
           <div className="flex items-center gap-3 flex-wrap mb-6">
-            <h2 className="font-heading font-light text-xl text-slate-900 mr-2">Dokumenty ke stažení</h2>
+            <h2 className="font-heading font-light text-xl text-slate-900 mr-2">Dostupné typy podkladů</h2>
             {categories.map((c) => (
               <button key={c} onClick={() => setFilter(c)}
                 className={`px-3 py-1 rounded-full text-xs font-mono transition-all ${filter === c ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300'}`}>
@@ -132,7 +112,7 @@ export default function KeStazeni() {
         {/* Product datasheets */}
         <div>
           <div className="mb-6">
-            <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Produktové datasheets (PDF)</h2>
+            <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Produktové podklady na vyžádání</h2>
             <p className="text-sm text-slate-400 font-light">Produktové datasheets a cenové podklady připravujeme na vyžádání, aby se nezveřejňovaly neaktuální ceny ani interní technické dokumenty.</p>
           </div>
 

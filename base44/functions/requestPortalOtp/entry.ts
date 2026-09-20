@@ -62,11 +62,11 @@ Deno.serve(async (req) => {
 
       await base44.asServiceRole.integrations.Core.SendEmail({
         to: email,
-        subject: quoteNumber ? `Přístup k nabídce ${quoteNumber} | MLŽIDLA®` : 'Ověřovací kód | MLŽIDLA® Můj projekt',
+        subject: quoteNumber ? `Přístup k nabídce ${quoteNumber} | MLŽIDLA®` : 'Ověřovací kód | MLŽIDLA® Klientské CRM',
         body: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d2d38;color:#e6f4f7;padding:32px;border-radius:18px;">
             <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#61d5e5;margin-bottom:8px;">MLŽIDLA® by HolmTec</div>
-            <h1 style="font-size:24px;margin:0;color:#ffffff;">Přístup do Můj projekt</h1>
+            <h1 style="font-size:24px;margin:0;color:#ffffff;">Přístup do Klientského CRM</h1>
             <p style="color:#a8c4ca;font-size:13px;line-height:1.7;margin:10px 0 24px;">${quoteNumber ? `Ověřujeme přístup k cenové nabídce <strong style="color:#ffffff;">${quoteNumber}</strong>.` : 'Ověřujeme přístup k vašim projektům a cenovým nabídkám.'}</p>
             <div style="margin:24px 0;padding:18px;background:#113b47;border:1px solid #245966;border-radius:14px;text-align:center;">
               <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8bcfda;margin-bottom:8px;">Ověřovací kód</div>

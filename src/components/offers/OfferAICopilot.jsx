@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Bot, Check, FileImage, FileText, ImagePlus, Loader2, Send, Sparkles, UploadCloud } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { createOfferAttachmentName, SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
+import { getGeometryLock, getNegativeRules, getProductReferenceImages } from '@/lib/productVisualizationRules';
 
 const isImage = (file) => String(file?.file_type || '').startsWith('image/') || /\.(png|jpe?g|webp|gif)(\?|$)/i.test(String(file?.file_url || ''));
 const short = (value, max = 180) => String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -188,7 +189,7 @@ ${learningContext}
     }
     setError(''); setVisualBusy(true);
     try {
-      const refs = [product.image_url, ...(product.gallery_urls || [])].filter(Boolean).filter((url, i, all) => all.indexOf(url) === i).slice(0, 4);
+      const refs = getProductReferenceImages(product, 5);
       const mistVariants = [
         'Téměř bezvětří: mlha zůstává krátce kompaktní u trysek a pak se jemně rozpouští.',
         'Lehký vítr zleva doprava: mlha se přirozeně stáčí do strany, ale vychází přesně z trysek.',
@@ -196,10 +197,7 @@ ${learningContext}
         'Proměnlivý slabý vánek: část mlhy se drží u produktu a část se lehce rozptyluje do pobytové zóny.',
       ];
       const mistBehavior = mistVariants[Math.floor(Math.random() * mistVariants.length)];
-      const isBendy = /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
-      const productRule = isBendy
-        ? `BENDY LOCK: Referenční produkt BENDY musí zůstat konstrukčně čistý jako na produktové fotografii. Jedna samostatná nerezová trubka tvoří rovný svislý dřík a nahoře přechází do jediného plynulého oblouku. ŽÁDNÉ výhonky, větvičky, boční trubky, hadice, kabely, sekundární oblouky ani dekorativní přídavky. Mlžicí trysky jsou malé samostatné kovové trysky přímo osazené v hlavní trubce a pouze z nich vystupuje jemná mlha. Nevytvářej žádné hadičky vedoucí k tryskám. Zachovej štíhlé proporce, broušený nerezový povrch a jednoduché kotvení.`
-        : `PRODUCT LOCK: Zachovej přesně rozpoznatelnou siluetu, hlavní konstrukci, proporce, materiál a charakter produktu podle produktových referencí. Produkt kreativně nepřepracovávej a nepřidávej nové konstrukční části.`;
+      const productRule = `PRODUCT MASTER LOCK: PRVNÍ produktová reference má absolutní prioritu. ${getGeometryLock(product)}\nZAKÁZÁNO:\n- ${getNegativeRules(product).join('\n- ')}\nStav MASTER reference: ${(product.visual_master_verified || product.hero_visual_verified) ? 'ověřená; výsledek přesto vyžaduje vizuální kontrolu' : 'neověřená; výstup je pouze návrhový koncept a nesmí být automaticky schválen pro klienta'}.`;
       const response = await base44.integrations.Core.GenerateImage({
         prompt: `Vytvoř fotorealistickou architektonickou vizualizaci pro obchodní nabídku MLŽIDLA.cz.
 
@@ -231,7 +229,7 @@ Umístění navrhni bezpečně v návaznosti na pěší trasu a pobytová místa
       });
       setAssets((current) => [asset, ...current]);
       onAttachmentsChange?.([...attachments.filter((item) => item.file_url !== asset.file_url), asset]);
-      setMessages((current) => [...current, { role: 'assistant', text: `Vizualizace ${product.name} je připravená a označená pro vložení do nabídky a prezentace.` }]);
+      setMessages((current) => [...current, { role: 'assistant', text: `Vizualizace ${product.name} je připravená k vizuální kontrole proti MASTER referenci. Do nabídky ji zařaďte až po potvrzení geometrie produktu.` }]);
       try {
         await base44.functions.invoke('archiveGeneratedMediaToDrive', {
           fileUrl: response.url,
@@ -294,7 +292,7 @@ Umístění navrhni bezpečně v návaznosti na pěší trasu a pobytová místa
           <button type="button" onClick={generateVisualization} disabled={visualBusy || !sourceUrl || !product} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0e5b67] px-4 py-3 text-sm font-bold text-white disabled:opacity-40"><ImagePlus size={16}/>{visualBusy ? 'Generuji vizualizaci…' : 'Vygenerovat vizualizaci z podkladů'}</button>
 
           <div className="mt-4 space-y-2">
-            {assets.filter((asset) => asset.asset_type === 'generated_visualization').slice(0, 3).map((asset) => <div key={asset.id || asset.file_url} className="flex items-center gap-3 rounded-xl border border-slate-200 p-2"><img src={asset.file_url} alt={asset.title || 'Vizualizace'} className="h-14 w-20 rounded-lg bg-slate-50 object-contain"/><div className="min-w-0 flex-1"><p className="truncate text-xs font-semibold text-slate-800">{asset.title || 'AI vizualizace'}</p><p className="mt-1 flex items-center gap-1 text-[10px] text-emerald-700"><Check size={11}/> Připraveno pro nabídku</p></div></div>)}
+            {assets.filter((asset) => asset.asset_type === 'generated_visualization').slice(0, 3).map((asset) => <div key={asset.id || asset.file_url} className="flex items-center gap-3 rounded-xl border border-slate-200 p-2"><img src={asset.file_url} alt={asset.title || 'Vizualizace'} className="h-14 w-20 rounded-lg bg-slate-50 object-contain"/><div className="min-w-0 flex-1"><p className="truncate text-xs font-semibold text-slate-800">{asset.title || 'AI vizualizace'}</p><p className="mt-1 flex items-center gap-1 text-[10px] text-amber-700"><Check size={11}/> K ověření proti MASTER referenci</p></div></div>)}
           </div>
           {error && <p className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">{error}</p>}
         </div>

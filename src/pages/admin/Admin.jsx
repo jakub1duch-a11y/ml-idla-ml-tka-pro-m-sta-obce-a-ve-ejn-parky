@@ -57,6 +57,13 @@ const TABS = [
   { id: 'instagram', label: 'Instagram', icon: Instagram },
 ];
 
+const TAB_GROUPS = [
+  { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
+  { label: 'Obchod', ids: ['poptavky', 'crm', 'prospects'] },
+  { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
+  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'development', 'databricks', 'terminal'] },
+];
+
 export default function Admin() {
   const navigate = useNavigate();
 
@@ -156,23 +163,30 @@ export default function Admin() {
     <div className="min-h-screen bg-ink flex flex-col md:flex-row">
       <AdminMobileNav tabs={TABS} activeTab={activeTab} onChange={changeTab} />
       {/* Sidebar */}
-      <div className="hidden w-56 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
+      <div className="hidden w-64 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
         <div className="px-5 py-6 border-b border-white/8">
           <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-1">Admin</p>
           <p className="text-white text-sm font-medium truncate">{user.full_name || user.email}</p>
         </div>
-        <nav className="flex-1 p-3 space-y-1">
-          {TABS.map(tab => {
-            const Icon = tab.icon;
-            return (
-              <button key={tab.id} onClick={() => changeTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
-                <Icon size={16} />
-                {tab.label}
-                {activeTab === tab.id && <ChevronRight size={12} className="ml-auto" />}
-              </button>
-            );
-          })}
+        <nav className="flex-1 overflow-y-auto p-3">
+          {TAB_GROUPS.map((group) => (
+            <div key={group.label} className="mb-4 last:mb-0">
+              <p className="mb-1.5 px-3 font-mono text-[9px] uppercase tracking-[.16em] text-white/20">{group.label}</p>
+              <div className="space-y-1">
+                {group.ids.map((tabId) => TABS.find((item) => item.id === tabId)).filter(Boolean).map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button key={tab.id} onClick={() => changeTab(tab.id)}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+                      <Icon size={16} />
+                      {tab.label}
+                      {activeTab === tab.id && <ChevronRight size={12} className="ml-auto" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
         <div className="p-3 border-t border-white/8 space-y-1">
           <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />

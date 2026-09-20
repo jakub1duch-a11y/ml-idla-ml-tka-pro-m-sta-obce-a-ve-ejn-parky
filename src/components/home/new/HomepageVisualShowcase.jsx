@@ -102,18 +102,24 @@ export default function HomepageVisualShowcase() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {useCases.map(({ icon: Icon, title, text, image, link }) => (
-              <Link key={title} to={link} className="group relative min-h-[360px] overflow-hidden rounded-[1.6rem] bg-[#07131D] shadow-[0_24px_70px_rgba(7,19,29,.14)]">
-                <img src={image} alt={`${title} — reálný produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/26 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/18 bg-black/28 text-[#26C6E9] backdrop-blur-md">
-                    <Icon size={22} />
+            {useCases.map(({ icon: Icon, title, text, image, link }, index) => (
+              <motion.div key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -8 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.5, delay: index * 0.05 }}>
+                <Link to={link} className="group relative block min-h-[360px] overflow-hidden rounded-[1.6rem] bg-[#07131D] shadow-[0_24px_70px_rgba(7,19,29,.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
+                  <img src={image} alt={`${title} — reálný produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/26 to-transparent" />
+                  <motion.span className="absolute left-5 right-5 top-5 h-px origin-left rounded-full bg-gradient-to-r from-[#26C6E9] via-white/60 to-transparent opacity-0 group-hover:opacity-100" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.72, delay: 0.12 + index * 0.04 }} />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/18 bg-black/28 text-[#26C6E9] backdrop-blur-md transition group-hover:scale-105">
+                      <Icon size={22} />
+                    </div>
+                    <h3 className="font-heading text-2xl font-bold tracking-[-.04em]">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/76">{text}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] transition group-hover:translate-x-1">
+                      Zobrazit řešení <ArrowRight size={14} />
+                    </span>
                   </div>
-                  <h3 className="font-heading text-2xl font-bold tracking-[-.04em]">{title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-white/76">{text}</p>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -156,7 +162,7 @@ export default function HomepageVisualShowcase() {
           </div>
 
           <div className="mt-12 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-3">
-            <div className="flex items-start gap-3"><Droplets className="mt-1 text-[#26C6E9]" size={20} /><p className="text-sm leading-6 text-white/66"><strong className="block text-white">Pocitové ochlazení 5–10 °C</strong>Podle provozu, mikroklimatu a konkrétního nastavení.</p></div>
+            <div className="flex items-start gap-3"><Droplets className="mt-1 text-[#26C6E9]" size={20} /><p className="text-sm leading-6 text-white/66"><strong className="block text-white">Cílené osvěžení zóny</strong>Podle provozu, mikroklimatu a konkrétního nastavení.</p></div>
             <div className="flex items-start gap-3"><Droplets className="mt-1 text-[#26C6E9]" size={20} /><p className="text-sm leading-6 text-white/66"><strong className="block text-white">Prach a pyl</strong>Jemná mlha pomáhá vázat částice v bezprostředním okolí.</p></div>
             <div className="flex items-start gap-3"><Droplets className="mt-1 text-[#26C6E9]" size={20} /><p className="text-sm leading-6 text-white/66"><strong className="block text-white">Nerez + smart řízení</strong>Odolná konstrukce a provoz podle teploty nebo času.</p></div>
           </div>

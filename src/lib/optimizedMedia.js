@@ -113,20 +113,19 @@ const ORIGINAL_MEDIA_MAP = Object.fromEntries(
   Object.entries(MEDIA_MAP).map(([source, optimized]) => [optimized, source])
 );
 
+export function getOptimizedMediaUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  return MEDIA_MAP[url] || url;
+}
+
+export function getOriginalMediaUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  return ORIGINAL_MEDIA_MAP[url] || url;
+}
+
 export function resolveMediaUrl(url) {
   if (!url || typeof url !== 'string') return url;
-
-  // The generated /public/media/optimized files are not guaranteed to be
-  // present in every Base44/Vercel checkout. When an entity still contains
-  // one of those generated paths, fall back to the durable original media
-  // URL instead of rendering a broken product image/video.
-  if (url.startsWith('/media/optimized/')) {
-    return ORIGINAL_MEDIA_MAP[url] || url;
-  }
-
-  // Keep durable source URLs as-is. Converting them to MEDIA_MAP targets here
-  // can create broken thumbnails when the optimized asset was not deployed.
-  return url;
+  return getOptimizedMediaUrl(url);
 }
 
 export function normalizeProductMedia(product) {
@@ -134,9 +133,8 @@ export function normalizeProductMedia(product) {
 
   return {
     ...product,
-    // Live BENDY records may themselves contain a stale generated
-    // /media/optimized path, so every main image must pass through the same
-    // durable-source fallback. Source URLs stay untouched by resolveMediaUrl.
+    // Prefer local optimized media for uploaded Base44/Drive assets. Image components
+    // can still fall back to the original URL through getOriginalMediaUrl on load error.
     image_url: resolveMediaUrl(product.image_url),
     gallery_urls: Array.isArray(product.gallery_urls) ? product.gallery_urls.map(resolveMediaUrl) : product.gallery_urls,
     video_url: resolveMediaUrl(product.video_url),

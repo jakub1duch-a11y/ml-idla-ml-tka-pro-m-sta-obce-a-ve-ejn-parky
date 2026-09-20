@@ -20,19 +20,19 @@ const TRUST = [
 
 const STEPS = [
   {
-    kicker: 'MLŽIDLA® · Urban cooling',
-    title: 'Ochlazení, které patří do architektury.',
-    body: 'Nerezová mlžítka a mlžné brány pro města, parky, promenády, areály i zahrady. Navrhujeme je jako součást prostoru — funkční, odolné a vizuálně čisté.',
+    kicker: 'MLŽIDLA® · chytré mlžení prostoru',
+    title: 'Proměňujeme atmosféru míst.',
+    body: 'Nerezová mlžítka, chytré mlžné brány a vodní mlha na veřejná prostranství vytvářejí příjemnější mikroklima pro města, parky, sportoviště, gastro i zahrady.',
   },
   {
     kicker: 'Architektonické řešení',
-    title: 'Mlha jako součást veřejného prostoru.',
-    body: 'Nerezová mlžítka a mlžné prvky navrhujeme tak, aby byly funkční, odolné a přirozeně zapadly do moderní architektury města.',
+    title: 'Mikroklima pro náměstí, parky a sportoviště.',
+    body: 'Mlžítka pro města navrhujeme podle pohybu lidí, stínu, mobiliáře a dostupného napojení na běžný vodovodní řád.'
   },
   {
     kicker: 'Chytré ovládání',
-    title: 'Řízení podle času, teploty i provozu.',
-    body: 'Napojení na chytré ventily, senzory a scénáře ovládání pomáhá držet komfort i efektivní provoz bez zbytečné spotřeby.',
+    title: 'Chytré řízení SUPLA v mobilu.',
+    body: 'Automatizace podle teploty, času, počasí nebo provozního režimu pomáhá spravovat jednu mlžnou zónu i více bodů ve veřejném prostoru.'
   },
   {
     kicker: 'Návrh a realizace',
@@ -247,10 +247,10 @@ export default function HomeHero() {
                   MLŽIDLA v prostoru
                 </p>
                 <h2 className="mt-3 font-heading text-2xl font-bold tracking-[-.03em]">
-                  Profesionální osvěžení a městské ochlazování
+                  Více svěžesti v každém dni
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-white/70">
-                  Od prvního návrhu přes výrobu až po instalaci a smart řízení. Každý projekt stavíme kolem skutečného prostoru, reálného provozu a věrné geometrie produktu.
+                  Od prvního návrhu přes výrobu až po instalaci a SUPLA řízení. Každý projekt stavíme kolem skutečného prostoru, reálného provozu a čisté geometrie produktu.
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
@@ -280,10 +280,10 @@ export default function HomeHero() {
                 HolmTec · mlžné systémy
               </p>
               <h3 className="mt-2 font-heading text-xl font-bold tracking-[-.02em] sm:text-2xl">
-                Mlha, která zpříjemňuje pobyt ve městě
+Mikroklima pro města, sportoviště i zahrady
               </h3>
               <p className="mt-1 max-w-2xl text-sm leading-6 text-white/65">
-                Pro veřejný prostor, parky, promenády, hřiště, gastro i rezidenční použití.
+Mlžítka pro města, ochlazování náměstí, osvěžení na sportovištích a rezidenční SMART komfort v jednom směru.
               </p>
             </div>
 

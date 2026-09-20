@@ -12,28 +12,28 @@ const benefits = [
 
 const tiles = [
   {
-    title: 'Parky',
-    text: 'Příjemné klima pro relax',
-    image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
-    link: '/mestske-mlzitka',
+    title: 'LINEA',
+    text: 'Minimalistické sloupové mlžítko',
+    image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
+    link: '/produkt/linea-mlzitko',
   },
   {
-    title: 'Náměstí',
-    text: 'Bod setkávání občanů',
-    image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
+    title: 'KVĚT',
+    text: 'Hravé osvěžení pro děti a hřiště',
+    image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
+    link: '/kategorie/skoly-skolky-deti',
+  },
+  {
+    title: 'MLŽNÁ BRÁNA',
+    text: 'Průchozí vodní mlha pro náměstí',
+    image: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
     link: '/mlzne-brany',
   },
   {
-    title: 'Restaurace',
-    text: 'Delší pobyt hostů',
-    image: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
-    link: '/chytre-reseni-pro-prostor',
-  },
-  {
-    title: 'Soukromé zahrady',
-    text: 'Svěžest u vás doma',
-    image: '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
-    link: '/zahradni-mlzitka',
+    title: 'BENDY',
+    text: 'Organická linie pro pobytové zóny',
+    image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
+    link: '/produkt/brana-bendy',
   },
 ];
 
@@ -93,7 +93,7 @@ export default function HomeHero() {
           {tiles.map((tile, index) => (
             <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
               <Link to={tile.link} className="group relative block min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)]">
-                <img src={tile.image} alt={`${tile.title} — MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" loading="lazy" />
+                <img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/24 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>

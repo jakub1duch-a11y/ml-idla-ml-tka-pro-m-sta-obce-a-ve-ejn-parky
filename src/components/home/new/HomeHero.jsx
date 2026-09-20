@@ -33,7 +33,7 @@ const tiles = [
     title: 'BENDY',
     text: 'Organická linie pro pobytové zóny',
     image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
-    link: '/produkt/brana-bendy',
+    link: '/produkt/mlzitko-bendy',
   },
 ];
 

@@ -139,6 +139,8 @@ const AuthenticatedApp = () => {
         <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/klient" element={<CustomerPortal />} />
         <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
+        <Route path="/klient" element={<CustomerPortal />} />
+        <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
         <Route path="/ai-vizualizace" element={<AIVizualizace />} />
         <Route path="/ar/bendy-single" element={<BendyARPrototype />} />

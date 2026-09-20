@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowRight, Play, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
@@ -40,17 +41,20 @@ export default function HomeHero() {
   return (
     <section className="relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
-        <img
+        <motion.img
           src="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp"
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover object-center"
+          initial={{ scale: 1.04 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
-          <div className="max-w-3xl">
+          <motion.div className="max-w-3xl" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.22em] text-[#26C6E9]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
             <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(4rem,9vw,8.6rem)] font-black leading-[.86] tracking-[-.085em] text-white">
               Město se nadechne.
@@ -67,9 +71,9 @@ export default function HomeHero() {
                 Přehrát video
               </Link>
             </div>
-          </div>
+          </motion.div>
 
-          <aside className="hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) => (
                 <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">
@@ -80,7 +84,7 @@ export default function HomeHero() {
                 </div>
               ))}
             </div>
-          </aside>
+          </motion.aside>
         </div>
       </div>
 

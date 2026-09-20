@@ -23,6 +23,9 @@
 /muj-projekt
   X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
 
+/klient*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+
 /login
   X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
 

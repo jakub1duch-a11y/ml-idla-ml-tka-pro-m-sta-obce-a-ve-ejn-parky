@@ -19,7 +19,7 @@ const categories = [
   label: 'Mlhoviště & chladicí zóny',
   tagline: 'Mikroklima pro pobyt venku.',
   desc: 'Vodní mlha pro terasy, hřiště, sportoviště a veřejná prostranství. Návrh přizpůsobíme prostoru, vodovodnímu napojení a provoznímu režimu.',
-  image: 'https://lh3.googleusercontent.com/d/1PSs-lVCOPnP-faNmq3C6vz26F2_xZepq',
+  image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
   link: '/mlhoviste',
   count: '4 produkty',
   tag: 'COOLING'
@@ -29,7 +29,7 @@ const categories = [
   label: 'Mlžné příslušenství a moduly',
   tagline: 'Doplňky pro každou instalaci.',
   desc: 'Trysky, filtrace, SUPLA řízení, senzory a další komponenty pro rozšíření a údržbu mlžného systému.',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
+  image: '/media/optimized/0f64f6136_mlzne_trysky.webp',
   link: '/prislusenstvi',
   count: '5 produktů',
   tag: 'PŘÍSLUŠENSTVÍ'
@@ -63,7 +63,7 @@ export default function CategoriesSection() {
             initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             
             <Link to={categories[0].link} className="group relative block rounded-2xl overflow-hidden h-full min-h-[400px]">
-              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6b2d05df_mlidlo-mlzitkoAURA.png" alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 duration-800" />
+              <img src={categories[0].image} alt={categories[0].label} className="absolute inset-0 w-full h-full object-cover transition-transform group-hover:scale-105 duration-800" loading="eager" fetchPriority="high" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
               <div className="absolute flex flex-col justify-between inset-0 p-8">
@@ -91,7 +91,7 @@ export default function CategoriesSection() {
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0 * 0.08 }}>
               <Link to={categories[1].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
                 <div className="relative w-48 shrink-0 overflow-hidden">
-                  <img src={categories[1].image} alt={categories[1].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={categories[1].image} alt={categories[1].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                 </div>
                 <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">
                   <div className="flex items-start justify-between gap-2">
@@ -113,7 +113,7 @@ export default function CategoriesSection() {
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 1 * 0.08 }}>
               <Link to={categories[2].link} className="group relative flex items-stretch rounded-2xl overflow-hidden h-36">
                 <div className="relative w-48 shrink-0 overflow-hidden">
-                  <img src="/media/optimized/0f64f6136_mlzne_trysky.webp" alt={categories[2].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={categories[2].image} alt={categories[2].label} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                 </div>
                 <div className="flex-1 bg-white border border-slate-200 group-hover:border-slate-300 transition-all p-5 flex flex-col justify-between">
                   <div className="flex items-start justify-between gap-2">

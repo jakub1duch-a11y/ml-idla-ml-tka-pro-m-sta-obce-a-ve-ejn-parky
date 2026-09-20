@@ -12,7 +12,6 @@ import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdWireframe from '@/components/produkt/new/PdWireframe';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
 import PdSmartControl from '@/components/produkt/new/PdSmartControl';
-import PdTechSheet from '@/components/produkt/new/PdTechSheet';
 import PdDetail from '@/components/produkt/new/PdDetail';
 import PdHowItWorks from '@/components/produkt/new/PdHowItWorks';
 import PdTabs from '@/components/produkt/new/PdTabs';
@@ -89,9 +88,8 @@ export default function ProduktDetail() {
       <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
       <PdWireframe product={product} />
       <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
-      <PdTechSheet product={product} />
       <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
-      <PdSmartControl product={product} />
+      <div id="chytre-rizeni" className="scroll-mt-28"><PdSmartControl product={product} /></div>
       <PdDetail product={product} />
       <PdHowItWorks product={product} />
       <PdTabs product={product} />

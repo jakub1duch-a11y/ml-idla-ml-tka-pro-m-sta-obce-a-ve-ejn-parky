@@ -3,8 +3,6 @@ import { Wrench, ShieldCheck, FileText } from 'lucide-react';
 
 export default function PdTabs({ product }) {
   const [active, setActive] = useState('instalace');
-  const documents = [];
-
   const tabs = useMemo(() => [
     {
       id: 'instalace',

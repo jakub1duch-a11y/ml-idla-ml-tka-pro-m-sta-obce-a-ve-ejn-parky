@@ -9,7 +9,7 @@ export default function Logo({ size = 'md' }) {
       <img
         src={LOGO_URL}
         alt="MLŽIDLA.cz"
-        className={`${compact ? 'h-9 max-w-[150px]' : 'h-11 max-w-[190px]'} w-auto object-contain transition-transform duration-300 ease-out motion-safe:group-hover/mlz-logo:-translate-y-0.5`}
+        className={`${compact ? 'h-9 max-w-[155px]' : 'h-12 max-w-[205px]'} w-auto object-contain transition-transform duration-300 ease-out motion-safe:group-hover/mlz-logo:-translate-y-0.5`}
       />
     </span>
   );

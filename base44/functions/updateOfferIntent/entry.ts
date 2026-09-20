@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { clientProjectView } from '../../shared/clientPortal.ts';
 
 export default async function(req) {
   try {
@@ -45,7 +46,7 @@ export default async function(req) {
 
     Object.keys(update).forEach((key) => update[key] === undefined && delete update[key]);
     const updated = await base44.asServiceRole.entities.ProjectOrder.update(projectId, update);
-    return Response.json({ ok: true, project: updated });
+    return Response.json({ ok: true, project: clientProjectView(updated) });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

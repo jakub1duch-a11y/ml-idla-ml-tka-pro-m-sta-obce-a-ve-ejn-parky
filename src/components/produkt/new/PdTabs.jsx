@@ -3,7 +3,7 @@ import { Wrench, ShieldCheck, FileText } from 'lucide-react';
 
 export default function PdTabs({ product }) {
   const [active, setActive] = useState('instalace');
-  const documents = product.documents_urls || [];
+  const documents = [];
 
   const tabs = useMemo(() => [
     {
@@ -61,25 +61,7 @@ export default function PdTabs({ product }) {
 
         <div className="mt-8 border border-[#D5E5EA] bg-white p-6 sm:p-8">
           {active === 'ke-stazeni' ? (
-            documents.length > 0 ? (
-              <ul className="divide-y divide-[#E4EEF2]">
-                {documents.map((url, index) => (
-                  <li key={url}>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex min-h-[52px] items-center gap-3 text-sm font-semibold text-[#0B5EA8] transition-colors hover:text-[#0A1628]"
-                    >
-                      <FileText size={16} />
-                      Technický dokument {index + 1}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-sm leading-6 text-[#5A6B78]">Technické podklady k tomuto produktu připravíme podle konkrétního projektu nebo na vyžádání.</p>
-            )
+            <p className="text-sm leading-6 text-[#5A6B78]">Technické dokumenty, výkresy a cenové podklady připravíme na vyžádání podle konkrétního projektu. Veřejná produktová stránka nezveřejňuje interní soubory ani nabídky.</p>
           ) : (
             <ul className="space-y-4">
               {tab.items.map((item) => (

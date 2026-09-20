@@ -1,3 +1,4 @@
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Loader, Search, X, Building2, Home, Dumbbell, School, UtensilsCrossed, SlidersHorizontal } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -122,10 +123,12 @@ export default function Kolekce() {
         {loading ? (
           <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-[#D3E2E8]" /></div>
         ) : (
-          <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <ProductExperience products={displayed}>
+<div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
             {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
             {displayed.length === 0 && <p className="col-span-3 py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
           </div>
+</ProductExperience>
         )}
       </div>
 

@@ -1,3 +1,4 @@
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Loader } from 'lucide-react';
@@ -68,9 +69,11 @@ export default function FeaturedMlzitka() {
                 <h3 className="mt-3 font-heading text-2xl font-semibold text-[#0A1628]">Nejčastěji poptávaná mlžítka</h3>
               </div>
             </div>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ProductExperience products={featured}>
+<div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {featured.map((p) => <CatalogProductCard key={p.id} product={p} />)}
             </div>
+</ProductExperience>
           </>
         )}
       </div>

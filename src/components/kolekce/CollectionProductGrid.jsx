@@ -1,3 +1,4 @@
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Ruler, MapPin, Layers3 } from 'lucide-react';
@@ -149,9 +150,11 @@ export default function CollectionProductGrid({ collection }) {
         <Link to="/mlzidla-mlzitka" className="btn-secondary-outline hidden rounded-full px-6 py-3 text-sm font-semibold text-foreground sm:inline-flex">Celý katalog <ArrowRight size={15} /></Link>
       </div>
 
-      {products.length > 0 && <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {products.length > 0 && <ProductExperience products={products}>
+<div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => <ProductCard key={product.id} product={product} />)}
-      </div>}
+      </div>
+</ProductExperience>}
 
       {variantCards.length > 0 && <div className={`${products.length ? 'mt-10' : ''} rounded-[2rem] border border-slate-200 bg-slate-50/70 p-4 sm:p-6 lg:p-8`}>
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">

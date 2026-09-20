@@ -1,3 +1,4 @@
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -148,7 +149,8 @@ export default function Outdoor() {
         {loading ?
         <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <ProductExperience products={products}>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {products.map((p, i) =>
           <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
@@ -164,6 +166,7 @@ export default function Outdoor() {
               </motion.div>
           )}
           </div>
+</ProductExperience>
         }
       </section>
 

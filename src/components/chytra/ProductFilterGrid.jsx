@@ -1,3 +1,4 @@
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -48,7 +49,8 @@ export default function ProductFilterGrid() {
       {loading ?
       <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> :
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <ProductExperience products={filtered}>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {filtered.map((p, i) =>
         <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
               <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'} onClick={() => trackProductClick(p.name, p.slug, 'chytra_mlzidla')}
@@ -67,6 +69,7 @@ export default function ProductFilterGrid() {
         )}
           {filtered.length === 0 && <p className="col-span-4 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>}
         </div>
+</ProductExperience>
       }
     </div>);
 

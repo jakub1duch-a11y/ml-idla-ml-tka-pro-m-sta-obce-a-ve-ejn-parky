@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { clientChargeView } from '../../shared/clientPortal.ts';
 
 const TEAM = ['meduna@holmtec.cz', 'info@mlzidla.cz', 'jakub1duch@gmail.com'];
 const normalize = (value: unknown) => String(value || '').trim();
@@ -65,8 +66,10 @@ export default async function(req) {
     const html = `<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;padding:28px;background:#0d2d38;color:#fff"><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#61d5e5">MLŽIDLA® · reakce klienta</div><h1 style="margin:8px 0 18px;font-size:24px">${action === 'approve' ? 'Příplatková položka schválena' : 'Příplatková položka odmítnuta'}</h1><p style="color:#cfe4e8"><strong>Projekt:</strong> ${escapeHtml(project.project_name || project.product_name || '')}<br><strong>Nabídka:</strong> ${escapeHtml(project.quote_number || '')}<br><strong>Položka:</strong> ${escapeHtml(charge.title)}<br><strong>Částka:</strong> ${money(charge.total_price_ex_vat)} Kč bez DPH<br><strong>Klient:</strong> ${escapeHtml(project.client_name)} · ${escapeHtml(project.client_email)}</p>${note ? `<div style="margin-top:18px;padding:16px;border:1px solid #245966;border-radius:12px;color:#d7e8eb"><strong>Poznámka klienta:</strong><br>${escapeHtml(note).replace(/\n/g,'<br>')}</div>` : ''}</div>`;
     await Promise.all(TEAM.map((to) => sendEmail(base44, to, subject, html)));
 
-    const charges = await base44.asServiceRole.entities.ProjectExtraCharge.filter({ project_order_id: project.id }, 'created_date', 100);
-    return Response.json({ ok: true, charge: updated, charges });
+    const charges = (await base44.asServiceRole.entities.ProjectExtraCharge.filter({ project_order_id: project.id }, 'created_date', 100))
+      .map(clientChargeView)
+      .filter(Boolean);
+    return Response.json({ ok: true, charge: clientChargeView(updated), charges });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

@@ -11,21 +11,21 @@ const CATEGORY_LABELS = {
   novinky: 'Novinky'
 };
 
-const FALLBACK_BG = 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80';
+const FALLBACK_BG = '/media/optimized/48d543124_generated_image.webp';
 
 const FALLBACK = [
 {
   id: 'f1', slug: 'vyhody-mlznych-systemu-mestske-prostory',
   title: '7 výhod instalace mlžných systémů v městských prostorech',
-  perex: 'Mlžné systémy ochlazují městské prostory až o 9 °C, zvyšují návštěvnost a vytvářejí ikonická místa.',
+  perex: 'Mlžítka pro města pomáhají vytvářet příjemnější mikroklima na náměstích, sportovištích i v parcích.',
   image_url: '/media/optimized/48d543124_generated_image.webp',
   category: 'technika', published_date: '2026-06-29', published: true
 },
 {
   id: 'f2', slug: 'evaporace-mikroklima',
   title: 'Jak evaporace mění mikroklima veřejných prostorů',
-  perex: 'Věda za mlhou: kapky 10–50 μm se odpařují ještě ve vzduchu a absorbují teplo z okolí.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+  perex: 'Jak vodní mlha na veřejná prostranství podporuje komfort v horkých dnech a proč záleží na návrhu prostoru.',
+  image_url: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
   category: 'technika', published_date: '2026-06-01', published: true
 }];
 
@@ -89,7 +89,7 @@ export default function BlogSection() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="font-heading text-[clamp(2rem,8vw,2.4rem)] font-light tracking-[-0.03em] text-white lg:text-3xl">
-              Co je nového u nás
+Nové příspěvky blogu
             </motion.h2>
             <Link to="/blog" className="btn-metallic-mist inline-flex min-h-12 w-full items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium text-[hsl(var(--card))] transition-all hover:gap-3 hover:text-white sm:w-auto">Všechny články
 

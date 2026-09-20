@@ -79,11 +79,21 @@ const CONFIG = {
     intro: 'STÉBLO® pracuje s lehkou organickou siluetou a umožňuje citlivé začlenění do zeleně, promenád i veřejného prostoru.',
     useCases: ['Parky', 'Zahrady', 'Promenády', 'Veřejná zeleň'],
   },
-  'mlzitko-mrak': {
-    tagline: 'Mlžný oblak pro hravá a pobytová místa',
-    intro: 'MLŽNÝ MRAK® vytváří prostorový efekt jemné vodní mlhy pro parky, hřiště, školní areály a veřejná prostranství.',
-    useCases: ['Dětská hřiště', 'Parky', 'Školní areály', 'Veřejný prostor'],
-  },
+  'mlzitko-mrak': [
+    ['Dětské hřiště', 'kompaktní provedení', 'Konfigurace pro dětské a školní areály.'],
+    ['Velký', 'větší mlžná zóna', 'Konfigurace pro mlžiště a větší pobytové plochy.'],
+    ['Parkový', 'otevřený prostor', 'Řešení určené pro parkové a promenádní prostředí.'],
+  ],
+  'mlzitko-lizatko': [
+    ['Single', '1 kruhový prvek', 'Samostatné LOLLI jako jasný ochlazovací bod pro děti, rodiny a veřejný prostor.'],
+    ['Duo', '2 stejné prvky', 'Dvojice kruhových mlžítek pro širší pobytovou nebo průchozí zónu.'],
+    ['Play Zone', 'více prvků v prostoru', 'Sestava více LOLLI prvků pro školky, hřiště a komunitní plochy.'],
+  ],
+  'lolli': [
+    ['Single', '1 kruhový prvek', 'Samostatné LOLLI jako jasný ochlazovací bod pro děti, rodiny a veřejný prostor.'],
+    ['Duo', '2 stejné prvky', 'Dvojice kruhových mlžítek pro širší pobytovou nebo průchozí zónu.'],
+    ['Play Zone', 'více prvků v prostoru', 'Sestava více LOLLI prvků pro školky, hřiště a komunitní plochy.'],
+  ],
   'mlzna-spirála': {
     tagline: 'Skulpturální spirála s mlžným efektem',
     intro: 'MLŽNÁ SPIRÁLA kombinuje nerezovou sochařskou formu s ochlazením a možností výrazného večerního působení.',

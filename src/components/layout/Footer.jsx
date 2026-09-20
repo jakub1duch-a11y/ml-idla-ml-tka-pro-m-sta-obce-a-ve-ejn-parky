@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Mail, Phone, MapPin, Droplets, Gauge, ThermometerSun } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
 import { trackNewsletterSignup } from '@/lib/ga4';
+
+const trustItems = [
+  { icon: Droplets, label: 'Vodní mlha pro veřejný prostor', text: 'Mlžítka pro města, parky, sportoviště i rezidenční zahrady.' },
+  { icon: Gauge, label: 'Chytré řízení SUPLA', text: 'Scénáře podle času, teploty, počasí a provozního režimu.' },
+  { icon: ThermometerSun, label: 'Návrh podle místa', text: 'Vizualizace, doporučení produktu a technické podklady na vyžádání.' },
+];
 
 const columns = [
   {
@@ -69,7 +75,7 @@ export default function Footer() {
               <Logo size="lg" variant="full" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-6 text-white/72">
-              Česká mlžítka a mlžné systémy pro města, architekturu a zahrady. Od návrhu a výroby po instalaci, řízení a servis.
+              Nízkotlaká mlžítka pro města, veřejná prostranství, sportoviště i zahrady. Propojujeme nerezový design, vodní mlhu a chytré řízení SUPLA do řešení navrženého pro konkrétní prostor.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">

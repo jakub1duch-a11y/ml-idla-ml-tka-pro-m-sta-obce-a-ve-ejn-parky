@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
-  { icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' }
+  { icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' },
   { icon: Droplets, text: 'Váže prach a pyl pro čistší vzduch' },
   { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
   { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' },

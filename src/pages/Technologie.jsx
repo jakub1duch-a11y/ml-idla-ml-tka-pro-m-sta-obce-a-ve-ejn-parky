@@ -57,8 +57,8 @@ export default function Technologie() {
   useEffect(() => {
     setSEO({
       title: 'Jak funguje mlžení | Technologie MLŽIDLA®',
-      description: 'Jak funguje nízkotlaké mlžení MLŽIDLA®: voda, filtrace, řízení, trysky, odpar, smart provoz a projektové dimenzování bez vysokotlakého čerpadla.',
-      keywords: 'jak funguje mlžení, technologie mlžení, nízkotlaké mlžítko, evaporační chlazení, mlžné trysky, mlžítka bez vysokotlakého čerpadla',
+      description: 'Jak funguje nízkotlaké mlžení MLŽIDLA®: voda, filtrace, řízení, trysky, odpar, smart provoz a projektové dimenzování pro běžný vodovodní řád.',
+      keywords: 'jak funguje mlžení, technologie mlžení, nízkotlaké mlžítko, evaporační chlazení, mlžné trysky, mlžítka na vodovodní řád',
       canonicalPath: '/jak-to-funguje',
     });
   }, []);
@@ -98,7 +98,7 @@ export default function Technologie() {
               transition={{ duration: 0.6, delay: 0.16 }}
               className="mt-7 max-w-2xl text-lg leading-8 text-white/75 lg:text-xl"
             >
-              Voda z řádu projde filtrací a řízením do přesně zvolených trysek. Jemné kapky se v kontaktu se vzduchem částečně odpařují a při odparu odebírají okolí teplo. Nízkotlaké řady MLŽIDLA® tak pracují bez vysokotlakého čerpadla.
+              Voda z řádu projde filtrací a řízením do přesně zvolených trysek. Jemné kapky se v kontaktu se vzduchem částečně odpařují a při odparu odebírají okolí teplo. Nízkotlaké řady MLŽIDLA® jsou navržené pro provoz z běžného vodovodního řádu podle ověřeného tlaku a průtoku.
             </motion.p>
 
             <motion.div
@@ -173,7 +173,7 @@ export default function Technologie() {
 
         <div className="mt-8 rounded-3xl border border-secondary/25 bg-secondary/[.055] p-7 sm:p-9">
           <p className="font-mono text-[10px] uppercase tracking-[.16em] text-secondary">Projektový princip</p>
-          <p className="mt-3 max-w-4xl font-heading text-2xl leading-snug sm:text-3xl">Neprodáváme „−10 °C“ jako univerzální parametr. Navrhujeme mlžení tak, aby odpovídalo reálnému místu, klimatu, pohybu lidí a dostupné hydraulice.</p>
+          <p className="mt-3 max-w-4xl font-heading text-2xl leading-snug sm:text-3xl">Navrhujeme mlžení tak, aby odpovídalo reálnému místu, klimatu, pohybu lidí a dostupné hydraulice.</p>
         </div>
       </section>
 

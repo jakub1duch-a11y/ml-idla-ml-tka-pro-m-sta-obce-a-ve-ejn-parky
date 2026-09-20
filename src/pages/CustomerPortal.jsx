@@ -688,6 +688,25 @@ export default function CustomerPortal() {
   const workspaceDocuments = projects.reduce((sum, project) => sum + Number(project.documents?.length || 0), 0);
   const workspaceMessages = projects.reduce((sum, project) => sum + Number(project.offer_messages?.length || 0), 0);
   const pendingExtras = projects.reduce((sum, project) => sum + Number((project.extra_charges || []).filter((charge) => charge.status === 'pending_customer_approval').length), 0);
+  const nextAction = pendingExtras > 0
+    ? `${pendingExtras} položek ke schválení`
+    : focusedProject
+      ? ({
+          draft: 'Nabídka se připravuje',
+          pending_approval: 'Nabídka čeká na interní kontrolu',
+          sent: 'Zkontrolovat nabídku',
+          viewed: 'Rozhodnout o nabídce',
+          extension_requested: 'Čeká se na aktualizaci platnosti',
+          approved: 'Technická příprava zakázky',
+          in_production: 'Výroba probíhá',
+          ready: 'Připraveno k předání',
+          delivered: 'Projekt dokončen',
+          expired: 'Požádat o aktualizaci nabídky',
+          rejected: 'Nabídka je uzavřena',
+        }[focusedProject.status] || 'Zkontrolovat stav projektu')
+      : inquiries.length > 0
+        ? 'Zadání se zpracovává'
+        : 'Založit nový požadavek';
 
   return (
     <div className="min-h-screen bg-[#eef3f4] pt-20 pb-16">
@@ -705,11 +724,12 @@ export default function CustomerPortal() {
               <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); setEmailPreferencesReady(false); setEmailPreferences({ enabled: false, topics: [] }); setEmailPreferencesMessage(''); setEmailPreferencesError(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>
           </div>
-          <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">
+          <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 xl:grid-cols-[.7fr_.7fr_.7fr_.7fr_1.5fr] sm:divide-y-0">
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Projekty / nabídky</p><p className="mt-1 text-2xl font-semibold text-slate-950">{projects.length}</p></div>
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Poptávky</p><p className="mt-1 text-2xl font-semibold text-slate-950">{inquiries.length}</p></div>
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Dokumenty</p><p className="mt-1 text-2xl font-semibold text-slate-950">{workspaceDocuments}</p></div>
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
+            <div className="col-span-2 p-4 sm:col-span-4 sm:p-5 xl:col-span-1"><p className="text-[10px] uppercase tracking-[.13em] text-cyan-700">Další krok</p><p className="mt-1 text-sm font-semibold leading-5 text-slate-950">{nextAction}</p></div>
           </div>
           <nav aria-label="Klientské CRM" className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
             {[['#overview','Dashboard'],['#offers','Nabídky'],['#inquiries','Poptávky'],['#communication','Zprávy'],['#contact-profile','Profil'],['#email-preferences','Upozornění'],['#new-inquiry','Nový požadavek']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}

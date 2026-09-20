@@ -26,11 +26,11 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-      <motion.section aria-labelledby="city-network" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.65 }} className="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20">
+      <motion.section aria-labelledby="city-network" className="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20">
         <motion.div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" animate={{ scale: [1, 1.12, 1], opacity: [0.55, 0.8, 0.55] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }} />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1.1fr_.9fr] lg:px-10">
           <div>
-            <motion.p initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">Pro města a obce</motion.p>
+            <motion.p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">Pro města a obce</motion.p>
             <h2 id="city-network" className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">Městská síť ochlazovacích míst. Od prvního pilotu po celé území.</h2>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">Spojíme návrh zón, modulární produkty, pilotní sezónu, servis a možnost rozšíření do jednoho srozumitelného řešení. Mlha zůstává tam, kde má: v prostoru, ne na zemi.</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -40,7 +40,7 @@ export default function Home() {
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {['Zónový návrh podle prostoru a provozu','Modulární mlžítka a mlžné brány','Pilotní sezóna + servis','Postupné rozšíření bez změny konceptu'].map((item, index) => (
-              <motion.div key={item} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ delay: 0.12 * index, duration: 0.45 }} whileHover={{ x: 5 }} className="group rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm transition-colors hover:border-cyan-300/30 hover:bg-white/[0.09]">
+              <motion.div key={item} whileHover={{ x: 5 }} className="group rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm transition-colors hover:border-cyan-300/30 hover:bg-white/[0.09]">
                 <span className="font-mono text-xs font-semibold text-cyan-300">0{index + 1}</span>
                 <p className="mt-2 font-medium">{item}</p>
                 <span className="mt-3 block h-px w-8 bg-cyan-300/40 transition-all duration-300 group-hover:w-16" />

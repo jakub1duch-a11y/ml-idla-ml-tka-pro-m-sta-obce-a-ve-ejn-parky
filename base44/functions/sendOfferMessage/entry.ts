@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
+import { clientMessageView } from '../../shared/clientPortal.ts';
 
 const TEAM_RECIPIENTS = ['meduna@holmtec.cz', 'info@mlzidla.cz', 'jakub1duch@gmail.com'];
 const CATEGORY_LABELS = {
@@ -75,8 +76,10 @@ export default async function(req) {
 
     await Promise.all(TEAM_RECIPIENTS.map((to) => base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)));
 
-    const messages = await base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []);
-    return Response.json({ ok: true, message: created, messages });
+    const messages = (await base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []))
+      .map(clientMessageView)
+      .filter(Boolean);
+    return Response.json({ ok: true, message: clientMessageView(created), messages });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

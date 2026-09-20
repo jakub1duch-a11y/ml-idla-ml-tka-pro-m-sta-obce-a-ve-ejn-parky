@@ -24,7 +24,7 @@ const TAGLINES = [
 const SLIDES = [
 { type: 'video', src: '/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm' },
 { type: 'video', src: '/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm' },
-{ type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' },
+{ type: 'image', src: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp' },
 { type: 'video', src: '/media/optimized/9f0153e3a_ml_detailvparku_01.webm' },
 { type: 'video', src: '/media/optimized/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.webm' },
 { type: 'video', src: '/media/optimized/ae9faa0a3_video-mlitkospiralavakci.webm' }];
@@ -93,7 +93,7 @@ export default function KolekceHero() {
         
           {s.type === 'video' ?
         <VideoSlide src={s.src} active={i === current} /> :
-        <img src={s.src} alt="" className="absolute inset-0 w-full h-full object-cover" />}
+        <img src={s.src} alt="" className="absolute inset-0 w-full h-full object-cover object-center" loading={i === current ? 'eager' : 'lazy'} fetchPriority={i === current ? 'high' : 'auto'} />}
         </div>
       )}
 

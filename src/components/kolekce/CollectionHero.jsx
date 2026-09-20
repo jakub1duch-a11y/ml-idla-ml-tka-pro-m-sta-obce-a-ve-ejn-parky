@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play, ShieldCheck } from 'lucide-react';
 
+const COLLECTION_FALLBACK = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
+
 export default function CollectionHero({ collection }) {
   const isCity = collection.name === 'Městská mlžítka';
   const isGarden = collection.name === 'Zahradní mlžítka';
@@ -10,11 +12,18 @@ export default function CollectionHero({ collection }) {
     <section className="relative min-h-[620px] overflow-hidden bg-primary text-primary-foreground lg:min-h-[680px]">
       <div className="absolute inset-0">
         {collection.video_url ? (
-          <video src={collection.video_url} poster={collection.image} autoPlay muted loop playsInline className="h-full w-full object-cover opacity-55" />
+          <video src={collection.video_url} poster={collection.image || COLLECTION_FALLBACK} autoPlay muted loop playsInline className="h-full w-full object-cover" />
         ) : (
-          <img src={collection.image} alt={collection.name} className="h-full w-full object-cover opacity-55" />
+          <img
+            src={collection.image || COLLECTION_FALLBACK}
+            alt={collection.name}
+            className="h-full w-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
+            onError={(event) => { event.currentTarget.src = COLLECTION_FALLBACK; }}
+          />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/88 to-primary/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/74 to-primary/12" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/35 via-transparent to-primary/10" />
       </div>
 

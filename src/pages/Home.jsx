@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
-import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
@@ -27,7 +26,6 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-      <ReferencesStrip />
       <motion.section aria-labelledby="city-network" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.65 }} className="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20">
         <motion.div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" animate={{ scale: [1, 1.12, 1], opacity: [0.55, 0.8, 0.55] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }} />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[1.1fr_.9fr] lg:px-10">

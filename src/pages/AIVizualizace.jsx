@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import { trackInquirySubmitted, trackVisualizerDownload, trackVisualizerGenerated, trackVisualizerRegistration } from '@/lib/ga4';
+import { getGeometryLock, getNegativeRules, getProductReferenceImages } from '@/lib/productVisualizationRules';
 
 const isImageUrl = (url = '') => /\.(png|jpe?g|webp)(\?|$)/i.test(url) || url.includes('/images/');
 const MAX_UPLOAD_MB = 20;
@@ -261,16 +262,13 @@ export default function AIVizualizace() {
       }
 
       const context = description.trim() || 'venkovní prostor určený k ochlazení lidí během horkých dnů';
-      const productRefs = customConceptMode || !selectedProduct ? [] : [selectedProduct.image_url, ...(selectedProduct.gallery_urls || []).filter(isImageUrl)]
-        .filter(Boolean)
-        .filter((url, index, all) => all.indexOf(url) === index)
-        .slice(0, 4);
+      const productRefs = customConceptMode || !selectedProduct ? [] : getProductReferenceImages(selectedProduct, 5).filter(isImageUrl);
       const isRailingConcept = /zábradlí|zabradli/i.test(requestedConcept || '');
       const insertionInstruction = customConceptMode
         ? (isRailingConcept
           ? `VLOŽENÍ MLŽNÉHO DESIGNOVÉHO ZÁBRADLÍ: Navrhni nejjednodušší reálně vyrobitelné mlžné zábradlí z broušené nerezové trubky podél chodníku, záhonu, promenády nebo okraje náměstí. Výška přibližně 0,9–1,05 m. Konstrukce má být tvořena co nejmenším počtem plynulých linií, bez dekorativní složitosti. Horní linie může být rovná nebo může jemně sledovat měkký oblouk prostoru; modulová varianta znamená několik jednoduchých navazujících úseků. Maximální vnější průměr ohýbané trubky je Ø 74 mm. Žádný viditelný spodní kroužek, límec ani nadzemní kotevní patka; kotvení je schované pod dlažbou nebo terénem. Mlžicí trysky jsou malé, téměř zapuštěné do trubky a rozmístěné diskrétně na boční nebo spodní straně horní linie tak, aby vytvářely jemnou mlhu do pobytové zóny, nikoli proudy vody. Zábradlí má zároveň působit jako kultivovaný městský mobiliář a bezpečně oddělovat pěší trasu od záhonu.`
           : `VLOŽENÍ ZAKÁZKOVÉHO TVARU: Navrhni pouze nejjednodušší výrobně uvěřitelnou interpretaci motivu „${requestedConcept}“. Konstrukce musí působit jako skutečné mlžítko z broušené nerezové trubky, kterou lze reálně ohýbat. Upřednostni jednu souvislou plynulou linii nebo minimum jednoduchých napojení. Žádné tenké grafické čáry, ostré nereálné zlomy, dekorativní složitost ani křížení bez konstrukční logiky. Maximální vnější průměr ohýbané trubky je Ø 74 mm. Spodní konec má vizuálně vstupovat přímo do dlažby nebo terénu: bez viditelného spodního kroužku, bez límce a bez nadzemní patky; kotvení je schované pod finálním povrchem. Variantu motivu dodrž podle zadání — Solo je výchozí a nejjednodušší, Duo znamená dva stejné jednoduché prvky, Brána znamená průchozí sestavu ze stejného jednoduchého motivu.`)
-        : `VLOŽENÍ PRODUKTU: DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct?.name}. PRIORITA Č. 2 JE VĚRNOST VÝROBKU. Nekresli nový design a výrobek kreativně nepřepracovávej. Zachovej jeho rozpoznatelnou siluetu, počet a průběh konstrukčních prvků, proporce, rádiusy a charakter ohybů, profil/trubku, povrch nerezu, polohu hlavních částí a viditelné konstrukční detaily podle produktových referencí. Nepřidávej ramena, oblouky, sloupky, dekorace ani trysky, které na referencích nejsou zřejmé. Pokud některý detail z referencí nelze spolehlivě určit, raději jej zjednoduš než vymýšlej. Produkt: ${selectedProduct?.name}. Materiál dle katalogu: ${selectedProduct?.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct?.short_description || ''}.`;
+        : `VLOŽENÍ PRODUKTU — PRODUCT MASTER LOCK: DALŠÍ referenční obrázky zobrazují skutečný výrobek ${selectedProduct?.name}. PRVNÍ produktová reference má absolutní prioritu. Nekresli nový design a výrobek kreativně nepřepracovávej. ${getGeometryLock(selectedProduct)}\n\nZAKÁZANÉ ZMĚNY:\n- ${getNegativeRules(selectedProduct).join('\n- ')}\n\nPokud některý detail z referencí nelze spolehlivě určit, zachovej jej neutrálně a nic nevymýšlej. Produkt: ${selectedProduct?.name}. Materiál dle katalogu: ${selectedProduct?.material || 'nerezová ocel'}. Katalogový popis: ${selectedProduct?.short_description || ''}. Stav MASTER reference: ${(selectedProduct?.visual_master_verified || selectedProduct?.hero_visual_verified) ? 'ověřená, ale výsledek stále vyžaduje vizuální kontrolu' : 'neověřená — výstup je návrhový koncept, nikoli schválený produktový obraz'}.`;
       const generateImageParams = /** @type {import('@base44/sdk').GenerateImageParams & { existing_image_urls?: string[] }} */ ({
         prompt: `Vytvoř fotorealistickou architektonickou vizualizaci MLŽIDLA® HolmTec v nahraném prostoru.
 

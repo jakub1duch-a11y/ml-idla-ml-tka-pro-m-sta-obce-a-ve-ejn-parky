@@ -1,11 +1,12 @@
 import React from 'react';
-import { ArrowRight, Clock3, Smartphone, ThermometerSun, Wifi } from 'lucide-react';
+import { ArrowRight, Clock3, Droplets, Gauge, Smartphone, ThermometerSun, Wifi } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const SCENARIOS = [
   { Icon: ThermometerSun, title: 'Podle teploty', text: 'Mlžení se spustí až při nastavené venkovní teplotě.' },
   { Icon: Clock3, title: 'Podle času', text: 'Nastavíte provozní okna pro ráno, odpoledne, akci nebo víkend.' },
   { Icon: Smartphone, title: 'Kdykoli z aplikace', text: 'Obsluha může mlžítko ručně zapnout či vypnout na dálku.' },
+  { Icon: Droplets, title: 'Více vodních zón', text: 'Město, sportoviště nebo zahrada může mít samostatně řízené okruhy.' },
 ];
 
 export default function SmartControlTeaser() {
@@ -21,7 +22,7 @@ export default function SmartControlTeaser() {
             Osvěžení přesně tehdy,<br />kdy je potřeba.
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70">
-            Chytrý ventil ovládá přívod vody k mlžítku. V aplikaci SUPLA lze vytvořit provozní scénáře a upravit je podle konkrétního místa, teploty nebo denního režimu.
+            Chytré řízení SUPLA propojuje mlžítka, ventil, senzory a provozní scénáře do jedné přehledné vrstvy. Pro města, sportoviště i rezidenční instalace lze nastavit osvěžení podle teploty, času a konkrétní zóny.
           </p>
           <p className="mt-5 max-w-xl border-l-2 border-cyan pl-4 text-sm leading-relaxed text-white/58">
             Konkrétní zapojení, počet zón a vhodný ventil vždy navrhujeme podle přívodu vody a režimu instalace.
@@ -31,15 +32,21 @@ export default function SmartControlTeaser() {
           </Link>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           {SCENARIOS.map(({ Icon, title, text }, index) => (
-            <article key={title} className="relative min-h-[210px] border border-white/12 bg-white/[.045] p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-cyan/45">
+            <article key={title} className="relative min-h-[190px] border border-white/12 bg-white/[.045] p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-cyan/45">
               <span className="font-mono text-[10px] tracking-widest text-cyan">0{index + 1}</span>
               <Icon size={25} className="mt-7 text-cyan" />
               <h3 className="mt-5 font-heading text-lg font-semibold">{title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-white/60">{text}</p>
             </article>
           ))}
+          <div className="relative min-h-[190px] overflow-hidden border border-cyan/20 bg-cyan/10 p-6 sm:col-span-2">
+            <img src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp" alt="Chytré řízení SUPLA v mobilní aplikaci" className="absolute inset-y-0 right-0 hidden h-full w-1/2 object-contain p-4 opacity-90 sm:block" loading="lazy" decoding="async" />
+            <Gauge size={24} className="text-cyan" />
+            <h3 className="mt-5 max-w-sm font-heading text-xl font-semibold">Jedna sekce pro Smart a SUPLA</h3>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/62">Tady se spojuje technické řízení, mobilní ovládání, úsporné scénáře a vzdálený dohled nad vodní mlhou.</p>
+          </div>
         </div>
       </div>
     </section>

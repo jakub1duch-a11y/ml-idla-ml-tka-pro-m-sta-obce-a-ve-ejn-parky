@@ -115,7 +115,7 @@ export default function PrezentaceMlziciProstor() {
             className="mt-10 flex flex-wrap gap-6 text-sm text-white/50 font-mono">
             <span className="flex items-center gap-2"><MapPin size={14} className="text-cyan" /> Město Jičín · Náměstí</span>
             <span className="flex items-center gap-2"><Sun size={14} className="text-cyan" /> Období: květen — září 2026</span>
-            <span className="flex items-center gap-2"><Wind size={14} className="text-cyan" /> Vysokotlaké mlžení</span>
+            <span className="flex items-center gap-2"><Wind size={14} className="text-cyan" /> Řízené mlžení prostoru</span>
           </motion.div>
           <button onClick={() => scrollTo('cile')} className="mt-12 inline-flex items-center gap-2 text-sm text-white/60 hover:text-cyan transition">
             Pokračovat <ArrowDown size={16} />
@@ -144,7 +144,7 @@ export default function PrezentaceMlziciProstor() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 border-t border-[#D3E2E8] pt-6">
           {[
-            { label: 'Typ systému', value: 'Vysokotlaké mlžení 60 bar' },
+            { label: 'Typ systému', value: 'Nízkotlaké mlžení z vodovodního řádu' },
             { label: 'Lokalita', value: 'Jičínské náměstí' },
             { label: 'Období provozu', value: 'Květen — září 2026' },
             { label: 'Počet trysek', value: '24 × AISI 316L' },

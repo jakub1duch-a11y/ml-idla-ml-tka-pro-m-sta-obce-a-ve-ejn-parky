@@ -6,6 +6,7 @@ import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
 import HomepageVisualShowcase from '@/components/home/new/HomepageVisualShowcase';
+import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
 import SmartUseCasesExperience from '@/components/home/new/SmartUseCasesExperience';
 import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
@@ -30,6 +31,7 @@ export default function Home() {
     <>
       <HomeHero />
       <HomepageVisualShowcase />
+      <ProductPhotoGallery />
       <V3EditorialBridge />
       <ReferencesStrip />
       <ProKohoSection />

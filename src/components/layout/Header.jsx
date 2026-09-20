@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Newspaper, Calculator, PlayCircle } from 'lucide-react';
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Newspaper, Calculator, PlayCircle, UserCircle, LogIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -158,6 +158,7 @@ export default function Header() {
               </AnimatePresence>
             </div>
             <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
+            <Link to="/muj-projekt" className="px-4 py-2.5 rounded-full text-sm font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Klientská sekce</Link>
           </nav> : <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             <Link to={ROUTE_MAP.catalog[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.products}</Link>
             <Link to={ROUTE_MAP.city[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.urban}</Link>
@@ -171,11 +172,17 @@ export default function Header() {
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
               <LanguageSwitcher />
+              <Link to="/login?next=/muj-projekt" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[.08] px-4 py-2.5 text-sm font-semibold text-white/86 transition hover:bg-white/[.14] hover:text-white">
+                <LogIn size={15} /> Přihlášení
+              </Link>
+              <Link to="/register?next=/muj-projekt" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/12 px-4 py-2.5 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
+                <UserCircle size={15} /> Registrace
+              </Link>
               <Link to={inquiryPath}
               className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
-            <Link to={inquiryPath} className="mr-1 inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-cyan/35 bg-cyan/12 px-3.5 py-2 text-[11px] font-bold text-white lg:hidden">{locale === 'cs' ? 'Popsat projekt' : internationalCopy.quote}</Link>
+            <Link to="/muj-projekt" className="mr-1 inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-cyan/35 bg-cyan/12 px-3.5 py-2 text-[11px] font-bold text-white lg:hidden">Klientská sekce</Link>
             <motion.button
               type="button"
               onClick={toggleMobileMenu}

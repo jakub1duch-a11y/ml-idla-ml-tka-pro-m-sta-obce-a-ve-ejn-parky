@@ -4,7 +4,7 @@ import { Loader, Search, X, Building2, Home, Dumbbell, School, UtensilsCrossed, 
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
-import { FAMILIES, getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
+import { getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
 import { mergePortalGateProducts } from '@/lib/portalGateProducts';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import CollectionOffers from '@/components/kolekce/CollectionOffers';

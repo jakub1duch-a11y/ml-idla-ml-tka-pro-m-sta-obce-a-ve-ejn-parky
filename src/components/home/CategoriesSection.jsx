@@ -28,7 +28,7 @@ const categories = [
   id: 'prislusenstvi',
   label: 'Mlžné příslušenství a moduly',
   tagline: 'Doplňky pro každou instalaci.',
-  desc: 'Trysky, čerpadla, filtry, Smart moduly a další komponenty pro rozšíření a údržbu vašeho mlžného systému.',
+  desc: 'Trysky, filtrace, SUPLA řízení, senzory a další komponenty pro rozšíření a údržbu mlžného systému.',
   image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/dec576b4e_upscaled_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
   link: '/prislusenstvi',
   count: '5 produktů',

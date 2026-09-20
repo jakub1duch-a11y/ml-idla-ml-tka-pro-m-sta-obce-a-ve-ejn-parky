@@ -5,7 +5,7 @@ export const VISUAL_ENVIRONMENTS = [
   { value: 'mestsky_park', label: 'Městský park', prompt: 'městský park s pěšími trasami, lavičkami, vzrostlou zelení a pobytovou zónou' },
   { value: 'promenada', label: 'Promenáda / pěší zóna', prompt: 'městská promenáda nebo pěší zóna s přirozeným pohybem lidí a kultivovaným mobiliářem' },
   { value: 'event', label: 'Letní event / festival', prompt: 'letní městský event, festival nebo slavnost, dočasná pobytová zóna, přirození návštěvníci, žádná přeplněná reklamní grafika' },
-  { value: 'mestska_zahrada', label: 'Městská zahrada / veřejná zeleň', prompt: 'veřejná nebo komunitní městská zahrada, trávník, záhony, stromy, pobytové plochy' },
+  { value: 'maly_mestsky_park', label: 'Městská zahrada / veřejná zeleň', prompt: 'veřejná nebo komunitní městská zahrada, trávník, záhony, stromy, pobytové plochy' },
   { value: 'rezidencni_zahrada', label: 'Rezidenční zahrada', prompt: 'prémiová současná soukromá zahrada u rodinného domu, terasa, kvalitní zeleň, realistické měřítko' },
   { value: 'gastro_terasa', label: 'Gastro / hotelová terasa', prompt: 'moderní hotelová nebo restaurační terasa s přirozenými hosty a kvalitním venkovním mobiliářem' },
   { value: 'sportoviste', label: 'Sportoviště / koupaliště', prompt: 'venkovní sportoviště nebo koupaliště s bezpečnou pěší zónou a letním provozem' },

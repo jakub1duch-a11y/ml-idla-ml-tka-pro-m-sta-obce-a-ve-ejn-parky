@@ -88,15 +88,7 @@ export default function Admin() {
   useEffect(() => {
     const resolveAdmin = async () => {
       try {
-        let u = await base44.auth.me();
-        if (['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(u?.email?.toLowerCase()) && u.role !== 'admin') {
-          try {
-            await base44.functions.invoke('bootstrapJakubAdmin', {});
-            u = await base44.auth.me();
-          } catch (promotionError) {
-            console.warn('Admin bootstrap failed', promotionError);
-          }
-        }
+        const u = await base44.auth.me();
         setUser(u);
         if (!u) navigate('/admin-login', { replace: true });
       } catch (_error) {

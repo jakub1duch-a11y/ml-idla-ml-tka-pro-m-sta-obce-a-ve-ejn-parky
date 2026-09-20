@@ -8,7 +8,7 @@ import InquiryManager from '@/components/offers/InquiryManager';
 const formatPrice = (value) => new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(value);
 
 export default function ObchodniNabidky() {
-  const { isAuthenticated, isLoadingAuth, navigateToLogin } = useAuth();
+  const { isAuthenticated, isLoadingAuth } = useAuth();
   const [products, setProducts] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const [mediaFiles, setMediaFiles] = useState([]);
@@ -29,21 +29,18 @@ export default function ObchodniNabidky() {
 
   useEffect(() => {
     if (isLoadingAuth) return;
-    if (!isAuthenticated) { navigateToLogin(); return; }
+    if (!isAuthenticated) { window.location.replace('/admin-login?returnTo=/obchodni-nabidky'); return; }
     const checkAccess = async () => {
       try {
-        let user = await base44.auth.me();
-        if (['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'].includes(user?.email?.toLowerCase()) && user.role !== 'admin') {
-          try { await base44.functions.invoke('bootstrapJakubAdmin', {}); user = await base44.auth.me(); } catch (_error) {}
-        }
+        const user = await base44.auth.me();
         const allowedEmails = ['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com', 'meduna@holmtec.cz', 'kjuvideo@email.cz'];
         const emailAllowed = user?.email && (user.email.toLowerCase().endsWith('@mlzidla.cz') || allowedEmails.includes(user.email.toLowerCase()));
         if (user?.role === 'admin' && emailAllowed) setAuthorized(true);
-        else window.location.href = '/admin-login';
-      } catch (_error) { window.location.href = '/admin-login'; }
+        else window.location.replace('/admin-login?returnTo=/obchodni-nabidky');
+      } catch (_error) { window.location.replace('/admin-login?returnTo=/obchodni-nabidky'); }
     };
     checkAccess();
-  }, [isAuthenticated, isLoadingAuth, navigateToLogin]);
+  }, [isAuthenticated, isLoadingAuth]);
   const loadInquiries = async () => {
     const [poptavky, contacts] = await Promise.all([base44.entities.Poptavka.list(), base44.entities.ContactInquiry.list()]);
     setInquiries([

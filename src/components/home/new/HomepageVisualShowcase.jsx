@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowRight, Building2, Trees, Home, Landmark, Sparkles, Droplets } from 'lucide-react';
 
 const useCases = [
@@ -35,22 +36,46 @@ const useCases = [
 
 const products = [
   {
+    name: 'KVĚT',
+    label: 'Hravé mlžítko',
+    text: 'Výrazný prvek pro školy, školky, hřiště a pobytové zóny s dětmi.',
+    image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
+  },
+  {
+    name: 'LINEA',
+    label: 'Sloupové mlžítko',
+    text: 'Minimalistické sloupové mlžítko pro náměstí, promenády a moderní veřejný prostor.',
+    image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
+  },
+  {
+    name: 'MLŽNÉ HŘIŠTĚ',
+    label: 'Vodní mlha pro děti',
+    text: 'Osvěžení na sportovištích, školních zahradách a veřejných herních zónách.',
+    image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
+  },
+  {
+    name: 'MLŽNÁ BRÁNA',
+    label: 'Průchozí ochlazení',
+    text: 'Chytré mlžné brány pro ochlazování náměstí, eventy, nábřeží a pěší tahy.',
+    image: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
+  },
+  {
+    name: 'STÉBLO',
+    label: 'Organický tvar',
+    text: 'Jemná vertikální linie pro zahrady, parky a komornější odpočinkové zóny.',
+    image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
+  },
+  {
+    name: 'BENDY',
+    label: 'Pobytová zóna',
+    text: 'Měkká nerezová linie pro vodní mlhu na veřejná prostranství i rezidenční zahrady.',
+    image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
+  },
+  {
     name: 'AURA',
     label: 'Kruhové mlžení',
     text: 'Elegantní nerezový prvek pro parky, promenády a klidové zóny.',
     image: '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
-  },
-  {
-    name: 'BENDY',
-    label: 'Hravá linie',
-    text: 'Organický tvar pro veřejný prostor, školy, parky a rezidenční zahrady.',
-    image: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
-  },
-  {
-    name: 'MLŽNÉ BRÁNY',
-    label: 'Průchozí ochlazení',
-    text: 'Silný vizuální efekt pro náměstí, eventy, nábřeží a pěší tahy.',
-    image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
   },
 ];
 

@@ -17,9 +17,9 @@ import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 export default function Home() {
   useEffect(() => {
     setSEO({
-      title: 'Mlžítka, mlžné brány a mlhoviště pro města i zahrady',
-      description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, parky, zahrady, terasy a pergoly. Projektová podpora, výroba HolmTec a Smart řízení.',
-      keywords: 'mlžítka, mlžná brána, mlhoviště, vodní mlha na terasu, zahradní mlžítko, městské mlžítko',
+      title: 'Mlžítka pro města, chytré mlžné brány a vodní mlha | MLŽIDLA.cz',
+      description: 'Nízkotlaká mlžítka pro města, ochlazování náměstí, osvěžení na sportovištích, vodní mlha na veřejná prostranství a chytré řízení SUPLA.',
+      keywords: 'mlžítka, mlžítka pro města, ochlazování náměstí, osvěžení na sportovištích, vodní mlha na veřejná prostranství, chytré mlžné brány, ochlazování městských prostorů, SUPLA řízení mlžení',
       canonicalPath: '/',
       robots: 'index, follow',
     });

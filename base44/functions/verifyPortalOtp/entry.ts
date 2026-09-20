@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { loadClientPortalData } from '../../shared/clientPortal.ts';
 
 const normalizeQuote = (value: unknown) => String(value || '').trim().toUpperCase();
 const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
@@ -43,29 +44,7 @@ Deno.serve(async (req) => {
 
     await base44.asServiceRole.entities.PortalOtp.delete(record.id);
 
-    const contactInquiries = await base44.asServiceRole.entities.ContactInquiry.filter({ email });
-    const poptavky = await base44.asServiceRole.entities.Poptavka.filter({ email }).catch(() => []);
-    const rawProjects = await base44.asServiceRole.entities.ProjectOrder.filter({ client_email: email });
-
-    const projects = await Promise.all((rawProjects || []).map(async (project) => {
-      const assets = await base44.asServiceRole.entities.OfferAsset.filter({ project_order_id: project.id }).catch(() => []);
-      const selectedAssets = (assets || [])
-        .filter((asset) => asset.selected_for_offer || ['generated_visualization', 'quote_pdf', 'presentation_pdf', 'presentation'].includes(asset.asset_type))
-        .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
-      const visualizations = selectedAssets.filter((asset) => asset.asset_type === 'generated_visualization');
-      const documents = selectedAssets.filter((asset) => asset.asset_type !== 'generated_visualization');
-      const offerMessages = await base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []);
-      const extraCharges = await base44.asServiceRole.entities.ProjectExtraCharge.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []);
-      return {
-        ...project,
-        offer_assets: selectedAssets,
-        visualizations,
-        documents,
-        offer_messages: offerMessages || [],
-        extra_charges: (extraCharges || []).filter((charge) => charge.status !== 'draft' && charge.status !== 'cancelled'),
-        primary_visualization_url: visualizations[0]?.file_url || '',
-      };
-    }));
+    const { inquiries, projects } = await loadClientPortalData(base44, email);
 
     const existingSessions = await base44.asServiceRole.entities.PortalSession.filter({ email });
     for (const session of existingSessions) {
@@ -86,7 +65,7 @@ Deno.serve(async (req) => {
       email,
       access_mode: quoteNumber ? 'quote' : 'email',
       requested_quote: quoteNumber,
-      inquiries: [...(contactInquiries || []), ...(poptavky || [])],
+      inquiries,
       projects,
       session_token: sessionToken,
       password_setup_required: passwordSetupRequired,

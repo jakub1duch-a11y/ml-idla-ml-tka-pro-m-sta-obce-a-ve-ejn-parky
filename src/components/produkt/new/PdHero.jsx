@@ -201,6 +201,21 @@ export default function PdHero({ product }) {
             </button>
           )}
 
+          <div className="pointer-events-none absolute inset-0 z-20 hidden sm:block" aria-hidden="true">
+            {heroCallouts.map((item, index) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.46, delay: 0.22 + index * 0.08 }}
+                className={`absolute ${item.pos} max-w-[230px] rounded-2xl border border-white/14 bg-black/32 px-4 py-3 text-white shadow-[0_18px_54px_rgba(0,0,0,.25)] backdrop-blur-xl`}
+              >
+                <p className="font-mono text-[9px] uppercase tracking-[.2em] text-[#22D3EE]">{item.label}</p>
+                <p className="mt-1 text-xs font-semibold leading-5 text-white/82">{item.value}</p>
+              </motion.div>
+            ))}
+          </div>
+
           <div className="absolute bottom-5 left-5 right-5 z-20 rounded-[1.5rem] border border-white/12 bg-[#07131D]/70 p-4 backdrop-blur-xl">
             <div className="grid gap-3 sm:grid-cols-4">
               {featureTiles.map((item) => (

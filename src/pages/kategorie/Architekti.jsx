@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { isArchived } from '@/lib/newMedia';
+import ProductExperience from '@/components/ui/ProductExperience';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, Box, Ruler, Layers, Mail } from 'lucide-react';
@@ -24,6 +27,15 @@ const DOWNLOADS = [
 ];
 
 export default function Architekti() {
+  const [galleryProducts, setGalleryProducts] = useState([]);
+  useEffect(() => {
+    let active = true;
+    base44.entities.Product.list('name', 200).then((all) => {
+      if (active) setGalleryProducts((all || []).filter((product) => !isArchived(product.slug) &&
+        GEOMETRIES.some(({ title }) => (product.name || '').toUpperCase().includes(title))));
+    }).catch(() => {});
+    return () => { active = false; };
+  }, []);
   useEffect(() => {
     setSEO({
       title: 'Podklady pro projektanty — MLŽIDLA.cz',
@@ -63,6 +75,7 @@ export default function Architekti() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Katalog geometrií</p>
           <h2 className="mt-4 font-heading text-3xl leading-tight text-[#0D2F4F] lg:text-4xl">Tvary a velikosti pro každý kontext.</h2>
+          <ProductExperience products={galleryProducts}>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {GEOMETRIES.map((g, i) => (
               <motion.div key={g.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
@@ -73,6 +86,7 @@ export default function Architekti() {
               </motion.div>
             ))}
           </div>
+          </ProductExperience>
         </div>
       </section>
 

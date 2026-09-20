@@ -5,10 +5,10 @@ import { Building2, Landmark, Compass } from 'lucide-react';
 const AUDIENCES = [
   {
     icon: Building2,
-    problem: 'Horké dny omezuje pobyt občanů na náměstích, v parcích a u veřejních budov.',
+    problem: 'Horké dny mění náměstí, parky a okolí veřejných budov na místa, kde lidé hledají stín a rychlé osvěžení.',
     benefits: [
-      'Lokální ochlazení 2–8 °C bez velkých investic do infrastruktury',
-      'Provoz na běžný vodovodní tlak — bez čerpadla i bez elektřiny',
+      'Vodní mlha na veřejná prostranství pro příjemnější pobyt v tropických dnech',
+      'Napojení na běžný vodovodní řád a standardní tlak v potrubí podle konkrétní instalace',
       'Nerezová konstrukce navržená pro dlouhodobý venkovní provoz',
     ],
     cta: 'Připravit podklady pro radu města',
@@ -29,11 +29,11 @@ const AUDIENCES = [
     icon: Compass,
     problem: 'Architekti a projektanti hledají ověřené technické řešení, které se začlení do návrhu veřejného prostoru.',
     benefits: [
-      'Technické listy, kotvení a podklady pro projektovou dokumentaci',
-      'Zakázkové tvary a geometrie — od mrkev po organické oblouky',
-      'Vizualizace produktu v konkrétním prostoru do 48 hodin',
+      'Technické listy, kotvení a podklady pro projektovou dokumentaci na vyžádání',
+      'Zakázkové tvary a geometrie v ověřitelných produktových pravidlech',
+      'Vizualizace produktu v konkrétním prostoru jako podklad pro poptávku',
     ],
-    cta: 'Stáhnout podklady pro projekt',
+    cta: 'Vyžádat podklady pro projekt',
     link: '/ke-stazeni',
   },
 ];
@@ -44,7 +44,7 @@ export default function ProKohoSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Pro koho</p>
         <h2 className="mt-4 max-w-3xl font-heading text-3xl leading-tight text-[#0D2F4F] lg:text-4xl">
-          Řešení pro tři typy zadavatelů veřejného prostoru.
+Mlžítka pro města, areály a architekty veřejného prostoru.
         </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {AUDIENCES.map((a) => (

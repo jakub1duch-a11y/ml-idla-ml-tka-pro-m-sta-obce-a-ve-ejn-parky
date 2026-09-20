@@ -95,6 +95,12 @@ export default function PdHero({ product }) {
     { icon: Droplets, title: 'Jemná vodní mlha', text: product.micron_size || 'Konfigurace podle prostoru a typu provozu.' },
   ];
 
+  const heroCallouts = [
+    { label: 'MATERIÁL', value: product.material || 'nerez pro venkovní provoz', pos: 'left-5 top-[18%]' },
+    { label: 'NAPOJENÍ', value: 'vodovodní řád 3–6 barů dle projektu', pos: 'right-5 top-[28%]' },
+    { label: 'ŘÍZENÍ', value: 'SUPLA / čas / teplota', pos: 'left-6 bottom-[232px]' },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-[#07131D] text-white">
       <TechnicalBlueprintBackground product={product} theme="dark" autoRotate />

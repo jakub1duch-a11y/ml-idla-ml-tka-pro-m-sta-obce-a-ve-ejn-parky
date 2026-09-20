@@ -223,10 +223,33 @@ Umístění navrhni bezpečně v návaznosti na pěší trasu a pobytová místa
         file_type: 'image/webp',
         asset_type: 'generated_visualization',
         title: `Vizualizace ${product.name}`,
-        description: 'AI vizualizace vytvořená z fotografie prostoru a reálných produktových referencí.',
-        selected_for_offer: true,
+        description: 'AI vizualizace vytvořená z fotografie prostoru a reálných produktových referencí. Před klientským použitím vyžaduje kontrolu geometrie proti MASTER referenci.',
+        selected_for_offer: false,
         generated_by_ai: true,
       });
+      try {
+        await base44.entities.VisualizationAsset.create({
+          title: `Vizualizace ${product.name} · k ověření`,
+          image_url: response.url,
+          product_slug: product.slug || '',
+          product_name: product.name,
+          configuration: 'single',
+          quantity: 1,
+          environment: 'custom',
+          scene_description: short(inquiry.message, 800),
+          source_inquiry_id: inquiry.id,
+          generation_prompt: `PRODUCT MASTER LOCK + klientská fotografie prostoru. ${productRule}`,
+          reference_image_urls: refs,
+          material: product.material || '',
+          is_master_geometry_locked: true,
+          approval_status: 'needs_review',
+          approved_for_presentation: false,
+          is_primary_for_variant: false,
+          notes: (product.visual_master_verified || product.hero_visual_verified)
+            ? 'MASTER reference je ověřená; výsledek stále vyžaduje vizuální porovnání.'
+            : 'MASTER reference není ověřená; výstup je pouze návrhový koncept.',
+        });
+      } catch (_) {}
       setAssets((current) => [asset, ...current]);
       onAttachmentsChange?.([...attachments.filter((item) => item.file_url !== asset.file_url), asset]);
       setMessages((current) => [...current, { role: 'assistant', text: `Vizualizace ${product.name} je připravená k vizuální kontrole proti MASTER referenci. Do nabídky ji zařaďte až po potvrzení geometrie produktu.` }]);

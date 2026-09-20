@@ -148,6 +148,42 @@
       "type": "string",
       "format": "date-time",
       "description": "Datum posledn\u00ed aktualizace hero vizualizace."
+    },
+    "visual_master_reference_url": {
+      "type": "string",
+      "description": "Hlavn\u00ed MASTER fotografie produktu pro AI vizualizace. M\u00e1 absolutn\u00ed prioritu p\u0159ed stylem prost\u0159ed\u00ed."
+    },
+    "visual_master_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "True pouze po lidsk\u00e9m ov\u011b\u0159en\u00ed, \u017ee MASTER reference odpov\u00edd\u00e1 skute\u010dn\u00e9mu produktu."
+    },
+    "visual_geometry_lock": {
+      "type": "string",
+      "description": "Produktov\u011b specifick\u00fd geometrick\u00fd z\u00e1mek: silueta, po\u010det a pr\u016fb\u011bh trubek/ramen, r\u00e1diusy, trysky, patka a proporce."
+    },
+    "visual_negative_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Zak\u00e1zan\u00e9 zm\u011bny p\u0159i generov\u00e1n\u00ed produktu."
+    },
+    "visual_allowed_environments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Doporu\u010den\u00e1 prost\u0159ed\u00ed pro generov\u00e1n\u00ed produktu."
+    },
+    "visual_rule_version": {
+      "type": "string",
+      "description": "Verze pravidel produktov\u00e9 p\u0159esnosti."
+    },
+    "visual_requires_human_review": {
+      "type": "boolean",
+      "default": true,
+      "description": "Ka\u017ed\u00e1 nov\u00e1 AI vizualizace mus\u00ed proj\u00edt kontrolou proti MASTER referenci p\u0159ed pou\u017eit\u00edm v nab\u00eddce."
     }
   },
   "required": [

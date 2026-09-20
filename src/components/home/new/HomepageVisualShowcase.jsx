@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Building2, Trees, Home, Landmark, Sparkles, Droplets } from 'lucide-react';
+import { ArrowRight, Trees, Home, Landmark, Sparkles, Droplets } from 'lucide-react';
 
 const useCases = [
   {

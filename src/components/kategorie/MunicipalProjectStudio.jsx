@@ -223,7 +223,7 @@ export function MunicipalCustomProduction() {
           </div>
           <div className="max-w-2xl lg:justify-self-end">
             <p className="text-base leading-7 text-white/68">
-              Neprodáváme obci jen samostatný výrobek. Umíme připravit autorské nebo kombinované řešení od prvního návrhu přes technické zpracování a výrobu až po instalaci, řízení a servis.
+              Pro obce připravujeme autorské i kombinované mlžné zóny od prvního návrhu přes technické zpracování a výrobu až po instalaci, SUPLA řízení a servis.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {['Atypické rozměry', 'Povrch a kotvení', 'Kombinace prvků', 'Smart řízení'].map((item) => (

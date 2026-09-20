@@ -44,9 +44,9 @@ export default function HomeHero() {
           src="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp"
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-80"
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.26),transparent_32%),linear-gradient(90deg,rgba(0,0,0,.86)_0%,rgba(0,0,0,.54)_44%,rgba(0,0,0,.22)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
@@ -88,7 +88,7 @@ export default function HomeHero() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((tile) => (
             <Link key={tile.title} to={tile.link} className="group relative min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)]">
-              <img src={tile.image} alt={`${tile.title} — MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover opacity-82 transition duration-500 group-hover:scale-[1.05]" loading="lazy" />
+              <img src={tile.image} alt={`${tile.title} — MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/24 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>

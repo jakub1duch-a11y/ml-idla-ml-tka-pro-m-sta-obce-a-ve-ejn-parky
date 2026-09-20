@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
 
 const SLOGAN = 'Samostojná mlžná trojnožka';
+const HERO_FALLBACK = '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp';
 
 /** Hero produktu s videosmyčkou na pozadí. Data načte přes SDK podle slugu, pokud nedostane `product`. */
 export default function ProductHero({ slug = 'teepee', product: given, slogan = SLOGAN }) {
@@ -17,14 +18,14 @@ export default function ProductHero({ slug = 'teepee', product: given, slogan = 
 
   if (!product) return <section className="min-h-[70vh] bg-[#0A1628]" />;
 
-  const poster = product.hero_background_url || product.image_url;
+  const poster = product.hero_background_url || product.image_url || HERO_FALLBACK;
 
   return (
     <section className="relative flex min-h-[78vh] items-end overflow-hidden bg-[#0A1628] text-white">
       {product.video_url ? (
-        <video src={product.video_url} poster={poster} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover" />
+        <video src={product.video_url} poster={poster} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover object-center" />
       ) : (
-        <img src={poster} alt={product.image_alt || product.name} className="absolute inset-0 h-full w-full object-cover" />
+        <img src={poster} alt={product.image_alt || product.name || 'Produkt MLŽIDLA ve veřejném prostoru'} className="absolute inset-0 h-full w-full object-cover object-center" loading="eager" fetchPriority="high" onError={(event) => { event.currentTarget.src = HERO_FALLBACK; }} />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/55 to-[#0A1628]/15" />
       <TechnicalBlueprintBackground product={product} theme="dark" autoRotate showBase={false} className="z-[1] opacity-70 mix-blend-screen" />

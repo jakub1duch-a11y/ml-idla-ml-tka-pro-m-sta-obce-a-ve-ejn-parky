@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
-  { icon: Wind, text: 'Snižuje pocitovou teplotu o 5–10 °C' },
+  { icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' }
   { icon: Droplets, text: 'Váže prach a pyl pro čistší vzduch' },
   { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
   { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' },
@@ -91,13 +91,17 @@ export default function HomeHero() {
       <div className="relative z-20 mx-auto -mt-16 max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((tile, index) => (
-            <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
-              <Link to={tile.link} className="group relative block min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)]">
-                <img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/24 to-transparent" />
+            <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
+              <Link to={tile.link} className="group relative block min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
+                <img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/24 to-transparent" />
+                <motion.span className="absolute inset-x-6 top-5 h-px origin-left rounded-full bg-gradient-to-r from-transparent via-[#26C6E9] to-transparent opacity-0 group-hover:opacity-100" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.7, delay: 0.12 + index * 0.04 }} />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
                   <p className="mt-1 text-sm font-semibold text-white/76">{tile.text}</p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] opacity-90 transition group-hover:translate-x-1">
+                    Detail produktu <ArrowRight size={14} />
+                  </span>
                 </div>
               </Link>
             </motion.div>

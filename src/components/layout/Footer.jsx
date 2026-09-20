@@ -94,6 +94,21 @@ export default function Footer() {
               </Link>
             </div>
 
+            <div className="mt-7 grid gap-3 text-sm text-white/72 sm:grid-cols-3 lg:grid-cols-1">
+              <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Phone size={15} /></span>
+                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Telefon</span><span className="font-semibold text-white/86">+420 774 700 390</span></span>
+              </a>
+              <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Mail size={15} /></span>
+                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">E-mail</span><span className="font-semibold text-white/86">obchod1@holmtec.cz</span></span>
+              </a>
+              <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><MapPin size={15} /></span>
+                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Zázemí</span><span className="font-semibold text-white/86">Trutnov · HolmTec</span></span>
+              </Link>
+            </div>
+
             <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               <a
                 href="https://mlzidla-vizualizator-prostoru.duchjakubghost.chatgpt.site"
@@ -133,10 +148,10 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="mt-7 flex items-center gap-4">
-              <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram" className="text-white/55 transition-colors hover:text-cyan"><Instagram size={18} /></a>
-              <a href="#linkedin" aria-label="LinkedIn" className="text-white/55 transition-colors hover:text-cyan"><Linkedin size={18} /></a>
-              <a href="#youtube" aria-label="YouTube" className="text-white/55 transition-colors hover:text-cyan"><Youtube size={18} /></a>
+            <div className="mt-7 flex items-center gap-3">
+              <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Instagram size={18} /></a>
+              <a href="https://www.linkedin.com/company/holmtec/" target="_blank" rel="noreferrer" aria-label="LinkedIn HolmTec" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Linkedin size={18} /></a>
+              <a href="https://studio.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
             </div>
           </div>
 

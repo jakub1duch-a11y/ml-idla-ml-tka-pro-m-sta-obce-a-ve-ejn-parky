@@ -8,6 +8,7 @@ import { EMAIL_TOPIC_OPTIONS, sanitizeEmailTopics } from '@/lib/emailPreferences
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
+  pending_approval: { label: 'Čeká na interní schválení', color: 'bg-amber-50 text-amber-700', icon: '⏳' },
   sent: { label: 'Odeslána', color: 'bg-blue-50 text-blue-600', icon: '📤' },
   viewed: { label: 'Zobrazena', color: 'bg-cyan-50 text-cyan-700', icon: '👁' },
   extension_requested: { label: 'Žádost o prodloužení', color: 'bg-amber-50 text-amber-700', icon: '↻' },

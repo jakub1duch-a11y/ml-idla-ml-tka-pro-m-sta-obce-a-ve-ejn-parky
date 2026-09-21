@@ -26,7 +26,7 @@ export default function FeaturedMlzitka() {
   const featured = useMemo(() => sortByStructure(products.filter((p) => p.featured)).slice(0, 6), [products]);
 
   return (
-    <section className="bg-white py-20 lg:py-28">
+    <section id="home-product-gallery" className="hero-gallery-anchor bg-white py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>

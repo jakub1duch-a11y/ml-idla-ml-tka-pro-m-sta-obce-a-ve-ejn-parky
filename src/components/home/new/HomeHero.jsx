@@ -1,27 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Play, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
+import { motion, MotionConfig } from 'framer-motion';
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
   { icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' },
-  { icon: Droplets, text: 'Váže prach a pyl pro čistší vzduch' },
+  { icon: Droplets, text: 'Jemná mlha pro příjemnější pobyt' },
   { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
   { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' },
 ];
 
 const tiles = [
   {
-    title: 'LINEA',
-    text: 'Minimalistické sloupové mlžítko',
+    title: 'LINEA CE',
+    text: 'Nerezová linie s charakteristickým ohybem',
     image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
-    link: '/produkt/linea-mlzitko',
+    link: '/produkt/linea-solo',
   },
   {
-    title: 'KVĚT',
+    title: 'MRAK',
     text: 'Hravé osvěžení pro děti a hřiště',
     image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
-    link: '/kategorie/skoly-skolky-deti',
+    link: '/produkt/mlzitko-mrak',
   },
   {
     title: 'MLŽNÁ BRÁNA',
@@ -39,8 +40,10 @@ const tiles = [
 
 export default function HomeHero() {
   return (
-    <section className="relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
+    <MotionConfig reducedMotion="user">
+    <section className="hero-motion-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
+        <HeroAtmosphere />
         <motion.img
           src="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp"
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
@@ -56,20 +59,20 @@ export default function HomeHero() {
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.22em] text-[#26C6E9]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(4rem,9vw,8.6rem)] font-black leading-[.86] tracking-[-.085em] text-white">
+            <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(3rem,9vw,8.6rem)] font-black leading-[.86] tracking-[-.085em] text-white">
               Město se nadechne.
             </h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-white/82 sm:text-2xl">
-              Chytrá nerezová mlžítka pro města, obce i soukromé prostory. Příjemnější klima, čistší vzduch a místa, kde se lidé chtějí zdržet.
+            <p className="mt-7 max-w-2xl text-xl leading-8 text-slate-200 sm:text-2xl">
+              Chytrá nerezová mlžítka pro města, obce i soukromé prostory. Příjemnější klima a místa, kde se lidé chtějí zdržet.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Link to="/mlzidla-mlzitka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
                 Zobrazit produkty <ArrowRight size={17} />
               </Link>
-              <Link to="/reference" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/8 px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/28"><Play size={15} fill="currentColor" /></span>
-                Přehrát video
-              </Link>
+              <a href="#home-product-gallery" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/[.08] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/28"><ArrowRight size={15} /></span>
+                Prohlédnout galerii
+              </a>
             </div>
           </motion.div>
 
@@ -80,7 +83,7 @@ export default function HomeHero() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[#26C6E9]">
                     <Icon size={20} />
                   </div>
-                  <p className="text-sm font-bold leading-6 text-white/86">{text}</p>
+                  <p className="text-sm font-bold leading-6 text-slate-200">{text}</p>
                 </div>
               ))}
             </div>
@@ -94,11 +97,11 @@ export default function HomeHero() {
             <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
               <Link to={tile.link} className="group relative block min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
                 <img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/24 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/[.88] via-black/24 to-transparent" />
                 <motion.span className="absolute inset-x-6 top-5 h-px origin-left rounded-full bg-gradient-to-r from-transparent via-[#26C6E9] to-transparent opacity-0 group-hover:opacity-100" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.7, delay: 0.12 + index * 0.04 }} />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
-                  <p className="mt-1 text-sm font-semibold text-white/76">{tile.text}</p>
+                  <p className="mt-1 text-sm font-semibold text-slate-200">{tile.text}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] opacity-90 transition group-hover:translate-x-1">
                     Detail produktu <ArrowRight size={14} />
                   </span>
@@ -109,5 +112,6 @@ export default function HomeHero() {
         </div>
       </div>
     </section>
+    </MotionConfig>
   );
 }

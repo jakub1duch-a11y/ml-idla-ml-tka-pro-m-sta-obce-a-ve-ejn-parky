@@ -15,6 +15,7 @@ import {
   Upload,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { buildMarketingVisualizationPrompt, getMarketingReferences, MARKETING_GENERATION_SKILL } from '@/lib/mlzidlaMarketingGenerationSkill';
 
 const INPUT = 'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition focus:border-cyan/40';
 const FORMATS = {
@@ -48,11 +49,7 @@ const totalScore = (concept) => {
   return Math.round((values.reduce((sum, value) => sum + value, 0) / values.length) * 10);
 };
 const splitUrls = (value) => String(value || '').split(/[\n,]/).map((item) => item.trim()).filter(Boolean);
-const productReferences = (product) => [
-  product?.hero_visual_verified ? product?.hero_product_image_url : '',
-  product?.image_url,
-  ...(product?.gallery_urls || []).slice(0, 2),
-].filter(Boolean);
+const productReferences = (product) => getMarketingReferences(product);
 
 export default function ThumbnailDirectorTab() {
   const [form, setForm] = useState({

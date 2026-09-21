@@ -1,9 +1,10 @@
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
 import ProductExperience from '@/components/ui/ProductExperience';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import { ArrowRight, Download, Box, Ruler, Layers, Mail } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
@@ -48,8 +49,10 @@ export default function Architekti() {
   return (
     <div className="min-h-screen bg-white pt-20">
       {/* Hero */}
-      <section className="bg-[#0D2F4F] py-20 text-white lg:py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <MotionConfig reducedMotion="user">
+<section className="hero-motion-surface bg-[#0D2F4F] py-20 text-white lg:py-28">
+        <HeroAtmosphere />
+        <div className="hero-content relative mx-auto max-w-7xl px-6 lg:px-10">
           <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#7FC4E8]">Podklady pro projektanty</p>
           <h1 className="mt-5 max-w-4xl font-heading text-4xl leading-[1.08] lg:text-5xl xl:text-6xl">
             Nástroj pro návrh veřejného prostoru s mlhou.
@@ -69,6 +72,7 @@ export default function Architekti() {
           </div>
         </div>
       </section>
+</MotionConfig>
 
       {/* Katalog geometrií */}
       <section className="bg-white py-16 lg:py-24">

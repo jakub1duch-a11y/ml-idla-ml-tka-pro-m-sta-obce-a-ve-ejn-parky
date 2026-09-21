@@ -1,7 +1,9 @@
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import { ArrowRight, Trees, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
@@ -35,9 +37,10 @@ export default function Outdoor() {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm"
-        className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+      <MotionConfig reducedMotion="user">
+<section className="hero-motion-surface hero-category relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <HeroAtmosphere />
+        <HeroBackgroundVideo src="/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm" poster="/media/hero-posters/outdoor.webp" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
@@ -64,6 +67,7 @@ export default function Outdoor() {
           </motion.div>
         </div>
       </section>
+</MotionConfig>
 
       <section className="border-b border-slate-200 bg-white" data-analytics-section="residential-funnel">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">

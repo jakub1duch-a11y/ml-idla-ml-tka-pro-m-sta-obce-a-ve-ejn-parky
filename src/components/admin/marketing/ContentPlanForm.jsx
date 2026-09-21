@@ -43,11 +43,15 @@ export default function ContentPlanForm({ onCreated }) {
   const [aiUsed, setAiUsed] = useState(false);
 
   const generateCaption = async () => {
-    if (!form.title) return;
+    if (!form.title || !selectedProduct) {
+      setError('Nejprve vyber konkrétní produkt MLŽIDLA.');
+      return;
+    }
+    setError('');
     setGeneratingText(true);
     try {
       const res = await base44.integrations.Core.InvokeLLM({
-        prompt: `Jsi seniorní creative director značky MLŽIDLA® pro Instagram @mlzidla. Vytvoř profesionální český reklamní caption k tématu: "${form.title}". Cílová skupina: architekti, města, obce, hotely a prémiová gastronomie. Struktura: silný scroll-stopping hook; 2–3 konkrétní přínosy (ochlazení prostoru, nerezová odolnost, nízká spotřeba, instalace bez čerpadla podle kontextu); krátký důkaz nebo scénář využití; jasná výzva k návštěvě https://mlzidla.cz a hlavní CTA k nezávazné poptávce na https://mlzidla.cz/poptavka. Tón prémiový, věcný a sebevědomý, bez prázdných superlativů. Použij přirozené odstavce a zakonči 5–7 relevantními hashtagy včetně #mlzidla, #ochlazenimesta a #mestskaarchitektura.`,
+        prompt: `${buildMarketingCaptionPrompt({ product: selectedProduct, channel: form.platform, visualMode, captionGoal: form.title })}\n\nVytvoř český caption k tématu: "${form.title}". Cílová skupina: architekti, města, obce, hotely a prémiová gastronomie. Přidej 5–7 relevantních hashtagů včetně #mlzidla. Neopakuj neověřené technické hodnoty.`,
         model: 'gemini_3_flash',
       });
       const caption = typeof res === 'string' ? res : JSON.stringify(res, null, 2);
@@ -59,12 +63,20 @@ export default function ContentPlanForm({ onCreated }) {
   };
 
   const generateImage = async () => {
-    if (!form.title) return;
+    if (!form.title || !selectedProduct) {
+      setError('Vyber produkt před generováním vizuálu.');
+      return;
+    }
+    if (!selectedMaster || selectedReferences.length === 0) {
+      setError('Produkt nemá MASTER referenci. Vizuál nelze bezpečně generovat.');
+      return;
+    }
+    setError('');
     setGeneratingImage(true);
     try {
       const generateImageParams = /** @type {import('@base44/sdk').GenerateImageParams & { existing_image_urls?: string[] }} */ ({
-        prompt: `Prémiový realistický Instagram vizuál pro MLŽIDLA.cz k tématu: ${form.title}. Zvolený produkt: ${productFocus || 'urči podle tématu'}. Typ vizuálu: ${visualMode}. Zachovej skutečnou geometrii, proporce, počet ramen a trubek, umístění trysek, AISI 316L, patku a ukotvení podle schválené reference. Nevymýšlej nové prvky ani varianty. Pokud jsou zobrazeni montážníci nebo ruce, ukaž přirozenou dokumentární fotografii české výroby a instalace: ruce realisticky pracují s nerezovým dílem, vhodné pracovní oblečení a ochranné pomůcky, žádné nebezpečné jednání ani stock-photo póza. Produkt zůstává přesný a hlavní. Pro fotogalerii vytvoř vizuálně konzistentní scénu vhodnou jako titulní náhled carouselu, ne koláž s náhodnými produkty. Umísti produkt do moderního českého městského prostoru nebo dílny podle typu vizuálu, s lidmi pro měřítko a jemnou realistickou mlhou 50–100 μm pouze tam, kde dává smysl. Použij Deep Steel #0D2D38, Ocean Teal #0E5B67, Mist Aqua #61D5E5, tlumenou přírodní zelenou #6F8F72 a bílou. Zelená má evokovat stromy, stín a úlevu ve veřejném prostoru, ne neověřené ekologické tvrzení. Zachovej přirozené světlo, kontakt se zemí a bezpečný prostor pro přesný nadpis a logo. Negeneruj dlouhé texty ani falešné logo; typografii a grafické prvky vloží administrace/Adobe Express. Portrétní kompozice 4:5 pro Instagram carousel.`,
-        existing_image_urls: [BRAND_LOGO_URL, BRAND_REFERENCE_URL],
+        prompt: buildMarketingVisualizationPrompt({ product: selectedProduct, channel: form.platform, visualMode, topic: form.title }),
+        existing_image_urls: selectedReferences,
       });
       const res = await base44.integrations.Core.GenerateImage(generateImageParams);
       setForm((f) => ({ ...f, image_url: res.url }));

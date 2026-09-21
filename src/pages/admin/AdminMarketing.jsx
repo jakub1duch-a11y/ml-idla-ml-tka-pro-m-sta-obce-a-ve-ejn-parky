@@ -10,6 +10,7 @@ import MarketingBriefingTab from '@/components/admin/marketing/MarketingBriefing
 import MarketingConnectorHealth from '@/components/admin/marketing/MarketingConnectorHealth';
 import ThumbnailDirectorTab from '@/components/admin/marketing/ThumbnailDirectorTab';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
+import { MARKETING_CHANNELS, MARKETING_GENERATION_SKILL } from '@/lib/mlzidlaMarketingGenerationSkill';
 
 const SUBTABS = [
   { id:'briefing', label:'Briefing', sub:'Výkon, práce a priority', icon:Gauge },
@@ -38,6 +39,13 @@ export default function AdminMarketing(){
     </section>
 
     <MarketingConnectorHealth />
+
+    <section className="rounded-2xl border border-cyan/15 bg-cyan/5 p-4">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Exact product marketing skill · {MARKETING_GENERATION_SKILL.version}</p><p className="mt-1 text-sm text-white/60">Instagram, Reels, Facebook, LinkedIn, web i reklama používají MASTER reference a schválení před publikací.</p></div>
+        <p className="font-mono text-[10px] uppercase tracking-wider text-white/35">{Object.keys(MARKETING_CHANNELS).length} kanálů · žádné auto-publikování</p>
+      </div>
+    </section>
 
     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">{SUBTABS.map(t=>{const Icon=t.icon;const active=subtab===t.id;return <button key={t.id} onClick={()=>setSubtab(t.id)} className={`rounded-2xl border p-4 text-left transition ${active?'border-cyan/30 bg-cyan/10 shadow-[0_14px_40px_rgba(34,211,238,.08)]':'border-white/8 bg-white/[.025] hover:border-white/15 hover:bg-white/[.04]'}`}><div className="flex items-center justify-between"><div className={`flex h-9 w-9 items-center justify-center rounded-xl ${active?'bg-cyan text-slate-950':'bg-white/5 text-white/45'}`}><Icon size={16}/></div>{active?<span className="rounded-full bg-cyan/15 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-cyan">aktivní</span>:null}</div><p className={`mt-4 text-sm font-semibold ${active?'text-white':'text-white/65'}`}>{t.label}</p><p className="mt-1 text-xs leading-5 text-white/30">{t.sub}</p></button>})}</div>
 

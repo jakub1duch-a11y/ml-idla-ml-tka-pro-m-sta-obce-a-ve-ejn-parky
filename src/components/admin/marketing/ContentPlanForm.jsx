@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Loader, Sparkles, ImageIcon } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import MarketingPostPreview from './MarketingPostPreview';
+import {
+  MARKETING_CHANNELS,
+  MARKETING_GENERATION_SKILL,
+  MARKETING_VISUAL_MODES,
+  buildMarketingCaptionPrompt,
+  buildMarketingVisualizationPrompt,
+  getMarketingChannel,
+  getMarketingReferences,
+} from '@/lib/mlzidlaMarketingGenerationSkill';
+import { getMasterReference } from '@/lib/productVisualizationRules';
 
 const inputCls = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all";
-const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png';
-const BRAND_REFERENCE_URL = '/media/optimized/3865c06a7_ana.webp';
 
 export default function ContentPlanForm({ onCreated }) {
-  const [form, setForm] = useState({ title: '', platform: 'instagram', caption: '', image_url: '', scheduled_date: '' });
+  const [form, setForm] = useState({ title: '', platform: 'instagram_feed', caption: '', image_url: '', scheduled_date: '' });
+  const [products, setProducts] = useState([]);
   const [productFocus, setProductFocus] = useState('');
-  const [visualMode, setVisualMode] = useState('Produkt v prostoru');
+  const [visualMode, setVisualMode] = useState('product_in_space');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    base44.entities.Product.list('name', 250).then((rows) => {
+      if (active) setProducts((rows || []).filter((product) => product?.is_archived !== true));
+    }).catch(() => { if (active) setProducts([]); });
+    return () => { active = false; };
+  }, []);
+
+  const selectedProduct = useMemo(
+    () => products.find((product) => product.id === productFocus || product.slug === productFocus),
+    [products, productFocus],
+  );
+  const selectedMaster = selectedProduct ? getMasterReference(selectedProduct) : '';
+  const selectedReferences = selectedProduct ? getMarketingReferences(selectedProduct) : [];
+  const channel = getMarketingChannel(form.platform);
   const [generatingText, setGeneratingText] = useState(false);
   const [generatingImage, setGeneratingImage] = useState(false);
   const [saving, setSaving] = useState(false);

@@ -1,0 +1,21 @@
+.hero-motion-surface{position:relative;isolation:isolate;overflow:hidden}
+.hero-atmosphere{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.hero-atmosphere i{position:absolute;width:85%;height:55%;right:-20%;bottom:-24%;border-radius:50%;background:radial-gradient(ellipse,rgba(141,226,236,.2),rgba(167,228,235,.06) 45%,transparent 70%);animation:hero-mist-arrive 3.8s cubic-bezier(.22,1,.36,1) both}
+.hero-atmosphere i+i{width:65%;bottom:0;right:-25%;opacity:.5;animation-duration:4.2s}
+.hero-motion-surface>div.relative,.hero-motion-surface>.hero-content{z-index:2}
+.hero-motion-surface h1{text-wrap:balance}
+.hero-motion-surface a:focus-visible,.hero-motion-surface button:focus-visible{outline:3px solid #7ae1ef;outline-offset:5px}
+.hero-video-toggle{position:absolute;z-index:45;right:20px;top:24px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;border:1px solid rgba(255,255,255,.4);border-radius:999px;background:rgba(7,19,29,.86);color:white;font-size:12px;font-weight:600}
+.hero-video-toggle:hover{background:#12384a}
+.hero-video-toggle:disabled{opacity:.8;cursor:default}
+.hero-video-toggle:focus-visible{outline:3px solid #7ae1ef;outline-offset:4px}
+.hero-catalog-content{position:relative;z-index:3;display:flex;flex-direction:column;justify-content:flex-end;min-height:650px;max-width:1280px;margin:auto;padding:130px 40px 50px}
+.hero-catalog-content h1{max-width:850px;font-size:clamp(2.5rem,5.7vw,5.4rem);line-height:1.02;letter-spacing:-.055em;font-weight:600}
+.hero-catalog-content>p{max-width:590px;font-size:1rem;line-height:1.8;color:#dbe8ee}
+.hero-scene-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.hero-scene-nav button{min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid #7797a7;background:rgba(7,19,29,.6);color:white;font-size:12px;font-weight:600}
+.hero-scene-nav button[aria-pressed=true]{background:#7ae1ef;color:#07131d;border-color:#7ae1ef}
+.hero-gallery-anchor{scroll-margin-top:110px}
+@keyframes hero-mist-arrive{from{transform:translate3d(6%,-4%,0);opacity:0}to{transform:translate3d(0,0,0);opacity:1}}
+@media(max-width:767px){.hero-catalog-content{min-height:650px;padding:110px 24px 32px}.hero-motion-surface.hero-category{height:auto;min-height:620px}.hero-category>div.relative{min-height:620px;padding-top:110px}.hero-category h1{font-size:clamp(2rem,8.5vw,3rem)}.hero-category p.text-lg{font-size:1rem;line-height:1.7}.hero-video-toggle{right:16px;top:20px}.hero-scene-nav{gap:6px}.hero-scene-nav button{padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){.hero-motion-surface *,.hero-motion-surface *::before,.hero-motion-surface *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.hero-atmosphere i{transform:none!important}}

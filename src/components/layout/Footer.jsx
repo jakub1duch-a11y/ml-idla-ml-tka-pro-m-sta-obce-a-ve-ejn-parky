@@ -176,6 +176,29 @@ export default function Footer() {
           </nav>
         </div>
 
+        <div className="grid gap-3 border-b border-white/10 py-7 md:grid-cols-3">
+          {trustItems.map(({ icon: Icon, label, text }, index) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.42, delay: index * 0.06 }}
+              className="group rounded-2xl border border-white/10 bg-white/[.035] p-4 transition hover:-translate-y-0.5 hover:border-cyan/35 hover:bg-white/[.06]"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan/12 text-cyan transition group-hover:scale-105">
+                  <Icon size={18} />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-white">{label}</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/62">{text}</span>
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
         <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <p className="max-w-2xl font-heading text-2xl leading-tight text-white sm:text-3xl">

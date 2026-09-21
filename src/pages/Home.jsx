@@ -8,6 +8,7 @@ import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
 import HomepageVisualShowcase from '@/components/home/new/HomepageVisualShowcase';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
+import MunicipalUseCasesSection from '@/components/home/new/MunicipalUseCasesSection';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
 import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
@@ -31,6 +32,7 @@ export default function Home() {
     <MotionConfig reducedMotion="user">
       <HomeHero />
       <HomepageVisualShowcase />
+      <MunicipalUseCasesSection />
       <ProductPhotoGallery />
       <V3EditorialBridge />
       <ReferencesStrip />

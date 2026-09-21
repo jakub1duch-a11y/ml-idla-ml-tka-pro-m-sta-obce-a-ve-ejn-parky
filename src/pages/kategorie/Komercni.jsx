@@ -1,7 +1,8 @@
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import { ArrowRight, Factory, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
@@ -29,8 +30,9 @@ export default function Komercni() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <MotionConfig reducedMotion="user"><div className="hero-motion-surface max-w-7xl mx-auto grid items-center gap-10 px-6 lg:px-10 pt-24 pb-16 lg:grid-cols-2">
+        <HeroAtmosphere />
+        <motion.div className="hero-content relative" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
               <Factory size={18} className="text-slate-900" />
@@ -41,7 +43,7 @@ export default function Komercni() {
             Ochlazení, které podporuje<br /><span style={{ fontStyle: 'italic' }}>komfort hostů i provozu.</span>
           </h1>
           <p className="text-slate-500 text-lg max-w-2xl leading-relaxed font-light mb-8">
-            Pro gastro, wellness, hotelové terasy a zahrady i komerční provozy navrhujeme mlžné systémy podle skutečného využití místa. Snižují pocitovou teplotu až o 9 °C bez klimatizace a s nízkou spotřebou energie.
+            Pro gastro, wellness, hotelové terasy a zahrady i komerční provozy navrhujeme mlžné systémy podle skutečného využití místa. Jemná vodní mlha vytváří příjemnější místo pro chvíli odpočinku i společné setkání.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -52,7 +54,8 @@ export default function Komercni() {
             </a>
           </div>
         </motion.div>
-      </div>
+      <figure className="hero-content relative overflow-hidden rounded-3xl bg-slate-100"><img src="/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp" alt="Mlžení pro zahrady, hotely a restaurace" fetchPriority="high" className="aspect-[4/5] w-full object-cover" /><figcaption className="p-5 text-sm text-slate-600">Příjemnější atmosféra venkovních prostor.</figcaption></figure>
+      </div></MotionConfig>
 
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">

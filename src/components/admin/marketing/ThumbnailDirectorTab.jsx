@@ -275,6 +275,8 @@ export default function ThumbnailDirectorTab() {
         aspect_ratio: format.ratio,
         product_id: selectedProduct?.id || '',
         product_name: selectedProduct?.name || '',
+        visual_rule_version: MARKETING_GENERATION_SKILL.version,
+        product_master_reference_url: productReferences(selectedProduct)[0] || '',
         audience: form.audience,
         viewer_question: form.viewer_question,
         reference_urls: splitUrls(form.reference_urls),

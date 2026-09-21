@@ -10,7 +10,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
 const sourceDir = join(rootDir, 'dist');
-const publishDir = join(rootDir, 'src', 'mlzidla');
+// Must live outside `src/` — copying a minified bundle into the source tree breaks lint.
+const publishDir = join(rootDir, 'mlzidla');
 
 if (!existsSync(sourceDir)) {
   throw new Error('[render-publish] dist directory does not exist after build.');

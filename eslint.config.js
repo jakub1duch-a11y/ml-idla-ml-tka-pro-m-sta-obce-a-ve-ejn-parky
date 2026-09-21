@@ -6,7 +6,7 @@ import pluginUnusedImports from "eslint-plugin-unused-imports";
 
 export default [
   {
-    ignores: [".vite/**/*", "dist/**/*", "node_modules/**/*"],
+    ignores: [".vite/**/*", "dist/**/*", "node_modules/**/*", "src/mlzidla/**/*"],
   },
   {
     files: [

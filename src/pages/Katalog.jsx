@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';

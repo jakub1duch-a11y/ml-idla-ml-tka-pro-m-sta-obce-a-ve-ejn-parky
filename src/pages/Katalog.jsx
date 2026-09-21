@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
@@ -32,12 +32,10 @@ export default function Katalog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Katalog 2026</p>
-          <h1 className="font-heading font-medium text-3xl lg:text-5xl text-slate-900 tracking-tight mb-8">Mlžítka, příslušenství a Smart systém.</h1>
-        </motion.div>
+    <div className="min-h-screen bg-white">
+      <KolekceHero />
+      <div id="catalog" className="hero-gallery-anchor max-w-7xl mx-auto px-6 lg:px-10 pt-12 pb-8">
+        
 
         <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />
 

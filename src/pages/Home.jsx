@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
@@ -27,7 +28,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <HomeHero />
       <HomepageVisualShowcase />
       <ProductPhotoGallery />
@@ -42,6 +43,6 @@ export default function Home() {
       <FinancingSection />
       <HomeInquiryForm />
       <MobileStickyBar />
-    </>
+    </MotionConfig>
   );
 }

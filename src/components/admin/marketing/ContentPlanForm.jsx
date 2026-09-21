@@ -102,10 +102,18 @@ export default function ContentPlanForm({ onCreated }) {
       ...form,
       status: form.scheduled_date ? 'scheduled' : 'draft',
       ai_generated: aiUsed,
+      product_id: selectedProduct?.id || '',
+      product_slug: selectedProduct?.slug || '',
+      product_name: selectedProduct?.name || '',
+      visual_rule_version: MARKETING_GENERATION_SKILL.version,
+      visual_channel: form.platform,
+      visual_mode: visualMode,
+      product_master_reference_url: selectedMaster,
     });
-    setForm({ title: '', platform: 'instagram', caption: '', image_url: '', scheduled_date: '' });
+    setForm({ title: '', platform: 'instagram_feed', caption: '', image_url: '', scheduled_date: '' });
     setProductFocus('');
-    setVisualMode('Produkt v prostoru');
+    setVisualMode('product_in_space');
+    setError('');
     setAiUsed(false);
     setSaving(false);
     onCreated();
@@ -125,30 +133,23 @@ export default function ContentPlanForm({ onCreated }) {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <input required placeholder="Název příspěvku *" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputCls} />
-        <select value={productFocus} onChange={(e) => setProductFocus(e.target.value)} className={inputCls} aria-label="Produkt pro vizuál">
-          <option value="">Produkt podle tématu</option>
-          <option value="LINEA kulaté">LINEA kulaté</option>
-          <option value="OSTŘEV">OSTŘEV</option>
-          <option value="MRKEV">MRKEV</option>
-          <option value="BENDY">BENDY</option>
-          <option value="BRÁNA GATE">BRÁNA GATE</option>
+        <select value={productFocus} onChange={(e) => setProductFocus(e.target.value)} className={inputCls} aria-label="Produkt pro vizuál" required>
+          <option value="">Vyber konkrétní produkt</option>
+          {products.map((product) => <option key={product.id} value={product.id}>{product.name}</option>)}
         </select>
         <select value={visualMode} onChange={(e) => setVisualMode(e.target.value)} className={inputCls} aria-label="Typ vizuálu">
-          <option>Produkt v prostoru</option>
-          <option>Fotogalerie výroby</option>
-          <option>Montáž a instalace</option>
-          <option>Detail rukou / řemeslo</option>
-          <option>Carousel mix · titulní náhled</option>
+          {MARKETING_VISUAL_MODES.map((mode) => <option key={mode.value} value={mode.value}>{mode.label}</option>)}
         </select>
         <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className={inputCls}>
-          <option value="instagram">Instagram</option>
-          <option value="facebook">Facebook</option>
-          <option value="google_ads">Google Ads</option>
-          <option value="blog">Blog</option>
+          {Object.entries(MARKETING_CHANNELS).map(([value, item]) => <option key={value} value={value}>{item.label}</option>)}
         </select>
       </div>
 
-      <p className="-mt-2 text-[11px] leading-5 text-white/35">Produkt a typ vizuálu řídí generování: realistická výroba, montáž, ruce i titulní náhled fotogalerie. AI musí zachovat reálné proporce, trysky, patku, ukotvení a materiál podle schválené reference.</p>
+      <div className="-mt-2 rounded-xl border border-cyan/15 bg-cyan/5 p-3 text-[11px] leading-5 text-white/55">
+        <p className="font-mono uppercase tracking-[.14em] text-cyan">Přesný produktový režim · {MARKETING_GENERATION_SKILL.version}</p>
+        <p className="mt-1">{selectedProduct ? `${selectedProduct.name} · ${channel.format} · ${channel.aspectRatio}` : 'Vyber produkt s MASTER referencí.'} Geometrie, proporce, trysky a základna se řídí pouze referencí.</p>
+      </div>
+      {error && <p role="alert" className="rounded-lg border border-red-300/20 bg-red-300/10 px-3 py-2 text-xs text-red-100">{error}</p>}
 
       <div className="flex gap-2">
         <button type="button" onClick={generateCaption} disabled={generatingText || !form.title}

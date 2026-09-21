@@ -112,6 +112,10 @@ export default function ThumbnailDirectorTab() {
       setMessage('Nejdřív doplňte titulek nebo téma obsahu.');
       return;
     }
+    if (!selectedProduct || productReferences(selectedProduct).length === 0) {
+      setMessage('Vyberte produkt s MASTER referencí, aby thumbnail zachoval přesnou geometrii.');
+      return;
+    }
     setBusy('concepts');
     setMessage('');
     setImages({});
@@ -129,6 +133,7 @@ export default function ThumbnailDirectorTab() {
 
       const prompt = [
         'Jsi seniorní YouTube thumbnail stratég a art director značky MLŽIDLA.cz.',
+        'Použij marketing generation skill ' + MARKETING_GENERATION_SKILL.version + ' a řiď se MASTER referencí produktu.',
         'Vytvoř přesně tři odlišné koncepty A/B/C pro ' + format.label + ' (' + format.ratio + ').',
         'Titulek nebo téma: ' + form.content_title,
         'Brief: ' + (form.brief || 'bez dalšího briefu'),
@@ -209,12 +214,17 @@ export default function ThumbnailDirectorTab() {
   };
 
   const generateImage = async (concept, index) => {
+    if (!selectedProduct || productReferences(selectedProduct).length === 0) {
+      setMessage('Vyberte produkt s MASTER referencí před generováním obrazové vrstvy.');
+      return;
+    }
     setBusy('image-' + index);
     setMessage('');
     try {
       const refs = [...sourceUrls, ...productReferences(selectedProduct)].slice(0, 6);
       const ratioInstruction = 'Výstupní kompozice ' + format.ratio + ', cílový export ' + format.dimensions + '.';
       const prompt = [
+        buildMarketingVisualizationPrompt({ product: selectedProduct, channel: form.channel === 'instagram' ? 'instagram_feed' : form.channel === 'shorts_reels' ? 'instagram_reels' : form.channel === 'ads' ? 'google_ads' : form.channel === 'web' ? 'blog' : 'linkedin', visualMode: 'product_in_space', topic: form.content_title, extraScene: concept.visual_prompt }),
         'Vytvoř čistou obrazovou vrstvu pro profesionální miniaturu MLŽIDLA.cz.',
         ratioInstruction,
         'Koncept ' + concept.variant + ': ' + concept.name + '.',

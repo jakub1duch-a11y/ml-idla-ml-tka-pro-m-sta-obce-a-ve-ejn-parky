@@ -151,7 +151,7 @@ export default function Footer() {
             <div className="mt-7 flex items-center gap-3">
               <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Instagram size={18} /></a>
               <a href="https://www.linkedin.com/company/holmtec/" target="_blank" rel="noreferrer" aria-label="LinkedIn HolmTec" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Linkedin size={18} /></a>
-              <a href="https://studio.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
+              <a href="https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
             </div>
           </div>
 
@@ -176,12 +176,35 @@ export default function Footer() {
           </nav>
         </div>
 
+        <div className="grid gap-3 border-b border-white/10 py-7 md:grid-cols-3">
+          {trustItems.map(({ icon: Icon, label, text }, index) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.42, delay: index * 0.06 }}
+              className="group rounded-2xl border border-white/10 bg-white/[.035] p-4 transition hover:-translate-y-0.5 hover:border-cyan/35 hover:bg-white/[.06]"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan/12 text-cyan transition group-hover:scale-105">
+                  <Icon size={18} />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-white">{label}</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/62">{text}</span>
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
         <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <p className="max-w-2xl font-heading text-2xl leading-tight text-white sm:text-3xl">
-              20 let zkušeností. Jedno promyšlené klima pro váš prostor.
+              Chcete navrhnout mlžítka pro konkrétní místo?
             </p>
-            <p className="mt-2 text-sm text-white/66">Nové realizace, produktové novinky a technologie bez zbytečného spamu.</p>
+            <p className="mt-2 text-sm text-white/66">Pošleme vám inspiraci, technické novinky a praktické ukázky použití pro města, sportoviště i zahrady.
           </div>
 
           <form onSubmit={subscribe} className="flex w-full max-w-md md:w-[360px]">

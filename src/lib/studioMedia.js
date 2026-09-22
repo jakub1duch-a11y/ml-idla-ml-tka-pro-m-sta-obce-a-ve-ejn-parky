@@ -1,14 +1,15 @@
 // Studio assets are only shown when they are explicitly verified against the
 // manufactured product. The previous local placeholders were not present in the
 // public build and produced empty product cards.
-export const STUDIO_MEDIA_BY_SLUG = Object.freeze({});
+export const STUDIO_MEDIA_BY_SLUG = Object.freeze({
+  'mlzitko-steblo': '/media/studio/steblo-studio.webp',
+  teepee: '/media/studio/teepee-studio.webp',
+});
 
 const isPublicProductAsset = (url) => (
   typeof url === 'string'
   && url.length > 0
-  && !url.startsWith('/media/studio/')
   && !url.startsWith('/media/products/')
-  && !url.startsWith('/media/optimized/')
 );
 
 export function getStudioMedia(product) {

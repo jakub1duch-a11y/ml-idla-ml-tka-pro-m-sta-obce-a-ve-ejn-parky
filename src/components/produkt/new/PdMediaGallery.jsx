@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
+import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
@@ -21,6 +22,15 @@ const drivePreviewUrl = (url) => {
   return id ? `https://drive.google.com/file/d/${id}/preview` : url;
 };
 const clean = (items) => [...new Map(items.filter((x) => x?.url).map((x) => [x.url, x])).values()];
+const mediaUrl = (url) => (url && !isVideo(url) ? getOptimizedMediaUrl(url) : url);
+const mediaCaption = (item) => item.caption || (
+  item.badge === 'Studio' ? 'Studiový náhled produktu' :
+  item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Vizualizace umístění' :
+  item.badge === 'Realizace' ? 'Fotografie z realizace' :
+  item.badge === 'Video' || item.badge === 'Hero video' ? 'Video ukázka' :
+  item.badge === 'Reálné testování' ? 'Reálné testování v zahradě' :
+  'Produktová fotografie'
+);
 const isTechnicalMedia = (url) => typeof url === 'string' && TECHNICAL_MEDIA_RE.test(url);
 const isGardenTest = (url) => typeof url === 'string' && GARDEN_TEST_RE.test(url);
 const isFlowerSculptureProduct = (product) => /květ|kvet|socha|art/i.test(`${product.name || ''} ${product.slug || ''}`);
@@ -45,7 +55,7 @@ function matchesProduct(realization, product) {
   return Boolean(used && (used.includes(name) || name.includes(used) || used.includes(slug) || tokens.some((t) => used.includes(t))));
 }
 
-function MediaCard({ item, onOpen }) {
+function MediaCard({ item, onOpen, productName }) {
   const video = item.type === 'video';
   return (
     <button
@@ -57,14 +67,14 @@ function MediaCard({ item, onOpen }) {
         {video ? (
           isDriveVideo(item.url) ? (
             <div className="relative h-full w-full bg-[#061923]">
-              {item.poster ? <img src={item.poster} alt={item.title || 'Video produktu'} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" /> : null}
+              {item.poster ? <img src={mediaUrl(item.poster)} alt={`${productName} — video ukázka`} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" /> : null}
               <div className="absolute inset-0 bg-black/18" />
             </div>
           ) : (
             <AutoPlayVideoPreview
               src={item.url}
               poster={item.poster}
-              label={item.title || 'Video produktu'}
+              label={`${productName} — video ukázka`}
               className="h-full w-full"
               videoClassName="transition-transform duration-500 group-hover:scale-[1.025]"
               threshold={0.55}
@@ -72,14 +82,14 @@ function MediaCard({ item, onOpen }) {
             />
           )
         ) : (
-          <img src={item.url} alt={item.alt || item.title || 'MLŽIDLA'} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
+          <img src={mediaUrl(item.url)} alt={item.alt || `${productName} — ${mediaCaption(item).toLocaleLowerCase('cs-CZ')}`} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
         )}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(4,20,31,.34)_0%,rgba(4,20,31,0)_42%,rgba(10,35,66,.48)_100%)] transition-opacity duration-500 group-hover:opacity-80" />
         {video && <span className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/92 text-[#0A2342] shadow-lg"><Play size={16} fill="currentColor" /></span>}
         {item.badge && <span className="absolute right-4 top-4 rounded-full border border-white/35 bg-black/28 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">{item.badge}</span>}
       </div>
       <div className="p-4 sm:p-5">
-        <p className="font-heading text-base font-bold text-[#0A2342] sm:text-lg">{item.title}</p>
+        <p className="font-heading text-base font-bold text-[#0A2342] sm:text-lg">{mediaCaption(item)}</p>
         {item.meta && <p className="mt-1.5 flex items-center gap-1.5 text-xs leading-relaxed text-[#0D2F4F]/55"><MapPin size={12} />{item.meta}</p>}
       </div>
     </button>
@@ -114,34 +124,36 @@ export default function PdMediaGallery({ product }) {
     const curated = getCuratedProductMedia(product);
     const curatedUrls = new Set(curated.map(item => item.url));
     const productPhotos = clean([
-      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: item.url, title: item.title, badge: 'Fotografie' })),
-      studioMedia && { type: 'image', url: studioMedia, title: `${product.name} — studiový náhled`, badge: 'Studio' },
-      product.image_url && { type: 'image', url: product.image_url, title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : `${product.name} — produkt`, badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
+      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktová fotografie`, caption: item.caption || 'Produktová fotografie', title: 'Produktová fotografie', badge: 'Fotografie' })),
+      studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: 'Studiový náhled produktu', badge: 'Studio' },
+      product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
       ...(product.gallery_urls || [])
         .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
-        .map((url, i) => ({
+        .map((url) => ({
           type: 'image',
-          url,
-          title: isGardenTest(url) ? 'Reálné testování v zahradě' : `${product.name} — fotografie ${i + 1}`,
+          url: mediaUrl(url),
+          alt: isGardenTest(url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktová fotografie`,
+          caption: isGardenTest(url) ? 'Reálné testování v zahradě' : 'Produktová fotografie',
+          title: isGardenTest(url) ? 'Reálné testování v zahradě' : 'Produktová fotografie',
           badge: isGardenTest(url) ? 'Reálné testování' : 'Produkt',
         })),
     ]);
 
     const realizationPhotos = clean(realizations.flatMap((r) => [
-      r.image_url && { type: 'image', url: r.image_url, title: r.name || product.name, meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' },
-      ...(r.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url, i) => ({ type: 'image', url, title: `${r.name || 'Realizace'} — ${i + 1}`, meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' })),
+      r.image_url && { type: 'image', url: mediaUrl(r.image_url), alt: `${product.name} — fotografie z realizace`, caption: 'Fotografie z realizace', title: 'Fotografie z realizace', meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' },
+      ...(r.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url) => ({ type: 'image', url: mediaUrl(url), alt: `${product.name} — fotografie z realizace`, caption: 'Fotografie z realizace', title: 'Fotografie z realizace', meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' })),
     ]));
 
-    const visualizations = clean([...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: item.url, title: item.title, badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
-      r.concept_image_url && { type: 'image', url: r.concept_image_url, title: `${r.name || product.name} — vizualizace`, meta: r.location, badge: 'Vizualizace' },
-      r.project_sheet_url && { type: 'image', url: r.project_sheet_url, title: `${r.name || product.name} — projektový návrh`, meta: r.location, badge: 'Návrh' },
+    const visualizations = clean([...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
+      r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Vizualizace' },
+      r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Návrh' },
     ])]);
 
     const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
     const videos = clean([
-      resolvedProductVideo && { type: 'video', url: resolvedProductVideo, poster: product.image_url, title: `${product.name} — ochlazení v městském prostoru`, badge: 'Hero video' },
-      ...(product.gallery_urls || []).filter(isVideo).map((url, i) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} — video ${i + 1}`, badge: 'Video' })),
-      ...realizations.filter((r) => r.video_url).map((r) => ({ type: 'video', url: r.video_url, poster: r.image_url, title: `${r.name || product.name} — video`, meta: r.location, badge: 'Realizace' })),
+      resolvedProductVideo && { type: 'video', url: resolvedProductVideo, poster: mediaUrl(product.image_url), alt: `${product.name} — video ukázka`, caption: 'Video ukázka', title: 'Video ukázka', badge: 'Hero video' },
+      ...(product.gallery_urls || []).filter(isVideo).map((url) => ({ type: 'video', url, poster: mediaUrl(product.image_url), alt: `${product.name} — video ukázka`, caption: 'Video ukázka', title: 'Video ukázka', badge: 'Video' })),
+      ...realizations.filter((r) => r.video_url).map((r) => ({ type: 'video', url: r.video_url, poster: mediaUrl(r.image_url), alt: `${product.name} — video z realizace`, caption: 'Video z realizace', title: 'Video z realizace', meta: r.location, badge: 'Realizace' })),
     ]);
 
     return {
@@ -269,7 +281,7 @@ export default function PdMediaGallery({ product }) {
           >
             {items.map((item, index) => (
               <div key={item.url} className="snap-start sm:block">
-                <MediaCard item={item} onOpen={() => setLightbox({ items, index })} />
+                <MediaCard item={item} productName={product.name} onOpen={() => setLightbox({ items, index })} />
               </div>
             ))}
           </motion.div>
@@ -313,11 +325,11 @@ function GalleryLightbox({ items, initial, productName, onClose }) {
               <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="mx-auto max-h-[80vh] w-full rounded-2xl bg-black object-contain" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
             )
           ) : (
-            <motion.img key={item.url} src={item.url} alt={item.alt || item.title || productName} className="mx-auto max-h-[80vh] w-full rounded-2xl object-contain" initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} />
+            <motion.img key={item.url} src={mediaUrl(item.url)} alt={item.alt || `${productName} — ${mediaCaption(item).toLocaleLowerCase('cs-CZ')}` className="mx-auto max-h-[80vh] w-full rounded-2xl object-contain" initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} />
           )}
         </AnimatePresence>
         <div className="mt-4 flex items-center justify-between gap-4 px-1 text-white">
-          <div><p className="font-heading text-sm font-bold sm:text-base">{item.title}</p>{item.meta && <p className="mt-1 text-xs text-white/50">{item.meta}</p>}</div>
+          <div><p className="font-heading text-sm font-bold sm:text-base">{mediaCaption(item)}</p>{item.meta && <p className="mt-1 text-xs text-white/50">{item.meta}</p>}</div>
           <p className="font-mono text-[10px] text-white/45">{index + 1} / {items.length}</p>
         </div>
         {items.length > 1 && <>

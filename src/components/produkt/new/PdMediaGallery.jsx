@@ -33,6 +33,9 @@ function matchesProduct(realization, product) {
   const used = (realization.product_used || '').toLocaleLowerCase('cs-CZ');
   const name = (product.name || '').toLocaleLowerCase('cs-CZ');
   const slug = (product.slug || '').toLocaleLowerCase('cs-CZ');
+  if (isLineaProduct(product)) {
+    return used === 'linea' || used === 'linea®' || used === 'mlžítko linea' || used === slug;
+  }
   const tokens = name
     .replace(/mlžítko|mlžné|®|city|garden/gi, '')
     .split(/\s+/)

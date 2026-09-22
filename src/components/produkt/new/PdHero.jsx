@@ -27,7 +27,7 @@ function isVideo(url) {
 }
 
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
-const isLineaProduct = (product) => product?.slug === 'linea-mlzitko' || /(?:^|\s)LINEA(?:®|\s|$)/i.test(product?.name || '');
+const isLineaProduct = (product) => product?.slug === 'linea-mlzitko';
 
 function getHeroTitle(product, detailConfig) {
   if (detailConfig?.tagline) return detailConfig.tagline;

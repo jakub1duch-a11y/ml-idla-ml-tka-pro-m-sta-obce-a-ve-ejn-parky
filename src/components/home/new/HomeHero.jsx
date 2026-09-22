@@ -27,13 +27,13 @@ const tiles = [
   {
     title: 'MLŽNÁ BRÁNA',
     text: 'Průchozí vodní mlha pro náměstí',
-    image: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
     link: '/mlzne-brany',
   },
   {
     title: 'BENDY',
     text: 'Organická linie pro pobytové zóny',
-    image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
+    image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
     link: '/produkt/mlzitko-bendy',
   },
 ];
@@ -45,7 +45,7 @@ export default function HomeHero() {
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
         <motion.img
-          src="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp"
+          src="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg"
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover object-center"

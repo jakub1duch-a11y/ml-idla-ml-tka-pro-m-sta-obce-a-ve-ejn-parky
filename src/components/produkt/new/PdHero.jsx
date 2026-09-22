@@ -17,7 +17,8 @@ import {
   Wifi,
   X,
 } from 'lucide-react';
-import { VIDEO_ASSETS, BENDY_SLUGS } from '@/lib/newMedia';
+import { BENDY_SLUGS } from '@/lib/newMedia';
+import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
 import { getLine, getFamily } from '@/lib/productFamilies';
 import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
@@ -57,19 +58,13 @@ export default function PdHero({ product }) {
       ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení prostoru` }]
       : [];
     const items = [
-      ...(isBendy ? ownVideo : []),
       ...(product.image_url ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
-      ...(isBendy ? [] : ownVideo),
+      ...getCuratedProductMedia(product).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · vizualizace' : '') })),
+      ...ownVideo,
       ...(product.gallery_urls || [])
         .filter(Boolean)
         .filter(isVideo)
         .map((url, index) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} – video ${index + 1}` })),
-      ...(isBendy
-        ? [
-            { type: 'video', url: VIDEO_ASSETS.heroJicin.src, poster: VIDEO_ASSETS.heroJicin.poster, title: 'BENDY – realizace Jičín' },
-            { type: 'video', url: VIDEO_ASSETS.realizaceKlip.src, poster: VIDEO_ASSETS.realizaceKlip.poster, title: 'BENDY – ukázka realizace' },
-          ]
-        : []),
       ...(product.gallery_urls || [])
         .filter(Boolean)
         .filter((u) => !isVideo(u))

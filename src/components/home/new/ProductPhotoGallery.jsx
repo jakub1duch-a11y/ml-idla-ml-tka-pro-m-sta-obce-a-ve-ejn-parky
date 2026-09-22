@@ -65,7 +65,7 @@ const FILTERS = ['Vše', 'Město', 'Zahrady', 'Produkty', 'Videa'];
 export default function ProductPhotoGallery() {
   const [filter, setFilter] = useState('Vše');
   const items = MEDIA.filter(item => filter === 'Vše' || item.tag === filter);
-  return <section className="bg-[#071a2b] py-16 text-white sm:py-20" aria-labelledby="media-gallery-title">
+  return <section id="home-product-gallery" className="bg-[#071a2b] py-16 text-white sm:py-20" aria-labelledby="media-gallery-title">
     <div className="mx-auto max-w-7xl px-5 lg:px-10">
       <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>
       <h2 id="media-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl tracking-tight sm:text-5xl">Podívejte se, kam mlha patří.</h2>

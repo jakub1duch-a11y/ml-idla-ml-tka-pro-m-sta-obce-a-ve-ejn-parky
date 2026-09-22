@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Images, Loader, MapPin, Play, Sparkles, Vide
 import { base44 } from '@/api/base44Client';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
+import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
@@ -110,11 +111,14 @@ export default function PdMediaGallery({ product }) {
 
   const groups = useMemo(() => {
     const studioMedia = getStudioMedia(product);
+    const curated = getCuratedProductMedia(product);
+    const curatedUrls = new Set(curated.map(item => item.url));
     const productPhotos = clean([
+      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: item.url, title: item.title, badge: 'Fotografie' })),
       studioMedia && { type: 'image', url: studioMedia, title: `${product.name} — studiový náhled`, badge: 'Studio' },
       product.image_url && { type: 'image', url: product.image_url, title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : `${product.name} — produkt`, badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
       ...(product.gallery_urls || [])
-        .filter((url) => url && !isVideo(url) && isAllowedProductMedia(url, product))
+        .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
         .map((url, i) => ({
           type: 'image',
           url,
@@ -128,10 +132,10 @@ export default function PdMediaGallery({ product }) {
       ...(r.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url, i) => ({ type: 'image', url, title: `${r.name || 'Realizace'} — ${i + 1}`, meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' })),
     ]));
 
-    const visualizations = clean(realizations.flatMap((r) => [
+    const visualizations = clean([...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: item.url, title: item.title, badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
       r.concept_image_url && { type: 'image', url: r.concept_image_url, title: `${r.name || product.name} — vizualizace`, meta: r.location, badge: 'Vizualizace' },
       r.project_sheet_url && { type: 'image', url: r.project_sheet_url, title: `${r.name || product.name} — projektový návrh`, meta: r.location, badge: 'Návrh' },
-    ]));
+    ])]);
 
     const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
     const videos = clean([
@@ -150,7 +154,7 @@ export default function PdMediaGallery({ product }) {
 
   const hasGardenTest = groups.photos.some((item) => item.badge === 'Reálné testování');
   const tabs = [
-    { id: 'photos', label: hasGardenTest ? 'Reálné testování v zahradě' : 'Reálné fotografie produktu', icon: Images, count: groups.photos.length },
+    { id: 'photos', label: hasGardenTest ? 'Reálné testování v zahradě' : 'Fotografie a produktové náhledy', icon: Images, count: groups.photos.length },
     { id: 'realizations', label: 'Reálné realizace', icon: MapPin, count: groups.realizations.length },
     { id: 'visualizations', label: 'Vizualizace umístění', icon: Sparkles, count: groups.visualizations.length },
     { id: 'videos', label: 'Videa', icon: Video, count: groups.videos.length },

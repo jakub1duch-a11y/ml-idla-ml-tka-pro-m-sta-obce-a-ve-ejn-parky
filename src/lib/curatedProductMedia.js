@@ -1,4 +1,3 @@
-// Reviewed user uploads. Product photos and design visualizations remain distinct.
 export const CURATED_PRODUCT_MEDIA = {
   "mlzitko-bendy": [
     {

@@ -457,8 +457,8 @@ export default function CustomerPortal() {
           <div className="mx-auto w-full max-w-md">
           <div className="text-center mb-8">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Soukromá klientská zóna MLŽIDLA®</p>
-            <h1 className="text-3xl font-light text-slate-900">Klientské CRM</h1>
+            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Soukromá zóna MLŽIDLA®</p>
+            <h1 className="text-3xl font-light text-slate-900">Klientská sekce</h1>
             <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">{otpSent ? 'Zadejte 6místný kód, který jsme poslali na e-mail přiřazený k vašemu projektu.' : 'Přihlaste se k nabídkám, vizualizacím, dokumentům, komunikaci a aktuálnímu stavu realizace.'}</p>
           </div>
 
@@ -542,7 +542,7 @@ export default function CustomerPortal() {
               disabled={loading}
               className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:opacity-50"
             >
-              {loading ? <><Loader size={16} className="animate-spin" /> {authMethod === 'password' && !otpSent ? 'Přihlašuji…' : otpSent ? 'Ověřuji…' : 'Odesílám kód…'}</> : authMethod === 'password' && !otpSent ? 'Přihlásit do klientského CRM' : otpSent ? 'Ověřit a otevřít CRM' : accessMode === 'quote' ? 'Pokračovat k projektu' : 'Poslat ověřovací kód'}
+              {loading ? <><Loader size={16} className="animate-spin" /> {authMethod === 'password' && !otpSent ? 'Přihlašuji…' : otpSent ? 'Ověřuji…' : 'Odesílám kód…'}</> : authMethod === 'password' && !otpSent ? 'Přihlásit do klientské sekce' : otpSent ? 'Ověřit a otevřít klientskou sekci' : accessMode === 'quote' ? 'Pokračovat k projektu' : 'Poslat ověřovací kód'}
             </button>
           </form>
 
@@ -588,11 +588,10 @@ export default function CustomerPortal() {
           <div className="flex flex-col gap-5 border-b border-slate-100 px-5 py-5 sm:px-7 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
-              <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">MLŽIDLA® Client CRM</p><div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1"><h1 className="text-2xl font-light text-slate-950">Klientský dashboard</h1><span className="text-xs text-slate-400">{email}</span></div></div>
+              <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">MLŽIDLA® / Klientská sekce</p><div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1"><h1 className="text-2xl font-light text-slate-950">Můj projekt</h1><span className="text-xs text-slate-400">{email}</span></div></div>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
-              {isAdmin && <Link to="/obchodni-nabidky" className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-xs font-semibold text-cyan-900">Sales Hub</Link>}
               <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); setEmailPreferencesReady(false); setEmailPreferences({ enabled: false, topics: [] }); setEmailPreferencesMessage(''); setEmailPreferencesError(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>
           </div>
@@ -604,7 +603,7 @@ export default function CustomerPortal() {
             <div className="col-span-2 p-4 sm:col-span-4 sm:p-5 xl:col-span-1"><p className="text-[10px] uppercase tracking-[.13em] text-cyan-700">Další krok</p><p className="mt-1 text-sm font-semibold leading-5 text-slate-950">{nextAction}</p></div>
           </div>
           <nav aria-label="Klientské CRM" className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
-            {[['#overview','Dashboard'],['#offers','Nabídky'],['#inquiries','Poptávky'],['#communication','Zprávy'],['#contact-profile','Profil'],['#email-preferences','Upozornění'],['#new-inquiry','Nový požadavek']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
+            {[['#overview','Přehled'],['#offers','Moje nabídky'],['#inquiries','Moje poptávky'],['#communication','Zprávy'],['#contact-profile','Profil'],['#new-inquiry','Nový požadavek']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
           </nav>
         </header>
 

@@ -26,9 +26,7 @@ const PROJECT_ORDER = [
 ];
 
 const FEATURED_BENDY_LINEA_ID = '6a9fdf2f153be3ee13d70207';
-const JICIN_ID = '6a71d1ff57598752eed27bfb';
-const JICIN_COVER = 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg';
-const projectCover = (project) => project?.id === JICIN_ID ? JICIN_COVER : project?.image_url;
+const projectCover = (project) => project?.image_url;
 
 const getYouTubeId = (url) => {
   if (!url) return null;

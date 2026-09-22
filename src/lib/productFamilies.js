@@ -5,7 +5,8 @@ export const LINES = {
   bendy: { label: 'BENDY®', family: 'prime', slugs: ['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l', 'bendy-field'], tagline: 'Ikonický ohyb. Zahrada, terasa i náměstí.' },
   steblo: { label: 'STÉBLO®', family: 'prime', slugs: ['mlzitko-steblo'], tagline: 'Organická silueta pro městský prostor.' },
   aura: { label: 'AURA', family: 'prime', slugs: ['aura-mlzitko', 'aura-duo'], tagline: 'Designové mlžítko pro zahrady a areály.' },
-  linea: { label: 'LINEA', family: 'prime', slugs: ['linea-mlzitko', 'linea-solo'], tagline: 'Minimalistický nerezový sloup.' },
+  linea: { label: 'LINEA', family: 'prime', slugs: ['linea-mlzitko'], tagline: 'Sloupové mlžítko.' },
+  lineaCe: { label: 'LINEA CE', family: 'prime', slugs: ['linea-solo'], tagline: 'Samostatný produkt LINEA CE.' },
   yarmist: { label: 'Y‑ARMIST', family: 'prime', slugs: ['y-armist-tr60', 'y-armist-j70', 'ostrev-mlzitko'], tagline: 'Vícearmenné mlžítko pro parky a školy.' },
   ostrev: { label: 'OSTŘEV', family: 'prime', slugs: ['ostrev-city', 'mlzny-sloupost-ostrev'], tagline: 'Mlžný sloup s rozevřenými rameny.' },
   mrak: { label: 'MRAK', family: 'prime', slugs: ['mlzitko-mrak'], tagline: 'Mlžný oblak nad hlavou.' },
@@ -45,6 +46,8 @@ export function getLineKey(product) {
   if (s.includes('bendy')) return 'bendy';
   if (s.includes('stébl') || s.includes('steblo')) return 'steblo';
   if (s.includes('aura')) return 'aura';
+  if (s.includes('linea') && /gate|brána|brana/.test(s)) return 'lineaGate';
+  if (/linea[\s_-]*ce/.test(s)) return /portal|portál/.test(s) ? 'lineaCePortal' : 'lineaCe';
   if (s.includes('linea')) return 'linea';
   if (s.includes('armist')) return 'yarmist';
   if (s.includes('ostrev') || s.includes('ostřev')) return 'ostrev';

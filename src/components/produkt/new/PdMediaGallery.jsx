@@ -325,7 +325,7 @@ function GalleryLightbox({ items, initial, productName, onClose }) {
               <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="mx-auto max-h-[80vh] w-full rounded-2xl bg-black object-contain" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
             )
           ) : (
-            <motion.img key={item.url} src={mediaUrl(item.url)} alt={item.alt || `${productName} — ${mediaCaption(item).toLocaleLowerCase('cs-CZ')}` className="mx-auto max-h-[80vh] w-full rounded-2xl object-contain" initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} />
+            <motion.img key={item.url} src={mediaUrl(item.url)} alt={item.alt || `${productName} — ${mediaCaption(item).toLocaleLowerCase('cs-CZ')}`} className="mx-auto max-h-[80vh] w-full rounded-2xl object-contain" initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} />
           )}
         </AnimatePresence>
         <div className="mt-4 flex items-center justify-between gap-4 px-1 text-white">

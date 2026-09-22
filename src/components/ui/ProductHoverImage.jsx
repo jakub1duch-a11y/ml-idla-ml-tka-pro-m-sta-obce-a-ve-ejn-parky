@@ -171,7 +171,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       })}
 
       {/* View type badge */}
-      {hasMultiple && (
+      {(hasMultiple || current.type === 'studio') && (
         <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md transition-opacity duration-300">
           {current.type === 'video' ? <Play size={10} fill="currentColor" /> : <Images size={10} />}
           {current.label}
@@ -195,6 +195,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
         </div>
       )}
 
+      <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover/product-media:translate-x-full motion-reduce:transition-none" />
       {overlay && <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent" />}
     </div>
   );

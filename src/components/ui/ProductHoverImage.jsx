@@ -37,7 +37,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     const studioMedia = getStudioMedia(product);
     const productImage = isUsableImage(product?.image_url) ? getOptimizedMediaUrl(product.image_url) : '';
     const fallbackImage = isUsableImage(fallback) ? getOptimizedMediaUrl(fallback) : '';
-    const primary = productImage || studioMedia || fallbackImage;
+    const primary = studioMedia || productImage || fallbackImage;
     const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls.map(getOptimizedMediaUrl) : [];
     const videoUrl = isDirectVideo(product?.video_url)
       ? product.video_url
@@ -47,7 +47,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
     // 1. Verified studio image, otherwise the original product image in a studio frame.
     if (primary) {
-      const type = !productImage && studioMedia ? 'studio' : 'product';
+      const type = studioMedia ? 'studio' : 'product';
       list.push({ type, url: primary, label: VIEW_LABELS[type] });
     }
 
@@ -123,7 +123,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden bg-slate-200 ${className}`}
+      className={`group/product-media relative overflow-hidden bg-slate-200 ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}

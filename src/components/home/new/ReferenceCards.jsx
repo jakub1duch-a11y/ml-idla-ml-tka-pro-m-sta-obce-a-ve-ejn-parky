@@ -70,8 +70,7 @@ export default function ReferenceCards() {
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {refs.map((r) => {
-              const isJicin = r.id === '6a71d1ff57598752eed27bfb';
-              const img = isJicin ? VIDEO_ASSETS.heroJicin.poster : r.image_url;
+              const img = r.image_url;
               return (
                 <Link key={r.id} to={`/reference/${r.id}`} className="group block overflow-hidden rounded-2xl border border-[#EAF5FB] bg-white transition-all hover:-translate-y-1 hover:border-[#0B5EA8]/25 hover:shadow-[0_18px_45px_rgba(11,45,56,.08)]">
                   <div className="aspect-[4/3] overflow-hidden bg-[#EAF5FB]">

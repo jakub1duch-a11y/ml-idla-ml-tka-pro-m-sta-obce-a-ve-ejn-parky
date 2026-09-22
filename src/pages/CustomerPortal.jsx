@@ -106,30 +106,6 @@ export default function CustomerPortal() {
   }, [step, projects, inquiries, email, contactProfileReady]);
 
   useEffect(() => {
-    if (!isAdmin || step !== 'login') return;
-    let active = true;
-    setAdminOverviewLoading(true);
-    Promise.all([
-      base44.entities.ProjectOrder.list('-created_date', 500),
-      base44.entities.Poptavka.list('-created_date', 500),
-      base44.entities.ContactInquiry.list('-created_date', 500),
-    ]).then(([orders = [], poptavky = [], contacts = []]) => {
-      if (!active) return;
-      setAdminOverview({
-        projects: orders.length,
-        inquiries: poptavky.length + contacts.length,
-        activeOffers: orders.filter((item) => ['sent', 'viewed', 'extension_requested'].includes(item.status)).length,
-        approvals: orders.filter((item) => ['approved', 'in_production', 'ready', 'delivered'].includes(item.status)).length,
-      });
-    }).catch(() => {
-      if (active) setAdminOverview(null);
-    }).finally(() => {
-      if (active) setAdminOverviewLoading(false);
-    });
-    return () => { active = false; };
-  }, [isAdmin, step]);
-
-  useEffect(() => {
     const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
     if (step !== 'dashboard' || !focusQuote) return;
     const target = projects.find((project) => project.quote_number === focusQuote);

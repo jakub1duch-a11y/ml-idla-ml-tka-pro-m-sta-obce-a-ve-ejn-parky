@@ -34,23 +34,10 @@ const referenceSlugs = {
 };
 const referencePath = (project) => `/reference/${referenceSlugs[project.id] || project.id}`;
 
-const JICIN_ID = '6a71d1ff57598752eed27bfb';
-const JICIN_IMAGES = [
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/1db590bd1_realizace-IMG_5040.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/9dc93a791_realizace-IMG_5039.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/5c7fc888a_realizace-IMG_5035.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/add2a849f_realizace-IMG_5036.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/1938f53e2_realizace-IMG_4983.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/b60f1bf04_realizace-IMG_4989.jpg',
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/ff7aaa73f_realizace-IMG_4974.jpg',
-];
-const projectPhotos = (project) => project.id === JICIN_ID
-  ? JICIN_IMAGES
-  : [project.image_url, ...(Array.isArray(project.gallery_urls) ? project.gallery_urls : [])];
-const projectCover = (project) => project.id === JICIN_ID ? JICIN_IMAGES[0] : project.image_url;
+const projectPhotos = (project) => [project.image_url, ...(Array.isArray(project.gallery_urls) ? project.gallery_urls : [])];
+const projectCover = (project) => project.image_url;
 
-const isImage = (url) => String(url || '').match(/\.(png|jpe?g|webp|avif|gif)(\?|$)/i);
+const isImage = (url) => /\.(png|jpe?g|webp|avif|gif)(\?|$)|drive\.google\.com\/thumbnail|lh3\.googleusercontent\.com/i.test(String(url || ''));
 
 export default function ReferenceShowcase() {
   const [projects, setProjects] = useState([]);

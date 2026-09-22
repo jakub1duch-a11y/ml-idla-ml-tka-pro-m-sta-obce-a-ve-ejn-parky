@@ -2,20 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trees, Home, Landmark, Sparkles, Droplets } from 'lucide-react';
+import { getUploadedProductPhoto } from '@/lib/uploadedProductPhotos';
+
+const stebloPhoto = getUploadedProductPhoto('steblo-hero')?.src;
+const lineaPhoto = getUploadedProductPhoto('sloup-detail')?.src;
 
 const useCases = [
   {
     icon: Landmark,
     title: 'LINEA',
     text: 'Sloupové mlžítko pro čistou architekturu náměstí, promenád a veřejných vstupů.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.jpg',
+    image: lineaPhoto || 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.jpg',
     link: '/produkt/linea-mlzitko',
   },
   {
     icon: Sparkles,
     title: 'STÉBLO',
     text: 'Organický nerezový prvek pro jemnou vodní mlhu v zahradách, parcích a pobytových zónách.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+    image: stebloPhoto || 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
     link: '/produkt/mlzitko-steblo',
   },
   {
@@ -46,7 +50,7 @@ const products = [
     name: 'LINEA',
     label: 'Sloupové mlžítko',
     text: 'Minimalistické sloupové mlžítko pro náměstí, promenády a moderní veřejný prostor.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fc2d57e81_C-MlzitkoLINEA_CE70_single1.jpg',
+    image: lineaPhoto || 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fc2d57e81_C-MlzitkoLINEA_CE70_single1.jpg',
     link: '/produkt/linea-mlzitko',
   },
   {
@@ -67,7 +71,7 @@ const products = [
     name: 'STÉBLO',
     label: 'Organický tvar',
     text: 'Jemná vertikální linie pro zahrady, parky a komornější odpočinkové zóny.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+    image: stebloPhoto || 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
     link: '/produkt/mlzitko-steblo',
   },
   {

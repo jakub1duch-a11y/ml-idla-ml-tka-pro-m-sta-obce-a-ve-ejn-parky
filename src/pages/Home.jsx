@@ -6,7 +6,7 @@ import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
-import HomepageVisualShowcase from '@/components/home/new/HomepageVisualShowcase';
+import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
 import MunicipalUseCasesSection from '@/components/home/new/MunicipalUseCasesSection';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <MotionConfig reducedMotion="user">
       <HomeHero />
-      <HomepageVisualShowcase />
+      <ProductCategoryExplorer />
       <MunicipalUseCasesSection />
       <ProductPhotoGallery />
       <V3EditorialBridge />

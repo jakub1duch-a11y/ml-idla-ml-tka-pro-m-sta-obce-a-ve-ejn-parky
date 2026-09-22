@@ -7,7 +7,8 @@ import { isArchived } from '@/lib/newMedia';
 import { getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
 import { mergePortalGateProducts } from '@/lib/portalGateProducts';
 import KolekceHero from '@/components/kolekce/KolekceHero';
-import CollectionOffers from '@/components/kolekce/CollectionOffers';
+import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
+import { useSearchParams } from 'react-router-dom';
 import FamilyNav from '@/components/kolekce/FamilyNav';
 import LineChips from '@/components/kolekce/LineChips';
 import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
@@ -43,6 +44,11 @@ function matchesSpace(p, filter) {
 
 export default function Kolekce() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categorySlug = searchParams.get('kategorie');
+  const selectedCategory = categories.find(c => c.slug === categorySlug);
+  useEffect(() => { base44.entities.ProductCategory.list('order', 100).then(setCategories).catch(() => {}); }, []);
   const [loading, setLoading] = useState(true);
   const [family, setFamily] = useState(null);
   const [line, setLine] = useState(null);
@@ -50,6 +56,7 @@ export default function Kolekce() {
   const [search, setSearch] = useState('');
 
   useEffect(() => { setSEO(SEO_PAGES.kolekce); }, []);
+  useEffect(() => { setFamily(null); setLine(null); setSpace('all'); setSearch(''); }, [categorySlug]);
 
   useEffect(() => {
     base44.entities.Product.list('name', 200)
@@ -64,28 +71,29 @@ export default function Kolekce() {
   const lineCounts = useMemo(() => products.reduce((acc, p) => { const k = getLine(p).key; acc[k] = (acc[k] || 0) + 1; return acc; }, {}), [products]);
 
   const displayed = useMemo(() => sortByStructure(products
+    .filter((p) => !selectedCategory || p.category_id === selectedCategory.id)
     .filter((p) => !family || getFamily(p).id === family)
     .filter((p) => !line || getLine(p).key === line)
     .filter((p) => matchesSpace(p, space))
     .filter((p) => !search.trim() || `${p.name} ${p.short_description || ''}`.toLowerCase().includes(search.toLowerCase()))
-  ), [products, family, line, space, search]);
+  ), [products, family, line, space, search, selectedCategory]);
 
   const activeFamily = family ? getFamilyById(family) : null;
-  const hasFilter = family || line || space !== 'all' || search.trim();
-  const clear = () => { setFamily(null); setLine(null); setSpace('all'); setSearch(''); };
+  const hasFilter = selectedCategory || family || line || space !== 'all' || search.trim();
+  const clear = () => { setFamily(null); setLine(null); setSpace('all'); setSearch(''); setSearchParams({}); };
   const selectFamily = (id) => { setFamily(id); setLine(null); };
 
   return (
     <div className="min-h-screen bg-white">
-      <KolekceHero />
-      <CollectionOffers />
+      {selectedCategory ? <section className="relative overflow-hidden bg-slate-950 px-5 pb-16 pt-32 text-white lg:px-10"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-center"><div><p className="text-xs uppercase tracking-widest text-cyan-300">Kategorie produktů</p><h1 className="mt-4 font-heading text-4xl sm:text-5xl">{selectedCategory.name}</h1><p className="mt-5 max-w-xl leading-7 text-slate-200">{selectedCategory.description}</p><a href="#catalog" className="mt-7 inline-flex min-h-11 items-center rounded-full bg-cyan-300 px-6 font-semibold text-slate-950">Prohlédnout produkty</a></div>{selectedCategory.image_url && <img src={selectedCategory.image_url} alt={selectedCategory.name} className="max-h-[440px] w-full rounded-2xl object-contain"/>}</div></section> : <KolekceHero />}
+      {!selectedCategory && <ProductCategoryExplorer />}
       <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
 
       <div id="catalog" className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
-            <h2 className="mt-3 font-heading text-3xl font-semibold text-[#0A1628] sm:text-4xl">{activeFamily ? activeFamily.title : 'Všechna mlžítka, brány a mlžné sochy'}</h2>
+            <h2 className="mt-3 font-heading text-3xl font-semibold text-[#0A1628] sm:text-4xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Všechna mlžítka, brány a mlžné sochy'}</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle kolekcí a produktových řad. Vyberte kolekci, řadu nebo typ prostoru — ceny sdělujeme na poptávku podle konfigurace a rozsahu instalace.'}</p>
           </div>
           {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}

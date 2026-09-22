@@ -1,64 +1,88 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Camera, Droplets } from 'lucide-react';
-import { UPLOADED_PRODUCT_PHOTOS } from '@/lib/uploadedProductPhotos';
-
+import { ArrowUpRight } from 'lucide-react';
+const MEDIA = [
+  {
+    "title": "BENDY ve městě",
+    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg",
+    "tag": "Město",
+    "badge": "Náhled použití",
+    "href": "/produkt/mlzitko-bendy"
+  },
+  {
+    "title": "BENDY a sloupová LINEA",
+    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "tag": "Zahrady",
+    "badge": "Fotografie",
+    "href": "/produkt/linea-mlzitko"
+  },
+  {
+    "title": "KVĚT na náměstí",
+    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.png",
+    "tag": "Město",
+    "badge": "Vizualizace",
+    "href": "/produkt/mlzitko-kvet-4"
+  },
+  {
+    "title": "TEEPEE v prostoru",
+    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/06c42b5dc_Screenshot_20260920_171920.jpg",
+    "tag": "Město",
+    "badge": "Vizualizace",
+    "href": "/produkt/teepee"
+  },
+  {
+    "title": "Osvěžení na sportovišti",
+    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/48b54bbc2_1789940598791.png",
+    "tag": "Město",
+    "badge": "Vizualizace",
+    "href": "/kategorie/parky-hriste"
+  },
+  {
+    "title": "Z výroby mlžítka MRAK",
+    "url": "https://drive.google.com/thumbnail?id=1cAuotLpUftsG_fNk3ii_RKWZ83EyWdK6&sz=w1600",
+    "tag": "Produkty",
+    "badge": "Výroba",
+    "href": "/produkt/mlzitko-mrak"
+  },
+  {
+    "title": "BENDY v provozu",
+    "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/78cf9a6c8_KolekceBendy_20260812_121335_0000.mp4",
+    "poster": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "tag": "Videa",
+    "badge": "Video",
+    "href": "/produkt/mlzitko-bendy"
+  },
+  {
+    "title": "LINEA v provozu",
+    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c37b035c2_mlzidla-linea-real-video-01.mp4",
+    "poster": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "tag": "Videa",
+    "badge": "Video",
+    "href": "/produkt/linea-mlzitko"
+  }
+];
+const FILTERS = ['Vše', 'Město', 'Zahrady', 'Produkty', 'Videa'];
 export default function ProductPhotoGallery() {
-  const photos = UPLOADED_PRODUCT_PHOTOS;
-
-  if (!photos?.length) return null;
-
-  return (
-    <section className="bg-[#F4F8FA] py-16 lg:py-24" aria-labelledby="product-photo-gallery-title">
-      <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12">
-        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[.22em] text-[#0B8EC5]">// Produktové fotografie</p>
-            <h2 id="product-photo-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-tight tracking-[-.045em] text-[#07131D] sm:text-4xl lg:text-5xl">
-              Reálné produkty, nerez, jemná mlha a konkrétní prostředí.
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-[#516574]">
-              Fotografie a vizualizace používáme jako podklad pro návrh umístění, cenovou nabídku a klientskou sekci projektu.
-            </p>
-          </div>
-          <Link to="/poptavka" className="inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0B8EC5] sm:self-auto">
-            Chci návrh do prostoru <ArrowRight size={16} />
-          </Link>
-        </div>
-
-        <div className="grid gap-5 lg:grid-cols-[1.25fr_.75fr]">
-          <article className="relative min-h-[360px] overflow-hidden rounded-[2rem] bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.14)] lg:min-h-[480px]">
-            <img src={photos[0].src} alt={photos[0].alt} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/24 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 text-white sm:p-8">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/18 bg-black/28 px-4 py-2 text-[11px] font-bold uppercase tracking-[.16em] backdrop-blur-md">
-                <Camera size={15} className="text-[#26C6E9]" /> Stéblo / produktový hero
-              </div>
-              <h3 className="font-heading text-3xl font-bold tracking-[-.045em] sm:text-5xl">Štíhlé mlžítko inspirované přírodou.</h3>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/74 sm:text-base">
-                Přirozený tvar pro parky, zahrady a veřejné prostory, kde má technologie působit lehce a nenápadně.
-              </p>
-            </div>
-          </article>
-
-          <div className="grid gap-5">
-            {photos.slice(1).map((photo) => (
-              <article key={photo.key} className="overflow-hidden rounded-[1.5rem] border border-[#DDEAF0] bg-white shadow-[0_18px_50px_rgba(7,19,29,.08)]">
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#07131D]">
-                  <img src={photo.src} alt={photo.alt} className="h-full w-full object-cover" loading="lazy" />
-                  <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/18 bg-black/25 px-3 py-2 text-[10px] font-bold uppercase tracking-[.16em] text-white backdrop-blur-md">
-                    <Droplets size={13} className="text-[#26C6E9]" /> Produkt
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-heading text-xl font-bold tracking-[-.035em] text-[#07131D]">Sloupové mlžítko</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#516574]">{photo.alt}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+  const [filter, setFilter] = useState('Vše');
+  const items = MEDIA.filter(item => filter === 'Vše' || item.tag === filter);
+  return <section className="bg-[#071a2b] py-16 text-white sm:py-20" aria-labelledby="media-gallery-title">
+    <div className="mx-auto max-w-7xl px-5 lg:px-10">
+      <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>
+      <h2 id="media-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl tracking-tight sm:text-5xl">Podívejte se, kam mlha patří.</h2>
+      <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Fotografie z výroby, ukázky provozu a návrhy umístění. Vyberte si prostředí a prohlédněte si konkrétní produkt.</p>
+      <div className="my-8 flex gap-2 overflow-x-auto pb-2" aria-label="Filtrovat média">
+        {FILTERS.map(label => <button type="button" key={label} aria-pressed={filter === label} onClick={() => setFilter(label)} className={`min-h-11 shrink-0 rounded-full border px-5 text-sm font-semibold transition-colors ${filter === label ? 'border-cyan-300 bg-cyan-300 text-slate-950' : 'border-white/30 text-white hover:bg-white/10'}`}>{label}</button>)}
       </div>
-    </section>
-  );
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map(item => <article key={item.url} className="group overflow-hidden rounded-2xl border border-white/15 bg-white/5">
+          <div className="relative aspect-[4/3] overflow-hidden bg-black/20">
+            {item.tag === 'Videa' ? <video src={item.url} poster={item.poster} controls playsInline preload="none" aria-label={item.title} className="h-full w-full object-contain"/> :
+            <Link to={item.href} aria-label={item.title}><img src={item.url} alt={item.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03] motion-reduce:transition-none"/></Link>}
+            {item.tag !== 'Videa' && <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-slate-950/85 px-3 py-1.5 text-xs text-white">{item.badge}</span>}
+          </div>
+          <Link to={item.href} className="flex min-h-16 items-center justify-between gap-3 p-5 text-white hover:text-cyan-200"><h3 className="text-lg font-semibold">{item.title}</h3><ArrowUpRight size={19} className="shrink-0"/></Link>
+        </article>)}
+      </div>
+    </div>
+  </section>;
 }

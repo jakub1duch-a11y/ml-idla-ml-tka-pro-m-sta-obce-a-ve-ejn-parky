@@ -23,7 +23,7 @@ const VIEW_STYLES = {
 const VIEW_LABELS = {
   studio: 'Studio',
   product: 'Produkt',
-  real: 'Realizace',
+  real: 'Galerie',
   viz: 'Vizualizace',
   video: 'Video',
 };
@@ -37,7 +37,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     const studioMedia = getStudioMedia(product);
     const productImage = isUsableImage(product?.image_url) ? getOptimizedMediaUrl(product.image_url) : '';
     const fallbackImage = isUsableImage(fallback) ? getOptimizedMediaUrl(fallback) : '';
-    const primary = studioMedia || productImage || fallbackImage;
+    const primary = productImage || studioMedia || fallbackImage;
     const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls.map(getOptimizedMediaUrl) : [];
     const videoUrl = isDirectVideo(product?.video_url)
       ? product.video_url
@@ -47,7 +47,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
     // 1. Verified studio image, otherwise the original product image in a studio frame.
     if (primary) {
-      const type = studioMedia ? 'studio' : 'product';
+      const type = !productImage && studioMedia ? 'studio' : 'product';
       list.push({ type, url: primary, label: VIEW_LABELS[type] });
     }
 
@@ -112,34 +112,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
   const containerRef = useRef(null);
 
-  // On touch devices, auto-advance preview when card scrolls into view
-  useEffect(() => {
-    if (views.length <= 1) return;
-    // Only on mobile viewport or touch devices — skip desktop with hover
-    if (window.matchMedia('(hover: hover)').matches && window.innerWidth >= 768) return;
-    const el = containerRef.current;
-    if (!el) return;
-    let triggered = false;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.65) {
-          if (!triggered) {
-            triggered = true;
-            const nextIdx = views.findIndex((v, i) => i > 0 && v.type !== 'video');
-            if (nextIdx !== -1) setActiveView(nextIdx);
-          }
-        } else if (!entry.isIntersecting || entry.intersectionRatio < 0.25) {
-          if (triggered) {
-            triggered = false;
-            setActiveView(0);
-          }
-        }
-      },
-      { threshold: [0, 0.25, 0.65, 1.0] }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [views]);
+
 
   if (views.length === 0) return <div className={`bg-muted ${className}`} />;
 

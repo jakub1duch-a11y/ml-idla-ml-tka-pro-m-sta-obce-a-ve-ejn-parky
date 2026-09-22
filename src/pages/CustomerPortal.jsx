@@ -454,21 +454,6 @@ export default function CustomerPortal() {
     return (
       <div className="min-h-screen bg-[linear-gradient(180deg,#f7fafb_0%,#ffffff_48%,#eef5f6_100%)] px-4 pb-16 pt-28">
         <div className="mx-auto w-full max-w-5xl">
-          {isAdmin && <section className="mb-8 overflow-hidden rounded-[28px] border border-[#1f5360] bg-[#0d2d38] text-white shadow-[0_24px_70px_rgba(13,45,56,0.18)]">
-            <div className="flex flex-col gap-5 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-start gap-4"><div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-[#61d5e5]"><LayoutDashboard size={22}/></div><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#8fe4ef]">Administrátorský přístup rozpoznán</p><h2 className="mt-2 text-2xl font-light">Řízení klientských projektů</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">Spravujte poptávky, nabídky, dokumenty a komunikaci v interním Sales Hubu. Níže můžete zároveň bezpečně otestovat klientský přístup.</p></div></div>
-              <div className="flex shrink-0 flex-wrap gap-2"><Link to="/obchodni-nabidky" className="inline-flex items-center gap-2 rounded-full bg-[#61d5e5] px-5 py-3 text-xs font-bold text-[#0d2d38]"><BriefcaseBusiness size={15}/> Otevřít Sales Hub</Link><Link to="/admin" className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold text-white"><LayoutDashboard size={15}/> Administrace</Link></div>
-            </div>
-            <div className="grid grid-cols-2 border-t border-white/10 sm:grid-cols-4">
-              {adminOverviewLoading ? <div className="col-span-full flex items-center gap-2 px-6 py-5 text-xs text-white/50"><Loader size={14} className="animate-spin"/> Načítám přehled…</div> : [
-                ['Poptávky', adminOverview?.inquiries ?? '—', Inbox],
-                ['Projekty', adminOverview?.projects ?? '—', Users],
-                ['Aktivní nabídky', adminOverview?.activeOffers ?? '—', FileText],
-                ['Objednáno', adminOverview?.approvals ?? '—', CheckCircle],
-              ].map(([label, value, Icon], index) => <div key={label} className={`px-5 py-4 ${index ? 'border-l border-white/10' : ''}`}><Icon size={14} className="text-[#61d5e5]"/><p className="mt-3 text-2xl font-semibold">{value}</p><p className="mt-1 text-[10px] uppercase tracking-wider text-white/40">{label}</p></div>)}
-            </div>
-          </section>}
-
           <div className="mx-auto w-full max-w-md">
           <div className="text-center mb-8">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>

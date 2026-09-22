@@ -5,28 +5,28 @@ const MEDIA = [
   {
     "title": "BENDY ve městě",
     "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg",
-    "tag": "Město",
+    "tag": "Náměstí a města",
     "badge": "Náhled použití",
     "href": "/produkt/mlzitko-bendy"
   },
   {
     "title": "BENDY a sloupová LINEA",
     "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
-    "tag": "Zahrady",
+    "tag": "Gastro a zahrady",
     "badge": "Fotografie",
     "href": "/produkt/linea-mlzitko"
   },
   {
     "title": "KVĚT na náměstí",
     "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.png",
-    "tag": "Město",
+    "tag": "Náměstí a města",
     "badge": "Vizualizace",
     "href": "/produkt/mlzitko-kvet-4"
   },
   {
     "title": "TEEPEE v prostoru",
     "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/06c42b5dc_Screenshot_20260920_171920.jpg",
-    "tag": "Město",
+    "tag": "Náměstí a města",
     "badge": "Vizualizace",
     "href": "/produkt/teepee"
   },
@@ -102,7 +102,7 @@ const MEDIA = [
     "href": "/produkt/linea-mlzitko"
   }
 ];
-const FILTERS = ['Vše', 'Náměstí a města', 'Sportoviště', 'Školy a školky', 'Gastro a zahrady', 'Hotely a wellness', 'Nádraží a uzly', 'Videa'];
+const FILTERS = ['Vše', 'Náměstí a města', 'Sportoviště', 'Školy a školky', 'Gastro a zahrady', 'Hotely a wellness', 'Nádraží a uzly', 'Produkty', 'Videa'];
 export default function ProductPhotoGallery() {
   const [filter, setFilter] = useState('Vše');
   const items = MEDIA.filter(item => filter === 'Vše' || item.tag === filter);

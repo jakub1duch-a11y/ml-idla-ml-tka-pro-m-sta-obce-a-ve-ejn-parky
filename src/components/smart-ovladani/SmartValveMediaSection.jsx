@@ -36,7 +36,7 @@ export default function SmartValveMediaSection() {
               Chytrý ventil PEVEKO propojuje přívod vody s automatizací SUPLA. Mlžítka mohou reagovat na teplotu, časový plán, stav zóny nebo ruční povel z aplikace.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/poptavka?tema=peveko-suplа" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold">
+              <Link to="/poptavka?tema=peveko-supla" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold">
                 Navrhnout řízení pro prostor <ArrowRight size={16} />
               </Link>
               <a href={PEVEKO_VIDEO_PAGE} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-white transition hover:border-cyan-300/60 hover:bg-white/10">

@@ -106,32 +106,6 @@ export default function CustomerPortal() {
   }, [step, projects, inquiries, email, contactProfileReady]);
 
   useEffect(() => {
-    if (step !== 'dashboard' || !sessionToken || emailPreferencesReady) return;
-    let active = true;
-
-    base44.functions.invoke('saveEmailPreferences', {
-      action: 'get',
-      session_token: sessionToken,
-    }).then((response) => {
-      if (!active) return;
-      const result = response?.data || response || {};
-      setEmailPreferences({
-        enabled: Boolean(result.marketing_consent && result.status === 'active'),
-        topics: sanitizeEmailTopics(result.topics),
-      });
-      setEmailPreferencesReady(true);
-    }).catch(() => {
-      if (!active) return;
-      setEmailPreferencesError('Nastavení upozornění se nepodařilo načíst.');
-      setEmailPreferencesReady(true);
-    });
-
-    return () => {
-      active = false;
-    };
-  }, [emailPreferencesReady, sessionToken, step]);
-
-  useEffect(() => {
     if (!isAdmin || step !== 'login') return;
     let active = true;
     setAdminOverviewLoading(true);

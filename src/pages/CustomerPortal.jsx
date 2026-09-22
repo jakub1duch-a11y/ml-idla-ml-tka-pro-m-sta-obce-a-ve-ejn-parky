@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff, LayoutDashboard, BriefcaseBusiness, Users, Inbox, BellRing } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
-import { useAuth } from '@/lib/AuthContext';
-import { EMAIL_TOPIC_OPTIONS, sanitizeEmailTopics } from '@/lib/emailPreferences';
+
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
@@ -24,7 +23,6 @@ const getFunctionErrorCode = (error) =>
   error?.response?.data?.error || error?.data?.error || error?.error || error?.message || '';
 
 export default function CustomerPortal() {
-  const { user: appUser } = useAuth();
   const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
   const [accessMode, setAccessMode] = useState('quote');
@@ -37,8 +35,6 @@ export default function CustomerPortal() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [resetPasswordRequested, setResetPasswordRequested] = useState(false);
-  const [adminOverview, setAdminOverview] = useState(null);
-  const [adminOverviewLoading, setAdminOverviewLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [inquiries, setInquiries] = useState([]);
@@ -65,14 +61,8 @@ export default function CustomerPortal() {
   const [contactProfileReady, setContactProfileReady] = useState(false);
   const [contactProfileBusy, setContactProfileBusy] = useState(false);
   const [contactProfileMessage, setContactProfileMessage] = useState('');
-  const [emailPreferences, setEmailPreferences] = useState({ enabled: false, topics: [] });
-  const [emailPreferencesReady, setEmailPreferencesReady] = useState(false);
-  const [emailPreferencesBusy, setEmailPreferencesBusy] = useState(false);
-  const [emailPreferencesMessage, setEmailPreferencesMessage] = useState('');
-  const [emailPreferencesError, setEmailPreferencesError] = useState('');
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
-  const isAdmin = appUser?.role === 'admin';
   const passwordChecks = {
     length: newPassword.length >= 10,
     letter: /[A-Za-zÀ-ž]/.test(newPassword),

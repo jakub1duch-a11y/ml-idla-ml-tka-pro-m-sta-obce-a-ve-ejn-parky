@@ -40,5 +40,14 @@ export const BRAND = {
 // BENDY slugy pro produktový detail
 export const BENDY_SLUGS = ['mlzitko-bendy', 'bendy-60', 'bendy-alej', 'bendy-arc'];
 
-// Skryj produkty s archivovaným slugem
-export const isArchived = (slug) => typeof slug === 'string' && slug.startsWith('archived-');
+// Skryj produkty s archivovaným nebo staženým slugem
+const HIDDEN_PRODUCT_SLUGS = new Set([
+  'bendy-field',
+  'mlzitko-bendy-field',
+]);
+
+export const isArchived = (slug) => {
+  if (typeof slug !== 'string') return false;
+  const normalized = slug.trim().toLowerCase();
+  return normalized.startsWith('archived-') || HIDDEN_PRODUCT_SLUGS.has(normalized);
+};

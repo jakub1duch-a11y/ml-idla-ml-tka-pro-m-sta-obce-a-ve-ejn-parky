@@ -8,14 +8,14 @@ const useCases = [
     icon: Landmark,
     title: 'LINEA',
     text: 'Sloupové mlžítko pro čistou architekturu náměstí, promenád a veřejných vstupů.',
-    image: '/media/optimized/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.webp',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bcb5c5f4d_C-MlzitkoLINEA_CE70_single.jpg',
     link: '/produkt/linea-mlzitko',
   },
   {
     icon: Sparkles,
     title: 'STÉBLO',
     text: 'Organický nerezový prvek pro jemnou vodní mlhu v zahradách, parcích a pobytových zónách.',
-    image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
     link: '/produkt/mlzitko-steblo',
   },
   {
@@ -46,7 +46,7 @@ const products = [
     name: 'LINEA',
     label: 'Sloupové mlžítko',
     text: 'Minimalistické sloupové mlžítko pro náměstí, promenády a moderní veřejný prostor.',
-    image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fc2d57e81_C-MlzitkoLINEA_CE70_single1.jpg',
     link: '/produkt/linea-mlzitko',
   },
   {
@@ -67,7 +67,7 @@ const products = [
     name: 'STÉBLO',
     label: 'Organický tvar',
     text: 'Jemná vertikální linie pro zahrady, parky a komornější odpočinkové zóny.',
-    image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
     link: '/produkt/mlzitko-steblo',
   },
   {

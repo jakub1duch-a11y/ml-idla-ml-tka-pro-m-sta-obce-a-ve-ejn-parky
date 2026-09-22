@@ -7,7 +7,7 @@ import { getStudioMedia } from '@/lib/studioMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
-const isLineaProduct = (product) => product?.slug === 'linea-mlzitko' || /(?:^|\s)LINEA(?:®|\s|$)/i.test(product?.name || '');
+const isLineaProduct = (product) => product?.slug === 'linea-mlzitko';
 const DRIVE_FILE_RE = /drive\.google\.com\/file\/d\/([^/?#]+)/i;
 const TECHNICAL_MEDIA_RE = /(1000008748|technick|schema|schéma|edraw|vykres|výkres|montaz|montáž|instalac)/i;
 const GARDEN_TEST_RE = /(1000008852|1000008768)/i;

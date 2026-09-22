@@ -592,7 +592,7 @@ export default function CustomerPortal() {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
-              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); setEmailPreferencesReady(false); setEmailPreferences({ enabled: false, topics: [] }); setEmailPreferencesMessage(''); setEmailPreferencesError(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
+              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>
           </div>
           <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 xl:grid-cols-[.7fr_.7fr_.7fr_.7fr_1.5fr] sm:divide-y-0">
@@ -602,7 +602,7 @@ export default function CustomerPortal() {
             <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
             <div className="col-span-2 p-4 sm:col-span-4 sm:p-5 xl:col-span-1"><p className="text-[10px] uppercase tracking-[.13em] text-cyan-700">Další krok</p><p className="mt-1 text-sm font-semibold leading-5 text-slate-950">{nextAction}</p></div>
           </div>
-          <nav aria-label="Klientské CRM" className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
+          <nav aria-label="Klientská sekce" className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
             {[['#overview','Přehled'],['#offers','Moje nabídky'],['#inquiries','Moje poptávky'],['#communication','Zprávy'],['#contact-profile','Profil'],['#new-inquiry','Nový požadavek']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
           </nav>
         </header>

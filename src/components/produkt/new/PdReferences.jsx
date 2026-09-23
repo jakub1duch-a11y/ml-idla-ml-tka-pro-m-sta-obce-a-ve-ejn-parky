@@ -40,7 +40,7 @@ export default function PdReferences({ product }) {
             <h2 className="mt-4 font-heading text-2xl leading-tight text-[#0D2F4F] lg:text-3xl">Realizace, kde se {product.name} používá.</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {refs.map((r) => (
-                <Link key={r.id} to={`/reference/${r.id}`} className="group block overflow-hidden border border-[#EAF5FB] transition-all hover:border-[#0B5EA8]/30">
+                <Link key={r.id} to={`/reference/${r.id}`} className="product-motion-card group block overflow-hidden rounded-[1.5rem] border border-[#EAF5FB] bg-white transition-all hover:-translate-y-1 hover:border-[#22D3EE]/50">
                   <div className="aspect-[4/3] overflow-hidden bg-[#EAF5FB]">
                     {r.image_url && <img src={r.image_url} alt={r.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />}
                   </div>
@@ -60,7 +60,7 @@ export default function PdReferences({ product }) {
             <h2 className="mt-4 font-heading text-2xl leading-tight text-[#0D2F4F] lg:text-3xl">Mohlo by vás zajímat.</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((p) => (
-                <Link key={p.id} to={`/produkt/${p.slug}`} className="group block overflow-hidden border border-[#EAF5FB] transition-all hover:border-[#0B5EA8]/30">
+                <Link key={p.id} to={`/produkt/${p.slug}`} className="product-motion-card group block overflow-hidden rounded-[1.5rem] border border-[#EAF5FB] bg-white transition-all hover:-translate-y-1 hover:border-[#22D3EE]/50">
                   <ProductHoverImage
                     product={p}
                     alt={p.name + ' – produktový náhled'}

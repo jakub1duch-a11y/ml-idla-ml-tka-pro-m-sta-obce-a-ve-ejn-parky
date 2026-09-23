@@ -100,6 +100,7 @@ function MediaCard({ item, onOpen, productName }) {
 export default function PdMediaGallery({ product }) {
   const [realizations, setRealizations] = useState([]);
   const [approvedVisualizations, setApprovedVisualizations] = useState([]);
+  const [adminMedia, setAdminMedia] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('photos');
   const [lightbox, setLightbox] = useState(null);
@@ -115,11 +116,13 @@ export default function PdMediaGallery({ product }) {
     Promise.all([
       base44.entities.Realizace.filter({ published: true }, '-year', 100).catch(() => []),
       base44.entities.VisualizationAsset.filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 100).catch(() => []),
+      base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160).catch(() => []),
     ])
-      .then(([realizationItems, visualItems]) => {
+      .then(([realizationItems, visualItems, mediaItems]) => {
         if (cancelled) return;
         setRealizations((realizationItems || []).filter((r) => matchesProduct(r, product)));
         setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url));
+        setAdminMedia((mediaItems || []).filter((item) => item?.file_url));
       })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
@@ -129,7 +132,13 @@ export default function PdMediaGallery({ product }) {
     const studioMedia = getStudioMedia(product);
     const curated = getCuratedProductMedia(product);
     const curatedUrls = new Set(curated.map(item => item.url));
+    const adminProductPhotos = adminMedia
+      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'technology'].includes(item.media_role))
+      .filter((item) => !isVideo(item.file_url))
+      .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — ${item.file_name || 'produktová fotografie'}`, caption: item.file_name || 'Produktová fotografie', title: item.file_name || 'Produktová fotografie', badge: item.media_role === 'reference' ? 'Reference' : 'Média' }));
+
     const productPhotos = clean([
+      ...adminProductPhotos,
       ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktová fotografie`, caption: item.caption || 'Produktová fotografie', title: 'Produktová fotografie', badge: 'Fotografie' })),
       studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: 'Studiový náhled produktu', badge: 'Studio' },
       product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
@@ -145,10 +154,14 @@ export default function PdMediaGallery({ product }) {
         })),
     ]);
 
-    const realizationPhotos = clean(realizations.flatMap((r) => [
+    const adminRealizationPhotos = adminMedia
+      .filter((item) => item.media_role === 'realization' && !isVideo(item.file_url))
+      .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — ${item.file_name || 'fotografie z realizace'}`, caption: item.file_name || 'Fotografie z realizace', title: item.file_name || 'Fotografie z realizace', badge: 'Realizace' }));
+
+    const realizationPhotos = clean([...adminRealizationPhotos, ...realizations.flatMap((r) => [
       r.image_url && { type: 'image', url: mediaUrl(r.image_url), alt: `${product.name} — fotografie z realizace`, caption: 'Fotografie z realizace', title: 'Fotografie z realizace', meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' },
       ...(r.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url) => ({ type: 'image', url: mediaUrl(url), alt: `${product.name} — fotografie z realizace`, caption: 'Fotografie z realizace', title: 'Fotografie z realizace', meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' })),
-    ]));
+    ])]);
 
     const approvedAdminVisuals = [...approvedVisualizations]
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
@@ -168,7 +181,11 @@ export default function PdMediaGallery({ product }) {
     ])]);
 
     const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
+    const adminVideos = adminMedia
+      .filter((item) => item.media_role === 'video' || isVideo(item.file_url))
+      .map((item) => ({ type: 'video', url: item.file_url, poster: mediaUrl(product.image_url), alt: `${product.name} — ${item.file_name || 'video'}`, caption: item.file_name || 'Video ukázka', title: item.file_name || 'Video ukázka', badge: 'Video' }));
     const videos = clean([
+      ...adminVideos,
       resolvedProductVideo && { type: 'video', url: resolvedProductVideo, poster: mediaUrl(product.image_url), alt: `${product.name} — video ukázka`, caption: 'Video ukázka', title: 'Video ukázka', badge: 'Hero video' },
       ...(product.gallery_urls || []).filter(isVideo).map((url) => ({ type: 'video', url, poster: mediaUrl(product.image_url), alt: `${product.name} — video ukázka`, caption: 'Video ukázka', title: 'Video ukázka', badge: 'Video' })),
       ...realizations.filter((r) => r.video_url).map((r) => ({ type: 'video', url: r.video_url, poster: mediaUrl(r.image_url), alt: `${product.name} — video z realizace`, caption: 'Video z realizace', title: 'Video z realizace', meta: r.location, badge: 'Realizace' })),
@@ -180,7 +197,7 @@ export default function PdMediaGallery({ product }) {
       visualizations,
       videos,
     };
-  }, [product, realizations, approvedVisualizations]);
+  }, [product, realizations, approvedVisualizations, adminMedia]);
 
   const hasGardenTest = groups.photos.some((item) => item.badge === 'Reálné testování');
   const tabs = [

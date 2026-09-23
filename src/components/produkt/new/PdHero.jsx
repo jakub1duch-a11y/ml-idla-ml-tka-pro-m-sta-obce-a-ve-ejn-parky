@@ -154,19 +154,19 @@ export default function PdHero({ product }) {
           </div>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-[#22D3EE] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_22px_60px_rgba(34,211,238,.24)] transition hover:-translate-y-0.5 hover:bg-white">
+            <Link to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`} className="product-sweep inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-[#22D3EE] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_22px_60px_rgba(34,211,238,.24)] transition hover:-translate-y-0.5 hover:bg-white">
               Získat návrh a cenu <ArrowRight size={16} />
             </Link>
-            <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/18 bg-white/[.07] px-6 py-4 text-sm font-bold text-white backdrop-blur-md transition hover:bg-white/[.12]">
+            <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="product-sweep product-glass inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl px-6 py-4 text-sm font-bold text-white">
               Vizualizovat v mém prostoru <ExternalLink size={15} />
             </Link>
-            <Link to="/ke-stazeni" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/12 px-6 py-4 text-sm font-bold text-white/78 transition hover:border-[#22D3EE]/60 hover:text-white">
+            <Link to="/ke-stazeni" className="product-sweep inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/[.12] px-6 py-4 text-sm font-bold text-white/[.78] transition hover:-translate-y-0.5 hover:border-[#22D3EE]/60 hover:text-white">
               Technické podklady <FileText size={15} />
             </Link>
           </div>
         </div>
 
-        <div className="relative min-h-[420px] overflow-hidden rounded-t-[2.5rem] border border-white/10 bg-white/[.035] shadow-[0_30px_100px_rgba(0,0,0,.28)] lg:mb-16 lg:min-h-[640px] lg:rounded-[2.5rem]">
+        <div className="product-motion-card relative min-h-[420px] overflow-hidden rounded-t-[2.5rem] border border-white/10 bg-white/[.035] shadow-[0_30px_100px_rgba(0,0,0,.28)] lg:mb-16 lg:min-h-[640px] lg:rounded-[2.5rem]">
           <AnimatePresence mode="wait">
             <motion.div
               key={`${hero?.type}-${hero?.url}`}
@@ -214,7 +214,7 @@ export default function PdHero({ product }) {
           </div>
 
           {hero && (
-            <button type="button" onClick={() => setLightbox(active)} className="absolute right-5 top-5 z-20 inline-flex items-center gap-2 rounded-full border border-white/22 bg-black/34 px-4 py-2 text-xs font-bold text-white backdrop-blur-md transition hover:bg-black/52">
+            <button type="button" onClick={() => setLightbox(active)} className="product-sweep absolute right-5 top-5 z-20 inline-flex items-center gap-2 rounded-full border border-white/[.22] bg-black/[.34] px-4 py-2 text-xs font-bold text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-black/[.52]">
               <Play size={12} fill="currentColor" /> Galerie
             </button>
           )}
@@ -226,7 +226,7 @@ export default function PdHero({ product }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.46, delay: 0.22 + index * 0.08 }}
-                className={`absolute ${item.pos} max-w-[230px] rounded-2xl border border-white/14 bg-black/32 px-4 py-3 text-white shadow-[0_18px_54px_rgba(0,0,0,.25)] backdrop-blur-xl`}
+                className={`product-glass absolute ${item.pos} max-w-[230px] rounded-2xl bg-black/[.32] px-4 py-3 text-white shadow-[0_18px_54px_rgba(0,0,0,.25)]`}
               >
                 <p className="font-mono text-[9px] uppercase tracking-[.2em] text-[#22D3EE]">{item.label}</p>
                 <p className="mt-1 text-xs font-semibold leading-5 text-white/82">{item.value}</p>
@@ -237,7 +237,7 @@ export default function PdHero({ product }) {
           <div className="absolute bottom-5 left-5 right-5 z-20 rounded-[1.5rem] border border-white/12 bg-[#07131D]/70 p-4 backdrop-blur-xl">
             <div className="grid gap-3 sm:grid-cols-4">
               {featureTiles.map((item) => (
-                <div key={item.title} className="rounded-2xl border border-white/10 bg-white/[.045] p-3">
+                <div key={item.title} className="product-glass rounded-2xl p-3">
                   <item.icon size={18} strokeWidth={1.6} className="text-[#22D3EE]" />
                   <p className="mt-2 font-heading text-sm font-bold leading-tight text-white">{item.title}</p>
                   <p className="mt-1 text-[11px] leading-snug text-white/52">{item.text}</p>
@@ -264,10 +264,10 @@ export default function PdHero({ product }) {
 
       <div className="relative z-10 border-t border-white/10 bg-[#07131D]">
         <div className="mx-auto grid max-w-[1540px] gap-4 px-5 py-7 sm:px-8 lg:grid-cols-4 lg:px-12 xl:px-20">
-          <Link to="/mlzidla-mlzitka" className="rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Katalog</p><strong className="mt-2 block text-white">Další mlžítka</strong><span className="mt-1 block text-sm text-white/52">Porovnat produkty a kolekce.</span></Link>
-          <Link to="/mlzne-brany" className="rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Sestavy</p><strong className="mt-2 block text-white">Mlžné brány</strong><span className="mt-1 block text-sm text-white/52">Průchozí ochlazení veřejného prostoru.</span></Link>
-          <Link to="/mestske-mlzitka" className="rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Města</p><strong className="mt-2 block text-white">Městské ochlazování</strong><span className="mt-1 block text-sm text-white/52">Řešení pro náměstí, parky a školy.</span></Link>
-          <Link to="/kontakt" className="rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Kontakt</p><strong className="mt-2 block text-white">Konzultace projektu</strong><span className="mt-1 block text-sm text-white/52">Technické dotazy a návrh prostoru.</span></Link>
+          <Link to="/mlzidla-mlzitka" className="product-motion-card rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:-translate-y-1 hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Katalog</p><strong className="mt-2 block text-white">Další mlžítka</strong><span className="mt-1 block text-sm text-white/52">Porovnat produkty a kolekce.</span></Link>
+          <Link to="/mlzne-brany" className="product-motion-card rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:-translate-y-1 hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Sestavy</p><strong className="mt-2 block text-white">Mlžné brány</strong><span className="mt-1 block text-sm text-white/52">Průchozí ochlazení veřejného prostoru.</span></Link>
+          <Link to="/mestske-mlzitka" className="product-motion-card rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:-translate-y-1 hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Města</p><strong className="mt-2 block text-white">Městské ochlazování</strong><span className="mt-1 block text-sm text-white/52">Řešení pro náměstí, parky a školy.</span></Link>
+          <Link to="/kontakt" className="product-motion-card rounded-2xl border border-white/10 bg-white/[.035] p-5 transition hover:-translate-y-1 hover:border-[#22D3EE]/40 hover:bg-white/[.06]"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#22D3EE]">Kontakt</p><strong className="mt-2 block text-white">Konzultace projektu</strong><span className="mt-1 block text-sm text-white/52">Technické dotazy a návrh prostoru.</span></Link>
         </div>
       </div>
 

@@ -99,7 +99,7 @@ export default async function(req) {
       presentation_filename: presentationFilename,
       presentation_url: presentationUrl = '',
       quote_pdf_url: quotePdfUrl = '',
-      portal_url: portalUrl = 'https://mlzidla.cz/muj-projekt',
+      portal_url: portalUrl = 'https://mlzidla.cz/klientska-sekce',
       valid_until: validUntil = '',
       quote_number: quoteNumber = '',
       project_summary: projectSummary = '',

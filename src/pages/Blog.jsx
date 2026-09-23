@@ -142,7 +142,7 @@ export default function Blog() {
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#0B6B7A]">MLŽIDLA® MAGAZÍN</p>
               <h1 className="mt-4 max-w-2xl font-heading text-5xl leading-[.95] tracking-[-.05em] text-[#081827] sm:text-6xl lg:text-7xl">Místa, kde se lépe dýchá.</h1>
-              <p className="mt-6 max-w-xl text-base leading-7 text-slate-550">Novinky ze světa mlžítek, skutečné realizace, návrhová inspirace a praktické články pro města, architekty, sportoviště, školy i veřejný prostor.</p>
+              <p className="mt-6 max-w-xl text-base leading-7 text-slate-500">Novinky ze světa mlžítek, skutečné realizace, návrhová inspirace a praktické články pro města, architekty, sportoviště, školy i veřejný prostor.</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">
               <Link to="/blog?sekce=realizace" className="rounded-full bg-[#071A2F] px-5 py-3 text-xs font-semibold text-white">Realizované projekty</Link>

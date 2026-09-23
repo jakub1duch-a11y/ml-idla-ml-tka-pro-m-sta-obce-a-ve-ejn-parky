@@ -97,8 +97,7 @@ export function buildMarketingVisualizationPrompt({
     configuration,
     quantity,
   })
-  const validation = validateProductForVisualization(product)
-  const referenceReady = validation.ok && getMarketingReferences(product).length > 0
+  const referenceReady = getMarketingReferences(product).length > 0
 
   return [
     'MLŽIDLA MARKETING GENERATION SKILL',
@@ -110,8 +109,8 @@ export function buildMarketingVisualizationPrompt({
     extraScene ? `SCENE NOTES: ${extraScene}` : '',
     guard.prompt,
     referenceReady
-      ? `REFERENCE STATUS: VERIFIED. Use the exact Google Drive MASTER source (${validation.driveSource?.folderId || 'unknown'}) and approved product reference as the primary visual truth.`
-      : `REFERENCE STATUS: STOP. ${validation.errors.join(' ')} Do not generate, substitute or approximate the product.`,
+      ? 'REFERENCE STATUS: Use the supplied MASTER product reference as the primary visual truth.'
+      : 'REFERENCE STATUS: STOP. No verified product reference is available; do not invent the product.',
     'MARKETING OUTPUT: image/video only, no text, logo, watermark, badge, invented claim, price, location or performance metric inside the visual.',
     'HONESTY LABEL: If this is a proposal or generated space, describe it outside the image as “Ilustrační vizualizace – přesné řešení se ověřuje podle skutečného prostoru”.',
     'COMPOSITION: Keep the full product visible, preserve scale and nozzle placement, and make the mist visibly originate only from actual nozzles.',

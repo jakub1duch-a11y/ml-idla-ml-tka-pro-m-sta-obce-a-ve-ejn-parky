@@ -44,15 +44,20 @@ function imageScore(url = '', config) {
 
 export default function HomeSpatialConfigurations() {
   const [products, setProducts] = useState([]);
+  const [adminMedia, setAdminMedia] = useState([]);
   const [slug, setSlug] = useState('mlzitko-bendy');
   const [space, setSpace] = useState('namesti');
   const [config, setConfig] = useState('portal');
   const rule = RULES[slug];
 
   useEffect(() => {
-    base44.entities.Product.filter({ slug: { $in: Object.keys(RULES) } })
-      .then((items) => setProducts(items || []))
-      .catch(() => setProducts([]));
+    Promise.all([
+      base44.entities.Product.filter({ slug: { $in: Object.keys(RULES) } }).catch(() => []),
+      base44.entities.VisualizationAsset?.list?.('-created_date', 250).catch(() => []),
+    ]).then(([productItems, mediaItems]) => {
+      setProducts(productItems || []);
+      setAdminMedia((mediaItems || []).filter((item) => item?.image_url));
+    });
   }, []);
 
   useEffect(() => {
@@ -63,10 +68,21 @@ export default function HomeSpatialConfigurations() {
   const product = products.find((p) => p.slug === slug);
   const visual = useMemo(() => {
     if (!product) return '';
+
+    const normalizedConfig = config === 'portal' ? 'gate' : config === 'back-to-back' ? 'custom' : config;
+    const approvedAdmin = adminMedia
+      .filter((item) => item.product_slug === slug)
+      .filter((item) => !item.approval_status || item.approval_status === 'approved')
+      .filter((item) => item.approved_for_presentation !== false)
+      .filter((item) => !item.configuration || item.configuration === normalizedConfig || item.configuration === config)
+      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)));
+
+    if (approvedAdmin[0]?.image_url) return approvedAdmin[0].thumbnail_url || approvedAdmin[0].image_url;
+
     return [product.image_url, ...(product.gallery_urls || [])]
       .filter(Boolean)
       .sort((a,b) => imageScore(b, config) - imageScore(a, config))[0] || '';
-  }, [product, config]);
+  }, [product, config, adminMedia, slug]);
 
   const [title, count, description] = COPY[config];
 
@@ -130,7 +146,7 @@ export default function HomeSpatialConfigurations() {
               </div>
             </div>
             <div className="flex flex-col gap-3 border-t border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-              <p className="text-xs leading-5 text-white/45">Zobrazené médium vychází z knihovny konkrétního produktu. Finální klientská vizualizace musí zachovat přesnou geometrii výrobku.</p>
+              <p className="text-xs leading-5 text-white/45">Primárním zdrojem je Galerie médií v administraci. Pokud pro variantu není schválený asset, použije se produktová galerie. Finální vizualizace musí zachovat přesnou geometrii výrobku.</p>
               <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(rule.label)}&slug=${encodeURIComponent(slug)}&konfigurace=${encodeURIComponent(config)}`} className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#22D3EE] px-5 py-3 text-xs font-bold text-[#07131F]">
                 Vizualizovat můj prostor <ArrowRight size={14}/>
               </Link>

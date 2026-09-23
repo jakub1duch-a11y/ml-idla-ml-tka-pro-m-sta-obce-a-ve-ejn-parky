@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
 import {
   ArrowRight,
   Download,
@@ -73,6 +74,39 @@ const smartPoints = [
 ];
 
 export default function PremiumHomepage2026() {
+  const [approvedVisuals, setApprovedVisuals] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    base44.entities.VisualizationAsset
+      .filter({ approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 120)
+      .then((items = []) => { if (active) setApprovedVisuals((items || []).filter((item) => item?.image_url)); })
+      .catch(() => { if (active) setApprovedVisuals([]); });
+    return () => { active = false; };
+  }, []);
+
+  const approvedBySlug = useMemo(() => {
+    const map = new Map();
+    [...approvedVisuals]
+      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .forEach((item) => {
+        if (item.product_slug && !map.has(item.product_slug)) map.set(item.product_slug, item.thumbnail_url || item.image_url);
+      });
+    return map;
+  }, [approvedVisuals]);
+
+  const resolvedHighlights = useMemo(() => productHighlights.map((product) => ({
+    ...product,
+    image: approvedBySlug.get(product.link.split('/').pop()) || product.image,
+  })), [approvedBySlug]);
+
+  const resolvedCategories = useMemo(() => categories.map((item, index) => ({
+    ...item,
+    image: index === 0 ? (approvedBySlug.get('linea-mlzitko') || approvedBySlug.get('mlzitko-steblo') || item.image)
+      : index === 1 ? (approvedBySlug.get('mlzna-brana-gate') || approvedBySlug.get('brana-bendy') || item.image)
+      : (approvedBySlug.get('mlzitko-mrak') || approvedBySlug.get('teepee') || item.image),
+  })), [approvedBySlug]);
+
   return (
     <div className="premium-homepage-2026 overflow-x-clip bg-white text-[#07131D]">
       <section className="relative overflow-hidden bg-[#07131D] text-white" aria-labelledby="premium-hero-title">
@@ -141,7 +175,7 @@ export default function PremiumHomepage2026() {
           </motion.div>
 
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {categories.map((item, index) => {
+            {resolvedCategories.map((item, index) => {
               const Icon = item.icon;
               return (
                 <motion.div key={item.title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.08 }}>
@@ -180,7 +214,7 @@ export default function PremiumHomepage2026() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {productHighlights.map((product, index) => (
+            {resolvedHighlights.map((product, index) => (
               <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
                 <Link to={product.link} className="premium-card-interactive group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/20 bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
                   <img src={product.image} alt={`${product.name} — ${product.label}`} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />

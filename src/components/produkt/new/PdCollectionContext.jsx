@@ -28,7 +28,7 @@ export default function PdCollectionContext({ product }) {
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">// Kategorie produktů</p>
             <h2 className="mt-3 font-heading text-2xl font-semibold text-[#0A1628] sm:text-3xl">Kde tento produkt patří v katalogu</h2>
           </div>
-          <Link to="/mlzidla-mlzitka#catalog" className="btn-brand-accent-link shrink-0">Celý katalog <ArrowRight size={14} /></Link>
+          <Link to="/mlzidla-mlzitka#catalog" className="catalog-sweep btn-brand-accent-link shrink-0">Celý katalog <ArrowRight size={14} /></Link>
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -41,11 +41,12 @@ export default function PdCollectionContext({ product }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.45, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -6, scale: 1.008 }}
+                whileTap={{ scale: 0.988 }}
               >
                 <Link
                   to="/mlzidla-mlzitka#catalog"
-                  className={`group flex h-full flex-col overflow-hidden border transition-colors ${active ? 'border-[#0A1628] bg-[#0A1628] text-white' : 'border-[#D3E2E8] bg-white text-[#0A1628] hover:border-[#153863]'}`}
+                  className={`product-motion-card group flex h-full flex-col overflow-hidden rounded-[1.5rem] border transition-colors ${active ? 'border-[#0A1628] bg-[#0A1628] text-white' : 'border-[#D3E2E8] bg-white text-[#0A1628] hover:border-[#22D3EE]'}`}
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-[#E7F4F8]">
                     {f.cover && <img src={f.cover} alt={f.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />}

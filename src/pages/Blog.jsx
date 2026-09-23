@@ -106,7 +106,7 @@ export default function Blog() {
         if (view?.post_id) map[view.post_id] = (map[view.post_id] || 0) + 1;
         return map;
       }, {}));
-      setVisuals((media || []).filter((m) => ['render', 'marketing', 'visualization'].includes(m.media_role)).slice(0, 12).map((m) => ({
+      setVisuals((media || []).filter((m) => m.media_role === 'render').slice(0, 12).map((m) => ({
         id: m.id,
         image_url: m.file_url,
         title: m.file_name,

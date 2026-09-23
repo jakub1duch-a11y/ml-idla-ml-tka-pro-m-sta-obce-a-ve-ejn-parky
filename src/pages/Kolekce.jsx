@@ -89,23 +89,23 @@ export default function Kolekce() {
       {!selectedCategory && <ProductCategoryExplorer />}
       <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
 
-      <div id="catalog" className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
-        <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <div id="catalog" className="relative mx-auto max-w-[1500px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+        <div className="mb-10 flex flex-col gap-6 border-b border-[#DCE9ED] pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
-            <h2 className="mt-3 font-heading text-3xl font-semibold text-[#0A1628] sm:text-4xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Všechna mlžítka, brány a mlžné sochy'}</h2>
+            <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.98] tracking-[-.055em] text-[#07131D] sm:text-5xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Všechna mlžítka, brány a mlžné sochy'}</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle kolekcí a produktových řad. Vyberte kolekci, řadu nebo typ prostoru — ceny sdělujeme na poptávku podle konfigurace a rozsahu instalace.'}</p>
           </div>
           {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}
         </div>
 
-        <div className="sticky top-[64px] z-30 mb-8 border border-[#D3E2E8] bg-white/95 p-3 shadow-[var(--brand-shadow-md)] backdrop-blur-xl sm:p-4">
+        <div className="sticky top-[72px] z-30 mb-10 rounded-[1.4rem] border border-[#D3E2E8]/90 bg-white/88 p-3 shadow-[0_16px_50px_rgba(7,19,29,.09)] backdrop-blur-2xl sm:p-4">
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
             <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {
                 const active = space === value;
                 return (
-                  <button key={value} type="button" onClick={() => setSpace(value)} className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 border px-4 font-heading text-[13px] font-semibold transition ${active ? 'border-[#0A1628] bg-[#0A1628] text-[#F4FAFC]' : 'border-[#D3E2E8] bg-white text-[#0A1628] hover:border-[#153863]'}`}>
+                  <button key={value} type="button" onClick={() => setSpace(value)} className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 rounded-full border px-4 font-heading text-[13px] font-semibold transition ${active ? 'border-[#07131D] bg-[#07131D] text-white shadow-sm' : 'border-[#D3E2E8] bg-white/80 text-[#0A1628] hover:border-[#7CCBD8] hover:bg-[#EFFAFC]'}`}>
                     <Icon size={15} strokeWidth={1.6} />{label}
                   </button>
                 );
@@ -113,7 +113,7 @@ export default function Kolekce() {
             </div>
             <label className="relative xl:w-[280px]">
               <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#5A6B78]" />
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-[42px] w-full border border-[#D3E2E8] bg-[#F4FAFC] pl-11 pr-4 text-sm text-[#0A1628] outline-none transition focus:border-[#153863] focus:bg-white" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-[42px] w-full rounded-full border border-[#D3E2E8] bg-[#F4FAFC]/80 pl-11 pr-4 text-sm text-[#0A1628] outline-none transition focus:border-[#7CCBD8] focus:bg-white focus:ring-4 focus:ring-[#DDF7FA]/60" />
             </label>
           </div>
           {family && (
@@ -132,7 +132,7 @@ export default function Kolekce() {
           <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-[#D3E2E8]" /></div>
         ) : (
           <ProductExperience products={displayed}>
-<div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+<div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
             {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
             {displayed.length === 0 && <p className="col-span-3 py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
           </div>

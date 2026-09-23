@@ -16,7 +16,7 @@ export default function UseCaseCard({ item, index, reduceMotion }) {
         src={image}
         alt={title}
         loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.07]"
+        className="absolute inset-0 h-full w-full object-cover transition-transform ease-out group-hover:scale-[1.07]" style={{ transitionDuration: "900ms" }}
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.10)_0%,rgba(10,22,40,.55)_52%,rgba(10,22,40,.92)_100%)] transition-opacity duration-500 group-hover:opacity-95" />
 

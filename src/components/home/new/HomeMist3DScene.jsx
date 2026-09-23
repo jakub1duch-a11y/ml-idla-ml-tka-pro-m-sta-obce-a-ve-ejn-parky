@@ -1,84 +1,123 @@
-import React, { Suspense, useMemo, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, Move3D, Sparkles, Wind } from 'lucide-react';
 
-function StainlessMistObject() {
-  const group = useRef();
-  useFrame((state, delta) => {
-    if (!group.current) return;
-    group.current.rotation.y += delta * 0.12;
-    group.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.35) * 0.025;
-  });
+const LINEA_MASTER =
+  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg';
 
-  const particles = useMemo(() => {
-    const positions = new Float32Array(360 * 3);
-    for (let i = 0; i < 360; i += 1) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 0.45 + Math.random() * 1.7;
-      positions[i * 3] = Math.cos(angle) * radius;
-      positions[i * 3 + 1] = 0.6 + Math.random() * 2.8;
-      positions[i * 3 + 2] = Math.sin(angle) * radius;
-    }
-    return positions;
-  }, []);
-
-  return (
-    <group ref={group}>
-      <Float speed={0.7} rotationIntensity={0.08} floatIntensity={0.16}>
-        <mesh position={[0, -0.35, 0]}>
-          <cylinderGeometry args={[0.11, 0.11, 3.2, 48]} />
-          <meshPhysicalMaterial color="#c8d0d5" metalness={1} roughness={0.17} clearcoat={0.8} />
-        </mesh>
-        <mesh position={[0.52, 1.13, 0]} rotation={[0, 0, -0.72]}>
-          <cylinderGeometry args={[0.11, 0.11, 1.45, 48]} />
-          <meshPhysicalMaterial color="#d9dee1" metalness={1} roughness={0.16} clearcoat={0.9} />
-        </mesh>
-        <mesh position={[1.03, 1.65, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.11, 0.11, 0.55, 48]} />
-          <meshPhysicalMaterial color="#edf0f1" metalness={1} roughness={0.14} clearcoat={1} />
-        </mesh>
-      </Float>
-      <points>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" array={particles} count={particles.length / 3} itemSize={3} />
-        </bufferGeometry>
-        <pointsMaterial size={0.045} color="#d8f7ff" transparent opacity={0.38} depthWrite={false} blending={THREE.AdditiveBlending} />
-      </points>
-    </group>
-  );
-}
+const principles = [
+  { icon: Move3D, label: 'Pomalý pohyb kamery' },
+  { icon: Wind, label: 'Jemná animace mlhy' },
+  { icon: Sparkles, label: 'Ocelové odlesky a světlo' },
+];
 
 export default function HomeMist3DScene() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="relative overflow-hidden bg-[#08131f] py-20 sm:py-24 lg:py-28" aria-label="3D ukázka mlžítka">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(34,211,238,.12),transparent_35%),radial-gradient(circle_at_20%_30%,rgba(255,196,128,.08),transparent_30%)]" />
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 sm:px-7 lg:grid-cols-[.8fr_1.2fr] lg:px-10">
-        <div className="flex flex-col justify-center">
-          <p className="font-mono text-[10px] uppercase tracking-[.24em] text-[#22D3EE]">// 3D mist experience</p>
-          <h2 className="mt-4 max-w-xl font-heading text-4xl font-semibold leading-[.98] tracking-[-.04em] text-white sm:text-5xl">
-            Nerez, světlo a mlha v pohybu.
-          </h2>
-          <p className="mt-5 max-w-lg text-sm leading-7 text-white/60 sm:text-base">
-            Interaktivní WebGL vrstva ukazuje princip produktu bez změny jeho výrobní geometrie. Pro konkrétní produkty se používají schválené fotografie a modely.
+    <section
+      className="relative isolate overflow-hidden bg-[#06111B] py-20 text-white sm:py-24 lg:py-32"
+      aria-label="Animovaná produktová scéna MLŽIDLA"
+      data-home-reveal
+    >
+      <style>{`
+        @keyframes mlzAmbientDriftA {
+          0%,100% { transform: translate3d(-8%, 8%, 0) scale(1); opacity: .18; }
+          50% { transform: translate3d(14%, -7%, 0) scale(1.16); opacity: .34; }
+        }
+        @keyframes mlzAmbientDriftB {
+          0%,100% { transform: translate3d(12%, -6%, 0) scale(1.08); opacity: .12; }
+          50% { transform: translate3d(-14%, 8%, 0) scale(.94); opacity: .28; }
+        }
+        @keyframes mlzMistSweep {
+          0% { transform: translate3d(-20%, 0, 0) scaleX(.8); opacity: 0; }
+          18% { opacity: .24; }
+          70% { opacity: .12; }
+          100% { transform: translate3d(38%, -3%, 0) scaleX(1.22); opacity: 0; }
+        }
+        .mlz-cinematic-noise {
+          background-image:
+            radial-gradient(circle at 22% 35%, rgba(158,217,240,.14), transparent 24%),
+            radial-gradient(circle at 72% 22%, rgba(248,250,252,.10), transparent 19%),
+            linear-gradient(115deg, rgba(255,255,255,.035), transparent 42%);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .mlz-ambient-a,.mlz-ambient-b,.mlz-mist-sweep { animation: none !important; }
+        }
+      `}</style>
+
+      <div className="pointer-events-none absolute inset-0 mlz-cinematic-noise" />
+      <div className="mlz-ambient-a pointer-events-none absolute -left-[10%] top-[5%] h-[46rem] w-[46rem] rounded-full bg-[#5BD6F5]/20 blur-[110px]" style={{ animation: 'mlzAmbientDriftA 16s ease-in-out infinite' }} />
+      <div className="mlz-ambient-b pointer-events-none absolute -right-[12%] bottom-[-25%] h-[40rem] w-[40rem] rounded-full bg-white/10 blur-[120px]" style={{ animation: 'mlzAmbientDriftB 19s ease-in-out infinite' }} />
+
+      <div className="relative mx-auto grid max-w-[1480px] gap-10 px-5 sm:px-8 lg:grid-cols-[.74fr_1.26fr] lg:items-center lg:px-12 xl:px-16">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: .72, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-10"
+        >
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[.28em] text-[#6BD8F2]">
+            Produktová motion vrstva
           </p>
-          <div className="mt-7 flex flex-wrap gap-2 text-[11px] text-white/55">
-            {['Three.js', 'React Three Fiber', 'WebGL mist', 'Reduced-motion safe'].map((item) => (
-              <span key={item} className="rounded-full border border-white/10 bg-white/[.04] px-3 py-1.5">{item}</span>
+          <h2 className="mt-5 max-w-[10ch] font-heading text-[clamp(2.6rem,5vw,5.8rem)] font-bold leading-[.93] tracking-[-.055em] text-white">
+            Nerez. Světlo. Mlha v pohybu.
+          </h2>
+          <p className="mt-6 max-w-xl text-base leading-7 text-white/72 sm:text-lg">
+            Produkt zůstává geometricky beze změny. Animujeme pouze kameru, světlo a atmosféru,
+            aby vynikla skutečná konstrukce a práce jemné vodní mlhy.
+          </p>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            {principles.map(({ icon: Icon, label }) => (
+              <div key={label} className="flex min-h-14 items-center gap-3 border border-white/10 bg-white/[.045] px-4 py-3 backdrop-blur-md">
+                <Icon size={18} className="shrink-0 text-[#6BD8F2]" strokeWidth={1.6} />
+                <span className="text-xs font-semibold leading-5 text-white/72">{label}</span>
+              </div>
             ))}
           </div>
-        </div>
-        <div className="h-[440px] overflow-hidden rounded-[28px] border border-white/10 bg-white/[.025] sm:h-[540px]">
-          <Canvas camera={{ position: [4.5, 2.1, 5.2], fov: 37 }} dpr={[1, 1.7]}>
-            <ambientLight intensity={1.2} />
-            <directionalLight position={[4, 6, 5]} intensity={3.5} color="#ffd8a8" />
-            <directionalLight position={[-4, 3, 2]} intensity={2.2} color="#9cecff" />
-            <Suspense fallback={null}>
-              <StainlessMistObject />
-              <Environment preset="city" />
-            </Suspense>
-          </Canvas>
-        </div>
+
+          <a href="/produkt/linea-mlzitko" className="mt-8 inline-flex min-h-12 items-center gap-2 border border-white/18 bg-white/[.06] px-5 py-3 text-sm font-bold text-white transition hover:border-[#6BD8F2]/55 hover:bg-white/[.10]">
+            Prohlédnout LINEA® <ArrowUpRight size={16} />
+          </a>
+        </motion.div>
+
+        <motion.div
+          className="relative min-h-[520px] overflow-hidden border border-white/10 bg-[#0A1A27] shadow-[0_40px_120px_rgba(0,0,0,.38)] sm:min-h-[620px] lg:min-h-[720px]"
+          initial={reduceMotion ? false : { opacity: 0, scale: .985 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: .9, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.img
+            src={LINEA_MASTER}
+            alt="Ověřený produkt MLŽÍTKO LINEA v prostoru"
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+            initial={false}
+            animate={reduceMotion ? undefined : { scale: [1.035, 1.085, 1.035], x: ['0%', '-1.6%', '0%'] }}
+            transition={reduceMotion ? undefined : { duration: 16, ease: 'easeInOut', repeat: Infinity }}
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,9,15,.05)_0%,rgba(2,9,15,.08)_48%,rgba(2,9,15,.82)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_34%,rgba(207,243,255,.24),transparent_28%)]" />
+
+          <div className="mlz-mist-sweep pointer-events-none absolute left-[15%] top-[24%] h-40 w-[75%] rounded-full bg-[radial-gradient(ellipse,rgba(232,250,255,.32),rgba(207,243,255,.10)_45%,transparent_72%)] blur-2xl" style={{ animation: 'mlzMistSweep 11s ease-in-out infinite' }} />
+          <div className="mlz-mist-sweep pointer-events-none absolute left-[5%] top-[46%] h-28 w-[68%] rounded-full bg-[radial-gradient(ellipse,rgba(232,250,255,.24),rgba(207,243,255,.07)_48%,transparent_74%)] blur-2xl" style={{ animation: 'mlzMistSweep 13.5s 2.2s ease-in-out infinite' }} />
+
+          <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-9">
+            <div className="flex flex-col gap-4 border-t border-white/14 pt-5 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-[.24em] text-[#6BD8F2]">MASTER reference · geometrie uzamčena</p>
+                <h3 className="mt-2 font-heading text-2xl font-semibold tracking-[-.035em] text-white sm:text-3xl">LINEA® — sloupové mlžítko</h3>
+              </div>
+              <p className="max-w-xs text-xs leading-5 text-white/58">
+                Webová motion vrstva je oddělená od produktu. Žádné AI přetváření konstrukce.
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

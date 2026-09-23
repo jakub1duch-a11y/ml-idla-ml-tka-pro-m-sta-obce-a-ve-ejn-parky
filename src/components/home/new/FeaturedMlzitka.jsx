@@ -13,17 +13,27 @@ export default function FeaturedMlzitka() {
 
   useEffect(() => {
     base44.entities.Product.list('name', 200)
-      .then((all) => setProducts((all || []).filter((p) => !isArchived(p.slug))))
+      .then((all) => setProducts((all || []).filter((p) => {
+        const slug = String(p?.slug || '').toLowerCase();
+        const name = String(p?.name || '').toLowerCase();
+        return !isArchived(p.slug) && slug !== 'bendy-field' && name !== 'bendy field';
+      })))
       .finally(() => setLoading(false));
   }, []);
 
-  const familyTiles = useMemo(() => FAMILIES.map((f) => {
-    const inFamily = sortByStructure(products.filter((p) => getFamily(p).id === f.id));
-    const cover = inFamily.find((p) => p.featured && p.image_url) || inFamily.find((p) => p.image_url);
-    return { ...f, count: inFamily.length, cover: cover?.image_url };
+  const publicProducts = useMemo(() => products.filter((p) => {
+    const slug = String(p?.slug || '').toLowerCase();
+    const name = String(p?.name || '').toLowerCase();
+    return slug !== 'bendy-field' && name !== 'bendy field';
   }), [products]);
 
-  const featured = useMemo(() => sortByStructure(products.filter((p) => p.featured)).slice(0, 6), [products]);
+  const familyTiles = useMemo(() => FAMILIES.map((f) => {
+    const inFamily = sortByStructure(publicProducts.filter((p) => getFamily(p).id === f.id));
+    const cover = inFamily.find((p) => p.featured && p.image_url) || inFamily.find((p) => p.image_url);
+    return { ...f, count: inFamily.length, cover: cover?.image_url };
+  }), [publicProducts]);
+
+  const featured = useMemo(() => sortByStructure(publicProducts.filter((p) => p.featured)).slice(0, 6), [publicProducts]);
 
   return (
     <section id="home-product-gallery" className="hero-gallery-anchor bg-white py-20 lg:py-28">

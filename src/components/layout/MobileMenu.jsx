@@ -42,7 +42,7 @@ const PRIMARY_LINKS = [
   { label: 'Pro města a obce', sub: 'Návrh, výroba a podklady pro veřejný prostor', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
   { label: 'Realizace', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
   { label: 'Technologie', sub: 'Jak funguje nízkotlaké mlžení', path: '/jak-to-funguje', icon: Cpu },
-  { label: 'Blog', sub: 'Inspirace, projekty a novinky', path: '/blog', icon: Newspaper },
+  { label: 'Magazín', sub: 'Novinky, realizace, inspirace a video', path: '/blog', icon: Newspaper },
   { label: 'Podpora', sub: 'FAQ, servis a technické informace', path: '/podpora', icon: LifeBuoy },
 ];
 

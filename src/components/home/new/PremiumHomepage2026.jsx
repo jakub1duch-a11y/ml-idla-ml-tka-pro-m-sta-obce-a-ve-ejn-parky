@@ -216,13 +216,13 @@ export default function PremiumHomepage2026() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {resolvedHighlights.map((product, index) => (
               <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
-                <Link to={product.link} className="premium-card-interactive group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/20 bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
+                <Link to={product.link} className="premium-card-interactive group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/[.20] bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
                   <img src={product.image} alt={`${product.name} — ${product.label}`} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#07131D] via-[#07131D]/16 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                     <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#26C6E9]">Produkt</p>
                     <h3 className="mt-1 font-heading text-3xl font-black tracking-[-.055em]">{product.name}</h3>
-                    <p className="mt-1 text-sm font-semibold text-white/76">{product.label}</p>
+                    <p className="mt-1 text-sm font-semibold text-white/[.76]">{product.label}</p>
                   </div>
                 </Link>
               </motion.div>
@@ -237,13 +237,13 @@ export default function PremiumHomepage2026() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>
             <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/68">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/[.68]">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {smartPoints.map(({ icon: Icon, title, text }) => (
                 <motion.div key={title} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 320, damping: 24 }} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.06] p-4 backdrop-blur-md">
                   <Icon className="text-[#26C6E9]" size={24} />
                   <strong className="mt-4 block text-base">{title}</strong>
-                  <p className="mt-2 text-xs leading-5 text-white/60">{text}</p>
+                  <p className="mt-2 text-xs leading-5 text-white/[.60]">{text}</p>
                 </motion.div>
               ))}
             </div>
@@ -256,12 +256,12 @@ export default function PremiumHomepage2026() {
                   <p className="text-xs font-bold uppercase tracking-[.18em] text-[#26C6E9]">Přehled provozu</p>
                   <h3 className="mt-1 font-heading text-2xl font-black">Mlžítko aktivní</h3>
                 </div>
-                <span className="rounded-full bg-emerald-400/18 px-4 py-2 text-xs font-bold text-emerald-200">Zapnuto</span>
+                <span className="rounded-full bg-emerald-400/[.18] px-4 py-2 text-xs font-bold text-emerald-200">Zapnuto</span>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/56">Aktuálně</p><strong className="mt-2 block text-4xl">28 °C</strong><span className="text-xs text-[#26C6E9]">ideální podmínky pro mlžení</span></div>
-                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/56">Spotřeba dnes</p><strong className="mt-2 block text-4xl">124 l</strong><span className="text-xs text-emerald-200">úsporný režim</span></div>
-                <div className="rounded-2xl bg-white/[.07] p-5 sm:col-span-2"><p className="text-sm text-white/56">Scénáře</p><div className="mt-3 grid gap-2 sm:grid-cols-3"><span className="rounded-full bg-[#26C6E9]/18 px-3 py-2 text-xs font-bold text-[#A8EFFF]">Park</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Hřiště</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Event</span></div></div>
+                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/[.56]">Aktuálně</p><strong className="mt-2 block text-4xl">28 °C</strong><span className="text-xs text-[#26C6E9]">ideální podmínky pro mlžení</span></div>
+                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/[.56]">Spotřeba dnes</p><strong className="mt-2 block text-4xl">124 l</strong><span className="text-xs text-emerald-200">úsporný režim</span></div>
+                <div className="rounded-2xl bg-white/[.07] p-5 sm:col-span-2"><p className="text-sm text-white/[.56]">Scénáře</p><div className="mt-3 grid gap-2 sm:grid-cols-3"><span className="rounded-full bg-[#26C6E9]/[.18] px-3 py-2 text-xs font-bold text-[#A8EFFF]">Park</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Hřiště</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Event</span></div></div>
               </div>
             </div>
           </motion.div>
@@ -270,13 +270,13 @@ export default function PremiumHomepage2026() {
 
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/10 bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/[.10] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
             <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
             <div className="absolute inset-0 p-6 sm:p-8 lg:p-10">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
               <h2 id="planning-title" className="premium-heading mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl">Zákresy a zaměření.</h2>
-              <p className="mt-5 max-w-xl text-sm leading-6 text-white/72 sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
+              <p className="mt-5 max-w-xl text-sm leading-6 text-white/[.72] sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
               <div className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
                 {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="premium-glass-card rounded-full border border-white/[.16] bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
               </div>

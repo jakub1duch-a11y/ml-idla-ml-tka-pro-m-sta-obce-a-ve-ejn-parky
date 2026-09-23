@@ -219,7 +219,7 @@ export default async function(req) {
     const issued = issuedAt.toLocaleDateString('cs-CZ');
     const validUntil = validUntilDate.toLocaleDateString('cs-CZ');
     const quoteNumber = requestedQuoteNumber || `MLZ-${issuedAt.getFullYear()}-${String(Date.now()).slice(-6)}`;
-    const portalUrl = requestedPortalUrl || 'https://mlzidla.cz/muj-projekt';
+    const portalUrl = requestedPortalUrl || 'https://mlzidla.cz/klientska-sekce';
     const orderUrl = `${portalUrl}?action=order&quote=${encodeURIComponent(quoteNumber)}`;
     const extensionUrl = `${portalUrl}?action=extend&quote=${encodeURIComponent(quoteNumber)}`;
     const timingUrl = `${portalUrl}?action=timing&quote=${encodeURIComponent(quoteNumber)}`;

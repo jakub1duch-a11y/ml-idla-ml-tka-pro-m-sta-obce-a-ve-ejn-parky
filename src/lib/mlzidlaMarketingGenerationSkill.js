@@ -4,7 +4,6 @@ import {
   VISUAL_RULE_VERSION,
 } from './productVisualizationRules'
 import { validateProductForVisualization } from './driveProductMasterRegistry'
-import { validateProductForVisualization } from './driveProductMasterRegistry'
 
 export const MARKETING_GENERATION_SKILL = {
   id: 'mlzidla-exact-product-marketing',

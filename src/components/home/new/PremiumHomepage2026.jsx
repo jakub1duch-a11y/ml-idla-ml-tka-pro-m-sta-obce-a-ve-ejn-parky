@@ -234,6 +234,69 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
+      <section className="bg-[#F7FAFC] py-18 lg:py-24" aria-labelledby="planning-title">
+        <div className="mx-auto grid max-w-[1540px] gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_.74fr] lg:items-center lg:px-12 xl:px-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="relative overflow-hidden rounded-[2rem] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)]">
+            <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="aspect-[16/9] w-full object-cover opacity-72" loading="lazy" decoding="async" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
+            <div className="absolute inset-0 p-6 sm:p-8 lg:p-10">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
+              <h2 id="planning-title" className="mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl">Zákresy a zaměření.</h2>
+              <p className="mt-5 max-w-xl text-sm leading-6 text-white/72 sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
+              <div className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
+                {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="rounded-full border border-white/16 bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Od návrhu k realizaci</p>
+            <h3 className="mt-4 font-heading text-3xl font-black tracking-[-.045em] text-[#07131D] sm:text-4xl">Vizualizace, půdorys a doporučení pro konkrétní místo.</h3>
+            <div className="mt-7 grid gap-3">
+              {[
+                ['Půdorysný pohled', 'Rozmístění mlžítek do skutečného prostoru nebo fotografie místa.'],
+                ['Dosah mlhy', 'Návrh zóny osvěžení podle pohybu lidí a charakteru plochy.'],
+                ['Doporučení produktu', 'Výběr mezi Linea, Bendy, Aura, Mrak, TeePee nebo mlžnou bránou.'],
+              ].map(([title, text]) => (
+                <div key={title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <strong className="text-base text-[#07131D]">{title}</strong>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
+                </div>
+              ))}
+            </div>
+            <Link to="/poptavka" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#26C6E9] px-6 py-4 text-sm font-extrabold text-[#04131F] transition hover:-translate-y-0.5 hover:bg-[#07131D] hover:text-white">Nechat zpracovat zákres <ArrowRight size={16} /></Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-white py-18 lg:py-24" aria-labelledby="eventy-title">
+        <div className="mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
+          <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Sportoviště · eventy · parky</p>
+              <h2 id="eventy-title" className="mt-4 max-w-4xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Mlžítka pro horké dny, kde se lidé opravdu pohybují.</h2>
+            </div>
+            <Link to="/poptavka" className="inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0B8EC5] lg:self-auto">Poptat řešení pro akci <ArrowRight size={16} /></Link>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-3">
+            {[
+              ['Sportoviště a cyklotrasy', media.gate, 'Mlžná alej podél trasy vytváří krátké osvěžení pro sportovce i návštěvníky.'],
+              ['Městské parky', media.aura, 'AURA a tvarové prvky podporují setkávání a delší pobyt ve stínu zeleně.'],
+              ['Slavnosti a eventy', media.steblo, 'Mobilní nebo dočasné osvěžení pro akce, trhy a letní program města.'],
+            ].map(([title, image, text], index) => (
+              <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
+                <img src={image} alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+                <div className="p-6">
+                  <h3 className="font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-[#F7FAFC] py-18 lg:py-24" aria-labelledby="kotveni-title">
         <div className="mx-auto grid max-w-[1540px] gap-8 px-5 sm:px-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:px-12 xl:px-20">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">

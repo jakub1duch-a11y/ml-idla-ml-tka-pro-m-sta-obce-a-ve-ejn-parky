@@ -3,9 +3,10 @@
 
 export const CATALOG_LINES = {
   bendy: { folderId: '1JwPiTtlROg6zD23V0caeUVm7NO0E_nHd', slugs: ['mlzitko-bendy', 'bendy-radius-s', 'bendy-radius-m', 'bendy-radius-l', 'bendy-field'] },
-  steblo: { folderId: '1JwPiTtlROg6zD23V0caeUVm7NO0E_nHd', slugs: ['mlzitko-steblo', 'mlzitko-2-stebla', 'bendy-back-to-back', 'bendy-alej', 'brana-bendy', 'mlzitko-bendy-field'] },
+  steblo: { folderId: '1cPqOLEIB_qBzCzEfvICG3xCFR7cxSGj9', slugs: ['mlzitko-steblo', 'mlzitko-2-stebla'] },
   aura: { folderId: '1CKaaqf7wMwp5DWtbH0tqBDlVVHy0Czc4', slugs: ['aura-mlzitko', 'aura-duo'] },
   linea: { folderId: '15RH-7vaGhkDoOSB8UKj9Eybgj1n3BiZy', slugs: ['linea-mlzitko', 'linea-solo', 'linea-gate', 'linea-avenue'] },
+  lineace: { folderId: '1LXNhFna8CdVhFizMiLZx3MIIBXmYFR7a', slugs: ['linea-ce', 'lineace', 'linea-ce70'] },
   yarmist: { folderId: '1OtbstfDyf0yWodTet3asJfYPg-odzfNn', slugs: ['y-armist-tr60', 'y-armist-j70', 'ostrev-mlzitko'] },
   ostrev: { folderId: '1pQVR2pnM-UCvkKORGL4KFvwBhzH1PN0s', slugs: ['ostrev-city', 'mlzny-sloupost-ostrev'] },
   mrak: { folderId: '1NKKbz7H4a-BlnJc6-9AsujMqNRXALwed', slugs: ['mlzitko-mrak'] },

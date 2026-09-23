@@ -74,7 +74,7 @@ const smartPoints = [
 
 export default function PremiumHomepage2026() {
   return (
-    <div className="premium-homepage-2026 bg-white text-[#07131D]">
+    <div className="premium-homepage-2026 overflow-x-clip bg-white text-[#07131D]">
       <section className="relative overflow-hidden bg-[#07131D] text-white" aria-labelledby="premium-hero-title">
         <div className="absolute inset-0">
           <img src={media.cityHero} alt="Mlžné instalace ve veřejném prostoru" className="h-full w-full object-cover" loading="eager" decoding="async" />
@@ -82,7 +82,7 @@ export default function PremiumHomepage2026() {
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07131D] to-transparent" />
         </div>
 
-        <div className="relative mx-auto grid min-h-[86svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_.82fr] lg:px-12 xl:px-20">
+        <div className="premium-shell relative grid min-h-[86svh] items-center gap-10 py-24 sm:py-28 lg:grid-cols-[1fr_.82fr] lg:py-32">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="max-w-3xl">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Chladnější města · spokojenější lidé</p>
             <h1 id="premium-hero-title" className="mt-6 font-heading text-5xl font-black leading-[.98] tracking-[-.06em] text-white sm:text-6xl lg:text-7xl xl:text-8xl">
@@ -92,10 +92,10 @@ export default function PremiumHomepage2026() {
               Designová nerezová mlžítka pro náměstí, parky, sportoviště, školy, eventy i rezidenční zahrady. Voda, architektura a chytré řízení v jednom řešení.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link to="/mlzidla-mlzitka" className="inline-flex min-h-14 items-center gap-3 rounded-full bg-[#26C6E9] px-7 py-4 text-sm font-extrabold uppercase tracking-[.06em] text-[#04131F] shadow-[0_22px_60px_rgba(38,198,233,.35)] transition hover:-translate-y-0.5 hover:bg-white">
+              <Link to="/mlzidla-mlzitka" className="premium-action inline-flex min-h-14 items-center gap-3 rounded-full bg-[#26C6E9] px-7 py-4 text-sm font-extrabold uppercase tracking-[.06em] text-[#04131F] shadow-[0_22px_60px_rgba(38,198,233,.35)] transition hover:-translate-y-0.5 hover:bg-white">
                 Prohlédnout produkty <ArrowRight size={17} />
               </Link>
-              <Link to="/ke-stazeni" className="inline-flex min-h-14 items-center gap-3 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-extrabold uppercase tracking-[.06em] text-white backdrop-blur-md transition hover:bg-white/16">
+              <Link to="/ke-stazeni" className="premium-action inline-flex min-h-14 items-center gap-3 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-extrabold uppercase tracking-[.06em] text-white backdrop-blur-md transition hover:bg-white/[.16]">
                 <Download size={17} /> Brožury ke stažení
               </Link>
             </div>
@@ -106,7 +106,7 @@ export default function PremiumHomepage2026() {
                 ['SUPLA', 'chytré řízení'],
                 ['B2G', 'řešení pro města'],
               ].map(([value, label]) => (
-                <div key={value} className="rounded-2xl border border-white/12 bg-white/[.07] p-4 backdrop-blur-md">
+                <div key={value} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.07] p-4 backdrop-blur-md">
                   <strong className="block text-2xl font-black text-white">{value}</strong>
                   <span className="mt-1 block text-xs font-semibold leading-5 text-white/64">{label}</span>
                 </div>
@@ -132,24 +132,24 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#F4FBFF] py-18 lg:py-24" aria-labelledby="categories-premium-title">
-        <div className="mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
+      <section className="premium-section premium-pattern-light relative overflow-hidden bg-[#F4FBFF]" aria-labelledby="categories-premium-title">
+        <div className="premium-shell">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="mx-auto max-w-3xl text-center">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Řešení pro města a obce</p>
-            <h2 id="categories-premium-title" className="mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Kategorie mlžítek</h2>
+            <h2 id="categories-premium-title" className="premium-heading mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Kategorie mlžítek</h2>
             <p className="mt-4 text-base leading-7 text-slate-600">Přehledné rozdělení produktů podle prostoru, provozu a typu zážitku. Návštěvník má okamžitě poznat, jaký produkt si prohlíží a kam se hodí.</p>
           </motion.div>
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {categories.map((item, index) => {
               const Icon = item.icon;
               return (
-                <motion.div key={item.title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.08 }}>
-                  <Link to={item.link} className="group block overflow-hidden rounded-[2rem] border border-[#C7EAF6] bg-white shadow-[0_24px_80px_rgba(11,142,197,.12)] transition duration-500 hover:shadow-[0_32px_100px_rgba(11,142,197,.22)]">
+                <motion.div key={item.title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.08 }}>
+                  <Link to={item.link} className="premium-card-interactive group block overflow-hidden rounded-[2rem] border border-[#C7EAF6] bg-white shadow-[0_24px_80px_rgba(11,142,197,.12)] hover:shadow-[0_32px_100px_rgba(11,142,197,.22)]">
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <img src={item.image} alt={`${item.title} — MLŽIDLA.CZ`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                      <div className="absolute left-5 top-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-white/86 text-[#0B8EC5] shadow-lg backdrop-blur-sm">
+                      <div className="absolute left-5 top-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-white/[.86] text-[#0B8EC5] shadow-lg backdrop-blur-sm">
                         <Icon size={26} />
                       </div>
                     </div>
@@ -169,20 +169,20 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="bg-white py-18 lg:py-24" aria-labelledby="products-premium-title">
-        <div className="mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
-          <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <section className="premium-section bg-white" aria-labelledby="products-premium-title">
+        <div className="premium-shell">
+          <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Produkt musí být jasný na první pohled</p>
-              <h2 id="products-premium-title" className="mt-4 max-w-3xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Vybrané produkty pro hlavní stránku</h2>
+              <h2 id="products-premium-title" className="premium-heading mt-4 max-w-3xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Vybrané produkty pro hlavní stránku</h2>
             </div>
-            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0B8EC5] lg:self-auto">Celý katalog <ArrowRight size={16} /></Link>
+            <Link to="/mlzidla-mlzitka" className="premium-action inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto">Celý katalog <ArrowRight size={16} /></Link>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {productHighlights.map((product, index) => (
               <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
-                <Link to={product.link} className="group relative block overflow-hidden rounded-[1.6rem] bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
+                <Link to={product.link} className="premium-card-interactive group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/20 bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
                   <img src={product.image} alt={`${product.name} — ${product.label}`} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#07131D] via-[#07131D]/16 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-white">
@@ -197,25 +197,25 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#071A2F] py-18 text-white lg:py-24" aria-labelledby="smart-title">
+      <section className="premium-section premium-pattern-dark relative overflow-hidden bg-[#071A2F] text-white" aria-labelledby="smart-title">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)]" />
-        <div className="relative mx-auto grid max-w-[1540px] gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-12 xl:px-20">
+        <div className="premium-shell relative grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>
-            <h2 id="smart-title" className="mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
+            <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-white/68">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {smartPoints.map(({ icon: Icon, title, text }) => (
-                <div key={title} className="rounded-2xl border border-white/12 bg-white/[.06] p-4 backdrop-blur-md">
+                <motion.div key={title} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 320, damping: 24 }} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.06] p-4 backdrop-blur-md">
                   <Icon className="text-[#26C6E9]" size={24} />
                   <strong className="mt-4 block text-base">{title}</strong>
                   <p className="mt-2 text-xs leading-5 text-white/60">{text}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="rounded-[2rem] border border-white/12 bg-white/[.06] p-5 backdrop-blur-md">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-glass-card rounded-[2rem] border border-white/[.12] bg-white/[.06] p-5 backdrop-blur-md">
             <div className="rounded-[1.5rem] bg-[#06101B] p-5 shadow-2xl">
               <div className="mb-5 flex items-center justify-between">
                 <div>
@@ -234,17 +234,17 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="bg-[#F7FAFC] py-18 lg:py-24" aria-labelledby="planning-title">
-        <div className="mx-auto grid max-w-[1540px] gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_.74fr] lg:items-center lg:px-12 xl:px-20">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="relative overflow-hidden rounded-[2rem] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)]">
-            <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="aspect-[16/9] w-full object-cover opacity-72" loading="lazy" decoding="async" />
+      <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
+        <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/10 bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
+            <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
             <div className="absolute inset-0 p-6 sm:p-8 lg:p-10">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
-              <h2 id="planning-title" className="mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl">Zákresy a zaměření.</h2>
+              <h2 id="planning-title" className="premium-heading mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl">Zákresy a zaměření.</h2>
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/72 sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
               <div className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
-                {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="rounded-full border border-white/16 bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
+                {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="premium-glass-card rounded-full border border-white/[.16] bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
               </div>
             </div>
           </motion.div>
@@ -258,25 +258,25 @@ export default function PremiumHomepage2026() {
                 ['Dosah mlhy', 'Návrh zóny osvěžení podle pohybu lidí a charakteru plochy.'],
                 ['Doporučení produktu', 'Výběr mezi Linea, Bendy, Aura, Mrak, TeePee nebo mlžnou bránou.'],
               ].map(([title, text]) => (
-                <div key={title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div key={title} className="premium-card-interactive rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                   <strong className="text-base text-[#07131D]">{title}</strong>
                   <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
                 </div>
               ))}
             </div>
-            <Link to="/poptavka" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#26C6E9] px-6 py-4 text-sm font-extrabold text-[#04131F] transition hover:-translate-y-0.5 hover:bg-[#07131D] hover:text-white">Nechat zpracovat zákres <ArrowRight size={16} /></Link>
+            <Link to="/poptavka" className="premium-action mt-8 inline-flex items-center gap-2 rounded-full bg-[#26C6E9] px-6 py-4 text-sm font-extrabold text-[#04131F] transition hover:-translate-y-0.5 hover:bg-[#07131D] hover:text-white">Nechat zpracovat zákres <ArrowRight size={16} /></Link>
           </motion.div>
         </div>
       </section>
 
-      <section className="bg-white py-18 lg:py-24" aria-labelledby="eventy-title">
-        <div className="mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
-          <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <section className="premium-section bg-white" aria-labelledby="eventy-title">
+        <div className="premium-shell">
+          <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Sportoviště · eventy · parky</p>
-              <h2 id="eventy-title" className="mt-4 max-w-4xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Mlžítka pro horké dny, kde se lidé opravdu pohybují.</h2>
+              <h2 id="eventy-title" className="premium-heading mt-4 max-w-4xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Mlžítka pro horké dny, kde se lidé opravdu pohybují.</h2>
             </div>
-            <Link to="/poptavka" className="inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0B8EC5] lg:self-auto">Poptat řešení pro akci <ArrowRight size={16} /></Link>
+            <Link to="/poptavka" className="premium-action inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto">Poptat řešení pro akci <ArrowRight size={16} /></Link>
           </div>
 
           <div className="grid gap-5 lg:grid-cols-3">
@@ -285,7 +285,7 @@ export default function PremiumHomepage2026() {
               ['Městské parky', media.aura, 'AURA a tvarové prvky podporují setkávání a delší pobyt ve stínu zeleně.'],
               ['Slavnosti a eventy', media.steblo, 'Mobilní nebo dočasné osvěžení pro akce, trhy a letní program města.'],
             ].map(([title, image, text], index) => (
-              <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
+              <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="premium-card-interactive overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
                 <img src={image} alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="p-6">
                   <h3 className="font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{title}</h3>
@@ -297,14 +297,14 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="bg-[#F7FAFC] py-18 lg:py-24" aria-labelledby="kotveni-title">
-        <div className="mx-auto grid max-w-[1540px] gap-8 px-5 sm:px-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:px-12 xl:px-20">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
+      <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="kotveni-title">
+        <div className="premium-shell grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
             <img src={media.brochure} alt="Skryté kotvení mlžítek pro městské použití" className="w-full object-cover" loading="lazy" decoding="async" />
           </motion.div>
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Instalace a technické podklady</p>
-            <h2 id="kotveni-title" className="mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] text-[#07131D] sm:text-5xl">Skryté kotvení pro městské použití.</h2>
+            <h2 id="kotveni-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] text-[#07131D] sm:text-5xl">Skryté kotvení pro městské použití.</h2>
             <p className="mt-5 text-base leading-7 text-slate-600">Čistý vzhled, minimální vizuální zásah do prostoru a technické řešení připravené pro dlažbu, betonový základ i veřejný provoz.</p>
             <div className="mt-7 grid gap-3">
               {[
@@ -312,13 +312,13 @@ export default function PremiumHomepage2026() {
                 ['Krycí patka', 'Nenápadný detail pro čistý městský povrch.'],
                 ['Antivandal provedení', 'Nerezová konstrukce pro intenzivní veřejné užívání.'],
               ].map(([title, text]) => (
-                <div key={title} className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-4">
+                <div key={title} className="premium-card-interactive flex gap-4 rounded-2xl border border-slate-200 bg-white p-4">
                   <ShieldCheck className="mt-1 text-[#0B8EC5]" size={22} />
                   <p className="text-sm leading-6 text-slate-600"><strong className="block text-[#07131D]">{title}</strong>{text}</p>
                 </div>
               ))}
             </div>
-            <Link to="/ke-stazeni" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#07131D] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0B8EC5]"><Download size={17} /> Stáhnout brožury a manuály</Link>
+            <Link to="/ke-stazeni" className="premium-action mt-8 inline-flex items-center gap-2 rounded-full bg-[#07131D] px-6 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5]"><Download size={17} /> Stáhnout brožury a manuály</Link>
           </motion.div>
         </div>
       </section>

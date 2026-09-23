@@ -54,9 +54,10 @@ const FILTERS = [
   { id: 'sekvence', label: 'Sekvence', icon: Clapperboard },
 ];
 
-export default function BlogVideoShowcase() {
+export default function BlogVideoShowcase({ limit = null }) {
   const [filter, setFilter] = useState('all');
-  const visible = filter === 'all' ? VIDEOS : VIDEOS.filter(v => v.group === filter);
+  const filtered = filter === 'all' ? VIDEOS : VIDEOS.filter(v => v.group === filter);
+  const visible = limit ? filtered.slice(0, Math.max(1, limit)) : filtered;
   const hero = visible[0];
   const rest = visible.slice(1);
 
@@ -67,7 +68,7 @@ export default function BlogVideoShowcase() {
         <h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">Videa, živé ukázky a sekvence.</h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">Reálné instalace, produktové detaily, mlžné brány, výroba i krátké vizualizační sekvence. Videa zobrazujeme přímo bez automatického přehrávání, aby stránka zůstala rychlá i na mobilu.</p>
       </div>
-      <span className="font-mono text-xs uppercase tracking-[.16em] text-muted-foreground">{VIDEOS.length} videí</span>
+      <span className="font-mono text-xs uppercase tracking-[.16em] text-muted-foreground">{limit ? `${visible.length} vybraných videí` : `${VIDEOS.length} videí`}</span>
     </div>
 
     <div className="mt-6 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

@@ -66,8 +66,39 @@ export default function VisualizationAssetLibrary() {
     }
   };
 
-  const approve = (item) => patch(item, { approval_status: 'approved', approved_for_presentation: true });
-  const reject = (item) => patch(item, { approval_status: 'rejected', approved_for_presentation: false, is_primary_for_variant: false });
+  const approve = async (item) => {
+    setBusyId(item.id);
+    try {
+      await base44.entities.VisualizationAsset.update(item.id, { approval_status: 'approved', approved_for_presentation: true });
+      const existing = await base44.entities.MediaFile.filter({ file_url: item.image_url }).catch(() => []);
+      if (!existing?.length) {
+        await base44.entities.MediaFile.create({
+          file_url: item.image_url,
+          file_name: item.title || `${item.product_name || item.product_slug || 'MLŽIDLA'} — schválená vizualizace`,
+          file_type: 'image/visualization',
+          product_slug: item.product_slug || '',
+          media_group: item.product_name || 'VIZUALIZACE',
+          media_role: 'render',
+          sort_order: Date.now(),
+        });
+      }
+      setItems((current) => current.map((row) => row.id === item.id ? { ...row, approval_status: 'approved', approved_for_presentation: true } : row));
+    } finally {
+      setBusyId('');
+    }
+  };
+
+  const reject = async (item) => {
+    setBusyId(item.id);
+    try {
+      await base44.entities.VisualizationAsset.update(item.id, { approval_status: 'rejected', approved_for_presentation: false, is_primary_for_variant: false });
+      const publicCopies = await base44.entities.MediaFile.filter({ file_url: item.image_url }).catch(() => []);
+      await Promise.all((publicCopies || []).filter((row) => row.media_role === 'render').map((row) => base44.entities.MediaFile.delete(row.id)));
+      setItems((current) => current.map((row) => row.id === item.id ? { ...row, approval_status: 'rejected', approved_for_presentation: false, is_primary_for_variant: false } : row));
+    } finally {
+      setBusyId('');
+    }
+  };
   const toggleWeb = (item) => patch(item, { approved_for_presentation: !item.approved_for_presentation });
   const togglePrimary = async (item) => {
     const next = !item.is_primary_for_variant;

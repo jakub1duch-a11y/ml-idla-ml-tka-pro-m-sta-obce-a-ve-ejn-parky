@@ -26,7 +26,10 @@ const EXCLUDED_PATHS = [
   '/register',
   '/forgot-password',
   '/reset-password',
+  '/klientska-sekce',
   '/muj-projekt',
+  '/klient',
+  '/klient-prihlaseni',
   '/admin',
 ];
 
@@ -234,7 +237,7 @@ export default function ReturningVisitorEmailPopup() {
                   Ať vám neunikne to podstatné
                 </h2>
                 <p className="mt-4 text-sm leading-6 text-white/65">
-                  Vyberte si, které informace mají smysl právě pro váš projekt. Nastavení pak kdykoli změníte v portálu Můj projekt.
+                  Vyberte si, které informace mají smysl právě pro váš projekt. Váš výběr uložíme k přihlášenému účtu.
                 </p>
                 <div className="mt-6 space-y-3 text-xs leading-5 text-white/65">
                   <p className="flex gap-2"><CheckCircle2 size={15} className="mt-0.5 shrink-0 text-cyan" /> Jen vámi vybraná témata</p>
@@ -251,7 +254,7 @@ export default function ReturningVisitorEmailPopup() {
                     </div>
                     <h3 className="mt-5 text-xl font-semibold text-slate-950">Upozornění jsou nastavena</h3>
                     <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500">
-                      Budeme respektovat váš výběr. Preference můžete později změnit v portálu.
+                      Budeme respektovat váš výběr a zasílat pouze vámi zvolená témata.
                     </p>
                     <Link to="/muj-projekt#email-preferences" className="mt-5 text-sm font-semibold text-cyan-800 underline underline-offset-4">
                       Otevřít Můj projekt

@@ -99,7 +99,31 @@ export default function VisualizationAssetLibrary() {
       setBusyId('');
     }
   };
-  const toggleWeb = (item) => patch(item, { approved_for_presentation: !item.approved_for_presentation });
+  const toggleWeb = async (item) => {
+    const next = !item.approved_for_presentation;
+    setBusyId(item.id);
+    try {
+      await base44.entities.VisualizationAsset.update(item.id, { approved_for_presentation: next });
+      const publicCopies = await base44.entities.MediaFile.filter({ file_url: item.image_url }).catch(() => []);
+      if (next && !publicCopies?.length) {
+        await base44.entities.MediaFile.create({
+          file_url: item.image_url,
+          file_name: item.title || `${item.product_name || item.product_slug || 'MLŽIDLA'} — schválená vizualizace`,
+          file_type: 'image/visualization',
+          product_slug: item.product_slug || '',
+          media_group: item.product_name || 'VIZUALIZACE',
+          media_role: 'render',
+          sort_order: Date.now(),
+        });
+      }
+      if (!next) {
+        await Promise.all((publicCopies || []).filter((row) => row.media_role === 'render').map((row) => base44.entities.MediaFile.delete(row.id)));
+      }
+      setItems((current) => current.map((row) => row.id === item.id ? { ...row, approved_for_presentation: next } : row));
+    } finally {
+      setBusyId('');
+    }
+  };
   const togglePrimary = async (item) => {
     const next = !item.is_primary_for_variant;
     setBusyId(item.id);

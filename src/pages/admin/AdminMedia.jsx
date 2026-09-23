@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Loader, Upload } from 'lucide-react';
+import { Loader, Upload, FolderOpen, ShieldCheck, Sparkles } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import MediaGrid from '@/components/admin/media/MediaGrid';
+import VisualizationAssetLibrary from '@/components/admin/media/VisualizationAssetLibrary';
+import VisualizationStudio from '@/components/admin/VisualizationStudio';
 
 export default function AdminMedia() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [subtab, setSubtab] = useState('files');
+  const [products, setProducts] = useState([]);
   const inputRef = useRef(null);
 
   const load = () => {
@@ -14,7 +18,12 @@ export default function AdminMedia() {
     base44.entities.MediaFile.list('-created_date').then(setFiles).finally(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    base44.entities.Product.list('name', 300)
+      .then((rows) => setProducts((rows || []).filter((p) => p?.slug && !p.slug.startsWith('archived-') && p.slug !== 'mlzici-tryska')))
+      .catch(() => setProducts([]));
+  }, []);
 
   // Automatické přiřazení známých produktových videí podle názvu souboru.
   // Pokud název neznáme, soubor se bezpečně uloží jako NEZAŘAZENÉ a lze jej přiřadit ručně.
@@ -70,24 +79,44 @@ export default function AdminMedia() {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-white text-lg font-medium">Media knihovna ({files.length})</h2>
-          <p className="text-white/30 text-xs font-mono mt-1">Odkazy na soubory jsou dostupné z mlzidla.cz</p>
+    <div className="space-y-6 p-6">
+      <section className="rounded-3xl border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,.10),transparent_34%),rgba(255,255,255,.025)] p-5 sm:p-6">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[.2em] text-cyan">Web media control center</p>
+            <h2 className="mt-2 text-2xl font-medium tracking-tight text-white">Galerie médií a produktové vizualizace</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/40">Jedno místo pro nahrané fotografie a videa, AI vizualizace s PRODUCT LOCK a schválení toho, co se smí zobrazovat na webu nebo použít v marketingu.</p>
+          </div>
+          {subtab === 'files' && (
+            <label className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-mono cursor-pointer transition-all ${uploading ? 'bg-white/10 text-white/40' : 'bg-cyan text-ink hover:bg-cyan/90'}`}>
+              {uploading ? <Loader size={13} className="animate-spin" /> : <Upload size={13} />}
+              {uploading ? 'Nahrávám...' : 'Nahrát soubory'}
+              <input ref={inputRef} type="file" multiple accept="image/*,video/*,application/pdf" onChange={handleUpload} disabled={uploading} className="hidden" />
+            </label>
+          )}
         </div>
-        <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono cursor-pointer transition-all ${uploading ? 'bg-white/10 text-white/40' : 'bg-cyan text-ink hover:bg-cyan/90'}`}>
-          {uploading ? <Loader size={13} className="animate-spin" /> : <Upload size={13} />}
-          {uploading ? 'Nahrávám...' : 'Nahrát soubory'}
-          <input ref={inputRef} type="file" multiple accept="image/*,video/*,application/pdf" onChange={handleUpload} disabled={uploading} className="hidden" />
-        </label>
+      </section>
+
+      <div className="grid gap-3 md:grid-cols-3">
+        {[
+          ['files', 'Nahraná média', 'Fotografie, video a dokumenty', FolderOpen],
+          ['visuals', 'Schvalovací galerie', 'AI vizualizace pro web a marketing', ShieldCheck],
+          ['generate', 'Generovat vizualizaci', 'MASTER reference + PRODUCT LOCK', Sparkles],
+        ].map(([id, label, sub, Icon]) => {
+          const active = subtab === id;
+          return <button key={id} onClick={() => setSubtab(id)} className={`rounded-2xl border p-4 text-left transition ${active ? 'border-cyan/30 bg-cyan/10' : 'border-white/8 bg-white/[.025] hover:border-white/15'}`}>
+            <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-cyan text-ink' : 'bg-white/5 text-white/40'}`}><Icon size={16}/></div>
+            <p className={`mt-3 text-sm font-semibold ${active ? 'text-white' : 'text-white/65'}`}>{label}</p>
+            <p className="mt-1 text-xs text-white/30">{sub}</p>
+          </button>;
+        })}
       </div>
 
-      {loading ? (
-        <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div>
-      ) : (
-        <MediaGrid files={files} onDelete={handleDelete} />
+      {subtab === 'files' && (
+        loading ? <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div> : <MediaGrid files={files} onDelete={handleDelete} />
       )}
+      {subtab === 'visuals' && <VisualizationAssetLibrary />}
+      {subtab === 'generate' && <VisualizationStudio products={products} />}
     </div>
   );
 }

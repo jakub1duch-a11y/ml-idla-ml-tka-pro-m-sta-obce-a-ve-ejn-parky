@@ -23,26 +23,26 @@ export default function PdClosingCta({ product }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/85 to-[#0A1628]/70" />
         <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-7 lg:px-10">
-          <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#22D3EE]">// Poptávka</p>
+          <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#22D3EE]">Projektová konzultace</p>
           <h2 className="mt-4 font-heading text-3xl font-bold leading-tight tracking-[-.02em] text-white lg:text-5xl">
-            Poptat řešení pro váš prostor
+            Získejte návrh a cenu pro váš prostor
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/60">
-            Pro {product.name} připravíme doporučení, vizualizaci v prostoru a nezávaznou cenovou nabídku.
+            Pro {product.name} připravíme návrh umístění, vhodnou konfiguraci, vizualizaci a cenovou nabídku podle konkrétního místa a způsobu provozu.
           </p>
-          <p className="mt-5 font-heading text-xl italic text-[#9BE8F2]">Dobře dýchat.</p>
+          <p className="mt-5 text-sm font-medium text-[#9BE8F2]">Stačí poslat fotografii, adresu nebo projektovou situaci.</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to={`/poptavka?produkt=${product.slug}`}
               className="btn-brand-primary-dark"
             >
-              Poptat produkt <ArrowRight size={16} />
+              Získat návrh a cenu <ArrowRight size={16} />
             </Link>
             <Link
               to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
               className="btn-brand-outline-dark"
             >
-              Chci vizualizaci ve svém prostoru
+              Vizualizovat v mém prostoru
             </Link>
           </div>
         </div>

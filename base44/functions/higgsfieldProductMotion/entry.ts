@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { config, higgsfield } from 'npm:@higgsfield/client/v2';
 
-const MODEL_ID = 'bytedance/seedance-2.0/image-to-video';
+const MODEL_ID = 'bytedance/seedance-2.0/reference-to-video';
 const DEFAULT_DURATION = 5;
 const DEFAULT_RESOLUTION = '720p';
 
@@ -23,6 +23,10 @@ function clampDuration(value) {
 
 function safeResolution(value) {
   return ['480p', '720p', '1080p', '4k'].includes(value) ? value : DEFAULT_RESOLUTION;
+}
+
+function safeAspectRatio(value) {
+  return ['16:9', '4:3', '1:1', '3:4', '9:16', '21:9'].includes(value) ? value : '16:9';
 }
 
 function buildPrompt(product, customPrompt = '') {
@@ -81,6 +85,7 @@ Deno.serve(async (req) => {
 
     const duration = clampDuration(body.duration);
     const resolution = safeResolution(String(body.resolution || DEFAULT_RESOLUTION));
+    const aspectRatio = safeAspectRatio(String(body.aspectRatio || '16:9'));
     const prompt = buildPrompt(product, body.prompt);
 
     config({ credentials });
@@ -90,9 +95,10 @@ Deno.serve(async (req) => {
       {
         input: {
           prompt,
-          image_url: product.visual_master_reference_url,
+          image_urls: [product.visual_master_reference_url],
           duration,
           resolution,
+          aspect_ratio: aspectRatio,
           generate_audio: false,
         },
         withPolling: true,
@@ -109,7 +115,7 @@ Deno.serve(async (req) => {
         name: product.name,
         master_reference: product.visual_master_reference_url,
       },
-      settings: { duration, resolution, generate_audio: false },
+      settings: { duration, resolution, aspect_ratio: aspectRatio, generate_audio: false },
       result,
       review_required: true,
       review_note: 'Generated media must be checked against the MASTER reference before publication.',

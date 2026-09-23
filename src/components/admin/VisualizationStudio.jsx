@@ -45,7 +45,6 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
 
   const masterReference = useMemo(() => getMasterReference(selectedProductObj || {}), [selectedProductObj]);
   const masterVerified = Boolean(selectedProductObj?.visual_master_verified || selectedProductObj?.hero_visual_verified);
-  const higgsfieldReady = Boolean(selectedProductObj?.visual_master_verified && selectedProductObj?.visual_master_reference_url);
   const allowedEnvironments = useMemo(() => getAllowedEnvironmentValues(selectedProductObj || {}), [selectedProductObj]);
 
   useEffect(() => {
@@ -106,22 +105,13 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
         if (!res?.url) throw new Error('Generátor nevrátil obrázek.');
         setResult({ type: 'image', url: res.url, fullPrompt, references, guard });
       } else {
-        if (!higgsfieldReady) {
-          throw new Error('Higgsfield video vyžaduje ověřenou visual_master_reference_url.');
-        }
-        const videoRes = await generateHiggsfieldProductMotion({
-          productSlug: selectedProductObj.slug,
-          prompt: `${scene} Kamera se pohybuje pomalu a klidně; produkt zůstává po celou dobu geometricky identický s MASTER referencí.`,
-          duration: 5,
-          resolution: '720p',
-          aspectRatio: aspect,
+        const videoRes = await base44.integrations.Core.GenerateVideo({
+          prompt: `${fullPrompt} Kamera se pohybuje pomalu a klidně. Produkt po celou dobu zachovává stejnou geometrii a počet konstrukčních prvků.`,
+          aspect_ratio: aspect,
+          generate_audio: false,
         });
-        const videoPayload = videoRes?.result || videoRes;
-        const videoUrl = typeof videoPayload?.video === 'string'
-          ? videoPayload.video
-          : videoPayload?.video?.url || videoPayload?.url || videoPayload?.output?.url || '';
-        if (!videoUrl) throw new Error('Higgsfield nevrátil URL videa.');
-        setResult({ type: 'video', url: videoUrl, fullPrompt, references, guard, provider: 'Higgsfield' });
+        if (!videoRes?.url) throw new Error('Generátor nevrátil video.');
+        setResult({ type: 'video', url: videoRes.url, fullPrompt, references, guard });
       }
     } catch (err) {
       setError(err?.response?.data?.error || err?.message || 'Generování selhalo.');
@@ -242,7 +232,7 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
 
         <button onClick={generate} disabled={busy || !selectedProductObj || !masterReference} className="inline-flex items-center gap-2 rounded-xl bg-cyan px-5 py-2.5 text-sm font-bold text-ink transition-all hover:bg-cyan/90 disabled:opacity-40">
           {busy ? <Loader size={15} className="animate-spin"/> : <Sparkles size={15}/>}
-          {busy ? 'Generuji s PRODUCT LOCK…' : mode === 'image' ? 'Generovat přesnou vizualizaci' : 'Generovat video · Higgsfield'}
+          {busy ? 'Generuji s PRODUCT LOCK…' : mode === 'image' ? 'Generovat přesnou vizualizaci' : 'Generovat video'}
         </button>
 
         {error && <div className="flex items-center gap-2 rounded-lg border border-rose-400/20 bg-rose-400/10 px-3 py-2 text-xs text-rose-400"><X size={12}/> {error}</div>}

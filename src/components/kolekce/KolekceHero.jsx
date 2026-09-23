@@ -24,21 +24,21 @@ export default function KolekceHero() {
     <div className="absolute inset-0 bg-gradient-to-r from-[#07131D] via-[#07131D]/80 to-[#07131D]/20" />
     <div className="absolute inset-0 bg-gradient-to-t from-[#07131D] via-transparent to-[#07131D]/20" />
     <HeroAtmosphere />
-    <div className="hero-catalog-content">
+    <motion.div className="hero-catalog-content" initial={reduced ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduced ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}>
       <p className="!text-xs font-mono uppercase tracking-[.2em] !text-[#7AE1EF]">Katalog MLŽIDLA® · Česká výroba</p>
       <h1 className="mt-5">Najděte tvar.<br />Proměňte atmosféru.</h1>
       <p className="mt-6">Mlžítka a mlžné brány pro města, parky i zahrady. Prohlédněte si jednotlivé produkty a představte si jemnou mlhu ve svém prostoru.</p>
       <div className="mt-8 flex flex-wrap gap-3">
-        <a href="#catalog" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-[#7AE1EF] px-6 py-3 text-sm font-bold text-[#07131D]">
+        <a href="#catalog" className="catalog-sweep inline-flex min-h-12 items-center gap-3 rounded-full bg-[#7AE1EF] px-6 py-3 text-sm font-bold text-[#07131D] shadow-[0_16px_45px_rgba(122,225,239,.18)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(122,225,239,.28)]">
           Vybrat mlžítko <ArrowRight size={17} aria-hidden="true" />
         </a>
-        <Link to={scene.href} className="inline-flex min-h-12 items-center gap-3 rounded-full border border-white/40 bg-black/20 px-6 py-3 text-sm font-semibold text-white">
+        <Link to={scene.href} className="catalog-sweep inline-flex min-h-12 items-center gap-3 rounded-full border border-white/30 bg-white/[.08] px-6 py-3 text-sm font-semibold text-white shadow-lg backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/[.14]">
           {selected === 2 ? 'Řešení pro města' : 'Prohlédnout ' + scene.name} <ArrowRight size={17} aria-hidden="true" />
         </Link>
       </div>
       <div className="hero-scene-nav" aria-label="Scéna katalogu">
-        {SCENES.map((item, index) => <button key={item.name} type="button" aria-pressed={selected === index} onClick={() => setSelected(index)}>{item.name}</button>)}
+        {SCENES.map((item, index) => <motion.button key={item.name} type="button" aria-pressed={selected === index} onClick={() => setSelected(index)} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.96 }}>{item.name}</motion.button>)}
       </div>
-    </div>
+    </motion.div>
   </section>;
 }

@@ -1,5 +1,6 @@
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Ruler, MapPin, Layers3 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -81,11 +82,12 @@ const getFamily = (product) => {
 };
 
 function ProductCard({ product }) {
+  const reduced = useReducedMotion();
   const type = getType(product);
   const family = getFamily(product);
   const variants = [];
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/40 hover:shadow-xl">
+    <motion.article whileHover={reduced ? undefined : { y: -6 }} whileTap={reduced ? undefined : { scale: 0.992 }} transition={{ type: "spring", stiffness: 280, damping: 24 }} className="catalog-glass-card group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white/[.92] shadow-[0_18px_60px_rgba(7,19,29,.07)] backdrop-blur-xl">
       <Link to={`/produkt/${product.slug}`} className="block">
       <div className="relative bg-[linear-gradient(180deg,#fafbfb_0%,#eef1f2_100%)] p-3 sm:p-4">
         <div className="overflow-hidden rounded-2xl border border-white/80 bg-white shadow-[0_8px_24px_rgba(15,23,42,.045)]">
@@ -103,9 +105,9 @@ function ProductCard({ product }) {
         <h3 className="mt-2 min-h-[3.6rem] line-clamp-2 font-heading text-2xl leading-[1.2] text-foreground">{product.name}</h3>
         <p className="mt-3 min-h-[2.75rem] line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
         {variants.length > 0 && <div className="mt-5 border-t border-slate-100 pt-4"><p className="mb-2 font-mono text-[9px] font-semibold uppercase tracking-[.15em] text-slate-400">Rychlá volba varianty</p><div className="flex flex-wrap gap-2">{variants.map((variant) => <Link key={variant.href} to={variant.href} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-600 transition hover:border-[#0b4860]/30 hover:bg-[#0b4860]/5 hover:text-[#0b4860]">{variant.label}</Link>)}</div></div>}
-        <Link to={`/produkt/${product.slug}`} className="btn-secondary-outline mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground transition-colors group-hover:border-secondary group-hover:text-secondary">Detail produktu <ArrowRight size={15} /></Link>
+        <Link to={`/produkt/${product.slug}`} className="catalog-sweep btn-secondary-outline mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground transition-colors group-hover:border-secondary group-hover:text-secondary">Detail produktu <ArrowRight size={15} /></Link>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -140,14 +142,14 @@ export default function CollectionProductGrid({ collection }) {
   if (!products.length && !variantCards.length) return null;
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+    <section className="catalog-pattern relative mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-28">
       <div className="mb-10 flex items-end justify-between gap-5">
         <div>
           <p className="font-mono text-[11px] tracking-[.18em] uppercase text-secondary">Produkty kolekce</p>
           <h2 className="mt-3 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">{collection.name}</h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">Přehled samostatných produktů kolekce. Každý produkt má vlastní detail, technické informace a možnost poptávky.</p>
         </div>
-        <Link to="/mlzidla-mlzitka" className="btn-secondary-outline hidden rounded-full px-6 py-3 text-sm font-semibold text-foreground sm:inline-flex">Celý katalog <ArrowRight size={15} /></Link>
+        <Link to="/mlzidla-mlzitka" className="catalog-sweep btn-secondary-outline hidden rounded-full px-6 py-3 text-sm font-semibold text-foreground sm:inline-flex">Celý katalog <ArrowRight size={15} /></Link>
       </div>
 
       {products.length > 0 && <ProductExperience products={products}>
@@ -170,7 +172,7 @@ export default function CollectionProductGrid({ collection }) {
         </div>
       </div>}
 
-      <div className="mt-7 sm:hidden"><Link to="/mlzidla-mlzitka" className="btn-secondary-outline inline-flex rounded-full px-6 py-3 text-sm font-semibold text-foreground">Celý katalog <ArrowRight size={15} /></Link></div>
+      <div className="mt-7 sm:hidden"><Link to="/mlzidla-mlzitka" className="catalog-sweep btn-secondary-outline inline-flex rounded-full px-6 py-3 text-sm font-semibold text-foreground">Celý katalog <ArrowRight size={15} /></Link></div>
     </section>
   );
 }

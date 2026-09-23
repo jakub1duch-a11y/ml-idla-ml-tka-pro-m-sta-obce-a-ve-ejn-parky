@@ -115,7 +115,12 @@ Deno.serve(async (req) => {
         name: product.name,
         master_reference: product.visual_master_reference_url,
       },
-      settings: { duration, resolution, aspect_ratio: aspectRatio, generate_audio: false },
+      settings: {
+        duration,
+        resolution,
+        aspect_ratio: aspectRatio,
+        generate_audio: false,
+      },
       result,
       review_required: true,
       review_note: 'Generated media must be checked against the MASTER reference before publication.',

@@ -114,14 +114,14 @@ export default function ProductPhotoGallery() {
       <div className="my-8 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2" aria-label="Filtrovat média">
         {FILTERS.map(label => <button type="button" key={label} aria-pressed={filter === label} onClick={() => setFilter(label)} className={`min-h-11 shrink-0 snap-start rounded-full border px-5 text-sm font-semibold transition-colors ${filter === label ? 'border-cyan-300 bg-cyan-300 text-slate-950' : 'border-white/30 text-white hover:bg-white/10'}`}>{label}</button>)}
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map(item => <article key={item.url} className="group overflow-hidden rounded-2xl border border-white/15 bg-white/5">
-          <div className="relative aspect-[4/3] overflow-hidden bg-black/20">
-            {item.tag === 'Videa' ? <video src={item.url} poster={item.poster} controls playsInline preload="none" aria-label={item.title} className="h-full w-full object-contain"/> :
-            <Link to={item.href} aria-label={item.title}><img src={item.url} alt={item.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03] motion-reduce:transition-none"/></Link>}
+      <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, index) => <article key={`${item.url}-${index}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/5">
+          <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/20">
+            {item.tag === 'Videa' ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" aria-label={item.title} className="h-full w-full object-cover object-center"/> :
+            <Link to={item.href} aria-label={item.title} className="block h-full w-full"><img src={item.url} alt={item.title} loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-reduce:transition-none"/></Link>}
             {item.tag !== 'Videa' && <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-slate-950/85 px-3 py-1.5 text-xs text-white">{item.badge}</span>}
           </div>
-          <div className="flex flex-col gap-3 p-5"><Link to={item.href} className="flex items-start justify-between gap-3 text-white hover:text-cyan-200"><h3 className="text-lg font-semibold leading-tight">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0"/></Link><p className="text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p><Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 hover:text-white">Navrhnout řešení <ArrowRight size={14}/></Link></div>
+          <div className="flex flex-1 flex-col gap-3 p-5"><Link to={item.href} className="flex items-start justify-between gap-3 text-white hover:text-cyan-200"><h3 className="text-lg font-semibold leading-tight">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0"/></Link><p className="flex-1 text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p><Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 hover:text-white">Navrhnout řešení <ArrowRight size={14}/></Link></div>
         </article>)}
       </div>
     </div>

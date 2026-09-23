@@ -1,0 +1,264 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import {
+  ArrowRight,
+  Download,
+  Droplets,
+  Gauge,
+  Landmark,
+  Leaf,
+  Play,
+  ShieldCheck,
+  Sparkles,
+  Timer,
+  Wifi,
+} from 'lucide-react';
+
+const media = {
+  cityHero: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg',
+  bendy: '/media/optimized/31478e4b3_bendymlzitko02.webp',
+  aura: '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
+  mrak: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
+  gate: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
+  linea: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg',
+  steblo: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+  brochure: '/media/optimized/874fb533f_kotveniproduktu.webp',
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const categories = [
+  {
+    title: 'Sloupková mlžítka',
+    subtitle: 'Linea, Stéblo, Bendy',
+    text: 'Elegantní vertikální a organické prvky pro parky, promenády, náměstí a pobytové zóny.',
+    icon: Landmark,
+    image: media.linea,
+    link: '/mlzidla-mlzitka#catalog',
+  },
+  {
+    title: 'Mlžné brány a oblouky',
+    subtitle: 'Gate, Linea CE, Bendy Gate',
+    text: 'Průchozí nerezové brány, které vytváří okamžitý pocit osvěžení na frekventovaných místech.',
+    icon: Droplets,
+    image: media.gate,
+    link: '/mlzne-brany',
+  },
+  {
+    title: 'Ateliérové prvky',
+    subtitle: 'Aura, Mrak, TeePee, Spirála',
+    text: 'Výrazné designové tvary pro místa setkávání, hřiště, eventy a reprezentativní veřejný prostor.',
+    icon: Sparkles,
+    image: media.aura,
+    link: '/mlzidla-mlzitka#creative',
+  },
+];
+
+const productHighlights = [
+  { name: 'AURA', label: 'kruhové mlžení', image: media.aura, link: '/produkt/aura-mlzitko' },
+  { name: 'BENDY', label: 'měkká organická linie', image: media.bendy, link: '/produkt/mlzitko-bendy' },
+  { name: 'LINEA', label: 'čistý sloupový prvek', image: media.linea, link: '/produkt/linea-mlzitko' },
+  { name: 'MRAK', label: 'mlžný prvek pro děti', image: media.mrak, link: '/produkt/mlzitko-mrak' },
+  { name: 'STÉBLO', label: 'přírodní inspirace', image: media.steblo, link: '/produkt/mlzitko-steblo' },
+];
+
+const smartPoints = [
+  { icon: Gauge, title: 'Podle teploty', text: 'Mlžení se spustí při nastavených venkovních podmínkách.' },
+  { icon: Timer, title: 'Podle času', text: 'Provozní okna pro ráno, odpoledne, akci nebo víkend.' },
+  { icon: Wifi, title: 'Z aplikace', text: 'Vzdálené zapnutí, vypnutí a přehled provozu přes SUPLA.' },
+];
+
+export default function PremiumHomepage2026() {
+  return (
+    <div className="premium-homepage-2026 bg-white text-[#07131D]">
+      <section className="relative overflow-hidden bg-[#07131D] text-white" aria-labelledby="premium-hero-title">
+        <div className="absolute inset-0">
+          <img src={media.cityHero} alt="Mlžné instalace ve veřejném prostoru" className="h-full w-full object-cover" loading="eager" decoding="async" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_36%,rgba(38,198,233,.18),transparent_34%),linear-gradient(90deg,rgba(5,13,22,.88),rgba(5,13,22,.58)_45%,rgba(5,13,22,.1))]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07131D] to-transparent" />
+        </div>
+
+        <div className="relative mx-auto grid min-h-[86svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_.82fr] lg:px-12 xl:px-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="max-w-3xl">
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Chladnější města · spokojenější lidé</p>
+            <h1 id="premium-hero-title" className="mt-6 font-heading text-5xl font-black leading-[.98] tracking-[-.06em] text-white sm:text-6xl lg:text-7xl xl:text-8xl">
+              Mlžné instalace, které <span className="text-[#26C6E9]">mění města.</span>
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">
+              Designová nerezová mlžítka pro náměstí, parky, sportoviště, školy, eventy i rezidenční zahrady. Voda, architektura a chytré řízení v jednom řešení.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to="/mlzidla-mlzitka" className="inline-flex min-h-14 items-center gap-3 rounded-full bg-[#26C6E9] px-7 py-4 text-sm font-extrabold uppercase tracking-[.06em] text-[#04131F] shadow-[0_22px_60px_rgba(38,198,233,.35)] transition hover:-translate-y-0.5 hover:bg-white">
+                Prohlédnout produkty <ArrowRight size={17} />
+              </Link>
+              <Link to="/ke-stazeni" className="inline-flex min-h-14 items-center gap-3 rounded-full border border-white/20 bg-white/10 px-7 py-4 text-sm font-extrabold uppercase tracking-[.06em] text-white backdrop-blur-md transition hover:bg-white/16">
+                <Download size={17} /> Brožury ke stažení
+              </Link>
+            </div>
+            <div className="mt-10 grid gap-3 sm:grid-cols-4">
+              {[
+                ['5–10 °C', 'pocitově příjemnější zóna'],
+                ['AISI', 'nerezová konstrukce'],
+                ['SUPLA', 'chytré řízení'],
+                ['B2G', 'řešení pro města'],
+              ].map(([value, label]) => (
+                <div key={value} className="rounded-2xl border border-white/12 bg-white/[.07] p-4 backdrop-blur-md">
+                  <strong className="block text-2xl font-black text-white">{value}</strong>
+                  <span className="mt-1 block text-xs font-semibold leading-5 text-white/64">{label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="hidden lg:block">
+            <div className="relative rounded-[2.4rem] border border-white/14 bg-black/22 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)]">
+              <div className="relative overflow-hidden rounded-[1.8rem] bg-[#0B2034]">
+                <img src={media.gate} alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
+                <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/12 px-4 py-3 text-sm font-bold backdrop-blur-md">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07131D]"><Play size={16} fill="currentColor" /></span>
+                  Přehrát video
+                </button>
+              </div>
+              <div className="absolute -right-5 top-8 rounded-2xl border border-[#26C6E9]/35 bg-[#07131D]/80 px-5 py-4 text-sm font-bold text-white shadow-2xl backdrop-blur-md">
+                Chladnější města<br /><span className="text-[#26C6E9]">pro lepší zítřky</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-[#F4FBFF] py-18 lg:py-24" aria-labelledby="categories-premium-title">
+        <div className="mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Řešení pro města a obce</p>
+            <h2 id="categories-premium-title" className="mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Kategorie mlžítek</h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">Přehledné rozdělení produktů podle prostoru, provozu a typu zážitku. Návštěvník má okamžitě poznat, jaký produkt si prohlíží a kam se hodí.</p>
+          </motion.div>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            {categories.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div key={item.title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.08 }}>
+                  <Link to={item.link} className="group block overflow-hidden rounded-[2rem] border border-[#C7EAF6] bg-white shadow-[0_24px_80px_rgba(11,142,197,.12)] transition duration-500 hover:shadow-[0_32px_100px_rgba(11,142,197,.22)]">
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <img src={item.image} alt={`${item.title} — MLŽIDLA.CZ`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                      <div className="absolute left-5 top-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-white/86 text-[#0B8EC5] shadow-lg backdrop-blur-sm">
+                        <Icon size={26} />
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#0B8EC5]">{item.subtitle}</p>
+                      <h3 className="mt-2 font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{item.title}</h3>
+                      <p className="mt-3 min-h-[72px] text-sm leading-6 text-slate-600">{item.text}</p>
+                      <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#E7F8FE] px-4 py-3 text-sm font-extrabold text-[#086F9D] transition group-hover:bg-[#26C6E9] group-hover:text-[#04131F]">
+                        Zobrazit kategorii <ArrowRight size={15} />
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-18 lg:py-24" aria-labelledby="products-premium-title">
+        <div className="mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
+          <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Produkt musí být jasný na první pohled</p>
+              <h2 id="products-premium-title" className="mt-4 max-w-3xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Vybrané produkty pro hlavní stránku</h2>
+            </div>
+            <Link to="/mlzidla-mlzitka" className="inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0B8EC5] lg:self-auto">Celý katalog <ArrowRight size={16} /></Link>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {productHighlights.map((product, index) => (
+              <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
+                <Link to={product.link} className="group relative block overflow-hidden rounded-[1.6rem] bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
+                  <img src={product.image} alt={`${product.name} — ${product.label}`} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07131D] via-[#07131D]/16 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                    <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#26C6E9]">Produkt</p>
+                    <h3 className="mt-1 font-heading text-3xl font-black tracking-[-.055em]">{product.name}</h3>
+                    <p className="mt-1 text-sm font-semibold text-white/76">{product.label}</p>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-[#071A2F] py-18 text-white lg:py-24" aria-labelledby="smart-title">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)]" />
+        <div className="relative mx-auto grid max-w-[1540px] gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-12 xl:px-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>
+            <h2 id="smart-title" className="mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/68">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {smartPoints.map(({ icon: Icon, title, text }) => (
+                <div key={title} className="rounded-2xl border border-white/12 bg-white/[.06] p-4 backdrop-blur-md">
+                  <Icon className="text-[#26C6E9]" size={24} />
+                  <strong className="mt-4 block text-base">{title}</strong>
+                  <p className="mt-2 text-xs leading-5 text-white/60">{text}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="rounded-[2rem] border border-white/12 bg-white/[.06] p-5 backdrop-blur-md">
+            <div className="rounded-[1.5rem] bg-[#06101B] p-5 shadow-2xl">
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[.18em] text-[#26C6E9]">Přehled provozu</p>
+                  <h3 className="mt-1 font-heading text-2xl font-black">Mlžítko aktivní</h3>
+                </div>
+                <span className="rounded-full bg-emerald-400/18 px-4 py-2 text-xs font-bold text-emerald-200">Zapnuto</span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/56">Aktuálně</p><strong className="mt-2 block text-4xl">28 °C</strong><span className="text-xs text-[#26C6E9]">ideální podmínky pro mlžení</span></div>
+                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/56">Spotřeba dnes</p><strong className="mt-2 block text-4xl">124 l</strong><span className="text-xs text-emerald-200">úsporný režim</span></div>
+                <div className="rounded-2xl bg-white/[.07] p-5 sm:col-span-2"><p className="text-sm text-white/56">Scénáře</p><div className="mt-3 grid gap-2 sm:grid-cols-3"><span className="rounded-full bg-[#26C6E9]/18 px-3 py-2 text-xs font-bold text-[#A8EFFF]">Park</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Hřiště</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Event</span></div></div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-[#F7FAFC] py-18 lg:py-24" aria-labelledby="kotveni-title">
+        <div className="mx-auto grid max-w-[1540px] gap-8 px-5 sm:px-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:px-12 xl:px-20">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
+            <img src={media.brochure} alt="Skryté kotvení mlžítek pro městské použití" className="w-full object-cover" loading="lazy" decoding="async" />
+          </motion.div>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Instalace a technické podklady</p>
+            <h2 id="kotveni-title" className="mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] text-[#07131D] sm:text-5xl">Skryté kotvení pro městské použití.</h2>
+            <p className="mt-5 text-base leading-7 text-slate-600">Čistý vzhled, minimální vizuální zásah do prostoru a technické řešení připravené pro dlažbu, betonový základ i veřejný provoz.</p>
+            <div className="mt-7 grid gap-3">
+              {[
+                ['Přívod vody', 'Vedení pod povrchem přímo k tělu mlžítka.'],
+                ['Krycí patka', 'Nenápadný detail pro čistý městský povrch.'],
+                ['Antivandal provedení', 'Nerezová konstrukce pro intenzivní veřejné užívání.'],
+              ].map(([title, text]) => (
+                <div key={title} className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-4">
+                  <ShieldCheck className="mt-1 text-[#0B8EC5]" size={22} />
+                  <p className="text-sm leading-6 text-slate-600"><strong className="block text-[#07131D]">{title}</strong>{text}</p>
+                </div>
+              ))}
+            </div>
+            <Link to="/ke-stazeni" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#07131D] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#0B8EC5]"><Download size={17} /> Stáhnout brožury a manuály</Link>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+}

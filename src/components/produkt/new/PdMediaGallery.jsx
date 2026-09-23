@@ -25,6 +25,7 @@ const clean = (items) => [...new Map(items.filter((x) => x?.url).map((x) => [x.u
 const mediaUrl = (url) => (url && !isVideo(url) ? getOptimizedMediaUrl(url) : url);
 const mediaCaption = (item) => item.caption || (
   item.badge === 'Studio' ? 'Studiový náhled produktu' :
+  item.badge === 'Schváleno' ? 'Schválená vizualizace umístění' :
   item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Vizualizace umístění' :
   item.badge === 'Realizace' ? 'Fotografie z realizace' :
   item.badge === 'Video' || item.badge === 'Hero video' ? 'Video ukázka' :
@@ -98,6 +99,7 @@ function MediaCard({ item, onOpen, productName }) {
 
 export default function PdMediaGallery({ product }) {
   const [realizations, setRealizations] = useState([]);
+  const [approvedVisualizations, setApprovedVisualizations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('photos');
   const [lightbox, setLightbox] = useState(null);
@@ -110,11 +112,15 @@ export default function PdMediaGallery({ product }) {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    base44.entities.Realizace.filter({ published: true }, '-year', 100)
-      .then((items) => {
-        if (!cancelled) setRealizations((items || []).filter((r) => matchesProduct(r, product)));
+    Promise.all([
+      base44.entities.Realizace.filter({ published: true }, '-year', 100).catch(() => []),
+      base44.entities.VisualizationAsset.filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 100).catch(() => []),
+    ])
+      .then(([realizationItems, visualItems]) => {
+        if (cancelled) return;
+        setRealizations((realizationItems || []).filter((r) => matchesProduct(r, product)));
+        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url));
       })
-      .catch(() => { if (!cancelled) setRealizations([]); })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [product.id, product.name, product.slug]);
@@ -144,7 +150,19 @@ export default function PdMediaGallery({ product }) {
       ...(r.gallery_urls || []).filter((u) => u && !isVideo(u)).map((url) => ({ type: 'image', url: mediaUrl(url), alt: `${product.name} — fotografie z realizace`, caption: 'Fotografie z realizace', title: 'Fotografie z realizace', meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' })),
     ]));
 
-    const visualizations = clean([...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
+    const approvedAdminVisuals = [...approvedVisualizations]
+      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .map((item) => ({
+        type: 'image',
+        url: mediaUrl(item.thumbnail_url || item.image_url),
+        alt: `${product.name} — schválená vizualizace ${item.configuration || 'umístění'}`,
+        caption: item.is_primary_for_variant ? 'Schválená hlavní vizualizace' : 'Schválená vizualizace umístění',
+        title: item.title || 'Schválená vizualizace',
+        meta: [item.environment, item.configuration, item.quantity ? `${item.quantity} ks` : ''].filter(Boolean).join(' · '),
+        badge: 'Schváleno',
+      }));
+
+    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
       r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Vizualizace' },
       r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Návrh' },
     ])]);
@@ -162,7 +180,7 @@ export default function PdMediaGallery({ product }) {
       visualizations,
       videos,
     };
-  }, [product, realizations]);
+  }, [product, realizations, approvedVisualizations]);
 
   const hasGardenTest = groups.photos.some((item) => item.badge === 'Reálné testování');
   const tabs = [

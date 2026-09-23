@@ -22,6 +22,7 @@ import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
 import { getLine, getFamily } from '@/lib/productFamilies';
 import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
+import { base44 } from '@/api/base44Client';
 
 function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
@@ -42,6 +43,7 @@ function getHeroIntro(product, detailConfig) {
 export default function PdHero({ product }) {
   const [lightbox, setLightbox] = useState(null);
   const [active, setActive] = useState(0);
+  const [approvedVisuals, setApprovedVisuals] = useState([]);
   const isBendy = BENDY_SLUGS.includes(product.slug);
   const detailConfig = getProductDetailConfig(product);
   const family = getFamily(product);
@@ -52,12 +54,33 @@ export default function PdHero({ product }) {
   const hasVerifiedComposite = Boolean(product.hero_visual_verified && heroBackground && heroProduct);
   const heroProductIsPhoto = Boolean(heroProduct && /\.(jpe?g|webp|png)(\?|#|$)/i.test(heroProduct));
 
+  useEffect(() => {
+    let activeRequest = true;
+    base44.entities.VisualizationAsset
+      .filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 60)
+      .then((items = []) => {
+        if (!activeRequest) return;
+        setApprovedVisuals((items || []).filter((item) => item?.image_url));
+      })
+      .catch(() => { if (activeRequest) setApprovedVisuals([]); });
+    return () => { activeRequest = false; };
+  }, [product.slug]);
+
   const media = useMemo(() => {
     const resolvedVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
     const ownVideo = resolvedVideo && isVideo(resolvedVideo)
       ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení prostoru` }]
       : [];
+    const approvedItems = [...approvedVisuals]
+      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .map((item) => ({
+        type: 'image',
+        url: item.thumbnail_url || item.image_url,
+        title: `${product.name} – schválená vizualizace${item.configuration ? ` · ${item.configuration}` : ''}`,
+        approvedAdmin: true,
+      }));
     const items = [
+      ...approvedItems,
       ...(product.image_url ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
       ...getCuratedProductMedia(product).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · vizualizace' : '') })),
       ...ownVideo,
@@ -72,14 +95,14 @@ export default function PdHero({ product }) {
     ].filter(Boolean);
 
     return [...new Map(items.map((item) => [item.url, item])).values()];
-  }, [product, isBendy]);
+  }, [product, isBendy, approvedVisuals]);
 
   useEffect(() => {
     setActive(0);
   }, [product.slug]);
 
   const hero = media[active] || media[0];
-  const showVerifiedComposite = hasVerifiedComposite && active === 0 && hero?.type === 'image';
+  const showVerifiedComposite = hasVerifiedComposite && active === 0 && hero?.type === 'image' && !hero?.approvedAdmin;
   const prev = () => setActive((i) => (i - 1 + media.length) % media.length);
   const next = () => setActive((i) => (i + 1) % media.length);
 
@@ -187,7 +210,7 @@ export default function PdHero({ product }) {
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-[-12%] bottom-[-12%] z-[3] h-[34%] opacity-60 blur-2xl" style={{ background: 'radial-gradient(ellipse at 28% 70%, rgba(255,255,255,.72), transparent 42%), radial-gradient(ellipse at 72% 58%, rgba(155,232,242,.6), transparent 38%)' }} />
 
           <div className="absolute left-5 top-5 z-20 rounded-full border border-white/18 bg-black/30 px-4 py-2 font-mono text-[10px] uppercase tracking-[.18em] text-white/78 backdrop-blur-md">
-            {hero?.type === 'video' ? 'Video produktu' : 'Produktový hero'}
+            {hero?.type === 'video' ? 'Video produktu' : hero?.approvedAdmin ? 'Schválená vizualizace' : 'Produktový hero'}
           </div>
 
           {hero && (

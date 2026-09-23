@@ -92,7 +92,7 @@ export default function PdHero({ product }) {
 
   const heroCallouts = [
     { label: 'MATERIÁL', value: product.material || 'nerez pro venkovní provoz', pos: 'left-5 top-[18%]' },
-    { label: 'NAPOJENÍ', value: 'vodovodní řád 3–6 barů dle projektu', pos: 'right-5 top-[28%]' },
+    { label: 'NAPOJENÍ', value: 'přívod vody a tlak podle konkrétní konfigurace', pos: 'right-5 top-[28%]' },
     { label: 'ŘÍZENÍ', value: 'SUPLA / čas / teplota', pos: 'left-6 bottom-[232px]' },
   ];
 
@@ -132,10 +132,10 @@ export default function PdHero({ product }) {
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-[#22D3EE] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_22px_60px_rgba(34,211,238,.24)] transition hover:-translate-y-0.5 hover:bg-white">
-              Poptat produkt <ArrowRight size={16} />
+              Získat návrh a cenu <ArrowRight size={16} />
             </Link>
             <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/18 bg-white/[.07] px-6 py-4 text-sm font-bold text-white backdrop-blur-md transition hover:bg-white/[.12]">
-              Vizualizace v prostoru <ExternalLink size={15} />
+              Vizualizovat v mém prostoru <ExternalLink size={15} />
             </Link>
             <Link to="/ke-stazeni" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/12 px-6 py-4 text-sm font-bold text-white/78 transition hover:border-[#22D3EE]/60 hover:text-white">
               Technické podklady <FileText size={15} />

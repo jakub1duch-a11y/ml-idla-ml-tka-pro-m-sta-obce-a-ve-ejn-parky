@@ -62,7 +62,7 @@ function MediaCard({ item, onOpen, productName }) {
     <button
       type="button"
       onClick={onOpen}
-      className="group relative min-w-[82%] overflow-hidden rounded-[24px] bg-[#EAF5FB] text-left shadow-[0_12px_36px_rgba(10,35,66,.06)] sm:min-w-0"
+      className="product-motion-card group relative min-w-[82%] overflow-hidden rounded-[24px] border border-[#D8E8F0] bg-white/80 text-left shadow-[0_12px_36px_rgba(10,35,66,.06)] backdrop-blur-xl sm:min-w-0"
     >
       <div className="aspect-[4/3] overflow-hidden bg-[#DCECF4]">
         {video ? (
@@ -233,7 +233,7 @@ export default function PdMediaGallery({ product }) {
         </div>
 
         {featuredVideo && (
-          <div className="mt-9 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white shadow-[0_22px_70px_rgba(10,35,66,.10)]">
+          <div className="product-motion-card mt-9 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white/90 shadow-[0_22px_70px_rgba(10,35,66,.10)] backdrop-blur-xl">
             <div className="grid lg:grid-cols-[1.45fr_.55fr]">
               <div className="relative aspect-video min-h-0 bg-[#061923] lg:aspect-auto lg:min-h-[420px]">
                 {isDriveVideo(featuredVideo.url) ? (

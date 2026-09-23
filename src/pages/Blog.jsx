@@ -224,7 +224,7 @@ export default function Blog() {
             <div><p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Video magazín</p><h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Mlžítka v pohybu.</h2></div>
             <Link to="/blog?sekce=videa" className="inline-flex items-center gap-2 text-sm font-semibold text-[#0B6B7A]">Všechna videa <ArrowRight size={14}/></Link>
           </div>
-          <BlogVideoShowcase />
+          <BlogVideoShowcase limit={6} />
         </section>
       )}
 

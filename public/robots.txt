@@ -1,11 +1,11 @@
 # MLŽIDLA.cz crawl policy
-# Public marketing, product, category, reference and blog pages are crawlable.
-# Internal administration, offers, inquiry data, client portal and generated documents are not for search engines.
+# Veřejné marketingové, produktové, referenční a blogové stránky jsou indexovatelné.
+# Interní administrace, klientská data a neveřejné pracovní postupy jsou z crawlu vyloučené.
 
 User-agent: *
 Allow: /
+Allow: /poptavka
 
-# Internal application and account pages
 Disallow: /admin
 Disallow: /admin-login
 Disallow: /admin-logout
@@ -14,34 +14,19 @@ Disallow: /obchodni-nabidky
 Disallow: /muj-projekt
 Disallow: /klient
 Disallow: /klient-prihlaseni
+Disallow: /klientska-sekce
 Disallow: /login
 Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /oauth/
 Disallow: /connect
-
-# Internal data, generated responses and non-public flows
 Disallow: /api/
 Disallow: /search-analytics
 Disallow: /dekujeme
 Disallow: /vyvoj-systemu
 Disallow: /prezentace/
 Disallow: /ar/
-
-# Generated/private documents should never be discovered from search.
-Disallow: /*.pdf$
-Disallow: /*.doc$
-Disallow: /*.docx$
-Disallow: /*.xls$
-Disallow: /*.xlsx$
-Disallow: /*.ppt$
-Disallow: /*.pptx$
-Disallow: /*nabidka*
-Disallow: /*nabídka*
-Disallow: /*poptavka*
-Disallow: /*poptávka*
-Disallow: /*quote*
-Disallow: /*offer*
+Disallow: /brand-identity
 
 Sitemap: https://mlzidla.cz/sitemap.xml

@@ -20,6 +20,7 @@ import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeMist3DScene from '@/components/home/new/HomeMist3DScene';
 import HomeSpatialConfigurations from '@/components/home/new/HomeSpatialConfigurations';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
+import PremiumHomepage2026 from '@/components/home/new/PremiumHomepage2026';
 
 export default function Home() {
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function Home() {
     <MotionConfig reducedMotion="user">
       <HomeGsapMotion />
       <HomeHero />
+      <PremiumHomepage2026 />
       <HomeMist3DScene />
       <ProductCategoryExplorer />
       <HomeSpatialConfigurations />

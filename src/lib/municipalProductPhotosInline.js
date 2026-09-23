@@ -42,7 +42,7 @@ export const MUNICIPAL_CATEGORIES = [
     description: 'LOLLI, KVĚT, TEEPEE a další tvarové prvky pro školní dvory, dětská hřiště a sportovní plochy.',
     image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
     href: '/poptavka?typ=skola-hriste',
-    recommended: ['LOLLI', 'TEEPEE', 'KVĚT', 'BENDY FIELD'],
+    recommended: ['LOLLI', 'TEEPEE', 'KVĚT', 'BENDY'],
   },
   {
     id: 'rezidence',

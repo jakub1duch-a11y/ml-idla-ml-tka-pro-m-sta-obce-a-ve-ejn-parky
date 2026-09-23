@@ -170,24 +170,51 @@ export default function ProductPhotoGallery() {
   }, [approvedVisuals, adminMedia]);
 
   const items = allItems.filter(item => filter === 'Vše' || item.tag === filter);
-  return <section id="home-product-gallery" className="bg-[#071a2b] py-16 text-white sm:py-20" aria-labelledby="media-gallery-title">
-    <div className="mx-auto max-w-7xl px-5 lg:px-10">
-      <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>
-      <h2 id="media-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl tracking-tight sm:text-5xl">Podívejte se, kam mlha patří.</h2>
-      <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Prohlédněte si, jak mohou mlžítka fungovat v konkrétním prostoru. Vyberte prostředí a přejděte rovnou k produktu, kategorii nebo návrhu řešení.</p>
-      <div className="my-8 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2" aria-label="Filtrovat média">
-        {FILTERS.map(label => <button type="button" key={label} aria-pressed={filter === label} onClick={() => setFilter(label)} className={`min-h-11 shrink-0 snap-start rounded-full border px-5 text-sm font-semibold transition-colors ${filter === label ? 'border-cyan-300 bg-cyan-300 text-slate-950' : 'border-white/30 text-white hover:bg-white/10'}`}>{label}</button>)}
+  return <section id="home-product-gallery" className="relative overflow-hidden bg-[#071a2b] py-20 text-white sm:py-24 lg:py-28" aria-labelledby="media-gallery-title">
+    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(34,211,238,.11),transparent_30%),radial-gradient(circle_at_88%_82%,rgba(14,116,144,.12),transparent_32%)]" />
+    <div className="relative mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
+      <div className="max-w-3xl">
+        <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>
+        <h2 id="media-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl font-semibold tracking-[-.04em] sm:text-5xl">Podívejte se, kam mlha patří.</h2>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Galerie nyní načítá i nová média a pouze schválené produktové vizualizace z administrace webu. Vyberte prostředí a přejděte rovnou k produktu nebo návrhu řešení.</p>
       </div>
-      <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, index) => <article key={`${item.url}-${index}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/5">
-          <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/20">
-            {item.tag === 'Videa' ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" aria-label={item.title} className="h-full w-full object-cover object-center"/> :
-            <Link to={item.href} aria-label={item.title} className="block h-full w-full"><img src={item.url} alt={item.title} loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-reduce:transition-none"/></Link>}
-            {item.tag !== 'Videa' && <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-slate-950/85 px-3 py-1.5 text-xs text-white">{item.badge}</span>}
-          </div>
-          <div className="flex flex-1 flex-col gap-3 p-5"><Link to={item.href} className="flex items-start justify-between gap-3 text-white hover:text-cyan-200"><h3 className="text-lg font-semibold leading-tight">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0"/></Link><p className="flex-1 text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p><Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 hover:text-white">Navrhnout řešení <ArrowRight size={14}/></Link></div>
-        </article>)}
+
+      <div className="my-9 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Filtrovat média">
+        {FILTERS.map(label => <button type="button" key={label} aria-pressed={filter === label} onClick={() => setFilter(label)} className={`min-h-11 shrink-0 snap-start rounded-full border px-5 text-sm font-semibold transition-all duration-300 ${filter === label ? 'border-cyan-300 bg-cyan-300 text-slate-950 shadow-[0_10px_30px_rgba(34,211,238,.18)]' : 'border-white/20 bg-white/[.035] text-white/80 hover:-translate-y-0.5 hover:border-cyan-300/50 hover:bg-white/[.07]'}`}>{label}</button>)}
       </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={filter}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }}
+          className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {items.map((item, index) => <motion.article
+            key={`${item.url}-${index}`}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: .18 }}
+            whileHover={{ y: -5 }}
+            transition={{ duration: .42, delay: Math.min(index, 5) * .035, ease: [0.22, 1, 0.36, 1] }}
+            className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-white/12 bg-white/[.045] shadow-[0_18px_54px_rgba(0,0,0,.13)] backdrop-blur-sm"
+          >
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/20">
+              {item.tag === 'Videa' ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" aria-label={item.title} className="h-full w-full object-cover object-center"/> :
+              <Link to={item.href} aria-label={item.title} className="block h-full w-full"><img src={item.url} alt={item.title} loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="h-full w-full object-cover object-center transition-transform duration-700 motion-safe:group-hover:scale-[1.035] motion-reduce:transition-none"/></Link>}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06131e]/45 via-transparent to-transparent opacity-70" />
+              {item.tag !== 'Videa' && <span className={`pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold backdrop-blur-md ${item.approved ? 'border-cyan-300/35 bg-[#062433]/82 text-cyan-200' : 'border-white/16 bg-slate-950/72 text-white'}`}>{item.approved && <ShieldCheck size={13}/>} {item.badge}</span>}
+            </div>
+            <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
+              <Link to={item.href} className="flex items-start justify-between gap-3 text-white transition hover:text-cyan-200"><h3 className="text-lg font-semibold leading-tight">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"/></Link>
+              <p className="flex-1 text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p>
+              <Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 transition hover:gap-3 hover:text-white">Navrhnout řešení <ArrowRight size={14}/></Link>
+            </div>
+          </motion.article>)}
+        </motion.div>
+      </AnimatePresence>
     </div>
   </section>;
 }

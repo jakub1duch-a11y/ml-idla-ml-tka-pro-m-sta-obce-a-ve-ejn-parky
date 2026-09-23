@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 const MEDIA = [
   {
     "title": "BENDY ve městě",
@@ -103,9 +105,71 @@ const MEDIA = [
   }
 ];
 const FILTERS = ['Vše', 'Náměstí a města', 'Sportoviště', 'Školy a školky', 'Gastro a zahrady', 'Hotely a wellness', 'Nádraží a uzly', 'Produkty', 'Videa'];
+const ENVIRONMENT_TAG = {
+  namesti: 'Náměstí a města',
+  mestsky_park: 'Náměstí a města',
+  maly_mestsky_park: 'Náměstí a města',
+  promenada: 'Náměstí a města',
+  sportoviste: 'Sportoviště',
+  hriste: 'Sportoviště',
+  koupaliste: 'Sportoviště',
+  skola_skolka: 'Školy a školky',
+  rezidencni_zahrada: 'Gastro a zahrady',
+  gastro_terasa: 'Gastro a zahrady',
+  hotel_wellness: 'Hotely a wellness',
+  event: 'Náměstí a města',
+  custom: 'Produkty',
+};
+const isImageFile = (file) => String(file?.file_type || '').startsWith('image/') || /\.(png|jpe?g|webp|avif)(\?|#|$)/i.test(file?.file_url || '');
+
 export default function ProductPhotoGallery() {
   const [filter, setFilter] = useState('Vše');
-  const items = MEDIA.filter(item => filter === 'Vše' || item.tag === filter);
+  const [approvedVisuals, setApprovedVisuals] = useState([]);
+  const [adminMedia, setAdminMedia] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      base44.entities.VisualizationAsset.filter({ approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 80).catch(() => []),
+      base44.entities.MediaFile.list('-created_date', 240).catch(() => []),
+    ]).then(([visuals, files]) => {
+      if (!active) return;
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url));
+      setAdminMedia((files || []).filter((item) => item?.file_url));
+    });
+    return () => { active = false; };
+  }, []);
+
+  const allItems = useMemo(() => {
+    const visuals = approvedVisuals.map((item) => ({
+      title: item.product_name || item.title || 'Schválená vizualizace',
+      url: item.thumbnail_url || item.image_url,
+      tag: ENVIRONMENT_TAG[item.environment] || 'Produkty',
+      badge: 'Schválená vizualizace',
+      href: item.product_slug ? `/produkt/${item.product_slug}` : '/mlzidla-mlzitka',
+      text: item.scene_description || `Schválený návrh použití produktu ${item.product_name || ''}.`,
+      approved: true,
+      primary: Boolean(item.is_primary_for_variant),
+      updated: item.updated_date || '',
+    }));
+
+    const media = adminMedia
+      .filter(isImageFile)
+      .filter((item) => ['homepage_visual', 'hero', 'gallery', 'reference', 'realization'].includes(item.media_role))
+      .map((item) => ({
+        title: item.file_name || item.media_group || 'MLŽIDLA®',
+        url: item.file_url,
+        tag: 'Produkty',
+        badge: item.media_role === 'realization' || item.media_role === 'reference' ? 'Fotografie' : 'Média',
+        href: item.product_slug ? `/produkt/${item.product_slug}` : '/mlzidla-mlzitka',
+        text: item.media_group ? `${item.media_group} — fotografie z administrace webu.` : 'Fotografie z administrace webu.',
+      }));
+
+    const combined = [...visuals.sort((a, b) => Number(b.primary) - Number(a.primary)), ...media, ...MEDIA];
+    return [...new Map(combined.filter((item) => item?.url).map((item) => [item.url, item])).values()].slice(0, 30);
+  }, [approvedVisuals, adminMedia]);
+
+  const items = allItems.filter(item => filter === 'Vše' || item.tag === filter);
   return <section id="home-product-gallery" className="bg-[#071a2b] py-16 text-white sm:py-20" aria-labelledby="media-gallery-title">
     <div className="mx-auto max-w-7xl px-5 lg:px-10">
       <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>

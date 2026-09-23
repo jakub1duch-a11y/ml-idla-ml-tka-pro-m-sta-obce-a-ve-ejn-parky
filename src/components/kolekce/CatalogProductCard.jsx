@@ -1,10 +1,12 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ShieldCheck, Gauge, Droplets, Sparkles } from 'lucide-react';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import { getLine, getFamily } from '@/lib/productFamilies';
 
 export default function CatalogProductCard({ product }) {
+  const reduced = useReducedMotion();
   const line = getLine(product);
   const family = getFamily(product);
   const specs = [
@@ -14,8 +16,8 @@ export default function CatalogProductCard({ product }) {
   ].filter(Boolean).slice(0, 2);
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#D8E7EC] bg-white shadow-[0_18px_60px_rgba(7,19,29,.07)] transition duration-500 hover:-translate-y-1.5 hover:border-[#A9DCE7] hover:shadow-[0_28px_90px_rgba(7,19,29,.13)]">
-      <Link to={`/produkt/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden bg-[radial-gradient(circle_at_72%_22%,#FFFFFF_0%,#EDF8FA_45%,#DCEFF3_100%)]">
+    <motion.article initial={reduced ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} whileHover={reduced ? undefined : { y: -7 }} whileTap={reduced ? undefined : { scale: 0.992 }} transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }} className="catalog-glass-card group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#D8E7EC] bg-white/90 shadow-[0_18px_60px_rgba(7,19,29,.07)] backdrop-blur-xl">
+      <Link to={`/produkt/${product.slug}`} className="relative block aspect-[4/3] overflow-hidden bg-[radial-gradient(circle_at_72%_22%,#FFFFFF_0%,#EDF8FA_45%,#DCEFF3_100%)] after:pointer-events-none after:absolute after:inset-y-0 after:-left-1/2 after:w-1/3 after:-skew-x-12 after:bg-gradient-to-r after:from-transparent after:via-white/35 after:to-transparent after:opacity-0 after:transition-all after:duration-700 group-hover:after:left-[120%] group-hover:after:opacity-100">
         <ProductHoverImage product={product} className="h-full w-full" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07131D]/10 via-transparent to-white/15 opacity-70" />
         <span className="absolute left-4 top-4 rounded-full border border-white/70 bg-white/80 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[.14em] text-[#0B6680] shadow-sm backdrop-blur-xl">{line.label}</span>
@@ -35,9 +37,9 @@ export default function CatalogProductCard({ product }) {
         )}
         <div className="mt-auto grid grid-cols-[1fr_auto] items-center gap-3 border-t border-[#E0EBEF] pt-4">
           <Link to={`/produkt/${product.slug}`} className="text-sm font-bold text-[#07131D] transition group-hover:text-[#0B8EC5]">Detail produktu</Link>
-          <Link to={`/poptavka?produkt=${product.slug}`} aria-label={`Získat návrh a cenu pro ${product.name}`} className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#DDF7FA] text-[#075D70] transition hover:bg-[#07131D] hover:text-white"><ArrowUpRight size={16} /></Link>
+          <Link to={`/poptavka?produkt=${product.slug}`} aria-label={`Získat návrh a cenu pro ${product.name}`} className="catalog-sweep inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#DDF7FA] text-[#075D70] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#07131D] hover:text-white"><ArrowUpRight size={16} /></Link>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

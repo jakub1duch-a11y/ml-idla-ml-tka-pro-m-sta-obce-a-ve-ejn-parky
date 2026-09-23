@@ -20,6 +20,7 @@ import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdSectionNav from '@/components/produkt/new/PdSectionNav';
 import PdUseCases from '@/components/produkt/new/PdUseCases';
+import PdAudienceSolutions from '@/components/produkt/new/PdAudienceSolutions';
 import PdDescription from '@/components/produkt/new/PdDescription';
 import PdStory from '@/components/produkt/new/PdStory';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
@@ -82,6 +83,7 @@ export default function ProduktDetail() {
       <PdDescription product={product} />
       <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
       <PdStory product={product} />
+      <PdAudienceSolutions product={product} />
       <PdUseCases product={product} />
       <PdMediaGallery product={product} />
       <PdTeepeeRental product={product} />

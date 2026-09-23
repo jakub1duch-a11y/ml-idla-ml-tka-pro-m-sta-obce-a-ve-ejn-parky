@@ -116,12 +116,12 @@ export default function PdBendyUsageGrid({ product }) {
           })}
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 rounded-[1.75rem] border border-white/10 bg-white/[.04] p-6 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="product-glass mt-8 flex flex-col gap-4 rounded-[1.75rem] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <p className="font-heading text-xl font-bold">Nevybíráte nový produkt. Vybíráte vhodnou sestavu BENDY.</p>
             <p className="mt-2 text-sm leading-6 text-white/55">Pro konkrétní místo navrhneme počet kusů, rozestupy a řízení podle provozu a charakteru prostoru.</p>
           </div>
-          <Link to="/ai-vizualizace?produkt=BENDY&slug=mlzitko-bendy" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#22D3EE] px-5 text-sm font-extrabold text-[#07131D] transition hover:bg-white">
+          <Link to="/ai-vizualizace?produkt=BENDY&slug=mlzitko-bendy" className="product-sweep inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#22D3EE] px-5 text-sm font-extrabold text-[#07131D] transition hover:-translate-y-0.5 hover:bg-white">
             Navrhnout BENDY do prostoru <ArrowUpRight size={16} />
           </Link>
         </div>

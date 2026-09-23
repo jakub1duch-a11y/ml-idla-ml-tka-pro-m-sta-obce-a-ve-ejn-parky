@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
@@ -21,6 +21,7 @@ const TABS = [
 
 
 export default function Katalog() {
+  const reduced = useReducedMotion();
   const [tab, setTab] = useState('mlzitka');
 
   useEffect(() => {
@@ -33,9 +34,9 @@ export default function Katalog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="catalog-premium min-h-screen overflow-x-clip bg-white">
       <KolekceHero />
-      <div id="catalog" className="hero-gallery-anchor max-w-7xl mx-auto px-6 lg:px-10 pt-12 pb-8">
+      <div id="catalog" className="catalog-pattern hero-gallery-anchor relative mx-auto max-w-7xl px-6 pb-10 pt-16 lg:px-10 lg:pt-20">
         
 
         <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />
@@ -43,10 +44,10 @@ export default function Katalog() {
         {/* Desktop tab bar */}
         <div className="hidden lg:flex flex-wrap gap-2 border-b border-slate-200 pb-4">
           {TABS.map((t) =>
-          <button key={t.id} onClick={() => setTab(t.id)}
+          <motion.button key={t.id} onClick={() => setTab(t.id)} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.97 }}
             className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${tab === t.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
               {t.label}
-            </button>
+            </motion.button>
           )}
         </div>
       </div>

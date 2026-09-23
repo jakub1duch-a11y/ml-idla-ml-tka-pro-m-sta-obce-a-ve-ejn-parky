@@ -89,7 +89,7 @@ export default function CustomerPortal() {
   const promoDaysLeft = promoCountdown.daysLeft;
 
   useEffect(() => {
-    setSEO({ title: 'Klientské CRM | MLŽIDLA®', description: 'Soukromý klientský přístup k projektům, nabídkám, dokumentům, vizualizacím a komunikaci MLŽIDLA®.', robots: 'noindex, nofollow, noarchive, nosnippet' });
+    setSEO({ title: 'Klientská sekce | MLŽIDLA®', description: 'Soukromý přístup k vašim projektům, nabídkám, dokumentům, vizualizacím a komunikaci MLŽIDLA®.', robots: 'noindex, nofollow, noarchive, nosnippet' });
   }, []);
 
   useEffect(() => {

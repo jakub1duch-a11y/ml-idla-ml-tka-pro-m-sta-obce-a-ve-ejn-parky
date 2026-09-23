@@ -9,6 +9,7 @@ import MistInOperation from '@/components/home/new/MistInOperation';
 import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
 import MunicipalUseCasesSection from '@/components/home/new/MunicipalUseCasesSection';
+import ProductCategoryShowcase from '@/components/home/new/ProductCategoryShowcase';
 import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
 import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
@@ -39,6 +40,7 @@ export default function Home() {
       <ProductCategoryExplorer />
       <HomeSpatialConfigurations />
       <MunicipalUseCasesSection />
+      <ProductCategoryShowcase />
       <ProductPhotoGallery />
       <V3EditorialBridge />
       <ReferencesStrip />

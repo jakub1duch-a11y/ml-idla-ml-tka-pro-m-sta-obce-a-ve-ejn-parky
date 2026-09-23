@@ -1,5 +1,6 @@
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Loader, Search, X, Building2, Home, Dumbbell, School, UtensilsCrossed, SlidersHorizontal } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
@@ -43,6 +44,7 @@ function matchesSpace(p, filter) {
 }
 
 export default function Kolekce() {
+  const reduced = useReducedMotion();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -84,12 +86,12 @@ export default function Kolekce() {
   const selectFamily = (id) => { setFamily(id); setLine(null); };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="catalog-premium min-h-screen overflow-x-clip bg-white">
       {selectedCategory ? <section className="relative overflow-hidden bg-slate-950 px-5 pb-16 pt-32 text-white lg:px-10"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-center"><div><p className="text-xs uppercase tracking-widest text-cyan-300">Kategorie produktů</p><h1 className="mt-4 font-heading text-4xl sm:text-5xl">{selectedCategory.name}</h1><p className="mt-5 max-w-xl leading-7 text-slate-200">{selectedCategory.description}</p><a href="#catalog" className="mt-7 inline-flex min-h-11 items-center rounded-full bg-cyan-300 px-6 font-semibold text-slate-950">Prohlédnout produkty</a></div>{selectedCategory.image_url && <img src={selectedCategory.image_url} alt={selectedCategory.name} className="max-h-[440px] w-full rounded-2xl object-contain"/>}</div></section> : <KolekceHero />}
       {!selectedCategory && <ProductCategoryExplorer />}
       <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
 
-      <div id="catalog" className="relative mx-auto max-w-[1500px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+      <div id="catalog" className="catalog-pattern relative mx-auto max-w-[1500px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="mb-10 flex flex-col gap-6 border-b border-[#DCE9ED] pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
@@ -99,15 +101,15 @@ export default function Kolekce() {
           {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}
         </div>
 
-        <div className="sticky top-[72px] z-30 mb-10 rounded-[1.4rem] border border-[#D3E2E8]/90 bg-white/88 p-3 shadow-[0_16px_50px_rgba(7,19,29,.09)] backdrop-blur-2xl sm:p-4">
+        <motion.div initial={reduced ? false : { opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="sticky top-[72px] z-30 mb-12 rounded-[1.5rem] border border-white/70 bg-white/[.78] p-3 shadow-[0_18px_60px_rgba(7,19,29,.10)] backdrop-blur-2xl sm:p-4">
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
             <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {
                 const active = space === value;
                 return (
-                  <button key={value} type="button" onClick={() => setSpace(value)} className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 rounded-full border px-4 font-heading text-[13px] font-semibold transition ${active ? 'border-[#07131D] bg-[#07131D] text-white shadow-sm' : 'border-[#D3E2E8] bg-white/80 text-[#0A1628] hover:border-[#7CCBD8] hover:bg-[#EFFAFC]'}`}>
+                  <motion.button key={value} type="button" onClick={() => setSpace(value)} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.97 }} className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 rounded-full border px-4 font-heading text-[13px] font-semibold transition ${active ? 'border-[#07131D] bg-[#07131D] text-white shadow-sm' : 'border-[#D3E2E8] bg-white/80 text-[#0A1628] hover:border-[#7CCBD8] hover:bg-[#EFFAFC]'}`}>
                     <Icon size={15} strokeWidth={1.6} />{label}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -126,16 +128,16 @@ export default function Kolekce() {
               <button type="button" onClick={clear} className="btn-brand-text inline-flex items-center gap-1 !p-0"><X size={13} /> Zrušit filtry</button>
             </div>
           )}
-        </div>
+        </motion.div>
 
         {loading ? (
           <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-[#D3E2E8]" /></div>
         ) : (
           <ProductExperience products={displayed}>
-<div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+<AnimatePresence mode="popLayout"><motion.div layout className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
             {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
             {displayed.length === 0 && <p className="col-span-3 py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
-          </div>
+          </motion.div></AnimatePresence>
 </ProductExperience>
         )}
       </div>

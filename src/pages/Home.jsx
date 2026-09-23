@@ -6,19 +6,12 @@ import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
-import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
-import MunicipalUseCasesSection from '@/components/home/new/MunicipalUseCasesSection';
-import ProductCategoryShowcase from '@/components/home/new/ProductCategoryShowcase';
-import SmartControlTeaser from '@/components/home/new/SmartControlTeaser';
-import FeaturedMlzitka from '@/components/home/new/FeaturedMlzitka';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
-import ReferenceCards from '@/components/home/new/ReferenceCards';
 import FinancingSection from '@/components/home/new/FinancingSection';
 import HomeInquiryForm from '@/components/home/new/HomeInquiryForm';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeMist3DScene from '@/components/home/new/HomeMist3DScene';
-import HomeSpatialConfigurations from '@/components/home/new/HomeSpatialConfigurations';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import PremiumHomepage2026 from '@/components/home/new/PremiumHomepage2026';
 
@@ -39,19 +32,12 @@ export default function Home() {
       <HomeHero />
       <PremiumHomepage2026 />
       <HomeMist3DScene />
-      <ProductCategoryExplorer />
-      <HomeSpatialConfigurations />
-      <MunicipalUseCasesSection />
-      <ProductCategoryShowcase />
       <ProductPhotoGallery />
       <V3EditorialBridge />
       <ReferencesStrip />
       <ProKohoSection />
       <MistInOperation />
-      <SmartControlTeaser />
-      <FeaturedMlzitka />
       <CooperationSteps />
-      <ReferenceCards />
       <FinancingSection />
       <HomeInquiryForm />
       <MobileStickyBar />

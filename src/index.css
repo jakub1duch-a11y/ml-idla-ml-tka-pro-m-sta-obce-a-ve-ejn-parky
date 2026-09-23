@@ -393,6 +393,15 @@
   68% { transform: translate3d(1.7px, -2px, 0) scale(1.16); opacity: .34; }
 }
 
+/* Catalog / collection premium interaction layer */
+.catalog-glass-card { transition: border-color .35s ease, box-shadow .45s cubic-bezier(.22,1,.36,1), background-color .35s ease; }
+.catalog-glass-card:hover { border-color: rgba(38,198,233,.42); box-shadow: 0 30px 90px rgba(7,19,29,.14); background-color: rgba(255,255,255,.96); }
+.catalog-sweep { position: relative; overflow: hidden; isolation: isolate; }
+.catalog-sweep::after { content: ""; position: absolute; inset-block: -40%; left: -55%; width: 38%; transform: skewX(-18deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent); transition: left .7s cubic-bezier(.22,1,.36,1); pointer-events: none; }
+.catalog-sweep:hover::after { left: 125%; }
+.catalog-pattern { isolation: isolate; }
+.catalog-pattern::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle at 8% 12%, rgba(38,198,233,.09), transparent 26%), radial-gradient(circle at 92% 48%, rgba(11,142,197,.06), transparent 30%); }
+
 /* Premium homepage rhythm, subtle patterns and micro-interactions */
 .premium-homepage-2026 {
   --premium-inline: clamp(1.25rem, 4vw, 5rem);

@@ -47,7 +47,6 @@ const INFO_LINKS = [
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
-{ icon: Newspaper, label: 'Blog & novinky', path: '/blog', featured: true },
 { icon: PlayCircle, label: 'Videa a živé ukázky', path: '/blog?sekce=videa' }];
 
 
@@ -131,6 +130,7 @@ export default function Header() {
             <Link to="/jak-to-funguje" className="px-4 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
             <Link to="/smart-ovladani" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Chytré ovládání</Link>
             <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Magazín</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`

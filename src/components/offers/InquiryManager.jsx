@@ -217,7 +217,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         quote_number: reminderOffer?.quote_number || '',
         quote_pdf_url: reminderOffer?.quote_pdf_url || '',
         presentation_url: reminderOffer?.presentation_url || '',
-        portal_url: reminderOffer ? 'https://mlzidla.cz/muj-projekt' : '',
+        portal_url: reminderOffer ? 'https://mlzidla.cz/klientska-sekce' : '',
         valid_until: validUntil?.toISOString() || '',
         attachments: [],
       });
@@ -350,7 +350,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
         quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate },
         offer_final_page: {
-          portal_url: 'https://mlzidla.cz/muj-projekt',
+          portal_url: 'https://mlzidla.cz/klientska-sekce',
           title: 'Pokračujte v portálu Můj projekt',
           intro: 'Na jednom místě získáte přehled objednávaných produktů, dokumentace a dalšího průběhu projektu.',
           actions: [
@@ -367,7 +367,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         },
         quote_number: quoteNumber,
         valid_until: validUntil.toISOString(),
-        portal_url: 'https://mlzidla.cz/muj-projekt',
+        portal_url: 'https://mlzidla.cz/klientska-sekce',
         ar_url: arUrl,
         offer_standard: SOBESLAV_OFFER_STANDARD,
         audience_variant: audienceForOffer,
@@ -668,7 +668,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     try {
       const followUpValidUntil = latestOffer?.valid_until ? new Date(latestOffer.valid_until) : null;
       const validityLine = prepared ? `Cenová nabídka ${prepared.quoteNumber} je platná do ${prepared.validUntil.toLocaleDateString('cs-CZ')}.` : '';
-      const portalLine = prepared ? 'Interaktivní nabídku, prezentaci a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/muj-projekt' : '';
+      const portalLine = prepared ? 'Interaktivní nabídku, prezentaci a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/klientska-sekce' : '';
       const testMessage = prepared
         ? withSignature([message.trim(), validityLine, portalLine].filter(Boolean).join('\n\n'))
         : message.trim();
@@ -685,7 +685,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         presentation_filename: prepared?.presentation?.presentation_filename,
         presentation_url: prepared?.presentation?.presentation_url || latestOffer?.presentation_url || '',
         quote_pdf_url: prepared?.quoteDriveUrl || latestOffer?.quote_pdf_url || '',
-        portal_url: prepared || latestOffer ? 'https://mlzidla.cz/muj-projekt' : '',
+        portal_url: prepared || latestOffer ? 'https://mlzidla.cz/klientska-sekce' : '',
         valid_until: prepared?.validUntil?.toISOString() || followUpValidUntil?.toISOString() || '',
         quote_number: prepared?.quoteNumber || latestOffer?.quote_number || '',
         project_summary: selected.message || '',
@@ -716,13 +716,13 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
     setError(''); setBusy('send');
     try {
       const validityLine = `Cenová nabídka ${prepared.quoteNumber} je platná do ${prepared.validUntil.toLocaleDateString('cs-CZ')}.`;
-      const portalLine = 'Interaktivní nabídku, prezentaci a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/muj-projekt';
+      const portalLine = 'Interaktivní nabídku, prezentaci a elektronické potvrzení objednávky najdete v portálu: https://mlzidla.cz/klientska-sekce';
       const signedMessage = withSignature([message.trim(), validityLine, portalLine].filter(Boolean).join('\n\n'));
       await base44.functions.invoke('sendInquiryReply', {
         inquiry_type: selected.type, inquiry_id: selected.id, subject, message: signedMessage, sender_email: senderEmail,
         quote_pdf_base64: prepared.quote?.pdf_base64, quote_filename: prepared.quote?.filename,
         presentation_pdf_base64: prepared.presentation?.presentation_pdf_base64, presentation_filename: prepared.presentation?.presentation_filename,
-        presentation_url: prepared.presentation?.presentation_url || '', quote_pdf_url: prepared.quoteDriveUrl || '', portal_url: 'https://mlzidla.cz/muj-projekt',
+        presentation_url: prepared.presentation?.presentation_url || '', quote_pdf_url: prepared.quoteDriveUrl || '', portal_url: 'https://mlzidla.cz/klientska-sekce',
         valid_until: prepared.validUntil.toISOString(), quote_number: prepared.quoteNumber,
         attachments: [
           ...attachments,
@@ -737,7 +737,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         ],
         project_summary: selected.message || '', email_type: 'offer',
         offer_final_page: {
-          portal_url: 'https://mlzidla.cz/muj-projekt',
+          portal_url: 'https://mlzidla.cz/klientska-sekce',
           title: 'Pokračujte v portálu Můj projekt',
           intro: 'Na jednom místě získáte přehled objednávaných produktů, dokumentace a dalšího průběhu projektu.',
           actions: [

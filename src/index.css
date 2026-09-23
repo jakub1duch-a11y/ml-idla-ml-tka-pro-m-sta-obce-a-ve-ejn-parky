@@ -461,6 +461,65 @@
   }
 }
 
+/* Shared premium system for public content pages */
+.public-premium-page {
+  --public-inline: clamp(1.25rem, 4vw, 5rem);
+  --public-section-y: clamp(4.75rem, 8vw, 8rem);
+}
+.public-premium-page section { position: relative; }
+.public-premium-page .public-shell {
+  width: min(100%, 1540px);
+  margin-inline: auto;
+  padding-inline: var(--public-inline);
+}
+.public-premium-page .public-card,
+.public-premium-page article {
+  transition: transform .38s cubic-bezier(.22,1,.36,1), box-shadow .38s cubic-bezier(.22,1,.36,1), border-color .28s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .public-premium-page .public-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(34,211,238,.38);
+    box-shadow: 0 28px 80px rgba(7,19,29,.12);
+  }
+}
+.public-premium-page .public-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.public-premium-page .public-sweep::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  transform:translateX(-135%);
+  background:linear-gradient(110deg,transparent 34%,rgba(255,255,255,.32) 50%,transparent 66%);
+  transition:transform .72s cubic-bezier(.22,1,.36,1);
+}
+.public-premium-page .public-sweep:hover::after { transform:translateX(135%); }
+.public-premium-page .public-sweep > * { position:relative; z-index:2; }
+.public-premium-page .public-glass {
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.065);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.public-premium-page h1,
+.public-premium-page h2 { text-wrap:balance; }
+@media (max-width:640px) {
+  .public-premium-page { --public-inline:1.25rem; --public-section-y:4.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-premium-page *, .catalog-premium *, .product-detail-page * {
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
 /* Catalog + product-detail premium motion system */
 .catalog-premium,
 .product-detail-page {

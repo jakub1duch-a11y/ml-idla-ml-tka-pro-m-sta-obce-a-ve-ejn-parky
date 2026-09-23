@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
 
       await base44.asServiceRole.integrations.Core.SendEmail({
         to: email,
-        subject: quoteNumber ? `Přístup k nabídce ${quoteNumber} | MLŽIDLA®` : 'Ověřovací kód | MLŽIDLA® Klientské CRM',
+        subject: quoteNumber ? `Přístup k nabídce ${quoteNumber} | MLŽIDLA®` : 'Ověřovací kód | MLŽIDLA® Klientská sekce',
         body: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d2d38;color:#e6f4f7;padding:32px;border-radius:18px;">
             <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#61d5e5;margin-bottom:8px;">MLŽIDLA® by HolmTec</div>

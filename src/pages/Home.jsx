@@ -16,6 +16,9 @@ import ReferenceCards from '@/components/home/new/ReferenceCards';
 import FinancingSection from '@/components/home/new/FinancingSection';
 import HomeInquiryForm from '@/components/home/new/HomeInquiryForm';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
+import HomeMist3DScene from '@/components/home/new/HomeMist3DScene';
+import HomeSpatialConfigurations from '@/components/home/new/HomeSpatialConfigurations';
+import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 
 export default function Home() {
   useEffect(() => {
@@ -30,8 +33,11 @@ export default function Home() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <HomeGsapMotion />
       <HomeHero />
+      <HomeMist3DScene />
       <ProductCategoryExplorer />
+      <HomeSpatialConfigurations />
       <MunicipalUseCasesSection />
       <ProductPhotoGallery />
       <V3EditorialBridge />

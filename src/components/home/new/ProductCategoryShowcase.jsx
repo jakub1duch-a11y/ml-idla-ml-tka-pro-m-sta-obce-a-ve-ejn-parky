@@ -31,7 +31,7 @@ const categoryCards = [
     description:
       'Nerezové brány pro náměstí, parky, promenády a dětská hřiště. Průchozí mlžná zóna, která přirozeně zve k osvěžení.',
     image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
-    href: '/mlzne-brany',
+    href: '/mlzidla-mlzitka#catalog',
     icon: Building2,
   },
   {

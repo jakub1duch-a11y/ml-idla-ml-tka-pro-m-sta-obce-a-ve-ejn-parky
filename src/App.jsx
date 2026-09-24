@@ -111,6 +111,7 @@ const AuthenticatedApp = () => {
           <Route key={`${locale}-${routeKey}`} path={path} element={<LocalizedLanding routeKey={routeKey} />} />
         ))}
         <Route path="/" element={<Home />} />
+        <Route path="/katalog-mlzitek" element={<Kolekce />} />
         <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
         <Route path="/mestske-mlzitka" element={<CollectionDetail forcedCollection="city" canonicalPath="/mestske-mlzitka" />} />
         <Route path="/kolekce/city" element={<Navigate to="/mestske-mlzitka" replace />} />
@@ -183,7 +184,7 @@ const AuthenticatedApp = () => {
         <Route path="/servis-udrzba" element={<ServisUdrzba />} />
         <Route path="/vraceni-zbozi" element={<VraceniZbozi />} />
         <Route path="/chytra-mlzidla" element={<Navigate to="/smart-ovladani" replace />} />
-        <Route path="/katalog" element={<Katalog />} />
+        <Route path="/katalog" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/smart-ovladani" element={<SmartOvladani />} />
         <Route path="/chytre-reseni-pro-prostor" element={<ChytreReseniProProstor />} />
         <Route path="/ppc/mlzitka-pro-mesta-obce" element={<PpcLanding variant="mesta" />} />
@@ -202,12 +203,12 @@ const AuthenticatedApp = () => {
         <Route path="/domu" element={<Navigate to="/" replace />} />
         <Route path="/hello-world" element={<Navigate to="/" replace />} />
         <Route path="/category/uncategorized" element={<Navigate to="/blog" replace />} />
-        <Route path="/product-category/vodni-mlzitka" element={<Navigate to="/mlzidla-mlzitka" replace />} />
+        <Route path="/product-category/vodni-mlzitka" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/mlzici-brany" element={<Navigate to="/mlzne-brany" replace />} />
         <Route path="/terms-privacy" element={<Navigate to="/gdpr" replace />} />
       </Route>
-      <Route path="/mlzidla" element={<Navigate to="/mlzidla-mlzitka" replace />} />
-      <Route path="/mlzidla/produkt/:id" element={<Navigate to="/mlzidla-mlzitka" replace />} />
+      <Route path="/mlzidla" element={<Navigate to="/katalog-mlzitek" replace />} />
+      <Route path="/mlzidla/produkt/:id" element={<Navigate to="/katalog-mlzitek" replace />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

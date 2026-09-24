@@ -9,7 +9,7 @@ import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
 
 const PRODUCT_LINKS = [
-{ label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', image: '/media/optimized/cfc837b23_image.webp', featured: true },
+{ label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', image: '/media/optimized/cfc837b23_image.webp', featured: true },
 { label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
 { label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/rezidencni-mlzeni', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
 { label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: '/media/optimized/68953132b_IMG_3524.webp' },

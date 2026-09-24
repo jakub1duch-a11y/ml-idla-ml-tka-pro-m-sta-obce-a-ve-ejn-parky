@@ -66,7 +66,7 @@ export default function HomeHero() {
               Nízkotlaká mlžítka pro náměstí, sportoviště i zahrady. Napojení na běžný vodovodní řad, nerezový design a chytré řízení SUPLA.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Link to="/mlzidla-mlzitka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
+              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
                 Zobrazit produkty <ArrowRight size={17} />
               </Link>
               <a href="#home-product-gallery" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/[.08] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">

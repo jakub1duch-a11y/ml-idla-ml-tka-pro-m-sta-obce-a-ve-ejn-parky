@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { Segmented } from 'konsta/react';
+import { Segmented } from 'konsta/react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
@@ -39,6 +40,11 @@ export default function ProduktDetail() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [mobileSection, setMobileSection] = useState('prehled');
+  const jumpTo = (id) => {
+    setMobileSection(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const [mobileSection, setMobileSection] = useState('prehled');
   const jumpTo = (id) => {
     setMobileSection(id);

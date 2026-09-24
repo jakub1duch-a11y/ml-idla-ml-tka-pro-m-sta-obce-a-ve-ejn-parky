@@ -44,11 +44,6 @@ export default function ProduktDetail() {
     setMobileSection(id);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  const [mobileSection, setMobileSection] = useState('prehled');
-  const jumpTo = (id) => {
-    setMobileSection(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   useEffect(() => {
     if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }

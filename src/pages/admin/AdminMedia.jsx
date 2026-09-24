@@ -43,6 +43,9 @@ export default function AdminMedia() {
       { match: 'mlzitka-kolekce-nove-video', product_slug: '', media_group: 'MARKETING', media_role: 'video' },
       { match: 'mlzitko-linea-steblo-video', product_slug: 'linea-solo', media_group: 'LINEA_STEBLO', media_role: 'video' },
       { match: 'mlzitko-ostrev-video', product_slug: 'ostrev-mlzitko', media_group: 'OSTREV', media_role: 'video' },
+      { match: '1000010340', product_slug: 'mlzitko-mrak', media_group: 'MRAK', media_role: 'video' },
+      { match: '1000010339', product_slug: 'mlzitko-mrak', media_group: 'MRAK', media_role: 'video' },
+      { match: '1000010327', product_slug: 'mlzitko-mrak', media_group: 'MRAK', media_role: 'video' },
     ];
 
     const rule = rules.find((item) => name.includes(item.match));

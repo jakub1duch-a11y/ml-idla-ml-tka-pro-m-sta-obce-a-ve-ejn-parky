@@ -19,7 +19,7 @@ const columns = [
       ['Městská mlžítka', '/mestske-mlzitka'],
       ['Zahradní mlžítka', '/zahradni-mlzitka'],
       ['Zakázková výroba', '/zakazkova-mlzitka'],
-      ['Kompletní katalog', '/mlzidla-mlzitka'],
+      ['Kompletní katalog', '/katalog-mlzitek'],
     ],
   },
   {

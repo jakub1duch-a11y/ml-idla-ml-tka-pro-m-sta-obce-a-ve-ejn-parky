@@ -208,13 +208,17 @@ export default function CustomerPortal() {
     setLoading(true);
     try {
       const res = await base44.functions.invoke('setPortalPassword', { session_token: sessionToken, password: newPassword });
-      const result = res?.data || res || {};
-      if (!result.ok || !result.password_set) {
+      const result = res?.data ?? res ?? {};
+      const explicitFailure = result?.ok === false || result?.password_set === false || Boolean(result?.error);
+      if (explicitFailure) {
         const setupError = new Error(result.error || 'password_setup_failed');
         setupError.error = result.error || 'password_setup_failed';
         throw setupError;
       }
-      if (result.session_token) setSessionToken(result.session_token);
+      // Older/newer Base44 function deployments may return 2xx with no explicit
+      // password_set flag. A successful invoke is sufficient unless the backend
+      // explicitly reports failure.
+      if (result?.session_token) setSessionToken(result.session_token);
       setPassword('');
       setNewPassword('');
       setConfirmPassword('');

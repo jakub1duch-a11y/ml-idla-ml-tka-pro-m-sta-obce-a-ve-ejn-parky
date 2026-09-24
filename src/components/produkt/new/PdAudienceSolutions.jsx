@@ -45,7 +45,7 @@ export default function PdAudienceSolutions({ product }) {
         <div className="max-w-4xl">
           <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-[#0B97E8] sm:text-[11px]">Doporučené využití</p>
           <h2 className="mt-3 max-w-4xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">
-            Primárně pro města a veřejný prostor.
+            Primárně pro města, obce a veřejný prostor.
           </h2>
           <p className="mt-5 max-w-3xl text-base leading-7 text-[#0D2F4F]/62">
             {product.name} neposuzujeme jako izolovaný výrobek. Pro městský projekt řešíme místo, pohyb lidí, stín, vítr, přívod vody, způsob řízení, servisní přístup a vztah k okolní architektuře.

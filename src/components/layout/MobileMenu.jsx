@@ -38,7 +38,7 @@ const MOBILE_USE_LINKS = [
 ];
 
 const PRIMARY_LINKS = [
-  { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka', icon: Grid2X2 },
+  { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', icon: Grid2X2 },
   { label: 'Pro města a obce', sub: 'Návrh, výroba a podklady pro veřejný prostor', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
   { label: 'Realizace', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
   { label: 'Technologie', sub: 'Jak funguje nízkotlaké mlžení', path: '/jak-to-funguje', icon: Cpu },

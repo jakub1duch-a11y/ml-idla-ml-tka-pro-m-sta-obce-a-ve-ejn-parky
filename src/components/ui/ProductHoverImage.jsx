@@ -28,7 +28,7 @@ const VIEW_LABELS = {
   video: 'Video',
 };
 
-export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '' }) {
+export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '', fullBleed = false }) {
   const [activeView, setActiveView] = useState(0);
   const resolvedAlt = alt || product?.image_alt || product?.name || 'Mlžítko MLŽIDLA®';
   const [hovered, setHovered] = useState(false);
@@ -132,7 +132,9 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       {/* Render all views stacked, toggle opacity for crossfade */}
       {views.map((view, idx) => {
         const isActive = idx === activeView;
-        const styleClass = VIEW_STYLES[view.type] || 'object-cover';
+        const styleClass = fullBleed && (view.type === 'studio' || view.type === 'product')
+          ? 'object-cover object-center'
+          : (VIEW_STYLES[view.type] || 'object-cover');
 
         if (view.type === 'video') {
           return (
@@ -159,6 +161,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
             alt={isActive ? resolvedAlt : ''}
             loading={idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
+            sizes="(min-width: 1280px) 31vw, (min-width: 768px) 48vw, 100vw"
             className={`absolute inset-0 h-full w-full transition-all duration-500 ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}
             onError={(event) => {
               const original = getOriginalMediaUrl(view.url);

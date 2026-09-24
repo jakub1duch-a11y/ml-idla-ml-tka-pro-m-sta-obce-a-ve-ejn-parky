@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Segmented } from 'konsta/react';
 import { setSEO } from '@/lib/seo';
 import SmartHero from '@/components/smart-ovladani/SmartHero';
 import SmartBenefits from '@/components/smart-ovladani/SmartBenefits';
@@ -13,6 +14,12 @@ import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
 import ContextLinks from '@/components/common/ContextLinks';
 
 export default function SmartOvladani() {
+  const [mobileSection, setMobileSection] = useState('prehled');
+  const jumpTo = (id) => {
+    setMobileSection(id);
+    document.getElementById(`smart-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   useEffect(() => {
     setSEO({
       title: 'Smart Cooling — chytré řízení městského ochlazování | mlzidla.cz',
@@ -46,12 +53,24 @@ export default function SmartOvladani() {
 
   return (
     <div className="min-h-screen bg-white">
-      <SmartHero />
+      <div id="smart-prehled" className="scroll-mt-28"><SmartHero /></div>
+      <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
+        <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
+          <Segmented strong>
+            {[['prehled','Přehled'],['automatizace','Řízení'],['senzory','Senzory']].map(([id,label]) => (
+              <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
+                className={`min-h-11 flex-1 rounded-[14px] px-3 text-xs font-semibold transition-colors ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600'}`}>
+                {label}
+              </button>
+            ))}
+          </Segmented>
+        </div>
+      </div>
       <SmartCoolingConcept />
       <SmartCoolingCityUseCases />
-      <SmartAutomationFlow />
+      <div id="smart-automatizace" className="scroll-mt-32"><SmartAutomationFlow /></div>
       <SmartBenefits />
-      <SmartSensorsSection />
+      <div id="smart-senzory" className="scroll-mt-32"><SmartSensorsSection /></div>
       <SmartValveMediaSection />
       <SmartOfferSection />
       <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Kalkulačka provozu</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Spočítejte orientační spotřebu vody.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Spočítejte orientační provoz vody podle počtu trysek, průtoku a denní doby provozu. Smart řízení pak pomáhá omezit zbytečné spuštění systému podle nastavených podmínek.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>

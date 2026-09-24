@@ -1,12 +1,118 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { CITY_ITEMS, GARDEN_ITEMS } from '@/components/kolekce/useCaseData';
 import UseCaseCard from '@/components/kolekce/UseCaseCard';
+import { base44 } from '@/api/base44Client';
+
+const CITY_MEDIA_KEYWORDS = {
+  'Náměstí & centrum města': ['namesti', 'náměstí', 'centrum', 'city', 'mesto', 'město', 'urban', 'bendy', 'linea', 'gate'],
+  'Parky & promenády': ['park', 'promenada', 'promenáda', 'alej', 'zeleň', 'zelen', 'steblo', 'bendy'],
+  'Nádraží & dopravní uzly': ['nadrazi', 'nádraží', 'terminal', 'doprav', 'station', 'uzel'],
+  'Sportoviště': ['sport', 'stadion', 'hriste', 'hřiště', 'beh', 'běh', 'cyklo'],
+  'Hotely & resorty': ['hotel', 'resort', 'terasa', 'hospitality'],
+  'Lázně & wellness': ['lazne', 'lázně', 'wellness', 'spa', 'relax'],
+  'Domovy seniorů': ['senior', 'domov', 'pecovat', 'pečovat', 'klidova', 'klidová'],
+  'Veřejné instituce': ['skola', 'škola', 'urad', 'úřad', 'instituce', 'verejn', 'veřejn', 'dvur', 'dvůr'],
+};
+
+const normalize = (value = '') => value
+  .toString()
+  .toLocaleLowerCase('cs')
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '');
+
+const assetText = (asset) => normalize([
+  asset?.file_name,
+  asset?.media_group,
+  asset?.product_slug,
+  asset?.file_type,
+].filter(Boolean).join(' '));
+
+const rankAssetForItem = (asset, item) => {
+  const haystack = assetText(asset);
+  const keywords = CITY_MEDIA_KEYWORDS[item.title] || [];
+  let score = 0;
+
+  for (const keyword of keywords) {
+    if (haystack.includes(normalize(keyword))) score += 4;
+  }
+
+  const titleWords = normalize(item.title)
+    .split(/[^a-z0-9]+/)
+    .filter((word) => word.length > 3);
+
+  for (const word of titleWords) {
+    if (haystack.includes(word)) score += 2;
+  }
+
+  if (asset?.product_slug) score += 1;
+  return score;
+};
+
+function applyApprovedMedia(items, assets) {
+  if (!Array.isArray(assets) || assets.length === 0) return items;
+
+  const available = [...assets];
+  return items.map((item) => {
+    if (!available.length) return item;
+
+    const ranked = available
+      .map((asset, index) => ({ asset, index, score: rankAssetForItem(asset, item) }))
+      .sort((a, b) => b.score - a.score || a.index - b.index);
+
+    const selected = ranked[0]?.asset;
+    if (!selected?.file_url) return item;
+
+    const sourceIndex = available.findIndex((asset) => asset.id === selected.id);
+    if (sourceIndex >= 0) available.splice(sourceIndex, 1);
+
+    return {
+      ...item,
+      image: selected.file_url,
+      imageAlt: selected.file_name || item.title,
+      mediaSource: 'approved-admin',
+    };
+  });
+}
 
 export default function UseCaseExperience({ variant = 'city' }) {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
-  const items = variant === 'garden' ? GARDEN_ITEMS : CITY_ITEMS;
+  const [approvedMedia, setApprovedMedia] = useState([]);
+
+  useEffect(() => {
+    if (variant !== 'city') return undefined;
+
+    let active = true;
+
+    const loadApprovedMedia = async () => {
+      try {
+        const rows = await base44.entities.MediaFile.list('-created_date', 120);
+        if (!active) return;
+
+        const approved = (rows || []).filter((row) =>
+          row?.media_role === 'render' &&
+          typeof row?.file_url === 'string' &&
+          row.file_url.length > 0 &&
+          String(row?.file_type || '').toLowerCase().startsWith('image')
+        );
+
+        setApprovedMedia(approved);
+      } catch {
+        if (active) setApprovedMedia([]);
+      }
+    };
+
+    loadApprovedMedia();
+    return () => { active = false; };
+  }, [variant]);
+
+  const baseItems = variant === 'garden' ? GARDEN_ITEMS : CITY_ITEMS;
+  const items = useMemo(
+    () => variant === 'city' ? applyApprovedMedia(baseItems, approvedMedia) : baseItems,
+    [variant, baseItems, approvedMedia]
+  );
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [36, -36]);
   const ySecondary = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [-24, 32]);

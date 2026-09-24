@@ -4,8 +4,30 @@ import { Link } from 'react-router-dom';
 import { setSEO } from '@/lib/seo';
 import ReferenceMetrics from '@/components/premium/ReferenceMetrics';
 import ReferenceShowcase from '@/components/premium/ReferenceShowcase';
+import PremiumSwiper from '@/components/common/PremiumSwiper';
 
 const HERO_IMAGE = '/assets/reference-zoo-hero.webp';
+
+const featuredReferences = [
+  {
+    id: 'zoo-praha',
+    eyebrow: 'Veřejný prostor',
+    title: 'ZOO Praha',
+    text: 'Ukázka realizace MLŽIDLA® ve frekventovaném veřejném areálu.',
+    src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp',
+    href: '/reference/mlzitka-pro-zoo-praha',
+    cta: 'Prohlédnout realizaci',
+  },
+  {
+    id: 'jicin',
+    eyebrow: 'Městský prostor',
+    title: 'Jičín',
+    text: 'Inspirace pro začlenění mlžení do městského prostoru a pobytových zón.',
+    src: 'https://drive.google.com/thumbnail?id=1DMozP4S_U8KaiNlCraTE-fugcQuytuB7&sz=w1600',
+    href: '/reference',
+    cta: 'Prohlédnout reference',
+  },
+];
 
 const sectors = [
   { Icon: Building2, label: 'Města', path: '/mlzitka-pro-mesta-obce' },
@@ -69,6 +91,16 @@ export default function Reference() {
       </section>
 
       <ReferenceMetrics />
+
+      <section className="overflow-hidden bg-slate-50 py-16 lg:py-20" aria-labelledby="featured-reference-title">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mb-8 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-700">Realizace v pohybu</p>
+            <h2 id="featured-reference-title" className="mt-3 font-heading text-3xl font-semibold tracking-[-.03em] text-slate-950 sm:text-4xl">Vybrané realizace MLŽIDLA®.</h2>
+          </div>
+          <PremiumSwiper items={featuredReferences} ariaLabel="Vybrané realizace MLŽIDLA" />
+        </div>
+      </section>
 
       <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <div className="grid grid-cols-2 overflow-hidden border border-slate-200 bg-white lg:grid-cols-4">

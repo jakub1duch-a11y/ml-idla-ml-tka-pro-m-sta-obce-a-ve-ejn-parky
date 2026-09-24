@@ -465,10 +465,10 @@ export default function CustomerPortal() {
             <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Soukromá zóna MLŽIDLA®</p>
             <h1 className="text-3xl font-light text-slate-900">Klientská sekce</h1>
             <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">{otpSent ? 'Zadejte 6místný kód, který jsme poslali na e-mail přiřazený k vašemu projektu.' : 'Přihlaste se k nabídkám, vizualizacím, dokumentům, komunikaci a aktuálnímu stavu realizace.'}</p>
-            <div className="mx-auto mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-[11px] font-semibold text-cyan-900">
+            <a href="https://klientska-sekce.mlzidla.cz" className="mx-auto mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-[11px] font-semibold text-cyan-900 transition hover:border-cyan-300 hover:bg-cyan-100">
               <ShieldCheck size={13}/>
               Veřejný přístup: klientska-sekce.mlzidla.cz
-            </div>
+            </a>
           </div>
 
           {!otpSent && <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-100 p-1">

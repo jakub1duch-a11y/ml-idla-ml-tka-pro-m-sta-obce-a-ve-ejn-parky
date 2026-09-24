@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { Segmented } from 'konsta/react';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
@@ -58,24 +59,27 @@ export default function Katalog() {
         {tab === 'smart' && <SmartSystemPreview />}
       </motion.div>
 
-      {/* Mobile switcher — thumb-reachable, fixed at bottom, one-handed use */}
-      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
-        <div className="flex items-center gap-1 p-1.5 rounded-full bg-white/70 backdrop-blur-xl border border-slate-200 shadow-xl shadow-slate-900/10">
-          {TABS.map((t) => {
-            const Icon = t.icon;
-            const active = tab === t.id;
-            return (
-              <button key={t.id} onClick={() => setTab(t.id)}
-                className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-2 rounded-full text-[11px] font-medium transition-colors ${active ? 'text-white' : 'text-slate-500'}`}>
-                {active &&
-                <motion.div layoutId="katalog-mobile-tab" className="absolute inset-0 bg-slate-900 rounded-full -z-10"
-                  transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
-                }
-                <Icon size={16} />
-                <span className="leading-tight px-1 text-center">{t.label.split(' ')[0]}</span>
-              </button>);
-
-          })}
+      {/* Mobile switcher — Konsta touch-first segmented control */}
+      <div className="lg:hidden fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
+        <div className="rounded-[22px] border border-slate-200/80 bg-white/85 p-1.5 shadow-xl shadow-slate-900/10 backdrop-blur-xl">
+          <Segmented strong>
+            {TABS.map((t) => {
+              const Icon = t.icon;
+              const active = tab === t.id;
+              return (
+                <button
+                  type="button"
+                  key={t.id}
+                  aria-pressed={active}
+                  onClick={() => setTab(t.id)}
+                  className={`flex min-h-12 flex-1 items-center justify-center gap-1.5 rounded-[16px] px-2 text-[11px] font-semibold transition-colors ${active ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600'}`}
+                >
+                  <Icon size={16} aria-hidden="true" />
+                  <span className="leading-tight">{t.label.split(' ')[0]}</span>
+                </button>
+              );
+            })}
+          </Segmented>
         </div>
       </div>
     </div>);

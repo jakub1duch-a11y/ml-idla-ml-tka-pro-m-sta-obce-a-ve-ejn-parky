@@ -112,7 +112,7 @@ const AuthenticatedApp = () => {
         ))}
         <Route path="/" element={<Home />} />
         <Route path="/katalog-mlzitek" element={<Kolekce />} />
-        <Route path="/mlzidla-mlzitka" element={<Kolekce />} />
+        <Route path="/mlzidla-mlzitka" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/mestske-mlzitka" element={<CollectionDetail forcedCollection="city" canonicalPath="/mestske-mlzitka" />} />
         <Route path="/kolekce/city" element={<Navigate to="/mestske-mlzitka" replace />} />
         <Route path="/zahradni-mlzitka" element={<CollectionDetail forcedCollection="garden" canonicalPath="/zahradni-mlzitka" />} />
@@ -131,7 +131,7 @@ const AuthenticatedApp = () => {
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
-        <Route path="/produkt2/:slug" element={<Navigate to="/mlzidla-mlzitka" replace />} />
+        <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/klientska-sekce" element={<CustomerPortal />} />
         <Route path="/muj-projekt" element={<CustomerPortal />} />

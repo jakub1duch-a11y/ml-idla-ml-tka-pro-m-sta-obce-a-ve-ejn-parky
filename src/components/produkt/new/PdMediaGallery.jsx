@@ -183,7 +183,11 @@ export default function PdMediaGallery({ product }) {
     const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
     const adminVideos = adminMedia
       .filter((item) => item.media_role === 'video' || isVideo(item.file_url))
-      .map((item) => ({ type: 'video', url: item.file_url, poster: mediaUrl(product.image_url), alt: `${product.name} — ${item.file_name || 'video'}`, caption: item.file_name || 'Video ukázka', title: item.file_name || 'Video ukázka', badge: 'Video' }));
+      .map((item, index) => {
+        const isMrakUpload = product.slug === 'mlzitko-mrak' && /1000010(340|339|327)/.test(item.file_name || '');
+        const title = isMrakUpload ? `Mlžný MRAK — video ${index + 1}` : (item.file_name || 'Video ukázka');
+        return { type: 'video', url: item.file_url, poster: mediaUrl(product.image_url), alt: `${product.name} — ${title}`, caption: title, title, badge: 'Video' };
+      });
     const videos = clean([
       ...adminVideos,
       resolvedProductVideo && { type: 'video', url: resolvedProductVideo, poster: mediaUrl(product.image_url), alt: `${product.name} — video ukázka`, caption: 'Video ukázka', title: 'Video ukázka', badge: 'Hero video' },
@@ -216,6 +220,9 @@ export default function PdMediaGallery({ product }) {
   const items = groups[activeTab] || [];
   const allEmpty = tabs.every((t) => t.count === 0);
   const featuredVideo = groups.videos[featuredVideoIndex] || groups.videos[0];
+  const featuredVideoCount = groups.videos.length;
+  const previousFeaturedVideo = () => setFeaturedVideoIndex((current) => featuredVideoCount ? (current - 1 + featuredVideoCount) % featuredVideoCount : 0);
+  const nextFeaturedVideo = () => setFeaturedVideoIndex((current) => featuredVideoCount ? (current + 1) % featuredVideoCount : 0);
 
   if (loading) return <section className="bg-[#F7FBFD] py-16"><div className="mx-auto flex max-w-7xl justify-center px-6"><Loader className="animate-spin text-[#0B5EA8]/40" /></div></section>;
   if (allEmpty) return null;
@@ -260,6 +267,11 @@ export default function PdMediaGallery({ product }) {
                   />
                 )}
                 <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/20 bg-black/42 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-white backdrop-blur-md">{isDriveVideo(featuredVideo.url) ? 'TV reportáž · přehrát' : 'Video produktu · autoplay bez zvuku'}</div>
+                {featuredVideoCount > 1 && <>
+                  <button type="button" onClick={previousFeaturedVideo} aria-label="Předchozí video" className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/38 text-white shadow-xl backdrop-blur-md transition hover:bg-black/58 sm:left-4"><ChevronLeft size={22}/></button>
+                  <button type="button" onClick={nextFeaturedVideo} aria-label="Další video" className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/38 text-white shadow-xl backdrop-blur-md transition hover:bg-black/58 sm:right-4"><ChevronRight size={22}/></button>
+                  <div className="pointer-events-none absolute bottom-4 right-4 z-20 rounded-full border border-white/20 bg-black/42 px-3 py-1.5 font-mono text-[9px] font-semibold text-white backdrop-blur-md">{featuredVideoIndex + 1} / {featuredVideoCount}</div>
+                </>}
               </div>
 
               <div className="flex flex-col p-5 sm:p-6 lg:p-7">

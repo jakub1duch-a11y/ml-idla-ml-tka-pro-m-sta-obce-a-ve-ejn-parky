@@ -1,6 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { A11y, Keyboard, Mousewheel, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 const MEDIA = [
@@ -190,10 +195,28 @@ export default function ProductPhotoGallery() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: .28, ease: [0.22, 1, 0.36, 1] }}
-          className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className="relative"
         >
-          {items.map((item, index) => <motion.article
-            key={`${item.url}-${index}`}
+          <Swiper
+            modules={[A11y, Keyboard, Mousewheel, Navigation, Pagination]}
+            slidesPerView={1.08}
+            spaceBetween={16}
+            navigation
+            pagination={{ clickable: true, dynamicBullets: true }}
+            keyboard={{ enabled: true }}
+            mousewheel={{ forceToAxis: true }}
+            grabCursor
+            watchOverflow
+            breakpoints={{
+              640: { slidesPerView: 1.65, spaceBetween: 18 },
+              900: { slidesPerView: 2.25, spaceBetween: 20 },
+              1180: { slidesPerView: 3, spaceBetween: 20 },
+            }}
+            className="mlzidla-product-swiper !overflow-visible !pb-14"
+            aria-label={`Galerie MLŽIDLA — ${filter}`}
+          >
+          {items.map((item, index) => <SwiperSlide key={`${item.url}-${index}`} className="!h-auto">
+          <motion.article
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: .18 }}
@@ -212,7 +235,9 @@ export default function ProductPhotoGallery() {
               <p className="flex-1 text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p>
               <Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 transition hover:gap-3 hover:text-white">Navrhnout řešení <ArrowRight size={14}/></Link>
             </div>
-          </motion.article>)}
+          </motion.article>
+          </SwiperSlide>)}
+          </Swiper>
         </motion.div>
       </AnimatePresence>
     </div>

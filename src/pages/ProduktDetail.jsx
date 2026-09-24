@@ -4,6 +4,7 @@ import { Loader } from 'lucide-react';
 import { Segmented } from 'konsta/react';
 import { Segmented } from 'konsta/react';
 import { Segmented } from 'konsta/react';
+import { Segmented } from 'konsta/react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';

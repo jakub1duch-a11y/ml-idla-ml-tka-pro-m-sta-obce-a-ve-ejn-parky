@@ -55,14 +55,14 @@ export default function SmartOvladani() {
       <div id="smart-prehled" className="scroll-mt-28"><SmartHero /></div>
       <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
         <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
-          <div className="flex gap-1">
+          <nav className="flex gap-1" aria-label="Navigace chytrého řízení">
             {[['prehled','Přehled'],['automatizace','Řízení'],['senzory','Senzory']].map(([id,label]) => (
               <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
-                className={`min-h-11 flex-1 rounded-[14px] px-3 text-xs font-semibold transition-colors ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600'}`}>
+                className={`min-h-11 flex-1 rounded-[14px] px-3 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
                 {label}
               </button>
             ))}
-          </div>
+          </nav>
         </div>
       </div>
       <SmartCoolingConcept />

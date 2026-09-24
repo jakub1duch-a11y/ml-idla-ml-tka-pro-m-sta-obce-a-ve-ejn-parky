@@ -26,8 +26,8 @@ export default function KolekceHero() {
     <HeroAtmosphere />
     <motion.div className="hero-catalog-content" initial={reduced ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduced ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}>
       <p className="!text-xs font-mono uppercase tracking-[.2em] !text-[#7AE1EF]">Katalog MLŽIDLA® · Česká výroba</p>
-      <h1 className="mt-5">Najděte tvar.<br />Proměňte atmosféru.</h1>
-      <p className="mt-6">Mlžítka a mlžné brány pro města, parky i zahrady. Prohlédněte si jednotlivé produkty a představte si jemnou mlhu ve svém prostoru.</p>
+      <h1 className="mt-5">Katalog mlžítek<br />a mlžných bran.</h1>
+      <p className="mt-6">Nerezová mlžítka a mlžné brány pro města, obce, náměstí, parky, sportoviště i soukromé zahrady. Vyberte produkt podle prostoru, použití a požadovaného způsobu provozu.</p>
       <div className="mt-8 flex flex-wrap gap-3">
         <a href="#catalog" className="catalog-sweep inline-flex min-h-12 items-center gap-3 rounded-full bg-[#7AE1EF] px-6 py-3 text-sm font-bold text-[#07131D] shadow-[0_16px_45px_rgba(122,225,239,.18)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(122,225,239,.28)]">
           Vybrat mlžítko <ArrowRight size={17} aria-hidden="true" />

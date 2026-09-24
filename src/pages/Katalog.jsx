@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Segmented } from 'konsta/react';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
@@ -62,7 +61,7 @@ export default function Katalog() {
       {/* Mobile switcher — Konsta touch-first segmented control */}
       <div className="lg:hidden fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
         <div className="rounded-[22px] border border-slate-200/80 bg-white/85 p-1.5 shadow-xl shadow-slate-900/10 backdrop-blur-xl">
-          <Segmented strong>
+          <div className="flex gap-1">
             {TABS.map((t) => {
               const Icon = t.icon;
               const active = tab === t.id;
@@ -79,7 +78,7 @@ export default function Katalog() {
                 </button>
               );
             })}
-          </Segmented>
+          </div>
         </div>
       </div>
     </div>);

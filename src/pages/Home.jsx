@@ -14,6 +14,8 @@ import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeMist3DScene from '@/components/home/new/HomeMist3DScene';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import PremiumHomepage2026 from '@/components/home/new/PremiumHomepage2026';
+import UrbanCoolingExperience from '@/components/home/new/UrbanCoolingExperience';
+import '@/styles/urban-cooling-experience.css';
 
 export default function Home() {
   useEffect(() => {
@@ -30,6 +32,7 @@ export default function Home() {
     <MotionConfig reducedMotion="user">
       <HomeGsapMotion />
       <HomeHero />
+      <UrbanCoolingExperience />
       <PremiumHomepage2026 />
       <HomeMist3DScene />
       <ProductPhotoGallery />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Loader } from 'lucide-react';
+import { Segmented } from 'konsta/react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
@@ -38,6 +39,11 @@ export default function ProduktDetail() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [mobileSection, setMobileSection] = useState('prehled');
+  const jumpTo = (id) => {
+    setMobileSection(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
@@ -78,6 +84,18 @@ export default function ProduktDetail() {
         {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
       </div>
       <PdSectionNav product={product} />
+      <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
+        <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
+          <Segmented strong>
+            {[['prehled','Přehled'],['parametry','Parametry'],['reference','Reference']].map(([id,label]) => (
+              <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
+                className={`min-h-11 flex-1 rounded-[14px] px-2 text-[11px] font-semibold transition-colors ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600'}`}>
+                {label}
+              </button>
+            ))}
+          </Segmented>
+        </div>
+      </div>
       <PdFamilyNav product={product} />
       <PdTeepeeStudio product={product} />
       <PdDescription product={product} />

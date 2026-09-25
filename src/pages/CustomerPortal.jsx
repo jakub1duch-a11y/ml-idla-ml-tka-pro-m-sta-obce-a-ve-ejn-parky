@@ -223,7 +223,9 @@ export default function CustomerPortal() {
       setNewPassword('');
       setConfirmPassword('');
       setResetPasswordRequested(false);
+      setError('');
       setStep('dashboard');
+      window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
     } catch (e) {
       const code = getFunctionErrorCode(e);
       setError(code === 'session_expired'
@@ -610,7 +612,7 @@ export default function CustomerPortal() {
             <div className="flex flex-wrap items-center gap-2">
               <a href="/" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">← Zpět na MLŽIDLA.cz</a>
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
-              <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
+              <div className="flex flex-wrap items-center justify-end gap-2"><Link to="/" className="inline-flex min-h-11 items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-cyan-300 hover:text-[#0d2d38] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2">Zpět na MLŽIDLA.cz</Link><button type="button" onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="min-h-11 rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2">Odhlásit se</button></div>
             </div>
           </div>
           <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 xl:grid-cols-[.7fr_.7fr_.7fr_.7fr_1.5fr] sm:divide-y-0">

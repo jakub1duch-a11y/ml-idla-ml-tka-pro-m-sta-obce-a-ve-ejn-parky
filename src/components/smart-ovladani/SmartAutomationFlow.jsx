@@ -33,7 +33,7 @@ export default function SmartAutomationFlow() {
   const reduced = useReducedMotion();
 
   return (
-    <section id="jak-to-funguje" className="smart-motion-section scroll-mt-24 overflow-hidden bg-[#07131D] py-20 text-white lg:py-32">
+    <section id="jak-to-funguje" className="smart-motion-section relative scroll-mt-24 overflow-hidden bg-[#07131D] py-20 text-white lg:py-32">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[8%] top-10 h-72 w-72 rounded-full bg-cyan-300/10 blur-3xl" />
         <div className="absolute bottom-0 right-[8%] h-96 w-96 rounded-full bg-sky-400/10 blur-3xl" />

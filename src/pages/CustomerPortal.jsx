@@ -230,8 +230,10 @@ export default function CustomerPortal() {
         ? 'Ověření vypršelo. Přihlaste se znovu jednorázovým kódem.'
         : code === 'password_policy'
           ? 'Heslo musí mít alespoň 10 znaků a obsahovat písmeno i číslici.'
-          : code === 'missing_session' || code === 'session_invalid' || code === 'account_write_failed'
-            ? 'Ověřená relace nebo uložení účtu není platné. Nechte si poslat nový kód a zkuste nastavení znovu.'
+          : code === 'account_write_failed'
+            ? 'Heslo se teď nepodařilo bezpečně uložit. Ověření je stále aktivní — zkuste uložení ještě jednou. Pokud chyba přetrvá, použijte nový jednorázový kód.'
+            : code === 'missing_session' || code === 'session_invalid'
+              ? 'Ověřená relace není platná. Nechte si poslat nový kód a zkuste nastavení znovu.'
             : 'Heslo se nepodařilo uložit. Ověření zůstává aktivní jen omezenou dobu; nechte si poslat nový kód a zkuste to znovu.');
     } finally {
       setLoading(false);
@@ -453,7 +455,9 @@ export default function CustomerPortal() {
             </div>
             <div className="rounded-xl bg-slate-50 px-4 py-3 text-[11px] leading-5 text-slate-500"><ShieldCheck size={13} className="mr-1 inline text-cyan-700"/> Heslo se neodesílá e-mailem a v databázi se neukládá v čitelné podobě. Jednorázový kód zůstává dostupný pro obnovu přístupu.</div>
             <button type="submit" disabled={loading || !passwordChecks.length || !passwordChecks.letter || !passwordChecks.number || !passwordChecks.matches} className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:cursor-not-allowed disabled:opacity-50">{loading ? <><Loader size={16} className="animate-spin"/> Ukládám heslo…</> : <><KeyRound size={16}/> Nastavit heslo a otevřít projekt</>}</button>
+            {error && <button type="button" onClick={() => { setStep("login"); setAuthMethod("otp"); setAccessMode("email"); setOtpSent(false); setOtp(""); setError(""); setResetPasswordRequested(true); }} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">Použít nový jednorázový kód</button>}
           </form>
+          <a href="/" className="mx-auto mt-5 flex w-fit items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-slate-500 transition hover:bg-white hover:text-slate-900">← Zpět na MLŽIDLA.cz</a>
         </div>
       </div>
     );
@@ -604,6 +608,7 @@ export default function CustomerPortal() {
               <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">MLŽIDLA® / Klientská sekce</p><div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1"><h1 className="text-2xl font-light text-slate-950">Můj projekt</h1><span className="text-xs text-slate-400">{email}</span></div></div>
             </div>
             <div className="flex flex-wrap items-center gap-2">
+              <a href="/" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">← Zpět na MLŽIDLA.cz</a>
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
               <button onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49]">Odhlásit se</button>
             </div>

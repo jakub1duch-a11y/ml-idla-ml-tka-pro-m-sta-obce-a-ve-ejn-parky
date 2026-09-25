@@ -26,11 +26,11 @@ export default function ProductFilterGrid() {
   const filtered = activeCategory === 'all' ? products : products.filter((p) => p.category_id === activeCategory);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+    <div className="ref-editorial-surface mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
         <div>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Celý katalog</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vyberte si mlžítko podle prostoru.</h2>
+          <h2 className="max-w-[13ch] font-heading text-4xl font-semibold leading-[1.02] tracking-[-.045em] text-slate-950 lg:text-6xl">Vyberte si mlžítko podle prostoru.</h2>
         </div>
         <div className="flex flex-wrap gap-2">
           <button onClick={() => setActiveCategory('all')}
@@ -46,22 +46,25 @@ export default function ProductFilterGrid() {
         </div>
       </div>
 
+      <div className="ref-progress-track mb-10"><span className="ref-progress-line" data-home-progress /></div>
+
       {loading ?
       <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> :
 
       <ProductExperience products={filtered}>
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filtered.map((p, i) =>
         <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
               <Link to={p.slug ? `/produkt/${p.slug}` : '/kontakt'} onClick={() => trackProductClick(p.name, p.slug, 'chytra_mlzidla')}
-            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:border-slate-300 hover:shadow-md">
-                <ProductHoverImage product={p} className="aspect-[4/3] bg-slate-100" />
+            className="ref-product-card group flex h-full flex-col overflow-hidden bg-white/90">
+                <ProductHoverImage product={p} className="ref-card-media aspect-[4/3] bg-slate-100" />
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="min-h-[2.6rem] line-clamp-2 font-medium leading-snug text-slate-900 mb-1">{p.name}</h3>
+                  <div className="mb-4 flex items-center justify-between gap-3"><span className="ref-card-index font-mono text-[10px] font-bold text-cyan-700">{String(i + 1).padStart(2, "0")}</span><span className="truncate text-[10px] font-semibold uppercase tracking-[.14em] text-slate-400">{categories.find((c) => c.id === p.category_id)?.name || "MLŽIDLA"}</span></div>
+                  <h3 className="mb-1 min-h-[2.6rem] line-clamp-2 font-heading text-xl font-semibold leading-snug tracking-[-.025em] text-slate-950">{p.name}</h3>
                   <p className="min-h-[2rem] text-xs text-slate-400 mb-3 line-clamp-2">{p.short_description}</p>
                   {p.coverage_area && <p className="-mt-2 mb-3 text-[11px] font-medium text-slate-500">Výška / dosah: {p.coverage_area}</p>}
-                  <div className="mt-auto flex items-center gap-1 text-xs text-slate-900 font-medium">
-                    Detail produktu <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+                  <div className="mt-auto flex items-center justify-between gap-3 pt-2 text-xs font-semibold text-slate-900">
+                    <span>Detail produktu</span><span className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white transition group-hover:border-cyan-300 group-hover:bg-cyan-50"><ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" /></span>
                   </div>
                 </div>
               </Link>

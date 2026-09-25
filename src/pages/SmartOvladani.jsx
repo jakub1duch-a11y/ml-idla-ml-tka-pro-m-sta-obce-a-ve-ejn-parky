@@ -21,8 +21,8 @@ export default function SmartOvladani() {
 
   useEffect(() => {
     setSEO({
-      title: 'Smart Cooling — chytré řízení městského ochlazování | mlzidla.cz',
-      description: 'Smart Cooling propojuje designová mlžítka, chytré ventily, senzory, provozní scénáře a data. Řízené ochlazovací body pro města, parky, náměstí a sportoviště.',
+      title: 'Automatizace MLŽIDLA® — chytré řízení městského ochlazování | mlzidla.cz',
+      description: 'Automatizace MLŽIDLA® propojuje designová mlžítka, chytré ventily, senzory, provozní scénáře a data. Řízené ochlazování pro města, parky, náměstí a sportoviště.',
       keywords: 'smart cooling, chytré městské ochlazování, smart city mlžítka, automatizace mlžení, chytré senzory mlžítka, řízení mlžného systému, PEVEKO ventil',
       canonicalPath: '/smart-ovladani',
       jsonLd: {
@@ -30,7 +30,7 @@ export default function SmartOvladani() {
         '@graph': [
           {
             '@type': 'Service',
-            name: 'Smart Cooling — chytré městské ochlazování',
+            name: 'Automatizace MLŽIDLA® — chytré městské ochlazování',
             provider: { '@type': 'Organization', name: 'HolmTec' },
             areaServed: 'CZ',
             serviceType: 'Řízené ochlazování veřejného prostoru pomocí mlžných systémů, senzorů a automatizace',
@@ -55,8 +55,8 @@ export default function SmartOvladani() {
       <div id="smart-prehled" className="scroll-mt-28"><SmartHero /></div>
       <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
         <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
-          <nav className="flex gap-1" aria-label="Navigace chytrého řízení">
-            {[['prehled','Přehled'],['automatizace','Řízení'],['senzory','Senzory']].map(([id,label]) => (
+          <nav className="flex gap-1" aria-label="Navigace automatizace">
+            {[['prehled','Přehled'],['automatizace','Automatizace'],['senzory','Senzory']].map(([id,label]) => (
               <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
                 className={`min-h-11 flex-1 rounded-[14px] px-3 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
                 {label}
@@ -72,10 +72,10 @@ export default function SmartOvladani() {
       <div id="smart-senzory" className="scroll-mt-32"><SmartSensorsSection /></div>
       <SmartValveMediaSection />
       <SmartOfferSection />
-      <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Kalkulačka provozu</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Spočítejte orientační spotřebu vody.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Spočítejte orientační provoz vody podle počtu trysek, průtoku a denní doby provozu. Smart řízení pak pomáhá omezit zbytečné spuštění systému podle nastavených podmínek.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>
-      <ContextLinks eyebrow="Související obsah" title="Smart řízení je jedna část celého řešení." items={[
+      <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Kalkulačka provozu</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Spočítejte orientační spotřebu vody.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Spočítejte orientační provoz vody podle počtu trysek, průtoku a denní doby provozu. Automatizace pak pomáhá omezit zbytečné spuštění systému podle nastavených podmínek.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>
+      <ContextLinks eyebrow="Související obsah" title="Automatizace je jedna část celého řešení." items={[
         { path: '/jak-to-funguje', kicker: 'Princip', title: 'Jak mlžítka fungují', text: 'Technický princip mlžení, napojení a provozní souvislosti.' },
-        { path: '/mestske-mlzitka', kicker: 'Produkty', title: 'Městská mlžítka', text: 'Vyberte konkrétní systém, který lze doplnit o chytré řízení.' },
+        { path: '/mestske-mlzitka', kicker: 'Produkty', title: 'Městská mlžítka', text: 'Vyberte konkrétní systém, který lze doplnit o automatizaci.' },
         { path: '/ochrana-zdravi', kicker: 'Hygiena', title: 'Ochrana zdraví', text: 'Provozní režim, voda, proplach a servis u veřejných instalací.' },
         { path: '/vyhody', kicker: 'Přínosy', title: 'Výhody a benefity', text: 'Jak automatizace přispívá ke komfortu, správě a efektivnímu provozu.' },
         { path: '/kalkulacka', kicker: 'Náklady', title: 'Kalkulačka provozu', text: 'Samostatná kalkulačka orientační spotřeby vody pro aktivní produkty.' },

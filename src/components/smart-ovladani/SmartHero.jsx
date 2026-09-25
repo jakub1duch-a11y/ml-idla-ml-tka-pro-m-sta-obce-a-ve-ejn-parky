@@ -62,7 +62,7 @@ export default function SmartHero() {
             >
               <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/[.055] px-4 py-2 backdrop-blur-md">
                 <span className="h-2 w-2 rounded-full bg-[#7AE1EF] shadow-[0_0_18px_rgba(122,225,239,.8)]" />
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">SMART COOLING / SUPLA</span>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">AUTOMATIZACE / SUPLA</span>
               </div>
 
               <h1 className="mt-7 max-w-[11ch] font-heading text-[clamp(3.1rem,6.1vw,6.5rem)] font-black leading-[.9] tracking-[-.065em]">
@@ -70,15 +70,15 @@ export default function SmartHero() {
               </h1>
 
               <p className="mt-7 max-w-xl text-base leading-8 text-white/62 sm:text-lg">
-                Chytré řízení propojuje mlžítko, ventil, provozní scénáře a dostupné senzory. Výsledkem je přehlednější správa a automatický provoz podle skutečné konfigurace instalace.
+                Automatizace propojuje mlžítko, ventil, provozní scénáře a dostupné senzory. Výsledkem je přehlednější správa a automatický provoz podle skutečné konfigurace instalace.
               </p>
 
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
-                  to="/poptavka?produkt=Chytr%C3%A9%20SUPLA%20%C5%99%C3%ADzen%C3%AD%20ml%C5%BE%C3%ADtek"
+                  to="/poptavka?produkt=Automatizace%20SUPLA%20ml%C5%BE%C3%ADtek"
                   className="product-sweep inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-[#7AE1EF] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_22px_60px_rgba(122,225,239,.22)] transition hover:-translate-y-0.5 hover:bg-white"
                 >
-                  Navrhnout chytré řízení <ArrowRight size={17} />
+                  Navrhnout automatizaci <ArrowRight size={17} />
                 </Link>
                 <a
                   href="#smart-automatizace"
@@ -115,7 +115,7 @@ export default function SmartHero() {
             <div className="relative min-h-[500px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[.05] shadow-[0_38px_120px_rgba(0,0,0,.35)] backdrop-blur-xl sm:min-h-[620px]">
               <img
                 src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp"
-                alt="Smart řízení mlžného systému v mobilní aplikaci"
+                alt="Automatizace mlžného systému v mobilní aplikaci"
                 className="absolute inset-0 h-full w-full object-contain p-4 sm:p-8"
                 loading="eager"
                 fetchPriority="high"

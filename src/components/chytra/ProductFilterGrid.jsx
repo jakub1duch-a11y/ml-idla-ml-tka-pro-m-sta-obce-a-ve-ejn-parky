@@ -46,7 +46,7 @@ export default function ProductFilterGrid() {
         </div>
       </div>
 
-      <div className="ref-progress-track mb-10"><span className="ref-progress-line" data-home-progress /></div>
+      <div className="ref-progress-track mb-10"><motion.span className="ref-progress-line" initial={reduced ? false : { scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: 0.8 }} transition={{ duration: reduced ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }} /></div>
 
       {loading ?
       <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-slate-300" /></div> :

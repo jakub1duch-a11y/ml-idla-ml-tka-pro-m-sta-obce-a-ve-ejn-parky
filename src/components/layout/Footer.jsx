@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Mail, Phone, MapPin, Droplets, Gauge, ThermometerSun } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Mail, Phone, MapPin, Droplets, Gauge, ThermometerSun, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
@@ -56,6 +56,7 @@ const columns = [
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [openColumn, setOpenColumn] = useState(null);
 
   const subscribe = async (event) => {
     event.preventDefault();
@@ -155,24 +156,49 @@ export default function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Navigace v patičce" className="grid grid-cols-2 gap-x-7 gap-y-10 md:grid-cols-4">
-            {columns.map((column) => (
-              <div key={column.title} className="border-t border-white/10 pt-4">
-                <p className="mb-5 font-mono text-[10px] uppercase tracking-[.18em] text-cyan">{column.title}</p>
-                <div className="space-y-3.5">
-                  {column.links.map(([label, to]) => (
-                    <Link
-                      key={label}
-                      to={to}
-                      className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white"
-                    >
-                      <span>{label}</span>
-                      <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-60" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <nav aria-label="Navigace v patičce" className="grid gap-x-7 md:grid-cols-4 md:gap-y-10">
+            {columns.map((column, columnIndex) => {
+              const isOpen = openColumn === columnIndex;
+              return (
+                <motion.div
+                  key={column.title}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.42, delay: columnIndex * 0.05 }}
+                  className="border-t border-white/10 py-1 md:pt-4"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenColumn(isOpen ? null : columnIndex)}
+                    className="flex w-full items-center justify-between py-4 text-left md:pointer-events-none md:py-0"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">{column.title}</span>
+                    <ChevronDown size={16} className={`text-white/55 transition-transform duration-300 md:hidden ${isOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <motion.div
+                    initial={false}
+                    animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden md:!h-auto md:!opacity-100"
+                  >
+                    <div className="space-y-3.5 pb-5 md:pb-0 md:pt-5">
+                      {column.links.map(([label, to]) => (
+                        <Link
+                          key={label}
+                          to={to}
+                          className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white"
+                        >
+                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full">{label}</span>
+                          <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0 group-hover:opacity-60" />
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </nav>
         </div>
 

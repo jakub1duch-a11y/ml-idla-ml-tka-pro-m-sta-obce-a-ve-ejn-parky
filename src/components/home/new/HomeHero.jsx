@@ -41,14 +41,15 @@ const tiles = [
 export default function HomeHero() {
   return (
     <MotionConfig reducedMotion="user">
-    <section className="hero-motion-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
+    <section className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
         <motion.img
           src="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg"
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-[108%] w-full object-cover object-center"
+          data-home-parallax="7"
           initial={{ scale: 1.04 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
@@ -57,7 +58,7 @@ export default function HomeHero() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
-          <motion.div className="max-w-3xl" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div className="max-w-3xl" data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.22em] text-[#26C6E9]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
             <h1 className="mt-6 max-w-[10ch] font-heading text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-normal text-white">
               Mlžítka pro příjemnější města.
@@ -76,7 +77,7 @@ export default function HomeHero() {
             </div>
           </motion.div>
 
-          <motion.aside initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) => (
                 <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">
@@ -91,15 +92,17 @@ export default function HomeHero() {
         </div>
       </div>
 
+      <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
       <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((tile, index) => (
             <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
-              <Link to={tile.link} className="group relative block min-h-[240px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
-                <img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
+              <Link to={tile.link} className="ref-product-card group relative block min-h-[240px] overflow-hidden border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
+                <div className="ref-card-media absolute inset-0"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" /></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/[.88] via-black/24 to-transparent" />
                 <motion.span className="absolute inset-x-6 top-5 h-px origin-left rounded-full bg-gradient-to-r from-transparent via-[#26C6E9] to-transparent opacity-0 group-hover:opacity-100" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.7, delay: 0.12 + index * 0.04 }} />
                 <div className="relative pt-24 p-5">
+                  <div className="mb-3 flex items-center justify-between"><span className="ref-card-index font-mono text-[10px] font-bold text-[#26C6E9]">{String(index + 1).padStart(2, "0")}</span><span className="text-[10px] font-bold uppercase tracking-[.18em] text-white/55">Produkt</span></div>
                   <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
                   <p className="mt-1 text-sm font-semibold text-slate-200">{tile.text}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] opacity-90 transition group-hover:translate-x-1">

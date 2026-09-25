@@ -1,13 +1,14 @@
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductClick } from '@/lib/ga4';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 export default function ProductFilterGrid() {
+  const reduced = useReducedMotion();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState('all');

@@ -7,6 +7,7 @@ import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
 import SmartSystemPreview from '@/components/katalog/SmartSystemPreview';
 import FeatureIconRow from '@/components/common/FeatureIconRow';
+import '@/styles/reference-motion.css';
 
 const CATALOG_FEATURES = [
 { icon: Droplets, label: 'Nízká spotřeba vody', value: 'od 4,6 l/h' },

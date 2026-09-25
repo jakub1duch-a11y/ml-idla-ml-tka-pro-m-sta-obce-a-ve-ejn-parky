@@ -131,6 +131,31 @@ export default function ONas() {
       </section>
 
       {/* CTA */}
+      <section className="bg-[#f7f8f6] py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#0B5EA8]">Jak pracujeme</p>
+            <h2 className="mt-4 font-heading text-4xl leading-tight text-[#0D2F4F] lg:text-5xl">Jeden tým od návrhu až po servis.</h2>
+            <p className="mt-6 text-lg leading-8 text-slate-600">Technický návrh, výroba, instalace i následná péče na sebe navazují. Díky tomu se při předávání mezi jednotlivými fázemi neztrácí důležité informace o projektu.</p>
+          </div>
+          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              ['01','Návrh a specifikace','Řešíme prostor, způsob využití, přívod vody, rozmístění prvků a vhodný způsob řízení.'],
+              ['02','Výroba','Nerezové prvky připravujeme s důrazem na geometrii, povrch a servisovatelnost celé sestavy.'],
+              ['03','Instalace a spuštění','Systém osadíme, nastavíme a ověříme v reálném provozu včetně trysek a ovládání.'],
+              ['04','Servis a péče','Na instalaci navazuje předsezónní kontrola, údržba a podle potřeby také zazimování.'],
+            ].map(([n,title,text]) => (
+              <article key={n} className="bg-white p-7 lg:p-8">
+                <span className="font-mono text-sm tracking-widest text-[#0B5EA8]">{n}</span>
+                <h3 className="mt-6 font-heading text-xl font-semibold text-[#0D2F4F]">{title}</h3>
+                <p className="mt-4 text-sm leading-7 text-slate-600">{text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-8 text-center"><Link to="/servis-udrzba" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#0D2F4F]/25 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#0D2F4F] transition hover:border-[#0D2F4F]">Jak zajišťujeme servis <ArrowRight size={16} className="ml-2" /></Link></div>
+        </div>
+      </section>
+
       <section className="border-y border-[#EAF5FB] bg-[#EAF5FB] py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-10">
           <div>

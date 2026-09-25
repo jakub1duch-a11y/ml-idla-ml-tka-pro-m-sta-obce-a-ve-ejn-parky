@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig } from 'framer-motion';
+import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
@@ -39,9 +39,16 @@ const tiles = [
 ];
 
 export default function HomeHero() {
+  const heroRef = useRef(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '8%']);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.045]);
+  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-5%']);
+
   return (
     <MotionConfig reducedMotion="user">
-    <section className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
+    <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
         <motion.img
@@ -49,6 +56,7 @@ export default function HomeHero() {
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
           className="absolute inset-0 h-[108%] w-full object-cover object-center"
+          style={{ y: mediaY, scale: mediaScale }}
           data-home-parallax="7"
           initial={{ scale: 1.04 }}
           animate={{ scale: 1 }}
@@ -58,13 +66,13 @@ export default function HomeHero() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
-          <motion.div className="max-w-3xl" data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.22em] text-[#26C6E9]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-6 max-w-[10ch] font-heading text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-normal text-white">
-              Mlžítka pro příjemnější města.
+            <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(3.2rem,6.8vw,7rem)] font-black leading-[.92] tracking-[-.06em] text-white">
+              Ochlazení, které patří do prostoru.
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-8 text-slate-200 sm:text-2xl">
-              Nízkotlaká mlžítka pro náměstí, sportoviště i zahrady. Napojení na běžný vodovodní řad, nerezový design a chytré řízení SUPLA.
+              Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">

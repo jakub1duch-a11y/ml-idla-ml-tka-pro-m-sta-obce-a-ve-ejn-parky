@@ -56,6 +56,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const location = useLocation();
   const locale = getLocaleFromPath(location.pathname);
   const internationalCopy = INTERNATIONAL_NAV[locale];
@@ -76,7 +77,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);}, [location]);
+  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setAccountOpen(false);}, [location]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -105,7 +106,7 @@ export default function Header() {
       
 
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#071A2F]/94 text-white backdrop-blur-2xl transition-all duration-500 ease-out ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
-        <div className="mx-auto flex h-[68px] max-w-[1500px] items-center justify-between gap-4 px-5 sm:px-6 lg:gap-8 lg:px-8">
+        <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
           <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">
@@ -113,26 +114,26 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          {locale === 'cs' ? <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
+          {locale === 'cs' ? <nav className="hidden lg:flex min-w-0 items-center gap-0 flex-1 justify-center mx-auto whitespace-nowrap">
             {/* Produkty megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button
                 type="button"
                 onClick={() => setMegaOpen((value) => !value)}
                 aria-expanded={megaOpen}
-                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}
+                className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}
               >
                 Produkty
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/mlzitka-pro-mesta-obce" className="px-4 py-2.5 rounded-full text-sm font-medium transition-all text-cyan-100 hover:text-white hover:bg-white/10">Pro města</Link>
-            <Link to="/jak-to-funguje" className="px-4 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
-            <Link to="/smart-ovladani" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Chytré ovládání</Link>
-            <Link to="/reference" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
-            <Link to="/blog" className="px-5 py-2.5 rounded-full text-sm font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Magazín</Link>
+            <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-white/10">Městská mlžítka</Link>
+            <Link to="/jak-to-funguje" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
+            <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
+            <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Magazín</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
-              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+              <button className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
                 Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
@@ -157,8 +158,7 @@ export default function Header() {
                 }
               </AnimatePresence>
             </div>
-            <Link to="/kontakt" className="px-5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
-            <Link to="/klientska-sekce" className="px-4 py-2.5 rounded-full text-sm font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Klientská sekce</Link>
+            <Link to="/kontakt" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
           </nav> : <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             <Link to={ROUTE_MAP.catalog[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.products}</Link>
             <Link to={ROUTE_MAP.city[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.urban}</Link>
@@ -172,9 +172,16 @@ export default function Header() {
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
             <div className="hidden lg:flex items-center gap-2">
               <LanguageSwitcher />
-              <Link to="/klientska-sekce" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/12 px-4 py-2.5 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
-                <LogIn size={15} /> Přihlásit do klientské sekce
-              </Link>
+              <div className="relative">
+                <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
+                  <LogIn size={17} />
+                </button>
+                <AnimatePresence>
+                  {accountOpen && <motion.div initial={{opacity:0,y:-6,scale:.98}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:-6,scale:.98}} transition={{duration:.16}} className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-white/15 bg-[#071A2F]/98 p-2 shadow-2xl backdrop-blur-2xl">
+                    <Link to="/klientska-sekce" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><LogIn size={15}/> Klientská sekce</Link>
+                  </motion.div>}
+                </AnimatePresence>
+              </div>
               <Link to={inquiryPath}
               className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>

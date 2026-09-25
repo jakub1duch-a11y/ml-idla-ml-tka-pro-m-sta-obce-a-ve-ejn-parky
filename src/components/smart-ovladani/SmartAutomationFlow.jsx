@@ -1,26 +1,174 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { CloudSun, Thermometer, Timer, Waves, Radio, Gauge, Droplets, ArrowRight, Box, Wifi } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  ArrowRight,
+  Box,
+  CloudSun,
+  Droplets,
+  Gauge,
+  Radio,
+  Thermometer,
+  Timer,
+  Waves,
+  Wifi,
+} from 'lucide-react';
+
+const FLOW = [
+  { Icon: Thermometer, label: 'PODMÍNKA', value: 'TEPLOTA / ČAS', note: 'podle nastavení konkrétní zóny' },
+  { Icon: Radio, label: 'SMART ŘÍZENÍ', value: 'AUTOMATIKA', note: 'vyhodnocení pravidel' },
+  { Icon: Gauge, label: 'VENTIL', value: 'ŘÍZENÁ ZÓNA', note: 'otevření nebo uzavření přívodu' },
+  { Icon: Droplets, label: 'MLŽÍTKO', value: 'PROVOZNÍ REŽIM', note: 'jemná vodní mlha podle scénáře' },
+];
 
 const STEPS = [
-{ Icon: Thermometer, number: '01', title: 'Senzor vyhodnotí teplotu', text: 'Po dosažení nastaveného teplotního limitu systém pokračuje ve vyhodnocení pravidel zóny.' },
-{ Icon: CloudSun, number: '02', title: 'Ověří nastavené podmínky', text: 'Podle konfigurace zohlední čas, počasí nebo další připojené senzory.' },
-{ Icon: Timer, number: '03', title: 'Spustí správný scénář', text: 'Řízení otevře příslušnou vodní zónu podle nastaveného časového nebo cyklického režimu.' },
-{ Icon: Waves, number: '04', title: 'Řídí provoz zóny', text: 'Po skončení scénáře nebo podmínky systém příslušnou vodní zónu opět uzavře.' }];
+  { Icon: Thermometer, number: '01', title: 'Systém načte podmínky', text: 'Vyhodnotí dostupné vstupy, například teplotu, časové okno nebo další připojené podmínky.' },
+  { Icon: CloudSun, number: '02', title: 'Ověří pravidla zóny', text: 'Automatizace porovná aktuální stav s nastaveným scénářem pro konkrétní místo.' },
+  { Icon: Timer, number: '03', title: 'Spustí správný scénář', text: 'Řízení aktivuje příslušnou vodní zónu na nastavený čas nebo cyklus.' },
+  { Icon: Waves, number: '04', title: 'Ukončí provoz bezpečně', text: 'Po skončení podmínky nebo scénáře se zóna automaticky uzavře.' },
+];
 
+const spring = { type: 'spring', stiffness: 120, damping: 18, mass: 0.7 };
 
 export default function SmartAutomationFlow() {
-  const FLOW = [
-  { Icon: Thermometer, label: 'SENZOR', value: '28,6 °C', note: 'teplota / podmínky' },
-  { Icon: Radio, label: 'SMART ŘÍZENÍ', value: 'AUTO', note: 'vyhodnocení pravidel' },
-  { Icon: Gauge, label: 'VENTIL', value: 'OTEVŘEN', note: 'řízení vodní zóny' },
-  { Icon: Droplets, label: 'MLŽÍTKO', value: 'AKTIVNÍ', note: 'jemná vodní mlha' }];
+  const reduced = useReducedMotion();
 
+  return (
+    <section id="jak-to-funguje" className="smart-motion-section scroll-mt-24 overflow-hidden bg-[#07131D] py-20 text-white lg:py-32">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[8%] top-10 h-72 w-72 rounded-full bg-cyan-300/10 blur-3xl" />
+        <div className="absolute bottom-0 right-[8%] h-96 w-96 rounded-full bg-sky-400/10 blur-3xl" />
+      </div>
 
-  return <section id="jak-to-funguje" className="scroll-mt-24 bg-background py-20 lg:py-28"><div className="mx-auto max-w-7xl px-6 lg:px-10">
-    <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-end"><div className="max-w-2xl"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-secondary">Jak to funguje</p><h2 className="mt-4 font-heading text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl">Od podmínky k jemné mlze. Automaticky.</h2><p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">Smart řízení propojí senzory, provozní logiku a vodní zónu. Mlžení se aktivuje pouze tehdy, když jsou splněny nastavené podmínky.</p></div><p className="max-w-xl text-sm leading-relaxed text-muted-foreground lg:justify-self-end">Příklad: je-li dosažena nastavená teplota a současně běží povolené časové okno, řídicí systém aktivuje ventil příslušné zóny. Po skončení podmínky nebo scénáře se zóna automaticky uzavře.</p></div>
-    <div className="mt-10 overflow-hidden rounded-[28px] border border-slate-800 bg-slate-950 p-4 shadow-xl sm:p-7"><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{FLOW.map(({ Icon, label, value, note }, i) => <React.Fragment key={label}><div className="relative rounded-2xl border border-white/10 bg-white/[.06] p-4 text-white sm:p-5"><div className="flex items-center justify-between"><Icon size={24} className="text-accent" /><span className="font-mono text-[10px] tracking-[.16em] text-white/60">0{i + 1}</span></div><p className="mt-6 font-mono text-[10px] tracking-[.16em] text-white/68 sm:mt-8">{label}</p><p className="mt-1 text-lg font-semibold sm:text-xl">{value}</p><p className="mt-1 leading-4 text-white/68 text-sm sm:text-sm">{note}</p>{i < 3 && <ArrowRight size={17} className="absolute -right-[11px] top-1/2 z-10 hidden -translate-y-1/2 text-accent lg:block" />}</div></React.Fragment>)}</div></div>
-    <p className="mt-8 font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Hlavní prvky řešení</p><div className="mt-3 grid gap-3 sm:grid-cols-3"><div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><Box size={20} className="text-secondary" /><p className="mt-3 text-sm font-semibold text-slate-900">Řídicí box</p><p className="mt-1 leading-relaxed text-slate-500 text-sm">Řídicí logika pro scénáře, čas a jednotlivé zóny.</p></div><div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><Gauge size={20} className="text-secondary" /><p className="mt-3 text-sm font-semibold text-slate-900">Ventilová zóna</p><p className="mt-1 leading-relaxed text-slate-500 text-sm">Otevírá a uzavírá přívod vody podle pokynu řízení.</p></div><div className="rounded-2xl border border-slate-200 bg-slate-50 p-4"><Wifi size={20} className="text-secondary" /><p className="mt-3 text-sm font-semibold text-slate-900">Vzdálená správa</p><p className="mt-1 leading-relaxed text-slate-500 text-sm">Volitelná vrstva pro podporované SMART / SMART PRO konfigurace.</p></div></div><p className="mt-12 font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Automatizace krok za krokem</p><div className="mt-3 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{STEPS.map(({ Icon, number, title, text }, index) => <motion.div key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }} className="border-t-2 border-secondary pt-5"><Icon size={34} className="text-secondary" /><p className="mt-8 font-mono text-xs text-muted-foreground">{number}</p><h3 className="mt-2 font-heading text-xl text-foreground">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></motion.div>)}</div>
-    <div className="mt-14 grid overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm ring-1 ring-black/[.02] lg:grid-cols-2"><div className="h-[280px] bg-slate-50 sm:h-[340px] lg:h-auto lg:min-h-[360px]"><img src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp" alt="Smart řízení mlžného systému v mobilní aplikaci" className="sm:p-4 w-full object-cover p-2" /></div><div className="flex flex-col justify-center p-7 sm:p-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Technologie v praxi</p><h3 className="mt-3 font-heading text-3xl leading-tight text-foreground">Jedno řízení. Jedna nebo více vodních zón.</h3><p className="mt-4 text-sm leading-7 text-muted-foreground">Řídicí část lze navrhnout podle rozsahu instalace – od jednoho mlžítka po několik samostatných zón. Každá zóna může mít vlastní časový režim a automatizační podmínky. Konkrétní ventilová a řídicí sestava se volí podle hydrauliky, napájení a požadovaných funkcí projektu.</p><div className="mt-6 flex flex-wrap gap-2">{['Teplota', 'Čas', 'Volitelné počasí', 'Volitelný pohyb', 'Více zón'].map((x) => <span key={x} className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600">{x}</span>)}</div></div></div>
-  </div></section>;
+      <div className="relative mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 xl:px-20">
+        <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-3xl"
+          >
+            <p className="font-mono text-[11px] uppercase tracking-[.22em] text-[#7AE1EF]">Automatizace / 01</p>
+            <h2 className="mt-5 max-w-[12ch] font-heading text-[clamp(2.5rem,5vw,5rem)] font-black leading-[.95] tracking-[-.055em]">
+              Nastavte podmínky. Systém pracuje za vás.
+            </h2>
+          </motion.div>
+
+          <motion.p
+            initial={reduced ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.62, delay: 0.08 }}
+            className="max-w-2xl text-base leading-8 text-white/62 lg:justify-self-end"
+          >
+            Smart řízení propojuje vstupy, provozní pravidla a jednotlivé vodní zóny. Konkrétní funkce se vždy zobrazují podle skutečně osazené konfigurace projektu.
+          </motion.p>
+        </div>
+
+        <div className="mt-12 grid gap-3 lg:grid-cols-4">
+          {FLOW.map(({ Icon, label, value, note }, index) => (
+            <React.Fragment key={label}>
+              <motion.article
+                initial={reduced ? false : { opacity: 0, y: 24, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={reduced ? undefined : { y: -6 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ ...spring, delay: index * 0.06 }}
+                className="smart-flow-card group relative min-h-[220px] overflow-hidden rounded-[28px] border border-white/10 bg-white/[.055] p-5 backdrop-blur-xl"
+              >
+                <div className="absolute inset-x-0 top-0 h-px origin-left bg-gradient-to-r from-transparent via-[#7AE1EF] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="flex items-center justify-between">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#7AE1EF]/25 bg-[#7AE1EF]/10 text-[#7AE1EF]">
+                    <Icon size={23} strokeWidth={1.7} />
+                  </span>
+                  <span className="font-mono text-[10px] tracking-[.16em] text-white/38">0{index + 1}</span>
+                </div>
+                <p className="mt-8 font-mono text-[10px] uppercase tracking-[.18em] text-white/44">{label}</p>
+                <p className="mt-2 font-heading text-xl font-bold tracking-[-.025em]">{value}</p>
+                <p className="mt-2 text-sm leading-6 text-white/52">{note}</p>
+                {index < 3 && <ArrowRight size={17} className="absolute -right-[11px] top-1/2 z-10 hidden -translate-y-1/2 text-[#7AE1EF] lg:block" />}
+              </motion.article>
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          {[
+            { Icon: Box, title: 'Řídicí box', text: 'Logika scénářů, času a jednotlivých zón.' },
+            { Icon: Gauge, title: 'Ventilová zóna', text: 'Řízené otevření a uzavření přívodu vody.' },
+            { Icon: Wifi, title: 'Vzdálená správa', text: 'Dostupná u podporovaných SMART konfigurací.' },
+          ].map(({ Icon, title, text }, index) => (
+            <motion.div
+              key={title}
+              initial={reduced ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={reduced ? undefined : { y: -4 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.48, delay: index * 0.05 }}
+              className="rounded-[24px] border border-white/10 bg-white/[.035] p-5"
+            >
+              <Icon size={21} className="text-[#7AE1EF]" />
+              <p className="mt-4 text-sm font-bold text-white">{title}</p>
+              <p className="mt-2 text-sm leading-6 text-white/48">{text}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <p className="mt-16 font-mono text-[10px] uppercase tracking-[.2em] text-white/36">Automatizace krok za krokem</p>
+        <div className="mt-5 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {STEPS.map(({ Icon, number, title, text }, index) => (
+            <motion.div
+              key={title}
+              initial={reduced ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.55, delay: index * 0.07 }}
+              className="border-t border-white/14 pt-6"
+            >
+              <div className="flex items-center justify-between">
+                <Icon size={30} className="text-[#7AE1EF]" />
+                <span className="font-mono text-xs text-white/28">{number}</span>
+              </div>
+              <h3 className="mt-10 font-heading text-xl font-bold tracking-[-.03em]">{title}</h3>
+              <p className="mt-3 text-sm leading-6 text-white/50">{text}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={reduced ? false : { opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.7 }}
+          className="mt-16 grid overflow-hidden rounded-[32px] border border-white/10 bg-white/[.04] shadow-[0_35px_120px_rgba(0,0,0,.28)] lg:grid-cols-[1.1fr_.9fr]"
+        >
+          <div className="relative min-h-[320px] overflow-hidden bg-white">
+            <motion.img
+              src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp"
+              alt="Smart řízení mlžného systému v mobilní aplikaci"
+              className="absolute inset-0 h-full w-full object-contain p-4 sm:p-8"
+              whileHover={reduced ? undefined : { scale: 1.025 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+          <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
+            <p className="font-mono text-[11px] uppercase tracking-[.2em] text-[#7AE1EF]">Technologie v praxi</p>
+            <h3 className="mt-4 max-w-lg font-heading text-3xl font-bold leading-[1.05] tracking-[-.04em] sm:text-4xl">
+              Jedno řízení. Jedna nebo více vodních zón.
+            </h3>
+            <p className="mt-5 text-sm leading-7 text-white/54">
+              Řídicí část se navrhuje podle rozsahu instalace. Každá zóna může mít vlastní provozní režim a automatizační podmínky; konkrétní sestava se volí podle skutečné hydrauliky, napájení a požadovaných funkcí projektu.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Teplota', 'Čas', 'Počasí podle konfigurace', 'Senzor podle konfigurace', 'Více zón'].map((item) => (
+                <span key={item} className="rounded-full border border-white/12 bg-white/[.04] px-3 py-1.5 text-xs font-medium text-white/62">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 }

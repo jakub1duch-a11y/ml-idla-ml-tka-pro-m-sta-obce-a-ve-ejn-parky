@@ -467,10 +467,10 @@ export const SEO_PAGES = {
     canonicalPath: '/',
   },
   kolekce: {
-    title: 'Celý katalog 2026 - Mlžítka a mlžné brány',
-    description: 'Katalog 2026 - Systémy HolmTec: OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70 a další. Zakázková výroba z nerezové oceli pro moderní architekturu.',
-    keywords: 'mlžítka katalog, mlžné brány, designová mlžítka, mlžné skulptury, mlžné systémy, OSTEV, MRAK, LINEA, Y-ARMIST, BENDY 60, GATE70',
-    canonicalPath: '/mlzidla-mlzitka',
+    title: 'Katalog mlžítek a mlžných bran',
+    description: 'Katalog nerezových mlžítek a mlžných bran pro města, obce, parky, sportoviště i zahrady. Fotografie, použití, parametry a poptávka.',
+    keywords: 'katalog mlžítek, katalog mlzitek, mlžítka pro města, mlžítka pro obce, mlžné brány, městská mlžítka, nerezová mlžítka',
+    canonicalPath: '/katalog-mlzitek',
   },
   mestskaKolekce: {
     title: 'Městská mlžítka pro města, obce a veřejný prostor',

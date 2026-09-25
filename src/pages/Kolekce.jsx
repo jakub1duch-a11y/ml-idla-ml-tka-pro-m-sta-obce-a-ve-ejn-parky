@@ -23,7 +23,7 @@ const HIDDEN_SLUGS = ['garden-cooling-set'];
 
 const SPACE_FILTERS = [
   { value: 'all', label: 'Všechny prostory', icon: SlidersHorizontal },
-  { value: 'city', label: 'Města', icon: Building2 },
+  { value: 'city', label: 'Města a obce', icon: Building2 },
   { value: 'garden', label: 'Zahrady', icon: Home },
   { value: 'sport', label: 'Sportoviště', icon: Dumbbell },
   { value: 'school', label: 'Školy & hřiště', icon: School },
@@ -95,8 +95,8 @@ export default function Kolekce() {
         <div className="mb-10 flex flex-col gap-6 border-b border-[#DCE9ED] pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
-            <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.98] tracking-[-.055em] text-[#07131D] sm:text-5xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Všechna mlžítka, brány a mlžné sochy'}</h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle kolekcí a produktových řad. Vyberte kolekci, řadu nebo typ prostoru — ceny sdělujeme na poptávku podle konfigurace a rozsahu instalace.'}</p>
+            <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.98] tracking-[-.055em] text-[#07131D] sm:text-5xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Katalog mlžítek, mlžných bran a mlžných prvků'}</h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle produktových řad a využití. Pro města a obce doporučujeme filtrovat podle typu veřejného prostoru; cenu připravujeme podle konfigurace, počtu prvků a rozsahu instalace.'}</p>
           </div>
           {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}
         </div>

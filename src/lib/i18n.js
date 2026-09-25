@@ -14,7 +14,7 @@ export const LOCALE_CONFIG = {
 
 export const ROUTE_MAP = {
   home: { cs: '/', en: '/en', de: '/de', pl: '/pl', sk: '/sk', it: '/it' },
-  catalog: { cs: '/mlzidla-mlzitka', en: '/en/misting-systems', de: '/de/nebelanlagen', pl: '/pl/systemy-mglowe', sk: '/sk/hmlove-systemy', it: '/it/sistemi-nebulizzazione' },
+  catalog: { cs: '/katalog-mlzitek', en: '/en/misting-systems', de: '/de/nebelanlagen', pl: '/pl/systemy-mglowe', sk: '/sk/hmlove-systemy', it: '/it/sistemi-nebulizzazione' },
   city: { cs: '/mestske-mlzitka', en: '/en/urban-misting', de: '/de/stadtnebel', pl: '/pl/systemy-mglowe-dla-miast', sk: '/sk/hmlove-systemy-pre-mesta', it: '/it/nebulizzazione-urbana' },
   garden: { cs: '/zahradni-mlzitka', en: '/en/garden-misting', de: '/de/gartennebel', pl: '/pl/mgla-wodna-do-ogrodu', sk: '/sk/hmlove-systemy-do-zahrady', it: '/it/nebulizzazione-giardino' },
   custom: { cs: '/zakazkova-mlzitka', en: '/en/custom-misting', de: '/de/sonderanfertigung', pl: '/pl/systemy-mglowe-na-zamowienie', sk: '/sk/hmlove-systemy-na-mieru', it: '/it/nebulizzazione-su-misura' },

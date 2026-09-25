@@ -1,0 +1,162 @@
+/* Reference-driven motion language for MLŽIDLA®.
+   Inspired by editorial interaction patterns, implemented in the MLŽIDLA brand system. */
+
+.ref-editorial-surface {
+  --ref-ink: #07131d;
+  --ref-aqua: #22d3ee;
+  --ref-cream: #f7f3eb;
+  position: relative;
+  isolation: isolate;
+}
+
+.ref-editorial-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 16%, rgba(34,211,238,.10), transparent 24%),
+    radial-gradient(circle at 86% 72%, rgba(255,180,94,.08), transparent 28%),
+    linear-gradient(rgba(7,19,29,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7,19,29,.035) 1px, transparent 1px);
+  background-size: auto, auto, 46px 46px, 46px 46px;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.ref-progress-track {
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(7,19,29,.10);
+}
+
+.ref-progress-line {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22d3ee, #0b8ec5 55%, #ffb45e);
+}
+
+.ref-product-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(7,19,29,.09);
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 18px 54px rgba(7,19,29,.08);
+  transition:
+    transform .42s cubic-bezier(.22,1,.36,1),
+    box-shadow .42s cubic-bezier(.22,1,.36,1),
+    border-color .3s ease;
+}
+
+.ref-product-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
+  height: 2px;
+  background: linear-gradient(90deg, #22d3ee, transparent 74%);
+  transform: scaleX(.34);
+  transform-origin: left;
+  transition: transform .42s cubic-bezier(.22,1,.36,1);
+}
+
+.ref-product-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(34,211,238,.35);
+  box-shadow: 0 30px 90px rgba(7,19,29,.14);
+}
+
+.ref-product-card:hover::before { transform: scaleX(1); }
+
+.ref-product-card .ref-card-media {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(34,211,238,.14), transparent 40%),
+    #edf4f5;
+}
+
+.ref-product-card .ref-card-media img {
+  transition: transform .75s cubic-bezier(.22,1,.36,1), filter .55s ease;
+}
+
+.ref-product-card:hover .ref-card-media img {
+  transform: scale(1.055) translateY(-1%);
+  filter: saturate(1.03) contrast(1.02);
+}
+
+.ref-card-index {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .12em;
+}
+
+.ref-float-rail {
+  position: absolute;
+  right: clamp(12px, 2vw, 28px);
+  top: 50%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.ref-float-rail span {
+  font: 700 9px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.62);
+}
+
+.ref-float-rail i {
+  display: block;
+  width: 62px;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255,255,255,.18);
+}
+
+.ref-float-rail i::after {
+  content: "";
+  display: block;
+  width: 62%;
+  height: 100%;
+  background: #22d3ee;
+}
+
+.ref-cursor-glow {
+  position: relative;
+}
+
+.ref-cursor-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(34,211,238,.22), transparent 56%);
+  transition: opacity .35s ease;
+}
+
+.ref-cursor-glow:hover::after { opacity: 1; }
+
+@media (max-width: 767px) {
+  .ref-editorial-surface::before { background-size: auto, auto, 32px 32px, 32px 32px; }
+  .ref-product-card { border-radius: 20px; }
+  .ref-product-card:hover { transform: none; }
+  .ref-float-rail { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ref-product-card,
+  .ref-product-card::before,
+  .ref-product-card .ref-card-media img { transition: none !important; transform: none !important; }
+}

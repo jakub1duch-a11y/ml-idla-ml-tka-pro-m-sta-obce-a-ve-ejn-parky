@@ -16,6 +16,7 @@ import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import PremiumHomepage2026 from '@/components/home/new/PremiumHomepage2026';
 import UrbanCoolingExperience from '@/components/home/new/UrbanCoolingExperience';
 import '@/styles/urban-cooling-experience.css';
+import '@/styles/reference-motion.css';
 
 export default function Home() {
   useEffect(() => {

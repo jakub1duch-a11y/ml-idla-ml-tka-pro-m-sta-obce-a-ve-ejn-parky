@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Building2, Droplets, Ruler, ShieldCheck, Wifi } from 'lucide-react';
+import { ArrowRight, Building2, Droplets, Ruler, ShieldCheck, Wifi, Trees, Dumbbell, School } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { base44 } from '@/api/base44Client';
 
+const USE_CASES = [
+  { icon: Building2, title: 'Náměstí a pěší zóny', text: 'Průchozí ochlazovací bod pro pobytové plochy, městská centra, předprostory veřejných budov a frekventované pěší trasy.' },
+  { icon: Trees, title: 'Parky a promenády', text: 'Architektonický průchod mlhou pro cesty, odpočinkové zóny a místa, kde se lidé v horkých dnech přirozeně pohybují.' },
+  { icon: Dumbbell, title: 'Sportoviště a areály', text: 'Osvěžení u vstupů, mezi zónami areálu, u tribun, koupališť a dalších míst s vysokou letní návštěvností.' },
+  { icon: School, title: 'Školy a veřejná hřiště', text: 'Průchozí mlžná zóna pro školní areály, venkovní hřiště a veřejné prostory, kde je důležitý přehledný provoz a vhodné umístění.' },
+];
+
 const FEATURES = [
-  { icon: Building2, title: 'Veřejný prostor', text: 'Mlžné brány pro náměstí, parky, pěší zóny, sportovní areály, eventy a návštěvnicky vytížená místa.' },
-  { icon: Ruler, title: 'Rozměr podle místa', text: 'Průchozí šířku, výšku, počet trysek i způsob kotvení upravujeme podle konkrétního provozu a architektury.' },
-  { icon: ShieldCheck, title: 'Nerezová konstrukce', text: 'Odolné provedení pro dlouhodobé venkovní použití, navržené s ohledem na servis a údržbu.' },
+  { icon: Ruler, title: 'Rozměr podle místa', text: 'Průchozí šířku, výšku, počet trysek i způsob kotvení navrhujeme podle konkrétního provozu a architektury.' },
+  { icon: ShieldCheck, title: 'Nerezová konstrukce', text: 'Odolné venkovní provedení s důrazem na čistý detail, servisní přístup a začlenění do veřejného prostoru.' },
   { icon: Wifi, title: 'Smart řízení', text: 'Časové plány, teplotní automatika, vzdálené ovládání a další provozní scénáře podle požadavků projektu.' },
+  { icon: Droplets, title: 'Projektová příprava', text: 'Přívod vody, filtraci, servisní přístup, proplach a zazimování řešíme podle konkrétní konfigurace a místa instalace.' },
 ];
 
 export default function MlzneBrany() {
@@ -20,9 +27,9 @@ export default function MlzneBrany() {
 
   useEffect(() => {
     setSEO({
-      title: 'Mlžné brány pro města, parky a eventy',
-      description: 'Designové nerezové mlžné brány pro města, parky, sportoviště a eventy. Nízkotlaké mlžení, zakázkové rozměry, projektová podpora a Smart řízení.',
-      keywords: 'mlžná brána, mlžné brány, mlzna brana, mlžící brána, mlžící brány, mlžná brána pro města, ochlazovací brána',
+      title: 'Mlžné brány pro města a obce',
+      description: 'Nerezové mlžné brány pro města, obce, náměstí, parky a sportoviště. Návrh umístění, projektová podpora, Smart řízení a servis.',
+      keywords: 'mlžná brána pro města, mlžné brány pro obce, mlžná brána náměstí, mlžící brána, ochlazovací brána, veřejný prostor',
       canonicalPath: '/mlzne-brany',
       jsonLd: {
         '@context': 'https://schema.org',
@@ -38,7 +45,7 @@ export default function MlzneBrany() {
           {
             '@type': 'FAQPage',
             mainEntity: [
-              { '@type': 'Question', name: 'Kde se mlžná brána používá?', acceptedAnswer: { '@type': 'Answer', text: 'Mlžné brány se hodí do parků, na náměstí, pěší zóny, sportoviště, festivaly a další venkovní prostory, kde lidé přirozeně procházejí ochlazovací zónou.' } },
+              { '@type': 'Question', name: 'Kde se mlžná brána používá?', acceptedAnswer: { '@type': 'Answer', text: 'Mlžné brány se používají na náměstích, v parcích, pěších zónách, u škol, na sportovištích a v dalších veřejných prostorech, kde lidé přirozeně procházejí ochlazovací zónou.' } },
               { '@type': 'Question', name: 'Lze vyrobit mlžnou bránu na míru?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Rozměr, tvar, počet trysek, kotvení, připojení vody a způsob řízení lze upravit podle konkrétního projektu.' } },
               { '@type': 'Question', name: 'Lze mlžnou bránu řídit automaticky?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Bránu lze doplnit o Smart řízení podle času, teploty, provozního harmonogramu nebo dalšího zvoleného scénáře.' } }
             ]
@@ -52,22 +59,41 @@ export default function MlzneBrany() {
     <main className="bg-white pt-16">
       <section className="bg-primary text-primary-foreground">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-          <p className="font-mono text-xs uppercase tracking-[.2em] text-accent">MLŽNÉ BRÁNY · PRŮCHOZÍ OCHLAZENÍ</p>
-          <h1 className="mt-5 max-w-5xl font-heading text-5xl leading-[.98] tracking-[-.03em] sm:text-6xl lg:text-7xl">Mlžná brána, která ochladí průchod a současně definuje místo.</h1>
-          <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/72">Navrhujeme nerezové mlžné brány jako architektonický prvek pro veřejný prostor i eventy. Od jednoduché průchozí brány po sestavy a zakázkové tvary.</p>
+          <p className="font-mono text-xs uppercase tracking-[.2em] text-accent">MLŽNÉ BRÁNY · MĚSTA A OBCE · VEŘEJNÝ PROSTOR</p>
+          <h1 className="mt-5 max-w-5xl font-heading text-5xl leading-[.98] tracking-[-.03em] sm:text-6xl lg:text-7xl">Mlžné brány pro města, obce a veřejný prostor.</h1>
+          <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/72">Navrhujeme nerezové průchozí mlžné zóny pro náměstí, parky, promenády, školy a sportovní areály. Tvar, rozměr, umístění a provoz řešíme podle konkrétního místa a pohybu lidí.</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Poptat mlžnou bránu <ArrowRight size={16} /></Link>
-            <Link to="/mestske-mlzitka" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white">Městská kolekce <ArrowRight size={16} /></Link>
+            <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>
+            <Link to="/mestske-mlzitka" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white">Mlžítka pro města a obce <ArrowRight size={16} /></Link>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <div className="mb-10 max-w-4xl">
+          <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">DOPORUČENÉ MĚSTSKÉ VYUŽITÍ</p>
+          <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Kde mlžná brána dává největší smysl.</h2>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">Bránu umisťujeme tam, kde přirozeně navazuje na pěší pohyb a pobyt lidí. Každý návrh posuzujeme podle prostoru, stínu, větru, návštěvnosti a provozních možností města nebo obce.</p>
+        </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {USE_CASES.map(({ icon: Icon, title, text }) => (
+            <article key={title} className="border border-border bg-white p-7 shadow-sm">
+              <Icon size={23} className="text-secondary" strokeWidth={1.6} />
+              <h3 className="mt-8 font-heading text-2xl text-foreground">{title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-16 border-t border-border pt-12">
+          <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">PROJEKT A PROVOZ</p>
+          <h2 className="mt-4 max-w-3xl font-heading text-4xl leading-tight text-foreground">Technické řešení podle konkrétní lokality.</h2>
+        </div>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map(({ icon: Icon, title, text }) => (
             <article key={title} className="border border-border bg-slate-50 p-7">
               <Icon size={23} className="text-secondary" strokeWidth={1.6} />
-              <h2 className="mt-8 font-heading text-2xl text-foreground">{title}</h2>
+              <h3 className="mt-8 font-heading text-2xl text-foreground">{title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
             </article>
           ))}
@@ -115,10 +141,10 @@ export default function MlzneBrany() {
       <section className="bg-[#12415e] text-primary-foreground">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-20">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[.18em] text-accent">PROJEKTOVÁ PODPORA</p>
-            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete rozměry nebo půdorys. Navrhneme vhodnou šířku, tvar, kotvení a počet trysek.</h2>
+            <p className="font-mono text-xs uppercase tracking-[.18em] text-accent">PROJEKTOVÁ PODPORA PRO MĚSTA A OBCE</p>
+            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete lokalitu, fotografii nebo půdorys. Připravíme návrh umístění, konfigurace a podklad pro cenu.</h2>
           </div>
-          <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex shrink-0 items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Nezávazná nabídka <ArrowRight size={16} /></Link>
+          <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex shrink-0 items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>
         </div>
       </section>
     </main>

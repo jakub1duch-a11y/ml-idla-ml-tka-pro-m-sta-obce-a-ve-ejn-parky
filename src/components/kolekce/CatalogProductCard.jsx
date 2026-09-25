@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ShieldCheck, Gauge, Droplets, Sparkles } from 'lucide-react';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
+import ProductViewMenu from '@/components/produkt/ProductViewMenu';
 import { getLine, getFamily } from '@/lib/productFamilies';
 
 export default function CatalogProductCard({ product }) {
@@ -21,7 +22,8 @@ export default function CatalogProductCard({ product }) {
         <ProductHoverImage product={product} className="h-full w-full" fullBleed />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07131D]/10 via-transparent to-white/15 opacity-70" />
         <span className="absolute left-4 top-4 rounded-full border border-white/70 bg-white/80 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[.14em] text-[#0B6680] shadow-sm backdrop-blur-xl">{line.label}</span>
-        {product.featured && <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#07131D] px-3 py-1.5 font-mono text-[10px] tracking-[.14em] text-white"><Sparkles size={11} className="text-[#7AE1EF]" /> VÝBĚR</span>}
+        {product.featured && <span className="absolute right-16 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#07131D] px-3 py-1.5 font-mono text-[10px] tracking-[.14em] text-white"><Sparkles size={11} className="text-[#7AE1EF]" /> VÝBĚR</span>}
+        <div className="absolute right-4 top-4 z-30" onClick={(event) => event.preventDefault()}><ProductViewMenu product={product} /></div>
         <span className="absolute bottom-4 right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-white/90 text-[#07131D] opacity-0 shadow-lg backdrop-blur transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"><ArrowUpRight size={17} /></span>
       </Link>
       <div className="flex flex-1 flex-col p-5 sm:p-6">

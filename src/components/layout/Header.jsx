@@ -36,7 +36,7 @@ const INTERNATIONAL_NAV = {
   de: { products: 'Produkte', urban: 'Stadt', technology: 'Funktionsweise', smart: 'Smart-Steuerung', references: 'Referenzen', contact: 'Kontakt', quote: 'Angebot' },
   pl: { products: 'Produkty', urban: 'Dla miast', technology: 'Jak to działa', smart: 'Smart sterowanie', references: 'Realizacje', contact: 'Kontakt', quote: 'Wycena' },
   sk: { products: 'Produkty', urban: 'Pre mestá', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', contact: 'Kontakt', quote: 'Ponuka' },
-  it: { products: 'Prodotti', urban: 'Urbano', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', contact: 'Contatti', quote: 'Preventivo' },
+  it: { products: 'Prodotti', urban: 'Urbano', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', contact: 'Contatti', quote: 'Preventivo' }
 };
 
 const INFO_LINKS = [
@@ -105,7 +105,7 @@ export default function Header() {
 
       
 
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#071A2F]/94 text-white backdrop-blur-2xl transition-all duration-500 ease-out ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#48646f] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
@@ -121,8 +121,8 @@ export default function Header() {
                 type="button"
                 onClick={() => setMegaOpen((value) => !value)}
                 aria-expanded={megaOpen}
-                className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}
-              >
+                className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
+                
                 Produkty
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -177,8 +177,8 @@ export default function Header() {
                   <LogIn size={17} />
                 </button>
                 <AnimatePresence>
-                  {accountOpen && <motion.div initial={{opacity:0,y:-6,scale:.98}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:-6,scale:.98}} transition={{duration:.16}} className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-white/15 bg-[#071A2F]/98 p-2 shadow-2xl backdrop-blur-2xl">
-                    <Link to="/klientska-sekce" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><LogIn size={15}/> Klientská sekce</Link>
+                  {accountOpen && <motion.div initial={{ opacity: 0, y: -6, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -6, scale: .98 }} transition={{ duration: .16 }} className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-white/15 bg-[#071A2F]/98 p-2 shadow-2xl backdrop-blur-2xl">
+                    <Link to="/klientska-sekce" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><LogIn size={15} /> Klientská sekce</Link>
                   </motion.div>}
                 </AnimatePresence>
               </div>
@@ -195,8 +195,8 @@ export default function Header() {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 520, damping: 30 }}
-              className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70"
-            >
+              className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
+              
               <motion.span
                 aria-hidden="true"
                 className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
@@ -204,11 +204,11 @@ export default function Header() {
                   width: mobileOpen ? 22 : 22,
                   y: mobileOpen ? 0 : -4,
                   rotate: mobileOpen ? 45 : 0,
-                  x: mobileOpen ? 0 : 0,
+                  x: mobileOpen ? 0 : 0
                 }}
                 whileHover={!mobileOpen ? { x: 1.5 } : { rotate: 48 }}
-                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }}
-              />
+                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+              
               <motion.span
                 aria-hidden="true"
                 className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
@@ -216,17 +216,17 @@ export default function Header() {
                   width: mobileOpen ? 22 : 15,
                   y: mobileOpen ? 0 : 4,
                   rotate: mobileOpen ? -45 : 0,
-                  x: mobileOpen ? 0 : 3.5,
+                  x: mobileOpen ? 0 : 3.5
                 }}
                 whileHover={!mobileOpen ? { width: 22, x: 0 } : { rotate: -48 }}
-                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }}
-              />
+                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+              
               <motion.span
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-1 rounded-full border border-white/0"
                 animate={{ borderColor: mobileOpen ? 'rgba(255,255,255,.14)' : 'rgba(255,255,255,0)' }}
-                transition={{ duration: .22 }}
-              />
+                transition={{ duration: .22 }} />
+              
             </motion.button>
           </div>
         </div>

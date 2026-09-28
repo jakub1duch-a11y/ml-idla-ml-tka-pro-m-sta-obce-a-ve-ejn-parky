@@ -5,38 +5,38 @@ import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
-  { icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' },
-  { icon: Droplets, text: 'Jemná mlha pro příjemnější pobyt' },
-  { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
-  { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' },
-];
+{ icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' },
+{ icon: Droplets, text: 'Jemná mlha pro příjemnější pobyt' },
+{ icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
+{ icon: ShieldCheck, text: 'Odolná nerezová konstrukce' }];
+
 
 const tiles = [
-  {
-    title: 'LINEA CE',
-    text: 'Nerezová linie s charakteristickým ohybem',
-    image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
-    link: '/produkt/linea-solo',
-  },
-  {
-    title: 'MRAK',
-    text: 'Hravé osvěžení pro děti a hřiště',
-    image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
-    link: '/produkt/mlzitko-mrak',
-  },
-  {
-    title: 'MLŽNÁ BRÁNA',
-    text: 'Průchozí vodní mlha pro náměstí',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
-    link: '/mlzne-brany',
-  },
-  {
-    title: 'BENDY',
-    text: 'Organická linie pro pobytové zóny',
-    image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
-    link: '/produkt/mlzitko-bendy',
-  },
-];
+{
+  title: 'LINEA CE',
+  text: 'Nerezová linie s charakteristickým ohybem',
+  image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
+  link: '/produkt/linea-solo'
+},
+{
+  title: 'MRAK',
+  text: 'Hravé osvěžení pro děti a hřiště',
+  image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
+  link: '/produkt/mlzitko-mrak'
+},
+{
+  title: 'MLŽNÁ BRÁNA',
+  text: 'Průchozí vodní mlha pro náměstí',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
+  link: '/mlzne-brany'
+},
+{
+  title: 'BENDY',
+  text: 'Organická linie pro pobytové zóny',
+  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
+  link: '/produkt/mlzitko-bendy'
+}];
+
 
 export default function HomeHero() {
   const heroRef = useRef(null);
@@ -51,8 +51,8 @@ export default function HomeHero() {
     <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
-        <motion.img
-          src="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg"
+        <motion.img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9d23110de_generated_image.png"
+
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
           className="absolute inset-0 h-[108%] w-full object-cover object-center"
@@ -60,8 +60,8 @@ export default function HomeHero() {
           data-home-parallax="7"
           initial={{ scale: 1.04 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        />
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }} />
+          
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
@@ -87,14 +87,14 @@ export default function HomeHero() {
 
           <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
-              {benefits.map(({ icon: Icon, text }) => (
+              {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">
                   <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[#26C6E9]">
                     <Icon size={20} />
                   </div>
                   <p className="text-sm font-bold leading-6 text-slate-200">{text}</p>
                 </div>
-              ))}
+                )}
             </div>
           </motion.aside>
         </div>
@@ -103,7 +103,7 @@ export default function HomeHero() {
       <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
       <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {tiles.map((tile, index) => (
+          {tiles.map((tile, index) =>
             <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
               <Link to={tile.link} className="ref-product-card group relative block min-h-[240px] overflow-hidden border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
                 <div className="ref-card-media absolute inset-0"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" /></div>
@@ -119,10 +119,10 @@ export default function HomeHero() {
                 </div>
               </Link>
             </motion.div>
-          ))}
+            )}
         </div>
       </div>
     </section>
-    </MotionConfig>
-  );
+    </MotionConfig>);
+
 }

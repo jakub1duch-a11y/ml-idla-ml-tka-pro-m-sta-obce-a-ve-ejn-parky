@@ -88,9 +88,9 @@ export default function HomeHero() {
           <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 p-5 backdrop-blur-xl lg:block bg-[#000000]/[0.18]" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
-                <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">
+                <div key={text} className="grid items-center gap-4 border border-white/10 bg-white/[.06] p-4 grid-cols-[54px_1fr] rounded-3xl">
                   <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[hsl(var(--background))] bg-[hsl(var(--background))]">
-                    <Icon size={20} className="text-[hsl(var(--background))]" />
+                    <Icon size={20} className="text-[hsl(var(--foreground))]" />
                   </div>
                   <p className="leading-6 text-slate-200 text-xl [font-family:'Manrope',_'Inter',_sans-serif] font-light">{text}</p>
                 </div>

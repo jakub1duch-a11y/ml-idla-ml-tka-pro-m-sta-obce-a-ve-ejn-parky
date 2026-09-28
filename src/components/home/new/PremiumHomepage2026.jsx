@@ -13,8 +13,8 @@ import {
   ShieldCheck,
   Sparkles,
   Timer,
-  Wifi,
-} from 'lucide-react';
+  Wifi } from
+'lucide-react';
 
 const media = {
   cityHero: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg',
@@ -24,87 +24,87 @@ const media = {
   gate: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
   linea: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg',
   steblo: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
-  brochure: '/media/optimized/874fb533f_kotveniproduktu.webp',
+  brochure: '/media/optimized/874fb533f_kotveniproduktu.webp'
 };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1] } }
 };
 
 const categories = [
-  {
-    title: 'Sloupková mlžítka',
-    subtitle: 'Linea, Stéblo, Bendy',
-    text: 'Elegantní vertikální a organické prvky pro parky, promenády, náměstí a pobytové zóny.',
-    icon: Landmark,
-    image: media.linea,
-    link: '/mlzidla-mlzitka#catalog',
-  },
-  {
-    title: 'Mlžné brány a oblouky',
-    subtitle: 'Gate, Linea CE, Bendy Gate',
-    text: 'Průchozí nerezové brány, které vytváří okamžitý pocit osvěžení na frekventovaných místech.',
-    icon: Droplets,
-    image: media.gate,
-    link: '/mlzne-brany',
-  },
-  {
-    title: 'Ateliérové prvky',
-    subtitle: 'Aura, Mrak, TeePee, Spirála',
-    text: 'Výrazné designové tvary pro místa setkávání, hřiště, eventy a reprezentativní veřejný prostor.',
-    icon: Sparkles,
-    image: media.aura,
-    link: '/mlzidla-mlzitka#creative',
-  },
-];
+{
+  title: 'Sloupková mlžítka',
+  subtitle: 'Linea, Stéblo, Bendy',
+  text: 'Elegantní vertikální a organické prvky pro parky, promenády, náměstí a pobytové zóny.',
+  icon: Landmark,
+  image: media.linea,
+  link: '/mlzidla-mlzitka#catalog'
+},
+{
+  title: 'Mlžné brány a oblouky',
+  subtitle: 'Gate, Linea CE, Bendy Gate',
+  text: 'Průchozí nerezové brány, které vytváří okamžitý pocit osvěžení na frekventovaných místech.',
+  icon: Droplets,
+  image: media.gate,
+  link: '/mlzne-brany'
+},
+{
+  title: 'Ateliérové prvky',
+  subtitle: 'Aura, Mrak, TeePee, Spirála',
+  text: 'Výrazné designové tvary pro místa setkávání, hřiště, eventy a reprezentativní veřejný prostor.',
+  icon: Sparkles,
+  image: media.aura,
+  link: '/mlzidla-mlzitka#creative'
+}];
+
 
 const productHighlights = [
-  { name: 'AURA', label: 'kruhové mlžení', image: media.aura, link: '/produkt/aura-mlzitko' },
-  { name: 'BENDY', label: 'měkká organická linie', image: media.bendy, link: '/produkt/mlzitko-bendy' },
-  { name: 'LINEA', label: 'čistý sloupový prvek', image: media.linea, link: '/produkt/linea-mlzitko' },
-  { name: 'MRAK', label: 'mlžný prvek pro děti', image: media.mrak, link: '/produkt/mlzitko-mrak' },
-  { name: 'STÉBLO', label: 'přírodní inspirace', image: media.steblo, link: '/produkt/mlzitko-steblo' },
-];
+{ name: 'AURA', label: 'kruhové mlžení', image: media.aura, link: '/produkt/aura-mlzitko' },
+{ name: 'BENDY', label: 'měkká organická linie', image: media.bendy, link: '/produkt/mlzitko-bendy' },
+{ name: 'LINEA', label: 'čistý sloupový prvek', image: media.linea, link: '/produkt/linea-mlzitko' },
+{ name: 'MRAK', label: 'mlžný prvek pro děti', image: media.mrak, link: '/produkt/mlzitko-mrak' },
+{ name: 'STÉBLO', label: 'přírodní inspirace', image: media.steblo, link: '/produkt/mlzitko-steblo' }];
+
 
 const smartPoints = [
-  { icon: Gauge, title: 'Podle teploty', text: 'Mlžení se spustí při nastavených venkovních podmínkách.' },
-  { icon: Timer, title: 'Podle času', text: 'Provozní okna pro ráno, odpoledne, akci nebo víkend.' },
-  { icon: Wifi, title: 'Z aplikace', text: 'Vzdálené zapnutí, vypnutí a přehled provozu přes SUPLA.' },
-];
+{ icon: Gauge, title: 'Podle teploty', text: 'Mlžení se spustí při nastavených venkovních podmínkách.' },
+{ icon: Timer, title: 'Podle času', text: 'Provozní okna pro ráno, odpoledne, akci nebo víkend.' },
+{ icon: Wifi, title: 'Z aplikace', text: 'Vzdálené zapnutí, vypnutí a přehled provozu přes SUPLA.' }];
+
 
 export default function PremiumHomepage2026() {
   const [approvedVisuals, setApprovedVisuals] = useState([]);
 
   useEffect(() => {
     let active = true;
-    base44.entities.VisualizationAsset
-      .filter({ approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 120)
-      .then((items = []) => { if (active) setApprovedVisuals((items || []).filter((item) => item?.image_url)); })
-      .catch(() => { if (active) setApprovedVisuals([]); });
-    return () => { active = false; };
+    base44.entities.VisualizationAsset.
+    filter({ approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 120).
+    then((items = []) => {if (active) setApprovedVisuals((items || []).filter((item) => item?.image_url));}).
+    catch(() => {if (active) setApprovedVisuals([]);});
+    return () => {active = false;};
   }, []);
 
   const approvedBySlug = useMemo(() => {
     const map = new Map();
-    [...approvedVisuals]
-      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
-      .forEach((item) => {
-        if (item.product_slug && !map.has(item.product_slug)) map.set(item.product_slug, item.thumbnail_url || item.image_url);
-      });
+    [...approvedVisuals].
+    sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant))).
+    forEach((item) => {
+      if (item.product_slug && !map.has(item.product_slug)) map.set(item.product_slug, item.thumbnail_url || item.image_url);
+    });
     return map;
   }, [approvedVisuals]);
 
   const resolvedHighlights = useMemo(() => productHighlights.map((product) => ({
     ...product,
-    image: approvedBySlug.get(product.link.split('/').pop()) || product.image,
+    image: approvedBySlug.get(product.link.split('/').pop()) || product.image
   })), [approvedBySlug]);
 
   const resolvedCategories = useMemo(() => categories.map((item, index) => ({
     ...item,
-    image: index === 0 ? (approvedBySlug.get('linea-mlzitko') || approvedBySlug.get('mlzitko-steblo') || item.image)
-      : index === 1 ? (approvedBySlug.get('mlzna-brana-gate') || approvedBySlug.get('brana-bendy') || item.image)
-      : (approvedBySlug.get('mlzitko-mrak') || approvedBySlug.get('teepee') || item.image),
+    image: index === 0 ? approvedBySlug.get('linea-mlzitko') || approvedBySlug.get('mlzitko-steblo') || item.image :
+    index === 1 ? approvedBySlug.get('mlzna-brana-gate') || approvedBySlug.get('brana-bendy') || item.image :
+    approvedBySlug.get('mlzitko-mrak') || approvedBySlug.get('teepee') || item.image
   })), [approvedBySlug]);
 
   return (
@@ -135,23 +135,23 @@ export default function PremiumHomepage2026() {
             </div>
             <div className="mt-10 grid gap-3 sm:grid-cols-4">
               {[
-                ['5–10 °C', 'pocitově příjemnější zóna'],
-                ['AISI', 'nerezová konstrukce'],
-                ['SUPLA', 'chytré řízení'],
-                ['B2G', 'řešení pro města'],
-              ].map(([value, label]) => (
-                <div key={value} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.07] p-4 backdrop-blur-md">
+              ['5–10 °C', 'pocitově příjemnější zóna'],
+              ['AISI', 'nerezová konstrukce'],
+              ['SUPLA', 'chytré řízení'],
+              ['B2G', 'řešení pro města']].
+              map(([value, label]) =>
+              <div key={value} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.07] p-4 backdrop-blur-md">
                   <strong className="block text-2xl font-black text-white">{value}</strong>
                   <span className="mt-1 block text-xs font-semibold leading-5 text-white/64">{label}</span>
                 </div>
-              ))}
+              )}
             </div>
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="hidden lg:block">
             <div className="relative rounded-[2.4rem] border border-white/14 bg-black/22 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)]">
               <div className="relative overflow-hidden rounded-[1.8rem] bg-[#0B2034]">
-                <img src={media.gate} alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3c02bdf2d_file_00000000288081f4a0ff8488d237ae23.png" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
                 <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/12 px-4 py-3 text-sm font-bold backdrop-blur-md">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07131D]"><Play size={16} fill="currentColor" /></span>
@@ -196,8 +196,8 @@ export default function PremiumHomepage2026() {
                       </span>
                     </div>
                   </Link>
-                </motion.div>
-              );
+                </motion.div>);
+
             })}
           </div>
         </div>
@@ -214,8 +214,8 @@ export default function PremiumHomepage2026() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {resolvedHighlights.map((product, index) => (
-              <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
+            {resolvedHighlights.map((product, index) =>
+            <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
                 <Link to={product.link} className="premium-card-interactive group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/[.20] bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
                   <img src={product.image} alt={`${product.name} — ${product.label}`} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#07131D] via-[#07131D]/16 to-transparent" />
@@ -226,7 +226,7 @@ export default function PremiumHomepage2026() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -239,13 +239,13 @@ export default function PremiumHomepage2026() {
             <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-white/[.68]">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {smartPoints.map(({ icon: Icon, title, text }) => (
-                <motion.div key={title} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 320, damping: 24 }} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.06] p-4 backdrop-blur-md">
+              {smartPoints.map(({ icon: Icon, title, text }) =>
+              <motion.div key={title} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 320, damping: 24 }} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.06] p-4 backdrop-blur-md">
                   <Icon className="text-[#26C6E9]" size={24} />
                   <strong className="mt-4 block text-base">{title}</strong>
                   <p className="mt-2 text-xs leading-5 text-white/[.60]">{text}</p>
                 </motion.div>
-              ))}
+              )}
             </div>
           </motion.div>
 
@@ -288,15 +288,15 @@ export default function PremiumHomepage2026() {
             <h3 className="mt-4 font-heading text-3xl font-black tracking-[-.045em] text-[#07131D] sm:text-4xl">Vizualizace, půdorys a doporučení pro konkrétní místo.</h3>
             <div className="mt-7 grid gap-3">
               {[
-                ['Půdorysný pohled', 'Rozmístění mlžítek do skutečného prostoru nebo fotografie místa.'],
-                ['Dosah mlhy', 'Návrh zóny osvěžení podle pohybu lidí a charakteru plochy.'],
-                ['Doporučení produktu', 'Výběr mezi Linea, Bendy, Aura, Mrak, TeePee nebo mlžnou bránou.'],
-              ].map(([title, text]) => (
-                <div key={title} className="premium-card-interactive rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              ['Půdorysný pohled', 'Rozmístění mlžítek do skutečného prostoru nebo fotografie místa.'],
+              ['Dosah mlhy', 'Návrh zóny osvěžení podle pohybu lidí a charakteru plochy.'],
+              ['Doporučení produktu', 'Výběr mezi Linea, Bendy, Aura, Mrak, TeePee nebo mlžnou bránou.']].
+              map(([title, text]) =>
+              <div key={title} className="premium-card-interactive rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                   <strong className="text-base text-[#07131D]">{title}</strong>
                   <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
                 </div>
-              ))}
+              )}
             </div>
             <Link to="/poptavka" className="premium-action mt-8 inline-flex items-center gap-2 rounded-full bg-[#26C6E9] px-6 py-4 text-sm font-extrabold text-[#04131F] transition hover:-translate-y-0.5 hover:bg-[#07131D] hover:text-white">Nechat zpracovat zákres <ArrowRight size={16} /></Link>
           </motion.div>
@@ -315,18 +315,18 @@ export default function PremiumHomepage2026() {
 
           <div className="grid gap-5 lg:grid-cols-3">
             {[
-              ['Sportoviště a cyklotrasy', media.gate, 'Mlžná alej podél trasy vytváří krátké osvěžení pro sportovce i návštěvníky.'],
-              ['Městské parky', media.aura, 'AURA a tvarové prvky podporují setkávání a delší pobyt ve stínu zeleně.'],
-              ['Slavnosti a eventy', media.steblo, 'Mobilní nebo dočasné osvěžení pro akce, trhy a letní program města.'],
-            ].map(([title, image, text], index) => (
-              <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="premium-card-interactive overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
+            ['Sportoviště a cyklotrasy', media.gate, 'Mlžná alej podél trasy vytváří krátké osvěžení pro sportovce i návštěvníky.'],
+            ['Městské parky', media.aura, 'AURA a tvarové prvky podporují setkávání a delší pobyt ve stínu zeleně.'],
+            ['Slavnosti a eventy', media.steblo, 'Mobilní nebo dočasné osvěžení pro akce, trhy a letní program města.']].
+            map(([title, image, text], index) =>
+            <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="premium-card-interactive overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
                 <img src={image} alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="p-6">
                   <h3 className="font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
                 </div>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -342,20 +342,20 @@ export default function PremiumHomepage2026() {
             <p className="mt-5 text-base leading-7 text-slate-600">Čistý vzhled, minimální vizuální zásah do prostoru a technické řešení připravené pro dlažbu, betonový základ i veřejný provoz.</p>
             <div className="mt-7 grid gap-3">
               {[
-                ['Přívod vody', 'Vedení pod povrchem přímo k tělu mlžítka.'],
-                ['Krycí patka', 'Nenápadný detail pro čistý městský povrch.'],
-                ['Antivandal provedení', 'Nerezová konstrukce pro intenzivní veřejné užívání.'],
-              ].map(([title, text]) => (
-                <div key={title} className="premium-card-interactive flex gap-4 rounded-2xl border border-slate-200 bg-white p-4">
+              ['Přívod vody', 'Vedení pod povrchem přímo k tělu mlžítka.'],
+              ['Krycí patka', 'Nenápadný detail pro čistý městský povrch.'],
+              ['Antivandal provedení', 'Nerezová konstrukce pro intenzivní veřejné užívání.']].
+              map(([title, text]) =>
+              <div key={title} className="premium-card-interactive flex gap-4 rounded-2xl border border-slate-200 bg-white p-4">
                   <ShieldCheck className="mt-1 text-[#0B8EC5]" size={22} />
                   <p className="text-sm leading-6 text-slate-600"><strong className="block text-[#07131D]">{title}</strong>{text}</p>
                 </div>
-              ))}
+              )}
             </div>
             <Link to="/ke-stazeni" className="premium-action mt-8 inline-flex items-center gap-2 rounded-full bg-[#07131D] px-6 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5]"><Download size={17} /> Stáhnout brožury a manuály</Link>
           </motion.div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }

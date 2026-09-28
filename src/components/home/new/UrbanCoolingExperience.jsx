@@ -31,7 +31,7 @@ export default function UrbanCoolingExperience() {
 
   return <div className="ucx">
     <section ref={heroRef} className="ucx-hero">
-      <div className="ucx-mist ucx-mist-a" /><div className="ucx-mist ucx-mist-b" />
+      <div className="ucx-mist ucx-mist-0" /><div className="ucx-mist ucx-mist-b" />
       <motion.div {...reveal} className="ucx-copy">
         <span className="ucx-kicker">MLŽIDLA® by HolmTec · městské ochlazování</span>
         <h1>Chytré chlazení <em>prostoru.</em></h1>

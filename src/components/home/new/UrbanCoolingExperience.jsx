@@ -79,7 +79,7 @@ export default function UrbanCoolingExperience() {
         <span className="ucx-kicker">Automatizace · SUPLA</span>
         <h2>Voda jen tehdy, když dává smysl.</h2>
         <p>Automatizace podle času, teploty nebo provozního režimu. Vzdálené ovládání, monitoring a přehled o systému v jedné vrstvě.</p>
-        <a href="/smart-ovladani" className="ucx-button ucx-button-light bg-[hsl(var(--card-foreground))] text-[hsl(var(--background))]">Automatizace <ArrowRight size={17} /></a>
+        <a href="/smart-ovladani" className="ucx-button ucx-button-light text-[hsl(var(--popover))] bg-[hsl(var(--card))]">Automatizace <ArrowRight size={17} /></a>
       </motion.div>
       <motion.div {...reveal} className="ucx-dashboard">
         <header><span>MLŽIDLA / ZÓNA 01</span><b>AKTIVNÍ</b></header>

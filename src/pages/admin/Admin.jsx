@@ -28,8 +28,10 @@ import AdminProspects from './AdminProspects';
 import AdminCRM from './AdminCRM';
 import AdminTerminal from './AdminTerminal';
 import AdminIntegrations from './AdminIntegrations';
+import { Bot } from 'lucide-react';
 import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimalizatorChat';
 import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
+import AdminMcpConnect from './AdminMcpConnect';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -55,13 +57,14 @@ const TABS = [
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
   { id: 'instagram', label: 'Instagram', icon: Instagram },
+  { id: 'chatgpt', label: 'ChatGPT / MCP', icon: Bot },
 ];
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
   { label: 'Obchod', ids: ['poptavky', 'crm', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
-  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'development', 'databricks', 'terminal'] },
+  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal'] },
 ];
 
 export default function Admin() {
@@ -149,6 +152,7 @@ export default function Admin() {
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,
     instagram: AdminInstagram,
+    chatgpt: AdminMcpConnect,
   }[activeTab];
 
   return (

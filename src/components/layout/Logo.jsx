@@ -7,7 +7,7 @@ export function MistZMark({ size = 'md', className = '' }) {
     xs: 'h-7 w-[22px]',
     sm: 'h-9 w-[28px]',
     md: 'h-11 w-[35px]',
-    lg: 'h-14 w-[44px]',
+    lg: 'h-14 w-[44px]'
   };
 
   return (
@@ -15,8 +15,8 @@ export function MistZMark({ size = 'md', className = '' }) {
       viewBox="0 0 64 92"
       fill="none"
       aria-hidden="true"
-      className={`${sizes[size] || sizes.md} shrink-0 overflow-visible ${className}`}
-    >
+      className={`${sizes[size] || sizes.md} shrink-0 overflow-visible ${className}`}>
+      
       <defs>
         <linearGradient id={`${svgId}-z-ribbon`} x1="12" y1="17" x2="55" y2="82" gradientUnits="userSpaceOnUse">
           <stop stopColor="#A8F0FF" />
@@ -46,8 +46,8 @@ export function MistZMark({ size = 'md', className = '' }) {
         <path d="M36.8 42.2H18C15.2 42.2 13 40.1 13 37.4V34.5H52C52 38.1 51.2 41.3 49.5 44.2C45.3 46.4 40.2 46.2 36.8 42.2Z" fill="#8DEBFF" opacity=".58" />
         <path d="M20.8 58.7C26.6 53.8 33.2 49.7 39.5 44.7C33.8 52.4 27.1 59.7 21.7 66.3C17.9 71 17.7 76 21.8 80.8C13.6 77.2 13.3 67.1 20.8 58.7Z" fill="white" opacity=".2" />
       </g>
-    </svg>
-  );
+    </svg>);
+
 }
 
 // Jednotné logo pro hlavičku, patičku, mobilní menu a brand manuál.
@@ -62,19 +62,19 @@ export default function Logo({ size = 'md', variant = 'simple', tone = 'dark', c
   return (
     <span
       className={`group/mlz-logo inline-flex min-w-0 select-none flex-col ${className}`}
-      aria-label="MLŽIDLA — jemná atraktivní mlha pro lepší klima"
-    >
+      aria-label="MLŽIDLA — jemná atraktivní mlha pro lepší klima">
+      
       <span className="inline-flex items-center whitespace-nowrap leading-none">
-        <span className={`${wordSize} font-heading font-bold tracking-[-0.045em] ${textColor}`}>ML</span>
+        <span className={`${wordSize} tracking-[-0.045em] [font-family:'Manrope',_'Inter',_sans-serif] font-light ${textColor}`}>ML</span>
         <span className="mx-[0.04em] inline-flex origin-center transition-transform duration-500 ease-out motion-safe:group-hover/mlz-logo:-translate-y-[1px] motion-safe:group-hover/mlz-logo:scale-[1.025]">
           <MistZMark size={markSize} />
         </span>
-        <span className={`${wordSize} font-heading font-bold tracking-[-0.045em] ${textColor}`}>IDLA</span>
+        <span className={`${wordSize} tracking-[-0.045em] [font-family:'Manrope',_'Inter',_sans-serif] font-light ${textColor}`}>IDLA</span>
         <sup className={`${compact ? 'ml-1 text-[7px]' : 'ml-1.5 text-[9px]'} self-start pt-1 font-semibold ${mutedColor}`}>®</sup>
       </span>
 
-      {isFull && (
-        <span className="mt-2.5 flex max-w-full flex-col">
+      {isFull &&
+      <span className="mt-2.5 flex max-w-full flex-col">
           <span className={`${size === 'lg' ? 'text-base sm:text-lg' : 'text-sm'} font-medium tracking-[0.01em] ${mutedColor}`}>
             Jemná atraktivní mlha
           </span>
@@ -87,7 +87,7 @@ export default function Logo({ size = 'md', variant = 'simple', tone = 'dark', c
             Architektura, která dýchá.
           </span>
         </span>
-      )}
-    </span>
-  );
+      }
+    </span>);
+
 }

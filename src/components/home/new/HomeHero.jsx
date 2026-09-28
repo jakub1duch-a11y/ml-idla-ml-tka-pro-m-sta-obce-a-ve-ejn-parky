@@ -67,8 +67,8 @@ export default function HomeHero() {
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[.22em] text-[#26C6E9]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(3.2rem,6.8vw,7rem)] font-black leading-[.92] tracking-[-.06em] text-white">
+            <p className="font-mono font-bold uppercase tracking-[.22em] text-[#26C6E9] text-lg">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
+            <h1 className="mt-6 max-w-[10ch] font-heading font-black leading-[.92] tracking-[-.06em] text-white text-8xl">
               Ochlazení, které patří do prostoru.
             </h1>
             <p className="mt-7 max-w-2xl text-xl leading-8 text-slate-200 sm:text-2xl">
@@ -92,7 +92,7 @@ export default function HomeHero() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[#26C6E9]">
                     <Icon size={20} />
                   </div>
-                  <p className="text-sm font-bold leading-6 text-slate-200">{text}</p>
+                  <p className="font-bold leading-6 text-slate-200 text-lg">{text}</p>
                 </div>
                 )}
             </div>

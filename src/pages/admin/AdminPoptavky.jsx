@@ -9,6 +9,7 @@ const CLIENTS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1EvZ7JRpOHQoBZ
 import { base44 } from '@/api/base44Client';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
 import TeamThread from '@/components/admin/team/TeamThread';
+import InquiryAiReply from '@/components/admin/InquiryAiReply';
 
 const BUCKETS = {
   nove: { label: 'Nové', color: 'text-cyan border-cyan/30 bg-cyan/10', icon: AlertCircle, match: (s) => s === 'nova' || s === 'new' },
@@ -495,6 +496,8 @@ export default function AdminPoptavky() {
                             Odpovědět <ArrowRight size={11} />
                           </a>
                         </div>
+
+                        <InquiryAiReply item={item} />
 
                         <div className="rounded-lg border border-white/8 bg-black/10 p-3">
                           <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-white/30">Interní komentáře k poptávce</p>

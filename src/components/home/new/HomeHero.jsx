@@ -89,10 +89,10 @@ export default function HomeHero() {
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[#26C6E9]">
-                    <Icon size={20} />
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[hsl(var(--background))] bg-[hsl(var(--background))]">
+                    <Icon size={20} className="text-[hsl(var(--background))]" />
                   </div>
-                  <p className="font-bold leading-6 text-slate-200 text-lg">{text}</p>
+                  <p className="leading-6 text-slate-200 text-xl [font-family:'Manrope',_'Inter',_sans-serif] font-light">{text}</p>
                 </div>
                 )}
             </div>

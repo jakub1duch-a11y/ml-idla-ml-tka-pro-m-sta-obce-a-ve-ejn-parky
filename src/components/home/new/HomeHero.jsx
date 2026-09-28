@@ -51,7 +51,7 @@ export default function HomeHero() {
     <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
-        <motion.img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9d23110de_generated_image.png"
+        <motion.img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/baebb2837_file_000000001f7c82439d3e572f79e0aeda.png"
 
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
@@ -85,7 +85,7 @@ export default function HomeHero() {
             </div>
           </motion.div>
 
-          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 bg-black/28 p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 p-5 backdrop-blur-xl lg:block bg-[#000000]/[0.18]" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[44px_1fr] items-center gap-4 rounded-2xl border border-white/10 bg-white/[.06] p-4">

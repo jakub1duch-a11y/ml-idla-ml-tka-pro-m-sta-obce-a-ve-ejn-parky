@@ -71,7 +71,7 @@ export default function HomeHero() {
             <h1 className="mt-6 max-w-[10ch] font-heading font-black leading-[.92] tracking-[-.06em] text-white text-8xl">
               Ochlazení, které patří do prostoru.
             </h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-slate-200 sm:text-2xl">
+            <p className="mt-7 max-w-2xl leading-8 text-slate-200 text-lg sm:text-lg">
               Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">

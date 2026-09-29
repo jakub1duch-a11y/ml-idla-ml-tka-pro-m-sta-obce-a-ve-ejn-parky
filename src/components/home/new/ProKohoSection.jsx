@@ -40,7 +40,7 @@ const AUDIENCES = [
 
 export default function ProKohoSection() {
   return (
-    <section className="bg-white py-20 lg:py-28">
+    <section className="bg-white py-20 lg:py-28 hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Pro koho</p>
         <h2 className="mt-4 max-w-3xl font-heading text-3xl leading-tight text-[#0D2F4F] lg:text-4xl">

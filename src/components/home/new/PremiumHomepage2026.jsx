@@ -334,7 +334,7 @@ export default function PremiumHomepage2026() {
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="kotveni-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
-            <img src={media.brochure} alt="Skryté kotvení mlžítek pro městské použití" className="w-full object-cover" loading="lazy" decoding="async" />
+            <img src={media.brochure} alt="Skryté kotvení mlžítek pro městské použití" className="w-full object-cover hidden" loading="lazy" decoding="async" />
           </motion.div>
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Instalace a technické podklady</p>

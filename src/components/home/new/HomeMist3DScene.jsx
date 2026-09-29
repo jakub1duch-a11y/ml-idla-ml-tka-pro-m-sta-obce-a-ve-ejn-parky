@@ -3,23 +3,23 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Move3D, Sparkles, Wind } from 'lucide-react';
 
 const LINEA_MASTER =
-  'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg';
+'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg';
 
 const principles = [
-  { icon: Move3D, label: 'Pomalý pohyb kamery' },
-  { icon: Wind, label: 'Jemná animace mlhy' },
-  { icon: Sparkles, label: 'Ocelové odlesky a světlo' },
-];
+{ icon: Move3D, label: 'Pomalý pohyb kamery' },
+{ icon: Wind, label: 'Jemná animace mlhy' },
+{ icon: Sparkles, label: 'Ocelové odlesky a světlo' }];
+
 
 export default function HomeMist3DScene() {
   const reduceMotion = useReducedMotion();
 
   return (
     <section
-      className="relative isolate overflow-hidden bg-[#06111B] py-20 text-white sm:py-24 lg:py-32"
+      className="relative isolate overflow-hidden bg-[#06111B] py-20 text-white sm:py-24 lg:py-32 hidden"
       aria-label="Animovaná produktová scéna MLŽIDLA"
-      data-home-reveal
-    >
+      data-home-reveal>
+      
       <style>{`
         @keyframes mlzAmbientDriftA {
           0%,100% { transform: translate3d(-8%, 8%, 0) scale(1); opacity: .18; }
@@ -56,8 +56,8 @@ export default function HomeMist3DScene() {
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: .72, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10"
-        >
+          className="relative z-10">
+          
           <p className="font-mono text-[10px] font-bold uppercase tracking-[.28em] text-[#6BD8F2]">
             Produktová motion vrstva
           </p>
@@ -70,12 +70,12 @@ export default function HomeMist3DScene() {
           </p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-            {principles.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex min-h-14 items-center gap-3 border border-white/10 bg-white/[.045] px-4 py-3 backdrop-blur-md">
+            {principles.map(({ icon: Icon, label }) =>
+            <div key={label} className="flex min-h-14 items-center gap-3 border border-white/10 bg-white/[.045] px-4 py-3 backdrop-blur-md">
                 <Icon size={18} className="shrink-0 text-[#6BD8F2]" strokeWidth={1.6} />
                 <span className="text-xs font-semibold leading-5 text-white/72">{label}</span>
               </div>
-            ))}
+            )}
           </div>
 
           <a href="/produkt/linea-mlzitko" className="mt-8 inline-flex min-h-12 items-center gap-2 border border-white/18 bg-white/[.06] px-5 py-3 text-sm font-bold text-white transition hover:border-[#6BD8F2]/55 hover:bg-white/[.10]">
@@ -88,8 +88,8 @@ export default function HomeMist3DScene() {
           initial={reduceMotion ? false : { opacity: 0, scale: .985 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: .9, ease: [0.22, 1, 0.36, 1] }}
-        >
+          transition={{ duration: .9, ease: [0.22, 1, 0.36, 1] }}>
+          
           <motion.img
             src={LINEA_MASTER}
             alt="Ověřený produkt MLŽÍTKO LINEA v prostoru"
@@ -98,8 +98,8 @@ export default function HomeMist3DScene() {
             decoding="async"
             initial={false}
             animate={reduceMotion ? undefined : { scale: [1.035, 1.085, 1.035], x: ['0%', '-1.6%', '0%'] }}
-            transition={reduceMotion ? undefined : { duration: 16, ease: 'easeInOut', repeat: Infinity }}
-          />
+            transition={reduceMotion ? undefined : { duration: 16, ease: 'easeInOut', repeat: Infinity }} />
+          
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,9,15,.05)_0%,rgba(2,9,15,.08)_48%,rgba(2,9,15,.82)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_34%,rgba(207,243,255,.24),transparent_28%)]" />
 
@@ -119,6 +119,6 @@ export default function HomeMist3DScene() {
           </div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

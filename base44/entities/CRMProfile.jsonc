@@ -1,0 +1,78 @@
+{
+  "name": "CRMProfile",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "format": "email",
+      "description": "E-mail z ov\u011b\u0159en\u00e9ho Base44 \u00fa\u010dtu"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "company_id": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "portal_type": {
+      "type": "string",
+      "enum": [
+        "visitor",
+        "client"
+      ],
+      "default": "visitor"
+    },
+    "onboarding_complete": {
+      "type": "boolean",
+      "default": false
+    },
+    "privacy_consent": {
+      "type": "boolean",
+      "default": false
+    },
+    "privacy_consent_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "user_email",
+    "portal_type"
+  ],
+  "rls": {
+    "create": {
+      "data.user_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "data.user_email": "{{user.email}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

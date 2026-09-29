@@ -1,0 +1,81 @@
+{
+  "name": "B2BLead",
+  "type": "object",
+  "properties": {
+    "companyName": {
+      "type": "string",
+      "minLength": 2,
+      "description": "N\u00e1zev firmy, m\u011bsta nebo obce"
+    },
+    "contactPerson": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Kontaktn\u00ed osoba"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Kontaktn\u00ed e-mail"
+    },
+    "phone": {
+      "type": "string",
+      "minLength": 9,
+      "description": "Kontaktn\u00ed telefon"
+    },
+    "projectType": {
+      "type": "string",
+      "enum": [
+        "namesti_ve\u0159ejne_prostranstvi",
+        "park_odpocinkova_zona",
+        "skola_sportoviste",
+        "komercni_objekt",
+        "jine"
+      ]
+    },
+    "selectedModel": {
+      "type": "string",
+      "default": "Bendy Field"
+    },
+    "nozzleCount": {
+      "type": "number",
+      "minimum": 2,
+      "maximum": 16
+    },
+    "waterPressureBar": {
+      "type": "number",
+      "minimum": 2,
+      "maximum": 8
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "companyName",
+    "contactPerson",
+    "email",
+    "phone",
+    "projectType",
+    "selectedModel",
+    "nozzleCount",
+    "waterPressureBar"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

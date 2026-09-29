@@ -3,40 +3,40 @@ import { Link } from 'react-router-dom';
 import { Building2, Landmark, Compass } from 'lucide-react';
 
 const AUDIENCES = [
-  {
-    icon: Building2,
-    problem: 'Horké dny mění náměstí, parky a okolí veřejných budov na místa, kde lidé hledají stín a rychlé osvěžení.',
-    benefits: [
-      'Vodní mlha na veřejná prostranství pro příjemnější pobyt v tropických dnech',
-      'Napojení na běžný vodovodní řád a standardní tlak v potrubí podle konkrétní instalace',
-      'Nerezová konstrukce navržená pro dlouhodobý venkovní provoz',
-    ],
-    cta: 'Připravit podklady pro radu města',
-    link: '/poptavka',
-  },
-  {
-    icon: Landmark,
-    problem: 'Sportoviště, koupaliště, ZOO a technické služby potřebují spolehlivé ochlazení pro návštěvníky i personál.',
-    benefits: [
-      'Modulární řešení pro areály s různými zónami využití',
-      'Smart řízení podle teploty, času a provozního režimu',
-      'Servis, zazimování a dlouhodobá podpora od výrobce',
-    ],
-    cta: 'Technická konzultace provozu',
-    link: '/poptavka',
-  },
-  {
-    icon: Compass,
-    problem: 'Architekti a projektanti hledají ověřené technické řešení, které se začlení do návrhu veřejného prostoru.',
-    benefits: [
-      'Technické listy, kotvení a podklady pro projektovou dokumentaci na vyžádání',
-      'Zakázkové tvary a geometrie v ověřitelných produktových pravidlech',
-      'Vizualizace produktu v konkrétním prostoru jako podklad pro poptávku',
-    ],
-    cta: 'Vyžádat podklady pro projekt',
-    link: '/ke-stazeni',
-  },
-];
+{
+  icon: Building2,
+  problem: 'Horké dny mění náměstí, parky a okolí veřejných budov na místa, kde lidé hledají stín a rychlé osvěžení.',
+  benefits: [
+  'Vodní mlha na veřejná prostranství pro příjemnější pobyt v tropických dnech',
+  'Napojení na běžný vodovodní řád a standardní tlak v potrubí podle konkrétní instalace',
+  'Nerezová konstrukce navržená pro dlouhodobý venkovní provoz'],
+
+  cta: 'Připravit podklady pro radu města',
+  link: '/poptavka'
+},
+{
+  icon: Landmark,
+  problem: 'Sportoviště, koupaliště, ZOO a technické služby potřebují spolehlivé ochlazení pro návštěvníky i personál.',
+  benefits: [
+  'Modulární řešení pro areály s různými zónami využití',
+  'Smart řízení podle teploty, času a provozního režimu',
+  'Servis, zazimování a dlouhodobá podpora od výrobce'],
+
+  cta: 'Technická konzultace provozu',
+  link: '/poptavka'
+},
+{
+  icon: Compass,
+  problem: 'Architekti a projektanti hledají ověřené technické řešení, které se začlení do návrhu veřejného prostoru.',
+  benefits: [
+  'Technické listy, kotvení a podklady pro projektovou dokumentaci na vyžádání',
+  'Zakázkové tvary a geometrie v ověřitelných produktových pravidlech',
+  'Vizualizace produktu v konkrétním prostoru jako podklad pro poptávku'],
+
+  cta: 'Vyžádat podklady pro projekt',
+  link: '/ke-stazeni'
+}];
+
 
 export default function ProKohoSection() {
   return (
@@ -47,29 +47,29 @@ export default function ProKohoSection() {
 Mlžítka pro města, areály a architekty veřejného prostoru.
         </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {AUDIENCES.map((a) => (
-            <div key={a.cta} className="flex flex-col border border-[#EAF5FB] bg-white p-7">
+          {AUDIENCES.map((a) =>
+          <div key={a.cta} className="flex flex-col border border-[#EAF5FB] bg-white p-7">
               <a.icon size={26} className="text-[#0B5EA8]" />
-              <p className="mt-5 text-sm leading-relaxed text-[#0D2F4F]/60">{a.problem}</p>
+              <p className="mt-5 leading-relaxed text-[#0D2F4F]/60 text-lg">{a.problem}</p>
               <ul className="mt-6 space-y-3 border-t border-[#EAF5FB] pt-6">
-                {a.benefits.map((b) => (
-                  <li key={b} className="flex items-start gap-2.5 text-sm leading-relaxed text-[#0D2F4F]">
+                {a.benefits.map((b) =>
+              <li key={b} className="flex items-start gap-2.5 text-sm leading-relaxed text-[#0D2F4F]">
                     <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 bg-[#0B5EA8]" />
                     {b}
                   </li>
-                ))}
+              )}
               </ul>
               <Link
-                to={a.link}
-                className="mt-7 inline-flex items-center gap-2 self-start font-heading text-sm font-semibold text-[#0B5EA8] transition-colors hover:text-[#0D2F4F]"
-              >
+              to={a.link}
+              className="mt-7 inline-flex items-center gap-2 self-start font-heading text-sm font-semibold text-[#0B5EA8] transition-colors hover:text-[#0D2F4F]">
+              
                 {a.cta}
                 <span aria-hidden="true">→</span>
               </Link>
             </div>
-          ))}
+          )}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

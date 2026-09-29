@@ -191,7 +191,7 @@ export default function PremiumHomepage2026() {
                       <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#0B8EC5]">{item.subtitle}</p>
                       <h3 className="mt-2 font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{item.title}</h3>
                       <p className="mt-3 min-h-[72px] text-sm leading-6 text-slate-600">{item.text}</p>
-                      <span className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#E7F8FE] px-4 py-3 text-sm font-extrabold text-[#086F9D] transition group-hover:bg-[#26C6E9] group-hover:text-[#04131F]">
+                      <span className="mt-5 inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-extrabold transition group-hover:bg-[#26C6E9] group-hover:text-[#04131F] bg-[hsl(var(--primary))] text-[hsl(var(--background))]">
                         Zobrazit kategorii <ArrowRight size={15} />
                       </span>
                     </div>
@@ -210,7 +210,7 @@ export default function PremiumHomepage2026() {
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Produkt musí být jasný na první pohled</p>
               <h2 id="products-premium-title" className="premium-heading mt-4 max-w-3xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Vybrané produkty pro hlavní stránku</h2>
             </div>
-            <Link to="/mlzidla-mlzitka" className="premium-action inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto">Celý katalog <ArrowRight size={16} /></Link>
+            <Link to="/mlzidla-mlzitka" className="premium-action inline-flex items-center gap-2 self-start rounded-full px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto bg-[hsl(var(--primary))]">Celý katalog <ArrowRight size={16} /></Link>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">

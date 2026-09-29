@@ -186,7 +186,7 @@ export default function Header() {
               className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
-            <Link to="/klientska-sekce" className="mr-1 inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-cyan/35 bg-cyan/12 px-3.5 py-2 text-[11px] font-bold text-white lg:hidden">Klientská sekce</Link>
+            <Link to="/klientska-sekce" className="mr-1 inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-cyan/35 bg-cyan/12 px-3.5 py-2 text-[11px] font-bold text-white lg:hidden hidden">Klientská sekce</Link>
             <motion.button
               type="button"
               onClick={toggleMobileMenu}

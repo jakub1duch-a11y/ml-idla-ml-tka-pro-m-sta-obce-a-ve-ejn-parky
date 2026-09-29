@@ -4,60 +4,60 @@ import { ArrowRight, Building2, MapPin } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const CITY_REFERENCES = [
-  {
-    city: 'Praha',
-    code: 'PHA',
-    label: 'městské parky, školy, pobytové zóny a veřejný prostor',
-    href: '/reference',
-  },
-  {
-    city: 'Polná',
-    code: 'POL',
-    label: 'slavnosti, eventy, Mrkvobraní a sezónní osvěžení',
-    href: '/reference/mesto-polna-mlzitko-mrkev',
-  },
-  {
-    city: 'Jičín',
-    code: 'JIC',
-    label: 'náměstí, promenády, parky a turistické trasy',
-    href: '/reference/bendy-jicinske-namesti',
-  },
-  {
-    city: 'Brno',
-    code: 'BRN',
-    label: 'sportoviště, parky, areály a pobytové zóny',
-    href: '/reference',
-  },
-];
+{
+  city: 'Praha',
+  code: 'PHA',
+  label: 'městské parky, školy, pobytové zóny a veřejný prostor',
+  href: '/reference'
+},
+{
+  city: 'Polná',
+  code: 'POL',
+  label: 'slavnosti, eventy, Mrkvobraní a sezónní osvěžení',
+  href: '/reference/mesto-polna-mlzitko-mrkev'
+},
+{
+  city: 'Jičín',
+  code: 'JIC',
+  label: 'náměstí, promenády, parky a turistické trasy',
+  href: '/reference/bendy-jicinske-namesti'
+},
+{
+  city: 'Brno',
+  code: 'BRN',
+  label: 'sportoviště, parky, areály a pobytové zóny',
+  href: '/reference'
+}];
+
 
 export default function ReferencesStrip() {
   const [cities, setCities] = useState(CITY_REFERENCES);
 
   useEffect(() => {
-    base44.entities.Realizace.filter({ published: true, category: 'mestsky' }, '-year', 20)
-      .then((items) => {
-        if (!items?.length) return;
-        const merged = [...CITY_REFERENCES];
-        items.forEach((item) => {
-          const name = item.client || item.location || item.name || '';
-          const normalized = name.toLowerCase();
-          const existing = merged.find((city) => normalized.includes(city.city.toLowerCase()) || city.city.toLowerCase().includes(normalized));
-          if (!existing && name) {
-            merged.push({
-              city: name.replace(/^Město\s+/i, '').trim(),
-              code: name.slice(0, 3).toUpperCase(),
-              label: item.short_description || item.description || 'veřejný prostor a realizace mlžení',
-              href: item.slug ? `/reference/${item.slug}` : '/reference',
-            });
-          }
-        });
-        setCities(merged.slice(0, 8));
-      })
-      .catch(() => {});
+    base44.entities.Realizace.filter({ published: true, category: 'mestsky' }, '-year', 20).
+    then((items) => {
+      if (!items?.length) return;
+      const merged = [...CITY_REFERENCES];
+      items.forEach((item) => {
+        const name = item.client || item.location || item.name || '';
+        const normalized = name.toLowerCase();
+        const existing = merged.find((city) => normalized.includes(city.city.toLowerCase()) || city.city.toLowerCase().includes(normalized));
+        if (!existing && name) {
+          merged.push({
+            city: name.replace(/^Město\s+/i, '').trim(),
+            code: name.slice(0, 3).toUpperCase(),
+            label: item.short_description || item.description || 'veřejný prostor a realizace mlžení',
+            href: item.slug ? `/reference/${item.slug}` : '/reference'
+          });
+        }
+      });
+      setCities(merged.slice(0, 8));
+    }).
+    catch(() => {});
   }, []);
 
   return (
-    <section className="relative overflow-hidden border-b border-[#EAF5FB] bg-[#fbfdfe] py-14 sm:py-16" aria-labelledby="city-references-title">
+    <section className="relative overflow-hidden border-b border-[#EAF5FB] bg-[#fbfdfe] py-14 sm:py-16 hidden" aria-labelledby="city-references-title">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-16 -top-20 h-56 w-56 rounded-full bg-cyan-200/20 blur-[72px]" />
         <div className="absolute -right-20 top-2 h-52 w-52 rounded-full bg-sky-100/35 blur-[80px]" />
@@ -84,12 +84,12 @@ export default function ReferencesStrip() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {cities.map((item) => (
-            <Link
-              key={`${item.city}-${item.code}`}
-              to={item.href || '/reference'}
-              className="group rounded-3xl border border-[#D8EAF2] bg-white p-5 shadow-[0_16px_50px_rgba(13,45,56,.06)] transition hover:-translate-y-1 hover:border-[#26C6E9]/50 hover:shadow-[0_22px_70px_rgba(11,142,197,.14)]"
-            >
+          {cities.map((item) =>
+          <Link
+            key={`${item.city}-${item.code}`}
+            to={item.href || '/reference'}
+            className="group rounded-3xl border border-[#D8EAF2] bg-white p-5 shadow-[0_16px_50px_rgba(13,45,56,.06)] transition hover:-translate-y-1 hover:border-[#26C6E9]/50 hover:shadow-[0_22px_70px_rgba(11,142,197,.14)]">
+            
               <div className="flex items-start justify-between gap-4">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E7F8FE] text-[#0B8EC5]">
                   <Building2 size={24} />
@@ -104,9 +104,9 @@ export default function ReferencesStrip() {
                 Zobrazit / poptat <ArrowRight size={14} />
               </span>
             </Link>
-          ))}
+          )}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

@@ -249,22 +249,22 @@ export default function PremiumHomepage2026() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-glass-card rounded-[2rem] border border-white/[.12] bg-white/[.06] p-5 backdrop-blur-md">
-            <div className="rounded-[1.5rem] bg-[#06101B] p-5 shadow-2xl">
-              <div className="mb-5 flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[.18em] text-[#26C6E9]">Přehled provozu</p>
-                  <h3 className="mt-1 font-heading text-2xl font-black">Mlžítko aktivní</h3>
-                </div>
-                <span className="rounded-full bg-emerald-400/[.18] px-4 py-2 text-xs font-bold text-emerald-200">Zapnuto</span>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/[.56]">Aktuálně</p><strong className="mt-2 block text-4xl">28 °C</strong><span className="text-xs text-[#26C6E9]">ideální podmínky pro mlžení</span></div>
-                <div className="rounded-2xl bg-white/[.07] p-5"><p className="text-sm text-white/[.56]">Spotřeba dnes</p><strong className="mt-2 block text-4xl">124 l</strong><span className="text-xs text-emerald-200">úsporný režim</span></div>
-                <div className="rounded-2xl bg-white/[.07] p-5 sm:col-span-2"><p className="text-sm text-white/[.56]">Scénáře</p><div className="mt-3 grid gap-2 sm:grid-cols-3"><span className="rounded-full bg-[#26C6E9]/[.18] px-3 py-2 text-xs font-bold text-[#A8EFFF]">Park</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Hřiště</span><span className="rounded-full bg-white/[.08] px-3 py-2 text-xs font-bold">Event</span></div></div>
-              </div>
-            </div>
-          </motion.div>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
         </div>
       </section>
 
@@ -275,7 +275,7 @@ export default function PremiumHomepage2026() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
             <div className="absolute inset-0 sm:p-8 lg:p-10 p-6">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
-              <h2 id="planning-title" className="premium-heading mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl">Zákresy a zaměření.</h2>
+              
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/[.72] sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
               <div className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
                 {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="premium-glass-card rounded-full border border-white/[.16] bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
@@ -334,7 +334,7 @@ export default function PremiumHomepage2026() {
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="kotveni-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
-            <img src={media.brochure} alt="Skryté kotvení mlžítek pro městské použití" className="w-full object-cover hidden" loading="lazy" decoding="async" />
+            
           </motion.div>
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Instalace a technické podklady</p>

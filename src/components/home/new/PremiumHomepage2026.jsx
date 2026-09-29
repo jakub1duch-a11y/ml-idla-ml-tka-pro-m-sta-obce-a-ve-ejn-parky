@@ -249,7 +249,7 @@ export default function PremiumHomepage2026() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-glass-card rounded-[2rem] border border-white/[.12] bg-white/[.06] p-5 backdrop-blur-md hidden">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-glass-card rounded-[2rem] border border-white/[.12] bg-white/[.06] p-5 backdrop-blur-md">
             <div className="rounded-[1.5rem] bg-[#06101B] p-5 shadow-2xl">
               <div className="mb-5 flex items-center justify-between">
                 <div>
@@ -273,10 +273,10 @@ export default function PremiumHomepage2026() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/[.10] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
             <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
-            <div className="absolute inset-0 p-6 sm:p-8 lg:p-1">
+            <div className="absolute inset-0 sm:p-8 lg:p-10 p-6">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
-              <h2 id="planning-title" className="premium-heading mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl hidden">Zákresy a zaměření.</h2>
-              <p className="mt-5 max-w-xl leading-6 text-white/[.72] sm:leading-7 text-lg sm:text-lg">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
+              <h2 id="planning-title" className="premium-heading mt-4 max-w-[11ch] font-heading text-4xl font-black leading-[.98] tracking-[-.055em] sm:text-5xl">Zákresy a zaměření.</h2>
+              <p className="mt-5 max-w-xl text-sm leading-6 text-white/[.72] sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
               <div className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
                 {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="premium-glass-card rounded-full border border-white/[.16] bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
               </div>

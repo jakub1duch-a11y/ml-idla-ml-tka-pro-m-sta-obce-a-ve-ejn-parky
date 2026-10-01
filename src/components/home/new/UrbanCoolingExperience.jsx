@@ -57,8 +57,8 @@ export default function UrbanCoolingExperience() {
       <div className="ucx-grid">
         {places.map((p, i) => <motion.a
           {...reveal}
-          whileHover={{ y: -6 }}
-          transition={{ duration: .28, ease: [.22, 1, .36, 1] }}
+          transition={{ duration: .62, ease: [.22, 1, .36, 1], delay: i * 0.08 }}
+          whileHover={{ y: -6, transition: { duration: .28, ease: [.22, 1, .36, 1] } }}
           href="/mestske-mlzitka"
           className="ucx-place"
           key={p[0]}>
@@ -99,7 +99,7 @@ export default function UrbanCoolingExperience() {
         <h2>Čistá architektura. <em>Jasná technika.</em></h2>
         <p>Technické informace mají vlastní přehlednou vrstvu pro projektanty, města a realizační týmy.</p>
       </motion.div>
-      <div className="ucx-facts">{facts.map((f) => <motion.div {...reveal} key={f[0]}><small>{f[0]}</small><strong>{f[1]}</strong></motion.div>)}</div>
+      <div className="ucx-facts">{facts.map((f, i) => <motion.div {...reveal} transition={{ duration: .62, ease: [.22, 1, .36, 1], delay: i * 0.08 }} key={f[0]}><small>{f[0]}</small><strong>{f[1]}</strong></motion.div>)}</div>
       <motion.a {...reveal} className="ucx-doc" href="/ke-stazeni">
         <ShieldCheck /><span><small>PRO PROJEKT A REALIZACI</small><strong>Technické listy a podklady</strong></span><b>Otevřít dokumentaci <ArrowRight size={16} /></b>
       </motion.a>

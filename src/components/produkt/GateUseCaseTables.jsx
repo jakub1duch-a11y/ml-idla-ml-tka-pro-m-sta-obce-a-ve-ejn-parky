@@ -75,7 +75,7 @@ export default function GateUseCaseTables() {
 
   return (
     <section className="border-y border-border bg-muted/40">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+      <div className="mx-auto max-w-[1440px] px-6 py-16 lg:px-10 lg:py-24">
         <div className="mb-10 max-w-4xl">
           <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">MLŽNÁ BRÁNA GATE · PŘEHLED PRODUKTŮ</p>
           <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground lg:text-5xl">Jasný přehled brány pro každý prostor.</h2>
@@ -106,10 +106,10 @@ export default function GateUseCaseTables() {
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
+            initial={{ opacity: 0, y: 16, scale: 0.99 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.99 }}
+            transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Use case intro */}
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -150,7 +150,7 @@ export default function GateUseCaseTables() {
               </div>
 
               {SPECS.map((s, i) => (
-                <div key={s.label} className={`grid grid-cols-4 ${i % 2 === 0 ? 'bg-white' : 'bg-muted/30'}`}>
+                <motion.div key={s.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.36, delay: 0.06 + i * 0.05, ease: [0.22, 1, 0.36, 1] }} className={`grid grid-cols-4 ${i % 2 === 0 ? 'bg-white' : 'bg-muted/30'} transition-colors hover:bg-accent/10`}>
                   <div className="px-5 py-4 flex items-center gap-2">
                     <s.icon size={14} className="text-muted-foreground shrink-0" />
                     <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">{s.label}</span>
@@ -164,7 +164,7 @@ export default function GateUseCaseTables() {
                       </div>
                     );
                   })}
-                </div>
+                </motion.div>
               ))}
 
               <div className="grid grid-cols-4 bg-muted/40">
@@ -189,10 +189,10 @@ export default function GateUseCaseTables() {
 
             {/* Mobile stacked cards */}
             <div className="lg:hidden space-y-4">
-              {VARIANTS.map((v) => {
+              {VARIANTS.map((v, vi) => {
                 const isRec = useCase.recommended === v.id;
                 return (
-                  <div key={v.id} className={`overflow-hidden rounded-2xl border bg-white shadow-sm ${isRec ? 'border-accent' : 'border-border'}`}>
+                  <motion.div key={v.id} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.38, delay: vi * 0.08, ease: [0.22, 1, 0.36, 1] }} whileHover={{ y: -4, transition: { duration: 0.24 } }} className={`overflow-hidden rounded-2xl border bg-white shadow-sm ${isRec ? 'border-accent' : 'border-border'}`}>
                     <div className={`px-4 py-3.5 flex items-center justify-between ${isRec ? 'bg-accent/15' : 'bg-primary'}`}>
                       <div>
                         <span className="text-sm font-bold text-foreground">{v.name}</span>
@@ -218,7 +218,7 @@ export default function GateUseCaseTables() {
                         <p className="text-sm font-medium text-foreground">{useCase.placement} · {useCase.operation}</p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>

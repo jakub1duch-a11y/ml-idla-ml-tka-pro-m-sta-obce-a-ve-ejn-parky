@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn } from 'lucide-react';
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -179,6 +179,7 @@ export default function Header() {
                 <AnimatePresence>
                   {accountOpen && <motion.div initial={{ opacity: 0, y: -6, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -6, scale: .98 }} transition={{ duration: .16 }} className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-white/15 bg-[#071A2F]/98 p-2 shadow-2xl backdrop-blur-2xl">
                     <Link to="/klientska-sekce" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><LogIn size={15} /> Klientská sekce</Link>
+                    <Link to="/register" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><UserPlus size={15} /> Vytvořit účet</Link>
                   </motion.div>}
                 </AnimatePresence>
               </div>

@@ -15,7 +15,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const nextUrl = safeReturnTo("next");
+  const resolvedNext = safeReturnTo("next");
+  const nextUrl = resolvedNext === "/" ? "/klientska-sekce" : resolvedNext;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

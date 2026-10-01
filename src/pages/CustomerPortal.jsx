@@ -61,6 +61,7 @@ export default function CustomerPortal() {
   const [contactProfileReady, setContactProfileReady] = useState(false);
   const [contactProfileBusy, setContactProfileBusy] = useState(false);
   const [contactProfileMessage, setContactProfileMessage] = useState('');
+  const [base44Session, setBase44Session] = useState(null);
   const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
   const passwordChecks = {
@@ -95,6 +96,22 @@ export default function CustomerPortal() {
       canonicalPath: '/klientska-sekce',
       robots: 'noindex, nofollow, noarchive, nosnippet',
     });
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    base44.auth.isAuthenticated().then(async (authed) => {
+      if (!active || !authed) return;
+      try {
+        const me = await base44.auth.me();
+        if (!active || !me?.email) return;
+        setBase44Session(me);
+        setEmail(me.email);
+        setAuthMethod('otp');
+        setAccessMode('email');
+      } catch { /* ignore — user can enter email manually */ }
+    });
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
@@ -481,6 +498,12 @@ export default function CustomerPortal() {
             </a>
           </div>
 
+          {base44Session && !otpSent && (
+            <div className="mb-4 flex items-center gap-3 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs text-cyan-900">
+              <ShieldCheck size={15} className="shrink-0 text-cyan-700" />
+              <span>Jste přihlášen jako <strong>{base44Session.email}</strong>. Pošlete si ověřovací kód pro vstup do klientské sekce.</span>
+            </div>
+          )}
           {!otpSent && <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-100 p-1">
             <button type="button" onClick={() => { setAuthMethod('password'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${authMethod === 'password' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><KeyRound size={14}/> E-mail + heslo</button>
             <button type="button" onClick={() => { setAuthMethod('otp'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${authMethod === 'otp' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><ShieldCheck size={14}/> První přihlášení / obnova</button>
@@ -566,7 +589,8 @@ export default function CustomerPortal() {
           </form>
 
           <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400"><ShieldCheck size={13}/> Přístup je chráněný ověřovacím kódem a bezpečně uloženým heslem.</div>
-          <p className="text-xs text-slate-400 text-center mt-3">Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a></p>
+          <p className="text-xs text-slate-400 text-center mt-3">Ještě nemáte účet? <Link to="/register" className="text-slate-900 font-semibold hover:underline">Vytvořit klientský účet</Link></p>
+          <p className="text-xs text-slate-400 text-center mt-2">Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a></p>
           </div>
         </div>
       </div>

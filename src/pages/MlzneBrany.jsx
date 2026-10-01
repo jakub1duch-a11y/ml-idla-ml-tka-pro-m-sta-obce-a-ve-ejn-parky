@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Droplets, Ruler, ShieldCheck, Wifi, Trees, Dumbbell, School } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { base44 } from '@/api/base44Client';
+import GateUseCaseTables from '@/components/produkt/GateUseCaseTables';
 
 const USE_CASES = [
   { icon: Building2, title: 'Náměstí a pěší zóny', text: 'Průchozí ochlazovací bod pro pobytové plochy, městská centra, předprostory veřejných budov a frekventované pěší trasy.' },
@@ -99,6 +100,8 @@ export default function MlzneBrany() {
           ))}
         </div>
       </section>
+
+      <GateUseCaseTables />
 
       {kruh && (
         <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-10 lg:pb-24">

@@ -131,12 +131,13 @@ export default function Eventy() {
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {EVENT_SCENES.map((scene, index) => (
-            <motion.article key={scene.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="group relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100">
-              <img src={scene.image} alt={`${scene.title} — mlžení MLŽIDLA`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/5 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                <p className="font-mono text-[9px] uppercase tracking-[.16em] text-white/60">{scene.kicker}</p>
-                <h3 className="mt-1 font-heading text-2xl">{scene.title}</h3>
+            <motion.article key={scene.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="aspect-[16/10] overflow-hidden bg-slate-100">
+                <img src={scene.image} alt={`${scene.title} — mlžení MLŽIDLA`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.025]" loading="lazy" />
+              </div>
+              <div className="border-t border-slate-100 p-5 sm:p-6">
+                <p className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-400">{scene.kicker}</p>
+                <h3 className="mt-1 font-heading text-2xl text-slate-900">{scene.title}</h3>
               </div>
             </motion.article>
           ))}

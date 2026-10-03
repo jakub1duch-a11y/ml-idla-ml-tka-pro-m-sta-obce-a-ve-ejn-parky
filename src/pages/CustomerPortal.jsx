@@ -920,6 +920,8 @@ export default function CustomerPortal() {
           {projects.map(project => {
             const statusInfo = STATUS_MAP[project.status] || STATUS_MAP.draft;
             const isApproved = ['approved', 'in_production', 'ready', 'delivered'].includes(project.status);
+            const canOrder = ['sent', 'viewed', 'extension_requested'].includes(project.status);
+            const canExtend = ['sent', 'viewed', 'extension_requested', 'expired'].includes(project.status);
             const isRequested = Boolean(focusQuote && project.quote_number === focusQuote);
 
             return (
@@ -952,6 +954,39 @@ export default function CustomerPortal() {
                   </div>}
 
                   {project.description && <div className="rounded-2xl border border-slate-200 bg-white p-4"><p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Shrnutí projektu</p><p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600">{project.description}</p></div>}
+
+                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 sm:p-5">
+                    <div className="flex flex-wrap items-end justify-between gap-3">
+                      <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-700">Nabídkový balíček</p><h3 className="mt-1 text-lg font-semibold text-slate-950">Návrh řešení + obchodní nabídka</h3></div>
+                      {project.quote_number && <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-mono text-slate-500">{project.quote_number}</span>}
+                    </div>
+                    <div className="mt-4 grid gap-3 md:grid-cols-2">
+                      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                        <div className="relative aspect-[16/9] bg-[#10242b]">
+                          {project.primary_visualization_url ? <img src={project.primary_visualization_url} alt={'Návrhová nabídka ' + project.project_name} className="h-full w-full object-cover"/> : <div className="flex h-full items-center justify-center text-white/40"><Image size={30}/></div>}
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent px-4 pb-4 pt-12 text-white"><p className="text-[10px] uppercase tracking-widest text-cyan-200">Návrhová nabídka</p><p className="mt-1 text-sm font-semibold">{project.visualizations?.length || 0} vizualizací / fotografií</p></div>
+                        </div>
+                        <div className="flex flex-wrap gap-2 p-3">
+                          {(project.presentation_pdf_url || project.presentation_url) && <a href={project.presentation_pdf_url || project.presentation_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-[11px] font-semibold text-slate-700"><FileText size={12}/> Prezentace návrhu</a>}
+                          {project.notebook_source_url && <a href={project.notebook_source_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-2 text-[11px] font-semibold text-cyan-900"><ExternalLink size={12}/> NotebookLM prezentace</a>}
+                        </div>
+                      </div>
+                      <div className="flex flex-col justify-between rounded-2xl bg-[#0d2d38] p-5 text-white">
+                        <div><p className="text-[10px] uppercase tracking-[.14em] text-[#61d5e5]">Cenová nabídka</p><p className="mt-3 text-3xl font-semibold">{project.total_price ? project.total_price.toLocaleString('cs-CZ') + ' Kč' : 'Cena k doplnění'}</p><p className="mt-1 text-[11px] text-white/45">bez DPH · dle schválené nabídky</p>{project.valid_until && <p className="mt-4 text-xs text-white/65">Platnost do <strong className="text-white">{new Date(project.valid_until).toLocaleDateString('cs-CZ')}</strong></p>}</div>
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {project.quote_pdf_url && <a href={project.quote_pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-[11px] font-bold text-[#0d2d38]"><Download size={12}/> Otevřít cenovou nabídku</a>}
+                          {project.presentation_pdf_url && <a href={project.presentation_pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-semibold text-white"><FileText size={12}/> PDF návrhu</a>}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-4 sm:flex-row sm:flex-wrap">
+                      {canOrder && <button type="button" onClick={() => document.getElementById('order-action-' + project.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-emerald-700"><CheckCircle size={14}/> Potvrdit nabídku a objednat</button>}
+                      {canExtend && <button type="button" onClick={() => submitOfferIntent(project, 'extension')} disabled={intentBusy === project.id + ':extension'} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-5 py-2.5 text-xs font-bold text-amber-800 disabled:opacity-50"><Clock size={14}/>{intentBusy === project.id + ':extension' ? 'Odesílám žádost…' : 'Požádat o prodloužení nabídky'}</button>}
+                      {!canOrder && !canExtend && !isApproved && <span className="inline-flex items-center rounded-full bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-600">Nabídka se připravuje k odeslání.</span>}
+                      {isApproved && <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-800"><CheckCircle size={13}/> Nabídka byla potvrzena klientem</span>}
+                    </div>
+                  </div>
 
                   {/* Timeline */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1053,6 +1088,12 @@ export default function CustomerPortal() {
                         <FileText size={14} /> Prezentace projektu
                       </a>
                     )}
+                    {project.notebook_source_url && (
+                      <a href={project.notebook_source_url} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 bg-cyan-50 text-cyan-900 text-xs rounded-full hover:bg-cyan-100 border border-cyan-200 transition-all">
+                        <ExternalLink size={14} /> NotebookLM prezentace
+                      </a>
+                    )}
 
                     {project.shared_token && (
                       <button onClick={() => generateShareUrl(project.shared_token)}
@@ -1131,7 +1172,7 @@ export default function CustomerPortal() {
                   )}
 
                   {(project.status === 'sent' || project.status === 'viewed' || project.status === 'extension_requested') && (
-                    <div className="rounded-xl border border-green-200 bg-green-50/60 p-4">
+                    <div id={'order-action-' + project.id} className="rounded-xl border border-green-200 bg-green-50/60 p-4">
                       <label className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-slate-700">
                         <input
                           type="checkbox"

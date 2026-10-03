@@ -685,6 +685,14 @@ export default function CustomerPortal() {
   const primaryInquiryMessage = primaryInquiry?.zprava || primaryInquiry?.message || primaryInquiry?.description || focusedProject?.description || '';
   const focusedStatus = focusedProject ? (STATUS_MAP[focusedProject.status] || STATUS_MAP.draft) : STATUS_MAP.draft;
   const workspaceDocuments = projects.reduce((sum, project) => sum + Number(project.documents?.length || 0), 0);
+  const clientUploads = focusedProject?.client_uploads || primaryInquiry?.client_uploads || [];
+  const inquiryAttachments = (primaryInquiry?.attachment_urls || []).map((url, index) => ({
+    id: `inquiry-attachment-${index}`,
+    file_url: url,
+    file_name: primaryInquiry?.attachment_names?.[index] || `Příloha ${index + 1}`,
+    asset_type: /\.(avif|gif|heic|jpeg|jpg|png|webp)(\?|$)/i.test(url) ? 'source_photo' : 'source_document',
+  }));
+  const workspaceClientFiles = [...inquiryAttachments, ...clientUploads];
   const workspaceMessages = projects.reduce((sum, project) => sum + Number(project.offer_messages?.length || 0), 0);
   const pendingExtras = projects.reduce((sum, project) => sum + Number((project.extra_charges || []).filter((charge) => charge.status === 'pending_customer_approval').length), 0);
   const nextAction = pendingExtras > 0
@@ -734,6 +742,80 @@ export default function CustomerPortal() {
             {[['#overview','Přehled'],['#offers','Moje nabídky'],['#inquiries','Moje poptávky'],['#communication','Zprávy'],['#contact-profile','Profil'],['#new-inquiry','Nový požadavek']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
           </nav>
         </header>
+
+        <section className="mb-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+            <div className="border-b border-slate-100 bg-gradient-to-r from-white to-cyan-50/60 px-6 py-6 sm:px-8">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Nezávazná poptávka</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{primaryInquiryTitle}</h2>
+                </div>
+                <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-cyan-800">
+                  {primaryInquiry ? (['nova','new'].includes(primaryInquiry.status) ? 'Přijata' : ['v_reseni','contacted','in_progress'].includes(primaryInquiry.status) ? 'V řešení' : 'Evidována') : focusedStatus.label}
+                </span>
+              </div>
+              {primaryInquiryMessage && <p className="mt-4 max-w-4xl whitespace-pre-line text-sm leading-6 text-slate-600">{primaryInquiryMessage}</p>}
+              <div className="mt-5 flex flex-wrap gap-2 text-[11px]">
+                {primaryInquiry?.firma && <span className="rounded-full bg-slate-100 px-3 py-1.5 text-slate-600">{primaryInquiry.firma}</span>}
+                {primaryInquiry?.installation_location && <span className="rounded-full bg-slate-100 px-3 py-1.5 text-slate-600">Místo: {primaryInquiry.installation_location}</span>}
+                {primaryInquiry?.quantity && <span className="rounded-full bg-slate-100 px-3 py-1.5 text-slate-600">Počet: {primaryInquiry.quantity} ks</span>}
+                {primaryInquiry?.requested_visualization && <span className="rounded-full bg-cyan-50 px-3 py-1.5 text-cyan-800">Požadována vizualizace</span>}
+              </div>
+            </div>
+
+            <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_.9fr]">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[.14em] text-slate-400">Co se bude dít dál</p>
+                <div className="mt-3 space-y-3">
+                  {[
+                    ['1', 'Poptávka a podklady', 'Vaše zadání je uložené v projektu a můžete jej průběžně doplňovat.'],
+                    ['2', 'Návrh řešení', 'Přidáme fotografie, vizualizace, doporučené řešení a projektové podklady.'],
+                    ['3', 'Obchodní nabídka', 'Po interním schválení uvidíte cenu, platnost a podklady k objednání.'],
+                    ['4', 'Potvrzení / prodloužení', 'Nabídku můžete elektronicky objednat nebo požádat o prodloužení její platnosti.'],
+                  ].map(([stepNo, title, textValue]) => <div key={stepNo} className="flex gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0d2d38] text-[11px] font-bold text-white">{stepNo}</span><div><p className="text-sm font-semibold text-slate-900">{title}</p><p className="mt-1 text-xs leading-5 text-slate-500">{textValue}</p></div></div>)}
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between gap-3"><p className="text-[10px] font-bold uppercase tracking-[.14em] text-slate-400">Vaše soubory k projektu</p><span className="text-[10px] text-slate-400">{workspaceClientFiles.length} souborů</span></div>
+                {workspaceClientFiles.length > 0 ? <div className="mt-3 grid gap-2">{workspaceClientFiles.slice(0, 8).map((asset) => <a key={asset.id || asset.file_url} href={asset.file_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 transition hover:border-cyan-300"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-50">{asset.asset_type === 'source_photo' ? <Image size={14} className="text-cyan-700"/> : <FileText size={14} className="text-slate-500"/>}</span><span className="min-w-0 flex-1 truncate">{asset.title || asset.file_name || 'Projektový soubor'}</span><ExternalLink size={12} className="shrink-0 text-slate-400"/></a>)}</div> : <div className="mt-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-center text-xs leading-5 text-slate-400">Zatím nejsou přidané žádné klientské podklady. Můžete je nahrát v pravém panelu.</div>}
+                {focusedProject && <a href="#offers" className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#0d2d38] px-5 py-3 text-xs font-bold text-white">Otevřít návrh a obchodní nabídku <ArrowRight size={13}/></a>}
+              </div>
+            </div>
+          </div>
+
+          <aside className="h-fit rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(13,45,56,0.07)] xl:sticky xl:top-24">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Projektový chat</p>
+              <h2 className="mt-2 text-lg font-semibold text-slate-950">Kontakt s týmem MLŽIDLA®</h2>
+              <p className="mt-2 text-xs leading-5 text-slate-500">Zprávy z nabídky se ukládají k projektu a současně se odesílají odpovědnému týmu.</p>
+              <div className="mt-4 space-y-2 text-[11px]">
+                <a href="mailto:jakub1duch@gmail.com" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 font-semibold text-slate-700 hover:bg-cyan-50"><Mail size={13}/> Admin · jakub1duch@gmail.com</a>
+                <a href="mailto:info@mlzidla.cz" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 font-semibold text-slate-700 hover:bg-cyan-50"><Mail size={13}/> Obchod · info@mlzidla.cz</a>
+                <a href="mailto:meduna@holmtec.cz" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 font-semibold text-slate-700 hover:bg-cyan-50"><Mail size={13}/> Technik · meduna@holmtec.cz</a>
+              </div>
+
+              {focusedProject ? <div className="mt-4 border-t border-slate-100 pt-4">
+                <textarea value={(messageForms[focusedProject.id] || {}).message || ''} onChange={(event) => setMessageForms((current) => ({ ...current, [focusedProject.id]: { ...(current[focusedProject.id] || {}), category: (current[focusedProject.id] || {}).category || 'question', message: event.target.value } }))} rows={4} placeholder="Napište zprávu k projektu…" className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-800 outline-none focus:border-cyan-400"/>
+                <button type="button" onClick={() => sendOfferMessage(focusedProject)} disabled={messageBusy === focusedProject.id || !String((messageForms[focusedProject.id] || {}).message || '').trim()} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-4 py-3 text-xs font-bold text-white disabled:opacity-40"><MessageSquare size={14}/>{messageBusy === focusedProject.id ? 'Odesílám…' : 'Odeslat do projektového chatu'}</button>
+                {messageSaved[focusedProject.id] && <p className="mt-2 text-center text-[11px] font-semibold text-emerald-700">Zpráva byla předána týmu.</p>}
+              </div> : <p className="mt-4 rounded-xl bg-amber-50 px-3 py-3 text-[11px] leading-5 text-amber-800">Projektový chat se propojí s konkrétní obchodní nabídkou. Do té doby můžete použít kontaktní e-maily výše.</p>}
+            </div>
+
+            <form onSubmit={uploadProjectFiles} className="mt-5 border-t border-slate-100 pt-5">
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Přidat podklady</p>
+              <label className="mt-3 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-5 text-center transition hover:border-cyan-300 hover:bg-cyan-50/40">
+                <UploadCloud size={22} className="text-cyan-700"/>
+                <span className="mt-2 text-xs font-semibold text-slate-800">Fotografie, PDF, výkresy a dokumenty</span>
+                <span className="mt-1 text-[10px] leading-4 text-slate-400">Maximálně 8 souborů v jednom kroku.</span>
+                <input type="file" multiple className="hidden" onChange={(event) => setProjectUploadFiles(Array.from(event.target.files || []).slice(0, 8))}/>
+              </label>
+              {projectUploadFiles.length > 0 && <div className="mt-3 space-y-1.5">{projectUploadFiles.map((file) => <div key={file.name + file.size} className="flex items-center gap-2 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] text-slate-600"><Paperclip size={11}/><span className="min-w-0 flex-1 truncate">{file.name}</span></div>)}</div>}
+              <button type="submit" disabled={projectUploadBusy || projectUploadFiles.length === 0} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-bold text-cyan-900 disabled:opacity-40">{projectUploadBusy ? <><Loader size={13} className="animate-spin"/> Nahrávám…</> : <><UploadCloud size={13}/> Přidat k projektu</>}</button>
+              {projectUploadMessage && <p className="mt-2 rounded-xl bg-emerald-50 px-3 py-2 text-center text-[11px] font-semibold text-emerald-800">{projectUploadMessage}</p>}
+            </form>
+          </aside>
+        </section>
 
         <section id="contact-profile" className="mb-6 scroll-mt-28 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
           <form onSubmit={saveContactProfile} className="grid gap-5 p-5 sm:p-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">

@@ -28,7 +28,7 @@ const VIEW_LABELS = {
   video: 'Video',
 };
 
-export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '', fullBleed = false }) {
+export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '', fullBleed = false, cleanPreview = false }) {
   const [activeView, setActiveView] = useState(0);
   const resolvedAlt = alt || product?.image_alt || product?.name || 'Mlžítko MLŽIDLA®';
   const [hovered, setHovered] = useState(false);
@@ -118,7 +118,8 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
   const current = views[activeView] || views[0];
   const hasMultiple = views.length > 1;
-  const showDots = hasMultiple;
+  const showDots = hasMultiple && !cleanPreview;
+  const previewPosition = product?.hero_focal_position || 'center center';
 
   return (
     <div
@@ -163,6 +164,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
             decoding="async"
             sizes="(min-width: 1280px) 31vw, (min-width: 768px) 48vw, 100vw"
             className={`absolute inset-0 h-full w-full transition-all duration-500 ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}
+            style={fullBleed ? { objectPosition: previewPosition } : undefined}
             onError={(event) => {
               const original = getOriginalMediaUrl(view.url);
               if (original && original !== view.url && event.currentTarget.src !== original) {
@@ -174,7 +176,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       })}
 
       {/* View type badge */}
-      {(hasMultiple || current.type === 'studio') && (
+      {!cleanPreview && (hasMultiple || current.type === 'studio') && (
         <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md transition-opacity duration-300">
           {current.type === 'video' ? <Play size={10} fill="currentColor" /> : <Images size={10} />}
           {current.label}

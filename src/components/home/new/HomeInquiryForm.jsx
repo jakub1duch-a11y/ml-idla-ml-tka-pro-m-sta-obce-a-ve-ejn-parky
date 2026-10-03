@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { trackFunnelStep } from '@/lib/ga4';
 import { Loader2, CheckCircle2 } from 'lucide-react';
@@ -49,6 +50,10 @@ export default function HomeInquiryForm() {
           <p className="mt-4 text-sm leading-relaxed text-[#0D2F4F]/60">
             Ozveme se do jednoho pracovního dne s návrhem dalšího postupu.
           </p>
+          <Link to="/klientska-sekce" className="mt-6 inline-flex items-center justify-center rounded-full bg-[#0D2F4F] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16425f]">
+            Otevřít klientskou sekci
+          </Link>
+          <p className="mt-3 text-xs text-[#0D2F4F]/50">Přihlaste se e-mailem použitým v právě odeslané poptávce.</p>
         </div>
       </section>
     );

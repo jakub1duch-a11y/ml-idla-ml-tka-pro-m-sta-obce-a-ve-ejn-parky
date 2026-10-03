@@ -20,6 +20,7 @@ const BUCKETS = {
 const STATUS_OPTIONS = {
   Poptavka: [{ value: 'nova', label: 'Nová' }, { value: 'v_reseni', label: 'V řešení' }, { value: 'uzavrena', label: 'Vyřízená' }],
   ContactInquiry: [{ value: 'new', label: 'Nová' }, { value: 'contacted', label: 'Kontaktováno' }, { value: 'in_progress', label: 'V řešení' }, { value: 'closed', label: 'Vyřízená' }],
+  WebAdvisorLead: [{ value: 'new', label: 'Nový chat' }, { value: 'contacted', label: 'Kontaktováno' }, { value: 'in_progress', label: 'V řešení' }, { value: 'closed', label: 'Vyřízený' }],
 };
 
 const OFFER_STAGES = [
@@ -67,21 +68,28 @@ export default function AdminPoptavky() {
 
   const load = async () => {
     setLoading(true);
-    const [poptavky, inquiries, orders, prods] = await Promise.all([
+    const [poptavky, inquiries, advisorLeads, orders, prods] = await Promise.all([
       base44.entities.Poptavka.list('-created_date'),
       base44.entities.ContactInquiry.list('-created_date'),
+      base44.entities.WebAdvisorLead.list('-created_date'),
       base44.entities.ProjectOrder.list('-created_date', 200),
       base44.entities.Product.list(),
     ]);
     const normalized = [
       ...poptavky.map((p) => ({
-        id: p.id, entity: 'Poptavka', source: 'Poptávka', name: p.jmeno, email: p.email, phone: p.telefon,
+        id: p.id, entity: 'Poptavka', source: p.service_type === 'ai_misting_advisor' ? 'AI poradce 24/7' : 'Poptávka', name: p.jmeno, email: p.email, phone: p.telefon,
         company: p.firma, product: p.produkt, message: p.zprava, status: p.status, created_date: p.created_date,
         offer_status: p.offer_status || 'nova_poptavka',
       })),
-      ...inquiries.map((c) => ({
-        id: c.id, entity: 'ContactInquiry', source: 'Kontakt', name: c.name, email: c.email, phone: '',
-        company: '', product: c.product_id, message: c.message, status: c.status, created_date: c.created_date,
+      ...inquiries.map((item) => ({
+        id: item.id, entity: 'ContactInquiry', source: 'Kontakt', name: item.name, email: item.email, phone: '',
+        company: '', product: item.product_id, message: item.message, status: item.status, created_date: item.created_date,
+        offer_status: 'nova_poptavka',
+      })),
+      ...(advisorLeads || []).filter((lead) => !lead.inquiry_id).map((lead) => ({
+        id: lead.id, entity: 'WebAdvisorLead', source: 'AI chat 24/7', name: lead.name, email: lead.email || '', phone: lead.phone,
+        company: '', product: (lead.recommended_products || []).join(', ') || lead.topic || 'Poradenství k mlžítku',
+        message: [lead.summary, lead.transcript].filter(Boolean).join('\n\n'), status: lead.status || 'new', created_date: lead.created_date,
         offer_status: 'nova_poptavka',
       })),
     ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime());
@@ -478,23 +486,28 @@ export default function AdminPoptavky() {
                               {opt.label}
                             </button>
                           ))}
-                          <button onClick={() => prepareConcept(item)} disabled={preparingConcept === item.id}
-                            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-50">
-                            {preparingConcept === item.id ? <Loader size={11} className="animate-spin" /> : <Sparkles size={11} />}
-                            {preparingConcept === item.id ? 'Připravuji…' : 'Připravit koncept'}
-                          </button>
-                          <button onClick={() => downloadConceptPdf(item)} disabled={generatingPdf === item.id}
-                            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-50">
-                            {generatingPdf === item.id ? <Loader size={11} className="animate-spin" /> : <FileText size={11} />}
-                            {generatingPdf === item.id ? 'Generuji PDF…' : 'PDF koncept'}
-                          </button>
+                          {item.entity !== 'WebAdvisorLead' && <>
+                            <button onClick={() => prepareConcept(item)} disabled={preparingConcept === item.id}
+                              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-50">
+                              {preparingConcept === item.id ? <Loader size={11} className="animate-spin" /> : <Sparkles size={11} />}
+                              {preparingConcept === item.id ? 'Připravuji…' : 'Připravit koncept'}
+                            </button>
+                            <button onClick={() => downloadConceptPdf(item)} disabled={generatingPdf === item.id}
+                              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-cyan/30 text-cyan hover:bg-cyan/10 transition-all disabled:opacity-50">
+                              {generatingPdf === item.id ? <Loader size={11} className="animate-spin" /> : <FileText size={11} />}
+                              {generatingPdf === item.id ? 'Generuji PDF…' : 'PDF koncept'}
+                            </button>
+                          </>}
                           <button onClick={() => printA4(item)} className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono border border-white/15 text-white/50 hover:text-white">
                             <Printer size={11} /> Tisk A4
                           </button>
-                          <a href={`mailto:${item.email}?subject=Re: Vaše poptávka mlzidla.cz`}
+                          {item.email ? <a href={`mailto:${item.email}?subject=Re: Vaše poptávka mlzidla.cz`}
                             className="ml-auto inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-cyan text-ink hover:bg-cyan/90 transition-all">
                             Odpovědět <ArrowRight size={11} />
-                          </a>
+                          </a> : item.phone ? <a href={`tel:${item.phone}`}
+                            className="ml-auto inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-cyan text-ink hover:bg-cyan/90 transition-all">
+                            Zavolat <Phone size={11} />
+                          </a> : null}
                         </div>
 
                         <InquiryAiReply item={item} />

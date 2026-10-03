@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Loader, Paperclip, Trash2, UploadCloud } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackContactFormSubmit } from '@/lib/ga4';
@@ -76,6 +77,8 @@ export default function ProductContactForm({ productName, product }) {
       <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50"><CheckCircle2 size={22} className="text-emerald-600" /></div>
       <p className="font-semibold text-slate-950">Děkujeme, poptávku máme.</p>
       <p className="mt-2 text-sm leading-relaxed text-slate-500">Ozveme se a technické podklady doplníme společně až podle vašeho projektu.</p>
+      <Link to="/klientska-sekce" className="mt-5 inline-flex items-center justify-center rounded-full bg-[#0d2d38] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#123c49]">Otevřít klientskou sekci</Link>
+      <p className="mt-2 text-[11px] leading-5 text-slate-400">Použijte stejný e-mail jako v této poptávce.</p>
     </div>
   );
 

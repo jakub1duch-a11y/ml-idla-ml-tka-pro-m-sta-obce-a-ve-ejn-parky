@@ -107,7 +107,7 @@ export default function Koupaliste() {
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
-                  <ProductHoverImage product={p} alt={p.name} className="aspect-[4/3] bg-slate-100" />
+                  <ProductHoverImage product={p} alt={p.name} className="aspect-[4/3] bg-slate-100" fullBleed cleanPreview />
                   <div className="p-5 flex items-center justify-between">
                     <div>
                       <p className="text-slate-900 font-medium">{p.name}</p>

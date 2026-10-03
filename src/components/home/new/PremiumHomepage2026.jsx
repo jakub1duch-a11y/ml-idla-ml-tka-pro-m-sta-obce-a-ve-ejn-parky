@@ -216,13 +216,12 @@ export default function PremiumHomepage2026() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {resolvedHighlights.map((product, index) =>
             <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
-                <Link to={product.link} className="premium-card-interactive group relative block overflow-hidden rounded-[1.6rem] border border-slate-200/[.20] bg-[#07131D] shadow-[0_24px_80px_rgba(7,19,29,.16)]">
-                  <img src={product.image} alt={`${product.name} — ${product.label}`} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#07131D] via-[#07131D]/16 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                    <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#26C6E9]">Produkt</p>
-                    <h3 className="mt-1 font-heading text-3xl font-black tracking-[-.055em]">{product.name}</h3>
-                    <p className="mt-1 text-sm font-semibold text-white/[.76]">{product.label}</p>
+                <Link to={product.link} className="premium-card-interactive group block h-full overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.12)]">
+                  <div className="aspect-[4/5] overflow-hidden bg-slate-100"><img src={product.image} alt={`${product.name} — ${product.label}`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
+                  <div className="border-t border-slate-100 p-5">
+                    <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#0B8EC5]">Produkt</p>
+                    <h3 className="mt-1 font-heading text-3xl font-black tracking-[-.055em] text-[#07131D]">{product.name}</h3>
+                    <p className="mt-1 text-sm font-semibold text-slate-600">{product.label}</p>
                   </div>
                 </Link>
               </motion.div>

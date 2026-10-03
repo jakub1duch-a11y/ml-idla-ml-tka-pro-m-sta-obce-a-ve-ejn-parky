@@ -55,7 +55,7 @@ export default function HomeHero() {
 
           alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
           fetchPriority="high"
-          className="absolute inset-0 h-[108%] w-full object-cover object-center"
+          className="absolute inset-0 h-[108%] w-full object-cover object-[58%_center] sm:object-center"
           style={{ y: mediaY, scale: mediaScale }}
           data-home-parallax="7"
           initial={{ scale: 1.04 }}
@@ -68,7 +68,7 @@ export default function HomeHero() {
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono font-bold uppercase tracking-[.22em] text-[#26C6E9] text-base">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-6 max-w-[10ch] leading-[.92] tracking-[-.06em] text-white font-semibold [font-family:'Manrope',_'Inter',_sans-serif] text-7xl">
+            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl">
               Ochlazení, které patří do prostoru.
             </h1>
             <p className="mt-7 max-w-2xl leading-8 text-slate-200 text-lg sm:text-lg">
@@ -102,17 +102,15 @@ export default function HomeHero() {
 
       <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
       <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
           {tiles.map((tile, index) =>
-            <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
-              <Link to={tile.link} className="ref-product-card group relative block min-h-[240px] overflow-hidden border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
-                <div className="ref-card-media absolute inset-0"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" /></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/[.88] via-black/24 to-transparent" />
-                <motion.span className="absolute inset-x-6 top-5 h-px origin-left rounded-full bg-gradient-to-r from-transparent via-[#26C6E9] to-transparent opacity-0 group-hover:opacity-100" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.7, delay: 0.12 + index * 0.04 }} />
-                <div className="relative pt-24 p-5">
+            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
+              <Link to={tile.link} className="ref-product-card group block h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
+                <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
+                <div className="border-t border-white/10 p-5">
                   <div className="mb-3 flex items-center justify-between"><span className="ref-card-index font-mono text-[10px] font-bold text-[#26C6E9]">{String(index + 1).padStart(2, "0")}</span><span className="text-[10px] font-bold uppercase tracking-[.18em] text-white/55">Produkt</span></div>
                   <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
-                  <p className="mt-1 text-sm font-semibold text-slate-200">{tile.text}</p>
+                  <p className="mt-1 min-h-[40px] text-sm font-semibold leading-5 text-slate-200">{tile.text}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] opacity-90 transition group-hover:translate-x-1">
                     Detail produktu <ArrowRight size={14} />
                   </span>
@@ -121,6 +119,7 @@ export default function HomeHero() {
             </motion.div>
             )}
         </div>
+        <p className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[.16em] text-white/40 sm:hidden">Přejeďte pro další produkty</p>
       </div>
     </section>
     </MotionConfig>);

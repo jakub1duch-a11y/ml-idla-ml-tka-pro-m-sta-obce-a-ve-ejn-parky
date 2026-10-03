@@ -75,7 +75,12 @@ export function linesOfFamily(familyId) {
   return Object.entries(LINES).filter(([, l]) => l.family === familyId).map(([key, l]) => ({ key, ...l }));
 }
 
-// Pořadí: podle kolekce, pak podle řady, pak featured, pak název
+export function isPrimaryVariant(product) {
+  const line = getLine(product);
+  return Boolean(line?.slugs?.[0] && product?.slug === line.slugs[0]);
+}
+
+// Pořadí: podle kolekce, pak podle řady, hlavní varianta řady, featured, pak název
 export function sortByStructure(products) {
   const familyOrder = FAMILIES.map((f) => f.id);
   const lineOrder = Object.keys(LINES);
@@ -85,6 +90,8 @@ export function sortByStructure(products) {
     if (fa !== fb) return fa - fb;
     const li = lineOrder.indexOf(la.key); const lj = lineOrder.indexOf(lb.key);
     if (li !== lj) return li - lj;
+    const primaryDiff = Number(isPrimaryVariant(b)) - Number(isPrimaryVariant(a));
+    if (primaryDiff !== 0) return primaryDiff;
     return Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.name || '').localeCompare(b.name || '', 'cs');
   });
 }

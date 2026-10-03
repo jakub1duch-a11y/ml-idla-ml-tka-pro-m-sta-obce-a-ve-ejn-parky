@@ -29,7 +29,6 @@ export default async function(req) {
       power_supply: clean(product.power_supply, 120),
       location_context: clean(product.location_context, 300),
       use_cases: Array.isArray(product.use_cases) ? product.use_cases.slice(0, 8) : [],
-      price_from: typeof product.price_from === 'number' ? product.price_from : null,
     })).filter((product: any) => product.name);
 
     const conversation = messages.map((message: any) =>
@@ -47,7 +46,8 @@ export default async function(req) {
 
 Pevná pravidla:
 - Nevymýšlej ceny, rozměry, tlaky, průtoky, materiály, termíny ani jiné technické údaje.
-- Konkrétní technický údaj nebo cenu smíš uvést jen tehdy, když je přesně uveden v OVĚŘENÉM KATALOGU.
+- Ceny ve veřejném chatu neuváděj; pro cenu odkaž na nezávaznou nabídku podle konkrétního projektu.
+- Konkrétní technický údaj smíš uvést jen tehdy, když je přesně uveden v OVĚŘENÉM KATALOGU.
 - Pokud údaj v katalogu není, napiš "je potřeba ověřit podle konkrétního projektu".
 - Nezaměňuj produktové řady ani jejich geometrii.
 - U stavebních a instalačních kroků dávej praktické obecné doporučení, ale upozorni na ověření přívodu vody, povrchu, kotvení, odvodnění/provozu a místních podmínek.

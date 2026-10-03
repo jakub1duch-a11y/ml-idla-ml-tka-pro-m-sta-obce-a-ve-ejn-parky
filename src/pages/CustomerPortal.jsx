@@ -107,12 +107,31 @@ export default function CustomerPortal() {
         if (!active || !me?.email) return;
         setBase44Session(me);
         setEmail(me.email);
+
+        const response = await base44.functions.invoke('loginPortalWithBase44Session', {});
+        if (!active) return;
+        const result = response?.data || response || {};
+        setInquiries(result.inquiries || []);
+        setProjects(result.projects || []);
+        setSessionToken(result.session_token || null);
+        setStep('dashboard');
+      } catch (sessionError) {
+        if (!active) return;
+        const code = getFunctionErrorCode(sessionError);
         setAuthMethod('otp');
         setAccessMode('email');
-      } catch { /* ignore — user can enter email manually */ }
+        if (code === 'no_client_access') {
+          setError('K tomuto Google účtu zatím neevidujeme poptávku ani klientský projekt. Přihlaste se e-mailem použitým v poptávce.');
+        }
+      }
     });
     return () => { active = false; };
   }, []);
+
+  const loginWithGoogle = () => {
+    setError('');
+    base44.auth.loginWithProvider('google', `${window.location.origin}/klientska-sekce`);
+  };
 
   useEffect(() => {
     if (step !== 'dashboard' || contactProfileReady) return;
@@ -501,8 +520,13 @@ export default function CustomerPortal() {
           {base44Session && !otpSent && (
             <div className="mb-4 flex items-center gap-3 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs text-cyan-900">
               <ShieldCheck size={15} className="shrink-0 text-cyan-700" />
-              <span>Jste přihlášen jako <strong>{base44Session.email}</strong>. Pošlete si ověřovací kód pro vstup do klientské sekce.</span>
+              <span>Přihlášený Google účet: <strong>{base44Session.email}</strong>. Pokud je tento e-mail uvedený u poptávky, portál se otevře automaticky.</span>
             </div>
+          )}
+          {!otpSent && !base44Session && (
+            <button type="button" onClick={loginWithGoogle} className="mb-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-cyan-300 hover:text-cyan-900">
+              <ShieldCheck size={16} /> Přihlásit přes Google
+            </button>
           )}
           {!otpSent && <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-100 p-1">
             <button type="button" onClick={() => { setAuthMethod('password'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${authMethod === 'password' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><KeyRound size={14}/> E-mail + heslo</button>
@@ -526,7 +550,7 @@ export default function CustomerPortal() {
               authMethod === 'password' ? <>
                 <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">E-mail *</label><input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="vas@email.cz" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/></div>
                 <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Heslo *</label><div className="relative"><input type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" placeholder="Vaše heslo" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700" aria-label={showPassword ? 'Skrýt heslo' : 'Zobrazit heslo'}>{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div></div>
-                <div className="flex items-start justify-between gap-3 text-[11px] leading-5 text-slate-400"><span>Při prvním přihlášení použijte jednorázový kód. Finální klientský vstup používejte přes klientska-sekce.mlzidla.cz.</span><button type="button" onClick={() => { setResetPasswordRequested(true); setAuthMethod('otp'); setAccessMode('email'); setError(''); }} className="shrink-0 font-semibold text-cyan-700 hover:text-cyan-900">Zapomenuté heslo?</button></div>
+                <div className="flex items-start justify-between gap-3 text-[11px] leading-5 text-slate-400"><span>Pokud jste už odeslali poptávku, použijte stejný e-mail. Přes Google se klientská sekce otevře automaticky; jednorázový kód slouží pro první přístup nebo obnovu.</span><button type="button" onClick={() => { setResetPasswordRequested(true); setAuthMethod('otp'); setAccessMode('email'); setError(''); }} className="shrink-0 font-semibold text-cyan-700 hover:text-cyan-900">Zapomenuté heslo?</button></div>
               </> : accessMode === 'quote' ? <div>
                 <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Číslo cenové nabídky *</label>
                 <div className="relative">

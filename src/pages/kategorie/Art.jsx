@@ -85,7 +85,7 @@ export default function Art() {
           <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                    {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
+                    {p.image_url && <img src={p.image_url} alt={p.name} style={{ objectPosition: p.hero_focal_position || 'center center' }} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                   </div>
                   <div className="p-5 flex items-center justify-between">
                     <div>

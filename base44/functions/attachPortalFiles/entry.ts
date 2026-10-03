@@ -15,7 +15,7 @@ export default async function(req) {
     const body = await req.json().catch(() => ({}));
     const sessionToken = String(body.session_token || '');
     const projectId = String(body.project_id || '');
-    const inquiryId = String(body.inquiry_id || '');
+    let inquiryId = String(body.inquiry_id || '');
     const files = Array.isArray(body.files) ? body.files.slice(0, MAX_FILES) : [];
 
     if (!sessionToken || (!projectId && !inquiryId) || files.length === 0) {

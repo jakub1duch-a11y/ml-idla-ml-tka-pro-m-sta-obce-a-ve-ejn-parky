@@ -4,6 +4,7 @@ import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
+import HomeMagazineSections from '@/components/home/new/HomeMagazineSections';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import MistInOperation from '@/components/home/new/MistInOperation';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
@@ -38,6 +39,7 @@ export default function Home() {
       <HomeMist3DScene />
       <ProductPhotoGallery />
       <V3EditorialBridge />
+      <HomeMagazineSections />
       <ReferencesStrip />
       <ProKohoSection />
       <MistInOperation />

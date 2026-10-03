@@ -37,7 +37,9 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     const studioMedia = getStudioMedia(product);
     const productImage = isUsableImage(product?.image_url) ? getOptimizedMediaUrl(product.image_url) : '';
     const fallbackImage = isUsableImage(fallback) ? getOptimizedMediaUrl(fallback) : '';
-    const primary = studioMedia || productImage || fallbackImage;
+    const primary = cleanPreview
+      ? (productImage || studioMedia || fallbackImage)
+      : (studioMedia || productImage || fallbackImage);
     const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls.map(getOptimizedMediaUrl) : [];
     const videoUrl = isDirectVideo(product?.video_url)
       ? product.video_url
@@ -71,16 +73,17 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
     }
 
     return list;
-  }, [product, fallback]);
+  }, [product, fallback, cleanPreview]);
 
   // Auto-advance on hover (desktop): go to first non-studio view
   const handleMouseEnter = useCallback(() => {
     setHovered(true);
+    if (cleanPreview) return;
     if (views.length > 1 && activeView === 0) {
       const nextIdx = views.findIndex((v, i) => i > 0 && v.type !== 'video');
       if (nextIdx !== -1) setActiveView(nextIdx);
     }
-  }, [views, activeView]);
+  }, [views, activeView, cleanPreview]);
 
   const handleMouseLeave = useCallback(() => {
     setHovered(false);
@@ -102,13 +105,14 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
   }, []);
 
   const handleTouchEnd = useCallback((e) => {
+    if (cleanPreview) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     const dy = e.changedTouches[0].clientY - touchStartY.current;
     if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
       if (dx < 0 && activeView < views.length - 1) setActiveView((v) => v + 1);
       else if (dx > 0 && activeView > 0) setActiveView((v) => v - 1);
     }
-  }, [views.length, activeView]);
+  }, [views.length, activeView, cleanPreview]);
 
   const containerRef = useRef(null);
 

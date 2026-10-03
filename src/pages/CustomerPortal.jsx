@@ -57,6 +57,9 @@ export default function CustomerPortal() {
   const [newInquiryFiles, setNewInquiryFiles] = useState([]);
   const [newInquiryBusy, setNewInquiryBusy] = useState(false);
   const [newInquirySent, setNewInquirySent] = useState(null);
+  const [projectUploadFiles, setProjectUploadFiles] = useState([]);
+  const [projectUploadBusy, setProjectUploadBusy] = useState(false);
+  const [projectUploadMessage, setProjectUploadMessage] = useState('');
   const [contactProfile, setContactProfile] = useState({ name: '', email: '', phone: '', source: 'manual' });
   const [contactProfileReady, setContactProfileReady] = useState(false);
   const [contactProfileBusy, setContactProfileBusy] = useState(false);
@@ -419,6 +422,60 @@ export default function CustomerPortal() {
     }
   };
 
+  const uploadProjectFiles = async (event) => {
+    event?.preventDefault?.();
+    if (!sessionToken || projectUploadFiles.length === 0) return;
+    const targetProject = focusedProject || null;
+    const targetInquiry = (targetProject?.inquiry_id
+      ? inquiries.find((item) => item.id === targetProject.inquiry_id)
+      : null) || inquiries[0] || null;
+    if (!targetProject && !targetInquiry) return;
+
+    setProjectUploadBusy(true);
+    setProjectUploadMessage('');
+    setError('');
+    try {
+      const files = projectUploadFiles.slice(0, 8);
+      const uploaded = await Promise.all(files.map(async (file) => {
+        const result = await base44.integrations.Core.UploadFile({ file });
+        return {
+          name: file.name,
+          url: result.file_url,
+          type: file.type || '',
+          size: file.size || 0,
+        };
+      }));
+      const response = await base44.functions.invoke('attachPortalFiles', {
+        session_token: sessionToken,
+        project_id: targetProject?.id || '',
+        inquiry_id: targetInquiry?.id || '',
+        files: uploaded,
+      });
+      const result = response?.data || response || {};
+      const assets = result.assets || [];
+
+      if (targetProject) {
+        setProjects((current) => current.map((item) => item.id === targetProject.id
+          ? { ...item, client_uploads: [...(item.client_uploads || []), ...assets] }
+          : item));
+      } else if (targetInquiry) {
+        setInquiries((current) => current.map((item) => item.id === targetInquiry.id
+          ? { ...item, client_uploads: [...(item.client_uploads || []), ...assets] }
+          : item));
+      }
+
+      setProjectUploadFiles([]);
+      setProjectUploadMessage(`Nahráno ${assets.length} souborů k projektu.`);
+    } catch (uploadError) {
+      const code = getFunctionErrorCode(uploadError);
+      setError(code === 'invalid_or_expired_session'
+        ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
+        : 'Soubory se nepodařilo přidat k projektu. Zkuste to znovu.');
+    } finally {
+      setProjectUploadBusy(false);
+    }
+  };
+
   const saveContactProfile = async (event) => {
     event.preventDefault();
     if (!sessionToken || !contactProfile.name.trim() || !contactProfile.email.trim()) return;
@@ -623,6 +680,9 @@ export default function CustomerPortal() {
 
   const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
   const focusedProject = projects.find((project) => project.quote_number === focusQuote) || projects[0] || null;
+  const primaryInquiry = (focusedProject?.inquiry_id ? inquiries.find((item) => item.id === focusedProject.inquiry_id) : null) || inquiries[0] || null;
+  const primaryInquiryTitle = primaryInquiry?.produkt || primaryInquiry?.product_id || primaryInquiry?.project_scope || focusedProject?.product_name || 'Nezávazná poptávka MLŽIDLA®';
+  const primaryInquiryMessage = primaryInquiry?.zprava || primaryInquiry?.message || primaryInquiry?.description || focusedProject?.description || '';
   const focusedStatus = focusedProject ? (STATUS_MAP[focusedProject.status] || STATUS_MAP.draft) : STATUS_MAP.draft;
   const workspaceDocuments = projects.reduce((sum, project) => sum + Number(project.documents?.length || 0), 0);
   const workspaceMessages = projects.reduce((sum, project) => sum + Number(project.offer_messages?.length || 0), 0);

@@ -15,7 +15,7 @@ import PdSmartControl from '@/components/produkt/new/PdSmartControl';
 import PdDetail from '@/components/produkt/new/PdDetail';
 import PdHowItWorks from '@/components/produkt/new/PdHowItWorks';
 import PdTabs from '@/components/produkt/new/PdTabs';
-import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
+import PdScrollGallery from '@/components/produkt/new/PdScrollGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdSectionNav from '@/components/produkt/new/PdSectionNav';
@@ -86,7 +86,7 @@ export default function ProduktDetail() {
       <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
         <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
           <div className="flex gap-1">
-            {[['prehled','Přehled'],['parametry','Parametry'],['reference','Reference']].map(([id,label]) => (
+            {[['prehled','Přehled'],['galerie','Galerie'],['parametry','Parametry'],['reference','Reference']].map(([id,label]) => (
               <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
                 className={`min-h-11 flex-1 rounded-[14px] px-2 text-[11px] font-semibold transition-colors ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600'}`}>
                 {label}
@@ -98,13 +98,13 @@ export default function ProduktDetail() {
       <PdFamilyNav product={product} />
       <PdTeepeeStudio product={product} />
       <PdDescription product={product} />
+      <div id="galerie" className="scroll-mt-16"><PdScrollGallery product={product} /></div>
+      <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
       <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
       <PdStory product={product} />
       <PdAudienceSolutions product={product} />
       <PdUseCases product={product} />
-      <PdMediaGallery product={product} />
       <PdTeepeeRental product={product} />
-      <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
       <PdWireframe product={product} />
       <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
       <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>

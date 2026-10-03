@@ -4,8 +4,9 @@ import { ArrowRight } from 'lucide-react';
 
 const ITEMS = [
   ['prehled', 'Přehled'],
-  ['vyhody', 'Výhody'],
+  ['galerie', 'Galerie'],
   ['parametry', 'Parametry'],
+  ['vyhody', 'Výhody'],
   ['konfigurace', 'Konfigurace'],
   ['instalace', 'Instalace'],
   ['reference', 'Reference'],

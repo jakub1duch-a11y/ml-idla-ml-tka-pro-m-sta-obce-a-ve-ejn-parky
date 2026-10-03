@@ -21,6 +21,7 @@ export function clientProjectView(project: any) {
     order_confirmation_pdf_url,
     presentation_url,
     presentation_pdf_url,
+    notebook_source_url,
     presentation_variant,
     issued_at,
     valid_until,
@@ -62,6 +63,7 @@ export function clientProjectView(project: any) {
     order_confirmation_pdf_url,
     presentation_url,
     presentation_pdf_url,
+    notebook_source_url,
     presentation_variant,
     issued_at,
     valid_until,
@@ -210,15 +212,26 @@ export async function loadClientPortalData(base44: any, emailInput: string) {
   ]);
 
   const projects = await Promise.all((rawProjects || []).map(async (project: any) => {
-    const [assets, rawMessages, rawCharges] = await Promise.all([
+    const [projectAssets, inquiryAssets, rawMessages, rawCharges] = await Promise.all([
       base44.asServiceRole.entities.OfferAsset.filter({ project_order_id: project.id }).catch(() => []),
+      project.inquiry_id ? base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: project.inquiry_id }).catch(() => []) : Promise.resolve([]),
       base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []),
       base44.asServiceRole.entities.ProjectExtraCharge.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []),
     ]);
 
-    const selectedAssets = (assets || [])
+    const assetMap = new Map<string, any>();
+    [...(projectAssets || []), ...(inquiryAssets || [])].forEach((asset: any) => {
+      assetMap.set(String(asset.id || asset.file_url), asset);
+    });
+    const allAssets = [...assetMap.values()];
+    const selectedAssets = allAssets
       .filter((asset: any) => asset.selected_for_offer === true)
       .sort((a: any, b: any) => Number(a.sort_order || 0) - Number(b.sort_order || 0))
+      .map(clientAssetView)
+      .filter(Boolean);
+    const clientUploads = allAssets
+      .filter((asset: any) => ['source_photo', 'source_document'].includes(asset.asset_type))
+      .sort((a: any, b: any) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime())
       .map(clientAssetView)
       .filter(Boolean);
 
@@ -230,6 +243,7 @@ export async function loadClientPortalData(base44: any, emailInput: string) {
     return {
       ...clientProjectView(project),
       offer_assets: selectedAssets,
+      client_uploads: clientUploads,
       visualizations,
       documents,
       offer_messages: offerMessages,
@@ -238,8 +252,20 @@ export async function loadClientPortalData(base44: any, emailInput: string) {
     };
   }));
 
+  const rawInquiries = [...(contactInquiries || []), ...(poptavky || [])];
+  const inquiries = await Promise.all(rawInquiries.map(async (inquiry: any) => {
+    const base = clientInquiryView(inquiry);
+    if (!base?.id) return base;
+    const assets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: base.id }).catch(() => []);
+    const clientUploads = (assets || [])
+      .filter((asset: any) => ['source_photo', 'source_document'].includes(asset.asset_type))
+      .map(clientAssetView)
+      .filter(Boolean);
+    return { ...base, client_uploads: clientUploads };
+  }));
+
   return {
-    inquiries: [...(contactInquiries || []), ...(poptavky || [])].map(clientInquiryView).filter(Boolean),
+    inquiries: inquiries.filter(Boolean),
     projects,
   };
 }

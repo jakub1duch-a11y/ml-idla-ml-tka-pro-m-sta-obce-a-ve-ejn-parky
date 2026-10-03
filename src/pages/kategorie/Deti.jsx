@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { motion, MotionConfig } from 'framer-motion';
 import { ArrowRight, Baby, Loader, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { sortByStructure } from '@/lib/productFamilies';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
@@ -32,7 +33,7 @@ export default function Deti() {
   useEffect(() => {
     setSEO(SEO_PAGES.deti);
     base44.entities.Product.list().catch(() => []).then(p => {
-      setProducts((p || []).slice(0, 6));
+      setProducts(sortByStructure(p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 

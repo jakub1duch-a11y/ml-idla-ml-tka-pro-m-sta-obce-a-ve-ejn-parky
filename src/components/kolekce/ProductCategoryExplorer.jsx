@@ -113,14 +113,14 @@ export default function ProductCategoryExplorer() {
               Pro města a obce držíme nabídku přehledně: sloupky pro čistou infrastrukturu, brány pro průchozí ochlazení a tvarové prvky pro místa, která mají mít vlastní charakter.
             </p>
             <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[.12em] text-[#07131D]/58">
-              <span className="rounded-full border border-cyan-200 bg-white px-3 py-2">bez Bendy Field</span>
-              <span className="rounded-full border border-cyan-200 bg-white px-3 py-2">bez míchání Linea / Bendy</span>
-              <span className="rounded-full border border-cyan-200 bg-white px-3 py-2">B2G přehled</span>
+              <span className="rounded-full border border-cyan-200 bg-white px-3 py-2 hidden">bez Bendy Field</span>
+              <span className="rounded-full border border-cyan-200 bg-white px-3 py-2 hidden">bez míchání Linea / Bendy</span>
+              <span className="rounded-full border border-cyan-200 bg-white px-3 py-2 hidden">B2G přehled</span>
             </div>
           </div>
         </motion.div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3 hidden">
           {categoryCards.map((category, index) => {
             const Icon = category.icon;
             return (
@@ -135,7 +135,7 @@ export default function ProductCategoryExplorer() {
                 className="group relative overflow-hidden rounded-[2rem] border border-[#D9E9EF] bg-white shadow-[0_22px_70px_rgba(7,19,29,.08)] transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(7,19,29,.14)]">
                 
                 <Link to={category.href} className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0B8EC5]">
-                  <div className="relative aspect-[16/11] overflow-hidden bg-[#07131D] hidden">
+                  <div className="relative aspect-[16/11] overflow-hidden bg-[#07131D]">
                     {category.image ?
                     <img
                       src={category.image}
@@ -184,7 +184,7 @@ export default function ProductCategoryExplorer() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.25 }}
-          className="mt-10 overflow-hidden rounded-[1.5rem] border border-cyan-200/70 bg-[#07131D] py-4 text-white shadow-[0_18px_60px_rgba(7,19,29,.12)]">
+          className="mt-10 overflow-hidden rounded-[1.5rem] border border-cyan-200/70 bg-[#07131D] py-4 text-white shadow-[0_18px_60px_rgba(7,19,29,.12)] hidden">
           
           <div className="mlzidla-marquee-track flex w-max items-center gap-4 whitespace-nowrap px-4">
             {marqueeItems.map((item, index) => {

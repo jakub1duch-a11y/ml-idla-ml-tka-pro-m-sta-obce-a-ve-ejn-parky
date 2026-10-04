@@ -96,15 +96,15 @@ export default function Footer() {
             </div>
 
             <div className="mt-7 grid gap-3 text-sm text-white/72 sm:grid-cols-3 lg:grid-cols-1">
-              <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
+              <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Phone size={15} /></span>
                 <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Telefon</span><span className="font-semibold text-white/86">+420 774 700 390</span></span>
               </a>
-              <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
+              <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Mail size={15} /></span>
                 <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">E-mail</span><span className="font-semibold text-white/86">obchod1@holmtec.cz</span></span>
               </a>
-              <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
+              <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><MapPin size={15} /></span>
                 <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Zázemí</span><span className="font-semibold text-white/86">Trutnov · HolmTec</span></span>
               </Link>

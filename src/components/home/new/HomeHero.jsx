@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import { VIDEO_ASSETS } from '@/lib/newMedia';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
@@ -51,16 +52,32 @@ export default function HomeHero() {
     <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
-        <motion.img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/baebb2837_file_000000001f7c82439d3e572f79e0aeda.png"
-
-          alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
-          fetchPriority="high"
-          className="absolute inset-0 h-[108%] w-full object-cover object-[58%_center] sm:object-center"
+        <motion.div
+          className="absolute inset-0 h-[108%] w-full"
           style={{ y: mediaY, scale: mediaScale }}
           data-home-parallax="7"
           initial={{ scale: 1.04 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }} />
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
+          {reduced ? (
+            <img
+              src={VIDEO_ASSETS.heroCityPromo.poster}
+              alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
+              fetchPriority="high"
+              className="h-full w-full object-cover object-[58%_center] sm:object-center" />
+          ) : (
+            <video
+              src={VIDEO_ASSETS.heroCityPromo.src}
+              poster={VIDEO_ASSETS.heroCityPromo.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+              className="h-full w-full object-cover object-[58%_center] sm:object-center" />
+          )}
+        </motion.div>
           
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />

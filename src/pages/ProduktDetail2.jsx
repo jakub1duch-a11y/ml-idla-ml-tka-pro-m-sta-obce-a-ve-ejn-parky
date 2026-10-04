@@ -75,7 +75,6 @@ export default function ProduktDetail2() {
     product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
     product.coverage_area && { label: 'Výška / pokrytí', value: product.coverage_area },
     product.power_supply && { label: 'Napájení', value: product.power_supply },
-    product.price_from && { label: 'Cena od', value: `${product.price_from.toLocaleString('cs-CZ')} Kč` },
   ].filter(Boolean);
 
   const sections = [

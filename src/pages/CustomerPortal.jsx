@@ -1,44 +1,177 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { Mail, Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X } from 'lucide-react';
+import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+
 
 const STATUS_MAP = {
   draft: { label: 'Koncept', color: 'bg-slate-100 text-slate-500', icon: '📝' },
+  pending_approval: { label: 'Čeká na interní schválení', color: 'bg-amber-50 text-amber-700', icon: '⏳' },
   sent: { label: 'Odeslána', color: 'bg-blue-50 text-blue-600', icon: '📤' },
+  viewed: { label: 'Zobrazena', color: 'bg-cyan-50 text-cyan-700', icon: '👁' },
+  extension_requested: { label: 'Žádost o prodloužení', color: 'bg-amber-50 text-amber-700', icon: '↻' },
   approved: { label: 'Odsouhlasena', color: 'bg-green-50 text-green-600', icon: '✓' },
+  expired: { label: 'Platnost skončila', color: 'bg-amber-50 text-amber-700', icon: '⌛' },
+  rejected: { label: 'Odmítnuta', color: 'bg-red-50 text-red-600', icon: '×' },
   in_production: { label: 'Ve výrobě', color: 'bg-orange-50 text-orange-600', icon: '⚙️' },
   ready: { label: 'Hotovo', color: 'bg-slate-100 text-slate-700', icon: '📦' },
   delivered: { label: 'Doručeno', color: 'bg-emerald-50 text-emerald-600', icon: '✓✓' },
 };
 
+const getFunctionErrorCode = (error) =>
+  error?.response?.data?.error || error?.data?.error || error?.error || error?.message || '';
+
 export default function CustomerPortal() {
   const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
+  const [accessMode, setAccessMode] = useState('quote');
+  const [authMethod, setAuthMethod] = useState(() => new URLSearchParams(window.location.search).get('quote') ? 'otp' : 'password');
+  const [quoteNumber, setQuoteNumber] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [resetPasswordRequested, setResetPasswordRequested] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [inquiries, setInquiries] = useState([]);
   const [projects, setProjects] = useState([]);
   const [approving, setApproving] = useState(null);
+  const [orderConfirmed, setOrderConfirmed] = useState({});
+  const [acceptedTerms, setAcceptedTerms] = useState({});
   const [shareUrl, setShareUrl] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
+  const [intentBusy, setIntentBusy] = useState(null);
+  const [intentForms, setIntentForms] = useState({});
+  const [intentSaved, setIntentSaved] = useState({});
+  const [messageBusy, setMessageBusy] = useState(null);
+  const [messageForms, setMessageForms] = useState({});
+  const [messageSaved, setMessageSaved] = useState({});
+  const [extraChargeBusy, setExtraChargeBusy] = useState(null);
+  const [extraChargeNotes, setExtraChargeNotes] = useState({});
+  const [newInquiryType, setNewInquiryType] = useState('other_product');
+  const [newInquiryForm, setNewInquiryForm] = useState({ product: '', shape: '', description: '' });
+  const [newInquiryFiles, setNewInquiryFiles] = useState([]);
+  const [newInquiryBusy, setNewInquiryBusy] = useState(false);
+  const [newInquirySent, setNewInquirySent] = useState(null);
+  const [projectUploadFiles, setProjectUploadFiles] = useState([]);
+  const [projectUploadBusy, setProjectUploadBusy] = useState(false);
+  const [projectUploadMessage, setProjectUploadMessage] = useState('');
+  const [contactProfile, setContactProfile] = useState({ name: '', email: '', phone: '', source: 'manual' });
+  const [contactProfileReady, setContactProfileReady] = useState(false);
+  const [contactProfileBusy, setContactProfileBusy] = useState(false);
+  const [contactProfileMessage, setContactProfileMessage] = useState('');
+  const [base44Session, setBase44Session] = useState(null);
+  const [requestedQuote] = useState(() => new URLSearchParams(window.location.search).get('quote') || '');
+  const [requestedAction] = useState(() => new URLSearchParams(window.location.search).get('action') || '');
+  const passwordChecks = {
+    length: newPassword.length >= 10,
+    letter: /[A-Za-zÀ-ž]/.test(newPassword),
+    number: /\d/.test(newPassword),
+    matches: Boolean(confirmPassword) && newPassword === confirmPassword,
+  };
+  const promoCountdown = (() => {
+    const now = new Date();
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Europe/Prague',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(now).filter((part) => part.type !== 'literal').map((part) => [part.type, Number(part.value)]));
+    const year = parts.year;
+    const month = parts.month;
+    const day = parts.day;
+    const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
+    return {
+      daysLeft: Math.max(0, lastDay - day),
+      endLabel: `${lastDay}. ${month}. ${year}`,
+    };
+  })();
+  const promoDaysLeft = promoCountdown.daysLeft;
 
   useEffect(() => {
-    setSEO({ title: 'Můj projekt', description: 'Přístup k vašim poptávkám a projektům HolmTec.', robots: 'noindex, nofollow' });
+    setSEO({
+      title: 'Klientská sekce | MLŽIDLA®',
+      description: 'Soukromý přístup k vašim projektům, nabídkám, dokumentům, vizualizacím a komunikaci MLŽIDLA®.',
+      canonicalPath: '/klientska-sekce',
+      robots: 'noindex, nofollow, noarchive, nosnippet',
+    });
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    base44.auth.isAuthenticated().then(async (authed) => {
+      if (!active || !authed) return;
+      try {
+        const me = await base44.auth.me();
+        if (!active || !me?.email) return;
+        setBase44Session(me);
+        setEmail(me.email);
+
+        const response = await base44.functions.invoke('loginPortalWithBase44Session', {});
+        if (!active) return;
+        const result = response?.data || response || {};
+        setInquiries(result.inquiries || []);
+        setProjects(result.projects || []);
+        setSessionToken(result.session_token || null);
+        setStep('dashboard');
+      } catch (sessionError) {
+        if (!active) return;
+        const code = getFunctionErrorCode(sessionError);
+        setAuthMethod('otp');
+        setAccessMode('email');
+        if (code === 'no_client_access') {
+          setError('K tomuto Google účtu zatím neevidujeme poptávku ani klientský projekt. Přihlaste se e-mailem použitým v poptávce.');
+        }
+      }
+    });
+    return () => { active = false; };
+  }, []);
+
+  const loginWithGoogle = () => {
+    setError('');
+    base44.auth.loginWithProvider('google', `${window.location.origin}/klientska-sekce`);
+  };
+
+  useEffect(() => {
+    if (step !== 'dashboard' || contactProfileReady) return;
+    const project = projects[0] || null;
+    const inquiry = inquiries.find((item) => item.contact_source) || inquiries[0] || null;
+    setContactProfile({
+      name: project?.client_name || inquiry?.jmeno || inquiry?.name || '',
+      email: project?.client_email || inquiry?.email || email,
+      phone: project?.client_phone || inquiry?.telefon || inquiry?.phone || '',
+      source: inquiry?.contact_source || 'manual',
+    });
+    setContactProfileReady(true);
+  }, [step, projects, inquiries, email, contactProfileReady]);
+
+  useEffect(() => {
+    const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+    if (step !== 'dashboard' || !focusQuote) return;
+    const target = projects.find((project) => project.quote_number === focusQuote);
+    if (!target) return;
+    window.setTimeout(() => document.getElementById(`offer-${target.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
+  }, [step, projects, requestedQuote, quoteNumber]);
 
   const requestOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
-      await base44.functions.invoke('requestPortalOtp', { email });
+      const payload = accessMode === 'quote'
+        ? { quote_number: quoteNumber.trim().toUpperCase() }
+        : { email: email.trim().toLowerCase() };
+      await base44.functions.invoke('requestPortalOtp', payload);
       setOtpSent(true);
     } catch (e) {
-      setError('Chyba při odesílání kódu. Zkuste to znovu.');
+      const code = getFunctionErrorCode(e);
+      setError(code === 'rate_limited'
+        ? 'O nový kód jste požádali příliš brzy. Počkejte chvíli a zkuste to znovu.'
+        : 'Kód se nepodařilo odeslat. Zkontrolujte údaj a zkuste to znovu.');
     } finally {
       setLoading(false);
     }
@@ -49,27 +182,343 @@ export default function CustomerPortal() {
     setLoading(true);
     setError('');
     try {
-      const res = await base44.functions.invoke('verifyPortalOtp', { email, otp });
-      const { inquiries, projects, session_token } = res.data;
+      const payload = accessMode === 'quote'
+        ? { quote_number: quoteNumber.trim().toUpperCase(), otp }
+        : { email: email.trim().toLowerCase(), otp };
+      const res = await base44.functions.invoke('verifyPortalOtp', payload);
+      const { inquiries, projects, session_token, email: verifiedEmail, password_setup_required: passwordSetupRequired } = res.data;
+      setEmail(verifiedEmail || email);
       setInquiries(inquiries || []);
-      setProjects(projects || []);
+      const projectList = projects || [];
+      const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+      setProjects(focusQuote ? [...projectList].sort((a, b) => (b.quote_number === focusQuote ? 1 : 0) - (a.quote_number === focusQuote ? 1 : 0)) : projectList);
       setSessionToken(session_token);
-      setStep('dashboard');
+      // Nové heslo vyžadujeme jen při prvním přístupu nebo výslovné obnově.
+      // Odkaz s číslem nabídky tak stávající klienty nezdržuje povinným resetem.
+      setStep(passwordSetupRequired || resetPasswordRequested ? 'passwordSetup' : 'dashboard');
     } catch (e) {
-      setError('Nesprávný nebo vypršelý ověřovací kód.');
+      const code = getFunctionErrorCode(e);
+      setError(code === 'invalid_or_expired'
+        ? 'Kód je nesprávný nebo vypršel. Nechte si poslat nový kód.'
+        : 'Ověření se nepodařilo dokončit. Zkuste to znovu.');
     } finally {
       setLoading(false);
     }
   };
 
-  const approveQuote = async (projectId) => {
-    setApproving(projectId);
+  const loginWithPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
-      const res = await base44.functions.invoke('approveProjectOrder', { project_id: projectId, session_token: sessionToken });
+      const res = await base44.functions.invoke('loginPortalPassword', {
+        email: email.trim().toLowerCase(),
+        password,
+      });
+      const { inquiries, projects, session_token, email: verifiedEmail } = res.data;
+      setEmail(verifiedEmail || email);
+      setInquiries(inquiries || []);
+      const projectList = projects || [];
+      const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+      setProjects(focusQuote ? [...projectList].sort((a, b) => (b.quote_number === focusQuote ? 1 : 0) - (a.quote_number === focusQuote ? 1 : 0)) : projectList);
+      setSessionToken(session_token);
+      setPassword('');
+      setStep('dashboard');
+    } catch (e) {
+      const code = getFunctionErrorCode(e);
+      setError(code === 'temporarily_locked' ? 'Příliš mnoho neúspěšných pokusů. Přístup je na 15 minut dočasně uzamčen.' : 'Nesprávný e-mail nebo heslo. Pro první přihlášení nebo obnovu použijte jednorázový kód.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setupPassword = async (e) => {
+    e.preventDefault();
+    setError('');
+    if (newPassword.length < 10) { setError('Heslo musí mít alespoň 10 znaků.'); return; }
+    if (!passwordChecks.letter || !passwordChecks.number) { setError('Heslo musí obsahovat alespoň jedno písmeno a jednu číslici.'); return; }
+    if (newPassword !== confirmPassword) { setError('Zadaná hesla se neshodují.'); return; }
+    if (!sessionToken) {
+      setError('Ověřená relace chybí. Nechte si poslat nový jednorázový kód.');
+      setStep('login');
+      setOtpSent(false);
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await base44.functions.invoke('setPortalPassword', { session_token: sessionToken, password: newPassword });
+      const result = res?.data ?? res ?? {};
+      const explicitFailure = result?.ok === false || result?.password_set === false || Boolean(result?.error);
+      if (explicitFailure) {
+        const setupError = new Error(result.error || 'password_setup_failed');
+        setupError.error = result.error || 'password_setup_failed';
+        throw setupError;
+      }
+      // Older/newer Base44 function deployments may return 2xx with no explicit
+      // password_set flag. A successful invoke is sufficient unless the backend
+      // explicitly reports failure.
+      if (result?.session_token) setSessionToken(result.session_token);
+      setPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+      setResetPasswordRequested(false);
+      setError('');
+      setStep('dashboard');
+      window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
+    } catch (e) {
+      const code = getFunctionErrorCode(e);
+      setError(code === 'session_expired'
+        ? 'Ověření vypršelo. Přihlaste se znovu jednorázovým kódem.'
+        : code === 'password_policy'
+          ? 'Heslo musí mít alespoň 10 znaků a obsahovat písmeno i číslici.'
+          : code === 'account_write_failed'
+            ? 'Heslo se teď nepodařilo bezpečně uložit. Ověření je stále aktivní — zkuste uložení ještě jednou. Pokud chyba přetrvá, použijte nový jednorázový kód.'
+            : code === 'missing_session' || code === 'session_invalid'
+              ? 'Ověřená relace není platná. Nechte si poslat nový kód a zkuste nastavení znovu.'
+            : 'Heslo se nepodařilo uložit. Ověření zůstává aktivní jen omezenou dobu; nechte si poslat nový kód a zkuste to znovu.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const approveQuote = async (project) => {
+    if (!acceptedTerms[project.id]) return;
+    setApproving(project.id);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('approveProjectOrder', {
+        project_id: project.id,
+        session_token: sessionToken,
+        accept_terms: true,
+        acceptance_name: project.client_name,
+        acceptance_user_agent: navigator.userAgent,
+      });
       const updated = res.data.project;
-      setProjects(prev => prev.map(p => p.id === projectId ? { ...p, ...updated } : p));
+      setProjects(prev => prev.map(p => p.id === project.id ? { ...p, ...updated } : p));
+      setOrderConfirmed(prev => ({ ...prev, [project.id]: true }));
+    } catch (e) {
+      setError(e?.response?.data?.error === 'offer_expired' ? 'Platnost této nabídky již skončila. Požádejte nás o její aktualizaci.' : 'Nabídku se nepodařilo odsouhlasit. Zkuste to znovu.');
     } finally {
       setApproving(null);
+    }
+  };
+
+  const submitOfferIntent = async (project, action) => {
+    const form = intentForms[project.id] || {};
+    setIntentBusy(`${project.id}:${action}`);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('updateOfferIntent', {
+        project_id: project.id,
+        session_token: sessionToken,
+        action,
+        estimated_order_date: form.estimated_order_date || '',
+        estimated_order_window: form.estimated_order_window || '',
+        message: form.message || '',
+      });
+      const updated = res.data.project;
+      setProjects(prev => prev.map(p => p.id === project.id ? { ...p, ...updated } : p));
+      setIntentSaved(prev => ({ ...prev, [project.id]: action }));
+    } catch (e) {
+      setError('Požadavek se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setIntentBusy(null);
+    }
+  };
+
+  const sendOfferMessage = async (project) => {
+    const form = messageForms[project.id] || {};
+    const text = String(form.message || '').trim();
+    if (!text) return;
+    setMessageBusy(project.id);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('sendOfferMessage', {
+        project_id: project.id,
+        session_token: sessionToken,
+        category: form.category || 'question',
+        message: text,
+      });
+      const messages = res.data?.messages || [];
+      setProjects(prev => prev.map(p => p.id === project.id ? { ...p, offer_messages: messages } : p));
+      setMessageForms(prev => ({ ...prev, [project.id]: { category: form.category || 'question', message: '' } }));
+      setMessageSaved(prev => ({ ...prev, [project.id]: true }));
+    } catch (_e) {
+      setError('Zprávu se nepodařilo odeslat. Zkuste to prosím znovu.');
+    } finally {
+      setMessageBusy(null);
+    }
+  };
+
+  const respondExtraCharge = async (project, charge, action) => {
+    setExtraChargeBusy(charge.id);
+    setError('');
+    try {
+      const res = await base44.functions.invoke('respondExtraCharge', {
+        charge_id: charge.id,
+        project_id: project.id,
+        session_token: sessionToken,
+        action,
+        note: extraChargeNotes[charge.id] || '',
+      });
+      const charges = res.data?.charges || [];
+      setProjects((current) => current.map((item) => item.id === project.id ? { ...item, extra_charges: charges } : item));
+    } catch (_error) {
+      setError('Reakci na příplatkovou položku se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setExtraChargeBusy(null);
+    }
+  };
+
+  const submitNewInquiry = async (event) => {
+    event.preventDefault();
+    const description = String(newInquiryForm.description || '').trim();
+    const product = String(newInquiryForm.product || '').trim();
+    const shape = String(newInquiryForm.shape || '').trim();
+    if (!description || (newInquiryType === 'other_product' && !product) || (newInquiryType === 'custom_design' && !shape)) return;
+    setNewInquiryBusy(true);
+    setError('');
+    setNewInquirySent(null);
+    try {
+      const uploaded = await Promise.all(newInquiryFiles.map(async (file) => {
+        const result = await base44.integrations.Core.UploadFile({ file });
+        return { name: file.name, url: result.file_url };
+      }));
+      const clientName = focusedProject?.client_name || inquiries[0]?.jmeno || inquiries[0]?.name || email;
+      const clientPhone = focusedProject?.client_phone || inquiries[0]?.telefon || inquiries[0]?.phone || '';
+      const clientCompany = focusedProject?.client_company || inquiries[0]?.firma || inquiries[0]?.company || '';
+      const inquiryProduct = newInquiryType === 'custom_design' ? `Vlastní návrh — ${shape}` : product;
+      const details = [
+        newInquiryType === 'custom_design' ? 'Typ požadavku: Vlastní návrh / atypické řešení' : 'Typ požadavku: Poptávka jiného produktu',
+        product ? `Produkt / směr: ${product}` : '',
+        shape ? `Požadovaný tvar / představa: ${shape}` : '',
+        '',
+        description,
+        uploaded.length ? `\nPřiložené soubory: ${uploaded.map((item) => item.name).join(', ')}` : '',
+      ].filter(Boolean).join('\n');
+      const created = await base44.entities.Poptavka.create({
+        jmeno: clientName,
+        email,
+        telefon: clientPhone,
+        firma: clientCompany,
+        produkt: inquiryProduct,
+        service_type: 'customer_portal',
+        request_type: newInquiryType,
+        custom_shape: shape,
+        attachment_urls: uploaded.map((item) => item.url),
+        attachment_names: uploaded.map((item) => item.name),
+        source_project_order_id: focusedProject?.id || '',
+        zprava: details,
+        status: 'nova',
+      });
+      setInquiries((current) => [created, ...current]);
+      setNewInquiryForm({ product: '', shape: '', description: '' });
+      setNewInquiryFiles([]);
+      setNewInquirySent(created.id);
+    } catch (_error) {
+      setError('Novou poptávku se nepodařilo odeslat. Zkontrolujte přílohy a zkuste to prosím znovu.');
+    } finally {
+      setNewInquiryBusy(false);
+    }
+  };
+
+  const uploadProjectFiles = async (event) => {
+    event?.preventDefault?.();
+    if (!sessionToken || projectUploadFiles.length === 0) return;
+    const targetProject = focusedProject || null;
+    const targetInquiry = (targetProject?.inquiry_id
+      ? inquiries.find((item) => item.id === targetProject.inquiry_id)
+      : null) || inquiries[0] || null;
+    if (!targetProject && !targetInquiry) return;
+
+    setProjectUploadBusy(true);
+    setProjectUploadMessage('');
+    setError('');
+    try {
+      const files = projectUploadFiles.slice(0, 8);
+      const uploaded = await Promise.all(files.map(async (file) => {
+        const result = await base44.integrations.Core.UploadFile({ file });
+        return {
+          name: file.name,
+          url: result.file_url,
+          type: file.type || '',
+          size: file.size || 0,
+        };
+      }));
+      const response = await base44.functions.invoke('attachPortalFiles', {
+        session_token: sessionToken,
+        project_id: targetProject?.id || '',
+        inquiry_id: targetInquiry?.id || '',
+        files: uploaded,
+      });
+      const result = response?.data || response || {};
+      const assets = result.assets || [];
+
+      if (targetProject) {
+        setProjects((current) => current.map((item) => item.id === targetProject.id
+          ? { ...item, client_uploads: [...(item.client_uploads || []), ...assets] }
+          : item));
+      } else if (targetInquiry) {
+        setInquiries((current) => current.map((item) => item.id === targetInquiry.id
+          ? { ...item, client_uploads: [...(item.client_uploads || []), ...assets] }
+          : item));
+      }
+
+      setProjectUploadFiles([]);
+      setProjectUploadMessage(`Nahráno ${assets.length} souborů k projektu.`);
+    } catch (uploadError) {
+      const code = getFunctionErrorCode(uploadError);
+      setError(code === 'invalid_or_expired_session'
+        ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
+        : 'Soubory se nepodařilo přidat k projektu. Zkuste to znovu.');
+    } finally {
+      setProjectUploadBusy(false);
+    }
+  };
+
+  const saveContactProfile = async (event) => {
+    event.preventDefault();
+    if (!sessionToken || !contactProfile.name.trim() || !contactProfile.email.trim()) return;
+    setContactProfileBusy(true);
+    setContactProfileMessage('');
+    setError('');
+    try {
+      const response = await base44.functions.invoke('updatePortalContact', {
+        session_token: sessionToken,
+        name: contactProfile.name,
+        email: contactProfile.email,
+        phone: contactProfile.phone,
+      });
+      const result = response?.data || response || {};
+      if (!result.ok) throw new Error(result.error || 'update_failed');
+      setEmail(result.email);
+      setContactProfile((current) => ({ ...current, name: result.name, email: result.email, phone: result.phone }));
+      setInquiries((current) => current.map((item) => ({
+        ...item,
+        email: result.email,
+        name: result.name,
+        jmeno: result.name,
+        phone: result.phone,
+        telefon: result.phone,
+        contact_confirmed_by_user: true,
+        contact_confirmed_at: result.confirmed_at,
+      })));
+      setProjects((current) => current.map((item) => ({
+        ...item,
+        client_name: result.name,
+        client_email: result.email,
+        client_phone: result.phone,
+      })));
+      setContactProfileMessage('Kontaktní osoba projektu byla aktualizována.');
+    } catch (updateError) {
+      const code = getFunctionErrorCode(updateError);
+      setError(code === 'email_already_used'
+        ? 'Tento e-mail už používá jiný klientský účet.'
+        : code === 'session_expired'
+          ? 'Přihlášení vypršelo. Přihlaste se prosím znovu.'
+          : 'Kontaktní údaje se nepodařilo uložit. Zkuste to prosím znovu.');
+    } finally {
+      setContactProfileBusy(false);
     }
   };
 
@@ -79,17 +528,74 @@ export default function CustomerPortal() {
     navigator.clipboard.writeText(url);
   };
 
-  if (step === 'login') {
+  if (step === 'passwordSetup') {
     return (
-      <div className="min-h-screen bg-white pt-28 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#eef3f4] pt-24 flex items-center justify-center px-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Ověření přístupu</p>
-            <h1 className="text-3xl font-light text-slate-900">Můj projekt</h1>
-            <p className="text-slate-500 text-sm mt-2">{otpSent ? 'Zadejte ověřovací kód z emailu' : 'Zadejte email pro přístup k vašim poptávkám a projektům'}</p>
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><KeyRound size={24}/></div>
+            <p className="text-xs font-mono text-cyan-700 tracking-widest uppercase mb-2">Ověřený přístup</p>
+            <h1 className="text-3xl font-light text-slate-900">Nastavte nové heslo</h1>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-slate-500">E-mail jsme ověřili jednorázovým kódem. Nyní nastavte nové heslo pro další přihlášení do Můj projekt.</p>
+          </div>
+          <form onSubmit={setupPassword} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_20px_60px_rgba(13,45,56,0.08)] sm:p-8 space-y-4">
+            {error && <div className="flex gap-3 rounded-xl border border-red-200 bg-red-50 p-4"><AlertCircle size={18} className="mt-0.5 shrink-0 text-red-500"/><p className="text-sm text-red-600">{error}</p></div>}
+            <div className="rounded-xl border border-cyan-100 bg-cyan-50/60 px-4 py-3 text-xs text-cyan-900"><strong>Ověřený účet:</strong> {email}</div>
+            <label className="block text-xs font-semibold text-slate-600">Nové heslo *
+              <div className="relative mt-1.5"><input type={showPassword ? 'text' : 'password'} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} minLength={10} maxLength={128} required autoComplete="new-password" placeholder="Minimálně 10 znaků" className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pr-11 text-sm text-slate-900 outline-none focus:border-cyan-400"/><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700" aria-label={showPassword ? 'Skrýt heslo' : 'Zobrazit heslo'}>{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div>
+            </label>
+            <label className="block text-xs font-semibold text-slate-600">Heslo znovu *<input type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={10} maxLength={128} required autoComplete="new-password" placeholder="Zopakujte heslo" aria-invalid={Boolean(confirmPassword) && !passwordChecks.matches} className={`mt-1.5 w-full rounded-xl border bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none ${confirmPassword && !passwordChecks.matches ? 'border-red-300 focus:border-red-400' : 'border-slate-200 focus:border-cyan-400'}`}/></label>
+            <div className="grid grid-cols-2 gap-2 text-[11px]">
+              {[['length', 'Alespoň 10 znaků'], ['letter', 'Písmeno'], ['number', 'Číslice'], ['matches', 'Hesla se shodují']].map(([key, label]) => <span key={key} className={`flex items-center gap-1.5 ${passwordChecks[key] ? 'text-emerald-700' : 'text-slate-400'}`}><CheckCircle size={12}/>{label}</span>)}
+            </div>
+            <div className="rounded-xl bg-slate-50 px-4 py-3 text-[11px] leading-5 text-slate-500"><ShieldCheck size={13} className="mr-1 inline text-cyan-700"/> Heslo se neodesílá e-mailem a v databázi se neukládá v čitelné podobě. Jednorázový kód zůstává dostupný pro obnovu přístupu.</div>
+            <button type="submit" disabled={loading || !passwordChecks.length || !passwordChecks.letter || !passwordChecks.number || !passwordChecks.matches} className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:cursor-not-allowed disabled:opacity-50">{loading ? <><Loader size={16} className="animate-spin"/> Ukládám heslo…</> : <><KeyRound size={16}/> Nastavit heslo a otevřít projekt</>}</button>
+            {error && <button type="button" onClick={() => { setStep("login"); setAuthMethod("otp"); setAccessMode("email"); setOtpSent(false); setOtp(""); setError(""); setResetPasswordRequested(true); }} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">Použít nový jednorázový kód</button>}
+          </form>
+          <a href="/" className="mx-auto mt-5 flex w-fit items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-slate-500 transition hover:bg-white hover:text-slate-900">← Zpět na MLŽIDLA.cz</a>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'login') {
+    return (
+      <div className="min-h-screen bg-[linear-gradient(180deg,#f7fafb_0%,#ffffff_48%,#eef5f6_100%)] px-4 pb-16 pt-28">
+        <div className="mx-auto w-full max-w-5xl">
+          <div className="mx-auto w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
+            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Soukromá zóna MLŽIDLA®</p>
+            <h1 className="text-3xl font-light text-slate-900">Klientská sekce</h1>
+            <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">{otpSent ? 'Zadejte 6místný kód, který jsme poslali na e-mail přiřazený k vašemu projektu.' : 'Přihlaste se k nabídkám, vizualizacím, dokumentům, komunikaci a aktuálnímu stavu realizace.'}</p>
+            <a href="https://klientska-sekce.mlzidla.cz" className="mx-auto mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-[11px] font-semibold text-cyan-900 transition hover:border-cyan-300 hover:bg-cyan-100">
+              <ShieldCheck size={13}/>
+              Veřejný přístup: klientska-sekce.mlzidla.cz
+            </a>
           </div>
 
-          <form onSubmit={otpSent ? verifyOtp : requestOtp} className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-4">
+          {base44Session && !otpSent && (
+            <div className="mb-4 flex items-center gap-3 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs text-cyan-900">
+              <ShieldCheck size={15} className="shrink-0 text-cyan-700" />
+              <span>Přihlášený Google účet: <strong>{base44Session.email}</strong>. Pokud je tento e-mail uvedený u poptávky, portál se otevře automaticky.</span>
+            </div>
+          )}
+          {!otpSent && !base44Session && (
+            <button type="button" onClick={loginWithGoogle} className="mb-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-cyan-300 hover:text-cyan-900">
+              <ShieldCheck size={16} /> Přihlásit přes Google
+            </button>
+          )}
+          {!otpSent && <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-100 p-1">
+            <button type="button" onClick={() => { setAuthMethod('password'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${authMethod === 'password' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><KeyRound size={14}/> E-mail + heslo</button>
+            <button type="button" onClick={() => { setAuthMethod('otp'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${authMethod === 'otp' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><ShieldCheck size={14}/> První přihlášení / obnova</button>
+          </div>}
+
+          {!otpSent && authMethod === 'otp' && <div className="mb-4 grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-50 p-1">
+            <button type="button" onClick={() => { setAccessMode('quote'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${accessMode === 'quote' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><Hash size={14}/> Číslo nabídky</button>
+            <button type="button" onClick={() => { setAccessMode('email'); setError(''); }} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${accessMode === 'email' ? 'bg-white text-[#0d2d38] shadow-sm' : 'text-slate-500'}`}><Mail size={14}/> E-mail</button>
+          </div>}
+
+          <form autoComplete="off" onSubmit={authMethod === 'password' && !otpSent ? loginWithPassword : otpSent ? verifyOtp : requestOtp} className="rounded-3xl border border-slate-200 bg-slate-50 p-7 shadow-sm sm:p-8 space-y-4">
             {error && (
               <div className="flex gap-3 p-4 rounded-xl bg-red-50 border border-red-200">
                 <AlertCircle size={18} className="text-red-500 flex-shrink-0 mt-0.5" />
@@ -98,15 +604,33 @@ export default function CustomerPortal() {
             )}
 
             {!otpSent ? (
-              <div>
-                <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Email *</label>
+              authMethod === 'password' ? <>
+                <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">E-mail *</label><input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="vas@email.cz" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/></div>
+                <div><label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Heslo *</label><div className="relative"><input type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" placeholder="Vaše heslo" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"/><button type="button" onClick={() => setShowPassword((value) => !value)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700" aria-label={showPassword ? 'Skrýt heslo' : 'Zobrazit heslo'}>{showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}</button></div></div>
+                <div className="flex items-start justify-between gap-3 text-[11px] leading-5 text-slate-400"><span>Pokud jste už odeslali poptávku, použijte stejný e-mail. Přes Google se klientská sekce otevře automaticky; jednorázový kód slouží pro první přístup nebo obnovu.</span><button type="button" onClick={() => { setResetPasswordRequested(true); setAuthMethod('otp'); setAccessMode('email'); setError(''); }} className="shrink-0 font-semibold text-cyan-700 hover:text-cyan-900">Zapomenuté heslo?</button></div>
+              </> : accessMode === 'quote' ? <div>
+                <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">Číslo cenové nabídky *</label>
+                <div className="relative">
+                  <Hash size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"/>
+                  <input
+                    type="text"
+                    required
+                    value={quoteNumber}
+                    onChange={e => setQuoteNumber(e.target.value.toUpperCase())}
+                    placeholder="např. MLZ-2026-123456"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-11 pr-4 font-mono text-sm uppercase tracking-wide text-slate-900 placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 focus:border-[#0e7584] focus:outline-none"
+                  />
+                </div>
+                <p className="mt-2 text-[11px] leading-5 text-slate-400">Číslo najdete v předmětu e-mailu a na PDF cenové nabídce. Ověřovací kód pošleme na e-mail evidovaný u této nabídky.</p>
+              </div> : <div>
+                <label className="text-xs font-mono text-slate-400 tracking-widest uppercase block mb-2">E-mail *</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="vas@email.cz"
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none"
+                  className="w-full px-4 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-[#0e7584] focus:outline-none"
                 />
               </div>
             ) : (
@@ -116,14 +640,23 @@ export default function CustomerPortal() {
                   type="text"
                   required
                   value={otp}
-                  onChange={e => setOtp(e.target.value)}
+                  onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  aria-describedby="otp-help"
                   placeholder="000000"
                   maxLength={6}
                   className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none text-center text-2xl tracking-[0.5em] font-mono"
                 />
-                <button type="button" onClick={() => { setOtpSent(false); setError(''); }} className="mt-3 text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1 mx-auto">
-                  <X size={12} /> Změnit email
-                </button>
+                <p id="otp-help" className="mt-2 text-center text-[11px] text-slate-400">Kód má 6 číslic a platí 10 minut.</p>
+                <div className="mt-3 flex items-center justify-center gap-4">
+                  <button type="button" disabled={loading} onClick={requestOtp} className="text-xs text-cyan-700 hover:text-cyan-900 disabled:opacity-50 transition-colors">
+                    Poslat kód znovu
+                  </button>
+                  <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(''); }} className="text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1">
+                    <X size={12} /> {accessMode === 'quote' ? 'Zadat jiné číslo nabídky' : 'Změnit e-mail'}
+                  </button>
+                </div>
               </div>
             )}
 
@@ -132,55 +665,268 @@ export default function CustomerPortal() {
               disabled={loading}
               className="btn-metallic-mist w-full py-3 justify-center text-sm font-bold disabled:opacity-50"
             >
-              {loading ? <><Loader size={16} className="animate-spin" /> {otpSent ? 'Ověřuji...' : 'Odesílám kód...'}</> : otpSent ? 'Ověřit' : 'Poslat kód'}
+              {loading ? <><Loader size={16} className="animate-spin" /> {authMethod === 'password' && !otpSent ? 'Přihlašuji…' : otpSent ? 'Ověřuji…' : 'Odesílám kód…'}</> : authMethod === 'password' && !otpSent ? 'Přihlásit do klientské sekce' : otpSent ? 'Ověřit a otevřít klientskou sekci' : accessMode === 'quote' ? 'Pokračovat k projektu' : 'Poslat ověřovací kód'}
             </button>
           </form>
 
-          <p className="text-xs text-slate-400 text-center mt-4">
-            Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a>
-          </p>
+          <div className="mt-4 flex items-center justify-center gap-2 text-center text-[11px] text-slate-400"><ShieldCheck size={13}/> Přístup je chráněný ověřovacím kódem a bezpečně uloženým heslem.</div>
+          <p className="text-xs text-slate-400 text-center mt-3">Ještě nemáte účet? <Link to="/register" className="text-slate-900 font-semibold hover:underline">Vytvořit klientský účet</Link></p>
+          <p className="text-xs text-slate-400 text-center mt-2">Problém s přihlášením? <a href="mailto:obchod1@holmtec.cz" className="text-slate-900 hover:underline">Napište nám</a></p>
+          </div>
         </div>
       </div>
     );
   }
 
+  const focusQuote = (requestedQuote || quoteNumber || '').trim().toUpperCase();
+  const focusedProject = projects.find((project) => project.quote_number === focusQuote) || projects[0] || null;
+  const primaryInquiry = (focusedProject?.inquiry_id ? inquiries.find((item) => item.id === focusedProject.inquiry_id) : null) || inquiries[0] || null;
+  const primaryInquiryTitle = primaryInquiry?.produkt || primaryInquiry?.product_id || primaryInquiry?.project_scope || focusedProject?.product_name || 'Nezávazná poptávka MLŽIDLA®';
+  const primaryInquiryMessage = primaryInquiry?.zprava || primaryInquiry?.message || primaryInquiry?.description || focusedProject?.description || '';
+  const focusedStatus = focusedProject ? (STATUS_MAP[focusedProject.status] || STATUS_MAP.draft) : STATUS_MAP.draft;
+  const workspaceDocuments = projects.reduce((sum, project) => sum + Number(project.documents?.length || 0), 0);
+  const clientUploads = focusedProject?.client_uploads || primaryInquiry?.client_uploads || [];
+  const inquiryAttachments = (primaryInquiry?.attachment_urls || []).map((url, index) => ({
+    id: `inquiry-attachment-${index}`,
+    file_url: url,
+    file_name: primaryInquiry?.attachment_names?.[index] || `Příloha ${index + 1}`,
+    asset_type: /\.(avif|gif|heic|jpeg|jpg|png|webp)(\?|$)/i.test(url) ? 'source_photo' : 'source_document',
+  }));
+  const workspaceClientFiles = [...inquiryAttachments, ...clientUploads];
+  const workspaceMessages = projects.reduce((sum, project) => sum + Number(project.offer_messages?.length || 0), 0);
+  const pendingExtras = projects.reduce((sum, project) => sum + Number((project.extra_charges || []).filter((charge) => charge.status === 'pending_customer_approval').length), 0);
+  const nextAction = pendingExtras > 0
+    ? `${pendingExtras} položek ke schválení`
+    : focusedProject
+      ? ({
+          draft: 'Nabídka se připravuje',
+          pending_approval: 'Nabídka čeká na interní kontrolu',
+          sent: 'Zkontrolovat nabídku',
+          viewed: 'Rozhodnout o nabídce',
+          extension_requested: 'Čeká se na aktualizaci platnosti',
+          approved: 'Technická příprava zakázky',
+          in_production: 'Výroba probíhá',
+          ready: 'Připraveno k předání',
+          delivered: 'Projekt dokončen',
+          expired: 'Požádat o aktualizaci nabídky',
+          rejected: 'Nabídka je uzavřena',
+        }[focusedProject.status] || 'Zkontrolovat stav projektu')
+      : inquiries.length > 0
+        ? 'Zadání se zpracovává'
+        : 'Založit nový požadavek';
+
   return (
-    <div className="min-h-screen bg-white pt-28 pb-16">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-1">Váš účet</p>
-            <h1 className="text-2xl lg:text-3xl font-light text-slate-900">{email}</h1>
+    <div className="min-h-screen bg-[#eef3f4] pt-20 pb-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Professional workspace shell */}
+        <header className="mb-6 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_70px_rgba(13,45,56,0.08)]">
+          <div className="flex flex-col gap-5 border-b border-slate-100 px-5 py-5 sm:px-7 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0d2d38] text-[#61d5e5]"><ShieldCheck size={22}/></div>
+              <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">MLŽIDLA® / Klientská sekce</p><div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1"><h1 className="text-2xl font-light text-slate-950">Můj projekt</h1><span className="text-xs text-slate-400">{email}</span></div></div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <a href="/" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">← Zpět na MLŽIDLA.cz</a>
+              <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
+              <div className="flex flex-wrap items-center justify-end gap-2"><Link to="/" className="inline-flex min-h-11 items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-cyan-300 hover:text-[#0d2d38] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2">Zpět na MLŽIDLA.cz</Link><button type="button" onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="min-h-11 rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2">Odhlásit se</button></div>
+            </div>
           </div>
-          <button onClick={() => { setStep('login'); setEmail(''); setInquiries([]); setProjects([]); setSessionToken(null); }}
-            className="px-4 py-2 bg-slate-50 text-slate-600 text-sm rounded-full hover:bg-slate-100 border border-slate-200 transition-all">
-            Odhlásit se
-          </button>
-        </div>
+          <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 xl:grid-cols-[.7fr_.7fr_.7fr_.7fr_1.5fr] sm:divide-y-0">
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Projekty / nabídky</p><p className="mt-1 text-2xl font-semibold text-slate-950">{projects.length}</p></div>
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Poptávky</p><p className="mt-1 text-2xl font-semibold text-slate-950">{inquiries.length}</p></div>
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Dokumenty</p><p className="mt-1 text-2xl font-semibold text-slate-950">{workspaceDocuments}</p></div>
+            <div className="p-4 sm:p-5"><p className="text-[10px] uppercase tracking-[.13em] text-slate-400">Ke schválení</p><p className="mt-1 text-2xl font-semibold text-slate-950">{pendingExtras}</p></div>
+            <div className="col-span-2 p-4 sm:col-span-4 sm:p-5 xl:col-span-1"><p className="text-[10px] uppercase tracking-[.13em] text-cyan-700">Další krok</p><p className="mt-1 text-sm font-semibold leading-5 text-slate-950">{nextAction}</p></div>
+          </div>
+          <nav aria-label="Klientská sekce" className="flex gap-1 overflow-x-auto border-t border-slate-100 bg-slate-50/80 p-2 sm:px-4">
+            {[['#overview','Přehled'],['#offers','Moje nabídky'],['#inquiries','Moje poptávky'],['#communication','Zprávy'],['#contact-profile','Profil'],['#new-inquiry','Nový požadavek']].map(([href,label]) => <a key={href} href={href} className="whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-[#0d2d38] hover:shadow-sm">{label}</a>)}
+          </nav>
+        </header>
+
+        <section className="mb-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+            <div className="border-b border-slate-100 bg-gradient-to-r from-white to-cyan-50/60 px-6 py-6 sm:px-8">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Nezávazná poptávka</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{primaryInquiryTitle}</h2>
+                </div>
+                <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-cyan-800">
+                  {primaryInquiry ? (['nova','new'].includes(primaryInquiry.status) ? 'Přijata' : ['v_reseni','contacted','in_progress'].includes(primaryInquiry.status) ? 'V řešení' : 'Evidována') : focusedStatus.label}
+                </span>
+              </div>
+              {primaryInquiryMessage && <p className="mt-4 max-w-4xl whitespace-pre-line text-sm leading-6 text-slate-600">{primaryInquiryMessage}</p>}
+              <div className="mt-5 flex flex-wrap gap-2 text-[11px]">
+                {primaryInquiry?.firma && <span className="rounded-full bg-slate-100 px-3 py-1.5 text-slate-600">{primaryInquiry.firma}</span>}
+                {primaryInquiry?.installation_location && <span className="rounded-full bg-slate-100 px-3 py-1.5 text-slate-600">Místo: {primaryInquiry.installation_location}</span>}
+                {primaryInquiry?.quantity && <span className="rounded-full bg-slate-100 px-3 py-1.5 text-slate-600">Počet: {primaryInquiry.quantity} ks</span>}
+                {primaryInquiry?.requested_visualization && <span className="rounded-full bg-cyan-50 px-3 py-1.5 text-cyan-800">Požadována vizualizace</span>}
+              </div>
+            </div>
+
+            <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_.9fr]">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[.14em] text-slate-400">Co se bude dít dál</p>
+                <div className="mt-3 space-y-3">
+                  {[
+                    ['1', 'Poptávka a podklady', 'Vaše zadání je uložené v projektu a můžete jej průběžně doplňovat.'],
+                    ['2', 'Návrh řešení', 'Přidáme fotografie, vizualizace, doporučené řešení a projektové podklady.'],
+                    ['3', 'Obchodní nabídka', 'Po interním schválení uvidíte cenu, platnost a podklady k objednání.'],
+                    ['4', 'Potvrzení / prodloužení', 'Nabídku můžete elektronicky objednat nebo požádat o prodloužení její platnosti.'],
+                  ].map(([stepNo, title, textValue]) => <div key={stepNo} className="flex gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0d2d38] text-[11px] font-bold text-white">{stepNo}</span><div><p className="text-sm font-semibold text-slate-900">{title}</p><p className="mt-1 text-xs leading-5 text-slate-500">{textValue}</p></div></div>)}
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between gap-3"><p className="text-[10px] font-bold uppercase tracking-[.14em] text-slate-400">Vaše soubory k projektu</p><span className="text-[10px] text-slate-400">{workspaceClientFiles.length} souborů</span></div>
+                {workspaceClientFiles.length > 0 ? <div className="mt-3 grid gap-2">{workspaceClientFiles.slice(0, 8).map((asset) => <a key={asset.id || asset.file_url} href={asset.file_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 transition hover:border-cyan-300"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-50">{asset.asset_type === 'source_photo' ? <Image size={14} className="text-cyan-700"/> : <FileText size={14} className="text-slate-500"/>}</span><span className="min-w-0 flex-1 truncate">{asset.title || asset.file_name || 'Projektový soubor'}</span><ExternalLink size={12} className="shrink-0 text-slate-400"/></a>)}</div> : <div className="mt-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-center text-xs leading-5 text-slate-400">Zatím nejsou přidané žádné klientské podklady. Můžete je nahrát v pravém panelu.</div>}
+                {focusedProject && <a href="#offers" className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#0d2d38] px-5 py-3 text-xs font-bold text-white">Otevřít návrh a obchodní nabídku <ArrowRight size={13}/></a>}
+              </div>
+            </div>
+          </div>
+
+          <aside className="h-fit rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(13,45,56,0.07)] xl:sticky xl:top-24">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Projektový chat</p>
+              <h2 className="mt-2 text-lg font-semibold text-slate-950">Kontakt s týmem MLŽIDLA®</h2>
+              <p className="mt-2 text-xs leading-5 text-slate-500">Zprávy z nabídky se ukládají k projektu a současně se odesílají odpovědnému týmu.</p>
+              <div className="mt-4 space-y-2 text-[11px]">
+                <a href="mailto:jakub1duch@gmail.com" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 font-semibold text-slate-700 hover:bg-cyan-50"><Mail size={13}/> Admin · jakub1duch@gmail.com</a>
+                <a href="mailto:info@mlzidla.cz" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 font-semibold text-slate-700 hover:bg-cyan-50"><Mail size={13}/> Obchod · info@mlzidla.cz</a>
+                <a href="mailto:meduna@holmtec.cz" className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5 font-semibold text-slate-700 hover:bg-cyan-50"><Mail size={13}/> Technik · meduna@holmtec.cz</a>
+              </div>
+
+              {focusedProject ? <div className="mt-4 border-t border-slate-100 pt-4">
+                <textarea value={(messageForms[focusedProject.id] || {}).message || ''} onChange={(event) => setMessageForms((current) => ({ ...current, [focusedProject.id]: { ...(current[focusedProject.id] || {}), category: (current[focusedProject.id] || {}).category || 'question', message: event.target.value } }))} rows={4} placeholder="Napište zprávu k projektu…" className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-800 outline-none focus:border-cyan-400"/>
+                <button type="button" onClick={() => sendOfferMessage(focusedProject)} disabled={messageBusy === focusedProject.id || !String((messageForms[focusedProject.id] || {}).message || '').trim()} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-4 py-3 text-xs font-bold text-white disabled:opacity-40"><MessageSquare size={14}/>{messageBusy === focusedProject.id ? 'Odesílám…' : 'Odeslat do projektového chatu'}</button>
+                {messageSaved[focusedProject.id] && <p className="mt-2 text-center text-[11px] font-semibold text-emerald-700">Zpráva byla předána týmu.</p>}
+              </div> : <p className="mt-4 rounded-xl bg-amber-50 px-3 py-3 text-[11px] leading-5 text-amber-800">Projektový chat se propojí s konkrétní obchodní nabídkou. Do té doby můžete použít kontaktní e-maily výše.</p>}
+            </div>
+
+            <form onSubmit={uploadProjectFiles} className="mt-5 border-t border-slate-100 pt-5">
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Přidat podklady</p>
+              <label className="mt-3 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-5 text-center transition hover:border-cyan-300 hover:bg-cyan-50/40">
+                <UploadCloud size={22} className="text-cyan-700"/>
+                <span className="mt-2 text-xs font-semibold text-slate-800">Fotografie, PDF, výkresy a dokumenty</span>
+                <span className="mt-1 text-[10px] leading-4 text-slate-400">Maximálně 8 souborů v jednom kroku.</span>
+                <input type="file" multiple className="hidden" onChange={(event) => setProjectUploadFiles(Array.from(event.target.files || []).slice(0, 8))}/>
+              </label>
+              {projectUploadFiles.length > 0 && <div className="mt-3 space-y-1.5">{projectUploadFiles.map((file) => <div key={file.name + file.size} className="flex items-center gap-2 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] text-slate-600"><Paperclip size={11}/><span className="min-w-0 flex-1 truncate">{file.name}</span></div>)}</div>}
+              <button type="submit" disabled={projectUploadBusy || projectUploadFiles.length === 0} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-bold text-cyan-900 disabled:opacity-40">{projectUploadBusy ? <><Loader size={13} className="animate-spin"/> Nahrávám…</> : <><UploadCloud size={13}/> Přidat k projektu</>}</button>
+              {projectUploadMessage && <p className="mt-2 rounded-xl bg-emerald-50 px-3 py-2 text-center text-[11px] font-semibold text-emerald-800">{projectUploadMessage}</p>}
+            </form>
+          </aside>
+        </section>
+
+        <section id="contact-profile" className="mb-6 scroll-mt-28 overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
+          <form onSubmit={saveContactProfile} className="grid gap-5 p-5 sm:p-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">Kontaktní osoba projektu</p>
+              <h2 className="mt-2 text-xl font-semibold text-slate-950">Údaje pro nabídku a další komunikaci</h2>
+              <p className="mt-2 text-xs leading-5 text-slate-500">
+                Zdroj kontaktu: <strong className="text-slate-700">{contactProfile.source === 'google_account' ? 'Google účet' : 'ručně vyplněno'}</strong>. Údaje můžete kdykoli upravit.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <label className="text-[11px] font-semibold text-slate-600">Jméno kontaktní osoby *
+                <input required autoComplete="name" value={contactProfile.name} onChange={(event) => setContactProfile((current) => ({ ...current, name: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
+              </label>
+              <label className="text-[11px] font-semibold text-slate-600">E-mail *
+                <input required autoComplete="email" type="email" value={contactProfile.email} onChange={(event) => setContactProfile((current) => ({ ...current, email: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
+              </label>
+              <label className="text-[11px] font-semibold text-slate-600">Telefon
+                <input autoComplete="tel" value={contactProfile.phone} onChange={(event) => setContactProfile((current) => ({ ...current, phone: event.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:border-cyan-400" />
+              </label>
+              <div className="sm:col-span-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-[10px] leading-4 text-slate-400">Změna e-mailu upraví také e-mail používaný pro další přihlášení k tomuto projektu.</p>
+                <button type="submit" disabled={contactProfileBusy} className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-5 text-xs font-bold text-white disabled:opacity-50">
+                  {contactProfileBusy ? <><Loader size={14} className="animate-spin" /> Ukládám…</> : <><ShieldCheck size={14} /> Uložit kontakt</>}
+                </button>
+              </div>
+              {contactProfileMessage && <p className="sm:col-span-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800">{contactProfileMessage}</p>}
+              {error && <p className="sm:col-span-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700">{error}</p>}
+            </div>
+          </form>
+        </section>
+
+        {workspaceMessages > 0 && <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-cyan-100 bg-cyan-50/70 px-4 py-3 text-xs text-cyan-900"><span><strong>{workspaceMessages}</strong> zpráv uložených v komunikaci k vašim nabídkám.</span><a href="#communication" className="font-semibold underline underline-offset-2">Otevřít komunikaci</a></div>}
+
+        {focusedProject && <section id="overview" className="mb-7 scroll-mt-28 overflow-hidden rounded-[28px] bg-[#0d2d38] text-white shadow-xl shadow-slate-900/5">
+          <div className="grid lg:grid-cols-[1.05fr_.95fr]">
+            <div className="flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+              <div>
+                <div className="flex flex-wrap items-center gap-2"><span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-[#8fe4ef]">{focusedStatus.icon} {focusedStatus.label}</span>{focusedProject.quote_number && <span className="font-mono text-[11px] text-white/45">{focusedProject.quote_number}</span>}</div>
+                <h2 className="mt-5 max-w-2xl text-3xl font-light leading-tight sm:text-4xl">{focusedProject.project_name}</h2>
+                {focusedProject.description && <p className="mt-4 max-w-xl text-sm leading-6 text-white/65">{focusedProject.description}</p>}
+              </div>
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] uppercase tracking-wider text-white/40">Cena nabídky</p><p className="mt-1 text-lg font-semibold">{focusedProject.total_price ? `${focusedProject.total_price.toLocaleString('cs-CZ')} Kč` : 'K doplnění'}</p><p className="text-[10px] text-white/35">bez DPH</p></div>
+                <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] uppercase tracking-wider text-white/40">Platnost</p><p className="mt-1 text-sm font-semibold">{focusedProject.valid_until ? new Date(focusedProject.valid_until).toLocaleDateString('cs-CZ') : 'Dle nabídky'}</p></div>
+                <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] uppercase tracking-wider text-white/40">Vizualizace</p><p className="mt-1 text-sm font-semibold">{focusedProject.visualizations?.length || 0} návrhů</p></div>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <button type="button" onClick={() => document.getElementById(`offer-${focusedProject.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="inline-flex items-center gap-2 rounded-full bg-[#61d5e5] px-5 py-3 text-xs font-bold text-[#0d2d38]">Otevřít nabídku <ArrowRight size={14}/></button>
+                {focusedProject.quote_pdf_url && <a href={focusedProject.quote_pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-3 text-xs font-semibold text-white">PDF nabídka <ExternalLink size={13}/></a>}
+              </div>
+            </div>
+            <div className="min-h-[260px] bg-[#10242b] lg:min-h-full">
+              {focusedProject.primary_visualization_url ? <img src={focusedProject.primary_visualization_url} alt={`Vizualizace ${focusedProject.project_name}`} className="h-full min-h-[260px] w-full object-cover"/> : <div className="flex h-full min-h-[260px] flex-col items-center justify-center gap-3 text-white/35"><Image size={34}/><span className="text-xs">Vizualizace se připravuje</span></div>}
+            </div>
+          </div>
+        </section>}
 
         {/* Tabs */}
         <div className="flex gap-4 mb-8 border-b border-slate-200">
           <button className="px-4 py-3 text-slate-900 font-medium border-b-2 border-slate-900">
-            Moje projekty ({projects.length})
+            CRM projekty a nabídky ({projects.length + inquiries.length})
           </button>
         </div>
 
+        {inquiries.length > 0 && (
+          <section id="inquiries" className="mb-8 scroll-mt-28">
+            <div className="mb-4 flex items-end justify-between gap-4">
+              <div><p className="text-xs font-mono uppercase tracking-widest text-slate-400">Přijaté poptávky</p><h2 className="mt-1 text-xl font-medium text-slate-900">Vaše zadání</h2></div>
+              {projects.length === 0 && <span className="rounded-full bg-amber-50 px-3 py-1 text-[11px] font-semibold text-amber-700">Čeká na zpracování nabídky</span>}
+            </div>
+            <div className="space-y-3">
+              {inquiries.map((inquiry) => {
+                const inquiryTitle = inquiry.produkt || inquiry.product_id || inquiry.project_scope || 'Poptávka MLŽIDLA®';
+                const inquiryMessage = inquiry.zprava || inquiry.message || inquiry.description || '';
+                const inquiryStatus = inquiry.status || 'nova';
+                const statusLabel = ['nova','new'].includes(inquiryStatus) ? 'Přijata' : ['v_reseni','contacted','in_progress'].includes(inquiryStatus) ? 'V řešení' : 'Uzavřena';
+                return <article key={inquiry.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                  <div className="flex flex-wrap items-start justify-between gap-3"><div><span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-mono text-slate-500 ring-1 ring-slate-200">{statusLabel}</span><h3 className="mt-3 text-lg font-semibold text-slate-900">{inquiryTitle}</h3></div><span className="font-mono text-[10px] text-slate-400">ID: {inquiry.id}</span></div>
+                  {inquiryMessage && <p className="mt-3 whitespace-pre-line text-sm leading-6 text-slate-600">{inquiryMessage}</p>}
+                  <p className="mt-4 text-xs text-slate-400">Přijato {inquiry.created_date ? new Date(inquiry.created_date).toLocaleDateString('cs-CZ') : '—'}</p>
+                </article>;
+              })}
+            </div>
+          </section>
+        )}
+
+        {workspaceMessages > 0 && <section id="communication" className="mb-8 scroll-mt-28 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-700">Komunikace projektu</p><h2 className="mt-1 text-xl font-semibold text-slate-950">Zprávy k nabídkám na jednom místě</h2><p className="mt-1 text-xs leading-5 text-slate-500">Dotazy, technická upřesnění a reakce jsou vždy navázané na konkrétní nabídku, takže je nemusíte hledat v e-mailu.</p></div><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{workspaceMessages} zpráv</span></div>
+          <div className="mt-4 space-y-2">{projects.flatMap((project) => (project.offer_messages || []).map((message) => ({ ...message, project_name: project.project_name, quote_number: project.quote_number }))).slice(-6).reverse().map((message) => <div key={message.id} className="rounded-2xl border border-slate-100 bg-slate-50 p-4"><div className="flex flex-wrap items-center justify-between gap-2"><div className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">{message.sender_type === 'customer' ? 'Vy' : 'MLŽIDLA®'} · {message.quote_number || message.project_name}</div><span className="text-[10px] text-slate-400">{message.created_date ? new Date(message.created_date).toLocaleString('cs-CZ') : ''}</span></div><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-700">{message.message}</p></div>)}</div>
+        </section>}
+
         {/* Projects list */}
-        <div className="space-y-4">
-          {projects.length === 0 && (
+        <div id="offers" className="scroll-mt-28 space-y-4">
+          {projects.length === 0 && inquiries.length === 0 && (
             <div className="text-center py-16">
               <FileText size={48} className="mx-auto mb-4 text-slate-200" />
-              <p className="text-slate-500">Zatím žádné projekty</p>
+              <p className="text-slate-500">K tomuto e-mailu zatím neevidujeme žádnou poptávku ani nabídku.</p>
             </div>
           )}
 
           {projects.map(project => {
             const statusInfo = STATUS_MAP[project.status] || STATUS_MAP.draft;
             const isApproved = ['approved', 'in_production', 'ready', 'delivered'].includes(project.status);
+            const canOrder = ['sent', 'viewed', 'extension_requested'].includes(project.status);
+            const canExtend = ['sent', 'viewed', 'extension_requested', 'expired'].includes(project.status);
+            const isRequested = Boolean(focusQuote && project.quote_number === focusQuote);
 
             return (
-              <div key={project.id} className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden hover:border-slate-300 transition-all">
+              <div id={`offer-${project.id}`} key={project.id} className={`bg-slate-50 border rounded-2xl overflow-hidden transition-all ${isRequested ? 'border-cyan-400 ring-4 ring-cyan-100' : 'border-slate-200 hover:border-slate-300'}`}>
+                {isRequested && <div className="border-b border-cyan-200 bg-cyan-50 px-6 py-3 text-xs font-semibold text-cyan-900">{requestedAction === 'order' ? 'Otevřeli jste nabídku k elektronickému objednání. Zkontrolujte nabídku a níže potvrďte souhlas s podmínkami.' : requestedAction === 'extend' ? 'Otevřeli jste žádost o prodloužení platnosti této nabídky.' : requestedAction === 'timing' ? 'Otevřeli jste formulář pro doplnění plánovaného termínu.' : 'Otevřená cenová nabídka.'}</div>}
                 {/* Header */}
                 <div className="p-6 border-b border-slate-200">
                   <div className="flex items-start justify-between gap-4 mb-3">
@@ -201,7 +947,47 @@ export default function CustomerPortal() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-4">
+                <div className="p-6 space-y-5">
+                  {project.visualizations?.length > 0 && <div>
+                    <div className="mb-3 flex items-center justify-between"><div className="flex items-center gap-2"><Image size={15} className="text-[#0e7584]"/><p className="text-xs font-semibold text-slate-800">Vizualizace projektu</p></div><span className="text-[10px] text-slate-400">{project.visualizations.length} návrhů</span></div>
+                    <div className={`grid gap-3 ${project.visualizations.length > 1 ? 'sm:grid-cols-2' : ''}`}>{project.visualizations.slice(0, 4).map((visual, index) => <a key={visual.id || visual.file_url} href={visual.file_url} target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white"><img src={visual.file_url} alt={visual.title || `Vizualizace ${index + 1}`} className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.02]"/><div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-slate-950/70 to-transparent px-4 pb-3 pt-10 text-white"><span className="truncate text-[11px] font-semibold">{visual.title || `Vizualizace ${index + 1}`}</span><ExternalLink size={12}/></div></a>)}</div>
+                  </div>}
+
+                  {project.description && <div className="rounded-2xl border border-slate-200 bg-white p-4"><p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Shrnutí projektu</p><p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600">{project.description}</p></div>}
+
+                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 sm:p-5">
+                    <div className="flex flex-wrap items-end justify-between gap-3">
+                      <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-700">Nabídkový balíček</p><h3 className="mt-1 text-lg font-semibold text-slate-950">Návrh řešení + obchodní nabídka</h3></div>
+                      {project.quote_number && <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-mono text-slate-500">{project.quote_number}</span>}
+                    </div>
+                    <div className="mt-4 grid gap-3 md:grid-cols-2">
+                      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                        <div className="relative aspect-[16/9] bg-[#10242b]">
+                          {project.primary_visualization_url ? <img src={project.primary_visualization_url} alt={'Návrhová nabídka ' + project.project_name} className="h-full w-full object-cover"/> : <div className="flex h-full items-center justify-center text-white/40"><Image size={30}/></div>}
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent px-4 pb-4 pt-12 text-white"><p className="text-[10px] uppercase tracking-widest text-cyan-200">Návrhová nabídka</p><p className="mt-1 text-sm font-semibold">{project.visualizations?.length || 0} vizualizací / fotografií</p></div>
+                        </div>
+                        <div className="flex flex-wrap gap-2 p-3">
+                          {(project.presentation_pdf_url || project.presentation_url) && <a href={project.presentation_pdf_url || project.presentation_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-[11px] font-semibold text-slate-700"><FileText size={12}/> Prezentace návrhu</a>}
+                          {project.notebook_source_url && <a href={project.notebook_source_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-2 text-[11px] font-semibold text-cyan-900"><ExternalLink size={12}/> NotebookLM prezentace</a>}
+                        </div>
+                      </div>
+                      <div className="flex flex-col justify-between rounded-2xl bg-[#0d2d38] p-5 text-white">
+                        <div><p className="text-[10px] uppercase tracking-[.14em] text-[#61d5e5]">Cenová nabídka</p><p className="mt-3 text-3xl font-semibold">{project.total_price ? project.total_price.toLocaleString('cs-CZ') + ' Kč' : 'Cena k doplnění'}</p><p className="mt-1 text-[11px] text-white/45">bez DPH · dle schválené nabídky</p>{project.valid_until && <p className="mt-4 text-xs text-white/65">Platnost do <strong className="text-white">{new Date(project.valid_until).toLocaleDateString('cs-CZ')}</strong></p>}</div>
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {project.quote_pdf_url && <a href={project.quote_pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-[11px] font-bold text-[#0d2d38]"><Download size={12}/> Otevřít cenovou nabídku</a>}
+                          {project.presentation_pdf_url && <a href={project.presentation_pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-[11px] font-semibold text-white"><FileText size={12}/> PDF návrhu</a>}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-4 sm:flex-row sm:flex-wrap">
+                      {canOrder && <button type="button" onClick={() => document.getElementById('order-action-' + project.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-emerald-700"><CheckCircle size={14}/> Potvrdit nabídku a objednat</button>}
+                      {canExtend && <button type="button" onClick={() => submitOfferIntent(project, 'extension')} disabled={intentBusy === project.id + ':extension'} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-5 py-2.5 text-xs font-bold text-amber-800 disabled:opacity-50"><Clock size={14}/>{intentBusy === project.id + ':extension' ? 'Odesílám žádost…' : 'Požádat o prodloužení nabídky'}</button>}
+                      {!canOrder && !canExtend && !isApproved && <span className="inline-flex items-center rounded-full bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-600">Nabídka se připravuje k odeslání.</span>}
+                      {isApproved && <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-800"><CheckCircle size={13}/> Nabídka byla potvrzena klientem</span>}
+                    </div>
+                  </div>
+
                   {/* Timeline */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {project.production_start_date && (
@@ -246,6 +1032,8 @@ export default function CustomerPortal() {
                     </div>
                   )}
 
+                  {project.documents?.filter((asset) => !['quote_pdf', 'presentation', 'presentation_pdf'].includes(asset.asset_type)).length > 0 && <div className="rounded-2xl border border-slate-200 bg-white p-4"><div className="flex items-center gap-2"><FileText size={14} className="text-[#0e7584]"/><p className="text-xs font-semibold text-slate-800">Další projektové podklady</p></div><div className="mt-3 grid gap-2 sm:grid-cols-2">{project.documents.filter((asset) => !['quote_pdf', 'presentation', 'presentation_pdf'].includes(asset.asset_type)).map((asset) => <a key={asset.id || asset.file_url} href={asset.file_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-700 hover:border-slate-300"><span className="truncate">{asset.title || asset.file_name}</span><ExternalLink size={12} className="shrink-0 text-slate-400"/></a>)}</div></div>}
+
                   {/* Delivery info */}
                   {project.delivery_location && (
                     <div className="bg-white border border-slate-200 rounded-xl p-4">
@@ -256,38 +1044,180 @@ export default function CustomerPortal() {
                 </div>
 
                 {/* Actions */}
-                <div className="px-6 py-4 border-t border-slate-200 flex gap-3 flex-wrap">
-                  {project.quote_pdf_url && (
-                    <a href={project.quote_pdf_url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 text-xs rounded-full hover:bg-slate-100 border border-slate-200 transition-all">
-                      <Download size={14} /> PDF nabídka
+                <div className="px-6 py-4 border-t border-slate-200 space-y-3">
+                  {(project.extra_charges || []).length > 0 && <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 sm:p-5">
+                    <div className="flex items-start gap-3"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700"><ReceiptText size={17}/></div><div><p className="font-mono text-[10px] uppercase tracking-[.14em] text-amber-700">Příplatkové účtování projektu</p><h3 className="mt-1 text-base font-semibold text-slate-950">Dodatečné práce a položky mimo původní nabídku</h3><p className="mt-1 text-xs leading-5 text-slate-600">Každou novou položku vidíte samostatně s důvodem, cenou a stavem. Položky vyžadující váš souhlas můžete potvrdit nebo odmítnout přímo zde.</p></div></div>
+                    <div className="mt-4 space-y-3">{project.extra_charges.map((charge) => <div key={charge.id} className="rounded-xl border border-amber-100 bg-white p-4"><div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"><div><div className="flex flex-wrap items-center gap-2"><p className="text-sm font-semibold text-slate-900">{charge.title}</p><span className={`rounded-full px-2 py-1 text-[9px] font-bold uppercase tracking-wide ${charge.status === 'approved' ? 'bg-emerald-100 text-emerald-700' : charge.status === 'declined' ? 'bg-rose-100 text-rose-700' : charge.status === 'billed' ? 'bg-slate-900 text-white' : 'bg-amber-100 text-amber-800'}`}>{charge.status === 'approved' ? 'Schváleno' : charge.status === 'declined' ? 'Odmítnuto' : charge.status === 'billed' ? 'Vyúčtováno' : 'Ke schválení'}</span></div>{charge.description && <p className="mt-2 text-xs leading-5 text-slate-600">{charge.description}</p>}<p className="mt-2 text-[10px] text-slate-400">{Number(charge.quantity || 1).toLocaleString('cs-CZ')} {charge.unit || 'ks'} × {Number(charge.unit_price_ex_vat || charge.total_price_ex_vat || 0).toLocaleString('cs-CZ')} Kč bez DPH</p></div><div className="text-left sm:text-right"><p className="text-[10px] uppercase tracking-wide text-slate-400">Příplatek</p><p className="mt-1 text-lg font-bold text-amber-800">{Number(charge.total_price_ex_vat || 0).toLocaleString('cs-CZ')} Kč</p><p className="text-[10px] text-slate-400">bez DPH</p></div></div>
+                      {charge.status === 'pending_customer_approval' && <div className="mt-4 border-t border-slate-100 pt-4"><textarea value={extraChargeNotes[charge.id] || ''} onChange={(e) => setExtraChargeNotes((current) => ({ ...current, [charge.id]: e.target.value }))} rows={2} placeholder="Volitelná poznámka k vašemu rozhodnutí…" className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-800 outline-none focus:border-amber-300"/><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => respondExtraCharge(project, charge, 'approve')} disabled={extraChargeBusy === charge.id} className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">Schválit příplatek</button><button onClick={() => respondExtraCharge(project, charge, 'decline')} disabled={extraChargeBusy === charge.id} className="rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-xs font-semibold text-rose-700 disabled:opacity-50">Nesouhlasím / potřebuji upřesnit</button></div></div>}
+                    </div>)}</div>
+                  </div>}
+                  {orderConfirmed[project.id] && <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4"><div className="flex items-start gap-3"><CheckCircle size={18} className="mt-0.5 shrink-0 text-emerald-600"/><div><p className="text-sm font-semibold text-emerald-900">Objednávka byla úspěšně potvrzena.</p><p className="mt-1 text-xs leading-5 text-emerald-800">Potvrzení objednávky jsme připravili k projektu a odesíláme jej také na váš e-mail. Náš tým naváže technickým upřesněním a potvrzením dalšího harmonogramu.</p>{project.order_confirmation_pdf_url && <a href={project.order_confirmation_pdf_url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-4 py-2 text-xs font-semibold text-white"><Download size={13}/> Potvrzení objednávky PDF</a>}</div></div></div>}
+                  {!isApproved && <div className="overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-cyan-50 shadow-sm">
+                    <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-emerald-600 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white">Akce do {promoCountdown.endLabel}</span><span className="text-[11px] font-semibold text-emerald-700">Zbývá {promoDaysLeft} {promoDaysLeft === 1 ? 'den' : promoDaysLeft >= 2 && promoDaysLeft <= 4 ? 'dny' : 'dní'}</span></div>
+                        <h3 className="mt-3 text-lg font-semibold text-slate-900">Doprava na místo, představení a vyzkoušení zdarma</h3>
+                        <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-600">Při závazném objednání této nabídky do konce aktuálního měsíce získáte dopravu na místo a osobní představení řešení s možností vyzkoušení bez příplatku. Konkrétní rozsah návštěvy a přesný termín s vámi potvrdíme po přijetí objednávky.</p>
+                      </div>
+                      <div className="shrink-0 rounded-2xl border border-white bg-white/90 px-5 py-4 text-center shadow-sm"><div className="text-[10px] font-bold uppercase tracking-widest text-emerald-700">Zbývá</div><div className="mt-1 text-3xl font-semibold text-slate-900">{promoDaysLeft}</div><div className="mt-1 text-[10px] uppercase tracking-widest text-slate-500">{promoDaysLeft === 1 ? 'den' : promoDaysLeft >= 2 && promoDaysLeft <= 4 ? 'dny' : 'dní'}</div></div>
+                    </div>
+                  </div>}
+
+                  <div className="rounded-xl border border-cyan-200 bg-cyan-50/60 p-4">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-cyan-700">Orientační termín dodání</p>
+                    <p className="mt-1 text-lg font-semibold text-slate-900">2–3 týdny od potvrzení objednávky</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-600">Jde o orientační výrobní a dodací lhůtu. Přesný termín dodání nebo realizace vám potvrdíme po přijetí objednávky a technickém upřesnění projektu.</p>
+                  </div>
+
+                  {project.valid_until && (
+                    <p className="text-[11px] text-slate-500">
+                      Cenová nabídka je platná do <strong className="text-slate-700">{new Date(project.valid_until).toLocaleDateString('cs-CZ')}</strong>.
+                    </p>
+                  )}
+
+                  <div className="flex gap-3 flex-wrap">
+                    {project.quote_pdf_url && (
+                      <a href={project.quote_pdf_url} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 text-xs rounded-full hover:bg-slate-100 border border-slate-200 transition-all">
+                        <Download size={14} /> PDF nabídka
+                      </a>
+                    )}
+                    {(project.presentation_pdf_url || project.presentation_url) && (
+                      <a href={project.presentation_pdf_url || project.presentation_url} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 bg-white text-[#0b4860] text-xs rounded-full hover:bg-slate-100 border border-[#0b4860]/20 transition-all">
+                        <FileText size={14} /> Prezentace projektu
+                      </a>
+                    )}
+                    {project.notebook_source_url && (
+                      <a href={project.notebook_source_url} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 bg-cyan-50 text-cyan-900 text-xs rounded-full hover:bg-cyan-100 border border-cyan-200 transition-all">
+                        <ExternalLink size={14} /> NotebookLM prezentace
+                      </a>
+                    )}
+
+                    {project.shared_token && (
+                      <button onClick={() => generateShareUrl(project.shared_token)}
+                        className="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 text-xs rounded-full hover:bg-slate-100 border border-slate-200 transition-all">
+                        <Share2 size={14} /> {shareUrl ? 'Zkopírováno' : 'Sdílet'}
+                      </button>
+                    )}
+
+                    <a href={`mailto:meduna@holmtec.cz?subject=Dotaz k nabídce: ${project.quote_number || project.project_name}`}
+                      className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 text-xs rounded-full hover:bg-slate-200 transition-all">
+                      <MessageSquare size={14} /> Odpovědět / dotaz
                     </a>
+                  </div>
+
+                  {['sent','viewed','extension_requested','expired','approved','in_production'].includes(project.status) && (
+                    <div className="rounded-xl border border-slate-200 bg-white p-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div><p className="text-xs font-mono uppercase tracking-widest text-slate-400">Reagovat na nabídku</p><h3 className="mt-1 text-base font-semibold text-slate-900">Máte dotaz nebo chcete řešení upravit?</h3><p className="mt-1 text-xs leading-5 text-slate-500">Napište nám přímo k této nabídce. Můžete se zeptat na technické řešení, cenu, instalaci, termín nebo požádat o změnu rozsahu projektu.</p></div>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {[
+                          ['question','Mám dotaz'],
+                          ['solution_change','Chci upravit řešení'],
+                          ['technical','Technický dotaz'],
+                          ['delivery','Termín / dodání']
+                        ].map(([value,label]) => <button key={value} type="button" onClick={() => setMessageForms(prev => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), category: value } }))} className={`rounded-full border px-3 py-2 text-[11px] font-semibold transition ${(messageForms[project.id]?.category || 'question') === value ? 'border-[#0b4860] bg-[#0b4860] text-white' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300'}`}>{label}</button>)}
+                      </div>
+                      <textarea value={(messageForms[project.id] || {}).message || ''}
+                        onChange={(e) => setMessageForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), message: e.target.value } }))}
+                        placeholder="Napište dotaz nebo upřesnění k této nabídce…" rows={4}
+                        className="mt-3 w-full resize-y rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-900 outline-none focus:border-cyan-400" />
+                      <div className="mt-3 flex flex-wrap items-center gap-3">
+                        <button onClick={() => sendOfferMessage(project)} disabled={messageBusy === project.id || !String((messageForms[project.id] || {}).message || '').trim()}
+                          className="rounded-full bg-[#0b4860] px-5 py-2.5 text-xs font-semibold text-white disabled:opacity-40">
+                          {messageBusy === project.id ? 'Odesílám…' : 'Odeslat zprávu k nabídce'}
+                        </button>
+                        {messageSaved[project.id] && <span className="text-xs font-medium text-emerald-700">Zpráva byla odeslána našemu týmu.</span>}
+                      </div>
+
+                      {(project.offer_messages || []).length > 0 && <div className="mt-5 border-t border-slate-100 pt-4"><p className="text-[10px] font-mono uppercase tracking-widest text-slate-400">Komunikace k nabídce</p><div className="mt-3 space-y-2">{project.offer_messages.map((item) => <div key={item.id} className={`rounded-xl p-3 ${item.sender_type === 'customer' ? 'ml-6 bg-cyan-50 text-slate-700' : 'mr-6 bg-slate-100 text-slate-700'}`}><div className="flex items-center justify-between gap-3"><span className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">{item.sender_type === 'customer' ? 'Vy' : 'MLŽIDLA®'}</span><span className="text-[10px] text-slate-400">{item.created_date ? new Date(item.created_date).toLocaleString('cs-CZ') : ''}</span></div><p className="mt-1 whitespace-pre-line text-xs leading-5">{item.message}</p></div>)}</div></div>}
+                    </div>
                   )}
 
-                  {project.status === 'sent' && (
-                    <button onClick={() => approveQuote(project.id)} disabled={approving === project.id}
-                      className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 text-xs rounded-full hover:bg-green-100 disabled:opacity-50 transition-all">
-                      {approving === project.id ? <Loader size={14} className="animate-spin" /> : <CheckCircle size={14} />}
-                      {approving === project.id ? 'Odsouhlašuji...' : 'Odsouhlasit nabídku'}
-                    </button>
+                  {['sent','viewed','extension_requested','expired'].includes(project.status) && (
+                    <div className="rounded-xl border border-slate-200 bg-white p-4">
+                      <p className="text-xs font-mono uppercase tracking-widest text-slate-400">Další krok k nabídce</p>
+                      <div className="mt-3 grid gap-3 md:grid-cols-2">
+                        <label className="text-xs text-slate-500">Přibližný termín objednání
+                          <input type="date" value={(intentForms[project.id] || {}).estimated_order_date || ''}
+                            onChange={(e) => setIntentForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), estimated_order_date: e.target.value } }))}
+                            className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900" />
+                        </label>
+                        <label className="text-xs text-slate-500">Nebo orientační období
+                          <input value={(intentForms[project.id] || {}).estimated_order_window || ''}
+                            onChange={(e) => setIntentForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), estimated_order_window: e.target.value } }))}
+                            placeholder="např. září 2026 / po schválení rozpočtu"
+                            className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900" />
+                        </label>
+                      </div>
+                      <textarea value={(intentForms[project.id] || {}).message || ''}
+                        onChange={(e) => setIntentForms((prev) => ({ ...prev, [project.id]: { ...(prev[project.id] || {}), message: e.target.value } }))}
+                        placeholder="Poznámka k termínu, schvalování nebo žádosti o prodloužení platnosti…" rows={3}
+                        className="mt-3 w-full resize-none rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900" />
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button onClick={() => submitOfferIntent(project, 'timing')} disabled={intentBusy === `${project.id}:timing`}
+                          className="rounded-full bg-[#0b4860] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
+                          {intentBusy === `${project.id}:timing` ? 'Ukládám…' : 'Odeslat plánovaný termín'}
+                        </button>
+                        <button onClick={() => submitOfferIntent(project, 'extension')} disabled={intentBusy === `${project.id}:extension`}
+                          className="rounded-full border border-amber-300 bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-800 disabled:opacity-50">
+                          {intentBusy === `${project.id}:extension` ? 'Odesílám…' : 'Požádat o prodloužení platnosti'}
+                        </button>
+                      </div>
+                      {intentSaved[project.id] && <p className="mt-3 text-xs text-emerald-700">Požadavek byl uložen a předán k nabídce.</p>}
+                    </div>
                   )}
 
-                  {project.shared_token && (
-                    <button onClick={() => generateShareUrl(project.shared_token)}
-                      className="flex items-center gap-2 px-4 py-2 bg-white text-slate-600 text-xs rounded-full hover:bg-slate-100 border border-slate-200 transition-all">
-                      <Share2 size={14} /> {shareUrl ? 'Zkopírováno' : 'Sdílet'}
-                    </button>
+                  {(project.status === 'sent' || project.status === 'viewed' || project.status === 'extension_requested') && (
+                    <div id={'order-action-' + project.id} className="rounded-xl border border-green-200 bg-green-50/60 p-4">
+                      <label className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(acceptedTerms[project.id])}
+                          onChange={(e) => setAcceptedTerms((prev) => ({ ...prev, [project.id]: e.target.checked }))}
+                          className="mt-0.5 h-4 w-4"
+                        />
+                        <span>Souhlasím s cenovou nabídkou, její specifikací a <Link to="/obchodni-podminky" className="font-semibold underline">obchodními podmínkami</Link>. Kliknutím na „Závazně objednat nabídku“ objednávám uvedené řešení. Orientační termín dodání je 2–3 týdny; přesný termín potvrdíme po přijetí objednávky a technickém upřesnění.</span>
+                      </label>
+                      <button onClick={() => approveQuote(project)} disabled={approving === project.id || !acceptedTerms[project.id]}
+                        className="mt-3 flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white text-xs font-semibold rounded-full hover:bg-green-700 disabled:opacity-40 transition-all">
+                        {approving === project.id ? <Loader size={14} className="animate-spin" /> : <CheckCircle size={14} />}
+                        {approving === project.id ? 'Potvrzuji objednávku…' : 'Závazně objednat nabídku'}
+                      </button>
+                    </div>
                   )}
-
-                  <a href={`mailto:obchod1@holmtec.cz?subject=Dotaz k projektu: ${project.project_name}`}
-                    className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 text-xs rounded-full hover:bg-slate-200 transition-all">
-                    <MessageSquare size={14} /> Zpráva
-                  </a>
                 </div>
               </div>
             );
           })}
         </div>
+
+        <section id="new-inquiry" className="mt-8 scroll-mt-28 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(13,45,56,0.06)]">
+          <div className="border-b border-slate-100 bg-[#0d2d38] px-6 py-7 text-white sm:px-8"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#61d5e5]">Nový požadavek</p><div className="mt-2 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between"><div><h2 className="text-2xl font-light sm:text-3xl">Jiný produkt nebo vlastní návrh</h2><p className="mt-2 max-w-3xl text-sm leading-6 text-white/65">Nahrajte skicu, fotografii, výkres nebo jiný podklad a popište svou představu. Náš tým vyhodnotí vyrobitelnost, vhodný výrobní postup a možné varianty řešení. Poté se vám ozveme s doporučením a cenovou nabídkou.</p></div><div className="shrink-0 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/70"><strong className="block text-white">Technické posouzení</strong>ohýbání · svařování · kotvení · hydraulika · výroba</div></div></div>
+          <form onSubmit={submitNewInquiry} className="p-6 sm:p-8">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <button type="button" onClick={() => setNewInquiryType('other_product')} className={`rounded-2xl border p-5 text-left transition ${newInquiryType === 'other_product' ? 'border-cyan-400 bg-cyan-50 ring-4 ring-cyan-50' : 'border-slate-200 bg-slate-50 hover:border-slate-300'}`}><ShoppingBag size={20} className={newInquiryType === 'other_product' ? 'text-cyan-700' : 'text-slate-400'}/><p className="mt-3 text-sm font-semibold text-slate-950">Poptávka jiného produktu</p><p className="mt-1 text-xs leading-5 text-slate-500">Máte zájem o jiný produkt, variantu, počet kusů nebo řešení, které není v aktuální nabídce.</p></button>
+              <button type="button" onClick={() => setNewInquiryType('custom_design')} className={`rounded-2xl border p-5 text-left transition ${newInquiryType === 'custom_design' ? 'border-cyan-400 bg-cyan-50 ring-4 ring-cyan-50' : 'border-slate-200 bg-slate-50 hover:border-slate-300'}`}><Shapes size={20} className={newInquiryType === 'custom_design' ? 'text-cyan-700' : 'text-slate-400'}/><p className="mt-3 text-sm font-semibold text-slate-950">Vlastní návrh / požadovaný tvar</p><p className="mt-1 text-xs leading-5 text-slate-500">Pošlete nám vlastní tvar, skicu nebo představu. Posoudíme vyrobitelnost a navrhneme jednu či více reálných výrobních variant.</p></button>
+            </div>
+
+            <div className="mt-6 grid gap-4 lg:grid-cols-2">
+              <div className="space-y-4">
+                {newInquiryType === 'other_product' ? <label className="block text-xs font-semibold text-slate-600">Produkt / varianta, o kterou máte zájem *<input value={newInquiryForm.product} onChange={(e) => setNewInquiryForm((current) => ({ ...current, product: e.target.value }))} required placeholder="např. AURA Duo, BENDY Alej, zakázková brána…" className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-cyan-400"/></label> : <label className="block text-xs font-semibold text-slate-600">Požadovaný tvar / stručná představa *<input value={newInquiryForm.shape} onChange={(e) => setNewInquiryForm((current) => ({ ...current, shape: e.target.value }))} required placeholder="např. organický oblouk, znak města, vlastní linie…" className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-cyan-400"/></label>}
+                <label className="block text-xs font-semibold text-slate-600">Popis požadavku *<textarea value={newInquiryForm.description} onChange={(e) => setNewInquiryForm((current) => ({ ...current, description: e.target.value }))} required rows={7} placeholder="Popište umístění, přibližné rozměry, počet kusů, požadovaný vzhled, termín nebo jakoukoli představu, kterou máme při návrhu zohlednit." className="mt-1.5 w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 outline-none focus:border-cyan-400"/></label>
+              </div>
+              <div>
+                <label className="flex min-h-[210px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center transition hover:border-cyan-300 hover:bg-cyan-50/40"><UploadCloud size={28} className="text-cyan-700"/><p className="mt-3 text-sm font-semibold text-slate-900">Přidat soubory a podklady</p><p className="mt-1 max-w-sm text-xs leading-5 text-slate-500">Fotografie prostoru, skica, PDF, technický výkres, inspirace nebo vlastní dokumentace projektu.</p><span className="mt-4 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700">Vybrat soubory</span><input type="file" multiple className="hidden" onChange={(e) => setNewInquiryFiles(Array.from(e.target.files || []))}/></label>
+                {newInquiryFiles.length > 0 && <div className="mt-3 space-y-2">{newInquiryFiles.map((file) => <div key={`${file.name}-${file.size}`} className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600"><span className="flex min-w-0 items-center gap-2"><Paperclip size={12} className="shrink-0"/><span className="truncate">{file.name}</span></span><span className="shrink-0 text-[10px] text-slate-400">{Math.max(1, Math.round(file.size / 1024))} kB</span></div>)}</div>}
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-col gap-4 border-t border-slate-100 pt-6 sm:flex-row sm:items-center sm:justify-between"><div className="max-w-2xl text-xs leading-5 text-slate-500">Po odeslání se nový požadavek uloží k vašemu e-mailu a objeví se v tomto portálu. Vyhodnotíme výrobní proveditelnost, možné konstrukční varianty a následně připravíme cenové řešení.</div><button type="submit" disabled={newInquiryBusy} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d2d38] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#123c49] disabled:opacity-50">{newInquiryBusy ? <><Loader size={15} className="animate-spin"/> Odesílám požadavek…</> : <><Plus size={15}/> Odeslat k posouzení</>}</button></div>
+            {newInquirySent && <div className="mt-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900"><strong>Požadavek byl přijat.</strong> Evidujeme jej pod ID <span className="font-mono text-xs">{newInquirySent}</span>. Po technickém posouzení se vám ozveme s doporučeným řešením a možnostmi výroby.</div>}
+          </form>
+        </section>
       </div>
     </div>
   );

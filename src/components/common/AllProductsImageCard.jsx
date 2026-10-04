@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
-export default function AllProductsImageCard({ to, image, compact = false, onClick }) {
+export default function AllProductsImageCard({ to, image = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e3b9629f2_mlzidla-vizual__5_.webp', compact = false, onClick = undefined }) {
   return (
     <Link to={to} onClick={onClick} className={`group relative block overflow-hidden rounded-2xl border border-white/70 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${compact ? 'h-36' : 'h-56 lg:h-72'}`}>
       <img src={image} alt="Všechny produkty" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />

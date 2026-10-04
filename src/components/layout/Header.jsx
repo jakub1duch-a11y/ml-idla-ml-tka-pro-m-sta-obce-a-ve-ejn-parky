@@ -1,18 +1,79 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+<<<<<<< HEAD
 import { Menu, X, ChevronDown } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
 import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
 import NavDropdown from '@/components/layout/NavDropdown';
 import { PRODUCT_LINKS, CUSTOM_LINK, USAGE_GROUPS, USAGE_LINKS, B2G_LINKS, INFO_LINKS } from '@/components/layout/navData';
+=======
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Logo from '@/components/layout/Logo';
+import MobileMenu from '@/components/layout/MobileMenu';
+import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
+
+const PRODUCT_LINKS = [
+{ label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', image: '/media/optimized/cfc837b23_image.webp', featured: true },
+{ label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
+{ label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/rezidencni-mlzeni', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
+{ label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: '/media/optimized/68953132b_IMG_3524.webp' },
+{ label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }];
+
+
+const CUSTOM_LINK = { label: 'Zakázková výroba', sub: 'Návrh, zpracování a mlžiště na míru', path: '/zakazkova-mlzitka' };
+
+
+const USAGE_LINKS = [
+{ icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-cyan' },
+{ icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-secondary' },
+{ icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-secondary' },
+{ icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/rezidencni-mlzeni', color: 'text-accent' },
+{ icon: Sparkles, label: 'Autorské instalace', path: '/kategorie/art-instalace', color: 'text-accent' },
+{ icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-secondary' },
+{ icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-secondary' },
+{ icon: Factory, label: 'Gastro, wellness a hotely', path: '/kategorie/komercni', color: 'text-accent' },
+{ icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-secondary' }];
+
+
+const INTERNATIONAL_NAV = {
+  en: { products: 'Products', urban: 'Urban', technology: 'How it works', smart: 'Smart control', references: 'Projects', contact: 'Contact', quote: 'Get a quote' },
+  de: { products: 'Produkte', urban: 'Stadt', technology: 'Funktionsweise', smart: 'Smart-Steuerung', references: 'Referenzen', contact: 'Kontakt', quote: 'Angebot' },
+  pl: { products: 'Produkty', urban: 'Dla miast', technology: 'Jak to działa', smart: 'Smart sterowanie', references: 'Realizacje', contact: 'Kontakt', quote: 'Wycena' },
+  sk: { products: 'Produkty', urban: 'Pre mestá', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', contact: 'Kontakt', quote: 'Ponuka' },
+  it: { products: 'Prodotti', urban: 'Urbano', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', contact: 'Contatti', quote: 'Preventivo' }
+};
+
+const INFO_LINKS = [
+{ icon: Building2, label: 'O společnosti', path: '/o-nas' },
+{ icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
+{ icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
+{ icon: ShieldCheck, label: 'Výhody a benefity', path: '/vyhody' },
+{ icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
+{ icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
+{ icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
+{ icon: PlayCircle, label: 'Videa a živé ukázky', path: '/blog?sekce=videa' }];
+
+>>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+<<<<<<< HEAD
+=======
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+>>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
   const location = useLocation();
+  const locale = getLocaleFromPath(location.pathname);
+  const internationalCopy = INTERNATIONAL_NAV[locale];
+  const homePath = ROUTE_MAP.home[locale];
+  const inquiryPath = ROUTE_MAP.inquiry[locale];
   const timeoutRef = useRef(null);
   const lastScrollYRef = useRef(0);
 
@@ -27,7 +88,11 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+<<<<<<< HEAD
   useEffect(() => { setMobileOpen(false); setMegaOpen(false); }, [location]);
+=======
+  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setAccountOpen(false);}, [location]);
+>>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -39,6 +104,7 @@ export default function Header() {
 
   return (
     <>
+<<<<<<< HEAD
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro/90 text-white backdrop-blur-xl transition-all duration-500 ease-out ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-2xl shadow-primary/25' : 'shadow-sm'}`}>
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6 lg:gap-8 lg:px-8">
 
@@ -75,16 +141,162 @@ export default function Header() {
 
         <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)}
           collections={PRODUCT_LINKS} usageGroups={USAGE_GROUPS} b2gLinks={B2G_LINKS} customLink={CUSTOM_LINK} />
+=======
+      {/* Announcement bar */}
+      
+
+
+
+
+
+      
+
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#000000]/[0.85] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
+        <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
+
+          {/* Logo */}
+          <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">
+            <Logo size="sm" />
+          </Link>
+
+          {/* Desktop nav — centered elegant style */}
+          {locale === 'cs' ? <nav className="hidden lg:flex min-w-0 items-center gap-0 flex-1 justify-center mx-auto whitespace-nowrap">
+            {/* Produkty megamenu */}
+            <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
+              <button
+                type="button"
+                onClick={() => setMegaOpen((value) => !value)}
+                aria-expanded={megaOpen}
+                className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
+                
+                Produkty
+                <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+            <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-white/10">Městská mlžítka</Link>
+            <Link to="/jak-to-funguje" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
+            <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
+            <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
+            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Magazín</Link>
+            <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
+              <button className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
+              infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
+              }>
+                Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {infoOpen &&
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-primary/95 text-white backdrop-blur-2xl border border-white/15 shadow-xl shadow-primary/30 rounded-2xl p-3">
+                  {INFO_LINKS.map((link) =>
+                  <Link key={link.label} to={link.path} onClick={() => setInfoOpen(false)}
+                  className={`group flex items-center gap-2.5 rounded-xl px-3 py-2.5 transition-all ${link.featured ? 'my-1 border border-cyan-300/25 bg-cyan-300/10 shadow-sm' : 'hover:bg-white/10'}`}>
+                      <link.icon size={16} className={`${link.featured ? 'text-cyan-300' : 'text-accent'} group-hover:text-white transition-colors flex-shrink-0`} />
+                      <p className={`text-sm transition-colors ${link.featured ? 'font-semibold text-white' : 'text-white/80 group-hover:text-white'}`}>{link.label}</p>
+                      {link.featured && <span className="ml-auto rounded-full border border-cyan-300/25 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[.14em] text-cyan-200">Nové</span>}
+                    </Link>
+                  )}
+                  </motion.div>
+                }
+              </AnimatePresence>
+            </div>
+            <Link to="/kontakt" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
+          </nav> : <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
+            <Link to={ROUTE_MAP.catalog[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.products}</Link>
+            <Link to={ROUTE_MAP.city[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.urban}</Link>
+            <Link to={ROUTE_MAP.technology[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.technology}</Link>
+            <Link to={ROUTE_MAP.smart[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.smart}</Link>
+            <Link to={ROUTE_MAP.references[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.references}</Link>
+            <Link to={ROUTE_MAP.contact[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.contact}</Link>
+          </nav>}
+
+          {/* CTA right + mobile toggle */}
+          <div className="flex items-center gap-2 lg:gap-3 ml-auto">
+            <div className="hidden lg:flex items-center gap-2">
+              <LanguageSwitcher />
+              <div className="relative">
+                <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
+                  <LogIn size={17} />
+                </button>
+                <AnimatePresence>
+                  {accountOpen && <motion.div initial={{ opacity: 0, y: -6, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -6, scale: .98 }} transition={{ duration: .16 }} className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-white/15 bg-[#071A2F]/98 p-2 shadow-2xl backdrop-blur-2xl">
+                    <Link to="/klientska-sekce" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><LogIn size={15} /> Klientská sekce</Link>
+                    <Link to="/register" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"><UserPlus size={15} /> Vytvořit účet</Link>
+                  </motion.div>}
+                </AnimatePresence>
+              </div>
+              <Link to={inquiryPath}
+              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              </Link>
+            </div>
+            
+            <motion.button
+              type="button"
+              onClick={toggleMobileMenu}
+              aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'}
+              aria-expanded={mobileOpen}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 520, damping: 30 }}
+              className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
+              
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
+                animate={{
+                  width: mobileOpen ? 22 : 22,
+                  y: mobileOpen ? 0 : -4,
+                  rotate: mobileOpen ? 45 : 0,
+                  x: mobileOpen ? 0 : 0
+                }}
+                whileHover={!mobileOpen ? { x: 1.5 } : { rotate: 48 }}
+                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+              
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
+                animate={{
+                  width: mobileOpen ? 22 : 15,
+                  y: mobileOpen ? 0 : 4,
+                  rotate: mobileOpen ? -45 : 0,
+                  x: mobileOpen ? 0 : 3.5
+                }}
+                whileHover={!mobileOpen ? { width: 22, x: 0 } : { rotate: -48 }}
+                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+              
+              <motion.span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-1 rounded-full border border-white/0"
+                animate={{ borderColor: mobileOpen ? 'rgba(255,255,255,.14)' : 'rgba(255,255,255,0)' }}
+                transition={{ duration: .22 }} />
+              
+            </motion.button>
+          </div>
+        </div>
+
+        {locale === 'cs' && <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />}
+>>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
       </header>
 
       <MobileMenu
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         productLinks={PRODUCT_LINKS}
+<<<<<<< HEAD
         usageGroups={USAGE_GROUPS}
         b2gLinks={B2G_LINKS}
         infoLinks={INFO_LINKS}
         customLink={CUSTOM_LINK} />
     </>
   );
+=======
+        locale={locale} />
+
+    </>);
+
+>>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 }

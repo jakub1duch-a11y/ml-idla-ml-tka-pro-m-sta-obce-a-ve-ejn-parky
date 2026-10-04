@@ -1,0 +1,211 @@
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { Images, Play } from 'lucide-react';
+import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
+import { getStudioMedia } from '@/lib/studioMedia';
+import { getOptimizedMediaUrl, getOriginalMediaUrl } from '@/lib/optimizedMedia';
+
+const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
+const isDirectVideo = (url) => typeof url === 'string' && VIDEO_RE.test(url);
+const isBrokenLocalPath = (url) => typeof url === 'string' && (
+  url.startsWith('/media/studio/')
+  || url.startsWith('/media/products/')
+);
+const isUsableImage = (url) => typeof url === 'string' && url.length > 0 && !isBrokenLocalPath(url);
+
+const VIEW_STYLES = {
+  studio: 'object-contain p-2.5 sm:p-3',
+  product: 'object-contain p-2.5 sm:p-3',
+  real: 'object-cover',
+  viz: 'object-cover',
+  video: '',
+};
+
+const VIEW_LABELS = {
+  studio: 'Studio',
+  product: 'Produkt',
+  real: 'Galerie',
+  viz: 'Vizualizace',
+  video: 'Video',
+};
+
+export default function ProductHoverImage({ product, alt = '', className = '', overlay = false, fallback = '', fullBleed = false, cleanPreview = false }) {
+  const [activeView, setActiveView] = useState(0);
+  const resolvedAlt = alt || product?.image_alt || product?.name || 'Mlžítko MLŽIDLA®';
+  const [hovered, setHovered] = useState(false);
+
+  const views = useMemo(() => {
+    const studioMedia = getStudioMedia(product);
+    const productImage = isUsableImage(product?.image_url) ? getOptimizedMediaUrl(product.image_url) : '';
+    const fallbackImage = isUsableImage(fallback) ? getOptimizedMediaUrl(fallback) : '';
+    const primary = cleanPreview
+      ? (productImage || studioMedia || fallbackImage)
+      : (studioMedia || productImage || fallbackImage);
+    const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls.map(getOptimizedMediaUrl) : [];
+    const videoUrl = isDirectVideo(product?.video_url)
+      ? product.video_url
+      : gallery.find((url) => isDirectVideo(url));
+
+    const list = [];
+
+    // 1. Verified studio image, otherwise the original product image in a studio frame.
+    if (primary) {
+      const type = studioMedia ? 'studio' : 'product';
+      list.push({ type, url: primary, label: VIEW_LABELS[type] });
+    }
+
+    // 2. Real photos from gallery (distinct from primary, non-video, non-broken)
+    const realPhotos = gallery.filter(
+      (url) => url && url !== primary && !isBrokenLocalPath(url) && !isDirectVideo(url)
+    );
+    realPhotos.slice(0, 2).forEach((url) => {
+      list.push({ type: 'real', url, label: VIEW_LABELS.real });
+    });
+
+    // 3. Visualization (AI hero environment)
+    const heroBackground = getOptimizedMediaUrl(product?.hero_background_url);
+    if (heroBackground && heroBackground !== primary && !isBrokenLocalPath(heroBackground)) {
+      list.push({ type: 'viz', url: heroBackground, label: VIEW_LABELS.viz });
+    }
+
+    // 4. Video
+    if (videoUrl) {
+      list.push({ type: 'video', url: videoUrl, label: VIEW_LABELS.video });
+    }
+
+    return list;
+  }, [product, fallback, cleanPreview]);
+
+  // Auto-advance on hover (desktop): go to first non-studio view
+  const handleMouseEnter = useCallback(() => {
+    setHovered(true);
+    if (cleanPreview) return;
+    if (views.length > 1 && activeView === 0) {
+      const nextIdx = views.findIndex((v, i) => i > 0 && v.type !== 'video');
+      if (nextIdx !== -1) setActiveView(nextIdx);
+    }
+  }, [views, activeView, cleanPreview]);
+
+  const handleMouseLeave = useCallback(() => {
+    setHovered(false);
+    setActiveView(0);
+  }, []);
+
+  const selectView = useCallback((e, idx) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveView(idx);
+  }, []);
+
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback((e) => {
+    if (cleanPreview) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      if (dx < 0 && activeView < views.length - 1) setActiveView((v) => v + 1);
+      else if (dx > 0 && activeView > 0) setActiveView((v) => v - 1);
+    }
+  }, [views.length, activeView, cleanPreview]);
+
+  const containerRef = useRef(null);
+
+
+
+  if (views.length === 0) return <div className={`bg-muted ${className}`} />;
+
+  const current = views[activeView] || views[0];
+  const hasMultiple = views.length > 1;
+  const showDots = hasMultiple && !cleanPreview;
+  const previewPosition = product?.hero_focal_position || 'center center';
+
+  return (
+    <div
+      ref={containerRef}
+      className={`group/product-media relative overflow-hidden bg-slate-200 ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Render all views stacked, toggle opacity for crossfade */}
+      {views.map((view, idx) => {
+        const isActive = idx === activeView;
+        const styleClass = fullBleed && (view.type === 'studio' || view.type === 'product')
+          ? 'object-cover object-center'
+          : (VIEW_STYLES[view.type] || 'object-cover');
+
+        if (view.type === 'video') {
+          return (
+            <div key={`view-${idx}`} className={`absolute inset-0 transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
+              {isActive && (
+                <AutoPlayVideoPreview
+                  src={view.url}
+                  label={`${product?.name || 'Produkt'} – video náhled`}
+                  className="absolute inset-0"
+                  videoClassName="object-cover"
+                  threshold={0.58}
+                  showBadge={false}
+                  showLoadingBackground={false}
+                />
+              )}
+            </div>
+          );
+        }
+
+        return (
+          <img
+            key={`view-${idx}`}
+            src={view.url}
+            alt={isActive ? resolvedAlt : ''}
+            loading={idx === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            sizes="(min-width: 1280px) 31vw, (min-width: 768px) 48vw, 100vw"
+            className={`absolute inset-0 h-full w-full transition-all duration-500 ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}
+            style={fullBleed ? { objectPosition: previewPosition } : undefined}
+            onError={(event) => {
+              const original = getOriginalMediaUrl(view.url);
+              if (original && original !== view.url && event.currentTarget.src !== original) {
+                event.currentTarget.src = original;
+              }
+            }}
+          />
+        );
+      })}
+
+      {/* View type badge */}
+      {!cleanPreview && (hasMultiple || current.type === 'studio') && (
+        <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md transition-opacity duration-300">
+          {current.type === 'video' ? <Play size={10} fill="currentColor" /> : <Images size={10} />}
+          {current.label}
+        </span>
+      )}
+
+      {/* Interactive view switcher dots */}
+      {showDots && (
+        <div className="absolute bottom-1.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-0.5">
+          {views.map((view, idx) => (
+            <button
+              key={`dot-${idx}`}
+              type="button"
+              aria-label={`Zobrazit: ${view.label}`}
+              onClick={(e) => selectView(e, idx)}
+              className="flex h-8 items-center justify-center px-1.5 sm:h-5"
+            >
+              <span className={`block h-1.5 rounded-full transition-all duration-300 ${idx === activeView ? 'w-5 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/80'}`} />
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover/product-media:translate-x-full motion-reduce:transition-none" />
+      {overlay && <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent" />}
+    </div>
+  );
+}

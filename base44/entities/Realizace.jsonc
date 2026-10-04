@@ -55,6 +55,25 @@
       "type": "string",
       "description": "Product model used"
     },
+    "benefits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "2\u20134 konkr\u00e9tn\u00ed p\u0159\u00ednosy realizace zobrazovan\u00e9 v case study"
+    },
+    "concept_image_url": {
+      "type": "string",
+      "description": "Vizualizace, skica nebo n\u00e1vrhov\u00fd obraz projektu"
+    },
+    "project_sheet_url": {
+      "type": "string",
+      "description": "Fotografie nebo render A3 projektov\u00e9ho listu v kontextu m\u00edsta"
+    },
+    "design_note": {
+      "type": "string",
+      "description": "Kr\u00e1tk\u00e1 pozn\u00e1mka k n\u00e1vrhu, rozhodnut\u00ed nebo hodnot\u011b projektu"
+    },
     "featured": {
       "type": "boolean",
       "default": false,

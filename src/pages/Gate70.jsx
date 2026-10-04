@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import { trackContactFormSubmit } from '@/lib/ga4';
 import GateComparisonTable from '@/components/produkt/GateComparisonTable';
 
 // ─── Asset URLs ───────────────────────────────────────────────────────────────
@@ -49,8 +50,8 @@ const ALL_GALLERY = [
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60dab9091_mlnbrnaGATE70V2.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6fb189c0_MlznabranaGate76.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4333988f4_MlnbrnaGATE76V.png',
-'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg',
-'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg',
+'/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
+'/media/optimized/7a9bd010a_mlnbrnyaportaly-mlzidla.webp',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/405edf0a8_L-Mltko_GATE_60V.png',
 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22b4e3038_L-Mltko_GATE_60_3R.png',
@@ -59,11 +60,11 @@ const ALL_GALLERY = [
 
 
 const VIDEOS = [
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/aa11e932c_mlnbrnaGATE70.mp4', caption: 'GATE70 — mlhový efekt v parku' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/a4733f633_detailnamlhumlznebrany.MOV', caption: 'Detail mlhy — trysky v akci' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/37a6da879_mlzeni-mlznbrany-vakci.MOV', caption: 'Brána v provozu' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/352fd3ef1_mlnbrnaGATE74-vakci.MOV', caption: 'GATE74 realizace' },
-{ url: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/4b66409ed_mlnbrnaGATE74-vakci1.MOV', caption: 'GATE74 — úhel pohledu' }];
+{ url: '/media/optimized/aa11e932c_mlnbrnaGATE70.webm', caption: 'GATE70 — mlhový efekt v parku' },
+{ url: '/media/optimized/a4733f633_detailnamlhumlznebrany.webm', caption: 'Detail mlhy — trysky v akci' },
+{ url: '/media/optimized/37a6da879_mlzeni-mlznbrany-vakci.webm', caption: 'Brána v provozu' },
+{ url: '/media/optimized/352fd3ef1_mlnbrnaGATE74-vakci.webm', caption: 'GATE74 realizace' },
+{ url: '/media/optimized/4b66409ed_mlnbrnaGATE74-vakci1.webm', caption: 'GATE74 — úhel pohledu' }];
 
 
 const TECH_ROWS = [
@@ -91,8 +92,8 @@ const SMART_FEATURES = [
 
 
 const INSTALACE = [
-{ img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a2d77392e_Mlnbranyaportaly.jpg', title: "Testov\xE1n\xED ml\u017En\xE9 br\xE1ny GATE70", location: "- Testov\xE1n\xED" },
-{ img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7a9bd010a_mlnbrnyaportaly-mlzidla.jpg', title: "Mlžítka - Mlžidla.cz", location: "- testov\xE1n\xED" },
+{ img: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp', title: "Testov\xE1n\xED ml\u017En\xE9 br\xE1ny GATE70", location: "- Testov\xE1n\xED" },
+{ img: '/media/optimized/7a9bd010a_mlnbrnyaportaly-mlzidla.webp', title: "Mlžítka - Mlžidla.cz", location: "- testov\xE1n\xED" },
 { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png', title: "Ml\u017En\xE1 br\xE1na v rekrea\u010Dn\xEDm are\xE1lu", location: "Ml\u017En\xE1 br\xE1na pro Rekrea\u010Dn\xED camp" }];
 
 
@@ -524,15 +525,19 @@ function Gate70ContactForm() {
   const submit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const { base44: b44 } = await import('@/api/base44Client');
-    await b44.entities.ContactInquiry.create({
-      name: form.name,
-      email: form.email,
-      message: `[${form.variant}] ${form.message || 'Zájem o produkt GATE70'}`,
-      description: form.phone ? `Tel: ${form.phone}` : ''
-    }).catch(() => {});
-    setSent(true);
-    setSending(false);
+    try {
+      const { base44: b44 } = await import('@/api/base44Client');
+      const created = await b44.entities.ContactInquiry.create({
+        name: form.name,
+        email: form.email,
+        message: `[${form.variant}] ${form.message || 'Zájem o produkt GATE70'}`,
+        description: form.phone ? `Tel: ${form.phone}` : ''
+      });
+      trackContactFormSubmit('produkt-gate70', form.variant, created?.id || '');
+      setSent(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) return (

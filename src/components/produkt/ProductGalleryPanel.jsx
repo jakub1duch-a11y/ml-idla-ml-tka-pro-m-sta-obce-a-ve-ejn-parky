@@ -1,50 +1,260 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2, ImageOff } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ImageOff, Play, Video, ZoomIn } from 'lucide-react';
+import { trackProductLightboxOpen, trackProductMediaSelect } from '@/lib/ga4';
 
-export default function ProductGalleryPanel({ images, productName, onOpenLightbox }) {
+export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox, focusUrl }) {
+  const [failedUrls, setFailedUrls] = useState(() => new Set());
+  const items = Array.isArray(mediaItems)
+    ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
+    : [];
   const [active, setActive] = useState(0);
-  useEffect(() => setActive(0), [productName]);
+  const [magnify, setMagnify] = useState({ visible: false, x: 50, y: 50 });
+  const [hoverPreview, setHoverPreview] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const touchStart = useRef(null);
+  const hoverTimer = useRef(null);
+  const hoverVideoRef = useRef(null);
+  const activeItem = items[active];
+  const previewVideo = items.find((item) => item.type === 'video');
+  const markFailed = (url) => setFailedUrls((current) => {
+    const next = new Set(current);
+    next.add(url);
+    return next;
+  });
 
-  if (!images || images.length === 0) {
+  useEffect(() => {
+    setActive(0);
+    setFailedUrls(new Set());
+  }, [productName]);
+  useEffect(() => {
+    if (active > items.length - 1) setActive(0);
+  }, [active, items.length]);
+
+  useEffect(() => {
+    if (!focusUrl) return;
+    const index = items.findIndex((item) => item.url === focusUrl);
+    if (index >= 0) setActive(index);
+  }, [focusUrl, items]);
+
+  useEffect(() => () => {
+    if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
+  }, []);
+
+  const canHoverPreview = () => !reduceMotion && Boolean(previewVideo) && window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
+  const startHoverPreview = () => {
+    if (activeItem?.type === 'video' || !canHoverPreview()) return;
+    hoverTimer.current = window.setTimeout(() => setHoverPreview(true), 260);
+  };
+  const stopHoverPreview = () => {
+    if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = null;
+    setHoverPreview(false);
+    if (hoverVideoRef.current) {
+      hoverVideoRef.current.pause();
+      hoverVideoRef.current.currentTime = 0;
+    }
+  };
+
+  if (items.length === 0) {
     return (
-      <div className="rounded-2xl bg-slate-100 aspect-[4/3] flex flex-col items-center justify-center text-slate-300 gap-2">
+      <div className="flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 text-slate-300">
         <ImageOff size={28} />
-        <span className="text-xs font-mono uppercase tracking-widest">Fotografie doplní se</span>
+        <span className="font-mono text-xs uppercase tracking-widest">Média doplníme</span>
       </div>
     );
   }
 
-  const prev = (e) => { e.stopPropagation(); setActive((a) => (a - 1 + images.length) % images.length); };
-  const next = (e) => { e.stopPropagation(); setActive((a) => (a + 1) % images.length); };
+  const select = (index) => setActive((index + items.length) % items.length);
+  const prev = (event) => { event?.stopPropagation?.(); select(active - 1); };
+  const next = (event) => { event?.stopPropagation?.(); select(active + 1); };
+
+  const onTouchStart = (event) => {
+    touchStart.current = event.touches?.[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (event) => {
+    if (touchStart.current == null) return;
+    const end = event.changedTouches?.[0]?.clientX;
+    if (end == null) return;
+    const delta = end - touchStart.current;
+    touchStart.current = null;
+    if (Math.abs(delta) < 48) return;
+    delta > 0 ? select(active - 1) : select(active + 1);
+  };
 
   return (
-    <div>
-      <button type="button" onClick={() => onOpenLightbox(active)} className="relative block w-full rounded-2xl overflow-hidden bg-slate-100 aspect-[4/3] group">
-        <img src={images[active]} alt={productName} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
-        <span className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
-          <Maximize2 size={15} />
-        </span>
-        {images.length > 1 && (
-          <>
-            <button type="button" onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow-sm hover:bg-white transition-colors">
-              <ChevronLeft size={16} className="text-slate-700" />
-            </button>
-            <button type="button" onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow-sm hover:bg-white transition-colors">
-              <ChevronRight size={16} className="text-slate-700" />
-            </button>
-          </>
-        )}
-      </button>
-      {images.length > 1 && (
-        <div className="grid grid-cols-5 gap-2.5 mt-3">
-          {images.slice(0, 5).map((img, i) => (
-            <button
-              key={img + i}
-              type="button"
-              onClick={() => setActive(i)}
-              className={`rounded-lg overflow-hidden aspect-[4/3] border-2 transition-colors ${active === i ? 'border-slate-900' : 'border-transparent hover:border-slate-300'}`}
+    <div className="min-w-0 max-w-full space-y-3">
+      <div
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-[0_12px_36px_rgba(15,23,42,.06)]"
+      >
+        <div
+          className={`relative w-full bg-white ${activeItem.type === 'video' ? 'aspect-video' : 'aspect-[4/3]'}`}
+          onMouseEnter={startHoverPreview}
+          onMouseMove={(event) => {
+            if (activeItem.type === 'video' || hoverPreview) return;
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = Math.min(100, Math.max(0, ((event.clientX - rect.left) / rect.width) * 100));
+            const y = Math.min(100, Math.max(0, ((event.clientY - rect.top) / rect.height) * 100));
+            setMagnify({ visible: true, x, y });
+          }}
+          onMouseLeave={() => {
+            setMagnify((current) => ({ ...current, visible: false }));
+            stopHoverPreview();
+          }}
+        > 
+          <AnimatePresence mode="wait" initial={false}>
+            {activeItem.type === 'video' ? (
+              <motion.div
+                key={`video-${activeItem.url}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                className="absolute inset-0"
+              >
+                <video
+                  src={activeItem.url}
+                  poster={activeItem.poster}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full bg-black object-contain"
+                  onError={() => markFailed(activeItem.url)}
+                />
+              </motion.div>
+            ) : (
+              <motion.img
+                key={`image-${activeItem.url}`}
+                src={activeItem.url}
+                alt={`${productName} – fotografie ${active + 1}`}
+                loading={active === 0 ? 'eager' : 'lazy'}
+                fetchPriority={active === 0 ? 'high' : 'auto'}
+                decoding="async"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                className={`absolute inset-0 h-full w-full object-contain p-1 sm:p-2 ${previewVideo ? 'cursor-video-preview' : 'cursor-zoom-in'}`}
+                onError={() => markFailed(activeItem.url)}
+                onClick={() => { trackProductLightboxOpen(productName, activeItem.type); onOpenLightbox?.(activeItem.originalIndex); }}
+              />
+            )}
+          </AnimatePresence>
+
+          {activeItem.type !== 'video' && hoverPreview && previewVideo && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-[18] bg-black">
+              <video
+                ref={hoverVideoRef}
+                src={previewVideo.url}
+                poster={previewVideo.poster || activeItem.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover"
+                onError={() => stopHoverPreview()}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031d26]/55 via-transparent to-black/5" />
+              <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-[10px] font-semibold text-white backdrop-blur-md">
+                <Play size={12} fill="currentColor" /> Pohyb produktu · najeďte kurzorem
+              </div>
+            </motion.div>
+          )}
+
+          {activeItem.type !== 'video' && magnify.visible && !hoverPreview && (
+            <div
+              className="pointer-events-none absolute z-20 hidden h-44 w-44 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-white shadow-[0_14px_40px_rgba(15,23,42,.28)] sm:block lg:h-52 lg:w-52"
+              style={{
+                left: `${magnify.x}%`,
+                top: `${magnify.y}%`,
+                backgroundImage: `url(${activeItem.url})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '230%',
+                backgroundPosition: `${magnify.x}% ${magnify.y}%`,
+              }}
+              aria-hidden="true"
             >
-              <img src={img} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 rounded-full ring-1 ring-black/10" />
+            </div>
+          )}
+
+          {activeItem.type !== 'video' && (
+            <button
+              type="button"
+              onClick={() => { trackProductLightboxOpen(productName, activeItem.type); onOpenLightbox?.(activeItem.originalIndex); }}
+              className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm transition hover:bg-white sm:hidden"
+              aria-label="Zvětšit fotografii"
+            >
+              <ZoomIn size={13} /> Zvětšit
+            </button>
+          )}
+
+          {items.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Předchozí médium"
+                className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-sm transition hover:bg-white"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Další médium"
+                className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-sm transition hover:bg-white"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </>
+          )}
+
+          <div className="absolute bottom-3 right-3 rounded-full bg-black/55 px-2.5 py-1 font-mono text-[9px] text-white backdrop-blur-sm">
+            {active + 1} / {items.length}
+          </div>
+        </div>
+      </div>
+
+      {items.length > 1 && (
+        <div className="flex w-full max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+          {items.map((item, index) => (
+            <button
+              key={`${item.type}-${item.url}-${index}`}
+              type="button"
+              onClick={() => { trackProductMediaSelect(productName, item.type, index); setActive(index); }}
+              aria-current={active === index ? 'true' : undefined}
+              aria-label={`Zobrazit ${item.type === 'video' ? 'video' : 'fotografii'} ${index + 1}`}
+              className={`relative aspect-[4/3] min-w-[92px] overflow-hidden rounded-xl border-2 bg-slate-100 transition sm:min-w-[108px] ${active === index ? 'border-[#0b4860] opacity-100' : 'border-transparent opacity-70 hover:opacity-100'}`}
+            >
+              {item.type === 'video' ? (
+                <>
+                  {item.poster ? (
+                    <img src={item.poster} alt="" loading="lazy" decoding="async" className="h-full w-full bg-white object-contain p-1" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-slate-900 text-white"><Video size={18} /></div>
+                  )}
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/15">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-900 shadow-sm">
+                      <Play size={13} className="ml-0.5" fill="currentColor" />
+                    </span>
+                  </span>
+                  <span className="absolute bottom-1 left-1 rounded bg-black/65 px-1.5 py-0.5 font-mono text-[7px] font-bold text-white">VIDEO</span>
+                </>
+              ) : (
+                <img
+                  src={item.url}
+                  alt={`${productName} – náhled ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full bg-white object-contain p-1"
+                  onError={() => markFailed(item.url)}
+                />
+              )}
             </button>
           ))}
         </div>

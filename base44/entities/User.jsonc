@@ -1,4 +1,6 @@
 {
+  "name": "User",
+  "type": "object",
   "properties": {
     "role": {
       "type": "string",
@@ -7,11 +9,55 @@
         "admin",
         "user"
       ]
+    },
+    "first_name": {
+      "type": "string",
+      "description": "K\u0159estn\u00ed jm\u00e9no klienta"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "P\u0159\u00edjmen\u00ed klienta"
+    },
+    "company": {
+      "type": "string",
+      "description": "Firma / organizace"
+    },
+    "profile_type": {
+      "type": "string",
+      "description": "Typ klientsk\u00e9ho profilu"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Telefon"
+    },
+    "address": {
+      "type": "string",
+      "description": "Adresa"
+    },
+    "city": {
+      "type": "string",
+      "description": "M\u011bsto / obec"
+    },
+    "postal_code": {
+      "type": "string",
+      "description": "PS\u010c"
+    },
+    "country": {
+      "type": "string",
+      "description": "Zem\u011b",
+      "default": "\u010cesk\u00e1 republika"
+    },
+    "company_id": {
+      "type": "string",
+      "description": "I\u010c / identifikace organizace"
+    },
+    "newsletter": {
+      "type": "boolean",
+      "description": "Souhlas s newsletterem",
+      "default": false
     }
   },
   "required": [
     "role"
-  ],
-  "name": "User",
-  "type": "object"
+  ]
 }

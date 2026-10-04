@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Droplets, Gauge, Thermometer, Layers, Waves, Wrench, Wifi, Shield, CheckCircle2, Download, FileText } from 'lucide-react';
+import { ArrowRight, Droplets, Gauge, Thermometer, Layers, Waves, Wrench, Wifi, CheckCircle2, Download, FileText } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const TECH_SPECS = [
@@ -23,12 +23,12 @@ const BENEFITS = [
 ];
 
 const GALLERY_IMAGES = [
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg',
+  '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
   'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/72a6bb588_mlnprvek-mrak-mlzidla02.png',
   'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.jpg',
-  'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fbcf274b1_FB_IMG_1782148331764.jpg',
+  '/media/optimized/8139fde88_7fc9b4e64_mlzitko_upraveno_Z09_3544_zmenseno.webp',
+  '/media/optimized/fbcf274b1_FB_IMG_1782148331764.webp',
 ];
 
 const INSTALL_STEPS = [
@@ -69,7 +69,7 @@ export default function Mlzitko() {
       <div className="relative min-h-[85vh] flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg"
+            src="/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp"
             alt="Mlžná socha OSTEV v parku"
             className="w-full h-full object-cover"
             loading="eager"
@@ -227,10 +227,10 @@ export default function Mlzitko() {
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.MOV',
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.MOV',
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.MOV',
-            'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.MOV',
+            '/media/optimized/bdb338033_EFC9FCE8-7138-44C3-AAE6-246F88644813.webm',
+            '/media/optimized/b0171e69d_AF599DD3-EFF1-43AB-B6AB-40C8B869039F.webm',
+            '/media/optimized/66dd73724_1283CEC3-EA3F-42B3-9E58-3788630B07A6.webm',
+            '/media/optimized/1d1271290_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm',
           ].map((url, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
               className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">

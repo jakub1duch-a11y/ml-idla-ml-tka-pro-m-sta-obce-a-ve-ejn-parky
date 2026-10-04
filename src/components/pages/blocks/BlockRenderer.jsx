@@ -11,8 +11,8 @@ const MAP = {
   cta: CtaBlock,
 };
 
-export default function BlockRenderer({ block }) {
+export default function BlockRenderer({ block, editMode = false, onChange }) {
   const Comp = MAP[block?.type];
   if (!Comp) return null;
-  return <Comp data={block.data} />;
+  return <Comp data={block.data} editMode={editMode} onChange={onChange} />;
 }

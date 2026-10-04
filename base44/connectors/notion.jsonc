@@ -1,0 +1,11 @@
+{
+  "type": "notion",
+  "scopes": [
+    "read_content",
+    "update_content",
+    "insert_content",
+    "read_comments",
+    "create_comments",
+    "read_users"
+  ]
+}

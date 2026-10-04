@@ -1,0 +1,63 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 8 * * *",
+      "one_time_date": null,
+      "timezone": "Europe/Prague",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "LinkedIn denn\u00ed synchronizace interakc\u00ed",
+  "description": "Denn\u011b synchronizuje koment\u00e1\u0159e a reakce na LinkedIn p\u0159\u00edsp\u011bvc\u00edch do sd\u00edlen\u00e9 tabulky \u2014 automaticky zaznamen\u00e1v\u00e1 odpov\u011bdi architekt\u016f a developer\u016f pro follow-up.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "linkedin_daily_interaction_sync",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_interactions": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncLinkedinToSheets",
+            "args": {
+              "action": "sync_interactions"
+            }
+          },
+          "then": "sync_activity",
+          "x-base44": {
+            "title": "Synchronizace interakc\u00ed",
+            "description": "Koment\u00e1\u0159e a reakce z LinkedInu"
+          }
+        }
+      },
+      {
+        "sync_activity": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncLinkedinToSheets",
+            "args": {
+              "action": "sync_activity"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Synchronizace p\u0159\u00edsp\u011bvk\u016f",
+            "description": "Aktualizace aktivity a profilu"
+          }
+        }
+      }
+    ]
+  }
+}

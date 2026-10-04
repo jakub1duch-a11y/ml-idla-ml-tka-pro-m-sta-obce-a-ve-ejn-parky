@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Save } from 'lucide-react';
+import { Loader, Save, Leaf, Type, Palette } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const inputCls = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none transition-all";
+const defaults = {
+  tone_of_voice: 'Prémiový architektonický styl; klidný, chytrý, věcný a lidský. Bez prázdných superlativů.',
+  target_audience: 'Města, obce, architekti, správci parků, hřišť, promenád, areálů a veřejných prostor.',
+  key_messages: 'Chytré mlžení. Bez čerpadla. Bez kompromisů, ochlazení prostoru, česká výroba, návrh na míru, instalace a servis',
+  primary_colors: '#0D2D38, #0E5B67, #61D5E5, #6F8F72, #FFFFFF',
+  hashtags: '#mlzidla, #ochlazenimesta, #mestskaarchitektura, #verejnyprostor, #chytreMesto',
+};
 
 export default function BrandProfileTab() {
-  const [profile, setProfile] = useState({ tone_of_voice: '', target_audience: '', key_messages: '', primary_colors: '', hashtags: '' });
+  const [profile, setProfile] = useState(defaults);
   const [id, setId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -16,11 +23,11 @@ export default function BrandProfileTab() {
         const p = list[0];
         setId(p.id);
         setProfile({
-          tone_of_voice: p.tone_of_voice || '',
-          target_audience: p.target_audience || '',
-          key_messages: (p.key_messages || []).join(', '),
-          primary_colors: (p.primary_colors || []).join(', '),
-          hashtags: (p.hashtags || []).join(', '),
+          tone_of_voice: p.tone_of_voice || defaults.tone_of_voice,
+          target_audience: p.target_audience || defaults.target_audience,
+          key_messages: (p.key_messages || []).join(', ') || defaults.key_messages,
+          primary_colors: (p.primary_colors || []).join(', ') || defaults.primary_colors,
+          hashtags: (p.hashtags || []).join(', ') || defaults.hashtags,
         });
       }
       setLoading(false);
@@ -47,7 +54,14 @@ export default function BrandProfileTab() {
   if (loading) return <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div>;
 
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="space-y-5 max-w-2xl">
+      <div className="rounded-2xl border border-cyan/15 bg-gradient-to-br from-[#0D2D38] via-[#0E5B67] to-[#6F8F72] p-5">
+        <p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">Vizuální systém MLŽIDLA.cz</p>
+        <h3 className="mt-2 text-xl font-semibold text-white">Technologie, úleva a živý prostor</h3>
+        <p className="mt-2 text-sm leading-6 text-white/70">Tmavá ocel a aqua komunikují důvěru, technickou přesnost a mlhu. Tlumená zelená evokuje stromy, stín, úlevu a lepší klima ve veřejném prostoru — bez neověřených ekologických tvrzení.</p>
+        <div className="mt-4 grid grid-cols-3 gap-2">{[['#0D2D38','Deep Steel','důvěra'],['#0E5B67','Ocean Teal','technologie'],['#6F8F72','Living Green','stín a úleva']].map(([color,label,meaning]) => <div key={color} className="rounded-xl border border-white/10 bg-black/15 p-3"><div className="h-8 rounded-lg" style={{ backgroundColor: color }} /><p className="mt-2 text-[11px] font-semibold text-white">{label}</p><p className="text-[10px] text-white/50">{color} · {meaning}</p></div>)}</div>
+        <div className="mt-4 grid gap-2 text-xs text-white/60 sm:grid-cols-3"><span className="inline-flex items-center gap-2"><Palette size={14} className="text-cyan" /> Paleta s kontrastem</span><span className="inline-flex items-center gap-2"><Type size={14} className="text-cyan" /> Nadpisy: font-heading</span><span className="inline-flex items-center gap-2"><Leaf size={14} className="text-cyan" /> Zelená = živý prostor</span></div>
+      </div>
       <div>
         <label className="text-xs font-mono text-white/40 tracking-widest uppercase block mb-1">Tón komunikace</label>
         <textarea rows={2} value={profile.tone_of_voice} onChange={(e) => setProfile({ ...profile, tone_of_voice: e.target.value })}

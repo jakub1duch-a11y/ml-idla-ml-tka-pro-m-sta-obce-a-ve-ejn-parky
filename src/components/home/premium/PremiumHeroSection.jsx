@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
 import { DrawPath } from "./DrawIcon";
 
-const DEVICE_VIDEO = "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2c4b0efa9_animatediconmist.mp4";
+const DEVICE_VIDEO = "/media/optimized/2c4b0efa9_animatediconmist.webm";
 
 function MistDrawIcon() {
   return (

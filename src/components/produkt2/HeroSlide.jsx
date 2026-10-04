@@ -2,11 +2,20 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
+const HERO_FALLBACK = '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp';
+
 export default function HeroSlide({ product, categoryName, onScrollNext }) {
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-end">
-      {product.image_url && <img src={product.image_url} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />}
-      <div className="absolute inset-0 bg-gradient-to-t from-ink via-black/40 to-black/10" />
+      <img
+        src={product.image_url || HERO_FALLBACK}
+        alt={product.name || 'Produkt MLŽIDLA ve veřejném prostoru'}
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        loading="eager"
+        fetchPriority="high"
+        onError={(event) => { event.currentTarget.src = HERO_FALLBACK; }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink via-black/42 to-black/8" />
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
         className="relative z-10 p-8 lg:p-16 max-w-3xl">
         <p className="font-mono text-xs tracking-widest uppercase text-techblue mb-3">[{categoryName || 'Produkt'}]</p>

@@ -1,0 +1,107 @@
+{
+  "name": "SalesSheetVariant",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Stabiln\u00ed kl\u00ed\u010d varianty A/B"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string",
+      "description": "Prim\u00e1rn\u00ed obchodn\u00ed publikum"
+    },
+    "variant_type": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B"
+      ]
+    },
+    "headline": {
+      "type": "string"
+    },
+    "subheadline": {
+      "type": "string"
+    },
+    "hook": {
+      "type": "string"
+    },
+    "value_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "technical_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cta": {
+      "type": "string"
+    },
+    "price_ex_vat": {
+      "type": "number"
+    },
+    "smart_addon_price_ex_vat": {
+      "type": "number"
+    },
+    "bundle_price_ex_vat": {
+      "type": "number"
+    },
+    "visual_style": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "key",
+    "product_slug",
+    "product_name",
+    "audience",
+    "variant_type",
+    "headline",
+    "cta",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

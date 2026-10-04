@@ -14,7 +14,7 @@ const BENEFITS = [
 ];
 
 const USAGE_LINKS = [
-  { icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce', color: 'text-slate-600' },
+  { icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-slate-600' },
   { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-emerald-500' },
   { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-blue-500' },
   { icon: Flower2, label: 'Outdoor a zahrady', path: '/kategorie/outdoor-zahrady', color: 'text-green-500' },
@@ -161,6 +161,34 @@ export default function Partnerstvi() {
         </div>
       </div>
 
+      {/* COLLABORATION PROCESS */}
+      <div className="py-20 max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:sticky lg:top-28">
+            <p className="text-xs font-mono text-cyan-700 tracking-widest uppercase mb-3">Jak spolupráce probíhá</p>
+            <h2 className="font-heading font-light text-3xl lg:text-5xl text-slate-900 tracking-tight">Od první skici až po hotový prvek v prostoru.</h2>
+            <p className="mt-5 max-w-xl text-slate-500 leading-relaxed font-light">Pro architekty, projektanty i města držíme technickou část co nejjednodušší: rychlé podklady, jasné návaznosti profesí, přesná výroba a jeden kontaktní bod.</p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link to="/kontakt" className="btn-metallic-mist px-6 py-3 text-sm font-bold">Probrat projekt <ArrowRight size={14} /></Link>
+              <Link to="/ke-stazeni" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50">Technické podklady</Link>
+            </div>
+          </motion.div>
+          <div className="grid gap-3">
+            {[
+              { n: '01', title: 'Zadání a prostor', text: 'Pošlete situaci, fotografii nebo výkres. Ověříme měřítko, přívod vody, průchodnost a vhodný typ mlžného prvku.' },
+              { n: '02', title: 'Návrh a vizualizace', text: 'Připravíme doporučené řešení, 2D/3D podklad nebo fotovizualizaci do konkrétního prostoru a variantu chytrého ovládání.' },
+              { n: '03', title: 'Technické dopracování', text: 'Doplníme rozměry, kotvení, přívody, trysky, materiál 316L a podklady pro koordinaci se stavbou nebo projektantem.' },
+              { n: '04', title: 'Výroba, instalace a servis', text: 'Vyrobíme prvek, provedeme nebo podpoříme instalaci, odzkoušíme provoz a předáme doporučený servisní režim.' },
+            ].map((step, index) => (
+              <motion.div key={step.n} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06 }} className="group grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-md sm:grid-cols-[64px_1fr]">
+                <div className="font-mono text-2xl text-slate-300 transition group-hover:text-cyan-600">{step.n}</div>
+                <div><h3 className="font-heading text-xl text-slate-900">{step.title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-500">{step.text}</p></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* KEY FEATURES */}
       <div className="py-20 max-w-7xl mx-auto px-6 lg:px-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 text-center">
@@ -227,7 +255,7 @@ export default function Partnerstvi() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
             <img
-              src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.jpg"
+              src="/media/optimized/1a8bf738a_7926f77e-d40e-463f-b1ae-2e20e46e13e0.webp"
               alt="Y-ARMIST technický výkres a mlžný efekt"
               className="rounded-2xl w-full object-cover border border-slate-200"
             />
@@ -265,7 +293,7 @@ export default function Partnerstvi() {
           <Users size={32} className="mx-auto mb-5 text-slate-300" />
           <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 mb-4">Zahajte spolupráci</h2>
           <p className="text-slate-500 font-light leading-relaxed mb-8">
-            Konzultace k projektové dokumentaci, cenová kalkulace i 3D vizualizace — vše zdarma a do 48 hodin.
+            Pošlete nám situaci, fotografii nebo výkres. Navrhneme vhodný postup, technické návaznosti a další krok bez zbytečného přeposílání mezi dodavateli.
           </p>
           <Link to="/kontakt" className="btn-metallic-mist px-8 py-4 text-sm font-bold">
             Domluvit schůzku <ArrowRight size={16} />

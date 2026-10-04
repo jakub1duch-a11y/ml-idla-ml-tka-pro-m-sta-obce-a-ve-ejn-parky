@@ -1,262 +1,151 @@
-import React, { useState, useEffect } from 'react';
-import KolekceHero from '@/components/kolekce/KolekceHero';
-import CategorySelector from '@/components/kolekce/CategorySelector';
-import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
-import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
-import GatesSlider from '@/components/kolekce/GatesSlider';
-import CollectionMainInfoSection from '@/components/kolekce/CollectionMainInfoSection';
-import ProductsShowcaseSlider from '@/components/kolekce/ProductsShowcaseSlider';
-import CollectionOffers from '@/components/kolekce/CollectionOffers';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Trees, Landmark, Flame, Building2, Home, Users, Warehouse, Baby, Loader, SlidersHorizontal, X, Zap, Eye } from 'lucide-react';
+import ProductExperience from '@/components/ui/ProductExperience';
+import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Loader, Search, X, Building2, Home, Dumbbell, School, UtensilsCrossed, SlidersHorizontal } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
-import { trackQuickInquiryClick } from '@/lib/ga4';
+import { isArchived } from '@/lib/newMedia';
+import { getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
+import { mergePortalGateProducts } from '@/lib/portalGateProducts';
+import KolekceHero from '@/components/kolekce/KolekceHero';
+import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
+import { useSearchParams } from 'react-router-dom';
+import FamilyNav from '@/components/kolekce/FamilyNav';
+import LineChips from '@/components/kolekce/LineChips';
+import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
+import GatesSlider from '@/components/kolekce/GatesSlider';
+import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
+import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
+import CatalogAudience from '@/components/kolekce/CatalogAudience';
 
-const HEIGHT_OPTIONS = [
-{ value: 'all', label: 'Všechny výšky' },
-{ value: 'low', label: 'Do 1 m' },
-{ value: 'medium', label: '1–3 m' },
-{ value: 'tall', label: '3 m a více' }];
+const HIDDEN_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'];
+const HIDDEN_SLUGS = ['garden-cooling-set'];
 
-
-const INSTALL_OPTIONS = [
-{ value: 'all', label: 'Jakákoliv instalace' },
-{ value: 'easy', label: 'Snadná (plug & play)' },
-{ value: 'medium', label: 'Střední (odborník)' },
-{ value: 'complex', label: 'Komplexní (projekt)' }];
-
-
-function getHeightRange(product) {
-  const h = (product.coverage_area || '').toLowerCase();
-  if (!h) return 'all';
-  const match = h.match(/(\d+)/);
-  if (!match) return 'all';
-  const val = parseInt(match[1]);
-  if (val < 100) return 'low';
-  if (val < 300) return 'medium';
-  return 'tall';
-}
-
-function getInstallComplexity(product) {
-  const desc = ((product.description || '') + (product.short_description || '')).toLowerCase();
-  if (desc.includes('plug') || desc.includes('snadná') || desc.includes('terasa') || desc.includes('zahrada')) return 'easy';
-  if (desc.includes('projekt') || desc.includes('zakázk') || desc.includes('instalace')) return 'complex';
-  return 'medium';
-}
-
-const CATEGORY_GROUPS = [
-{
-  id: 'sochy',
-  label: 'Mlžné sochy',
-  icon: Trees,
-  tagline: 'Přírodní tvary. Živá atmosféra.',
-  description: 'Mlžné sochy jsou skulpturální instalace mlžítek inspirované přírodou — stromy, mraky, listy a větve.',
-  audience: ['Architekti a krajinní designéři', 'Správci měst a náměstí', 'Eventy a festivaly', 'Resorty a wellness'],
-  usecases: ['Městská náměstí a parky', 'Vstupní prostory hotelů', 'Open-air eventy', 'Soukromé zahrady a vily'],
-  accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-  dbCategories: ['NATURE'],
-  slugKeywords: ['strom', 'mrak', 'steblo', 'mrkev', 'duna', 'slunecnik']
-},
-{
-  id: 'brany',
-  label: 'Mlžné brány a portály',
-  icon: Landmark,
-  tagline: 'Vstup skrze mlhu. Nezapomenutelný moment.',
-  description: 'Mlžné brány a portály vytvářejí výrazný vstupní zážitek v čistých liniích nerezové oceli.',
-  audience: ['Organizátoři eventů a festivalů', 'Hotely a resorty', 'Obchodní centra a showroomy', 'Sportovní areály'],
-  usecases: ['Vstup na festival nebo event', 'Hotelový vstupní portál', 'Výstavní stánky a expozice', 'VIP zóny'],
-  accent: 'text-sky-700 bg-sky-50 border-sky-200',
-  dbCategories: ['URBAN ART'],
-  slugKeywords: ['aura', 'linear', 'y-armist', 'spirala', 'bendy']
-},
-{
-  id: 'mlhoviste',
-  label: 'Mlhoviště a chladicí zóny',
-  icon: Flame,
-  tagline: 'Ochlazení otevřených prostorů až o 9 °C.',
-  description: 'Systémy pro plošné ochlazení teras, hřišť, sportovního zázemí a průmyslových prostorů.',
-  audience: ['Provozovatelé restaurací a kaváren', 'Obce a správci veřejných ploch', 'Průmyslové provozy', 'Školy a školky'],
-  usecases: ['Letní terasy restaurací', 'Dětská hřiště a školní dvorky', 'Sportovní tribuny', 'Sklady a výrobní haly'],
-  accent: 'text-orange-700 bg-orange-50 border-orange-200',
-  dbCategories: ['GEOMETRY'],
-  slugKeywords: ['mlzitka', 'mlziste', 'mlzne-systemy', 'mlzne-prislusenstvi', 'smart']
-}];
-
-
-const audienceSegments = [
-{ icon: Building2, label: 'Města a obce', desc: 'Městské ochlazení náměstí, parků a veřejných prostranství. Dotační programy dostupné.' },
-{ icon: Users, label: 'Eventy a festivaly', desc: 'Pronájem nebo zakoupení mlžítek a mlžných instalací. Rychlá montáž a přenosnost.' },
-{ icon: Home, label: 'Rezidenční', desc: 'Mlžítka zahradní pro soukromé zahrady, terasy, wellness hotely, restaurační zahrádky... Individuální návrh a diskrétní mlžná instalace.' },
-{ icon: Warehouse, label: 'Průmysl a logistika', desc: 'Ochlazení pracovišť, skladů a výrobních hal. Zvýšení produktivity a BOZP.' },
-{ icon: Baby, label: 'Školy a hřiště', desc: 'Bezpečné mlžítka - mlžná hřiště pro děti. Certifikované materiály, bez chemie, potravinářská nerez.' }];
-
-
-// Fallback images by category
-const FALLBACK_IMAGES = {
-  NATURE: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6993add8_Reference-mstoPolna.webp',
-  'URBAN ART': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/58e5e3931_MestskabranaGATE.png',
-  GEOMETRY: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/03ba352a3_mlzitka-zahradni-hotely-restaurace.png',
-  DEFAULT: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9cf838258_MlzicisprchaaSMARTaplikace.png'
+const SPACE_FILTERS = [
+  { value: 'all', label: 'Všechny prostory', icon: SlidersHorizontal },
+  { value: 'city', label: 'Města a obce', icon: Building2 },
+  { value: 'garden', label: 'Zahrady', icon: Home },
+  { value: 'sport', label: 'Sportoviště', icon: Dumbbell },
+  { value: 'school', label: 'Školy & hřiště', icon: School },
+  { value: 'gastro', label: 'Gastro & hotel', icon: UtensilsCrossed },
+];
+const SPACE_TERMS = {
+  city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'brána', 'gate', 'linea', 'stébl'],
+  garden: ['zahrad', 'terasa', 'reziden', 'soukrom'],
+  sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
+  school: ['škol', 'dětsk', 'hřiště', 'školk'],
+  gastro: ['gastro', 'restaur', 'hotel', 'resort', 'terasa'],
 };
 
-function ProductCard({ product, i }) {
-  const imgSrc = product.image_url || FALLBACK_IMAGES[product._categoryName] || FALLBACK_IMAGES.DEFAULT;
-  return <motion.article initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl mx-auto">
-    <Link to={product.slug ? `/produkt/${product.slug}` : '/kontakt'} className="block flex-1"><div className="relative aspect-[16/10] overflow-hidden bg-muted"><img src={imgSrc} alt={product.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" /><div className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-transparent" />{product.featured && <span className="absolute left-4 top-4 bg-card px-3 py-1 font-mono text-[10px] tracking-[.14em] text-primary">VÝBĚR</span>}<span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-[.14em] text-white">{product._categoryName || 'MLŽNÝ SYSTÉM'}</span></div><div className="p-6"><h3 className="font-heading text-2xl text-foreground">{product.name}</h3><p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p><p className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary pl-1">Prohlédnout detail</p></div></Link>
-    <Link to={`/kontakt?produkt=${encodeURIComponent(product.name)}`} onClick={() => trackQuickInquiryClick(product.name, 'katalog')} className="flex items-center justify-center gap-1.5 border-t border-border py-3 font-bold transition hover:bg-muted text-[hsl(var(--background))] text-sm bg-[hsl(var(--ring))]"><Zap size={13} /> Popsat projekt</Link>
-  </motion.article>;
+function matchesSpace(p, filter) {
+  if (filter === 'all') return true;
+  const hay = `${p.name} ${p.slug} ${p.short_description || ''} ${p.description || ''}`.toLowerCase();
+  return SPACE_TERMS[filter].some((t) => hay.includes(t));
 }
 
 export default function Kolekce() {
-  const [activeCategory, setActiveCategory] = useState(null);
+  const reduced = useReducedMotion();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categorySlug = searchParams.get('kategorie');
+  const selectedCategory = categories.find(c => c.slug === categorySlug);
+  useEffect(() => { base44.entities.ProductCategory.list('order', 100).then(setCategories).catch(() => {}); }, []);
   const [loading, setLoading] = useState(true);
-  const [heightFilter, setHeightFilter] = useState('all');
-  const [installFilter, setInstallFilter] = useState('all');
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [family, setFamily] = useState(null);
+  const [line, setLine] = useState(null);
+  const [space, setSpace] = useState('all');
   const [search, setSearch] = useState('');
 
-  useEffect(() => {
-    setSEO(SEO_PAGES.kolekce);
-  }, []);
+  useEffect(() => { setSEO(SEO_PAGES.kolekce); }, []);
+  useEffect(() => { setFamily(null); setLine(null); setSpace('all'); setSearch(''); }, [categorySlug]);
 
   useEffect(() => {
-    Promise.all([
-    base44.entities.Product.list().catch(() => []),
-    base44.entities.ProductCategory.list().catch(() => [])]
-    ).then(([prods, cats]) => {
-      const enriched = (prods || []).map((p) => ({
-        ...p,
-        _categoryName: (cats || []).find((c) => c.id === p.category_id)?.name || ''
-      }));
-      setProducts(enriched);
-      setCategories(cats || []);
-    }).finally(() => setLoading(false));
+    base44.entities.Product.list('name', 200)
+      .then((list) => {
+        const visibleProducts = (list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug));
+        setProducts(mergePortalGateProducts(visibleProducts));
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  const activeGroup = CATEGORY_GROUPS.find((g) => g.id === activeCategory);
-  const hasAdvancedFilter = heightFilter !== 'all' || installFilter !== 'all' || search.trim();
+  const familyCounts = useMemo(() => products.reduce((acc, p) => { const id = getFamily(p).id; acc[id] = (acc[id] || 0) + 1; return acc; }, {}), [products]);
+  const lineCounts = useMemo(() => products.reduce((acc, p) => { const k = getLine(p).key; acc[k] = (acc[k] || 0) + 1; return acc; }, {}), [products]);
 
-  const displayedProducts = products.
-  filter((p) => !['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'].includes(p.name)).
-  filter((p) => {
-    if (activeGroup) {
-      return activeGroup.dbCategories.includes(p._categoryName) ||
-      activeGroup.slugKeywords.some((kw) => (p.slug || '').includes(kw));
-    }
-    return true;
-  }).
-  filter((p) => heightFilter === 'all' || getHeightRange(p) === heightFilter).
-  filter((p) => installFilter === 'all' || getInstallComplexity(p) === installFilter).
-  filter((p) => {
-    if (!search.trim()) return true;
-    const q = search.toLowerCase();
-    return (p.name || '').toLowerCase().includes(q) ||
-    (p.short_description || '').toLowerCase().includes(q) ||
-    (p.description || '').toLowerCase().includes(q);
-  });
+  const displayed = useMemo(() => sortByStructure(products
+    .filter((p) => !selectedCategory || p.category_id === selectedCategory.id)
+    .filter((p) => !family || getFamily(p).id === family)
+    .filter((p) => !line || getLine(p).key === line)
+    .filter((p) => matchesSpace(p, space))
+    .filter((p) => !search.trim() || `${p.name} ${p.short_description || ''}`.toLowerCase().includes(search.toLowerCase()))
+  ), [products, family, line, space, search, selectedCategory]);
+
+  const activeFamily = family ? getFamilyById(family) : null;
+  const hasFilter = selectedCategory || family || line || space !== 'all' || search.trim();
+  const clear = () => { setFamily(null); setLine(null); setSpace('all'); setSearch(''); setSearchParams({}); };
+  const selectFamily = (id) => { setFamily(id); setLine(null); };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="catalog-premium min-h-screen overflow-x-clip bg-white">
+      {selectedCategory ? <section className="relative overflow-hidden bg-slate-950 px-5 pb-16 pt-32 text-white lg:px-10"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-center"><div><p className="text-xs uppercase tracking-widest text-cyan-300">Kategorie produktů</p><h1 className="mt-4 font-heading text-4xl sm:text-5xl">{selectedCategory.name}</h1><p className="mt-5 max-w-xl leading-7 text-slate-200">{selectedCategory.description}</p><a href="#catalog" className="mt-7 inline-flex min-h-11 items-center rounded-full bg-cyan-300 px-6 font-semibold text-slate-950">Prohlédnout produkty</a></div>{selectedCategory.image_url && <div className="aspect-[4/3] max-h-[440px] overflow-hidden rounded-2xl bg-slate-900"><img src={selectedCategory.image_url} alt={selectedCategory.name} className="h-full w-full object-cover object-center"/></div>}</div></section> : <KolekceHero />}
+      {!selectedCategory && <ProductCategoryExplorer />}
+      <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
 
-      {/* ── HERO SLIDER ── */}
-      <KolekceHero />
+      <div id="catalog" className="catalog-pattern relative mx-auto max-w-[1500px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+        <div className="mb-10 flex flex-col gap-6 border-b border-[#DCE9ED] pb-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
+            <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.98] tracking-[-.055em] text-[#07131D] sm:text-5xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Katalog mlžítek, mlžných bran a mlžných prvků'}</h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle produktových řad a využití. Pro města a obce doporučujeme filtrovat podle typu veřejného prostoru; cenu připravujeme podle konfigurace, počtu prvků a rozsahu instalace.'}</p>
+          </div>
+          {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}
+        </div>
 
-      <CollectionOffers />
+        <motion.div initial={reduced ? false : { opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="sticky top-[72px] z-30 mb-12 rounded-[1.5rem] border border-white/70 bg-white/[.78] p-3 shadow-[0_18px_60px_rgba(7,19,29,.10)] backdrop-blur-2xl sm:p-4">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
+            <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 xl:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {
+                const active = space === value;
+                return (
+                  <motion.button key={value} type="button" onClick={() => setSpace(value)} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.97 }} className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 rounded-full border px-4 font-heading text-[13px] font-semibold transition ${active ? 'border-[#07131D] bg-[#07131D] text-white shadow-sm' : 'border-[#D3E2E8] bg-white/80 text-[#0A1628] hover:border-[#7CCBD8] hover:bg-[#EFFAFC]'}`}>
+                    <Icon size={15} strokeWidth={1.6} />{label}
+                  </motion.button>
+                );
+              })}
+            </div>
+            <label className="relative xl:w-[280px]">
+              <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#5A6B78]" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-[42px] w-full rounded-full border border-[#D3E2E8] bg-[#F4FAFC]/80 pl-11 pr-4 text-sm text-[#0A1628] outline-none transition focus:border-[#7CCBD8] focus:bg-white focus:ring-4 focus:ring-[#DDF7FA]/60" />
+            </label>
+          </div>
+          {family && (
+            <div className="mt-3 border-t border-[#D3E2E8] pt-3">
+              <LineChips familyId={family} activeLine={line} onSelect={setLine} counts={lineCounts} />
+            </div>
+          )}
+          {hasFilter && (
+            <div className="mt-3 flex items-center justify-end border-t border-[#D3E2E8] pt-3">
+              <button type="button" onClick={clear} className="btn-brand-text inline-flex items-center gap-1 !p-0"><X size={13} /> Zrušit filtry</button>
+            </div>
+          )}
+        </motion.div>
 
-      {/* ── KATEGORIE (hover icon cards) ── */}
-      <CategorySelector groups={CATEGORY_GROUPS} activeCategory={activeCategory} onSelect={setActiveCategory} />
+        {loading ? (
+          <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-[#D3E2E8]" /></div>
+        ) : (
+          <ProductExperience products={displayed}>
+<AnimatePresence mode="popLayout"><motion.div layout className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
+            {displayed.length === 0 && <p className="col-span-3 py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
+          </motion.div></AnimatePresence>
+</ProductExperience>
+        )}
+      </div>
 
-      {/* ── MLŽNÉ BRÁNY (GATE, LINEA) ── */}
       <GatesSlider />
-
-      {/* ── HLAVNÍ INFORMACE ── */}
-      <CollectionMainInfoSection />
-
-      {/* ── DYNAMICKÝ SLIDER PRODUKTŮ ── */}
-      <ProductsShowcaseSlider />
-
-      {/* ── VLASTNOSTI A VÝHODY ── */}
       <FeaturesBenefitsSection />
-
-      {/* ── PRODUKTY ── */}
-      <div id="catalog" className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-24">
-        <div className="flex items-center justify-between mb-10 lg:mb-12">
-          <p className="tracking-widest uppercase text-slate-400 text-lg [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
-            {activeGroup ? `${activeGroup.label} — produkty` : 'Všechny mlžné systémy'}
-            {!loading && <span className="ml-2 text-slate-300">({displayedProducts.length})</span>}
-          </p>
-          {activeCategory &&
-          <button onClick={() => setActiveCategory(null)} className="text-xs text-slate-400 hover:text-slate-900 transition-colors font-mono">
-              × Zobrazit vše
-            </button>
-          }
-        </div>
-        {loading ?
-        <div className="flex justify-center py-24">
-            <Loader size={24} className="animate-spin text-slate-300" />
-          </div> :
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-5">
-            {displayedProducts.map((p, i) => <ProductCard key={p.id} product={p} i={i} />)}
-            {displayedProducts.length === 0 &&
-          <p className="col-span-3 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>
-          }
-          </div>
-        }
-      </div>
-
-      {/* ── ŽIVÁ UKÁZKA ── */}
       <LiveDemoSection />
-
-      {/* ── PRO KOHO ── */}
-      <div className="border-t border-slate-200 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-10">
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Pro koho jsou mlžítka a mlžné systémy určeny</p>
-            <h2 className="font-heading font-semibold text-3xl lg:text-4xl text-slate-900 tracking-tight">Řešení podle prostoru a provozu.</h2>
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {audienceSegments.map((seg, i) => {
-              const Icon = seg.icon;
-              return (
-                <motion.div key={seg.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 transition-all">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3 bg-[hsl(var(--ring))] text-[hsl(var(--background))]">
-                    <Icon size={16} className="text-[hsl(var(--card))]" />
-                  </div>
-                  <h4 className="text-slate-900 mb-2 text-base [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{seg.label}</h4>
-                  <p className="text-slate-400 leading-relaxed text-sm">{seg.desc}</p>
-                </motion.div>);
-
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* ── CTA ── */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <div className="p-6 md:p-10 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[hsl(var(--secondary))]">
-          <div>
-            <p className="font-mono tracking-widest uppercase mb-2 text-lg text-[hsl(var(--background))]">NOVÝ KATALOG - KOLEKCE 2026</p>
-            <h3 className="text-slate-900 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-3xl font-semibold">Celá kolekce mlžítek v jednom PDF.</h3>
-            <p className="text-sm mt-1 text-[hsl(var(--background))]">Technické listy, výkresy, ceníky a referenční fotografie všech modelů mlžítek.</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a href="mailto:obchod1@holmtec.cz?subject=Katalog 2026 — zaslat PDF"
-            className="py-3.5 border border-slate-300 text-slate-900 text-sm font-medium rounded-full hover:bg-slate-100 transition-all whitespace-nowrap btn-metallic-mist px-7">Zaslat katalog na e-mail
-
-            </a>
-            <Link to="/kontakt"
-            className="px-7 py-3.5 text-sm font-bold rounded-full hover:bg-slate-800 transition-all whitespace-nowrap bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">Popsat projekt
-
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>);
-
+      <CatalogAudience />
+    </div>
+  );
 }

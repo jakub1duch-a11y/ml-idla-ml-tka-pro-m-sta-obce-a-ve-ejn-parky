@@ -1,0 +1,86 @@
+name: Deploy MLZIDLA.cz to Base44
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "base44/**"
+      - "scripts/**"
+      - "public/**"
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.*"
+      - ".github/workflows/deploy-base44.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: base44-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and deploy Base44 production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE44_APP_ID: "6a3ee88c10959cd3588c4d68"
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Check Base44 deployment credential
+        id: auth
+        shell: bash
+        env:
+          BASE44_API_KEY: ${{ secrets.BASE44_API_KEY }}
+        run: |
+          if [ -z "$BASE44_API_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Base44 deploy not activated::Add repository secret BASE44_API_KEY (workspace API key starting with b44k_) to activate automatic deployments."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node.js
+        if: steps.auth.outputs.configured == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.0"
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.auth.outputs.configured == 'true'
+        run: npm ci
+
+      - name: Verify Base44 authentication
+        if: steps.auth.outputs.configured == 'true'
+        env:
+          BASE44_API_KEY: ${{ secrets.BASE44_API_KEY }}
+        run: npx --yes base44@0.1.7 whoami
+
+      - name: Deploy entities, functions and site to Base44
+        if: steps.auth.outputs.configured == 'true'
+        env:
+          BASE44_API_KEY: ${{ secrets.BASE44_API_KEY }}
+        run: npx --yes base44@0.1.7 deploy --build -y
+
+      - name: Deployment summary
+        if: always()
+        shell: bash
+        run: |
+          if [ "${{ steps.auth.outputs.configured }}" = "true" ]; then
+            echo "### Base44 deployment" >> "$GITHUB_STEP_SUMMARY"
+            echo "- App: `6a3ee88c10959cd3588c4d68`" >> "$GITHUB_STEP_SUMMARY"
+            echo "- Source: `${GITHUB_REPOSITORY}@${GITHUB_SHA}`" >> "$GITHUB_STEP_SUMMARY"
+            echo "- Branch: `${GITHUB_REF_NAME}`" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Base44 deployment bridge prepared" >> "$GITHUB_STEP_SUMMARY"
+            echo "Automatic deploy is waiting for repository secret `BASE44_API_KEY`." >> "$GITHUB_STEP_SUMMARY"
+          fi

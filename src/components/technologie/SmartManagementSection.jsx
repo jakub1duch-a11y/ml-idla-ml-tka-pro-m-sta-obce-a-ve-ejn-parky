@@ -3,23 +3,23 @@ import { motion } from 'framer-motion';
 import { Wifi, Thermometer, MonitorCheck } from 'lucide-react';
 
 const TOGGLES = [
-{ icon: Wifi, title: 'Konektivita', text: 'Plné ovládání přes Wi-Fi nebo Bluetooth.' },
-{ icon: Thermometer, title: 'Automatizace', text: 'Spínání na základě reálné teploty okolí (teplotní čidlo) nebo časového programu.' },
-{ icon: MonitorCheck, title: 'Efektivita', text: 'Vzdálený monitoring zajišťuje, že systém běží jen tehdy, kdy to dává smysl.' }];
+{ icon: Wifi, title: 'Konektivita', text: 'Volitelné Wi-Fi nebo jiné vzdálené ovládání podle zvolené řídicí sestavy.' },
+{ icon: Thermometer, title: 'Automatizace', text: 'Časový program a volitelné teplotní podmínky mohou omezit provoz na situace, kdy je mlžení skutečně účelné.' },
+{ icon: MonitorCheck, title: 'Více zón a dohled', text: 'U větších projektů lze řízení rozdělit do samostatných zón a doplnit vzdálený dohled podle požadavků provozovatele.' }];
 
 
 export default function SmartManagementSection() {
   return (
-    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-14 border-t border-slate-100 bg-slate-50">
+    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 border-t border-slate-100 bg-slate-50">
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      className="text-3xl lg:text-4xl text-slate-900 tracking-tight mb-10 [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-medium">
-        Smart správa pro moderní města.
+      className="mb-10 font-heading text-3xl tracking-[-.02em] text-foreground sm:text-4xl lg:text-5xl">
+        Chytré řízení podle rozsahu projektu.
       </motion.h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
         className="rounded-2xl overflow-hidden border border-slate-200">
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/16ca9d71c_9RFLppbaXYD67osYj_pkoR.png"
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp"
 
           alt="Smart správa mlžení přes mobilní aplikaci"
           className="w-full h-full object-cover aspect-[4/3]" />

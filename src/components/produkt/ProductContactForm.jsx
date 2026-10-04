@@ -1,123 +1,126 @@
-import React, { useState } from 'react';
-import { ArrowRight, Loader } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle2, Loader, Paperclip, Trash2, UploadCloud } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { trackContactFormSubmit } from '@/lib/ga4';
+import GoogleContactBox from '@/components/forms/GoogleContactBox';
 
-const ANCHORING_PHOTO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/150f3566d_IMG_20260623_124103.jpg';
+const MAX_FILES = 3;
+const MAX_FILE_SIZE = 12 * 1024 * 1024;
 
-const SMART_VARIANTS = [
-{ value: 'none', label: 'Bez smart řízení' },
-{ value: 'v1', label: 'Varianta 1 – Manuální Wi-Fi' },
-{ value: 'v2', label: 'Varianta 2 – Smart senzory' },
-{ value: 'v3', label: 'Varianta 3 – Plná automatizace' },
-{ value: 'all', label: 'Všechny možnosti' }];
-
-
-export default function ProductContactForm({ productName }) {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', smartVariant: 'none', installationType: 'mobile' });
+export default function ProductContactForm({ productName, product }) {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', gdpr: false, contactConfirmed: false });
+  const [useGoogleContact, setUseGoogleContact] = useState(false);
+  const [googleContact, setGoogleContact] = useState({ email: '', name: '', imageUrl: '' });
+  const [files, setFiles] = useState([]);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+  const fileInputRef = useRef(null);
 
-  const submit = async (e) => {
-    e.preventDefault();
+  const addFiles = (event) => {
+    const incoming = Array.from(event.target.files || []);
+    const valid = incoming.filter((file) => (file.type.startsWith('image/') || file.type === 'application/pdf') && file.size <= MAX_FILE_SIZE);
+    setFiles((current) => [...current, ...valid].slice(0, MAX_FILES));
+    if (valid.length !== incoming.length) setError('Přijímáme fotografie nebo PDF do 12 MB za soubor.');
+    event.target.value = '';
+  };
+
+  const applyGoogleContact = (contact) => {
+    setGoogleContact(contact);
+    setForm((values) => ({ ...values, name: contact.name || values.name, email: contact.email || values.email }));
+  };
+
+  const submit = async (event) => {
+    event.preventDefault();
     setSending(true);
-    const smartLabel = SMART_VARIANTS.find((v) => v.value === form.smartVariant)?.label;
-    const extras = [
-    form.smartVariant !== 'none' && `Smart řízení: ${smartLabel}`,
-    form.installationType === 'mobile' ? 'Instalace: Mobilní – zemní vrut (do 30 min)' : 'Instalace: Trvalé a stabilní – kotvení do betonu'].
-    filter(Boolean).join(', ');
-    await base44.entities.ContactInquiry.create({
-      name: form.name,
-      email: form.email,
-      message: `[${productName}] ${form.message || 'Zájem o produkt'} | ${extras}`,
-      description: form.phone ? `Tel: ${form.phone}` : ''
-    }).catch(() => {});
-    setSent(true);
-    setSending(false);
-    if (typeof window !== 'undefined' && window.trackHolmTec) {
-      window.trackHolmTec('contact_form_submit', { product_name: productName, form_type: 'produkt' });
+    setError('');
+    try {
+      const uploaded = await Promise.all(files.map(async (file) => {
+        const result = await base44.integrations.Core.UploadFile({ file });
+        return { name: file.name, url: result.file_url };
+      }));
+
+      const response = await base44.functions.invoke('submitPoptavka', {
+        jmeno: form.name,
+        email: form.email,
+        telefon: form.phone,
+        produkt: productName,
+        zprava: form.message || `Mám zájem o návrh a cenovou nabídku pro ${productName}.`,
+        request_type: 'standard',
+        service_type: 'product_quote',
+        use_google_contact: useGoogleContact,
+        google_contact_email: googleContact.email,
+        google_contact_name: googleContact.name,
+        google_profile_image_url: googleContact.imageUrl,
+        contact_confirmed_by_user: form.contactConfirmed,
+        privacy_contact_consent: form.gdpr,
+        attachment_names: uploaded.map((item) => item.name),
+        attachment_urls: uploaded.map((item) => item.url),
+        photo_count: uploaded.filter((item) => /\.(avif|gif|heic|jpeg|jpg|png|webp)$/i.test(item.name)).length,
+        requested_visualization: uploaded.some((item) => /\.(avif|gif|heic|jpeg|jpg|png|webp)$/i.test(item.name))
+      });
+      const created = response?.data?.inquiry || response?.inquiry;
+
+      trackContactFormSubmit('produkt_zjednodusena', productName, created?.id || '');
+      setSent(true);
+    } catch (submitError) {
+      console.error('Product inquiry failed', submitError);
+      setError('Poptávku se nepodařilo uložit. Zkuste to znovu nebo zavolejte na +420 774 700 390.');
+    } finally {
+      setSending(false);
     }
   };
 
   if (sent) return (
-    <div className="text-center py-8">
-      <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center mx-auto mb-4">
-        <span className="text-emerald-600 text-xl">✓</span>
-      </div>
-      <p className="text-slate-900 font-medium text-lg">Poptávka odeslána.</p>
-      <p className="text-slate-400 text-sm mt-1">Odpovídáme do 24 h.</p>
-    </div>);
+    <div className="rounded-[22px] border border-emerald-200 bg-white p-7 text-center shadow-sm">
+      <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50"><CheckCircle2 size={22} className="text-emerald-600" /></div>
+      <p className="font-semibold text-slate-950">Děkujeme, poptávku máme.</p>
+      <p className="mt-2 text-sm leading-relaxed text-slate-500">Ozveme se a technické podklady doplníme společně až podle vašeho projektu.</p>
+      <Link to="/klientska-sekce" className="mt-5 inline-flex items-center justify-center rounded-full bg-[#0d2d38] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#123c49]">Otevřít klientskou sekci</Link>
+      <p className="mt-2 text-[11px] leading-5 text-slate-400">Použijte stejný e-mail jako v této poptávce.</p>
+    </div>
+  );
 
   return (
-    <form onSubmit={submit} className="space-y-5 p-7 lg:p-8 rounded-3xl border-2 border-slate-900 shadow-xl bg-TRANSPARENT">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Jméno a příjmení *</label>
-          <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors text-[hsl(var(--popover))]"
-          placeholder="Jan Novák" />
-        </div>
-        <div>
-          <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Email *</label>
-          <input required type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
-          placeholder="jan@firma.cz" />
-        </div>
-      </div>
-      <div className="opacity-100">
-        <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Telefon</label>
-        <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors"
-        placeholder="+420 000 000 000" />
+    <form id="produkt-poptavka" onSubmit={submit} className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,.06)] sm:p-6">
+      <div className="mb-5">
+        <p className="font-mono text-[9px] uppercase tracking-[.18em] text-cyan-700">Nezávazná poptávka</p>
+        <h3 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-slate-950">Chci návrh a cenovou nabídku</h3>
+        <p className="mt-2 text-sm leading-relaxed text-slate-500">Stačí kontakt. Rozměry, instalaci a smart řízení s vámi dořešíme následně.</p>
       </div>
 
-      {/* Doplňkové možnosti */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
-        <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">Doplňkové možnosti</p>
-        <div>
-          <p className="text-sm text-slate-700 mb-2">Ovládání mlžítka:</p>
-          <select value={form.smartVariant} onChange={(e) => setForm((f) => ({ ...f, smartVariant: e.target.value }))}
-          className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-slate-900 transition-colors">
-            {SMART_VARIANTS.map((v) => <option key={v.value} value={v.value}>{v.label}</option>)}
-          </select>
-        </div>
+      <GoogleContactBox
+        checked={useGoogleContact}
+        onCheckedChange={setUseGoogleContact}
+        onApply={applyGoogleContact}
+        contactFieldsId="product-contact-fields"
+      />
 
-        <div>
-          <p className="text-sm text-slate-700 mb-2">Typ instalace</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <label className={`flex flex-col gap-1 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.installationType === 'mobile' ? 'border-slate-900 bg-white' : 'border-slate-200 bg-white/50'}`}>
-              <span className="flex items-center gap-2">
-                <input type="radio" name="installationType" checked={form.installationType === 'mobile'} onChange={() => setForm((f) => ({ ...f, installationType: 'mobile' }))}
-                className="w-4 h-4 text-slate-900 focus:ring-slate-900" />
-                <span className="text-sm font-medium text-slate-900">Mobilní</span>
-              </span>
-              <span className="text-xs text-slate-500 pl-6">Zemní vrut (instalace do 30 min)</span>
-            </label>
-            <label className={`flex flex-col gap-1 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.installationType === 'permanent' ? 'border-slate-900 bg-white' : 'border-slate-200 bg-white/50'}`}>
-              <span className="flex items-center gap-2">
-                <input type="radio" name="installationType" checked={form.installationType === 'permanent'} onChange={() => setForm((f) => ({ ...f, installationType: 'permanent' }))}
-                className="w-4 h-4 text-slate-900 focus:ring-slate-900" />
-                <span className="text-sm font-medium text-slate-900">Trvalé a stabilní</span>
-              </span>
-              <span className="text-xs text-slate-500 pl-6">Kotvení do betonu</span>
-            </label>
-          </div>
-          <a href={ANCHORING_PHOTO_URL} target="_blank" rel="noopener noreferrer"
-          className="inline-block text-xs text-slate-400 hover:text-slate-900 underline mt-2">
-            Zobrazit náhled možností kotvení
-          </a>
-        </div>
+      <div id="product-contact-fields" className="grid gap-3 sm:grid-cols-2">
+        <label className="text-[11px] font-semibold text-slate-600">Jméno *<input required value={form.name} onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="Jméno a příjmení" /></label>
+        <label className="text-[11px] font-semibold text-slate-600">E-mail *<input required type="email" value={form.email} onChange={(e) => setForm((v) => ({ ...v, email: e.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="jmeno@firma.cz" /></label>
+        <label className="text-[11px] font-semibold text-slate-600 sm:col-span-2">Telefon<input value={form.phone} onChange={(e) => setForm((v) => ({ ...v, phone: e.target.value }))} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="+420 000 000 000" /></label>
+        <label className="text-[11px] font-semibold text-slate-600 sm:col-span-2">Krátce o projektu<textarea rows={3} value={form.message} onChange={(e) => setForm((v) => ({ ...v, message: e.target.value }))} className="mt-1.5 w-full resize-none rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-cyan-500" placeholder="Např. náměstí, park, zahrada, počet prvků nebo termín…" /></label>
       </div>
 
-      <div className="text-[hsl(var(--popover))]">
-        <label className="block text-xs font-mono text-slate-400 tracking-widest uppercase mb-2">Popište váš projekt</label>
-        <textarea value={form.message} onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))} rows={4}
-        className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 text-sm placeholder-slate-300 focus:outline-none focus:border-slate-900 transition-colors resize-none"
-        placeholder="Kde plánujete instalaci, jaký prostor, přibližné rozměry..." />
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <button type="button" onClick={() => fileInputRef.current?.click()} className="inline-flex min-h-10 items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 text-xs font-semibold text-slate-700 hover:bg-white"><UploadCloud size={14}/> Přidat foto místa</button>
+        <span className="text-[10px] text-slate-400">volitelné · až {MAX_FILES} soubory</span>
+        <input ref={fileInputRef} type="file" accept="image/*,.pdf,application/pdf" multiple onChange={addFiles} className="sr-only" />
       </div>
-      <button type="submit" disabled={sending}
-      className="w-full py-5 text-white rounded-full transition-all disabled:opacity-60 flex items-center justify-center gap-2 normal-case font-bold text-sm bg-primary btn-metallic-mist">
-        {sending ? <Loader size={18} className="animate-spin" /> : <>Poptat produkt zdarma <ArrowRight size={18} /></>}
+
+      {files.length > 0 && <div className="mt-3 space-y-2">{files.map((file, index) => <div key={file.name + file.lastModified} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2"><Paperclip size={13} className="text-cyan-700"/><span className="min-w-0 flex-1 truncate text-xs text-slate-600">{file.name}</span><button type="button" onClick={() => setFiles((current) => current.filter((_, i) => i !== index))} aria-label={`Odebrat ${file.name}`} className="text-slate-400 hover:text-rose-600"><Trash2 size={13}/></button></div>)}</div>}
+
+      <div className="mt-4 space-y-3">
+        <label className="flex items-start gap-2.5 text-[11px] leading-relaxed text-slate-500"><input required type="checkbox" checked={form.contactConfirmed} onChange={(e) => setForm((v) => ({ ...v, contactConfirmed: e.target.checked }))} className="mt-0.5 h-4 w-4 rounded border-slate-300"/><span>Potvrzuji, že uvedené kontaktní údaje jsou správné.</span></label>
+        <label className="flex items-start gap-2.5 text-[11px] leading-relaxed text-slate-500"><input required type="checkbox" checked={form.gdpr} onChange={(e) => setForm((v) => ({ ...v, gdpr: e.target.checked }))} className="mt-0.5 h-4 w-4 rounded border-slate-300"/><span>Souhlasím, aby MLŽIDLA.cz použila uvedené kontaktní údaje pro zpracování poptávky, přípravu návrhu a zaslání nabídky.</span></label>
+      </div>
+      {error && <p className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">{error}</p>}
+
+      <button type="submit" disabled={sending} className="mt-5 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-[#86d7f4] px-5 text-sm font-bold text-[#073747] transition hover:bg-[#6ccbed] disabled:opacity-60">
+        {sending ? <><Loader size={16} className="animate-spin"/> Odesílám…</> : <>Odeslat poptávku <ArrowRight size={15}/></>}
       </button>
-    </form>);
-
+    </form>
+  );
 }

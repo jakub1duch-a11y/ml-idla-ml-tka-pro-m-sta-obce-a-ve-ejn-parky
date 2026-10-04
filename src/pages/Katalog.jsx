@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import KolekceHero from '@/components/kolekce/KolekceHero';
 import { Droplets, Layers, Cpu, ThermometerSnowflake, Gauge } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ProductFilterGrid from '@/components/chytra/ProductFilterGrid';
 import AccessoriesSection from '@/components/chytra/AccessoriesSection';
 import SmartSystemPreview from '@/components/katalog/SmartSystemPreview';
 import FeatureIconRow from '@/components/common/FeatureIconRow';
+import '@/styles/reference-motion.css';
 
 const CATALOG_FEATURES = [
 { icon: Droplets, label: 'Nízká spotřeba vody', value: 'od 4,6 l/h' },
@@ -20,6 +22,7 @@ const TABS = [
 
 
 export default function Katalog() {
+  const reduced = useReducedMotion();
   const [tab, setTab] = useState('mlzitka');
 
   useEffect(() => {
@@ -27,55 +30,58 @@ export default function Katalog() {
       title: 'Katalog — mlžítka, příslušenství a Smart systém | mlzidla.cz',
       description: 'Kompletní katalog mlžítek, příslušenství a modulů a přehled Smart systému pro chytré řízení mlžení.',
       keywords: 'katalog mlžítek, příslušenství mlžítek, smart systém mlžidla',
-      canonicalPath: '/katalog',
+      canonicalPath: '/mlzidla-mlzitka',
     });
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-8">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Katalog 2026</p>
-          <h1 className="font-heading font-medium text-3xl lg:text-5xl text-slate-900 tracking-tight mb-8">Mlžítka, příslušenství a Smart systém.</h1>
-        </motion.div>
+    <div className="catalog-premium min-h-screen overflow-x-clip bg-white">
+      <KolekceHero />
+      <div id="catalog" className="catalog-pattern hero-gallery-anchor relative mx-auto max-w-7xl px-6 pb-10 pt-16 lg:px-10 lg:pt-20">
+        
 
         <FeatureIconRow items={CATALOG_FEATURES} className="mb-10" />
 
         {/* Desktop tab bar */}
-        <div className="hidden lg:flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+        <div className="hidden lg:flex flex-wrap gap-2 border-b border-slate-200 pb-4" role="tablist" aria-label="Sekce katalogu">
           {TABS.map((t) =>
-          <button key={t.id} onClick={() => setTab(t.id)}
-            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${tab === t.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+          <motion.button type="button" role="tab" aria-selected={tab === t.id} aria-controls={`catalog-panel-${t.id}`} key={t.id} onClick={() => setTab(t.id)} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.97 }}
+            className={`min-h-11 px-5 py-2.5 rounded-full text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${tab === t.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
               {t.label}
-            </button>
+            </motion.button>
           )}
         </div>
       </div>
 
-      <motion.div key={tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="pb-28 lg:pb-0">
+      <motion.div id={`catalog-panel-${tab}`} role="tabpanel" key={tab} initial={reduced ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduced ? 0 : 0.3 }} className="pb-28 lg:pb-0">
         {tab === 'mlzitka' && <ProductFilterGrid />}
         {tab === 'prislusenstvi' && <AccessoriesSection />}
         {tab === 'smart' && <SmartSystemPreview />}
       </motion.div>
 
-      {/* Mobile switcher — thumb-reachable, fixed at bottom, one-handed use */}
-      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
-        <div className="flex items-center gap-1 p-1.5 rounded-full bg-white/70 backdrop-blur-xl border border-slate-200 shadow-xl shadow-slate-900/10">
-          {TABS.map((t) => {
-            const Icon = t.icon;
-            const active = tab === t.id;
-            return (
-              <button key={t.id} onClick={() => setTab(t.id)}
-                className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-2 rounded-full text-[11px] font-medium transition-colors ${active ? 'text-white' : 'text-slate-500'}`}>
-                {active &&
-                <motion.div layoutId="katalog-mobile-tab" className="absolute inset-0 bg-slate-900 rounded-full -z-10"
-                  transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
-                }
-                <Icon size={16} />
-                <span className="leading-tight px-1 text-center">{t.label.split(' ')[0]}</span>
-              </button>);
-
-          })}
+      {/* Mobile switcher — Konsta touch-first segmented control */}
+      <div className="lg:hidden fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-30 w-[calc(100%-2rem)] max-w-md">
+        <div className="rounded-[22px] border border-slate-200/80 bg-white/85 p-1.5 shadow-xl shadow-slate-900/10 backdrop-blur-xl">
+          <div className="flex gap-1" role="tablist" aria-label="Sekce katalogu">
+            {TABS.map((t) => {
+              const Icon = t.icon;
+              const active = tab === t.id;
+              return (
+                <button
+                  type="button"
+                  key={t.id}
+                  role="tab"
+                  aria-selected={active}
+                  aria-controls={`catalog-panel-${t.id}`}
+                  onClick={() => setTab(t.id)}
+                  className={`flex min-h-12 flex-1 items-center justify-center gap-1.5 rounded-[16px] px-2 text-[11px] font-semibold transition-colors ${active ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600'}`}
+                >
+                  <Icon size={16} aria-hidden="true" />
+                  <span className="leading-tight">{t.label.split(' ')[0]}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>);

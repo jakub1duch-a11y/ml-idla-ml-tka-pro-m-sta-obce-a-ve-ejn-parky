@@ -1,11 +1,16 @@
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Trees, CheckCircle, Loader } from 'lucide-react';
+import { motion, MotionConfig } from 'framer-motion';
+import { ArrowRight, Trees, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { sortByStructure } from '@/lib/productFamilies';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const USE_CASES = [
   { emoji: '🏰', title: 'Zámecké parky', desc: 'Decentní estetika, organické tvary z nerezu — zapadnou do historické zeleně.' },
@@ -21,15 +26,16 @@ export default function ParkyHriste() {
   useEffect(() => {
     setSEO(SEO_PAGES.parkyHriste);
     base44.entities.Product.list().catch(() => []).then(p => {
-      setProducts((p || []).slice(0, 6));
+      setProducts(sortByStructure(p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/3c3e64d18_generated_video.mp4"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+      <MotionConfig reducedMotion="user">
+<section className="hero-motion-surface hero-category relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <HeroAtmosphere />
+        <HeroBackgroundVideo src="/media/optimized/3c3e64d18_generated_video.webm" poster="/media/hero-posters/parkyhriste.webp" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
@@ -56,6 +62,7 @@ export default function ParkyHriste() {
           </motion.div>
         </div>
       </section>
+</MotionConfig>
 
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -83,13 +90,12 @@ export default function ParkyHriste() {
         {loading ? (
           <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <ProductExperience products={products}>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
-                  <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                    {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
-                  </div>
+                  <ProductHoverImage product={p} alt={p.name} className="aspect-[4/3] bg-slate-100" fullBleed cleanPreview />
                   <div className="p-5 flex items-center justify-between">
                     <div>
                       <p className="text-slate-900 font-medium">{p.name}</p>
@@ -101,6 +107,7 @@ export default function ParkyHriste() {
               </motion.div>
             ))}
           </div>
+</ProductExperience>
         )}
       </section>
 

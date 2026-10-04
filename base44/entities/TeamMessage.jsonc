@@ -1,0 +1,63 @@
+{
+  "name": "TeamMessage",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "description": "Kan\u00e1l chatu (general, sales, production, marketing) nebo vl\u00e1kno objektu ve tvaru inquiry:<id>"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "ai",
+        "image",
+        "summary",
+        "system"
+      ],
+      "default": "text",
+      "description": "Typ zpr\u00e1vy \u2014 b\u011b\u017en\u00e1, odpov\u011b\u010f AI, vygenerovan\u00fd vizu\u00e1l, z\u00e1pis sch\u016fzky, syst\u00e9mov\u00e1"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL vygenerovan\u00e9ho vizu\u00e1lu / ikony"
+    }
+  },
+  "required": [
+    "channel",
+    "author_email",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "name": "MisterDocument",
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string"
+    },
+    "client_email": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "quote",
+        "proposal",
+        "visualization",
+        "installation",
+        "anchoring",
+        "maintenance",
+        "supla",
+        "handover",
+        "deposit",
+        "final_payment",
+        "other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "client_visible": {
+      "type": "boolean",
+      "default": true
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "offer",
+        "drive",
+        "product",
+        "generated",
+        "manual"
+      ],
+      "default": "manual"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "project_order_id",
+    "client_email",
+    "document_type",
+    "title",
+    "file_url"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -16,6 +16,12 @@ export default defineConfig({
     }),
     react(),
   ],
+  resolve: {
+    // Force a single React copy across the app and all dependencies.
+    // Fixes "Cannot read properties of null (reading 'useState')" / invalid hook call
+    // caused by duplicate React copies in the optimized dep graph.
+    dedupe: ['react', 'react-dom', 'scheduler'],
+  },
   build: {
     sourcemap: true,
   },

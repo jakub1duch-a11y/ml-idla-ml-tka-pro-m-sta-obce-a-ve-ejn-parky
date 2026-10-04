@@ -1,0 +1,28 @@
+{
+  "name": "WebAdvisorLead",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "maxLength": 160 },
+    "phone": { "type": "string", "maxLength": 80 },
+    "email": { "type": "string", "maxLength": 254 },
+    "source_page": { "type": "string", "maxLength": 1000 },
+    "topic": { "type": "string", "maxLength": 240 },
+    "summary": { "type": "string", "maxLength": 3000 },
+    "transcript": { "type": "string", "maxLength": 12000 },
+    "recommended_products": { "type": "array", "items": { "type": "string" } },
+    "status": {
+      "type": "string",
+      "enum": ["new", "contacted", "in_progress", "closed"],
+      "default": "new"
+    },
+    "inquiry_id": { "type": "string" },
+    "consent": { "type": "boolean", "default": false }
+  },
+  "required": ["name", "phone", "transcript", "consent"],
+  "rls": {
+    "create": { "user_condition": { "role": "admin" } },
+    "read": { "user_condition": { "role": "admin" } },
+    "update": { "user_condition": { "role": "admin" } },
+    "delete": { "user_condition": { "role": "admin" } }
+  }
+}

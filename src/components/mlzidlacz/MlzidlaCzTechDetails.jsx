@@ -13,9 +13,9 @@ const TECH = [
 ];
 
 const GALLERY = [
-  { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f436db8ab_generated_image.png', caption: 'Zábava a ochlazení v horkých dnech' },
+  { img: '/media/optimized/f436db8ab_generated_image.webp', caption: 'Zábava a ochlazení v horkých dnech' },
   { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png', caption: 'Nerezové vysokotlaké trysky' },
-  { img: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/0549d625f_generated_image.png', caption: 'Realizace v městském parku' },
+  { img: '/media/optimized/0549d625f_generated_image.webp', caption: 'Realizace v městském parku' },
 ];
 
 export default function MlzidlaCzTechDetails() {

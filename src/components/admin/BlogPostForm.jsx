@@ -1,6 +1,6 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback, useMemo, useState } from 'react';
 import ReactQuill from 'react-quill';
-import { Loader, Upload, X } from 'lucide-react';
+import { ImageIcon, Loader, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const CATEGORIES = [
@@ -26,6 +26,9 @@ function slugify(str) {
 
 export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, uploadingCover, setUploadingCover }) {
   const quillRef = useRef(null);
+  const [uploadingContent, setUploadingContent] = useState(false);
+  const [generatingVisuals, setGeneratingVisuals] = useState(false);
+  const [visualError, setVisualError] = useState('');
 
   const imageHandler = useCallback(() => {
     const input = document.createElement('input');
@@ -66,6 +69,77 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
     setUploadingCover(false);
   };
 
+  const handleContentUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploadingContent(true);
+    setVisualError('');
+    try {
+      const uploaded = [];
+      for (const file of files) {
+        const { file_url } = await base44.integrations.Core.UploadFile({ file });
+        uploaded.push({
+          url: file_url,
+          alt: `${form.title || 'Článek MLŽIDLA®'} — doprovodná fotografie`,
+          caption: '',
+          kind: 'photo',
+        });
+      }
+      setForm((f) => ({ ...f, content_images: [...(f.content_images || []), ...uploaded] }));
+    } catch (error) {
+      setVisualError(error?.message || 'Nahrání obrázků se nepodařilo.');
+    } finally {
+      setUploadingContent(false);
+      e.target.value = '';
+    }
+  };
+
+  const updateContentImage = (index, patch) => {
+    setForm((f) => ({
+      ...f,
+      content_images: (f.content_images || []).map((item, itemIndex) => itemIndex === index ? { ...item, ...patch } : item),
+    }));
+  };
+
+  const removeContentImage = (index) => {
+    setForm((f) => ({ ...f, content_images: (f.content_images || []).filter((_, itemIndex) => itemIndex !== index) }));
+  };
+
+  const generateContentVisuals = async () => {
+    if (!form.title || generatingVisuals) return;
+    setGeneratingVisuals(true);
+    setVisualError('');
+    try {
+      const referenceUrls = [form.image_url, ...(form.content_images || []).map((item) => item?.url)].filter(Boolean).slice(0, 3);
+      const variants = [
+        'široký kontext prostoru a způsob využití',
+        'detail jemné vodní mlhy, materiálu a atmosféry bez vymyšlených technických detailů',
+        'doplňkový architektonický pohled, který vysvětluje téma článku bez textových nápisů',
+      ];
+      const created = [];
+      for (let index = 0; index < variants.length; index += 1) {
+        const params = {
+          prompt: `Fotorealistická doprovodná vizualizace pro odborný článek MLŽIDLA.cz „${form.title}“. Kontext článku: ${form.perex || 'mlžítka, veřejný nebo rezidenční prostor a vodní mlha'}. Záběr: ${variants[index]}. Pokud je na referenční fotografii konkrétní produkt HolmTec/MLŽIDLA®, zachovej absolutně přesně jeho geometrii, počet ramen, trubek, trysek, ohybů, patku a proporce; měň pouze prostředí, světlo, mlhu, lidi, kompozici a úhel. Pokud ověřená produktová reference není k dispozici, nevymýšlej nový produkt ani jeho konstrukci — zobraz raději prostředí, mikroklima, detail mlhy nebo neutrální architektonický kontext. Žádná falešná loga, žádné texty v obraze, žádné neověřené technické hodnoty. Přirozené české nebo evropské prostředí, realistická nerez, jemná vodní mlha a lidé pouze tam, kde pomáhají měřítku. Kompozice 16:10 vhodná do odborného webového článku.`,
+          ...(referenceUrls.length ? { existing_image_urls: referenceUrls } : {}),
+        };
+        const result = await base44.integrations.Core.GenerateImage(params);
+        if (result?.url) {
+          created.push({
+            url: result.url,
+            alt: `${form.title} — vizualizace ${index + 1}`,
+            caption: '',
+            kind: 'visualization',
+          });
+        }
+      }
+      setForm((f) => ({ ...f, content_images: [...(f.content_images || []), ...created] }));
+    } catch (error) {
+      setVisualError(error?.response?.data?.error || error?.message || 'Generování vizualizací se nepodařilo.');
+    } finally {
+      setGeneratingVisuals(false);
+    }
+  };
+
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -97,6 +171,39 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
         placeholder="Perex — krátký úvodní text (zobrazí se i ve výsledcích vyhledávání)"
         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-none" />
 
+      <div className="rounded-xl border border-cyan/15 bg-cyan/[.03] p-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-mono text-cyan/80 tracking-widest uppercase">SEO + AEO</p>
+          <span className="text-[10px] text-white/30">Jasná entita · lokalita · FAQ · interní odkazy</span>
+        </div>
+        <div>
+          <input value={form.seo_title || ''} onChange={(e) => setForm(f => ({ ...f, seo_title: e.target.value }))}
+            placeholder="SEO title — ideálně do 60 znaků"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+          <p className="mt-1 text-right text-[10px] text-white/30">{(form.seo_title || '').length}/60</p>
+        </div>
+        <div>
+          <textarea value={form.seo_description || ''} onChange={(e) => setForm(f => ({ ...f, seo_description: e.target.value }))} rows={2}
+            placeholder="Meta description — stručná a konkrétní odpověď, ideálně do 155 znaků"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-none" />
+          <p className="mt-1 text-right text-[10px] text-white/30">{(form.seo_description || '').length}/155</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input value={form.location_context || ''} onChange={(e) => setForm(f => ({ ...f, location_context: e.target.value }))}
+            placeholder="Lokalita / kontext, např. Jičín, městské náměstí"
+            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+          <input value={form.related_product_slugs || ''} onChange={(e) => setForm(f => ({ ...f, related_product_slugs: e.target.value }))}
+            placeholder="Produkty — slugs oddělené čárkou"
+            className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+        </div>
+        <textarea value={form.faq_text || ''} onChange={(e) => setForm(f => ({ ...f, faq_text: e.target.value }))} rows={4}
+          placeholder={'FAQ pro AEO — jeden řádek = Otázka | Odpověď\nNapř. Jaká je spotřeba vody? | Podle konfigurace produktu...'}
+          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-y" />
+        <textarea value={form.related_links_text || ''} onChange={(e) => setForm(f => ({ ...f, related_links_text: e.target.value }))} rows={3}
+          placeholder={'Vlastní interní odkazy — jeden řádek = Název | /cesta | volitelný popis\nNapř. Chytré ovládání | /smart-ovladani | Automatické řízení mlžení'}
+          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none resize-y" />
+      </div>
+
       <div>
         <p className="text-xs font-mono text-white/40 tracking-widest uppercase mb-2">Titulní obrázek (náhled ve vyhledávání)</p>
         <div className="flex items-center gap-3">
@@ -114,6 +221,55 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
             <input type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} />
           </label>
         </div>
+        <input value={form.image_alt || ''} onChange={(e) => setForm(f => ({ ...f, image_alt: e.target.value }))}
+          placeholder="ALT obrázku — popište věcně, co je na snímku a případně lokalitu / produkt"
+          className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
+      </div>
+
+      <div className="rounded-xl border border-white/10 bg-white/[.025] p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-mono text-white/50 tracking-widest uppercase">Fotografie a vizualizace v článku</p>
+            <p className="mt-1 text-xs leading-5 text-white/35">Pro kvalitní detail článku používejte ideálně 2–4 doprovodné vizuály. U produktů musí být zachována přesná geometrie podle reference.</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-xs text-white/70 transition hover:bg-white/5">
+              {uploadingContent ? <Loader size={13} className="animate-spin" /> : <Upload size={13} />}
+              Nahrát obrázky
+              <input type="file" accept="image/*" multiple className="hidden" onChange={handleContentUpload} />
+            </label>
+            <button type="button" onClick={generateContentVisuals} disabled={generatingVisuals || !form.title}
+              className="inline-flex items-center gap-2 rounded-full border border-cyan/25 bg-cyan/[.06] px-3 py-2 text-xs font-semibold text-cyan disabled:opacity-40">
+              {generatingVisuals ? <Loader size={13} className="animate-spin" /> : <Sparkles size={13} />}
+              Vygenerovat 3 vizualizace
+            </button>
+          </div>
+        </div>
+        {visualError && <p className="mt-3 text-xs text-rose-300">{visualError}</p>}
+        {(form.content_images || []).length > 0 ? (
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {(form.content_images || []).map((item, index) => (
+              <div key={`${item.url}-${index}`} className="overflow-hidden rounded-xl border border-white/10 bg-black/10">
+                <div className="relative aspect-[16/10] bg-white/5">
+                  {item.url ? <img src={item.url} alt={item.alt || ''} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-white/20"><ImageIcon size={24} /></div>}
+                  <button type="button" onClick={() => removeContentImage(index)} className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white/80 hover:text-white" aria-label="Odstranit obrázek"><X size={13} /></button>
+                </div>
+                <div className="space-y-2 p-3">
+                  <select value={item.kind || 'visualization'} onChange={(e) => updateContentImage(index, { kind: e.target.value })}
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white focus:outline-none">
+                    <option value="photo" className="bg-ink">Fotografie</option>
+                    <option value="visualization" className="bg-ink">Vizualizace</option>
+                    <option value="diagram" className="bg-ink">Schéma / diagram</option>
+                  </select>
+                  <input value={item.alt || ''} onChange={(e) => updateContentImage(index, { alt: e.target.value })} placeholder="ALT text *"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-white/25 focus:outline-none" />
+                  <input value={item.caption || ''} onChange={(e) => updateContentImage(index, { caption: e.target.value })} placeholder="Popisek obrázku"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white placeholder-white/25 focus:outline-none" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : <p className="mt-4 text-xs text-white/25">Zatím nejsou přidané žádné doprovodné vizuály.</p>}
       </div>
 
       <div>
@@ -123,13 +279,6 @@ export default function BlogPostForm({ form, setForm, onSave, onCancel, saving, 
             onChange={(html) => setForm(f => ({ ...f, content: html }))}
             modules={modules} className="text-slate-900" />
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input value={form.cta_label || ''} onChange={(e) => setForm(f => ({ ...f, cta_label: e.target.value }))}
-          placeholder="Text prodejní CTA (např. Nezávazná kalkulace realizace)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
-        <input value={form.cta_link || ''} onChange={(e) => setForm(f => ({ ...f, cta_link: e.target.value }))}
-          placeholder="Odkaz CTA (např. /poptavka)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:border-cyan/40 focus:outline-none" />
       </div>
 
       <label className="flex items-center gap-2 text-sm text-white/60">

@@ -30,6 +30,30 @@
         "type": "string"
       },
       "description": "Doporu\u010den\u00e9 hashtagy"
+    },
+    "font_heading": {
+      "type": "string",
+      "description": "Prim\u00e1rn\u00ed font pro nadpisy a logotyp"
+    },
+    "font_body": {
+      "type": "string",
+      "description": "Prim\u00e1rn\u00ed font pro b\u011b\u017en\u00fd text"
+    },
+    "font_mono": {
+      "type": "string",
+      "description": "Font pro technick\u00e9 \u00fadaje a \u0161t\u00edtky"
+    },
+    "font_script": {
+      "type": "string",
+      "description": "Rukopisn\u00fd font pro podpisov\u00fd claim"
+    },
+    "site_operator": {
+      "type": "string",
+      "description": "Provozovatel webu"
+    },
+    "design_author": {
+      "type": "string",
+      "description": "Tv\u016frce a autor webov\u00e9ho designu"
     }
   },
   "required": [],

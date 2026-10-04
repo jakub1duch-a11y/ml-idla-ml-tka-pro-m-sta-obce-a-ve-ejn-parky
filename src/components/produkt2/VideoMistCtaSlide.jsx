@@ -26,7 +26,7 @@ export default function VideoMistCtaSlide({ product }) {
             <p className="text-white/50 text-sm">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
           </div>
           <div className="bg-white rounded-3xl overflow-hidden">
-            <ProductContactForm productName={product.name} />
+            <ProductContactForm productName={product.name} product={product} />
           </div>
         </div>
       </div>

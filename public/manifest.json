@@ -1,46 +1,15 @@
 {
-  "name": "Mlžítka, mlžné sochy - MLŽIDLA.CZ",
-  "short_name": "mlžidla.cz",
-  "description": "Zakázkové mlžné sochy, mlžítka a venkovní chladicí mlžné systémy z nerezové oceli. Ochlazení až −10 °C pro veřejné prostory.",
+  "name": "MLŽIDLA.cz — chytré mlžení",
+  "short_name": "MLŽIDLA.cz",
+  "description": "Mlžítka a mlžné systémy pro města, veřejné prostory, zahrady a terasy.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0D1117",
-  "theme_color": "#22d3ee",
-  "orientation": "portrait-primary",
+  "orientation": "any",
+  "background_color": "#071A2F",
+  "theme_color": "#071A2F",
   "lang": "cs",
   "icons": [
-    {
-      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
-      "sizes": "192x192",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
-      "sizes": "512x512",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide"
-    }
-  ],
-  "categories": ["shopping", "business"],
-  "shortcuts": [
-    {
-      "name": "Mlžítka, mlžné sochy - MLŽIDLA.CZ",
-      "url": "/mlzidla-mlzitka",
-      "description": "Prohlédnout mlžné systémy"
-    },
-    {
-      "name": "Poptávka",
-      "url": "/poptavka",
-      "description": "Odeslat nezávaznou poptávku"
-    }
+    {"src":"/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
   ]
 }

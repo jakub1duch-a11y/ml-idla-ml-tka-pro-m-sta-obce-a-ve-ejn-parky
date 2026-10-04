@@ -20,6 +20,10 @@
       ],
       "description": "Type of project"
     },
+    "service_type": {
+      "type": "string",
+      "description": "Source/service type of the inquiry"
+    },
     "message": {
       "type": "string",
       "description": "Project description"
@@ -43,6 +47,10 @@
       ],
       "default": "new",
       "description": "Inquiry status"
+    },
+    "monday_item_id": {
+      "type": "string",
+      "description": "ID polo\u017eky v Monday.com propojen\u00e9 s t\u00edmto kontaktem"
     }
   },
   "required": [

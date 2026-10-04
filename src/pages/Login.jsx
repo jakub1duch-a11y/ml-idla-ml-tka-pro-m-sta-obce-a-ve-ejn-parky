@@ -15,7 +15,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const nextUrl = safeReturnTo("next");
+  const resolvedNext = safeReturnTo("next");
+  const nextUrl = resolvedNext === "/" ? "/klientska-sekce" : resolvedNext;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,7 +113,7 @@ export default function Login() {
             />
           </div>
         </div>
-        <Button type="Odeslat" className="w-full h-12 font-medium" disabled={loading}>
+        <Button type="submit" className="w-full h-12 font-medium" disabled={loading}>
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />

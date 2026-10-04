@@ -1,35 +1,49 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Smartphone, CalendarClock, Droplets, BarChart3, Bell, Layers } from 'lucide-react';
 
 const BENEFITS = [
-{ icon: Smartphone, title: 'Vzdálené ovládání', desc: 'Zapněte, vypněte i naplánujte mlžení odkudkoliv z mobilu.' },
-{ icon: CalendarClock, title: 'Automatické scénáře', desc: 'Nastavte si scénáře podle denní doby, počasí nebo senzorů.' },
-{ icon: Droplets, title: 'Úspora vody a energie', desc: 'Mlžení běží jen tehdy, kdy má skutečně smysl.' },
-{ icon: BarChart3, title: 'Historie a statistiky', desc: 'Přehled spotřeby vody a provozních cyklů v čase.' },
-{ icon: Bell, title: 'Notifikace', desc: 'Upozornění na dokončení cyklu, poruchu nebo nízký tlak.' },
-{ icon: Layers, title: 'Více zařízení najednou', desc: 'Ovládejte a skupinujte více mlžítek v jedné aplikaci.' }];
-
+  { icon: Smartphone, title: 'Vzdálené ovládání', desc: 'U podporované konfigurace můžete mlžení ovládat a plánovat také vzdáleně.', code: '// VZDÁLENĚ' },
+  { icon: CalendarClock, title: 'Automatické scénáře', desc: 'Nastavte scénáře podle času, teploty a podle konfigurace dalších senzorů.', code: '// SCÉNÁŘE' },
+  { icon: Droplets, title: 'Efektivní využití vody', desc: 'Mlžení běží jen tehdy, kdy má podle nastavených podmínek skutečně smysl.', code: '// ÚSPORA VODY' },
+  { icon: BarChart3, title: 'Provozní přehled', desc: 'Podle konfigurace lze sledovat stav systému, zón a provozních scénářů.', code: '// PŘEHLED' },
+  { icon: Bell, title: 'Stavová upozornění', desc: 'U podporované konfigurace lze doplnit vzdálená stavová upozornění a diagnostiku.', code: '// ALERTS' },
+  { icon: Layers, title: 'Více zařízení najednou', desc: 'Více mlžítek lze podle návrhu rozdělit do samostatně řízených zón.', code: '// MULTI-ZÓNA' }
+];
 
 export default function SmartBenefits() {
+  const reduced = useReducedMotion();
   return (
-    <section className="bg-white py-20 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="max-w-2xl mb-12">
-          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Výhody chytré aplikace</p>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight">Vše, co potřebujete pro chytré mlžení.</h2>
+    <section className="border-y border-slate-200 bg-slate-50/60 py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mb-14 max-w-2xl">
+          <p className="font-mono text-[11px] uppercase tracking-[.22em] text-slate-400">Výhody smart řízení</p>
+          <h2 className="mt-4 font-heading text-3xl leading-[1.05] tracking-[-.025em] text-slate-950 sm:text-4xl lg:text-[2.75rem]">
+            Kontrola nad provozem bez každodenní obsluhy.
+          </h2>
+          <div className="mt-6 h-px w-16 bg-accent" />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {BENEFITS.map((b, i) =>
-          <motion.div key={b.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-            className="p-6 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all">
-              <b.icon size={38} strokeWidth={1.6} className="mb-5 text-secondary" />
-              <h3 className="font-heading text-xl text-foreground mb-1.5">{b.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{b.desc}</p>
-            </motion.div>
-          )}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {BENEFITS.map((b, i) => (
+            <motion.article
+              key={b.title}
+              initial={reduced ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={reduced ? undefined : { y: -4 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className="group rounded-2xl border border-slate-200 bg-white p-6 transition-colors duration-300 hover:border-primary/40 lg:p-7"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-primary transition-colors duration-300 group-hover:border-accent group-hover:text-accent">
+                <b.icon size={24} strokeWidth={1.6} />
+              </div>
+              <p className="mt-6 font-mono text-[10px] uppercase tracking-[.16em] text-slate-400">{b.code}</p>
+              <h3 className="mt-2 font-heading text-xl font-semibold tracking-[-.01em] text-slate-950">{b.title}</h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-slate-500">{b.desc}</p>
+            </motion.article>
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 }

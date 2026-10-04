@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import BlockRenderer from '@/components/pages/blocks/BlockRenderer';
+import { setSEO } from '@/lib/seo';
 
 export default function CustomPageView() {
   const { slug } = useParams();
@@ -16,7 +17,13 @@ export default function CustomPageView() {
     base44.entities.CustomPage.filter({ slug, published: true })
       .then((results) => {
         if (!results || results.length === 0) { setNotFound(true); return; }
-        setPage(results[0]);
+        const foundPage = results[0];
+        setPage(foundPage);
+        setSEO({
+          title: foundPage.seo_title || foundPage.title || foundPage.name || slug,
+          description: foundPage.seo_description || foundPage.description || '',
+          canonicalPath: `/p/${slug}`,
+        });
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));

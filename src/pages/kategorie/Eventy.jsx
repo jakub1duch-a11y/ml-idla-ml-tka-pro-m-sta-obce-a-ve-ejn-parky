@@ -1,11 +1,30 @@
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
+import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import { ArrowRight, Tent, CheckCircle, Loader, Phone, Mail } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+
+const EVENT_SCENES = [
+  { title: 'Festivaly', kicker: 'Chill-out / vstupní zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png' },
+  { title: 'Veletrhy', kicker: 'Expozice / stánek', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG' },
+  { title: 'Firemní akce', kicker: 'Letní event / hospitality', image: '/media/optimized/83e0506f1_generated_fd2118cd.webp' },
+  { title: 'Oslavy a rodinné dny', kicker: 'Pobytová zóna', image: '/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp' },
+];
+
+const EVENT_PRODUCT_THUMBNAILS = {
+  'mlzna-brana-gate': EVENT_SCENES[0].image,
+  'brana-bendy': EVENT_SCENES[3].image,
+  'aura-duo': EVENT_SCENES[2].image,
+  'linea-gate': EVENT_SCENES[1].image,
+};
+
+const eventProductThumb = (product) => EVENT_PRODUCT_THUMBNAILS[product?.slug] || product?.gallery_urls?.[1] || product?.gallery_urls?.[0] || product?.image_url;
 
 const USE_CASES = [
   { emoji: '🎶', title: 'Hudební festivaly', desc: 'Ochlazení před stage i v chill-out zónách. Stane se součástí vizuálního konceptu akce.' },
@@ -29,15 +48,19 @@ export default function Eventy() {
   useEffect(() => {
     setSEO(SEO_PAGES.eventy);
     base44.entities.Product.list().catch(() => []).then(p => {
-      setProducts((p || []).slice(0, 3));
+      const preferred = ['mlzna-brana-gate', 'brana-bendy', 'aura-duo', 'linea-gate'];
+      const all = (p || []).filter((item) => item?.slug && !String(item.name || '').startsWith('ARCHIV'));
+      const curated = preferred.map((slug) => all.find((item) => item.slug === slug)).filter(Boolean);
+      setProducts(curated.length ? curated : all.slice(0, 4));
     }).finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/f0ba17112_generated_video.mp4"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline />
+      <MotionConfig reducedMotion="user">
+<section className="hero-motion-surface hero-category relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
+        <HeroAtmosphere />
+        <HeroBackgroundVideo src="/media/optimized/f0ba17112_generated_video.webm" poster="/media/hero-posters/eventy.webp" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
@@ -64,6 +87,7 @@ export default function Eventy() {
           </motion.div>
         </div>
       </section>
+</MotionConfig>
 
       {/* Pronájem výhody */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
@@ -99,6 +123,27 @@ export default function Eventy() {
         </div>
       </section>
 
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+        <div className="mb-8 max-w-3xl">
+          <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Eventové náhledy</p>
+          <h2 className="text-slate-900 text-3xl lg:text-4xl" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Jak může mlžení fungovat přímo v atmosféře akce.</h2>
+          <p className="mt-4 text-sm leading-6 text-slate-500">Samostatné inspirační fotografie pro festivaly, oslavy, veletrhy a firemní eventy. Finální rozmístění vždy přizpůsobíme průchodu lidí, zónám sezení a dostupnému napojení.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {EVENT_SCENES.map((scene, index) => (
+            <motion.article key={scene.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="aspect-[16/10] overflow-hidden bg-slate-100">
+                <img src={scene.image} alt={`${scene.title} — mlžení MLŽIDLA`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.025]" loading="lazy" />
+              </div>
+              <div className="border-t border-slate-100 p-5 sm:p-6">
+                <p className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-400">{scene.kicker}</p>
+                <h3 className="mt-1 font-heading text-2xl text-slate-900">{scene.title}</h3>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
       {/* Use cases */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
@@ -117,12 +162,13 @@ export default function Eventy() {
         {loading ? (
           <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <ProductExperience products={products}>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {products.map((p, i) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <div className="aspect-[4/3] overflow-hidden bg-slate-100">
-                    {p.image_url && <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
+                    {eventProductThumb(p) && <img src={eventProductThumb(p)} alt={`${p.name} v eventovém použití`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />}
                   </div>
                   <div className="p-5 flex items-center justify-between">
                     <div>
@@ -135,6 +181,7 @@ export default function Eventy() {
               </motion.div>
             ))}
           </div>
+</ProductExperience>
         )}
       </section>
 

@@ -1,0 +1,422 @@
+[
+  {
+    "id": "6a807c7661fe3c918a37995c",
+    "name": "OSTREV City S®",
+    "set": {
+      "image_url": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
+      "gallery_urls": [
+        "/media/optimized/db-e6e5d71854-thumbnail.webp",
+        "/media/optimized/db-349ca3cbfc-thumbnail.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a807c7661fe3c918a37995d",
+    "name": "OSTREV City M®",
+    "set": {
+      "image_url": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
+      "gallery_urls": [
+        "/media/optimized/db-508b2b08d7-thumbnail.webp",
+        "/media/optimized/db-bdca53faa9-thumbnail.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a807c7661fe3c918a37995e",
+    "name": "OSTREV City L®",
+    "set": {
+      "image_url": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
+      "gallery_urls": [
+        "/media/optimized/db-319ca57544-thumbnail.webp",
+        "/media/optimized/db-d325919fcc-thumbnail.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a807b0b8f6cc1f9f0c17c89",
+    "name": "AURA Garden Duo®",
+    "set": {
+      "image_url": "/media/optimized/db-377b5e7e28-3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp",
+      "video_url": "/media/optimized/feff82d99_Aura-mlzitko-video-01.webm",
+      "gallery_urls": [
+        "/media/optimized/db-858b838106-91ce94feb_MlzitkoAURA.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6b2d05df_mlidlo-mlzitkoAURA.png",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a807b0b8f6cc1f9f0c17c8a",
+    "name": "AURA City Single®",
+    "set": {
+      "image_url": "/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp",
+      "gallery_urls": [
+        "/media/optimized/db-dc9b5ec6e1-442982da0_mlzitkoaura-vysic.webp",
+        "/media/optimized/db-dad6fa84fb-ad39c3ee1_mlzitkoprodomovsenioru.webp",
+        "/media/optimized/3ffb5387e_mlzitkoprodomovsenioru-2.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a807b0b8f6cc1f9f0c17c8b",
+    "name": "AURA City Duo®",
+    "set": {
+      "image_url": "/media/optimized/db-dad6fa84fb-ad39c3ee1_mlzitkoprodomovsenioru.webp",
+      "gallery_urls": [
+        "/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp",
+        "/media/optimized/db-dc9b5ec6e1-442982da0_mlzitkoaura-vysic.webp",
+        "/media/optimized/3ffb5387e_mlzitkoprodomovsenioru-2.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7fb1e50cab7d38863ebedc",
+    "name": "BENDY ARC 2.0®",
+    "set": {
+      "image_url": "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+      "gallery_urls": [
+        "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+        "/media/optimized/88c697962_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7fb1e50cab7d38863ebedd",
+    "name": "BENDY ARC 3.0®",
+    "set": {
+      "image_url": "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp",
+      "gallery_urls": [
+        "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp",
+        "/media/optimized/88c697962_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf4993d",
+    "name": "BENDY FIELD®",
+    "set": {
+      "image_url": "/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp",
+      "gallery_urls": [
+        "/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp",
+        "/media/optimized/88c697962_generated_image.webp",
+        "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+        "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf4993e",
+    "name": "CITY COOLING ZONE®",
+    "set": {
+      "image_url": "/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp",
+      "gallery_urls": [
+        "/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp",
+        "/media/optimized/88c697962_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf49941",
+    "name": "CITY ARC 5®",
+    "set": {
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4c8c44da_Gemini_Generated_Image_d421i6d421i6d421.png",
+        "/media/optimized/db-1eb118208f-4af832dea_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf49942",
+    "name": "GARDEN COOLING SET®",
+    "set": {
+      "image_url": "/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp",
+      "gallery_urls": [
+        "/media/optimized/db-858b838106-91ce94feb_MlzitkoAURA.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf49943",
+    "name": "LINEA SOLO®",
+    "set": {
+      "image_url": "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+      "gallery_urls": [
+        "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf49944",
+    "name": "LINEA GATE®",
+    "set": {
+      "image_url": "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+      "gallery_urls": [
+        "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf49945",
+    "name": "LINEA AVENUE®",
+    "set": {
+      "image_url": "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+      "gallery_urls": [
+        "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png"
+      ]
+    }
+  },
+  {
+    "id": "6a7f87220eb396bf3cf49946",
+    "name": "ARCHIV — MIST HUB®",
+    "set": {
+      "image_url": "/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp"
+    }
+  },
+  {
+    "id": "6a7f84a9d8aaf4547cc78aa3",
+    "name": "BENDY ARC 1.0®",
+    "set": {
+      "image_url": "/media/optimized/88c697962_generated_image.webp",
+      "gallery_urls": [
+        "/media/optimized/88c697962_generated_image.webp",
+        "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+        "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f84a9d8aaf4547cc78aa4",
+    "name": "BENDY BACK-TO-BACK®",
+    "set": {
+      "image_url": "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+      "gallery_urls": [
+        "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp",
+        "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp",
+        "/media/optimized/88c697962_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a7f84a9d8aaf4547cc78aa5",
+    "name": "BENDY ALEJ®",
+    "set": {
+      "image_url": "/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp",
+      "gallery_urls": [
+        "/media/optimized/db-19e5384da6-d87c0cdb3_generated_image.webp",
+        "/media/optimized/88c697962_generated_image.webp",
+        "/media/optimized/db-1176ad4d1c-b9da23d56_generated_image.webp",
+        "/media/optimized/db-0346204f8a-f37d76dfe_generated_image.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a75a22bbfc02802e7e9141e",
+    "name": "MLŽÍTKO VOLAVKA",
+    "set": {
+      "image_url": "/media/optimized/db-d0e58a79d9-25f7cd749_volavka-rezidencnizahrady.webp",
+      "gallery_urls": [
+        "/media/optimized/db-2accde7763-a54a1faa7_Volavka_mlzitko.webp",
+        "/media/optimized/db-d0e58a79d9-25f7cd749_volavka-rezidencnizahrady.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a6ca3ae051e9ee30669be9f",
+    "name": "BRÁNA BENDY",
+    "set": {
+      "image_url": "/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp",
+      "gallery_urls": [
+        "/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp",
+        "/media/optimized/5401e0933_dac8b98065c5472b16bc1910348915a1.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a5639dbda8887f133ae10cf",
+    "name": "MLŽNÁ TRYSKA",
+    "set": {
+      "image_url": "/media/optimized/db-6d9a3b1fe5-dda3e5142_mlzna-tryska-mlzidla.webp",
+      "gallery_urls": [
+        "/media/optimized/db-5accb7e1f5-7750acf57_mlzna-tryska-mlzidla.webp",
+        "/media/optimized/db-952f248814-607866493_images4.webp",
+        "/media/optimized/db-22e3d79c83-85afbaef4_smartaplikacepromlzutka-nova.webp",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a450b8785119bddadd78006",
+    "name": "AURA Garden Single®",
+    "set": {
+      "image_url": "/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp",
+      "video_url": "/media/optimized/feff82d99_Aura-mlzitko-video-01.webm",
+      "gallery_urls": [
+        "/media/optimized/db-858b838106-91ce94feb_MlzitkoAURA.webp",
+        "/media/optimized/db-377b5e7e28-3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp",
+        "/media/optimized/db-dc9b5ec6e1-442982da0_mlzitkoaura-vysic.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6b2d05df_mlidlo-mlzitkoAURA.png",
+        "/media/optimized/db-dad6fa84fb-ad39c3ee1_mlzitkoprodomovsenioru.webp",
+        "/media/optimized/3ffb5387e_mlzitkoprodomovsenioru-2.webp",
+        "/media/optimized/db-22e3d79c83-85afbaef4_smartaplikacepromlzutka-nova.webp",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a44c4c21c908c5616376be1",
+    "name": "BRÁNA GATE",
+    "set": {
+      "image_url": "/media/optimized/db-ad208f4172-4c13d4866_1000004418.webp",
+      "video_url": "/media/optimized/0d9a4e147_mlznabranaGATE70-video.webm",
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f47023cbe_MlnbrnaGATE70V.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/60dab9091_mlnbrnaGATE70V2.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e6fb189c0_MlznabranaGate76.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4333988f4_MlnbrnaGATE76V.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/405edf0a8_L-Mltko_GATE_60V.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/22b4e3038_L-Mltko_GATE_60_3R.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e8e65d772_L-Mltko_GATE_60U.png",
+        "/media/optimized/a2d77392e_Mlnbranyaportaly.webp",
+        "/media/optimized/7a9bd010a_mlnbrnyaportaly-mlzidla.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aa26eeb6a_Mltko_GATE_70U.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4c8c44da_Gemini_Generated_Image_d421i6d421i6d421.png",
+        "/media/optimized/db-1eb118208f-4af832dea_generated_image.webp",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp",
+        "/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp",
+        "/media/optimized/5401e0933_dac8b98065c5472b16bc1910348915a1.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png"
+      ]
+    }
+  },
+  {
+    "id": "6a4278bb879c73a6842a9a88",
+    "name": "BENDY SINGLE®",
+    "set": {
+      "image_url": "/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp",
+      "gallery_urls": [
+        "/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp",
+        "/media/optimized/db-323b5abc81-31478e4b3_bendymlzitko02.webp",
+        "/media/optimized/db-9bb04eb6fe-b47ae10f2_bendymlzitko.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a73ab7232_Mltko-Bendy60-edited1.png"
+      ]
+    }
+  },
+  {
+    "id": "6a4271c2ced692a42a111c78",
+    "name": "Y-ARMIST - TUBE",
+    "set": {
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/080a7e429_MlzitkoY-ARMISTTR60_2.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1668eda70_MlzitkoY-ARMISTTR60_1.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/56f93a8b2_MlzitkoY-ARMISTTR60.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7bc7b6164_Y-ARMISTTR60.png",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a4271c15a8c51221293bde3",
+    "name": "Y-ARMIST - 4HRAN",
+    "set": {
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/93cd8ff63_MlzitkoY-ARMISTJ70_2.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/625f54e91_MlzitkoY-ARMISTJ70_1.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/95f7c7ca5_MlzitkoY-ARMISTJ70.png",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a426d9f65f9354b2da118be",
+    "name": "BRÁNA IRIS",
+    "set": {
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/91c5002dc_C-MlzitkoLINEA_CE70_single2.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ba9888b92_C-MlzitkoLINEA_CE70_double.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/74c60312a_C-MlzitkoLINEA_CE70_single-1.png",
+        "/media/optimized/db-f351ae794a-fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp",
+        "/media/optimized/db-d46926d75f-bcb5c5f4d_C-MlzitkoLINEA_CE70_single.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b4f4ca4a8_LINEACE70.png",
+        "/media/optimized/db-53153eac8d-edc3c46d8_BRACKETA_koupaliste.webp",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a422c3b44204afcf07fb830",
+    "name": "MLŽNÝ MRAK",
+    "set": {
+      "image_url": "/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp",
+      "video_url": "/media/optimized/db-502997824c-06d0df395_Zahradn-mlzitka.webm",
+      "gallery_urls": [
+        "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/a01ebd4e8_volnytvar-motorkar-apli.png",
+        "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a422b7e90e398fa84bfb286",
+    "name": "MLŽNÉ LÍZÁTKO",
+    "set": {
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png",
+        "/media/optimized/db-68273f5f2a-ad09f28ad_4ba76226-4e57-4242-bf1d-b9add4e0da7b.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9b46f2f7b_tepelnyostrov.png",
+        "/media/optimized/db-26362d070e-d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.webp",
+        "/media/optimized/db-54c72ac2af-c55aec790_Lzatko-mlzitko.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4c8c44da_Gemini_Generated_Image_d421i6d421i6d421.png",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a422b7e90e398fa84bfb289",
+    "name": "MLŽÍTKO LINEA",
+    "set": {
+      "image_url": "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+      "gallery_urls": [
+        "/media/optimized/db-4e43b71468-ca9abbd12_08a91a06-3433-4e35-b4b2-f0e8e464f473.webp",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png"
+      ]
+    }
+  },
+  {
+    "id": "6a422b7e90e398fa84bfb28b",
+    "name": "MLŽNÁ SPIRÁLA",
+    "set": {
+      "gallery_urls": [
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e43641bae_mlzitko-spirala.png",
+        "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/838f908c3_Mltkospirla-mlzidla.png",
+        "/media/optimized/db-9938e69714-df874507a_mlzidlospiralavakci-video.webm",
+        "/media/optimized/db-a135d5312d-eca0629b1_video-mlitkospiralavakci1.webm",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  },
+  {
+    "id": "6a3f4cc6fe1b618a0542fa75",
+    "name": "MLŽÍTKO OSTREV",
+    "set": {
+      "image_url": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
+      "gallery_urls": [
+        "/media/optimized/db-e6e5d71854-thumbnail.webp",
+        "/media/optimized/db-349ca3cbfc-thumbnail.webp",
+        "/media/optimized/db-508b2b08d7-thumbnail.webp",
+        "/media/optimized/db-bdca53faa9-thumbnail.webp",
+        "/media/optimized/db-319ca57544-thumbnail.webp",
+        "/media/optimized/db-d325919fcc-thumbnail.webp",
+        "/media/optimized/db-0ebea28aa0-thumbnail.webp",
+        "/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp",
+        "/media/optimized/3f715c287_copilot_image_1782505642436.webp",
+        "/media/optimized/150f3566d_IMG_20260623_124103.webp"
+      ]
+    }
+  }
+]

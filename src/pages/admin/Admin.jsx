@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles, PlugZap } from 'lucide-react';
+import AdminTeamChat from './AdminTeamChat';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
+import InstallAppButton from '@/components/admin/team/InstallAppButton';
+import AdminCallDock from '@/components/admin/team/AdminCallDock';
 import { base44 } from '@/api/base44Client';
+import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
 import AdminProducts from './AdminProducts';
 import AdminReferences from './AdminReferences';
@@ -14,36 +19,88 @@ import AdminPages from './AdminPages';
 import AdminMedia from './AdminMedia';
 import AdminMarketing from './AdminMarketing';
 import AdminProductAnalytics from './AdminProductAnalytics';
+import AdminReferenceAnalytics from './AdminReferenceAnalytics';
+import AdminAR from './AdminAR';
+import AdminDatabricks from './AdminDatabricks';
+import AdminTasks from './AdminTasks';
+import AdminSystemDevelopment from './AdminSystemDevelopment';
+import AdminProspects from './AdminProspects';
+import AdminCRM from './AdminCRM';
+import AdminTerminal from './AdminTerminal';
+import AdminIntegrations from './AdminIntegrations';
+import { Bot } from 'lucide-react';
+import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimalizatorChat';
+import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
+import AdminMcpConnect from './AdminMcpConnect';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
+  { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
+  { id: 'chat', label: 'Týmový chat', icon: MessagesSquare },
+  { id: 'development', label: 'Vývoj systému', icon: Activity },
+  { id: 'integrations', label: 'Integrace', icon: PlugZap },
+  { id: 'tasks', label: 'Úkoly & tým', icon: ListTodo },
   { id: 'products', label: 'Produkty', icon: Package },
+  { id: 'ai-optimalizace', label: 'AI optimalizace', icon: Wand2 },
+  { id: 'brand-visuals', label: 'AI ikony & vizuály', icon: Sparkles },
   { id: 'product-analytics', label: 'Produktová analýza', icon: TrendingUp },
+  { id: 'reference-analytics', label: 'Analýza realizací', icon: BarChart3 },
   { id: 'references', label: 'Reference', icon: ImageIcon },
   { id: 'blog', label: 'Blog', icon: Newspaper },
   { id: 'pages', label: 'Stránky', icon: FileStack },
   { id: 'media', label: 'Media', icon: FolderOpen },
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
+  { id: 'prospects', label: 'Prospecting', icon: Users },
+  { id: 'crm', label: 'CRM Corporate', icon: BriefcaseBusiness },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
+  { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'databricks', label: 'Databricks', icon: Database },
   { id: 'instagram', label: 'Instagram', icon: Instagram },
+  { id: 'chatgpt', label: 'ChatGPT / MCP', icon: Bot },
+];
+
+const TAB_GROUPS = [
+  { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
+  { label: 'Obchod', ids: ['poptavky', 'crm', 'prospects'] },
+  { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
+  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal'] },
 ];
 
 export default function Admin() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
-    base44.auth.me().then(u => {
-      setUser(u);
-      setLoading(false);
-      if (!u) navigate('/admin-login', { replace: true });
-    }).catch(() => {
-      setLoading(false);
-      navigate('/admin-login', { replace: true });
-    });
+    setSEO({ title: 'Administrace MLŽIDLA®', robots: 'noindex, nofollow, noarchive, nosnippet' });
+  }, []);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const requestedTab = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(() => TABS.some((tab) => tab.id === requestedTab) ? requestedTab : 'dashboard');
+
+  useEffect(() => {
+    if (requestedTab && TABS.some((tab) => tab.id === requestedTab) && requestedTab !== activeTab) setActiveTab(requestedTab);
+  }, [requestedTab]);
+
+  const changeTab = (tabId) => {
+    setActiveTab(tabId);
+    setSearchParams(tabId === 'dashboard' ? {} : { tab: tabId }, { replace: true });
+  };
+
+  useEffect(() => {
+    const resolveAdmin = async () => {
+      try {
+        const u = await base44.auth.me();
+        setUser(u);
+        if (!u) navigate('/admin-login', { replace: true });
+      } catch (_error) {
+        navigate('/admin-login', { replace: true });
+      } finally {
+        setLoading(false);
+      }
+    };
+    resolveAdmin();
   }, [navigate]);
 
   if (loading) return (
@@ -54,7 +111,7 @@ export default function Admin() {
 
   if (!user) return null;
 
-  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz'];
+  const ADMIN_EMAIL_EXCEPTIONS = ['meduna@holmtec.cz', 'kjuvideo@email.cz', 'jakub1duch@gmail.com', 'jakubjednaduch@gmail.com'];
   const emailAllowed = !!user.email && (
     user.email.toLowerCase().endsWith('@mlzidla.cz') ||
     ADMIN_EMAIL_EXCEPTIONS.includes(user.email.toLowerCase())
@@ -73,40 +130,66 @@ export default function Admin() {
 
   const ActiveComponent = {
     dashboard: AdminDashboard,
+    terminal: AdminTerminal,
+    chat: AdminTeamChat,
+    development: AdminSystemDevelopment,
+    integrations: AdminIntegrations,
+    tasks: AdminTasks,
     products: AdminProducts,
+    'ai-optimalizace': ProduktovyOptimalizatorChat,
+    'brand-visuals': BrandIconStudio,
     'product-analytics': AdminProductAnalytics,
+    'reference-analytics': AdminReferenceAnalytics,
     references: AdminReferences,
     blog: AdminBlog,
     pages: AdminPages,
     media: AdminMedia,
     marketing: AdminMarketing,
+    prospects: AdminProspects,
+    crm: AdminCRM,
     poptavky: AdminPoptavky,
+    ar: AdminAR,
     analytics: AdminAnalytics,
+    databricks: AdminDatabricks,
     instagram: AdminInstagram,
+    chatgpt: AdminMcpConnect,
   }[activeTab];
 
   return (
-    <div className="min-h-screen bg-ink flex">
+    <div className="min-h-screen bg-ink flex flex-col md:flex-row">
+      <AdminMobileNav tabs={TABS} activeTab={activeTab} onChange={changeTab} />
       {/* Sidebar */}
-      <div className="w-56 bg-[#0d1117] border-r border-white/8 flex flex-col shrink-0">
+      <div className="hidden w-64 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
         <div className="px-5 py-6 border-b border-white/8">
           <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-1">Admin</p>
           <p className="text-white text-sm font-medium truncate">{user.full_name || user.email}</p>
         </div>
-        <nav className="flex-1 p-3 space-y-1">
-          {TABS.map(tab => {
-            const Icon = tab.icon;
-            return (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
-                <Icon size={16} />
-                {tab.label}
-                {activeTab === tab.id && <ChevronRight size={12} className="ml-auto" />}
-              </button>
-            );
-          })}
+        <nav className="flex-1 overflow-y-auto p-3">
+          {TAB_GROUPS.map((group) => (
+            <div key={group.label} className="mb-4 last:mb-0">
+              <p className="mb-1.5 px-3 font-mono text-[9px] uppercase tracking-[.16em] text-white/20">{group.label}</p>
+              <div className="space-y-1">
+                {group.ids.map((tabId) => TABS.find((item) => item.id === tabId)).filter(Boolean).map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button key={tab.id} onClick={() => changeTab(tab.id)}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+                      <Icon size={16} />
+                      {tab.label}
+                      {activeTab === tab.id && <ChevronRight size={12} className="ml-auto" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
-        <div className="p-3 border-t border-white/8">
+        <div className="p-3 border-t border-white/8 space-y-1">
+          <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />
+          <button onClick={() => navigate('/obchodni-nabidky')}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
+            <BriefcaseBusiness size={16} /> Sales Hub
+          </button>
           <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">
             <LogOut size={16} /> Odhlásit
@@ -115,11 +198,17 @@ export default function Admin() {
       </div>
 
       {/* Main */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 min-w-0 overflow-auto">
         <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
           <ActiveComponent />
         </motion.div>
+        <div className="p-4 md:hidden">
+          <InstallAppButton className="w-full flex items-center justify-center gap-2 rounded-xl border border-cyan/20 bg-cyan/10 px-3 py-3 text-sm text-cyan" />
+        </div>
       </div>
+      {activeTab !== 'chat' && (
+        <AdminCallDock user={user} contextLabel={TABS.find((t) => t.id === activeTab)?.label || 'Administrace'} />
+      )}
     </div>
   );
 }

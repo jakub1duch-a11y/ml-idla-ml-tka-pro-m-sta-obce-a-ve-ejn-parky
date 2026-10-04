@@ -1,0 +1,37 @@
+{
+  "id": "BENDY-SINGLE-AR-BASE-v1",
+  "product": "BENDY SINGLE®",
+  "status": "prototype",
+  "units": "mm",
+  "scale": "1:1",
+  "profile": {
+    "availableDiameters": [
+      50,
+      60.2,
+      70
+    ],
+    "availableWallThicknesses": [
+      2,
+      2.5,
+      3
+    ],
+    "referenceDiameter": 60.2,
+    "referenceWallThickness": 2
+  },
+  "dimensions": {
+    "nominalHeight": 1800,
+    "bendGeometry": "approximate-v1"
+  },
+  "ar": {
+    "anchor": "ground-center",
+    "scaleLocked": true,
+    "glb": "/ar/bendy-single/bendy-single-ar-base-v1.glb",
+    "usdz": null
+  },
+  "validationRequired": [
+    "exact bend radius / centreline",
+    "exact overall width and top offset",
+    "anchoring geometry",
+    "verified nozzle positions and orientation"
+  ]
+}

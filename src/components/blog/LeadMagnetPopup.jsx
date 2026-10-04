@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, Loader } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
+import { trackNewsletterSignup } from '@/lib/ga4';
 
 const STORAGE_KEY = 'lead_magnet_dismissed';
 
@@ -26,6 +26,7 @@ export default function LeadMagnetPopup() {
     e.preventDefault();
     setSending(true);
     await base44.entities.NewsletterLead.create({ email, source: 'blog_popup' });
+    trackNewsletterSignup('blog_popup');
     setSending(false);
     setDone(true);
     localStorage.setItem(STORAGE_KEY, '1');

@@ -1,0 +1,47 @@
+{
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 20 * * *",
+      "one_time_date": null,
+      "timezone": "Europe/Prague",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Denn\u00ed marketingov\u00fd analytick\u00fd report",
+  "description": "Ka\u017ed\u00fd den ve 20:00 sestav\u00ed stru\u010dn\u00fd report s hlavn\u00edmi GA4 v\u00fdsledky za p\u0159edchoz\u00ed kalend\u00e1\u0159n\u00ed den, popt\u00e1vkami a dostupn\u00fdm stavem reklamn\u00edch a soci\u00e1ln\u00edch dat a ode\u0161le jej marketingov\u00e9mu t\u00fdmu.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "denni_marketingovy_analyticky_report",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "odeslat_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "marketingIntelligence",
+            "args": {
+              "sendEmail": true
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sestavit a odeslat marketingov\u00fd report",
+            "description": "GA4 za p\u0159edchoz\u00ed den + popt\u00e1vky + stru\u010dn\u00e9 marketingov\u00e9 doporu\u010den\u00ed"
+          }
+        }
+      }
+    ]
+  }
+}

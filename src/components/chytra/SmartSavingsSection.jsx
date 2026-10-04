@@ -18,7 +18,7 @@ export default function SmartSavingsSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4d6333cb_generated_image.png" alt="Technik při údržbě chytrého mlžítka na rezidenčním eventu"
+            <img src="/media/optimized/a4d6333cb_generated_image.webp" alt="Technik při údržbě chytrého mlžítka na rezidenčním eventu"
               className="w-full rounded-3xl object-cover aspect-[4/3]" />
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>

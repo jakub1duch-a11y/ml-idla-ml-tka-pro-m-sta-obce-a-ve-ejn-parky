@@ -1,145 +1,83 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 
-const TAGLINES = [
-'Mlžítka – ochlazují prostor, osvěžují pocit.',
-'Když prostor chladí, pocit roste.',
-'Prostor, který dýchá a osvěžuje.',
-'Osvěžení prostoru, které cítíte.',
-'Mlžítka – chladnější vzduch, lepší zážitek.',
-'Prostor, kde se cítíte lépe.',
-'Dotek mlhy, který změní prostor.',
-'Ochlazení, které oživí místo.',
-'Vytváříme příjemnější místa k životu.',
-'Příjemnější místa k životu díky mlžítkům.',
-'Mlžítka – vytváří příjemnější místa k životu.',
-'Ochlazujeme a vytváříme příjemnější místa k životu.'];
-
-
-const SLIDES = [
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/eb7e87313_mlzidla-mlzitkaproparkyamesta03.MOV' },
-{ type: 'image', src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/96ec1f8e9_mlnprvek-mrak-mlzidla04.png' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/9f0153e3a_ml_detailvparku_01.MOV' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.MOV' },
-{ type: 'video', src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/ae9faa0a3_video-mlitkospiralavakci.MOV' }];
-
-
-// Duration per slide: videos ~8s, images 5s
-const SLIDE_DURATION = 8000;
-
-function VideoSlide({ src, active }) {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    if (active) {
-      ref.current.currentTime = 0;
-      ref.current.play().catch(() => {});
-    } else {
-      ref.current.pause();
-    }
-  }, [active]);
-
-  return (
-    <video
-      ref={ref}
-      src={src}
-      className="absolute inset-0 w-full h-full object-cover"
-      muted
-      playsInline
-      loop
-      preload="metadata" />);
-
-
-}
+const SCENES = [
+  { name: 'BENDY', image: '/media/optimized/31478e4b3_bendymlzitko02.webp', video: '/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm', href: '/produkt/mlzitko-bendy' },
+  { name: 'MRAK', image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp', video: '/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm', href: '/produkt/mlzitko-mrak' },
+  { name: 'Veřejný prostor', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp', href: '/mlzitka-pro-mesta-obce' },
+];
 
 export default function KolekceHero() {
-  const [current, setCurrent] = useState(0);
-  const [taglineIdx, setTaglineIdx] = useState(0);
-  const timerRef = useRef(null);
-
-  const next = useCallback(() => {
-    setCurrent((c) => (c + 1) % SLIDES.length);
-    setTaglineIdx((t) => (t + 1) % TAGLINES.length);
-  }, []);
-
-  const goTo = (i) => {
-    clearInterval(timerRef.current);
-    setCurrent(i);
-    setTaglineIdx(i % TAGLINES.length);
-    timerRef.current = setInterval(next, SLIDE_DURATION);
-  };
-
-  useEffect(() => {
-    timerRef.current = setInterval(next, SLIDE_DURATION);
-    return () => clearInterval(timerRef.current);
-  }, [next]);
-
-  const slide = SLIDES[current];
+  const ref = useRef(null);
+  const [selected, setSelected] = useState(0);
+  const reduced = useReducedMotion();
+  const scene = SCENES[selected];
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '10%']);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.055]);
+  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-7%']);
 
   return (
-    <div className="relative w-full overflow-hidden bg-slate-900 h-[70vh] min-h-[480px]">
-      {/* Slides */}
-      {SLIDES.map((s, i) =>
-      <div
-        key={i}
-        className={`absolute inset-0 transition-opacity duration-1000 ${i === current ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-        
-          {s.type === 'video' ?
-        <VideoSlide src={s.src} active={i === current} /> :
-        <img src={s.src} alt="" className="absolute inset-0 w-full h-full object-cover" />}
+    <section ref={ref} className="hero-motion-surface relative min-h-[720px] bg-[#07131D] text-white" aria-label="Katalog mlžítek">
+      <motion.div className="absolute inset-0" style={{ y: mediaY, scale: mediaScale }}>
+        <motion.img
+          key={scene.image}
+          src={scene.image}
+          alt={scene.name}
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-75"
+          fetchPriority="high"
+          initial={reduced ? false : { opacity: 0, scale: 1.025 }}
+          animate={{ opacity: 0.75, scale: 1 }}
+          transition={{ duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
+        />
+        {scene.video && <HeroBackgroundVideo key={scene.video} src={scene.video} poster={scene.image} />}
+      </motion.div>
+
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_28%,rgba(122,225,239,.16),transparent_30%),linear-gradient(90deg,rgba(7,19,29,.96)_0%,rgba(7,19,29,.78)_42%,rgba(7,19,29,.24)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#07131D] to-transparent" />
+      <HeroAtmosphere />
+
+      <motion.div style={{ y: copyY }} className="hero-catalog-content !min-h-[720px]">
+        <div className="inline-flex w-fit items-center gap-3 rounded-full border border-white/12 bg-white/[.055] px-4 py-2 backdrop-blur-md">
+          <span className="h-2 w-2 rounded-full bg-[#7AE1EF] shadow-[0_0_18px_rgba(122,225,239,.8)]" />
+          <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">KATALOG / MLŽIDLA®</span>
         </div>
-      )}
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
+        <h1 className="mt-6 !max-w-[10ch] !font-black !leading-[.93] !tracking-[-.06em]">
+          Vyberte mlžítko podle prostoru.
+        </h1>
+        <p className="mt-6 !max-w-2xl !text-base !leading-8 !text-white/62 sm:!text-lg">
+          Sloupková mlžítka, mlžné brány a ateliérové prvky pro města, parky, sportoviště, školy, gastro i soukromé zahrady. Katalog můžete filtrovat podle prostoru a produktové řady.
+        </p>
 
-      {/* Content */}
-      <div className="absolute z-30 flex flex-col justify-end pb-12 inset-0">
-        <div className="absolute bottom-12 left-0 right-0 px-6 lg:px-8 max-w-7xl mx-auto">
-          <h1 className="font-heading font-light text-white tracking-tight mb-4 text-5xl lg:text-6xl">Mlžítka
-a mlžné brány.
-          </h1>
-          <p className="text-white/70 max-w-xl leading-relaxed font-light text-xl">Od skulpturálních soch přes vstupní portály až po plošné chladicí zóny. Zakázková výroba z nerezové oceli, navržená přesně pro váš projekt.
-
-          </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <a href="#catalog" className="catalog-sweep inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#7AE1EF] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_18px_52px_rgba(122,225,239,.2)] transition hover:-translate-y-0.5 hover:bg-white">
+            Otevřít katalog <ArrowRight size={17} aria-hidden="true" />
+          </a>
+          <Link to={scene.href} className="catalog-sweep inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/16 bg-white/[.06] px-6 py-4 text-sm font-bold text-white backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#7AE1EF]/45">
+            {selected === 2 ? 'Řešení pro města' : 'Detail ' + scene.name} <ArrowRight size={17} aria-hidden="true" />
+          </Link>
         </div>
-        <AnimatePresence mode="wait">
-          <motion.h2
-            key={`title-${taglineIdx}`}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="font-heading font-extralight text-3xl lg:text-5xl text-white max-w-2xl leading-tight tracking-tight hidden">
 
-            Mlžítka a mlžidla Holmtec
-          </motion.h2>
-        </AnimatePresence>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={`tag-${taglineIdx}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.05 }}
-            className="text-xs font-medium tracking-[0.18em] uppercase text-white/60 mt-3 hidden">
-            
-            {TAGLINES[taglineIdx]}
-          </motion.p>
-        </AnimatePresence>
-
-        {/* Dash nav */}
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </div>);
-
+        <div className="hero-scene-nav !mt-8" aria-label="Scéna katalogu">
+          {SCENES.map((item, index) => (
+            <motion.button
+              key={item.name}
+              type="button"
+              aria-pressed={selected === index}
+              onClick={() => setSelected(index)}
+              whileHover={reduced ? undefined : { y: -2 }}
+              whileTap={reduced ? undefined : { scale: 0.96 }}
+            >
+              <span className="mr-2 font-mono text-[9px] opacity-45">0{index + 1}</span>{item.name}
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
 }

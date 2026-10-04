@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { trackQuickInquiryClick } from '@/lib/ga4';
+import { trackContactFormSubmit, trackQuickInquiryClick } from '@/lib/ga4';
 
 export default function SpecialistContactForm() {
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
@@ -17,14 +17,20 @@ export default function SpecialistContactForm() {
     }
     setError('');
     setSending(true);
-    await base44.entities.ContactInquiry.create({
-      name: form.name || 'Neuvedeno',
-      email: form.email || 'neuvedeno@mlzidla.cz',
-      message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
-    }).catch(() => {});
-    trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
-    setSent(true);
-    setSending(false);
+    try {
+      const created = await base44.entities.ContactInquiry.create({
+        name: form.name || 'Neuvedeno',
+        email: form.email || 'neuvedeno@mlzidla.cz',
+        message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
+      });
+      trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
+      trackContactFormSubmit('smart-specialista', 'Smart systém', created?.id || '');
+      setSent(true);
+    } catch (_) {
+      setError('Kontakt se nepodařilo odeslat. Zkuste to prosím znovu.');
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) return (

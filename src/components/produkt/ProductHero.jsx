@@ -1,86 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, FileText, Thermometer, Droplets, Gauge, Zap } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight, Play, Snowflake, Leaf, Users, ScanLine } from 'lucide-react';
 import { trackQuickInquiryClick } from '@/lib/ga4';
-import ProductGalleryPanel from './ProductGalleryPanel';
-import ProductHeroMist from './ProductHeroMist';
+import { getProductDetailConfig } from '@/lib/productDetailConfig';
 
-export default function ProductHero({ product, categoryName, allImages, onOpenLightbox, onShowTechnical }) {
-  const quickSpecs = [
-  product.coverage_area && { icon: Thermometer, label: 'Ochlazení', value: product.coverage_area },
-  product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption },
-  product.pressure && { icon: Gauge, label: 'Tlak vody', value: product.pressure },
-  product.power_supply && { icon: Zap, label: 'Napájení', value: product.power_supply }].
-  filter(Boolean);
+export default function ProductHero({ product, allMedia = [], onOpenLightbox }) {
+  const location = useLocation();
+  const videoRef = useRef(null);
+  const query = new URLSearchParams(location.search);
+  const heroImage = allMedia.find((item) => item.type === 'image')?.url || product.image_url || product.gallery_urls?.[0];
+  const heroVideo = allMedia.find((item) => item.type === 'video')?.url || product.video_url;
+  const selectedName = product.slug === 'mlzitko-mrak' && query.get('variant') ? `${product.name} · ${query.get('variant')}` : product.name;
+  const detailConfig = getProductDetailConfig(product);
+  const tagline = detailConfig.tagline || product.short_description || 'Designové mlžítko pro příjemnější venkovní prostor';
+
+  const playVideo = () => {
+    if (!heroVideo) return;
+    const index = allMedia.findIndex((item) => item.type === 'video');
+    if (index >= 0) onOpenLightbox?.(index);
+  };
 
   return (
-    <div className="relative overflow-hidden">
-      <ProductHeroMist />
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-10">
-      <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-6 flex-wrap">
-        <Link to="/" className="hover:text-slate-700 transition-colors">Domů</Link>
-        <ChevronRight size={12} />
-        <Link to="/mlzidla-mlzitka" className="hover:text-slate-700 transition-colors">Produkty</Link>
-        {categoryName &&
-          <>
-            <ChevronRight size={12} />
-            <span>{categoryName}</span>
-          </>
-          }
-        <ChevronRight size={12} />
-        <span className="text-slate-700 font-medium">{product.name}</span>
-      </div>
+    <section className="product-detail-hero relative min-h-[560px] overflow-hidden bg-[#0a2731] text-white sm:min-h-[600px] lg:min-h-[610px] xl:min-h-[690px]">
+      {heroImage && <img src={heroImage} alt={`${product.name} – hlavní vizualizace`} className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,17,23,.86)_0%,rgba(2,17,23,.64)_34%,rgba(2,17,23,.16)_64%,rgba(2,17,23,.04)_100%)]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-14 items-start">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <ProductGalleryPanel images={allImages} productName={product.name} onOpenLightbox={onOpenLightbox} />
-        </motion.div>
+      <div className="relative z-10 mx-auto flex min-h-[560px] max-w-7xl items-end px-5 pb-8 pt-24 sm:min-h-[600px] sm:px-6 lg:min-h-[610px] lg:px-7 lg:pb-9 xl:min-h-[690px] xl:px-10 xl:pb-12">
+        <div className="max-w-2xl">
+          <p className="font-mono text-[11px] font-semibold uppercase tracking-[.28em] text-white/80">{product.name}</p>
+          <h1 className="mt-4 max-w-xl font-heading text-[2.45rem] font-semibold leading-[1.02] tracking-[-.045em] text-white sm:text-5xl lg:text-[3.25rem] xl:text-[4rem]">{tagline}</h1>
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-white/82 sm:text-lg">{detailConfig.intro || product.short_description}</p>
 
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-          {categoryName && <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">{categoryName}</p>}
-          <h1 className="tracking-tight leading-[1.08] mb-5 text-[#0b4860] [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-4xl lg:text-4xl">
-            {product.name}
-          </h1>
-          {product.short_description &&
-            <p className="text-slate-700 text-lg font-medium leading-[1.75] mb-7">{product.short_description}</p>
-            }
-
-          {quickSpecs.length > 0 &&
-            <div className="grid grid-cols-2 gap-3 mb-8">
-              {quickSpecs.map((s) =>
-              <div key={s.label} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                  <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
-                    <s.icon size={14} className="text-slate-500" strokeWidth={1.75} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[11px] font-medium text-slate-500 uppercase tracking-wide">{s.label}</span>
-                    <span className="block text-sm font-semibold text-slate-900 truncate">{s.value}</span>
-                  </span>
-                </div>
-              )}
-            </div>
-            }
-
-          <div className="flex flex-wrap gap-3">
-            <Link
-                to={`/kontakt?produkt=${encodeURIComponent(product.name)}`}
-                onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')}
-                className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                
-              Rychlá poptávka <ArrowRight size={16} />
-            </Link>
-            <button
-                type="button"
-                onClick={onShowTechnical}
-                className="inline-flex items-center gap-2 border border-slate-300 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-full hover:bg-slate-50 transition-colors">
-                
-              Technické parametry <FileText size={14} />
-            </button>
+          <div className="mt-6 flex flex-wrap gap-x-4 gap-y-3 text-xs text-white/85 lg:max-w-[720px]">
+            <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Snowflake size={18}/></span>Příjemné ochlazení</span>
+            <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Leaf size={18}/></span>Čistý nerezový design</span>
+            <span className="inline-flex items-center gap-2"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#62cbed] text-white"><Users size={18}/></span>Komfortnější venkovní prostor</span>
           </div>
-        </motion.div>
-      </div>
-      </div>
-    </div>);
 
+          <div className="mt-6 flex flex-wrap items-center gap-2.5 lg:max-w-[760px]">
+            <Link to={`/kontakt?produkt=${encodeURIComponent(selectedName)}`} onClick={() => trackQuickInquiryClick(product.name, 'produkt_hero')} className="inline-flex min-h-[48px] items-center gap-2 rounded-lg bg-[#8bd9f4] px-6 text-sm font-bold text-[#073747] shadow-[0_12px_30px_rgba(63,181,218,.22)] transition hover:-translate-y-0.5 hover:bg-[#73cfee]">Chci návrh a cenovou nabídku <ArrowRight size={15}/></Link>
+            {heroVideo && <button type="button" onClick={playVideo} className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/30 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-black/35"><span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/50"><Play size={13} fill="currentColor"/></span>Přehrát video</button>}
+            <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/25 bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"><ScanLine size={15}/> Vizualizovat v prostoru</Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="pointer-events-none absolute bottom-7 right-8 hidden text-right xl:block">
+        <p className="font-heading text-2xl italic leading-tight text-white/90">Více než mlžítko.<br/>Lepší místo.</p>
+        <p className="mt-5 text-sm font-bold tracking-wide text-white">HolmTec</p>
+        <p className="text-[9px] uppercase tracking-[.2em] text-white/55">technologie pro lepší klima</p>
+      </div>
+      <video ref={videoRef} className="hidden" />
+    </section>
+  );
 }

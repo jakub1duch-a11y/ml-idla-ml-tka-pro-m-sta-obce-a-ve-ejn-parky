@@ -1,0 +1,245 @@
+/* Enhanced Typography System */
+/* Optimized font loading, readability, and responsive scaling */
+
+/* ============= Font Loading Strategy ============= */
+@font-face {
+  font-family: 'Inter Display';
+  src: url('https://fonts.gstatic.com/s/inter/v12/UcCO_p8HxEo-_EFQqvCsBXg.woff2')
+    format('woff2');
+  font-weight: 400 500 600 700;
+  font-display: swap;
+  font-stretch: 100%;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('https://fonts.gstatic.com/s/plusjakartasans/v8/4-Hh6p_Z63p0UYMTV-1x0A.woff2')
+    format('woff2');
+  font-weight: 400 500 600 700 800;
+  font-display: swap;
+}
+
+/* ============= Enhanced Typography Base ============= */
+:root {
+  /* Text Scaling: fluid between devices */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.825rem + 0.25vw, 1rem);
+  --text-base: clamp(1rem, 0.97rem + 0.18vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.055rem + 0.35vw, 1.375rem);
+  --text-xl: clamp(1.25rem, 1.155rem + 0.475vw, 1.625rem);
+  --text-2xl: clamp(1.5rem, 1.365rem + 0.675vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.675rem + 1vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.975rem + 1.375vw, 3.125rem);
+  --text-5xl: clamp(3rem, 2.6rem + 2vw, 4rem);
+
+  /* Line heights for readability */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 1.875;
+
+  /* Letter spacing */
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+}
+
+/* ============= Headings ============= */
+body {
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 1.5em 0 0.5em 0;
+}
+
+h2 {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 1.25em 0 0.5em 0;
+}
+
+h3 {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 1em 0 0.5em 0;
+}
+
+h4 {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  margin: 0.875em 0 0.5em 0;
+}
+
+h5 {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  margin: 0.75em 0 0.5em 0;
+}
+
+h6 {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  margin: 0.75em 0 0.5em 0;
+}
+
+/* ============= Paragraph & Text ============= */
+p {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  margin: 1em 0;
+  max-width: 70ch; /* Optimal line length for reading */
+}
+
+p.lead {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: var(--leading-relaxed);
+  color: inherit;
+}
+
+small,
+.text-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+/* ============= Lists ============= */
+ul,
+ol {
+  margin: 1em 0;
+  padding-left: 2em;
+  line-height: var(--leading-relaxed);
+}
+
+li {
+  margin: 0.5em 0;
+}
+
+/* ============= Links ============= */
+a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+a:hover {
+  color: hsl(var(--primary) / 0.8);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ============= Code ============= */
+code,
+pre {
+  font-family: 'Courier New', monospace;
+  font-size: 0.875em;
+  line-height: 1.5;
+}
+
+code {
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  padding: 0.125em 0.25em;
+  border-radius: 0.25rem;
+}
+
+pre {
+  background: hsl(var(--muted));
+  padding: 1em;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ============= Blockquote ============= */
+blockquote {
+  border-left: 3px solid hsl(var(--primary));
+  padding-left: 1em;
+  margin-left: 0;
+  font-style: italic;
+  color: hsl(var(--foreground) / 0.8);
+}
+
+/* ============= Responsive Text Measure ============= */
+.text-measure {
+  max-width: 60ch;
+}
+
+@media (max-width: 640px) {
+  .text-measure {
+    max-width: 50ch;
+  }
+
+  h1 {
+    margin: 1em 0 0.5em 0;
+  }
+
+  h2 {
+    margin: 0.875em 0 0.5em 0;
+  }
+}
+
+/* ============= Print Styles ============= */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 28pt;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 24pt;
+    page-break-after: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "name": "PartnerApplication",
+  "type": "object",
+  "properties": {
+    "applicant_email": {
+      "type": "string",
+      "format": "email"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "company_id": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "partner_type": {
+      "type": "string",
+      "enum": [
+        "architect",
+        "designer",
+        "installer",
+        "dealer",
+        "supplier",
+        "other"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 3000
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_by": {
+      "type": "string"
+    },
+    "admin_note": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "applicant_email",
+    "contact_name",
+    "company_name",
+    "partner_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "data.applicant_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.applicant_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

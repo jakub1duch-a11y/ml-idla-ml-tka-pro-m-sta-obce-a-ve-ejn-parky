@@ -26,8 +26,8 @@ export default function MlzidlaCzShowcase({ product, onPrev, onNext }) {
               </div>
             </div>
 
-            <div className="relative rounded-2xl overflow-hidden bg-slate-100 aspect-[4/3]">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            <div className="relative rounded-2xl overflow-hidden bg-white aspect-[4/3]">
+              <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3" />
               <button onClick={onPrev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow-sm hover:bg-white transition-colors">
                 <ChevronLeft size={16} className="text-slate-700" />
               </button>

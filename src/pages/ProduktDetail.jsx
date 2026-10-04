@@ -105,10 +105,10 @@ export default function ProduktDetail() {
       {viewMode !== 'new' && <PdScrollProgress />}
       <PdViewModeSwitch mode={viewMode} onChange={setViewMode} />
 
-      {viewMode === 'classic' && (
-        <>
-          {classicHero}
-          <PdSectionNav product={product} />
+{viewMode === 'classic' && (
+  <>
+    {classicHero}
+    <PdSectionNav product={product} />
 
           <div className="sticky top-[116px] z-30 mx-auto max-w-md px-4 py-3 lg:hidden">
             <div className="rounded-[20px] border border-slate-200/80 bg-white/90 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">

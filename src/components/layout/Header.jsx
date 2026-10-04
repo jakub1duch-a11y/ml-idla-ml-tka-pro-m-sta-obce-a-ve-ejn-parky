@@ -49,7 +49,6 @@ const INFO_LINKS = [
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
 { icon: PlayCircle, label: 'Videa a živé ukázky', path: '/blog?sekce=videa' }];
 
-
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
@@ -63,7 +62,6 @@ export default function Header() {
   const homePath = ROUTE_MAP.home[locale];
   const inquiryPath = ROUTE_MAP.inquiry[locale];
   const timeoutRef = useRef(null);
-  const infoTimeoutRef = useRef(null);
   const lastScrollYRef = useRef(0);
 
   useEffect(() => {
@@ -81,29 +79,20 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => {document.body.style.overflow = '';};
+    return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
-  const toggleMobileMenu = () => {
-    setMobileOpen(!mobileOpen);
-    setMegaOpen(false);
-  };
-
-  const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);};
-  const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
-  const openInfo = () => {clearTimeout(infoTimeoutRef.current);setInfoOpen(true);};
-  const closeInfo = () => {infoTimeoutRef.current = setTimeout(() => setInfoOpen(false), 150);};
+  const openMega = () => { clearTimeout(timeoutRef.current); setMegaOpen(true); };
+  const closeMega = () => { timeoutRef.current = setTimeout(() => setMegaOpen(false), 150); };
+  const openInfo = () => { clearTimeout(timeoutRef.current); setInfoOpen(true); };
+  const closeInfo = () => { timeoutRef.current = setTimeout(() => setInfoOpen(false), 150); };
+  const toggleMobileMenu = () => { setMobileOpen((v) => !v); setMegaOpen(false); };
 
   return (
     <>
       {/* Announcement bar */}
-      
 
 
-
-
-
-      
 
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#000000]/[0.85] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
@@ -235,7 +224,6 @@ export default function Header() {
         {locale === 'cs' && <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />}
       </header>
 
-      {/* Mobile menu — compact floating panel, not full screen */}
       <MobileMenu
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
@@ -243,5 +231,4 @@ export default function Header() {
         locale={locale} />
 
     </>);
-
 }

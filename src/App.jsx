@@ -72,6 +72,7 @@ import Pronajem from '@/pages/Pronajem';
 import Mlhoviste from '@/pages/Mlhoviste';
 import VodniMlha from '@/pages/VodniMlha';
 import MlzneBrany from '@/pages/MlzneBrany';
+import CategoryLanding from '@/pages/CategoryLanding';
 import RezidencniMlzeni from '@/pages/RezidencniMlzeni';
 import BendyARPrototype from '@/pages/BendyARPrototype';
 import PrezentaceMlziciProstor from '@/pages/PrezentaceMlziciProstor';
@@ -124,7 +125,9 @@ const AuthenticatedApp = () => {
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/mlhoviste" element={<Mlhoviste />} />
         <Route path="/vodni-mlha" element={<VodniMlha />} />
+        <Route path="/sloupkova-mlzitka" element={<CategoryLanding variant="sloupky" />} />
         <Route path="/mlzne-brany" element={<MlzneBrany />} />
+        <Route path="/atelierove-prvky" element={<CategoryLanding variant="atelier" />} />
         <Route path="/rezidencni-mlzeni" element={<RezidencniMlzeni />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/connect" element={<Connect />} />

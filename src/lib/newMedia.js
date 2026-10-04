@@ -4,7 +4,7 @@
 export const VIDEO_ASSETS = {
   // NEW HERO — promo pro městské ochlazování
   heroCityPromo: {
-    src: '/media/products/linea/linea-urban-cooling-hero.mp4',
+    src: 'https://videogen.vidiq.com/1f7c803a-a05c-4f80-8a0f-60f8fe0a9147/1d66c701-4c1b-4f99-8b1b-d09b3c699c3f_13447856395380036099.mp4.mp4',
     poster: '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp',
   },
   // V1 — Hero: BENDY na náměstí v Jičíně (18 s, 832×464)

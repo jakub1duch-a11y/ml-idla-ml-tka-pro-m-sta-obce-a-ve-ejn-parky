@@ -135,7 +135,7 @@ export default function ProductCategoryExplorer() {
                 className="group relative overflow-hidden rounded-[2rem] border border-[#D9E9EF] bg-white shadow-[0_22px_70px_rgba(7,19,29,.08)] transition-shadow duration-300 hover:shadow-[0_30px_90px_rgba(7,19,29,.14)]">
                 
                 <Link to={category.href} className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0B8EC5]">
-                  <div className="relative aspect-[16/11] overflow-hidden bg-[#07131D]">
+                  <div className="relative aspect-[16/11] overflow-hidden bg-[#07131D] hidden">
                     {category.image ?
                     <img
                       src={category.image}

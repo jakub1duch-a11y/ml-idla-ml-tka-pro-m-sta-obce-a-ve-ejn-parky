@@ -28,8 +28,8 @@ export default function MlzneBrany() {
 
   useEffect(() => {
     setSEO({
-      title: 'Mlžné brány pro města a obce',
-      description: 'Nerezové mlžné brány pro města, obce, náměstí, parky a sportoviště. Návrh umístění, projektová podpora, Smart řízení a servis.',
+      title: 'Mlžné brány a oblouky pro města a obce',
+      description: 'Nerezové mlžné brány a oblouky pro města, obce, náměstí, parky a sportoviště. Návrh umístění, projektová podpora, Smart řízení a servis.',
       keywords: 'mlžná brána pro města, mlžné brány pro obce, mlžná brána náměstí, mlžící brána, ochlazovací brána, veřejný prostor',
       canonicalPath: '/mlzne-brany',
       jsonLd: {
@@ -58,10 +58,12 @@ export default function MlzneBrany() {
 
   return (
     <main className="bg-white pt-16">
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
+      <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
+        <img src="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/d2ed069f8_mlzne-brany-a-portaly---mlzidla.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,19,29,.94)_6%,rgba(7,19,29,.74)_55%,rgba(7,19,29,.25)_100%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <p className="font-mono text-xs uppercase tracking-[.2em] text-accent">MLŽNÉ BRÁNY · MĚSTA A OBCE · VEŘEJNÝ PROSTOR</p>
-          <h1 className="mt-5 max-w-5xl font-heading text-5xl leading-[.98] tracking-[-.03em] sm:text-6xl lg:text-7xl">Mlžné brány pro města, obce a veřejný prostor.</h1>
+          <h1 className="mt-5 max-w-5xl font-heading text-5xl leading-[.98] tracking-[-.03em] sm:text-6xl lg:text-7xl">Mlžné brány a oblouky pro města, obce a veřejný prostor.</h1>
           <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/72">Navrhujeme nerezové průchozí mlžné zóny pro náměstí, parky, promenády, školy a sportovní areály. Tvar, rozměr, umístění a provoz řešíme podle konkrétního místa a pohybu lidí.</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>

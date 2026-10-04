@@ -7,51 +7,51 @@ import Logo from '@/components/layout/Logo';
 import { trackNewsletterSignup } from '@/lib/ga4';
 
 const trustItems = [
-  { icon: Droplets, label: 'Vodní mlha pro veřejný prostor', text: 'Mlžítka pro města, parky, sportoviště i rezidenční zahrady.' },
-  { icon: Gauge, label: 'Automatizace SUPLA', text: 'Scénáře podle času, teploty, počasí a provozního režimu.' },
-  { icon: ThermometerSun, label: 'Návrh podle místa', text: 'Vizualizace, doporučení produktu a technické podklady na vyžádání.' },
-];
+{ icon: Droplets, label: 'Vodní mlha pro veřejný prostor', text: 'Mlžítka pro města, parky, sportoviště i rezidenční zahrady.' },
+{ icon: Gauge, label: 'Automatizace SUPLA', text: 'Scénáře podle času, teploty, počasí a provozního režimu.' },
+{ icon: ThermometerSun, label: 'Návrh podle místa', text: 'Vizualizace, doporučení produktu a technické podklady na vyžádání.' }];
+
 
 const columns = [
-  {
-    title: 'Produkty',
-    links: [
-      ['Městská mlžítka', '/mestske-mlzitka'],
-      ['Zahradní mlžítka', '/zahradni-mlzitka'],
-      ['Zakázková výroba', '/zakazkova-mlzitka'],
-      ['Kompletní katalog', '/katalog-mlzitek'],
-    ],
-  },
-  {
-    title: 'Řešení',
-    links: [
-      ['Automatizace', '/smart-ovladani'],
-      ['Jak funguje mlžení', '/jak-to-funguje'],
-      ['AI vizualizace', '/ai-vizualizace'],
-      ['Kalkulačka projektu', '/kalkulacka'],
-    ],
-  },
-  {
-    title: 'Inspirace',
-    links: [
-      ['Reference', '/reference'],
-      ['Města a obce', '/mlzitka-pro-mesta-obce'],
-      ['Parky a hřiště', '/kategorie/parky-hriste'],
-      ['Blog & novinky', '/blog'],
-    ],
-  },
-  {
-    title: 'Podpora & firma',
-    links: [
-      ['Ke stažení', '/ke-stazeni'],
-      ['Servis a údržba', '/servis-udrzba'],
-      ['Časté dotazy', '/faq'],
-      ['O nás', '/o-nas'],
-      ['Kontakt', '/kontakt'],
-      ['Připojit AI asistenta', '/connect'],
-    ],
-  },
-];
+{
+  title: 'Produkty',
+  links: [
+  ['Městská mlžítka', '/mestske-mlzitka'],
+  ['Zahradní mlžítka', '/zahradni-mlzitka'],
+  ['Zakázková výroba', '/zakazkova-mlzitka'],
+  ['Kompletní katalog', '/katalog-mlzitek']]
+
+},
+{
+  title: 'Řešení',
+  links: [
+  ['Automatizace', '/smart-ovladani'],
+  ['Jak funguje mlžení', '/jak-to-funguje'],
+  ['AI vizualizace', '/ai-vizualizace'],
+  ['Kalkulačka projektu', '/kalkulacka']]
+
+},
+{
+  title: 'Inspirace',
+  links: [
+  ['Reference', '/reference'],
+  ['Města a obce', '/mlzitka-pro-mesta-obce'],
+  ['Parky a hřiště', '/kategorie/parky-hriste'],
+  ['Blog & novinky', '/blog']]
+
+},
+{
+  title: 'Podpora & firma',
+  links: [
+  ['Ke stažení', '/ke-stazeni'],
+  ['Servis a údržba', '/servis-udrzba'],
+  ['Časté dotazy', '/faq'],
+  ['O nás', '/o-nas'],
+  ['Kontakt', '/kontakt'],
+  ['Připojit AI asistenta', '/connect']]
+
+}];
+
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -82,15 +82,15 @@ export default function Footer() {
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 to="/poptavka"
-                className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-cyan px-5 py-3 text-sm font-semibold text-slate-950 transition-transform duration-300 hover:-translate-y-0.5"
-              >
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-cyan px-5 py-3 text-sm font-semibold text-slate-950 transition-transform duration-300 hover:-translate-y-0.5">
+                
                 Poptat projekt
                 <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
               </Link>
               <Link
                 to="/reference"
-                className="inline-flex min-h-11 items-center rounded-full border border-white/18 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white"
-              >
+                className="inline-flex min-h-11 items-center rounded-full border border-white/18 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white">
+                
                 Prohlédnout realizace
               </Link>
             </div>
@@ -115,9 +115,9 @@ export default function Footer() {
                 href="https://mlzidla-vizualizator-prostoru.duchjakubghost.chatgpt.site"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex min-h-20 items-center gap-4 rounded-2xl border border-cyan/25 bg-white/[.045] p-4 transition-colors hover:border-cyan/60 hover:bg-white/[.08] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
-                aria-label="Aplikace Vizualizátor prostoru — soukromý náhled, otevře se v novém okně"
-              >
+                className="group flex min-h-20 items-center gap-4 rounded-2xl border border-cyan/25 bg-white/[.045] p-4 transition-colors hover:border-cyan/60 hover:bg-white/[.08] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan hidden"
+                aria-label="Aplikace Vizualizátor prostoru — soukromý náhled, otevře se v novém okně">
+                
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan/15 text-cyan">
                   <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><path d="m7 15 3-4 3 3 2-2 3 4M15 7h.01" /></svg>
                 </span>
@@ -134,8 +134,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex min-h-20 items-center gap-4 rounded-2xl border border-white/12 bg-white/[.035] p-4 transition-colors hover:border-white/28 hover:bg-white/[.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
-                aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně"
-              >
+                aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně">
+                
                 <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[.06] text-[10px] font-black tracking-[-.04em] text-white">
                   HT
                   <motion.span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-cyan shadow-[0_0_18px_rgba(38,198,233,.85)]" animate={{ scale: [1, 1.28, 1], opacity: [0.78, 1, 0.78] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} />
@@ -166,14 +166,14 @@ export default function Footer() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.42, delay: columnIndex * 0.05 }}
-                  className="border-t border-white/10 py-1 md:pt-4"
-                >
+                  className="border-t border-white/10 py-1 md:pt-4">
+                  
                   <button
                     type="button"
                     onClick={() => setOpenColumn(isOpen ? null : columnIndex)}
                     className="flex w-full items-center justify-between py-4 text-left md:pointer-events-none md:py-0"
-                    aria-expanded={isOpen}
-                  >
+                    aria-expanded={isOpen}>
+                    
                     <span className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">{column.title}</span>
                     <ChevronDown size={16} className={`text-white/55 transition-transform duration-300 md:hidden ${isOpen ? 'rotate-180' : ''}`} />
                   </button>
@@ -181,37 +181,37 @@ export default function Footer() {
                     initial={false}
                     animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden md:!h-auto md:!opacity-100"
-                  >
+                    className="overflow-hidden md:!h-auto md:!opacity-100">
+                    
                     <div className="space-y-3.5 pb-5 md:pb-0 md:pt-5">
-                      {column.links.map(([label, to]) => (
-                        <Link
-                          key={label}
-                          to={to}
-                          className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white"
-                        >
+                      {column.links.map(([label, to]) =>
+                      <Link
+                        key={label}
+                        to={to}
+                        className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white">
+                        
                           <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full">{label}</span>
                           <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0 group-hover:opacity-60" />
                         </Link>
-                      ))}
+                      )}
                     </div>
                   </motion.div>
-                </motion.div>
-              );
+                </motion.div>);
+
             })}
           </nav>
         </div>
 
         <div className="grid gap-3 border-b border-white/10 py-7 md:grid-cols-3">
-          {trustItems.map(({ icon: Icon, label, text }, index) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{ duration: 0.42, delay: index * 0.06 }}
-              className="group rounded-2xl border border-white/10 bg-white/[.035] p-4 transition hover:-translate-y-0.5 hover:border-cyan/35 hover:bg-white/[.06]"
-            >
+          {trustItems.map(({ icon: Icon, label, text }, index) =>
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.42, delay: index * 0.06 }}
+            className="group rounded-2xl border border-white/10 bg-white/[.035] p-4 transition hover:-translate-y-0.5 hover:border-cyan/35 hover:bg-white/[.06]">
+            
               <div className="flex items-start gap-3">
                 <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan/12 text-cyan transition group-hover:scale-105">
                   <Icon size={18} />
@@ -222,7 +222,7 @@ export default function Footer() {
                 </span>
               </div>
             </motion.div>
-          ))}
+          )}
         </div>
 
         <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
@@ -234,24 +234,24 @@ export default function Footer() {
           </div>
 
           <form onSubmit={subscribe} className="flex w-full max-w-md md:w-[360px]">
-            {subscribed ? (
-              <p className="py-3 text-sm font-medium text-cyan">Děkujeme za váš zájem.</p>
-            ) : (
-              <>
+            {subscribed ?
+            <p className="py-3 text-sm font-medium text-cyan">Děkujeme za váš zájem.</p> :
+
+            <>
                 <input
-                  required
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  aria-label="E-mail pro newsletter"
-                  type="email"
-                  placeholder="Váš e-mail"
-                  className="min-w-0 flex-1 rounded-l-xl border border-r-0 border-white/12 bg-white/[.07] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25"
-                />
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                aria-label="E-mail pro newsletter"
+                type="email"
+                placeholder="Váš e-mail"
+                className="min-w-0 flex-1 rounded-l-xl border border-r-0 border-white/12 bg-white/[.07] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25" />
+              
                 <button className="rounded-r-xl bg-cyan px-4 text-slate-950 transition-colors hover:bg-cyan/90" aria-label="Přihlásit k odběru">
                   <ArrowRight size={18} />
                 </button>
               </>
-            )}
+            }
           </form>
         </div>
 
@@ -270,8 +270,8 @@ export default function Footer() {
             <div
               className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[.05] px-3 py-1.5 text-left"
               aria-label="Zabezpečené připojení a kontrola odkazu"
-              title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství."
-            >
+              title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
+              
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 bg-emerald-300/10 text-emerald-200">
                 <ShieldCheck size={13} strokeWidth={1.9} />
               </span>
@@ -299,14 +299,14 @@ export default function Footer() {
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="pointer-events-none relative border-t border-white/[.06] px-3 pb-2 pt-6 sm:px-6 lg:px-8"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
+        
         <div className="mx-auto max-w-[1600px] overflow-hidden">
           <div className="flex select-none items-end justify-center whitespace-nowrap font-heading text-[18vw] font-extrabold leading-[0.72] tracking-[-0.075em] text-white/[.055] sm:text-[15vw] lg:text-[12vw]">
             <span className="text-cyan/[.12]">MLŽ</span><span>IDLA</span><sup className="ml-1 self-start pt-[1.8vw] text-[2.2vw] tracking-normal text-white/[.09]">®</sup>
           </div>
         </div>
       </motion.div>
-    </footer>
-  );
+    </footer>);
+
 }

@@ -129,7 +129,7 @@ export default function GateUseCaseTables() {
 
             {/* Desktop table */}
             <div className="hidden lg:block overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
-              <div className="grid bg-primary text-primary-foreground grid-cols">
+              <div className="grid bg-primary text-primary-foreground grid-cols-4">
                 <div className="px-5 py-4">
                   <span className="font-mono text-xs uppercase tracking-[.16em] text-white/70">Parametr</span>
                 </div>

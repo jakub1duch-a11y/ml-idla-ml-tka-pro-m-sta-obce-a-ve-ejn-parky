@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-<<<<<<< HEAD
-import { Menu, X, ChevronDown } from 'lucide-react';
-import Logo from '@/components/layout/Logo';
-import MobileMenu from '@/components/layout/MobileMenu';
-import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
-import NavDropdown from '@/components/layout/NavDropdown';
-import { PRODUCT_LINKS, CUSTOM_LINK, USAGE_GROUPS, USAGE_LINKS, B2G_LINKS, INFO_LINKS } from '@/components/layout/navData';
-=======
 import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
@@ -57,18 +49,13 @@ const INFO_LINKS = [
 { icon: Download, label: 'Ke stažení a manuály', path: '/ke-stazeni' },
 { icon: PlayCircle, label: 'Videa a živé ukázky', path: '/blog?sekce=videa' }];
 
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
-
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
-<<<<<<< HEAD
-=======
   const [infoOpen, setInfoOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
   const location = useLocation();
   const locale = getLocaleFromPath(location.pathname);
   const internationalCopy = INTERNATIONAL_NAV[locale];
@@ -88,11 +75,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-<<<<<<< HEAD
-  useEffect(() => { setMobileOpen(false); setMegaOpen(false); }, [location]);
-=======
   useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setAccountOpen(false);}, [location]);
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -101,55 +84,15 @@ export default function Header() {
 
   const openMega = () => { clearTimeout(timeoutRef.current); setMegaOpen(true); };
   const closeMega = () => { timeoutRef.current = setTimeout(() => setMegaOpen(false), 150); };
+  const openInfo = () => { clearTimeout(timeoutRef.current); setInfoOpen(true); };
+  const closeInfo = () => { timeoutRef.current = setTimeout(() => setInfoOpen(false), 150); };
+  const toggleMobileMenu = () => { setMobileOpen((v) => !v); setMegaOpen(false); };
 
   return (
     <>
-<<<<<<< HEAD
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro/90 text-white backdrop-blur-xl transition-all duration-500 ease-out ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-2xl shadow-primary/25' : 'shadow-sm'}`}>
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6 lg:gap-8 lg:px-8">
-
-          <Link to="/" className="flex shrink-0 items-center gap-2.5">
-            <Logo size="sm" />
-          </Link>
-
-          <nav className="mx-auto hidden flex-1 items-center justify-center gap-0.5 lg:flex">
-            <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
-              <button onClick={() => setMegaOpen((open) => !open)} aria-expanded={megaOpen}
-                className={`flex items-center gap-1.5 rounded-full px-3.5 py-2.5 text-sm font-medium transition-all xl:px-5 ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:bg-white/10 hover:text-white'}`}>
-                <span className="whitespace-nowrap">Produkty</span> <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
-              </button>
-            </div>
-            <NavDropdown label="Mlžné zóny" links={USAGE_LINKS} width="w-80" />
-            <NavDropdown label="Pro města" links={B2G_LINKS} width="w-80" />
-            <Link to="/reference" className="whitespace-nowrap rounded-full px-3.5 py-2.5 text-sm font-medium text-white/85 transition-all hover:bg-white/10 hover:text-white xl:px-5">Reference</Link>
-            <NavDropdown label="Informace" links={INFO_LINKS} />
-            <Link to="/kontakt" className="whitespace-nowrap rounded-full px-3.5 py-2.5 text-sm font-medium text-white/85 transition-all hover:bg-white/10 hover:text-white xl:px-5">Kontakt</Link>
-          </nav>
-
-          <div className="ml-auto flex items-center gap-2 lg:gap-3">
-            <div className="hidden items-center gap-2 lg:flex">
-              <Link to="/o-nas" className="hidden whitespace-nowrap rounded-full px-3.5 py-2.5 text-sm font-medium text-white/85 transition-all hover:bg-white/10 hover:text-white xl:inline-flex xl:px-5">O společnosti</Link>
-              <Link to="/poptavka" className="btn-metallic-mist px-6 py-2.5 text-sm font-bold">POPTAT CENU</Link>
-            </div>
-            <Link to="/poptavka" className="whitespace-nowrap rounded-full bg-accent px-5 py-2.5 text-[11px] font-bold text-accent-foreground lg:hidden">Popsat projekt</Link>
-            <button onClick={() => { setMobileOpen(!mobileOpen); setMegaOpen(false); }} aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'}
-              className="flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10 lg:hidden">
-              {mobileOpen ? <X size={23} /> : <Menu size={23} />}
-            </button>
-          </div>
-        </div>
-
-        <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)}
-          collections={PRODUCT_LINKS} usageGroups={USAGE_GROUPS} b2gLinks={B2G_LINKS} customLink={CUSTOM_LINK} />
-=======
       {/* Announcement bar */}
-      
 
 
-
-
-
-      
 
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#000000]/[0.85] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
@@ -279,24 +222,13 @@ export default function Header() {
         </div>
 
         {locale === 'cs' && <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />}
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
       </header>
 
       <MobileMenu
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         productLinks={PRODUCT_LINKS}
-<<<<<<< HEAD
-        usageGroups={USAGE_GROUPS}
-        b2gLinks={B2G_LINKS}
-        infoLinks={INFO_LINKS}
-        customLink={CUSTOM_LINK} />
-    </>
-  );
-=======
         locale={locale} />
 
     </>);
-
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 }

@@ -4,26 +4,6 @@ import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
-<<<<<<< HEAD
-import ProductReviews from '@/components/reviews/ProductReviews';
-import ProductHero from '@/components/produkt/ProductHero';
-import ProductStickyFooterBar from '@/components/produkt/ProductStickyFooterBar';
-import OProduktuTab from '@/components/produkt/tabs/OProduktuTab';
-import SpecsTab from '@/components/produkt/tabs/SpecsTab';
-import BenefityTab from '@/components/produkt/tabs/BenefityTab';
-import InstallationTab from '@/components/produkt/tabs/InstallationTab';
-import ZivaUkazkaTab from '@/components/produkt/tabs/ZivaUkazkaTab';
-import DownloadsTab from '@/components/produkt/tabs/DownloadsTab';
-import MistFogEffect from '@/components/produkt/MistFogEffect';
-import ProductContactForm from '@/components/produkt/ProductContactForm';
-import GateComparisonTable from '@/components/produkt/GateComparisonTable';
-import RelatedProductCard from '@/components/produkt/RelatedProductCard';
-import ProductVisualShowcase from '@/components/produkt/ProductVisualShowcase';
-import ProductVariantsSection from '@/components/produkt/ProductVariantsSection';
-import ProductTechnicalDetailSection from '@/components/produkt/ProductTechnicalDetailSection';
-import ProductUseCaseGallery from '@/components/produkt/ProductUseCaseGallery';
-import { getProductVisuals } from '@/components/produkt/productVisuals';
-=======
 import { isArchived } from '@/lib/newMedia';
 import PdHero from '@/components/produkt/new/PdHero';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
@@ -54,7 +34,6 @@ import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
 import PdTeepeeRental from '@/components/produkt/new/PdTeepeeRental';
 import PdTeepeeStudio from '@/components/produkt/new/PdTeepeeStudio';
 import ProductHero from '@/components/ProductHero';
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 
 const VIEW_MODES = new Set(['classic', 'standard', 'new']);
 
@@ -126,30 +105,10 @@ export default function ProduktDetail() {
       {viewMode !== 'new' && <PdScrollProgress />}
       <PdViewModeSwitch mode={viewMode} onChange={setViewMode} />
 
-<<<<<<< HEAD
-      {/* ═══════ HERO ═══════ */}
-      <ProductHero
-        product={product}
-        categoryName={categoryName}
-        allImages={allImages}
-        onOpenLightbox={(i) => setLightbox({ images: allImages, idx: i })}
-        onShowTechnical={() => handleTabClick(TABS[1])} />
-
-      <ProductVisualShowcase slug={product.slug} />
-      <ProductVariantsSection variants={getProductVisuals(product.slug)?.variants} />
-      {getProductVisuals(product.slug) &&
-      <>
-          <ProductTechnicalDetailSection />
-          <ProductUseCaseGallery onOpenLightbox={(i, images) => setLightbox({ images, idx: i })} />
-        </>
-      }
-      
-=======
-      {viewMode === 'classic' && (
-        <>
-          {classicHero}
-          <PdSectionNav product={product} />
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
+{viewMode === 'classic' && (
+  <>
+    {classicHero}
+    <PdSectionNav product={product} />
 
           <div className="sticky top-[116px] z-30 mx-auto max-w-md px-4 py-3 lg:hidden">
             <div className="rounded-[20px] border border-slate-200/80 bg-white/90 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">

@@ -83,15 +83,8 @@ export default function Register() {
       });
       setStep("success");
     } catch (err) {
-<<<<<<< HEAD
-      setError(err.message || "Invalid email or password");
-    } finally {
-      setLoading(false);
-    }
-=======
       setError(err.message || "Ověření se nezdařilo. Zkontrolujte kód a zkuste to znovu.");
     } finally { setLoading(false); }
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
   };
 
   const handleResend = async () => {
@@ -202,67 +195,6 @@ export default function Register() {
           </div>
         </section>
       </div>
-<<<<<<< HEAD
-
-      {error && (
-        <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              autoFocus
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="pl-10 h-12"
-              required
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="password">Heslo</Label>
-            <Link to="/forgot-password" className="text-xs text-primary hover:underline">
-              Forgot password?
-            </Link>
-          </div>
-          <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
-            <Input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="pl-10 h-12"
-              required
-            />
-          </div>
-        </div>
-        <Button type="submit" className="w-full h-12 font-medium" disabled={loading}>
-          {loading ? (
-            <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Přihlašování...
-            </>
-          ) : (
-            "Přihlášení"
-          )}
-        </Button>
-      </form>
-    </AuthLayout>
-=======
     </main>
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
   );
 }

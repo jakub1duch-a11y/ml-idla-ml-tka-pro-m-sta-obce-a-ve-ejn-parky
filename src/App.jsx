@@ -69,13 +69,10 @@ import RedesignSpoluprace from '@/pages/RedesignSpoluprace';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
 import Pronajem from '@/pages/Pronajem';
-<<<<<<< HEAD
-import MlzneBrany from '@/pages/MlzneBrany';
-import Linea from '@/pages/Linea';
-=======
 import Mlhoviste from '@/pages/Mlhoviste';
 import VodniMlha from '@/pages/VodniMlha';
 import MlzneBrany from '@/pages/MlzneBrany';
+import Linea from '@/pages/Linea';
 import CategoryLanding from '@/pages/CategoryLanding';
 import RezidencniMlzeni from '@/pages/RezidencniMlzeni';
 import BendyARPrototype from '@/pages/BendyARPrototype';
@@ -92,7 +89,6 @@ import { ROUTE_MAP, SUPPORTED_LOCALES } from '@/lib/i18n';
 const LOCALIZED_ROUTES = Object.entries(ROUTE_MAP).flatMap(([routeKey, paths]) =>
   SUPPORTED_LOCALES.filter((locale) => locale !== 'cs').map((locale) => ({ routeKey, locale, path: paths[locale] }))
 );
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -208,17 +204,13 @@ const AuthenticatedApp = () => {
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/prezentace/mlzici-prostor-vysledky" element={<PrezentaceMlziciProstor />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
-<<<<<<< HEAD
-        <Route path="/mlzne-brany" element={<MlzneBrany />} />
         <Route path="/linea" element={<Linea />} />
-=======
         <Route path="/domu" element={<Navigate to="/" replace />} />
         <Route path="/hello-world" element={<Navigate to="/" replace />} />
         <Route path="/category/uncategorized" element={<Navigate to="/blog" replace />} />
         <Route path="/product-category/vodni-mlzitka" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/mlzici-brany" element={<Navigate to="/mlzne-brany" replace />} />
         <Route path="/terms-privacy" element={<Navigate to="/gdpr" replace />} />
->>>>>>> 1e28a04f7e4fc88c3c1a6e05f0c05012801eeb4e
       </Route>
       <Route path="/mlzidla" element={<Navigate to="/katalog-mlzitek" replace />} />
       <Route path="/mlzidla/produkt/:id" element={<Navigate to="/katalog-mlzitek" replace />} />

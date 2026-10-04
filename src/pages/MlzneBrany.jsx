@@ -6,18 +6,18 @@ import { base44 } from '@/api/base44Client';
 import GateUseCaseTables from '@/components/produkt/GateUseCaseTables';
 
 const USE_CASES = [
-  { icon: Building2, title: 'Náměstí a pěší zóny', text: 'Průchozí ochlazovací bod pro pobytové plochy, městská centra, předprostory veřejných budov a frekventované pěší trasy.' },
-  { icon: Trees, title: 'Parky a promenády', text: 'Architektonický průchod mlhou pro cesty, odpočinkové zóny a místa, kde se lidé v horkých dnech přirozeně pohybují.' },
-  { icon: Dumbbell, title: 'Sportoviště a areály', text: 'Osvěžení u vstupů, mezi zónami areálu, u tribun, koupališť a dalších míst s vysokou letní návštěvností.' },
-  { icon: School, title: 'Školy a veřejná hřiště', text: 'Průchozí mlžná zóna pro školní areály, venkovní hřiště a veřejné prostory, kde je důležitý přehledný provoz a vhodné umístění.' },
-];
+{ icon: Building2, title: 'Náměstí a pěší zóny', text: 'Průchozí ochlazovací bod pro pobytové plochy, městská centra, předprostory veřejných budov a frekventované pěší trasy.' },
+{ icon: Trees, title: 'Parky a promenády', text: 'Architektonický průchod mlhou pro cesty, odpočinkové zóny a místa, kde se lidé v horkých dnech přirozeně pohybují.' },
+{ icon: Dumbbell, title: 'Sportoviště a areály', text: 'Osvěžení u vstupů, mezi zónami areálu, u tribun, koupališť a dalších míst s vysokou letní návštěvností.' },
+{ icon: School, title: 'Školy a veřejná hřiště', text: 'Průchozí mlžná zóna pro školní areály, venkovní hřiště a veřejné prostory, kde je důležitý přehledný provoz a vhodné umístění.' }];
+
 
 const FEATURES = [
-  { icon: Ruler, title: 'Rozměr podle místa', text: 'Průchozí šířku, výšku, počet trysek i způsob kotvení navrhujeme podle konkrétního provozu a architektury.' },
-  { icon: ShieldCheck, title: 'Nerezová konstrukce', text: 'Odolné venkovní provedení s důrazem na čistý detail, servisní přístup a začlenění do veřejného prostoru.' },
-  { icon: Wifi, title: 'Smart řízení', text: 'Časové plány, teplotní automatika, vzdálené ovládání a další provozní scénáře podle požadavků projektu.' },
-  { icon: Droplets, title: 'Projektová příprava', text: 'Přívod vody, filtraci, servisní přístup, proplach a zazimování řešíme podle konkrétní konfigurace a místa instalace.' },
-];
+{ icon: Ruler, title: 'Rozměr podle místa', text: 'Průchozí šířku, výšku, počet trysek i způsob kotvení navrhujeme podle konkrétního provozu a architektury.' },
+{ icon: ShieldCheck, title: 'Nerezová konstrukce', text: 'Odolné venkovní provedení s důrazem na čistý detail, servisní přístup a začlenění do veřejného prostoru.' },
+{ icon: Wifi, title: 'Smart řízení', text: 'Časové plány, teplotní automatika, vzdálené ovládání a další provozní scénáře podle požadavků projektu.' },
+{ icon: Droplets, title: 'Projektová příprava', text: 'Přívod vody, filtraci, servisní přístup, proplach a zazimování řešíme podle konkrétní konfigurace a místa instalace.' }];
+
 
 export default function MlzneBrany() {
   const [kruh, setKruh] = useState(null);
@@ -35,31 +35,31 @@ export default function MlzneBrany() {
       jsonLd: {
         '@context': 'https://schema.org',
         '@graph': [
-          {
-            '@type': 'Service',
-            name: 'Designové mlžné brány',
-            provider: { '@type': 'Organization', name: 'HolmTec' },
-            areaServed: 'CZ',
-            serviceType: 'Návrh, výroba a instalace nerezových mlžných bran',
-            url: 'https://mlzidla.cz/mlzne-brany'
-          },
-          {
-            '@type': 'FAQPage',
-            mainEntity: [
-              { '@type': 'Question', name: 'Kde se mlžná brána používá?', acceptedAnswer: { '@type': 'Answer', text: 'Mlžné brány se používají na náměstích, v parcích, pěších zónách, u škol, na sportovištích a v dalších veřejných prostorech, kde lidé přirozeně procházejí ochlazovací zónou.' } },
-              { '@type': 'Question', name: 'Lze vyrobit mlžnou bránu na míru?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Rozměr, tvar, počet trysek, kotvení, připojení vody a způsob řízení lze upravit podle konkrétního projektu.' } },
-              { '@type': 'Question', name: 'Lze mlžnou bránu řídit automaticky?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Bránu lze doplnit o Smart řízení podle času, teploty, provozního harmonogramu nebo dalšího zvoleného scénáře.' } }
-            ]
-          }
-        ]
-      },
+        {
+          '@type': 'Service',
+          name: 'Designové mlžné brány',
+          provider: { '@type': 'Organization', name: 'HolmTec' },
+          areaServed: 'CZ',
+          serviceType: 'Návrh, výroba a instalace nerezových mlžných bran',
+          url: 'https://mlzidla.cz/mlzne-brany'
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+          { '@type': 'Question', name: 'Kde se mlžná brána používá?', acceptedAnswer: { '@type': 'Answer', text: 'Mlžné brány se používají na náměstích, v parcích, pěších zónách, u škol, na sportovištích a v dalších veřejných prostorech, kde lidé přirozeně procházejí ochlazovací zónou.' } },
+          { '@type': 'Question', name: 'Lze vyrobit mlžnou bránu na míru?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Rozměr, tvar, počet trysek, kotvení, připojení vody a způsob řízení lze upravit podle konkrétního projektu.' } },
+          { '@type': 'Question', name: 'Lze mlžnou bránu řídit automaticky?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Bránu lze doplnit o Smart řízení podle času, teploty, provozního harmonogramu nebo dalšího zvoleného scénáře.' } }]
+
+        }]
+
+      }
     });
   }, []);
 
   return (
     <main className="bg-white pt-16">
       <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
-        <img src="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/d2ed069f8_mlzne-brany-a-portaly---mlzidla.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6158a8485_generated_image.png" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
         <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,19,29,.94)_6%,rgba(7,19,29,.74)_55%,rgba(7,19,29,.25)_100%)]" />
         <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <p className="font-mono text-xs uppercase tracking-[.2em] text-accent">MLŽNÉ BRÁNY · MĚSTA A OBCE · VEŘEJNÝ PROSTOR</p>
@@ -79,13 +79,13 @@ export default function MlzneBrany() {
           <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">Bránu umisťujeme tam, kde přirozeně navazuje na pěší pohyb a pobyt lidí. Každý návrh posuzujeme podle prostoru, stínu, větru, návštěvnosti a provozních možností města nebo obce.</p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {USE_CASES.map(({ icon: Icon, title, text }) => (
-            <article key={title} className="border border-border bg-white p-7 shadow-sm">
+          {USE_CASES.map(({ icon: Icon, title, text }) =>
+          <article key={title} className="border border-border bg-white p-7 shadow-sm">
               <Icon size={23} className="text-secondary" strokeWidth={1.6} />
               <h3 className="mt-8 font-heading text-2xl text-foreground">{title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
             </article>
-          ))}
+          )}
         </div>
 
         <div className="mt-16 border-t border-border pt-12">
@@ -93,20 +93,20 @@ export default function MlzneBrany() {
           <h2 className="mt-4 max-w-3xl font-heading text-4xl leading-tight text-foreground">Technické řešení podle konkrétní lokality.</h2>
         </div>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map(({ icon: Icon, title, text }) => (
-            <article key={title} className="border border-border bg-slate-50 p-7">
+          {FEATURES.map(({ icon: Icon, title, text }) =>
+          <article key={title} className="border border-border bg-slate-50 p-7">
               <Icon size={23} className="text-secondary" strokeWidth={1.6} />
               <h3 className="mt-8 font-heading text-2xl text-foreground">{title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
             </article>
-          ))}
+          )}
         </div>
       </section>
 
       <GateUseCaseTables />
 
-      {kruh && (
-        <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-10 lg:pb-24">
+      {kruh &&
+      <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-10 lg:pb-24">
           <div className="grid overflow-hidden border border-border bg-white lg:grid-cols-[1.1fr_.9fr]">
             <div className="relative min-h-[360px] bg-slate-100">
               <img src={kruh.image_url} alt="MLŽÍTKO KRUH — kruhový mlžný portál" className="absolute inset-0 h-full w-full object-cover" />
@@ -124,7 +124,7 @@ export default function MlzneBrany() {
             </div>
           </div>
         </section>
-      )}
+      }
 
       <section className="border-y border-border bg-slate-50">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-2 lg:px-10 lg:py-24">
@@ -136,8 +136,8 @@ export default function MlzneBrany() {
             <p>Podle zvolené konfigurace lze bránu navrhnout pro běžný vodovodní řad. Počet trysek, jejich průtok a rozmístění volíme podle požadované intenzity mlhy, šířky průchodu a dostupného tlaku.</p>
             <p>Pro veřejné instalace doporučujeme řešit filtraci, servisní přístup, proplach, zazimování a provozní automatiku už v projektu.</p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <Link to="/vodni-mlha" className="inline-flex items-center gap-2 font-semibold text-primary"><Droplets size={16}/> Vodní mlha <ArrowRight size={15}/></Link>
-              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 font-semibold text-primary"><Wifi size={16}/> Smart řízení <ArrowRight size={15}/></Link>
+              <Link to="/vodni-mlha" className="inline-flex items-center gap-2 font-semibold text-primary"><Droplets size={16} /> Vodní mlha <ArrowRight size={15} /></Link>
+              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 font-semibold text-primary"><Wifi size={16} /> Smart řízení <ArrowRight size={15} /></Link>
             </div>
           </div>
         </div>
@@ -152,6 +152,6 @@ export default function MlzneBrany() {
           <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex shrink-0 items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>
         </div>
       </section>
-    </main>
-  );
+    </main>);
+
 }

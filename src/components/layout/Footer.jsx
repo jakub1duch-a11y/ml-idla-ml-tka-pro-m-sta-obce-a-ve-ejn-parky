@@ -141,8 +141,8 @@ export default function Footer() {
                   <motion.span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-cyan shadow-[0_0_18px_rgba(38,198,233,.85)]" animate={{ scale: [1, 1.28, 1], opacity: [0.78, 1, 0.78] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-white/45">Výroba a zázemí</span>
-                  <span className="mt-1 block text-sm font-semibold text-white">HolmTec.cz</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--background))]">Výroba a zázemí</span>
+                  <span className="mt-1 block font-semibold text-white text-lg uppercase no-underline">HolmTec.cz</span>
                   <span className="mt-1 block leading-5 text-white/62 text-sm">Česká výroba, ohýbání nerezu a technické zázemí MLŽIDLA®</span>
                 </span>
                 <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

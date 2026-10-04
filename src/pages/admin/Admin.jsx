@@ -159,21 +159,21 @@ export default function Admin() {
     <div className="min-h-screen bg-ink flex flex-col md:flex-row">
       <AdminMobileNav tabs={TABS} activeTab={activeTab} onChange={changeTab} />
       {/* Sidebar */}
-      <div className="hidden w-64 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
+      <div className="sticky top-0 h-screen hidden w-64 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
         <div className="px-5 py-6 border-b border-white/8">
-          <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-1">Admin</p>
+          <p className="text-xs font-mono text-white/70 tracking-widest uppercase mb-1">Admin</p>
           <p className="text-white text-sm font-medium truncate">{user.full_name || user.email}</p>
         </div>
         <nav className="flex-1 overflow-y-auto p-3">
           {TAB_GROUPS.map((group) => (
             <div key={group.label} className="mb-4 last:mb-0">
-              <p className="mb-1.5 px-3 font-mono text-[9px] uppercase tracking-[.16em] text-white/20">{group.label}</p>
+              <p className="mb-1.5 px-3 font-mono text-[9px] uppercase tracking-[.16em] text-white/65">{group.label}</p>
               <div className="space-y-1">
                 {group.ids.map((tabId) => TABS.find((item) => item.id === tabId)).filter(Boolean).map((tab) => {
                   const Icon = tab.icon;
                   return (
                     <button key={tab.id} onClick={() => changeTab(tab.id)}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeTab === tab.id ? 'bg-cyan/10 text-cyan border border-cyan/20' : 'text-white/75 hover:text-white hover:bg-white/5'}`}>
                       <Icon size={16} />
                       {tab.label}
                       {activeTab === tab.id && <ChevronRight size={12} className="ml-auto" />}
@@ -185,7 +185,7 @@ export default function Admin() {
           ))}
         </nav>
         <div className="p-3 border-t border-white/8 space-y-1">
-          <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />
+          <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/75 hover:text-white hover:bg-white/5 transition-all" />
           <button onClick={() => navigate('/obchodni-nabidky')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
             <BriefcaseBusiness size={16} /> Sales Hub

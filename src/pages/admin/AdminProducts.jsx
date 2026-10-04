@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Loader, Image, Images, ArrowUp, ArrowDown, Star, Link2, Video, Upload } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { base44, productAdminEntity } from '@/api/base44Client';
+import { isArchived } from '@/lib/newMedia';
 import ProductAnalyticsPanel from '@/components/admin/products/ProductAnalyticsPanel';
 
-const EMPTY = { name: '', slug: '', short_description: '', description: '', image_url: '', gallery_urls: [], video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
+const EMPTY = { name: '', slug: '', category_id: '', seo_title: '', seo_description: '', short_description: '', description: '', image_url: '', gallery_urls: [], video_url: '', water_consumption: '', micron_size: '', pressure: '', coverage_area: '', material: '', power_supply: '', price_from: '', featured: false };
 
 const VARIANT_PARENTS = {
   'bendy-radius-s': 'mlzitko-bendy',
   'bendy-radius-m': 'mlzitko-bendy',
   'bendy-radius-l': 'mlzitko-bendy',
   'bendy-field': 'mlzitko-bendy',
-  'linea-solo': 'linea-mlzitko',
-  'linea-gate': 'linea-mlzitko',
-  'linea-avenue': 'linea-mlzitko',
 };
 
 function slugify(str) {
@@ -20,6 +18,10 @@ function slugify(str) {
 }
 
 export default function AdminProducts() {
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState('');
+  const [query, setQuery] = useState('');
+  const [showArchived, setShowArchived] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null); // null | 'new' | product object
@@ -32,13 +34,17 @@ export default function AdminProducts() {
 
   const load = () => {
     setLoading(true);
-    base44.entities.Product.list().then(setProducts).finally(() => setLoading(false));
+    setError('');
+    Promise.all([productAdminEntity.list('name', 200), base44.entities.ProductCategory.list('order', 100)])
+      .then(([items, groups]) => { setProducts(items); setCategories(groups); })
+      .catch(() => setError('Katalog se nepodařilo načíst. Zkuste obnovit seznam.'))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {load();}, []);
 
-  const startEdit = (p) => {setEditing(p);setForm({ ...EMPTY, ...(p || {}), gallery_urls: Array.isArray(p?.gallery_urls) ? p.gallery_urls : [] });setGalleryUrl('');};
-  const startNew = () => {setEditing('new');setForm(EMPTY);setGalleryUrl('');};
+  const startEdit = (p) => {setError('');setEditing(p);setForm({ ...EMPTY, ...(p || {}), gallery_urls: Array.isArray(p?.gallery_urls) ? p.gallery_urls : [] });setGalleryUrl('');};
+  const startNew = () => {setError('');setEditing('new');setForm(EMPTY);setGalleryUrl('');};
   const cancel = () => {setEditing(null);setForm(EMPTY);setGalleryUrl('');};
 
   const set = (field) => (e) => {
@@ -56,7 +62,7 @@ export default function AdminProducts() {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const upload = await base44.integrations.Core.UploadFile({ file }).catch(() => null);
+    const upload = await base44.integrations.Core.UploadFile({ file }).catch(() => { setError('Soubor se nepodařilo nahrát. Zkuste to znovu.'); return null; });
     if (upload?.file_url) setForm((f) => ({ ...f, image_url: upload.file_url }));
     setUploading(false);
   };
@@ -74,7 +80,7 @@ export default function AdminProducts() {
     setGalleryUploading(true);
     const uploaded = [];
     for (const file of files) {
-      const result = await base44.integrations.Core.UploadFile({ file }).catch(() => null);
+      const result = await base44.integrations.Core.UploadFile({ file }).catch(() => { setError('Soubor se nepodařilo nahrát. Zkuste to znovu.'); return null; });
       if (result?.file_url) uploaded.push(result.file_url);
     }
     if (uploaded.length) {
@@ -88,7 +94,7 @@ export default function AdminProducts() {
     const file = e.target.files?.[0];
     if (!file) return;
     setVideoUploading(true);
-    const result = await base44.integrations.Core.UploadFile({ file }).catch(() => null);
+    const result = await base44.integrations.Core.UploadFile({ file }).catch(() => { setError('Soubor se nepodařilo nahrát. Zkuste to znovu.'); return null; });
     if (result?.file_url) setForm((f) => ({ ...f, video_url: result.file_url }));
     e.target.value = '';
     setVideoUploading(false);
@@ -111,21 +117,30 @@ export default function AdminProducts() {
   }));
 
   const save = async () => {
-    setSaving(true);
-    if (editing === 'new') {
-      await base44.entities.Product.create(form);
-    } else {
-      await base44.entities.Product.update(editing.id, form);
+    if (!form.name.trim() || !form.slug.trim() || !form.category_id) {
+      setError('Vyplňte název, slug a kategorii produktu.'); return;
     }
-    setSaving(false);
-    cancel();
-    load();
+    if (products.some(p => p.slug === form.slug.trim() && p.id !== editing?.id)) {
+      setError('Tento slug už používá jiný produkt. Zvolte jedinečnou adresu.'); return;
+    }
+    setSaving(true); setError('');
+    try {
+      const data = Object.fromEntries(Object.entries(form).filter(([key]) => !['id', 'created_date', 'updated_date', 'created_by', 'is_sample'].includes(key)));
+      data.name = form.name.trim(); data.slug = form.slug.trim();
+      if (form.price_from === '') delete data.price_from;
+      else data.price_from = Number(form.price_from);
+      if (editing === 'new') await base44.entities.Product.create(data);
+      else await base44.entities.Product.update(editing.id, data);
+      cancel(); load();
+    } catch {
+      setError('Produkt se nepodařilo uložit. Změny zůstávají ve formuláři.');
+    } finally { setSaving(false); }
   };
 
   const remove = async (id) => {
     if (!confirm('Opravdu smazat produkt?')) return;
-    await base44.entities.Product.delete(id);
-    load();
+    try { await base44.entities.Product.delete(id); load(); }
+    catch { setError('Produkt se nepodařilo smazat. Zkuste to znovu.'); }
   };
 
   const inputCls = 'w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-white/25 focus:border-cyan/40 focus:outline-none';
@@ -149,41 +164,45 @@ export default function AdminProducts() {
         });
       }
     });
-    return result;
+    return result.filter(({ product }) => (showArchived || !isArchived(product.slug)) && `${product.name} ${product.slug}`.toLocaleLowerCase('cs-CZ').includes(query.toLocaleLowerCase('cs-CZ')));
   })();
 
   if (editing) return (
-    <div className="p-6 max-w-3xl">
+    <div className="p-4 sm:p-6 max-w-3xl">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-white text-lg font-medium">{editing === 'new' ? 'Nový produkt' : `Editace: ${editing.name}`}</h2>
-        <button onClick={cancel} className="text-white/40 hover:text-white"><X size={20} /></button>
+        <button onClick={cancel} className="text-white/70 hover:text-white"><X size={20} /></button>
       </div>
+      {error && <p role="alert" className="mb-4 rounded-xl bg-red-500/10 p-3 text-sm text-red-200">{error}</p>}
       <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <label className="block text-sm text-white/80">Kategorie *
+          <select aria-label="Kategorie produktu" value={form.category_id || ''} onChange={set('category_id')} className={inputCls + ' mt-2'}><option value="" className="bg-slate-950">Vyberte kategorii</option>{categories.map(c => <option key={c.id} value={c.id} className="bg-slate-950">{c.name}</option>)}</select>
+        </label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Název *</label>
+            <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">Název *</label>
             <input value={form.name} onChange={set('name')} placeholder="OSTEV" className={inputCls} />
           </div>
           <div>
-            <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Slug *</label>
+            <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">Slug *</label>
             <input value={form.slug} onChange={set('slug')} placeholder="ostev-mlzny-strom" className={inputCls} />
           </div>
         </div>
         <div>
-          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Krátký popis</label>
+          <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">Krátký popis</label>
           <input value={form.short_description} onChange={set('short_description')} className={inputCls} />
         </div>
         <div>
-          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Popis</label>
+          <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">Popis</label>
           <textarea value={form.description} onChange={set('description')} rows={4} className={inputCls + ' resize-none'} />
         </div>
         <div>
-          <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Hlavní fotografie</label>
+          <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">Hlavní fotografie</label>
           <div className="flex gap-3 items-start">
             {form.image_url && <div className="w-20 h-14 rounded-lg border border-white/10 overflow-hidden bg-slate-800"><img src={form.image_url} alt="" className="w-full h-full object-contain" /></div>}
             <div className="flex-1 space-y-2">
               <input value={form.image_url} onChange={set('image_url')} placeholder="URL fotografie" className={inputCls} />
-              <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/40 cursor-pointer hover:text-white hover:border-white/30 transition-all w-fit">
+              <label className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-white/70 cursor-pointer hover:text-white hover:border-white/30 transition-all w-fit">
                 {uploading ? <Loader size={12} className="animate-spin" /> : <Image size={12} />}
                 {uploading ? 'Nahrávám...' : 'Nahrát soubor'}
                 <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
@@ -198,7 +217,7 @@ export default function AdminProducts() {
                 <Images size={16} className="text-cyan" />
                 <h3 className="text-sm font-semibold">Galerie produktu</h3>
               </div>
-              <p className="mt-1 text-xs leading-5 text-white/35">Přidávejte fotografie, měňte pořadí a jedním kliknutím nastavte hlavní fotografii produktu.</p>
+              <p className="mt-1 text-xs leading-5 text-white/70">Přidávejte fotografie, měňte pořadí a jedním kliknutím nastavte hlavní fotografii produktu.</p>
             </div>
             <label className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full border border-cyan/25 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan transition hover:bg-cyan/15">
               {galleryUploading ? <Loader size={13} className="animate-spin" /> : <Plus size={13} />}
@@ -209,7 +228,7 @@ export default function AdminProducts() {
 
           <div className="mb-4 flex flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
-              <Link2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25" />
+              <Link2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/70" />
               <input
                 value={galleryUrl}
                 onChange={(e) => setGalleryUrl(e.target.value)}
@@ -256,13 +275,13 @@ export default function AdminProducts() {
             <Video size={16} className="text-cyan" />
             <h3 className="text-sm font-semibold">Video produktu</h3>
           </div>
-          <p className="mb-4 text-xs leading-5 text-white/35">Nahrajte produktové video přímo z počítače/telefonu, nebo vložte jeho URL. Po uložení se video zobrazí v detailu produktu.</p>
+          <p className="mb-4 text-xs leading-5 text-white/70">Nahrajte produktové video přímo z počítače/telefonu, nebo vložte jeho URL. Po uložení se video zobrazí v detailu produktu.</p>
 
           {form.video_url && (
             <div className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-black/20">
               <video src={form.video_url} controls playsInline preload="metadata" className="aspect-video w-full bg-black object-contain" />
               <div className="flex items-center justify-between gap-3 border-t border-white/10 px-3 py-2">
-                <span className="truncate font-mono text-[10px] text-white/35">{form.video_url}</span>
+                <span className="truncate font-mono text-[10px] text-white/70">{form.video_url}</span>
                 <button type="button" onClick={() => setForm((f) => ({ ...f, video_url: '' }))} className="shrink-0 rounded-lg border border-red-400/15 px-2.5 py-1.5 text-[10px] font-semibold text-red-300/70 hover:border-red-400/35 hover:text-red-300">Odebrat</button>
               </div>
             </div>
@@ -270,7 +289,7 @@ export default function AdminProducts() {
 
           <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
-              <Link2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25" />
+              <Link2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/70" />
               <input value={form.video_url || ''} onChange={set('video_url')} placeholder="https://.../video.mp4" className={`${inputCls} pl-9`} />
             </div>
             <label className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-cyan/25 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan transition hover:bg-cyan/15">
@@ -283,12 +302,12 @@ export default function AdminProducts() {
         <div className="grid grid-cols-3 gap-4">
           {[['coverage_area', 'Výška / rozměry'], ['water_consumption', 'Spotřeba vody'], ['pressure', 'Tlak'], ['micron_size', 'Trysky (μm)'], ['material', 'Materiál'], ['power_supply', 'Napájení']].map(([field, label]) =>
           <div key={field}>
-              <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">{label}</label>
+              <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">{label}</label>
               <input value={form[field] || ''} onChange={set(field)} className={inputCls} />
             </div>
           )}
           <div>
-            <label className="text-xs font-mono text-white/40 uppercase tracking-widest block mb-1">Cena od (Kč)</label>
+            <label className="text-xs font-mono text-white/70 uppercase tracking-widest block mb-1">Cena od (Kč)</label>
             <input type="number" value={form.price_from || ''} onChange={set('price_from')} placeholder="např. 89000" className={inputCls} />
           </div>
         </div>
@@ -298,7 +317,7 @@ export default function AdminProducts() {
         </label>
         {editing !== 'new' && editing?.slug && <ProductAnalyticsPanel slug={editing.slug} />}
         <div className="flex gap-3 pt-2">
-          <button onClick={save} disabled={saving || !form.name || !form.slug}
+          <button onClick={save} disabled={saving || !form.name || !form.slug || !form.category_id || uploading || galleryUploading || videoUploading}
           className="flex items-center gap-2 px-5 py-2.5 bg-cyan text-ink text-sm font-bold rounded-full hover:bg-cyan/90 transition-all disabled:opacity-50">
             {saving ? <Loader size={14} className="animate-spin" /> : <Save size={14} />} Uložit
           </button>
@@ -316,6 +335,13 @@ export default function AdminProducts() {
           <Plus size={14} /> Přidat produkt
         </button>
       </div>
+      {error && <p role="alert" className="my-4 rounded-xl bg-red-500/10 p-3 text-sm text-red-200">{error}</p>}
+      <div className="mb-5 flex flex-wrap items-center gap-3">
+        <input aria-label="Hledat produkt" value={query} onChange={e => setQuery(e.target.value)} placeholder="Hledat název nebo slug…" className={inputCls + ' max-w-sm min-h-11'} />
+        <label className="flex min-h-11 items-center gap-2 text-sm text-white/80"><input type="checkbox" checked={showArchived} onChange={e => setShowArchived(e.target.checked)} />Zobrazit archivované</label>
+        <button type="button" onClick={load} className="min-h-11 rounded-xl border border-white/20 px-4 text-sm text-white">Obnovit</button>
+        <span className="text-sm text-white/75">{orderedProducts.length} produktů</span>
+      </div>
       {loading ?
       <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div> :
 
@@ -329,14 +355,14 @@ export default function AdminProducts() {
                   {p.name}
                   {isVariant && <span className="text-[9px] font-mono text-cyan/40 border border-cyan/20 px-1.5 py-0.5 rounded">VARIANTA</span>}
                 </p>
-                <p className="text-white/35 text-xs font-mono truncate">/produkt/{p.slug}</p>
+                <p className="text-white/70 text-xs font-mono truncate">/produkt/{p.slug}</p>
               </div>
               {p.featured && <span className="text-[10px] font-mono text-cyan border border-cyan/30 px-2 py-0.5 rounded-full">Featured</span>}
               <div className="flex gap-2">
-                <button onClick={() => startEdit(p)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all">
+                <button aria-label={`Upravit ${p.name}`} onClick={() => startEdit(p)} className="w-11 h-11 rounded-lg border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 transition-all">
                   <Edit2 size={13} />
                 </button>
-                <button onClick={() => remove(p.id)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-red-400 hover:border-red-400/30 transition-all">
+                <button aria-label={`Smazat ${p.name}`} onClick={() => remove(p.id)} className="w-11 h-11 rounded-lg border border-white/10 flex items-center justify-center text-white/70 hover:text-red-400 hover:border-red-400/30 transition-all">
                   <Trash2 size={13} />
                 </button>
               </div>

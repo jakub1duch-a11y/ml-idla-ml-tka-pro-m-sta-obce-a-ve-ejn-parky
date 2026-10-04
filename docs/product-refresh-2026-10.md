@@ -1,0 +1,32 @@
+# Product and admin refresh — 4 October 2026
+
+## Application and source
+
+Base44 app: `6a3ee88c10959cd3588c4d68` (Mlžidla & mlžítka pro města, obce a veřejné parky).
+Source: `jakub1duch-a11y/ml-idla-ml-tka-pro-m-sta-obce-a-ve-ejn-parky`.
+
+The authenticated Base44 MCP connection successfully updated and read back the short description, long description, SEO title and SEO description of 31 non-archived Product records. Archived duplicate records were preserved. Copy is written for customers, distinguishes the shapes and uses of the products, and removes internal visualization instructions and unsubstantiated promises of dry surfaces or guaranteed cooling.
+
+## Website changes
+
+- One homepage hero, using the existing BENDY photo-motion video and an illustrative-visualization label.
+- Product cards before categories; the shared product overview defaults to a grid.
+- One product-detail layout with the product's main image as header background, prominent name, inquiry CTA, sanitized long description, gallery, specifications, configuration, installation, smart control, FAQ and references.
+- Mobile gallery uses a responsive grid, separates rendered concepts from product photos and supports explicit fullscreen viewing with keyboard controls and focus restoration.
+- Reusable SUPLA presentation for homepage and detail: conditional features without universal hardware or telemetry claims.
+- Dashboard shortcuts to products, media, inquiries, references, pages and integrations; catalog completeness checks, refresh and readable unavailable-analytics states.
+- Admin product list includes variants independently of the public catalog filter. Product creation includes the required category. Failed saves preserve form content and display an error. Archive filter, search, refresh and 44px edit/delete targets.
+
+The two earlier SUPLA JPG attachments were unavailable in this workspace. The SUPLA component uses the existing website visual, not those missing attachments.
+
+## Verification
+
+Production build succeeds. Targeted ESLint for changed source files succeeds. Existing repository-wide lint and TypeScript issues require separate maintenance; the latter includes diagnostics in GSAP dependencies. Browser checks use local mocked API responses, not production admin credentials. At 390px the homepage, catalog and product detail have no horizontal overflow; the image dialog opens and closes with Escape. Admin checks confirm that category is required, failed saves retain the form, and the dashboard product shortcut navigates to the correct tab. Existing browser console findings include a WebAssembly/CSP diagnostic and nested-link warnings outside these edits.
+
+## Publishing and connection boundaries
+
+The app's reported `git_remote_source` was `s3`, so current native GitHub synchronization is not verified. The Base44 source-file MCP bridge rejected access with `PREMIUM_REQUIRED` and requires Builder or above. A GitHub branch/PR is not proof that Mlzidla.cz has been deployed.
+
+To publish this change, use the linked Base44 application's dashboard to connect/import the correct GitHub repository and publish the reviewed source. Verify the live product page, catalog and homepage afterwards. The runtime GitHub API connector is separate from source synchronization. Initiation was rejected because the app requires a paid plan with Connectors capability; no new GitHub connector was established.
+
+Local frontend setup uses the existing Base44 SDK and Vite integration. Set the public app identifier and app base URL in ignored `.env.local`, as documented in README. Keep tokens and service-role credentials out of frontend code and git. No new public write endpoint or device-control integration is introduced.

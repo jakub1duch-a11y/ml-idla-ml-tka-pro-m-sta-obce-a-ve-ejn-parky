@@ -1,9 +1,8 @@
 import React from 'react';
-import { getProductDetailConfig } from '@/lib/productDetailConfig';
+import DOMPurify from 'dompurify';
 
 export default function PdDescription({ product }) {
-  const detailConfig = getProductDetailConfig(product);
-  const intro = detailConfig.intro || product.short_description;
+  const intro = product.short_description;
 
   const techTags = [
     product.material,
@@ -24,19 +23,16 @@ export default function PdDescription({ product }) {
               // {product.name}
             </p>
             <h2 className="mt-4 font-heading text-2xl font-bold leading-tight tracking-[-.02em] text-[#0A1628] sm:text-3xl lg:text-[2.5rem]">
-              Reálné chlazení jemnou vodní mlhou
+              Design a využití
             </h2>
           </div>
 
           {/* Right: Description body */}
           <div className="text-[15px] leading-[1.75] text-[#0A1628]/70 lg:text-base">
-            {intro && <p className="font-medium text-[#0A1628]">{intro}</p>}
-            {product.short_description && product.short_description !== intro && (
-              <p className="mt-4">{product.short_description}</p>
-            )}
-            {!intro && (
-              <p>Česká zakázková výroba nerezových mlžítek pro veřejný prostor. Každý projekt je originál navržený na míru prostoru, rozpočtu a záměru.</p>
-            )}
+            {product.description ? (
+              <div className="[&_h2]:mb-4 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-slate-950 [&_h3]:mt-6 [&_h3]:font-bold [&_h3]:text-slate-950 [&_p]:mt-3 [&_ul]:list-disc [&_ul]:pl-5 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }} />
+            ) : <p>{intro || 'Navrhneme řešení podle prostoru a požadovaného provozu.'}</p>}
+
           </div>
         </div>
 

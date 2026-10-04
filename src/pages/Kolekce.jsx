@@ -13,7 +13,6 @@ import { useSearchParams } from 'react-router-dom';
 import FamilyNav from '@/components/kolekce/FamilyNav';
 import LineChips from '@/components/kolekce/LineChips';
 import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
-import GatesSlider from '@/components/kolekce/GatesSlider';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import CatalogAudience from '@/components/kolekce/CatalogAudience';
@@ -88,7 +87,6 @@ export default function Kolekce() {
   return (
     <div className="catalog-premium min-h-screen overflow-x-clip bg-white">
       {selectedCategory ? <section className="relative overflow-hidden bg-slate-950 px-5 pb-16 pt-32 text-white lg:px-10"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-center"><div><p className="text-xs uppercase tracking-widest text-cyan-300">Kategorie produktů</p><h1 className="mt-4 font-heading text-4xl sm:text-5xl">{selectedCategory.name}</h1><p className="mt-5 max-w-xl leading-7 text-slate-200">{selectedCategory.description}</p><a href="#catalog" className="mt-7 inline-flex min-h-11 items-center rounded-full bg-cyan-300 px-6 font-semibold text-slate-950">Prohlédnout produkty</a></div>{selectedCategory.image_url && <div className="aspect-[4/3] max-h-[440px] overflow-hidden rounded-2xl bg-slate-900"><img src={selectedCategory.image_url} alt={selectedCategory.name} className="h-full w-full object-cover object-center"/></div>}</div></section> : <KolekceHero />}
-      {!selectedCategory && <ProductCategoryExplorer />}
       <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
 
       <div id="catalog" className="catalog-pattern relative mx-auto max-w-[1500px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
@@ -136,13 +134,13 @@ export default function Kolekce() {
           <ProductExperience products={displayed}>
 <AnimatePresence mode="popLayout"><motion.div layout className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
             {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
-            {displayed.length === 0 && <p className="col-span-3 py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
+            {displayed.length === 0 && <p className="col-span-full py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
           </motion.div></AnimatePresence>
 </ProductExperience>
         )}
       </div>
 
-      <GatesSlider />
+      {!selectedCategory && <ProductCategoryExplorer />}
       <FeaturesBenefitsSection />
       <LiveDemoSection />
       <CatalogAudience />

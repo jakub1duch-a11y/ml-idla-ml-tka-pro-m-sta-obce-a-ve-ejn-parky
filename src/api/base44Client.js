@@ -16,7 +16,9 @@ const rawBase44 = createClient({
 // Product records are stored with their original source media in Base44.
 // The website transparently resolves those URLs to optimized WebP/WebM files
 // generated in public/media/optimized. Transparent product cut-outs remain original.
-const productEntity = rawBase44.entities.Product;
+// Admin lists need all variants and archives; authorization remains enforced by Base44.
+export const productAdminEntity = rawBase44.entities.Product;
+const productEntity = productAdminEntity;
 const HIDDEN_STANDALONE_PRODUCT_SLUGS = new Set([
   'archived-bendy-radius-s-duplicate',
   'archived-bendy-radius-m-duplicate',

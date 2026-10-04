@@ -133,7 +133,7 @@ export default function Footer() {
                 href="https://www.holmtec.cz"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex min-h-20 items-center gap-4 rounded-2xl border border-white/12 bg-white/[.035] p-4 transition-colors hover:border-white/28 hover:bg-white/[.07] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+                className="group flex min-h-20 items-center gap-4 rounded-2xl border border-white/12 bg-white/[.035] p-4 transition-colors hover:bg-white/[.07] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-cyan focus-visible:outline-"
                 aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně">
                 
                 <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[.06] text-[10px] font-black tracking-[-.04em] text-white">

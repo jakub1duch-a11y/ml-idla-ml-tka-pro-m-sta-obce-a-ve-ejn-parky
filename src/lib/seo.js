@@ -508,11 +508,23 @@ export const SEO_PAGES = {
     keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu',
     canonicalPath: '/vodni-mlha',
   },
+  sloupkovaMlzitka: {
+    title: 'Sloupková mlžítka pro města, parky a veřejný prostor',
+    description: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.',
+    keywords: 'sloupková mlžítka, sloupkové mlžítko, mlžítko LINEA, nerezové mlžítko, mlžítka pro města',
+    canonicalPath: '/sloupkova-mlzitka',
+  },
   mlzneBrany: {
-    title: 'Mlžné brány pro města, parky a eventy',
-    description: 'Designové nerezové mlžné brány pro města, parky, sportoviště a eventy. Nízkotlaké mlžení, zakázkové rozměry, projektová podpora a Smart řízení.',
-    keywords: 'mlžná brána, mlžné brány, mlzna brana, mlžící brána, ochlazovací brána',
+    title: 'Mlžné brány a oblouky pro města a veřejný prostor',
+    description: 'Designové nerezové mlžné brány a oblouky pro města, parky, sportoviště a eventy. Zakázkové rozměry, projektová podpora a Smart řízení.',
+    keywords: 'mlžná brána, mlžné brány, mlžný oblouk, mlžící brána, ochlazovací brána',
     canonicalPath: '/mlzne-brany',
+  },
+  atelierovePrvky: {
+    title: 'Ateliérové prvky a zakázková mlžítka',
+    description: 'Designové ateliérové prvky a zakázková mlžítka pro města, parky, školy i soukromé prostory. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
+    keywords: 'zakázková mlžítka, ateliérové prvky, designová mlžítka, mlžná instalace, mlžítko na míru',
+    canonicalPath: '/atelierove-prvky',
   },
   jakToFunguje: {
     title: 'Jak funguje vodní mlha a nízkotlaké mlžení',

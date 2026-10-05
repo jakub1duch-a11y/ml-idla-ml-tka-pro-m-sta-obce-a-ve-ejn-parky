@@ -6,10 +6,10 @@ import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 
 const SCENES = [
-  { name: 'BENDY', image: '/media/optimized/31478e4b3_bendymlzitko02.webp', video: '/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm', href: '/produkt/mlzitko-bendy' },
-  { name: 'MRAK', image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp', video: '/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm', href: '/produkt/mlzitko-mrak' },
-  { name: 'Veřejný prostor', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp', href: '/mlzitka-pro-mesta-obce' },
-];
+{ name: 'BENDY', image: '/media/optimized/31478e4b3_bendymlzitko02.webp', video: '/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm', href: '/produkt/mlzitko-bendy' },
+{ name: 'MRAK', image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp', video: '/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm', href: '/produkt/mlzitko-mrak' },
+{ name: 'Veřejný prostor', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp', href: '/mlzitka-pro-mesta-obce' }];
+
 
 export default function KolekceHero() {
   const ref = useRef(null);
@@ -25,15 +25,15 @@ export default function KolekceHero() {
     <section ref={ref} className="hero-motion-surface relative min-h-[720px] bg-[#07131D] text-white" aria-label="Katalog mlžítek">
       <motion.div className="absolute inset-0" style={{ y: mediaY, scale: mediaScale }}>
         <motion.img
-          key={scene.image}
-          src={scene.image}
+          key={scene.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/81fba139a_1789936964386.png"
+
           alt={scene.name}
           className="absolute inset-0 h-full w-full object-cover object-center opacity-75"
           fetchPriority="high"
           initial={reduced ? false : { opacity: 0, scale: 1.025 }}
           animate={{ opacity: 0.75, scale: 1 }}
-          transition={{ duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-        />
+          transition={{ duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }} />
+        
         {scene.video && <HeroBackgroundVideo key={scene.video} src={scene.video} poster={scene.image} />}
       </motion.div>
 
@@ -64,20 +64,20 @@ export default function KolekceHero() {
         </div>
 
         <div className="hero-scene-nav !mt-8" aria-label="Scéna katalogu">
-          {SCENES.map((item, index) => (
-            <motion.button
-              key={item.name}
-              type="button"
-              aria-pressed={selected === index}
-              onClick={() => setSelected(index)}
-              whileHover={reduced ? undefined : { y: -2 }}
-              whileTap={reduced ? undefined : { scale: 0.96 }}
-            >
+          {SCENES.map((item, index) =>
+          <motion.button
+            key={item.name}
+            type="button"
+            aria-pressed={selected === index}
+            onClick={() => setSelected(index)}
+            whileHover={reduced ? undefined : { y: -2 }}
+            whileTap={reduced ? undefined : { scale: 0.96 }}>
+            
               <span className="mr-2 font-mono text-[9px] opacity-45">0{index + 1}</span>{item.name}
             </motion.button>
-          ))}
+          )}
         </div>
       </motion.div>
-    </section>
-  );
+    </section>);
+
 }

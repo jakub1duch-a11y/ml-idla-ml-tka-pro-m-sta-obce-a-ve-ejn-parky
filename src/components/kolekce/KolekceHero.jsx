@@ -25,7 +25,7 @@ export default function KolekceHero() {
     <section ref={ref} className="hero-motion-surface relative min-h-[720px] bg-[#07131D] text-white" aria-label="Katalog mlžítek">
       <motion.div className="absolute inset-0" style={{ y: mediaY, scale: mediaScale }}>
         <motion.img
-          key={scene.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ac11a056c_generated_ca8c53a7.jpg"
+          key={scene.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5cba7b56a_Obrzek_Codex_5_10_2026_01_14_09.png"
 
           alt={scene.name}
           className="absolute inset-0 h-full w-full object-cover object-center opacity-75"

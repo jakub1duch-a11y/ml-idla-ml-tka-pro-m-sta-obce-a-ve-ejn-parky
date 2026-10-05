@@ -44,7 +44,7 @@ export default function HomeHero() {
   const reduced = useReducedMotion();
   const [playVideo, setPlayVideo] = useState(false);
   useEffect(() => {
-    const connection = navigator.connection;
+    const connection = /** @type {Navigator & { connection?: { saveData?: boolean, effectiveType?: string } }} */ (navigator).connection;
     if (reduced || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) {
       setPlayVideo(false);
       return undefined;

@@ -2,10 +2,10 @@ import React from 'react';
 import { Droplets, Gauge, Ruler, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 
 function plainText(value = '') {
-  return String(value)
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return String(value).
+  replace(/<[^>]*>/g, ' ').
+  replace(/\s+/g, ' ').
+  trim();
 }
 
 function SpecTable({ title, eyebrow, rows, icon: Icon }) {
@@ -23,15 +23,15 @@ function SpecTable({ title, eyebrow, rows, icon: Icon }) {
       </div>
 
       <div className="divide-y divide-[#EDF3F6]">
-        {rows.map((row) => (
-          <div key={row.label} className="grid gap-1 px-5 py-4 sm:grid-cols-[minmax(150px,.72fr)_1.28fr] sm:items-start sm:gap-6 sm:px-6 sm:py-5">
+        {rows.map((row) =>
+        <div key={row.label} className="grid gap-1 px-5 py-4 sm:grid-cols-[minmax(150px,.72fr)_1.28fr] sm:items-start sm:gap-6 sm:px-6 sm:py-5">
             <span className="font-mono text-[10px] font-semibold uppercase tracking-[.11em] text-[#0D2F4F]/42">{row.label}</span>
             <span className="text-sm font-semibold leading-6 text-[#0D2F4F] sm:text-right">{row.value}</span>
           </div>
-        ))}
+        )}
       </div>
-    </section>
-  );
+    </section>);
+
 }
 
 function MaterialQualityBadge({ material }) {
@@ -42,13 +42,13 @@ function MaterialQualityBadge({ material }) {
     <div
       className="relative overflow-hidden rounded-[28px] border border-[#B9DCE8] bg-[linear-gradient(145deg,#F9FEFF_0%,#EAF6F9_48%,#FFFFFF_100%)] p-5 shadow-[0_18px_55px_rgba(10,35,66,.08)] sm:p-6"
       title="Designové označení materiálového standardu MLŽIDLA®; nejde o externí certifikační značku."
-      aria-label="MLŽIDLA material quality badge"
-    >
+      aria-label="MLŽIDLA material quality badge">
+      
       <div className="absolute -right-10 -top-12 h-36 w-36 rounded-full border border-[#9ED9F0]/40" />
       <div className="absolute -right-3 top-3 h-20 w-20 rounded-full border border-[#9ED9F0]/35" />
 
       <div className="relative flex items-start gap-4">
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#8BC8DA] bg-white shadow-[inset_0_0_0_5px_#EFF8FA]">
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#8BC8DA] shadow-[inset_0_0_0_5px_#EFF8FA]">
           <ShieldCheck size={25} strokeWidth={1.55} className="text-[#0B5EA8]" />
         </div>
         <div className="min-w-0">
@@ -58,23 +58,23 @@ function MaterialQualityBadge({ material }) {
           <p className="mt-3 font-mono text-[8px] font-bold uppercase tracking-[.18em] text-[#0D2F4F]/38">MLŽIDLA® material standard</p>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 export default function PdSpecs({ product }) {
   const intro = plainText(product.short_description || product.description || '');
   const constructionRows = [
-    product.material && { label: 'Materiál', value: product.material },
-    product.coverage_area && { label: 'Rozměr / dosah', value: product.coverage_area },
-  ].filter(Boolean);
+  product.material && { label: 'Materiál', value: product.material },
+  product.coverage_area && { label: 'Rozměr / dosah', value: product.coverage_area }].
+  filter(Boolean);
 
   const operationRows = [
-    product.pressure && { label: 'Provozní tlak', value: product.pressure },
-    product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
-    product.micron_size && { label: 'Trysky / velikost kapek', value: product.micron_size },
-    product.power_supply && { label: 'Napájení / řízení', value: product.power_supply },
-  ].filter(Boolean);
+  product.pressure && { label: 'Provozní tlak', value: product.pressure },
+  product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption },
+  product.micron_size && { label: 'Trysky / velikost kapek', value: product.micron_size },
+  product.power_supply && { label: 'Napájení / řízení', value: product.power_supply }].
+  filter(Boolean);
 
   const allRows = [...constructionRows, ...operationRows];
 
@@ -113,21 +113,21 @@ export default function PdSpecs({ product }) {
           </div>
         </div>
 
-        {allRows.length > 0 ? (
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+        {allRows.length > 0 ?
+        <div className="mt-8 grid gap-5 lg:grid-cols-2">
             <SpecTable title="Konstrukce a provedení" eyebrow="Specifikace produktu" rows={constructionRows} icon={Ruler} />
             <SpecTable title="Provozní parametry" eyebrow="Technická data" rows={operationRows} icon={Gauge} />
-          </div>
-        ) : (
-          <div className="mt-8 rounded-[28px] border border-[#D8E8F0] bg-white p-6 text-sm leading-7 text-[#0D2F4F]/62">
+          </div> :
+
+        <div className="mt-8 rounded-[28px] border border-[#D8E8F0] bg-white p-6 text-sm leading-7 text-[#0D2F4F]/62">
             Technické parametry tohoto produktu zatím nejsou v ověřených produktových datech kompletní. Do nabídky se doplní až po potvrzení konkrétní konfigurace.
           </div>
-        )}
+        }
 
         <div className="mt-6 rounded-[24px] border border-[#CBE4EE] bg-[#EAF7FD]/75 px-5 py-4 text-xs leading-6 text-[#0D2F4F]/60 sm:px-6">
           Přesné kotvení, počet a typ trysek, napojení vody, řízení a další projektové detaily se potvrzují podle místa instalace a schváleného technického návrhu.
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

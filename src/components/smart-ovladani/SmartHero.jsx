@@ -62,14 +62,14 @@ export default function SmartHero() {
             >
               <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/[.055] px-4 py-2 backdrop-blur-md">
                 <span className="h-2 w-2 rounded-full bg-[#7AE1EF] shadow-[0_0_18px_rgba(122,225,239,.8)]" />
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">AUTOMATIZACE / SUPLA</span>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/75">AUTOMATIZACE / SUPLA</span>
               </div>
 
               <h1 className="mt-7 max-w-[11ch] font-heading text-[clamp(3.1rem,6.1vw,6.5rem)] font-black leading-[.9] tracking-[-.065em]">
-                Nastavte pravidla. Systém poběží sám.
+                Chytré mlžení. Pod vaší kontrolou.
               </h1>
 
-              <p className="mt-7 max-w-xl text-base leading-8 text-white/62 sm:text-lg">
+              <p className="mt-7 max-w-xl text-base leading-8 text-white/75 sm:text-lg">
                 Automatizace propojuje mlžítko, ventil, provozní scénáře a dostupné senzory. Výsledkem je přehlednější správa a automatický provoz podle skutečné konfigurace instalace.
               </p>
 
@@ -112,7 +112,7 @@ export default function SmartHero() {
             className="relative"
           >
             <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle,rgba(122,225,239,.15),transparent_68%)] blur-2xl" />
-            <div className="relative min-h-[500px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[.05] shadow-[0_38px_120px_rgba(0,0,0,.35)] backdrop-blur-xl sm:min-h-[620px]">
+            <div className="relative min-h-[360px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[.05] shadow-[0_38px_120px_rgba(0,0,0,.35)] backdrop-blur-xl sm:min-h-[520px]">
               <img
                 src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp"
                 alt="Automatizace mlžného systému v mobilní aplikaci"
@@ -120,7 +120,8 @@ export default function SmartHero() {
                 loading="eager"
                 fetchPriority="high"
               />
-              <div className="absolute inset-x-5 bottom-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            </div>
+              <div className="relative mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   { icon: Wifi, label: 'Připojení', value: 'SUPLA / Wi‑Fi' },
                   { icon: Droplets, label: 'Zóna', value: 'Provozní stav' },
@@ -134,12 +135,11 @@ export default function SmartHero() {
                     className="rounded-2xl border border-white/12 bg-[#07131D]/72 p-4 backdrop-blur-xl"
                   >
                     <Icon size={18} className="text-[#7AE1EF]" />
-                    <p className="mt-3 font-mono text-[9px] uppercase tracking-[.18em] text-white/40">{label}</p>
+                    <p className="mt-3 font-mono text-[9px] uppercase tracking-[.18em] text-white/70">{label}</p>
                     <p className="mt-1 text-sm font-bold text-white">{value}</p>
                   </motion.div>
                 ))}
               </div>
-            </div>
           </motion.div>
         </div>
 
@@ -158,10 +158,10 @@ export default function SmartHero() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#7AE1EF]/20 bg-[#7AE1EF]/10 text-[#7AE1EF]">
                   <Icon size={23} strokeWidth={1.7} />
                 </span>
-                <span className="font-mono text-[10px] text-white/24">0{index + 1}</span>
+                <span className="font-mono text-[10px] text-white/65">0{index + 1}</span>
               </div>
               <h2 className="mt-6 font-heading text-xl font-bold tracking-[-.03em]">{title}</h2>
-              <p className="mt-3 text-sm leading-6 text-white/50">{text}</p>
+              <p className="mt-3 text-sm leading-6 text-white/75">{text}</p>
             </motion.article>
           ))}
         </div>

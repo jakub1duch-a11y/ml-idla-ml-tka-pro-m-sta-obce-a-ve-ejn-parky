@@ -4,9 +4,9 @@ import { ArrowRight, Clock3, Droplets, Gauge, Smartphone, ThermometerSun, Wifi }
 import { Link } from 'react-router-dom';
 
 const SCENARIOS = [
-  { Icon: ThermometerSun, title: 'Podle teploty', text: 'S osazeným teplotním senzorem se mlžení spustí při nastavené teplotě.' },
+  { Icon: ThermometerSun, title: 'Podle teploty', text: 'Mlžení se spustí až při nastavené venkovní teplotě.' },
   { Icon: Clock3, title: 'Podle času', text: 'Nastavíte provozní okna pro ráno, odpoledne, akci nebo víkend.' },
-  { Icon: Smartphone, title: 'Kdykoli z aplikace', text: 'S připojením k internetu může obsluha mlžení zapnout či vypnout na dálku.' },
+  { Icon: Smartphone, title: 'Kdykoli z aplikace', text: 'Obsluha může mlžítko ručně zapnout či vypnout na dálku.' },
   { Icon: Droplets, title: 'Více vodních zón', text: 'Město, sportoviště nebo zahrada může mít samostatně řízené okruhy.' },
 ];
 
@@ -27,7 +27,7 @@ export default function SmartControlTeaser() {
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70">
             Chytré řízení SUPLA propojuje mlžítka, ventil, senzory a provozní scénáře do jedné přehledné vrstvy. Pro města, sportoviště i rezidenční instalace lze nastavit osvěžení podle teploty, času a konkrétní zóny.
           </p>
-          <p className="mt-5 max-w-xl border-l-2 border-cyan pl-4 text-sm leading-relaxed text-white/75">
+          <p className="mt-5 max-w-xl border-l-2 border-cyan pl-4 text-sm leading-relaxed text-white/58">
             Konkrétní zapojení, počet zón a vhodný ventil vždy navrhujeme podle přívodu vody a režimu instalace.
           </p>
           <Link to="/smart-ovladani" className="btn-metallic-mist mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold">
@@ -41,7 +41,7 @@ export default function SmartControlTeaser() {
               <span className="font-mono text-[10px] tracking-widest text-cyan">0{index + 1}</span>
               <Icon size={25} className="mt-7 text-cyan" />
               <h3 className="mt-5 font-heading text-lg font-semibold">{title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/75">{text}</p>
+              <p className="mt-3 text-sm leading-relaxed text-white/60">{text}</p>
             </button>
           ))}
           <div id="supla-scenario-preview" className="relative min-h-[230px] overflow-hidden rounded-lg border border-cyan/20 bg-cyan/10 p-6 sm:col-span-2">

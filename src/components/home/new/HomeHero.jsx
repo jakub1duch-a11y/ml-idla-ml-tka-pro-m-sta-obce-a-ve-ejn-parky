@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
@@ -28,13 +28,13 @@ const tiles = [
 {
   title: 'MLŽNÁ BRÁNA',
   text: 'Průchozí vodní mlha pro náměstí',
-  image: '/media/studio/gate-studio.webp',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
   link: '/mlzne-brany'
 },
 {
   title: 'BENDY',
   text: 'Organická linie pro pobytové zóny',
-  image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
+  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
   link: '/produkt/mlzitko-bendy'
 }];
 
@@ -42,16 +42,6 @@ const tiles = [
 export default function HomeHero() {
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
-  const [playVideo, setPlayVideo] = useState(false);
-  useEffect(() => {
-    const connection = /** @type {Navigator & { connection?: { saveData?: boolean, effectiveType?: string } }} */ (navigator).connection;
-    if (reduced || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) {
-      setPlayVideo(false);
-      return undefined;
-    }
-    const timer = window.setTimeout(() => setPlayVideo(true), 1800);
-    return () => window.clearTimeout(timer);
-  }, [reduced]);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '8%']);
   const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.045]);
@@ -65,10 +55,11 @@ export default function HomeHero() {
         <motion.div
           className="absolute inset-0 h-[108%] w-full"
           style={{ y: mediaY, scale: mediaScale }}
-          initial={reduced ? false : { scale: 1.04 }}
+          data-home-parallax="7"
+          initial={{ scale: 1.04 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
-          {!playVideo ? (
+          {reduced ? (
             <img
               src={VIDEO_ASSETS.heroCityPromo.poster}
               alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
@@ -82,7 +73,7 @@ export default function HomeHero() {
               muted
               loop
               playsInline
-              preload="none"
+              preload="metadata"
               aria-hidden="true"
               className="h-full w-full object-cover object-[58%_center] sm:object-center" />
           )}
@@ -92,7 +83,7 @@ export default function HomeHero() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
-          <motion.div className="max-w-3xl" style={{ y: copyY }} initial={reduced ? false : { opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono font-bold uppercase tracking-[.22em] text-[#26C6E9] text-base">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
             <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl">
               Ochlazení, které patří do prostoru.
@@ -101,8 +92,8 @@ export default function HomeHero() {
               Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Link to="/poptavka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#7AE1EF] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-white">
-                Navrhnout řešení <ArrowRight size={17} />
+              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
+                Zobrazit produkty <ArrowRight size={17} />
               </Link>
               <a href="#home-product-gallery" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/[.08] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/28"><ArrowRight size={15} /></span>
@@ -111,7 +102,7 @@ export default function HomeHero() {
             </div>
           </motion.div>
 
-          <motion.aside initial={reduced ? false : { opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 p-5 backdrop-blur-xl lg:block bg-[#000000]/[0.18]" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 p-5 backdrop-blur-xl lg:block bg-[#000000]/[0.18]" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid items-center gap-4 border border-white/10 bg-white/[.06] p-4 grid-cols-[54px_1fr] rounded-3xl">
@@ -130,7 +121,7 @@ export default function HomeHero() {
       <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
           {tiles.map((tile, index) =>
-            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={reduced ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={reduced ? undefined : { y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
+            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
               <Link to={tile.link} className="ref-product-card group block h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
                 <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
                 <div className="border-t border-white/10 p-5">
@@ -145,7 +136,7 @@ export default function HomeHero() {
             </motion.div>
             )}
         </div>
-        <p className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[.16em] text-white/75 sm:hidden">Přejeďte pro další produkty</p>
+        <p className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[.16em] text-white/40 sm:hidden">Přejeďte pro další produkty</p>
       </div>
     </section>
     </MotionConfig>);

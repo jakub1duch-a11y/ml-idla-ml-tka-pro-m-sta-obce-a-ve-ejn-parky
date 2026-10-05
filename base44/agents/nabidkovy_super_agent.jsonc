@@ -73,7 +73,7 @@
     },
     {
       "function_name": "generateProductDatasheet",
-      "description": "Vygeneruje vizu\u00e1ln\u00ed PDF cenov\u00e9 nab\u00eddky (pdf_base64, filename) \u2014 slou\u017e\u00ed i k tisku."
+      "description": "Vygeneruje PDF cenov\u00e9 nab\u00eddky (pdf_base64, filename) \u2014 slou\u017e\u00ed i k tisku."
     },
     {
       "function_name": "generateOfferPresentation",
@@ -101,63 +101,18 @@
     }
   ],
   "context_files": [],
-  "app_user_connector_configs": [
-    {
-      "connector_id": "6a69e4b1a75cc14687827cca",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a69e49ad32469ebc8d1e5f9",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a69e471c53bf2c66ffb9f67",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a69e43509bf9d59c5a06d9a",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a64bec088e0c8b31ff37284",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a48154c19f44e6e0269b046",
-      "enabled": false
-    },
-    {
-      "connector_id": "6a4628539a45aba9765ff8ee",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a3e96206a7f35b2cdad6f11",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a3e961339c3fc632b7a0ec6",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a3e95ff99997839ac850976",
-      "enabled": true
-    },
-    {
-      "connector_id": "6a3e95f3b798efdb40710c8a",
-      "enabled": true
-    }
-  ],
+  "app_user_connector_configs": [],
   "selected_skill_names": [],
   "selected_workspace_skill_ids": [],
   "model": "claude_opus_4_8",
-  "whatsapp_greeting": "",
-  "telegram_greeting": "",
-  "line_greeting": "",
+  "whatsapp_greeting": null,
+  "telegram_greeting": null,
+  "line_greeting": null,
   "memory_config": {
     "enabled": false,
     "scope": "user",
     "include_other_conversation_context": false,
-    "instructions": null
+    "instructions": ""
   },
   "voice_config": {
     "voice_id": null

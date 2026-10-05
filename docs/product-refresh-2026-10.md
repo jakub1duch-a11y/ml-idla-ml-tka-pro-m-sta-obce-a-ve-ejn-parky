@@ -30,3 +30,13 @@ The app's reported `git_remote_source` was `s3`, so current native GitHub synchr
 To publish this change, use the linked Base44 application's dashboard to connect/import the correct GitHub repository and publish the reviewed source. Verify the live product page, catalog and homepage afterwards. The runtime GitHub API connector is separate from source synchronization. Initiation was rejected because the app requires a paid plan with Connectors capability; no new GitHub connector was established.
 
 Local frontend setup uses the existing Base44 SDK and Vite integration. Set the public app identifier and app base URL in ignored `.env.local`, as documented in README. Keep tokens and service-role credentials out of frontend code and git. No new public write endpoint or device-control integration is introduced.
+
+## Architectural catalog, category and collection refresh
+
+- Shared ArchitecturalHero uses editable Czech copy, separate imagery, an architectural frame, clear product/poptávka links and a mobile stacked layout. New 1600×900 WebP (226 KB) is explicitly labeled an illustrative architectural visualization; it contains no invented product geometry.
+- Applied the hero to catalog/category filters, all collection pages, sloupková mlžítka, ateliérové prvky and mlžné brány. Category and collection product grids precede marketing sections.
+- Reused CatalogProductCard across lists and removed duplicate collection card implementations. Restored the previously empty category overview. Replaced large pre-grid collection cards with an accessible select filter.
+- Added catalog/collection load errors and retry, request cleanup on navigation, working anchor targets and 44px controls. Product media menu now sits outside the image link (no nested anchors).
+- Product detail keeps its background image hero and gains section navigation. Hero rail, product description, product and category cards use restrained motion with reduced-motion support.
+- Validation: targeted ESLint passed; production build passed (87 prerendered pages). Playwright with mocked public product API checked 390px catalog, filtered category, BENDY collection, city collection, both category landing pages, gates and BENDY detail; catalog/BENDY also checked at 1440px. One H1, hero images loaded, no horizontal overflow or nested links, collection grids present and CTA anchor targets valid. Final catalog filter/layout changes rechecked at both widths.
+- Existing unrelated model-viewer WebAssembly CSP error remains. Direct Base44 source bridge is still blocked by PREMIUM_REQUIRED (Builder plan); GitHub source and Base44 built-in builder are separate delivery paths. Do not infer live publication from the PR or media registration.

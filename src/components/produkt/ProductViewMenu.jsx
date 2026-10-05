@@ -23,7 +23,7 @@ export default function ProductViewMenu({ product, dark = false, align = 'right'
     <details className="group/view relative z-40">
       <summary
         aria-label={`Vybrat způsob zobrazení produktu ${product.name || ''}`}
-        className={`flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border backdrop-blur-md transition [&::-webkit-details-marker]:hidden ${dark ? 'border-white/18 bg-black/34 text-white hover:bg-black/52' : 'border-white/75 bg-white/90 text-[#07131D] shadow-md hover:bg-white'}`}
+        className={`flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border backdrop-blur-md transition [&::-webkit-details-marker]:hidden ${dark ? 'border-white/18 bg-black/34 text-white hover:bg-black/52' : 'border-white/75 bg-white/90 text-[#07131D] shadow-md hover:bg-white'}`}
       >
         <Eye size={17} strokeWidth={1.8} />
       </summary>
@@ -37,7 +37,7 @@ export default function ProductViewMenu({ product, dark = false, align = 'right'
           <Link
             key={id}
             to={`/produkt/${product.slug}?view=${id}`}
-            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${itemBase}`}
+            className={`flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${itemBase}`}
           >
             <Icon size={16} strokeWidth={1.7} />
             <span>{label}</span>

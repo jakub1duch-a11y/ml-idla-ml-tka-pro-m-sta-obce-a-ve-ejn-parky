@@ -55,6 +55,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
   return (
     <main className="bg-background pt-16">
       <CollectionHero collection={collection} />
+      <CollectionProductGrid collection={collection} />
 
       {(isCity || isGarden) && <UseCaseExperience variant={isGarden ? 'garden' : 'city'} />}
 
@@ -120,7 +121,6 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
         </section>
       )}
 
-      <CollectionProductGrid collection={collection} />
 
       {isCity && <ContextLinks eyebrow="Pro města a projektanty" title="Technika, hygiena a benefity na jednom místě." items={[
         { path: '/jak-to-funguje', kicker: 'Technologie', title: 'Jak mlžítka fungují', text: 'Princip mlžení, napojení, provozní tlak a technické řešení pro veřejný prostor.' },

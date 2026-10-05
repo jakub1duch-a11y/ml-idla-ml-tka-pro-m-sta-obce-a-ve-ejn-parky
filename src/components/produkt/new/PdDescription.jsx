@@ -1,7 +1,9 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import DOMPurify from 'dompurify';
 
 export default function PdDescription({ product }) {
+  const reduced = useReducedMotion();
   const intro = product.short_description;
 
   const techTags = [
@@ -14,7 +16,7 @@ export default function PdDescription({ product }) {
   ].filter(Boolean);
 
   return (
-    <section className="bg-white py-14 lg:py-20">
+    <motion.section initial={false} whileInView={reduced ? undefined : { y: [14, 0] }} viewport={{ once: true, amount: .1 }} transition={{ duration: .5 }} className="bg-white py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-12">
           {/* Left: Eyebrow + heading */}
@@ -47,6 +49,6 @@ export default function PdDescription({ product }) {
           </div>
         )}
       </div>
-    </section>
+    </motion.section>
   );
 }

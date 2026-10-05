@@ -1,0 +1,30 @@
+.architecture-hero{--arch-ink:#0d2d38;--arch-teal:#0e5b67;position:relative;isolation:isolate;background:#f4f6f3;color:var(--arch-ink);border-bottom:1px solid #d3deda}
+.architecture-hero--catalog{padding-top:88px}
+.architecture-hero__layout{display:grid;grid-template-columns:1fr 1.12fr;max-width:1600px;margin:auto;min-height:580px}
+.architecture-hero__copy{position:relative;z-index:2;align-self:center;padding:64px clamp(24px,4.5vw,80px);background:linear-gradient(90deg,#f4f6f3 90%,#f4f6f300)}
+.architecture-hero__eyebrow{font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--arch-teal);margin-bottom:28px}
+.architecture-hero__eyebrow span{margin:0 9px;color:#6f8f72}
+.architecture-hero h1{font-family:Manrope,sans-serif;font-size:clamp(38px,4.4vw,70px);font-weight:600;line-height:1.08;letter-spacing:-.05em;text-wrap:balance}
+.architecture-hero h1>span{display:block;color:var(--arch-teal);margin-top:.1em}
+.architecture-hero__description{max-width:490px;margin-top:25px;font-size:16px;line-height:1.8;color:#425d65}
+.architecture-hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.architecture-hero__actions a{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:48px;padding:13px 20px;font-size:13px;font-weight:600;border-radius:4px;transition:background .2s}
+.architecture-hero__primary{background:var(--arch-ink);color:white}
+.architecture-hero__primary:hover{background:var(--arch-teal)}
+.architecture-hero__secondary{border:1px solid #aabdbb;color:var(--arch-ink)}
+.architecture-hero__secondary:hover{background:#e5ece8}
+.architecture-hero__actions a:focus-visible{outline:3px solid #0e5b67;outline-offset:4px}
+.architecture-hero__figure{position:relative;margin:0;min-width:0;overflow:hidden;background:#e0e8e1;min-height:580px}
+.architecture-hero__figure>img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:62% center}
+.architecture-hero__figure::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(13,45,56,.78),transparent 30%)}
+.architecture-hero__frame{position:absolute;inset:24px;border:1px solid #ffffff80;pointer-events:none;z-index:1}
+.architecture-hero__frame>span{position:absolute;top:14px;left:14px;background:#f4f6f3e8;padding:8px 10px;color:var(--arch-ink);font:10px/1.4 'JetBrains Mono',monospace;letter-spacing:.1em}
+.architecture-hero__frame i{position:absolute;top:0;left:50%;height:16px;border-left:1px solid white}
+.architecture-hero__frame b{position:absolute;right:12px;bottom:10px;color:white;font:24px monospace}
+.architecture-hero__figure figcaption{position:absolute;left:42px;right:60px;bottom:43px;z-index:2;font:11px/1.6 'JetBrains Mono',monospace;color:white}
+.architecture-hero__rail{max-width:1600px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #d3deda;background:linear-gradient(90deg,#f4f6f3,#eaf0eb)}
+.architecture-hero__rail>div{padding:22px clamp(20px,4vw,64px);font-size:12px;display:flex;gap:20px;align-items:center;border-right:1px solid #d3deda}
+.architecture-hero__rail>div:last-child{border-right:0}
+.architecture-hero__rail span{font:10px 'JetBrains Mono',monospace;color:var(--arch-teal)}
+@media(max-width:767px){.architecture-hero--catalog{padding-top:72px}.architecture-hero__layout{grid-template-columns:1fr;min-height:0}.architecture-hero__copy{padding:36px 24px 32px}.architecture-hero h1{font-size:40px;max-width:560px}.architecture-hero__eyebrow{margin-bottom:20px}.architecture-hero__description{font-size:15px;line-height:1.75;margin-top:20px}.architecture-hero__actions{margin-top:24px;gap:10px}.architecture-hero__actions a{font-size:12px;padding:12px 15px}.architecture-hero__figure{min-height:0;height:300px}.architecture-hero__frame{inset:16px}.architecture-hero__figure figcaption{left:30px;bottom:30px;right:48px;font-size:10px}.architecture-hero__rail>div{padding:15px 12px;gap:8px;font-size:10px;align-items:flex-start}.architecture-hero__rail span{font-size:9px;padding-top:2px}}
+@media(prefers-reduced-motion:reduce){.architecture-hero *{transition:none!important;scroll-behavior:auto!important}}

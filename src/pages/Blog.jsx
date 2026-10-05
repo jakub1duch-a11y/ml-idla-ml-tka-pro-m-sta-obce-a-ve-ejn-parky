@@ -67,7 +67,7 @@ function ArticleCard({ post, views = 0, large = false }) {
       </div>
       <div className={large ? 'p-7 sm:p-8' : 'p-5'}>
         <div className="flex flex-wrap items-center gap-2 font-mono text-[9px] uppercase tracking-[.13em] text-slate-400">
-          <span className="text-[#0B6B7A]">{CATEGORY_LABELS[post.category] || post.category || 'Magazín'}</span>
+          <span className="text-[#0B6B7A]">{CATEGORY_LABELS[post.category] || post.category || 'Blog a novinky'}</span>
           {post.published_date && <><span>·</span><span>{formatDate(post.published_date)}</span></>}
           {views > 0 && <><span>·</span><span className="inline-flex items-center gap-1"><Eye size={10}/>{views.toLocaleString('cs-CZ')}</span></>}
         </div>
@@ -90,8 +90,8 @@ export default function Blog() {
 
   useEffect(() => {
     setSEO({
-      title: 'Magazín MLŽIDLA® | Novinky, realizace a inspirace',
-      description: 'Magazín o mlžítkách: nové produkty, realizované projekty, inspirace pro města, sportoviště, školy, školky, video a návrhové vizualizace.',
+      title: 'Blog a novinky MLŽIDLA® | Realizace, inspirace a technologie',
+      description: 'Blog a novinky o mlžítkách: nové produkty, realizace, inspirace pro města, sportoviště, školy, školky, video a návrhové vizualizace.',
       canonicalPath: '/blog',
       robots: 'index, follow',
     });
@@ -140,13 +140,13 @@ export default function Blog() {
         <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-7 lg:grid-cols-[.72fr_1.28fr] lg:px-10 lg:py-14">
           <div className="flex flex-col justify-between">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#0B6B7A]">MLŽIDLA® MAGAZÍN</p>
+              <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#0B6B7A]">MLŽIDLA® BLOG A NOVINKY</p>
               <h1 className="mt-4 max-w-2xl font-heading text-5xl leading-[.95] tracking-[-.05em] text-[#081827] sm:text-6xl lg:text-7xl">Místa, kde se lépe dýchá.</h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-500">Novinky ze světa mlžítek, skutečné realizace, návrhová inspirace a praktické články pro města, architekty, sportoviště, školy i veřejný prostor.</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">
               <Link to="/blog?sekce=realizace" className="rounded-full bg-[#071A2F] px-5 py-3 text-xs font-semibold text-white">Realizované projekty</Link>
-              <Link to="/blog?sekce=videa" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-xs font-semibold text-slate-700"><PlayCircle size={14}/> Video magazín</Link>
+              <Link to="/blog?sekce=videa" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-xs font-semibold text-slate-700"><PlayCircle size={14}/> Video a inspirace</Link>
             </div>
           </div>
 
@@ -156,7 +156,7 @@ export default function Blog() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#04131f]/95 via-[#071A2F]/24 to-black/5"/>
               <div className="relative flex min-h-[410px] flex-col justify-between p-6 sm:p-8 lg:min-h-[520px]">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-full border border-white/20 bg-black/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[.16em] backdrop-blur">Nové v magazínu</span>
+                  <span className="rounded-full border border-white/20 bg-black/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[.16em] backdrop-blur">Nové na blogu</span>
                   {latest.published_date && <span className="inline-flex items-center gap-1.5 text-xs text-white/65"><Clock3 size={12}/>{formatDate(latest.published_date)}</span>}
                 </div>
                 <div className="max-w-3xl">
@@ -197,7 +197,7 @@ export default function Blog() {
           <div className="mb-8 flex items-end justify-between gap-5">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Výběr redakce</p>
-              <h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">{category === 'all' ? 'Nejnovější z magazínu.' : CATEGORY_LABELS[category] || 'Magazín'}</h2>
+              <h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">{category === 'all' ? 'Nejnovější z blogu a novinek.' : CATEGORY_LABELS[category] || 'Blog a novinky'}</h2>
             </div>
             <span className="hidden font-mono text-[10px] uppercase tracking-[.13em] text-slate-400 sm:block">{visible.length} článků</span>
           </div>
@@ -221,7 +221,7 @@ export default function Blog() {
       {category !== 'videa' && (
         <section className="mx-auto max-w-7xl px-5 py-16 sm:px-7 lg:px-10">
           <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div><p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Video magazín</p><h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Mlžítka v pohybu.</h2></div>
+            <div><p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Video a inspirace</p><h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Mlžítka v pohybu.</h2></div>
             <Link to="/blog?sekce=videa" className="inline-flex items-center gap-2 text-sm font-semibold text-[#0B6B7A]">Všechna videa <ArrowRight size={14}/></Link>
           </div>
           <BlogVideoShowcase limit={6} />

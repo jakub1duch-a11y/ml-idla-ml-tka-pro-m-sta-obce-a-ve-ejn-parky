@@ -120,7 +120,7 @@ export default function Header() {
             <Link to="/jak-to-funguje" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
             <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
             <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
-            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Magazín</Link>
+            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Blog a novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`

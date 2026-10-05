@@ -211,7 +211,7 @@ export default function HomeMagazineSections() {
           <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
             <div className="mb-8 grid gap-5 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
               <div>
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-[#0B8EC5]">Magazín / svět mlžení</p>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-[#0B8EC5]">Blog a novinky / svět mlžení</p>
                 <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.96] tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">
                   Články, nápady a zkušenosti.
                 </h2>
@@ -221,7 +221,7 @@ export default function HomeMagazineSections() {
                   Technologie, realizace, architektura, provoz a inspirace ze světa vodní mlhy a venkovního ochlazování.
                 </p>
                 <Link to="/blog" className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-[#07131D] transition hover:gap-3 hover:text-[#0B8EC5]">
-                  Otevřít celý magazín <ArrowRight size={14} />
+                  Otevřít blog a novinky <ArrowRight size={14} />
                 </Link>
               </div>
             </div>

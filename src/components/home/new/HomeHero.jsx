@@ -34,7 +34,7 @@ const tiles = [
 {
   title: 'BENDY',
   text: 'Organická linie pro pobytové zóny',
-  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
+  image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
   link: '/produkt/mlzitko-bendy'
 }];
 

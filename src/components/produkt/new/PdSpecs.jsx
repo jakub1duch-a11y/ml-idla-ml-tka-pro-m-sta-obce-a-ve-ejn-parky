@@ -55,7 +55,7 @@ function MaterialQualityBadge({ material }) {
           <p className="font-mono text-[9px] font-black uppercase tracking-[.22em] text-[#0B97E8]">Best quality</p>
           <p className="mt-1 font-heading text-lg font-black uppercase leading-[.95] tracking-[-.025em] text-[#0A2342]">Stainless product material</p>
           <p className="mt-3 text-xs font-semibold leading-5 text-[#0D2F4F]/62">{material}</p>
-          <p className="mt-3 font-mono text-[8px] font-bold uppercase tracking-[.18em] text-[#0D2F4F]/38">MLŽIDLA® material standard</p>
+          
         </div>
       </div>
     </div>);

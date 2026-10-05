@@ -151,9 +151,9 @@ export default function PremiumHomepage2026() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="hidden lg:block">
             <div className="relative rounded-[2.4rem] border border-white/14 bg-black/22 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)]">
               <div className="relative overflow-hidden rounded-[1.8rem] bg-[#0B2034]">
-                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3c02bdf2d_file_00000000288081f4a0ff8488d237ae23.png" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5cba7b56a_Obrzek_Codex_5_10_2026_01_14_09.png" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
-                <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/12 px-4 py-3 text-sm font-bold backdrop-blur-md">
+                <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 px-4 py-3 text-sm font-bold backdrop-blur-md bg-[hsl(var(--ring))] text-[hsl(var(--accent-foreground))] uppercase">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07131D]"><Play size={16} fill="currentColor" /></span>
                   Přehrát video
                 </button>

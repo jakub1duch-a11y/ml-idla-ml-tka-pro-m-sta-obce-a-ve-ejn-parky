@@ -231,7 +231,7 @@ export default function PremiumHomepage2026() {
       </section>
 
       <section className="premium-section premium-pattern-dark relative overflow-hidden bg-[#071A2F] text-white" aria-labelledby="smart-title">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)] opacity-100" />
         <div className="premium-shell relative grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>

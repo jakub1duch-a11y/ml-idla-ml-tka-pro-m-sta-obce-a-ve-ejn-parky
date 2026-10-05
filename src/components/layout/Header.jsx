@@ -94,7 +94,7 @@ export default function Header() {
 
 
 
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#000000]/[0.85] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-xl transition-all duration-300 ease-out bg-[#102c36]/[0.98] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
@@ -116,16 +116,14 @@ export default function Header() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-white/10">Městská mlžítka</Link>
             <Link to="/jak-to-funguje" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
-            <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
+            <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Chytré řízení</Link>
             <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
-            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Blog a novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
-                Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
+                Podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {infoOpen &&
@@ -173,7 +171,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to={inquiryPath}
-              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'Navrhnout řešení' : internationalCopy.quote}
               </Link>
             </div>
             
@@ -185,7 +183,7 @@ export default function Header() {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 520, damping: 30 }}
-              className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
+              className="group relative lg:hidden flex h-11 w-11 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
               
               <motion.span
                 aria-hidden="true"

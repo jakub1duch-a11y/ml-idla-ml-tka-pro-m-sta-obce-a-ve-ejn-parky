@@ -150,11 +150,11 @@ export default function PremiumHomepage2026({ showHero = true }) {
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="hidden lg:block">
-            <div className="relative rounded-[2.4rem] border border-white/14 bg-black/22 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)]">
+            <div className="relative rounded-[2.4rem] border border-white/14 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)] bg-[hsl(var(--background))]">
               <div className="relative overflow-hidden rounded-[1.8rem] bg-[#0B2034]">
-                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3c02bdf2d_file_00000000288081f4a0ff8488d237ae23.png" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5cba7b56a_Obrzek_Codex_5_10_2026_01_14_09.png" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
-                <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/12 px-4 py-3 text-sm font-bold backdrop-blur-md">
+                <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 px-4 py-3 text-sm font-bold backdrop-blur-md bg-[hsl(var(--ring))] text-[hsl(var(--accent-foreground))] uppercase">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07131D]"><Play size={16} fill="currentColor" /></span>
                   Přehrát video
                 </button>
@@ -232,7 +232,69 @@ export default function PremiumHomepage2026({ showHero = true }) {
         </div>
       </section>
 
-      <PdSmartControl />
+      <section className="premium-section bg-white" aria-labelledby="products-premium-title">
+        <div className="premium-shell">
+          <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Produkt musí být jasný na první pohled</p>
+              <h2 id="products-premium-title" className="premium-heading mt-4 max-w-3xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Vybrané produkty pro hlavní stránku</h2>
+            </div>
+            <Link to="/mlzidla-mlzitka" className="premium-action inline-flex items-center gap-2 self-start rounded-full px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto bg-[hsl(var(--primary))]">Celý katalog <ArrowRight size={16} /></Link>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {resolvedHighlights.map((product, index) =>
+            <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
+                <Link to={product.link} className="premium-card-interactive group block h-full overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.12)]">
+                  <div className="aspect-[4/5] overflow-hidden bg-slate-100"><img src={product.image} alt={`${product.name} — ${product.label}`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
+                  <div className="border-t border-slate-100 p-5">
+                    <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#0B8EC5]">Produkt</p>
+                    <h3 className="mt-1 font-heading text-3xl font-black tracking-[-.055em] text-[#07131D]">{product.name}</h3>
+                    <p className="mt-1 text-sm font-semibold text-slate-600">{product.label}</p>
+                  </div>
+                </Link>
+              </motion.div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="premium-section premium-pattern-dark relative overflow-hidden bg-[#071A2F] text-white" aria-labelledby="smart-title">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)] opacity-100" />
+        <div className="premium-shell relative grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>
+            <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/[.68]">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {smartPoints.map(({ icon: Icon, title, text }) =>
+              <motion.div key={title} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 320, damping: 24 }} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.06] p-4 backdrop-blur-md">
+                  <Icon className="text-[#26C6E9]" size={24} />
+                  <strong className="mt-4 block text-base">{title}</strong>
+                  <p className="mt-2 text-xs leading-5 text-white/[.60]">{text}</p>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </div>
+      </section>
 
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">

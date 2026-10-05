@@ -261,9 +261,9 @@ export default function Footer() {
             <p className="mt-1 text-white/58"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
             <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
             <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
-            <p className="mt-3 max-w-2xl border-l border-cyan/35 pl-3 text-[11px] leading-5 text-white/52">
-              <strong className="font-medium text-white/72">Tvůrce / autor designu: Jakub Duch</strong> — web design, webové prezentace, e-shopy, terminály pro firemní správu a OpenAI agents.
-            </p>
+            
+
+            
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:items-end">

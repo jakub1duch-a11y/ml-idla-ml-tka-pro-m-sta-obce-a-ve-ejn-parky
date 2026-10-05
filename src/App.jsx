@@ -72,6 +72,7 @@ import Pronajem from '@/pages/Pronajem';
 import Mlhoviste from '@/pages/Mlhoviste';
 import VodniMlha from '@/pages/VodniMlha';
 import MlzneBrany from '@/pages/MlzneBrany';
+import Linea from '@/pages/Linea';
 import CategoryLanding from '@/pages/CategoryLanding';
 import RezidencniMlzeni from '@/pages/RezidencniMlzeni';
 import BendyARPrototype from '@/pages/BendyARPrototype';
@@ -203,6 +204,7 @@ const AuthenticatedApp = () => {
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/prezentace/mlzici-prostor-vysledky" element={<PrezentaceMlziciProstor />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
+        <Route path="/linea" element={<Linea />} />
         <Route path="/domu" element={<Navigate to="/" replace />} />
         <Route path="/hello-world" element={<Navigate to="/" replace />} />
         <Route path="/category/uncategorized" element={<Navigate to="/blog" replace />} />

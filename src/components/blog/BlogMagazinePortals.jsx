@@ -34,7 +34,7 @@ export default function BlogMagazinePortals() {
     <section className="mx-auto max-w-7xl px-5 py-12 sm:px-7 lg:px-10 lg:py-16">
       <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Magazín podle prostoru</p>
+          <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Blog a novinky podle prostoru</p>
           <h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Inspirace pro konkrétní místo.</h2>
         </div>
         <p className="max-w-md text-sm leading-6 text-slate-500">Tři rychlé vstupy pro nejčastější veřejné projekty. Každý kombinuje realizace, návrhy, technologie a vhodné produkty.</p>

@@ -75,9 +75,9 @@ export default function Logo({ size = 'md', variant = 'simple', tone = 'dark', c
 
       {isFull &&
       <span className="mt-2.5 flex max-w-full flex-col">
-          <span className={`${size === 'lg' ? 'text-base sm:text-lg' : 'text-sm'} font-medium tracking-[0.01em] ${mutedColor}`}>
-            Jemná atraktivní mlha
-          </span>
+          
+
+        
           <span className="mt-1.5 flex items-center gap-2 font-mono text-[9px] font-semibold uppercase tracking-[.34em] text-[#00B7FF] sm:text-[10px]">
             <span className="h-px w-5 bg-current" />
             <span>Pro lepší klima</span>

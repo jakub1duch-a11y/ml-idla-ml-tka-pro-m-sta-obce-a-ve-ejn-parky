@@ -60,18 +60,87 @@ export default function ProduktDetail() {
   );
 
   return (
-    <div className="product-detail-page min-h-screen overflow-x-clip bg-white">
-      <PdCompactHero product={product} />
-      <PdDescription product={product} />
-      <PdMediaGallery key={product.slug} product={product} />
-      <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
-      <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
-      <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
-      <div id="chytre-rizeni" className="scroll-mt-28"><PdSmartControl product={product} /></div>
-      <PdFaq product={product} />
-      <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
-      <PdLineProducts product={product} />
-      <PdClosingCta product={product} />
+    <div className="product-detail-page min-h-screen bg-white">
+      {viewMode !== 'new' && <PdScrollProgress />}
+      <PdViewModeSwitch mode={viewMode} onChange={setViewMode} />
+
+{viewMode === 'classic' && (
+  <>
+    {classicHero}
+    <PdSectionNav product={product} />
+
+          <div className="sticky top-[116px] z-30 mx-auto max-w-md px-4 py-3 lg:hidden">
+            <div className="rounded-[20px] border border-slate-200/80 bg-white/90 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
+              <div className="flex gap-1">
+                {[
+                  ['prehled', 'Přehled'],
+                  ['galerie', 'Galerie'],
+                  ['parametry', 'Parametry'],
+                  ['reference', 'Reference'],
+                ].map(([id, label]) => (
+                  <button
+                    type="button"
+                    key={id}
+                    aria-pressed={mobileSection === id}
+                    onClick={() => jumpTo(id)}
+                    className={`min-h-11 flex-1 rounded-[14px] px-2 text-[11px] font-semibold transition-colors ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600'}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <PdFamilyNav product={product} />
+          <PdTeepeeStudio product={product} />
+          <PdDescription product={product} />
+          <div id="galerie" className="scroll-mt-16"><PdScrollGallery product={product} /></div>
+          <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
+          <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
+          <PdStory product={product} />
+          <PdAudienceSolutions product={product} />
+          <PdUseCases product={product} />
+          <PdTeepeeRental product={product} />
+          <PdWireframe product={product} />
+          <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
+          <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
+          <div id="chytre-rizeni" className="scroll-mt-28"><PdSmartControl product={product} /></div>
+          <PdDetail product={product} />
+          <PdHowItWorks product={product} />
+          <PdTabs product={product} />
+          <PdFaq product={product} />
+          <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
+          <PdCollectionContext product={product} />
+          <PdLineProducts product={product} />
+          <PdClosingCta product={product} />
+        </>
+      )}
+
+      {viewMode === 'standard' && (
+        <>
+          {classicHero}
+          <PdFamilyNav product={product} />
+          <PdDescription product={product} />
+          <PdVisualGalleryCompact product={product} />
+          <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
+          <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
+          <div id="chytre-rizeni" className="scroll-mt-28"><PdSmartControl product={product} /></div>
+          <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
+          <PdClosingCta product={product} />
+        </>
+      )}
+
+      {viewMode === 'new' && (
+        <>
+          <PdCompactHero product={product} />
+          <PdVisualGalleryCompact product={product} />
+          <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
+          <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
+          <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
+          <PdClosingCta product={product} />
+        </>
+      )}
     </div>
   );
 }

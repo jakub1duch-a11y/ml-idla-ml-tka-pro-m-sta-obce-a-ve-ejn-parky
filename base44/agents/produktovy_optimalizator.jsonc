@@ -33,7 +33,48 @@
     }
   ],
   "context_files": [],
-  "app_user_connector_configs": [],
+  "app_user_connector_configs": [
+    {
+      "connector_id": "6a4628539a45aba9765ff8ee",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e96206a7f35b2cdad6f11",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e961339c3fc632b7a0ec6",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e95ff99997839ac850976",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a3e95f3b798efdb40710c8a",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a4d51c9f28c6e0b0efd8e6f",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a4815d14bdad9f1dc6a1ff4",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a69e471c53bf2c66ffb9f67",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a69e4b1a75cc14687827cca",
+      "enabled": true
+    },
+    {
+      "connector_id": "6a69e580ab507d3ccb2e8da4",
+      "enabled": true
+    }
+  ],
   "selected_skill_names": [],
   "selected_workspace_skill_ids": [],
   "model": "claude-sonnet-5",

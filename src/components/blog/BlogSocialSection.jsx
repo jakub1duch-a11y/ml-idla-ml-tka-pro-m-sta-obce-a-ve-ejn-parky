@@ -15,7 +15,7 @@ export default function BlogSocialSection() {
         <div className="grid gap-7 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Sledujte MLŽIDLA®</p>
-            <h2 className="mt-3 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Magazín pokračuje na sociálních sítích.</h2>
+            <h2 className="mt-3 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Blog a novinky pokračují na sociálních sítích.</h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-slate-500">Krátké formáty, nové realizace, výrobní detaily a inspiraci publikujeme podle formátu dané sítě. Vizuály pro Reels a covery používají stejné MASTER produktové reference jako web.</p>
         </div>

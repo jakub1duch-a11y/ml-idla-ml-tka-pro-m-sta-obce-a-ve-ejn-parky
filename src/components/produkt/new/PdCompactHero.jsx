@@ -25,7 +25,7 @@ export default function PdCompactHero({ product }) {
 
   return (
     <section id="prehled" className="scroll-mt-28 bg-[#F7FBFD]">
-      <div className="mx-auto grid max-w-[1500px] gap-7 px-5 pb-10 pt-8 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch lg:px-12 lg:pb-14 lg:pt-12 xl:px-20 my-1">
+      <div className="grid max-w-[1500px] gap-7 px-5 pb-10 pt-8 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch lg:px-12 lg:pb-14 lg:pt-12 xl:px-20 my-20">
         <div className="flex flex-col justify-center">
           <div className="flex flex-wrap items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[.17em] text-[#0B8EC5]">
             <span>{family.label}</span>

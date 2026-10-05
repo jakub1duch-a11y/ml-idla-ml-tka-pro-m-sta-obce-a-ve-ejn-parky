@@ -1,4 +1,5 @@
 import React from 'react';
+import TechnologyGraphic from './TechnologyGraphic';
 import { Link } from 'react-router-dom';
 import { Smartphone, Clock, Droplets, Hand, ArrowRight } from 'lucide-react';
 
@@ -20,10 +21,11 @@ export default function PdSmartControl({ product = null }) {
             <p className="mt-5 max-w-xl leading-7 text-slate-700">Sladíme ovládání s provozem vašeho areálu. Řadič, ventil, napájení a případné senzory vybíráme podle počtu zón, připojení a požadovaných funkcí.</p>
             <Link to={`/poptavka?produkt=${encodeURIComponent(product?.slug || '')}`} className="mt-6 inline-flex min-h-12 items-center gap-3 rounded-xl bg-[#0D2D38] px-6 py-3 font-semibold text-white">Navrhnout chytré řízení <ArrowRight size={18}/></Link>
           </div>
-          <figure className="overflow-hidden rounded-2xl bg-white">
-            <img src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp" alt="Ukázka mobilního ovládání mlžného systému" className="max-h-[420px] w-full object-contain" loading="lazy" />
-            <figcaption className="p-4 text-sm leading-6 text-slate-600">Ilustrační ukázka ovládání. Funkce a vzhled aplikace závisejí na zvolené výbavě a připojení.</figcaption>
-          </figure>
+          <TechnologyGraphic kind="smart" />
+        </div>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div><h3 className="mb-4 text-xl font-bold text-[#0D2D38]">Skryté kotvení</h3><TechnologyGraphic kind="anchoring" /></div>
+          <div><h3 className="mb-4 text-xl font-bold text-[#0D2D38]">Umístění rozvodového boxu</h3><TechnologyGraphic kind="box" /></div>
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map(({ icon: Icon, title, text }) => <article key={title} className="rounded-2xl border border-slate-200 bg-white p-5"><Icon size={24} className="text-[#0E5B67]"/><h3 className="mt-4 font-bold text-[#0D2D38]">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-700">{text}</p></article>)}

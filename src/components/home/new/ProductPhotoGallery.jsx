@@ -232,7 +232,7 @@ export default function ProductPhotoGallery() {
             </div>
             <div className="flex flex-col flex-1 p-0 gap-3 sm:p-8">
               <Link to={item.href} className="flex items-start justify-between gap-3 text-white transition hover:text-cyan-200"><h3 className="text-lg font-semibold leading-tight">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
-              <p className="flex-1 text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p>
+              <p className="flex-1 text-sm text-slate-300 leading-2">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p>
               <Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 transition hover:gap-3 hover:text-white">Navrhnout řešení <ArrowRight size={14} /></Link>
             </div>
           </motion.article>

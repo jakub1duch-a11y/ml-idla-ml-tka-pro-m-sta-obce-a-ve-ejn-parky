@@ -261,7 +261,7 @@ export default function PremiumHomepage2026() {
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/[.10] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
-            <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f60a460af_kotvici_patka_mlzitek_HolmTec.png" alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
             <div className="absolute inset-0 sm:p-8 lg:p-10 p-6">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>

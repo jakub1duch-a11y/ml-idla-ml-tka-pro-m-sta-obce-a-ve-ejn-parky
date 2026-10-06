@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { setSEO } from '@/lib/seo';
 import SmartHero from '@/components/smart-ovladani/SmartHero';
 import SmartBenefits from '@/components/smart-ovladani/SmartBenefits';
+import SmartAppConsumptionSection from '@/components/smart-ovladani/SmartAppConsumptionSection';
 import SmartSensorsSection from '@/components/smart-ovladani/SmartSensorsSection';
 import SmartAutomationFlow from '@/components/smart-ovladani/SmartAutomationFlow';
 import SmartCTA from '@/components/smart-ovladani/SmartCTA';
@@ -69,6 +70,7 @@ export default function SmartOvladani() {
       <SmartCoolingCityUseCases />
       <div id="smart-automatizace" className="scroll-mt-32"><SmartAutomationFlow /></div>
       <SmartBenefits />
+      <SmartAppConsumptionSection />
       <div id="smart-senzory" className="scroll-mt-32"><SmartSensorsSection /></div>
       <SmartValveMediaSection />
       <SmartOfferSection />

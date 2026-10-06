@@ -247,23 +247,15 @@ export default function PremiumHomepage2026() {
               )}
             </div>
           </motion.div>
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
+          <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,.44fr)] items-center gap-3 sm:gap-5">
+            <figure className="min-w-0">
+              <img src="/media/smart/smart-control-system.webp" alt="Ilustrační sestava chytrého řízení mlžení s ventilem, snímači a mobilním ovládáním" width="1254" height="1254" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
+              <figcaption className="mt-3 text-xs leading-5 text-white/70">Ilustrační sestava. Konkrétní vybavení dle návrhu řešení.</figcaption>
+            </figure>
+            <figure className="min-w-0 overflow-hidden rounded-2xl border border-white/15 bg-black">
+              <img src="/media/smart/smart-control-phone.webp" alt="Ilustrační náhled ovládání mlžení v mobilním telefonu" width="1024" height="1536" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
+            </figure>
+          </div>
         </div>
       </section>
 

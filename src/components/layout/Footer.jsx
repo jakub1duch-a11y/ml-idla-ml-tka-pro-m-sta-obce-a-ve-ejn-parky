@@ -98,15 +98,15 @@ export default function Footer() {
             <div className="mt-7 grid gap-3 text-sm text-white/72 sm:grid-cols-3 lg:grid-cols-1">
               <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Phone size={15} /></span>
-                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Telefon</span><span className="font-semibold text-white/86">+420 774 700 390</span></span>
+                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/70">Telefon</span><span className="font-semibold text-white/86">+420 774 700 390</span></span>
               </a>
               <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Mail size={15} /></span>
-                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">E-mail</span><span className="font-semibold text-white/86">obchod1@holmtec.cz</span></span>
+                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/70">E-mail</span><span className="font-semibold text-white/86">obchod1@holmtec.cz</span></span>
               </a>
               <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><MapPin size={15} /></span>
-                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Zázemí</span><span className="font-semibold text-white/86">Trutnov · HolmTec</span></span>
+                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/70">Zázemí</span><span className="font-semibold text-white/86">Trutnov · HolmTec</span></span>
               </Link>
             </div>
 
@@ -255,12 +255,12 @@ export default function Footer() {
           </form>
         </div>
 
-        <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-5 py-7 text-xs text-white/75 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-3xl">
             <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
-            <p className="mt-1 text-white/58"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
-            <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
-            <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
+            <p className="mt-1 text-white/75"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
+            <p className="mt-1 text-white/70">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
+            <p className="mt-1 text-white/75"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
             
 
             
@@ -278,7 +278,7 @@ export default function Footer() {
               <span className="flex min-w-0 items-center gap-1.5">
                 <LockKeyhole size={11} className="shrink-0 text-white/62" aria-hidden="true" />
                 <span className="text-[10px] font-semibold tracking-[.02em] text-white/82">Zabezpečené připojení</span>
-                <span className="hidden text-[10px] text-white/52 sm:inline">· kontrola odkazu</span>
+                <span className="hidden text-[10px] text-white/70 sm:inline">· kontrola odkazu</span>
               </span>
             </div>
 
@@ -293,20 +293,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 72, filter: 'blur(12px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="pointer-events-none relative border-t border-white/[.06] px-3 pb-2 pt-6 sm:px-6 lg:px-8"
-        aria-hidden="true">
-        
-        <div className="mx-auto max-w-[1600px] overflow-hidden">
-          <div className="flex select-none items-end justify-center whitespace-nowrap font-heading text-[18vw] font-extrabold leading-[0.72] tracking-[-0.075em] text-white/[.055] sm:text-[15vw] lg:text-[12vw]">
-            <span className="text-cyan/[.12]">MLŽ</span><span>IDLA</span><sup className="ml-1 self-start pt-[1.8vw] text-[2.2vw] tracking-normal text-white/[.09]">®</sup>
-          </div>
-        </div>
-      </motion.div>
+
     </footer>);
 
 }

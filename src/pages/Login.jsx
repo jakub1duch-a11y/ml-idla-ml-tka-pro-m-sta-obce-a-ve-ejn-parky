@@ -69,7 +69,11 @@ export default function Login() {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm"
+        >
           {error}
         </div>
       )}
@@ -113,14 +117,20 @@ export default function Login() {
             />
           </div>
         </div>
-        <Button type="submit" className="w-full h-12 font-medium" disabled={loading}>
+        <Button
+          type="submit"
+          aria-label={loading ? "Probíhá přihlašování" : "Přihlásit se"}
+          aria-busy={loading}
+          className="w-full h-12 font-medium focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          disabled={loading}
+        >
           {loading ? (
             <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Přihlašování...
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" aria-hidden="true" />
+              <span>Přihlašování...</span>
             </>
           ) : (
-            "Přihlášení"
+            "Přihlásit se"
           )}
         </Button>
       </form>

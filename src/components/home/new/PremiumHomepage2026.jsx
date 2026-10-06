@@ -261,7 +261,7 @@ export default function PremiumHomepage2026() {
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/[.10] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f60a460af_kotvici_patka_mlzitek_HolmTec.png" alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
+            <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
             <div className="absolute inset-0 sm:p-8 lg:p-10 p-6">
               <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
@@ -310,7 +310,7 @@ export default function PremiumHomepage2026() {
             ['Slavnosti a eventy', media.steblo, 'Mobilní nebo dočasné osvěžení pro akce, trhy a letní program města.']].
             map(([title, image, text], index) =>
             <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="premium-card-interactive overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
-                <img src={image} alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d19f07acb_40c8a362-0fb9-40af-a332-f6566b1d3ee2__1_.jpeg" alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="p-6">
                   <h3 className="font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
@@ -325,7 +325,7 @@ export default function PremiumHomepage2026() {
         <div className="premium-shell grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative overflow-hidden rounded-[2rem] border border-slate-200 bg-[#071A2F] shadow-[0_24px_80px_rgba(7,19,29,.18)]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(38,198,233,.24),transparent_38%),linear-gradient(140deg,#071A2F,#0C3148)]" aria-hidden="true" />
-            <img src={media.brochure} alt="Technický detail skrytého kotvení mlžítka v podkladu" className="relative aspect-[4/3] w-full object-contain p-6 sm:p-10" loading="lazy" decoding="async" />
+            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f60a460af_kotvici_patka_mlzitek_HolmTec.png" alt="Technický detail skrytého kotvení mlžítka v podkladu" className="relative aspect-[4/3] w-full object-contain p-6 sm:p-0" loading="lazy" decoding="async" />
             <div className="relative grid grid-cols-3 gap-2 border-t border-white/15 bg-black/20 p-4 text-center text-[10px] font-semibold uppercase tracking-[.12em] text-white/75 sm:p-5 sm:text-[11px]">
               <span>Skrytá patka</span><span>Přívod vody</span><span>Stabilní základ</span>
             </div>

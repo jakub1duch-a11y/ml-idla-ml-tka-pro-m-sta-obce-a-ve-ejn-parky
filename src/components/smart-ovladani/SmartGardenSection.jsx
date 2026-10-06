@@ -18,7 +18,7 @@ export default function SmartGardenSection({ product = null, eyebrow = 'Chytrá 
   const mode = MODES[selected];
   return (
     <section className="smart-garden" aria-labelledby={`${uid}-heading`}>
-      <img className="smart-garden__sketch" src="/media/smart-control-sketch.svg" alt="" aria-hidden="true" loading="lazy" />
+      <div className="smart-garden__sketch" aria-hidden="true" />
       <div className="smart-garden__inner">
         <div className="smart-garden__layout">
           <div className="smart-garden__copy">

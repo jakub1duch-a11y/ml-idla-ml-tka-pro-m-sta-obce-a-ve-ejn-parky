@@ -252,7 +252,7 @@ export default function PremiumHomepage2026() {
               <figcaption className="mt-3 text-xs leading-5 text-white/70">Ilustrační sestava. Konkrétní vybavení dle návrhu řešení.</figcaption>
             </figure>
             <figure className="min-w-0 overflow-hidden rounded-2xl border border-white/15 bg-black">
-              <img src="/media/smart/smart-control-phone.webp" alt="Ilustrační náhled ovládání mlžení v mobilním telefonu" width="1024" height="1536" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f80b74fc4_ovladani_mlzitek_z_mobilu.png" alt="Ilustrační náhled ovládání mlžení v mobilním telefonu" width="1024" height="1536" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
             </figure>
           </div>
         </div>

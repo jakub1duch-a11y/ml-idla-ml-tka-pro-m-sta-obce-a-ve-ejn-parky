@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, Droplets, Ruler, ShieldCheck, Wifi, Trees, Dumbbell, School } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { base44 } from '@/api/base44Client';
+import ArchitecturalHero from '@/components/kolekce/ArchitecturalHero';
+import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
 import GateUseCaseTables from '@/components/produkt/GateUseCaseTables';
+
+const GATE_COLLECTION = { name: 'Mlžné brány a oblouky', productSlugs: ['mlzna-brana-gate', 'mlzitko-kruh', 'linea-gate', 'brana-bendy'] };
 
 const USE_CASES = [
 { icon: Building2, title: 'Náměstí a pěší zóny', text: 'Průchozí ochlazovací bod pro pobytové plochy, městská centra, předprostory veřejných budov a frekventované pěší trasy.' },
@@ -58,19 +62,8 @@ export default function MlzneBrany() {
 
   return (
     <main className="bg-white pt-16">
-      <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
-        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6158a8485_generated_image.png" alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,19,29,.94)_6%,rgba(7,19,29,.74)_55%,rgba(7,19,29,.25)_100%)]" />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-          <p className="font-mono text-xs uppercase tracking-[.2em] text-accent">MLŽNÉ BRÁNY · MĚSTA A OBCE · VEŘEJNÝ PROSTOR</p>
-          <h1 className="mt-5 max-w-5xl font-heading text-5xl leading-[.98] tracking-[-.03em] sm:text-6xl lg:text-7xl">Mlžné brány a oblouky pro města, obce a veřejný prostor.</h1>
-          <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/72">Navrhujeme nerezové průchozí mlžné zóny pro náměstí, parky, promenády, školy a sportovní areály. Tvar, rozměr, umístění a provoz řešíme podle konkrétního místa a pohybu lidí.</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/poptavka?produkt=Mlžná%20brána" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>
-            <Link to="/mestske-mlzitka" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white">Mlžítka pro města a obce <ArrowRight size={16} /></Link>
-          </div>
-        </div>
-      </section>
+      <ArchitecturalHero eyebrow="Mlžné brány a oblouky" title="Projděte létem." accent="Svěží cestou." description="Nerezové průchozí mlžné zóny pro náměstí, parky a promenády. Tvar, měřítko i provoz navrhneme podle vašeho místa." image="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6158a8485_generated_image.png" imageAlt="Vizualizace mlžné brány ve veřejném prostoru" caption="Mlžné brány / ilustrační vizualizace" target="collection-products" />
+      <CollectionProductGrid collection={GATE_COLLECTION} />
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
         <div className="mb-10 max-w-4xl">

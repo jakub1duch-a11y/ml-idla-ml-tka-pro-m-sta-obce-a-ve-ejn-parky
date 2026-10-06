@@ -12,33 +12,6 @@ const benefits = [
 { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' }];
 
 
-const tiles = [
-{
-  title: 'LINEA CE',
-  text: 'Nerezová linie s charakteristickým ohybem',
-  image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
-  link: '/produkt/linea-solo'
-},
-{
-  title: 'MRAK',
-  text: 'Hravé osvěžení pro děti a hřiště',
-  image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
-  link: '/produkt/mlzitko-mrak'
-},
-{
-  title: 'MLŽNÁ BRÁNA',
-  text: 'Průchozí vodní mlha pro náměstí',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
-  link: '/mlzne-brany'
-},
-{
-  title: 'BENDY',
-  text: 'Organická linie pro pobytové zóny',
-  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
-  link: '/produkt/mlzitko-bendy'
-}];
-
-
 export default function HomeHero() {
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
@@ -52,6 +25,7 @@ export default function HomeHero() {
     <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
+        <p className="absolute bottom-4 right-4 z-20 rounded-full bg-black/60 px-3 py-2 text-xs text-white">BENDY · ilustrační vizualizace</p>
         <motion.div
           className="absolute inset-0 h-[108%] w-full"
           style={{ y: mediaY, scale: mediaScale }}
@@ -117,27 +91,6 @@ export default function HomeHero() {
         </div>
       </div>
 
-      <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
-      <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-          {tiles.map((tile, index) =>
-            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
-              <Link to={tile.link} className="ref-product-card group block h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
-                <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
-                <div className="border-t border-white/10 p-5">
-                  <div className="mb-3 flex items-center justify-between"><span className="ref-card-index font-mono text-[10px] font-bold text-[#26C6E9]">{String(index + 1).padStart(2, "0")}</span><span className="text-[10px] font-bold uppercase tracking-[.18em] text-white/55">Produkt</span></div>
-                  <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
-                  <p className="mt-1 min-h-[40px] text-sm font-semibold leading-5 text-slate-200">{tile.text}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] opacity-90 transition group-hover:translate-x-1">
-                    Detail produktu <ArrowRight size={14} />
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-            )}
-        </div>
-        <p className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[.16em] text-white/40 sm:hidden">Přejeďte pro další produkty</p>
-      </div>
     </section>
     </MotionConfig>);
 

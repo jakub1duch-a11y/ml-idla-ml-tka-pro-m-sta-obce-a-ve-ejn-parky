@@ -21,7 +21,7 @@ const drivePreviewUrl = (url) => {
   const id = typeof url === 'string' ? url.match(DRIVE_FILE_RE)?.[1] : null;
   return id ? `https://drive.google.com/file/d/${id}/preview` : url;
 };
-const clean = (items) => [...new Map(items.filter((x) => x?.url).map((x) => [x.url, x])).values()];
+const clean = (items) => [...items.filter((x) => x?.url).reduce((map, item) => { if (!map.has(item.url)) map.set(item.url, item); return map; }, new Map()).values()];
 const mediaUrl = (url) => (url && !isVideo(url) ? getOptimizedMediaUrl(url) : url);
 const mediaCaption = (item) => item.caption || (
   item.badge === 'Studio' ? 'Studiový náhled produktu' :
@@ -62,7 +62,7 @@ function MediaCard({ item, onOpen, productName }) {
     <button
       type="button"
       onClick={onOpen}
-      className="product-motion-card group relative min-w-[82%] overflow-hidden rounded-[24px] border border-[#D8E8F0] bg-white/80 text-left shadow-[0_12px_36px_rgba(10,35,66,.06)] backdrop-blur-xl sm:min-w-0"
+      className="product-motion-card group relative w-full min-w-0 overflow-hidden rounded-[24px] border border-[#D8E8F0] bg-white/80 text-left shadow-[0_12px_36px_rgba(10,35,66,.06)] backdrop-blur-xl sm:min-w-0"
     >
       <div className="aspect-[4/3] overflow-hidden bg-[#DCECF4]">
         {video ? (
@@ -132,6 +132,8 @@ export default function PdMediaGallery({ product }) {
     const studioMedia = getStudioMedia(product);
     const curated = getCuratedProductMedia(product);
     const curatedUrls = new Set(curated.map(item => item.url));
+    const renderUrls = new Set(adminMedia.filter(item => item.media_role === 'render').map(item => item.file_url));
+    const adminVisuals = adminMedia.filter(item => item.media_role === 'render' && !isVideo(item.file_url)).map(item => ({ type: 'image', url: mediaUrl(item.file_url), caption: item.file_name || 'Ilustrační vizualizace', alt: `${product.name} — ilustrační vizualizace`, badge: 'Vizualizace' }));
     const adminProductPhotos = adminMedia
       .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'technology'].includes(item.media_role))
       .filter((item) => !isVideo(item.file_url))
@@ -143,7 +145,7 @@ export default function PdMediaGallery({ product }) {
       studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: 'Studiový náhled produktu', badge: 'Studio' },
       product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
       ...(product.gallery_urls || [])
-        .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
+        .filter((url) => url && !curatedUrls.has(url) && !renderUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
         .map((url) => ({
           type: 'image',
           url: mediaUrl(url),
@@ -175,7 +177,7 @@ export default function PdMediaGallery({ product }) {
         badge: 'Schváleno',
       }));
 
-    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
+    const visualizations = clean([...approvedAdminVisuals, ...adminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
       r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Vizualizace' },
       r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Návrh' },
     ])]);
@@ -228,12 +230,12 @@ export default function PdMediaGallery({ product }) {
   if (allEmpty) return null;
 
   return (
-    <section id="media" className="overflow-hidden bg-[#F7FBFD] py-16 lg:py-24">
+    <section id="galerie" className="overflow-hidden bg-[#F7FBFD] py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-[#0B97E8] sm:text-[11px]">Produkt v detailu</p>
-            <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">Vhodné pro zahrady, parky i veřejný prostor</h2>
+            <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">Prohlédněte si produkt zblízka</h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — reálné fotografie a realizace držíme odděleně od návrhových vizualizací.</p>
           </div>
           <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">Technická schémata patří do sekce „Příprava a instalace“. Vizualizace umístění jsou vždy označené samostatně.</p>
@@ -324,10 +326,10 @@ export default function PdMediaGallery({ product }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: .28 }}
-            className="mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-3 xl:grid-cols-4 [&::-webkit-scrollbar]:hidden"
+            className="mt-7 grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
             {items.map((item, index) => (
-              <div key={item.url} className="snap-start sm:block">
+              <div key={item.url} className="min-w-0">
                 <MediaCard item={item} productName={product.name} onOpen={() => setLightbox({ items, index })} />
               </div>
             ))}
@@ -348,18 +350,27 @@ function GalleryLightbox({ items, initial, productName, onClose }) {
 
   useEffect(() => {
     const previous = document.body.style.overflow;
+    const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const dialog = document.querySelector('[role=dialog][aria-label]');
+    dialog?.querySelector('button')?.focus();
     document.body.style.overflow = 'hidden';
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab' && dialog) {
+        const controls = Array.from(dialog.querySelectorAll('button, video[controls], iframe')).filter((element) => element instanceof HTMLElement);
+        const first = controls[0], last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+        if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      }
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
     };
     window.addEventListener('keydown', onKey);
-    return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', onKey); };
+    return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', onKey); trigger?.focus(); };
   }, [items.length, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[250] flex items-center justify-center bg-[#04141f]/95 p-3 backdrop-blur-xl sm:p-6" onClick={onClose}>
+    <div role="dialog" aria-modal="true" aria-label={`${productName} — galerie`} className="fixed inset-0 z-[250] flex items-center justify-center bg-[#04141f]/95 p-3 backdrop-blur-xl sm:p-6" onClick={onClose}>
       <button type="button" onClick={onClose} className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/18" aria-label="Zavřít"><X size={22}/></button>
       <div className="relative w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
         <AnimatePresence mode="wait">

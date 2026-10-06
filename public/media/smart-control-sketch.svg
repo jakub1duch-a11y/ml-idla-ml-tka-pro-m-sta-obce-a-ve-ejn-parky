@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <title>Chytré řízení mlžení — vektorový náčrt</title>
+  <desc>Dekorativní koncepční náčrt telefonu, řadiče a místního tlačítka propojených s vodní mlhou. Nejde o instalační dokumentaci.</desc>
+  <g stroke="#0e5b67" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(1020 48) rotate(19 120 180)">
+      <rect x="0" y="0" width="230" height="386" rx="31"/>
+      <rect x="13" y="15" width="204" height="356" rx="21"/>
+      <path d="M78 16h77l-7 14H84zM83 351h65"/>
+      <circle cx="115" cy="162" r="62"/>
+      <path d="M115 119v47m-24-33a41 41 0 1 0 48 0" stroke="#31b9c8" stroke-width="3"/>
+      <rect x="37" y="257" width="156" height="30" rx="9"/><rect x="37" y="300" width="156" height="20" rx="7"/>
+    </g>
+    <g transform="translate(916 557)">
+      <path d="M0 38 65 0h185v145l-63 41H0zM0 38h186v148M186 38l64-38"/>
+      <circle cx="18" cy="56" r="3"/><circle cx="166" cy="56" r="3"/><circle cx="18" cy="164" r="3"/><circle cx="166" cy="164" r="3"/>
+      <circle cx="92" cy="90" r="7" stroke="#31b9c8"/>
+      <path d="M74 186v29h37v-29m-18 29v35m157-136h23V-56m-6 0h12v170h-12z"/>
+    </g>
+    <g transform="translate(575 688)">
+      <path d="m0 24 34-24h141l-35 24zm0 0v79h140V24m0 79 35-24V0"/>
+      <ellipse cx="72" cy="56" rx="28" ry="16" stroke="#31b9c8" stroke-width="3"/>
+    </g>
+    <path d="M1007 807v35H354V536H187" stroke-dasharray="7 11"/>
+    <path d="M904 683H770v60" stroke-dasharray="7 11"/>
+    <path d="M1234 207c39 1 75 21 94 52m-95-77c50-1 99 27 123 68m-122-98c68-2 124 31 152 84" stroke="#31b9c8"/>
+    <path d="M120 474c0-24 35-72 35-72s35 48 35 72a35 35 0 0 1-70 0zM137 475c0 12 8 20 18 20"/>
+  </g>
+  <g stroke="#6f8f72" stroke-width="1" opacity=".65">
+    <path d="M38 80h280M178 44v72M900 29h456M1349 37v776M1355 835H375M374 829v12M1355 829v12"/>
+    <path d="M62 75v10M304 75v10M1337 42h24M1337 804h24"/>
+    <circle cx="1327" cy="72" r="13"/><path d="M1308 72h38m-19-19v38"/>
+  </g>
+</svg>

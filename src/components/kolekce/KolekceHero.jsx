@@ -72,6 +72,7 @@ export default function KolekceHero() {
             onClick={() => setSelected(index)}
             whileHover={reduced ? undefined : { y: -2 }}
             whileTap={reduced ? undefined : { scale: 0.96 }}>
+           
             
               <span className="mr-2 font-mono text-[9px] opacity-45">0{index + 1}</span>{item.name}
             </motion.button>

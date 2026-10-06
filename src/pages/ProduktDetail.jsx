@@ -1,73 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
-import PdHero from '@/components/produkt/new/PdHero';
+import PdMediaGallery from '@/components/produkt/new/PdMediaGallery';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
-import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
-import PdViewModeSwitch from '@/components/produkt/new/PdViewModeSwitch';
-import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdVariants from '@/components/produkt/new/PdVariants';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
-import PdWireframe from '@/components/produkt/new/PdWireframe';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
 import PdSmartControl from '@/components/produkt/new/PdSmartControl';
-import PdDetail from '@/components/produkt/new/PdDetail';
-import PdHowItWorks from '@/components/produkt/new/PdHowItWorks';
-import PdTabs from '@/components/produkt/new/PdTabs';
-import PdScrollGallery from '@/components/produkt/new/PdScrollGallery';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
-import PdSectionNav from '@/components/produkt/new/PdSectionNav';
-import PdUseCases from '@/components/produkt/new/PdUseCases';
-import PdAudienceSolutions from '@/components/produkt/new/PdAudienceSolutions';
 import PdDescription from '@/components/produkt/new/PdDescription';
-import PdStory from '@/components/produkt/new/PdStory';
-import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdLineProducts from '@/components/produkt/new/PdLineProducts';
-import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
 import PdFaq from '@/components/produkt/new/PdFaq';
-import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
-import PdTeepeeRental from '@/components/produkt/new/PdTeepeeRental';
-import PdTeepeeStudio from '@/components/produkt/new/PdTeepeeStudio';
-import ProductHero from '@/components/ProductHero';
-
-const VIEW_MODES = new Set(['classic', 'standard', 'new']);
 
 export default function ProduktDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [mobileSection, setMobileSection] = useState('prehled');
-
-  const requestedView = searchParams.get('view');
-  const viewMode = VIEW_MODES.has(requestedView) ? requestedView : 'new';
-
-  const setViewMode = (nextMode) => {
-    if (!VIEW_MODES.has(nextMode)) return;
-    const next = new URLSearchParams(searchParams);
-    next.set('view', nextMode);
-    setSearchParams(next, { replace: true });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const jumpTo = (id) => {
-    setMobileSection(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   useEffect(() => {
     if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
+    let active = true;
+    setProduct(null);
     setLoading(true);
     setNotFound(false);
     base44.entities.Product.filter({ slug })
       .then((results) => {
+        if (!active) return;
         if (!results || results.length === 0) { setNotFound(true); return; }
         const p = results[0];
         if (isArchived(p.slug)) { setNotFound(true); return; }
@@ -75,8 +39,9 @@ export default function ProduktDetail() {
         trackProductView(p.name, p.slug, p.category_id);
         setSEO({ ...getProductSEO(p), robots: 'index, follow' });
       })
-      .catch(() => setNotFound(true))
-      .finally(() => setLoading(false));
+      .catch(() => { if (active) setNotFound(true); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [slug, navigate]);
 
   if (loading) return (
@@ -91,12 +56,6 @@ export default function ProduktDetail() {
         <p className="mb-4 text-lg text-[#0D2F4F]/40">Produkt nenalezen.</p>
         <Link to="/katalog-mlzitek" className="text-[#0B5EA8] hover:underline">← Zpět na katalog</Link>
       </div>
-    </div>
-  );
-
-  const classicHero = (
-    <div id="prehled" className="scroll-mt-28">
-      {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
     </div>
   );
 

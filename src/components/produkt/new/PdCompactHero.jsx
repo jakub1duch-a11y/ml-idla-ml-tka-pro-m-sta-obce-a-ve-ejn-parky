@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { getFamily, getLine } from '@/lib/productFamilies';
 
 function cleanText(value = '') {

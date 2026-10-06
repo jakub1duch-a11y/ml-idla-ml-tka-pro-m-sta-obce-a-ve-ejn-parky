@@ -75,7 +75,7 @@ function ProductStage({ product, reduced }) {
 /** Uses the same filtered records as the card view; never invents product media or attributes. */
 export default function ProductExperience({ products = [], children }) {
   const [selected, setSelected] = useState(null);
-  const [mode, setMode] = useState('gallery');
+  const [mode, setMode] = useState('grid');
   const reduced = useReducedMotion();
   const regionId = useId();
   const index = Math.max(0, products.findIndex((product) => identity(product) === selected));

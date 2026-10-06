@@ -1,0 +1,32 @@
+.smart-garden{position:relative;isolation:isolate;overflow:hidden;border-block:1px solid #dce7e4;background:linear-gradient(135deg,#f7faf7 0%,#fff 55%,#eef7f6 100%);color:#0d2d38}
+.smart-garden__inner{position:relative;z-index:1;max-width:1280px;margin:auto;padding:80px 40px 48px}
+.smart-garden__sketch{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.15;pointer-events:none;z-index:0}
+.smart-garden__layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.smart-garden__eyebrow,.smart-garden__detail-label{font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#0e5b67}
+.smart-garden h2{margin-top:24px;font:600 clamp(38px,4.5vw,64px)/1.06 Manrope,sans-serif;letter-spacing:-.045em}
+.smart-garden h2>span{color:#0e5b67}
+.smart-garden__intro{max-width:460px;margin-top:25px;font-size:16px;line-height:1.8;color:#405b63}
+.smart-garden__cta{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:48px;max-width:100%;margin-top:30px;padding:13px 22px;border-radius:6px;background:#0d2d38;color:white;font-size:13px;font-weight:600;transition:background .2s}
+.smart-garden__cta:hover{background:#0e5b67}
+.smart-garden__visual{position:relative;min-width:0;margin:0;isolation:isolate}
+.smart-garden__visual>img{position:relative;display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain;z-index:1}
+.smart-garden__orbit{position:absolute;inset:14% 6% 10%;border:1px solid #b9dcd6;border-radius:50%;background:radial-gradient(ellipse,#d8f3ea88,transparent 70%);transform:rotate(-16deg);z-index:0}
+.smart-garden__orbit::after{content:'';position:absolute;inset:10%;border:1px dashed #b9dcd6;border-radius:50%}
+.smart-garden__visual-label{position:relative;display:flex;align-items:center;gap:9px;margin-left:7%;font:10px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#0e5b67}
+.smart-garden__visual figcaption{text-align:center;font:10px/1.7 'JetBrains Mono',monospace;color:#526b73}
+.smart-garden__controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}
+.smart-garden__control{display:flex;align-items:center;gap:16px;min-width:0;min-height:98px;padding:20px;text-align:left;border:1px solid #cdded9;border-radius:12px;background:#ffffffeb;color:#0e5b67;transition:background .2s,border-color .2s}
+.smart-garden__control>svg{flex-shrink:0}
+.smart-garden__control strong{display:block;font-size:15px;font-weight:600;color:#0d2d38}
+.smart-garden__control small{display:block;margin-top:4px;font-size:12px;color:#4c6268}
+.smart-garden__number{align-self:flex-start;margin-left:auto;font:10px 'JetBrains Mono',monospace;color:#4c6268}
+.smart-garden__control[aria-pressed=true]{border-color:#0e5b67;background:#eaf5f0;box-shadow:inset 0 -3px #0e5b67}
+.smart-garden__control:hover{border-color:#0e5b67}
+.smart-garden button:focus-visible,.smart-garden a:focus-visible{outline:3px solid #0e5b67;outline-offset:4px}
+.smart-garden__detail{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;min-height:160px;margin-top:24px;padding:28px 0 20px;border-bottom:1px solid #cdded9}
+.smart-garden__detail h3{font:600 24px/1.3 Manrope,sans-serif;letter-spacing:-.025em;margin-top:10px}
+.smart-garden__detail>p{font-size:14px;line-height:1.8;color:#405b63}
+.smart-garden__more{display:inline-flex;align-items:center;gap:12px;min-height:44px;margin-top:12px;font-size:13px;font-weight:600;color:#0e5b67}
+.smart-garden__fallback{display:flex;aspect-ratio:1;flex-direction:column;align-items:center;justify-content:center;gap:20px;color:#0e5b67}
+@media(max-width:767px){.smart-garden__inner{padding:44px 22px 30px}.smart-garden__layout{grid-template-columns:1fr;gap:28px}.smart-garden h2{font-size:40px;margin-top:18px}.smart-garden__intro{font-size:15px;line-height:1.75;margin-top:20px}.smart-garden__cta{margin-top:24px}.smart-garden__visual{max-width:420px;width:100%;margin-inline:auto}.smart-garden__sketch{width:900px;max-width:none;left:auto;right:-240px;object-position:right top;opacity:.11}.smart-garden__controls{gap:8px;margin-top:26px}.smart-garden__control{flex-direction:column;align-items:flex-start;gap:12px;padding:14px 10px;min-height:132px}.smart-garden__control strong{font-size:12px}.smart-garden__control small{font-size:10px;line-height:1.5}.smart-garden__number{display:none}.smart-garden__detail{grid-template-columns:1fr;gap:14px;min-height:235px;padding-top:24px}.smart-garden__detail h3{font-size:23px}.smart-garden__visual-label{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.smart-garden *{transition:none!important}}

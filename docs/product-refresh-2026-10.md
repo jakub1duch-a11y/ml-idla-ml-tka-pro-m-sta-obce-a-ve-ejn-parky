@@ -40,3 +40,12 @@ Local frontend setup uses the existing Base44 SDK and Vite integration. Set the 
 - Product detail keeps its background image hero and gains section navigation. Hero rail, product description, product and category cards use restrained motion with reduced-motion support.
 - Validation: targeted ESLint passed; production build passed (87 prerendered pages). Playwright with mocked public product API checked 390px catalog, filtered category, BENDY collection, city collection, both category landing pages, gates and BENDY detail; catalog/BENDY also checked at 1440px. One H1, hero images loaded, no horizontal overflow or nested links, collection grids present and CTA anchor targets valid. Final catalog filter/layout changes rechecked at both widths.
 - Existing unrelated model-viewer WebAssembly CSP error remains. Direct Base44 source bridge is still blocked by PREMIUM_REQUIRED (Builder plan); GitHub source and Base44 built-in builder are separate delivery paths. Do not infer live publication from the PR or media registration.
+
+## SVG smart-control section (2026-10-06)
+
+- Added reusable SmartGardenSection with transparent 1200px WebP (124 KB), standalone transparent SVG line drawing and three accessible explanatory controls. Generated hardware is labeled illustrative; remote access and sensor functions are conditional on project configuration.
+- Replaced the homepage smart block and automation-page benefit block with this component. The automation mobile navigation includes Ovládání, and its contextual link leads to the on-page flow rather than linking back to itself.
+- Applied the same section to the earlier requested Outdoor page and shared product smart-control component, retaining installation illustrations.
+- Preserved newer homepage edits from branch head 5ecc00fccd100c9c2c9fa65b0612befefdd85dc1. Only the smart block and its obsolete constants/imports are replaced.
+- Validation: targeted ESLint and production build passed. Browser checks at 390 and 1440 pixels passed on / and /smart-ovladani with mocked public data: one section, SVG and cutout loaded, no horizontal overflow, control switching and keyboard activation work. Transparent alpha was checked in the generated PNG and WebP.
+- Base44 direct source access is still PREMIUM_REQUIRED on 2026-10-06. Media registration and builder submission do not by themselves confirm a production release.

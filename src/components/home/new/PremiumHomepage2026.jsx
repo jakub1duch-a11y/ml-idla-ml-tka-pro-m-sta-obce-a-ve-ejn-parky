@@ -1,19 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import PdSmartControl from '@/components/produkt/new/PdSmartControl';
+import SmartGardenSection from '@/components/smart-ovladani/SmartGardenSection';
 import { base44 } from '@/api/base44Client';
 import {
   ArrowRight,
   Download,
   Droplets,
-  Gauge,
   Landmark,
   Play,
   ShieldCheck,
   Sparkles,
-  Timer,
-  Wifi } from
+  } from
 'lucide-react';
 
 const media = {
@@ -65,12 +63,6 @@ const productHighlights = [
 { name: 'LINEA', label: 'čistý sloupový prvek', image: media.linea, link: '/produkt/linea-mlzitko' },
 { name: 'MRAK', label: 'mlžný prvek pro děti', image: media.mrak, link: '/produkt/mlzitko-mrak' },
 { name: 'STÉBLO', label: 'přírodní inspirace', image: media.steblo, link: '/produkt/mlzitko-steblo' }];
-
-
-const smartPoints = [
-{ icon: Gauge, title: 'Podle teploty', text: 'Mlžení se spustí při nastavených venkovních podmínkách.' },
-{ icon: Timer, title: 'Podle času', text: 'Provozní okna pro ráno, odpoledne, akci nebo víkend.' },
-{ icon: Wifi, title: 'Z aplikace', text: 'Vzdálené zapnutí, vypnutí a přehled provozu přes SUPLA.' }];
 
 
 export default function PremiumHomepage2026({ showHero = true }) {
@@ -259,42 +251,7 @@ export default function PremiumHomepage2026({ showHero = true }) {
         </div>
       </section>
 
-      <section className="premium-section premium-pattern-dark relative overflow-hidden bg-[#071A2F] text-white" aria-labelledby="smart-title">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)] opacity-100" />
-        <div className="premium-shell relative grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>
-            <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/[.68]">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {smartPoints.map(({ icon: Icon, title, text }) =>
-              <motion.div key={title} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 320, damping: 24 }} className="premium-glass-card rounded-2xl border border-white/[.12] bg-white/[.06] p-4 backdrop-blur-md">
-                  <Icon className="text-[#26C6E9]" size={24} />
-                  <strong className="mt-4 block text-base">{title}</strong>
-                  <p className="mt-2 text-xs leading-5 text-white/[.60]">{text}</p>
-                </motion.div>
-              )}
-            </div>
-          </motion.div>
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-        </div>
-      </section>
+      <SmartGardenSection eyebrow="SUPLA / chytré ovládání mlžení" />
 
       <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
         <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">

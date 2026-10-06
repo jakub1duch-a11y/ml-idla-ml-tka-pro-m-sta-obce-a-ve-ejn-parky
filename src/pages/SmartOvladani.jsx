@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { setSEO } from '@/lib/seo';
 import SmartHero from '@/components/smart-ovladani/SmartHero';
-import SmartBenefits from '@/components/smart-ovladani/SmartBenefits';
+import SmartGardenSection from '@/components/smart-ovladani/SmartGardenSection';
 import SmartSensorsSection from '@/components/smart-ovladani/SmartSensorsSection';
 import SmartAutomationFlow from '@/components/smart-ovladani/SmartAutomationFlow';
 import SmartCTA from '@/components/smart-ovladani/SmartCTA';
@@ -16,7 +16,7 @@ export default function SmartOvladani() {
   const [mobileSection, setMobileSection] = useState('prehled');
   const jumpTo = (id) => {
     setMobileSection(id);
-    document.getElementById(`smart-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById(`smart-${id}`)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   };
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function SmartOvladani() {
       <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
         <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
           <nav className="flex gap-1" aria-label="Navigace automatizace">
-            {[['prehled','Přehled'],['automatizace','Automatizace'],['senzory','Senzory']].map(([id,label]) => (
+            {[['prehled','Přehled'],['ovladani','Ovládání'],['automatizace','Automatizace'],['senzory','Senzory']].map(([id,label]) => (
               <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
                 className={`min-h-11 flex-1 rounded-[14px] px-3 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
                 {label}
@@ -68,7 +68,7 @@ export default function SmartOvladani() {
       <SmartCoolingConcept />
       <SmartCoolingCityUseCases />
       <div id="smart-automatizace" className="scroll-mt-32"><SmartAutomationFlow /></div>
-      <SmartBenefits />
+      <div id="smart-ovladani" className="scroll-mt-32"><SmartGardenSection eyebrow="Automatizace / SUPLA" moreHref="#smart-automatizace" moreLabel="Prohlédnout princip automatizace" /></div>
       <div id="smart-senzory" className="scroll-mt-32"><SmartSensorsSection /></div>
       <SmartValveMediaSection />
       <SmartOfferSection />

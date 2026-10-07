@@ -18,8 +18,8 @@ export default function SmartControlCabinetSection() {
         </div>
         <div className="relative">
           <picture>
-            <source media="(max-width: 640px)" srcSet="/media/smart/smart-control-section-mobile.png" />
-            <img src="/media/smart/smart-control-section-desktop.png" alt="Chytré řízení mlžení MLŽIDLA.cz s rozvaděčem, aplikací a měřením spotřeby" className="h-auto w-full rounded-[2rem] border border-white/80 object-cover shadow-[0_24px_80px_rgba(8,47,63,.16)]" loading="lazy" />
+            <source media="(max-width: 640px)" srcSet="/media/smart/mlzidla-smart-cabinet-fade-mobile.gif" />
+            <img src="/media/smart/mlzidla-smart-cabinet-fade.gif" alt="Animovaný přehled chytrého řízení mlžení MLŽIDLA.cz, rozvaděče, aplikace a měření spotřeby" className="h-auto w-full rounded-[2rem] border border-white/80 object-cover shadow-[0_24px_80px_rgba(8,47,63,.16)]" loading="lazy" />
           </picture>
           <img src="/media/smart/mlzidla-control-cabinet-transparent.png" alt="" aria-hidden="true" className="pointer-events-none absolute -bottom-8 -right-8 hidden w-44 drop-shadow-2xl lg:block" />
         </div>

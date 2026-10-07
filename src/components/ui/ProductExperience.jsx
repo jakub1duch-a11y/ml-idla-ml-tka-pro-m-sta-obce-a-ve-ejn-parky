@@ -84,7 +84,7 @@ export default function ProductExperience({ products = [], children }) {
   const move = (step) => setSelected(identity(products[(index + step + products.length) % products.length]));
   return <div className="mpe" data-product-experience>
     <div className="mpe-toolbar">
-      <p>Objevte jednotlivé tvary</p>
+      <p className="text-1x1 text-3xl">Objevte jednotlivé tvary</p>
       {children && <div className="mpe-modes" aria-label="Zobrazení produktů">
         <button type="button" aria-pressed={mode === 'gallery'} aria-controls={regionId} onClick={() => setMode('gallery')}>
           <Images size={16} aria-hidden="true" /> Galerie

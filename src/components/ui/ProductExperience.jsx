@@ -13,11 +13,11 @@ function ProductImage({ url, name, className = '' }) {
   const [failed, setFailed] = useState(false);
   if (!url || failed) return <div className={`mpe-image-empty ${className}`}>Fotografie se připravuje</div>;
   return <img src={getOptimizedMediaUrl(url)} alt={name} className={className} loading="lazy" decoding="async"
-    onError={(event) => {
-      const original = getOriginalMediaUrl(url);
-      if (original && event.currentTarget.getAttribute('src') !== original) event.currentTarget.src = original;
-      else setFailed(true);
-    }} />;
+  onError={(event) => {
+    const original = getOriginalMediaUrl(url);
+    if (original && event.currentTarget.getAttribute('src') !== original) event.currentTarget.src = original;else
+    setFailed(true);
+  }} />;
 }
 
 function ProductStage({ product, reduced }) {
@@ -35,22 +35,22 @@ function ProductStage({ product, reduced }) {
       const dx = event.changedTouches[0].clientX - touch.current.x;
       const dy = event.changedTouches[0].clientY - touch.current.y;
       if (urls.length > 1 && Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5)
-        setView((current) => (current + (dx < 0 ? 1 : -1) + urls.length) % urls.length);
+      setView((current) => (current + (dx < 0 ? 1 : -1) + urls.length) % urls.length);
       touch.current = null;
     }}>
       <span className="mpe-stage-label">{mediaIsVideo ? 'Video produktu' : 'Galerie produktu'}</span>
       <motion.div key={media || 'empty'} className="mpe-media"
-        initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: reduced ? 0 : 0.35 }}>
-        {mediaIsVideo
-          ? <video src={getOptimizedMediaUrl(media)} controls playsInline preload="none"
-              aria-label={`${product.name} — video produktu`} />
-          : <ProductImage key={media} url={media} name={`${product.name} — fotografie ${view + 1}`} />}
+      initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduced ? 0 : 0.35 }}>
+        {mediaIsVideo ?
+        <video src={getOptimizedMediaUrl(media)} controls playsInline preload="none"
+        aria-label={`${product.name} — video produktu`} /> :
+        <ProductImage key={media} url={media} name={`${product.name} — fotografie ${view + 1}`} />}
       </motion.div>
       {urls.length > 1 && <div className="mpe-photo-controls" aria-label={`Fotografie: ${product.name}`}>
         {urls.map((url, index) => <button type="button" key={url}
-          aria-label={`${isVideo(url) ? 'Video' : 'Fotografie'} ${index + 1} — ${product.name}`}
-          aria-pressed={index === view} onClick={() => setView(index)}>
+        aria-label={`${isVideo(url) ? 'Video' : 'Fotografie'} ${index + 1} — ${product.name}`}
+        aria-pressed={index === view} onClick={() => setView(index)}>
           <span>{isVideo(url) ? '▶' : index + 1}</span>
         </button>)}
       </div>}
@@ -99,7 +99,7 @@ export default function ProductExperience({ products = [], children }) {
         <div className="mpe-feature">
           <ProductStage key={identity(product)} product={product} reduced={reduced} />
         </div>
-        <div className="mpe-navigation">
+        <div className="mpe-navigation bg-[hsl(var(--border))]">
           <p role="status" aria-live="polite" aria-atomic="true"><span>{String(index + 1).padStart(2, '0')}</span> / {products.length} · {product.name}</p>
           {products.length > 1 && <div className="mpe-arrows">
             <button type="button" aria-label="Předchozí produkt" onClick={() => move(-1)}><ArrowLeft size={20} /></button>
@@ -108,7 +108,7 @@ export default function ProductExperience({ products = [], children }) {
         </div>
         {products.length > 1 && <div className="mpe-thumbnails" aria-label="Výběr produktu">
           {products.map((item, itemIndex) => <button type="button" key={identity(item)}
-            aria-pressed={index === itemIndex} onClick={() => setSelected(identity(item))}>
+          aria-pressed={index === itemIndex} onClick={() => setSelected(identity(item))}>
             <ProductImage key={item.image_url} url={item.image_url} name="" />
             <span>{item.name}</span>
           </button>)}

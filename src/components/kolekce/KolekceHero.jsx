@@ -41,7 +41,7 @@ export default function KolekceHero() {
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#07131D] to-transparent" />
       <HeroAtmosphere />
 
-      <motion.div style={{ y: copyY }} className="hero-catalog-content !min-h-[720px]">
+      <motion.div style={{ y: copyY }} className="hero-catalog-content min-h-[720px]">
         <div className="inline-flex w-fit items-center gap-3 rounded-full border border-white/12 bg-white/[.055] px-4 py-2 backdrop-blur-md">
           <span className="h-2 w-2 rounded-full bg-[#7AE1EF] shadow-[0_0_18px_rgba(122,225,239,.8)]" />
           <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">KATALOG / MLŽIDLA®</span>

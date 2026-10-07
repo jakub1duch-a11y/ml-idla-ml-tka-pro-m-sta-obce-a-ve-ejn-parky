@@ -110,7 +110,7 @@ export default function PremiumHomepage2026() {
     <div className="premium-homepage-2026 overflow-x-clip bg-white text-[#07131D]">
       <section className="relative overflow-hidden bg-[#07131D] text-white" aria-labelledby="premium-hero-title">
         <div className="absolute inset-0">
-          <img src={media.cityHero} alt="Mlžné instalace ve veřejném prostoru" className="h-full w-full object-cover" loading="eager" decoding="async" />
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fabf797f7_teepee-namesti-deti.webp" alt="Mlžné instalace ve veřejném prostoru" className="h-full w-full object-cover" loading="eager" decoding="async" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_36%,rgba(38,198,233,.18),transparent_34%),linear-gradient(90deg,rgba(5,13,22,.88),rgba(5,13,22,.58)_45%,rgba(5,13,22,.1))]" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07131D] to-transparent" />
         </div>

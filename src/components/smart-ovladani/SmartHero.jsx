@@ -114,12 +114,13 @@ export default function SmartHero() {
             <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle,rgba(122,225,239,.15),transparent_68%)] blur-2xl" />
             <div className="relative min-h-[500px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[.05] shadow-[0_38px_120px_rgba(0,0,0,.35)] backdrop-blur-xl sm:min-h-[620px]">
               <img
-                src="/media/optimized/5c4b99749_Smartmlzitka-ovladanizmobilu.webp"
-                alt="Automatizace mlžného systému v mobilní aplikaci"
-                className="absolute inset-0 h-full w-full object-contain p-4 sm:p-8"
+                src="/media/smart/smart-control-system.webp"
+                alt="Chytré řízení mlžítka, ventil a senzory v jednom systému"
+                className="absolute inset-0 h-full w-full object-contain p-7 sm:p-12"
                 loading="eager"
                 fetchPriority="high"
               />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_52%_46%,rgba(122,225,239,.13),transparent_46%)]" />
               <div className="absolute inset-x-5 bottom-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   { icon: Wifi, label: 'Připojení', value: 'SUPLA / Wi‑Fi' },

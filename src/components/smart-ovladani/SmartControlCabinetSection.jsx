@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { Pause, Play } from 'lucide-react';
 
 export default function SmartControlCabinetSection() {
+  const reduceMotion = useReducedMotion();
+  const [paused, setPaused] = useState(false);
+  const playing = reduceMotion === false && !paused;
+  const extension = playing ? '.gif' : '-poster.webp';
+
   return (
     <section className="relative overflow-hidden border-y border-cyan-100 bg-[#f7fcfd] py-14 sm:py-18 lg:py-24" aria-labelledby="smart-cabinet-title">
       <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(120deg,transparent_0_48%,rgba(60,160,180,.12)_48.2%,transparent_48.8%),linear-gradient(32deg,transparent_0_70%,rgba(122,225,239,.12)_70.2%,transparent_70.7%)] [background-size:620px_620px,760px_760px]" />
@@ -17,11 +24,18 @@ export default function SmartControlCabinetSection() {
           <p className="mt-5 text-xs leading-5 text-slate-500">Ilustrační grafika · výbava a rozmístění se potvrzují podle konkrétního projektu.</p>
         </div>
         <div className="relative">
-          <picture>
-            <source media="(max-width: 640px)" srcSet="/media/smart/mlzidla-smart-cabinet-fade-mobile.gif" />
-            <img src="/media/smart/mlzidla-smart-cabinet-fade.gif" alt="Animovaný přehled chytrého řízení mlžení MLŽIDLA.cz, rozvaděče, aplikace a měření spotřeby" className="h-auto w-full rounded-[2rem] border border-white/80 object-cover shadow-[0_24px_80px_rgba(8,47,63,.16)]" loading="lazy" />
+          <picture key={playing ? 'motion' : 'poster'}>
+            <source media="(max-width: 640px)" srcSet={`/media/smart/mlzidla-smart-fade-v2-mobile${extension}`} />
+            <img src={`/media/smart/mlzidla-smart-fade-v2-desktop${extension}`} alt="Chytré mlžení: rozvaděč, ovládání aplikací a přehled spotřeby vody. Ilustrační konfigurace." width="800" height="600" className="aspect-[3/4] h-auto w-full rounded-[2rem] border border-cyan-100 bg-[#f7fcfd] object-contain shadow-[0_24px_80px_rgba(8,47,63,.10)] sm:aspect-[4/3]" loading="lazy" decoding="async" />
           </picture>
-          <img src="/media/smart/mlzidla-control-cabinet-transparent.png" alt="" aria-hidden="true" className="pointer-events-none absolute -bottom-8 -right-8 hidden w-44 drop-shadow-2xl lg:block" />
+          {reduceMotion === false && (
+            <div className="mt-3 flex justify-end">
+              <button type="button" onClick={() => setPaused(value => !value)} aria-pressed={paused} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-cyan-100 bg-white/90 px-4 text-xs font-semibold text-slate-700 transition hover:bg-cyan-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700">
+                {paused ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}
+                {paused ? 'Přehrát animaci' : 'Zastavit animaci'}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

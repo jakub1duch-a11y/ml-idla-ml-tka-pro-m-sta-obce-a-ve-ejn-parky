@@ -80,7 +80,7 @@ function StoryFrame({ item, index, total, progress, productName, onOpen }) {
         <motion.img
           src={optimize(item.url)}
           alt={item.alt || `${productName} — fotografie ${index + 1}`}
-          className={`h-full w-full duration-700 ease-out group-hover:scale-[1.035] transition-transform ticky ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
+          className={`h-full w-full duration-700 ease-out group-hover:scale-[1.035] transition-transform ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
           style={{ objectPosition: item.focal || 'center center' }}
           loading={index < 2 ? 'eager' : 'lazy'} />
         

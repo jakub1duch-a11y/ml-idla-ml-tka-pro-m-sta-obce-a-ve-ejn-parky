@@ -38,7 +38,7 @@ export default function Komercni() {
             <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
               <Factory size={18} className="text-slate-900" />
             </div>
-            <p className="text-xs font-mono tracking-widest uppercase text-slate-500">Komerční a industriální prostory</p>
+            <p className="font-mono tracking-widest uppercase text-slate-500 text-sm">Komerční a industriální prostory</p>
           </div>
           <h1 className="font-heading text-4xl lg:text-6xl text-slate-900 mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
             Ochlazení, které podporuje<br /><span style={{ fontStyle: 'italic' }}>komfort hostů i provozu.</span>

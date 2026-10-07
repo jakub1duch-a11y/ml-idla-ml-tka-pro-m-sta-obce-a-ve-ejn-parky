@@ -6,7 +6,7 @@ export const PRODUCT_LINKS = [
   { label: 'Mlžítka pro města', sub: 'Sloupová mlžítka do veřejného prostoru', path: '/kolekce/city', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png' },
   { label: 'Mlžné brány', sub: 'Průchozí zóny, vstupy a koupaliště', path: '/mlzne-brany', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
   { label: 'LINEA', sub: 'Kulatá trubka nebo hranatý jekl', path: '/linea', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/512446aa1_file_00000000ada8822fab4c3e868219c559.png' },
-  { label: 'Mlžné zóny a mlžiště', sub: 'Sestavy pro pobytové plochy', path: '/kategorie/parky-hriste', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/61b270214_Sportovisteamlznehristemlhoviste.jpg' },
+  { label: 'Mlžiště a mlhoviště', sub: 'Sestavy pro pobytové plochy', path: '/mlhoviste', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/61b270214_Sportovisteamlznehristemlhoviste.jpg' },
   { label: 'Autorské instalace', sub: 'Mlžné skulptury na míru', path: '/kolekce/art', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' },
   { label: 'Zahradní kolekce', sub: 'Terasy, gastro a rezidence', path: '/kolekce/garden', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg', crop: 'garden' },
   { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }

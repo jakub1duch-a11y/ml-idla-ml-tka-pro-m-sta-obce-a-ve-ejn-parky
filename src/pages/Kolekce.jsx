@@ -52,6 +52,7 @@ export default function Kolekce() {
   const selectedCategory = categories.find((c) => c.slug === categorySlug);
   useEffect(() => {base44.entities.ProductCategory.list('order', 100).then(setCategories).catch(() => {});}, []);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [family, setFamily] = useState(null);
   const [line, setLine] = useState(null);
   const [space, setSpace] = useState('all');
@@ -66,6 +67,7 @@ export default function Kolekce() {
       const visibleProducts = (list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug));
       setProducts(mergePortalGateProducts(visibleProducts));
     }).
+    catch(() => setLoadError(true)).
     finally(() => setLoading(false));
   }, []);
 
@@ -107,15 +109,15 @@ export default function Kolekce() {
               {SPACE_FILTERS.map(({ value, label, icon: Icon }) => {
                 const active = space === value;
                 return (
-                  <motion.button key={value} type="button" onClick={() => setSpace(value)} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.97 }} className={`inline-flex min-h-[42px] shrink-0 items-center gap-2 rounded-full border px-4 font-heading text-[13px] font-semibold transition bg-[hsl(var(--accent-foreground))] ${active ? 'border-[#07131D] bg-[#07131D] text-white shadow-sm' : 'border-[#D3E2E8] bg-white/80 text-[#0A1628] hover:border-[#7CCBD8] hover:bg-[#EFFAFC]'}`}>
-                    <Icon size={15} strokeWidth={1.6} className="text-[hsl(var(--background))]" />{label}
+                  <motion.button key={value} type="button" onClick={() => setSpace(value)} aria-pressed={active} whileHover={reduced ? undefined : { y: -2 }} whileTap={reduced ? undefined : { scale: 0.97 }} className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border px-4 font-heading text-[13px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700 ${active ? 'border-[#07131D] bg-[#07131D] text-white shadow-sm' : 'border-[#D3E2E8] bg-white/80 text-[#0A1628] hover:border-[#7CCBD8] hover:bg-[#EFFAFC]'}`}>
+                    <Icon size={15} strokeWidth={1.6} aria-hidden="true" />{label}
                   </motion.button>);
 
               })}
             </div>
             <label className="relative xl:w-[280px]">
               <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[hsl(var(--primary))]" />
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-[42px] w-full rounded-full border border-[#D3E2E8] bg-[#F4FAFC]/80 pl-11 pr-4 outline-none transition focus:border-[#7CCBD8] focus:bg-white focus:ring-4 focus:ring-[#DDF7FA]/60 text-[hsl(var(--card-foreground))] text-base" />
+              <input aria-label="Hledat produkt v katalogu" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Hledat produkt…" className="h-[42px] w-full rounded-full border border-[#D3E2E8] bg-[#F4FAFC]/80 pl-11 pr-4 outline-none transition focus:border-[#7CCBD8] focus:bg-white focus:ring-4 focus:ring-[#DDF7FA]/60 text-[hsl(var(--card-foreground))] text-base" />
             </label>
           </div>
           {family &&
@@ -136,7 +138,7 @@ export default function Kolekce() {
         <ProductExperience products={displayed}>
 <AnimatePresence mode="popLayout"><motion.div layout className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
             {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
-            {displayed.length === 0 && <p className="col-span-3 py-16 text-center text-sm text-[#5A6B78]">Žádné produkty neodpovídají filtru.</p>}
+            {displayed.length === 0 && <p className="col-span-full py-16 text-center text-sm text-[#5A6B78]" role="status">{loadError ? 'Produkty se nepodařilo načíst. Obnovte stránku nebo nás kontaktujte s výběrem řešení.' : 'Žádné produkty neodpovídají výběru. Zkuste jiný výraz nebo zrušte filtry.'}</p>}
           </motion.div></AnimatePresence>
 </ProductExperience>
         }

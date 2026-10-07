@@ -14,7 +14,7 @@ export default function SiteLayout() {
   const locale = getLocaleFromPath(location.pathname);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="architecture-site min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         <Outlet />

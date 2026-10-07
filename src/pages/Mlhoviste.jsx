@@ -1,119 +1,316 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Trees, Building2, ShieldCheck, Gauge, Sparkles } from 'lucide-react';
-import { setSEO } from '@/lib/seo';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Droplets, MapPin, SlidersHorizontal } from "lucide-react";
+import { setSEO, SEO_PAGES } from "@/lib/seo";
+import { CATALOG_CATEGORIES } from "@/lib/catalogCategories";
 
-const USE_CASES = [
-  { icon: Building2, title: 'Města a veřejný prostor', text: 'Mlhoviště pro náměstí, parky, pěší zóny, školy, hřiště a sportoviště s důrazem na odolnost, servis a bezpečný provoz.' },
-  { icon: Trees, title: 'Zahrady a terasy', text: 'Designové mlhoviště pro zahradu, terasu, pergolu nebo hotelový venkovní prostor bez nutnosti vysokotlakého čerpadla.' },
-  { icon: Sparkles, title: 'Řešení na míru', text: 'Tvar, počet prvků, rozmístění trysek, kotvení i Smart řízení přizpůsobíme konkrétnímu prostoru a způsobu použití.' },
+const FAQ = [
+  [
+    "Co je mlžiště neboli mlhoviště?",
+    "Oba názvy zde označují venkovní zónu osvěžení s jedním nebo více mlžicími prvky. Návrh propojuje jejich rozmístění, přívod vody a způsob ovládání s pohybem lidí a charakterem místa.",
+  ],
+  [
+    "Potřebuje mlžiště čerpadlo?",
+    "Nízkotlaká MLŽIDLA navrhujeme pro přímé napojení na běžný vodovodní řad bez čerpadla. Před výběrem sestavy ověřujeme dostupný tlak a průtok v místě připojení i délku rozvodů.",
+  ],
+  [
+    "Jak se určuje počet prvků a jejich rozestupy?",
+    "Podle velikosti pobytové plochy, pohybu lidí, směru větru, okolní zeleně a dostupného přívodu vody. Alej podél cesty a volná sestava na náměstí mohou vyžadovat odlišné rozmístění.",
+  ],
+  [
+    "Lze mlhoviště řídit z telefonu?",
+    "Ano, vhodnou sestavu lze doplnit o chytré řízení SUPLA. Časové plány, řízení podle teploty či počasí a přehled spotřeby závisí na zvoleném ventilu, připojení, senzorech a měření.",
+  ],
+  [
+    "Jaká je spotřeba vody a cena?",
+    "Spotřeba závisí na typu a počtu trysek, provozním tlaku a délce jednotlivých cyklů. Nabídku sestavujeme z konkrétních prvků, řízení, kotvení, rozvodů a rozsahu montáže. Pro první návrh pošlete fotografii místa a základní rozměry.",
+  ],
+  [
+    "Co je potřeba připravit pro instalaci?",
+    "Vhodný přívod vody, prostor pro rozvody a kotvení a přístup pro servis. Součástí návrhu je posouzení povrchu a odvodu vody, provozních pravidel, údržby a zimního odstavení podle konkrétního řešení.",
+  ],
 ];
-
-const FACTS = [
-  { icon: Gauge, label: 'Typické napojení', value: 'běžný vodovodní řad' },
-  { icon: Droplets, label: 'Princip', value: 'jemná vodní mlha' },
-  { icon: ShieldCheck, label: 'Konstrukce', value: 'nerezové provedení' },
+const LAYOUTS = [
+  [
+    "01",
+    "Pobytová zóna",
+    "Mlžicí prvky kolem místa pro odpočinek. Vhodné pro náměstí, parky a předprostory budov, kde se návštěvníci zastavují.",
+    "Rozmístění kolem plochy",
+  ],
+  [
+    "02",
+    "Mlžná alej",
+    "Opakování prvků podél pěší trasy. Doplňuje promenády a propojení uvnitř areálu s ohledem na volný průchod a okolní mobiliář.",
+    "Osvěžení podél cesty",
+  ],
+  [
+    "03",
+    "Volná sestava",
+    "Několik prvků rozmístěných podle provozu místa. Pro školy, rekreační areály a další plochy s více směry pohybu.",
+    "Návrh podle půdorysu",
+  ],
 ];
 
 export default function Mlhoviste() {
   useEffect(() => {
     setSEO({
-      title: 'Mlhoviště pro města, zahrady a dětská hřiště',
-      description: 'Navrhujeme nerezová mlhoviště a mlžné zóny pro města, parky, dětská hřiště, zahrady a terasy. Nízkotlaké řešení na vodovodní řad, Smart řízení a zakázková výroba.',
-      keywords: 'mlhoviště, mlhoviste, mlhoviště na zahradu, dětské mlhoviště, mobilní mlhoviště, mlžná zóna, mlžení veřejný prostor',
-      canonicalPath: '/mlhoviste',
+      ...SEO_PAGES.mlhoviste,
+      image: CATALOG_CATEGORIES[3].image,
       jsonLd: {
-        '@context': 'https://schema.org',
-        '@graph': [
+        "@context": "https://schema.org",
+        "@graph": [
           {
-            '@type': 'Service',
-            name: 'Nerezová mlhoviště a mlžné zóny',
-            provider: { '@type': 'Organization', name: 'HolmTec' },
-            areaServed: 'CZ',
-            serviceType: 'Návrh, výroba a instalace mlhovišť pro veřejný a soukromý prostor',
-            url: 'https://mlzidla.cz/mlhoviste'
+            "@type": "Service",
+            name: "Návrh mlžišť a mlhovišť",
+            provider: { "@type": "Organization", name: "HolmTec" },
+            areaServed: "CZ",
+            url: "https://mlzidla.cz/mlhoviste",
           },
           {
-            '@type': 'FAQPage',
-            mainEntity: [
-              { '@type': 'Question', name: 'Co je mlhoviště?', acceptedAnswer: { '@type': 'Answer', text: 'Mlhoviště je venkovní zóna s jedním nebo více mlžicími prvky, které vytvářejí jemnou vodní mlhu pro lokální ochlazení a osvěžení prostoru.' } },
-              { '@type': 'Question', name: 'Lze mlhoviště připojit na běžný vodovodní řad?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. U nízkotlakých konfigurací MLŽIDLA.cz lze systém navrhnout pro běžný vodovodní tlak bez vysokotlakého čerpadla; konkrétní parametry se ověřují podle instalace.' } },
-              { '@type': 'Question', name: 'Je možné automatické řízení?', acceptedAnswer: { '@type': 'Answer', text: 'Ano. Mlhoviště lze doplnit o Smart řízení podle času, teploty, provozního harmonogramu nebo dalšího zvoleného scénáře.' } }
-            ]
-          }
-        ]
+            "@type": "FAQPage",
+            mainEntity: FAQ.map(([name, text]) => ({
+              "@type": "Question",
+              name,
+              acceptedAnswer: { "@type": "Answer", text },
+            })),
+          },
+        ],
       },
     });
   }, []);
-
   return (
-    <main className="bg-white pt-16">
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[1.1fr_.9fr] lg:items-end lg:px-10 lg:py-28">
+    <div className="mist-field-page bg-white pt-24">
+      <section className="mx-auto max-w-7xl px-5 pb-14 pt-6 sm:px-8 lg:pb-20 lg:pt-12">
+        <nav
+          aria-label="Drobečková navigace"
+          className="mb-8 flex flex-wrap gap-2 text-sm text-slate-600"
+        >
+          <Link to="/">Úvod</Link>
+          <span aria-hidden="true">/</span>
+          <Link to="/katalog-mlzitek">Katalog</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Mlžiště a mlhoviště</span>
+        </nav>
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[.2em] text-accent">MLHOVIŠTĚ · MLŽNÉ ZÓNY</p>
-            <h1 className="mt-5 max-w-4xl font-heading text-5xl leading-[.98] tracking-[-.03em] sm:text-6xl lg:text-7xl">Mlhoviště pro veřejný prostor, zahrady i dětská hřiště.</h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">Navrhujeme čisté nerezové mlžné zóny, které ochlazují konkrétní místo bez složité technologie navíc. Od jednoho prvku po větší sestavu pro vysokou návštěvnost.</p>
+            <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">
+              MLŽIDLA · architektura osvěžení
+            </p>
+            <h1 className="mt-5">
+              Mlžiště a mlhoviště.
+              <br />
+              Prostor, kde je příjemné zůstat.
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
+              Promyšlené mlžné zóny pro náměstí, parky a areály. Nerezová
+              mlžítka, přímé napojení na vodovod a volitelné chytré řízení SUPLA
+              propojujeme v řešení pro konkrétní místo.
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/poptavka" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Navrhnout mlhoviště <ArrowRight size={16} /></Link>
-              <Link to="/smart-ovladani" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white">Smart řízení <ArrowRight size={16} /></Link>
+              <Link
+                to="/poptavka?produkt=Ml%C5%BEi%C5%A1t%C4%9B"
+                className="inline-flex min-h-12 items-center gap-3 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white"
+              >
+                Navrhnout moje mlžiště <ArrowRight size={17} />
+              </Link>
+              <a
+                href="#rozmisteni"
+                className="inline-flex min-h-12 items-center gap-2 px-4 py-3 text-sm font-semibold text-slate-900"
+              >
+                Možnosti rozmístění <ArrowRight size={17} />
+              </a>
             </div>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-            {FACTS.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="border border-white/15 bg-white/5 p-5">
-                <Icon size={20} className="text-accent" strokeWidth={1.6} />
-                <p className="mt-4 text-[11px] font-mono uppercase tracking-[.16em] text-white/45">{label}</p>
-                <p className="mt-1 font-heading text-xl text-white">{value}</p>
-              </div>
-            ))}
-          </div>
+          <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+            <img
+              src={CATALOG_CATEGORIES[3].image}
+              alt="Mlžicí prvek v prostředí městského parku"
+              width="900"
+              height="1000"
+              fetchPriority="high"
+              className="aspect-[4/3] w-full object-cover lg:aspect-[4/5]"
+            />
+            <figcaption className="px-5 py-3 text-xs leading-5 text-slate-600">
+              Inspirace pro parkový prostor. Počet a rozmístění prvků navrhujeme
+              individuálně.
+            </figcaption>
+          </figure>
         </div>
       </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">VYUŽITÍ</p>
-          <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground lg:text-5xl">Jedno řešení, různé typy prostoru.</h2>
-          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">Mlhoviště není hotový set bez kontextu. Nejprve řešíme pohyb lidí, velikost plochy, přívod vody, proudění vzduchu a způsob provozu. Teprve potom volíme počet a rozmístění mlžicích prvků.</p>
-        </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {USE_CASES.map(({ icon: Icon, title, text }) => (
-            <article key={title} className="border border-border bg-slate-50 p-7">
-              <Icon size={24} className="text-secondary" strokeWidth={1.6} />
-              <h3 className="mt-8 font-heading text-2xl text-foreground">{title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
+      <section className="border-y border-slate-200 bg-slate-50">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 md:grid-cols-3">
+          {[
+            [
+              MapPin,
+              "Návrh podle místa",
+              "Pohyb lidí, pobytové plochy, vítr a okolní zeleň určují rozmístění prvků.",
+            ],
+            [
+              Droplets,
+              "Přímo z vodovodu",
+              "Nízkotlaké mlžení bez čerpadla. Dostupný tlak a průtok ověříme pro konkrétní sestavu.",
+            ],
+            [
+              SlidersHorizontal,
+              "Řízení podle provozu",
+              "Volitelné cykly, časové plány a SUPLA podle vybavení a požadavků správce.",
+            ],
+          ].map(([Icon, title, text]) => (
+            <article key={title}>
+              <Icon
+                size={23}
+                strokeWidth={1.5}
+                className="text-cyan-800"
+                aria-hidden="true"
+              />
+              <h2 className="mt-4 text-xl">{title}</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
             </article>
           ))}
         </div>
       </section>
-
-      <section className="border-y border-border bg-slate-50">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-2 lg:px-10 lg:py-20">
+      <section
+        id="rozmisteni"
+        className="mx-auto max-w-7xl scroll-mt-28 px-5 py-16 sm:px-8 lg:py-24"
+      >
+        <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">
+          Možnosti rozmístění
+        </p>
+        <h2 className="mt-4">Tři způsoby, jak dát mlze prostor.</h2>
+        <p className="mt-4 max-w-2xl leading-7 text-slate-600">
+          Způsob využití je výchozím bodem návrhu. Konkrétní model, počet prvků
+          a rozestupy upřesníme podle podkladů k místu.
+        </p>
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {LAYOUTS.map(([number, title, text, label]) => (
+            <article
+              key={number}
+              className="rounded-2xl border border-slate-200 p-6 lg:p-8"
+            >
+              <p className="font-mono text-sm text-cyan-800">
+                {number} / {label}
+              </p>
+              <h3 className="mt-8">{title}</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-600">{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="bg-slate-950 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:py-20">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">NÍZKOTLAKÉ MLŽENÍ</p>
-            <h2 className="mt-4 font-heading text-3xl text-foreground lg:text-4xl">Bez vysokotlakého čerpadla, pokud to podmínky dovolí.</h2>
+            <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-200">
+              Chytré řízení SUPLA
+            </p>
+            <h2 className="mt-4">Provoz v rytmu vašeho místa.</h2>
           </div>
-          <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>Pro řadu realizací používáme nízkotlaké řešení připojené na běžný vodovodní řad. Díky tomu je instalace jednodušší a servis méně náročný. Konkrétní tlak, průtok a typ trysek vždy navrhujeme podle výsledného efektu a dostupného zdroje vody.</p>
-            <p>Pro města a veřejné instalace lze systém doplnit o filtraci, proplach, časový plán, teplotní automatiku, vzdálené ovládání a měření spotřeby vody.</p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link to="/jak-to-funguje" className="inline-flex items-center gap-2 font-semibold text-primary">Jak funguje vodní mlha <ArrowRight size={15} /></Link>
-              <Link to="/kalkulacka" className="inline-flex items-center gap-2 font-semibold text-primary">Kalkulačka spotřeby <ArrowRight size={15} /></Link>
-            </div>
+          <div>
+            <p className="leading-8 text-slate-200">
+              Mlžení lze plánovat podle otevírací doby a střídat s přestávkami.
+              S vhodnými senzory a konfigurací může reagovat na teplotu či
+              počasí. Správce může získat vzdálené ovládání a po doplnění měření
+              i přehled o průtoku a spotřebě.
+            </p>
+            <Link
+              to="/smart-ovladani"
+              className="mt-6 inline-flex min-h-11 items-center gap-3 font-semibold text-cyan-200"
+            >
+              Prohlédnout možnosti SUPLA <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
       </section>
-
-      <section className="bg-[#12415e] text-primary-foreground">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-20">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[.18em] text-accent">PROJEKT NA MÍRU</p>
-            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete fotografii nebo půdorys prostoru. Navrhneme vhodné mlhoviště.</h2>
-          </div>
-          <Link to="/poptavka" className="btn-metallic-mist inline-flex shrink-0 items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Nezávazná poptávka <ArrowRight size={16} /></Link>
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+        <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">
+          Prvky pro váš návrh
+        </p>
+        <h2 className="mt-4">Vyberte charakter mlžiště.</h2>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {CATALOG_CATEGORIES.slice(0, 3).map((c) => (
+            <Link
+              key={c.href}
+              to={c.href}
+              className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-cyan-700"
+            >
+              <img
+                src={c.image}
+                alt={c.imageAlt}
+                loading="lazy"
+                width="640"
+                height="480"
+                className="aspect-[4/3] w-full object-cover"
+              />
+              <div className="p-6">
+                <h3>{c.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  {c.description}
+                </p>
+                <span className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold">
+                  Prohlédnout řešení <ArrowRight size={16} />
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
-    </main>
+      <section className="border-y border-slate-200 bg-slate-50">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+          <h2>Od fotografie k návrhu instalace.</h2>
+          <ol className="mt-8 grid gap-6 md:grid-cols-3">
+            {[
+              [
+                "Pošlete prostor",
+                "Fotografii nebo půdorys, základní rozměry, způsob využití a informace o přívodu vody.",
+              ],
+              [
+                "Upřesníme sestavu",
+                "Doporučíme rozmístění, modely, kotvení a způsob ovládání s ohledem na provoz místa.",
+              ],
+              [
+                "Připravíme nabídku",
+                "Oddělíme cenu prvků, volitelného řízení a rozsah instalačních prací podle zadání.",
+              ],
+            ].map(([title, text], i) => (
+              <li key={title}>
+                <p className="text-lg font-semibold">
+                  0{i + 1} — {title}
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+      <section className="mx-auto max-w-3xl px-5 py-16 sm:px-8 lg:py-24">
+        <h2>Co vědět před návrhem mlžiště.</h2>
+        <div className="mt-8 divide-y divide-slate-200">
+          {FAQ.map(([q, a]) => (
+            <details key={q} className="py-2">
+              <summary className="cursor-pointer py-4 pr-4 text-base font-semibold leading-7">
+                {q}
+              </summary>
+              <p className="pb-5 text-base leading-7 text-slate-600">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+      <section className="bg-[#EAF2F2]">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-7 px-5 py-14 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <h2>Začněme vaším prostorem.</h2>
+            <p className="mt-4 max-w-xl leading-7 text-slate-600">
+              Pošlete fotografii, půdorys nebo krátké zadání. Společně vybereme
+              vhodné mlžiště a další krok projektu.
+            </p>
+          </div>
+          <Link
+            to="/poptavka?produkt=Ml%C5%BEi%C5%A1t%C4%9B"
+            className="inline-flex min-h-12 shrink-0 items-center gap-3 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white"
+          >
+            Získat návrh a cenu <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }

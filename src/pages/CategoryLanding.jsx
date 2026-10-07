@@ -6,7 +6,7 @@ import { setSEO } from '@/lib/seo';
 const PAGE_DATA = {
   sloupky: {
     eyebrow: 'SLOUPKOVÁ MLŽÍTKA · VEŘEJNÝ PROSTOR',
-    title: 'Sloupková mlžítka, která ochladí místo a neruší jeho architekturu.',
+    title: 'Sloupková mlžítka. Čistá linie pro váš prostor.',
     description: 'Štíhlé nerezové mlžicí prvky pro promenády, parky, předprostory budov i odpočinkové zóny. Řadu, počet prvků a umístění navrhujeme podle konkrétního prostoru.',
     image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
     imageAlt: 'Sloupkové mlžítko LINEA ve veřejném prostoru',
@@ -27,13 +27,14 @@ const PAGE_DATA = {
     ],
     process: 'Začněte fotkou nebo půdorysem. Projdeme umístění, vodu, způsob využití a vybereme vhodný počet prvků.',
     related: [
+      ['Mlžiště a mlhoviště', '/mlhoviste', 'Propojení více prvků v ucelenou zónu osvěžení.'],
       ['Mlžné brány a oblouky', '/mlzne-brany', 'Průchozí ochlazení pro místa s intenzivním pohybem.'],
       ['Ateliérové prvky', '/atelierove-prvky', 'Zakázkové tvary pro prostor s vlastním příběhem.'],
     ],
   },
   atelier: {
     eyebrow: 'ATELIÉROVÉ PRVKY · ZAKÁZKOVÁ VÝROBA',
-    title: 'Ateliérové prvky: mlžení ve tvaru, který patří právě vašemu místu.',
+    title: 'Ateliérové prvky. Vodní mlha s vlastním výrazem.',
     description: 'Designové tvary mlžítek pro veřejný prostor, zahrady, školy i instalace s vlastním charakterem. Od prvního záměru řešíme tvar, měřítko, umístění a chování mlhy jako jeden celek.',
     image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
     imageAlt: 'Designový ateliérový mlžicí prvek',
@@ -54,6 +55,7 @@ const PAGE_DATA = {
     ],
     process: 'Pošlete skicu, inspiraci, fotografii nebo půdorys. Společně upřesníme formu, rozměr, technické možnosti a další krok projektu.',
     related: [
+      ['Mlžiště a mlhoviště', '/mlhoviste', 'Propojení více prvků v ucelenou zónu osvěžení.'],
       ['Sloupková mlžítka', '/sloupkova-mlzitka', 'Čisté vertikální prvky pro infrastrukturu a pěší zóny.'],
       ['Mlžné brány a oblouky', '/mlzne-brany', 'Průchozí mlžné zóny pro ochlazení v pohybu.'],
     ],
@@ -113,19 +115,15 @@ export default function CategoryLanding({ variant }) {
 
   return (
     <main className="bg-white pt-16">
-      <section className="relative isolate min-h-[650px] overflow-hidden bg-slate-950 text-white">
-        <img src={page.image} alt={page.imageAlt} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,19,29,.96)_4%,rgba(7,19,29,.75)_48%,rgba(7,19,29,.18)_100%)]" />
-        <div className="absolute -left-20 bottom-0 h-80 w-80 rounded-full bg-cyan-300/15 blur-3xl" aria-hidden="true" />
-        <div className="relative mx-auto flex min-h-[650px] max-w-7xl items-end px-6 py-16 lg:px-10 lg:py-24">
-          <div className="max-w-4xl">
-            <p className="font-mono text-xs uppercase tracking-[.2em] text-cyan-200">{page.eyebrow}</p>
-            <h1 className="mt-5 font-heading text-5xl leading-[.98] tracking-[-.04em] sm:text-6xl lg:text-7xl">{page.title}</h1>
-            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-white/78">{page.description}</p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link to={`/poptavka?produkt=${encodeURIComponent(page.serviceName)}`} className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">{page.primaryCta} <ArrowRight size={16} /></Link>
-              <Link to="/katalog-mlzitek" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white">Prohlédnout katalog <ArrowRight size={16} /></Link>
+      <section className="bg-slate-950 text-white">
+        <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:py-16">
+          <nav aria-label="Drobečková navigace" className="mb-8 flex flex-wrap items-center gap-2 text-sm text-slate-200"><Link to="/">Úvod</Link><span aria-hidden="true">/</span><Link to="/katalog-mlzitek">Katalog</Link><span aria-hidden="true">/</span><span aria-current="page">{variant === 'atelier' ? 'Ateliérové prvky' : 'Sloupková mlžítka'}</span></nav>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+            <div><p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-200">{page.eyebrow}</p>
+              <h1 className="mt-5">{page.title}</h1><p className="mt-6 max-w-xl text-base leading-8 text-slate-200">{page.description}</p>
+              <div className="mt-8 flex flex-wrap gap-3"><Link to={`/poptavka?produkt=${encodeURIComponent(page.serviceName)}`} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-cyan-100 px-6 py-3 text-sm font-semibold text-slate-950">{page.primaryCta} <ArrowRight size={16} /></Link><Link to="/katalog-mlzitek#catalog" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold">Prohlédnout produkty <ArrowRight size={16} /></Link></div>
             </div>
+            <img src={page.image} alt={page.imageAlt} width="900" height="1000" fetchPriority="high" className="aspect-[4/3] w-full rounded-2xl object-cover lg:aspect-[4/5]" />
           </div>
         </div>
       </section>
@@ -165,7 +163,7 @@ export default function CategoryLanding({ variant }) {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[.9fr_1.1fr] lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">OD ZÁMĚRU K NÁVRHU</p>
-            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Řešení vzniká z místa, ne z univerzální šablony.</h2>
+            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Od charakteru místa ke konkrétnímu řešení.</h2>
           </div>
           <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
             <p>{page.process}</p>

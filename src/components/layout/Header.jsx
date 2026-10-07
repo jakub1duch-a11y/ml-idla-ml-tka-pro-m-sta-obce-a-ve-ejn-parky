@@ -80,14 +80,14 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {document.body.style.overflow = '';};
   }, [mobileOpen]);
 
-  const openMega = () => { clearTimeout(timeoutRef.current); setMegaOpen(true); };
-  const closeMega = () => { timeoutRef.current = setTimeout(() => setMegaOpen(false), 150); };
-  const openInfo = () => { clearTimeout(timeoutRef.current); setInfoOpen(true); };
-  const closeInfo = () => { timeoutRef.current = setTimeout(() => setInfoOpen(false), 150); };
-  const toggleMobileMenu = () => { setMobileOpen((v) => !v); setMegaOpen(false); };
+  const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);};
+  const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
+  const openInfo = () => {clearTimeout(timeoutRef.current);setInfoOpen(true);};
+  const closeInfo = () => {timeoutRef.current = setTimeout(() => setInfoOpen(false), 150);};
+  const toggleMobileMenu = () => {setMobileOpen((v) => !v);setMegaOpen(false);};
 
   return (
     <>
@@ -160,7 +160,7 @@ export default function Header() {
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2 rounded-none">
               <LanguageSwitcher />
               <div className="relative">
                 <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
@@ -174,7 +174,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to={inquiryPath}
-              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold rounded-none">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
             

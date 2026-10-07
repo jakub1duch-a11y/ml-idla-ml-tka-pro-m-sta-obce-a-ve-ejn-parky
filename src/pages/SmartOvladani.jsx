@@ -13,6 +13,13 @@ import SmartCoolingCityUseCases from '@/components/smart-ovladani/SmartCoolingCi
 import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
 import ContextLinks from '@/components/common/ContextLinks';
 
+const SMART_OVERVIEW = [
+  ['01', 'Jedna řídicí vrstva', 'Ventil, senzory a zóny v jednom přehledu.'],
+  ['02', 'Provoz podle pravidel', 'Čas, teplota a podmínky podle projektu.'],
+  ['03', 'Data pro správu', 'Spotřeba a stav systému podle osazené konfigurace.'],
+  ['04', 'Připraveno k růstu', 'Od jednoho mlžítka po více lokalit.'],
+];
+
 export default function SmartOvladani() {
   const [mobileSection, setMobileSection] = useState('prehled');
   const jumpTo = (id) => {
@@ -52,20 +59,31 @@ export default function SmartOvladani() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="architecture-site smart-control-page min-h-screen bg-[#f5fafc]">
       <div id="smart-prehled" className="scroll-mt-28"><SmartHero /></div>
-      <div className="lg:hidden sticky top-16 z-30 mx-auto max-w-md px-4 py-3">
-        <div className="rounded-[20px] border border-slate-200/80 bg-white/85 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
+      <div className="sticky top-16 z-30 mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-5xl rounded-[20px] border border-slate-200/80 bg-white/90 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
           <nav className="flex gap-1" aria-label="Navigace automatizace">
-            {[['prehled','Přehled'],['automatizace','Automatizace'],['senzory','Senzory']].map(([id,label]) => (
+            {[['prehled','Přehled'],['automatizace','Automatizace'],['senzory','Senzory'],['varianty','Varianty']].map(([id,label]) => (
               <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
-                className={`min-h-11 flex-1 rounded-[14px] px-3 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${mobileSection === id ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
+                className={`min-h-11 flex-1 rounded-[14px] px-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:px-3 sm:text-xs ${mobileSection === id ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}>
                 {label}
               </button>
             ))}
           </nav>
         </div>
       </div>
+      <section aria-label="Přehled Smart řízení" className="relative z-10 -mt-1 border-b border-slate-200 bg-white">
+        <div className="mx-auto grid max-w-7xl gap-px bg-slate-200 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-10">
+          {SMART_OVERVIEW.map(([index, title, text]) => (
+            <div key={title} className="bg-white px-4 py-5 sm:px-6 lg:py-7">
+              <p className="font-mono text-[10px] tracking-[.2em] text-cyan-700">{index}</p>
+              <p className="mt-2 font-heading text-base font-semibold tracking-[-.02em] text-slate-950">{title}</p>
+              <p className="mt-1 text-xs leading-5 text-slate-500">{text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
       <SmartCoolingConcept />
       <SmartCoolingCityUseCases />
       <div id="smart-automatizace" className="scroll-mt-32"><SmartAutomationFlow /></div>

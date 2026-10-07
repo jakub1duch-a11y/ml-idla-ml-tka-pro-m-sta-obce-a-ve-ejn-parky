@@ -59,7 +59,14 @@ export default function BlogArticleSidebar({ related = [] }) {
 
         <section className="overflow-hidden rounded-[1.5rem] bg-[#07131D] p-5 text-white shadow-[0_18px_60px_rgba(7,19,29,.16)]" aria-label="Rychlý kontakt">
           <div className="flex items-center gap-3">
-            <div className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full border-2 border-cyan-200/40 bg-gradient-to-br from-cyan-200 to-slate-500 font-heading text-lg font-bold text-[#07131D]" title="Avatar Radka Meduny">RM</div>
+            <img
+              src="/media/avatars/radek-meduna-support.svg"
+              alt="Ing. Radek Meduna"
+              className="h-14 w-14 shrink-0 rounded-full border-2 border-cyan-200/40 bg-white object-cover"
+              width="56"
+              height="56"
+              loading="lazy"
+            />
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan-200">Rychlý kontakt</p>
               <p className="mt-1 font-heading text-lg font-semibold">Ing. Radek Meduna</p>

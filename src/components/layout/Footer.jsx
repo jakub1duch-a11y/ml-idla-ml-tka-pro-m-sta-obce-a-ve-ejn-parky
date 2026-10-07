@@ -167,7 +167,7 @@ export default function Footer() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.42, delay: columnIndex * 0.05 }}
-                  className="border-t border-white/10 py-1 md:pt-4">
+                  className="border-t border-white/10 py-1 md:pt-">
                   
                   <button
                     type="button"

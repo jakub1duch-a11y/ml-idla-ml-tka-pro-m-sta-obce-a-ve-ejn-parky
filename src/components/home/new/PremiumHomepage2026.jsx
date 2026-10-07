@@ -150,7 +150,7 @@ export default function PremiumHomepage2026() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="hidden lg:block">
             <div className="relative rounded-[2.4rem] border border-white/14 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)] bg-[hsl(var(--background))]">
               <div className="relative overflow-hidden rounded-[1.8rem] bg-[#0B2034]">
-                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5cba7b56a_Obrzek_Codex_5_10_2026_01_14_09.png" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/20c6958fe_file_000000006f94821096150eb04577a01b.jpg" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
                 <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 px-4 py-3 text-sm font-bold backdrop-blur-md bg-[hsl(var(--ring))] text-[hsl(var(--accent-foreground))] uppercase">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07131D]"><Play size={16} fill="currentColor" /></span>
@@ -168,7 +168,7 @@ export default function PremiumHomepage2026() {
       <section className="premium-section premium-pattern-light relative overflow-hidden bg-[#F4FBFF]" aria-labelledby="categories-premium-title">
         <div className="premium-shell">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Řešení pro města a obce</p>
+            <p className="font-mono font-bold uppercase tracking-[.28em] text-[#0B8EC5] text-base">Řešení pro města a obce</p>
             <h2 id="categories-premium-title" className="premium-heading mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Kategorie mlžítek</h2>
             <p className="mt-4 text-base leading-7 text-slate-600">Přehledné rozdělení produktů podle prostoru, provozu a typu zážitku. Návštěvník má okamžitě poznat, jaký produkt si prohlíží a kam se hodí.</p>
           </motion.div>

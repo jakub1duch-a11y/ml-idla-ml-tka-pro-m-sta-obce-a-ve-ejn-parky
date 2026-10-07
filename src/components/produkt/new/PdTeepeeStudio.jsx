@@ -5,10 +5,10 @@ export const TEEPEE_STUDIO_URL = 'https://media.base44.com/images/public/6a3ee88
 export const TEEPEE_NOZZLE_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae73692aa_generated_image.png';
 
 const FACTS = [
-  { icon: Ruler, label: 'Výška / šířka', value: '2 400 / 1 600 mm' },
-  { icon: Gauge, label: 'Provozní tlak', value: '2–8 bar' },
-  { icon: Droplets, label: 'Jemnost mlhy', value: '50–100 μm' },
-];
+{ icon: Ruler, label: 'Výška / šířka', value: '2 400 / 1 600 mm' },
+{ icon: Gauge, label: 'Provozní tlak', value: '2–8 bar' },
+{ icon: Droplets, label: 'Jemnost mlhy', value: '50–100 μm' }];
+
 
 export default function PdTeepeeStudio({ product }) {
   if (product?.slug !== 'teepee') return null;
@@ -25,21 +25,21 @@ export default function PdTeepeeStudio({ product }) {
           </figure>
           <div className="flex flex-col gap-4">
             <figure className="relative flex-1 overflow-hidden border border-[#D3E2E8] bg-[#0D2D38]">
-              <img src={TEEPEE_NOZZLE_URL} alt={`${product.name} – detail mlžné hlavy a trysek na vrcholu konstrukce`} loading="lazy" className="h-full min-h-[260px] w-full object-cover" />
+              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/fabf797f7_teepee-namesti-deti.webp" alt={`${product.name} – detail mlžné hlavy a trysek na vrcholu konstrukce`} loading="lazy" className="h-full min-h-[260px] w-full object-cover" />
               <figcaption className="absolute bottom-0 left-0 bg-[#0D2D38]/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[.16em] text-[#61D5E5] backdrop-blur-sm">Detail mlžné hlavy a trysek</figcaption>
             </figure>
             <dl className="grid grid-cols-3 divide-x divide-[#D3E2E8] border border-[#D3E2E8] bg-white">
-              {FACTS.map(({ icon: Icon, label, value }) => (
-                <div key={label} className="p-4">
+              {FACTS.map(({ icon: Icon, label, value }) =>
+              <div key={label} className="p-4">
                   <Icon size={18} strokeWidth={1.5} className="text-[#0E5B67]" />
                   <dt className="mt-3 text-[11px] text-[#5A6B78]">{label}</dt>
                   <dd className="mt-1 font-mono text-sm font-semibold text-[#0D2D38]">{value}</dd>
                 </div>
-              ))}
+              )}
             </dl>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

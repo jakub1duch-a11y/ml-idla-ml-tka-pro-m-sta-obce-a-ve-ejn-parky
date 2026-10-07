@@ -113,7 +113,7 @@ export default function MistingAdvisorWidget() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group flex items-center rounded-full border border-cyan-200/80 bg-[#0d2d38] py-2.5 pl-3 pr-5 text-left text-white shadow-[0_16px_50px_rgba(13,45,56,.28)] transition hover:-translate-y-0.5 hover:bg-[#123c49] gap-"
+        className="group flex items-center rounded-full border border-cyan-200/80 bg-[#0d2d38] py-2.5 pl-3 pr-5 text-left text-white shadow-[0_16px_50px_rgba(13,45,56,.28)] transition hover:-translate-y-0.5 hover:bg-[#123c49] gap- mr-48"
         aria-label="Otevřít AI poradce MLŽIDLA">
         
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-300/15 text-xl">💧</span>

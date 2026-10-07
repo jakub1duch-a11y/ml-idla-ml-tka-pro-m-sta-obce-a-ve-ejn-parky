@@ -11,6 +11,7 @@ const benefits = [
 { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
 { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' }];
 
+const headlineWords = ['Ochlazení,', 'které', 'patří', 'do prostoru.'];
 
 const tiles = [
 {
@@ -38,7 +39,6 @@ const tiles = [
   link: '/produkt/mlzitko-bendy'
 }];
 
-
 export default function HomeHero() {
   const heroRef = useRef(null);
   const reduced = useReducedMotion();
@@ -64,8 +64,7 @@ export default function HomeHero() {
               src={VIDEO_ASSETS.heroCityPromo.poster}
               alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
               fetchPriority="high"
-              className="h-full w-full object-cover object-[58%_center] sm:object-center" /> :
-
+              className="hero-home-media h-full w-full object-cover object-[58%_center] sm:object-center" /> :
             <video
               src={VIDEO_ASSETS.heroCityPromo.src}
               poster={VIDEO_ASSETS.heroCityPromo.poster}
@@ -75,20 +74,29 @@ export default function HomeHero() {
               playsInline
               preload="metadata"
               aria-hidden="true"
-              className="h-full w-full object-cover object-[58%_center] sm:object-center" />
+              className="hero-home-media h-full w-full object-cover object-[58%_center] sm:object-center" />
             }
         </motion.div>
-          
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
+
+        <div className="hero-home-colorwash absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
-            <p className="font-mono font-bold uppercase tracking-[.22em] text-[#26C6E9] text-base">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left">
-              Ochlazení, které patří do prostoru.
+            <p className="font-mono text-base font-bold uppercase tracking-[.22em] text-[#7AE1EF]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
+            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left" aria-label={headlineWords.join(' ')}>
+              {headlineWords.map((word, index) => (
+                <motion.span
+                  key={word}
+                  className="hero-headline-word"
+                  initial={reduced ? false : { opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: reduced ? 0 : .52, delay: reduced ? 0 : .12 + index * .075, ease: [0.22, 1, 0.36, 1] }}>
+                  {word}
+                </motion.span>
+              ))}
             </h1>
-            <p className="mt-7 max-w-2xl leading-8 text-slate-200 text-lg sm:text-lg">
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
               Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
@@ -102,14 +110,14 @@ export default function HomeHero() {
             </div>
           </motion.div>
 
-          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 p-5 backdrop-blur-xl lg:block bg-[#000000]/[0.18]" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 bg-[#000000]/[0.18] p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
-                <div key={text} className="grid items-center gap-4 border border-white/10 p-4 grid-cols-[54px_1fr] rounded-3xl bg-white/[.0\n]">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[hsl(var(--background))] bg-[hsl(var(--background))]">
+                <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border border-white/10 bg-white/[.03] p-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 bg-[hsl(var(--background))] text-[hsl(var(--background))]">
                     <Icon size={20} className="text-[hsl(var(--foreground))]" />
                   </div>
-                  <p className="leading-6 text-slate-200 text-xl [font-family:'Manrope',_'Inter',_sans-serif] font-light">{text}</p>
+                  <p className="font-light text-xl leading-6 text-slate-200 [font-family:'Manrope',_'Inter',_sans-serif]">{text}</p>
                 </div>
                 )}
             </div>
@@ -140,5 +148,4 @@ export default function HomeHero() {
       </div>
     </section>
     </MotionConfig>);
-
 }

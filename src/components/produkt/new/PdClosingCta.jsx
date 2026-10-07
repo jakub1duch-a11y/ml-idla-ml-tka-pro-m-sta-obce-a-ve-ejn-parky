@@ -14,11 +14,11 @@ export default function PdClosingCta({ product }) {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-[#0A1628] py-20 lg:py-32">
+      <section className="relative overflow-hidden py-20 lg:py-32 bg-[#0a1628]/[0.7]">
         <video
           src={VIDEO_ASSETS.loopSquare.src}
           poster={VIDEO_ASSETS.loopSquare.poster}
-          className="absolute inset-0 h-full w-full object-cover opacity-100"
+          className="absolute inset-0 h-full w-full object-cover opacity-0"
           autoPlay muted loop playsInline preload="metadata" />
         
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/85 to-[#0A1628]/70" />

@@ -20,6 +20,14 @@ import CatalogAudience from '@/components/kolekce/CatalogAudience';
 
 const HIDDEN_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'];
 const HIDDEN_SLUGS = ['garden-cooling-set'];
+const EXCLUDED_CATALOG_NAMES = new Set(['BENDY GATE', 'STÉBLO GATE', 'STEBLO GATE', 'PORTÁL LINEA CE', 'PORTAL LINEA CE']);
+const EXCLUDED_CATALOG_SLUGS = new Set(['bendy-gate', 'steblo-gate', 'steblo-gate-70', 'portal-linea-ce', 'linea-ce-portal']);
+
+function isFunctionalCatalogProduct(product) {
+  const name = String(product?.name || '').trim().toUpperCase();
+  const slug = String(product?.slug || '').trim().toLowerCase();
+  return !EXCLUDED_CATALOG_NAMES.has(name) && !EXCLUDED_CATALOG_SLUGS.has(slug);
+}
 
 const SPACE_FILTERS = [
 { value: 'all', label: 'Všechny prostory', icon: SlidersHorizontal },
@@ -65,7 +73,7 @@ export default function Kolekce() {
     base44.entities.Product.list('name', 200).
     then((list) => {
       const visibleProducts = (list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug));
-      setProducts(mergePortalGateProducts(visibleProducts));
+      setProducts((mergePortalGateProducts(visibleProducts) || []).filter(isFunctionalCatalogProduct));
     }).
     catch(() => setLoadError(true)).
     finally(() => setLoading(false));
@@ -98,7 +106,7 @@ export default function Kolekce() {
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
             <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.98] tracking-[-.055em] text-[#07131D] sm:text-5xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Katalog mlžítek, mlžných bran a mlžných prvků'}</h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle produktových řad a využití. Pro města a obce doporučujeme filtrovat podle typu veřejného prostoru; cenu připravujeme podle konfigurace, počtu prvků a rozsahu instalace.'}</p>
+            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Přehled funkčních produktů členěný podle produktových řad a využití. Pro města a obce doporučujeme filtrovat podle typu veřejného prostoru; cenu připravujeme podle konfigurace, počtu prvků a rozsahu instalace.'}</p>
           </div>
           {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}
         </div>

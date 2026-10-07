@@ -30,7 +30,7 @@ export default function PdClosingCta({ product }) {
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/60">
             Pro {product.name} připravíme návrh umístění, vhodnou konfiguraci, vizualizaci a cenovou nabídku podle konkrétního místa a způsobu provozu.
           </p>
-          <p className="mt-5 font-medium text-[hsl(var(--primary))] text-base">Stačí poslat fotografii, adresu nebo projektovou situaci.</p>
+          <p className="mt-5 font-medium text-base text-[hsl(var(--ring))]">Stačí poslat fotografii, adresu nebo projektovou situaci.</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to={`/poptavka?produkt=${product.slug}`}

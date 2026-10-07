@@ -6,7 +6,7 @@ import { A11y, Keyboard, Mousewheel, Navigation, Pagination } from 'swiper/modul
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { ArrowRight, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 const MEDIA = [
 {
@@ -142,6 +142,14 @@ const SPACE_LABELS = {
   event: 'eventový prostor',
   custom: 'konkrétní prostor',
 };
+const PRODUCT_NAMES_BY_SLUG = {
+  'mlzitko-bendy': 'BENDY®',
+  'linea-mlzitko': 'LINEA®',
+  'mlzitko-kvet-4': 'KVĚT 4',
+  teepee: 'TEEPEE',
+  'mlzitko-mrak': 'MRAK',
+  'aura-mlzitko': 'AURA®',
+};
 
 const readableSpace = (item, fallback = 'konkrétní prostor') => {
   const raw = item?.environment_label || item?.space_name || item?.location || item?.environment;
@@ -150,7 +158,7 @@ const readableSpace = (item, fallback = 'konkrétní prostor') => {
 };
 
 const visualTitle = (item, fallbackProduct = 'Mlžítko MLŽIDLA') => {
-  const product = item?.product_name || item?.product_title || item?.product || fallbackProduct;
+  const product = item?.product_name || item?.product_title || item?.product || PRODUCT_NAMES_BY_SLUG[item?.product_slug] || fallbackProduct;
   return `${product} · ${readableSpace(item)}`;
 };
 
@@ -158,6 +166,7 @@ export default function ProductPhotoGallery() {
   const [filter, setFilter] = useState('Vše');
   const [approvedVisuals, setApprovedVisuals] = useState([]);
   const [adminMedia, setAdminMedia] = useState([]);
+  const [activeSwiper, setActiveSwiper] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -189,7 +198,7 @@ export default function ProductPhotoGallery() {
     filter(isImageFile).
     filter((item) => ['homepage_visual', 'hero', 'gallery', 'reference', 'realization'].includes(item.media_role)).
     map((item) => ({
-      title: `${item.product_name || item.product_title || 'Mlžítko MLŽIDLA'} · ${item.space_name || item.media_group || 'konkrétní prostor'}`,
+      title: `${item.product_name || item.product_title || PRODUCT_NAMES_BY_SLUG[item.product_slug] || 'Mlžítko MLŽIDLA'} · ${item.space_name || item.media_group || 'konkrétní prostor'}`,
       url: item.file_url,
       tag: 'Produkty',
       badge: item.media_role === 'realization' || item.media_role === 'reference' ? 'Náhled v prostoru' : 'Produktový náhled',
@@ -228,7 +237,7 @@ export default function ProductPhotoGallery() {
             modules={[A11y, Keyboard, Mousewheel, Navigation, Pagination]}
             slidesPerView={1.08}
             spaceBetween={16}
-            navigation
+            onSwiper={setActiveSwiper}
             pagination={{ clickable: true, dynamicBullets: true }}
             keyboard={{ enabled: true }}
             mousewheel={{ forceToAxis: true }}
@@ -265,6 +274,14 @@ export default function ProductPhotoGallery() {
           </motion.article>
           </SwiperSlide>)}
           </Swiper>
+          {items.length > 1 && <div className="pointer-events-none absolute inset-x-0 top-1/2 z-30 flex -translate-y-1/2 items-center justify-between px-1 sm:px-2">
+            <button type="button" onClick={() => activeSwiper?.slidePrev()} aria-label="Předchozí náhled" className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#071a2b]/90 text-white shadow-[0_8px_30px_rgba(0,0,0,.32)] backdrop-blur-md transition hover:scale-105 hover:border-cyan-300 hover:bg-cyan-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 sm:h-12 sm:w-12">
+              <ChevronLeft size={22} aria-hidden="true" />
+            </button>
+            <button type="button" onClick={() => activeSwiper?.slideNext()} aria-label="Další náhled" className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#071a2b]/90 text-white shadow-[0_8px_30px_rgba(0,0,0,.32)] backdrop-blur-md transition hover:scale-105 hover:border-cyan-300 hover:bg-cyan-300 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 sm:h-12 sm:w-12">
+              <ChevronRight size={22} aria-hidden="true" />
+            </button>
+          </div>}
         </motion.div>
       </AnimatePresence>
     </div>

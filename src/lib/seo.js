@@ -497,9 +497,9 @@ export const SEO_PAGES = {
     canonicalPath: '/mlzitko',
   },
   mlhoviste: {
-    title: 'Mlhoviště pro města, zahrady a dětská hřiště',
-    description: 'Nerezová mlhoviště a mlžné zóny pro města, parky, dětská hřiště, zahrady a terasy. Nízkotlaké řešení, Smart řízení a zakázková výroba.',
-    keywords: 'mlhoviště, mlhoviste, mlhoviště na zahradu, dětské mlhoviště, mobilní mlhoviště, mlžná zóna',
+    title: 'Mlžiště a mlhoviště pro města, parky a areály',
+    description: 'Navrhujeme mlžiště a mlhoviště pro náměstí, parky a areály. Nerezová mlžítka, napojení na vodovod bez čerpadla a volitelné chytré řízení SUPLA.',
+    keywords: 'mlžiště, mlziste, mlhoviště, mlhoviste, mlhoviště na zahradu, dětské mlhoviště, mobilní mlhoviště, mlžná zóna',
     canonicalPath: '/mlhoviste',
   },
   vodniMlha: {

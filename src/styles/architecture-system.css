@@ -1,0 +1,140 @@
+/* Shared public-site typography. Scoped so administration and editors retain their UI scale. */
+.architecture-site {
+  --font-heading: "Manrope", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --arch-h1: clamp(2rem, 1.25rem + 3.1vw, 4.5rem);
+  --arch-h2: clamp(1.6rem, 1.15rem + 1.8vw, 3rem);
+  --arch-h3: clamp(1.2rem, 1.05rem + 0.6vw, 1.65rem);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+/* Resolve old per-page utility overrides into one deliberate editorial scale. */
+.architecture-site h1 {
+  font-family: var(--font-heading) !important;
+  font-size: var(--arch-h1) !important;
+  font-weight: 600 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.035em !important;
+  text-wrap: balance;
+}
+.architecture-site h2 {
+  font-family: var(--font-heading) !important;
+  font-size: var(--arch-h2) !important;
+  font-weight: 600 !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.025em !important;
+  text-wrap: balance;
+}
+.architecture-site :is(article, nav, header, footer, [role="dialog"]) h2,
+.architecture-site .mist-field-page article h2 {
+  font-size: var(--arch-h3) !important;
+  line-height: 1.3 !important;
+}
+.architecture-site h3 {
+  font-family: var(--font-heading) !important;
+  font-size: var(--arch-h3) !important;
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+  text-wrap: balance;
+}
+.architecture-site :is(h4, h5, h6) {
+  font-family: var(--font-heading);
+  line-height: 1.4;
+}
+.architecture-site p {
+  text-wrap: pretty;
+}
+.architecture-site :is(input, textarea, select, button) {
+  font-family: inherit;
+}
+.architecture-site
+  :is(a, button, summary, input, textarea, select):focus-visible {
+  outline: 2px solid #07839b;
+  outline-offset: 4px;
+}
+.architecture-site :is(section[id], div[id]) {
+  scroll-margin-top: 7rem;
+}
+.mlz-wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.mlz-wordmark--ink {
+  color: #102b37;
+}
+.mlz-wordmark--white {
+  color: #fff;
+}
+.mlz-wordmark__line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+.mlz-wordmark__name {
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+}
+.mlz-wordmark__symbol {
+  display: inline-flex;
+  align-items: center;
+}
+.mlz-wordmark__registered {
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  font:
+    500 0.55rem/1.4 "Inter",
+    sans-serif;
+}
+.mlz-wordmark__caption {
+  margin-top: 0.55rem;
+  font:
+    500 0.65rem/1.5 "Inter",
+    sans-serif;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.mlz-wordmark--sm .mlz-wordmark__name,
+.mlz-wordmark--xs .mlz-wordmark__name {
+  font-size: 1.25rem;
+}
+.mlz-wordmark--lg .mlz-wordmark__name {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+@media (max-width: 639px) {
+  .architecture-site :is(input, textarea, select) {
+    font-size: 1rem;
+  }
+  .architecture-site main p {
+    line-height: 1.7;
+  }
+  .architecture-site main :is(h1, h2, h3) {
+    overflow-wrap: anywhere;
+  }
+  .mlz-wordmark__line {
+    gap: 0.3rem;
+  }
+  .mlz-wordmark__name {
+    font-size: 1.4rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+@media print {
+  .mlz-wordmark {
+    color: #000;
+  }
+  .mlz-wordmark__symbol {
+    display: none;
+  }
+}

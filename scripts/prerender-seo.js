@@ -36,6 +36,7 @@ const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd358
 // we emit exact static redirect documents with noindex + canonical + instant
 // meta/JS redirect. Static route files take precedence over the SPA fallback.
 const LEGACY_REDIRECTS = {
+  '/mlziste': '/mlhoviste',
   '/domu': '/',
   '/hello-world': '/',
   '/category/uncategorized': '/blog',

@@ -25,7 +25,7 @@ export default function KolekceHero() {
     <section ref={ref} className="hero-motion-surface relative min-h-[720px] bg-[#07131D] text-white" aria-label="Katalog mlžítek">
       <motion.div className="absolute inset-0" style={{ y: mediaY, scale: mediaScale }}>
         <motion.img
-          key={scene.image} src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/5cba7b56a_Obrzek_Codex_5_10_2026_01_14_09.png"
+          key={scene.image} src={scene.image}
 
           alt={scene.name}
           className="absolute inset-0 h-full w-full object-cover object-center opacity-75"
@@ -51,7 +51,7 @@ export default function KolekceHero() {
           Vyberte mlžítko podle prostoru.
         </h1>
         <p className="mt-6 !max-w-2xl !text-base !leading-8 !text-white/62 sm:!text-lg">
-          Sloupková mlžítka, mlžné brány a ateliérové prvky pro města, parky, sportoviště, školy, gastro i soukromé zahrady. Katalog můžete filtrovat podle prostoru a produktové řady.
+          Sloupková mlžítka, mlžné brány, ateliérové prvky i celá mlžiště pro města, parky, sportoviště, školy, gastro i soukromé zahrady. Katalog můžete filtrovat podle prostoru a produktové řady.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">

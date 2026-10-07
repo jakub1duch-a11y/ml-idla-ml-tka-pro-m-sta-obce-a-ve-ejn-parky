@@ -125,6 +125,7 @@ const AuthenticatedApp = () => {
         <Route path="/brand-identity" element={<BrandIdentity />} />
         <Route path="/jak-to-funguje" element={<Technologie />} />
         <Route path="/mlhoviste" element={<Mlhoviste />} />
+        <Route path="/mlziste" element={<Navigate to="/mlhoviste" replace />} />
         <Route path="/vodni-mlha" element={<VodniMlha />} />
         <Route path="/sloupkova-mlzitka" element={<CategoryLanding variant="sloupky" />} />
         <Route path="/mlzne-brany" element={<MlzneBrany />} />

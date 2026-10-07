@@ -17,6 +17,7 @@ const columns = [
   title: 'Produkty',
   links: [
   ['Městská mlžítka', '/mestske-mlzitka'],
+  ['Mlžiště a mlhoviště', '/mlhoviste'],
   ['Zahradní mlžítka', '/zahradni-mlzitka'],
   ['Zakázková výroba', '/zakazkova-mlzitka'],
   ['Kompletní katalog', '/katalog-mlzitek']]

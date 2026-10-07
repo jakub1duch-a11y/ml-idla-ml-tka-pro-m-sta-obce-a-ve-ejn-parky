@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Loader, Clock, Eye } from 'lucide-react';
+import BlogArticleSidebar from '@/components/blog/BlogArticleSidebar';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO, getBlogFaqItems } from '@/lib/seo';
@@ -234,13 +235,16 @@ export default function BlogDetail() {
           <ShareButtons title={post.title} />
         </div>
 
-        {/* Content */}
+        {/* Content and article sidebar */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
+          <BlogArticleSidebar related={related} category={post.category} />
+          <div id="article-content" className="lg:col-span-8 lg:col-start-4">
         {post.content ?
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="prose prose-slate max-w-none pb-6 pt-6 text-[15px] leading-[1.8] sm:text-base lg:text-[17px] lg:grid lg:grid-cols-12 lg:gap-x-10 [&>*]:lg:col-span-8 [&>*]:lg:col-start-3 [&>img]:lg:col-span-10 [&>img]:lg:col-start-2 [&>div]:lg:col-span-8 [&>div]:lg:col-start-3
+          className="prose prose-slate max-w-none pb-6 pt-6 text-[15px] leading-[1.8] sm:text-base lg:text-[17px]
               prose-headings:font-heading prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-slate-900
               prose-p:text-slate-600 prose-p:font-normal prose-p:leading-[1.75]
               prose-li:text-slate-600 prose-li:font-normal
@@ -259,6 +263,8 @@ export default function BlogDetail() {
         </motion.div> :
         <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
         }
+          </div>
+        </div>
 
         {Array.isArray(post.content_images) && post.content_images.some((item) => item?.url) && (
           <section className="mx-auto my-10 max-w-5xl" aria-labelledby="article-gallery-heading">

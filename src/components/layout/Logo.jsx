@@ -15,7 +15,7 @@ export function MistZMark({ size = "md", className = "" }) {
       viewBox="0 0 64 92"
       fill="none"
       aria-hidden="true"
-      className={`${sizes[size] || sizes.md} shrink-0 overflow-visible w-[8px] ${className}`}>
+      className={`${sizes[size] || sizes.md} shrink-0 overflow-visible ${className}`}>
       
       <defs>
         <linearGradient
@@ -100,7 +100,7 @@ export default function Logo({
           <MistZMark size={size === "lg" ? "md" : "sm"} />
         </span>
         <span className="mlz-wordmark__name">MLŽIDLA</span>
-        <sup className="mlz-wordmark__registered">®</sup>
+        <sup className="z-wordmark__registered">®</sup>
       </span>
       {variant === "full" &&
       <span className="mlz-wordmark__caption" aria-hidden="true">

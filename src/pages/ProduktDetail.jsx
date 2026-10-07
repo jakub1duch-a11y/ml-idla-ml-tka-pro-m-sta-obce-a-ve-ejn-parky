@@ -47,7 +47,7 @@ export default function ProduktDetail() {
   const [mobileSection, setMobileSection] = useState('prehled');
 
   const requestedView = searchParams.get('view');
-  const viewMode = VIEW_MODES.has(requestedView) ? requestedView : 'new';
+  const viewMode = VIEW_MODES.has(requestedView) ? requestedView : 'classic';
 
   const setViewMode = (nextMode) => {
     if (!VIEW_MODES.has(nextMode)) return;

@@ -47,7 +47,7 @@ export default function KolekceHero() {
           <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">KATALOG / MLŽIDLA®</span>
         </div>
 
-        <h1 className="mt-6 !max-w-[10ch] !font-black !leading-[.93] !tracking-[-.06em]">
+        <h1 className="mt-6 !font-black !leading-[.93] !tracking-[-.06em] !max-w-[20ch]">
           Vyberte mlžítko podle prostoru.
         </h1>
         <p className="mt-6 !max-w-2xl !text-base !leading-8 !text-white/62 sm:!text-lg">

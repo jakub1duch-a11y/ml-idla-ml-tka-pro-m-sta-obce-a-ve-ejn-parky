@@ -37,28 +37,28 @@ export default function LanguageSwitcher({ mobile = false, onNavigate = undefine
 
   return (
     <div className={`relative ${mobile ? 'w-fit' : ''}`}>
-      <button
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        aria-label={ariaLabel}
-        className={mobile ?
-        `flex min-h-11 items-center gap-1.5 rounded-full border px-3 transition hidden ${open ? 'border-slate-300 bg-white text-slate-950' : 'border-slate-200 bg-slate-50 text-slate-800 hover:bg-white'}` :
-        `flex min-h-10 items-center gap-1.5 rounded-full border px-2.5 transition ${open ? 'border-white/30 bg-white/15 text-white' : 'border-white/15 bg-white/[.06] text-white/90 hover:border-white/30 hover:bg-white/10'}`}>
-        
-        <motion.span
-          key={active.code}
-          initial={{ opacity: 0, y: 3 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: .16 }}
-          className="text-[18px] leading-none"
-          aria-hidden="true">
-          
-          {FLAGS[active.code]}
-        </motion.span>
-        <ChevronDown size={13} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
-      </button>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       <AnimatePresence>
         {open &&

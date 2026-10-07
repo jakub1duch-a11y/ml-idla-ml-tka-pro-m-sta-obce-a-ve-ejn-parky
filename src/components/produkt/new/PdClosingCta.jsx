@@ -18,7 +18,7 @@ export default function PdClosingCta({ product }) {
         <video
           src={VIDEO_ASSETS.loopSquare.src}
           poster={VIDEO_ASSETS.loopSquare.poster}
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
+          className="absolute inset-0 h-full w-full object-cover opacity-100"
           autoPlay muted loop playsInline preload="metadata" />
         
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/85 to-[#0A1628]/70" />
@@ -49,7 +49,7 @@ export default function PdClosingCta({ product }) {
       </section>
 
       {showBar &&
-      <div className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between border-t border-[#22D3EE]/15 bg-[#0A1628]/95 px-5 py-3 backdrop-blur-md lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between border-t border-[#22D3EE]/15 bg-[#0A1628]/95 px-5 py-3 backdrop-blur-md lg:hidden hidden">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-wide text-white/40">{product.name}</p>
             <p className="font-heading text-sm font-semibold text-white">Zjistit cenu</p>

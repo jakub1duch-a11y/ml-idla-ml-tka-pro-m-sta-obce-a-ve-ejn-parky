@@ -47,7 +47,7 @@ function ProductStage({ product, reduced }) {
         aria-label={`${product.name} — video produktu`} /> :
         <ProductImage key={media} url={media} name={`${product.name} — fotografie ${view + 1}`} />}
       </motion.div>
-      {urls.length > 1 && <div className="mpe-photo-controls" aria-label={`Fotografie: ${product.name}`}>
+      {urls.length > 1 && <div className="mpe-photo-controls rounded-none" aria-label={`Fotografie: ${product.name}`}>
         {urls.map((url, index) => <button type="button" key={url}
         aria-label={`${isVideo(url) ? 'Video' : 'Fotografie'} ${index + 1} — ${product.name}`}
         aria-pressed={index === view} onClick={() => setView(index)}>
@@ -55,7 +55,7 @@ function ProductStage({ product, reduced }) {
         </button>)}
       </div>}
     </div>
-    <div className="mpe-story">
+    <div className="mpe-story rounded-none">
       <p className="mpe-eyebrow">Osvěžení má svůj tvar</p>
       <h3>{product.name}</h3>
       {product.short_description && <p className="mpe-description">{product.short_description}</p>}

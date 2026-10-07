@@ -99,7 +99,7 @@ export default function UrbanCoolingExperience() {
         <h2>Čistá architektura. <em>Jasná technika.</em></h2>
         <p>Technické informace mají vlastní přehlednou vrstvu pro projektanty, města a realizační týmy.</p>
       </motion.div>
-      <div className="ucx-facts">{facts.map((f, i) => <motion.div {...reveal} transition={{ duration: .62, ease: [.22, 1, .36, 1], delay: i * 0.08 }} key={f[0]}><small className="text-3xl">{f[0]}</small><strong>{f[1]}</strong></motion.div>)}</div>
+      <div className="ucx-facts">{facts.map((f, i) => <motion.div {...reveal} transition={{ duration: .62, ease: [.22, 1, .36, 1], delay: i * 0.08 }} key={f[0]}><small className="text-4xl">{f[0]}</small><strong>{f[1]}</strong></motion.div>)}</div>
       <motion.a {...reveal} className="ucx-doc" href="/ke-stazeni">
         <ShieldCheck /><span><small>PRO PROJEKT A REALIZACI</small><strong>Technické listy a podklady</strong></span><b>Otevřít dokumentaci <ArrowRight size={16} /></b>
       </motion.a>

@@ -14,20 +14,20 @@ export default function PdClosingCta({ product }) {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-[#0A1628] py-20 lg:py-32">
+      <section className="relative overflow-hidden py-20 lg:py-32 bg-[#0a1628]/[0.7]">
         <video
           src={VIDEO_ASSETS.loopSquare.src}
           poster={VIDEO_ASSETS.loopSquare.poster}
-          className="absolute inset-0 h-full w-full object-cover opacity-100"
+          className="absolute inset-0 h-full w-full object-cover opacity-0"
           autoPlay muted loop playsInline preload="metadata" />
         
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] to-[#0A1628]/50 via-[#0A1628]/65" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/85 to-[#0A1628]/70" />
         <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-7 lg:px-10">
-          <p className="font-mono uppercase tracking-[.18em] text-[hsl(var(--accent-foreground))] text-base">Projektová konzultace</p>
+          <p className="font-mono uppercase tracking-[.18em] text-base text-[hsl(var(--background))]">Projektová konzultace</p>
           <h2 className="mt-4 font-heading text-3xl font-bold leading-tight tracking-[-.02em] text-white lg:text-5xl">
             Získejte návrh a cenu pro váš prostor
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/60">
+          <p className="text-white/60 mt-5 mx-auto text-lg leading-relaxed max-w-xl hidden">
             Pro {product.name} připravíme návrh umístění, vhodnou konfiguraci, vizualizaci a cenovou nabídku podle konkrétního místa a způsobu provozu.
           </p>
           <p className="mt-5 font-medium text-base text-[hsl(var(--ring))]">Stačí poslat fotografii, adresu nebo projektovou situaci.</p>

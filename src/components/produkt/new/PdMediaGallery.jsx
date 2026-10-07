@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Images, Loader, MapPin, Play, Sparkles, Video, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
@@ -101,7 +101,8 @@ function MediaCard({ item, onOpen, productName }) {
         {item.badge && <span className="absolute right-4 top-4 rounded-full border border-white/35 bg-black/28 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">{item.badge}</span>}
       </div>
       <div className="p-4 sm:p-5">
-        <p className="font-heading text-base font-bold text-[#0A2342] sm:text-lg">{mediaCaption(item)}</p>
+        <p className="font-heading text-base font-bold leading-tight text-[#0A2342] sm:text-lg">{item.title || productName}</p>
+        <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#0B97E8]">{mediaCaption(item)}</p>
         {item.meta && <p className="mt-1.5 flex items-center gap-1.5 text-xs leading-relaxed text-[#0D2F4F]/55"><MapPin size={12} />{item.meta}</p>}
       </div>
     </button>
@@ -116,6 +117,7 @@ export default function PdMediaGallery({ product }) {
   const [activeTab, setActiveTab] = useState('photos');
   const [lightbox, setLightbox] = useState(null);
   const [featuredVideoIndex, setFeaturedVideoIndex] = useState(0);
+  const mediaRailRef = useRef(null);
 
   useEffect(() => {
     setFeaturedVideoIndex(0);
@@ -150,9 +152,9 @@ export default function PdMediaGallery({ product }) {
 
     const productPhotos = clean([
       ...adminProductPhotos,
-      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktová fotografie`, caption: item.caption || 'Produktová fotografie', title: 'Produktová fotografie', badge: 'Fotografie' })),
-      studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: 'Studiový náhled produktu', badge: 'Studio' },
-      product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
+      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktový náhled`, caption: item.caption || 'Produktový náhled', title: `${product.name} · produktový náhled`, badge: 'Fotografie' })),
+      studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: `${product.name} · studiový náhled`, badge: 'Studio' },
+      product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? `${product.name} · reálné testování` : `${product.name} · produktový náhled`, badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
       ...(product.gallery_urls || [])
         .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
         .map((url) => ({
@@ -160,7 +162,7 @@ export default function PdMediaGallery({ product }) {
           url: mediaUrl(url),
           alt: isGardenTest(url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktová fotografie`,
           caption: isGardenTest(url) ? 'Reálné testování v zahradě' : 'Produktová fotografie',
-          title: isGardenTest(url) ? 'Reálné testování v zahradě' : 'Produktová fotografie',
+          title: isGardenTest(url) ? `${product.name} · reálné testování` : `${product.name} · produktový detail`,
           badge: isGardenTest(url) ? 'Reálné testování' : 'Produkt',
         })),
     ]);
@@ -186,9 +188,9 @@ export default function PdMediaGallery({ product }) {
         badge: 'Náhled v prostoru',
       }));
 
-    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [
-      r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Vizualizace' },
-      r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', meta: r.location, badge: 'Návrh' },
+    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · konkrétní prostor`, badge: 'Náhled v prostoru' })), ...realizations.flatMap((r) => [
+      r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · ${r.location || 'konkrétní prostor'}`, meta: r.location, badge: 'Náhled v prostoru' },
+      r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · ${r.location || 'konkrétní prostor'}`, meta: r.location, badge: 'Náhled v prostoru' },
     ])]);
 
     const resolvedProductVideo = product.video_url || (isLineaProduct(product) ? LINEA_HERO_VIDEO : '');
@@ -329,12 +331,14 @@ export default function PdMediaGallery({ product }) {
         </div>
 
         <AnimatePresence mode="wait">
+          <div className="relative">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: .28 }}
+            ref={mediaRailRef}
             className="mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-3 xl:grid-cols-4 [&::-webkit-scrollbar]:hidden"
           >
             {items.map((item, index) => (
@@ -343,6 +347,11 @@ export default function PdMediaGallery({ product }) {
               </div>
             ))}
           </motion.div>
+          {items.length > 1 && <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-between px-1 sm:hidden">
+            <button type="button" onClick={() => mediaRailRef.current?.scrollBy({ left: -280, behavior: 'smooth' })} aria-label="Předchozí náhled" className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-[#0A2342]/90 text-white shadow-xl backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22D3EE]"><ChevronLeft size={21} aria-hidden="true" /></button>
+            <button type="button" onClick={() => mediaRailRef.current?.scrollBy({ left: 280, behavior: 'smooth' })} aria-label="Další náhled" className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-[#0A2342]/90 text-white shadow-xl backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22D3EE]"><ChevronRight size={21} aria-hidden="true" /></button>
+          </div>}
+          </div>
         </AnimatePresence>
       </div>
 

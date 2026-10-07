@@ -6,11 +6,11 @@ import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const TECH_RE = /(technick|schema|schéma|vykres|výkres|montaz|montáž|edraw)/i;
-const isImage = (url = '') => Boolean(url && !VIDEO_RE.test(url) && !TECH_RE.test(url));
+const isImage = (url = '') => Boolean(typeof url === 'string' && url && !VIDEO_RE.test(url) && !TECH_RE.test(url));
 const optimize = (url) => isImage(url) ? getOptimizedMediaUrl(url) : url;
 
 function dedupe(items) {
-  return [...new Map(items.filter((item) => item?.url).map((item) => [item.url, item])).values()];
+  return [...new Map(items.filter((item) => item?.url).map((item) => [optimize(item.url.trim()), item])).values()];
 }
 
 function Fullscreen({ items, index, onClose, onChange, productName }) {
@@ -47,11 +47,7 @@ function Fullscreen({ items, index, onClose, onChange, productName }) {
           </button>
         </>
       )}
-      <div className="pointer-events-none absolute bottom-4 left-1/2 w-[min(90vw,720px)] -translate-x-1/2 rounded-2xl border border-white/12 bg-black/40 px-4 py-3 text-white backdrop-blur-xl">
-        <p className="font-mono text-[9px] uppercase tracking-[.16em] text-cyan-200">{index + 1} / {items.length}</p>
-        <p className="mt-1 truncate text-sm font-semibold">{item.title || productName}</p>
-        {item.caption && <p className="mt-1 truncate text-xs text-white/55">{item.caption}</p>}
-      </div>
+      <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-2 text-sm text-white" aria-live="polite">{index + 1} / {items.length}</p>
     </div>
   );
 }
@@ -62,6 +58,8 @@ export default function PdVisualGalleryCompact({ product }) {
 
   useEffect(() => {
     let active = true;
+    setMediaFiles([]);
+    setLightbox(null);
     base44.entities.MediaFile
       .filter({ product_slug: product.slug }, '-sort_order', 100)
       .then((items = []) => { if (active) setMediaFiles(items || []); })
@@ -102,7 +100,7 @@ export default function PdVisualGalleryCompact({ product }) {
         caption: 'Hlavní produktová fotografie',
         badge: 'Produkt',
       },
-      ...(product.gallery_urls || []).filter(isImage).map((url, index) => ({
+      ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []).filter(isImage).map((url, index) => ({
         url,
         title: index < 2 ? 'Produkt v detailu' : 'Produkt v prostoru',
         caption: index < 2 ? 'Materiál, tvar a provedení' : 'Příklad použití a měřítka',
@@ -116,7 +114,7 @@ export default function PdVisualGalleryCompact({ product }) {
   if (!items.length) return null;
 
   return (
-    <section id="galerie" className="scroll-mt-24 bg-white py-12 sm:py-16 lg:py-20">
+    <section id="galerie" className="scroll-mt-24 !px-0 bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-20">
         <div className="grid gap-4 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
           <div>
@@ -126,16 +124,16 @@ export default function PdVisualGalleryCompact({ product }) {
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-[#5A6B78] lg:justify-self-end">
-            Krátká galerie ukazuje produkt z více úhlů bez dlouhého scrollování. Každou fotografii lze otevřít přes celý displej.
+            Prohlédněte si produkt zblízka. Klepnutím fotografii zvětšíte na celý displej.
           </p>
         </div>
 
-        <div className="mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-12 lg:grid-rows-2 lg:gap-4 lg:overflow-visible lg:pb-0">
-          {items.slice(0, 6).map((item, index) => {
+        <div className="mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-12 lg:auto-rows-[240px] xl:auto-rows-[280px] lg:gap-4 lg:overflow-visible lg:pb-0">
+          {items.slice(0, 3).map((item, index) => {
             const desktop = index === 0
-              ? 'lg:col-span-7 lg:row-span-2'
+              ? items.length === 1 ? 'lg:col-span-12 lg:row-span-2' : 'lg:col-span-7 lg:row-span-2'
               : index === 1
-                ? 'lg:col-span-5 lg:row-span-1'
+                ? items.length === 2 ? 'lg:col-span-5 lg:row-span-2' : 'lg:col-span-5 lg:row-span-1'
                 : index === 2
                   ? 'lg:col-span-5 lg:row-span-1'
                   : 'lg:hidden';
@@ -144,32 +142,26 @@ export default function PdVisualGalleryCompact({ product }) {
                 key={item.url}
                 type="button"
                 onClick={() => setLightbox(index)}
-                className={`group relative min-h-[340px] w-[86vw] shrink-0 snap-center overflow-hidden rounded-[1.5rem] bg-[#07131D] text-left sm:w-[64vw] ${desktop}`}
+                aria-label={`Zvětšit fotografii ${index + 1}: ${product.name}`}
+                className={`group relative aspect-[4/5] min-w-0 w-[86vw] shrink-0 snap-center overflow-hidden rounded-[1.5rem] bg-[#07131D] text-left sm:w-[64vw] lg:aspect-auto lg:w-full ${desktop}`}
               >
-                <img src={optimize(item.url)} alt={`${product.name} — ${item.title}`} loading={index < 2 ? 'eager' : 'lazy'} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07131D]/82 via-transparent to-transparent" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/18 bg-black/28 px-3 py-2 font-mono text-[8px] font-bold uppercase tracking-[.18em] text-white/78 backdrop-blur-md">
-                  {item.badge}
-                </span>
+                <img src={optimize(item.url)} alt={`${product.name} — ${item.title}`} loading={index < 2 ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-700 motion-safe:group-hover:scale-[1.035] motion-reduce:transition-none" />
                 <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-black/28 text-white backdrop-blur-md">
                   <Maximize2 size={15} />
                 </span>
-                <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                  <h3 className="font-heading text-xl font-bold tracking-[-.03em] sm:text-2xl">{item.title}</h3>
-                  <p className="mt-1 text-xs leading-5 text-white/62 sm:text-sm">{item.caption}</p>
-                </div>
+
               </button>
             );
           })}
         </div>
 
-        {items.length > 6 && (
+        {items.length > 3 && (
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {items.slice(6).map((item, index) => {
-              const realIndex = index + 6;
+            {items.slice(3).map((item, index) => {
+              const realIndex = index + 3;
               return (
-                <button key={item.url} type="button" onClick={() => setLightbox(realIndex)} className="group relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-[#07131D]">
-                  <img src={optimize(item.url)} alt={`${product.name} — další fotografie`} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
+                <button key={item.url} type="button" onClick={() => setLightbox(realIndex)} aria-label={`Zvětšit fotografii ${realIndex + 1}: ${product.name}`} className="group relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-[#07131D]">
+                  <img src={optimize(item.url)} alt={`${product.name} — další fotografie`} loading="lazy" className="h-full w-full object-cover transition duration-500 motion-safe:group-hover:scale-[1.04] motion-reduce:transition-none" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#07131D]/65 to-transparent" />
                   <span className="absolute bottom-3 left-3 text-[10px] font-semibold text-white">{item.badge}</span>
                 </button>
@@ -179,7 +171,7 @@ export default function PdVisualGalleryCompact({ product }) {
         )}
       </div>
 
-      {lightbox !== null && (
+      {lightbox !== null && items[lightbox] && (
         <Fullscreen
           items={items}
           index={lightbox}

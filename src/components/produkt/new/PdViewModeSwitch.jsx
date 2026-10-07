@@ -24,9 +24,9 @@ const MODES = [
 
 export default function PdViewModeSwitch({ mode, onChange }) {
   return (
-    <div className="z-[60] border-b border-[#D8E8ED] bg-white/92 backdrop-blur-2xl sticky top-2">
+    <div className="relative z-10 border-b border-[#D8E8ED] bg-white pt-[68px]">
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5 sm:px-6 lg:px-10">
-        <span className="hidden shrink-0 font-mono text-[9px] font-bold uppercase tracking-[.18em] text-[#0D2F4F]/42 sm:block">
+        <span className="hidden shrink-0 font-mono text-[9px] font-bold uppercase tracking-[.18em] text-slate-600 sm:block">
           Zobrazení detailu
         </span>
         <div className="grid min-w-0 flex-1 grid-cols-3 gap-1 rounded-[18px] border border-[#D8E8ED] bg-[#F4FAFC] p-1 sm:ml-auto sm:max-w-[520px]">
@@ -44,7 +44,7 @@ export default function PdViewModeSwitch({ mode, onChange }) {
                   <Icon size={14} strokeWidth={1.7} aria-hidden="true" />
                   <strong className="text-[11px] sm:text-xs">{label}</strong>
                 </span>
-                <span className={`mt-0.5 hidden text-[9px] leading-4 sm:block ${active ? 'text-white/58' : 'text-[#5A6B78]/64'}`}>
+                <span className={`mt-0.5 hidden text-[9px] leading-4 sm:block ${active ? 'text-white/80' : 'text-slate-600'}`}>
                   {description}
                 </span>
               </button>);

@@ -26,10 +26,10 @@ export default function SmartControlCabinetSection() {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           <figure className="overflow-hidden rounded-[2rem] border border-cyan-100 bg-white/80 p-3 shadow-[0_24px_80px_rgba(8,47,63,.10)]">
-            <figcaption className="px-3 pb-3 pt-1 text-xs font-bold uppercase tracking-[.16em] text-cyan-800">Boxový rozvaděč</figcaption>
+            <figcaption className="px-3 pb-3 pt-1 text-xs font-bold uppercase tracking-[.16em] text-cyan-800">Chytré ovládání a přehled vody</figcaption>
             <picture key={playing ? 'motion' : 'poster'}>
-              <source media="(max-width: 640px)" srcSet={`/media/smart/mlzidla-smart-fade-v2-mobile${extension}`} />
-              <img src={`/media/smart/mlzidla-smart-fade-v2-desktop${extension}`} alt="Boxový rozvaděč MLŽIDLA s chytrým řízením, filtrací a měřením. Ilustrační konfigurace." width="800" height="600" className="aspect-[4/3] h-auto w-full rounded-[1.5rem] bg-[#f7fcfd] object-contain" loading="lazy" decoding="async" />
+              <source media="(max-width: 639px)" srcSet={`/media/smart/mlzidla-smart-display-v3-mobile${extension}`} />
+              <img src={`/media/smart/mlzidla-smart-display-v3-desktop${extension}`} alt="Chytré ovládání MLŽIDLA: zapnutí mlžení, časový plán a přehled vody. Ilustrační obrazovky." width="800" height="600" className="aspect-[2/3] h-auto w-full rounded-[1.5rem] bg-[#f7fcfd] object-contain sm:aspect-[4/3]" loading="lazy" decoding="async" />
             </picture>
             {reduceMotion === false && (
               <div className="mt-3 flex justify-end">

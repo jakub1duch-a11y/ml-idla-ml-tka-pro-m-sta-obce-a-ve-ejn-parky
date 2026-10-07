@@ -56,7 +56,7 @@ export default function PdClosingCta({ product }) {
           </div>
           <Link
           to={`/poptavka?produkt=${product.slug}`}
-          className="bg-[#22D3EE] px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[#0A1628] transition hover:bg-white">
+          className="bg-[#22D3EE] px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-[#0A1628] transition hover:bg-white rounded-lg">
           
             Zjistit cenu
           </Link>

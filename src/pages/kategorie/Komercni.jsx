@@ -12,11 +12,11 @@ import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigatio
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const USE_CASES = [
-  { emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Zákazníci zůstanou déle a objednají víc. Příjemná terasa i v letních vedrech.' },
-  { emoji: '🛍️', title: 'Nákupní centra', desc: 'Ochlazení vstupních zón, food courtů a venkovních průchodů.' },
-  { emoji: '🎪', title: 'Výstavy a showroomy', desc: 'Mlžné prvky jako součást prezentace — design i chlad.' },
-  { emoji: '🏭', title: 'Výrobní a průmyslové haly', desc: 'Ochlazení pracovišť, zvýšení produktivity a bezpečnosti práce při vysokých teplotách.' },
-];
+{ emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Zákazníci zůstanou déle a objednají víc. Příjemná terasa i v letních vedrech.' },
+{ emoji: '🛍️', title: 'Nákupní centra', desc: 'Ochlazení vstupních zón, food courtů a venkovních průchodů.' },
+{ emoji: '🎪', title: 'Výstavy a showroomy', desc: 'Mlžné prvky jako součást prezentace — design i chlad.' },
+{ emoji: '🏭', title: 'Výrobní a průmyslové haly', desc: 'Ochlazení pracovišť, zvýšení produktivity a bezpečnosti práce při vysokých teplotách.' }];
+
 
 export default function Komercni() {
   const [products, setProducts] = useState([]);
@@ -24,7 +24,7 @@ export default function Komercni() {
 
   useEffect(() => {
     setSEO(SEO_PAGES.komercni);
-    base44.entities.Product.list().catch(() => []).then(p => {
+    base44.entities.Product.list().catch(() => []).then((p) => {
       setProducts(sortByStructure(p || []).slice(0, 6));
     }).finally(() => setLoading(false));
   }, []);
@@ -61,14 +61,14 @@ export default function Komercni() {
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {USE_CASES.map((u, i) => (
-              <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="p-6 rounded-2xl bg-white border border-slate-200">
+            {USE_CASES.map((u, i) =>
+            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+            className="p-6 rounded-2xl bg-white border border-slate-200">
                 <span className="text-2xl mb-3 block">{u.emoji}</span>
                 <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -76,26 +76,26 @@ export default function Komercni() {
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            { val: '+34 %', label: 'Nárůst tržeb terasy' },
-            { val: '+2,4 h', label: 'Delší pobyt hosta' },
-            { val: '4–6 týdnů', label: 'Prodloužení sezóny' },
-          ].map(s => (
-            <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
+          { val: '+34 %', label: 'Nárůst tržeb terasy' },
+          { val: '+2,4 h', label: 'Delší pobyt hosta' },
+          { val: '4–6 týdnů', label: 'Prodloužení sezóny' }].
+          map((s) =>
+          <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
               <p className="font-heading text-2xl text-slate-900 mb-1" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
               <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">{s.label}</p>
             </div>
-          ))}
+          )}
         </div>
       </section>
 
       {/* Video */}
       <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
         <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/a155bfef6_mlzisteprokomercniprostory.mp4"
-          className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline preload="metadata" />
+        className="absolute inset-0 w-full h-full object-cover opacity-0" autoPlay loop muted playsInline preload="metadata" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
         <div className="relative h-full flex items-end">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
+          className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
             <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Mlžiště pro komerční prostory</p>
             <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
               Terasa, kde<br /><span style={{ fontStyle: 'italic' }}>hosté zůstávají.</span>
@@ -110,13 +110,13 @@ export default function Komercni() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty</p>
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>
-        {loading ? (
-          <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div>
-        ) : (
-          <ProductExperience products={products}>
+        {loading ?
+        <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
+
+        <ProductExperience products={products}>
 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {products.map((p, i) => (
-              <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+            {products.map((p, i) =>
+            <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                 <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
                   <ProductHoverImage product={p} alt={p.name} className="aspect-[4/3] bg-slate-100" fullBleed cleanPreview />
                   <div className="p-5 flex items-center justify-between">
@@ -128,10 +128,10 @@ export default function Komercni() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+            )}
           </div>
 </ProductExperience>
-        )}
+        }
       </section>
 
       <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24">
@@ -147,6 +147,6 @@ export default function Komercni() {
         </div>
       </section>
       <B2BPortfolioNavigation current="Komerční prostory" />
-    </div>
-  );
+    </div>);
+
 }

@@ -127,6 +127,33 @@ const ENVIRONMENT_TAG = {
 };
 const isImageFile = (file) => String(file?.file_type || '').startsWith('image/') || /\.(png|jpe?g|webp|avif)(\?|#|$)/i.test(file?.file_url || '');
 
+const SPACE_LABELS = {
+  namesti: 'náměstí',
+  mestsky_park: 'městský park',
+  maly_mestsky_park: 'městský park',
+  promenada: 'promenáda',
+  sportoviste: 'sportoviště',
+  hriste: 'hřiště',
+  koupaliste: 'koupaliště',
+  skola_skolka: 'školní zahrada',
+  rezidencni_zahrada: 'rezidenční zahrada',
+  gastro_terasa: 'gastro terasa',
+  hotel_wellness: 'hotelová terasa',
+  event: 'eventový prostor',
+  custom: 'konkrétní prostor',
+};
+
+const readableSpace = (item, fallback = 'konkrétní prostor') => {
+  const raw = item?.environment_label || item?.space_name || item?.location || item?.environment;
+  if (!raw) return fallback;
+  return SPACE_LABELS[raw] || String(raw).replace(/[_-]+/g, ' ').trim();
+};
+
+const visualTitle = (item, fallbackProduct = 'Mlžítko MLŽIDLA') => {
+  const product = item?.product_name || item?.product_title || item?.product || fallbackProduct;
+  return `${product} · ${readableSpace(item)}`;
+};
+
 export default function ProductPhotoGallery() {
   const [filter, setFilter] = useState('Vše');
   const [approvedVisuals, setApprovedVisuals] = useState([]);
@@ -147,12 +174,12 @@ export default function ProductPhotoGallery() {
 
   const allItems = useMemo(() => {
     const visuals = approvedVisuals.map((item) => ({
-      title: item.product_name || item.title || 'Schválená vizualizace',
+      title: visualTitle(item),
       url: item.thumbnail_url || item.image_url,
       tag: ENVIRONMENT_TAG[item.environment] || 'Produkty',
-      badge: 'Schválená vizualizace',
+      badge: 'Náhled v prostoru',
       href: item.product_slug ? `/produkt/${item.product_slug}` : '/mlzidla-mlzitka',
-      text: item.scene_description || `Schválený návrh použití produktu ${item.product_name || ''}.`,
+      text: item.scene_description || `Náhled použití ${item.product_name || 'mlžítka'} v prostoru: ${readableSpace(item)}.`,
       approved: true,
       primary: Boolean(item.is_primary_for_variant),
       updated: item.updated_date || ''
@@ -162,12 +189,12 @@ export default function ProductPhotoGallery() {
     filter(isImageFile).
     filter((item) => ['homepage_visual', 'hero', 'gallery', 'reference', 'realization'].includes(item.media_role)).
     map((item) => ({
-      title: item.file_name || item.media_group || 'MLŽIDLA®',
+      title: `${item.product_name || item.product_title || 'Mlžítko MLŽIDLA'} · ${item.space_name || item.media_group || 'konkrétní prostor'}`,
       url: item.file_url,
       tag: 'Produkty',
-      badge: item.media_role === 'realization' || item.media_role === 'reference' ? 'Fotografie' : 'Média',
+      badge: item.media_role === 'realization' || item.media_role === 'reference' ? 'Náhled v prostoru' : 'Produktový náhled',
       href: item.product_slug ? `/produkt/${item.product_slug}` : '/mlzidla-mlzitka',
-      text: item.media_group ? `${item.media_group} — fotografie z administrace webu.` : 'Fotografie z administrace webu.'
+      text: `Náhled mlžítka v prostoru: ${item.space_name || item.media_group || 'konkrétní prostor'}.`
     }));
 
     const combined = [...visuals.sort((a, b) => Number(b.primary) - Number(a.primary)), ...media, ...MEDIA];
@@ -181,7 +208,7 @@ export default function ProductPhotoGallery() {
       <div className="max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>
         <h2 id="media-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl font-semibold tracking-[-.04em] sm:text-5xl">Podívejte se, kam mlha patří.</h2>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Galerie nyní načítá i nová média a pouze schválené produktové vizualizace z administrace webu. Vyberte prostředí a přejděte rovnou k produktu nebo návrhu řešení.</p>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Náhledy mlžítek v konkrétních prostorech. Vyberte prostředí a přejděte rovnou k produktu nebo návrhu řešení.</p>
       </div>
 
       <div className="my-9 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Filtrovat média">
@@ -222,7 +249,7 @@ export default function ProductPhotoGallery() {
                 viewport={{ once: true, amount: .18 }}
                 whileHover={{ y: -5 }}
                 transition={{ duration: .42, delay: Math.min(index, 5) * .035, ease: [0.22, 1, 0.36, 1] }}
-                className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-white/12 bg-white/[.045] shadow-[0_18px_54px_rgba(0,0,0,.13)] backdrop-blur-sm">
+                className="group flex h-full min-h-[31rem] flex-col overflow-hidden rounded-[24px] border border-white/12 bg-white/[.045] shadow-[0_18px_54px_rgba(0,0,0,.13)] backdrop-blur-sm transition-colors duration-300 hover:border-cyan-300/30">
                 
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/20">
               {item.tag === 'Videa' ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" aria-label={item.title} className="h-full w-full object-cover object-center" /> :
@@ -230,9 +257,9 @@ export default function ProductPhotoGallery() {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06131e]/45 via-transparent to-transparent opacity-70" />
               {item.tag !== 'Videa' && <span className={`pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold backdrop-blur-md ${item.approved ? 'border-cyan-300/35 bg-[#062433]/82 text-cyan-200' : 'border-white/16 bg-slate-950/72 text-white'}`}>{item.approved && <ShieldCheck size={13} />} {item.badge}</span>}
             </div>
-            <div className="flex flex-col flex-1 p-0 gap-3 sm:p-8">
-              <Link to={item.href} className="flex items-start justify-between gap-3 text-white transition hover:text-cyan-200"><h3 className="text-lg font-semibold leading-tight">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
-              <p className="flex-1 text-sm text-slate-300 leading-2">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p>
+            <div className="flex flex-1 flex-col gap-3 p-4 sm:p-6 lg:p-7">
+              <Link to={item.href} className="flex items-start justify-between gap-3 text-white transition hover:text-cyan-200"><h3 className="line-clamp-2 text-lg font-semibold leading-tight tracking-[-.02em]">{item.title}</h3><ArrowUpRight size={19} className="mt-0.5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
+              <p className="flex-1 text-sm leading-6 text-slate-300">{item.text || "Prohlédněte si produkt a možnosti použití v konkrétním prostoru."}</p>
               <Link to={item.href} className="inline-flex items-center gap-2 self-start text-xs font-bold uppercase tracking-[.12em] text-cyan-200 transition hover:gap-3 hover:text-white">Navrhnout řešení <ArrowRight size={14} /></Link>
             </div>
           </motion.article>

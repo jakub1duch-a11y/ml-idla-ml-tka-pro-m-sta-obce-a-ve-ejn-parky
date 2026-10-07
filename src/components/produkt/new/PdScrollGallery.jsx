@@ -198,9 +198,9 @@ export default function PdScrollGallery({ product }) {
 
     const approved = approvedVisuals.map((item) => ({
       url: item.thumbnail_url || item.image_url,
-      title: item.title || `${product.name} — vizualizace umístění`,
-      caption: [item.environment, item.configuration].filter(Boolean).join(' · '),
-      badge: item.is_primary_for_variant ? 'Hlavní vizualizace' : 'Schválená vizualizace',
+      title: `${product.name} · ${(item.environment_label || item.space_name || item.environment || 'konkrétní prostor').toString().replace(/[_-]+/g, ' ')}`,
+      caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · '),
+      badge: 'Náhled v prostoru',
       fit: 'cover',
     }));
 

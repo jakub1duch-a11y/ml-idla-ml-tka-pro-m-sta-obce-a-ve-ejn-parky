@@ -10,6 +10,7 @@ const SCENES = [
 { name: 'MRAK', image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp', video: '/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm', href: '/produkt/mlzitko-mrak' },
 { name: 'Veřejný prostor', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp', href: '/mlzitka-pro-mesta-obce' }];
 
+const headlineWords = ['Vyberte', 'mlžítko', 'podle prostoru.'];
 
 export default function KolekceHero() {
   const ref = useRef(null);
@@ -26,18 +27,16 @@ export default function KolekceHero() {
       <motion.div className="absolute inset-0" style={{ y: mediaY, scale: mediaScale }}>
         <motion.img
           key={scene.image} src={scene.image}
-
           alt={scene.name}
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-75"
+          className="hero-catalog-media absolute inset-0 h-full w-full object-cover object-center opacity-75"
           fetchPriority="high"
           initial={reduced ? false : { opacity: 0, scale: 1.025 }}
           animate={{ opacity: 0.75, scale: 1 }}
           transition={{ duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }} />
-        
         {scene.video && <HeroBackgroundVideo key={scene.video} src={scene.video} poster={scene.image} />}
       </motion.div>
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_28%,rgba(122,225,239,.16),transparent_30%),linear-gradient(90deg,rgba(7,19,29,.96)_0%,rgba(7,19,29,.78)_42%,rgba(7,19,29,.24)_100%)]" />
+      <div className="hero-catalog-colorwash absolute inset-0" />
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#07131D] to-transparent" />
       <HeroAtmosphere />
 
@@ -47,8 +46,17 @@ export default function KolekceHero() {
           <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">KATALOG / MLŽIDLA®</span>
         </div>
 
-        <h1 className="mt-6 !font-black !leading-[.93] !tracking-[-.06em] !max-w-[20ch]">
-          Vyberte mlžítko podle prostoru.
+        <h1 className="hero-animated-heading mt-6 !max-w-[20ch] !font-black !leading-[.93] !tracking-[-.06em]" aria-label={headlineWords.join(' ')}>
+          {headlineWords.map((word, index) => (
+            <motion.span
+              key={word}
+              className="hero-headline-word"
+              initial={reduced ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduced ? 0 : .5, delay: reduced ? 0 : .12 + index * .08, ease: [0.22, 1, 0.36, 1] }}>
+              {word}
+            </motion.span>
+          ))}
         </h1>
         <p className="mt-6 !max-w-2xl !text-base !leading-8 !text-white/62 sm:!text-lg">
           Sloupková mlžítka, mlžné brány, ateliérové prvky i celá mlžiště pro města, parky, sportoviště, školy, gastro i soukromé zahrady. Katalog můžete filtrovat podle prostoru a produktové řady.
@@ -72,12 +80,10 @@ export default function KolekceHero() {
             onClick={() => setSelected(index)}
             whileHover={reduced ? undefined : { y: -2 }}
             whileTap={reduced ? undefined : { scale: 0.96 }}>
-            
               <span className="mr-2 font-mono text-[9px] opacity-45">0{index + 1}</span>{item.name}
-            </motion.button>
+          </motion.button>
           )}
         </div>
       </motion.div>
     </section>);
-
 }

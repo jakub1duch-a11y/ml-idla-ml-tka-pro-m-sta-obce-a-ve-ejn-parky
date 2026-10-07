@@ -31,22 +31,24 @@ export default function Home() {
   }, []);
 
   return (
-    <MotionConfig reducedMotion="user">
-      <HomeGsapMotion />
-      <HomeHero />
-      <UrbanCoolingExperience />
-      <PremiumHomepage2026 />
-      <HomeMist3DScene />
-      <ProductPhotoGallery />
-      <V3EditorialBridge />
-      <HomeMagazineSections />
-      <ReferencesStrip />
-      <ProKohoSection />
-      <MistInOperation />
-      <CooperationSteps />
-      <FinancingSection />
-      <HomeInquiryForm />
-      <MobileStickyBar />
-    </MotionConfig>
+    <div className="home-atmosphere">
+      <MotionConfig reducedMotion="user">
+        <HomeGsapMotion />
+        <HomeHero />
+        <UrbanCoolingExperience />
+        <PremiumHomepage2026 />
+        <HomeMist3DScene />
+        <ProductPhotoGallery />
+        <V3EditorialBridge />
+        <HomeMagazineSections />
+        <ReferencesStrip />
+        <ProKohoSection />
+        <MistInOperation />
+        <CooperationSteps />
+        <FinancingSection />
+        <HomeInquiryForm />
+        <MobileStickyBar />
+      </MotionConfig>
+    </div>
   );
 }

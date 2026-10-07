@@ -143,7 +143,7 @@ export default function Podpora() {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-28">
+    <div className="support-page min-h-screen bg-white pt-28">
 
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16">

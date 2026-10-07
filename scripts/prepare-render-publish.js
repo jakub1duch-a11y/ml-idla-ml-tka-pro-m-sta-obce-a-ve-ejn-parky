@@ -1,23 +1,22 @@
-// Render static-site compatibility step.
-// The existing Render service is configured to publish the `mlzidla` directory,
-// while the Vite/Base44 build correctly outputs production files into `dist`.
-// Copy the final built site so Render can publish without changing app behavior.
-
+// Publish the current build to both supported Render roots.
+// This service currently has rootDir=src and publishPath=mlzidla, so it serves
+// src/mlzidla. Keep the repository-root path for services with an empty rootDir.
+// Generated files are excluded by .gitignore and eslint.config.js.
 import { cpSync, existsSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const rootDir = join(__dirname, '..');
-const sourceDir = join(rootDir, 'dist');
-// Must live outside `src/` — copying a minified bundle into the source tree breaks lint.
-const publishDir = join(rootDir, 'mlzidla');
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const projectRoot = join(scriptDir, '..');
+const sourceDir = join(projectRoot, 'dist');
+const publishDirs = [join(projectRoot, 'mlzidla'), join(projectRoot, 'src', 'mlzidla')];
 
-if (!existsSync(sourceDir)) {
-  throw new Error('[render-publish] dist directory does not exist after build.');
+if (!existsSync(join(sourceDir, 'index.html'))) {
+  throw new Error('[render-publish] dist/index.html is missing after build.');
 }
 
-rmSync(publishDir, { recursive: true, force: true });
-cpSync(sourceDir, publishDir, { recursive: true });
-
-console.log('[render-publish] copied dist -> src/mlzidla for Render static-site publishing.');
+for (const publishDir of publishDirs) {
+  rmSync(publishDir, { recursive: true, force: true });
+  cpSync(sourceDir, publishDir, { recursive: true });
+}
+console.log('[render-publish] copied current dist to mlzidla and src/mlzidla.');

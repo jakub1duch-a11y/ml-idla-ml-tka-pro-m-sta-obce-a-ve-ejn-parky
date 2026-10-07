@@ -25,7 +25,7 @@ const clean = (items) => [...new Map(items.filter((x) => x?.url).map((x) => [x.u
 const mediaUrl = (url) => (url && !isVideo(url) ? getOptimizedMediaUrl(url) : url);
 const mediaCaption = (item) => item.caption || (
   item.badge === 'Studio' ? 'Studiový náhled produktu' :
-  item.badge === 'Schváleno' ? 'Schválená vizualizace umístění' :
+  item.badge === 'Schváleno' ? 'Náhled mlžítka v prostoru' :
   item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Vizualizace umístění' :
   item.badge === 'Realizace' ? 'Fotografie z realizace' :
   item.badge === 'Video' || item.badge === 'Hero video' ? 'Video ukázka' :
@@ -35,6 +35,17 @@ const mediaCaption = (item) => item.caption || (
 const isTechnicalMedia = (url) => typeof url === 'string' && TECHNICAL_MEDIA_RE.test(url);
 const isGardenTest = (url) => typeof url === 'string' && GARDEN_TEST_RE.test(url);
 const isFlowerSculptureProduct = (product) => /květ|kvet|socha|art/i.test(`${product.name || ''} ${product.slug || ''}`);
+const SPACE_LABELS = {
+  namesti: 'náměstí', mestsky_park: 'městský park', promenada: 'promenáda',
+  sportoviste: 'sportoviště', hriste: 'hřiště', koupaliste: 'koupaliště',
+  skola_skolka: 'školní zahrada', rezidencni_zahrada: 'rezidenční zahrada',
+  gastro_terasa: 'gastro terasa', hotel_wellness: 'hotelová terasa', event: 'eventový prostor',
+};
+const readableSpace = (item, fallback = 'konkrétní prostor') => {
+  const raw = item?.environment_label || item?.space_name || item?.location || item?.environment;
+  return raw ? (SPACE_LABELS[raw] || String(raw).replace(/[_-]+/g, ' ').trim()) : fallback;
+};
+const spaceTitle = (productName, item, fallback = 'konkrétní prostor') => `${productName} · ${readableSpace(item, fallback)}`;
 const isAllowedProductMedia = (url, product) => {
   if (typeof url !== 'string' || EDITORIAL_ONLY_RE.test(url) || isTechnicalMedia(url)) return false;
   if (FLOWER_SCULPTURE_RE.test(url) && !isFlowerSculptureProduct(product)) return false;
@@ -135,7 +146,7 @@ export default function PdMediaGallery({ product }) {
     const adminProductPhotos = adminMedia
       .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'technology'].includes(item.media_role))
       .filter((item) => !isVideo(item.file_url))
-      .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — ${item.file_name || 'produktová fotografie'}`, caption: item.file_name || 'Produktová fotografie', title: item.file_name || 'Produktová fotografie', badge: item.media_role === 'reference' ? 'Reference' : 'Média' }));
+      .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — náhled v prostoru`, caption: item.media_role === 'realization' ? 'Náhled v prostoru' : 'Produktový náhled', title: spaceTitle(product.name, item), badge: item.media_role === 'reference' ? 'Reference' : 'Média' }));
 
     const productPhotos = clean([
       ...adminProductPhotos,
@@ -156,7 +167,7 @@ export default function PdMediaGallery({ product }) {
 
     const adminRealizationPhotos = adminMedia
       .filter((item) => item.media_role === 'realization' && !isVideo(item.file_url))
-      .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — ${item.file_name || 'fotografie z realizace'}`, caption: item.file_name || 'Fotografie z realizace', title: item.file_name || 'Fotografie z realizace', badge: 'Realizace' }));
+      .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — náhled v prostoru`, caption: 'Náhled v prostoru', title: spaceTitle(product.name, item, 'realizace'), badge: 'Realizace' }));
 
     const realizationPhotos = clean([...adminRealizationPhotos, ...realizations.flatMap((r) => [
       r.image_url && { type: 'image', url: mediaUrl(r.image_url), alt: `${product.name} — fotografie z realizace`, caption: 'Fotografie z realizace', title: 'Fotografie z realizace', meta: [r.location, r.year].filter(Boolean).join(' · '), badge: 'Realizace' },
@@ -168,11 +179,11 @@ export default function PdMediaGallery({ product }) {
       .map((item) => ({
         type: 'image',
         url: mediaUrl(item.thumbnail_url || item.image_url),
-        alt: `${product.name} — schválená vizualizace ${item.configuration || 'umístění'}`,
-        caption: item.is_primary_for_variant ? 'Schválená hlavní vizualizace' : 'Schválená vizualizace umístění',
-        title: item.title || 'Schválená vizualizace',
-        meta: [item.environment, item.configuration, item.quantity ? `${item.quantity} ks` : ''].filter(Boolean).join(' · '),
-        badge: 'Schváleno',
+        alt: `${product.name} — náhled v prostoru`,
+        caption: 'Náhled mlžítka v prostoru',
+        title: spaceTitle(product.name, item),
+        meta: [readableSpace(item), item.configuration, item.quantity ? `${item.quantity} ks` : ''].filter(Boolean).join(' · '),
+        badge: 'Náhled v prostoru',
       }));
 
     const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — vizualizace umístění`, caption: 'Vizualizace umístění', title: 'Vizualizace umístění', badge: 'Vizualizace' })), ...realizations.flatMap((r) => [

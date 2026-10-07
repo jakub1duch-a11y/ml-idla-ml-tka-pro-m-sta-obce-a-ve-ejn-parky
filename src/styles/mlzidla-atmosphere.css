@@ -207,3 +207,28 @@ body::before {
   .support-page .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
   .support-page section[id] > .flex.items-center { align-items: flex-start; }
 }
+
+.support-page::after {
+  content: "";
+  position: absolute;
+  top: 7rem;
+  right: 3%;
+  width: min(34vw, 28rem);
+  height: 18rem;
+  pointer-events: none;
+  opacity: .13;
+  background: url('/media/optimized/cfc837b23_image.webp') center / cover no-repeat;
+  border-radius: 2rem;
+  filter: saturate(.8) contrast(1.05);
+  mask-image: linear-gradient(90deg, transparent, #000 28%, #000 72%, transparent);
+}
+.catalog-premium #catalog {
+  scroll-margin-top: 6rem;
+}
+.catalog-premium #catalog > .mb-10 {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 640px) {
+  .support-page::after { top: 8rem; right: -4rem; width: 18rem; height: 12rem; opacity: .09; }
+}

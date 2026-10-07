@@ -273,7 +273,7 @@ export default function Footer() {
               aria-label="Zabezpečené připojení a kontrola odkazu"
               title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
               
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 bg-emerald-300/10 text-emerald-200">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 text-emerald-200">
                 <ShieldCheck size={13} strokeWidth={1.9} />
               </span>
               <span className="flex min-w-0 items-center gap-1.5">

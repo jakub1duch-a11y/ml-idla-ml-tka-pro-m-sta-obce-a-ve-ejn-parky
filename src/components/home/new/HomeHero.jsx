@@ -53,19 +53,19 @@ export default function HomeHero() {
       <div className="relative min-h-[82svh] overflow-hidden">
         <HeroAtmosphere />
         <motion.div
-          className="absolute inset-0 h-[108%] w-full"
-          style={{ y: mediaY, scale: mediaScale }}
-          data-home-parallax="7"
-          initial={{ scale: 1.04 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
-          {reduced ? (
+            className="absolute inset-0 h-[108%] w-full"
+            style={{ y: mediaY, scale: mediaScale }}
+            data-home-parallax="7"
+            initial={{ scale: 1.04 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
+          {reduced ?
             <img
               src={VIDEO_ASSETS.heroCityPromo.poster}
               alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
               fetchPriority="high"
-              className="h-full w-full object-cover object-[58%_center] sm:object-center" />
-          ) : (
+              className="h-full w-full object-cover object-[58%_center] sm:object-center" /> :
+
             <video
               src={VIDEO_ASSETS.heroCityPromo.src}
               poster={VIDEO_ASSETS.heroCityPromo.poster}
@@ -76,7 +76,7 @@ export default function HomeHero() {
               preload="metadata"
               aria-hidden="true"
               className="h-full w-full object-cover object-[58%_center] sm:object-center" />
-          )}
+            }
         </motion.div>
           
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
@@ -85,7 +85,7 @@ export default function HomeHero() {
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono font-bold uppercase tracking-[.22em] text-[#26C6E9] text-base">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left">
               Ochlazení, které patří do prostoru.
             </h1>
             <p className="mt-7 max-w-2xl leading-8 text-slate-200 text-lg sm:text-lg">

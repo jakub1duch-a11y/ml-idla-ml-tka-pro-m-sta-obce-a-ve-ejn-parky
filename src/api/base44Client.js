@@ -8,7 +8,7 @@ const rawBase44 = createClient({
   appId,
   token,
   functionsVersion,
-  serverUrl: '',
+  serverUrl: import.meta.env.VITE_BASE44_SERVER_URL || '',
   requiresAuth: false,
   appBaseUrl
 });

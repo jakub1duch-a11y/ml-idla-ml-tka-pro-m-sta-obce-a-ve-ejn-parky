@@ -246,7 +246,7 @@ export default function Footer() {
                 aria-label="E-mail pro newsletter"
                 type="email"
                 placeholder="Váš e-mail"
-                className="min-w-0 flex-1 rounded-l-xl border border-r-0 border-white/12 bg-white/[.07] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25" />
+                className="min-w-0 flex-1 rounded-l-xl border border-r-0 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25 border-white/0 bg-white/[.08]" />
               
                 <button className="rounded-r-xl bg-cyan px-4 text-slate-950 transition-colors hover:bg-cyan/90" aria-label="Přihlásit k odběru">
                   <ArrowRight size={18} />

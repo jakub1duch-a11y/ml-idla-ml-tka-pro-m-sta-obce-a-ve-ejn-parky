@@ -13,7 +13,6 @@ import {
   Gauge,
   Landmark,
   Play,
-  ShieldCheck,
   Sparkles,
   Timer,
   Wifi } from
@@ -183,4 +182,3 @@ export default function PremiumHomepage2026() {
     </div>);
 
 }
-

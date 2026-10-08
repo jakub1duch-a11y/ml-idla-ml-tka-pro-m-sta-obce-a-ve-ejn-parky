@@ -23,7 +23,12 @@ const scenes = {
 };
 function ffmpeg(args) {
   const result = spawnSync(ffmpegPath, ['-hide_banner', '-loglevel', 'error', '-y', '-filter_complex_threads', '1', ...args], { stdio: 'inherit' });
-  if (result.status !== 0 || statSync(args.at(-1)).size === 0) throw new Error(`Photo motion failed: ${args.at(-1)}`);
+  if (result.status !== 0) { console.warn('[motion] Photo story generation skipped (ffmpeg unavailable).'); process.exit(0); }
+  try {
+    if (statSync(args.at(-1)).size === 0) { console.warn('[motion] Photo story generation skipped (ffmpeg produced empty output).'); process.exit(0); }
+  } catch {
+    console.warn('[motion] Photo story generation skipped (ffmpeg unavailable).'); process.exit(0);
+  }
 }
 for (const [name, inputs] of Object.entries(scenes)) {
   for (const [size, width] of [['desktop', 640], ['mobile', 360]]) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
-  Target, Thermometer, Users, Leaf, CheckCircle2, TrendingUp, ArrowRight, ArrowDown,
+  Thermometer, Users, Leaf, CheckCircle2, TrendingUp, ArrowRight, ArrowDown,
   Droplets, Zap, Cloud, ShieldCheck, Sparkles, Mail, Phone, MapPin, Wind, Sun, BarChart3 } from
 'lucide-react';
 import { TemperatureChart, SatisfactionChart } from '@/components/prezentace/PresentationCharts';

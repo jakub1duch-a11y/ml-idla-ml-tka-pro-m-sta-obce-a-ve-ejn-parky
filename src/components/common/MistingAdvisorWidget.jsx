@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bot, CheckCircle, ChevronDown, Loader2, MessageCircle, Phone, Send, ShieldCheck, Sparkles, User, X } from 'lucide-react';
+import { Bot, CheckCircle, ChevronDown, Loader2, Phone, Send, ShieldCheck, Sparkles, User, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const STARTERS = [

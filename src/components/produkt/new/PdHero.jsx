@@ -10,7 +10,6 @@ import {
   FileText,
   Leaf,
   Play,
-  ScanLine,
   ShieldCheck,
   Sparkles,
   ThermometerSun,

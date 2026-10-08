@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, Calendar, FileText, CheckCircle, Clock, AlertCircle, Plus, X, Trash2, User } from 'lucide-react';
+import { Phone, Mail, Calendar, FileText, CheckCircle, Clock, Plus, Trash2, User } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const fmtDate = (d) => d ? new Date(d).toLocaleDateString('cs-CZ', { day: 'numeric', month: 'short', year: 'numeric' }) : '';

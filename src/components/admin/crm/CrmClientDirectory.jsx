@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Search, Mail, Phone, Building2, ShoppingBag, DollarSign, Calendar, X, ChevronRight } from 'lucide-react';
+import { Search, Mail, Phone, Building2, ShoppingBag, Calendar, X, ChevronRight } from 'lucide-react';
 
 const money = (v) => new Intl.NumberFormat('cs-CZ').format(Number(v || 0));
 const fmtDate = (d) => d ? new Date(d).toLocaleDateString('cs-CZ') : '';

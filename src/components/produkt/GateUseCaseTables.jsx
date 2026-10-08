@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Building2, Trees, Dumbbell, PartyPopper } from 'lucide-react';
+import { Building2, Trees, Dumbbell, PartyPopper } from 'lucide-react';
 
 const SPACES = [
 { id: 'city', icon: Building2, name: 'Náměstí a pěší zóny', title: 'Osvěžení na přirozené pěší trase.', text: 'Brána nebo portál může vyznačit vstup do pobytové zóny. Při návrhu zohledníme pohyb lidí, průchozí šířku, vítr a návaznost na okolní architekturu.', groups: ['gate', 'portal'], notes: ['Volný průchod a přístupnost', 'Napojení vody a servisní přístup', 'Sladění s povrchem a mobiliářem'] },

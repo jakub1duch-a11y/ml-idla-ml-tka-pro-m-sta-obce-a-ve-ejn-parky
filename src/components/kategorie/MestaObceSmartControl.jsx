@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { ArrowRight, Wifi, Droplets, ShieldCheck, BatteryCharging, Smartphone, Cloud, Radio, Gauge, Clock3, Thermometer, Activity, MapPin, ExternalLink } from 'lucide-react';
 
 const VALVE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png';

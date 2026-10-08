@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle2, CircleDashed, Clock3, MessageSquare, Plus, Search, UserRound, CalendarDays, AlertTriangle, ArrowRightLeft, Send, X, Save, Loader, Filter, ListTodo } from 'lucide-react';
+import { CheckCircle2, CircleDashed, Clock3, MessageSquare, Plus, Search, UserRound, CalendarDays, AlertTriangle, ArrowRightLeft, Send, X, Save, Loader, ListTodo } from 'lucide-react';
 
 const PEOPLE = {
   'jakub1duch@gmail.com': { name: 'Jakub Duch', role: 'Admin · Creator' },

@@ -1,5 +1,3 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import { Building2, Landmark, Compass } from 'lucide-react';
 
 const AUDIENCES = [

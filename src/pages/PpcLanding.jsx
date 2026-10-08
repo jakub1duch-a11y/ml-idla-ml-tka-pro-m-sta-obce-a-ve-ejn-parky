@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, Building2, Trees, Wifi, Droplets, TimerReset, ThermometerSun, ShieldCheck, Gauge, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Building2, Trees, Wifi, Droplets, TimerReset, ThermometerSun, ShieldCheck, Gauge, CheckCircle2 } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const CITY_IMAGE = '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp';

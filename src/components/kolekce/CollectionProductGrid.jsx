@@ -1,12 +1,10 @@
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Ruler, MapPin, Layers3 } from 'lucide-react';
+import { ArrowRight, Layers3 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { normalizeProductMedia } from '@/lib/optimizedMedia';
 import { isPublicCatalogProduct } from '@/lib/publicCatalogProducts';
-import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
 
 // Zachovává pořadí kolekce přesně podle productSlugs; varianty jednoho produktu

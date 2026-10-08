@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle2, Cpu, Clock3, Sparkles, Layers3, ArrowUpRight } from 'lucide-react';
+import { CheckCircle2, Cpu, Clock3, Layers3, ArrowUpRight } from 'lucide-react';
 
 const fmt = (value) => Number(value || 0).toLocaleString('cs-CZ', { maximumFractionDigits: 1 });
 const monthLabel = (month) => {

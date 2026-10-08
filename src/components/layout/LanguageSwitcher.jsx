@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, ChevronDown } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { getLocaleFromPath, getSwitchTargets } from '@/lib/i18n';
 
 const FLAGS = {

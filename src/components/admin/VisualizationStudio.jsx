@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, CheckCircle2, FolderOpen, Image, Loader, Save, ShieldCheck, Sparkles, Trash2, Video, Wand2, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { generateHiggsfieldProductMotion } from '@/lib/higgsfieldMotion';
 import {
   buildProductVisualizationGuard,
   CONFIGURATION_PRESETS,

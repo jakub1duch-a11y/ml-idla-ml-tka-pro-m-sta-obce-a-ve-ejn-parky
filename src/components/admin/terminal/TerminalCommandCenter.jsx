@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import {
-  Activity, ArrowUpRight, Bot, CheckCircle2, Circle, Clock3, Cpu,
+  Activity, ArrowUpRight, Bot, CheckCircle2, Clock3, Cpu,
   FileText, Mail, MessageCircle, Paperclip, Radio, ShieldCheck,
-  Sparkles, UserRound, Workflow, XCircle
+  Sparkles, UserRound, Workflow
 } from 'lucide-react';
 
 const FALLBACK_AGENTS = [

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Users, Plus, Sparkles, Copy, Check, ExternalLink, Filter, Trash2, Send, Link2, Loader } from 'lucide-react';
+import { Users, Plus, Sparkles, Copy, Check, ExternalLink, Trash2, Send, Link2, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const SEGMENTS = [

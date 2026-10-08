@@ -110,7 +110,7 @@ export default function HomeHero() {
             </div>
           </motion.div>
 
-          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border p-5 backdrop-blur-xl lg:block border-white/0 bg-[#000000]/[0.0]" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border p-5 lg:block border-white/0 bg-[#000000]/[0.0] backdrop-blur-x0" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border border-white/10 bg-white/[.03] p-4">

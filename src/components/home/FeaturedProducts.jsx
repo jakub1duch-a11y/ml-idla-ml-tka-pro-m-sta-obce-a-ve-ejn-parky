@@ -50,9 +50,12 @@ export default function FeaturedProducts() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((p, i) => (
             <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-              <Link to="/kolekce" className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300">
-                <div className="aspect-video overflow-hidden">
-                  <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <Link to="/kolekce" className="group block overflow-hidden rounded-[1.75rem] border border-white/10 bg-card_bg transition-all duration-300 hover:border-cyan/40">
+                <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(circle_at_72%_18%,#ffffff_0%,#e8f7f9_38%,#cee6eb_100%)]">
+                  <div aria-hidden className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(7,94,112,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(7,94,112,.1)_1px,transparent_1px)] [background-size:3rem_3rem]" />
+                  <img src={p.image} alt={p.name} className="relative z-10 h-full w-full object-contain p-5 transition-transform duration-500 group-hover:scale-[1.035]" />
+                  <img aria-hidden="true" alt="" src="/media/ui/product-studio-motion.gif" loading="lazy" className="pointer-events-none absolute inset-0 h-full w-full object-cover mix-blend-screen opacity-25" />
+                  <span className="absolute left-4 top-4 z-20 rounded-full border border-white/70 bg-white/75 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-[#075D70] shadow-sm backdrop-blur">Studio preview</span>
                 </div>
                 <div className="p-5">
                   <h3 className="font-normal text-white mb-1 group-hover:text-cyan transition-colors">{p.name}</h3>

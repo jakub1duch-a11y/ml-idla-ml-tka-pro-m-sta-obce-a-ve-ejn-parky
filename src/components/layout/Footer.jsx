@@ -133,9 +133,11 @@ export default function Footer() {
                 href="https://www.holmtec.cz"
                 target="_blank"
                 rel="noopener noreferrer"
-
+                className="group mt-5 flex flex-wrap items-center gap-4 rounded-lg border border-white/15 p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
                 aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně">
-                
+                <span data-no-watermark="true" className="inline-flex w-44 max-w-full shrink-0 items-center rounded bg-white px-3 py-3">
+                  <img src="/media/logo/holmtec-footer.webp" alt="HolmTec" width="600" height="135" loading="lazy" className="h-auto w-full object-contain" />
+                </span>
                 
 
 
@@ -261,9 +263,9 @@ export default function Footer() {
             <p className="mt-1 text-white/58"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
             <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
             <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
-            
-
-            
+            <p className="mt-3 max-w-2xl border-l border-cyan/35 pl-3 text-[11px] leading-5 text-white/52">
+              <strong className="font-medium text-white/72">Tvůrce / autor designu: Jakub Duch</strong> — web design, webové prezentace, e-shopy, terminály pro firemní správu a OpenAI agents.
+            </p>
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:items-end">

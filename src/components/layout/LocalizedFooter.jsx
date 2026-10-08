@@ -31,6 +31,9 @@ export default function LocalizedFooter({ locale }) {
           <div>
             <Link to={ROUTE_MAP.home[locale]} className="inline-flex"><Logo size="sm" /></Link>
             <p className="mt-5 max-w-xl text-sm leading-7 text-white/60">{copy.text}</p>
+            <a data-no-watermark="true" href="https://www.holmtec.cz" target="_blank" rel="noopener noreferrer" aria-label="HolmTec.cz" className="mt-5 inline-flex min-h-12 w-44 max-w-full items-center rounded bg-white p-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+              <img src="/media/logo/holmtec-footer.webp" alt="HolmTec" width="600" height="135" loading="lazy" className="h-auto w-full object-contain" />
+            </a>
             <Link to={ROUTE_MAP.inquiry[locale]} className="btn-metallic-mist mt-6 inline-flex min-h-12 items-center gap-2 rounded-full px-5 py-3 text-sm font-bold">{copy.quote}<ArrowRight size={15}/></Link>
           </div>
           <div>

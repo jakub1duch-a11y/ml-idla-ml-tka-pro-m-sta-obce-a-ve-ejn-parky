@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus } from 'lucide-react';
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus, Droplets, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -32,6 +32,12 @@ const USAGE_LINKS = [
 { icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-secondary' }];
 
 
+const TECHNOLOGY_LINKS = [
+  { icon: Cpu, label: 'Princip technologie', sub: 'Jak funguje mlžení a evaporace', path: '/jak-to-funguje' },
+  { icon: Droplets, label: 'Vodní mlha', sub: 'Princip, použití a návrh systému', path: '/vodni-mlha' },
+  { icon: Wifi, label: 'Automatizace', sub: 'Smart řízení a provozní scénáře', path: '/smart-ovladani' },
+];
+
 const INTERNATIONAL_NAV = {
   en: { products: 'Products', urban: 'Urban', technology: 'How it works', smart: 'Smart control', references: 'Projects', contact: 'Contact', quote: 'Get a quote' },
   de: { products: 'Produkte', urban: 'Stadt', technology: 'Funktionsweise', smart: 'Smart-Steuerung', references: 'Referenzen', contact: 'Kontakt', quote: 'Angebot' },
@@ -56,6 +62,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [technologyOpen, setTechnologyOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const location = useLocation();
   const locale = getLocaleFromPath(location.pathname);
@@ -77,7 +84,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setAccountOpen(false);}, [location]);
+  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setTechnologyOpen(false);setAccountOpen(false);}, [location]);
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1024px)');
@@ -90,6 +97,8 @@ export default function Header() {
   const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
   const openInfo = () => {clearTimeout(timeoutRef.current);setInfoOpen(true);};
   const closeInfo = () => {timeoutRef.current = setTimeout(() => setInfoOpen(false), 150);};
+  const openTechnology = () => {clearTimeout(timeoutRef.current);setTechnologyOpen(true);};
+  const closeTechnology = () => {timeoutRef.current = setTimeout(() => setTechnologyOpen(false), 150);};
   const toggleMobileMenu = () => {setMobileOpen((v) => !v);setMegaOpen(false);};
 
   return (
@@ -121,7 +130,36 @@ export default function Header() {
               </button>
             </div>
             <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-white/10 text-[hsl(var(--input))]">Městská mlžítka</Link>
-            <Link to="/jak-to-funguje" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
+            <div className="relative" onMouseEnter={openTechnology} onMouseLeave={closeTechnology}>
+              <button
+                type="button"
+                onClick={() => setTechnologyOpen((value) => !value)}
+                aria-expanded={technologyOpen}
+                className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${technologyOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
+                Jak fungují <ChevronDown size={14} className={`transition-transform duration-200 ${technologyOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {technologyOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-1/2 top-full mt-1 w-80 -translate-x-1/2 rounded-2xl border border-white/15 bg-primary/95 p-3 text-white shadow-xl shadow-primary/30 backdrop-blur-2xl">
+                    <p className="px-3 pb-2 pt-1 font-mono text-[9px] uppercase tracking-[.16em] text-cyan-200/80">Technologie</p>
+                    {TECHNOLOGY_LINKS.map((link) => (
+                      <Link key={link.path} to={link.path} onClick={() => setTechnologyOpen(false)} className="group flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-white/10">
+                        <link.icon size={17} className="mt-0.5 shrink-0 text-cyan-200 transition-colors group-hover:text-white" />
+                        <span>
+                          <strong className="block text-sm font-semibold text-white">{link.label}</strong>
+                          <span className="mt-0.5 block text-[11px] leading-4 text-white/55">{link.sub}</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
             <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
             <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-cyan-300/15 text-[hsl(var(--input))]">Blog a novinky</Link>

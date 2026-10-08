@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(scriptDir, '..');
 const sourceDir = join(projectRoot, 'dist');
-const publishDirs = [join(projectRoot, 'mlzidla'), join(projectRoot, 'src', 'mlzidla')];
+// Never write build output into src/ outside Render — it gets linted as app source.
+const publishDirs = [join(projectRoot, 'mlzidla'), ...(process.env.RENDER ? [join(projectRoot, 'src', 'mlzidla')] : [])];
 
 if (!existsSync(join(sourceDir, 'index.html'))) {
   throw new Error('[render-publish] dist/index.html is missing after build.');
@@ -19,4 +20,4 @@ for (const publishDir of publishDirs) {
   rmSync(publishDir, { recursive: true, force: true });
   cpSync(sourceDir, publishDir, { recursive: true });
 }
-console.log('[render-publish] copied current dist to mlzidla and src/mlzidla.');
+console.log(`[render-publish] copied current dist to ${publishDirs.length} publish folder(s).`);

@@ -203,7 +203,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="grid gap-3 border-b border-white/10 py-7 md:grid-cols-3">
+        <div className="grid gap-3 border-b border-white/10 py-7 md:grid-cols-3 hidden">
           {trustItems.map(({ icon: Icon, label, text }, index) =>
           <motion.div
             key={label}

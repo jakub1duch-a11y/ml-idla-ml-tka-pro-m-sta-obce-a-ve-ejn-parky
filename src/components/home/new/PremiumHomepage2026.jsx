@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import AnchoringInstallationSection from '@/components/installation/AnchoringInstallationSection';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
@@ -321,35 +322,7 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="kotveni-title">
-        <div className="premium-shell grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative overflow-hidden rounded-[2rem] border border-slate-200 bg-[#071A2F] shadow-[0_24px_80px_rgba(7,19,29,.18)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(38,198,233,.24),transparent_38%),linear-gradient(140deg,#071A2F,#0C3148)]" aria-hidden="true" />
-            <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f60a460af_kotvici_patka_mlzitek_HolmTec.png" alt="Technický detail skrytého kotvení mlžítka v podkladu" className="relative aspect-[4/3] w-full object-contain p-6 sm:p-0" loading="lazy" decoding="async" />
-            <div className="relative grid grid-cols-3 gap-2 border-t border-white/15 bg-black/20 p-4 text-center text-[10px] font-semibold uppercase tracking-[.12em] text-white/75 sm:p-5 sm:text-[11px]">
-              <span>Skrytá patka</span><span>Přívod vody</span><span>Stabilní základ</span>
-            </div>
-          </motion.div>
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Instalace a technické podklady</p>
-            <h2 id="kotveni-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] text-[#07131D] sm:text-5xl">Skryté kotvení pro městské použití.</h2>
-            <p className="mt-5 text-base leading-7 text-slate-600">Čistý vzhled, minimální vizuální zásah do prostoru a technické řešení připravené pro dlažbu, betonový základ i veřejný provoz.</p>
-            <div className="mt-7 grid gap-3">
-              {[
-              ['Přívod vody', 'Vedení pod povrchem přímo k tělu mlžítka.'],
-              ['Krycí patka', 'Nenápadný detail pro čistý městský povrch.'],
-              ['Antivandal provedení', 'Nerezová konstrukce pro intenzivní veřejné užívání.']].
-              map(([title, text]) =>
-              <div key={title} className="premium-card-interactive flex gap-4 rounded-2xl border border-slate-200 bg-white p-4">
-                  <ShieldCheck className="mt-1 text-[#0B8EC5]" size={22} />
-                  <p className="text-sm leading-6 text-slate-600"><strong className="block text-[#07131D]">{title}</strong>{text}</p>
-                </div>
-              )}
-            </div>
-            <Link to="/ke-stazeni" className="premium-action mt-8 inline-flex items-center gap-2 rounded-full bg-[#07131D] px-6 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5]"><Download size={17} /> Stáhnout brožury a manuály</Link>
-          </motion.div>
-        </div>
-      </section>
+      <AnchoringInstallationSection />
     </div>);
 
 }

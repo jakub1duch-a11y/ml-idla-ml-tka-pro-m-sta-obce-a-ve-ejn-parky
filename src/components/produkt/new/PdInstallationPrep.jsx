@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Droplets, Layers3, ShieldCheck, Wrench } from 'lucide-react';
+import AnchorMotionPreview from '@/components/installation/AnchorMotionPreview';
 
 const TECHNICAL_MEDIA_RE = /(1000008748|technick|schema|schéma|edraw|vykres|výkres|montaz|montáž|instalac)/i;
 
@@ -23,7 +24,7 @@ export default function PdInstallationPrep({ product }) {
     {
       icon: Layers3,
       title: 'Čisté kotvení',
-      text: 'Patku a kotevní prvky lze u pevné instalace skrýt do betonu pod finální povrch.',
+      text: 'U pevné instalace je patka ukotvena k navrženému nosnému základu pod finálním povrchem.',
     },
     {
       icon: Wrench,
@@ -41,24 +42,27 @@ export default function PdInstallationPrep({ product }) {
               Příprava a instalace
             </p>
             <h2 className="mt-3 font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">
-              Technika zůstává skrytá. V prostoru vynikne produkt.
+              Pevné kotvení. Čistý detail v prostoru.
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-[#0D2F4F]/62 sm:text-base">
-            Přívod vody, kotvení i osazení trysek řešíme podle konkrétního produktu a stavební připravenosti místa. Finální technické provedení vždy potvrzuje projektová dokumentace.
+            Animace ukazuje princip pevné instalace se skrytou patkou a přívodem vody. Řešení tohoto produktu potvrzujeme podle místa a projektové dokumentace. U sezónních modelů se způsob kotvení může lišit.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+          <AnchorMotionPreview />
+          <div className="grid gap-3 sm:grid-cols-2">
           {items.map(({ icon: Icon, title, text }) => (
-            <article key={title} className="border border-[#D8E8F0] bg-[#F7FBFD] p-5 sm:p-6">
+            <article key={title} className="rounded-3xl bg-[#F0F7FA] p-5 sm:p-6">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#E3F6FC] text-[#0B5EA8]">
                 <Icon size={20} strokeWidth={1.5} />
               </span>
               <h3 className="mt-5 font-heading text-lg font-bold text-[#0A2342]">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#0D2F4F]/60">{text}</p>
+              <p className="mt-2 text-sm leading-6 text-[#365366]">{text}</p>
             </article>
           ))}
+          </div>
         </div>
 
         {technicalMedia.length > 0 && (

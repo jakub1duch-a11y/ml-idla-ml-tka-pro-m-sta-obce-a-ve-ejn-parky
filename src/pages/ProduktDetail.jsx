@@ -168,6 +168,7 @@ export default function ProduktDetail() {
           <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
           <div id="chytre-rizeni" className="scroll-mt-28"><PdSmartControl product={product} /></div>
           <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
+          <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
           <PdClosingCta product={product} />
         </>
       )}
@@ -178,6 +179,7 @@ export default function ProduktDetail() {
           <PdVisualGalleryCompact product={product} />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
+          <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>
           <div id="reference" className="scroll-mt-28"><PdReferences product={product} /></div>
           <PdClosingCta product={product} />
         </>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Leaf, ShieldCheck } from 'lucide-react';
+import AnchorMotionPreview from '@/components/installation/AnchorMotionPreview';
 
 const ROWS = [
   { label: 'Kotvení', permanent: 'Projektové kotvení podle podkladu', mobile: 'Zemní vrut nebo jiné sezónní řešení' },
@@ -11,7 +12,7 @@ const ROWS = [
 
 export default function InstallationComparisonSection() {
   return (
-    <section className="border-t border-border bg-muted/35 py-20 lg:py-24">
+    <section id="instalace" className="scroll-mt-28 bg-muted/35 py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mb-10 max-w-3xl">
           <p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Instalace</p>
@@ -19,20 +20,23 @@ export default function InstallationComparisonSection() {
           <p className="mt-5 text-base leading-7 text-muted-foreground">Kotvení, napojení a servisní přístup se nevolí jednou univerzální šablonou. Přizpůsobují se produktu, podkladu, provozu a požadované míře mobility.</p>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-2">
-          <motion.article initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-3xl border border-border bg-card p-7 lg:p-8">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+          <AnchorMotionPreview />
+          <div className="grid gap-5">
+          <motion.article initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-3xl bg-card p-7 lg:p-8">
             <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-secondary"><Building2 size={18} /></div>
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[.16em] text-secondary">01 / Trvalé kotvení</p>
             <h3 className="mt-2 font-heading text-3xl">Veřejný a architektonický prostor</h3>
             <p className="mt-4 text-sm leading-6 text-muted-foreground">Kotvení a přípojky se koordinují s projektem stavby, povrchy a servisním přístupem. Cílem je čistý detail a dlouhodobý provoz.</p>
           </motion.article>
 
-          <motion.article initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }} className="rounded-3xl border border-border bg-card p-7 lg:p-8">
+          <motion.article initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }} className="rounded-3xl bg-card p-7 lg:p-8">
             <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background text-secondary"><Leaf size={18} /></div>
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[.16em] text-secondary">02 / Sezónní instalace</p>
             <h3 className="mt-2 font-heading text-3xl">Zahrada, terasa a flexibilní provoz</h3>
             <p className="mt-4 text-sm leading-6 text-muted-foreground">U vybraných modelů lze použít rychlejší a přemístitelné kotvení. Přesný způsob závisí na konstrukci výrobku a podkladu.</p>
           </motion.article>
+          </div>
         </div>
 
         <div className="mt-6 overflow-hidden rounded-3xl border border-border bg-card">

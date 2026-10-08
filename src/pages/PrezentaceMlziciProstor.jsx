@@ -24,7 +24,7 @@ const SLIDES = [
 function Slide({ id, children, className = '' }) {
   return (
     <section id={id} className={`relative min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-20 ${className}`}>
-      <div className="mx-auto w-full max-w-">{children}</div>
+      <div className="max-w-6xl mx-auto w-full">{children}</div>
     </section>);
 
 }
@@ -82,7 +82,7 @@ export default function PrezentaceMlziciProstor() {
           className="group flex items-center gap-2.5 justify-end"
           aria-label={s.label}>
           
-            <span className={`font-mono text-[10px] tracking-wider uppercase transition-all ${activeSlide === i ? 'text-[#153863] opacity-100' : 'opacity-0 group-hover:opacity-60 text-[#5A6B78]'}`}>
+            <span className={`font-mono tracking-wider uppercase transition-all text-sm ${activeSlide === i ? 'text-[#153863] opacity-100' : 'opacity-0 group-hover:opacity-60 text-[#5A6B78]'}`}>
               {s.label}
             </span>
             <span className={`block transition-all ${activeSlide === i ? 'w-8 h-[3px] bg-[#22D3EE]' : 'w-3 h-[3px] bg-[#466279]/40 group-hover:bg-[#466279]'}`} />
@@ -99,7 +99,7 @@ export default function PrezentaceMlziciProstor() {
 
       {/* SLIDE 1 — Úvod */}
       <Slide id="uvod" className="relative overflow-hidden bg-[#0A1628] text-white">
-        <img src={HERO_IMG} alt="Mlžící systém v akci" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+        <img src={HERO_IMG} alt="Mlžící systém v akci" className="absolute inset-0 w-full h-full object-cover opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628]/90 via-[#0A1628]/60 to-[#041c28]/80" />
         <div className="relative z-10">
           <Eyebrow>MLŽIDLA® · Sezónní report 2026</Eyebrow>
@@ -117,7 +117,7 @@ export default function PrezentaceMlziciProstor() {
             <span className="flex items-center gap-2"><Sun size={14} className="text-cyan" /> Období: květen — září 2026</span>
             <span className="flex items-center gap-2"><Wind size={14} className="text-cyan" /> Řízené mlžení prostoru</span>
           </motion.div>
-          <button onClick={() => scrollTo('cile')} className="mt-12 inline-flex items-center gap-2 text-sm text-white/60 hover:text-cyan transition">
+          <button onClick={() => scrollTo('cile')} className="mt-12 inline-flex items-center gap-2 text-sm hover:text-cyan transition text-[hsl(var(--background))]">
             Pokračovat <ArrowDown size={16} />
           </button>
         </div>

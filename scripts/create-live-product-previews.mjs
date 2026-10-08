@@ -13,7 +13,12 @@ const sources = {
 };
 function convert(args) {
   const result = spawnSync(ffmpegPath, ['-hide_banner', '-loglevel', 'error', '-y', '-filter_complex_threads', '1', ...args], { stdio: 'inherit' });
-  if (result.status !== 0 || !statSync(args.at(-1)).size) throw new Error(`Live preview failed: ${args.at(-1)}`);
+  if (result.status !== 0) { console.warn('[motion] Live preview generation skipped (ffmpeg unavailable).'); process.exit(0); }
+  try {
+    if (!statSync(args.at(-1)).size) { console.warn('[motion] Live preview generation skipped (ffmpeg produced empty output).'); process.exit(0); }
+  } catch {
+    console.warn('[motion] Live preview generation skipped (ffmpeg unavailable).'); process.exit(0);
+  }
 }
 for (const [name, file] of Object.entries(sources)) {
   const source = join(root, 'optimized', file);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
-import { ArrowRight, Building2, Calculator, ChevronDown, Cpu, Grid2X2, Images, LifeBuoy, LogIn, Newspaper, Trees, X } from 'lucide-react';
+import { ArrowRight, Building2, Calculator, ChevronDown, Cpu, Droplets, Grid2X2, Images, LifeBuoy, LogIn, Newspaper, Trees, Wifi, X } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { ROUTE_MAP } from '@/lib/i18n';
@@ -19,14 +19,21 @@ const PRIMARY_LINKS = [
   { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', icon: Grid2X2 },
   { label: 'Pro města a obce', sub: 'Návrh, výroba a podklady pro veřejný prostor', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
   { label: 'Realizace', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
-  { label: 'Technologie', sub: 'Jak funguje nízkotlaké mlžení', path: '/jak-to-funguje', icon: Cpu },
   { label: 'Blog a novinky', sub: 'Novinky, realizace, inspirace a video', path: '/blog', icon: Newspaper },
   { label: 'Podpora', sub: 'FAQ, servis a technické informace', path: '/podpora', icon: LifeBuoy },
 ];
 
+
+const TECHNOLOGY_CHILDREN = [
+  { label: 'Princip technologie', sub: 'Jak funguje mlžení a evaporace', path: '/jak-to-funguje', icon: Cpu },
+  { label: 'Vodní mlha', sub: 'Princip, použití a návrh systému', path: '/vodni-mlha', icon: Droplets },
+  { label: 'Smart řízení', sub: 'Automatizace a provozní scénáře', path: '/smart-ovladani', icon: Wifi },
+];
+
 export default function MobileMenu({ open, onClose, productLinks = [], locale = 'cs', triggerRef }) {
   const [collectionsOpen, setCollectionsOpen] = useState(false);
-  useEffect(() => { if (!open) setCollectionsOpen(false); }, [open]);
+  const [technologyOpen, setTechnologyOpen] = useState(true);
+  useEffect(() => { if (!open) { setCollectionsOpen(false); setTechnologyOpen(true); } }, [open]);
   const collections = productLinks.filter((item) => !item.featured && !item.textOnly);
   const copy = INTERNATIONAL_MOBILE_COPY[locale] || INTERNATIONAL_MOBILE_COPY.en;
   const links = locale === 'cs' ? PRIMARY_LINKS : [
@@ -58,7 +65,7 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
           <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
             <div className="mx-auto max-w-xl">
               <p className="mb-4 font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#4B6979]">{locale === 'cs' ? 'Najděte své řešení' : copy.products}</p>
-              <nav aria-label={locale === 'cs' ? 'Hlavní navigace' : 'Main navigation'} className="grid grid-cols-2 gap-2.5">
+              <nav aria-label={locale === 'cs' ? 'Hlavní navigace' : 'Main navigation'} className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {links.map(({ label, sub, path, icon: Icon }, index) => (
                   <Link key={path} to={path} onClick={onClose} className={`group flex min-h-[96px] flex-col rounded-[1.3rem] p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087C91] ${index === 0 ? 'bg-[#082C3F] text-white shadow-lg shadow-slate-900/10' : 'bg-white text-[#16374B] hover:bg-[#E8F3F5]'}`}>
                     <span className="mb-2 flex items-center justify-between"><Icon size={20} aria-hidden="true" /><ArrowRight size={15} aria-hidden="true" className="opacity-60" /></span>
@@ -67,6 +74,33 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
                   </Link>
                 ))}
               </nav>
+              {locale === 'cs' && (
+                <div className="mt-4 overflow-hidden rounded-[1.3rem] bg-[#E7F2F5]">
+                  <button
+                    type="button"
+                    onClick={() => setTechnologyOpen((value) => !value)}
+                    aria-expanded={technologyOpen}
+                    aria-controls="mobile-technology-links"
+                    className="flex min-h-14 w-full items-center justify-between gap-3 px-4 text-left text-sm font-semibold text-[#16374B]">
+                    <span className="flex items-center gap-2"><Cpu size={18} /> Jak fungují · Technologie</span>
+                    <ChevronDown size={18} className={`shrink-0 transition-transform motion-reduce:transition-none ${technologyOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {technologyOpen && (
+                    <div id="mobile-technology-links" className="grid gap-1.5 px-2 pb-2">
+                      {TECHNOLOGY_CHILDREN.map(({ label, sub, path, icon: Icon }) => (
+                        <Link key={path} to={path} onClick={onClose} className="flex min-h-14 items-center gap-3 rounded-2xl bg-white px-4 py-3 text-[#235568]">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E7F4F6]"><Icon size={17} /></span>
+                          <span className="min-w-0">
+                            <strong className="block text-[13px] leading-5">{label}</strong>
+                            <span className="block text-[11px] leading-4 text-[#5D7784]">{sub}</span>
+                          </span>
+                          <ArrowRight size={14} className="ml-auto shrink-0 opacity-60" />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               {locale === 'cs' && <>
                 <div className="mt-4 rounded-[1.3rem] bg-white p-1">
                   <button type="button" onClick={() => setCollectionsOpen((value) => !value)} aria-expanded={collectionsOpen} aria-controls="mobile-collections"
@@ -84,7 +118,7 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
             </div>
           </div>
           <div className="shrink-0 bg-white px-5 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
-            <div className="mx-auto flex max-w-xl gap-2">
+            <div className="mx-auto grid max-w-xl grid-cols-1 gap-2 sm:grid-cols-[auto_1fr]">
               <Link to={ROUTE_MAP.contact[locale]} onClick={onClose} className="flex min-h-12 items-center justify-center rounded-full bg-[#EDF5F7] px-5 text-sm font-semibold">{locale === 'cs' ? 'Kontakt' : copy.contact}</Link>
               <Link to={ROUTE_MAP.inquiry[locale]} onClick={onClose} className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#082C3F] px-5 text-sm font-semibold text-white">{locale === 'cs' ? 'Nezávazná poptávka' : copy.quote}<ArrowRight size={15} /></Link>
             </div>

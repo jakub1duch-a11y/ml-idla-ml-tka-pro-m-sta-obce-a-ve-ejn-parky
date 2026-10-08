@@ -85,7 +85,7 @@ export default function HomeHero() {
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <p className="font-mono text-base font-bold uppercase tracking-[.22em] text-[#7AE1EF]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
             <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left" aria-label={headlineWords.join(' ')}>
-              {headlineWords.map((word, index) => (
+              {headlineWords.map((word, index) =>
                 <motion.span
                   key={word}
                   className="hero-headline-word"
@@ -94,7 +94,7 @@ export default function HomeHero() {
                   transition={{ duration: reduced ? 0 : .52, delay: reduced ? 0 : .12 + index * .075, ease: [0.22, 1, 0.36, 1] }}>
                   {word}
                 </motion.span>
-              ))}
+                )}
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
               Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
@@ -110,7 +110,7 @@ export default function HomeHero() {
             </div>
           </motion.div>
 
-          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 bg-[#000000]/[0.18] p-5 backdrop-blur-xl lg:block" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border p-5 backdrop-blur-xl lg:block border-white/0 bg-[#000000]/[0.0]" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border border-white/10 bg-white/[.03] p-4">

@@ -114,7 +114,7 @@ export default function HomeHero() {
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border border-white/10 p-4 bg-white/[.0]">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 bg-[hsl(var(--background))] text-[hsl(var(--background))]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border">
                     <Icon size={20} className="text-[hsl(var(--foreground))]" />
                   </div>
                   <p className="text-xl leading-6 text-slate-200 [font-family:'Manrope',_'Inter',_sans-serif] font-bold">{text}</p>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { Pause, Play } from 'lucide-react';
+import CabinetMotionGallery from './CabinetMotionGallery';
 
 export default function SmartControlCabinetSection() {
   const reduceMotion = useReducedMotion();
@@ -48,6 +49,7 @@ export default function SmartControlCabinetSection() {
           </figure>
         </div>
       </div>
+      <CabinetMotionGallery />
     </section>
   );
 }

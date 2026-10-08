@@ -31,3 +31,24 @@
 .smart-garden__fallback{display:flex;aspect-ratio:1;flex-direction:column;align-items:center;justify-content:center;gap:20px;color:#0e5b67}
 @media(max-width:767px){.smart-garden__inner{padding:44px 22px 30px}.smart-garden__layout{grid-template-columns:1fr;gap:28px}.smart-garden h2{font-size:40px;margin-top:18px}.smart-garden__intro{font-size:15px;line-height:1.75;margin-top:20px}.smart-garden__cta{margin-top:24px}.smart-garden__visual{max-width:420px;width:100%;margin-inline:auto}.smart-garden__sketch{width:900px;max-width:none;left:auto;right:-240px;background-position:right top;opacity:.15}.smart-garden__controls{gap:8px;margin-top:26px}.smart-garden__control{flex-direction:column;align-items:flex-start;gap:12px;padding:14px 10px;min-height:132px}.smart-garden__control strong{font-size:12px}.smart-garden__control small{font-size:10px;line-height:1.5}.smart-garden__number{display:none}.smart-garden__detail{grid-template-columns:1fr;gap:14px;min-height:235px;padding-top:24px}.smart-garden__detail h3{font-size:23px}.smart-garden__visual-label{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.smart-garden *{transition:none!important}}
+
+/* Separate transparent product layers on a shared architectural drawing. */
+.smart-garden__stage{position:relative;isolation:isolate;width:100%;aspect-ratio:6/5;margin-block:20px 12px}
+.smart-garden__cutout{position:absolute;object-fit:contain;filter:drop-shadow(0 12px 12px #0d2d3812);transition:transform .45s ease;z-index:2}
+.smart-garden__cutout--hardware{right:-2%;top:2%;width:69%;height:88%}
+.smart-garden__cutout--phone{left:2%;bottom:9%;width:34%;height:80%;z-index:3;transform:rotate(-5deg)}
+.smart-garden__combined{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2}
+.smart-garden__connection{position:absolute;inset:0;width:100%;height:100%;color:#31b9c8;opacity:.7;z-index:1}
+.smart-garden__focus{position:absolute;width:42%;height:64%;border:1px solid #31b9c8;border-radius:8px;opacity:0;transition:opacity .45s ease;z-index:0;background:transparent}
+.smart-garden__focus--phone{left:0;bottom:9%}.smart-garden__focus--hardware{right:0;top:6%}
+.smart-garden[data-mode=app] .smart-garden__focus--phone,.smart-garden[data-mode=plan] .smart-garden__focus--hardware,.smart-garden[data-mode=local] .smart-garden__focus--hardware{opacity:1}
+.smart-garden__callout{position:absolute;z-index:4;color:#0e5b67;font:9px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;padding:6px 9px;background:#ffffffde;border:1px solid #cdded9;border-radius:4px}
+.smart-garden__callout--phone{left:1%;bottom:0}.smart-garden__callout--hardware{right:3%;top:-1%}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.smart-garden__visual:hover .smart-garden__cutout--phone{transform:translateY(-5px) rotate(-5deg)}.smart-garden__visual:hover .smart-garden__cutout--hardware{transform:translateY(-3px)}}
+.smart-garden__film{margin:32px 0 0;max-width:960px;margin-inline:auto}
+.smart-garden__film video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#edf5f4;border-radius:8px}
+.smart-garden__film figcaption{padding-top:10px;font-size:12px;color:#405b63}
+.smart-garden h2{font-size:56px;letter-spacing:0}
+.smart-garden__detail h3{letter-spacing:0}
+@media(max-width:767px){.smart-garden h2{font-size:38px}.smart-garden__focus{filter:none}}
+@media(max-width:767px){.smart-garden__stage{margin-top:24px;aspect-ratio:1.15}.smart-garden__cutout--hardware{width:72%;height:88%;right:-2%;top:2%}.smart-garden__cutout--phone{width:35%;height:76%;left:1%;bottom:10%}.smart-garden__callout{font-size:8px;padding:5px 7px}.smart-garden__focus{filter:blur(16px)}}

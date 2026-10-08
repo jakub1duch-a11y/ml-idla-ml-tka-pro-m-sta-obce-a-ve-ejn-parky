@@ -12,7 +12,7 @@ function GateProductCard({ product }) {
       <span className="gate-card-tag">{product.group === 'standalone' ? 'Samostojící mlžítko' : product.group === 'portal' ? 'Vstupní portál' : 'Brána GATE'}</span>
     </Link>
     <div className="gate-card-body"><p className="gate-eyebrow">{product.caption}</p><h3><Link to={product.detailUrl}>{product.name}</Link></h3><p className="gate-card-description">{product.text}</p>
-      <div className="gate-card-actions"><Link to={product.detailUrl}>Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link><Link to={product.quoteUrl} aria-label={`Poptat ${product.name}`}>Poptat</Link></div>
+      <div className="gate-card-actions"><Link to={product.detailUrl}>Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link><Link to={product.quoteUrl} aria-label={`Poptat ${product.name}`} className="bg-[hsl(var(--ring))]">Poptat</Link></div>
     </div>
   </article>;
 }
@@ -29,4 +29,3 @@ export default function GateProductOverview({ products, loading, error, onRetry,
     </>}
   </section>;
 }
-

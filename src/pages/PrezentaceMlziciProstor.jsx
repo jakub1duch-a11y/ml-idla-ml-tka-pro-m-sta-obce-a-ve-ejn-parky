@@ -24,7 +24,7 @@ const SLIDES = [
 function Slide({ id, children, className = '' }) {
   return (
     <section id={id} className={`relative min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-20 ${className}`}>
-      <div className="max-w-6xl mx-auto w-full">{children}</div>
+      <div className="mx-auto w-full max-w-">{children}</div>
     </section>);
 
 }
@@ -82,7 +82,7 @@ export default function PrezentaceMlziciProstor() {
           className="group flex items-center gap-2.5 justify-end"
           aria-label={s.label}>
           
-            <span className={`font-mono tracking-wider uppercase transition-all text-sm ${activeSlide === i ? 'text-[#153863] opacity-100' : 'opacity-0 group-hover:opacity-60 text-[#5A6B78]'}`}>
+            <span className={`font-mono text-[10px] tracking-wider uppercase transition-all ${activeSlide === i ? 'text-[#153863] opacity-100' : 'opacity-0 group-hover:opacity-60 text-[#5A6B78]'}`}>
               {s.label}
             </span>
             <span className={`block transition-all ${activeSlide === i ? 'w-8 h-[3px] bg-[#22D3EE]' : 'w-3 h-[3px] bg-[#466279]/40 group-hover:bg-[#466279]'}`} />
@@ -99,7 +99,7 @@ export default function PrezentaceMlziciProstor() {
 
       {/* SLIDE 1 — Úvod */}
       <Slide id="uvod" className="relative overflow-hidden bg-[#0A1628] text-white">
-        <img src={HERO_IMG} alt="Mlžící systém v akci" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+        <img src={HERO_IMG} alt="Mlžící systém v akci" className="absolute inset-0 w-full h-full object-cover opacity-50" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628]/90 via-[#0A1628]/60 to-[#041c28]/80" />
         <div className="relative z-10">
           <Eyebrow>MLŽIDLA® · Sezónní report 2026</Eyebrow>
@@ -117,7 +117,7 @@ export default function PrezentaceMlziciProstor() {
             <span className="flex items-center gap-2"><Sun size={14} className="text-cyan" /> Období: květen — září 2026</span>
             <span className="flex items-center gap-2"><Wind size={14} className="text-cyan" /> Řízené mlžení prostoru</span>
           </motion.div>
-          <button onClick={() => scrollTo('cile')} className="mt-12 inline-flex items-center gap-2 text-sm hover:text-cyan transition text-[hsl(var(--background))]">
+          <button onClick={() => scrollTo('cile')} className="mt-12 inline-flex items-center gap-2 text-sm text-white/60 hover:text-cyan transition">
             Pokračovat <ArrowDown size={16} />
           </button>
         </div>
@@ -236,16 +236,16 @@ export default function PrezentaceMlziciProstor() {
           map((s) =>
           <div key={s.label} className="border border-[#D3E2E8] bg-white p-5">
               <s.icon size={24} className="text-[#22D3EE] mb-3" />
-              <p className="font-heading text-xl tracking-[-.02em] mb-1">{s.value}</p>
+              <p className="text-xl tracking-[-.02em] mb-1 [font-family:'Manrope',_'Inter',_sans-serif] font-semibold">{s.value}</p>
               <p className="text-xs text-[#5A6B78] leading-relaxed mb-2">{s.label}</p>
-              <p className="text-[10px] font-mono text-[#22D3EE] uppercase tracking-wider">{s.sub}</p>
+              <p className="text-[10px] font-mono uppercase tracking-wider text-[hsl(var(--card-foreground))]">{s.sub}</p>
             </div>
           )}
         </div>
-        <div className="border border-[#22D3EE]/30 bg-[#22D3EE]/5 p-5 flex items-start gap-3">
-          <BarChart3 size={20} className="text-[#22D3EE] shrink-0 mt-0.5" />
-          <p className="text-sm text-[#153863] leading-relaxed">
-            <span className="font-semibold">Měsíční provozní náklady:</span> cca 1 200 Kč (voda + energie) při průměrném 6hodinovém denním provozu.
+        <div className="border border-[#22D3EE]/30 p-5 flex items-start gap-3 bg-[hsl(var(--border))]">
+          <BarChart3 size={20} className="shrink-0 mt-0.5 text-[hsl(var(--card-foreground))]" />
+          <p className="text-[#153863] leading-relaxed text-base">
+            <span className="font-semibold text-base">Měsíční provozní náklady:</span> cca 1 200 Kč (voda + energie) při průměrném 6hodinovém denním provozu.
             Návratnost investice v nepeněžitím přínosu (komfort, PR, atraktivita prostoru) již v 1. sezóně.
           </p>
         </div>
@@ -302,7 +302,7 @@ export default function PrezentaceMlziciProstor() {
               <span className="font-mono text-2xl text-[#22D3EE] shrink-0">{r.num}</span>
               <div>
                 <h3 className="font-heading text-lg mb-1 group-hover:text-[#22D3EE] transition">{r.title}</h3>
-                <p className="text-sm text-[#5A6B78] leading-relaxed">{r.text}</p>
+                <p className="text-[#5A6B78] leading-relaxed text-base">{r.text}</p>
               </div>
             </div>
           )}

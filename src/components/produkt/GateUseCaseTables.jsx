@@ -13,11 +13,11 @@ export default function GateUseCaseTables({ products = [] }) {
   const [selected, setSelected] = useState('city');
   const space = SPACES.find((item) => item.id === selected);
   const recommendations = products.filter((product) => space.groups.includes(product.group));
-  return <section className="gate-selection" aria-labelledby="gate-selection-title"><div className="gate-shell gate-section hidden">
-    <p className="gate-eyebrow">Výběr podle prostoru</p><h2 id="gate-selection-title">Které řešení se hodí k vám?</h2>
-    <div className="gate-space-buttons" role="group" aria-label="Vyberte místo instalace">{SPACES.map(({ id, icon: Icon, name }) => <button type="button" key={id} aria-pressed={selected === id} onClick={() => setSelected(id)}><Icon size={20} aria-hidden="true" />{name}</button>)}</div>
-    <div className="gate-selection-content"><div><h3>{space.title}</h3><p>{space.text}</p><ul>{space.notes.map((note) => <li key={note}>{note}</li>)}</ul><Link className="gate-button" to={`/poptavka?produkt=${encodeURIComponent(`Mlžná zóna – ${space.name}`)}`}>Navrhnout řešení pro toto místo <ArrowRight size={17} aria-hidden="true" /></Link></div>
-      <aside aria-label="Doporučené produkty"><p className="gate-eyebrow">Prohlédněte si</p><div className="gate-recommendations">{recommendations.length ? recommendations.map((product) => <Link key={product.id} to={product.detailUrl}><span><strong>{product.name}</strong><small>{product.caption}</small></span><ArrowRight size={18} aria-hidden="true" /></Link>) : <a href="#produkty">Přejít na nabídku produktů <ArrowRight size={18} aria-hidden="true" /></a>}</div></aside>
-    </div>
-  </div></section>;
+  return <section className="gate-selection" aria-labelledby="gate-selection-title">
+
+
+
+
+
+  </section>;
 }

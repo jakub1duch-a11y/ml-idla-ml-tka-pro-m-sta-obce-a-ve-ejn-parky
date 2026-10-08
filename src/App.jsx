@@ -157,6 +157,8 @@ const AuthenticatedApp = () => {
         <Route path="/reference/bendy-linea-rodinna-zahrada" element={<ReferenceDetail fixedId="6a9fdf2f153be3ee13d70207" />} />
         <Route path="/reference/mestska-mlzna-brana-gate" element={<ReferenceDetail fixedId="6a6b8d1d553d8991f46cd6a3" />} />
         <Route path="/reference/mesto-polna-mlzitko-mrkev" element={<ReferenceDetail fixedId="6a450e035aef0b45b2a8728f" />} />
+        <Route path="/reference/bendy-nemojov" element={<ReferenceDetail fixedId="6ac7164f1b394c252d836779" />} />
+        <Route path="/reference/teepee-nove-mesto-na-morave" element={<ReferenceDetail fixedId="6ac7164f1b394c252d83677a" />} />
         <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />

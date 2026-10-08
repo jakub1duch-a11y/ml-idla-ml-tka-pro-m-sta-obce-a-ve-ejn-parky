@@ -13,7 +13,7 @@ export default function PlanningZoneSection() {
     <div className="premium-shell grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
       <figure className="relative overflow-hidden rounded-[2rem] bg-[#E1EAE5] shadow-[0_24px_70px_rgba(8,44,63,.12)]">
         <picture><source media="(max-width: 767px)" srcSet="/media/planning/misting-zones-plan-mobile.webp" />
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f6d471f14_1000006136.jpg" alt="Půdorysný návrh s cestami, zelení a zakreslenými body mlžení" width="1400" height="584" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ee5759df9_foto-instalace-vyroba.png" alt="Půdorysný návrh s cestami, zelení a zakreslenými body mlžení" width="1400" height="584" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
         </picture>
         <figcaption className="bg-[#082C3F] px-6 py-5 text-white"><span className="block font-mono text-[10px] uppercase tracking-[.18em] text-cyan-200">Ukázka návrhu rozmístění</span><span className="mt-1 block text-sm leading-6 text-slate-100">Půdorys, jednotlivá mlžítka a zóny osvěžení.</span></figcaption>
       </figure>

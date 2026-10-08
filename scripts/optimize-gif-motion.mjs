@@ -45,6 +45,7 @@ function findGifs(directory) {
 
 if (!ffmpegPath) throw new Error('ffmpeg-static není pro optimalizaci GIFů k dispozici.');
 
+// Keep this generated asset in the production bundle so all shared product cards can use it.
 const generatedStudioMotion = createStudioMotionAsset();
 const gifs = findGifs(mediaRoot);
 console.log(`Created ${generatedStudioMotion} and optimizing ${gifs.length} GIF files for motion playback.`);

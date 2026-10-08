@@ -1,0 +1,3 @@
+Production deploy marker for mlzidla.cz
+Date: 2026-10-08
+Purpose: trigger Render auto-deploy from GitHub main.

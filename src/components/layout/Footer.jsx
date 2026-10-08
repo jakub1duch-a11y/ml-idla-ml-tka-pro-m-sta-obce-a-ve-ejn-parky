@@ -97,15 +97,15 @@ export default function Footer() {
             </div>
 
             <div className="mt-7 grid gap-3 text-sm text-white/72 sm:grid-cols-3 lg:grid-cols-1">
-              <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06] hidden">
+              <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Phone size={15} /></span>
                 <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Telefon</span><span className="font-semibold text-white/86">+420 774 700 390</span></span>
               </a>
-              <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06] hidden">
+              <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Mail size={15} /></span>
                 <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">E-mail</span><span className="font-semibold text-white/86">obchod1@holmtec.cz</span></span>
               </a>
-              <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06] hidden">
+              <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><MapPin size={15} /></span>
                 <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Zázemí</span><span className="font-semibold text-white/86">Trutnov · HolmTec</span></span>
               </Link>
@@ -135,7 +135,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
 
-                aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně" className="hidden">
+                aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně">
                 
                 
 
@@ -144,13 +144,13 @@ export default function Footer() {
                 <span className="min-w-0 flex-1">
                   <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--background))]">Výroba a zázemí</span>
                   <span className="mt-1 block font-semibold text-white text-lg uppercase no-underline">HolmTec.cz</span>
-                  <span className="mt-1 block leading-5 text-white/62 text-xs">Česká výroba, ohýbání nerezu a technické zázemí MLŽIDLA®</span>
+                  <span className="mt-1 block leading-5 text-white/62 text-sm">Česká výroba, ohýbání nerezu a technické zázemí MLŽIDLA®</span>
                 </span>
                 <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
             </div>
 
-            <div className="flex items-center mt-0 gap-4">
+            <div className="mt-7 flex items-center gap-3">
               <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Instagram size={18} /></a>
               <a href="https://www.linkedin.com/company/holmtec/" target="_blank" rel="noreferrer" aria-label="LinkedIn HolmTec" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Linkedin size={18} /></a>
               <a href="https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
@@ -246,7 +246,7 @@ export default function Footer() {
                 aria-label="E-mail pro newsletter"
                 type="email"
                 placeholder="Váš e-mail"
-                className="min-w-0 flex-1 rounded-l-xl border border-r-0 border-white/12 bg-white/[.07] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25" />
+                className="min-w-0 flex-1 rounded-l-xl border border-r-0 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25 border-white/0 bg-white/[.08]" />
               
                 <button className="rounded-r-xl bg-cyan px-4 text-slate-950 transition-colors hover:bg-cyan/90" aria-label="Přihlásit k odběru">
                   <ArrowRight size={18} />
@@ -259,9 +259,9 @@ export default function Footer() {
         <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-3xl">
             <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
-            <p className="mt-1 text-white/58"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
+            <p className="mt-1 text-white/58 hidden"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
             <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
-            <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
+            <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white text-sm">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white text-sm">+420 774 700 390</a></p>
             
 
             
@@ -269,7 +269,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
             <div
-              className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[.05] px-3 py-1.5 text-left"
+              className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-left bg-white/[.00] border-white/0"
               aria-label="Zabezpečené připojení a kontrola odkazu"
               title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
               
@@ -278,7 +278,7 @@ export default function Footer() {
               </span>
               <span className="flex min-w-0 items-center gap-1.5">
                 <LockKeyhole size={11} className="shrink-0 text-white/62" aria-hidden="true" />
-                <span className="text-[10px] font-semibold tracking-[.02em] text-white/82">Zabezpečené připojení</span>
+                <span className="font-semibold tracking-[.02em] text-white/82 text-xs">Zabezpečené připojení</span>
                 <span className="hidden text-[10px] text-white/52 sm:inline">· kontrola odkazu</span>
               </span>
             </div>

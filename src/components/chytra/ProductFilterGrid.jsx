@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { preparePublicCatalogProducts } from '@/lib/publicCatalogProducts';
 import { trackProductClick } from '@/lib/ga4';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
@@ -19,7 +20,7 @@ export default function ProductFilterGrid() {
     base44.entities.Product.list().catch(() => []),
     base44.entities.ProductCategory.list().catch(() => [])]
     ).then(([prods, cats]) => {
-      setProducts(prods || []);
+      setProducts(preparePublicCatalogProducts(prods || []));
       setCategories(cats || []);
     }).finally(() => setLoading(false));
   }, []);
@@ -71,7 +72,7 @@ export default function ProductFilterGrid() {
               </Link>
             </motion.div>
         )}
-          {filtered.length === 0 && <p className="col-span-4 text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>}
+          {filtered.length === 0 && <p className="col-span-full text-center text-slate-400 py-16 text-sm">Žádné produkty v této kategorii.</p>}
         </div>
 </ProductExperience>
       }

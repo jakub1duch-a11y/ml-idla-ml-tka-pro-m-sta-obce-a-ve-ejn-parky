@@ -1,89 +1,58 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
-import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
+import { ArrowRight, Pause, Play } from 'lucide-react';
+import '@/styles/catalog-video-hero.css';
 
-const SCENES = [
-{ name: 'BENDY', image: '/media/optimized/31478e4b3_bendymlzitko02.webp', video: '/media/optimized/78cf9a6c8_KolekceBendy_20260812_121335_0000.webm', href: '/produkt/mlzitko-bendy' },
-{ name: 'MRAK', image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp', video: '/media/optimized/94c2b5f74_instalace-mlzitka-mrak.webm', href: '/produkt/mlzitko-mrak' },
-{ name: 'Veřejný prostor', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp', href: '/mlzitka-pro-mesta-obce' }];
-
-const headlineWords = ['Vyberte', 'mlžítko', 'podle prostoru.'];
+const VIDEO = '/media/reference-videos/mrak-zahrada-hero.mp4';
+const POSTER = '/media/catalog/misting-hero-poster.webp';
 
 export default function KolekceHero() {
-  const ref = useRef(null);
-  const [selected, setSelected] = useState(0);
-  const reduced = useReducedMotion();
-  const scene = SCENES[selected];
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '10%']);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.055]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-7%']);
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [desired, setDesired] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [tabVisible, setTabVisible] = useState(() => typeof document === 'undefined' || !document.hidden);
 
-  return (
-    <section ref={ref} className="hero-motion-surface relative min-h-[720px] bg-[#07131D] text-white" aria-label="Katalog mlžítek">
-      <motion.div className="absolute inset-0" style={{ y: mediaY, scale: mediaScale }}>
-        <motion.img
-          key={scene.image} src={scene.image}
-          alt={scene.name}
-          className="hero-catalog-media absolute inset-0 h-full w-full object-cover object-center opacity-75"
-          fetchPriority="high"
-          initial={reduced ? false : { opacity: 0, scale: 1.025 }}
-          animate={{ opacity: 0.75, scale: 1 }}
-          transition={{ duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }} />
-        {scene.video && <HeroBackgroundVideo key={scene.video} src={scene.video} poster={scene.image} />}
-      </motion.div>
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setDesired(!reduced.matches && !navigator.connection?.saveData);
+    const onReduced = () => { if (reduced.matches) setDesired(false); };
+    const onVisibility = () => setTabVisible(!document.hidden);
+    reduced.addEventListener('change', onReduced);
+    document.addEventListener('visibilitychange', onVisibility);
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.15 });
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => { observer.disconnect(); reduced.removeEventListener('change', onReduced); document.removeEventListener('visibilitychange', onVisibility); };
+  }, []);
 
-      <div className="hero-catalog-colorwash absolute inset-0" />
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#07131D] to-transparent" />
-      <HeroAtmosphere />
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (desired && visible && tabVisible && !failed) video.play().catch(() => setPlaying(false));
+    else video.pause();
+  }, [desired, visible, tabVisible, failed]);
 
-      <motion.div style={{ y: copyY }} className="hero-catalog-content min-h-[720px]">
-        <div className="inline-flex w-fit items-center gap-3 rounded-full border border-white/12 bg-white/[.055] px-4 py-2 backdrop-blur-md">
-          <span className="h-2 w-2 rounded-full bg-[#7AE1EF] shadow-[0_0_18px_rgba(122,225,239,.8)]" />
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[.22em] text-white/62">KATALOG / MLŽIDLA®</span>
-        </div>
-
-        <h1 className="hero-animated-heading mt-6 !max-w-[20ch] !font-black !leading-[.93] !tracking-[-.06em]" aria-label={headlineWords.join(' ')}>
-          {headlineWords.map((word, index) => (
-            <motion.span
-              key={word}
-              className="hero-headline-word"
-              initial={reduced ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: reduced ? 0 : .5, delay: reduced ? 0 : .12 + index * .08, ease: [0.22, 1, 0.36, 1] }}>
-              {word}
-            </motion.span>
-          ))}
-        </h1>
-        <p className="mt-6 !max-w-2xl !text-base !leading-8 !text-white/62 sm:!text-lg">
-          Sloupková mlžítka, mlžné brány, ateliérové prvky i celá mlžiště pro města, parky, sportoviště, školy, gastro i soukromé zahrady. Katalog můžete filtrovat podle prostoru a produktové řady.
-        </p>
-
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="#catalog" className="catalog-sweep inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#7AE1EF] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#07131D] shadow-[0_18px_52px_rgba(122,225,239,.2)] transition hover:-translate-y-0.5 hover:bg-white">
-            Otevřít katalog <ArrowRight size={17} aria-hidden="true" />
-          </a>
-          <Link to={scene.href} className="catalog-sweep inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/16 bg-white/[.06] px-6 py-4 text-sm font-bold text-white backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#7AE1EF]/45">
-            {selected === 2 ? 'Řešení pro města' : 'Detail ' + scene.name} <ArrowRight size={17} aria-hidden="true" />
-          </Link>
-        </div>
-
-        <div className="hero-scene-nav !mt-8" aria-label="Scéna katalogu">
-          {SCENES.map((item, index) =>
-          <motion.button
-            key={item.name}
-            type="button"
-            aria-pressed={selected === index}
-            onClick={() => setSelected(index)}
-            whileHover={reduced ? undefined : { y: -2 }}
-            whileTap={reduced ? undefined : { scale: 0.96 }}>
-              <span className="mr-2 font-mono text-[9px] opacity-45">0{index + 1}</span>{item.name}
-          </motion.button>
-          )}
-        </div>
-      </motion.div>
-    </section>);
+  return <section ref={sectionRef} className="catalog-video-hero" aria-labelledby="catalog-hero-title">
+    <div className="catalog-video-hero-media">
+      <picture><source media="(max-width: 767px)" srcSet="/media/catalog/misting-hero-poster-mobile.webp" />
+        <img src={POSTER} alt="Nerezový tvarový mlžicí prvek v zahradě s jemnou vodní mlhou" width="1280" height="720" fetchPriority="high" decoding="async" />
+      </picture>
+      {!failed && <video ref={videoRef} src={desired && visible ? VIDEO : undefined} poster={POSTER} muted loop playsInline preload="none"
+        className={playing ? 'is-playing' : ''} aria-label="Ukázka mlžení v zahradním prostoru"
+        onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }} />}
+      <div className="catalog-video-hero-shade" />
+      {!failed && <button type="button" className="catalog-video-toggle" aria-label={playing ? 'Pozastavit video' : 'Přehrát video mlžení'} onClick={() => { if (playing) setDesired(false); else if (desired) videoRef.current?.play().catch(() => setPlaying(false)); else setDesired(true); }}>
+        {playing ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}<span>{playing ? 'Pozastavit video' : 'Přehrát video'}</span>
+      </button>}
+    </div>
+    <div className="catalog-video-hero-copy">
+      <p className="catalog-video-hero-eyebrow">Katalog / MLŽIDLA®</p>
+      <h1 id="catalog-hero-title">Vyberte mlžítko pro svůj prostor.</h1>
+      <p className="catalog-video-hero-description">Sloupková mlžítka, průchozí brány, tvarové prvky i celé mlžné zóny. Prohlédněte si všechny produkty a vyberte řešení pro své místo.</p>
+      <div className="catalog-video-hero-actions"><a href="#catalog">Přehled všech produktů <ArrowRight size={18} aria-hidden="true" /></a><Link to="/poptavka">Poradit s výběrem <ArrowRight size={18} aria-hidden="true" /></Link></div>
+      <p className="catalog-video-hero-caption">Vodní mlha v pohybu · ukázka zahradní instalace</p>
+    </div>
+  </section>;
 }

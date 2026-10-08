@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import AnchoringInstallationSection from '@/components/installation/AnchoringInstallationSection';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { CATALOG_CATEGORIES } from '@/lib/catalogCategories';
+import HomeProductOverview from './HomeProductOverview';
+import PlanningZoneSection from './PlanningZoneSection';
 import {
   ArrowRight,
   Download,
@@ -32,40 +34,11 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1] } }
 };
 
-const categories = [
-{
-  title: 'Sloupková mlžítka',
-  subtitle: 'Linea, Stéblo, Bendy',
-  text: 'Elegantní vertikální a organické prvky pro parky, promenády, náměstí a pobytové zóny.',
-  icon: Landmark,
-  image: media.linea,
-  link: '/mlzidla-mlzitka#catalog'
-},
-{
-  title: 'Mlžné brány a oblouky',
-  subtitle: 'Gate, Linea CE, Bendy Gate',
-  text: 'Průchozí nerezové brány, které vytváří okamžitý pocit osvěžení na frekventovaných místech.',
-  icon: Droplets,
-  image: media.gate,
-  link: '/mlzne-brany'
-},
-{
-  title: 'Ateliérové prvky',
-  subtitle: 'Aura, Mrak, TeePee, Spirála',
-  text: 'Výrazné designové tvary pro místa setkávání, hřiště, eventy a reprezentativní veřejný prostor.',
-  icon: Sparkles,
-  image: media.aura,
-  link: '/mlzidla-mlzitka#creative'
-}];
-
-
-const productHighlights = [
-{ name: 'AURA', label: 'kruhové mlžení', image: media.aura, link: '/produkt/aura-mlzitko' },
-{ name: 'BENDY', label: 'měkká organická linie', image: media.bendy, link: '/produkt/mlzitko-bendy' },
-{ name: 'LINEA', label: 'čistý sloupový prvek', image: media.linea, link: '/produkt/linea-mlzitko' },
-{ name: 'MRAK', label: 'mlžný prvek pro děti', image: media.mrak, link: '/produkt/mlzitko-mrak' },
-{ name: 'STÉBLO', label: 'přírodní inspirace', image: media.steblo, link: '/produkt/mlzitko-steblo' }];
-
+const categoryIcons = [Landmark, Droplets, Sparkles, Droplets];
+const categories = CATALOG_CATEGORIES.map((category, index) => ({
+  ...category, subtitle: category.eyebrow, text: category.description,
+  icon: categoryIcons[index], link: category.href,
+}));
 
 const smartPoints = [
 { icon: Gauge, title: 'Podle teploty', text: 'Mlžení se spustí při nastavených venkovních podmínkách.' },
@@ -74,39 +47,6 @@ const smartPoints = [
 
 
 export default function PremiumHomepage2026() {
-  const [approvedVisuals, setApprovedVisuals] = useState([]);
-
-  useEffect(() => {
-    let active = true;
-    base44.entities.VisualizationAsset.
-    filter({ approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 120).
-    then((items = []) => {if (active) setApprovedVisuals((items || []).filter((item) => item?.image_url));}).
-    catch(() => {if (active) setApprovedVisuals([]);});
-    return () => {active = false;};
-  }, []);
-
-  const approvedBySlug = useMemo(() => {
-    const map = new Map();
-    [...approvedVisuals].
-    sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant))).
-    forEach((item) => {
-      if (item.product_slug && !map.has(item.product_slug)) map.set(item.product_slug, item.thumbnail_url || item.image_url);
-    });
-    return map;
-  }, [approvedVisuals]);
-
-  const resolvedHighlights = useMemo(() => productHighlights.map((product) => ({
-    ...product,
-    image: approvedBySlug.get(product.link.split('/').pop()) || product.image
-  })), [approvedBySlug]);
-
-  const resolvedCategories = useMemo(() => categories.map((item, index) => ({
-    ...item,
-    image: index === 0 ? approvedBySlug.get('linea-mlzitko') || approvedBySlug.get('mlzitko-steblo') || item.image :
-    index === 1 ? approvedBySlug.get('mlzna-brana-gate') || approvedBySlug.get('brana-bendy') || item.image :
-    approvedBySlug.get('mlzitko-mrak') || approvedBySlug.get('teepee') || item.image
-  })), [approvedBySlug]);
-
   return (
     <div className="premium-homepage-2026 overflow-x-clip bg-white text-[#07131D]">
       <section className="relative overflow-hidden bg-[#07131D] text-white" aria-labelledby="premium-hero-title">
@@ -171,17 +111,17 @@ export default function PremiumHomepage2026() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="mx-auto max-w-3xl text-center">
             <p className="font-mono font-bold uppercase tracking-[.28em] text-[#0B8EC5] text-base">Řešení pro města a obce</p>
             <h2 id="categories-premium-title" className="premium-heading mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Kategorie mlžítek</h2>
-            <p className="mt-4 text-base leading-7 text-slate-600">Přehledné rozdělení produktů podle prostoru, provozu a typu zážitku. Návštěvník má okamžitě poznat, jaký produkt si prohlíží a kam se hodí.</p>
+            <p className="mt-4 text-base leading-7 text-slate-600">Jednotlivý bod osvěžení, průchozí brána nebo celá mlžná zóna. Vyberte řešení podle svého místa a prohlédněte si konkrétní produkty.</p>
           </motion.div>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
-            {resolvedCategories.map((item, index) => {
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            {categories.map((item, index) => {
               const Icon = item.icon;
               return (
                 <motion.div key={item.title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.08 }}>
-                  <Link to={item.link} className="premium-card-interactive group block overflow-hidden rounded-[2rem] border border-[#C7EAF6] bg-white shadow-[0_24px_80px_rgba(11,142,197,.12)] hover:shadow-[0_32px_100px_rgba(11,142,197,.22)]">
+                  <Link to={item.link} className="premium-card-interactive group block overflow-hidden rounded-[2rem] bg-white shadow-[0_24px_80px_rgba(11,142,197,.12)] hover:shadow-[0_32px_100px_rgba(11,142,197,.22)]">
                     <div className="relative aspect-[16/10] overflow-hidden">
-                      <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1cb5f9b18_file_000000005c8081f5ad3ec61cc9e1c7cb.png" alt={`${item.title} — MLŽIDLA.CZ`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
+                      <img src={item.image} alt={item.imageAlt} style={{ objectPosition: item.imagePosition }} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]" loading="lazy" decoding="async" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                       <div className="absolute left-5 top-5 flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-white/[.86] text-[#0B8EC5] shadow-lg backdrop-blur-sm">
                         <Icon size={26} />
@@ -203,32 +143,7 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="premium-section bg-white" aria-labelledby="products-premium-title">
-        <div className="premium-shell">
-          <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Produkt musí být jasný na první pohled</p>
-              <h2 id="products-premium-title" className="premium-heading mt-4 max-w-3xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Vybrané produkty pro hlavní stránku</h2>
-            </div>
-            <Link to="/mlzidla-mlzitka" className="premium-action inline-flex items-center gap-2 self-start rounded-full px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto bg-[hsl(var(--primary))]">Celý katalog <ArrowRight size={16} /></Link>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {resolvedHighlights.map((product, index) =>
-            <motion.div key={product.name} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -8 }} viewport={{ once: true, amount: 0.24 }} transition={{ delay: index * 0.05 }}>
-                <Link to={product.link} className="premium-card-interactive group block h-full overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.12)]">
-                  <div className="aspect-[4/5] overflow-hidden bg-slate-100"><img src={product.image} alt={`${product.name} — ${product.label}`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
-                  <div className="border-t border-slate-100 p-5">
-                    <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#0B8EC5]">Produkt</p>
-                    <h3 className="mt-1 font-heading text-3xl font-black tracking-[-.055em] text-[#07131D]">{product.name}</h3>
-                    <p className="mt-1 text-sm font-semibold text-slate-600">{product.label}</p>
-                  </div>
-                </Link>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
+      <HomeProductOverview />
 
       <section className="premium-section premium-pattern-dark relative overflow-hidden bg-[#071A2F] text-white" aria-labelledby="smart-title">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_42%,rgba(38,198,233,.22),transparent_35%)] opacity-100" />
@@ -259,40 +174,7 @@ export default function PremiumHomepage2026() {
         </div>
       </section>
 
-      <section className="premium-section premium-pattern-light bg-[#F7FAFC]" aria-labelledby="planning-title">
-        <div className="premium-shell grid gap-10 lg:grid-cols-[1fr_.74fr] lg:items-center">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }} className="premium-card-interactive relative min-h-[460px] overflow-hidden rounded-[2rem] border border-slate-200/[.10] bg-[#071A2F] text-white shadow-[0_30px_100px_rgba(7,26,47,.22)] sm:min-h-[430px] lg:min-h-[390px]">
-            <img src={media.gate} alt="Zákres mlžných zón do městského prostoru" className="absolute inset-0 h-full w-full object-cover opacity-[.72]" loading="lazy" decoding="async" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_52%,rgba(38,198,233,.24),transparent_26%),linear-gradient(90deg,rgba(7,26,47,.90),rgba(7,26,47,.20))]" />
-            <div className="absolute inset-0 sm:p-8 lg:p-10 p-6">
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Plánování a realizace</p>
-              
-              <p className="mt-5 max-w-xl text-sm leading-6 text-white/[.72] sm:text-base sm:leading-7">Každý prostor je jiný. Před návrhem posuzujeme trasu pohybu lidí, slunce, okolní zeleň, směr proudění a návaznost na přívod vody.</p>
-              <div className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
-                {['Analýza prostoru', 'Optimální rozmístění', 'Přesný zákres'].map((item) => <span key={item} className="premium-glass-card rounded-full border border-white/[.16] bg-white/10 px-4 py-3 text-xs font-bold backdrop-blur-md">{item}</span>)}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Od návrhu k realizaci</p>
-            <h3 className="mt-4 font-heading text-3xl font-black tracking-[-.045em] text-[#07131D] sm:text-4xl">Vizualizace, půdorys a doporučení pro konkrétní místo.</h3>
-            <div className="mt-7 grid gap-3">
-              {[
-              ['Půdorysný pohled', 'Rozmístění mlžítek do skutečného prostoru nebo fotografie místa.'],
-              ['Dosah mlhy', 'Návrh zóny osvěžení podle pohybu lidí a charakteru plochy.'],
-              ['Doporučení produktu', 'Výběr mezi Linea, Bendy, Aura, Mrak, TeePee nebo mlžnou bránou.']].
-              map(([title, text]) =>
-              <div key={title} className="premium-card-interactive rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                  <strong className="text-base text-[#07131D]">{title}</strong>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
-                </div>
-              )}
-            </div>
-            <Link to="/poptavka" className="premium-action mt-8 inline-flex items-center gap-2 rounded-full bg-[#26C6E9] px-6 py-4 text-sm font-extrabold text-[#04131F] transition hover:-translate-y-0.5 hover:bg-[#07131D] hover:text-white">Nechat zpracovat zákres <ArrowRight size={16} /></Link>
-          </motion.div>
-        </div>
-      </section>
+      <PlanningZoneSection />
 
       <section className="premium-section bg-white" aria-labelledby="eventy-title">
         <div className="premium-shell">

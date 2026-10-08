@@ -10,7 +10,7 @@ import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
 
 const PRODUCT_LINKS = [
 { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', image: '/media/optimized/cfc837b23_image.webp', featured: true },
-{ label: 'Mlžiště a mlhoviště', sub: 'Sestavy a zóny osvěžení', path: '/mlhoviste', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp' },
+{ label: 'Mlžiště a mlhoviště', sub: 'Sestavy a zóny osvěžení', path: '/mlhoviste', image: '/media/categories/zones.webp' },
 { label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
 { label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/rezidencni-mlzeni', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
 { label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: '/media/optimized/68953132b_IMG_3524.webp' },
@@ -63,6 +63,7 @@ export default function Header() {
   const homePath = ROUTE_MAP.home[locale];
   const inquiryPath = ROUTE_MAP.inquiry[locale];
   const timeoutRef = useRef(null);
+  const mobileTriggerRef = useRef(null);
   const lastScrollYRef = useRef(0);
 
   useEffect(() => {
@@ -79,9 +80,11 @@ export default function Header() {
   useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setAccountOpen(false);}, [location]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => {document.body.style.overflow = '';};
-  }, [mobileOpen]);
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
 
   const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);};
   const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
@@ -95,7 +98,7 @@ export default function Header() {
 
 
 
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#000000]/[0.9] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-150 ease-out motion-reduce:transition-none bg-[#000000]/[0.9] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
@@ -180,12 +183,15 @@ export default function Header() {
             
             <motion.button
               type="button"
+              ref={mobileTriggerRef}
               onClick={toggleMobileMenu}
               aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'}
               aria-expanded={mobileOpen}
+              aria-haspopup="dialog"
+              aria-controls={mobileOpen ? 'mobile-site-menu' : undefined}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.94 }}
-              transition={{ type: 'spring', stiffness: 520, damping: 30 }}
+              transition={{ duration: 0.12, ease: 'easeOut' }}
               className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
               
               <motion.span
@@ -198,7 +204,7 @@ export default function Header() {
                   x: mobileOpen ? 0 : 0
                 }}
                 whileHover={!mobileOpen ? { x: 1.5 } : { rotate: 48 }}
-                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+                transition={{ duration: 0.12, ease: 'easeOut' }} />
               
               <motion.span
                 aria-hidden="true"
@@ -210,7 +216,7 @@ export default function Header() {
                   x: mobileOpen ? 0 : 3.5
                 }}
                 whileHover={!mobileOpen ? { width: 22, x: 0 } : { rotate: -48 }}
-                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+                transition={{ duration: 0.12, ease: 'easeOut' }} />
               
               <motion.span
                 aria-hidden="true"
@@ -229,7 +235,9 @@ export default function Header() {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         productLinks={PRODUCT_LINKS}
+        triggerRef={mobileTriggerRef}
         locale={locale} />
+        
 
     </>);
 }

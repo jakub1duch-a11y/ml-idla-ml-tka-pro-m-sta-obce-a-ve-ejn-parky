@@ -1,0 +1,18 @@
+.whatsapp-side-trigger{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:56px;padding:18px 10px;background:linear-gradient(155deg,#0c4858,#082c3f);color:#d9fff0;border-radius:22px 0 0 22px;box-shadow:0 8px 30px rgba(5,32,45,.2);transition:background 120ms,box-shadow 120ms}
+.whatsapp-side-trigger:hover{background:#105963;box-shadow:0 8px 35px rgba(5,32,45,.3)}
+.whatsapp-side-trigger:focus-visible{outline:3px solid #28bc83;outline-offset:3px}
+.whatsapp-side-label{writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:700;letter-spacing:.06em}
+.whatsapp-contact-panel[data-state=open]{animation:contact-open 160ms cubic-bezier(.2,.8,.2,1)}
+.whatsapp-contact-panel[data-state=closed]{animation:contact-close 100ms ease-in}
+.mobile-nav-panel[data-state=open]{animation:nav-open 160ms cubic-bezier(.2,.8,.2,1)}
+.mobile-nav-panel[data-state=closed]{animation:nav-close 110ms ease-in}
+.mobile-nav-overlay[data-state=open]{animation:nav-overlay-open 120ms ease-out}
+.mobile-nav-overlay[data-state=closed]{animation:nav-overlay-close 100ms ease-in}
+@keyframes contact-open{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@keyframes contact-close{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(5px)}}
+@keyframes nav-open{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes nav-close{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-5px)}}
+@keyframes nav-overlay-open{from{opacity:0}to{opacity:1}}
+@keyframes nav-overlay-close{from{opacity:1}to{opacity:0}}
+@media(max-width:1023px){.whatsapp-side-trigger{top:auto;bottom:calc(7.5rem + env(safe-area-inset-bottom));right:12px;transform:none;width:52px;height:52px;padding:0;border-radius:50%;background:#167c49}.whatsapp-side-label{display:none}}
+@media(prefers-reduced-motion:reduce){.mobile-nav-panel,.mobile-nav-overlay,.whatsapp-contact-panel{animation-duration:.01ms!important}.whatsapp-side-trigger{transition:none}}

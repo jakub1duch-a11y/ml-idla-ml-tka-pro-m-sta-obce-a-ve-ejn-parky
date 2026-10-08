@@ -60,7 +60,7 @@ export default function BlogArticleSidebar({ related = [] }) {
         <section className="overflow-hidden rounded-[1.5rem] bg-[#07131D] p-5 text-white shadow-[0_18px_60px_rgba(7,19,29,.16)]" aria-label="Rychlý kontakt">
           <div className="flex items-center gap-3">
             <img
-              src="/media/avatars/radek-meduna-support.svg"
+              src="/media/avatars/radek-meduna-support.webp"
               alt="Ing. Radek Meduna"
               className="h-14 w-14 shrink-0 rounded-full border-2 border-cyan-200/40 bg-white object-cover"
               width="56"

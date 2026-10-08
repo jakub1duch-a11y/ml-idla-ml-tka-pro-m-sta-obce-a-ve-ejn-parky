@@ -34,7 +34,7 @@ export default function ProductCategoryExplorer() {
             <Link
               key={category.href}
               to={category.href}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors hover:border-cyan-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700 focus-visible:ring-offset-4"
+              className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700 focus-visible:ring-offset-4"
             >
               <div className="aspect-[4/3] overflow-hidden bg-slate-100">
                 <img
@@ -43,6 +43,7 @@ export default function ProductCategoryExplorer() {
                   loading="lazy"
                   width="640"
                   height="480"
+                  style={{ objectPosition: category.imagePosition }}
                   className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105"
                 />
               </div>
@@ -59,7 +60,7 @@ export default function ProductCategoryExplorer() {
                 <p className="mb-5 mt-4 text-xs font-medium leading-5 text-slate-600">
                   {category.use}
                 </p>
-                <span className="mt-auto flex min-h-11 items-center justify-between border-t border-slate-200 pt-4 text-sm font-semibold text-slate-950">
+                <span className="mt-auto flex min-h-11 items-center justify-between pt-4 text-sm font-semibold text-slate-950">
                   Prozkoumat řešení <ArrowRight size={18} aria-hidden="true" />
                 </span>
               </div>

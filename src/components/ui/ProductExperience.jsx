@@ -75,7 +75,7 @@ function ProductStage({ product, reduced }) {
 /** Uses the same filtered records as the card view; never invents product media or attributes. */
 export default function ProductExperience({ products = [], children }) {
   const [selected, setSelected] = useState(null);
-  const [mode, setMode] = useState('gallery');
+  const [mode, setMode] = useState('grid');
   const reduced = useReducedMotion();
   const regionId = useId();
   const index = Math.max(0, products.findIndex((product) => identity(product) === selected));
@@ -84,18 +84,25 @@ export default function ProductExperience({ products = [], children }) {
   const move = (step) => setSelected(identity(products[(index + step + products.length) % products.length]));
   return <div className="mpe" data-product-experience>
     <div className="mpe-toolbar">
-      <p className="text-1x1 text-3xl">Objevte jednotlivé tvary</p>
-      {children && <div className="mpe-modes" aria-label="Zobrazení produktů">
+      <p>Všechny produkty ve vašem výběru</p>
+      <div className="mpe-modes" aria-label="Zobrazení produktů">
+        <button type="button" aria-pressed={mode === 'grid'} aria-controls={regionId} onClick={() => setMode('grid')}>
+          <LayoutGrid size={16} aria-hidden="true" /> Přehled produktů
+        </button>
         <button type="button" aria-pressed={mode === 'gallery'} aria-controls={regionId} onClick={() => setMode('gallery')}>
           <Images size={16} aria-hidden="true" /> Galerie
         </button>
-        <button type="button" aria-pressed={mode === 'grid'} aria-controls={regionId} onClick={() => setMode('grid')}>
-          <LayoutGrid size={16} aria-hidden="true" /> Přehled
-        </button>
-      </div>}
+      </div>
     </div>
     <div id={regionId}>
-      {mode === 'grid' ? children : <div role="region" aria-roledescription="karusel" aria-label="Galerie produktů">
+      {mode === 'grid' ? children || <div className="mpe-grid">
+        {products.map((item) => <article key={identity(item)} className="mpe-grid-card">
+          <ProductImage url={item.image_url} name={item.name} className="mpe-grid-image" />
+          <div className="mpe-grid-copy"><h3>{item.name}</h3>{item.short_description && <p>{item.short_description}</p>}
+            {item.slug && <Link to={`/produkt/${encodeURIComponent(item.slug)}`} className="mpe-grid-link">Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link>}
+          </div>
+        </article>)}
+      </div> : <div role="region" aria-roledescription="karusel" aria-label="Galerie produktů">
         <div className="mpe-feature">
           <ProductStage key={identity(product)} product={product} reduced={reduced} />
         </div>

@@ -1,26 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import {
-  ArrowRight,
-  Building2,
-  Trees,
-  Palette,
-  Tent,
-  Calculator,
-  ChevronDown,
-  Cpu,
-  Grid2X2,
-  Images,
-  Layers3,
-  LifeBuoy,
-  Newspaper,
-  Sparkles,
-  X,
-} from 'lucide-react';
+import * as Dialog from '@radix-ui/react-dialog';
+import { ArrowRight, Building2, Calculator, ChevronDown, Cpu, Grid2X2, Images, LifeBuoy, LogIn, Newspaper, Trees, X } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { ROUTE_MAP } from '@/lib/i18n';
+import '@/styles/contact-and-navigation.css';
 
 const INTERNATIONAL_MOBILE_COPY = {
   en: { products: 'Products', city: 'Urban misting', garden: 'Garden misting', custom: 'Custom solutions', technology: 'How it works', smart: 'Smart control', references: 'Projects', about: 'About HolmTec', faq: 'FAQ', contact: 'Contact', quote: 'Request a quote' },
@@ -29,13 +14,6 @@ const INTERNATIONAL_MOBILE_COPY = {
   sk: { products: 'Produkty', city: 'Systémy pre mestá', garden: 'Systémy do záhrady', custom: 'Na mieru', technology: 'Ako to funguje', smart: 'Smart riadenie', references: 'Realizácie', about: 'O HolmTec', faq: 'FAQ', contact: 'Kontakt', quote: 'Požiadať o ponuku' },
   it: { products: 'Prodotti', city: 'Nebulizzazione urbana', garden: 'Nebulizzazione giardino', custom: 'Soluzioni su misura', technology: 'Come funziona', smart: 'Controllo smart', references: 'Progetti', about: 'Chi siamo', faq: 'FAQ', contact: 'Contatti', quote: 'Richiedi preventivo' },
 };
-
-const MOBILE_USE_LINKS = [
-  { label: 'Města', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
-  { label: 'Zahrady', path: '/rezidencni-mlzeni', icon: Trees },
-  { label: 'Architekti', path: '/kategorie/architekti', icon: Palette },
-  { label: 'Eventy', path: '/kategorie/eventy', icon: Tent },
-];
 
 const PRIMARY_LINKS = [
   { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', icon: Grid2X2 },
@@ -46,196 +24,73 @@ const PRIMARY_LINKS = [
   { label: 'Podpora', sub: 'FAQ, servis a technické informace', path: '/podpora', icon: LifeBuoy },
 ];
 
-export default function MobileMenu({ open, onClose, productLinks, locale = 'cs' }) {
+export default function MobileMenu({ open, onClose, productLinks = [], locale = 'cs', triggerRef }) {
   const [collectionsOpen, setCollectionsOpen] = useState(false);
+  useEffect(() => { if (!open) setCollectionsOpen(false); }, [open]);
   const collections = productLinks.filter((item) => !item.featured && !item.textOnly);
-
-  if (locale !== 'cs') {
-    const copy = INTERNATIONAL_MOBILE_COPY[locale];
-    const links = [
-      [copy.products, ROUTE_MAP.catalog[locale]],
-      [copy.city, ROUTE_MAP.city[locale]],
-      [copy.garden, ROUTE_MAP.garden[locale]],
-      [copy.custom, ROUTE_MAP.custom[locale]],
-      [copy.technology, ROUTE_MAP.technology[locale]],
-      [copy.smart, ROUTE_MAP.smart[locale]],
-      [copy.references, ROUTE_MAP.references[locale]],
-      [copy.about, ROUTE_MAP.about[locale]],
-      [copy.faq, ROUTE_MAP.faq[locale]],
-      [copy.contact, ROUTE_MAP.contact[locale]],
-    ];
-
-    return (
-      <AnimatePresence>
-        {open && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} className="fixed inset-0 z-40 flex h-[100dvh] flex-col bg-white lg:hidden">
-            <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-gradient-to-r from-primary via-slate-800 to-hydro px-5">
-              <Link to={ROUTE_MAP.home[locale]} onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
-              <div className="flex items-center gap-2">
-                <LanguageSwitcher mobile onNavigate={onClose} />
-                <button onClick={onClose} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"><X size={20}/></button>
-              </div>
-            </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
-              <div className="grid grid-cols-2 gap-2">
-                {links.map(([label, path], index) => (
-                  <motion.div key={path} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .03 + index * .025, duration: .2 }}>
-                    <Link to={path} onClick={onClose} className="flex min-h-16 items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold leading-tight text-slate-800 transition hover:border-secondary/40 hover:bg-slate-50">
-                      <span>{label}</span><ArrowRight size={14} className="shrink-0 text-slate-300"/>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-              <Link to={ROUTE_MAP.inquiry[locale]} onClick={onClose} className="btn-metallic-mist flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-bold">{copy.quote}<ArrowRight size={16}/></Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
-  }
-
+  const copy = INTERNATIONAL_MOBILE_COPY[locale] || INTERNATIONAL_MOBILE_COPY.en;
+  const links = locale === 'cs' ? PRIMARY_LINKS : [
+    { label: copy.products, path: ROUTE_MAP.catalog[locale], icon: Grid2X2 },
+    { label: copy.city, path: ROUTE_MAP.city[locale], icon: Building2 },
+    { label: copy.garden, path: ROUTE_MAP.garden[locale], icon: Trees },
+    { label: copy.custom, path: ROUTE_MAP.custom[locale], icon: Grid2X2 },
+    { label: copy.technology, path: ROUTE_MAP.technology[locale], icon: Cpu },
+    { label: copy.smart, path: ROUTE_MAP.smart[locale], icon: Cpu },
+    { label: copy.references, path: ROUTE_MAP.references[locale], icon: Images },
+    { label: copy.about, path: ROUTE_MAP.about[locale], icon: Building2 },
+    { label: copy.faq, path: ROUTE_MAP.faq[locale], icon: LifeBuoy },
+    { label: copy.contact, path: ROUTE_MAP.contact[locale], icon: ArrowRight },
+  ];
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -10, scale: .992, filter: 'blur(5px)' }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, y: -8, scale: .994, filter: 'blur(4px)' }}
-          transition={{ type: 'spring', stiffness: 340, damping: 34, mass: .72 }}
-          className="fixed inset-0 z-40 flex h-[100dvh] flex-col overflow-hidden bg-[#f5f9fa] lg:hidden"
-        >
-          <div className="relative z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[linear-gradient(110deg,rgba(7,31,40,.98),rgba(12,58,70,.96),rgba(12,96,105,.9))] px-5 shadow-[0_12px_40px_rgba(8,44,55,.14)] backdrop-blur-xl">
-            <Link to="/" onClick={onClose} className="flex items-center gap-2.5"><Logo size="sm" /></Link>
-            <div className="flex items-center gap-2">
-              <LanguageSwitcher mobile onNavigate={onClose} />
-              <motion.button
-                type="button"
-                onClick={onClose}
-                aria-label="Zavřít menu"
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                whileTap={{ scale: .92 }}
-                transition={{ type: 'spring', stiffness: 520, damping: 28 }}
-                className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-md transition-colors duration-300 hover:border-white/20 hover:bg-white/[.14] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70"
-              >
-                <motion.span
-                  aria-hidden="true"
-                  className="absolute h-[1.5px] w-[21px] rounded-full bg-current"
-                  initial={{ rotate: 38, scaleX: .7 }}
-                  animate={{ rotate: 45, scaleX: 1 }}
-                  whileHover={{ rotate: 49 }}
-                  transition={{ type: 'spring', stiffness: 560, damping: 31, mass: .5 }}
-                />
-                <motion.span
-                  aria-hidden="true"
-                  className="absolute h-[1.5px] w-[21px] rounded-full bg-current"
-                  initial={{ rotate: -38, scaleX: .7 }}
-                  animate={{ rotate: -45, scaleX: 1 }}
-                  whileHover={{ rotate: -49 }}
-                  transition={{ type: 'spring', stiffness: 560, damping: 31, mass: .5 }}
-                />
-              </motion.button>
+    <Dialog.Root open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="mobile-nav-overlay fixed inset-0 z-[70] bg-[#041622]/50 lg:hidden" />
+        <Dialog.Content id="mobile-site-menu" aria-modal="true" onCloseAutoFocus={(event) => { event.preventDefault(); triggerRef?.current?.focus(); }}
+          className="mobile-nav-panel fixed inset-0 z-[80] flex h-[100dvh] flex-col bg-[#F4F8FA] text-[#16374B] focus:outline-none lg:hidden">
+          <Dialog.Title className="sr-only">{locale === 'cs' ? 'Hlavní navigace MLŽIDLA' : 'MLŽIDLA navigation'}</Dialog.Title>
+          <Dialog.Description className="sr-only">{locale === 'cs' ? 'Katalog, řešení podle prostoru, reference a kontakt.' : 'Products, projects, technology and contact.'}</Dialog.Description>
+          <div className="flex h-[68px] shrink-0 items-center justify-between bg-[#082C3F] px-5 text-white">
+            <Link to={ROUTE_MAP.home[locale]} onClick={onClose} aria-label="MLŽIDLA — home"><Logo size="sm" /></Link>
+            <div className="flex items-center gap-2"><LanguageSwitcher mobile onNavigate={onClose} />
+              <Dialog.Close aria-label={locale === 'cs' ? 'Zavřít menu' : 'Close menu'} className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-cyan-200"><X size={22} /></Dialog.Close>
             </div>
           </div>
-
-          <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 pb-7 pt-5 sm:px-5">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-              <div className="absolute -right-20 top-10 h-52 w-52 rounded-full bg-cyan-200/20 blur-3xl" />
-              <div className="absolute -left-24 top-[34%] h-64 w-64 rounded-full bg-white/70 blur-3xl" />
-            </div>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
             <div className="mx-auto max-w-xl">
-              <div className="px-1 pb-4">
-                <p className="font-mono text-[10px] uppercase tracking-[.2em] text-secondary">Hlavní navigace</p>
-                <h2 className="mt-1 font-heading text-2xl font-medium tracking-[-.03em] text-slate-950">Kam chcete pokračovat?</h2>
-              </div>
-
-              <div className="overflow-hidden rounded-[24px] border border-white/80 bg-white/88 shadow-[0_14px_40px_rgba(13,45,56,.08)] backdrop-blur-xl">
-                <button
-                  type="button"
-                  onClick={() => setCollectionsOpen((value) => !value)}
-                  aria-expanded={collectionsOpen}
-                  className="flex min-h-[70px] w-full items-center gap-4 border-b border-slate-100 px-4 py-3.5 text-left transition hover:bg-slate-50"
-                >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#eaf7fb] text-[#0b6c8e]"><Layers3 size={20}/></span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[15px] font-semibold text-slate-950">Kolekce</span>
-                    <span className="mt-0.5 block text-xs leading-5 text-slate-500">Městská, zahradní a zakázková řešení</span>
-                  </span>
-                  <ChevronDown size={17} className={`shrink-0 text-slate-400 transition-transform duration-200 ${collectionsOpen ? 'rotate-180' : ''}`}/>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {collectionsOpen && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: .2, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden border-b border-slate-100 bg-slate-50/80">
-                      <div className="grid gap-1 p-2.5">
-                        {collections.map((item, index) => (
-                          <motion.div key={item.path} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * .025, duration: .16 }}>
-                            <Link to={item.path} onClick={onClose} className="group flex min-h-12 items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition hover:bg-white">
-                              <span className="min-w-0"><strong className="block text-sm font-semibold text-slate-850">{item.label}</strong><span className="mt-0.5 block truncate text-[11px] text-slate-500">{item.sub}</span></span>
-                              <ArrowRight size={14} className="shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-secondary"/>
-                            </Link>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-4">
-                  <p className="mb-3 font-mono text-[9px] font-semibold uppercase tracking-[.18em] text-slate-500">Použití</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {MOBILE_USE_LINKS.map(({ label, path, icon: Icon }) => (
-                      <Link key={path} to={path} onClick={onClose} className="group flex min-h-12 items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3 text-[13px] font-semibold text-slate-800 transition hover:border-cyan-300 hover:bg-cyan-50">
-                        <Icon size={16} className="shrink-0 text-secondary" />
-                        <span>{label}</span>
-                      </Link>
-                    ))}
-                  </div>
+              <p className="mb-4 font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#4B6979]">{locale === 'cs' ? 'Najděte své řešení' : copy.products}</p>
+              <nav aria-label={locale === 'cs' ? 'Hlavní navigace' : 'Main navigation'} className="grid grid-cols-2 gap-2.5">
+                {links.map(({ label, sub, path, icon: Icon }, index) => (
+                  <Link key={path} to={path} onClick={onClose} className={`group flex min-h-[96px] flex-col rounded-[1.3rem] p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087C91] ${index === 0 ? 'bg-[#082C3F] text-white shadow-lg shadow-slate-900/10' : 'bg-white text-[#16374B] hover:bg-[#E8F3F5]'}`}>
+                    <span className="mb-2 flex items-center justify-between"><Icon size={20} aria-hidden="true" /><ArrowRight size={15} aria-hidden="true" className="opacity-60" /></span>
+                    <strong className="text-[14px] leading-5">{label}</strong>
+                    {sub && <span className={`mt-1 text-[11px] leading-4 ${index === 0 ? 'text-[#C6E1E9]' : 'text-[#557080]'}`}>{sub}</span>}
+                  </Link>
+                ))}
+              </nav>
+              {locale === 'cs' && <>
+                <div className="mt-4 rounded-[1.3rem] bg-white p-1">
+                  <button type="button" onClick={() => setCollectionsOpen((value) => !value)} aria-expanded={collectionsOpen} aria-controls="mobile-collections"
+                    className="flex min-h-12 w-full items-center justify-between rounded-2xl px-4 text-sm font-semibold hover:bg-[#F0F7FA]">
+                    Kolekce podle prostoru <ChevronDown size={18} className={`transition-transform motion-reduce:transition-none duration-150 ${collectionsOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {collectionsOpen && <div id="mobile-collections" className="space-y-1 px-1 pb-1">{collections.map((item) => <Link key={item.path} to={item.path} onClick={onClose} className="flex min-h-11 items-center justify-between rounded-xl bg-[#F0F7FA] px-3 text-sm text-[#235568]">{item.label}<ArrowRight size={14} /></Link>)}</div>}
                 </div>
-
-                {PRIMARY_LINKS.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <motion.div key={item.path} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .025 + index * .025, duration: .18 }}>
-                      <Link to={item.path} onClick={onClose} className="group flex min-h-[70px] items-center gap-4 border-b border-slate-100 px-4 py-3.5 transition last:border-b-0 hover:bg-slate-50">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 transition group-hover:border-secondary/25 group-hover:bg-cyan-50 group-hover:text-secondary"><Icon size={19}/></span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block text-[15px] font-semibold text-slate-950">{item.label}</span>
-                          <span className="mt-0.5 block text-xs leading-5 text-slate-500">{item.sub}</span>
-                        </span>
-                        <ArrowRight size={15} className="shrink-0 text-slate-300 transition group-hover:translate-x-1 group-hover:text-secondary"/>
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              <motion.div initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .18, duration: .2 }} className="mt-3">
-                <Link to="/kalkulacka" onClick={onClose} className="group flex min-h-[76px] items-center gap-4 rounded-[22px] border border-cyan-200 bg-gradient-to-r from-cyan-50 to-white px-4 py-3.5 shadow-sm transition hover:border-cyan-300 hover:shadow-md">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0b4860] text-white shadow-sm"><Calculator size={20}/></span>
-                  <span className="min-w-0 flex-1">
-                    <span className="flex items-center gap-2"><strong className="text-[15px] text-slate-950">Nezávazná kalkulace</strong><span className="rounded-full bg-cyan-100 px-2 py-0.5 font-mono text-[8px] font-bold uppercase tracking-[.12em] text-cyan-800">rychle</span></span>
-                    <span className="mt-1 block text-xs leading-5 text-slate-500">Orientační provozní náklady a podklady pro projekt</span>
-                  </span>
-                  <ArrowRight size={16} className="shrink-0 text-secondary transition group-hover:translate-x-1"/>
-                </Link>
-              </motion.div>
-
-              <div className="mt-4 grid grid-cols-2 gap-2.5">
-                <Link to="/smart-ovladani" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Smart řízení <ArrowRight size={13} className="text-slate-300"/></Link>
-                <Link to="/kontakt" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Kontakt <ArrowRight size={13} className="text-slate-300"/></Link>
-              </div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <Link to="/smart-ovladani" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-[#DDEFF2] px-4 text-xs font-semibold">Smart řízení <Cpu size={15} /></Link>
+                  <Link to="/kalkulacka" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-[#DDEFF2] px-4 text-xs font-semibold">Kalkulace provozu <Calculator size={15} /></Link>
+                </div>
+                <Link to="/klientska-sekce" onClick={onClose} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#235568]"><LogIn size={17} /> Klientská sekce</Link>
+              </>}
             </div>
           </div>
-
-          <div className="relative z-20 shrink-0 border-t border-white/70 bg-white/90 px-4 py-3 pb-[max(.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_36px_rgba(13,45,56,.06)] backdrop-blur-xl sm:px-5">
+          <div className="shrink-0 bg-white px-5 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
             <div className="mx-auto flex max-w-xl gap-2">
-              <Link to="/poptavka" onClick={onClose} className="btn-metallic-mist flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold"><Sparkles size={15}/>Popsat projekt<ArrowRight size={15}/></Link>
+              <Link to={ROUTE_MAP.contact[locale]} onClick={onClose} className="flex min-h-12 items-center justify-center rounded-full bg-[#EDF5F7] px-5 text-sm font-semibold">{locale === 'cs' ? 'Kontakt' : copy.contact}</Link>
+              <Link to={ROUTE_MAP.inquiry[locale]} onClick={onClose} className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#082C3F] px-5 text-sm font-semibold text-white">{locale === 'cs' ? 'Nezávazná poptávka' : copy.quote}<ArrowRight size={15} /></Link>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

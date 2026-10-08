@@ -7,7 +7,7 @@ import { getLocaleFromPath } from '@/lib/i18n';
 import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
 import ReturningVisitorEmailPopup from '@/components/common/ReturningVisitorEmailPopup';
-import MistingAdvisorWidget from '@/components/common/MistingAdvisorWidget';
+import WhatsAppContactWidget from '@/components/common/WhatsAppContactWidget';
 
 export default function SiteLayout() {
   const location = useLocation();
@@ -22,7 +22,7 @@ export default function SiteLayout() {
       {locale === 'cs' ? <Footer /> : <LocalizedFooter locale={locale} />}
       {locale === 'cs' && <NotificationPrompt />}
       {locale === 'cs' && <ReturningVisitorEmailPopup />}
-      {locale === 'cs' && <MistingAdvisorWidget />}
+      {locale === 'cs' && <WhatsAppContactWidget />}
       <CookieConsent locale={locale} />
     </div>
   );

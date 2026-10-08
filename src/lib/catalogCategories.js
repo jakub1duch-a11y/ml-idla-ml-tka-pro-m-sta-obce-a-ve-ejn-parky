@@ -6,8 +6,8 @@ export const CATALOG_CATEGORIES = [
     href: "/sloupkova-mlzitka",
     description:
       "Štíhlé nerezové prvky k pěším trasám, lavičkám a pobytovým plochám. Vyberte tvar, který přirozeně doplní architekturu místa.",
-    image: "/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp",
-    imageAlt: "Nerezový mlžicí prvek LINEA CE",
+    image: "/media/categories/columns.webp",
+    imageAlt: "Sloupková mlžítka LINEA v zahradním prostoru",
     use: "Parky · promenády · náměstí",
   },
   {
@@ -17,8 +17,8 @@ export const CATALOG_CATEGORIES = [
     description:
       "Průchozí mlžné prvky pro vstupy, promenády a frekventovaná místa. Tvar a umístění volíme podle pohybu návštěvníků.",
     image:
-      "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png",
-    imageAlt: "Mlžná brána GATE",
+      "/media/categories/gates.webp",
+    imageAlt: "Mlžná brána GATE ve veřejném prostoru",
     use: "Vstupní zóny · sportoviště · areály",
   },
   {
@@ -28,7 +28,7 @@ export const CATALOG_CATEGORIES = [
     description:
       "Výrazné nerezové tvary pro místa setkávání a hravé venkovní prostory. Propojují vodní mlhu s osobitým výrazem instalace.",
     image:
-      "/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp",
+      "/media/categories/sculptures.webp",
     imageAlt: "Tvarový mlžicí prvek MRAK",
     use: "Hřiště · školy · architektonické projekty",
   },
@@ -38,8 +38,9 @@ export const CATALOG_CATEGORIES = [
     href: "/mlhoviste",
     description:
       "Promyšlené sestavy mlžítek, aleje a pobytové zóny. Rozmístění, přívod vody a volitelné řízení SUPLA navrhujeme jako jeden celek.",
-    image: "/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp",
-    imageAlt: "Mlžicí prvek v prostředí městského parku",
+    image: "/media/categories/zones.webp",
+    imagePosition: "center 55%",
+    imageAlt: "Mlžná zóna s více prvky BENDY a LINEA v zahradě",
     use: "Náměstí · parky · rekreační areály",
   },
 ];

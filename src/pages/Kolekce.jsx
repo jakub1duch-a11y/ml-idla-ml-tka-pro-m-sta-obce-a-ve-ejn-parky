@@ -4,9 +4,8 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Loader, Search, X, Building2, Home, Dumbbell, School, UtensilsCrossed, SlidersHorizontal } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
-import { isArchived } from '@/lib/newMedia';
+import { preparePublicCatalogProducts } from '@/lib/publicCatalogProducts';
 import { getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
-import { mergePortalGateProducts } from '@/lib/portalGateProducts';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
 import { useSearchParams } from 'react-router-dom';
@@ -17,17 +16,6 @@ import GatesSlider from '@/components/kolekce/GatesSlider';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import CatalogAudience from '@/components/kolekce/CatalogAudience';
-
-const HIDDEN_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'];
-const HIDDEN_SLUGS = ['garden-cooling-set'];
-const EXCLUDED_CATALOG_NAMES = new Set(['BENDY GATE', 'STÉBLO GATE', 'STEBLO GATE', 'PORTÁL LINEA CE', 'PORTAL LINEA CE']);
-const EXCLUDED_CATALOG_SLUGS = new Set(['bendy-gate', 'steblo-gate', 'steblo-gate-70', 'portal-linea-ce', 'linea-ce-portal']);
-
-function isFunctionalCatalogProduct(product) {
-  const name = String(product?.name || '').trim().toUpperCase();
-  const slug = String(product?.slug || '').trim().toLowerCase();
-  return !EXCLUDED_CATALOG_NAMES.has(name) && !EXCLUDED_CATALOG_SLUGS.has(slug);
-}
 
 const SPACE_FILTERS = [
 { value: 'all', label: 'Všechny prostory', icon: SlidersHorizontal },
@@ -72,8 +60,7 @@ export default function Kolekce() {
   useEffect(() => {
     base44.entities.Product.list('name', 200).
     then((list) => {
-      const visibleProducts = (list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug));
-      setProducts((mergePortalGateProducts(visibleProducts) || []).filter(isFunctionalCatalogProduct));
+      setProducts(preparePublicCatalogProducts(list || []));
     }).
     catch(() => setLoadError(true)).
     finally(() => setLoading(false));

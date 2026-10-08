@@ -2,10 +2,9 @@ import { spawnSync } from 'node:child_process';
 import { mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import ffmpegPath from 'ffmpeg-static';
+const ffmpegPath = 'ffmpeg';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist', 'media');
-if (!ffmpegPath) throw new Error('ffmpeg-static is unavailable.');
 const ui = join(root, 'ui');
 mkdirSync(ui, { recursive: true });
 // Authoring holds and transparency in existing GIFs must survive the build unchanged.

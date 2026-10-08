@@ -14,9 +14,9 @@
 // falling back to the SPA's catch-all index.html, so this works without any
 // server-side routing changes.
 //
-// NOTE: this currently only covers static routes (SEO_PAGES). Dynamic routes
-// (/produkt/:slug, /blog/:slug, /reference/:id) need DB access at build time
-// and are a follow-up.
+// Published product routes use a metadata snapshot so direct links work on
+// static hosts without a SPA rewrite. Product data is still loaded live by
+// the application. Blog and reference detail routes need separate snapshots.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -52,6 +52,8 @@ const LEGACY_REDIRECTS = {
   '/kolekce/art': '/zakazkova-mlzitka',
   '/mlzidla': '/mlzidla-mlzitka',
 };
+
+const productPages = JSON.parse(readFileSync(join(__dirname, '..', 'src', 'lib', 'product-page-meta.json'), 'utf-8'));
 
 const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
 
@@ -93,7 +95,7 @@ function renderPage(page) {
 }
 
 let count = 0;
-const pagesToRender = [...Object.values(SEO_PAGES), ...LOCALIZED_SEO_PAGES];
+const pagesToRender = [...Object.values(SEO_PAGES), ...LOCALIZED_SEO_PAGES, ...productPages.filter(page => /^\/produkt\/[\p{L}\p{N}-]+$/u.test(page.canonicalPath))];
 for (const page of pagesToRender) {
   if (!page.canonicalPath) continue;
 
@@ -136,3 +138,4 @@ for (const [fromPath, toPath] of Object.entries(LEGACY_REDIRECTS)) {
 }
 
 console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s) and ${redirectCount} legacy redirect document(s).`);
+

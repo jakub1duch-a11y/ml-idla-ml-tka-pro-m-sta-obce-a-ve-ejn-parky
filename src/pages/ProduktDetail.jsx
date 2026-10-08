@@ -33,6 +33,9 @@ import PdFaq from '@/components/produkt/new/PdFaq';
 import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
 import PdTeepeeRental from '@/components/produkt/new/PdTeepeeRental';
 import PdTeepeeStudio from '@/components/produkt/new/PdTeepeeStudio';
+import StebloGateDetail from '@/components/produkt/StebloGateDetail';
+import ProductPhotoSequence from '@/components/motion/ProductPhotoSequence';
+import ProductMotionShowcase from '@/components/motion/ProductMotionShowcase';
 import ProductHero from '@/components/ProductHero';
 
 const VIEW_MODES = new Set(['classic', 'standard', 'new']);
@@ -94,6 +97,8 @@ export default function ProduktDetail() {
     </div>
   );
 
+  if (product.slug === 'brana-bendy' && viewMode === 'new') return <StebloGateDetail product={product} />;
+
   const classicHero = (
     <div id="prehled" className="scroll-mt-28">
       {product.slug === 'teepee' ? <ProductHero product={product} /> : <PdHero product={product} />}
@@ -136,6 +141,7 @@ export default function ProduktDetail() {
           <PdFamilyNav product={product} />
           <PdTeepeeStudio product={product} />
           <PdDescription product={product} />
+          <ProductPhotoSequence product={product} />
           <div id="galerie" className="scroll-mt-16"><PdScrollGallery product={product} /></div>
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
@@ -163,6 +169,7 @@ export default function ProduktDetail() {
           {classicHero}
           <PdFamilyNav product={product} />
           <PdDescription product={product} />
+          <ProductPhotoSequence product={product} />
           <PdVisualGalleryCompact product={product} />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
@@ -176,6 +183,7 @@ export default function ProduktDetail() {
       {viewMode === 'new' && (
         <>
           <PdCompactHero product={product} />
+          <ProductMotionShowcase product={product} />
           <PdVisualGalleryCompact product={product} />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
@@ -187,3 +195,4 @@ export default function ProduktDetail() {
     </div>
   );
 }
+

@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React from 'react';
+import useMotionPlayback from '@/components/motion/useMotionPlayback';
+import { motion } from 'framer-motion';
 import { Pause, Play } from 'lucide-react';
 
 export default function PevekoValveFlow({ theme = 'dark' }) {
-  const reduced = useReducedMotion();
-  const [paused, setPaused] = useState(false);
-  const playing = reduced === false && !paused;
+  const { ref, reduced, paused, setPaused, playing } = useMotionPlayback();
   const extension = playing ? '.gif' : '-poster.webp';
   const dark = theme === 'dark';
 
   return (
-    <figure className="min-w-0">
+    <figure ref={ref} className="min-w-0">
       <div className="relative isolate overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#09223a]/35 shadow-[0_24px_70px_rgba(0,0,0,.22)]">
         <div className="pointer-events-none absolute inset-x-4 top-4 z-10 flex items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-[#071a2f]/85 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.16em] text-white shadow-lg backdrop-blur-xl">
@@ -45,3 +44,4 @@ export default function PevekoValveFlow({ theme = 'dark' }) {
     </figure>
   );
 }
+

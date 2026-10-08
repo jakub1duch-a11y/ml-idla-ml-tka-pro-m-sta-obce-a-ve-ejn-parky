@@ -1,3 +1,4 @@
+import EventSpacesSection from './EventSpacesSection';
 import React from 'react';
 import AnchoringInstallationSection from '@/components/installation/AnchoringInstallationSection';
 import { Link } from 'react-router-dom';
@@ -176,35 +177,10 @@ export default function PremiumHomepage2026() {
 
       <PlanningZoneSection />
 
-      <section className="premium-section bg-white" aria-labelledby="eventy-title">
-        <div className="premium-shell">
-          <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#0B8EC5]">Sportoviště · eventy · parky</p>
-              <h2 id="eventy-title" className="premium-heading mt-4 max-w-4xl font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl">Mlžítka pro horké dny, kde se lidé opravdu pohybují.</h2>
-            </div>
-            <Link to="/poptavka" className="premium-action inline-flex items-center gap-2 self-start rounded-full bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#0B8EC5] lg:self-auto">Poptat řešení pro akci <ArrowRight size={16} /></Link>
-          </div>
-
-          <div className="grid gap-5 lg:grid-cols-3">
-            {[
-            ['Sportoviště a cyklotrasy', media.gate, 'Mlžná alej podél trasy vytváří krátké osvěžení pro sportovce i návštěvníky.'],
-            ['Městské parky', media.aura, 'AURA a tvarové prvky podporují setkávání a delší pobyt ve stínu zeleně.'],
-            ['Slavnosti a eventy', media.steblo, 'Mobilní nebo dočasné osvěžení pro akce, trhy a letní program města.']].
-            map(([title, image, text], index) =>
-            <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" whileHover={{ y: -6 }} whileTap={{ scale: 0.99 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: index * 0.06 }} className="premium-card-interactive overflow-hidden rounded-[1.8rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(7,19,29,.10)]">
-                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d19f07acb_40c8a362-0fb9-40af-a332-f6566b1d3ee2__1_.jpeg" alt={`${title} — využití mlžítek MLŽIDLA.CZ`} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
-                <div className="p-6">
-                  <h3 className="font-heading text-2xl font-black tracking-[-.04em] text-[#07131D]">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{text}</p>
-                </div>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
+      <EventSpacesSection />
 
       <AnchoringInstallationSection />
     </div>);
 
 }
+

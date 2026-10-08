@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
+import DetailPhotoStory from '@/components/motion/DetailPhotoStory';
 import HomeHero from '@/components/home/new/HomeHero';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import V3EditorialBridge from '@/components/home/new/V3EditorialBridge';
@@ -37,6 +38,7 @@ export default function Home() {
         <HomeHero />
         <UrbanCoolingExperience />
         <PremiumHomepage2026 />
+        <DetailPhotoStory />
         <HomeMist3DScene />
         <ProductPhotoGallery />
         <V3EditorialBridge />

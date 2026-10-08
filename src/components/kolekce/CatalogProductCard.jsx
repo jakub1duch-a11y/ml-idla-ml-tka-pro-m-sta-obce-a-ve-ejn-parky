@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ShieldCheck, Gauge, Droplets, Sparkles } from 'lucide-react';
+import { GATE_MEDIA } from '@/lib/gateMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import ProductViewMenu from '@/components/produkt/ProductViewMenu';
 import { getLine, getFamily } from '@/lib/productFamilies';
@@ -20,7 +21,7 @@ export default function CatalogProductCard({ product, onProductClick }) {
   return (
     <motion.article initial={reduced ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.16 }} whileHover={reduced ? undefined : { y: -7 }} whileTap={reduced ? undefined : { scale: 0.992 }} transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }} className="catalog-product-card catalog-glass-card group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white/90 shadow-[0_18px_60px_rgba(7,19,29,.07)] backdrop-blur-xl">
       <Link to={`/produkt/${product.slug}`} onClick={notifyOpen} className="relative block aspect-[4/3] overflow-hidden bg-[radial-gradient(circle_at_72%_22%,#FFFFFF_0%,#EDF8FA_45%,#DCEFF3_100%)] after:pointer-events-none after:absolute after:inset-y-0 after:-left-1/2 after:w-1/3 after:-skew-x-12 after:bg-gradient-to-r after:from-transparent after:via-white/35 after:to-transparent after:opacity-0 after:transition-all after:duration-700 group-hover:after:left-[120%] group-hover:after:opacity-100">
-        <ProductHoverImage product={product} className="h-full w-full" fullBleed cleanPreview />
+        <>{GATE_MEDIA[product.slug] ? <img src={GATE_MEDIA[product.slug]} alt={product.name} width="960" height="720" loading="lazy" decoding="async" className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.025]" /> : <ProductHoverImage product={product} className="h-full w-full" fullBleed cleanPreview />}</>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07131D]/10 via-transparent to-white/15 opacity-70" />
         <div className="absolute right-4 top-4 z-30" onClick={(event) => event.preventDefault()}><ProductViewMenu product={product} /></div>
         <span className="absolute bottom-4 right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-white/90 text-[#07131D] opacity-0 shadow-lg backdrop-blur transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"><ArrowUpRight size={17} /></span>
@@ -50,3 +51,4 @@ export default function CatalogProductCard({ product, onProductClick }) {
     </motion.article>
   );
 }
+

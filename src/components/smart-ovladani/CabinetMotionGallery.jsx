@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React from 'react';
+import useMotionPlayback from '@/components/motion/useMotionPlayback';
+import MotionHeading from '@/components/motion/MotionHeading';
+import { motion } from 'framer-motion';
 import { Pause, Play } from 'lucide-react';
 
 const details = [
@@ -9,14 +11,12 @@ const details = [
 ];
 
 export default function CabinetMotionGallery() {
-  const reduceMotion = useReducedMotion();
-  const [paused, setPaused] = useState(false);
-  const playing = reduceMotion === false && !paused;
+  const { ref, reduced: reduceMotion, paused, setPaused, playing } = useMotionPlayback();
   const extension = playing ? '.gif' : '-poster.webp';
   const source = name => `/media/smart/${name}${extension}`;
 
   return (
-    <div className="relative mx-auto mt-12 max-w-7xl px-5 sm:px-8 lg:px-10">
+    <div ref={ref} className="relative mx-auto mt-12 max-w-7xl px-5 sm:px-8 lg:px-10">
       <div className="overflow-hidden rounded-[2rem] bg-white/90 p-5 shadow-[0_24px_80px_rgba(8,47,63,.08)] sm:p-8">
         <div className="grid items-center gap-7 lg:grid-cols-[.95fr_1.05fr]">
           <figure className="min-w-0">
@@ -28,10 +28,10 @@ export default function CabinetMotionGallery() {
               <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-white/15 via-[#eaf6f7]/20 to-[#edf7f8]/80" />
               <div className="pointer-events-none absolute inset-x-4 top-4 z-10 flex items-center justify-between">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/55 bg-[#073142]/85 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.16em] text-white shadow-lg backdrop-blur-xl">
-                  <motion.span animate={playing ? { opacity: [0.45, 1, 0.45], scale: [0.8, 1.25, 0.8] } : false} transition={{ duration: 1.6, repeat: Infinity }} className="h-1.5 w-1.5 rounded-full bg-[#7AE1EF] shadow-[0_0_12px_rgba(122,225,239,.95)]" />
+                  <motion.span animate={playing ? { opacity: [0.45, 1, 0.45], scale: [0.8, 1.25, 0.8] } : false} transition={{ duration: 4.5, repeat: Infinity }} className="h-1.5 w-1.5 rounded-full bg-[#7AE1EF] shadow-[0_0_12px_rgba(122,225,239,.95)]" />
                   Animace řešení
                 </span>
-                <span className="rounded-full bg-white/80 px-2.5 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-cyan-950 shadow-sm">{playing ? '01 / LIVE' : 'PAUZA'}</span>
+                <span className="rounded-full bg-white/80 px-2.5 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-cyan-950 shadow-sm">{playing ? 'UKÁZKA' : 'PAUZA'}</span>
               </div>
               {playing && (
                 <motion.div aria-hidden="true" initial={{ x: '-130%', opacity: 0 }} animate={{ x: '170%', opacity: [0, 0.6, 0] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.4, ease: 'easeInOut' }} className="pointer-events-none absolute inset-y-0 z-[1] w-[28%] -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent blur-sm" />
@@ -49,7 +49,7 @@ export default function CabinetMotionGallery() {
           </figure>
           <div className="min-w-0">
             <p className="font-mono text-[11px] uppercase tracking-[.16em] text-cyan-800">Uvnitř chytrého mlžení</p>
-            <h3 className="mt-3 font-heading text-2xl font-semibold leading-tight tracking-[-.025em] text-[#082f3f] sm:text-3xl">Otevřete si přehled o celém řešení.</h3>
+            <MotionHeading as="h3" className="mt-3 font-heading text-2xl font-semibold leading-tight tracking-[-.025em] text-[#082f3f] sm:text-3xl">Otevřete si přehled o celém řešení.</MotionHeading>
             <p className="mt-4 max-w-xl text-base leading-7 text-slate-600">Za zavřenými dveřmi s logem MLŽIDLA je prostor pro řízení, filtraci a napojení zón. Prohlédněte si otevřený box i jednotlivé části jeho výbavy.</p>
             <p className="mt-3 text-xs leading-5 text-slate-500">Ilustrační sestava a městský prostor. Výbava i způsob montáže se navrhují podle konkrétního místa.</p>
             {reduceMotion === false && (
@@ -64,8 +64,8 @@ export default function CabinetMotionGallery() {
           {details.map((detail, index) => (
             <figure key={detail.file} className="group relative min-w-0 overflow-hidden rounded-3xl bg-[#f2fafb] px-4 pb-5 pt-2 shadow-[0_12px_28px_rgba(8,47,63,.05)]">
               <div className="pointer-events-none absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-[#073142]/88 px-2.5 py-1 font-mono text-[8px] font-bold uppercase tracking-[.14em] text-white shadow-sm">
-                <motion.span animate={playing ? { opacity: [0.4, 1, 0.4] } : false} transition={{ duration: 1.5, delay: index * 0.12, repeat: Infinity }} className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
-                živý detail
+                <motion.span animate={playing ? { opacity: [0.4, 1, 0.4] } : false} transition={{ duration: 4.5, delay: index * 0.12, repeat: Infinity }} className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
+                Detail výbavy
               </div>
               {playing && <motion.div aria-hidden="true" initial={{ x: '-145%' }} animate={{ x: '180%' }} transition={{ duration: 3.6, delay: 1.1 + index * 0.25, repeat: Infinity, repeatDelay: 2.4 }} className="pointer-events-none absolute inset-y-0 z-[1] w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/45 to-transparent" />}
               <img src={source(detail.file)} width="360" height="360" alt={detail.alt} className="relative mx-auto aspect-square h-auto w-full max-w-[280px] object-contain transition duration-500 group-hover:scale-[1.03]" loading="lazy" decoding="async" />
@@ -80,3 +80,4 @@ export default function CabinetMotionGallery() {
     </div>
   );
 }
+

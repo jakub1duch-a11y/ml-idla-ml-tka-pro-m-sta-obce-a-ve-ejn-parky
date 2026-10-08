@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Droplets, Gauge, ShieldCheck, Timer, Thermometer } from 'lucide-react';
 
 const places = [
-['Náměstí & centra', 'Ochlazení pobytových míst v aktivním centru města.', '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp'],
+['Náměstí & centra', 'Ochlazení pobytových míst v aktivním centru města.', '/media/gates/gate-u.webp'],
 ['Parky & promenády', 'Jemná mlha jako součást zeleně a veřejného prostoru.', '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp'],
-['Sportoviště & hřiště', 'Interaktivní osvěžení pro aktivní místa a letní provoz.', '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp'],
-['Nádraží & uzly', 'Komfort v místech čekání a vysokého pohybu lidí.', '/media/optimized/5401e0933_dac8b98065c5472b16bc1910348915a1.webp']];
+['Sportoviště & hřiště', 'Interaktivní osvěžení pro aktivní místa a letní provoz.', '/media/optimized/401d9b665_generated_image.webp'],
+['Nádraží & uzly', 'Komfort v místech čekání a vysokého pohybu lidí.', '/media/optimized/2cc053413_generated_image.webp']];
 
 
 const facts = [
@@ -25,9 +25,10 @@ const reveal = {
 
 export default function UrbanCoolingExperience() {
   const heroRef = useRef(null);
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.045]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 90]);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.045]);
 
   return <div className="ucx">
     <section ref={heroRef} className="ucx-hero">

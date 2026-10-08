@@ -13,7 +13,7 @@ const IMG = {
 };
 
 export const CITY_ITEMS = [
-  { icon: Building2, code: '01', title: 'Náměstí & centrum města', text: 'Lokální ochlazovací body pro pěší zóny, tržiště a frekventovaná pobytová místa.', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
+  { icon: Building2, code: '01', title: 'Náměstí & centrum města', text: 'Lokální ochlazovací body pro pěší zóny, tržiště a frekventovaná pobytová místa.', image: '/media/gates/gate-u.webp' },
   { icon: Trees, code: '02', title: 'Parky & promenády', text: 'Mlžné ostrovy a liniové prvky u laviček, pěších tras, nábřeží a městské zeleně.', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp' },
   { icon: TrainFront, code: '03', title: 'Nádraží & dopravní uzly', text: 'Ochlazení čekacích a přednádražních prostorů v místech s vysokou koncentrací lidí.', image: IMG.station },
   { icon: Trophy, code: '04', title: 'Sportoviště', text: 'Ochlazovací zóny pro sportovce, diváky a doprovod u tribun, hřišť a běžeckých tras.', image: IMG.sport },

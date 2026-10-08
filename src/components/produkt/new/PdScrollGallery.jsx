@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import '@/styles/product-scroll-gallery.css';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const TECHNICAL_RE = /(technick|schema|schéma|vykres|výkres|montaz|montáž|instalac|edraw)/i;
@@ -15,74 +16,30 @@ function dedupe(items) {
   return [...new Map(items.filter((item) => item?.url).map((item) => [item.url, item])).values()];
 }
 
-function StoryFrame({ item, index, total, progress, productName, onOpen }) {
-  const segment = 1 / Math.max(total, 1);
-  const enterStart = Math.max(0, index * segment - segment * 0.34);
-  const enterEnd = Math.min(0.98, index * segment + segment * 0.05);
-  const exitStart = Math.max(enterEnd + 0.01, (index + 1) * segment - segment * 0.20);
-  const exitEnd = Math.min(1, (index + 1) * segment);
-  const isFirst = index === 0;
-  const isLast = index === total - 1;
-
-  const y = useTransform(
-    progress,
-    isFirst ?
-    [0, exitStart, exitEnd] :
-    isLast ?
-    [enterStart, enterEnd, 1] :
-    [enterStart, enterEnd, exitStart, exitEnd],
-    isFirst ?
-    ['0%', '0%', '-112%'] :
-    isLast ?
-    ['112%', '0%', '0%'] :
-    ['112%', '0%', '0%', '-112%']
-  );
-
-  const opacity = useTransform(
-    progress,
-    isFirst ?
-    [0, exitStart, exitEnd] :
-    isLast ?
-    [enterStart, enterEnd, 1] :
-    [enterStart, enterEnd, exitStart, exitEnd],
-    isFirst ?
-    [1, 1, 0] :
-    isLast ?
-    [0, 1, 1] :
-    [0, 1, 1, 0]
-  );
-
-  const scale = useTransform(
-    progress,
-    isFirst ?
-    [0, exitStart, exitEnd] :
-    isLast ?
-    [enterStart, enterEnd, 1] :
-    [enterStart, enterEnd, exitStart, exitEnd],
-    isFirst ?
-    [1, 1, 0.965] :
-    isLast ?
-    [1.04, 1, 1] :
-    [1.04, 1, 1, 0.965]
-  );
-
+function StoryFrame({ item, index, total, progress, productName, onOpen, active }) {
+  const enterStart = Math.max(0, (index - .4) / total);
+  const enterEnd = Math.min(1, (index + .55) / total);
+  // The previous frame stays still. Each new photograph rolls over it from below.
+  const y = useTransform(progress, [enterStart, enterEnd], index === 0 ? ['0%', '0%'] : ['100%', '0%']);
   return (
     <motion.article
-      style={{ y, opacity, scale }}
-      className="group absolute inset-0 will-change-transform">
+      style={{ y, zIndex: index + 1 }}
+      className="group absolute inset-0 will-change-transform" aria-hidden={active !== index}>
       
       <button
         type="button"
         onClick={() => onOpen(index)}
+        tabIndex={active === index ? 0 : -1}
         className="relative h-full w-full overflow-hidden bg-[#07131D] text-left"
         aria-label={`Otevřít fotografii ${index + 1} přes celou obrazovku`}>
         
+        {item.fit === 'contain' && <img src={optimize(item.url)} alt="" aria-hidden="true" className="scroll-photo-backdrop" loading="lazy" />}
         <motion.img
           src={optimize(item.url)}
           alt={item.alt || `${productName} — fotografie ${index + 1}`}
           className={`h-full w-full duration-700 ease-out group-hover:scale-[1.035] transition-transform ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
           style={{ objectPosition: item.focal || 'center center' }}
-          loading={index < 2 ? 'eager' : 'lazy'} />
+          loading={Math.abs(active - index) <= 1 ? 'eager' : 'lazy'} />
         
 
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(3,12,20,.10)_0%,rgba(3,12,20,.05)_48%,rgba(3,12,20,.82)_100%)]" />
@@ -112,11 +69,20 @@ function StoryFrame({ item, index, total, progress, productName, onOpen }) {
 
 function FullscreenViewer({ items, index, productName, onClose, onChange }) {
   const item = items[index];
+  const dialogRef = useRef(null);
+  const reduced = useReducedMotion();
+  useEffect(() => { const previous = document.activeElement; dialogRef.current?.querySelector('button')?.focus(); return () => previous?.focus(); }, []);
 
   useEffect(() => {
     const before = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (event) => {
+      if (event.key === 'Tab') {
+        const nodes = [...dialogRef.current.querySelectorAll('button')];
+        const first = nodes[0], last = nodes.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
       if (event.key === 'Escape') onClose();
       if (event.key === 'ArrowLeft') onChange((index - 1 + items.length) % items.length);
       if (event.key === 'ArrowRight') onChange((index + 1) % items.length);
@@ -129,7 +95,7 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
   }, [index, items.length, onChange, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020A11]/96 p-3 backdrop-blur-xl sm:p-6" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020A11]/96 p-3 backdrop-blur-xl sm:p-6" ref={dialogRef} role="dialog" aria-modal="true" aria-label={`Fotografie produktu ${productName}`}>
       <button type="button" onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20">
         <X size={20} />
       </button>
@@ -144,7 +110,7 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
             initial={{ opacity: 0, y: 18, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.985 }}
-            transition={{ duration: 0.28, ease: 'easeOut' }} />
+            transition={{ duration: reduced ? 0 : 0.28, ease: 'easeOut' }} />
           
         </AnimatePresence>
 
@@ -170,6 +136,7 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
 
 export default function PdScrollGallery({ product }) {
   const sectionRef = useRef(null);
+  const reduced = useReducedMotion();
   const [approvedVisuals, setApprovedVisuals] = useState([]);
   const [adminMedia, setAdminMedia] = useState([]);
   const [active, setActive] = useState(0);
@@ -177,6 +144,7 @@ export default function PdScrollGallery({ product }) {
 
   useEffect(() => {
     let cancelled = false;
+    setApprovedVisuals([]); setAdminMedia([]); setLightbox(null); setActive(0);
     Promise.all([
     base44.entities.VisualizationAsset.
     filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 40).
@@ -197,7 +165,7 @@ export default function PdScrollGallery({ product }) {
     const curated = getCuratedProductMedia(product);
 
     const approved = approvedVisuals.map((item) => ({
-      url: item.thumbnail_url || item.image_url,
+      url: item.image_url,
       title: `${product.name} · ${(item.environment_label || item.space_name || item.environment || 'konkrétní prostor').toString().replace(/[_-]+/g, ' ')}`,
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · '),
       badge: 'Náhled v prostoru',
@@ -209,7 +177,7 @@ export default function PdScrollGallery({ product }) {
     filter((item) => isImage(item.file_url)).
     map((item) => ({
       url: item.file_url,
-      title: item.file_name || `${product.name} — produktová fotografie`,
+      title: `${product.name} — produktová fotografie`,
       caption: item.media_role === 'realization' ? 'Reálná realizace' : 'Produktový detail',
       badge: item.media_role === 'realization' ? 'Realizace' : 'Produkt',
       fit: 'cover'
@@ -268,14 +236,9 @@ export default function PdScrollGallery({ product }) {
     setActive(index);
   });
 
-  const shellScale = useTransform(scrollYProgress, [0, 0.05, 0.88, 1], [0.965, 1, 1, 0.90]);
-  const shellOpacity = useTransform(scrollYProgress, [0, 0.04, 0.92, 1], [0.72, 1, 1, 0.58]);
-  const shellFilter = useTransform(scrollYProgress, [0, 0.06, 0.90, 1], ['blur(6px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
-  const shellRadius = useTransform(scrollYProgress, [0, 0.05, 0.90, 1], [28, 0, 0, 32]);
-
   if (!items.length) return null;
 
-  const storyHeight = Math.max(260, items.length * 96 + 92);
+  const storyHeight = Math.max(180, items.length * 80 + 100);
 
   return (
     <section className="relative bg-[#07131D] text-white">
@@ -287,50 +250,26 @@ export default function PdScrollGallery({ product }) {
               Produkt v prostoru. Jeden snímek za druhým.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-white/64 sm:text-base">
-              Scrollujte dolů. Každá další fotografie vystoupí odspodu přes celou obrazovku. Kliknutím otevřete aktivní snímek bez rušivých popisků.
+              Prohlédněte si celý produkt, jeho detaily a umístění v prostoru. Posouvejte stránku nebo vyberte konkrétní snímek.
             </p>
           </div>
           <div className="hidden items-center gap-2 rounded-full border border-white/12 bg-white/[.05] px-4 py-2 text-xs text-white/68 lg:flex">
             <ArrowDown size={14} className="text-cyan-300" />
-            Scroll gallery
+            Prohlédnout fotografie
           </div>
         </div>
       </div>
 
-      <div ref={sectionRef} className="relative" style={{ height: `${storyHeight}svh` }}>
-        <motion.div
-          style={{ scale: shellScale, opacity: shellOpacity, filter: shellFilter, borderRadius: shellRadius }}
-          className="sticky top-0 h-[100svh] overflow-hidden bg-[#07131D] shadow-[0_30px_100px_rgba(0,0,0,.35)] will-change-transform">
-          
-          {items.map((item, index) =>
-          <StoryFrame
-            key={item.url}
-            item={item}
-            index={index}
-            total={items.length}
-            progress={scrollYProgress}
-            productName={product.name}
-            onOpen={setLightbox} />
-
-          )}
-
-          <div className="pointer-events-none absolute left-4 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-1.5 sm:left-6">
-            {items.map((item, index) =>
-            <span
-              key={item.url}
-              className={`block rounded-full transition-all duration-300 ${active === index ? 'h-8 w-1.5 bg-cyan-300' : 'h-1.5 w-1.5 bg-white/28'}`} />
-
-            )}
-          </div>
-
-          <div className="pointer-events-none absolute bottom-5 right-5 z-20 rounded-full border border-white/15 bg-black/32 px-3 py-2 font-mono text-[9px] uppercase tracking-[.16em] text-white/72 backdrop-blur-md sm:bottom-6 sm:right-6">
-            {active + 1} / {items.length}
-          </div>
-        </motion.div>
-      </div>
+      {reduced ? <div className="scroll-photo-static">{items.map((item, index) => <button key={item.url} type="button" onClick={() => setLightbox(index)} aria-label={`Zvětšit fotografii ${index + 1}: ${product.name}`}><img src={optimize(item.url)} alt={item.alt || `${product.name} — fotografie ${index + 1}`} loading="lazy" /><span>{index + 1} / {items.length} · {item.title || product.name}</span></button>)}</div> : <div ref={sectionRef} className="scroll-photo-track" style={{ height: items.length > 1 ? `${storyHeight}svh` : '100svh' }}>
+        <div className="scroll-photo-stage">
+          {items.map((item, index) => <StoryFrame key={item.url} item={item} index={index} total={items.length} progress={scrollYProgress} productName={product.name} onOpen={setLightbox} active={active} />)}
+          <nav className="scroll-photo-nav" aria-label="Vybrat fotografii produktu">{items.map((item, index) => <button type="button" key={item.url} aria-current={active === index ? 'true' : undefined} aria-label={`Přejít na fotografii ${index + 1}`} onClick={() => { const node = sectionRef.current; if (!node) return; const max = node.offsetHeight - window.innerHeight; const progress = index === 0 ? 0 : (index + .6) / items.length; window.scrollTo({ top: window.scrollY + node.getBoundingClientRect().top + max * progress, behavior: 'smooth' }); }}>{index + 1}</button>)}</nav>
+          <a className="scroll-photo-skip" href="#parametry">Přejít na parametry ↓</a>
+        </div>
+      </div>}
 
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 pb-14 pt-8 text-white/48 sm:px-6 lg:px-10 lg:pb-20">
-        <p className="text-xs leading-5 sm:text-sm">Po posledním snímku se galerie zmenší a zamlží, aby navázala na technickou část produktu.</p>
+        <p className="text-xs leading-5 sm:text-sm">Prohlédli jste si produkt. Níže najdete parametry, možnosti instalace a ovládání.</p>
         <ArrowDown size={16} className="shrink-0 text-cyan-300" />
       </div>
 

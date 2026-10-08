@@ -9,6 +9,7 @@ export const GATE_GROUPS = [
 ];
 
 const PRESENTATION = {
+  'brana-bendy': [{ name: 'STÉBLO GATE®', group: 'gate', caption: 'Průchod mezi dvěma stébly', image: '/media/gates/steblo-gate-1.webp', text: 'Dvě stejná mlžítka STÉBLO proti sobě vytvářejí lehký průchod jemnou mlhou pro parky, promenády a veřejné prostory.' }],
   'mlzna-brana-gate': [
     { variant: 'U', name: 'GATE70-U', group: 'gate', caption: 'Pravoúhlá mlžná brána', image: '/media/gates/gate-u.webp', text: 'Čistá pravoúhlá linie pro vstupy do areálů, náměstí a moderní veřejný prostor.' },
     { variant: 'V', name: 'GATE70-V', group: 'gate', caption: 'Mlžná brána s lomeným obloukem', image: '/media/gates/gate-v.webp', text: 'Jemně lomený oblouk vytváří průchod mlhou na promenádách, v parcích a pobytových zónách.' },
@@ -40,3 +41,4 @@ export function buildGateCatalog(records = []) {
     return order.indexOf(a.group) - order.indexOf(b.group) || a.name.localeCompare(b.name, 'cs');
   });
 }
+

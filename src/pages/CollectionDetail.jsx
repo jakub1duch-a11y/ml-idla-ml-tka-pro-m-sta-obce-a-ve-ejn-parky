@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, Check, Building2, ShieldCheck, Wrench, FileText, MapPin, Ruler, Droplets } from 'lucide-react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import DetailPhotoStory from '@/components/motion/DetailPhotoStory';
 import CollectionHero from '@/components/kolekce/CollectionHero';
 import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
 import { COLLECTIONS } from '@/components/kolekce/collectionData';
@@ -57,6 +58,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
       <CollectionHero collection={collection} />
 
       {(isCity || isGarden) && <UseCaseExperience variant={isGarden ? 'garden' : 'city'} />}
+      {isCity && <DetailPhotoStory variant="spaces" />}
 
       {(isCity || isGarden) && (
         <section className="border-b border-border bg-white">
@@ -144,3 +146,4 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
     </main>
   );
 }
+

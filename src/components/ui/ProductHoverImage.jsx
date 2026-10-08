@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Images, Play } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getOptimizedMediaUrl, getOriginalMediaUrl } from '@/lib/optimizedMedia';
@@ -32,14 +33,15 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
   const [activeView, setActiveView] = useState(0);
   const resolvedAlt = alt || product?.image_alt || product?.name || 'Mlžítko MLŽIDLA®';
   const [hovered, setHovered] = useState(false);
+  const reduced = useReducedMotion();
 
   const views = useMemo(() => {
     const studioMedia = getStudioMedia(product);
     const productImage = isUsableImage(product?.image_url) ? getOptimizedMediaUrl(product.image_url) : '';
     const fallbackImage = isUsableImage(fallback) ? getOptimizedMediaUrl(fallback) : '';
-    const primary = cleanPreview
-      ? (productImage || studioMedia || fallbackImage)
-      : (studioMedia || productImage || fallbackImage);
+    // Always lead with the approved studio asset when it exists. This keeps every
+    // product grid consistent, while the hover gallery still reveals real installations.
+    const primary = studioMedia || productImage || fallbackImage;
     const gallery = Array.isArray(product?.gallery_urls) ? product.gallery_urls.map(getOptimizedMediaUrl) : [];
     const videoUrl = isDirectVideo(product?.video_url)
       ? product.video_url
@@ -124,6 +126,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
   const hasMultiple = views.length > 1;
   const showDots = hasMultiple && !cleanPreview;
   const previewPosition = product?.hero_focal_position || 'center center';
+  const hasStudioStage = current.type === 'studio' || current.type === 'product';
 
   return (
     <div
@@ -134,6 +137,12 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
+      {hasStudioStage && (
+        <>
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(255,255,255,.98)_0%,rgba(232,247,249,.76)_38%,rgba(206,230,235,.92)_100%)]" />
+          <div aria-hidden className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(7,94,112,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(7,94,112,.07)_1px,transparent_1px)] [background-size:3rem_3rem] [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
+        </>
+      )}
       {/* Render all views stacked, toggle opacity for crossfade */}
       {views.map((view, idx) => {
         const isActive = idx === activeView;
@@ -178,6 +187,26 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
           />
         );
       })}
+
+      {hasStudioStage && (
+        <>
+          <img
+            aria-hidden="true"
+            alt=""
+            src="/media/ui/product-studio-motion.gif"
+            loading="lazy"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover mix-blend-screen opacity-35"
+          />
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 z-20 w-[30%] -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent blur-sm"
+            initial={false}
+            animate={reduced ? undefined : { x: ['-160%', '430%'], opacity: [0, 0.55, 0] }}
+            transition={reduced ? undefined : { duration: 3.8, ease: 'easeInOut', repeat: Infinity, repeatDelay: 2.4 }}
+          />
+          <span className="pointer-events-none absolute left-3 top-3 z-30 rounded-full border border-white/70 bg-white/75 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-[#075D70] shadow-sm backdrop-blur-md">Studio preview</span>
+        </>
+      )}
 
       {/* View type badge */}
       {!cleanPreview && (hasMultiple || current.type === 'studio') && (

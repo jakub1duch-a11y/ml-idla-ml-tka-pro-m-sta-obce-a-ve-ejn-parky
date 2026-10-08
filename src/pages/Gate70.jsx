@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2, Wifi, Thermometer, Zap, Lightbulb, Smartphone, Radio } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
@@ -134,7 +134,16 @@ function Lightbox({ images, idx: initIdx, onClose }) {
 }
 
 export default function Gate70() {
-  const [activeVariant, setActiveVariant] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedVariant = searchParams.get('varianta');
+  const [activeVariant, setActiveVariant] = useState(requestedVariant === 'V' ? 1 : 0);
+  useEffect(() => { setActiveVariant(requestedVariant === 'V' ? 1 : 0); }, [requestedVariant]);
+  const chooseVariant = (index) => {
+    setActiveVariant(index);
+    const next = new URLSearchParams(searchParams);
+    next.set('varianta', VARIANTS[index].id);
+    setSearchParams(next, { replace: true });
+  };
   const [lightbox, setLightbox] = useState(null);
   const variant = VARIANTS[activeVariant];
 
@@ -185,7 +194,7 @@ export default function Gate70() {
             {/* Variant switcher */}
             <div className="flex gap-3 mb-6">
               {VARIANTS.map((v, i) =>
-              <button key={v.id} onClick={() => setActiveVariant(i)}
+              <button key={v.id} onClick={() => chooseVariant(i)}
               className={`px-5 py-2 rounded-full text-sm font-mono tracking-widest uppercase border transition-all ${activeVariant === i ? 'bg-white text-slate-900 border-white' : 'border-white/25 text-white/60 hover:border-white/50 hover:text-white'}`}>
                   {v.label}
                 </button>
@@ -506,7 +515,7 @@ export default function Gate70() {
 
             {/* Contact form */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
-              <Gate70ContactForm />
+              <Gate70ContactForm initialVariant={variant.label} />
             </motion.div>
           </div>
         </div>
@@ -517,8 +526,9 @@ export default function Gate70() {
 
 }
 
-function Gate70ContactForm() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', variant: 'GATE70-U', message: '' });
+function Gate70ContactForm({ initialVariant }) {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', variant: initialVariant, message: '' });
+  useEffect(() => { setForm((current) => ({ ...current, variant: initialVariant })); }, [initialVariant]);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
 

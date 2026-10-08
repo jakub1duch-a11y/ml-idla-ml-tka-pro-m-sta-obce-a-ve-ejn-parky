@@ -7,6 +7,7 @@ import { base44 } from '@/api/base44Client';
 import { normalizeProductMedia } from '@/lib/optimizedMedia';
 import { isPublicCatalogProduct } from '@/lib/publicCatalogProducts';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
+import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
 
 // Zachovává pořadí kolekce přesně podle productSlugs; varianty jednoho produktu
 // se přidávají zvlášť přes collection.variantCards a nevytvářejí duplicitní Product záznamy.
@@ -83,33 +84,7 @@ const getFamily = (product) => {
 };
 
 function ProductCard({ product }) {
-  const reduced = useReducedMotion();
-  const type = getType(product);
-  const family = getFamily(product);
-  const variants = [];
-  return (
-    <motion.article whileHover={reduced ? undefined : { y: -6 }} whileTap={reduced ? undefined : { scale: 0.992 }} transition={{ type: "spring", stiffness: 280, damping: 24 }} className="catalog-glass-card group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white/[.92] shadow-[0_18px_60px_rgba(7,19,29,.07)] backdrop-blur-xl">
-      <Link to={`/produkt/${product.slug}`} className="block">
-      <div className="relative bg-[linear-gradient(180deg,#fafbfb_0%,#eef1f2_100%)] p-3 sm:p-4">
-        <div className="overflow-hidden rounded-2xl border border-white/80 bg-white shadow-[0_8px_24px_rgba(15,23,42,.045)]">
-          <ProductHoverImage product={product} className="aspect-[4/5] bg-white" />
-        </div>
-        <div className="absolute left-6 top-6 rounded-full border border-black/10 bg-white/94 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-foreground backdrop-blur">{type}</div>
-        {product.coverage_area && <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between gap-2 rounded-2xl border border-white/70 bg-white/90 px-3 py-2 text-[11px] text-foreground shadow-sm backdrop-blur"><span className="inline-flex items-center gap-1.5"><Ruler size={13} /> {product.coverage_area}</span><span className="hidden sm:inline-flex items-center gap-1.5 text-muted-foreground"><MapPin size={13} /> Katalogový model</span></div>}
-      </div>
-      </Link>
-      <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center justify-between gap-3">
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-secondary">{family || 'Produkt kolekce'}</p>
-          {variants.length > 0 && <span className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-500">{variants.length} variant</span>}
-        </div>
-        <h3 className="mt-2 min-h-[3.6rem] line-clamp-2 font-heading text-2xl leading-[1.2] text-foreground">{product.name}</h3>
-        <p className="mt-3 min-h-[2.75rem] line-clamp-2 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
-        {variants.length > 0 && <div className="mt-5 border-t border-slate-100 pt-4"><p className="mb-2 font-mono text-[9px] font-semibold uppercase tracking-[.15em] text-slate-400">Rychlá volba varianty</p><div className="flex flex-wrap gap-2">{variants.map((variant) => <Link key={variant.href} to={variant.href} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-600 transition hover:border-[#0b4860]/30 hover:bg-[#0b4860]/5 hover:text-[#0b4860]">{variant.label}</Link>)}</div></div>}
-        <Link to={`/produkt/${product.slug}`} className="catalog-sweep btn-secondary-outline mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground transition-colors group-hover:border-secondary group-hover:text-secondary">Detail produktu <ArrowRight size={15} /></Link>
-      </div>
-    </motion.article>
-  );
+  return <CatalogProductCard product={product} />;
 }
 
 function VariantCard({ variant }) {
@@ -154,7 +129,7 @@ export default function CollectionProductGrid({ collection }) {
       </div>
 
       {products.length > 0 && <ProductExperience products={products}>
-<div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+<div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => <ProductCard key={product.id} product={product} />)}
       </div>
 </ProductExperience>}

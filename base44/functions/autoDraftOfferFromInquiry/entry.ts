@@ -326,7 +326,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       product_name: product.name,
       presentation_variant: audienceVariant,
       smart_control_included: false,
-      status: 'draft',
+      status: 'draft_ready_for_review',
       total_price: unitPrice > 0 ? unitPrice * requestedQuantity : 0,
       sender_email: 'meduna@holmtec.cz',
       bcc_recipients: ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'],
@@ -425,6 +425,11 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       if (inquiryType === 'contact') await base44.asServiceRole.entities.ContactInquiry.update(inquiryId, { status: 'in_progress' });
       else await base44.asServiceRole.entities.Poptavka.update(inquiryId, { status: 'v_reseni' });
     } catch (_) {}
+
+    // Send internal review email to Jakub1duch@gmail.com (best-effort, not blocking)
+    try {
+      await base44.functions.invoke('sendOfferForReview', { project_id: order.id });
+    } catch (_) { /* best-effort */ }
 
     return Response.json({
       ok: true,

@@ -1,0 +1,119 @@
+<mjml>
+  <mj-head>
+    <mj-title>Cenová nabídka {{quote_number}} — {{product_name}} | MLŽIDLA®</mj-title>
+    <mj-preview>Cenová nabídka MLŽIDLA.cz — {{product_name}} pro {{client_name}}</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Inter, Helvetica, Arial, sans-serif" />
+      <mj-section background-color="#FFFFFF" padding="0 36px" />
+      <mj-text color="#0B2034" font-size="14px" line-height="1.7" padding="0" />
+      <mj-button background-color="#0B5FFF" border-radius="999px" font-weight="700" inner-padding="14px 36px" font-family="Manrope, Inter, sans-serif" />
+      <mj-class name="h" font-family="Manrope, Inter, sans-serif" font-weight="700" />
+      <mj-class name="label" font-size="11px" letter-spacing="0.14em" text-transform="uppercase" color="#00A8E8" font-weight="700" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#F8FBFC">
+    <!-- Header band -->
+    <mj-section background-color="linear-gradient(135deg,#0B5FFF,#00A8E8)" padding="28px 36px">
+      <mj-column>
+        <mj-image src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png" width="180px" alt="MLŽIDLA.cz" padding="0" />
+        <mj-text color="#ffffff" font-size="15px" font-weight="600" padding="14px 0 0">Chladíme svět mlžením</mj-text>
+        <mj-text color="rgba(255,255,255,0.85)" font-size="11px" letter-spacing="0.12em" text-transform="uppercase" font-weight="600" padding="4px 0 0">Chytré mlžení · by HolmTec</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Title + greeting -->
+    <mj-section padding="32px 36px 8px">
+      <mj-column>
+        <mj-text mj-class="h" font-size="24px" color="#0B2034">Cenová nabídka {{quote_number}}</mj-text>
+        <mj-text color="#586A72" font-size="15px">Dobrý den {{first_name}},</mj-text>
+        <mj-text color="#0B2034" font-size="14px">děkujeme za vaši poptávku. Na základě vašeho zadání jsme připravili cenovou nabídku na <strong>{{product_name}}</strong>{{quantity_suffix}}. Vizualizace a kompletní podklady najdete níže a v klientské sekci Můj projekt.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Summary -->
+    <mj-section padding="8px 36px">
+      <mj-column>
+        <mj-table>
+          <tr><td style="font-size:12px;color:#586A72;padding:8px 0;border-bottom:1px solid #D3E2E8">Produkt</td><td style="font-size:13px;font-weight:600;color:#0B2034;padding:8px 0;border-bottom:1px solid #D3E2E8">{{product_name}}</td></tr>
+          <tr><td style="font-size:12px;color:#586A72;padding:8px 0;border-bottom:1px solid #D3E2E8">Číslo nabídky</td><td style="font-size:13px;font-weight:600;color:#0B2034;padding:8px 0;border-bottom:1px solid #D3E2E8">{{quote_number}}</td></tr>
+          <tr><td style="font-size:12px;color:#586A72;padding:8px 0;border-bottom:1px solid #D3E2E8">Cena bez DPH</td><td style="font-size:13px;font-weight:600;color:#0B2034;padding:8px 0;border-bottom:1px solid #D3E2E8">{{total_price}}</td></tr>
+          <tr><td style="font-size:12px;color:#586A72;padding:8px 0;border-bottom:1px solid #D3E2E8">Platnost do</td><td style="font-size:13px;font-weight:600;color:#0B2034;padding:8px 0;border-bottom:1px solid #D3E2E8">{{valid_until}}</td></tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+
+    <!-- Visualizations -->
+    <mj-section padding="20px 36px">
+      <mj-column>
+        <mj-text mj-class="label">Vizualizace vašeho projektu</mj-text>
+        <mj-image src="{{visualization_1_url}}" alt="Vizualizace 1" border-radius="16px" padding="10px 0" />
+        <mj-image src="{{visualization_2_url}}" alt="Vizualizace 2" border-radius="16px" padding="10px 0" />
+        <mj-text font-size="11px" color="#586A72">Vizualizace mají konceptní charakter a slouží k představě umístění produktu. Finální provedení se může mírně lišit.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Smart control (conditional) -->
+    <mj-section padding="16px 36px" background-color="rgba(11,95,255,0.04)" border="1px solid rgba(11,95,255,0.15)" border-radius="16px">
+      <mj-column>
+        <mj-text mj-class="label" color="#0B5FFF">Chytré ovládání SUPLA</mj-text>
+        <mj-text font-size="13px" color="#0B2034">Nabídka zahrnuje chytré řízení mlžení — teplotní automatika, časové plány, monitoring spotřeby a dálkové řízení z mobilní aplikace.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- CTA -->
+    <mj-section padding="28px 36px" text-align="center">
+      <mj-column>
+        <mj-button href="{{portal_url}}" background-color="#0B5FFF">Zobrazit nabídku v Můj projekt</mj-button>
+        <mj-text font-size="11px" color="#586A72" align="center">Odkaz na vaši soukromou sekci s podklady a potvrzením nabídky.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Cooperation steps -->
+    <mj-section padding="16px 36px" background-color="#F8FBFC" border-radius="16px">
+      <mj-column>
+        <mj-text mj-class="label">Postup spolupráce</mj-text>
+        <mj-text font-size="13px" color="#0B2034"><strong>1. Nabídka</strong> — Připravili jsme cenovou nabídku s vizualizacemi.</mj-text>
+        <mj-text font-size="13px" color="#0B2034"><strong>2. Potvrzení</strong> — Potvrďte zájem v sekci Můj projekt nebo e-mailem.</mj-text>
+        <mj-text font-size="13px" color="#0B2034"><strong>3. Výrobní záloha 50 %</strong> — Po potvrzení vystavíme daňový doklad na 50 % zálohy.</mj-text>
+        <mj-text font-size="13px" color="#0B2034"><strong>4. Výroba</strong> — Zahájíme výrobu (typicky 2–4 týdny).</mj-text>
+        <mj-text font-size="13px" color="#0B2034"><strong>5. Dodání / instalace</strong> — Doručíme a případně nainstalujeme řešení.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Validity -->
+    <mj-section padding="16px 36px">
+      <mj-column>
+        <mj-text font-size="12px" color="#0B2034"><strong>Platnost nabídky:</strong> {{valid_until}}. Po tomto termínu si vyhrazujeme právo na úpravu cen materiálů.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section padding="24px 36px 0" border-top="2px solid #00A8E8">
+      <mj-column>
+        <mj-text mj-class="label" color="#00A8E8">Projektový kontakt</mj-text>
+        <mj-text font-size="18px" font-weight="700" color="#0B2034">Ing. Radek Meduna</mj-text>
+        <mj-text font-size="13px" color="#586A72">+420 774 700 390 · meduna@holmtec.cz<br />mlzidla.cz · Podpora · Katalog</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Logos -->
+    <mj-section padding="16px 36px" border-top="1px solid #D3E2E8">
+      <mj-group>
+        <mj-column width="60%">
+          <mj-image src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png" width="120px" alt="MLŽIDLA.cz" />
+        </mj-column>
+        <mj-column width="40%">
+          <mj-image src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/holmtec_logo_bez_pozadi.png" width="90px" alt="HolmTec" />
+        </mj-column>
+      </mj-group>
+    </mj-section>
+
+    <!-- Company bar -->
+    <mj-section background-color="#0B2034" padding="16px 36px">
+      <mj-column>
+        <mj-text color="#ffffff" font-size="12px" font-weight="700" align="center">MLŽIDLA® / HolmTec s.r.o.</mj-text>
+        <mj-text color="rgba(255,255,255,0.6)" font-size="11px" align="center">Chytré mlžení · by HolmTec · Trutnov · Česká republika</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

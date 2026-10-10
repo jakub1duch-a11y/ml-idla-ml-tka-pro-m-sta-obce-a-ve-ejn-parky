@@ -244,7 +244,7 @@ Architektonický styl: klidný, prémiový, realistický český veřejný prost
       product_id: product.id, product_slug: product.slug || '', product_name: product.name,
       presentation_variant: analysis?.audience_variant || 'custom',
       smart_control_included: true,
-      status: 'draft',
+      status: 'draft_ready_for_review',
       total_price: unitPrice > 0 ? unitPrice : 0,
       sender_email: 'meduna@holmtec.cz',
       bcc_recipients: ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'],
@@ -333,6 +333,11 @@ Architektonický styl: klidný, prémiový, realistický český veřejný prost
       send_allowed: false, // SAFETY GATE — never auto-send
       notes: `Koncept připraven AI. Produkt: ${product.name}. Vizualizace: ${visualizationUrl ? 'ano' : 'ne'}. Cena: ${unitPrice > 0 ? unitPrice + ' Kč bez DPH' : 'vyžaduje ruční nacenění'}. Čeká na schválení obchodníkem.`,
     });
+
+    // ── Send internal review email to Jakub1duch@gmail.com (best-effort) ──
+    try {
+      await base44.functions.invoke('sendOfferForReview', { project_id: order.id });
+    } catch (_) { /* best-effort */ }
 
     // ── 14. Return complete concept ──
     return Response.json({

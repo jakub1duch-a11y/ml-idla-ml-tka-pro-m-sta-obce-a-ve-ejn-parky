@@ -110,6 +110,7 @@
       "type": "string",
       "enum": [
         "draft",
+        "draft_ready_for_review",
         "pending_approval",
         "sent",
         "viewed",
@@ -126,6 +127,10 @@
     "approved_at": {
       "type": "string",
       "format": "date-time"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "E-mail administr\u00e1tora, kter\u00fd schv\u00e1lil odesl\u00e1n\u00ed nab\u00eddky"
     },
     "acceptance_terms_version": {
       "type": "string"

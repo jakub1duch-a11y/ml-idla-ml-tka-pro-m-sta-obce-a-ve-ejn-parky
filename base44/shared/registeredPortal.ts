@@ -22,7 +22,7 @@ export async function registeredPortal(base44, email, body) {
   const query = { client_email: email, ...(body.tab === 'documents' ? { status: { $in: purchased } } : {}) };
   const page = await entities.ProjectOrder.filter(query, options);
   const items = await Promise.all(page.items.map(async project => {
-    if (['draft', 'pending_approval'].includes(project.status)) {
+    if (['draft', 'draft_ready_for_review', 'pending_approval'].includes(project.status)) {
       const docsPage = await entities.MisterDocument.filter({ project_order_id: project.id, client_visible: true }, { sort: '-created_date', limit: 20 }).catch(() => ({ items: [] }));
       const docs = (docsPage?.items || []).map(d => ({ id: d.id, title: d.title, file_url: d.file_url, version: d.version, document_type: d.document_type }));
       for (const d of docs) if (String(d.file_url).startsWith('private/')) { const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({ file_uri: d.file_url }); d.file_url = signed.signed_url; }

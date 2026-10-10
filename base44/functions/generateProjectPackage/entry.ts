@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { jsPDF } from 'npm:jspdf@4.2.1';
-import { clean, pt, fetchImageAsBase64, buildReference, formatDate, PDF_COLORS, INSTALLATION_LABELS, WATER_LABELS, SURFACE_LABELS } from '../../shared/pdfHelpers.ts';
+import { clean, pt, fetchImageAsBase64, buildReference, formatDate, PDF_COLORS, INSTALLATION_LABELS, WATER_LABELS, SURFACE_LABELS, SUPLA_VERIFIED_FEATURES, SUPLA_CONDITIONAL_FEATURES, SUPLA_NOT_SUPPORTED, SUPLA_TECH_PREREQUISITES, SUPLA_NETWORK_NOTE, SITUATIONAL_PLAN_DISCLAIMER, SITUATIONAL_PLAN_ITEMS, buildChecklist, buildProductReasons } from '../../shared/pdfHelpers.ts';
 
 const { INK, CYAN, CYAN_DARK, TEXT_MUTED, TEXT_BODY, PANEL_BG } = PDF_COLORS;
 
@@ -82,6 +82,31 @@ export default async function(req: Request): Promise<Response> {
       products.forEach((p: any) => { if (p.image_url) visualizations.push({ url: p.image_url, title: p.name || '', verified: true }); });
     }
 
+    // ── Klientské fotky místa (z poptávky a OfferAsset) ──
+    const clientPhotos: Array<{ url: string; name: string }> = [];
+    if (inquiry?.attachment_urls && Array.isArray(inquiry.attachment_urls)) {
+      inquiry.attachment_urls.forEach((url: string, i: number) => {
+        if (url && /^https?:\/\//.test(url)) {
+          clientPhotos.push({ url, name: inquiry.attachment_names?.[i] || `Foto ${i + 1}` });
+        }
+      });
+    }
+    // OfferAsset source_photo záznamy
+    const sourcePhotos = (assets || []).filter((a: any) => a.asset_type === 'source_photo' && a.file_url);
+    sourcePhotos.forEach((a: any) => {
+      if (!clientPhotos.find(p => p.url === a.file_url)) {
+        clientPhotos.push({ url: a.file_url, name: a.file_name || a.title || 'Foto mista' });
+      }
+    });
+
+    // ── SUPLA smart control data ──
+    const smartIncluded = Boolean(order?.smart_control_included);
+    let smartProfiles: any[] = [];
+    if (smartIncluded) {
+      const profilesPage = await base44.asServiceRole.entities.SmartControlProfile.filter({ status: 'active' }, { limit: 5 }).catch(() => ({ items: [] }));
+      smartProfiles = profilesPage?.items || [];
+    }
+
     // ── Cenové údaje ──
     const lineItems: any[] = [];
     let baseTotal = 0;
@@ -135,6 +160,9 @@ export default async function(req: Request): Promise<Response> {
         products: products.map((p: any) => ({ name: p.name, slug: p.slug, has_image: Boolean(p.image_url) })),
         variants: variants.map((v: any) => ({ label: v.label, product_name: v.product_name, quantity: v.quantity, unit_price: v.unit_price, price_status: v.price_status })),
         visualizations: visualizations.map((v: any) => ({ url: v.url, verified: v.verified })),
+        client_photos: clientPhotos.map(p => ({ name: p.name })),
+        smart_control_included: smartIncluded,
+        smart_profiles_count: smartProfiles.length,
         line_items: lineItems,
         has_all_prices: hasAllPrices,
         base_total: baseTotal, vat, total_inc_vat: totalIncVat,
@@ -314,6 +342,40 @@ export default async function(req: Request): Promise<Response> {
       doc.text(techLines.slice(0, 8), M, y + 3);
     }
 
+    // ════════ STRANA: FOTKY MÍSTA (klientské) ════════
+    if (clientPhotos.length) {
+      doc.addPage();
+      pageHeader('FOTKY MISTA (OD KLIENTA)');
+      y = 28;
+
+      doc.setFontSize(9);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      const photoIntro = 'Fotografie dodane klientem pomahaji pri navrhu umisteni. Nejedna se o produktove fotky ani o overene technicke podklady.';
+      const introLines = doc.splitTextToSize(pt(photoIntro), W - 2 * M);
+      doc.text(introLines, M, y);
+      y += introLines.length * 5 + 8;
+
+      const maxPhotos = Math.min(clientPhotos.length, 4);
+      for (let i = 0; i < maxPhotos; i++) {
+        const photo = clientPhotos[i];
+        if (y > H - 80) { doc.addPage(); pageHeader('FOTKY MISTA (pokr.)'); y = 28; }
+        const img = await fetchImageAsBase64(photo.url);
+        if (img) {
+          try {
+            const imgH = Math.min(H - y - 30, 80);
+            doc.addImage(img.data, img.format, M, y, W - 2 * M, imgH, undefined, 'FAST');
+            y += imgH + 3;
+            doc.setFontSize(7);
+            doc.setTextColor(TEXT_MUTED);
+            doc.setFont('helvetica', 'italic');
+            doc.text(pt(photo.name), M, y);
+            y += 8;
+          } catch {}
+        }
+      }
+    }
+
     // ════════ STRANA 3+: PRODUKTOVÉ LISTY ════════
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
@@ -435,6 +497,225 @@ export default async function(req: Request): Promise<Response> {
       }
     }
 
+    // ════════ STRANA: KONCEPČNÍ SITUACNÍ PLÁN ════════
+    doc.addPage();
+    pageHeader('KONCEPNI SITUACNI PLAN');
+    y = 28;
+
+    doc.setFontSize(9);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    const planIntro = 'Nasledujici koncepni situacni plan je navrhem umisteni. Neni technickym projektem. Kruhy mlznych zon jsou ilustrační bez overenych vypoctu.';
+    const planIntroLines = doc.splitTextToSize(pt(planIntro), W - 2 * M);
+    doc.text(planIntroLines, M, y);
+    y += planIntroLines.length * 5 + 6;
+
+    // Disclaimer
+    doc.setFillColor('#fff8e1');
+    doc.rect(M, y, W - 2 * M, 16, 'F');
+    doc.setFontSize(7.5);
+    doc.setTextColor('#b8860b');
+    doc.setFont('helvetica', 'bold');
+    const discLines = doc.splitTextToSize(pt(SITUATIONAL_PLAN_DISCLAIMER), W - 2 * M - 10);
+    doc.text(discLines.slice(0, 3), M + 5, y + 6);
+    y += 18;
+
+    // Položky plánu
+    y = sectionLabel('DOPORUCENE POLOZKY PLÁNU', y);
+    doc.setFontSize(9);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    SITUATIONAL_PLAN_ITEMS.forEach((item) => {
+      if (y > H - 30) { doc.addPage(); pageHeader('KONCEPNI SITUACNI PLAN (pokr.)'); y = 28; }
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(CYAN_DARK);
+      doc.text(pt('•'), M + 2, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT_BODY);
+      const itemLines = doc.splitTextToSize(pt(item), W - 2 * M - 10);
+      doc.text(itemLines.slice(0, 2), M + 8, y);
+      y += 6 + (itemLines.length > 1 ? 5 : 0);
+    });
+
+    // Pokud nejsou fotky/půdorys
+    if (!clientPhotos.length) {
+      y += 6;
+      doc.setFillColor(PANEL_BG);
+      doc.rect(M, y, W - 2 * M, 20, 'F');
+      doc.setFontSize(8.5);
+      doc.setTextColor(CYAN_DARK);
+      doc.setFont('helvetica', 'bold');
+      doc.text(pt('POZADAVEK NA PODKLADY'), M + 5, y + 7);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT_BODY);
+      doc.setFontSize(8);
+      const reqLines = doc.splitTextToSize(pt('Pro presnejsi situacni plan potrebujeme fotografie mista a pripadne pudorys. Pozadame vas pres klientsky portal.'), W - 2 * M - 10);
+      doc.text(reqLines.slice(0, 2), M + 5, y + 13);
+      y += 24;
+    }
+
+    // ════════ STRANA: CHYTRÉ OVLÁDÁNÍ SUPLA (volitelné) ════════
+    if (smartIncluded) {
+      doc.addPage();
+      pageHeader('CHYTRÉ OVLADANI SUPLA (VOLITELNE)');
+      y = 28;
+
+      doc.setFontSize(9);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      const suplaIntro = 'SUPLA umoznuje mobilni zapnuti a vypnuti mlzeni odkudkoli pri dostupnem internetu a podporovane ridici jednotce. Toto je prezentace moznosti pro vase reseni, nikoli pripojeni skutecnych zarizeni k tomuto webu.';
+      const suplaIntroLines = doc.splitTextToSize(pt(suplaIntro), W - 2 * M);
+      doc.text(suplaIntroLines, M, y);
+      y += suplaIntroLines.length * 5 + 6;
+
+      // Schéma
+      y = sectionLabel('SCHEMA FUNGOVANI', y);
+      doc.setFontSize(8.5);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      const schemaSteps = [
+        '1. Mobilni aplikace / webove rozhrani SUPLA',
+        '2. Internet a cloud SUPLA',
+        '3. Lokalni Wi-Fi a kompatibilni ridici jednotka',
+        '4. Ventil nebo podporovane rizeni mlzeni',
+      ];
+      schemaSteps.forEach(step => {
+        doc.text(pt(step), M + 4, y);
+        y += 5.5;
+      });
+      y += 4;
+
+      // Ověřené funkce
+      y = sectionLabel('OVERENE FUNKCE', y);
+      doc.setFontSize(8.5);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      SUPLA_VERIFIED_FEATURES.forEach(f => {
+        if (y > H - 30) { doc.addPage(); pageHeader('CHYTRÉ OVLADANI SUPLA (pokr.)'); y = 28; }
+        doc.setTextColor(CYAN_DARK);
+        doc.setFont('helvetica', 'bold');
+        doc.text(pt('✓'), M + 2, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT_BODY);
+        doc.text(pt(f), M + 8, y);
+        y += 5.5;
+      });
+      y += 3;
+
+      // Podmíněné funkce
+      y = sectionLabel('FUNKCE VYŽADUJICI PRIDAVNE KOMPONENTY', y);
+      doc.setFontSize(8.5);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      SUPLA_CONDITIONAL_FEATURES.forEach(f => {
+        if (y > H - 30) { doc.addPage(); pageHeader('CHYTRÉ OVLADANI SUPLA (pokr.)'); y = 28; }
+        doc.setTextColor(TEXT_MUTED);
+        doc.setFont('helvetica', 'bold');
+        doc.text(pt('○'), M + 2, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT_BODY);
+        doc.text(pt(f), M + 8, y);
+        y += 5.5;
+      });
+      y += 3;
+
+      // Nepodporované
+      y = sectionLabel('NENI SOUCASTI OVERENE KONFIGURACE', y);
+      doc.setFontSize(8);
+      doc.setTextColor(TEXT_MUTED);
+      doc.setFont('helvetica', 'italic');
+      SUPLA_NOT_SUPPORTED.forEach(f => {
+        if (y > H - 30) { doc.addPage(); pageHeader('CHYTRÉ OVLADANI SUPLA (pokr.)'); y = 28; }
+        doc.text(pt('— ' + f), M + 4, y);
+        y += 5;
+      });
+      y += 4;
+
+      // Cenový údaj z SmartControlProfile (pokud existuje)
+      if (smartProfiles.length) {
+        y = sectionLabel('CENOVE UKAZATELE', y);
+        doc.setFontSize(8.5);
+        doc.setTextColor(TEXT_BODY);
+        doc.setFont('helvetica', 'normal');
+        smartProfiles.slice(0, 3).forEach(p => {
+          if (y > H - 30) { doc.addPage(); pageHeader('CHYTRÉ OVLADANI SUPLA (pokr.)'); y = 28; }
+          doc.setFont('helvetica', 'bold');
+          doc.text(pt(p.name || 'Profil'), M + 2, y);
+          if (p.unit_price_ex_vat) {
+            doc.setFont('helvetica', 'normal');
+            doc.text(`${Number(p.unit_price_ex_vat).toLocaleString('cs-CZ')} Kc bez DPH`, W - M - 5, y, { align: 'right' });
+          }
+          y += 5.5;
+        });
+        doc.setFontSize(7);
+        doc.setTextColor(TEXT_MUTED);
+        doc.setFont('helvetica', 'italic');
+        doc.text(pt('Ceny z overeneho ceniku. Finalni cena dle vybrane konfigurace.'), M, y);
+      }
+    }
+
+    // ════════ STRANA: TECHNICKÉ PŘEDPOKLADY ════════
+    doc.addPage();
+    pageHeader('TECHNICKE PREDPOKLADY');
+    y = 28;
+
+    doc.setFontSize(9);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    const techIntro = 'Nasledujici predpoklady je treba overit pred realizaci. Nejedna se o zarucene parametry, ale o kontrolni seznam pro technicke odsouhlaseni.';
+    const techIntroLines = doc.splitTextToSize(pt(techIntro), W - 2 * M);
+    doc.text(techIntroLines, M, y);
+    y += techIntroLines.length * 5 + 8;
+
+    if (smartIncluded) {
+      y = sectionLabel('PREDPOKLADY PRO CHYTRÉ OVLADANI', y);
+      doc.setFontSize(8.5);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      SUPLA_TECH_PREREQUISITES.forEach(item => {
+        if (y > H - 25) { doc.addPage(); pageHeader('TECHNICKE PREDPOKLADY (pokr.)'); y = 28; }
+        doc.setTextColor(CYAN_DARK);
+        doc.setFont('helvetica', 'bold');
+        doc.text(pt('☐'), M + 2, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT_BODY);
+        const itemLines = doc.splitTextToSize(pt(item), W - 2 * M - 10);
+        doc.text(itemLines.slice(0, 2), M + 8, y);
+        y += 5.5 + (itemLines.length > 1 ? 5 : 0);
+      });
+      y += 3;
+      doc.setFontSize(7.5);
+      doc.setTextColor(TEXT_MUTED);
+      doc.setFont('helvetica', 'italic');
+      const netLines = doc.splitTextToSize(pt(SUPLA_NETWORK_NOTE), W - 2 * M);
+      doc.text(netLines.slice(0, 2), M, y);
+      y += netLines.length * 4 + 4;
+    }
+
+    // Obecné technické předpoklady
+    y = sectionLabel('OBECNE PREDPOKLADY PRO INSTALACI', y);
+    doc.setFontSize(8.5);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    const generalPrereqs = [
+      'Privod vody v miste instalace (overit tlak a prutok)',
+      'Napajeni pro pripadne cerpadlo nebo ridici elektroniku',
+      'Typ povrchu a zpusob kotveni (dle overeneho povrchu)',
+      'Pristup pro servis a udrzbu',
+      'Ochrana pred mrazem a zimni provoz',
+      'Zajisteni bezpecnosti osob v miste instalace',
+    ];
+    generalPrereqs.forEach(item => {
+      if (y > H - 25) { doc.addPage(); pageHeader('TECHNICKE PREDPOKLADY (pokr.)'); y = 28; }
+      doc.setTextColor(CYAN_DARK);
+      doc.setFont('helvetica', 'bold');
+      doc.text(pt('☐'), M + 2, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT_BODY);
+      doc.text(pt(item), M + 8, y);
+      y += 5.5;
+    });
+
     // ════════ STRANA: CENOVÁ NABÍDKA ════════
     doc.addPage();
     pageHeader('CENOVA NABIDKA');
@@ -519,6 +800,96 @@ export default async function(req: Request): Promise<Response> {
       ? 'Ceny jsou orientacni, platnost 30 dnu. Finalni nabídka po potvrzeni technickych parametru.'
       : 'Tento dokument je koncept k doplneni. Finální ceny budou doplneny po overeni technickych parametru.';
     doc.text(pt(noteText), M, y);
+
+    // ════════ STRANA: DŮVODY VOLBY A CHECKLIST ════════
+    doc.addPage();
+    pageHeader('DUVODY VOLBY A CHECKLIST');
+    y = 28;
+
+    // Důvody volby produktů
+    const reasons = buildProductReasons(products, inquiry);
+    if (reasons.length) {
+      y = sectionLabel('DUVODY VOLBY PRODUKTU A INSTALACE', y);
+      doc.setFontSize(8.5);
+      doc.setTextColor(TEXT_BODY);
+      doc.setFont('helvetica', 'normal');
+      reasons.forEach(r => {
+        if (y > H - 25) { doc.addPage(); pageHeader('DUVODY VOLBY A CHECKLIST (pokr.)'); y = 28; }
+        doc.setTextColor(CYAN_DARK);
+        doc.setFont('helvetica', 'bold');
+        doc.text(pt('•'), M + 2, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT_BODY);
+        const rLines = doc.splitTextToSize(pt(r), W - 2 * M - 10);
+        doc.text(rLines.slice(0, 2), M + 8, y);
+        y += 5.5 + (rLines.length > 1 ? 5 : 0);
+      });
+      y += 6;
+    }
+
+    // Možnosti rozšíření a omezení
+    y = sectionLabel('MOZNOSTI ROZSIRENI A OMEZENI', y);
+    doc.setFontSize(8.5);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    const expansionItems = [
+      'Doplnkove zony mlzeni (s prislusnym poctem kanalu)',
+      'Smart ovladani SUPLA (pri overeni predpokladu)',
+      'Servis a udrzba pred sezonou',
+    ];
+    expansionItems.forEach(item => {
+      if (y > H - 25) { doc.addPage(); pageHeader('DUVODY VOLBY A CHECKLIST (pokr.)'); y = 28; }
+      doc.text(pt('• ' + item), M + 4, y);
+      y += 5.5;
+    });
+    y += 3;
+    doc.setFontSize(7.5);
+    doc.setTextColor(TEXT_MUTED);
+    doc.setFont('helvetica', 'italic');
+    const limitText = 'Omezeni: Kruhy mlznych zon jsou ilustrační. Technicke parametry a dosah mlhy budou upresneny po overeni mista.';
+    const limitLines = doc.splitTextToSize(pt(limitText), W - 2 * M);
+    doc.text(limitLines.slice(0, 2), M, y);
+    y += limitLines.length * 4 + 6;
+
+    // Checklist
+    const checklist = buildChecklist(inquiry, order, products, variants, hasAllPrices, smartIncluded);
+
+    y = sectionLabel('CO JE POTVRZENO', y);
+    doc.setFontSize(8.5);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    if (checklist.confirmed.length === 0) {
+      doc.setTextColor(TEXT_MUTED);
+      doc.text(pt('Zatim nejsou potvrzeny zadne polozky.'), M + 4, y);
+      y += 6;
+    } else {
+      checklist.confirmed.forEach(item => {
+        if (y > H - 25) { doc.addPage(); pageHeader('DUVODY VOLBY A CHECKLIST (pokr.)'); y = 28; }
+        doc.setTextColor('#0e7584');
+        doc.setFont('helvetica', 'bold');
+        doc.text(pt('✓'), M + 2, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(TEXT_BODY);
+        doc.text(pt(item), M + 8, y);
+        y += 5.5;
+      });
+    }
+    y += 6;
+
+    y = sectionLabel('CO ZBYVA DODAT', y);
+    doc.setFontSize(8.5);
+    doc.setTextColor(TEXT_BODY);
+    doc.setFont('helvetica', 'normal');
+    checklist.remaining.forEach(item => {
+      if (y > H - 25) { doc.addPage(); pageHeader('DUVODY VOLBY A CHECKLIST (pokr.)'); y = 28; }
+      doc.setTextColor('#b8860b');
+      doc.setFont('helvetica', 'bold');
+      doc.text(pt('☐'), M + 2, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(TEXT_BODY);
+      doc.text(pt(item), M + 8, y);
+      y += 5.5;
+    });
 
     // ════════ STRANA: POSTUP SPOLUPRÁCE ════════
     doc.addPage();
@@ -616,18 +987,29 @@ export default async function(req: Request): Promise<Response> {
     const version = new Date().toISOString().slice(0, 10);
     const title = `Projektovy baliceek — ${order?.project_name || inquiry?.produkt || 'Navrh reseni'} — P-${reference}`;
 
+    const checklistData = JSON.stringify({
+      confirmed: checklist.confirmed,
+      remaining: checklist.remaining,
+      smart_module_included: smartIncluded,
+      client_photos_count: clientPhotos.length,
+      generated_at: new Date().toISOString(),
+    });
+
     const docRecord = await base44.asServiceRole.entities.MisterDocument.create({
       project_order_id: order?.id || '',
+      inquiry_id: effectiveInquiryId || '',
       client_email: clientEmail,
       product_slug: order?.product_slug || products[0]?.slug || '',
       document_type: 'proposal',
       title,
       file_url: fileUri,
       version,
-      client_visible: false, // Koncept — admin musí schválit zveřejnění
+      client_visible: false,
       source: 'generated',
       sort_order: 0,
-      notes: `Auto-generovano ${new Date().toLocaleString('cs-CZ')}. Reference: P-${reference}. ${hasAllPrices ? '' : 'Koncept k doplneni — nejsou vsechny ceny.'}`,
+      smart_module_included: smartIncluded,
+      checklist_data: checklistData,
+      notes: `Auto-generovano ${new Date().toLocaleString('cs-CZ')}. Reference: P-${reference}. ${hasAllPrices ? '' : 'Koncept k doplneni — nejsou vsechny ceny.'} ${smartIncluded ? 'Smart modul SUPLA zahrnut.' : ''}`,
     });
 
     return Response.json({

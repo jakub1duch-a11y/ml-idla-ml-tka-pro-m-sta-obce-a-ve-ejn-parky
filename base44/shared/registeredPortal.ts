@@ -26,10 +26,23 @@ export async function registeredPortal(base44, email, body) {
       const docsPage = await entities.MisterDocument.filter({ project_order_id: project.id, client_visible: true }, { sort: '-created_date', limit: 20 }).catch(() => ({ items: [] }));
       const docs = (docsPage?.items || []).map(d => ({ id: d.id, title: d.title, file_url: d.file_url, version: d.version, document_type: d.document_type }));
       for (const d of docs) if (String(d.file_url).startsWith('private/')) { const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({ file_uri: d.file_url }); d.file_url = signed.signed_url; }
-      return { id: project.id, project_name: project.project_name, status: project.status, created_date: project.created_date, inquiry_id: project.inquiry_id, product_slug: project.product_slug, product_name: project.product_name, quote_number: project.quote_number, documents: docs };
+      const latestDoc = docs[0] || null;
+      return { id: project.id, project_name: project.project_name, status: project.status, created_date: project.created_date, inquiry_id: project.inquiry_id, product_slug: project.product_slug, product_name: project.product_name, quote_number: project.quote_number, smart_control_included: Boolean(project.smart_control_included), documents: docs, checklist_data: latestDoc?.checklist_data || '' };
     }
     return clientProjectView(project);
   }));
+  // Klientské fotky místa z poptávky
+  for (const item of items) {
+    if (item.inquiry_id) {
+      try {
+        const inq = await entities.Poptavka.get(item.inquiry_id).catch(() => null);
+        if (inq?.attachment_urls?.length) {
+          item.client_photos = inq.attachment_urls.map((url, i) => ({ url, name: inq.attachment_names?.[i] || `Foto ${i + 1}` })).filter(p => /^https?:\/\//.test(p.url));
+        }
+      } catch {}
+    }
+    if (!item.client_photos) item.client_photos = [];
+  }
   const [groups, inquiries, contacts] = await Promise.all([
     entities.ProjectOrder.aggregate({ query: { client_email: email }, groupBy: 'status' }),
     entities.Poptavka.count({ email }), entities.ContactInquiry.count({ email }),

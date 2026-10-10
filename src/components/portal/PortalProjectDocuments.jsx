@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Download, Eye, Loader2, Package, AlertCircle } from 'lucide-react';
+import { FileText, Download, Eye, Loader2, Package, AlertCircle, Camera, CheckCircle2, Circle, Smartphone, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { safeFileUrl } from '@/components/portal/portalUtils';
 
@@ -8,12 +8,19 @@ export default function PortalProjectDocuments({ project, userId }) {
   const [error, setError] = useState('');
   const [generatedDoc, setGeneratedDoc] = useState(null);
 
-  // Dokumenty z projektu (z registeredPortal dat)
   const projectDocs = [
     { type: 'quote', label: 'Cenová nabídka PDF', icon: FileText, url: project.quote_pdf_url, available: Boolean(safeFileUrl(project.quote_pdf_url)) },
     { type: 'presentation', label: 'Prezentace', icon: Eye, url: project.presentation_pdf_url || project.presentation_url, available: Boolean(safeFileUrl(project.presentation_pdf_url || project.presentation_url)) },
     { type: 'confirmation', label: 'Potvrzení objednávky', icon: FileText, url: project.order_confirmation_pdf_url, available: Boolean(safeFileUrl(project.order_confirmation_pdf_url)) },
   ].filter(d => d.available);
+
+  const clientPhotos = Array.isArray(project.client_photos) ? project.client_photos : [];
+  const smartIncluded = Boolean(project.smart_control_included);
+
+  let checklist = null;
+  try {
+    if (project.checklist_data) checklist = JSON.parse(project.checklist_data);
+  } catch {}
 
   async function generatePackage() {
     setGenerating(true);
@@ -47,9 +54,79 @@ export default function PortalProjectDocuments({ project, userId }) {
         <Package size={18} /> Projektová dokumentace
       </h3>
 
+      {/* Klientské fotky místa */}
+      {clientPhotos.length > 0 && (
+        <div className="mt-4">
+          <h4 className="flex items-center gap-2 text-sm font-semibold">
+            <Camera size={16} /> Fotky místa (od vás)
+          </h4>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Fotografie, které jste přiložili k poptávce. Pomáhají nám při návrhu umístění.
+          </p>
+          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            {clientPhotos.slice(0, 6).map((photo, i) => (
+              <div key={i} className="overflow-hidden rounded-lg border bg-muted">
+                <img src={photo.url} alt={photo.name || `Foto ${i + 1}`} className="h-32 w-full object-cover" />
+                <p className="truncate p-2 text-xs text-muted-foreground">{photo.name || `Foto ${i + 1}`}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Smart modul SUPLA */}
+      {smartIncluded && (
+        <div className="mt-4 rounded-lg border border-cyan-200 bg-cyan-50 p-4">
+          <h4 className="flex items-center gap-2 text-sm font-semibold text-cyan-900">
+            <Smartphone size={16} /> Chytré ovládání SUPLA (volitelný modul)
+          </h4>
+          <p className="mt-2 text-xs text-cyan-800">
+            Mobilní zapnutí/vypnutí mlžení odkudkoli při dostupném internetu a podporované řídicí jednotce.
+            Časové plány a scénáře dle kompatibilního hardware. Toto je prezentace možností, nikoli připojení
+            skutečných zařízení k tomuto webu.
+          </p>
+          <p className="mt-2 flex items-center gap-1.5 text-xs text-cyan-700">
+            <ShieldCheck size={13} /> Technické předpoklady k ověření: Wi-Fi pokrytí, napájení, kompatibilní ventil.
+          </p>
+        </div>
+      )}
+
+      {/* Checklist */}
+      {checklist && (checklist.confirmed?.length > 0 || checklist.remaining?.length > 0) && (
+        <div className="mt-4 rounded-lg border bg-card p-4">
+          <h4 className="text-sm font-semibold">Stav přípravy projektu</h4>
+          <div className="mt-3 grid gap-4 sm:grid-cols-2">
+            {checklist.confirmed?.length > 0 && (
+              <div>
+                <p className="mb-2 text-xs font-medium text-emerald-700">Potvrzeno</p>
+                <ul className="space-y-1.5">
+                  {checklist.confirmed.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-emerald-600" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {checklist.remaining?.length > 0 && (
+              <div>
+                <p className="mb-2 text-xs font-medium text-amber-700">Zbývá doplnit</p>
+                <ul className="space-y-1.5">
+                  {checklist.remaining.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <Circle size={14} className="mt-0.5 shrink-0 text-amber-500" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Existující dokumenty z nabídky */}
       {projectDocs.length > 0 && (
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {projectDocs.map((doc, i) => (
             <div key={i} className="rounded-lg border bg-muted p-4">
               <p className="flex items-center gap-2 break-words text-sm font-semibold">
@@ -68,8 +145,9 @@ export default function PortalProjectDocuments({ project, userId }) {
       <div className="mt-4 rounded-lg border border-dashed bg-card p-5">
         <h4 className="text-sm font-semibold">Projektový balíček (PDF)</h4>
         <p className="mt-2 text-sm text-muted-foreground">
-          Kompletní dokumentace k vaší poptávce: souhrn zadání, produktové listy, vizuální návrh,
-          cenová nabídka a postup spolupráce v jednom PDF.
+          Kompletní dokumentace: souhrn zadání, fotky místa, produktové listy, koncepční situační plán,
+          vizuální návrh, {smartIncluded ? 'chytré ovládání SuPLA, ' : ''}technické předpoklady, cenová nabídka,
+          důvody volby a checklist v jednom PDF.
         </p>
 
         {generatedDoc ? (

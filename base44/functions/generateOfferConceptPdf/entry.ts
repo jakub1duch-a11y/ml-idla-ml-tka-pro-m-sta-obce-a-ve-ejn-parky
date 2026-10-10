@@ -3,6 +3,7 @@ import { jsPDF } from 'npm:jspdf@4.2.1';
 import { clean, fetchSuplaPricing } from '../../shared/suplaPricing.ts';
 import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
 import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
+import { toBase64, fetchImageAsBase64, stripDiacritics, pt } from '../../shared/pdfHelpers.ts';
 
 const OFFERS_SPREADSHEET_ID = '1MS4i00ekY3Pf3fY-AsUdCT7GtNiCk5XPDr8CLiwym6M';
 const OFFERS_SHEET = 'Nabídky';
@@ -12,47 +13,6 @@ const OFFER_HEADERS = [
 ];
 
 const short = (value: unknown, max = 2000) => clean(value).slice(0, max);
-
-const toBase64 = (bytes: Uint8Array) => {
-  let binary = '';
-  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
-  return btoa(binary);
-};
-
-async function fetchImageAsBase64(url: string): Promise<{ data: string; format: string } | null> {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) return null;
-    const blob = await response.blob();
-    const buffer = new Uint8Array(await blob.arrayBuffer());
-    const base64 = toBase64(buffer);
-    const format = blob.type.includes('png') ? 'PNG' : 'JPEG';
-    return { data: base64, format };
-  } catch {
-    return null;
-  }
-}
-
-async function loadFont(doc: any): Promise<boolean> {
-  try {
-    const response = await fetch('https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/NotoSans%5Bwdth%2Cwght%5D.ttf');
-    if (!response.ok) return false;
-    const fontBytes = new Uint8Array(await response.arrayBuffer());
-    if (fontBytes.length < 1000) return false;
-    const fontBase64 = toBase64(fontBytes);
-    doc.addFileToVFS('NotoSans.ttf', fontBase64);
-    doc.addFont('NotoSans.ttf', 'NotoSans', 'normal');
-    doc.setFont('NotoSans', 'normal');
-    return true;
-  } catch (e) {
-    console.warn('Font load failed', e?.message || e);
-    return false;
-  }
-}
-
-const stripDiacritics = (text: string) => text
-  .normalize('NFD')
-  .replace(/[\u0300-\u036f]/g, '');
 
 export default async function(req: Request): Promise<Response> {
   try {
@@ -132,7 +92,6 @@ export default async function(req: Request): Promise<Response> {
 
     // Font loading disabled — using default helvetica with ASCII fallback
     const fontLoaded = false;
-    const pt = (value: unknown) => stripDiacritics(clean(value)).replace(/[^\x20-\x7E]/g, '');
 
     const quoteNum = order.quote_number || `HT-${new Date().getFullYear()}-${String(order.id || Date.now()).slice(-5)}`;
 

@@ -4,6 +4,7 @@ import { FileText } from 'lucide-react';
 import { statuses, formatDate, money, safeFileUrl } from '@/components/portal/portalUtils';
 import PortalOrderAction from '@/components/portal/PortalOrderAction';
 import PortalDocuments from '@/components/portal/PortalDocuments';
+import PortalProjectDocuments from '@/components/portal/PortalProjectDocuments';
 export default function PortalProjectCard({ project, documents=false, userId }) {
   const [showDocs,setShowDocs]=useState(false);
   const draft=['draft','pending_approval'].includes(project.status);
@@ -14,5 +15,6 @@ export default function PortalProjectCard({ project, documents=false, userId }) 
     {draft?<p className="mt-4 text-sm text-muted-foreground">Na řešení pracujeme. Cenu a podklady zde najdete po dokončení nabídky.</p>:<div className="mt-4 flex flex-wrap items-center gap-4">{safeFileUrl(project.quote_pdf_url)&&<a href={safeFileUrl(project.quote_pdf_url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-primary underline"><FileText size={16}/>Cenová nabídka PDF</a>}<Link className="text-sm text-primary underline" to={`/klientska-sekce?view=detail&quote=${encodeURIComponent(project.quote_number||'')}`}>Detail a komunikace s týmem</Link></div>}
     {!documents&&<PortalOrderAction project={project}/>}
     {documents&&<><button className="portal-secondary mt-4" aria-expanded={showDocs} onClick={()=>setShowDocs(!showDocs)}>{showDocs?'Skrýt dokumentaci':'Zobrazit dokumentaci'}</button>{showDocs&&<PortalDocuments project={project} userId={userId}/>}</>}
+    {!documents&&<PortalProjectDocuments project={project} userId={userId}/>}
   </article>;
 }

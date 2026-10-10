@@ -1,0 +1,115 @@
+{
+  "name": "NotificationLog",
+  "type": "object",
+  "properties": {
+    "dedup_key": {
+      "type": "string",
+      "description": "Deduplika\u010dn\u00ed kl\u00ed\u010d: event_type:entity_id:version:recipient"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "welcome",
+        "quote_sent",
+        "status_change",
+        "admin_message",
+        "admin_chat",
+        "inquiry_created",
+        "inquiry_status_change",
+        "offer_approved",
+        "offer_rejected",
+        "client_message",
+        "extra_charge_response",
+        "registration"
+      ],
+      "description": "Typ notifika\u010dn\u00ed ud\u00e1losti"
+    },
+    "channel_type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "slack",
+        "google_chat",
+        "internal"
+      ],
+      "description": "Doru\u010dovac\u00ed kan\u00e1l"
+    },
+    "recipient": {
+      "type": "string",
+      "description": "E-mail p\u0159\u00edjemce nebo kan\u00e1l ID"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID souvisej\u00edc\u00ed entity"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Typ entity (ProjectOrder, OfferMessage, User, Poptavka)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "failed",
+        "deduplicated"
+      ],
+      "default": "pending",
+      "description": "Stav doru\u010den\u00ed"
+    },
+    "subject": {
+      "type": "string",
+      "description": "P\u0159edm\u011bt notifikace"
+    },
+    "content_summary": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Stru\u010dn\u00e9 shrnut\u00ed obsahu"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Chybov\u00e1 zpr\u00e1va p\u0159i ne\u00fasp\u011bchu"
+    },
+    "attempts": {
+      "type": "number",
+      "default": 0,
+      "description": "Po\u010det pokus\u016f o odesl\u00e1n\u00ed"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "string",
+      "description": "JSON s dodate\u010dn\u00fdmi metadaty (before/after status, ai_draft, recommended_step)"
+    }
+  },
+  "required": [
+    "dedup_key",
+    "event_type",
+    "recipient",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

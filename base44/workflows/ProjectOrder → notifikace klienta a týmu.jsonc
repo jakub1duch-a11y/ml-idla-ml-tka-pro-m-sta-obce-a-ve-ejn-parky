@@ -1,0 +1,42 @@
+{
+  "name": "ProjectOrder \u2192 notifikace klienta a t\u00fdmu",
+  "description": "P\u0159i zm\u011bn\u011b z\u00e1kaznicky viditeln\u00e9ho stavu nab\u00eddky ode\u0161le klientovi transak\u010dn\u00ed e-mail a t\u00fdmu admin notifikaci. Nespou\u0161t\u00ed se na intern\u00ed stavy (draft, pending_approval) nebo pokud se stav nezm\u011bnil.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "ProjectOrder",
+      "events": [
+        "update"
+      ]
+    },
+    "condition": "${ .trigger.changed_fields | index(\"status\") != null and .trigger.data.status != .trigger.old_data.status }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "project_order_notification",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "dispatch_notification": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "dispatchProjectOrderNotification",
+            "args": {
+              "project_id": "${ .trigger.entity_id }",
+              "new_status": "${ .trigger.data.status }",
+              "old_status": "${ .trigger.old_data.status }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Odeslat notifikace",
+            "description": "Klient + t\u00fdm"
+          }
+        }
+      }
+    ]
+  }
+}

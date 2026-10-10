@@ -1,0 +1,41 @@
+{
+  "name": "Registrace \u2192 uv\u00edtac\u00ed e-mail",
+  "description": "Po \u00fasp\u011b\u0161n\u00e9 registraci klienta ode\u0161le pr\u00e1v\u011b jednou uv\u00edtac\u00ed e-mail s sezn\u00e1men\u00edm funkc\u00ed ML\u017dIDLA.cz.",
+  "trigger": {
+    "config": {
+      "trigger_type": "app_user_auth",
+      "events": [
+        "signup"
+      ]
+    },
+    "condition": "${ .trigger.event_type == \"signup\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "welcome_email_on_signup",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_welcome": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "dispatchWelcomeEmail",
+            "args": {
+              "email": "${ .trigger.email }",
+              "first_name": "${ .trigger.full_name }",
+              "user_id": "${ .trigger.user_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Uv\u00edtac\u00ed e-mail",
+            "description": "Jednor\u00e1zov\u00fd uv\u00edtac\u00ed e-mail"
+          }
+        }
+      }
+    ]
+  }
+}

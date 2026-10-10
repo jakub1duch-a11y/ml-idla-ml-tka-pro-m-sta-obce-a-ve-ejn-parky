@@ -7,11 +7,12 @@ const CONTACT_EMAIL = 'meduna@holmtec.cz';
 const INFO_EMAIL = 'info@mlzidla.cz';
 const CONTACT_PHONE = '+420 774 700 390';
 const PORTAL_URL = `${SITE_URL}/klientska-sekce`;
+const PORTAL_PROJECT_URL = `${SITE_URL}/muj-projekt`;
 const SUPPORT_URL = `${SITE_URL}/podpora`;
 const KATALOG_URL = `${SITE_URL}/katalog-mlzitek`;
 const POPTAVKA_URL = `${SITE_URL}/poptavka`;
 
-export const BRAND = { LOGO_URL, SITE_URL, CONTACT_EMAIL, INFO_EMAIL, CONTACT_PHONE, PORTAL_URL, SUPPORT_URL, KATALOG_URL, POPTAVKA_URL };
+export const BRAND = { LOGO_URL, SITE_URL, CONTACT_EMAIL, INFO_EMAIL, CONTACT_PHONE, PORTAL_URL, PORTAL_PROJECT_URL, SUPPORT_URL, KATALOG_URL, POPTAVKA_URL };
 
 const escapeHtml = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[c] as string));
 

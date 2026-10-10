@@ -162,10 +162,22 @@ export default async function(req) {
       <p style="margin:0;font-size:14px;line-height:1.7;color:#3f5560">Do 24 hodin se vám náš tým ozve s připravenou nezávaznou cenovou nabídkou nebo s doplňujícími dotazy k upřesnění a odsouhlasení řešení.</p>
     </div>
 
+    <div style="margin:22px 0;padding:22px 20px;background:#eaf6fc;border:1px solid #b8dff0;border-radius:16px">
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0e7584;font-weight:700;margin-bottom:10px">Váš klientský profil · Můj projekt</div>
+      <p style="margin:0 0 14px;font-size:14px;line-height:1.7;color:#3f5560">Vše přehledně na jednom místě. Po přihlášení do sekce Můj projekt uvidíte:</p>
+      <ul style="margin:0 0 14px;padding-left:20px;font-size:13px;line-height:1.8;color:#3f5560">
+        <li>vaši odeslanou poptávku včetně shrnutí a příloh</li>
+        <li>galerii vizualizací a obrázkových nabídek vašeho řešení</li>
+        <li>všechny vytvořené dokumenty a PDF podklady (nabídky, návrhy, technické listy)</li>
+        <li>historii komunikace a stav vaší zakázky krok za krokem</li>
+      </ul>
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#60777d">Přihlaste se stejným e-mailem, jakým jste poptávku odeslali. Pokud ještě účet nemáte, registrace trvá minutu.</p>
+    </div>
+
     <p style="margin:18px 0 0;line-height:1.7;color:#50666c;font-size:14px">Děkujeme za důvěru a těšíme se na spolupráci.</p>`;
 
     const ctaButtons = [
-      { label: 'Zobrazit poptávku', url: BRAND.PORTAL_URL, bg: '#0e5b67' },
+      { label: 'Otevřít Můj projekt', url: BRAND.PORTAL_PROJECT_URL, bg: '#0e5b67' },
       { label: 'Doplnit informace', url: `mailto:${BRAND.CONTACT_EMAIL}?subject=Popt%C3%A1vka%20P-${reference}`, bg: '#dff7fa', color: '#0d2d38' },
     ];
 

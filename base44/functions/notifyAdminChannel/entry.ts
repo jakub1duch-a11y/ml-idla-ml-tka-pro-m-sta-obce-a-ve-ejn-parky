@@ -45,6 +45,7 @@ export default async function(req) {
     const totalPrice = Number(body.total_price) || 0;
     const adminUrl = clean(body.admin_url, 500) || 'https://mlzidla.cz/admin?tab=poptavky';
     const message = clean(body.message, 1000);
+    const reactionDeadline = clean(body.reaction_deadline, 60);
     const dryRun = Boolean(body.dry_run);
 
     if (!eventType) return Response.json({ error: 'missing_event_type' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
@@ -76,6 +77,7 @@ export default async function(req) {
     const text = `:cloud: *${eventLabel}*\n` +
       `*Klient:* ${clientName || '—'}${clientEmail ? ` (${clientEmail})` : ''}\n` +
       `*Čas:* ${pragueTime} (Europe/Prague)\n` +
+      (reactionDeadline ? `*Termín reakce:* ${reactionDeadline}\n` : '') +
       (projectName ? `*Projekt:* ${projectName}\n` : '') +
       (quoteNumber ? `*Nabídka:* ${quoteNumber}\n` : '') +
       (totalPrice > 0 ? `*Cena:* ${new Intl.NumberFormat('cs-CZ').format(totalPrice)} Kč bez DPH\n` : '') +

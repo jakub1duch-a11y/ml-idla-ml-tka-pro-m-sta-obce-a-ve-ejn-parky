@@ -85,15 +85,33 @@ ${COMPANY_BAR}
 }
 
 export function buildEmailText(content: EmailContent): string {
+  const stripHtml = (html: string) => html
+    .replace(/<\/div>/gi, '\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#039;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
   const lines: string[] = [];
   lines.push(content.title);
   lines.push('');
   lines.push(content.greeting);
   lines.push('');
-  // Strip HTML tags from bodyHtml for plaintext
-  const plainBody = content.bodyHtml.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#039;/g, "'").replace(/&quot;/g, '"').trim();
-  lines.push(plainBody);
+  lines.push(stripHtml(content.bodyHtml));
   lines.push('');
+  if (content.summaryBlock) {
+    const plainSummary = stripHtml(content.summaryBlock);
+    if (plainSummary) {
+      lines.push('Shrnutí:');
+      lines.push(plainSummary);
+      lines.push('');
+    }
+  }
   if (content.ctaButtons?.length) {
     content.ctaButtons.forEach(b => lines.push(`${b.label}: ${b.url}`));
     lines.push('');

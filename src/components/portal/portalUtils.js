@@ -1,0 +1,4 @@
+export const statuses = { draft: 'Nabídka se připravuje', pending_approval: 'Probíhá kontrola nabídky', sent: 'Nabídka k rozhodnutí', viewed: 'Nabídka k rozhodnutí', extension_requested: 'Žádost o prodloužení', approved: 'Objednáno', in_production: 'Ve výrobě', ready: 'Připraveno k předání', delivered: 'Doručeno', expired: 'Platnost skončila', rejected: 'Odmítnuto', nova: 'Přijato', new: 'Přijato', v_reseni: 'V řešení', contacted: 'Kontaktováno', in_progress: 'V řešení', uzavrena: 'Uzavřeno', closed: 'Uzavřeno' };
+export const formatDate = value => value ? new Date(value).toLocaleDateString('cs-CZ') : '—';
+export const money = value => Number.isFinite(Number(value)) && value != null ? `${Number(value).toLocaleString('cs-CZ')} Kč` : 'Cena se připravuje';
+export const safeFileUrl = value => typeof value === 'string' && (/^https:\/\//i.test(value) || /^\/(?!\/)/.test(value)) ? value : null;

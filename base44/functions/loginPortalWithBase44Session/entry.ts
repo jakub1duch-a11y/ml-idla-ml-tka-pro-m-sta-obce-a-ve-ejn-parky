@@ -1,7 +1,8 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { registeredPortal } from '../../shared/registeredPortal.ts';
 import { loadClientPortalData, normalizePortalEmail } from '../../shared/clientPortal.ts';
 
-Deno.serve(async (req) => {
+export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me().catch(() => null);
@@ -11,22 +12,10 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'unauthorized' }, { status: 401 });
     }
 
-    const { inquiries, projects } = await loadClientPortalData(base44, email);
-    if (!inquiries.length && !projects.length) {
-      return Response.json({ error: 'no_client_access' }, {
-        status: 403,
-        headers: {
-          'Cache-Control': 'no-store',
-          'X-Content-Type-Options': 'nosniff',
-        },
-      });
-    }
-
-    const existingSessions = await base44.asServiceRole.entities.PortalSession.filter({ email }).catch(() => []);
-    for (const session of existingSessions || []) {
-      await base44.asServiceRole.entities.PortalSession.delete(session.id);
-    }
-
+    const body = await req.json().catch(() => ({}));
+    if (body.mode === 'workspace') return await registeredPortal(base44, email, body);
+    const { inquiries, projects } = body.mode === 'session_only' ? { inquiries: [], projects: [] } : await loadClientPortalData(base44, email);
+    // Keep other active devices and tabs signed in.
     const sessionToken = crypto.randomUUID();
     const sessionExpiresAt = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString();
     await base44.asServiceRole.entities.PortalSession.create({
@@ -53,4 +42,4 @@ Deno.serve(async (req) => {
   } catch (error) {
     return Response.json({ error: error?.message || 'portal_session_login_failed' }, { status: 500 });
   }
-});
+}

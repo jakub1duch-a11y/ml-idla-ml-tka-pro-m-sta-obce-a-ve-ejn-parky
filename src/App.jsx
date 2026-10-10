@@ -26,6 +26,9 @@ import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
+import RegisteredPortal from '@/components/portal/RegisteredPortal';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import '@/components/portal/googleAdsPortal';
 import Poradce from '@/pages/Poradce';
 import AIVizualizace from '@/pages/AIVizualizace';
 import Kalkulacka from '@/pages/Kalkulacka';
@@ -139,7 +142,9 @@ const AuthenticatedApp = () => {
         <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/klientska-sekce" element={<CustomerPortal />} />
-        <Route path="/muj-projekt" element={<CustomerPortal />} />
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?next=%2Fmuj-projekt" replace />} />}>
+          <Route path="/muj-projekt" element={<RegisteredPortal />} />
+        </Route>
         <Route path="/klient" element={<CustomerPortal />} />
         <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />

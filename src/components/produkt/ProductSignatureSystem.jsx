@@ -100,11 +100,10 @@ const FAMILY_VARIANTS = {
   'mlzitko-mrak': {
     title: 'Typ MLŽNÉHO MRAKU®',
     eyebrow: 'MRAK® · typ provedení',
-    description: 'Základ produktu zůstává stejný. Volíte typ provedení podle toho, kde má mlžný mrak fungovat — menší pro dětské hřiště, větší pro mlžiště a hřiště, nebo parkovou variantu pro otevřený prostor.',
+    description: 'Dvě velikosti organické nerezové skulptury. Malý h 1 600 mm je návrhové zadání, velký h 2 400 mm vychází z kalkulace MRAK 13R 2424.',
     items: [
-      { label: 'Dětské hřiště', sub: 'menší · pro dětské mlžení a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp' },
-      { label: 'Velký', sub: 'ideální pro mlžiště a hřiště', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
-      { label: 'Parkový', sub: 'parková promenáda a otevřený prostor', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
+      { label: 'MALÝ · h 1 600 mm', sub: 'návrhová výška · výrobní potvrzení nutné', slug: 'mlzitko-mrak', variant: 'maly', image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp' },
+      { label: 'VELKÝ · h 2 400 mm', sub: 'MRAK 13R 2424 · provedení dle kalkulace', slug: 'mlzitko-mrak', variant: 'velky', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
     ],
   },
 };
@@ -156,7 +155,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const isMrak = product.slug === 'mlzitko-mrak';
   const mrakHref = (patch = {}) => {
     const next = new URLSearchParams(location.search);
-    if (!next.get('variant')) next.set('variant', 'obrys');
+    if (!next.get('variant')) next.set('variant', 'maly');
     Object.entries(patch).forEach(([key, value]) => next.set(key, value));
     return `/produkt/${product.slug}?${next.toString()}`;
   };
@@ -282,7 +281,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
           <div className={`grid gap-3 ${variants.items.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-5'}`}>
             {variants.items.map((item) => {
               const active = item.variant
-                ? currentVariant === item.variant || (product.slug === 'mlzitko-bendy' && !currentVariant && item.variant === 'single') || (isMrak && !currentVariant && item.variant === 'obrys')
+                ? currentVariant === item.variant || (product.slug === 'mlzitko-bendy' && !currentVariant && item.variant === 'single') || (isMrak && !currentVariant && item.variant === 'maly')
                 : item.slug === product.slug && !currentVariant;
               const href = isMrak && item.variant
                 ? mrakHref({ variant: item.variant })

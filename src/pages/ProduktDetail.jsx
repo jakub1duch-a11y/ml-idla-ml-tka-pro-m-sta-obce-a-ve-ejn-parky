@@ -7,6 +7,7 @@ import { setSEO, getProductSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import PdHero from '@/components/produkt/new/PdHero';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
+import MrakVariantGallery from '@/components/produkt/new/MrakVariantGallery';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
 import PdViewModeSwitch from '@/components/produkt/new/PdViewModeSwitch';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
@@ -113,6 +114,7 @@ export default function ProduktDetail() {
 {viewMode === 'classic' && (
   <>
     {classicHero}
+    {product.slug === 'mlzitko-mrak' && <MrakVariantGallery />}
     <PdSectionNav product={product} />
 
           <div className="sticky top-[116px] z-30 mx-auto max-w-md px-4 py-3 lg:hidden">
@@ -166,6 +168,7 @@ export default function ProduktDetail() {
       {viewMode === 'standard' && (
         <>
           {classicHero}
+          {product.slug === 'mlzitko-mrak' && <MrakVariantGallery />}
           <PdFamilyNav product={product} />
           <PdDescription product={product} />
           <ProductPhotoSequence product={product} />
@@ -182,6 +185,7 @@ export default function ProduktDetail() {
       {viewMode === 'new' && (
         <>
           <PdCompactHero product={product} />
+          {product.slug === 'mlzitko-mrak' && <MrakVariantGallery />}
           <ProductMotionShowcase product={product} />
           <PdVisualGalleryCompact product={product} />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>

@@ -22,6 +22,12 @@ export default function Poptavka() {
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const arSession = searchParams.get('ar_session') || '';
   const initialProduct = searchParams.get('produkt') || '';
+  const mrakVariantId = initialProduct === 'mlzitko-mrak' ? searchParams.get('varianta') : null;
+  const mrakVariantName = mrakVariantId === 'velky'
+    ? 'MLŽNÝ MRAK — Velký, h 2 400 mm (MRAK 13R 2424)'
+    : mrakVariantId === 'maly'
+      ? 'MLŽNÝ MRAK — Malý, h 1 600 mm (návrhové provedení)'
+      : '';
   const products = initialProduct && !baseProducts.includes(initialProduct) ? [initialProduct, ...baseProducts] : baseProducts;
   const [form, setForm] = useState(() => ({
     jmeno: searchParams.get('jmeno') || '',
@@ -65,7 +71,11 @@ export default function Poptavka() {
         contact_confirmed_by_user: contactConfirmed,
         privacy_contact_consent: privacyConsent,
         service_type: initialProduct || 'general_inquiry',
-        zprava: arSession ? `${form.zprava}\n\nAR session: ${arSession}` : form.zprava,
+        zprava: [
+          form.zprava,
+          mrakVariantName ? `Vybraná varianta: ${mrakVariantName}` : '',
+          arSession ? `AR session: ${arSession}` : '',
+        ].filter(Boolean).join('\n\n'),
       });
       const created = response?.data?.inquiry || response?.inquiry;
       if (arSession) {
@@ -133,6 +143,11 @@ export default function Poptavka() {
               <label className="mt-7 block font-mono text-xs uppercase tracking-wider text-slate-500">Typ projektu
                 <select value={form.produkt} onChange={change('produkt')} className={input}>{products.map((item) => <option key={item}>{item}</option>)}</select>
               </label>
+              {mrakVariantName && (
+                <div className="mt-3 rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-xs leading-5 text-teal-900">
+                  Vybraná varianta: <strong>{mrakVariantName}</strong>. Rozměry a výrobní parametry potvrdíme před nabídkou.
+                </div>
+              )}
               <label className="mt-7 block font-mono text-xs uppercase tracking-wider text-slate-500">Jaký prostor řešíte? *
                 <textarea required value={form.zprava} onChange={change('zprava')} rows={4} placeholder="Město, místo instalace, přibližné rozměry, způsob využití a případně odkaz na fotografie prostoru…" className={`${input} resize-none`} />
               </label>

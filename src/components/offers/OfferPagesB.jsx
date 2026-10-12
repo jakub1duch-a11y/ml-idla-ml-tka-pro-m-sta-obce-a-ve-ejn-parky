@@ -14,7 +14,7 @@ export function DarkHeroPage({ c }) {
   return (
     <div className="offer-page op-dark">
       {c.pick(1) && <Bg src={c.pick(1)} style={{ opacity: .85 }} />}
-      <div className="op-abs" style={{ left: 0, right: 0, bottom: '6%', textAlign: 'center', color: '#fff' }}>
+      <div className="op-abs" style={{ left: 0, right: 0, bottom: '6%', textAlign: 'center', color: '#fff', background: 'rgba(17,22,19,.88)', padding: '3cqw' }}>
         <div className="op-h2" style={{ fontSize: '6cqw', color: '#fff' }}><ProductTitle name={c.productName} /></div>
         <div className="op-rule" style={{ margin: '1.4cqw auto 0' }} />
       </div>
@@ -26,7 +26,7 @@ export function PhotoHeroPage({ c }) {
   return (
     <div className="offer-page">
       <Bg src={c.pick(2)} />
-      <div className="op-abs op-fade-top" style={{ inset: '0 0 60% 0' }} />
+      <div className="op-abs" style={{ inset: '0 0 60% 0', background: 'linear-gradient(180deg,rgba(251,252,248,.98),rgba(251,252,248,.92),transparent)' }} />
       <div className="op-abs" style={{ left: '7cqw', top: '10cqw', zIndex: 3 }}>
         <div className="op-h1" style={{ fontSize: '7.4cqw' }}><ProductTitle name={c.productName} /></div>
         <div className="op-rule" />

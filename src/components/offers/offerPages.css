@@ -27,7 +27,7 @@
 .op-foot-site{margin-left:auto;border-left:.15cqw solid #cfd6c4;padding-left:3cqw;font-weight:900;font-size:3cqw}
 .op-dark{background:radial-gradient(circle at 50% 40%,#4a423a,#1c1a18)}
 .offer-print-hint{display:none}
-.op-flow-page{aspect-ratio:auto;min-height:141.43cqw;padding:5cqw 5cqw 7cqw;overflow:visible}
+.op-flow-page{aspect-ratio:210/297;min-height:0;padding:5% 5% 7%;overflow:visible}
 .op-flow-page .op-logo{position:relative;left:auto;top:auto;margin-bottom:5cqw;width:max-content}
 .op-flow-heading{margin-bottom:5cqw}.op-flow-heading .op-h1{font-size:6cqw;overflow-wrap:anywhere}.op-flow-heading .op-sub{margin-top:2cqw}
 .op-flow-content{display:grid;gap:3cqw}.op-flow-content p{margin:0;overflow-wrap:anywhere}.op-flow-photo{width:100%;height:52cqw;object-fit:contain;background:var(--op-soft)}

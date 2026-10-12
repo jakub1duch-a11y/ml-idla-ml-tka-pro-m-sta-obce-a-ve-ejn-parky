@@ -348,7 +348,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
         product: productForOffer,
         document_type: 'offer',
-        inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
+        inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal, attachment_urls: [...(selected.attachment_urls || []), ...offerAttachments.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean) },
         quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate },
         offer_final_page: {
           portal_url: 'https://mlzidla.cz/klientska-sekce',
@@ -461,6 +461,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
       try {
         const generatedAssets = [
+          ...(quote.scenes || []).map(s => ({ inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: s.url, file_name: `nabidka-${quoteNumber}-scene-${s.sort_order}.webp`, file_type: 'image/webp', asset_type: 'generated_visualization', title: s.title, description: s.caption, selected_for_offer: true, generated_by_ai: true })),
           quoteDriveUrl && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: quoteDriveUrl, file_name: quote?.filename || `${quoteNumber}-nabidka.pdf`, file_type: 'application/pdf', asset_type: 'quote_pdf', title: 'Cenová nabídka PDF', selected_for_offer: true, generated_by_ai: false },
           presentation?.presentation_url && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: presentation.presentation_url, file_name: `${quoteNumber}-prezentace`, file_type: 'application/vnd.google-apps.presentation', asset_type: 'presentation', title: 'Projektová prezentace', selected_for_offer: true, generated_by_ai: true },
           presentation?.presentation_pdf_url && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: presentation.presentation_pdf_url, file_name: presentation.presentation_filename || `${quoteNumber}-prezentace.pdf`, file_type: 'application/pdf', asset_type: 'presentation_pdf', title: 'Projektová prezentace PDF', selected_for_offer: true, generated_by_ai: true },
@@ -469,6 +470,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
       const generatedVisualizationUrls = [
+        ...(quote.scenes || []).map(s => s.url),
         visualizationUrl,
         ...visualizationOverrides,
         ...offerAttachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),

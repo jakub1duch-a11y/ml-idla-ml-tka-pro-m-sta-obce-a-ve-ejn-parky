@@ -5,7 +5,7 @@ import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts'
 import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
 import { toBase64 } from '../../shared/pdfHelpers.ts';
 import { loadOfferCtx } from '../../shared/offerPdfContext.ts';
-import { drawCoverPage, drawSolutionPage, drawTechPage, drawPlacementPage, drawSmartPage, drawPricePage, drawDarkHeroPage, drawPhotoHeroPage, drawRecapPage } from '../../shared/offerPdfBuilder.ts';
+import { buildOfferDocument } from '../../shared/offerPdfBuilder.ts';
 
 const OFFERS_SPREADSHEET_ID = '1MS4i00ekY3Pf3fY-AsUdCT7GtNiCk5XPDr8CLiwym6M';
 const OFFERS_SHEET = 'Nabídky';
@@ -30,15 +30,7 @@ export default async function(req: Request): Promise<Response> {
     const { ctx, total: baseTotal, quoteNum } = await loadOfferCtx(base44, order, inquiryId);
 
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-    drawCoverPage(doc, ctx);
-    doc.addPage(); drawSolutionPage(doc, ctx);
-    doc.addPage(); drawTechPage(doc, ctx);
-    doc.addPage(); drawPlacementPage(doc, ctx);
-    if (ctx.smart) { doc.addPage(); drawSmartPage(doc, ctx); }
-    doc.addPage(); drawPricePage(doc, ctx);
-    doc.addPage(); drawDarkHeroPage(doc, ctx);
-    doc.addPage(); drawPhotoHeroPage(doc, ctx);
-    doc.addPage(); drawRecapPage(doc, ctx);
+    buildOfferDocument(doc, ctx);
     const pdfBytes = doc.output('arraybuffer');
 
     let pdfUrl = '';

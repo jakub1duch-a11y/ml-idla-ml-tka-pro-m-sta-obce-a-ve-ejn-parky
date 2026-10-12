@@ -29,10 +29,12 @@ export async function loadOfferCtx(base44: any, order: any, inquiryId?: string) 
     total = Number(order.total_price || 0);
     lines.push({ label: clean(order.product_name), quantity: 1, unit: 'ks', total });
   }
-  if (supla && supla.standard_price_ex_vat > 0) {
-    total += supla.standard_price_ex_vat;
-    lines.push({ label: 'SUPLA Smart řízení (Standard)', quantity: 1, unit: 'set', total: supla.standard_price_ex_vat });
-  }
+  // Alternativní varianty se nesčítají a volitelná SUPLA se nepřičítá podruhé.
+  const selectedVariant = variants?.[0];
+  total = Number(order.total_price || selectedVariant?.total_price || 0);
+  lines.splice(0, lines.length, ...(selectedVariant?.line_items?.length
+    ? selectedVariant.line_items.map(l => ({ ...l, label: clean(l.label) }))
+    : [{ label: clean(order.product_name) || 'Produkt', quantity: selectedVariant?.quantity || 1, unit: 'ks', total }]));
 
   const quoteNum = order.quote_number || `HT-${new Date().getFullYear()}-${String(order.id || Date.now()).slice(-5)}`;
   const validUntil = new Date(order.valid_until || Date.now() + 30 * 86400000).toLocaleDateString('cs-CZ');
@@ -44,7 +46,13 @@ export async function loadOfferCtx(base44: any, order: any, inquiryId?: string) 
     solution: clean(order.production_notes || order.description).slice(0, 600),
     benefits: [], lines, total,
     smart: order.smart_control_included !== false,
-    quoteNum, validUntil, today: new Date().toLocaleDateString('cs-CZ'), product, imgs,
+    quoteNum, validUntil, today: new Date().toLocaleDateString('cs-CZ'), product, imgs, supla,
   };
-  return { ctx, vizUrls, productUrls, total, quoteNum };
+  let inquiry = null;
+  if (order.inquiry_id || inquiryId) inquiry = await sr[order.inquiry_type === 'contact' ? 'ContactInquiry' : 'Poptavka'].get(order.inquiry_id || inquiryId);
+  const sourcePhotos = [...(inquiry?.attachment_urls || []), ...assets.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean);
+  const sceneAssets = assets.filter(a => a.asset_type === 'generated_visualization' && /scene-\d/.test(a.file_name || '')).slice(-5);
+  ctx.scenes = await Promise.all(sceneAssets.map(async (a, i) => ({ url: a.file_url, title: a.title, caption: a.description, sort_order: i, source: sourcePhotos.length ? 'client_space' : 'illustrative_city', img: await fetchImageAsBase64(a.file_url) })));
+  if (!product) { const master = assets.find(a => a.asset_type === 'product_reference'); ctx.product = { name: ctx.productName, image_url: master?.file_url || '' }; }
+  return { ctx, vizUrls, productUrls, total, quoteNum, sourcePhotos };
 }

@@ -81,7 +81,7 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
   const inp = 'mt-1 w-full rounded-lg border border-slate-200 bg-white p-2.5 text-sm text-slate-800';
 
   return (
-    <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-6">
+    <div className="mt-6 min-w-0 rounded-2xl border border-slate-200 bg-white p-2 sm:p-6">
       <div className="mb-4 flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800">
         <Shield size={16} className="mt-0.5 shrink-0" />
         <span><b>Bezpečnostní brána:</b> nabídka je koncept a nikdy se neodesílá automaticky. Odeslání probíhá až po vašem ručním potvrzení.</span>

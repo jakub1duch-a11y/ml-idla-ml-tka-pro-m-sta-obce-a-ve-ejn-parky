@@ -765,7 +765,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
   return (
     <section className="border-t border-border bg-card">
-      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[.78fr_1.22fr] lg:px-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-8 px-6 py-14 lg:grid-cols-[minmax(0,.78fr)_minmax(0,1.22fr)] lg:px-10">
         <aside>
           <p className="font-mono text-[10px] tracking-[.16em] uppercase text-secondary">Poptávky</p>
           <h2 className="mt-2 font-heading text-3xl text-foreground">Tvorba nabídky</h2>
@@ -794,7 +794,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           {filteredInquiries.length === 0 && <div className="rounded-xl border border-dashed border-border p-5 text-center text-xs text-muted-foreground">Nenalezena žádná poptávka ani nabídka odpovídající hledání.</div>}</div>
         </aside>
 
-        <div className="border border-border p-5 lg:p-7">
+        <div className="min-w-0 border border-border p-5 lg:p-7">
           <NabidkovySuperAgentChat inquiryId={selected?.id} inquiryType={selected?.type} />
           <div className="mt-4">
             <button type="button" onClick={loadAgentOffer} disabled={busy === 'load-agent'} className="inline-flex items-center gap-2 rounded-full border border-cyan-300 bg-cyan-50 px-4 py-2 text-xs font-bold text-cyan-900 transition hover:bg-cyan-100 disabled:opacity-50">

@@ -18,6 +18,7 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
   const [editing, setEditing] = useState(false);
   const [sendOpen, setSendOpen] = useState(false);
   const [lines, setLines] = useState([]);
+  const [sceneAssets, setSceneAssets] = useState([]);
   const [content, setContent] = useState(() => ({
     presentation_title: prepared?.clientContent?.presentation_title || '',
     project_goal: prepared?.clientContent?.project_goal || '',
@@ -33,16 +34,23 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
       .then((r) => setLines((r?.items || r || [])[0]?.line_items || [])).catch(() => setLines([]));
   }, [orderId]);
 
+  useEffect(() => {
+    if (!orderId) return;
+    base44.entities.OfferAsset.filter({ project_order_id: orderId, asset_type: 'generated_visualization', file_name: { $regex: 'scene-' } }, { sort: '-created_date', limit: 5 }).then(({ items }) => setSceneAssets(items.reverse().map(a => ({ url: a.file_url, title: a.title, caption: a.description }))));
+  }, [orderId, prepared?.quote]);
+
   const ctx = useMemo(() => {
     const product = selectedProduct || null;
     const productName = product?.name || prepared?.projectOrder?.product_name || 'Mlžítko';
-    const viz = prepared?.visualizationUrls || [];
+    const scenes = prepared?.quote?.scenes?.length ? prepared.quote.scenes : sceneAssets;
+    const viz = scenes.length ? scenes.map(s => s.url) : prepared?.visualizationUrls || [];
     const gallery = [product?.image_url, ...(product?.gallery_urls || [])].filter(Boolean);
     const total = Number(prepared?.projectOrder?.total_price || prepared?.quote?.final_total || 0);
     const clientName = selected?.name || selected?.jmeno || '—';
     const clientCompany = selected?.firma || selected?.company || '';
     return {
-      product, productName, viz, gallery, total, clientName, clientCompany,
+      product, productName, viz, gallery, total, clientName, clientCompany, scenes,
+      sourcePhotos: selected?.attachment_urls || [], suplaPrice: prepared?.quote?.smart_pricing?.complete_supla_ex_vat || 0,
       forWhom: clientCompany || clientName,
       pick: (i) => viz[i] || viz[0] || gallery[0] || '',
       benefits: content.benefits.filter(Boolean), goal: content.project_goal, solution: content.solution_summary,
@@ -52,9 +60,9 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
       validUntil: prepared?.validUntil ? new Date(prepared.validUntil).toLocaleDateString('cs-CZ') : '—',
       today: new Date().toLocaleDateString('cs-CZ'),
     };
-  }, [prepared, selected, selectedProduct, content, lines]);
+  }, [prepared, selected, selectedProduct, content, lines, sceneAssets]);
 
-  const visible = ctx.smart ? PAGES : PAGES.filter(([, C]) => C !== SmartPage);
+  const visible = PAGES;
   const safePage = Math.min(page, visible.length - 1);
   const set = (f) => (e) => setContent((c) => ({ ...c, [f]: e.target.value }));
   const regenerate = () => { onRegenerate?.({ clientContent: { ...content, benefits: content.benefits.filter(Boolean) } }); setEditing(false); };

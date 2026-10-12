@@ -1,6 +1,7 @@
 import React from 'react';
 import { Clock, Thermometer, Smartphone, Droplets, ShieldCheck, Sparkles, Users, Leaf, Maximize2, Layers, Anchor, Sun } from 'lucide-react';
-import { Logo, Bg, Footer, ProductTitle, IconRow } from './OfferPageParts';
+import { Logo, Bg, ProductTitle, IconRow } from './OfferPageParts';
+import OfferFlowPage from '@/components/offers/OfferFlowPage';
 
 const DEFAULT_BENEFITS = [
   { icon: Droplets, title: 'Jemná vodní mlha', text: 'Příjemně ochlazuje, zvlhčuje vzduch a vytváří svěží prostředí.' },
@@ -44,39 +45,18 @@ export function CoverPage({ c }) {
           </div>
         )}
       </div>
-      <Footer />
+
     </div>
   );
 }
 
 export function SolutionPage({ c }) {
-  const list = (c.benefits.length ? c.benefits.slice(0, 5).map((b, i) => ({ icon: ICONS[i % 5], title: b, text: '' })) : DEFAULT_BENEFITS);
-  return (
-    <div className="offer-page">
-      <Bg src={c.pick(1)} style={{ height: '70%' }} />
-      <div className="op-abs op-fade-top" style={{ inset: '0 0 30% 0' }} />
-      <Logo />
-      <div className="op-abs" style={{ left: '5.2cqw', top: '17cqw', right: '5cqw', zIndex: 3 }}>
-        <div className="op-h1" style={{ fontSize: '7.4cqw' }}>Řešení pro <span className="op-green">{c.forWhom}</span></div>
-        <div className="op-sub" style={{ fontWeight: 700, marginTop: '1.4cqw' }}><ProductTitle name={c.productName} /> pro příjemné letní osvěžení.</div>
-        <div className="op-txt" style={{ width: '56%', marginTop: '2cqw', fontSize: '2.5cqw', color: '#222' }}>{c.goal || c.solution}</div>
-      </div>
-      <div className="op-abs" style={{ right: '3cqw', top: '24cqw', width: '33cqw', zIndex: 3, background: 'rgba(251,252,248,.9)', borderRadius: '2cqw', padding: '0 2cqw' }}>
-        {list.map((b) => <IconRow key={b.title} icon={b.icon} title={b.title} text={b.text} size={8} />)}
-      </div>
-      <div className="op-abs" style={{ left: '3.4cqw', right: '3.4cqw', bottom: '12.5cqw', height: '20cqw', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.6cqw' }}>
-        {[[c.pick(2), 'Jemná a osvěžující mlha', 'Speciální trysky vytváří jemnou vodní mlhu.'],
-          [c.gallery[1] || c.pick(0), 'Kvalitní nerezové provedení', 'Odolná nerezová ocel a precizní zpracování.'],
-          [c.pick(3), 'Atraktivní prvek', 'Moderní design podporuje pobyt venku.']].map(([src, t, d]) => (
-          <div key={t}>
-            <div style={{ height: '11.5cqw' }}>{src ? <img src={src} alt="" className="op-img" /> : <div className="op-img op-bg-fallback" />}</div>
-            <div className="op-bold" style={{ marginTop: '.8cqw' }}>{t}</div><div className="op-cap">{d}</div>
-          </div>
-        ))}
-      </div>
-      <Footer />
-    </div>
-  );
+  return <OfferFlowPage title="Řešení pro váš prostor" subtitle={c.forWhom}>
+    <p className="op-txt">{c.goal}</p><p className="op-txt">{c.solution}</p>
+    {c.pick(0) && <img className="op-flow-photo" src={c.pick(0)} alt={c.productName}/>}
+    {c.benefits.map(b => <p className="op-txt" key={b}>{b}</p>)}
+    <p className="op-cap">Vizualizace je koncepční návrh; umístění a technické návaznosti potvrdí technik.</p>
+  </OfferFlowPage>;
 }
 
 export function TechPage({ c }) {
@@ -118,7 +98,7 @@ export function TechPage({ c }) {
           );
         })}
       </div>
-      <Footer />
+
     </div>
   );
 }

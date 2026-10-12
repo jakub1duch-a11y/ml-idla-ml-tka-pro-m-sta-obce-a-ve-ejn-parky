@@ -5,6 +5,7 @@ import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
 import NabidkovySuperAgentChat from '@/components/offers/NabidkovySuperAgentChat';
 import OfferDocumentEditor from '@/components/offers/OfferDocumentEditor';
+import OfferVisualViewer from '@/components/offers/OfferVisualViewer';
 import OfferConceptPanel from '@/components/offers/OfferConceptPanel';
 import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
@@ -950,8 +951,15 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           </details>
 
           {prepared && (
-            <div id="offer-review" className="mt-6 scroll-mt-24 rounded-2xl border border-cyan-300 bg-cyan-50/50 p-5 sm:p-6">
-              <OfferDocumentEditor prepared={prepared} selected={selected} selectedProduct={selectedProduct} audiences={AUDIENCES} busy={busy === 'prepare' || busy === 'auto-offer'} onRegenerate={prepareOffer} downloadPreparedPdf={downloadPreparedPdf} />
+            <div id="offer-review" className="mt-6 scroll-mt-24">
+              <OfferVisualViewer
+                prepared={prepared}
+                selected={selected}
+                selectedProduct={selectedProduct}
+                busy={busy === 'prepare' || busy === 'auto-offer'}
+                onRegenerate={prepareOffer}
+                onSend={onSent}
+              />
               <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-mono uppercase tracking-widest text-cyan-800">Kompletní nabídka · připravena jako koncept</p><p className="mt-1 text-sm font-semibold text-slate-950">{prepared.quoteNumber} · platnost do {prepared.validUntil.toLocaleDateString('cs-CZ')}</p></div><CheckCircle2 size={20} className="text-cyan-700"/></div>
               <div className="mt-4 grid gap-2 sm:grid-cols-4">
                 <div className="rounded-xl border border-emerald-200 bg-white px-3 py-3 text-xs font-semibold text-emerald-800">✓ Doporučené řešení</div>

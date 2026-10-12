@@ -5,10 +5,10 @@ import type { OfferCtx, PdfImg } from './offerPdfBuilder.ts';
 
 export async function loadOfferCtx(base44: any, order: any, inquiryId?: string) {
   const sr = base44.asServiceRole.entities;
-  const variants = await sr.OfferVariant.filter({ project_order_id: order.id }).catch(() => []);
+  const { items: variants } = await sr.OfferVariant.filter({ project_order_id: order.id }, { sort: 'sort_order', limit: 1 });
   let product: any = null;
   if (order.product_id) { try { product = await sr.Product.get(order.product_id); } catch { /* bez produktu */ } }
-  const assets = await sr.OfferAsset.filter({ inquiry_id: order.inquiry_id || inquiryId }).catch(() => []);
+  const { items: assets } = await sr.OfferAsset.filter({ project_order_id: order.id }, { sort: 'created_date', limit: 50 });
   let vizUrls: string[] = (assets || []).filter((a: any) => a.asset_type === 'generated_visualization' && a.file_url).map((a: any) => a.file_url);
   if (!vizUrls.length && variants?.length) vizUrls = variants.map((v: any) => v.visualization_url).filter(Boolean);
   const productUrls: string[] = [product?.image_url, ...(product?.gallery_urls || [])].filter(Boolean);

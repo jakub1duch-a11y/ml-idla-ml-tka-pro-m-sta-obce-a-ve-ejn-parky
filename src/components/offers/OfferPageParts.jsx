@@ -19,20 +19,8 @@ export function Bg({ src, className = '', style }) {
     : <div className={`op-bg op-bg-fallback ${className}`} />;
 }
 
-export function Footer({ cta = 'Ukažte nám svůj prostor.' }) {
-  return (
-    <>
-      <div className="op-wave" />
-      <div className="op-foot">
-        <span className="op-cta">{cta} →</span>
-        <div className="op-foot-contact">
-          <b>{CONTACT.name}</b><br />{CONTACT.email} • {CONTACT.phone}
-        </div>
-        <div className="op-foot-site">{CONTACT.site}</div>
-      </div>
-    </>
-  );
-}
+// Kontaktní patičku vykresluje pouze poslední list přes OfferPortalContact.
+export function Footer() { return null; }
 
 // Název produktu: poslední slovo (např. číslo modelu) zeleně.
 export function ProductTitle({ name }) {

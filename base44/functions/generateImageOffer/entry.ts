@@ -14,14 +14,15 @@ export default async function(req) {
     if (!body.project_order_id) return Response.json({ error: 'Missing project_order_id' }, { status: 400 });
     const order = await base44.asServiceRole.entities.ProjectOrder.get(body.project_order_id);
     const { ctx, quoteNum, sourcePhotos } = await loadOfferCtx(base44, order);
-    const scenes = body.reuse_visuals && ctx.scenes?.length >= 5 ? ctx.scenes : await generateOfferVisualScenes(base44, { product: ctx.product || { name: ctx.productName }, sourcePhotos, quantity: ctx.lines[0]?.quantity || 1, goal: ctx.goal });
+    const reused = Boolean(body.reuse_visuals && ctx.scenes?.length >= 5);
+    const scenes = reused ? ctx.scenes : await generateOfferVisualScenes(base44, { product: ctx.product || { name: ctx.productName }, sourcePhotos, quantity: ctx.lines[0]?.quantity || 1, goal: ctx.goal });
     ctx.scenes = scenes;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
     buildOfferDocument(doc, ctx);
     const bytes = new Uint8Array(doc.output('arraybuffer'));
     const up = await base44.asServiceRole.integrations.Core.UploadPublicFile({ file: new Blob([bytes], { type: 'application/pdf' }) });
     if (!up?.file_url) throw new Error('PDF se nepodarilo ulozit.');
-    if (!body.reuse_visuals || !ctx.scenes?.length) await base44.asServiceRole.entities.OfferAsset.bulkCreate(scenes.map(s => ({
+    if (!reused) await base44.asServiceRole.entities.OfferAsset.bulkCreate(scenes.map(s => ({
       inquiry_id: order.inquiry_id, inquiry_type: order.inquiry_type, project_order_id: order.id,
       file_url: s.url, file_name: `nabidka-${quoteNum}-scene-${s.sort_order}.webp`, file_type: 'image/webp',
       asset_type: 'generated_visualization', title: s.title, description: s.caption, generated_by_ai: true, selected_for_offer: true,

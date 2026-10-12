@@ -35,10 +35,18 @@ export function drawCoverPage(doc, c) {
 }
 export function drawSolutionPage(doc, c) {
   let y = header(doc, c, 'Reseni pro vas prostor', c.productName);
-  y = text(doc, c.goal, 14, y, 182, 10);
-  y = text(doc, c.solution, 14, y + 5, 182, 10);
-  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, Math.max(y + 5, 110), 182, 100);
-  text(doc, 'Vizualizace je koncepcni navrh. Umisteni, kotveni a pripojeni potvrzuje technik pred realizaci.', 14, 230, 182, 10, false, MUTE);
+  for (const paragraph of [c.goal, c.solution]) {
+    doc.setFontSize(10);
+    const lines = doc.splitTextToSize(pt(paragraph || ''), 182);
+    for (const line of lines) {
+      if (y > 265) { doc.addPage(); y = header(doc, c, 'Reseni - pokracovani'); }
+      text(doc, line, 14, y, 182, 10); y += 5;
+    }
+    y += 5;
+  }
+  if (y + 129 > 275) { doc.addPage(); y = header(doc, c, 'Navrzene reseni', c.productName); }
+  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, y, 182, 100);
+  text(doc, 'Vizualizace je koncepcni navrh. Umisteni, kotveni a pripojeni potvrzuje technik pred realizaci.', 14, y + 108, 182, 10, false, MUTE);
 }
 export function drawTechPage(doc, c) {
   let y = header(doc, c, 'Technicke informace', c.productName);

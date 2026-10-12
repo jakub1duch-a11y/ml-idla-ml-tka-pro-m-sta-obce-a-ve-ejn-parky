@@ -4,7 +4,7 @@ export async function generateOfferVisualScenes(base44, { product, sourcePhotos 
   const productRefs = [product.visual_master_reference_url, product.image_url, ...(product.gallery_urls || [])].filter(Boolean).slice(0, 3);
   if (!productRefs.length) throw new Error('Chybí referenční fotografie produktu. Doplňte ji před generováním vizualizací.');
   const photos = [];
-  for (const uri of sourcePhotos.slice(0, 3)) {
+  for (const uri of [...new Set(sourcePhotos)].slice(0, 3)) {
     if (/^https:\/\//.test(uri)) photos.push(uri);
     else { const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({ file_uri: uri, expires_in: 900 }); photos.push(signed.signed_url); }
   }

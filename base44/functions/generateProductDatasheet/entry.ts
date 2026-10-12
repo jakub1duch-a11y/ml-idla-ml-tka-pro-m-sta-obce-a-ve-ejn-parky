@@ -223,7 +223,7 @@ export default async function(req) {
       const c = { product, productName: product.name, clientName: inquiry.name || '', clientCompany: inquiry.company || '', goal: safe(aiContent.project_goal || inquiry.project_goal), solution: safe(aiContent.solution_summary || product.short_description), benefits: aiContent.benefits || [], lines, total, smart: true, quoteNum: quoteNumber, validUntil: dateCs(requestedValidUntil || Date.now() + 30 * 86400000), today: dateCs(Date.now()), imgs: [await fetchImageAsBase64(product.image_url)], scenes, supla: { standard_price_ex_vat: smartPricing.complete_supla_ex_vat } };
       const offerDoc = new jsPDF({ unit: 'mm', format: 'a4' });
       buildOfferDocument(offerDoc, c);
-      return Response.json({ pdf_base64: toBase64(new Uint8Array(offerDoc.output('arraybuffer'))), filename: `${quoteNumber}-nabidka.pdf`, quote_number: quoteNumber, smart_pricing: smartPricing, scenes: scenes.map(({ img, ...s }) => s), portal_url: 'https://mlzidla.cz/muj-projekt', page_count: offerDoc.getNumberOfPages() });
+      return Response.json({ pdf_base64: toBase64(new Uint8Array(offerDoc.output('arraybuffer'))), filename: `${quoteNumber}-nabidka.pdf`, quote_number: quoteNumber, smart_pricing: smartPricing, lines, final_total: total, scenes: scenes.map(({ img, ...s }) => s), portal_url: 'https://mlzidla.cz/muj-projekt', page_count: offerDoc.getNumberOfPages() });
     }
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     await loadFont(doc);

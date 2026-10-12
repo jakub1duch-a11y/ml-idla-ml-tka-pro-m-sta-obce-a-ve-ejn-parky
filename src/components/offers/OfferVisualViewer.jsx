@@ -54,7 +54,7 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
       forWhom: clientCompany || clientName,
       pick: (i) => viz[i] || viz[0] || gallery[0] || '',
       benefits: content.benefits.filter(Boolean), goal: content.project_goal, solution: content.solution_summary,
-      lines: lines.length ? lines : [{ label: productName, quantity: 1, unit: 'ks', total }],
+      lines: prepared?.quote?.lines?.length ? prepared.quote.lines : lines.length ? lines : [{ label: productName, quantity: 1, unit: 'ks', total }],
       smart: prepared?.projectOrder?.smart_control_included !== false,
       quoteNumber: prepared?.quoteNumber,
       validUntil: prepared?.validUntil ? new Date(prepared.validUntil).toLocaleDateString('cs-CZ') : '—',
@@ -87,7 +87,7 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
         <span><b>Bezpečnostní brána:</b> nabídka je koncept a nikdy se neodesílá automaticky. Odeslání probíhá až po vašem ručním potvrzení.</span>
       </div>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">Nabídka {prepared?.quoteNumber || ''} · {visible.length} stran A4</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">Nabídka {prepared?.quoteNumber || ''} · {prepared?.quote?.page_count || (visible.length + Math.max(0, Math.ceil(ctx.viz.length / 2) - 1))} stran A4</span>
         <div className="ml-auto flex gap-2">
           <button onClick={() => setMode(mode === 'single' ? 'all' : 'single')} className={btn}>{mode === 'single' ? <><LayoutGrid size={14} /> Všechny strany</> : <><Square size={14} /> Listovat</>}</button>
         </div>

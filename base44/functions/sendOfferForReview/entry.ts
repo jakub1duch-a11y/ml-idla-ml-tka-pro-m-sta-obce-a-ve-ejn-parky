@@ -1,12 +1,13 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { buildClientOfferEmail, loadOfferEmailData } from '../../shared/clientOfferEmail.ts';
-import { sendViaGmail } from '../../shared/customerEmails.ts';
+import { createGmailDraft } from '../../shared/customerEmails.ts';
 
 const clean = (v: unknown, max = 2000) => String(v || '').trim().slice(0, max);
 const escapeHtml = (v: unknown) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[c] as string));
 
-// Interní e-mail pro kontrolu AI nabídky — odesílá se na Jakub1duch@gmail.com
-// Není to odeslání zákazníkovi. Obsahuje náhled klientského e-mailu, PDF a vizualizace.
+// Interní kontrolní koncept AI nabídky — ukládá se jako GMAIL KONCEPT (neodesílá se)
+// na meduna@holmtec.cz a jakub1duch@gmail.com. Obsahuje náhled klientského e-mailu, PDF a vizualizace.
+// Odeslání provede obchodník ručně v Gmailu po kontrole.
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -25,7 +26,7 @@ export default async function(req) {
     const { data, project } = loaded;
     const clientEmail = buildClientOfferEmail(data);
 
-    const reviewRecipient = 'jakub1duch@gmail.com';
+    const reviewRecipients = 'meduna@holmtec.cz, jakub1duch@gmail.com';
     const quoteNumber = clean(project.quote_number);
     const clientName = clean(project.client_name);
     const productName = clean(project.product_name);
@@ -104,7 +105,7 @@ MLŽIDLA® / HolmTec s.r.o. — interní notifikace AI nabídek`;
       return Response.json({
         ok: true,
         dry_run: true,
-        recipient: reviewRecipient,
+        recipients: reviewRecipients,
         subject,
         project_id: projectId,
         quote_number: quoteNumber,
@@ -113,13 +114,15 @@ MLŽIDLA® / HolmTec s.r.o. — interní notifikace AI nabídek`;
       }, { headers: { 'Cache-Control': 'no-store' } });
     }
 
-    // Send internal review email via Gmail
-    const result = await sendViaGmail(base44, {
-      to: reviewRecipient,
+    // Vytvoří KONCEPT v Gmailu (neodesílá) na meduna@holmtec.cz a jakub1duch@gmail.com
+    // Label_10 = Gmail štítek „Připravené nabídky“ na připojeném účtu.
+    const result = await createGmailDraft(base44, {
+      to: reviewRecipients,
       fromEmail: 'meduna@holmtec.cz',
       subject,
       text: reviewText,
       html: reviewHtml,
+      labelIds: ['Label_10'],
     });
 
     // Also send Slack admin notification with concept + next step
@@ -131,7 +134,7 @@ MLŽIDLA® / HolmTec s.r.o. — interní notifikace AI nabídek`;
         quote_number: quoteNumber,
         project_name: project.project_name || productName,
         total_price: data.totalPrice,
-        message: `AI vygenerovala nabídku ${quoteNumber}. Čeká na kontrolu a ruční odeslání. Interní kopie odeslána na ${reviewRecipient}.`,
+        message: `AI vygenerovala nabídku ${quoteNumber}. Čeká na kontrolu a ruční odeslání. Koncept uložen v Gmailu pro ${reviewRecipients}.`,
         admin_url: 'https://mlzidla.cz/admin?tab=poptavky',
       });
     } catch (_) { /* Slack best-effort */ }
@@ -158,8 +161,9 @@ MLŽIDLA® / HolmTec s.r.o. — interní notifikace AI nabídek`;
 
     return Response.json({
       ok: result.ok,
-      review_email_sent: result.ok,
-      recipient: reviewRecipient,
+      review_draft_created: result.ok,
+      draft_id: result.draft_id || '',
+      recipients: reviewRecipients,
       subject,
       error: result.error,
       project_id: projectId,

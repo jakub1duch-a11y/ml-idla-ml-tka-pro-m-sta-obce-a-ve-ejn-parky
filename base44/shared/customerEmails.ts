@@ -155,6 +155,33 @@ export function mimeToBase64Url(bytes: Uint8Array): string {
   return base64Url(bytes);
 }
 
+export async function createGmailDraft(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; labelIds?: string[] }): Promise<{ ok: boolean; draft_id?: string; error?: string }> {
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+    const raw = buildMimeMessage({ to: opts.to, fromEmail: opts.fromEmail, subject: opts.subject, text: opts.text, html: opts.html, bcc: opts.bcc });
+    const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/drafts', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: { raw: mimeToBase64Url(raw) } }),
+    });
+    if (!res.ok) return { ok: false, error: `Gmail API ${res.status}: ${await res.text()}` };
+    const data = await res.json().catch(() => ({}));
+    const draftId = data?.id || data?.message?.id || '';
+    const messageId = data?.message?.id || '';
+    // Gmail drafts API neumí nastavit štítky při vytváření — přidáme je až poté přes messages.modify.
+    if (opts.labelIds?.length && messageId) {
+      await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${messageId}/modify`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ addLabelIds: opts.labelIds }),
+      }).catch(() => null);
+    }
+    return { ok: true, draft_id: draftId };
+  } catch (error) {
+    return { ok: false, error: error?.message || String(error) };
+  }
+}
+
 export async function sendViaGmail(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[] }): Promise<{ ok: boolean; error?: string }> {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');

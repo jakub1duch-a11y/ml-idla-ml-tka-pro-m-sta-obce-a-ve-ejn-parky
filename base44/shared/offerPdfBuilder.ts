@@ -8,6 +8,7 @@ export const MUTE = '#4b524a';
 export const WHITE = '#fbfcf8';
 export const CARD = '#eef1e8';
 export const CARD_DARK = '#e1e6d6';
+const DARK = '#1c1a18';
 
 const t = (doc: any, text: any, x: number, y: number, opts?: any) => doc.text(pt(text), x, y, opts);
 const fmtKc = (v: any) => `${new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 2 }).format(Number(v || 0))} Kc`;
@@ -98,8 +99,8 @@ export function drawCoverPage(doc: any, ctx: OfferCtx) {
   const { W, H } = { W: 210, H: 297 };
   addImg(doc, ctx.imgs[0], 0, 42, W, 186);
   doc.setFillColor(WHITE);
-  doc.rect(0, 0, W, 42);
-  doc.rect(0, 228, W, 45);
+  doc.rect(0, 0, W, 42, 'F');
+  doc.rect(0, 228, W, 45, 'F');
   drawLogo(doc);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(20);
@@ -144,10 +145,10 @@ export function drawSolutionPage(doc: any, ctx: OfferCtx) {
   const { W, H } = { W: 210, H: 297 };
   addImg(doc, ctx.imgs[1] || ctx.imgs[0], 0, 0, W, 210);
   doc.setFillColor(WHITE);
-  doc.rect(0, 0, W, 14);
+  doc.rect(0, 0, W, 14, 'F');
   drawLogo(doc);
   doc.setFillColor(WHITE);
-  doc.rect(0, 35, W, 45);
+  doc.rect(0, 35, W, 45, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(INK);
@@ -320,10 +321,10 @@ export function drawSmartPage(doc: any, ctx: OfferCtx) {
   const { W, H } = { W: 210, H: 297 };
   addImg(doc, ctx.imgs[0], 0, 0, W, 210);
   doc.setFillColor(WHITE);
-  doc.rect(0, 0, W, 14);
+  doc.rect(0, 0, W, 14, 'F');
   drawLogo(doc);
   doc.setFillColor(WHITE);
-  doc.rect(0, 35, W, 50);
+  doc.rect(0, 35, W, 50, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(20);
   doc.setTextColor(INK);
@@ -397,7 +398,7 @@ export function drawPricePage(doc: any, ctx: OfferCtx) {
   const { W, H } = { W: 210, H: 297 };
   addImg(doc, ctx.imgs[0], 0, 0, W, 130);
   doc.setFillColor(WHITE);
-  doc.rect(0, 0, 90, 130);
+  doc.rect(0, 0, 90, 130, 'F');
   drawLogo(doc);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(17);
@@ -482,7 +483,7 @@ export function drawPhotoHeroPage(doc: any, ctx: OfferCtx) {
   const { W, H } = { W: 210, H: 297 };
   addImg(doc, ctx.imgs[2] || ctx.imgs[0], 0, 0, W, H, SOFT);
   doc.setFillColor(WHITE);
-  doc.rect(0, 0, W, 80);
+  doc.rect(0, 0, W, 80, 'F');
   drawLogo(doc);
   productTitle(doc, ctx.productName, 15, 35, 17);
   doc.setFillColor(GREEN);

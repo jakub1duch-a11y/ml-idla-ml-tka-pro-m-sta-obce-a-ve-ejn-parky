@@ -206,6 +206,16 @@
   --card: 192 22% 7%; --muted-foreground: 191 15% 70%; --border: 191 20% 19%;
 }
 
+/* Globální prémiové mikro-interakce */
+.architecture-site a,
+.architecture-site button {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: .45s;
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+}
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto; }
+
 @keyframes drip {
   0% { transform: translateY(-20px); opacity: 0; }
   10% { opacity: 1; }

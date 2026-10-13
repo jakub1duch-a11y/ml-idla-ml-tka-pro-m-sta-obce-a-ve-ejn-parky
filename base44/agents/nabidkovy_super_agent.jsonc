@@ -120,7 +120,9 @@
     "eskalace-podpory",
     "step-by-step"
   ],
-  "selected_workspace_skill_ids": [],
+  "selected_workspace_skill_ids": [
+    "6a641673856a990e1aee8e81"
+  ],
   "model": "claude_fable_5_1",
   "whatsapp_greeting": "",
   "telegram_greeting": "",

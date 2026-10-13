@@ -17,7 +17,7 @@ export const toBase64 = (bytes: Uint8Array) => {
 export async function fetchImageAsBase64(url: string, timeoutMs = 12000): Promise<{ data: string; format: string } | null> {
   try {
     const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) });
-    if (!response.ok) return null;
+    if (!response.ok || !/^image\//i.test(response.headers.get('content-type') || '')) return null;
     const blob = await response.blob();
     const buffer = new Uint8Array(await blob.arrayBuffer());
     const base64 = toBase64(buffer);

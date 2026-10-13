@@ -1,6 +1,7 @@
 import QRCode from 'npm:qrcode@1.5.4';
 import { pt } from './pdfHelpers.ts';
-export const GREEN = '#4f6b2e', SOFT = '#eef1e6', INK = '#111613', MUTE = '#4b524a', WHITE = '#fbfcf8';
+import { drawSuplaOfferPages } from './suplaOfferLayout.ts';
+export const GREEN = '#0e7584', SOFT = '#e7f4f4', INK = '#102f3a', MUTE = '#50666c', WHITE = '#f8fbfa';
 const money = v => Number(v) > 0 ? `${new Intl.NumberFormat('cs-CZ').format(Number(v))} Kc` : 'K individualnimu naceneni';
 const text = (doc, value, x, y, width = 182, size = 10, bold = false, color = INK) => {
   doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor(color);
@@ -30,8 +31,9 @@ export function drawCoverPage(doc, c) {
   y = text(doc, c.productName, 14, y, 182, 18, true, GREEN);
   image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, y + 4, 182, 146);
   y += 158;
-  y = text(doc, c.clientCompany || c.clientName, 14, y, 182, 14, true);
-  text(doc, 'Ceska nerezova reseni pro mesta, parky a zahrady. Koncept ke kontrole.', 14, y + 4, 182, 10, false, MUTE);
+  y = text(doc, c.clientName, 14, y, 182, 14, true);
+  if (c.clientCompany && c.clientCompany !== c.clientName) y = text(doc, c.clientCompany, 14, y + 2, 182, 10, false, MUTE);
+  text(doc, 'Ceska nerezova reseni pro mesta, parky a zahrady. Koncept ke kontrole.', 14, y + 4, 182, 9, false, MUTE);
 }
 export function drawSolutionPage(doc, c) {
   let y = header(doc, c, 'Reseni pro vas prostor', c.productName);
@@ -83,15 +85,7 @@ function diagram(doc, y, shaft) {
   });
 }
 export function drawSmartPage(doc, c) {
-  let y = header(doc, c, 'Chytre rizeni SUPLA', 'Dve volitelne varianty provedeni');
-  y = text(doc, 'Casove plany, ovladani z mobilu a volitelne senzory podle zvolene vybavy. Grafika je koncepcni schema, nikoli montazni dokumentace ani zive ovladani.', 14, y, 182, 10, false, MUTE) + 7;
-  for (const shaft of [true, false]) {
-    y = text(doc, shaft ? 'SUPLA se sachtou' : 'SUPLA bez sachty', 14, y, 182, 15, true, GREEN) + 3;
-    diagram(doc, y, shaft); y += 50;
-    y = text(doc, shaft ? 'Technologie v servisne pristupne sachte. Nutno overit odvodneni, ochranu proti zaplaveni, mrazu, signal a bezpecne napajeni.' : 'Technologie v chranenem servisnim prostoru nebo rozvadeci. Nutno overit kryti, privod vody, signal, napajeni a zazimovani.', 14, y, 182, 10);
-    y = text(doc, 'Cena kompletni varianty: k individualnimu naceneni.', 14, y + 3, 182, 10, true) + 8;
-  }
-  text(doc, c.supla?.standard_price_ex_vat > 0 ? `Cenikovy zaklad rizeni SUPLA: ${money(c.supla.standard_price_ex_vat)} bez DPH. Nejde o cenu varianty se sachtou nebo bez sachty. Stavebni cast a sestava se nacenuji samostatne.` : 'Cenikovy zaklad neni dostupny. Cena, rozsah senzoru a konfigurace se potvrdi obchodnikem.', 14, y, 182, 9, false, MUTE);
+  drawSuplaOfferPages(doc, c, { header, text, image, diagram, money });
 }
 function priceRows(doc, c, title) {
   let y = header(doc, c, title, c.clientCompany || c.clientName);
@@ -111,7 +105,13 @@ function priceRows(doc, c, title) {
 export function drawPricePage(doc, c) {
   let y = priceRows(doc, c, 'Cenova nabidka');
   if (y + 22 > 270) { doc.addPage(); y = header(doc, c, 'Rozsah ceny'); }
-  text(doc, 'Rozhodujici je rozsah uvedenych polozek. Volitelne SUPLA varianty nejsou automaticky pricteny. Neocenene polozky vyzaduji doplneni pred odeslanim.', 14, y + 5, 182, 10, false, MUTE);
+  y = text(doc, 'Rozhodujici je rozsah uvedenych polozek. Volitelne SUPLA varianty nejsou automaticky pricteny. Doprava, montaz, vykopy a stavebni prace nejsou zahrnuty; nacenime je po overeni mista.', 14, y + 5, 182, 10, false, MUTE) + 7;
+  if (c.pricingNote) y = text(doc, c.pricingNote, 14, y, 182, 9, false, MUTE) + 7;
+  if (c.alternatives?.length) {
+    y = text(doc, 'Cenove usporne alternativy (1 ks, bez DPH)', 14, y, 182, 13, true, GREEN) + 5;
+    for (const alternative of c.alternatives) y = text(doc, `${alternative.label}: ${money(alternative.total)}`, 14, y, 182, 10) + 4;
+    text(doc, 'Alternativni produkty se nesctaji s doporucenym resenim.', 14, y, 182, 9, false, MUTE);
+  }
 }
 export function drawDarkHeroPage(doc, c) { const y = header(doc, c, c.productName); image(doc, c.scenes?.[3]?.img || c.imgs[1] || c.imgs[0], 14, y, 182, 195); }
 export function drawPhotoHeroPage(doc, c) { const y = header(doc, c, 'Vizualizace reseni', c.productName); image(doc, c.scenes?.[4]?.img || c.imgs[2] || c.imgs[0], 14, y, 182, 185); }

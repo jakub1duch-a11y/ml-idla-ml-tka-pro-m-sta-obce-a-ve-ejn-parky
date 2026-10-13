@@ -50,7 +50,8 @@ export async function loadOfferCtx(base44: any, order: any, inquiryId?: string) 
   };
   let inquiry = null;
   if (order.inquiry_id || inquiryId) inquiry = await sr[order.inquiry_type === 'contact' ? 'ContactInquiry' : 'Poptavka'].get(order.inquiry_id || inquiryId);
-  const sourcePhotos = [...(inquiry?.attachment_urls || []), ...assets.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean);
+  const attachmentPhotos = (inquiry?.attachment_urls || []).filter((url, i) => /\.(png|jpe?g|webp)(?:$|\?)/i.test(inquiry?.attachment_names?.[i] || url));
+  const sourcePhotos = [...attachmentPhotos, ...assets.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean);
   const sceneAssets = assets.filter(a => a.asset_type === 'generated_visualization' && /scene-\d/.test(a.file_name || '')).slice(-5);
   ctx.scenes = await Promise.all(sceneAssets.map(async (a, i) => ({ url: a.file_url, title: a.title, caption: a.description, sort_order: i, source: sourcePhotos.length ? 'client_space' : 'illustrative_city', img: await fetchImageAsBase64(a.file_url) })));
   if (!product) { const master = assets.find(a => a.asset_type === 'product_reference'); ctx.product = { name: ctx.productName, image_url: master?.file_url || '' }; }

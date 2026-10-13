@@ -100,7 +100,7 @@ export default function Logo({
           <MistZMark size={size === "lg" ? "md" : "sm"} />
         </span>
         <span className="text-2xl">MLŽIDLA</span>
-        <sup className="z-wordmark__registered">®</sup>
+        <sup className="[font-family:'Aether',_sans-serif] font-normal text-base text-[#565656]">®</sup>
       </span>
       {variant === "full" &&
       <span className="mlz-wordmark__caption" aria-hidden="true">

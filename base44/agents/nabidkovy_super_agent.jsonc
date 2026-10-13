@@ -114,7 +114,9 @@
   ],
   "context_files": [],
   "app_user_connector_configs": [],
-  "selected_skill_names": [],
+  "selected_skill_names": [
+    "brand-voice"
+  ],
   "selected_workspace_skill_ids": [],
   "model": "claude_fable_5_1",
   "whatsapp_greeting": "",

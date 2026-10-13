@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-import { VARIANTS, ENVIRONMENTS, COVER_INTRO } from '../../shared/imageOfferCatalog.ts';
+import { VARIANTS, ENVIRONMENTS, ANGLES, COVER_INTRO } from '../../shared/imageOfferCatalog.ts';
 import { driveImage, urlImage, toDataUrl } from '../../shared/imageOfferMedia.ts';
 
 // Vrací data pro obrazové nabídky: klient, souhrn poptávky, ceny z ceníku a originální fotografie jako data URL.
@@ -38,6 +38,7 @@ export default async function(req) {
       validUntil: order.valid_until,
       client: { name: order.client_name, company: order.client_company, quote: order.quote_number },
       environments: ENVIRONMENTS.map(({ key, label, note }) => ({ key, label, note })),
+      angles: ANGLES.map(({ key, label }) => ({ key, label })),
       variants,
     });
   } catch (error) { return Response.json({ error: error.message }, { status: 500 }); }

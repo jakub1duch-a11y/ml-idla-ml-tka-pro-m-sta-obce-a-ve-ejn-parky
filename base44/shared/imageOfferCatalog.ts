@@ -21,6 +21,15 @@ export const ENVIRONMENTS = [
   { key: 'skolni-dvur', label: 'Školní dvůr', note: 'Na zpevněné ploše, kde chybí přirozený stín.', prompt: 'a contemporary school courtyard with large-format concrete paving, raised planters with trees and seating edges, clean modern architecture' },
 ];
 
+// Úhly kamery pro vizualizace: prompt (EN) a label (CZ).
+export const ANGLES = [
+  { key: 'celkovy', label: 'Celkový pohled', prompt: 'wide establishing shot from about 8 m away at eye level, product in the center with the surrounding space clearly visible, 24 mm lens' },
+  { key: 'celni', label: 'Čelní pohled', prompt: 'frontal eye-level view from about 4 m showing the full product silhouette from the same side as the reference photo, 35 mm lens' },
+  { key: 'tri-ctvrte', label: 'Pohled ze tří čtvrtin', prompt: 'three-quarter view about 40 degrees to the side at eye level, full product visible, 35 mm lens' },
+  { key: 'podhled', label: 'Nízký podhled', prompt: 'low-angle view from knee height looking slightly up at the full product against a blue summer sky, 28 mm lens' },
+  { key: 'detail-mlhy', label: 'Detail mlhy', prompt: 'medium close-up of the upper part of the product with the nozzles releasing fine mist backlit by the sun, 85 mm lens, shallow depth of field' },
+];
+
 export const PRICE_ALIASES: Record<string, string> = {
   'MRAK H1600': 'mlzitko-mrak', AURA_700: 'aura-mlzitko', 'LÍZÁTKO': 'mlzitko-lizatko', 'LINEA CE70': 'linea-mlzitko', BENDY_60: 'mlzitko-bendy',
 };

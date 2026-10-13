@@ -15,7 +15,7 @@ export default function ImageOfferSceneCard({ scene, variant, onToggle, onRemove
       <div className="flex items-center justify-between gap-2 p-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{scene.envLabel}</p>
-          <p className="truncate text-xs text-muted-foreground">{variant?.title}</p>
+          <p className="truncate text-xs text-muted-foreground">{[variant?.title, scene.angleLabel].filter(Boolean).join(' · ')}</p>
         </div>
         <div className="flex shrink-0 gap-1.5">
           <button onClick={onToggle} className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-bold">

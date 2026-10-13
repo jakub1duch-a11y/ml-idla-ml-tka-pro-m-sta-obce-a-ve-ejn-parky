@@ -1,5 +1,5 @@
 // Strana s fotorealistickou vizualizací v prostoru + originální konstrukcí pro srovnání.
-import { W, C, text, wrap, roundRect, drawCover, drawContain, loadImage, pill } from './base';
+import { W, C, text, fitText, wrap, roundRect, drawCover, drawContain, loadImage, pill } from './base';
 import { header, footer, CONTACT_NOTE } from './chrome';
 
 const DISCLAIMER = 'Vizualizace je ilustrační – vytvořila ji AI podle originální fotografie produktu. Závazná je konstrukce na originální fotografii a v technickém listu. Umístění, kotvení a přívod vody potvrdí technik HolmTec.';
@@ -7,8 +7,8 @@ const DISCLAIMER = 'Vizualizace je ilustrační – vytvořila ji AI podle origi
 export async function drawScene(ctx, d, scene, v, meta) {
   header(ctx, meta);
   text(ctx, 'VIZUALIZACE V PROSTORU', 70, 222, { weight: 700, size: 15, color: C.deep, spacing: 3 });
-  text(ctx, scene.envLabel, 70, 290, { weight: 800, size: 54, family: 'Manrope', color: C.navy, spacing: -1 });
-  text(ctx, v.title, 70, 340, { weight: 500, size: 24, color: C.deep });
+  fitText(ctx, scene.envLabel, 70, 290, W - 140, { weight: 800, size: 54, family: 'Manrope', color: C.navy, spacing: -1 });
+  text(ctx, [v.title, scene.angleLabel].filter(Boolean).join(' · '), 70, 340, { weight: 500, size: 24, color: C.deep });
   drawCover(ctx, await loadImage(scene.url), 70, 380, W - 140, 825, 24);
   pill(ctx, 'ILUSTRAČNÍ AI VIZUALIZACE', 94, 404, { bg: 'rgba(255,255,255,0.92)' });
 

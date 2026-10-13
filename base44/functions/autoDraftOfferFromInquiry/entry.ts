@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
-import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
+import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, findSmartControlPricing, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
 
 const AUDIENCES = ['city_public', 'residential', 'wellness_hospitality', 'architecture_design', 'custom'];
 
@@ -29,7 +29,22 @@ Deno.serve(async (req) => {
       firma: sourceRecord.company || '',
       produkt: sourceRecord.product_id || '',
       zprava: sourceRecord.message || sourceRecord.description || '',
+      attachment_urls: [] as string[],
     } : sourceRecord;
+
+    // ── FÁZE 1: Sběr fotek prostoru od zákazníka (Poptavka.attachment_urls + OfferAsset) ──
+    const customerPhotoUrls: string[] = [];
+    if (Array.isArray((inquiry as any).attachment_urls)) {
+      for (const url of (inquiry as any).attachment_urls) {
+        if (typeof url === 'string' && /^https?:\/\//.test(url)) customerPhotoUrls.push(url);
+      }
+    }
+    const earlyAssets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId }).catch(() => []);
+    for (const item of earlyAssets || []) {
+      if (item.asset_type === 'source_photo' && item.file_url && /^https?:\/\//.test(item.file_url) && !customerPhotoUrls.includes(item.file_url)) {
+        customerPhotoUrls.push(item.file_url);
+      }
+    }
 
     const existingOrders = await base44.asServiceRole.entities.ProjectOrder.filter({ inquiry_id: inquiryId });
     if (!force && existingOrders?.length) {
@@ -59,7 +74,10 @@ Deno.serve(async (req) => {
     }));
 
     const analysis = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky vytvoř pracovní koncept obchodní nabídky. U měst, obcí a veřejného prostoru začínej hodnotou pro lidi a místo — komfortem, možností delšího pobytu, živým veřejným prostorem a architektonickým začleněním — a teprve potom technickou vrstvou. Přínosy formuluj jako možnost nebo potenciál, nikdy jako garantované zvýšení návštěvnosti, tržeb nebo ROI. Pokud charakter návrhu odpovídá, můžeš produkt popsat jako funkční městskou sochu nebo architektonický chladicí objekt. Neomezuj se pouze na katalog: nejprve rozhodni product_mode = \"catalog\" nebo \"custom\". Katalog použij, když existující produkt opravdu odpovídá zadání. Pokud klient žádá vlastní tvar, symbol, atypické řešení, nový rozměr nebo produkt, který v katalogu není, zvol product_mode = \"custom\" a navrhni nový, reálně vyrobitelný koncept. Pokud text zmiňuje BENDY nebo jednoduchý tvar J a nepožaduje zásadně jiný tvar, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]) a všechny explicitně požadované počty současně vrať číselně v requested_quantities (např. [1,3]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Vždy také odvoď people_context: kdo bude prostor přirozeně používat podle poptávky. Pokud jde o domov pro seniory, seniorskou zahradu, sociální nebo zdravotní zařízení, uveď starší dospělé osoby cca 65+ v přirozených situacích (chůze, posezení, rozhovor, případně doprovod/personál). U školy/školky uveď věkově odpovídající děti s dohledem dospělých, u sportoviště sportující návštěvníky, u náměstí běžné obyvatele a návštěvníky. Lidé mají podporovat měřítko, účel a atmosféru prostoru, nikdy nezakrývat produkt. Neimituj konkrétní skutečné osoby ani identitu klienta. U všech technických a obchodních faktů dodrž: use null when unknown / do not infer. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, materiál, rozměry, počet trysek, účinek, cenu, reference nebo termíny. U katalogového produktu cenu nevymýšlej. U custom produktu ale vytvoř výrobní cost_plan pouze z níže uvedených povolených kalkulačních klíčů; cenu pak dopočítá systém z reálných sazeb MLŽNÉHO DISKU, ne LLM. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+      file_urls: customerPhotoUrls.length ? customerPhotoUrls : undefined,
+      prompt: `Jsi seniorní obchodně-technický návrhář MLŽIDLA.cz / HolmTec. Z textové poptávky${customerPhotoUrls.length ? ' A PŘILOŽENÝCH FOTEK PROSTORU' : ''} vytvoř pracovní koncept obchodní nabídky. U měst, obcí a veřejného prostoru začínej hodnotou pro lidi a místo — komfortem, možností delšího pobytu, živým veřejným prostorem a architektonickým začleněním — a teprve potom technickou vrstvou. Přínosy formuluj jako možnost nebo potenciál, nikdy jako garantované zvýšení návštěvnosti, tržeb nebo ROI. Pokud charakter návrhu odpovídá, můžeš produkt popsat jako funkční městskou sochu nebo architektonický chladicí objekt. Neomezuj se pouze na katalog: nejprve rozhodni product_mode = \"catalog\" nebo \"custom\". Katalog použij, když existující produkt opravdu odpovídá zadání. Pokud klient žádá vlastní tvar, symbol, atypické řešení, nový rozměr nebo produkt, který v katalogu není, zvol product_mode = \"custom\" a navrhni nový, reálně vyrobitelný koncept. Pokud text zmiňuje BENDY nebo jednoduchý tvar J a nepožaduje zásadně jiný tvar, preferuj skutečný produkt BENDY. Z textu VŽDY vytěž požadovaný počet kusů: například 1 kus = requested_quantity 1, tři kusy = 3. Pokud počet není uveden, použij 1. Pokud klient žádá více variant, alternativ, konfigurací nebo počtů, vypiš je do requested_variants (např. [\"1 ks\",\"3 ks\"] nebo [\"BENDY\",\"LINEA\"]) a všechny explicitně požadované počty současně vrať číselně v requested_quantities (např. [1,3]). visualization_scenes musí obsahovat jednu konkrétní fotorealistickou scénu pro každou požadovanou variantu; pokud varianty nejsou požadované, jednu scénu. Vždy také odvoď people_context: kdo bude prostor přirozeně používat podle poptávky. Pokud jde o domov pro seniory, seniorskou zahradu, sociální nebo zdravotní zařízení, uveď starší dospělé osoby cca 65+ v přirozených situacích (chůze, posezení, rozhovor, případně doprovod/personál). U školy/školky uveď věkově odpovídající děti s dohledem dospělých, u sportoviště sportující návštěvníky, u náměstí běžné obyvatele a návštěvníky. Lidé mají podporovat měřítko, účel a atmosféru prostoru, nikdy nezakrývat produkt. Neimituj konkrétní skutečné osoby ani identitu klienta. U všech technických a obchodních faktů dodrž: use null when unknown / do not infer. Neuváděj ani nevymýšlej neověřené tlaky, průtoky, spotřebu, materiál, rozměry, počet trysek, účinek, cenu, reference nebo termíny. U katalogového produktu cenu nevymýšlej. U custom produktu ale vytvoř výrobní cost_plan pouze z níže uvedených povolených kalkulačních klíčů; cenu pak dopočítá systém z reálných sazeb MLŽNÉHO DISKU, ne LLM. Výstup musí být vhodný pro následné vytvoření klientské nabídky.
+
+${customerPhotoUrls.length ? `FOTKY PROSTORU OD KLIENTA: ${customerPhotoUrls.length} fotka/y přiloženy. Proveď detailní vizuální analýzu — přesné tvary prostranství, architektonický styl, povrch, okolní zeleň, měřítko, stávající mobiliář. Využij je pro volbu produktu i popis vizualizační scény. Do space_analysis uveď konkrétní pozorování z fotky.` : 'Klient nedodal fotografie prostoru — pracuj pouze s textem poptávky a odvozeným typem lokace.'}
 
 POPTÁVKA:
 Jméno: ${clean(inquiry.jmeno)}
@@ -75,6 +93,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
         type: 'object',
         properties: {
           product_mode: { type: 'string', enum: ['catalog', 'custom'] },
+          space_analysis: { type: 'string', description: 'Analýza prostoru z textu a fotek — typ lokace, povrch, rozměry, kontext, překážky' },
           product_id: { type: 'string' },
           product_name: { type: 'string' },
           custom_product: {
@@ -109,7 +128,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
           visualization_scenes: { type: 'array', items: { type: 'string' } },
           people_context: { type: 'string' },
         },
-        required: ['product_mode', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity'], 
+        required: ['product_mode', 'audience_variant', 'project_title', 'client_summary', 'solution_summary', 'visual_scene', 'requested_quantity', 'space_analysis'],
       },
     });
 
@@ -190,10 +209,16 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       }
     }
 
+    // ── FÁZE 3: Načtení cen smart řízení SUPLA z tabulky Kalkulace 2026 ──
+    const smartPricing = await findSmartControlPricing(base44);
+    const smartControlPrice = Number(smartPricing.complete_supla_ex_vat) || 0;
+    const smartControlPriceIncVat = Number(smartPricing.complete_supla_inc_vat) || 0;
+    // Odhad technologie vodní mlhy (redukční ventil, filtr, přívod) — orientační sazba
+    const techBoxPrice = 8000; // orientační cena bez DPH pro redukční ventil + filtr + hadice + fitinky
+
     const isBendy = !customMode && /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
-    const linkedAssets = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId }).catch(() => []);
-    const sourcePhoto = (linkedAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)
-      || (linkedAssets || []).find((item) => String(item.file_type || '').startsWith('image/') && item.asset_type !== 'generated_visualization' && item.file_url);
+    const sourcePhoto = (earlyAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)
+      || (earlyAssets || []).find((item) => String(item.file_type || '').startsWith('image/') && item.asset_type !== 'generated_visualization' && item.file_url);
 
     let customMasterUrl = '';
     let customMasterAsset: any = null;
@@ -262,10 +287,35 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       : allRequestedQuantities.length > 1
         ? allRequestedQuantities.map((quantity) => `${quantity} ks ${product.name}`)
         : [`${requestedQuantity} ks ${product.name}`];
+    const buildLineItems = (quantity: number) => {
+      const items: Array<{ label: string; quantity: number; unit: string; unit_price: number; total: number; source: string }> = [];
+      // 1. Hlavní mlžný produkt
+      if (unitPrice > 0) {
+        if (customMode && customPricing?.line_items?.length) {
+          for (const line of customPricing.line_items) {
+            items.push({ ...line, quantity: Number(line.quantity || 0) * quantity, total: Number(line.total || 0) * quantity, source: customPricing.source });
+          }
+        } else {
+          items.push({ label: product.name, quantity, unit: 'ks', unit_price: unitPrice, total: unitPrice * quantity, source: pricingSource === 'mlzny_disk' ? pricing.source : 'Product.price_from' });
+        }
+      }
+      // 2. Smart řízení SUPLA (chytrý ventil + vodoměr + senzory)
+      if (smartControlPrice > 0) {
+        items.push({ label: 'Smart řízení SUPLA (chytrý ventil PEVEKO + vodoměr LIW-01 + senzor THW-01)', quantity: 1, unit: 'set', unit_price: smartControlPrice, total: smartControlPrice, source: smartPricing.source });
+      }
+      // 3. Technologie vodní mlhy (redukční ventil + filtr + hadice + fitinky)
+      items.push({ label: 'Technologie vodní mlhy (redukční ventil, filtr 5μm, hadice, fitinky)', quantity: 1, unit: 'set', unit_price: techBoxPrice, total: techBoxPrice, source: 'odhad' });
+      return items;
+    };
+    const calcVariantTotal = (quantity: number) => {
+      const items = buildLineItems(quantity);
+      return items.reduce((sum, item) => sum + item.total, 0);
+    };
     const variantSpecs = variantLabels.map((label, index) => {
       const quantityMatch = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
       const quantity = quantityMatch ? Math.max(1, Number(quantityMatch[1])) : (allRequestedQuantities[index] || requestedQuantity);
-      return { label, quantity, unit_price: unitPrice, price: unitPrice > 0 ? unitPrice * quantity : 0 };
+      const totalPrice = calcVariantTotal(quantity);
+      return { label, quantity, unit_price: unitPrice, price: totalPrice, line_items: buildLineItems(quantity) };
     });
 
     const generatedVisualizations: any[] = [];
@@ -327,7 +377,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       presentation_variant: audienceVariant,
       smart_control_included: false,
       status: 'draft_ready_for_review',
-      total_price: unitPrice > 0 ? unitPrice * requestedQuantity : 0,
+      total_price: calcVariantTotal(requestedQuantity),
       sender_email: 'meduna@holmtec.cz',
       bcc_recipients: ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'],
       supplier_name: 'HolmTec s.r.o. — MLŽIDLA.cz',
@@ -401,11 +451,9 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
           environment: audienceVariant,
           unit_price: unitPrice,
           products_subtotal: unitPrice > 0 ? unitPrice * variant.quantity : 0,
-          total_price: unitPrice > 0 ? unitPrice * variant.quantity : 0,
-          price_status: unitPrice > 0 ? 'complete' : 'missing_price',
-          line_items: unitPrice > 0 ? (customMode && customPricing?.line_items?.length
-            ? customPricing.line_items.map((line) => ({ ...line, quantity: Number(line.quantity || 0) * variant.quantity, total: Number(line.total || 0) * variant.quantity, source: customPricing.source }))
-            : [{ label: product.name, quantity: variant.quantity, unit: 'ks', unit_price: unitPrice, total: unitPrice * variant.quantity, source: pricingSource === 'mlzny_disk' ? pricing.source : 'Product.price_from' }]) : [],
+          total_price: variant.price,
+          price_status: variant.price > 0 ? 'complete' : 'missing_price',
+          line_items: variant.line_items,
           visualization_asset_ids: [visualizationAsset.id],
           primary_visualization_id: visualizationAsset.id,
           presentation_title: visual.label || variant.label,
@@ -442,6 +490,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       product_slug: product.slug || '',
       product_name: product.name,
       product_price_from: unitPrice,
+      customer_photos: customerPhotoUrls,
       custom_product: customMode ? { ...customSpec, master_image_url: customMasterUrl, estimated_unit_price_ex_vat: unitPrice, pricing_basis: customPricing?.material_basis || '', pricing_warnings: customPricing?.warnings || [] } : null,
       custom_master_asset: customMasterAsset,
       custom_pricing: customPricing,
@@ -453,8 +502,9 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         unit_price: unitPrice,
         note: pricing.note || '',
       },
+      smart_control_pricing: { ex_vat: smartControlPrice, inc_vat: smartControlPriceIncVat, source: smartPricing.source },
       requested_quantity: requestedQuantity,
-      requested_variants: variantSpecs.map((variant) => ({ ...variant, price: unitPrice > 0 ? unitPrice * variant.quantity : 0, price_source: pricingSource, pricing_label: pricingSource === 'custom_sheet_estimate' ? `${customPricing?.source || 'MLŽNÝ DISK'} · zakázkový výrobní odhad` : pricingSource === 'mlzny_disk' ? pricing.source : pricingSource })), 
+      requested_variants: variantSpecs.map((variant) => ({ ...variant, price_source: pricingSource, pricing_label: pricingSource === 'custom_sheet_estimate' ? `${customPricing?.source || 'MLŽNÝ DISK'} · zakázkový výrobní odhad` : pricingSource === 'mlzny_disk' ? pricing.source : pricingSource })),
       visualization_urls: generatedVisualizations.map((item) => item.url),
       visualization_assets: visualAssets,
       visualization_db_assets: visualizationDbAssets,
@@ -462,10 +512,59 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
       audience_variant: audienceVariant,
       ai_content: {
         project_goal: clientSummary,
-        solution_summary: `${solutionSummary}${customMode ? ` Zakázkový koncept je navržen s důrazem na jednoduchou výrobu: ${clean(customSpec?.primary_profile)}, ${clean(customSpec?.bend_strategy)}, ${clean(customSpec?.weld_strategy)}. Před výrobou proběhne technické potvrzení rozměrů, rádiusů, kotvení a materiálu.` : ''}${variantSpecs.length ? ` Nabídka počítá s variantami: ${variantSpecs.map((variant) => `${variant.label}${unitPrice > 0 ? ` — ${new Intl.NumberFormat('cs-CZ').format(unitPrice * variant.quantity)} Kč bez DPH` : ''}`).join('; ')}.` : ''}`,
+        solution_summary: `${solutionSummary}${customMode ? ` Zakázkový koncept je navržen s důrazem na jednoduchou výrobu: ${clean(customSpec?.primary_profile)}, ${clean(customSpec?.bend_strategy)}, ${clean(customSpec?.weld_strategy)}. Před výrobou proběhne technické potvrzení rozměrů, rádiusů, kotvení a materiálu.` : ''}`,
         benefits,
         next_step: 'Po odsouhlasení konceptu upřesníme technické návaznosti, rozsah dodávky a finální cenu.',
         presentation_title: projectTitle,
+      },
+      // ── FÁZE 4: Strukturovaný výstup nabídky ──
+      structured_offer: {
+        header: {
+          project_name: projectTitle,
+          date: new Date().toLocaleDateString('cs-CZ'),
+          client_name: clean(inquiry.jmeno),
+          client_company: clean(inquiry.firma),
+          space_identification: clean(analysis?.space_analysis) || clean(analysis?.visual_scene) || short(inquiry.zprava, 300),
+          quote_reference: `NAB-${String(inquiryId).slice(-6).toUpperCase()}`,
+        },
+        cover_letter: {
+          greeting: `Dobrý den${clean(inquiry.jmeno) ? `, ${clean(inquiry.jmeno).split(/\s+/)[0]}` : ''},`,
+          intro: `na základě vaší poptávky jsme připravili návrh mlžného řešení pro ${clean(analysis?.space_analysis) || 'váš prostor'}. ${solutionSummary}`,
+          benefits: benefits.length ? benefits : ['Městské ochlazování pobytových zón', 'Udržitelné a šetrné mlžení s nízkou spotřebou vody', 'Ochrana zdraví při vysokých teplotách'],
+          closing: 'Tento koncept je nezávazný návrh. Po odsouhlasení upřesníme technické návaznosti a finální cenu.',
+        },
+        visual_design: {
+          visualization_url: visualizationUrl,
+          visualization_urls: generatedVisualizations.map((item) => item.url),
+          scene_description: clean(analysis?.visual_scene),
+          is_from_customer_photo: Boolean(sourcePhoto?.file_url),
+        },
+        technical_specification: {
+          product: product.name,
+          material: clean(product.material) || (customMode ? clean(customSpec?.material) : 'Nerez AISI 316L (doporučeno pro venkovní instalace)'),
+          technology: 'Nízkotlaké mlžení (2–6 bar) — bezpečné pro pobytové zóny, jemná mlha 5–50 μm',
+          smart_control: smartControlPrice > 0 ? `SUPLA IoT — chytrý ventil, vodoměr, teplotní senzor, dálkové ovládání, časové plány (${new Intl.NumberFormat('cs-CZ').format(smartControlPrice)} Kč bez DPH)` : 'SUPLA IoT — dálkové ovládání, teplotní automatika, časové plány (cena na vyžádání)',
+          scope_of_delivery: customMode ? (customSpec?.manufacture_steps || []).map(clean).filter(Boolean) : ['Mlžítko (nerez konstrukce + trysky)', 'Přívodní potrubí', 'Redukční ventil + filtr 5μm', 'Smart řídicí jednotka SUPLA', 'Senzory (teplota, vlhkost)', 'Projektová dokumentace', 'Certifikát materiálu'],
+        },
+        pricing_overview: {
+          variants: variantSpecs.map((variant) => ({
+            label: variant.label,
+            quantity: variant.quantity,
+            line_items: variant.line_items,
+            total_ex_vat: variant.price,
+            vat_21: Math.round(variant.price * 0.21),
+            total_inc_vat: variant.price + Math.round(variant.price * 0.21),
+          })),
+          pricing_source: pricingSource === 'custom_sheet_estimate' ? 'MLŽNÝ DISK · Kalkulace 2026 · zakázkový odhad' : pricingSource === 'mlzny_disk' ? `${pricing.source}` : pricingSource === 'catalog' ? 'Katalog Product.price_from' : 'Ruční nacenění vyžadováno',
+          note: pricing.note || (unitPrice === 0 ? 'Cena vyžaduje ruční nacenění — AI koncept je připraven k revizi.' : ''),
+        },
+        cta_and_contacts: {
+          primary_cta: { label: 'Potvrdit zájem a upřesnit zadání', url: 'https://mlzidla.cz/poptavka' },
+          portal_cta: { label: 'Sledovat projekt v Můj projekt', url: 'https://mlzidla.cz/muj-projekt' },
+          contact: { name: 'Ing. Radek Meduna', email: 'meduna@holmtec.cz', phone: '+420 774 700 390', website: 'https://mlzidla.cz' },
+        },
+        confidence_note: clean(analysis?.confidence_note),
+        safety_gate: { auto_send_blocked: true, status: 'KONCEPT — čeká na schválení obchodníkem' },
       },
     });
   } catch (error) {

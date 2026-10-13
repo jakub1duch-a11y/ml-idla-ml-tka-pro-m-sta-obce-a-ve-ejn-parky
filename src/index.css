@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap');
 @import url('./styles/brand-components.css');
 @import url('./styles/brand-logo-system.css');
 @import url('./styles/mobile-premium.css');
@@ -185,6 +186,35 @@
     outline-offset: 3px;
   }
 }
+
+/* GATE70: isolated product theme, leaves the rest of the website unchanged. */
+.gate-experience {
+  --background: 195 25% 4%; --foreground: 180 23% 95%;
+  --card: 192 22% 7%; --card-foreground: 180 23% 95%;
+  --muted: 192 22% 10%; --muted-foreground: 191 15% 70%;
+  --accent: 172 80% 62%; --border: 191 20% 19%;
+  --font-heading: 'Unbounded', sans-serif; --font-body: 'Manrope', sans-serif;
+  --gate-ink: #080d0f; --gate-panel: #10191c; --gate-border: #26373c;
+  --gate-text: #edf5f5; --gate-muted: #a7bdc2; --gate-accent: #4becd8;
+  --gate-heat: #e98054;
+  --brand-font-heading: var(--font-heading); --brand-font-body: var(--font-body);
+  --brand-secondary: #0A1628; --brand-accent: #22D3EE; --brand-on-primary: #F4FAFC;
+  --brand-radius-sm: 0px; --brand-font-weight-semibold: 600;
+}
+.dark .gate-experience {
+  --background: 195 25% 4%; --foreground: 180 23% 95%;
+  --card: 192 22% 7%; --muted-foreground: 191 15% 70%; --border: 191 20% 19%;
+}
+
+/* Globální prémiové mikro-interakce */
+.architecture-site a,
+.architecture-site button {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: .45s;
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+}
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto; }
 
 @keyframes drip {
   0% { transform: translateY(-20px); opacity: 0; }

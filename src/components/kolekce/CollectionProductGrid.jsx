@@ -5,7 +5,7 @@ import { ArrowRight, Layers3 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { normalizeProductMedia } from '@/lib/optimizedMedia';
 import { isPublicCatalogProduct } from '@/lib/publicCatalogProducts';
-import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
+import BentoCatalogGrid from '@/components/kolekce/BentoCatalogGrid';
 
 // Zachovává pořadí kolekce přesně podle productSlugs; varianty jednoho produktu
 // se přidávají zvlášť přes collection.variantCards a nevytvářejí duplicitní Product záznamy.
@@ -79,10 +79,6 @@ const getFamily = (product) => {
   return null;
 };
 
-function ProductCard({ product }) {
-  return <CatalogProductCard product={product} />;
-}
-
 function VariantCard({ variant }) {
   const href = `/produkt/${variant.slug}?variant=${encodeURIComponent(variant.variant)}`;
   return (
@@ -125,9 +121,7 @@ export default function CollectionProductGrid({ collection }) {
       </div>
 
       {products.length > 0 && <ProductExperience products={products}>
-<div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {products.map((product) => <ProductCard key={product.id} product={product} />)}
-      </div>
+<BentoCatalogGrid products={products} />
 </ProductExperience>}
 
       {variantCards.length > 0 && <div className={`${products.length ? 'mt-10' : ''} rounded-[2rem] border border-slate-200 bg-slate-50/70 p-4 sm:p-6 lg:p-8`}>

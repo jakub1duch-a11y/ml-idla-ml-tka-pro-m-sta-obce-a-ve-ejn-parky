@@ -1,0 +1,492 @@
+/* GATE70 — izolovaný produktový theme. Luxusní, filmová, scroll-driven prezentace. */
+body.gate-page-active { overflow-x: clip; overflow-y: visible; }
+
+.gate-experience {
+  isolation: isolate;
+  font-family: var(--font-body);
+  background: var(--gate-ink);
+  color: var(--gate-text);
+  position: relative;
+}
+
+/* Atmosférické pozadí — jemné gradienty jako hluboká tma s azurovým nádechem */
+.gate-experience::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 70% 20%, rgba(34, 211, 213, 0.06), transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(75, 236, 218, 0.04), transparent 50%),
+    var(--gate-ink);
+  pointer-events: none;
+}
+
+/* --- Typografie --- */
+.gate-experience h1, .gate-experience h2, .gate-experience h3 {
+  font-family: var(--font-heading);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--gate-text);
+  font-weight: 500;
+}
+.gate-experience h1 { font-size: clamp(2.5rem, 4.8vw, 5.2rem); margin: 22px 0 24px; }
+.gate-experience h2 { font-size: clamp(1.7rem, 3.2vw, 3.2rem); margin: 20px 0 26px; }
+.gate-experience h3 { font-size: clamp(1.2rem, 2vw, 1.8rem); }
+.gate-experience em { font-style: normal; color: var(--gate-accent); }
+.gate-experience p { color: var(--gate-muted); line-height: 1.65; max-width: 66ch; }
+
+.gate-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+  color: var(--gate-accent);
+  text-transform: uppercase;
+}
+
+/* --- Scroll sekce --- */
+.gate-scroll {
+  height: var(--gate-scroll-distance, 6000px);
+  position: relative;
+  background: radial-gradient(ellipse at 70% 40%, var(--gate-panel), var(--gate-ink) 65%);
+}
+
+.gate-sticky {
+  position: sticky;
+  top: 68px;
+  height: calc(100svh - 68px);
+  display: flex;
+  flex-direction: column;
+  padding: 24px clamp(20px, 4vw, 72px) 0;
+  overflow: hidden;
+}
+
+.gate-core-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 2;
+}
+
+.gate-core-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.3fr);
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+  gap: 20px;
+}
+
+.gate-core-copy { position: relative; z-index: 2; padding: 20px 0; }
+.gate-core-copy p { font-size: 15px; max-width: 44ch; }
+
+.gate-core-facts {
+  display: flex;
+  gap: 32px;
+  margin: 28px 0;
+}
+.gate-core-facts strong { display: block; font-size: 26px; font-weight: 500; }
+.gate-core-facts small { font-size: 13px; color: var(--gate-accent); }
+.gate-core-facts span { display: block; font-size: 10px; color: var(--gate-muted); margin-top: 6px; }
+
+.gate-variant-buttons { display: flex; gap: 8px; margin-top: 24px; }
+.gate-variant-buttons button {
+  padding: 11px 18px;
+  border: 1px solid var(--gate-border);
+  font-size: 12px;
+  min-height: 44px;
+  color: var(--gate-muted);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  background: transparent;
+  cursor: pointer;
+}
+.gate-variant-buttons button[aria-pressed=true] { background: var(--gate-text); color: var(--gate-ink); }
+.gate-variant-buttons button:hover { border-color: var(--gate-accent); }
+
+/* --- 3D scéna --- */
+.gate-scene-wrap { position: relative; height: 100%; min-height: 0; }
+.gate-scene { height: 100%; width: 100%; touch-action: pan-y; cursor: grab; }
+.gate-scene:active { cursor: grabbing; }
+.gate-scene canvas { display: block; max-width: 100%; }
+.gate-scene-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.gate-scene[data-unavailable=true]:after {
+  content: 'Scéna není dostupná. Prohlédněte si produkt v galerii níže.';
+  position: absolute; inset: 25%; color: var(--gate-text); background: var(--gate-ink);
+}
+
+.gate-model-tag {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  color: var(--gate-muted);
+  font-size: 10px;
+  line-height: 1.6;
+  max-width: 200px;
+}
+
+.gate-explode {
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  border: 1px solid var(--gate-border);
+  background: var(--gate-panel);
+  color: var(--gate-text);
+  padding: 12px 16px;
+  font-size: 11px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.gate-explode:hover, .gate-explode[aria-pressed=true] { border-color: var(--gate-accent); color: var(--gate-accent); }
+.gate-explode span { margin-left: 12px; }
+
+.gate-equipment-note { font-size: 10px; color: var(--gate-muted); padding-bottom: 8px; }
+
+/* --- Spodní track fází --- */
+.gate-stage-track {
+  display: flex;
+  border-top: 1px solid var(--gate-border);
+  min-height: 70px;
+  align-items: stretch;
+  gap: 18px;
+  z-index: 2;
+}
+.gate-stage-track button {
+  text-align: left;
+  font-size: 10px;
+  flex: 1;
+  color: var(--gate-muted);
+  border-top: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+.gate-stage-track button[aria-current=step] { color: var(--gate-text); border-top-color: var(--gate-accent); }
+.gate-stage-track button span { color: var(--gate-accent); }
+.gate-scroll-hint { align-self: center; font-size: 10px; color: var(--gate-muted); white-space: nowrap; }
+
+/* --- Brand tlačítko --- */
+.gate-brand-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--brand-font-heading);
+  font-weight: var(--brand-font-weight-semibold);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--brand-secondary);
+  background: var(--brand-accent);
+  border: none;
+  border-radius: var(--brand-radius-sm);
+  padding: 14px 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  min-height: 44px;
+}
+.gate-brand-button:hover { background: var(--brand-on-primary); }
+.gate-brand-button:active { transform: translateY(1px); }
+
+.gate-inline-link {
+  display: inline-block;
+  color: var(--gate-accent);
+  font-size: 12px;
+  padding: 12px 0;
+  min-height: 44px;
+}
+.gate-inline-link:hover { text-decoration: underline; }
+
+/* --- Lokální navigace --- */
+.gate-local-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 48px);
+  padding: 18px;
+  border-block: 1px solid var(--gate-border);
+  background: var(--gate-ink);
+}
+.gate-local-nav a {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--gate-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.gate-local-nav a:hover { color: var(--gate-accent); }
+
+/* --- Sekce --- */
+.gate-section {
+  padding: 100px clamp(20px, 6vw, 100px);
+  max-width: 1600px;
+  margin: auto;
+  scroll-margin-top: 90px;
+  border-bottom: 1px solid var(--gate-border);
+}
+.gate-section-head { max-width: 850px; margin-bottom: 48px; }
+.gate-section-head p { font-size: 15px; }
+
+/* --- Termální vizualizace --- */
+.gate-thermal-art {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gate-border);
+  background: radial-gradient(ellipse at 45% 50%, color-mix(in srgb, var(--gate-heat) 16%, transparent), transparent 75%);
+  transition: background 0.6s;
+}
+.gate-thermal-art[data-active=true] {
+  background: radial-gradient(ellipse at 60% 50%, color-mix(in srgb, var(--gate-accent) 14%, transparent), transparent 75%);
+}
+.gate-thermal-art svg { position: relative; width: 100%; height: auto; max-height: 400px; }
+.gate-thermal-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--gate-border) 1px, transparent 1px), linear-gradient(90deg, var(--gate-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.3;
+}
+.gate-energy-ray { stroke-dasharray: 40 12; animation: gateEnergy 3s linear infinite; }
+.gate-thermal-legend { display: flex; justify-content: space-between; padding: 16px 24px; font-size: 12px; color: var(--gate-muted); }
+.gate-thermal-controls { display: flex; gap: 24px; align-items: center; margin-top: 22px; }
+.gate-thermal-controls p { font-size: 11px; }
+
+/* --- Metriky --- */
+.gate-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--gate-border);
+}
+.gate-metrics article {
+  padding: 28px 24px;
+  border-right: 1px solid var(--gate-border);
+  transition: background 0.3s;
+}
+.gate-metrics article:last-child { border: 0; }
+.gate-metrics article:hover { background: color-mix(in srgb, var(--gate-accent) 5%, transparent); }
+.gate-metrics h3 { font-size: clamp(18px, 2vw, 28px); margin: 24px 0 18px; }
+.gate-metrics p { font-size: 12px; }
+
+/* --- Kalkulačka --- */
+.gate-budget {
+  margin-top: 40px;
+  padding: 40px;
+  background: var(--gate-panel);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.gate-budget h3 { margin: 18px 0; }
+.gate-budget p { font-size: 12px; }
+.gate-budget-inputs { display: flex; flex-direction: column; gap: 14px; }
+.gate-budget-inputs label { display: flex; justify-content: space-between; font-size: 12px; }
+.gate-budget-inputs input { width: 100%; accent-color: var(--gate-accent); min-height: 24px; }
+.gate-budget-inputs output {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  color: var(--gate-accent);
+  margin-top: 8px;
+}
+.gate-spec-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding-top: 26px;
+  color: var(--gate-muted);
+  font-size: 12px;
+}
+
+/* --- Atlas galerie --- */
+.gate-atlas-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.gate-atlas-photo {
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  border: 1px solid var(--gate-border);
+  background: var(--gate-panel);
+  cursor: pointer;
+  padding: 0;
+}
+.gate-atlas-photo img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+.gate-atlas-photo:hover img { transform: scale(1.025); }
+.gate-photo-caption { display: flex; flex-direction: column; padding: 20px; position: relative; }
+.gate-photo-caption small { color: var(--gate-accent); font-size: 10px; margin-bottom: 8px; }
+.gate-photo-caption b { font-size: 14px; font-weight: 500; }
+.gate-photo-caption > span { position: absolute; right: 24px; top: 30px; color: var(--gate-accent); }
+
+/* --- Lightbox --- */
+.gate-lightbox { background: hsl(var(--background)); color: hsl(var(--foreground)); }
+.gate-lightbox img { width: 100%; max-height: 65svh; object-fit: contain; }
+.gate-lightbox-controls { display: flex; justify-content: space-between; gap: 14px; }
+.gate-lightbox-controls button { padding: 12px; min-height: 44px; border: 1px solid hsl(var(--border)); font-size: 12px; }
+
+/* --- Smart řízení --- */
+.gate-smart-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 50px; }
+.gate-smart-tabs { display: flex; flex-direction: column; }
+.gate-smart-tabs button {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--gate-border);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: 13px;
+  color: var(--gate-muted);
+  text-align: left;
+  background: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.gate-smart-tabs button span { flex: 1; }
+.gate-smart-tabs button[aria-selected=true] { color: var(--gate-accent); }
+.gate-smart-panel { padding: 36px; border: 1px solid var(--gate-border); background: var(--gate-panel); }
+.gate-status { font-size: 10px; color: var(--gate-accent); }
+.gate-smart-panel h3 { margin: 20px 0; }
+.gate-smart-panel p, .gate-smart-panel small { font-size: 12px; }
+.gate-smart-panel small { color: var(--gate-muted); }
+.gate-flow { display: flex; align-items: center; flex-direction: column; gap: 10px; margin: 28px 0; }
+.gate-flow b { padding: 14px; width: 100%; border: 1px solid var(--gate-border); text-align: center; font-size: 12px; font-weight: 500; }
+.gate-flow-step { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+.gate-flow-step > span { color: var(--gate-accent); }
+
+/* --- Video --- */
+.gate-operation video { width: 100%; aspect-ratio: 16/9; object-fit: contain; background: var(--gate-panel); margin: 30px 0 12px; }
+.gate-operation p { font-size: 12px; }
+
+/* --- Nabídka --- */
+.gate-offer-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.gate-offer-grid article {
+  border: 1px solid var(--gate-border);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: border-color 0.3s, background 0.3s;
+}
+.gate-offer-grid article:hover { border-color: var(--gate-accent); background: color-mix(in srgb, var(--gate-accent) 4%, transparent); }
+.gate-offer-grid h3 { font-size: 18px; margin-bottom: 20px; }
+.gate-offer-grid p { font-size: 13px; flex: 1; }
+.gate-offer-grid b { font-size: 13px; color: var(--gate-accent); margin: 24px 0; }
+.gate-offer-grid .gate-brand-button { font-size: 10px; padding: 14px 16px; }
+
+/* --- Kontaktní formulář --- */
+.gate-contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  margin-top: 80px;
+  scroll-margin-top: 110px;
+}
+.gate-contact-layout h3 { font-size: 30px; margin: 20px 0; }
+.gate-contact-layout p { font-size: 14px; }
+.gate-contact-layout form {
+  background: var(--gate-panel) !important;
+  border-color: var(--gate-border) !important;
+  border-radius: 0 !important;
+}
+.gate-contact-layout form label {
+  color: var(--gate-muted) !important;
+  font-family: var(--font-body);
+  letter-spacing: 0;
+  font-size: 11px;
+}
+.gate-contact-layout form input,
+.gate-contact-layout form select,
+.gate-contact-layout form textarea {
+  background: var(--gate-ink) !important;
+  border-color: var(--gate-border) !important;
+  color: var(--gate-text) !important;
+  border-radius: 0 !important;
+}
+.gate-contact-layout form input::placeholder,
+.gate-contact-layout form textarea::placeholder { color: var(--gate-muted) !important; opacity: 0.7; }
+.gate-contact-layout form button[type=submit] {
+  background: var(--brand-accent) !important;
+  color: var(--brand-secondary) !important;
+  border-radius: 0 !important;
+}
+.gate-contact-layout form button[type=submit]:hover { background: var(--brand-on-primary) !important; }
+.gate-contact-layout .text-slate-900 { color: var(--gate-text); }
+
+/* --- Animace --- */
+@keyframes gateEnergy { to { stroke-dashoffset: -104; } }
+
+/* --- Responsive --- */
+@media (max-width: 1100px) {
+  .gate-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .gate-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gate-metrics article { border-bottom: 1px solid var(--gate-border); }
+  .gate-offer-grid { grid-template-columns: 1fr; }
+  .gate-budget, .gate-smart-layout, .gate-contact-layout { gap: 32px; }
+  .gate-offer-grid article { padding: 24px; }
+}
+
+@media (max-width: 767px) {
+  .gate-scroll { height: 2400px; }
+  .gate-sticky { top: 64px; height: calc(100svh - 64px); padding: 12px 20px 0; }
+  .gate-core-top > .gate-brand-button { font-size: 8px; padding: 12px; }
+  .gate-core-top > .gate-kicker { font-size: 8px; max-width: 125px; }
+  .gate-core-layout { display: flex; flex-direction: column; gap: 0; align-items: stretch; }
+  .gate-core-copy { padding: 14px 0 0; }
+  .gate-core-copy h1 { font-size: clamp(25px, 6.5vw, 34px); line-height: 1.18; margin: 10px 0; }
+  .gate-core-copy p { font-size: 12px; line-height: 1.5; margin: 0; }
+  .gate-variant-buttons { margin-top: 12px; }
+  .gate-variant-buttons button { padding: 8px 14px; font-size: 10px; }
+  .gate-core-facts { margin: 12px 0; gap: 26px; }
+  .gate-core-facts strong { font-size: 18px; }
+  .gate-core-facts span { font-size: 9px; }
+  .gate-core-copy > .gate-inline-link { display: none; }
+  .gate-scene-wrap { flex: 1; min-height: 190px; }
+  .gate-model-tag { bottom: 12px; font-size: 8px; max-width: 140px; }
+  .gate-explode { font-size: 9px; padding: 10px; bottom: 12px; max-width: 140px; }
+  .gate-stage-track { min-height: 42px; gap: 8px; }
+  .gate-stage-track button { font-size: 0; justify-content: center; }
+  .gate-stage-track button span { font-size: 11px; }
+  .gate-scroll-hint { font-size: 8px; }
+  .gate-equipment-note { font-size: 8px; line-height: 1.35; }
+  .gate-section { padding: 64px 20px; }
+  .gate-section-head { margin-bottom: 30px; }
+  .gate-section-head p { font-size: 13px; }
+  .gate-local-nav { gap: 8px 20px; padding: 10px; }
+  .gate-local-nav a { font-size: 10px; }
+  .gate-thermal-controls { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .gate-thermal-legend { font-size: 10px; padding: 12px; }
+  .gate-metrics article { padding: 20px 16px; }
+  .gate-metrics h3 { font-size: 18px; margin: 16px 0; }
+  .gate-budget, .gate-smart-layout, .gate-contact-layout { grid-template-columns: 1fr; }
+  .gate-budget { padding: 24px; gap: 24px; }
+  .gate-atlas-grid { grid-template-columns: 1fr; gap: 20px; }
+  .gate-photo-caption { padding: 16px; }
+  .gate-smart-panel { padding: 24px; }
+  .gate-contact-layout { margin-top: 50px; }
+  .gate-offer-grid .gate-brand-button { font-size: 10px; }
+  .gate-operation h2 { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-scroll { height: 100svh; min-height: 780px; }
+  .gate-sticky { position: relative; top: 0; min-height: 780px; }
+  .gate-energy-ray { animation: none; }
+  .gate-atlas-photo img { transition: none; }
+  .gate-brand-button { transition: none; }
+}

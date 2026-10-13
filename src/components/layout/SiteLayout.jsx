@@ -8,10 +8,13 @@ import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
 import ReturningVisitorEmailPopup from '@/components/common/ReturningVisitorEmailPopup';
 import WhatsAppContactWidget from '@/components/common/WhatsAppContactWidget';
+import useGlobalLenis from '@/hooks/useGlobalLenis';
+import 'lenis/dist/lenis.css';
 
 export default function SiteLayout() {
   const location = useLocation();
   const locale = getLocaleFromPath(location.pathname);
+  useGlobalLenis(location.pathname);
 
   return (
     <div className="architecture-site min-h-screen flex flex-col">

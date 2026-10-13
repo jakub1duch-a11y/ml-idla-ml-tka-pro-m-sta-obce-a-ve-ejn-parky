@@ -17,6 +17,8 @@ export default async function(req) {
     const projectId = clean(body.project_id || body.project_order_id);
     const confirmSend = Boolean(body.confirm_send);
     const dryRun = Boolean(body.dry_run);
+    const customSubject = clean(body.custom_subject, 200);
+    const customMessage = clean(body.custom_message, 8000);
 
     if (!projectId) return Response.json({ error: 'missing_project_id' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
 
@@ -33,6 +35,19 @@ export default async function(req) {
 
     const { data, project } = loaded;
     const email = buildClientOfferEmail(data);
+    // Použij vlastní předmět a zprávu od obchodníka, pokud byly poskytnuty
+    if (customSubject) email.subject = customSubject;
+    if (customMessage) {
+      email.text = customMessage;
+      // Vložíme vlastní zprávu do HTML těla e-mailu — nahradí úvodní odstavec
+      const customHtml = customMessage
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>');
+      email.html = email.html.replace(
+        /Dobrý den[^<]*<\/p>/,
+        `<p style="margin:0 0 20px;font-size:14px;line-height:1.7;color:${'TEXT_DARK'}">${customHtml}</p>`
+      ).replace(/TEXT_DARK/g, '#0B2034');
+    }
 
     // Check OfferAgentRun safety gate
     let safetyGatePassed = true;

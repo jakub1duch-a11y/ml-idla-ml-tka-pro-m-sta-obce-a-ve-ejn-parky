@@ -11,7 +11,7 @@ import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplore
 import { useSearchParams } from 'react-router-dom';
 import FamilyNav from '@/components/kolekce/FamilyNav';
 import LineChips from '@/components/kolekce/LineChips';
-import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
+import BentoCatalogGrid from '@/components/kolekce/BentoCatalogGrid';
 import GatesSlider from '@/components/kolekce/GatesSlider';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
@@ -131,9 +131,10 @@ export default function Kolekce() {
         <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-[#D3E2E8]" /></div> :
 
         <ProductExperience products={displayed}>
-<AnimatePresence mode="popLayout"><motion.div layout className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
-            {displayed.length === 0 && <p className="col-span-full py-16 text-center text-sm text-[#5A6B78]" role="status">{loadError ? 'Produkty se nepodařilo načíst. Obnovte stránku nebo nás kontaktujte s výběrem řešení.' : 'Žádné produkty neodpovídají výběru. Zkuste jiný výraz nebo zrušte filtry.'}</p>}
+<AnimatePresence mode="popLayout"><motion.div layout>
+            <BentoCatalogGrid products={displayed}>
+              {displayed.length === 0 && <p className="col-span-full py-16 text-center text-sm text-[#5A6B78]" role="status">{loadError ? 'Produkty se nepodařilo načíst. Obnovte stránku nebo nás kontaktujte s výběrem řešení.' : 'Žádné produkty neodpovídají výběru. Zkuste jiný výraz nebo zrušte filtry.'}</p>}
+            </BentoCatalogGrid>
           </motion.div></AnimatePresence>
 </ProductExperience>
         }

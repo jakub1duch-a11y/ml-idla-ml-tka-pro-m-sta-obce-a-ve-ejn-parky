@@ -5,6 +5,7 @@ import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
 import NabidkovySuperAgentChat from '@/components/offers/NabidkovySuperAgentChat';
 import OfferDocumentEditor from '@/components/offers/OfferDocumentEditor';
+import OfferVisualViewer from '@/components/offers/OfferVisualViewer';
 import OfferConceptPanel from '@/components/offers/OfferConceptPanel';
 import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 
@@ -347,7 +348,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       const quoteResponse = await base44.functions.invoke('generateProductDatasheet', {
         product: productForOffer,
         document_type: 'offer',
-        inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal },
+        inquiry: { name: selected.name, email: selected.email, phone: selected.telefon || selected.phone || '', company: selected.firma || selected.company || '', project_goal: clientContent.project_goal, attachment_urls: [...(selected.attachment_urls || []), ...offerAttachments.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean) },
         quote: { final_total: finalTotalForOffer, base_price: basePriceForOffer, installation: installationForOffer, discount_percent: discountForOffer, price_is_estimate: priceIsEstimate },
         offer_final_page: {
           portal_url: 'https://mlzidla.cz/klientska-sekce',
@@ -431,7 +432,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         description: String(clientContent.project_goal || selected.message || '').slice(0, 2000), product_id: productForOffer.id, product_slug: productForOffer.slug, product_name: productForOffer.name,
         quote_number: quoteNumber, quote_pdf_url: quoteDriveUrl, presentation_url: presentation?.presentation_url || '', presentation_pdf_url: presentation?.presentation_pdf_url || '', notebook_source_url: notebookSourceUrl,
         drive_case_folder_id: presentation?.drive_case_folder_id || quoteDriveCaseFolderId, drive_case_folder_url: presentation?.drive_case_folder_url || quoteDriveCaseFolderUrl,
-        presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: true,
+        presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: false,
         status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,
         customer_message: visualizationUrl
           ? `Dobrý den, na základě vašeho zadání jsme připravili doporučené řešení ${productForOffer.name}, reálnou projektovou vizualizaci a cenovou nabídku ${quoteNumber}. V příloze najdete kompletní PDF. Vizualizace je návrhový podklad; finální technické řešení před realizací ověříme. Pokud budete chtít upravit umístění nebo rozsah, rádi návrh dopracujeme. Ing. Radek Meduna, MLŽIDLA® / HolmTec`
@@ -460,6 +461,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
       try {
         const generatedAssets = [
+          ...(quote.scenes || []).map(s => ({ inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: s.file_uri || s.url, file_name: `nabidka-${quoteNumber}-original-scene-${s.sort_order}`, file_type: 'image/png', asset_type: 'product_reference', title: s.title, description: s.caption, selected_for_offer: true, generated_by_ai: false })),
           quoteDriveUrl && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: quoteDriveUrl, file_name: quote?.filename || `${quoteNumber}-nabidka.pdf`, file_type: 'application/pdf', asset_type: 'quote_pdf', title: 'Cenová nabídka PDF', selected_for_offer: true, generated_by_ai: false },
           presentation?.presentation_url && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: presentation.presentation_url, file_name: `${quoteNumber}-prezentace`, file_type: 'application/vnd.google-apps.presentation', asset_type: 'presentation', title: 'Projektová prezentace', selected_for_offer: true, generated_by_ai: true },
           presentation?.presentation_pdf_url && { inquiry_id: selected.id, inquiry_type: selected.type, project_order_id: projectOrder.id, file_url: presentation.presentation_pdf_url, file_name: presentation.presentation_filename || `${quoteNumber}-prezentace.pdf`, file_type: 'application/pdf', asset_type: 'presentation_pdf', title: 'Projektová prezentace PDF', selected_for_offer: true, generated_by_ai: true },
@@ -468,6 +470,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
       } catch (assetError) { console.warn('Offer assets could not be indexed', assetError); }
 
       const generatedVisualizationUrls = [
+        ...(quote.scenes || []).map(s => s.url),
         visualizationUrl,
         ...visualizationOverrides,
         ...offerAttachments.filter((item) => item.asset_type === 'generated_visualization' && item.file_url).map((item) => item.file_url),
@@ -762,7 +765,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
 
   return (
     <section className="border-t border-border bg-card">
-      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[.78fr_1.22fr] lg:px-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-8 px-6 py-14 lg:grid-cols-[minmax(0,.78fr)_minmax(0,1.22fr)] lg:px-10">
         <aside>
           <p className="font-mono text-[10px] tracking-[.16em] uppercase text-secondary">Poptávky</p>
           <h2 className="mt-2 font-heading text-3xl text-foreground">Tvorba nabídky</h2>
@@ -791,7 +794,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           {filteredInquiries.length === 0 && <div className="rounded-xl border border-dashed border-border p-5 text-center text-xs text-muted-foreground">Nenalezena žádná poptávka ani nabídka odpovídající hledání.</div>}</div>
         </aside>
 
-        <div className="border border-border p-5 lg:p-7">
+        <div className="min-w-0 border border-border p-5 lg:p-7">
           <NabidkovySuperAgentChat inquiryId={selected?.id} inquiryType={selected?.type} />
           <div className="mt-4">
             <button type="button" onClick={loadAgentOffer} disabled={busy === 'load-agent'} className="inline-flex items-center gap-2 rounded-full border border-cyan-300 bg-cyan-50 px-4 py-2 text-xs font-bold text-cyan-900 transition hover:bg-cyan-100 disabled:opacity-50">
@@ -950,8 +953,15 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           </details>
 
           {prepared && (
-            <div id="offer-review" className="mt-6 scroll-mt-24 rounded-2xl border border-cyan-300 bg-cyan-50/50 p-5 sm:p-6">
-              <OfferDocumentEditor prepared={prepared} selected={selected} selectedProduct={selectedProduct} audiences={AUDIENCES} busy={busy === 'prepare' || busy === 'auto-offer'} onRegenerate={prepareOffer} downloadPreparedPdf={downloadPreparedPdf} />
+            <div id="offer-review" className="mt-6 scroll-mt-24">
+              <OfferVisualViewer
+                prepared={prepared}
+                selected={selected}
+                selectedProduct={selectedProduct}
+                busy={busy === 'prepare' || busy === 'auto-offer'}
+                onRegenerate={prepareOffer}
+                onSend={onSent}
+              />
               <div className="flex items-start justify-between gap-4"><div><p className="text-xs font-mono uppercase tracking-widest text-cyan-800">Kompletní nabídka · připravena jako koncept</p><p className="mt-1 text-sm font-semibold text-slate-950">{prepared.quoteNumber} · platnost do {prepared.validUntil.toLocaleDateString('cs-CZ')}</p></div><CheckCircle2 size={20} className="text-cyan-700"/></div>
               <div className="mt-4 grid gap-2 sm:grid-cols-4">
                 <div className="rounded-xl border border-emerald-200 bg-white px-3 py-3 text-xs font-semibold text-emerald-800">✓ Doporučené řešení</div>

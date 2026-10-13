@@ -76,7 +76,7 @@ export default function Footer() {
             <Link to="/" className="inline-flex" aria-label="MLŽIDLA.cz — domů">
               <Logo size="lg" variant="full" />
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-6 text-white/72">
+            <p className="mt-5 max-w-sm text-sm leading-6 text-[#afc1d5]">
               Nízkotlaká mlžítka pro města, veřejná prostranství, sportoviště i zahrady. Propojujeme nerezový design, vodní mlhu a automatizaci SUPLA do řešení navrženého pro konkrétní prostor.
             </p>
 

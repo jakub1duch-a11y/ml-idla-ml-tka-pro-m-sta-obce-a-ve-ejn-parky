@@ -1,11 +1,12 @@
 import QRCode from 'npm:qrcode@1.5.4';
 import { pt } from './pdfHelpers.ts';
 import { drawSuplaOfferPages } from './suplaOfferLayout.ts';
+import { drawOfferPriceRows, drawOptionalControlSummary } from './offerPricingLayout.ts';
 export const GREEN = '#007ACB', SOFT = '#EAF6FC', INK = '#071A2F', MUTE = '#607789', WHITE = '#F5FAFD';
 const money = v => Number(v) > 0 ? `${new Intl.NumberFormat('cs-CZ').format(Number(v))} Kc` : 'K individualnimu naceneni';
 const text = (doc, value, x, y, width = 182, size = 10, bold = false, color = INK) => {
   doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor(color);
-  const lines = doc.splitTextToSize(pt(value || ''), width);
+  const lines = doc.splitTextToSize(pt(String(value || '').replace(/[–—−]/g, '-').replace(/[µμ]/g, 'u').replace(/\u00a0/g, ' ')), width);
   doc.text(lines, x, y, { lineHeightFactor: 1.35 });
   return y + lines.length * size * 0.3528 * 1.35;
 };
@@ -29,14 +30,14 @@ function image(doc, img, x, y, w, h) {
   doc.addImage(img.data, img.format, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh, undefined, 'FAST');
 }
 export function drawCoverPage(doc, c) {
-  const y = header(doc, c, 'Designova mlzitka.', 'Chytry provoz.');
-  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, y, 182, 126);
-  doc.setFillColor(INK); doc.rect(14, y + 126, 182, 25, 'F');
-  text(doc, c.productName, 20, y + 141, 169, 18, true, WHITE);
-  let bottom = text(doc, c.clientName, 14, y + 165, 182, 14, true);
-  if (c.clientCompany && c.clientCompany !== c.clientName) bottom = text(doc, c.clientCompany, 14, bottom + 1, 182, 10, false, MUTE);
-  text(doc, 'Nerezova reseni pro vas prostor. SUPLA jako volitelna provozni vrstva.', 14, bottom + 4, 182, 9, false, MUTE);
-  text(doc, 'Koncepcni navrh ke kontrole / technicke reseni bude potvrzeno.', 14, bottom + 13, 182, 8, false, MUTE);
+  header(doc, c, c.productName, 'CESKA NEREZOVA MLZITKA / PRODUKTOVA NABIDKA');
+  image(doc, c.scenes?.[0]?.img || c.productImg || c.imgs[0], 0, 72, 210, 158);
+  doc.setFillColor(INK); doc.rect(0, 230, 210, 28, 'F');
+  text(doc, c.product?.short_description || 'Nerezove reseni pro verejny i soukromy prostor.', 14, 241, 182, 11, true, WHITE);
+  text(doc, c.clientName, 14, 269, 120, 12, true);
+  if (c.clientCompany && c.clientCompany !== c.clientName) text(doc, c.clientCompany, 14, 277, 120, 8, false, MUTE);
+  text(doc, 'Mlzitko funguje i bez SUPLA.', 139, 269, 57, 9, true, GREEN);
+  text(doc, 'Chytre rizeni je volitelne.', 139, 279, 57, 8, false, MUTE);
 }
 export function drawSolutionPage(doc, c) {
   let y = header(doc, c, 'Reseni pro vas prostor', c.productName);
@@ -68,7 +69,7 @@ export function drawPlacementPage(doc, c) {
   const groups = scenes.length ? scenes : [{ img: null, title: 'Navrh umisteni', caption: 'Vizualizace k doplneni' }];
   for (let i = 0; i < groups.length; i += 2) {
     if (i) doc.addPage();
-    const y = header(doc, c, 'Navrh umisteni', groups[i].source === 'client_space' ? 'Prostor klienta z ruznych uhlu' : 'Moznosti zacleneni do prostoru');
+    const y = header(doc, c, 'Produkt v prostoru', 'Puvodni produktove podklady / bez zmeny konstrukce');
     groups.slice(i, i + 2).forEach((s, j) => {
       const top = y + j * 103;
       text(doc, s.title, 14, top, 182, 12, true, GREEN);
@@ -91,23 +92,13 @@ function diagram(doc, y, shaft) {
 export function drawSmartPage(doc, c) {
   drawSuplaOfferPages(doc, c, { header, text, image, diagram, money });
 }
-function priceRows(doc, c, title) {
-  let y = header(doc, c, title, c.clientCompany || c.clientName);
-  for (const row of c.lines) {
-    doc.setFontSize(10); const wrapped = doc.splitTextToSize(pt(row.label), 120);
-    const height = Math.max(14, wrapped.length * 4.8 + 7);
-    if (y + height > 255) { doc.addPage(); y = header(doc, c, `${title} - pokracovani`); }
-    doc.setFillColor(SOFT); doc.rect(14, y - 4, 182, height, 'F');
-    text(doc, row.label, 18, y + 2, 116, 10);
-    text(doc, money(row.total), 143, y + 2, 49, 10, true, GREEN); y += height + 3;
-  }
-  if (y + 39 > 265) { doc.addPage(); y = header(doc, c, 'Cenova rekapitulace'); }
-  y = text(doc, `Celkem bez DPH: ${money(c.total)}`, 14, y + 5, 182, 14, true, GREEN);
-  if (c.total > 0) { y = text(doc, `DPH 21 %: ${money(Math.round(c.total * .21))}`, 14, y + 3, 182, 10); y = text(doc, `Celkem s DPH: ${money(Math.round(c.total * 1.21))}`, 14, y + 3, 182, 12, true); }
-  return y;
+const priceApi = { header, text, image, money, pt, ink: INK, soft: SOFT, accent: GREEN, mute: MUTE };
+function priceRows(doc, c, title, compact = false) {
+  return drawOfferPriceRows(doc, c, priceApi, title, compact);
 }
 export function drawPricePage(doc, c) {
-  let y = priceRows(doc, c, 'Cenova nabidka');
+  let y = priceRows(doc, c, 'Produkt. Popis. Cena.');
+  y = drawOptionalControlSummary(doc, c, priceApi, y);
   if (y + 22 > 270) { doc.addPage(); y = header(doc, c, 'Rozsah ceny'); }
   y = text(doc, 'Rozhodujici je rozsah uvedenych polozek. Volitelne SUPLA varianty nejsou automaticky pricteny. Doprava, montaz, vykopy a stavebni prace nejsou zahrnuty; nacenime je po overeni mista.', 14, y + 5, 182, 10, false, MUTE) + 7;
   if (c.pricingNote) y = text(doc, c.pricingNote, 14, y, 182, 9, false, MUTE) + 7;
@@ -121,14 +112,15 @@ export function drawDarkHeroPage(doc, c) {
   doc.setFillColor(INK); doc.rect(0, 0, 210, 297, 'F');
   image(doc, c.scenes?.[3]?.img || c.imgs[1] || c.imgs[0], 0, 0, 210, 249);
   text(doc, c.productName, 14, 266, 182, 24, true, WHITE);
-  text(doc, 'Koncepcni vizualizace / ke kontrole', 14, 280, 182, 9, false, '#B8C6CE');
+  text(doc, 'Puvodni produktovy podklad / technicke provedeni k potvrzeni', 14, 280, 182, 9, false, '#B8C6CE');
 }
 export function drawPhotoHeroPage(doc, c) {
-  const y = header(doc, c, 'Vizualizace reseni', c.productName);
+  const y = header(doc, c, 'Produktovy pohled', c.productName);
   image(doc, c.scenes?.[4]?.img || c.imgs[2] || c.imgs[0], 0, y, 210, 279 - y);
 }
 export function drawRecapPage(doc, c) {
-  let y = priceRows(doc, c, 'Rekapitulace a podminky');
+  let y = priceRows(doc, c, 'Shrnuti nabidky', true);
+  y = drawOptionalControlSummary(doc, c, priceApi, y, true);
   const terms = `Platnost do ${c.validUntil}. Termin, platebni podminky a rozsah instalace budou potvrzeny. Vizualizace jsou koncepcni a vyzaduji kontrolu produktu a technicke proveditelnosti. Objednavku potvrdite po prihlaseni ve svem projektu; samotne otevreni odkazu nebo QR kodu neni objednavkou.`;
   doc.setFontSize(10); const height = doc.splitTextToSize(pt(terms), 182).length * 4.8 + 10;
   if (y + height > 190) { doc.addPage(); y = header(doc, c, 'Podminky a dalsi postup'); }

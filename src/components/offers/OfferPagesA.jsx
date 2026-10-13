@@ -17,7 +17,7 @@ export function CoverPage({ c }) {
     <h3 className="op-h2" style={{ fontSize: '5cqw' }}><ProductTitle name={c.productName}/></h3>
     {c.pick(0) && <img src={c.pick(0)} className="op-flow-photo" alt={c.productName}/>}
     <p className="op-sub">{c.forWhom}</p><p className="op-txt">Česká nerezová řešení pro města, parky a zahrady.</p>
-    <p className="op-cap">Koncepční vizualizace ke kontrole. Chytré řízení SUPLA jako volitelná provozní vrstva.</p>
+    <p className="op-cap">Původní produktový podklad bez AI překreslení konstrukce. Chytré řízení SUPLA není podmínkou pro mlžítko.</p>
   </OfferFlowPage>;
 }
 
@@ -26,7 +26,7 @@ export function SolutionPage({ c }) {
     <p className="op-txt">{c.goal}</p><p className="op-txt">{c.solution}</p>
     {c.pick(0) && <img className="op-flow-photo" src={c.pick(0)} alt={c.productName}/>}
     {c.benefits.map(b => <p className="op-txt" key={b}>{b}</p>)}
-    <p className="op-cap">Vizualizace je koncepční návrh; umístění a technické návaznosti potvrdí technik.</p>
+    <p className="op-cap">Zobrazený výrobek vychází z původního produktového podkladu. Umístění a technické návaznosti potvrdí technik.</p>
   </OfferFlowPage>;
 }
 

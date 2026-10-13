@@ -8,7 +8,7 @@ export default function OfferSuplaSheet({ c }) {
   return <div className="op-supla-package">
     <OfferFlowPage title="Chytré řízení mlžení SUPLA" subtitle="Volitelné rozšíření / Wi-Fi + mobilní aplikace">
       <p className="op-txt">Od manuálního spouštění k pohodlnému provozu. Vyberte jednu ze dvou alternativ, automatizace není součástí základní ceny mlžítka.</p>
-      <p className="supla-scope-note op-txt"><b>Bez servisní šachty 29 639 Kč · se servisní šachtou 48 539 Kč. Ceny bez DPH.</b></p>
+      <p className="supla-scope-note op-txt"><b>Mlžítko funguje i bez chytrého řízení.</b><br />SUPLA bez šachty: 29 639 Kč bez DPH.<br />SUPLA se šachtou: 29 639 Kč + 18 900 Kč za otevíratelnou zemní šachtu, celkem 48 539 Kč bez DPH.</p>
       <img className="supla-offer-image" src={SUPLA_VISUALS.valve} alt="Koncepční vizualizace chytrého ventilu, Wi-Fi řízení SUPLA a mobilní aplikace" />
       <p className="op-cap">Ilustrační sestava, nikoli přesný seznam dodávaného hardware nebo montážní dokumentace.</p>
     </OfferFlowPage>

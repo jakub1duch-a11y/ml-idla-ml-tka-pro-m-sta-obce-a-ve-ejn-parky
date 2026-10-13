@@ -35,15 +35,23 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
   }, [orderId]);
 
   useEffect(() => {
-    if (!orderId) return;
-    base44.entities.OfferAsset.filter({ project_order_id: orderId, asset_type: 'generated_visualization', file_name: { $regex: 'scene-' } }, { sort: '-created_date', limit: 5 }).then(({ items }) => setSceneAssets(items.reverse().map(a => ({ url: a.file_url, title: a.title, caption: a.description }))));
-  }, [orderId, prepared?.quote]);
+    if (!orderId || !prepared?.quoteNumber) return;
+    let cancelled = false;
+    setSceneAssets([]);
+    const quotePrefix = String(prepared.quoteNumber).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    base44.entities.OfferAsset.filter({ project_order_id: orderId, asset_type: 'product_reference', generated_by_ai: false, file_name: { $regex: `^nabidka-${quotePrefix}-original-scene-` } }, { sort: '-created_date', limit: 5 }).then(async ({ items }) => {
+      const scenes = await Promise.all(items.reverse().map(async a => ({ url: /^https:\/\//.test(a.file_url) ? a.file_url : (await base44.integrations.Core.CreateFileSignedUrl({ file_uri: a.file_url, expires_in: 3600 })).signed_url, title: a.title, caption: a.description, geometry_preserved: true })));
+      if (!cancelled) setSceneAssets(scenes);
+    });
+    return () => { cancelled = true; };
+  }, [orderId, prepared?.quote, prepared?.quoteNumber]);
 
   const ctx = useMemo(() => {
     const product = selectedProduct || null;
     const productName = product?.name || prepared?.projectOrder?.product_name || 'Mlžítko';
-    const scenes = prepared?.quote?.scenes?.length ? prepared.quote.scenes : sceneAssets;
-    const viz = scenes.length ? scenes.map(s => s.url) : prepared?.visualizationUrls || [];
+    const originals = (prepared?.quote?.scenes || []).filter(s => s.geometry_preserved && s.generated_by_ai === false);
+    const scenes = originals.length ? originals : sceneAssets;
+    const viz = scenes.map(s => s.url);
     const gallery = [product?.image_url, ...(product?.gallery_urls || [])].filter(Boolean);
     const total = Number(prepared?.projectOrder?.total_price || prepared?.quote?.final_total || 0);
     const clientName = selected?.name || selected?.jmeno || '—';

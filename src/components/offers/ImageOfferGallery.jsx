@@ -3,13 +3,11 @@ import { Download, Loader2, CloudUpload, ExternalLink } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { renderOfferCard, canvasToBase64 } from '@/lib/imageOfferCard';
 
-const LOGO = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
-
-function Card({ variant, client, onReady }) {
+function Card({ variant, client, logo, onReady }) {
   const ref = useRef(null);
   useEffect(() => {
     let alive = true;
-    renderOfferCard({ variant, client, logo: LOGO }).then((canvas) => {
+    renderOfferCard({ variant, client, logo }).then((canvas) => {
       if (!alive || !ref.current) return;
       ref.current.replaceChildren(canvas); canvas.style.width = '100%'; canvas.style.height = 'auto';
       onReady(variant, canvas);
@@ -57,7 +55,7 @@ export default function ImageOfferGallery({ projectOrderId }) {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {data.variants.map((v) => (
           <div key={v.key} className="overflow-hidden border border-border bg-card shadow-sm">
-            <Card variant={v} client={data.client} onReady={(variant, canvas) => { canvases.current[variant.key] = canvas; }} />
+            <Card variant={v} client={data.client} logo={data.logo} onReady={(variant, canvas) => { canvases.current[variant.key] = canvas; }} />
             <div className="flex items-center justify-between p-3"><span className="text-sm font-semibold">{v.title}</span><button onClick={() => download(v)} className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-bold"><Download size={13} /> PNG</button></div>
           </div>
         ))}

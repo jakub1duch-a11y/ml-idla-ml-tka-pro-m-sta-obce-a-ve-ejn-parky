@@ -48,6 +48,7 @@ export default async function(req) {
       }
       return { key: v.key, title: v.title, subtitle: v.subtitle, recommended: !!v.recommended, price, priceNote: v.priceNote || (price ? '' : 'Cena bude potvrzena po ověření rozsahu.'), spec: v.spec, material: product?.material || '', pressure: product?.pressure || '', water: product?.water_consumption || '', images };
     }));
-    return Response.json({ ok: true, client: { name: order.client_name, company: order.client_company, quote: order.quote_number }, variants });
+    const logo = await toCatalogDataUrl('https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png');
+    return Response.json({ ok: true, logo, client: { name: order.client_name, company: order.client_company, quote: order.quote_number }, variants });
   } catch (error) { return Response.json({ error: error.message }, { status: 500 }); }
 }

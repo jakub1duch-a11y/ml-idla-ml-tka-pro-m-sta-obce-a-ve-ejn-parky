@@ -5,14 +5,17 @@ import { driveImage } from '../../shared/imageOfferMedia.ts';
 function buildPrompt(variant, env, angle, product) {
   return [
     `Ultra-realistic architectural photograph for a premium B2B product offer. Place the exact stainless-steel misting element from the reference image into this setting: ${env.prompt}.`,
-    'The reference photo is the master: reproduce the product silhouette, number of tubes, every bend and curve, tube profile, proportions, brushed stainless finish, nozzle positions and ground anchoring exactly as shown. Do not redesign, simplify, mirror, add or remove any tube, arm, bend, ring, nozzle, base plate or decoration. Ignore everything else in the reference photo (people, background, watermarks).',
-    variant.scale ? `Real-world size: ${variant.scale}.` : 'Keep a realistic real-world scale.',
     variant.promptExtra || '',
+    `The reference photo is the master: reproduce the product silhouette, number of tubes, every bend and curve, tube profile, proportions, brushed stainless finish${variant.promptExtra ? '' : ', nozzle positions'} and ground anchoring exactly as shown. Do not redesign, simplify, mirror, add or remove any tube, arm, bend, ring, nozzle, base plate or decoration. Ignore everything else in the reference photo (people, background, watermarks).`,
+    variant.scale ? `Real-world size: ${variant.scale}.` : 'Keep a realistic real-world scale.',
     'A light translucent cooling mist of micro water droplets comes only from the existing nozzles and catches the sunlight; it is fine aerosol, not smoke or steam.',
     `Camera: ${angle.prompt}. The product is the clear hero, natural summer daylight, realistic shadows and reflections on brushed steel, very high detail, calm and clean scene.`,
     'Strictly no people, no children, no animals, no text, no letters, no logos, no watermarks.',
-    product?.visual_geometry_lock ? `Geometry lock: ${product.visual_geometry_lock}` : '',
-    product?.visual_negative_rules?.length ? `Forbidden changes: ${product.visual_negative_rules.join('; ')}.` : '',
+    variant.promptExtra ? `REMINDER: ${variant.promptExtra}` : '',
+    // U variant s vlastním pokynem k tryskám se databázová pravidla o poloze trysek vynechávají, aby si neodporovala.
+    !variant.promptExtra && product?.visual_geometry_lock ? `Geometry lock: ${product.visual_geometry_lock}` : '',
+    !variant.promptExtra && product?.visual_negative_rules?.length ? `Forbidden changes: ${product.visual_negative_rules.join('; ')}.` : '',
+    variant.promptExtra ? 'Forbidden: adding extra tubes, arms, hoses, cables or decorations; changing the ring diameter, tube profile, stand or base.' : '',
   ].filter(Boolean).join('\n');
 }
 

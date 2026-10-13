@@ -115,7 +115,8 @@
   "context_files": [],
   "app_user_connector_configs": [],
   "selected_skill_names": [
-    "brand-voice"
+    "brand-voice",
+    "dovednost"
   ],
   "selected_workspace_skill_ids": [],
   "model": "claude_fable_5_1",

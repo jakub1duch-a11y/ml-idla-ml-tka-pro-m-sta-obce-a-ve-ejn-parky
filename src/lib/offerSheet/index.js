@@ -1,6 +1,6 @@
 // Sestaví strany obrazové nabídky: titulní, produktové listy (každý následují jeho schválené vizualizace), podmínky.
 import { createCanvas, loadFonts } from './base';
-import { paintBackground } from './chrome';
+import { paintBackground, loadLogo } from './chrome';
 import { drawCover } from './pageCover';
 import { drawProduct } from './pageProduct';
 import { drawScene } from './pageScene';
@@ -20,7 +20,7 @@ export function buildPages(d) {
   return list.map((p, i) => ({
     ...p,
     render: async () => {
-      await loadFonts();
+      await Promise.all([loadFonts(), loadLogo()]);
       const { canvas, ctx } = createCanvas();
       paintBackground(ctx);
       await p.draw(ctx, { quote: d.client.quote, page: i + 1, total: list.length });

@@ -1,6 +1,5 @@
 // Společné prvky stran podle šablony MLŽIDLA.cz: světlé pozadí s mlžnými vlnami, logo, hlavička a patička.
-import { W, H, C, text, font } from './base';
-import { ICONS } from './icons';
+import { W, H, C, text, loadImage } from './base';
 
 export function paintBackground(ctx) {
   ctx.fillStyle = C.white;
@@ -30,22 +29,21 @@ export function paintBackground(ctx) {
   ctx.fillStyle = g; ctx.fill();
 }
 
+// Oficiální logo MLŽIDLA (stejný soubor jako v e-mailech). Zdrojový obrázek 1024×512 má bílé okraje, kreslí se ořezané na motiv.
+const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const LOGO_CROP = { x: 70, y: 165, w: 890, h: 180 };
+let logoImage = null;
+
+export async function loadLogo() {
+  if (!logoImage) logoImage = await loadImage(LOGO_URL);
+  return logoImage;
+}
+
 function logo(ctx, x, y) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(2.4, 2.4);
-  const g = ctx.createLinearGradient(0, 2, 0, 22);
-  g.addColorStop(0, C.cyan); g.addColorStop(1, C.blue);
-  ctx.fillStyle = g;
-  ctx.fill(new Path2D(ICONS.droplet[0]));
-  ctx.restore();
-  const word = { weight: 800, size: 44, family: 'Manrope', spacing: -0.5 };
-  text(ctx, 'MLŽIDLA', x + 64, y + 44, { ...word, color: C.navy });
-  font(ctx, word);
-  const w = ctx.measureText('MLŽIDLA').width;
-  ctx.letterSpacing = '0px';
-  text(ctx, '.cz', x + 66 + w, y + 44, { weight: 800, size: 24, family: 'Manrope', color: C.cyan });
-  text(ctx, 'CHYTRÉ MLŽENÍ · BY HOLMTEC', x + 66, y + 68, { weight: 600, size: 12, color: C.navy, spacing: 2.6 });
+  if (!logoImage) return;
+  const h = 84;
+  const w = (LOGO_CROP.w / LOGO_CROP.h) * h;
+  ctx.drawImage(logoImage, LOGO_CROP.x, LOGO_CROP.y, LOGO_CROP.w, LOGO_CROP.h, x, y, w, h);
 }
 
 export function header(ctx, meta = {}) {

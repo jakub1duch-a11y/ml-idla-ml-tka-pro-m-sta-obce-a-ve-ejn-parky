@@ -7,6 +7,7 @@ function buildPrompt(variant, env, angle, product) {
     `Ultra-realistic architectural photograph for a premium B2B product offer. Place the exact stainless-steel misting element from the reference image into this setting: ${env.prompt}.`,
     'The reference photo is the master: reproduce the product silhouette, number of tubes, every bend and curve, tube profile, proportions, brushed stainless finish, nozzle positions and ground anchoring exactly as shown. Do not redesign, simplify, mirror, add or remove any tube, arm, bend, ring, nozzle, base plate or decoration. Ignore everything else in the reference photo (people, background, watermarks).',
     variant.scale ? `Real-world size: ${variant.scale}.` : 'Keep a realistic real-world scale.',
+    variant.promptExtra || '',
     'A light translucent cooling mist of micro water droplets comes only from the existing nozzles and catches the sunlight; it is fine aerosol, not smoke or steam.',
     `Camera: ${angle.prompt}. The product is the clear hero, natural summer daylight, realistic shadows and reflections on brushed steel, very high detail, calm and clean scene.`,
     'Strictly no people, no children, no animals, no text, no letters, no logos, no watermarks.',

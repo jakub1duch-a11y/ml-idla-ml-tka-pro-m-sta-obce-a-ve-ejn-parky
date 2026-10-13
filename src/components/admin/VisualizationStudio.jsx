@@ -9,6 +9,8 @@ import {
   getProductReferenceImages,
   VISUAL_ENVIRONMENTS,
 } from '@/lib/productVisualizationRules';
+import LockedVideoPanel from '@/components/admin/LockedVideoPanel';
+import useLockedVideo from '@/components/admin/useLockedVideo';
 
 const ASPECT_OPTIONS = [
   { value: '16:9', label: '16:9 · Na šířku' },
@@ -36,6 +38,10 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
   const [gallery, setGallery] = useState([]);
   const [loadingGallery, setLoadingGallery] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [heightMm, setHeightMm] = useState('');
+  const [diameterMm, setDiameterMm] = useState('');
+  const [seconds, setSeconds] = useState(6);
+  const locked = useLockedVideo();
 
   const selectedProductObj = useMemo(
     () => products.find((p) => p.id === selectedProduct),
@@ -71,6 +77,21 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
     loadGallery();
   }, [selectedProductObj?.slug]);
 
+  const lockedPayload = () => ({
+    productSlug: selectedProductObj?.slug,
+    quantity,
+    seconds,
+    aspectRatio: aspect,
+    environmentPrompt: VISUAL_ENVIRONMENTS.find((item) => item.value === environment)?.prompt,
+    scene: prompt,
+    heightMm: Number(heightMm) || 0,
+    diameterMm: Number(diameterMm) || 0,
+  });
+
+  useEffect(() => {
+    if (mode === 'video' && selectedProductObj?.slug) locked.loadPlan(lockedPayload());
+  }, [mode, selectedProductObj?.slug]);
+
   const applyConfiguration = (value) => {
     setConfiguration(value);
     const preset = CONFIGURATION_PRESETS.find((item) => item.value === value);
@@ -104,13 +125,8 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
         if (!res?.url) throw new Error('Generátor nevrátil obrázek.');
         setResult({ type: 'image', url: res.url, fullPrompt, references, guard });
       } else {
-        const videoRes = await base44.integrations.Core.GenerateVideo({
-          prompt: `${fullPrompt} Kamera se pohybuje pomalu a klidně. Produkt po celou dobu zachovává stejnou geometrii a počet konstrukčních prvků.`,
-          aspect_ratio: aspect,
-          generate_audio: false,
-        });
-        if (!videoRes?.url) throw new Error('Generátor nevrátil video.');
-        setResult({ type: 'video', url: videoRes.url, fullPrompt, references, guard });
+        const video = await locked.generate(lockedPayload());
+        setResult({ type: 'video', url: video.url, fullPrompt: video.prompt, references: video.references, guard });
       }
     } catch (err) {
       setError(err?.response?.data?.error || err?.message || 'Generování selhalo.');
@@ -136,6 +152,7 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
         generation_prompt: result.fullPrompt,
         reference_image_urls: result.references,
         material: selectedProductObj.material || '',
+        profile_diameter_mm: Number(diameterMm) || undefined,
         is_master_geometry_locked: true,
         approval_status: 'needs_review',
         approved_for_presentation: false,
@@ -227,11 +244,13 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
           <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} rows={3} placeholder="Volitelně doplňte styl prostoru, lidi, světlo, kompozici nebo atmosféru. Konstrukci produktu sem neměňte." className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-cyan/40"/>
         </div>
 
+        {mode === 'video' && <LockedVideoPanel plan={locked.plan} heightMm={heightMm} diameterMm={diameterMm} setHeightMm={setHeightMm} setDiameterMm={setDiameterMm} seconds={seconds} setSeconds={setSeconds} />}
+
         {mode === 'video' && <div><label className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-white/40">Poměr stran</label><div className="flex flex-wrap gap-2">{ASPECT_OPTIONS.map((opt) => <button key={opt.value} onClick={() => setAspect(opt.value)} className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-all ${aspect === opt.value ? 'border border-cyan/30 bg-cyan/20 text-cyan' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>{opt.label}</button>)}</div></div>}
 
         <button onClick={generate} disabled={busy || !selectedProductObj || !masterReference} className="inline-flex items-center gap-2 rounded-xl bg-cyan px-5 py-2.5 text-sm font-bold text-ink transition-all hover:bg-cyan/90 disabled:opacity-40">
           {busy ? <Loader size={15} className="animate-spin"/> : <Sparkles size={15}/>}
-          {busy ? 'Generuji s PRODUCT LOCK…' : mode === 'image' ? 'Generovat přesnou vizualizaci' : 'Generovat video'}
+          {busy ? (locked.status || 'Generuji s PRODUCT LOCK…') : mode === 'image' ? 'Generovat přesnou vizualizaci' : 'Generovat video s PRODUCT LOCK'}
         </button>
 
         {error && <div className="flex items-center gap-2 rounded-lg border border-rose-400/20 bg-rose-400/10 px-3 py-2 text-xs text-rose-400"><X size={12}/> {error}</div>}

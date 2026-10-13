@@ -3,6 +3,22 @@
 @import url('./styles/brand-components.css');
 @import url('./styles/brand-logo-system.css');
 @import url('./styles/mobile-premium.css');
+/* base44-workspace-fonts:start */
+@font-face {
+  font-family: 'Aether';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/aether-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Aether';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/aether-700-normal.woff2') format('woff2');
+}
+/* base44-workspace-fonts:end */
 
 @tailwind base;
 @tailwind components;

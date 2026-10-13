@@ -99,7 +99,7 @@ export default function Logo({
         <span className="mlz-wordmark__symbol">
           <MistZMark size={size === "lg" ? "md" : "sm"} />
         </span>
-        <span className="mlz-wordmark__name text-xl">MLŽIDLA</span>
+        <span className="text-2xl">MLŽIDLA</span>
         <sup className="z-wordmark__registered">®</sup>
       </span>
       {variant === "full" &&

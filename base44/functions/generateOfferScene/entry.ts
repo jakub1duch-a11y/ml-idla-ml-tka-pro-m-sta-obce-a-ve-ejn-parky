@@ -39,6 +39,8 @@ export default async function(req) {
       const img = await driveImage(accessToken, variant.driveFiles[0]);
       const up = await sr.integrations.Core.UploadPrivateFile({ file: new File([img.bytes], `${variant.key}-reference.jpg`, { type: img.type }) });
       referenceUrl = (await sr.integrations.Core.CreateFileSignedUrl({ file_uri: up.file_uri, expires_in: 1800 })).signed_url;
+    } else if (variant.referenceUrl) {
+      referenceUrl = variant.referenceUrl;
     } else {
       const src = product?.visual_master_reference_url || product?.image_url || '';
       referenceUrl = src.startsWith('/') ? `https://mlzidla.cz${src}` : src;

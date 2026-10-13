@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { VARIANTS, ENVIRONMENTS, ANGLES, COVER_INTRO } from '../../shared/imageOfferCatalog.ts';
 import { driveImage, urlImage, toDataUrl } from '../../shared/imageOfferMedia.ts';
+import { fetchSuplaPricing } from '../../shared/suplaPricing.ts';
 
 // Vrací data pro obrazové nabídky: klient, souhrn poptávky, ceny z ceníku a originální fotografie jako data URL.
 export default async function(req) {
@@ -18,6 +19,7 @@ export default async function(req) {
       sr.OfferVariant.filter({ project_order_id }, { limit: 30 }),
     ]);
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
+    const supla = await fetchSuplaPricing(base44);
     const alt1414 = orderVariants.items.find(v => /1414/.test(`${v.label} ${v.product_name}`));
     const variants = await Promise.all(VARIANTS.map(async (v) => {
       const product = products.items.find(p => p.slug === v.slug) || products.items.find(p => p.slug === 'mlzitko-mrak');
@@ -37,6 +39,7 @@ export default async function(req) {
       summary: order.description || '',
       validUntil: order.valid_until,
       client: { name: order.client_name, company: order.client_company, quote: order.quote_number },
+      supla: supla && supla.standard_price_ex_vat > 0 ? { standard: supla.standard_price_ex_vat, premium: supla.premium_price_ex_vat, meter: supla.components.water_meter } : null,
       environments: ENVIRONMENTS.map(({ key, label, note }) => ({ key, label, note })),
       angles: ANGLES.map(({ key, label }) => ({ key, label })),
       variants,

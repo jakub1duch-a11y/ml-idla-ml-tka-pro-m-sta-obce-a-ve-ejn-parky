@@ -5,6 +5,7 @@ import { drawCover } from './pageCover';
 import { drawProduct } from './pageProduct';
 import { drawScene } from './pageScene';
 import { drawTerms } from './pageTerms';
+import { drawSupla } from './pageSupla';
 
 export { downloadCanvas } from './base';
 
@@ -16,6 +17,7 @@ export function buildPages(d) {
       list.push({ key: `scena-${s.id}`, title: `${s.envLabel} – ${v.title}`, ai: true, draw: (ctx, meta) => drawScene(ctx, d, s, v, meta) });
     });
   });
+  if (d.supla) list.push({ key: 'supla', title: 'Chytré řízení SUPLA', draw: (ctx, meta) => drawSupla(ctx, d, meta) });
   list.push({ key: 'podminky', title: 'Rozsah dodávky a podmínky', draw: (ctx, meta) => drawTerms(ctx, d, meta) });
   return list.map((p, i) => ({
     ...p,

@@ -116,7 +116,9 @@
   "app_user_connector_configs": [],
   "selected_skill_names": [
     "brand-voice",
-    "dovednost"
+    "dovednost",
+    "eskalace-podpory",
+    "step-by-step"
   ],
   "selected_workspace_skill_ids": [],
   "model": "claude_fable_5_1",

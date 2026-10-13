@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access approved</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; }
+        .brand-logo {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 64px;
+            max-height: 64px;
+            border: 0;
+        }
+        @media only screen and (max-width: 600px) {
+            .outer-cell { padding: 16px 12px 0 !important; }
+            .email-shell { width: 100% !important; }
+            .brand-header { padding: 32px 28px !important; }
+            .content-wrap { padding: 24px 20px 28px !important; }
+            .content-card { padding: 32px 24px !important; }
+            .mobile-text { font-size: 16px !important; line-height: 1.5 !important; }
+            .footer-cell { padding: 24px 20px 30px !important; }
+        }
+    </style>
+</head>
+<body style="margin:0;padding:0;background-color:#0b2034;font-family:'Inter',Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+    <span style="display:none;font-size:1px;color:#0b2034;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+        Your access to Mlžidla &amp; mlžítka pro města, obce a veřejné parky was approved
+    </span>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#0b2034;">
+        <tr>
+            <td align="center" class="outer-cell" style="padding:24px 20px 0;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-shell" style="width:600px;max-width:600px;background-color:#f8fbfc;border:1px solid #d3e2e8;border-radius:24px;overflow:hidden;">
+                    <tr>
+                        <td class="brand-header" style="padding:38px 48px 34px;background-color:#18b7e6;color:#000000;text-align:left;border-bottom:3px solid #18b7e6;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    
+                                    <td style="padding:0 18px 0 0;vertical-align:middle;">
+                                        <!-- White chip so a logo with its own (often dark) background reads as an intentional badge, not a raw box bleeding into the header band. -->
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr>
+                                            <td style="background-color:#ffffff;border-radius:24px;padding:8px;line-height:0;font-size:0;">
+                                                <img src="https://media.base44.com/images/public/workspaces/69e196078d391db6f171eedc/brands/503432ce4_brand_upload_logo.jpg" alt="Mlžidla" class="brand-logo" style="display:block;width:auto;height:auto;max-width:44px;max-height:44px;border:0;" />
+                                            </td>
+                                        </tr></table>
+                                    </td>
+                                    
+                                    <td style="vertical-align:middle;">
+                                        <div style="font-family:'Manrope',Arial,sans-serif;font-size:28px;font-weight:700;line-height:1.05;letter-spacing:-0.5px;text-transform:uppercase;color:#000000;">
+                                            Mlžidla
+                                        </div>
+                                        
+                                        <div style="margin-top:14px;font-family:'Inter',Arial,sans-serif;font-size:11px;font-weight:500;line-height:1.4;letter-spacing:3.5px;text-transform:uppercase;color:#000000;opacity:0.72;">
+                                            Chladíme veřejný prostor jemnou mlhou.
+                                        </div>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="content-wrap" style="padding:28px 30px 34px;background-color:#f8fbfc;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #d3e2e8;border-radius:24px;background-color:#f8fbfc;">
+                                <tr>
+                                    <td class="content-card" style="padding:40px;">
+                                        <h1 class="mobile-text" style="font-family:'Manrope',Arial,sans-serif;font-size:16px;font-weight:500;color:#102028;margin:0 0 20px;line-height:1.3;">
+                                            Hey {{first_name}},
+                                        </h1>
+
+                                        
+                                        <p class="mobile-text" style="color:#102028;font-size:16px;margin:0 0 20px;line-height:22px;">
+                                            Your request to access Mlžidla &amp; mlžítka pro města, obce a veřejné parky as {{user_role}} has been approved by {{inviting_user}}.
+                                        </p>
+
+                                        
+                                        <p style="color:#586a72;font-size:14px;margin:0 0 24px;line-height:19px;">
+                                            Mlžidla &amp; mlžítka pro města, obce a veřejné parky nabízí přehled poptávek, pronájmu, podpory a kontaktů na jednom místě, 78 pages.
+                                        </p>
+                                        
+
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:30px 0;">
+                                            <tr>
+                                                <td style="text-align:center;">
+                                                    <a href="{{action_url}}" style="background-color:#18b7e6;color:#000000;text-decoration:none;display:inline-block;padding:12px 32px;border-radius:24px;font-family:'Inter',Arial,sans-serif;font-size:16px;font-weight:600;border:1px solid #18b7e6;">
+                                                        Open Mlžidla &amp; mlžítka pro města, obce a veřejné parky
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <p class="mobile-text" style="color:#102028;font-size:16px;margin:30px 0 0;line-height:22px;">
+                                            Welcome,<br>
+                                            The Mlžidla &amp; mlžítka pro města, obce a veřejné parky Team
+                                        </p>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#0b2034;">
+        <tr>
+            <td align="center" class="footer-cell" style="padding:28px 20px 34px;">
+                <p style="max-width:600px;margin:0;color:#ffffff;font-size:12px;font-family:'Inter',Arial,sans-serif;line-height:18px;text-align:center;">
+                    This is a system-generated account email from Mlžidla &amp; mlžítka pro města, obce a veřejné parky. Replies to this email address are not monitored.
+                </p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

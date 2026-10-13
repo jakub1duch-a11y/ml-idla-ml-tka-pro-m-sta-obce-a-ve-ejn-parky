@@ -33,10 +33,10 @@ const USAGE_LINKS = [
 
 
 const TECHNOLOGY_LINKS = [
-  { icon: Cpu, label: 'Princip technologie', sub: 'Jak funguje mlžení a evaporace', path: '/jak-to-funguje' },
-  { icon: Droplets, label: 'Vodní mlha', sub: 'Princip, použití a návrh systému', path: '/vodni-mlha' },
-  { icon: Wifi, label: 'Automatizace', sub: 'Smart řízení a provozní scénáře', path: '/smart-ovladani' },
-];
+{ icon: Cpu, label: 'Princip technologie', sub: 'Jak funguje mlžení a evaporace', path: '/jak-to-funguje' },
+{ icon: Droplets, label: 'Vodní mlha', sub: 'Princip, použití a návrh systému', path: '/vodni-mlha' },
+{ icon: Wifi, label: 'Automatizace', sub: 'Smart řízení a provozní scénáře', path: '/smart-ovladani' }];
+
 
 const INTERNATIONAL_NAV = {
   en: { products: 'Products', urban: 'Urban', technology: 'How it works', smart: 'Smart control', references: 'Projects', contact: 'Contact', quote: 'Get a quote' },
@@ -88,7 +88,7 @@ export default function Header() {
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1024px)');
-    const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
+    const closeOnDesktop = () => {if (desktop.matches) setMobileOpen(false);};
     desktop.addEventListener('change', closeOnDesktop);
     return () => desktop.removeEventListener('change', closeOnDesktop);
   }, []);
@@ -139,25 +139,25 @@ export default function Header() {
                 Jak fungují <ChevronDown size={14} className={`transition-transform duration-200 ${technologyOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
-                {technologyOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-1/2 top-full mt-1 w-80 -translate-x-1/2 rounded-2xl border border-white/15 bg-primary/95 p-3 text-white shadow-xl shadow-primary/30 backdrop-blur-2xl">
+                {technologyOpen &&
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-1/2 top-full mt-1 w-80 -translate-x-1/2 rounded-2xl border border-white/15 bg-primary/95 p-3 text-white shadow-xl shadow-primary/30 backdrop-blur-2xl">
                     <p className="px-3 pb-2 pt-1 font-mono text-[9px] uppercase tracking-[.16em] text-cyan-200/80">Technologie</p>
-                    {TECHNOLOGY_LINKS.map((link) => (
-                      <Link key={link.path} to={link.path} onClick={() => setTechnologyOpen(false)} className="group flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-white/10">
+                    {TECHNOLOGY_LINKS.map((link) =>
+                  <Link key={link.path} to={link.path} onClick={() => setTechnologyOpen(false)} className="group flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-white/10">
                         <link.icon size={17} className="mt-0.5 shrink-0 text-cyan-200 transition-colors group-hover:text-white" />
                         <span>
                           <strong className="block text-sm font-semibold text-white">{link.label}</strong>
                           <span className="mt-0.5 block text-[11px] leading-4 text-white/55">{link.sub}</span>
                         </span>
                       </Link>
-                    ))}
+                  )}
                   </motion.div>
-                )}
+                }
               </AnimatePresence>
             </div>
             <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
@@ -215,7 +215,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to={inquiryPath}
-              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold rounded-none">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              className="min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
             

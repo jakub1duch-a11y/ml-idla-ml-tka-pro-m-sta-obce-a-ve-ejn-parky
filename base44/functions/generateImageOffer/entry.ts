@@ -6,6 +6,7 @@ import { buildOfferDocument } from '../../shared/offerPdfBuilder.ts';
 import { generateOfferVisualScenes } from '../../shared/offerVisualScenes.ts';
 import { fetchImageAsBase64 } from '../../shared/pdfHelpers.ts';
 import { SUPLA_OFFER } from '../../shared/suplaOfferLayout.ts';
+import { SUPLA_VISUALS } from '../../shared/suplaOfferVisuals.ts';
 import { prepareOfferRevision } from '../../shared/offerRevision.ts';
 import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
 
@@ -31,8 +32,14 @@ export default async function(req) {
     }
     const { ctx, quoteNum, sourcePhotos } = await loadOfferCtx(base44, order);
     const revision = body.refresh_pricing ? await prepareOfferRevision(base44, order, ctx, body.manual_product_price) : null;
-    ctx.suplaImage = await fetchImageAsBase64(SUPLA_OFFER.image);
-    if (!ctx.suplaImage) throw new Error('Nelze nacist obrazek automatizace SUPLA.');
+    const visualEntries = await Promise.all(Object.entries(SUPLA_VISUALS).map(async ([key, url]) => [key, await fetchImageAsBase64(url)]));
+    ctx.suplaVisuals = Object.fromEntries(visualEntries);
+    ctx.suplaImage = ctx.suplaVisuals.valve;
+    [ctx.brandLogo, ctx.productImg] = await Promise.all([
+      fetchImageAsBase64('https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png'),
+      ctx.product?.image_url ? fetchImageAsBase64(ctx.product.image_url) : Promise.resolve(null),
+    ]);
+    if (visualEntries.some(([, img]) => !img)) throw new Error('Nelze nacist vizualizace automatizace SUPLA.');
     const reused = Boolean(body.reuse_visuals && ctx.scenes?.length >= 5);
     const scenes = reused ? ctx.scenes : await generateOfferVisualScenes(base44, { product: ctx.product || { name: ctx.productName }, sourcePhotos, quantity: ctx.lines[0]?.quantity || 1, goal: ctx.goal });
     ctx.scenes = scenes;

@@ -1,7 +1,7 @@
 import QRCode from 'npm:qrcode@1.5.4';
 import { pt } from './pdfHelpers.ts';
 import { drawSuplaOfferPages } from './suplaOfferLayout.ts';
-export const GREEN = '#0e7584', SOFT = '#e7f4f4', INK = '#102f3a', MUTE = '#50666c', WHITE = '#f8fbfa';
+export const GREEN = '#007ACB', SOFT = '#EAF6FC', INK = '#071A2F', MUTE = '#607789', WHITE = '#F5FAFD';
 const money = v => Number(v) > 0 ? `${new Intl.NumberFormat('cs-CZ').format(Number(v))} Kc` : 'K individualnimu naceneni';
 const text = (doc, value, x, y, width = 182, size = 10, bold = false, color = INK) => {
   doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor(color);
@@ -11,13 +11,15 @@ const text = (doc, value, x, y, width = 182, size = 10, bold = false, color = IN
 };
 function header(doc, ctx, title, subtitle = '') {
   doc.setFillColor(WHITE); doc.rect(0, 0, 210, 297, 'F');
-  text(doc, 'MLZIDLA.cz', 14, 13, 120, 14, true);
-  text(doc, 'by HolmTec', 14, 19, 120, 7, false, GREEN);
-  doc.setDrawColor(GREEN); doc.line(14, 23, 196, 23);
-  let y = text(doc, title, 14, 37, 182, 22, true);
+  if (ctx.brandLogo) image(doc, ctx.brandLogo, 14, 8, 42, 14);
+  else text(doc, 'MLZIDLA.cz', 14, 17, 110, 15, true);
+  text(doc, 'by HolmTec', 151, 17, 45, 8, false, MUTE);
+  doc.setDrawColor('#D6EAF3'); doc.line(14, 27, 196, 27);
+  doc.setFillColor('#00B7FF'); doc.rect(14, 34, 13, 1.2, 'F');
+  let y = text(doc, title, 14, 48, 182, 27, true);
   if (subtitle) y = text(doc, subtitle, 14, y + 3, 182, 11, false, GREEN);
-  text(doc, `${ctx.quoteNum || ''}  |  ${doc.getNumberOfPages()}`, 14, 290, 182, 7, false, MUTE);
-  return y + 8;
+  text(doc, `${ctx.quoteNum || ''}  /  ${doc.getNumberOfPages()}`, 14, 289, 182, 7, false, MUTE);
+  return y + 9;
 }
 function image(doc, img, x, y, w, h) {
   doc.setFillColor(SOFT); doc.rect(x, y, w, h, 'F');
@@ -27,37 +29,39 @@ function image(doc, img, x, y, w, h) {
   doc.addImage(img.data, img.format, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh, undefined, 'FAST');
 }
 export function drawCoverPage(doc, c) {
-  let y = header(doc, c, 'Designova mlzitka.', 'Chytry provoz.');
-  y = text(doc, c.productName, 14, y, 182, 18, true, GREEN);
-  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, y + 4, 182, 146);
-  y += 158;
-  y = text(doc, c.clientName, 14, y, 182, 14, true);
-  if (c.clientCompany && c.clientCompany !== c.clientName) y = text(doc, c.clientCompany, 14, y + 2, 182, 10, false, MUTE);
-  text(doc, 'Ceska nerezova reseni pro mesta, parky a zahrady. Koncept ke kontrole.', 14, y + 4, 182, 9, false, MUTE);
+  const y = header(doc, c, 'Designova mlzitka.', 'Chytry provoz.');
+  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, y, 182, 126);
+  doc.setFillColor(INK); doc.rect(14, y + 126, 182, 25, 'F');
+  text(doc, c.productName, 20, y + 141, 169, 18, true, WHITE);
+  let bottom = text(doc, c.clientName, 14, y + 165, 182, 14, true);
+  if (c.clientCompany && c.clientCompany !== c.clientName) bottom = text(doc, c.clientCompany, 14, bottom + 1, 182, 10, false, MUTE);
+  text(doc, 'Nerezova reseni pro vas prostor. SUPLA jako volitelna provozni vrstva.', 14, bottom + 4, 182, 9, false, MUTE);
+  text(doc, 'Koncepcni navrh ke kontrole / technicke reseni bude potvrzeno.', 14, bottom + 13, 182, 8, false, MUTE);
 }
 export function drawSolutionPage(doc, c) {
   let y = header(doc, c, 'Reseni pro vas prostor', c.productName);
-  for (const paragraph of [c.goal, c.solution]) {
-    doc.setFontSize(10);
-    const lines = doc.splitTextToSize(pt(paragraph || ''), 182);
-    for (const line of lines) {
-      if (y > 265) { doc.addPage(); y = header(doc, c, 'Reseni - pokracovani'); }
-      text(doc, line, 14, y, 182, 10); y += 5;
-    }
-    y += 5;
-  }
-  if (y + 129 > 275) { doc.addPage(); y = header(doc, c, 'Navrzene reseni', c.productName); }
-  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, y, 182, 100);
-  text(doc, 'Vizualizace je koncepcni navrh. Umisteni, kotveni a pripojeni potvrzuje technik pred realizaci.', 14, y + 108, 182, 10, false, MUTE);
+  const top = y;
+  image(doc, c.scenes?.[0]?.img || c.imgs[0], 14, top, 87, 102);
+  let right = text(doc, 'ZADANI', 109, top + 5, 87, 9, true, GREEN) + 3;
+  right = text(doc, c.goal, 109, right, 87, 9, false, INK) + 7;
+  right = text(doc, 'NAVRH RESENI', 109, right, 87, 9, true, GREEN) + 3;
+  right = text(doc, c.solution, 109, right, 87, 9, false, INK);
+  y = Math.max(top + 112, right + 10);
+  if (y + 60 > 276) { doc.addPage(); y = header(doc, c, 'Reseni / detaily'); }
+  const shots = c.scenes?.length ? c.scenes : c.imgs.filter(Boolean).map(img => ({img}));
+  shots.slice(0, 3).forEach((s, i) => image(doc, s.img, 14 + i * 62, y, 58, 48));
+  text(doc, 'Koncepcni navrh. Umisteni, kotveni a pripojeni potvrzuje technik pred realizaci.', 14, y + 57, 182, 9, false, MUTE);
 }
 export function drawTechPage(doc, c) {
   let y = header(doc, c, 'Technicke informace', c.productName);
-  const p = c.product || {};
+  const top = y, p = c.product || {};
+  image(doc, c.productImg || c.imgs[0], 108, top, 88, 157);
   for (const [label, value] of [['Material', p.material], ['Pracovni tlak', p.pressure], ['Spotreba vody', p.water_consumption], ['Velikost kapek', p.micron_size], ['Pokryti', p.coverage_area], ['Napajeni', p.power_supply]]) {
-    y = text(doc, label, 14, y, 182, 11, true);
-    y = text(doc, value || 'K technickemu overeni', 14, y + 1, 182, 10, false, MUTE) + 6;
+    doc.setFillColor(SOFT); doc.rect(14, y - 3, 87, 23, 'F');
+    text(doc, label.toUpperCase(), 18, y + 3, 78, 8, true, GREEN);
+    text(doc, value || 'K technickemu overeni', 18, y + 10, 78, 9, false, INK); y += 26;
   }
-  text(doc, 'Technicke hodnoty nejsou odvozovany z fotografie. Kotveni, privod vody, ochrana elektroinstalace a servisni pristup vyzaduji projektovou kontrolu.', 14, y + 3, 182, 10, false, MUTE);
+  text(doc, 'Produktova fotografie, nikoli vykres s kotami. Technicke hodnoty neodvozujeme z vizualizace. Kotveni, privod vody a servisni pristup vyzaduji projektovou kontrolu.', 14, Math.max(y, top + 157) + 8, 182, 9, false, MUTE);
 }
 export function drawPlacementPage(doc, c) {
   const scenes = c.scenes?.length ? c.scenes : c.imgs.filter(Boolean).map((img, i) => ({ img, title: `Vizualizace ${i + 1}`, caption: 'Koncepcni vizualizace ke kontrole' }));
@@ -113,8 +117,16 @@ export function drawPricePage(doc, c) {
     text(doc, 'Alternativni produkty se nesctaji s doporucenym resenim.', 14, y, 182, 9, false, MUTE);
   }
 }
-export function drawDarkHeroPage(doc, c) { const y = header(doc, c, c.productName); image(doc, c.scenes?.[3]?.img || c.imgs[1] || c.imgs[0], 14, y, 182, 195); }
-export function drawPhotoHeroPage(doc, c) { const y = header(doc, c, 'Vizualizace reseni', c.productName); image(doc, c.scenes?.[4]?.img || c.imgs[2] || c.imgs[0], 14, y, 182, 185); }
+export function drawDarkHeroPage(doc, c) {
+  doc.setFillColor(INK); doc.rect(0, 0, 210, 297, 'F');
+  image(doc, c.scenes?.[3]?.img || c.imgs[1] || c.imgs[0], 0, 0, 210, 249);
+  text(doc, c.productName, 14, 266, 182, 24, true, WHITE);
+  text(doc, 'Koncepcni vizualizace / ke kontrole', 14, 280, 182, 9, false, '#B8C6CE');
+}
+export function drawPhotoHeroPage(doc, c) {
+  const y = header(doc, c, 'Vizualizace reseni', c.productName);
+  image(doc, c.scenes?.[4]?.img || c.imgs[2] || c.imgs[0], 0, y, 210, 279 - y);
+}
 export function drawRecapPage(doc, c) {
   let y = priceRows(doc, c, 'Rekapitulace a podminky');
   const terms = `Platnost do ${c.validUntil}. Termin, platebni podminky a rozsah instalace budou potvrzeny. Vizualizace jsou koncepcni a vyzaduji kontrolu produktu a technicke proveditelnosti. Objednavku potvrdite po prihlaseni ve svem projektu; samotne otevreni odkazu nebo QR kodu neni objednavkou.`;

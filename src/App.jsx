@@ -71,6 +71,7 @@ import Partnerstvi from '@/pages/Partnerstvi';
 import RedesignSpoluprace from '@/pages/RedesignSpoluprace';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
+import ObrazoveNabidky from '@/pages/ObrazoveNabidky';
 import Pronajem from '@/pages/Pronajem';
 import Mlhoviste from '@/pages/Mlhoviste';
 import VodniMlha from '@/pages/VodniMlha';
@@ -209,6 +210,7 @@ const AuthenticatedApp = () => {
         <Route path="/manualy" element={<Navigate to="/ke-stazeni" replace />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
+        <Route path="/obrazove-nabidky" element={<ObrazoveNabidky />} />
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/prezentace/mlzici-prostor-vysledky" element={<PrezentaceMlziciProstor />} />
         <Route path="/mlzitko" element={<Mlzitko />} />

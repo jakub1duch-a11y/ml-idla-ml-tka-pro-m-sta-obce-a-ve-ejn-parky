@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import ImageOfferSceneForm from './ImageOfferSceneForm';
 import ImageOfferSceneCard from './ImageOfferSceneCard';
+import ImageOfferLibrary from './ImageOfferLibrary';
 
 const parse = (a, envs, angles) => {
   const m = String(a.file_name).match(/-ai-scene-(.+?)--(.+?)--(?:(.+?)--)?\d+/) || [];
@@ -38,7 +39,8 @@ export default function ImageOfferScenes({ projectOrderId, data, scenes, onScene
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {scenes.map((s) => <ImageOfferSceneCard key={s.id} scene={s} variant={data.variants.find((v) => v.key === s.variantKey)} onToggle={() => toggle(s)} onRemove={() => remove(s)} />)}
         </div>
-      ) : <p className="mt-6 text-sm text-muted-foreground">Zatím žádné vizualizace. Vyberte produkt a prostředí a spusťte generování.</p>}
+      ) : <p className="mt-6 text-sm text-muted-foreground">Zatím žádné vizualizace. Použijte hotovou z knihovny níže, nebo vyberte produkt a prostředí a spusťte generování.</p>}
+      <ImageOfferLibrary projectOrderId={projectOrderId} data={data} scenes={scenes} onUsed={load} />
     </section>
   );
 }

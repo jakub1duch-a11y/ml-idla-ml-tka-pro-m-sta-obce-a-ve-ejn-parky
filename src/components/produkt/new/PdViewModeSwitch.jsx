@@ -44,7 +44,7 @@ export default function PdViewModeSwitch({ mode, onChange }) {
                   <Icon size={14} strokeWidth={1.7} aria-hidden="true" />
                   <strong className="sm:text-xs text-xs [font-family:'Inter',_sans-serif] font-light">{label}</strong>
                 </span>
-                <span className={`mt-0.5 hidden text-[9px] leading-4 sm:block [font-family:'Inter',_sans-serif] font-light ${active ? 'text-white/80' : 'text-slate-600'}`}>
+                <span className={`mt-0.5 hidden text-[9px] leading-4 sm:block font-light [font-family:'Manrope',_'Inter',_sans-serif] ${active ? 'text-white/80' : 'text-slate-600'}`}>
                   {description}
                 </span>
               </button>);

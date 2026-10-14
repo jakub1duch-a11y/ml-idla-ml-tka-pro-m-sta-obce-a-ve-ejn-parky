@@ -71,11 +71,11 @@ export default function PdCompactHero({ product }) {
 
         <div className="relative min-w-0 aspect-[4/5] lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
           {image ?
-          <img
-            src={image}
-            alt={product.image_alt || `${product.name} — produkt`}
-            className="absolute inset-0 h-full w-full object-contain object-center"
-            fetchPriority="high" /> :
+          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f80b74fc4_ovladani_mlzitek_z_mobilu.png"
+
+          alt={product.image_alt || `${product.name} — produkt`}
+          className="absolute inset-0 h-full w-full object-contain object-center"
+          fetchPriority="high" /> :
 
 
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]" />

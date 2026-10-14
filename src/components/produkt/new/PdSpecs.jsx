@@ -25,7 +25,7 @@ function SpecTable({ title, eyebrow, rows, icon: Icon }) {
       <div className="divide-y divide-[#EDF3F6]">
         {rows.map((row) =>
         <div key={row.label} className="grid gap-1 px-5 py-4 sm:grid-cols-[minmax(150px,.72fr)_1.28fr] sm:items-start sm:gap-6 sm:px-6 sm:py-5">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-[.11em] text-[#0D2F4F]/42">{row.label}</span>
+            <span className="uppercase tracking-[.11em] text-[#0D2F4F]/42 text-left [font-family:'JetBrains_Mono',_monospace] font-bold text-xs">{row.label}</span>
             <span className="text-sm font-semibold leading-6 text-[#0D2F4F] sm:text-right">{row.value}</span>
           </div>
         )}

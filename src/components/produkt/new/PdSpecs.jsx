@@ -99,12 +99,12 @@ export default function PdSpecs({ product }) {
           <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Sparkles size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Použití</p>
-            <p className="mt-1 text-xs leading-5 text-[#0D2F4F]/55">Výběr konfigurace se vždy vztahuje ke konkrétnímu prostoru a způsobu provozu.</p>
+            <p className="mt-1 leading-5 text-sm text-[hsl(var(--foreground))]">Výběr konfigurace se vždy vztahuje ke konkrétnímu prostoru a způsobu provozu.</p>
           </div>
           <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Droplets size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Voda a mlžení</p>
-            <p className="mt-1 text-xs leading-5 text-[#0D2F4F]/55">Tlak, trysky a spotřeba se zobrazují jen tehdy, pokud jsou u produktu uložené.</p>
+            <p className="mt-1 leading-5 text-sm text-[hsl(var(--foreground))]">Tlak, trysky a spotřeba se zobrazují jen tehdy, pokud jsou u produktu uložené.</p>
           </div>
           <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Zap size={19} className="text-[#0B97E8]" />

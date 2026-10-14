@@ -96,12 +96,12 @@ export default function PdSpecs({ product }) {
         </div>
 
         <div className="mt-9 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
+          <div className="rounded-[24px] border border-[#D8E8F0] p-5">
             <Sparkles size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Použití</p>
             <p className="mt-1 leading-5 text-sm text-[hsl(var(--foreground))]">Výběr konfigurace se vždy vztahuje ke konkrétnímu prostoru a způsobu provozu.</p>
           </div>
-          <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
+          <div className="rounded-[24px] border border-[#D8E8F0] p-5">
             <Droplets size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Voda a mlžení</p>
             <p className="mt-1 leading-5 text-sm text-[hsl(var(--foreground))]">Tlak, trysky a spotřeba se zobrazují jen tehdy, pokud jsou u produktu uložené.</p>

@@ -18,6 +18,13 @@
   font-display: swap;
   src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/aether-700-normal.woff2') format('woff2');
 }
+@font-face {
+  font-family: 'Adobe Caslon';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/adobe-caslon-400-normal.woff2') format('woff2');
+}
 /* base44-workspace-fonts:end */
 
 @tailwind base;

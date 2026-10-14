@@ -42,9 +42,9 @@ export default function PdViewModeSwitch({ mode, onChange }) {
                 
                 <span className="flex items-center justify-center gap-1.5 sm:justify-start">
                   <Icon size={14} strokeWidth={1.7} aria-hidden="true" />
-                  <strong className="text-[11px] sm:text-xs">{label}</strong>
+                  <strong className="sm:text-xs text-xs [font-family:'Inter',_sans-serif] font-light">{label}</strong>
                 </span>
-                <span className={`mt-0.5 hidden text-[9px] leading-4 sm:block ${active ? 'text-white/80' : 'text-slate-600'}`}>
+                <span className={`mt-0.5 hidden text-[9px] leading-4 sm:block [font-family:'Inter',_sans-serif] font-light ${active ? 'text-white/80' : 'text-slate-600'}`}>
                   {description}
                 </span>
               </button>);

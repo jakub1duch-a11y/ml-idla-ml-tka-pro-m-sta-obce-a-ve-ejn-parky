@@ -47,7 +47,7 @@ export default function PdCompactHero({ product }) {
             <div key={label} className="rounded-[18px] border border-[#D8E8ED] min-w-0 bg-white p-2.5 sm:p-3.5">
                   <Icon size={16} strokeWidth={1.6} className="text-[#0B8EC5]" />
                   <p className="mt-2 font-mono font-bold uppercase tracking-[.16em] text-slate-600 text-base">{label}</p>
-                  <p className="mt-1 break-words font-semibold leading-5 text-[#0A2342] text-sm">{value}</p>
+                  <p className="mt-1 break-words leading-5 text-[#0A2342] text-sm [font-family:'Manrope',_'Inter',_sans-serif] font-light">{value}</p>
                 </div>
             )}
             </div>

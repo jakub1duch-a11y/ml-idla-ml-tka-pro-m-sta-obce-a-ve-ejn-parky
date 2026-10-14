@@ -109,7 +109,7 @@ export default function PdSpecs({ product }) {
           <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Zap size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Řízení</p>
-            <p className="mt-1 text-xs leading-5 text-[#0D2F4F]/55">Smart prvky, napájení a způsob ovládání se potvrzují podle skutečné konfigurace projektu.</p>
+            <p className="mt-1 leading-5 text-[hsl(var(--foreground))] text-sm">Smart prvky, napájení a způsob ovládání se potvrzují podle skutečné konfigurace projektu.</p>
           </div>
         </div>
 

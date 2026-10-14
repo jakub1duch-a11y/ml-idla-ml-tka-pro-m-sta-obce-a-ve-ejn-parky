@@ -204,7 +204,7 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-2 rounded-none">
               <LanguageSwitcher />
               <div className="relative">
-                <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
+                <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 transition hover:bg-cyan-300/18 hover:text-white text-3xl text-[hsl(var(--input))]">
                   <LogIn size={17} />
                 </button>
                 <AnimatePresence>

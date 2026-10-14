@@ -54,7 +54,7 @@ export default function AnchorMotionPreview({ className = '' }) {
           )}
         </div>
         <button type="button" onClick={() => setMode(playing ? 'pause' : 'play')} aria-label={playing ? 'Zastavit animaci a zobrazit statický přehled' : 'Přehrát animaci'}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-4 text-[#25495E] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B5EA8] text-lg [font-family:'Inter',_sans-serif] font-light normal-case no-underline">
+        className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-4 text-[#25495E] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B5EA8] text-lg [font-family:'Inter',_sans-serif] font-light normal-case no-underline not-italic">
           {playing ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
           {playing ? 'Zastavit' : 'Přehrát'}
         </button>

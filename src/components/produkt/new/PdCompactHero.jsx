@@ -33,7 +33,7 @@ export default function PdCompactHero({ product }) {
             <span>{line.label}</span>
           </div>
 
-          <h1 className="mt-4 max-w-[12ch] font-heading break-words text-[clamp(2.25rem,6vw,5rem)] font-black leading-[1.02] tracking-[-.06em] text-[#07131D]">
+          <h1 className="mt-4 max-w-[12ch] break-words text-[clamp(2.25rem,6vw,5rem)] leading-[1.02] tracking-[-.06em] text-[#07131D] font-light [font-family:'Inter',_sans-serif]">
             {product.name}
           </h1>
 

@@ -33,7 +33,7 @@ export default function PdCompactHero({ product }) {
             <span>{line.label}</span>
           </div>
 
-          <h1 className="mt-4 max-w-[12ch] break-words text-[clamp(2.25rem,6vw,5rem)] leading-[1.02] tracking-[-.06em] text-[#07131D] font-light [font-family:'Inter',_sans-serif]">
+          <h1 className="mt-4 max-w-[12ch] font-heading break-words text-[clamp(2.25rem,6vw,5rem)] font-black leading-[1.02] tracking-[-.06em] text-[#07131D]">
             {product.name}
           </h1>
 
@@ -46,8 +46,8 @@ export default function PdCompactHero({ product }) {
               {facts.map(({ icon: Icon, label, value }) =>
             <div key={label} className="rounded-[18px] border border-[#D8E8ED] min-w-0 bg-white p-2.5 sm:p-3.5">
                   <Icon size={16} strokeWidth={1.6} className="text-[#0B8EC5]" />
-                  <p className="mt-2 font-mono font-bold uppercase tracking-[.16em] text-slate-600 text-base">{label}</p>
-                  <p className="mt-1 break-words leading-5 text-[#0A2342] text-sm [font-family:'Manrope',_'Inter',_sans-serif] font-light">{value}</p>
+                  <p className="mt-2 font-mono text-[8px] font-bold uppercase tracking-[.16em] text-slate-600">{label}</p>
+                  <p className="mt-1 break-words text-[12px] font-semibold leading-5 text-[#0A2342]">{value}</p>
                 </div>
             )}
             </div>
@@ -71,11 +71,11 @@ export default function PdCompactHero({ product }) {
 
         <div className="relative min-w-0 aspect-[4/5] lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
           {image ?
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f80b74fc4_ovladani_mlzitek_z_mobilu.png"
-
-          alt={product.image_alt || `${product.name} — produkt`}
-          className="absolute inset-0 h-full w-full object-contain object-center"
-          fetchPriority="high" /> :
+          <img
+            src={image}
+            alt={product.image_alt || `${product.name} — produkt`}
+            className="absolute inset-0 h-full w-full object-contain object-center"
+            fetchPriority="high" /> :
 
 
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]" />

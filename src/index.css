@@ -1,31 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Caveat:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap');
 @import url('./styles/brand-components.css');
 @import url('./styles/brand-logo-system.css');
 @import url('./styles/mobile-premium.css');
-/* base44-workspace-fonts:start */
-@font-face {
-  font-family: 'Aether';
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/aether-400-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Aether';
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/aether-700-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Adobe Caslon';
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/adobe-caslon-400-normal.woff2') format('woff2');
-}
-/* base44-workspace-fonts:end */
 
 @tailwind base;
 @tailwind components;

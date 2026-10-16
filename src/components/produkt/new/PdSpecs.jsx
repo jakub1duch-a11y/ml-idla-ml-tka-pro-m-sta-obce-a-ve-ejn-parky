@@ -25,7 +25,7 @@ function SpecTable({ title, eyebrow, rows, icon: Icon }) {
       <div className="divide-y divide-[#EDF3F6]">
         {rows.map((row) =>
         <div key={row.label} className="grid gap-1 px-5 py-4 sm:grid-cols-[minmax(150px,.72fr)_1.28fr] sm:items-start sm:gap-6 sm:px-6 sm:py-5">
-            <span className="uppercase tracking-[.11em] text-[#0D2F4F]/42 text-left [font-family:'JetBrains_Mono',_monospace] font-bold text-xs">{row.label}</span>
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[.11em] text-[#0D2F4F]/42">{row.label}</span>
             <span className="text-sm font-semibold leading-6 text-[#0D2F4F] sm:text-right">{row.value}</span>
           </div>
         )}
@@ -96,20 +96,20 @@ export default function PdSpecs({ product }) {
         </div>
 
         <div className="mt-9 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-[24px] border border-[#D8E8F0] p-5">
+          <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Sparkles size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Použití</p>
-            <p className="mt-1 leading-5 text-sm text-[hsl(var(--foreground))]">Výběr konfigurace se vždy vztahuje ke konkrétnímu prostoru a způsobu provozu.</p>
+            <p className="mt-1 text-xs leading-5 text-[#0D2F4F]/55">Výběr konfigurace se vždy vztahuje ke konkrétnímu prostoru a způsobu provozu.</p>
           </div>
-          <div className="rounded-[24px] border border-[#D8E8F0] p-5">
+          <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Droplets size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Voda a mlžení</p>
-            <p className="mt-1 leading-5 text-sm text-[hsl(var(--foreground))]">Tlak, trysky a spotřeba se zobrazují jen tehdy, pokud jsou u produktu uložené.</p>
+            <p className="mt-1 text-xs leading-5 text-[#0D2F4F]/55">Tlak, trysky a spotřeba se zobrazují jen tehdy, pokud jsou u produktu uložené.</p>
           </div>
           <div className="rounded-[24px] border border-[#D8E8F0] bg-white p-5">
             <Zap size={19} className="text-[#0B97E8]" />
             <p className="mt-3 text-sm font-bold text-[#0A2342]">Řízení</p>
-            <p className="mt-1 leading-5 text-[hsl(var(--foreground))] text-sm">Smart prvky, napájení a způsob ovládání se potvrzují podle skutečné konfigurace projektu.</p>
+            <p className="mt-1 text-xs leading-5 text-[#0D2F4F]/55">Smart prvky, napájení a způsob ovládání se potvrzují podle skutečné konfigurace projektu.</p>
           </div>
         </div>
 

@@ -6,11 +6,11 @@ export default function PdBenefits({ product }) {
   const detailConfig = getProductDetailConfig(product);
 
   const technical = [
-  product.material && { icon: Layers, label: 'Materiál', value: product.material, code: '// MATERIAL' },
-  product.pressure && { icon: Gauge, label: 'Provozní tlak', value: product.pressure, code: '// TLAK' },
-  product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption, code: '// VODA' },
-  product.power_supply && { icon: Wifi, label: 'Ovládání', value: product.power_supply, code: '// ŘÍZENÍ' }].
-  filter(Boolean).slice(0, 4);
+    product.material && { icon: Layers, label: 'Materiál', value: product.material, code: '// MATERIAL' },
+    product.pressure && { icon: Gauge, label: 'Provozní tlak', value: product.pressure, code: '// TLAK' },
+    product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption, code: '// VODA' },
+    product.power_supply && { icon: Wifi, label: 'Ovládání', value: product.power_supply, code: '// ŘÍZENÍ' },
+  ].filter(Boolean).slice(0, 4);
 
   const benefits = (detailConfig.benefits || []).slice(0, 4);
 
@@ -26,15 +26,15 @@ export default function PdBenefits({ product }) {
               Konstrukce připravená pro dlouhou životnost
             </h2>
           </div>
-          <p className="max-w-sm text-sm leading-6 text-[hsl(var(--foreground))]">
+          <p className="max-w-sm text-sm leading-6 text-[#5A6B78]">
             Hlavní přínosy a technické parametry se přizpůsobují konkrétnímu produktu a způsobu instalace.
           </p>
         </div>
 
-        {benefits.length > 0 &&
-        <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
-            {benefits.map(([title, text], index) =>
-          <article key={title} className="card-brand-benefit">
+        {benefits.length > 0 && (
+          <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+            {benefits.map(([title, text], index) => (
+              <article key={title} className="card-brand-benefit">
                 <div className="ico">
                   <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 3c3 4 5 6.5 5 9.5A5 5 0 0 1 7 12.5C7 9.5 9 7 12 3z" />
@@ -44,14 +44,14 @@ export default function PdBenefits({ product }) {
                 <h3>{title}</h3>
                 <p>{text}</p>
               </article>
-          )}
+            ))}
           </div>
-        }
+        )}
 
-        {technical.length > 0 &&
-        <div className="mt-5 grid overflow-hidden border border-[#D3E2E8] bg-white sm:grid-cols-2 lg:grid-cols-4">
-            {technical.map((item, index) =>
-          <div key={item.label} className={`flex items-center gap-4 p-5 sm:p-6 ${index > 0 ? 'border-t border-[#D3E2E8] sm:border-t-0 sm:border-l' : ''}`}>
+        {technical.length > 0 && (
+          <div className="mt-5 grid overflow-hidden border border-[#D3E2E8] bg-white sm:grid-cols-2 lg:grid-cols-4">
+            {technical.map((item, index) => (
+              <div key={item.label} className={`flex items-center gap-4 p-5 sm:p-6 ${index > 0 ? 'border-t border-[#D3E2E8] sm:border-t-0 sm:border-l' : ''}`}>
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center text-[#153863]">
                   <item.icon size={20} strokeWidth={1.5} />
                 </span>
@@ -60,10 +60,10 @@ export default function PdBenefits({ product }) {
                   <p className="mt-1 font-heading text-sm font-semibold text-[#0A1628]">{item.value}</p>
                 </div>
               </div>
-          )}
+            ))}
           </div>
-        }
+        )}
       </div>
-    </section>);
-
+    </section>
+  );
 }

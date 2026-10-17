@@ -73,7 +73,7 @@ export default function MestaObce() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Městská mlžítka · návrh · výroba · servis</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Mlžítka pro města,<br /><span style={{ fontStyle: 'italic' }}>navržená pro konkrétní místo.</span>
+              Městská mlžítka pro města a obce,<br /><span style={{ fontStyle: 'italic' }}>navržená pro konkrétní místo.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
               Návrh, vizualizace, zakázkové zpracování a česká výroba nerezových mlžítek pro náměstí, parky, školy, sportoviště i dopravní uzly. Od prvního záměru po Smart řízení, instalaci a servis.
@@ -129,7 +129,7 @@ export default function MestaObce() {
             <div>
               <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Proč MLŽIDLA® pro obce</p>
               <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-                Řešení, které<br /><span style={{ fontStyle: 'italic' }}>funguje a vydrží.</span>
+                Proč zvolit městská mlžítka<br /><span style={{ fontStyle: 'italic' }}>pro ochlazení veřejného prostoru.</span>
               </h2>
               <ul className="space-y-3">
                 {BENEFITS.map((b) =>
@@ -164,7 +164,7 @@ export default function MestaObce() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-4">Kde mlžítka instalujeme</p>
         <h2 className="text-slate-900 text-3xl mb-10" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-          Místa, kde lidé<br /><span style={{ fontStyle: 'italic' }}>potřebují úlevu od horka.</span>
+          Kde se městská mlžítka hodí:<br /><span style={{ fontStyle: 'italic' }}>náměstí, parky a sportoviště.</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {USE_CASES.map((u, i) =>

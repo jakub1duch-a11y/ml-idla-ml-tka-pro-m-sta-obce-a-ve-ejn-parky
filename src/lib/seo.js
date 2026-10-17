@@ -529,7 +529,7 @@ export const SEO_PAGES = {
   },
   mlzneBrany: {
     title: 'Mlžné brány a mlžicí oblouky pro veřejný prostor',
-    description: 'Mlžné brány a oblouky pro náměstí, parky, promenády a sportoviště. Pomůžeme s výběrem tvaru, umístěním, napojením vody a provozem.'
+    description: 'Mlžné brány a oblouky pro náměstí, parky, promenády a sportoviště. Pomůžeme s výběrem tvaru, umístěním, napojením vody a provozem.',
     keywords: 'mlžná brána, mlžné brány, mlžicí oblouk, mlžný oblouk, ochlazovací brána, mlžná brána pro města, mlžné brány do parku',
     canonicalPath: '/mlzne-brany',
   },

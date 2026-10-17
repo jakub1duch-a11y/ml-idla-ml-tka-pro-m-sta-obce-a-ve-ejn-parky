@@ -49,8 +49,8 @@ export default function KolekceHero() {
     </div>
     <div className="catalog-video-hero-copy">
       <p className="catalog-video-hero-eyebrow">Katalog / MLŽIDLA®</p>
-      <h1 id="catalog-hero-title">Vyberte mlžítko pro svůj prostor.</h1>
-      <p className="catalog-video-hero-description">Sloupková mlžítka, průchozí brány, tvarové prvky i celé mlžné zóny. Prohlédněte si všechny produkty a vyberte řešení pro své místo.</p>
+      <h1 id="catalog-hero-title">Katalog mlžítek, mlžných bran a mlhovišť</h1>
+      <p className="catalog-video-hero-description">Prohlédněte si nerezová mlžítka pro města, obce, parky, hřiště, sportoviště i zahrady. Vyberte produktovou řadu nebo filtrujte podle prostoru a záměru.</p>
       <div className="catalog-video-hero-actions"><a href="#catalog">Přehled všech produktů <ArrowRight size={18} aria-hidden="true" /></a><Link to="/poptavka">Poradit s výběrem <ArrowRight size={18} aria-hidden="true" /></Link></div>
       <p className="catalog-video-hero-caption">Vodní mlha v pohybu · ukázka zahradní instalace</p>
     </div>

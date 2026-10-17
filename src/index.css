@@ -8,6 +8,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Scroll-triggered motion system: reveal meaningful page sections and product cards */
+.motion-reveal-pending {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  filter: blur(3px);
+  transition: opacity 680ms cubic-bezier(.22, 1, .36, 1), transform 760ms cubic-bezier(.22, 1, .36, 1), filter 760ms cubic-bezier(.22, 1, .36, 1);
+  transition-delay: var(--motion-reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.motion-reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-reveal-pending, .motion-reveal-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+}
+
 @layer base {
   :root {
     /* MLŽIDLA® Brand System 3.1 — Deep Ink / Ocean Blue / Fresh Cyan / Mist Blue */

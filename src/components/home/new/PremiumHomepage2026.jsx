@@ -110,7 +110,7 @@ export default function PremiumHomepage2026() {
         <div className="premium-shell">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="mx-auto max-w-3xl text-center">
             <p className="font-mono font-bold uppercase tracking-[.28em] text-[#0B8EC5] text-base">Řešení pro města a obce</p>
-            <h2 id="categories-premium-title" className="premium-heading mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Kategorie mlžítek</h2>
+            <h2 id="categories-premium-title" className="premium-heading mt-4 font-heading text-4xl font-black tracking-[-.055em] text-[#07131D] sm:text-5xl lg:text-6xl">Městská a zahradní mlžítka, mlžné brány i mlhoviště</h2>
             <p className="mt-4 text-base leading-7 text-slate-600">Jednotlivý bod osvěžení, průchozí brána nebo celá mlžná zóna. Vyberte řešení podle svého místa a prohlédněte si konkrétní produkty.</p>
           </motion.div>
 
@@ -150,7 +150,7 @@ export default function PremiumHomepage2026() {
         <div className="premium-shell relative grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.32 }}>
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Smart řízení SUPLA</p>
-            <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení, kdy je potřeba.</h2>
+            <h2 id="smart-title" className="premium-heading mt-4 font-heading text-4xl font-black leading-[1.02] tracking-[-.055em] sm:text-5xl lg:text-6xl">Chytré řízení mlžítek podle teploty, času a provozu.</h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-white/[.68]">Systém lze navrhnout podle konkrétního místa, přívodu vody, provozního režimu a požadovaného komfortu. Vhodné pro města, areály, sportoviště i rezidenční zahrady.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {smartPoints.map(({ icon: Icon, title, text }) =>

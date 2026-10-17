@@ -469,19 +469,19 @@ export function getReferenceSEO(project) {
 export const SEO_PAGES = {
   home: {
     title: 'Nerezová mlžítka pro města, obce, parky i zahrady',
-    description: 'Navrhujeme a dodáváme nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i soukromé zahrady. Výroba, pronájem, servis a chytré řízení mlžení podle konkrétního místa.',
+    description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i zahrady. Výroba, pronájem, montáž, servis a chytré řízení podle místa.',
     keywords: 'mlžítka, nerezová mlžítka, mlžítka pro města, mlžítka pro obce, mlhoviště, mlžiště, mlžné brány, městské ochlazování, vodní mlha, MLŽIDLA',
     canonicalPath: '/',
   },
   kolekce: {
     title: 'Katalog mlžítek a mlžných systémů',
-    description: 'Prohlédněte si nerezová mlžítka, mlžné brány, mlhoviště a designové vodní mlžicí prvky. Vyberte řešení pro město, obec, park, dětské hřiště, komerční areál nebo zahradu a připravte podklady pro návrh.',
+    description: 'Katalog nerezových mlžítek, mlžných bran a mlhovišť pro města, parky, dětská hřiště i zahrady. Vyberte řešení a připravte podklady pro návrh.',
     keywords: 'katalog mlžítek, nerezová mlžítka, městská mlžítka, mlhoviště, mlžiště, mlžné brány, vodní mlha, mlžicí systémy',
     canonicalPath: '/katalog-mlzitek',
   },
   mestskaKolekce: {
     title: 'Městská mlžítka pro náměstí, parky a obce',
-    description: 'Městská mlžítka a mlžné brány pro ochlazování veřejného prostoru. Navrhujeme rozmístění pro náměstí, pěší zóny, parky, školy a sportoviště včetně napojení vody, chytrého řízení a sezónního servisu.',
+    description: 'Městská mlžítka a mlžné brány pro náměstí, parky, školy a sportoviště. Návrh rozmístění, napojení vody, chytré řízení a sezónní servis.',
     keywords: 'městská mlžítka, mlžítka pro města, mlžítka pro obce, ochlazování veřejného prostoru, městské ochlazování, mlžná zóna, mlžné brány',
     canonicalPath: '/mestske-mlzitka',
   },
@@ -505,13 +505,13 @@ export const SEO_PAGES = {
   },
   mlzitko: {
     title: 'Nerezová mlžítka: městská i zahradní',
-    description: 'Nerezová mlžítka a designové mlžicí prvky pro města, obce, parky, dětská hřiště, terasy a zahrady. Porovnejte typy, způsoby využití, technické podklady a možnosti zakázkové výroby, montáže i servisu.',
+    description: 'Nerezová mlžítka pro města, obce, parky, hřiště, terasy i zahrady. Porovnejte typy, technické podklady, zakázkovou výrobu, montáž a servis.',
     keywords: 'mlžítko, mlžítka, nerezové mlžítko, městská mlžítka, zahradní mlžítka, mlžítka pro města, mlžítka pro obce, designové mlžítko',
     canonicalPath: '/mlzitko',
   },
   mlhoviste: {
     title: 'Mlhoviště a mlžiště: návrh mlžné zóny',
-    description: 'Mlhoviště a mlžiště pro města, obce, parky, dětská hřiště i zahrady. Navrhneme rozmístění nerezových mlžítek, napojení na vodovod, provozní režim, chytré řízení SUPLA a servis podle konkrétní lokality.',
+    description: 'Mlhoviště a mlžiště pro města, parky, dětská hřiště i zahrady. Navrhujeme rozmístění mlžítek, přívod vody, řízení SUPLA a servis.',
     keywords: 'mlhoviště, mlžiště, mlhoviště pro města, mlhoviště pro dětská hřiště, mlžná zóna, mlžítka do parku, mlhoviště na zahradu, návrh mlhoviště',
     canonicalPath: '/mlhoviste',
   },
@@ -529,7 +529,7 @@ export const SEO_PAGES = {
   },
   mlzneBrany: {
     title: 'Mlžné brány a mlžicí oblouky pro veřejný prostor',
-    description: 'Mlžné brány a mlžicí oblouky pro náměstí, parky, promenády, sportoviště a vstupy do areálů. Pomůžeme vybrat tvar, umístění, napojení vody, kotvení a provozní režim pro konkrétní projekt.',
+    description: 'Mlžné brány a oblouky pro náměstí, parky, promenády a sportoviště. Pomůžeme s výběrem tvaru, umístěním, napojením vody a provozem.'
     keywords: 'mlžná brána, mlžné brány, mlžicí oblouk, mlžný oblouk, ochlazovací brána, mlžná brána pro města, mlžné brány do parku',
     canonicalPath: '/mlzne-brany',
   },

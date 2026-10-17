@@ -1,5 +1,8 @@
 .hero-motion-surface{position:relative;isolation:isolate;overflow:hidden}
 .hero-atmosphere{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.hero-atmosphere::before,.hero-atmosphere::after{content:"";position:absolute;width:58%;height:42%;border-radius:50%;filter:blur(44px);opacity:0;pointer-events:none;will-change:transform,opacity}
+.hero-atmosphere::before{right:4%;top:12%;background:radial-gradient(ellipse,rgba(72,205,231,.18),rgba(72,205,231,.04) 48%,transparent 72%);animation:hero-mist-flow 17s ease-in-out 1s infinite alternate}
+.hero-atmosphere::after{left:18%;bottom:2%;background:radial-gradient(ellipse,rgba(210,248,255,.13),rgba(72,205,231,.035) 48%,transparent 72%);animation:hero-mist-flow-reverse 21s ease-in-out 2s infinite alternate}
 .hero-atmosphere i{position:absolute;width:85%;height:55%;right:-20%;bottom:-24%;border-radius:50%;background:radial-gradient(ellipse,rgba(141,226,236,.2),rgba(167,228,235,.06) 45%,transparent 70%);animation:hero-mist-arrive 3.8s cubic-bezier(.22,1,.36,1) both}
 .hero-atmosphere i+i{width:65%;bottom:0;right:-25%;opacity:.5;animation-duration:4.2s}
 .hero-motion-surface>div.relative,.hero-motion-surface>.hero-content{z-index:2}
@@ -24,5 +27,7 @@
 .hero-gallery-anchor{scroll-margin-top:110px}
 @keyframes hero-mist-arrive{from{transform:translate3d(6%,-4%,0);opacity:0}to{transform:translate3d(0,0,0);opacity:1}}
 @keyframes hero-color-breathe{from{opacity:.86;background-position:0% 50%}to{opacity:1;background-position:100% 50%}}
+@keyframes hero-mist-flow{0%{transform:translate3d(-7%,5%,0) scale(.92);opacity:.22}50%{opacity:.72}100%{transform:translate3d(7%,-5%,0) scale(1.12);opacity:.42}}
+@keyframes hero-mist-flow-reverse{0%{transform:translate3d(5%,-4%,0) scale(1.08);opacity:.18}55%{opacity:.52}100%{transform:translate3d(-6%,6%,0) scale(.94);opacity:.3}}
 @media(max-width:767px){.hero-catalog-content{min-height:650px;padding:110px 24px 32px}.hero-motion-surface.hero-category{height:auto;min-height:620px}.hero-category>div.relative{min-height:620px;padding-top:110px}.hero-category h1{font-size:clamp(2rem,8.5vw,3rem)}.hero-category p.text-lg{font-size:1rem;line-height:1.7}.hero-video-toggle{right:16px;top:20px}.hero-scene-nav{gap:6px}.hero-scene-nav button{padding:10px 12px}}
 @media(prefers-reduced-motion:reduce){.hero-motion-surface *,.hero-motion-surface *::before,.hero-motion-surface *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.hero-atmosphere i{transform:none!important}.hero-home-media,.hero-catalog-media{filter:none}}

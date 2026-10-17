@@ -18,9 +18,10 @@ const FAQ = [
 export default function MestskeOchlazovani() {
   useEffect(() => {
     setSEO({
-      title: 'Městské ochlazování veřejného prostoru | MLŽIDLA®',
-      description: 'Městská mlžítka a mlžné zóny pro náměstí, parky, promenády a sportoviště. Návrh, výroba, instalace, Smart řízení a servis MLŽIDLA®.',
+      title: 'Městská mlžítka pro ochlazení měst | MLŽIDLA.cz',
+      description: 'Městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky a sportoviště. Návrh rozmístění, technické podklady, chytré řízení, instalace i servis.',
       canonicalPath: '/mestske-ochlazovani-verejneho-prostoru',
+      keywords: 'městská mlžítka, mlžítka pro města, ochlazování měst, ochlazování veřejného prostoru, mlžné brány, mlžná zóna',
     });
   }, []);
 
@@ -30,7 +31,7 @@ export default function MestskeOchlazovani() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(34,211,238,.22),transparent_35%),radial-gradient(circle_at_20%_80%,rgba(14,116,144,.18),transparent_35%)]" />
         <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
           <p className="text-xs font-mono uppercase tracking-[.22em] text-cyan-300 mb-5">MLŽIDLA® · MĚSTA A OBCE</p>
-          <h1 className="max-w-5xl font-heading text-4xl lg:text-7xl font-bold tracking-tight leading-[.98]">Městské ochlazování,<br /><span className="italic text-cyan-200">které patří do prostoru.</span></h1>
+          <h1 className="max-w-5xl font-heading text-4xl lg:text-7xl font-bold tracking-tight leading-[.98]">Městská mlžítka pro ochlazení <span className="italic text-cyan-200">veřejného prostoru.</span></h1>
           <p className="max-w-2xl mt-7 text-lg lg:text-xl leading-relaxed text-white/70">Jak navrhnout příjemnější veřejný prostor pomocí mlžných zón, bran, alejí a architektonických mlžítek.</p>
           <div className="mt-9 flex flex-col sm:flex-row gap-3">
             <Link to="/poptavka" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-950 px-7 py-3.5 font-semibold">Navrhnout ochlazovací řešení <ArrowRight size={16} /></Link>
@@ -49,7 +50,7 @@ export default function MestskeOchlazovani() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
         <div className="max-w-3xl">
           <p className="text-xs font-mono uppercase tracking-[.2em] text-slate-400 mb-4">PROČ SE TÍM ZABÝVAT</p>
-          <h2 className="text-3xl lg:text-5xl font-bold tracking-tight">Horké město potřebuje řešit konkrétní místa.</h2>
+          <h2 className="text-3xl lg:text-5xl font-bold tracking-tight">Ochlazování měst: náměstí, parky a pěší zóny.</h2>
           <p className="mt-6 text-lg leading-relaxed text-slate-600">Náměstí, parky, promenády, pěší zóny nebo sportoviště se během horkých dnů mohou měnit v místa s vysokou tepelnou zátěží. Městské ochlazování proto není pouze otázkou komfortu. Je také součástí způsobu, jak veřejný prostor funguje a jak jej lidé využívají.</p>
           <p className="mt-4 text-lg leading-relaxed text-slate-600">Cílem MLŽIDLA® není pouze instalovat jedno mlžítko. Cílem je vytvořit dobře navržené ochlazovací místo.</p>
         </div>
@@ -91,7 +92,7 @@ export default function MestskeOchlazovani() {
 
       <section className="max-w-5xl mx-auto px-6 lg:px-10 py-20">
         <p className="text-xs font-mono uppercase tracking-[.2em] text-slate-400 mb-4">FAQ</p>
-        <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-10">Často kladené otázky</h2>
+        <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-10">Časté dotazy na městská mlžítka a ochlazování</h2>
         <div className="divide-y divide-slate-200 border-y border-slate-200">{FAQ.map(([q,a]) => <details key={q} className="py-6 group"><summary className="cursor-pointer list-none pr-8 text-lg font-semibold">{q}</summary><p className="mt-3 text-slate-600 leading-relaxed max-w-3xl">{a}</p></details>)}</div>
       </section>
 

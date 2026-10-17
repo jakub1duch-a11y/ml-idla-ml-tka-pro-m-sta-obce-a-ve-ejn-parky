@@ -509,14 +509,14 @@ export const SEO_PAGES = {
     canonicalPath: '/mlhoviste',
   },
   vodniMlha: {
-    title: 'Vodní mlha pro zahrady, terasy a města',
-    description: 'Zjistěte, jak funguje vodní mlha a nízkotlaké mlžení. Vysvětlujeme princip trysek, odpařování, spotřebu vody a možnosti pro zahrady i veřejný prostor.',
+    title: 'Vodní mlha: princip, použití a ochlazení',
+    description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, chytré řízení a návrh pro zahrady i města.'
     keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu',
     canonicalPath: '/vodni-mlha',
   },
   sloupkovaMlzitka: {
-    title: 'Sloupková mlžítka pro parky a města',
-    description: 'Sloupková mlžítka pro náměstí, promenády, parky a pěší zóny. Pomůžeme vybrat tvar a navrhnout rozmístění, napojení i provoz pro konkrétní lokalitu.',
+    title: 'Sloupková mlžítka pro města a parky',
+    description: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.'
     keywords: 'sloupková mlžítka, sloupkové mlžítko, mlžítko LINEA, nerezové mlžítko, mlžítka pro města',
     canonicalPath: '/sloupkova-mlzitka',
   },
@@ -527,8 +527,8 @@ export const SEO_PAGES = {
     canonicalPath: '/mlzne-brany',
   },
   atelierovePrvky: {
-    title: 'Ateliérová mlžítka a mlžné instalace na míru',
-    description: 'Zakázková mlžítka a výrazné mlžné instalace pro veřejný prostor, parky, školy i soukromé areály. Návrh vychází z charakteru místa a technických možností.',
+    title: 'Zakázková mlžítka a mlžné instalace',
+    description: 'Zakázková mlžítka a mlžné instalace pro města, parky, školy a zahrady. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.'
     keywords: 'zakázková mlžítka, ateliérové prvky, designová mlžítka, mlžná instalace, mlžítko na míru',
     canonicalPath: '/atelierove-prvky',
   },
@@ -545,8 +545,8 @@ export const SEO_PAGES = {
     canonicalPath: '/o-nas',
   },
   reference: {
-    title: 'Reference mlžítek a mlhovišť z realizací',
-    description: 'Prohlédněte si realizace mlžítek, mlžných bran a mlhovišť pro města, parky, školy, zoologické zahrady i soukromé zahrady. Inspirace pro nové projekty.',
+    title: 'Realizace mlžítek, mlžných bran a mlhovišť',
+    description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.'
     keywords: 'reference mlžná mlžítka, realizace mlhoviště, projekty mlžení veřejný prostor, instalace mlžných skulptur',
     canonicalPath: '/reference',
   },

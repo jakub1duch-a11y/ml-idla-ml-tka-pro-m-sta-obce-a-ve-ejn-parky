@@ -157,8 +157,8 @@ const sitemapEntries = [...canonicalPaths]
     const priority = path === '/' ? '1.0' : path.startsWith('/produkt/') ? '0.8' : '0.7';
     return `  <url><loc>${loc.replace(/&/g, '&amp;')}</loc><changefreq>weekly</changefreq><priority>${priority}</priority></url>`;
   })
-  .join('\\n');
-writeFileSync(sitemapPath, `<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n${sitemapEntries}\\n</urlset>\\n`);
+  .join('\n');
+writeFileSync(sitemapPath, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`);
 
 console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s), ${redirectCount} legacy redirect document(s), and ${canonicalPaths.size} sitemap URL(s).`);
 

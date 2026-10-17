@@ -510,13 +510,13 @@ export const SEO_PAGES = {
   },
   vodniMlha: {
     title: 'Vodní mlha: princip, použití a ochlazení',
-    description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, chytré řízení a návrh pro zahrady i města.'
+    description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, chytré řízení a návrh pro zahrady i města.',
     keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu',
     canonicalPath: '/vodni-mlha',
   },
   sloupkovaMlzitka: {
     title: 'Sloupková mlžítka pro města a parky',
-    description: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.'
+    description: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.',
     keywords: 'sloupková mlžítka, sloupkové mlžítko, mlžítko LINEA, nerezové mlžítko, mlžítka pro města',
     canonicalPath: '/sloupkova-mlzitka',
   },
@@ -528,7 +528,7 @@ export const SEO_PAGES = {
   },
   atelierovePrvky: {
     title: 'Zakázková mlžítka a mlžné instalace',
-    description: 'Zakázková mlžítka a mlžné instalace pro města, parky, školy a zahrady. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.'
+    description: 'Zakázková mlžítka a mlžné instalace pro města, parky, školy a zahrady. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
     keywords: 'zakázková mlžítka, ateliérové prvky, designová mlžítka, mlžná instalace, mlžítko na míru',
     canonicalPath: '/atelierove-prvky',
   },
@@ -546,7 +546,7 @@ export const SEO_PAGES = {
   },
   reference: {
     title: 'Realizace mlžítek, mlžných bran a mlhovišť',
-    description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.'
+    description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.',
     keywords: 'reference mlžná mlžítka, realizace mlhoviště, projekty mlžení veřejný prostor, instalace mlžných skulptur',
     canonicalPath: '/reference',
   },

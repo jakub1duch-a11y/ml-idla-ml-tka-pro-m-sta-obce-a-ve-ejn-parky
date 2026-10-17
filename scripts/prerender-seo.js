@@ -137,5 +137,28 @@ for (const [fromPath, toPath] of Object.entries(LEGACY_REDIRECTS)) {
   redirectCount++;
 }
 
-console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s) and ${redirectCount} legacy redirect document(s).`);
+// Keep the sitemap in sync with all statically rendered canonical pages (including products/locales).
+// Merge the curated sitemap from public/ so established category/reference URLs are preserved.
+const sitemapPath = join(distDir, 'sitemap.xml');
+const existingSitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, 'utf-8') : '';
+const existingUrls = [...existingSitemap.matchAll(/<loc>\s*(https:\/\/mlzidla\.cz[^<]*)\s*<\/loc>/g)].map((match) => {
+  try { return new URL(match[1]).pathname; } catch { return null; }
+}).filter(Boolean);
+const excludedRedirectPaths = new Set(Object.keys(LEGACY_REDIRECTS).map((path) => path.replace(/\/+$/, '') || '/'));
+const canonicalPaths = new Set([
+  ...existingUrls,
+  ...pagesToRender.map((page) => page.canonicalPath).filter(Boolean),
+]);
+for (const path of excludedRedirectPaths) canonicalPaths.delete(path);
+const sitemapEntries = [...canonicalPaths]
+  .filter((path) => path.startsWith('/') && !path.includes('?') && !path.includes('#'))
+  .map((path) => {
+    const loc = new URL(path, BASE_URL).href;
+    const priority = path === '/' ? '1.0' : path.startsWith('/produkt/') ? '0.8' : '0.7';
+    return `  <url><loc>${loc.replace(/&/g, '&amp;')}</loc><changefreq>weekly</changefreq><priority>${priority}</priority></url>`;
+  })
+  .join('\\n');
+writeFileSync(sitemapPath, `<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n${sitemapEntries}\\n</urlset>\\n`);
+
+console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s), ${redirectCount} legacy redirect document(s), and ${canonicalPaths.size} sitemap URL(s).`);
 

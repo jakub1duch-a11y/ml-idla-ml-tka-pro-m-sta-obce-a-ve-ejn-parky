@@ -176,7 +176,7 @@ export default function Mlhoviste() {
         <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">
           Možnosti rozmístění
         </p>
-        <h2 className="mt-4">Tři způsoby, jak dát mlze prostor.</h2>
+        <h2 className="mt-4">Mlhoviště pro města, parky a zahrady: tři možnosti řešení.</h2>
         <p className="mt-4 max-w-2xl leading-7 text-slate-600">
           Způsob využití je výchozím bodem návrhu. Konkrétní model, počet prvků
           a rozestupy upřesníme podle podkladů k místu.
@@ -202,7 +202,7 @@ export default function Mlhoviste() {
             <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-200">
               Chytré řízení SUPLA
             </p>
-            <h2 className="mt-4">Provoz v rytmu vašeho místa.</h2>
+            <h2 className="mt-4">Chytré řízení mlhoviště podle provozu a potřeb místa.</h2>
           </div>
           <div>
             <p className="leading-8 text-slate-200">
@@ -224,7 +224,7 @@ export default function Mlhoviste() {
         <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">
           Prvky pro váš návrh
         </p>
-        <h2 className="mt-4">Vyberte charakter mlžiště.</h2>
+        <h2 className="mt-4">Vyberte mlhoviště podle charakteru prostoru.</h2>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {CATALOG_CATEGORIES.slice(0, 3).map((c) => (
             <Link
@@ -255,7 +255,7 @@ export default function Mlhoviste() {
       </section>
       <section className="border-y border-slate-200 bg-slate-50">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
-          <h2>Od fotografie k návrhu instalace.</h2>
+          <h2>Návrh mlhoviště: od fotografie k instalaci.</h2>
           <ol className="mt-8 grid gap-6 md:grid-cols-3">
             {[
               [
@@ -282,7 +282,7 @@ export default function Mlhoviste() {
         </div>
       </section>
       <section className="mx-auto max-w-3xl px-5 py-16 sm:px-8 lg:py-24">
-        <h2>Co vědět před návrhem mlžiště.</h2>
+        <h2>Co připravit před návrhem mlhoviště.</h2>
         <div className="mt-8 divide-y divide-slate-200">
           {FAQ.map(([q, a]) => (
             <details key={q} className="py-2">

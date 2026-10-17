@@ -59,9 +59,9 @@ export default function PremiumHomepage2026() {
         <div className="premium-shell relative grid min-h-[86svh] items-center gap-10 py-24 sm:py-28 lg:grid-cols-[1fr_.82fr] lg:py-32">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="max-w-3xl">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[.28em] text-[#26C6E9]">Chladnější města · spokojenější lidé</p>
-            <h1 id="premium-hero-title" className="mt-6 font-heading text-5xl font-black leading-[.98] tracking-[-.06em] text-white sm:text-6xl lg:text-7xl xl:text-8xl">
-              Mlžné instalace, které <span className="text-[#26C6E9]">mění města.</span>
-            </h1>
+            <h2 id="premium-hero-title" className="mt-6 font-heading text-5xl font-black leading-[.98] tracking-[-.06em] text-white sm:text-6xl lg:text-7xl xl:text-8xl">
+              Mlžítka a mlžné brány pro <span className="text-[#26C6E9]">města a parky.</span>
+            </h2>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">
               Designová nerezová mlžítka pro náměstí, parky, sportoviště, školy, eventy i rezidenční zahrady. Voda, architektura a chytré řízení v jednom řešení.
             </p>

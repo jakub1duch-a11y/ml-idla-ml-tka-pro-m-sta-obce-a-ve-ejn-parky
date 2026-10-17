@@ -33,13 +33,13 @@ export default function MlzneBrany() {
     return () => {active = false;};
   }, [attempt]);
   useEffect(() => {
-    setSEO({ title: 'Mlžné brány GATE, vstupní portály a TEEPEE', description: 'Přehled mlžných bran GATE70-U a GATE70-V, portálů LINEA CE GATE a KRUH a samostojícího mlžítka TEEPEE. Výběr, návrh umístění a instalace pro veřejný prostor.', canonicalPath: '/mlzne-brany' });
+    setSEO({ title: 'Mlžné brány pro města, parky a veřejný prostor', description: 'Designové mlžné brány a oblouky pro náměstí, parky, sportoviště a areály. Prohlédněte si modely a řešte rozměry, napojení vody, řízení i instalaci.', keywords: 'mlžné brány, mlžná brána, mlžné oblouky, ochlazovací brána, mlžítka pro města', canonicalPath: '/mlzne-brany' });
   }, []);
 
   return <main className="gate-page opacity-100">
     <section aria-labelledby="gate-title" className="gate-hero">
       <img src="/media/gates/gate-u.webp" alt="" aria-hidden="true" fetchPriority="high" width="960" height="640" />
-      <div className="gate-shell gate-hero-content"><p className="gate-eyebrow">Mlžné brány · Vstupní portály · TEEPEE</p><h1 id="gate-title">Vstupte do<br />příjemnějšího léta.</h1><p>Průchod jemnou mlhou pro náměstí, parky i veřejné areály. Vyberte tvar, který zapadne do vašeho prostoru.</p><div className="gate-hero-actions"><a className="gate-button" href="#produkty">Prohlédnout všechny produkty <ArrowRight size={17} aria-hidden="true" /></a><Link className="gate-button gate-button-light" to="/poptavka?produkt=Ml%C5%BEn%C3%A9%20br%C3%A1ny">Získat návrh a cenu <ArrowRight size={17} aria-hidden="true" /></Link></div></div>
+      <div className="gate-shell gate-hero-content"><p className="gate-eyebrow">Mlžné brány · Vstupní portály · TEEPEE</p><h1 id="gate-title">Mlžné brány pro města, parky a veřejný prostor</h1><p>Designové mlžné brány a oblouky přinášejí jemnou vodní mlhu do náměstí, parků, sportovišť a dalších veřejných areálů. Vyberte tvar pro konkrétní prostor.</p><div className="gate-hero-actions"><a className="gate-button" href="#produkty">Prohlédnout všechny produkty <ArrowRight size={17} aria-hidden="true" /></a><Link className="gate-button gate-button-light" to="/poptavka?produkt=Ml%C5%BEn%C3%A9%20br%C3%A1ny">Získat návrh a cenu <ArrowRight size={17} aria-hidden="true" /></Link></div></div>
     </section>
     <GateProductOverview products={products} loading={loading} error={error} onRetry={() => setAttempt((value) => value + 1)} />
     <GateUseCaseTables products={products} />

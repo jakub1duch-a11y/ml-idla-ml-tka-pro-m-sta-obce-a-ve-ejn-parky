@@ -23,9 +23,9 @@ import '@/styles/reference-motion.css';
 export default function Home() {
   useEffect(() => {
     setSEO({
-      title: 'Mlžítka pro města, chytré mlžné brány a vodní mlha | MLŽIDLA.cz',
-      description: 'Nízkotlaká mlžítka pro města, ochlazování náměstí, osvěžení na sportovištích, vodní mlha na veřejná prostranství a chytré řízení SUPLA.',
-      keywords: 'mlžítka, mlžítka pro města, ochlazování náměstí, osvěžení na sportovištích, vodní mlha na veřejná prostranství, chytré mlžné brány, ochlazování městských prostorů, SUPLA řízení mlžení',
+      title: 'Mlžítka pro města, obce i zahrady | MLŽIDLA.cz',
+      description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i zahrady. Návrh, technické podklady a chytré řízení pro venkovní prostory.',
+      keywords: 'mlžítka, mlžítka pro města, městská mlžítka, mlžítka pro obce, zahradní mlžítka, mlžné brány, mlhoviště, vodní mlha, ochlazování měst, mlžení veřejného prostoru',
       canonicalPath: '/',
       robots: 'index, follow',
     });

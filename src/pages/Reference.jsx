@@ -39,8 +39,8 @@ const sectors = [
 
 export default function Reference() {
   useEffect(() => setSEO({
-    title: 'Realizace mlžítek a mlžných bran | MLŽIDLA®',
-    description: 'Realizace nerezových mlžítek a mlžných bran pro města, parky, zahrady, hotely, restaurace a veřejné instituce.',
+    title: 'Realizace mlžítek a mlžných bran',
+    description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.'
     canonicalPath: '/reference'
   }), []);
 
@@ -54,7 +54,7 @@ export default function Reference() {
         <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-end gap-10 px-6 pb-16 pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
           <div className="max-w-3xl">
             <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Reference MLŽIDLA®</p>
-            <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace, které dávají veřejnému prostoru nový důvod zůstat.</h1>
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace mlžítek, mlžných bran a mlhovišť</h1>
             <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-[hsl(var(--background))]">Od ZOO Praha přes náměstí a parky až po hotely a soukromé zahrady. Navrhujeme nerezové mlžicí systémy, které spojují funkci, design a spolehlivý provoz.</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link to="/poptavka" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Navrhnout váš prostor <ArrowRight size={16} /></Link>

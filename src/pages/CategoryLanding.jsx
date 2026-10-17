@@ -6,12 +6,12 @@ import { setSEO } from '@/lib/seo';
 const PAGE_DATA = {
   sloupky: {
     eyebrow: 'SLOUPKOVÁ MLŽÍTKA · VEŘEJNÝ PROSTOR',
-    title: 'Sloupková mlžítka. Čistá linie pro váš prostor.',
+    title: 'Sloupková mlžítka pro města, parky a promenády',
     description: 'Štíhlé nerezové mlžicí prvky pro promenády, parky, předprostory budov i odpočinkové zóny. Řadu, počet prvků a umístění navrhujeme podle konkrétního prostoru.',
     image: '/media/categories/columns.webp',
     imageAlt: 'Sloupková mlžítka LINEA v zahradním prostoru',
     canonicalPath: '/sloupkova-mlzitka',
-    seoTitle: 'Sloupková mlžítka pro města, parky a veřejný prostor',
+    seoTitle: 'Sloupková mlžítka pro města a parky',
     seoDescription: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.',
     serviceName: 'Sloupková mlžítka pro veřejný prostor',
     primaryCta: 'Navrhnout sloupkové mlžítko',
@@ -34,13 +34,13 @@ const PAGE_DATA = {
   },
   atelier: {
     eyebrow: 'ATELIÉROVÉ PRVKY · ZAKÁZKOVÁ VÝROBA',
-    title: 'Ateliérové prvky. Vodní mlha s vlastním výrazem.',
+    title: 'Zakázková mlžítka a mlžné instalace na míru',
     description: 'Designové tvary mlžítek pro veřejný prostor, zahrady, školy i instalace s vlastním charakterem. Od prvního záměru řešíme tvar, měřítko, umístění a chování mlhy jako jeden celek.',
     image: '/media/categories/sculptures.webp',
     imageAlt: 'Designový ateliérový mlžicí prvek',
     canonicalPath: '/atelierove-prvky',
-    seoTitle: 'Ateliérové prvky a zakázková mlžítka',
-    seoDescription: 'Designové ateliérové prvky a zakázková mlžítka pro města, parky, školy i soukromé prostory. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
+    seoTitle: 'Zakázková mlžítka a mlžné instalace',
+    seoDescription: 'Zakázková mlžítka a mlžné instalace pro města, parky, školy a zahrady. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
     serviceName: 'Ateliérové prvky a zakázková mlžítka',
     primaryCta: 'Probrat zakázkový návrh',
     strengths: [

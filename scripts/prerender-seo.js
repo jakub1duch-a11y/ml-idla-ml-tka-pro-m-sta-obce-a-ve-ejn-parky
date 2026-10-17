@@ -18,7 +18,7 @@
 // static hosts without a SPA rewrite. Product data is still loaded live by
 // the application. Blog and reference detail routes need separate snapshots.
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEO_PAGES } from '../src/lib/seo.js';

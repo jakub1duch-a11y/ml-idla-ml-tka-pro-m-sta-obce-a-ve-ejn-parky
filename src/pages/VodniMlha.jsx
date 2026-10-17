@@ -82,7 +82,7 @@ export default function VodniMlha() {
   useEffect(() => {
     setSEO({
       title: 'Vodní mlha: princip, použití a ochlazení',
-      description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, chytré řízení a návrh pro zahrady i města.'
+      description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, chytré řízení a návrh pro zahrady i města.',
       keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu, trysky na vodní mlhu, nízkotlaké mlžení',
       canonicalPath: '/vodni-mlha',
       jsonLd: {

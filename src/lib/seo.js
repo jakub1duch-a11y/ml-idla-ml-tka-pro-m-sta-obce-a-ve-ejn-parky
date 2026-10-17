@@ -461,7 +461,7 @@ export function getReferenceSEO(project) {
 
 export const SEO_PAGES = {
   home: {
-    title: 'Designová mlžítka pro města a zahrady',
+    title: 'Mlžítka pro města, obce i zahrady',
     description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i zahrady. Návrh řešení, technické podklady a chytré řízení pro venkovní prostory.',
     keywords: 'mlžné plastiky, mlžítka, mlzitka, mlžné brány, HolmTec, mlzidla, nerezové skulptury, vodní prvky, veřejné mlžení',
     canonicalPath: '/',
@@ -557,7 +557,7 @@ export const SEO_PAGES = {
     canonicalPath: '/blog',
   },
   poptavka: {
-    title: 'Poptávka na mlžítko, mlžnou bránu nebo mlhoviště',
+    title: 'Poptávka na mlžítko, bránu či mlhoviště',
     description: 'Pošlete nezávaznou poptávku na městské nebo zahradní mlžítko, mlžnou bránu či mlhoviště. Pomůžeme upřesnit vhodné řešení podle místa, rozpočtu a provozu.',
     keywords: 'poptávka mlžná tělesa, nezávazná poptávka mlhoviště, kalkulace mlžení, mlžné skulptury cena',
     canonicalPath: '/poptavka',

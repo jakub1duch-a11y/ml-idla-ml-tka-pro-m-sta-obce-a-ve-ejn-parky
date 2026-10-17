@@ -9,6 +9,7 @@ import CookieConsent from '@/components/common/CookieConsent';
 import ReturningVisitorEmailPopup from '@/components/common/ReturningVisitorEmailPopup';
 import WhatsAppContactWidget from '@/components/common/WhatsAppContactWidget';
 import useGlobalLenis from '@/hooks/useGlobalLenis';
+import ScrollMotionController from '@/components/common/ScrollMotionController';
 import 'lenis/dist/lenis.css';
 
 export default function SiteLayout() {
@@ -20,6 +21,7 @@ export default function SiteLayout() {
     <div className="architecture-site min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
+        <ScrollMotionController />
         <Outlet />
       </main>
       {locale === 'cs' ? <Footer /> : <LocalizedFooter locale={locale} />}

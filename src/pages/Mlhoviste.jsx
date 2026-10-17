@@ -124,7 +124,7 @@ export default function Mlhoviste() {
           <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             <img
               src={CATALOG_CATEGORIES[3].image}
-              alt="Mlžicí prvek v prostředí městského parku"
+              alt={CATALOG_CATEGORIES[3].imageAlt}
               width="900"
               height="1000"
               fetchPriority="high"

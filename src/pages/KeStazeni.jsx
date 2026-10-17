@@ -61,7 +61,7 @@ export default function KeStazeni() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Dokumentace</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4">
-Technické podklady<br /><span className="text-slate-400 font-extralight">na vyžádání podle projektu</span>
+Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">volně k zobrazení a stažení</span>
           </h1>
           <p className="text-slate-500 text-lg font-light max-w-2xl">
 Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, přípravu staveniště a tvorbu produktových listů. Dokumenty lze otevřít v prohlížeči, vytisknout nebo uložit pro konkrétní zakázku.
@@ -126,7 +126,7 @@ Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, příp
         {/* Product datasheets */}
         <div>
           <div className="mb-6">
-            <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Produktové podklady na vyžádání</h2>
+            <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Individuální produktové podklady</h2>
             <p className="text-sm text-slate-400 font-light">Produktové datasheets a cenové podklady připravujeme na vyžádání, aby se nezveřejňovaly neaktuální ceny ani interní technické dokumenty.</p>
           </div>
 

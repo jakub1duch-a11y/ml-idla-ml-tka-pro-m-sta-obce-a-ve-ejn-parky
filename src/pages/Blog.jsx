@@ -141,7 +141,7 @@ export default function Blog() {
           <div className="flex flex-col justify-between">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#0B6B7A]">MLŽIDLA® BLOG A NOVINKY</p>
-              <h1 className="mt-4 max-w-2xl font-heading text-5xl leading-[.95] tracking-[-.05em] text-[#081827] sm:text-6xl lg:text-7xl">Místa, kde se lépe dýchá.</h1>
+              <h1 className="mt-4 max-w-2xl font-heading text-5xl leading-[.95] tracking-[-.05em] text-[#081827] sm:text-6xl lg:text-7xl">Mlžítka, vodní mlha a ochlazování měst</h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-500">Novinky ze světa mlžítek, skutečné realizace, návrhová inspirace a praktické články pro města, architekty, sportoviště, školy i veřejný prostor.</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">

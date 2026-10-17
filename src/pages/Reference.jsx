@@ -39,7 +39,7 @@ const sectors = [
 
 export default function Reference() {
   useEffect(() => setSEO({
-    title: 'Realizace mlžítek a mlžných bran',
+    title: 'Realizace mlžítek, mlžných bran a mlhovišť',
     description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.',
     canonicalPath: '/reference'
   }), []);

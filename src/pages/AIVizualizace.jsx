@@ -93,13 +93,21 @@ const optimizeLargePhoto = async (file) => {
 export default function AIVizualizace() {
   const [searchParams] = useSearchParams();
   const requestedSlug = searchParams.get('slug') || '';
+  const requestedMrakVariant = requestedSlug === 'mlzitko-mrak' ? searchParams.get('varianta') : null;
   const fastMode = Boolean(requestedSlug);
   const fileRef = useRef(null);
   const [file, setFile] = useState(null);
   const [sourceUrl, setSourceUrl] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [resultUrl, setResultUrl] = useState('');
-  const [description, setDescription] = useState(() => searchParams.get('zadani') || sessionStorage.getItem('mlzidla-ai-zadani') || '');
+  const [description, setDescription] = useState(() => {
+    const savedDescription = searchParams.get('zadani') || sessionStorage.getItem('mlzidla-ai-zadani') || '';
+    if (!['maly', 'velky'].includes(requestedMrakVariant)) return savedDescription;
+    const sizeNote = requestedMrakVariant === 'velky'
+      ? 'Vybraný produkt: MLŽNÝ MRAK VELKÝ, h 2 400 mm, model MRAK 13R 2424. Zachovej autentický organický nerezový tvar. Neodhaduj počet trysek.'
+      : 'Vybraný produkt: MLŽNÝ MRAK MALÝ, požadovaná výška h 1 600 mm; návrhová výška musí být výrobně schválena. Zachovej autentický organický nerezový tvar.';
+    return [sizeNote, savedDescription].filter(Boolean).join('\n\n');
+  });
   const requestedType = searchParams.get('typ') || '';
   const requestedConcept = searchParams.get('tvar') || '';
   const requestedProfile = searchParams.get('profil') || '';

@@ -30,9 +30,12 @@ function isVideo(url) {
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
 const isLineaProduct = (product) => product?.slug === 'linea-mlzitko';
 
+// Keep the product's real name as the primary heading so every detail page has a unique, descriptive H1.
 function getHeroTitle(product, detailConfig) {
+  const productName = String(product?.name || '').trim();
+  if (productName) return productName;
   if (detailConfig?.tagline) return detailConfig.tagline;
-  return 'Nerezové mlžítko pro prostor, kde chcete zůstat';
+  return 'Mlžítko pro veřejný prostor a zahradu';
 }
 
 function getHeroIntro(product, detailConfig) {

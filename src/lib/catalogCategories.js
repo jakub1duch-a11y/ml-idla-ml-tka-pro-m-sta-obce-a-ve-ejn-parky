@@ -7,7 +7,7 @@ export const CATALOG_CATEGORIES = [
     description:
       "Štíhlé nerezové prvky k pěším trasám, lavičkám a pobytovým plochám. Vyberte tvar, který přirozeně doplní architekturu místa.",
     image: "/media/categories/columns.webp",
-    imageAlt: "Sloupková mlžítka LINEA v zahradním prostoru",
+    imageAlt: "Sloupková mlžítka LINEA v městském parku",
     use: "Parky · promenády · náměstí",
   },
   {
@@ -40,7 +40,7 @@ export const CATALOG_CATEGORIES = [
       "Promyšlené sestavy mlžítek, aleje a pobytové zóny. Rozmístění, přívod vody a volitelné řízení SUPLA navrhujeme jako jeden celek.",
     image: "/media/categories/zones.webp",
     imagePosition: "center 55%",
-    imageAlt: "Mlžná zóna s více prvky BENDY a LINEA v zahradě",
+    imageAlt: "Mlžná zóna s prvky BENDY a LINEA v zahradě",
     use: "Náměstí · parky · rekreační areály",
   },
 ];

@@ -253,8 +253,15 @@ export function getProductSEO(product, reviewStats) {
     product.power_supply && { '@type': 'PropertyValue', name: 'Napájení', value: product.power_supply },
   ].filter(Boolean);
 
-  const materialText = product.material ? ' V provedení ' + product.material + '.' : '';
-  const fallbackDescription = 'Designové nerezové mlžítko pro ochlazení zahrad, parků a veřejných prostor jemnou vodní mlhou.' + materialText;
+  const materialText = product.material ? ' Materiál: ' + product.material + '.' : '';
+  const detailText = String(product.short_description || product.description || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const useCase = search.useCase.charAt(0).toLocaleUpperCase('cs-CZ') + search.useCase.slice(1);
+  const fallbackDescription = detailText
+    ? `${product.name}: ${detailText.slice(0, 105).replace(/\s+\S*$/, '')}. ${useCase}.`
+    : `${product.name} – ${search.primaryKeyword} ${search.useCase}. Návrh, technické podklady a servis podle projektu.${materialText}`;
   const description = product.seo_description || fallbackDescription;
   const productSchema = {
     '@type': 'Product',
@@ -467,7 +474,7 @@ export const SEO_PAGES = {
     canonicalPath: '/',
   },
   kolekce: {
-    title: 'Katalog mlžítek a mlžných systémů | MLŽIDLA.cz',
+    title: 'Katalog mlžítek a mlžných systémů',
     description: 'Prohlédněte si nerezová mlžítka, mlžné brány, mlhoviště a designové vodní mlžicí prvky. Vyberte řešení pro město, obec, park, dětské hřiště, komerční areál nebo zahradu a připravte podklady pro návrh.',
     keywords: 'katalog mlžítek, nerezová mlžítka, městská mlžítka, mlhoviště, mlžiště, mlžné brány, vodní mlha, mlžicí systémy',
     canonicalPath: '/katalog-mlzitek',
@@ -497,13 +504,13 @@ export const SEO_PAGES = {
     canonicalPath: '/zakazkova-mlzitka',
   },
   mlzitko: {
-    title: 'Nerezová mlžítka: městská i zahradní | MLŽIDLA.cz',
+    title: 'Nerezová mlžítka: městská i zahradní',
     description: 'Nerezová mlžítka a designové mlžicí prvky pro města, obce, parky, dětská hřiště, terasy a zahrady. Porovnejte typy, způsoby využití, technické podklady a možnosti zakázkové výroby, montáže i servisu.',
     keywords: 'mlžítko, mlžítka, nerezové mlžítko, městská mlžítka, zahradní mlžítka, mlžítka pro města, mlžítka pro obce, designové mlžítko',
     canonicalPath: '/mlzitko',
   },
   mlhoviste: {
-    title: 'Mlhoviště a mlžiště: návrh mlžné zóny | MLŽIDLA.cz',
+    title: 'Mlhoviště a mlžiště: návrh mlžné zóny',
     description: 'Mlhoviště a mlžiště pro města, obce, parky, dětská hřiště i zahrady. Navrhneme rozmístění nerezových mlžítek, napojení na vodovod, provozní režim, chytré řízení SUPLA a servis podle konkrétní lokality.',
     keywords: 'mlhoviště, mlžiště, mlhoviště pro města, mlhoviště pro dětská hřiště, mlžná zóna, mlžítka do parku, mlhoviště na zahradu, návrh mlhoviště',
     canonicalPath: '/mlhoviste',

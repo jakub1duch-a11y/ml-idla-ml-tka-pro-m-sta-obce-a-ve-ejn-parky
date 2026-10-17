@@ -144,7 +144,7 @@ export default function CategoryLanding({ variant }) {
         <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">KDE DÁVÁ ŘEŠENÍ SMYSL</p>
-            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Navrženo pro konkrétní způsob pobytu a pohybu.</h2>
+            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">{variant === 'atelier' ? 'Kde se zakázková mlžítka a mlžné instalace uplatní.' : 'Kde se sloupková mlžítka hodí: parky, promenády a náměstí.'}</h2>
           </div>
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">Nejprve řešíme charakter prostoru, pohyb lidí, dostupné napojení a běžný provoz. Až pak vzniká řešení, které může fungovat vizuálně i technicky.</p>
         </div>
@@ -163,7 +163,7 @@ export default function CategoryLanding({ variant }) {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[.9fr_1.1fr] lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">OD ZÁMĚRU K NÁVRHU</p>
-            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Od charakteru místa ke konkrétnímu řešení.</h2>
+            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Návrh mlžítek podle místa, pohybu lidí a provozu.</h2>
           </div>
           <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
             <p>{page.process}</p>
@@ -193,7 +193,7 @@ export default function CategoryLanding({ variant }) {
         <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-accent">PROJEKTOVÁ PODPORA</p>
-            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete místo, záměr nebo inspiraci. Připravíme další krok pro váš projekt.</h2>
+            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete podklady pro návrh mlžítka nebo mlžné instalace na míru.</h2>
           </div>
           <Link to={`/poptavka?produkt=${encodeURIComponent(page.serviceName)}`} className="btn-metallic-mist inline-flex shrink-0 items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>
         </div>

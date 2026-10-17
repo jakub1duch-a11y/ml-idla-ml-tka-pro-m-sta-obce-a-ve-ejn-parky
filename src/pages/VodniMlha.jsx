@@ -129,7 +129,7 @@ export default function VodniMlha() {
           <div className="max-w-4xl">
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-200 sm:text-xs sm:tracking-[.2em]">JAK FUNGUJÍ · TECHNOLOGIE · VODNÍ MLHA</p>
             <h1 className="mt-4 max-w-4xl font-heading text-[clamp(2.5rem,11vw,5.4rem)] font-semibold leading-[.94] tracking-[-.04em] text-white">
-              Vodní mlha.<br />Princip, který je vidět i cítit.
+              Vodní mlha pro zahrady, terasy a města
             </h1>
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/78 sm:mt-7 sm:text-lg sm:leading-8">
               Jemné kapky vody se rozptýlí do vzduchu a část z nich se odpaří. Správný návrh trysek, tlaku, proudění a řízení určuje, jak příjemně bude mlžicí zóna fungovat.

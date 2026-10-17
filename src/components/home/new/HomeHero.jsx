@@ -11,7 +11,8 @@ const benefits = [
 { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
 { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' }];
 
-const headlineWords = ['Ochlazení,', 'které', 'patří', 'do prostoru.'];
+// Primární H1 záměrně obsahuje hlavní produktové dotazy a zůstává přirozený pro návštěvníka.
+const headlineWords = ['Mlžítka pro', 'města, obce', 'i zahrady.'];
 
 const tiles = [
 {
@@ -97,7 +98,7 @@ export default function HomeHero() {
                 )}
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
-              Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
+              Designová městská i zahradní mlžítka, mlžné brány a mlhoviště pro náměstí, parky, hřiště, sportoviště a terasy. Návrh i chytré řízení podle konkrétního místa.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">

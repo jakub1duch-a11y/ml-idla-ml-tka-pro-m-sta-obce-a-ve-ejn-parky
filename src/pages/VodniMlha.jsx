@@ -81,8 +81,8 @@ function MistPrincipleGraphic() {
 export default function VodniMlha() {
   useEffect(() => {
     setSEO({
-      title: 'Vodní mlha: princip, použití a ochlazení | MLŽIDLA.cz',
-      description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, Smart řízení a návrh pro zahrady i města.',
+      title: 'Vodní mlha: princip, použití a ochlazení',
+      description: 'Jak funguje vodní mlha, kde ji použít a co ovlivňuje účinek. Princip trysek, nízkotlaké mlžení, chytré řízení a návrh pro zahrady i města.',
       keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu, trysky na vodní mlhu, nízkotlaké mlžení',
       canonicalPath: '/vodni-mlha',
       jsonLd: {
@@ -129,7 +129,7 @@ export default function VodniMlha() {
           <div className="max-w-4xl">
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-200 sm:text-xs sm:tracking-[.2em]">JAK FUNGUJÍ · TECHNOLOGIE · VODNÍ MLHA</p>
             <h1 className="mt-4 max-w-4xl font-heading text-[clamp(2.5rem,11vw,5.4rem)] font-semibold leading-[.94] tracking-[-.04em] text-white">
-              Vodní mlha.<br />Princip, který je vidět i cítit.
+              Vodní mlha pro zahrady, terasy a města
             </h1>
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-white/78 sm:mt-7 sm:text-lg sm:leading-8">
               Jemné kapky vody se rozptýlí do vzduchu a část z nich se odpaří. Správný návrh trysek, tlaku, proudění a řízení určuje, jak příjemně bude mlžicí zóna fungovat.
@@ -145,7 +145,7 @@ export default function VodniMlha() {
       <section id="princip" className="mx-auto grid max-w-7xl scroll-mt-24 gap-10 px-5 py-14 sm:px-6 sm:py-16 lg:grid-cols-[.82fr_1.18fr] lg:items-center lg:px-10 lg:py-24">
         <div>
           <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">JAK TO FUNGUJE</p>
-          <h2 className="mt-4 font-heading text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl">Z vody vzniknou jemné kapky. Odpařování odebírá teplo okolnímu vzduchu.</h2>
+          <h2 className="mt-4 font-heading text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl">Jak funguje vodní mlha: jemné kapky a odpařování</h2>
           <div className="mt-6 space-y-4 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
             <p>Tryska rozdělí proud vody na malé kapky. Čím vhodnější je kombinace tlaku, otvoru trysky a proudění vzduchu, tím jemnější a účinnější může být výsledná mlha.</p>
             <p>Pro praktický návrh proto nestačí jen počet trysek. Sledujeme tlak vody, průtok, vzdálenost lidí od mlžení, vítr, vlhkost, požadovanou intenzitu a způsob spouštění.</p>
@@ -179,7 +179,7 @@ export default function VodniMlha() {
           </div>
           <div className="border-t border-border pt-7">
             <div className="flex items-center gap-3"><Wind className="text-secondary" size={22} /><p className="font-mono text-[10px] uppercase tracking-[.14em] text-secondary sm:text-xs sm:tracking-[.18em]">MĚSTA · PARKY · SPORTOVIŠTĚ</p></div>
-            <h2 className="mt-5 font-heading text-3xl text-foreground lg:text-4xl">Řízené ochlazovací body pro veřejný prostor.</h2>
+            <h2 className="mt-5 font-heading text-3xl text-foreground lg:text-4xl">Vodní mlha pro ochlazování veřejného prostoru.</h2>
             <p className="mt-5 text-base leading-7 text-muted-foreground">Ve veřejném prostoru řešíme odolnost, vandalismus, přístup k servisu, provozní režim a spotřebu vody. Více prvků lze rozdělit do samostatných zón a řídit podle času, teploty nebo provozního harmonogramu.</p>
             <Link to="/mestske-mlzitka" className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-primary">Městská mlžítka <ArrowRight size={16} /></Link>
           </div>

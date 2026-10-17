@@ -35,7 +35,7 @@ export default function UrbanCoolingExperience() {
       <div className="ucx-mist ucx-mist-0" /><div className="ucx-mist ucx-mist-b" />
       <motion.div {...reveal} className="ucx-copy">
         <span className="ucx-kicker">MLŽIDLA® by HolmTec · městské ochlazování</span>
-        <h1>Chytré chlazení <em>prostoru.</em></h1>
+        <h2>Městské ochlazování pomocí <em>mlžítek a mlžných zón.</em></h2>
         <p>Česká nerezová mlžítka pro náměstí, parky, hřiště a další veřejná místa. Architektura, voda a automatizace v jednom čistém systému.</p>
         <div className="ucx-actions">
           <a href="/ai-vizualizace" className="ucx-button">Ukázat můj prostor <ArrowRight size={17} /></a>
@@ -52,7 +52,7 @@ export default function UrbanCoolingExperience() {
     <section id="ucx-prostor" className="ucx-places">
       <motion.div {...reveal} className="ucx-heading">
         <span className="ucx-kicker">Kde MLŽIDLA dávají smysl</span>
-        <h2>Ochlazení tam, kde se město <em>skutečně používá.</em></h2>
+        <h2>Ochlazování měst a veřejných prostor tam, kde se lidé <em>skutečně pohybují.</em></h2>
         <p>Řešení navrhujeme pro konkrétní prostor, pohyb lidí a provoz města.</p>
       </motion.div>
       <div className="ucx-grid">

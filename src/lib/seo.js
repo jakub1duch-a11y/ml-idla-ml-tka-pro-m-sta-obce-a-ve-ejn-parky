@@ -478,6 +478,12 @@ export const SEO_PAGES = {
     keywords: 'městská mlžítka, mlžítka pro města, mlžítka pro obce, ochlazování měst, městské ochlazování, mlžná zóna',
     canonicalPath: '/mestske-mlzitka',
   },
+  mestskeOchlazovani: {
+    title: 'Městská mlžítka pro ochlazení měst',
+    description: 'Městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, pěší zóny a sportoviště. Návrh rozmístění, technické podklady, řízení i servis.',
+    keywords: 'městská mlžítka, mlžítka pro města, ochlazování měst, ochlazování veřejného prostoru, mlžné brány, mlžná zóna',
+    canonicalPath: '/mestske-ochlazovani-verejneho-prostoru',
+  },
   zahradniKolekce: {
     title: 'Zahradní mlžítka na terasu i do zahrady',
     description: 'Designová zahradní mlžítka pro terasy, pergoly, zahrady a venkovní wellness. Vyberte nerezový prvek, ovládání a napojení podle svého prostoru.',

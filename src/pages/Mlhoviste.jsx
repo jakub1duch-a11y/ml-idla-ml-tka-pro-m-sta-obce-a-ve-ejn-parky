@@ -97,9 +97,9 @@ export default function Mlhoviste() {
               MLŽIDLA · architektura osvěžení
             </p>
             <h1 className="mt-5">
-              Mlžiště a mlhoviště.
+              Mlhoviště a mlžiště
               <br />
-              Prostor, kde je příjemné zůstat.
+              pro města, parky a zahrady.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
               Promyšlené mlžné zóny pro náměstí, parky a areály. Nerezová

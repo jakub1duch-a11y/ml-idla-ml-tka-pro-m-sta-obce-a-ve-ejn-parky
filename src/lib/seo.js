@@ -523,7 +523,7 @@ export const SEO_PAGES = {
   },
   sloupkovaMlzitka: {
     title: 'Sloupková mlžítka LINEA pro města a parky',
-    description: 'Sloupková nerezová mlžítka pro náměstí, promenády, parky a veřejné budovy. Prohlédněte si řadu LINEA a možnosti návrhu, kotvení, přívodu vody, řízení a údržby podle podmínek lokality.',
+    description: 'Sloupková nerezová mlžítka pro náměstí, promenády, parky a veřejné budovy. Řada LINEA s návrhem, kotvením, napojením vody a údržbou.',
     keywords: 'sloupková mlžítka, sloupkové mlžítko, mlžítko LINEA, nerezové sloupkové mlžítko, mlžítka pro města, mlžítka do parku',
     canonicalPath: '/sloupkova-mlzitka',
   },

@@ -52,19 +52,34 @@ const isAllowedProductMedia = (url, product) => {
   return true;
 };
 
+function normalizeProductLabel(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('cs-CZ')
+    .replace(/®/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\b(mlzitko|mlzitka|mlzny|mlzna|mlzne|mlzici|produkt|product)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Realizaci propojujeme jen podle úplného názvu produktu nebo jeho slugu.
+// Hledání podřetězců a jednotlivých slov dříve míchalo fotografie různých
+// produktů (např. MRAK do galerie BENDY). Sestavy typu BENDY + LINEA
+// se nejprve rozdělí na konkrétní označení jednotlivých produktů.
 function matchesProduct(realization, product) {
-  const used = (realization.product_used || '').toLocaleLowerCase('cs-CZ');
-  const name = (product.name || '').toLocaleLowerCase('cs-CZ');
-  const slug = (product.slug || '').toLocaleLowerCase('cs-CZ');
-  if (isLineaProduct(product)) {
-    return used === 'linea' || used === 'linea®' || used === 'mlžítko linea' || used === slug;
-  }
-  const tokens = name
-    .replace(/mlžítko|mlžné|®|city|garden/gi, '')
-    .split(/\s+/)
-    .map((x) => x.trim())
-    .filter((x) => x.length > 2);
-  return Boolean(used && (used.includes(name) || name.includes(used) || used.includes(slug) || tokens.some((t) => used.includes(t))));
+  const usedLabels = String(realization?.product_used || '')
+    .split(/\s*(?:\+|,|;|\||\/|&)\s*/)
+    .map(normalizeProductLabel)
+    .filter(Boolean);
+  if (!usedLabels.length) return false;
+
+  const aliases = [product?.name, product?.slug, ...(Array.isArray(product?.aliases) ? product.aliases : [])]
+    .map(normalizeProductLabel)
+    .filter(Boolean);
+  const uniqueAliases = [...new Set(aliases)];
+  return usedLabels.some((used) => uniqueAliases.includes(used));
 }
 
 function MediaCard({ item, onOpen, productName }) {

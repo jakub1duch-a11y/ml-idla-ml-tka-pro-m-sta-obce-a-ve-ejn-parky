@@ -40,7 +40,7 @@ export const USE_CASE_GALLERY = [
   { image: IMG.trutnov, title: 'Náměstí a městské trasy', alt: 'Vizualizace tří mlžítek LINEA na Krakonošově náměstí v Trutnově' },
   { image: IMG.gatesStreet, title: 'Průchozí mlžné brány', alt: 'Cyklisté projíždějí mlžnými bránami v městské alej' },
   { image: IMG.mistField, title: 'Mlžiště a sportoviště', alt: 'Mlžiště se širokým mlžným oblakem u sportovního areálu' },
-  { image: IMG.lineaPlaza, title: 'Moderní plazy a areály', alt: 'Mlžítko LINEA na moderní městské plaze' }
+  { image: IMG.lineaPlaza, title: 'Moderní plochy a areály', alt: 'Mlžítko LINEA na moderní městské ploše' }
 ];
 
 export const LINEA_VIDEO = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/91d5c8d84_IMG_20260830_183249.mp4';

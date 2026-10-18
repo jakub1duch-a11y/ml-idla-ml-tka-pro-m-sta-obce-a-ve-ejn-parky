@@ -162,8 +162,8 @@ export default function PdMediaGallery({ product }) {
     const curated = getCuratedProductMedia(product);
     const curatedUrls = new Set(curated.map(item => item.url));
     const adminProductPhotos = adminMedia
-      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'technology'].includes(item.media_role))
-      .filter((item) => !isVideo(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
+      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role))
+      .filter((item) => !isVideo(item.file_url) && !isTechnicalMedia(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
       .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — náhled v prostoru`, caption: item.media_role === 'realization' ? 'Náhled v prostoru' : 'Produktový náhled', title: spaceTitle(product.name, item), badge: item.media_role === 'reference' ? 'Reference' : 'Média' }));
 
     const productPhotos = clean([

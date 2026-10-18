@@ -21,9 +21,43 @@ function dedupe(items) {
 }
 
 function StoryFrame({ item, index, total, productName, onOpen, active }) {
+  const frameRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) {
+      setInView(true);
+      return undefined;
+    }
+    const node = frameRef.current;
+    if (!node) {
+      setInView(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    setLoaded(false);
+    setImageFailed(false);
+  }, [item.url]);
+
   return (
     <article
-      className="scroll-photo-frame group absolute inset-0 will-change-transform"
+      ref={frameRef}
+      className={'scroll-photo-frame group absolute inset-0 will-change-transform ' + (inView ? 'is-in-view' : 'is-entering')}
       style={{ zIndex: index + 1 }}
       aria-hidden={active !== index}
     >

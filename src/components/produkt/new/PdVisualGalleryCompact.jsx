@@ -90,6 +90,8 @@ export default function PdVisualGalleryCompact({ product }) {
   const [autoPlay, setAutoPlay] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const galleryRef = useRef(null);
   const swipe = useRef(null);
   const reduced = useReducedMotion();
 
@@ -175,10 +177,23 @@ export default function PdVisualGalleryCompact({ product }) {
   }, [items.length]);
 
   useEffect(() => {
-    if (!autoPlay || reduced || hovered || focused || lightbox !== null || items.length < 2) return undefined;
+    const node = galleryRef.current;
+    if (!node || !('IntersectionObserver' in window)) {
+      setInView(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => setInView(entry.isIntersecting));
+    }, { threshold: 0.18 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [product.slug]);
+
+  useEffect(() => {
+    if (!autoPlay || !inView || reduced || hovered || focused || lightbox !== null || items.length < 2) return undefined;
     const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % items.length), 3600);
     return () => window.clearInterval(timer);
-  }, [autoPlay, reduced, hovered, focused, lightbox, items.length]);
+  }, [autoPlay, inView, reduced, hovered, focused, lightbox, items.length]);
 
   useEffect(() => {
     const onVisibility = () => { if (document.hidden) setAutoPlay(false); };
@@ -202,7 +217,7 @@ export default function PdVisualGalleryCompact({ product }) {
           <p className="pdpc-intro">Velké fotografie, jemné přechody a rychlý přístup ke každému pohledu na konkrétní produkt.</p>
         </motion.div>
 
-        <motion.div className="pdpc-gallery" data-reduced={reduced ? 'true' : 'false'}
+        <motion.div ref={galleryRef} className="pdpc-gallery" data-reduced={reduced ? 'true' : 'false'}
           data-autoplay={autoPlay && !reduced ? 'true' : 'false'}
           onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
           onFocusCapture={() => setFocused(true)} onBlurCapture={(event) => {

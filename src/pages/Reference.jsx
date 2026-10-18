@@ -57,7 +57,7 @@ export default function Reference() {
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace mlžítek, mlžných bran a mlhovišť</h1>
             <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-[hsl(var(--background))]">Od ZOO Praha přes náměstí a parky až po hotely a soukromé zahrady. Navrhujeme nerezové mlžicí systémy, které spojují funkci, design a spolehlivý provoz.</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link to="/poptavka" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Navrhnout váš prostor <ArrowRight size={16} /></Link>
+              <Link to="/poptavka" className="btn-metallic-mist inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Poptat podobné řešení <ArrowRight size={16} /></Link>
               <a href="#realizace" className="btn-secondary-outline inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white">Prohlédnout realizace <ArrowRight size={16} /></a>
             </div>
             <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/82">

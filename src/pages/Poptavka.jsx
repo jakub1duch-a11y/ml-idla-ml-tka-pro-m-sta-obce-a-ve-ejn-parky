@@ -8,7 +8,7 @@ import InquiryHero from '@/components/premium/InquiryHero';
 import InquiryTrust from '@/components/premium/InquiryTrust';
 import GoogleContactBox from '@/components/forms/GoogleContactBox';
 
-const baseProducts = ['AI návrh projektu', 'City Collection', 'Garden Collection', 'Zakázkové řešení', 'Smart řízení', 'Ještě nevím'];
+const baseProducts = ['Návrh projektu', 'Městská mlžítka', 'Zahradní mlžítka', 'Zakázkové řešení', 'Chytré řízení', 'Ještě nevím'];
 const input = 'w-full border-b border-slate-300 bg-transparent px-0 py-3 text-sm text-slate-950 placeholder:text-slate-400 focus:border-teal-700 focus:outline-none';
 
 export default function Poptavka() {

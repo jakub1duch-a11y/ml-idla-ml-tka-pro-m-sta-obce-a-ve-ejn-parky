@@ -27,7 +27,7 @@ const mediaUrl = (url) => (url && !isVideo(url) ? getOptimizedMediaUrl(url) : ur
 const mediaCaption = (item) => item.caption || (
   item.badge === 'Studio' ? 'Studiový náhled produktu' :
   item.badge === 'Schváleno' ? 'Náhled mlžítka v prostoru' :
-  item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Vizualizace umístění' :
+  item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Náhled umístění' :
   item.badge === 'Realizace' ? 'Fotografie z realizace' :
   item.badge === 'Video' || item.badge === 'Hero video' ? 'Video ukázka' :
   item.badge === 'Reálné testování' ? 'Reálné testování v zahradě' :
@@ -237,7 +237,7 @@ export default function PdMediaGallery({ product }) {
   const tabs = [
     { id: 'photos', label: hasGardenTest ? 'Reálné testování v zahradě' : 'Fotografie a produktové náhledy', icon: Images, count: groups.photos.length },
     { id: 'realizations', label: 'Reálné realizace', icon: MapPin, count: groups.realizations.length },
-    { id: 'visualizations', label: 'Vizualizace umístění', icon: Sparkles, count: groups.visualizations.length },
+    { id: 'visualizations', label: 'Náhledy v prostoru', icon: Sparkles, count: groups.visualizations.length },
     { id: 'videos', label: 'Videa', icon: Video, count: groups.videos.length },
   ];
 
@@ -264,9 +264,9 @@ export default function PdMediaGallery({ product }) {
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-[#0B97E8] sm:text-[11px]">Produkt v detailu</p>
             <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">Vhodné pro zahrady, parky i veřejný prostor</h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — reálné fotografie a realizace držíme odděleně od návrhových vizualizací.</p>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — reálné fotografie a realizace držíme odděleně od návrhů umístění.</p>
           </div>
-          <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">Technická schémata patří do sekce „Příprava a instalace“. Vizualizace umístění jsou vždy označené samostatně.</p>
+          <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">Technická schémata patří do sekce „Příprava a instalace“. Pohledy na umístění jsou označené samostatně.</p>
         </div>
 
         {featuredVideo && (

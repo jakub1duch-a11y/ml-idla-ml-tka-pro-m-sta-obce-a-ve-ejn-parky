@@ -50,6 +50,7 @@ import Eventy from '@/pages/kategorie/Eventy';
 import Outdoor from '@/pages/kategorie/Outdoor';
 import Art from '@/pages/kategorie/Art';
 import Deti from '@/pages/kategorie/Deti';
+import UseCaseCategory from '@/pages/kategorie/UseCaseCategory';
 import Gdpr from '@/pages/Gdpr';
 import Admin from '@/pages/admin/Admin';
 import AdminLogin from '@/pages/admin/AdminLogin';
@@ -181,6 +182,8 @@ const AuthenticatedApp = () => {
         <Route path="/mlzitka-pro-mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/mesta-obce" element={<Navigate to="/mlzitka-pro-mesta-obce" replace />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
+        <Route path="/parky" element={<Navigate to="/kategorie/parky-hriste" replace />} />
+        <Route path="/parky-a-hriste" element={<Navigate to="/kategorie/parky-hriste" replace />} />
         <Route path="/kategorie/koupaliste" element={<Koupaliste />} />
         <Route path="/kategorie/architekti" element={<Architekti />} />
         <Route path="/kategorie/komercni" element={<Komercni />} />
@@ -188,6 +191,7 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/outdoor-zahrady" element={<Outdoor />} />
         <Route path="/kategorie/art-instalace" element={<Art />} />
         <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
+        <Route path="/kategorie/:categorySlug" element={<UseCaseCategory />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
         <Route path="/faq" element={<Navigate to="/podpora" replace />} />

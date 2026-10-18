@@ -1,4 +1,4 @@
-import { Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Calculator, PlayCircle, Leaf, FileText, Landmark, Dumbbell } from 'lucide-react';
+import { Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, Cpu, ShieldCheck, Wrench, Download, Calculator, PlayCircle, Leaf, FileText, Landmark, Dumbbell, TrainFront, Hotel } from 'lucide-react';
 
 // Produktové kategorie — řazeno podle relevance pro městskou klientelu.
 export const PRODUCT_LINKS = [
@@ -21,6 +21,8 @@ export const USAGE_GROUPS = [
     links: [
       { icon: Building2, label: 'Města a obce', path: '/kategorie/mesta-obce' },
       { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste' },
+      { icon: TrainFront, label: 'Dopravní uzly a nádraží', path: '/kategorie/dopravni-uzly' },
+      { icon: Landmark, label: 'Veřejné instituce', path: '/kategorie/verejne-instituce' },
       { icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti' },
       { icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti' }
     ]
@@ -29,7 +31,7 @@ export const USAGE_GROUPS = [
     title: 'Volný čas a sport',
     links: [
       { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste' },
-      { icon: Dumbbell, label: 'Sportoviště a mlžiště', path: '/kategorie/parky-hriste' },
+      { icon: Dumbbell, label: 'Sportoviště a mlžiště', path: '/kategorie/sportoviste' },
       { icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy' },
       { icon: Sparkles, label: 'Autorské instalace', path: '/kategorie/art-instalace' }
     ]
@@ -38,6 +40,7 @@ export const USAGE_GROUPS = [
     title: 'Komerce a rezidence',
     links: [
       { icon: Factory, label: 'Gastro, wellness a hotely', path: '/kategorie/komercni' },
+      { icon: Hotel, label: 'Hotely a resorty', path: '/kategorie/hotely-resorty' },
       { icon: Flower2, label: 'Zahrady a terasy', path: '/kategorie/outdoor-zahrady' }
     ]
   }

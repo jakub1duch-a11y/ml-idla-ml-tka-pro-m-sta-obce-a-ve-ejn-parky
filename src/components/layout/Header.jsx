@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus, Droplets, Cpu, Wifi } from 'lucide-react';
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus, Droplets, Cpu, Wifi, TrainFront, Landmark, Hotel } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -24,11 +24,15 @@ const USAGE_LINKS = [
 { icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-cyan' },
 { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-secondary' },
 { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-secondary' },
+{ icon: TrainFront, label: 'Dopravní uzly a nádraží', path: '/kategorie/dopravni-uzly', color: 'text-secondary' },
+{ icon: Landmark, label: 'Veřejné instituce', path: '/kategorie/verejne-instituce', color: 'text-secondary' },
 { icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/rezidencni-mlzeni', color: 'text-accent' },
 { icon: Sparkles, label: 'Autorské instalace', path: '/kategorie/art-instalace', color: 'text-accent' },
 { icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-secondary' },
 { icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-secondary' },
 { icon: Factory, label: 'Gastro, wellness a hotely', path: '/kategorie/komercni', color: 'text-accent' },
+{ icon: TrainFront, label: 'Sportoviště', path: '/kategorie/sportoviste', color: 'text-secondary' },
+{ icon: Hotel, label: 'Hotely a resorty', path: '/kategorie/hotely-resorty', color: 'text-accent' },
 { icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-secondary' }];
 
 

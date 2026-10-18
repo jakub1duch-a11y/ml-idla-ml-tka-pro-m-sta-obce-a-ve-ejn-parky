@@ -101,13 +101,13 @@ export default function HomeHero() {
               Designová městská i zahradní mlžítka, mlžné brány a mlhoviště pro náměstí, parky, hřiště, sportoviště a terasy. Návrh i chytré řízení podle konkrétního místa.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
-                Zobrazit produkty <ArrowRight size={17} />
+              <Link to="/poptavka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#06283A] shadow-[0_22px_60px_rgba(24,183,230,.32)] transition hover:-translate-y-0.5 hover:bg-[#69DDF4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#07131D]">
+                Navrhnout řešení <ArrowRight size={17} />
               </Link>
-              <a href="#home-product-gallery" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/[.08] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/28"><ArrowRight size={15} /></span>
-                Prohlédnout galerii
-              </a>
+              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/35 bg-white/[.10] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:border-white/60 hover:bg-white/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/35"><ArrowRight size={15} /></span>
+                Prohlédnout produkty
+              </Link>
             </div>
           </motion.div>
 

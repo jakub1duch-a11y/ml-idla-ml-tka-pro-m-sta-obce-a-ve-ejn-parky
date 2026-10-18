@@ -13,7 +13,7 @@ import SpoluPartnerForm from '@/components/spoluprace/SpoluPartnerForm';
 const BASE_URL = 'https://mlzidla.cz';
 const PATH = '/spoluprace';
 
-const HERO_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6158a8485_generated_image.png';
+const HERO_IMAGE = '/media/optimized/6158a8485_generated_image.webp';
 
 const VISUALS = [
   {
@@ -23,13 +23,13 @@ const VISUALS = [
     desc: 'Mlžná brána v reálném měřítku náměstí — ukazuje průchodnost, výšku mlžného pásu i vliv na pobytovou kvalitu prostoru.',
   },
   {
-    url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/8f6a1245f_generated_image.png',
+    url: '/media/optimized/8f6a1245f_generated_image.webp',
     tag: 'Technický podklad · schéma',
     alt: 'Technické schéma mlžné brány s rozměry, tryskami a přívodem vody',
     desc: 'Technický podklad s rozměry, počtem trysek a napojením na vodu — vstup do projektové dokumentace a koordinace profesí.',
   },
   {
-    url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/62f148d8b_generated_image.png',
+    url: '/media/optimized/62f148d8b_generated_image.webp',
     tag: 'Zahrada a terasa · fotovizualizace',
     alt: 'Vizualizace zahradního mlžítka u pergoly na terase',
     desc: 'Zahradní mlžítko u pergoly — nízkotlaké řešení na vodovodní řad, bez čerpadla, s jemnou mlhou pro pobytovou zónu.',

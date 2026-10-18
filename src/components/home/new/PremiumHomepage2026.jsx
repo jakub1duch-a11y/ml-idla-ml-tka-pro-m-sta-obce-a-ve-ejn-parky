@@ -25,7 +25,7 @@ const media = {
   mrak: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
   gate: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
   linea: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg',
-  steblo: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+  steblo: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
   brochure: '/media/optimized/874fb533f_kotveniproduktu.webp'
 };
 
@@ -91,7 +91,7 @@ export default function PremiumHomepage2026() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} className="hidden lg:block">
             <div className="relative rounded-[2.4rem] border border-white/14 p-5 backdrop-blur-xl shadow-[0_32px_100px_rgba(0,0,0,.28)] bg-[hsl(var(--background))]">
               <div className="relative overflow-hidden rounded-[1.8rem] bg-[#0B2034]">
-                <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/20c6958fe_file_000000006f94821096150eb04577a01b.jpg" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="/media/optimized/20c6958fe_file_000000006f94821096150eb04577a01b.webp" alt="Mlžná brána ve veřejném prostoru" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
                 <button type="button" className="absolute bottom-5 left-5 inline-flex items-center gap-3 rounded-full border border-white/20 px-4 py-3 text-sm font-bold backdrop-blur-md bg-[hsl(var(--ring))] text-[hsl(var(--accent-foreground))] uppercase">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07131D]"><Play size={16} fill="currentColor" /></span>
@@ -168,7 +168,7 @@ export default function PremiumHomepage2026() {
               <figcaption className="mt-3 text-xs leading-5 text-white/70">Ilustrační sestava. Konkrétní vybavení dle návrhu řešení.</figcaption>
             </figure>
             <figure className="min-w-0 overflow-hidden rounded-2xl border border-white/15 bg-black">
-              <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f80b74fc4_ovladani_mlzitek_z_mobilu.png" alt="Ilustrační náhled ovládání mlžení v mobilním telefonu" width="1024" height="1536" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
+              <img src="/media/optimized/f80b74fc4_ovladani_mlzitek_z_mobilu.webp" alt="Ilustrační náhled ovládání mlžení v mobilním telefonu" width="1024" height="1536" className="h-auto w-full object-contain" loading="lazy" decoding="async" />
             </figure>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droplets, Ruler, Gauge } from 'lucide-react';
 
-export const TEEPEE_STUDIO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c7080572_generated_image.png';
+export const TEEPEE_STUDIO_URL = '/media/optimized/9c7080572_generated_image.webp';
 export const TEEPEE_NOZZLE_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae73692aa_generated_image.png';
 
 const FACTS = [

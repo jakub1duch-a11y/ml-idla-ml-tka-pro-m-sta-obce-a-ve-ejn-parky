@@ -44,7 +44,7 @@ export default function UrbanCoolingExperience() {
       </motion.div>
 
       <motion.figure className="ucx-hero-media" style={{ y: mediaY, scale: mediaScale }}>
-        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/01d287da0_1789937295981.png" alt="MLŽIDLA v městském parku" fetchPriority="high" decoding="async" />
+        <img src="/media/optimized/01d287da0_1789937295981.webp" alt="MLŽIDLA v městském parku" fetchPriority="high" decoding="async" />
         <span className="ucx-hero-glass">Městské ochlazování · nerez · vodní mlha</span>
       </motion.figure>
     </section>

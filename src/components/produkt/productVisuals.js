@@ -1,20 +1,20 @@
 // Pravidlo pro všechny vizualizace: průměr trubky mlžítka max. Ø70 mm (kulatá) / 70×70 mm (jekl).
 const IMG = {
-  bendyHero: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ded6a5d3f_generated_image.png',
-  nozzleDetail: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a937054fe_generated_image.png',
-  install: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9e7d7a670_generated_image.png',
-  ostrevHero: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2a6c23aa2_generated_image.png',
-  lineaPrague: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c4c1b47a8_file_000000002440821082cc47cf9c186371.png',
-  lineaPlaza: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1cb5f9b18_file_000000005c8081f5ad3ec61cc9e1c7cb.png',
-  lineaPraguePortrait: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/512446aa1_file_00000000ada8822fab4c3e868219c559.png',
-  lineaSquare: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/de905f415_generated_image.png',
-  anchorDetail: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6fed4704e_06_Detail_skryte_patky_a_privodu_vody.png',
-  spiralAnchor: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/20aa9f5f9_09_Vizualizace_Mlzna_spirala_skryta_patka.png',
-  kidsPool: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/63f7ce7ec_file_00000000817481f4a65e35df068e49fc.png',
-  kidChild: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/97764c6a5_Bendymlznabrana.jpg',
-  gatesStreet: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/dae0f65d1_Mlznebrany-gatemlznabrana.jpg',
-  mistField: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/61b270214_Sportovisteamlznehristemlhoviste.jpg',
-  trutnov: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/aff0ffe26_2026-08-31_Trutnov_Krakonosovo-namesti_04_Vizualizace_3x-LINEA.png'
+  bendyHero: '/media/optimized/ded6a5d3f_generated_image.webp',
+  nozzleDetail: '/media/optimized/a937054fe_generated_image.webp',
+  install: '/media/optimized/9e7d7a670_generated_image.webp',
+  ostrevHero: '/media/optimized/2a6c23aa2_generated_image.webp',
+  lineaPrague: '/media/optimized/c4c1b47a8_file_000000002440821082cc47cf9c186371.webp',
+  lineaPlaza: '/media/optimized/1cb5f9b18_file_000000005c8081f5ad3ec61cc9e1c7cb.webp',
+  lineaPraguePortrait: '/media/optimized/512446aa1_file_00000000ada8822fab4c3e868219c559.webp',
+  lineaSquare: '/media/optimized/de905f415_generated_image.webp',
+  anchorDetail: '/media/optimized/6fed4704e_06_Detail_skryte_patky_a_privodu_vody.webp',
+  spiralAnchor: '/media/optimized/20aa9f5f9_09_Vizualizace_Mlzna_spirala_skryta_patka.webp',
+  kidsPool: '/media/optimized/63f7ce7ec_file_00000000817481f4a65e35df068e49fc.webp',
+  kidChild: '/media/optimized/97764c6a5_Bendymlznabrana.webp',
+  gatesStreet: '/media/optimized/dae0f65d1_Mlznebrany-gatemlznabrana.webp',
+  mistField: '/media/optimized/61b270214_Sportovisteamlznehristemlhoviste.webp',
+  trutnov: '/media/optimized/aff0ffe26_2026-08-31_Trutnov_Krakonosovo-namesti_04_Vizualizace_3x-LINEA.webp'
 };
 
 // Technická sekce — skrytá patka a přívod vody (společná pro produkty s pevnou instalací).

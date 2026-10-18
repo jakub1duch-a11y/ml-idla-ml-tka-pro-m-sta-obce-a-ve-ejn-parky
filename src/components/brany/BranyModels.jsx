@@ -15,7 +15,7 @@ const MODELS = [
     name: 'GATE70-V',
     tag: 'Lomený oblouk',
     desc: 'Oblouková varianta pro náměstí a parky, kde má brána fungovat i jako architektonická dominanta.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/effe6c584_file_0000000022a0821096a8f7e02e1adbff.png',
+    image: '/media/optimized/effe6c584_file_0000000022a0821096a8f7e02e1adbff.webp',
     path: '/gate70'
   },
   {

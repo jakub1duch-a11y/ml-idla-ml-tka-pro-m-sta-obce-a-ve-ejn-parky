@@ -20,7 +20,7 @@ const useCases = [
     icon: Sparkles,
     title: 'STÉBLO',
     text: 'Organický nerezový prvek pro jemnou vodní mlhu v zahradách, parcích a pobytových zónách.',
-    image: stebloPhoto || 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+    image: stebloPhoto || '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
     link: '/produkt/mlzitko-steblo',
   },
   {
@@ -72,7 +72,7 @@ const products = [
     name: 'STÉBLO',
     label: 'Organický tvar',
     text: 'Jemná vertikální linie pro zahrady, parky a komornější odpočinkové zóny.',
-    image: stebloPhoto || 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg',
+    image: stebloPhoto || '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
     link: '/produkt/mlzitko-steblo',
   },
   {

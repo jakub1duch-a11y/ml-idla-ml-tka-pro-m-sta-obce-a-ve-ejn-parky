@@ -16,7 +16,7 @@ export default function CityGatesSection() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:px-8">
         <motion.div initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="order-2 lg:order-1">
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ecaf9a72b_file_0000000075bc82108187190f4dd478c4.png"
+            src="/media/optimized/ecaf9a72b_file_0000000075bc82108187190f4dd478c4.webp"
             alt="Děti probíhají mlžnou bránou u městského koupaliště"
             className="h-[300px] w-full object-cover sm:h-[420px]"
             loading="lazy" />

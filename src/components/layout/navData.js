@@ -2,13 +2,13 @@ import { Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Bab
 
 // Produktové kategorie — řazeno podle relevance pro městskou klientelu.
 export const PRODUCT_LINKS = [
-  { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka#catalog', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cfc837b23_image.png', featured: true },
-  { label: 'Mlžítka pro města', sub: 'Sloupová mlžítka do veřejného prostoru', path: '/kolekce/city', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/da0942c09_mlzidla-mlzitka-pro-mesta-obce.png' },
+  { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka#catalog', image: '/media/optimized/cfc837b23_image.webp', featured: true },
+  { label: 'Mlžítka pro města', sub: 'Sloupová mlžítka do veřejného prostoru', path: '/kolekce/city', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
   { label: 'Mlžné brány', sub: 'Průchozí zóny, vstupy a koupaliště', path: '/mlzne-brany', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
-  { label: 'LINEA', sub: 'Kulatá trubka nebo hranatý jekl', path: '/linea', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/512446aa1_file_00000000ada8822fab4c3e868219c559.png' },
-  { label: 'Mlžiště a mlhoviště', sub: 'Sestavy pro pobytové plochy', path: '/mlhoviste', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/61b270214_Sportovisteamlznehristemlhoviste.jpg' },
-  { label: 'Autorské instalace', sub: 'Mlžné skulptury na míru', path: '/kolekce/art', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/68953132b_IMG_3524.jpg' },
-  { label: 'Zahradní kolekce', sub: 'Terasy, gastro a rezidence', path: '/kolekce/garden', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b94c771e1_a982a794f_mlzitkosteblo.jpg', crop: 'garden' },
+  { label: 'LINEA', sub: 'Kulatá trubka nebo hranatý jekl', path: '/linea', image: '/media/optimized/512446aa1_file_00000000ada8822fab4c3e868219c559.webp' },
+  { label: 'Mlžiště a mlhoviště', sub: 'Sestavy pro pobytové plochy', path: '/mlhoviste', image: '/media/optimized/61b270214_Sportovisteamlznehristemlhoviste.webp' },
+  { label: 'Autorské instalace', sub: 'Mlžné skulptury na míru', path: '/kolekce/art', image: '/media/optimized/68953132b_IMG_3524.webp' },
+  { label: 'Zahradní kolekce', sub: 'Terasy, gastro a rezidence', path: '/kolekce/garden', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
   { label: 'Pronájem GO', sub: 'Eventy a festivaly', path: '/pronajem', textOnly: true }
 ];
 

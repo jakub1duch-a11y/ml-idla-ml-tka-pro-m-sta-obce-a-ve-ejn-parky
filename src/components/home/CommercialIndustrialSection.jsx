@@ -7,7 +7,7 @@ const EXPERTISE = [
   {
     icon: Ruler,
     title: 'Návrh na míru',
-    desc: 'Rozměr, tvar i kotvení navrhneme přesně pro váš prostor — nikdy neúčtovány katalogové kompromisy.',
+    desc: 'Rozměr, tvar i kotvení přizpůsobíme podmínkám instalace. Výsledkem je řešení podle projektu, ne univerzální katalogová sestava.',
   },
   {
     icon: FlaskConical,

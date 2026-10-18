@@ -98,7 +98,7 @@ export default function MestskeOchlazovani() {
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
         <div className="rounded-3xl bg-gradient-to-br from-cyan-50 to-slate-50 border border-cyan-100 p-9 lg:p-14 text-center">
-          <p className="text-xs font-mono uppercase tracking-[.2em] text-cyan-700 mb-4">VÁŠ PROSTOR · NÁŠ NÁVRH</p>
+          <p className="text-xs font-mono uppercase tracking-[.2em] text-cyan-700 mb-4">MĚSTSKÉ OCHLAZOVÁNÍ · OD KONCEPTU K REALIZACI</p>
           <h2 className="text-3xl lg:text-5xl font-bold tracking-tight">Máte ve městě místo, které se v létě přehřívá?</h2>
           <p className="max-w-2xl mx-auto mt-5 text-lg text-slate-600">Pošlete nám fotografii, situační plán nebo krátký popis. Navrhneme první variantu ochlazení.</p>
           <Link to="/poptavka" className="mt-8 inline-flex items-center gap-2 rounded-full bg-slate-950 text-white px-8 py-4 font-semibold">Navrhnout ochlazovací řešení <ArrowRight size={16} /></Link>

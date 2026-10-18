@@ -75,7 +75,7 @@ export default function PdArPromo({ product }) {
             <span className="h-1.5 w-1.5 rounded-full bg-[#22D3EE]" /> AR NÁHLED
           </span>
           <p className="absolute inset-x-0 bottom-0 bg-[#0A1628]/80 px-4 py-2.5 font-mono text-[10px] tracking-[.12em] text-[#22D3EE] backdrop-blur-sm">
-            NA DISPLEJI: VÁŠ PROSTOR S PRODUKTEM
+            VIZUALIZACE VYBRANÉHO MLŽÍTKA
           </p>
         </div>
 

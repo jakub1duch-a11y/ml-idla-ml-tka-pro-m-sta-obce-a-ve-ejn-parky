@@ -22,7 +22,7 @@ export function CoverPage({ c }) {
 }
 
 export function SolutionPage({ c }) {
-  return <OfferFlowPage title="Řešení pro váš prostor" subtitle={c.forWhom}>
+  return <OfferFlowPage title="Návrh řešení a cenová nabídka" subtitle={c.forWhom}>
     <p className="op-txt">{c.goal}</p><p className="op-txt">{c.solution}</p>
     {c.pick(0) && <img className="op-flow-photo" src={c.pick(0)} alt={c.productName}/>}
     {c.benefits.map(b => <p className="op-txt" key={b}>{b}</p>)}

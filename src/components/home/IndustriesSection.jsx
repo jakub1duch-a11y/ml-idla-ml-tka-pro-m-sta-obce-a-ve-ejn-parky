@@ -79,7 +79,7 @@ export default function IndustriesSection() {
             transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.12 }}
             className="mt-5 text-base leading-7 text-[#5A6B78] sm:text-lg"
           >
-            Od náměstí po zahradu, od festivalu po hotelovou terasu. Navrhujeme, vyrábíme a instalujeme nerezová mlžítka přesně pro váš prostor a způsob využití.
+            Od náměstí a parků po festivaly a hotelové terasy. Navrhujeme, vyrábíme a instalujeme nerezová mlžítka podle účelu, provozu a podmínek konkrétní lokality.
           </motion.p>
         </div>
 

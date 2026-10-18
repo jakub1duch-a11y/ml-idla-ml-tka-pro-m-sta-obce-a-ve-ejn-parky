@@ -41,7 +41,7 @@ export default function Poptavka() {
   useEffect(() => {
     setSEO({
       title: 'Nezávazná poptávka | MLŽIDLA®',
-      description: 'Navrhneme architektonický mlžicí systém přesně pro váš prostor.',
+      description: 'Navrhneme architektonický mlžicí systém podle typu místa, provozu a technických podmínek.',
       canonicalPath: '/poptavka',
     });
   }, []);

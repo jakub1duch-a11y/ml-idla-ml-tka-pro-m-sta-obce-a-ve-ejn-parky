@@ -12,7 +12,7 @@ const SRC_DIR = path.resolve('src');
 const OUT_DIR = path.resolve('public/media/optimized');
 const MANIFEST_PATH = path.join(OUT_DIR, 'manifest.json');
 const TMP_DIR = await fs.mkdtemp(path.join(os.tmpdir(), 'mlzidla-media-'));
-const MEDIA_RE = new RegExp(`https://media\\.base44\\.com/(images|videos)/public/${APP_ID}/[^'\\\"\\s)]+`, 'g');
+const MEDIA_RE = /https:\/\/media\.base44\.com\/(images|videos)\/public\/[^/]+\/[^'\"\s)]+/g;
 const BASE44_API_IMAGE_RE = /https:\/\/base44\.app\/api\/apps\/[^/]+\/files\/mp\/public\/[^/]+\/[^'\"\s)]+\.(?:png|jpe?g|webp)(?:\?[^'\"\s)]*)?/gi;
 const TEXT_EXTS = new Set(['.js','.jsx','.ts','.tsx','.css','.html','.json','.md']);
 await fs.mkdir(OUT_DIR, { recursive: true });

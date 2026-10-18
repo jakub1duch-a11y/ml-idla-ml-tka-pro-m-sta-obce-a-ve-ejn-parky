@@ -25,7 +25,10 @@ export function ImageOptimized({
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    if (!src) setHasError(true);
+    // Reset image state when a card reuses this component for another product.
+    // Otherwise a previous load/error can leave the new source hidden or stuck.
+    setIsLoaded(false);
+    setHasError(!src);
   }, [src]);
 
   const handleLoad = () => {

@@ -7,32 +7,32 @@ const featured = [
   {
     name: 'Vertigo',
     desc: 'Nerezová šroubovice pnoucí se do výšky 3m.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/17b6b7c94_generated_image.png',
+    image: '/media/optimized/17b6b7c94_generated_image.webp',
   },
   {
     name: 'GATE 80 — Vstupní mlžná brána',
     desc: 'Spektakulární vstupní brána s 8 tryskami.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/e03a84d77_L-Mltko_GATE_60_3R-1.png',
+    image: '/media/optimized/e03a84d77_L-Mltko_GATE_60_3R-1.webp',
   },
   {
     name: 'Mlžná brána - Rainbow GATE',
     desc: 'Barevný půlkruh s jemnou mlhou po obvodu — mlžiště nejen pro děti.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/7ee43ab21_generated_image.png',
+    image: '/media/optimized/7ee43ab21_generated_image.webp',
   },
   {
     name: 'Mlžný Slunečník',
     desc: 'Skládací nerezová konstrukce "MLŽÍTKO" pro eventy i soukromé akce.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/bf2ac4965_generated_image.png',
+    image: '/media/optimized/bf2ac4965_generated_image.webp',
   },
   {
     name: 'Icespot - Mlžný sloup',
     desc: 'Mlžný sloup je jemnou mlhou ideálně pro sedící osoby. Vandal-proof, celoroční instalace.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/b75d2a5bb_generated_image.png',
+    image: '/media/optimized/b75d2a5bb_generated_image.webp',
   },
   {
     name: 'mlžné brány MARATON',
     desc: 'Modulární tunel MARATON pro ochlazení velkých davů na akcích.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/3a39f6017_generated_image.png',
+    image: '/media/optimized/3a39f6017_generated_image.webp',
   },
 ];
 

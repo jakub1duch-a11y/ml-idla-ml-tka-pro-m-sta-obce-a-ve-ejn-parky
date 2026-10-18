@@ -6,16 +6,16 @@ import { base44 } from '@/api/base44Client';
 import GalleryLightbox from '../GalleryLightbox';
 
 const fallbackPhotos = [
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/e508e04b9_img-4513.jpeg',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/af3c01f8d_3695-fullsizerender-1.jpeg',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/a01ebd4e8_volnytvar-motorkar-apli.png',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/6bcee1127_kontinent-mlzitko.png',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.jpg',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/0b7f23005_3734-fullsizerender.jpg',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/c9de9fd45_img-3558.jpeg',
+  '/media/optimized/e508e04b9_img-4513.webp',
+  '/media/optimized/1e2e816a4_ker-mlzitko.webp',
+  '/media/optimized/af3c01f8d_3695-fullsizerender-1.webp',
+  '/media/optimized/a01ebd4e8_volnytvar-motorkar-apli.webp',
+  '/media/optimized/6bcee1127_kontinent-mlzitko.webp',
+  '/media/optimized/d6618acdb_cd290d8c-b544-42b4-9823-9661da467f33.webp',
+  '/media/optimized/0b7f23005_3734-fullsizerender.webp',
+  '/media/optimized/c9de9fd45_img-3558.webp',
   'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/f8370e628_573bb0e8-cd2d-4509-9b8f-738084ea3b2b.webp',
-  'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/f01bc8d2c_img-4587.jpeg',
+  '/media/optimized/f01bc8d2c_img-4587.webp',
   'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/9e50cca6a_573bb0e8-cd2d-4509-9b8f-738084ea3b2b1.webp',
   'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/38d5a8482_Mlzitko-do-zahrady-tvar-mrak-VDMA.webp',
 ];

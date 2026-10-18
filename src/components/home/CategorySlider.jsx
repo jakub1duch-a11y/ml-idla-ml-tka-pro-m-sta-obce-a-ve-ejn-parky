@@ -12,7 +12,7 @@ const categories = [
   tag: 'Parky a hřiště',
   title: 'Bezpečné mlžení pro dětská hřiště',
   desc: 'Interaktivní mlžné prvky pro parky a mateřské školy. Potravinářská nerez, bez chemie — jen radost a osvěžení pro nejmenší.',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg',
+  image: '/media/optimized/62841e4f5_img-5153.webp',
   path: '/kategorie/parky-hriste'
 },
 {

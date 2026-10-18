@@ -61,7 +61,7 @@ const defaultSlides = [
   name: 'MLŽIŠTĚ',
   subtitle: 'Radost pro děti.',
   desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg alt="mlžné prvky pro školky"',
+  image: '/media/optimized/62841e4f5_img-5153.webp alt="mlžné prvky pro školky"',
   badge: 'Dětské mlžiště',
   cta: '/kategorie/skoly-skolky-deti'
 }];

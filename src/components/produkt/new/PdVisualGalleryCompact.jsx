@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Maximize2, Pause, Play, X, Droplets } from '
 import { base44 } from '@/api/base44Client';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import './PdVisualGalleryCompact.css';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)([?#]|$)/i;
@@ -85,6 +86,7 @@ function GalleryImage({ item, index, productName, onOpen }) {
 
 export default function PdVisualGalleryCompact({ product }) {
   const [mediaFiles, setMediaFiles] = useState([]);
+  const [approvedVisuals, setApprovedVisuals] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightbox, setLightbox] = useState(null);
   const [autoPlay, setAutoPlay] = useState(false);
@@ -98,19 +100,25 @@ export default function PdVisualGalleryCompact({ product }) {
   useEffect(() => {
     let active = true;
     setMediaFiles([]);
+    setApprovedVisuals([]);
     setActiveIndex(0);
     setLightbox(null);
     setAutoPlay(!reduced);
-    base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 100)
-      .then((items = []) => { if (active) setMediaFiles(items || []); })
-      .catch(() => { if (active) setMediaFiles([]); });
+    Promise.all([
+      base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160).catch(() => []),
+      base44.entities.VisualizationAsset.filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 100).catch(() => []),
+    ]).then(([media, visuals]) => {
+      if (!active) return;
+      setMediaFiles((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+    }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
     return () => { active = false; };
   }, [product.slug, reduced]);
 
   const items = useMemo(() => {
     const admin = mediaFiles
       .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role))
-      .filter((item) => isImage(item.file_url))
+      .filter((item) => isImage(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
       .map((item) => {
         const role = item.media_role;
         const label = role === 'realization' ? 'V prostoru' : role === 'render' ? 'Produkt' : role === 'detail' ? 'Detail' : role === 'reference' ? 'Použití' : role === 'hero' ? 'Hlavní pohled' : 'Galerie';
@@ -125,7 +133,7 @@ export default function PdVisualGalleryCompact({ product }) {
       });
 
     const curated = getCuratedProductMedia(product)
-      .filter((item) => isImage(item.url))
+      .filter((item) => isImage(item.url) && isProductMediaAllowed(product, item.url, item.title))
       .map((item) => ({
         url: item.url,
         title: item.title || (product.name + ' — fotografie'),
@@ -152,7 +160,7 @@ export default function PdVisualGalleryCompact({ product }) {
         fit: 'contain',
         alt: product.name + ' — hlavní fotografie'
       },
-      ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []).filter(isImage).map((url, index) => ({
+      ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []).filter((url) => isImage(url) && isProductMediaAllowed(product, url)).map((url, index) => ({
         url,
         title: product.name + ' — fotografie ' + (index + 1),
         caption: 'Produkt, detaily a provedení',
@@ -162,8 +170,17 @@ export default function PdVisualGalleryCompact({ product }) {
       }))
     ].filter(Boolean);
 
-    return dedupe([...admin, ...curated, ...productItems]).slice(0, 12);
-  }, [mediaFiles, product]);
+    const approved = approvedVisuals.map((item) => ({
+      url: item.thumbnail_url || item.image_url,
+      title: item.title || (product.name + ' — pohled v prostoru'),
+      caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · ') || 'Umístění produktu v prostoru',
+      badge: 'V prostoru',
+      fit: 'cover',
+      alt: product.name + ' — pohled v prostoru'
+    }));
+
+    return dedupe([...admin, ...approved, ...curated, ...productItems]).slice(0, 12);
+  }, [mediaFiles, approvedVisuals, product]);
 
   useEffect(() => { setActiveIndex((index) => clampIndex(index, items.length)); }, [items.length]);
 

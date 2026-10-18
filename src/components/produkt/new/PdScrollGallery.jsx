@@ -25,6 +25,19 @@ function StoryFrame({ item, index, total, productName, onOpen, active }) {
   const [inView, setInView] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(media.matches);
+    update();
+    if (media.addEventListener) media.addEventListener('change', update);
+    else media.addListener(update);
+    return () => {
+      if (media.removeEventListener) media.removeEventListener('change', update);
+      else media.removeListener(update);
+    };
+  }, []);
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -59,12 +72,12 @@ function StoryFrame({ item, index, total, productName, onOpen, active }) {
       ref={frameRef}
       className={'scroll-photo-frame group absolute inset-0 will-change-transform ' + (inView ? 'is-in-view' : 'is-entering')}
       style={{ zIndex: index + 1 }}
-      aria-hidden={active !== index}
+      aria-hidden={!(isMobile || active === index)}
     >
       <button
         type="button"
         onClick={() => onOpen(index)}
-        tabIndex={active === index ? 0 : -1}
+        tabIndex={isMobile || active === index ? 0 : -1}
         className="relative h-full w-full overflow-hidden bg-[#07131D] text-left"
         aria-label={`Otevřít fotografii ${index + 1} přes celou obrazovku`}
       >

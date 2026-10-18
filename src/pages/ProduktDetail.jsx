@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { Loader } from 'lucide-react';
+import { Loader, Droplets, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';

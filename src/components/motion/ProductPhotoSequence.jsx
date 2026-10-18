@@ -5,10 +5,11 @@ import { ArrowRight, Pause, Play } from 'lucide-react';
 import useMotionPlayback from './useMotionPlayback';
 import MotionHeading from './MotionHeading';
 import '@/styles/content-motion.css';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 export default function ProductPhotoSequence({ product, zoom = false }) {
   const { ref, playing, reduced, paused, setPaused } = useMotionPlayback();
-  const photos = useMemo(() => [...new Set([product?.image_url, ...(Array.isArray(product?.gallery_urls) ? product.gallery_urls : [])].filter(url => typeof url === 'string' && url.trim() && !/\.(webm|mp4|mov)([?#]|$)/i.test(url)))].slice(0, 4), [product?.image_url, product?.gallery_urls]);
+  const photos = useMemo(() => [...new Set([product?.image_url, ...(Array.isArray(product?.gallery_urls) ? product.gallery_urls.filter((url) => isProductMediaAllowed(product, url)) : [])].filter(url => typeof url === 'string' && url.trim() && !/\.(webm|mp4|mov)([?#]|$)/i.test(url)))].slice(0, 4), [product?.slug, product?.image_url, product?.gallery_urls]);
   const [index, setIndex] = useState(0);
   const [failed, setFailed] = useState(new Set());
   const usable = photos.filter(url => !failed.has(url));

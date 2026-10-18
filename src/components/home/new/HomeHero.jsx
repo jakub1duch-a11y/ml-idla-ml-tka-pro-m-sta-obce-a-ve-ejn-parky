@@ -30,13 +30,13 @@ const tiles = [
 {
   title: 'MLŽNÁ BRÁNA',
   text: 'Průchozí vodní mlha pro náměstí',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
+  image: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
   link: '/mlzne-brany'
 },
 {
   title: 'BENDY',
   text: 'Organická linie pro pobytové zóny',
-  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
+  image: '/media/optimized/b47ae10f2_bendymlzitko.webp',
   link: '/produkt/mlzitko-bendy'
 }];
 
@@ -60,23 +60,30 @@ export default function HomeHero() {
             initial={{ scale: 1.04 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
-          {reduced ?
-            <img
-              src={VIDEO_ASSETS.heroCityPromo.poster}
-              alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
-              fetchPriority="high"
-              className="hero-home-media h-full w-full object-cover object-[58%_center] sm:object-center" /> :
-            <video
-              src={VIDEO_ASSETS.heroCityPromo.src}
-              poster={VIDEO_ASSETS.heroCityPromo.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-hidden="true"
-              className="hero-home-media h-full w-full object-cover object-[58%_center] sm:object-center" />
-            }
+          {/* Vždy vykresli lokální poster pod videem. Pokud externí video selže nebo ho prohlížeč zablokuje, hero nikdy nezůstane prázdné. */}
+          <img
+            data-hero-fallback
+            src={VIDEO_ASSETS.heroCityPromo.poster}
+            alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
+            fetchPriority="high"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
+            }}
+            className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
+          />
+          {!reduced && <video
+            src={VIDEO_ASSETS.heroCityPromo.src}
+            poster={VIDEO_ASSETS.heroCityPromo.poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            onError={(event) => { event.currentTarget.style.display = 'none'; }}
+            className="relative h-full w-full object-cover object-[58%_center] sm:object-center"
+          />}
         </motion.div>
 
         <div className="hero-home-colorwash absolute inset-0" />

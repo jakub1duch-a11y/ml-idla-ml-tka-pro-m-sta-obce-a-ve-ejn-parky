@@ -1,7 +1,7 @@
 {
   "images": [
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/cd22b84b0_1000000697.jpg",
+      "url": "/media/optimized/cd22b84b0_1000000697.webp",
       "output": "/media/optimized/db-cdaf7d83f1-cd22b84b0_1000000697.webp",
       "before": 1921629,
       "after": 244348,
@@ -64,7 +64,7 @@
       "source": "Product entity"
     },
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25f7cd749_volavka-rezidencnizahrady.jpg",
+      "url": "/media/optimized/25f7cd749_volavka-rezidencnizahrady.webp",
       "output": "/media/optimized/db-d0e58a79d9-25f7cd749_volavka-rezidencnizahrady.webp",
       "before": 303069,
       "after": 230756,
@@ -73,7 +73,7 @@
       "source": "Product entity"
     },
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/4c13d4866_1000004418.png",
+      "url": "/media/optimized/4c13d4866_1000004418.webp",
       "output": "/media/optimized/db-ad208f4172-4c13d4866_1000004418.webp",
       "before": 3526690,
       "after": 262494,
@@ -82,7 +82,7 @@
       "source": "Product entity"
     },
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84805a215_mlnprvek-mrak-mlzidla02.png",
+      "url": "/media/optimized/84805a215_mlnprvek-mrak-mlzidla02.webp",
       "output": "/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp",
       "before": 3177770,
       "after": 421350,

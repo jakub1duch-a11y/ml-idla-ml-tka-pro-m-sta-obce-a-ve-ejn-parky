@@ -9,7 +9,7 @@ const PORTALS = [
     text: 'Náměstí, parky, pěší zóny a veřejný prostor. Inspirace pro městské mikroklima.',
     href: '/blog?tema=mesta',
     icon: Building2,
-    image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/d2ed069f8_mlzne-brany-a-portaly---mlzidla.jpg',
+    image: '/media/optimized/d2ed069f8_mlzne-brany-a-portaly-mlzidla.webp',
   },
   {
     key: 'sport',
@@ -17,7 +17,7 @@ const PORTALS = [
     text: 'Ochlazení návštěvníků, sportovců a pobytových zón během horkých dnů.',
     href: '/blog?tema=sport',
     icon: Dumbbell,
-    image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/1c63ea4bc_sportoviste-a-mlzne-hriste-mlhoviste.jpg',
+    image: '/media/optimized/1c63ea4bc_sportoviste-a-mlzne-hriste-mlhoviste.webp',
   },
   {
     key: 'skoly',
@@ -25,7 +25,7 @@ const PORTALS = [
     text: 'Bezpečnější a příjemnější venkovní pobyt dětí s jemnou vodní mlhou.',
     href: '/blog?tema=skoly',
     icon: GraduationCap,
-    image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/d99ac5771_mlzne-brany-pro-detske-detske-hriste.jpg',
+    image: '/media/optimized/d99ac5771_mlzne-brany-pro-detske-detske-hriste.webp',
   },
 ];
 

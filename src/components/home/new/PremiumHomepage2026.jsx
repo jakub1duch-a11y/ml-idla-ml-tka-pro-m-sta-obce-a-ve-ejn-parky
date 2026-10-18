@@ -19,12 +19,12 @@ import {
 'lucide-react';
 
 const media = {
-  cityHero: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg',
+  cityHero: '/media/optimized/eb80e8486_IMG_1789934399993.webp',
   bendy: '/media/optimized/31478e4b3_bendymlzitko02.webp',
   aura: '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
   mrak: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
   gate: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
-  linea: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg',
+  linea: '/media/optimized/6af16b6a9_linea-rezidencni-mlzeni.webp',
   steblo: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp',
   brochure: '/media/optimized/874fb533f_kotveniproduktu.webp'
 };

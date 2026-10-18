@@ -2,7 +2,7 @@ import { useReducedMotion } from 'framer-motion';
 import { Move3D, Sparkles, Wind } from 'lucide-react';
 
 const LINEA_MASTER =
-'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg';
+'/media/optimized/6af16b6a9_linea-rezidencni-mlzeni.webp';
 
 const principles = [
 { icon: Move3D, label: 'Pomalý pohyb kamery' },

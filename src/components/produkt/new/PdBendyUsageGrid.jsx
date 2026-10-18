@@ -21,7 +21,7 @@ const USE_CASES = [
     label: 'BENDY DUO',
     eyebrow: 'Dvojice pro širší pobytovou zónu',
     text: 'Dva identické prvky BENDY. Mění se pouze počet kusů a jejich rozmístění.',
-    image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
+    image: '/media/optimized/e7593e68f_realizace-IMG_5072.webp',
     icon: Users,
     span: 'lg:col-span-5',
     variant: 'duo',

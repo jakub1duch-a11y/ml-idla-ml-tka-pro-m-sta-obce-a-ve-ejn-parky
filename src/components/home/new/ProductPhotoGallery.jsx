@@ -11,7 +11,7 @@ import { base44 } from '@/api/base44Client';
 const MEDIA = [
   {
     "title": "BENDY ve městě",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg",
+    "url": "/media/optimized/eb80e8486_IMG_1789934399993.webp",
     "tag": "Náměstí a města",
     "badge": "Náhled použití",
     "href": "/produkt/mlzitko-bendy",
@@ -19,7 +19,7 @@ const MEDIA = [
   },
   {
     "title": "BENDY a sloupová LINEA",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "url": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
     "tag": "Gastro a zahrady",
     "badge": "Fotografie",
     "href": "/produkt/linea-mlzitko",
@@ -27,7 +27,7 @@ const MEDIA = [
   },
   {
     "title": "KVĚT na náměstí",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.png",
+    "url": "/media/optimized/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.webp",
     "tag": "Náměstí a města",
     "badge": "Vizualizace",
     "href": "/produkt/mlzitko-kvet-4",
@@ -35,7 +35,7 @@ const MEDIA = [
   },
   {
     "title": "TEEPEE v prostoru",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/06c42b5dc_Screenshot_20260920_171920.jpg",
+    "url": "/media/optimized/06c42b5dc_Screenshot_20260920_171920.webp",
     "tag": "Náměstí a města",
     "badge": "Vizualizace",
     "href": "/produkt/teepee",
@@ -43,7 +43,7 @@ const MEDIA = [
   },
   {
     "title": "Osvěžení na sportovišti",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/48b54bbc2_1789940598791.png",
+    "url": "/media/optimized/48b54bbc2_1789940598791.webp",
     "tag": "Sportoviště",
     "badge": "Vizualizace",
     "href": "/kategorie/parky-hriste",
@@ -67,7 +67,7 @@ const MEDIA = [
   },
   {
     "title": "Zahrádka restaurace a terasa",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "url": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
     "tag": "Gastro a zahrady",
     "badge": "Fotografie",
     "href": "/rezidencni-mlzeni",
@@ -75,7 +75,7 @@ const MEDIA = [
   },
   {
     "title": "Městské náměstí a obchodní zóna",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.png",
+    "url": "/media/optimized/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.webp",
     "tag": "Náměstí a města",
     "badge": "Vizualizace",
     "href": "/mlzitka-pro-mesta-obce",
@@ -83,7 +83,7 @@ const MEDIA = [
   },
   {
     "title": "Nádraží a dopravní uzly",
-    "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg",
+    "url": "/media/optimized/eb80e8486_IMG_1789934399993.webp",
     "tag": "Nádraží a uzly",
     "badge": "Náhled použití",
     "href": "/mlzitka-pro-mesta-obce",
@@ -100,7 +100,7 @@ const MEDIA = [
   {
     "title": "BENDY v provozu",
     "url": "https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/78cf9a6c8_KolekceBendy_20260812_121335_0000.mp4",
-    "poster": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "poster": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
     "tag": "Videa",
     "badge": "Video",
     "href": "/produkt/mlzitko-bendy",
@@ -109,7 +109,7 @@ const MEDIA = [
   {
     "title": "LINEA v provozu",
     "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c37b035c2_mlzidla-linea-real-video-01.mp4",
-    "poster": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+    "poster": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
     "tag": "Videa",
     "badge": "Video",
     "href": "/produkt/linea-mlzitko",

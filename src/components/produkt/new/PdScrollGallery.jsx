@@ -69,13 +69,16 @@ function StoryFrame({ item, index, total, productName, onOpen, active }) {
         aria-label={`Otevřít fotografii ${index + 1} přes celou obrazovku`}
       >
         {item.fit === 'contain' && <img src={optimize(item.url)} alt="" aria-hidden="true" className="scroll-photo-backdrop" loading="lazy" />}
-        <img
+        {!loaded && !imageFailed && <span className="scroll-photo-loading" aria-hidden="true"><span className="scroll-photo-loading-mark">◌</span><span className="scroll-photo-loading-bar" /></span>}
+        {!imageFailed ? <img
           src={optimize(item.url)}
-          alt={item.alt || `${productName} — fotografie ${index + 1}`}
-          className={`h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.035] ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
+          alt={item.alt || (productName + ' — fotografie ' + (index + 1))}
+          className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.035] ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
           style={{ objectPosition: item.focal || 'center center' }}
           loading={Math.abs(active - index) <= 1 ? 'eager' : 'lazy'}
-        />
+          onLoad={() => setLoaded(true)}
+          onError={() => setImageFailed(true)}
+        /> : <span className="scroll-photo-image-error">Fotografie se nyní nepodařilo načíst.</span>}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(3,12,20,.10)_0%,rgba(3,12,20,.05)_48%,rgba(3,12,20,.82)_100%)]" />
         <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-2 text-white backdrop-blur-md sm:left-6 sm:top-6">
           <span className="font-mono text-[9px] font-bold uppercase tracking-[.16em] text-cyan-200">{item.badge || 'Galerie'}</span>

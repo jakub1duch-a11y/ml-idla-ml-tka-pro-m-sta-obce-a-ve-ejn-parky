@@ -84,8 +84,8 @@ export default function PdHero({ product }) {
         approvedAdmin: true,
       }));
     const items = [
-      ...approvedItems,
       ...(product.image_url ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
+      ...approvedItems,
       ...getCuratedProductMedia(product).filter(item => isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · návrh umístění' : '') })),
       ...ownVideo,
       ...(product.gallery_urls || [])

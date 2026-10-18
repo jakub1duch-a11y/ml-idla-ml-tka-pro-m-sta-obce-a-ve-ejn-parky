@@ -2,7 +2,7 @@ import React from 'react';
 
 const STEPS = [
   { num: '01', title: 'Analýza místa a podkladů', desc: 'Zpracujeme fotografie, půdorys, připojení vody a typ povrchu. Navrhujeme umístění s ohledem na provoz i údržbu.' },
-  { num: '02', title: 'Návrh a vizualizace do 48 h', desc: 'Připravíme návrh rozmístění a vizualizaci produktu přímo ve vašem prostoru, včetně variant A/B/C.' },
+  { num: '02', title: 'Předběžný koncept řešení', desc: 'Navrhneme rozmístění prvků podle prostoru a provozu. Konkrétní varianty připravíme po upřesnění zadání a podkladů.' }
   { num: '03', title: 'Nabídka s variantami a technickým listem', desc: 'Doložíme technický list, cenu variant, kotvení a provozní parametry. Strukturováno pro schvalování v radě.' },
   { num: '04', title: 'Výroba, instalace, zaškolení, servis', desc: 'Vyrobeno v Trutnově, instalace na klíč, zaškolení obsluhy a dlouhodobý servis včetně zazimování.' },
 ];

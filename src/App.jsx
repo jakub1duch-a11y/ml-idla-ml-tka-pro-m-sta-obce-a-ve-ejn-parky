@@ -30,7 +30,6 @@ import RegisteredPortal from '@/components/portal/RegisteredPortal';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import '@/components/portal/googleAdsPortal';
 import Poradce from '@/pages/Poradce';
-import AIVizualizace from '@/pages/AIVizualizace';
 import Kalkulacka from '@/pages/Kalkulacka';
 import ONas from '@/pages/ONas';
 import Reference from '@/pages/Reference';

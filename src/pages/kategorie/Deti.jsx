@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -158,6 +159,7 @@ export default function Deti() {
           <CategoryInquiryForm category="Školy, školky a děti" projectScope="urban" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="školy, školky a dětská hřiště" />
       <B2BPortfolioNavigation current="Školy a školky" />
     </div>
   );

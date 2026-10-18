@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -135,6 +136,7 @@ export default function Koupaliste() {
           <CategoryInquiryForm category="Koupaliště & aquaparky" projectScope="urban" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="koupaliště a aquaparky" />
       <B2BPortfolioNavigation current="Koupaliště & aquaparky" />
     </div>
   );

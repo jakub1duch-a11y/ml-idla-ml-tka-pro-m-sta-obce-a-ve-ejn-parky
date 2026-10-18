@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
@@ -186,6 +187,7 @@ export default function Architekti() {
         </div>
       </section>
 
+      <AllProductsCatalog categoryTitle="architekty a projektanty" />
       <B2BPortfolioNavigation current="Pro architekty" />
     </div>
   );

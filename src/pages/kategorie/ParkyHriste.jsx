@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -123,6 +124,7 @@ export default function ParkyHriste() {
           <CategoryInquiryForm category="Parky a hřiště" projectScope="urban" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="parky a hřiště" />
       <B2BPortfolioNavigation current="Parky a hřiště" />
     </div>
   );

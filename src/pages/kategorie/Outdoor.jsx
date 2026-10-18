@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -193,6 +194,7 @@ export default function Outdoor() {
           <CategoryInquiryForm category="Outdoor a zahrady" projectScope="private" analyticsSegment="residential" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="zahrady a terasy" />
       <B2BPortfolioNavigation current="Outdoor a zahrady" />
     </div>);
 

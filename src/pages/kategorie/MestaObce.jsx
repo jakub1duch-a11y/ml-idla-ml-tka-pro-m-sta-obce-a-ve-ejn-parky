@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -241,6 +242,7 @@ export default function MestaObce() {
           <CategoryInquiryForm category="Města a obce" projectScope="urban" analyticsSegment="cities" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="města a obce" />
       <B2BPortfolioNavigation current="Města a obce" />
     </div>);
 

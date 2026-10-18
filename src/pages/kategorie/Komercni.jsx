@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -146,6 +147,7 @@ export default function Komercni() {
           <CategoryInquiryForm category="Komerční prostory" projectScope="industrial" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="gastro, hotely a komerční provozy" />
       <B2BPortfolioNavigation current="Komerční prostory" />
     </div>);
 

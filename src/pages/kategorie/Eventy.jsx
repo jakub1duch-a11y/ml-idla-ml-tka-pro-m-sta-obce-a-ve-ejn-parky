@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -200,6 +201,7 @@ export default function Eventy() {
           <CategoryInquiryForm category="Eventy & festivaly" projectScope="event" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="eventy a festivaly" />
       <B2BPortfolioNavigation current="Eventy & festivaly" />
     </div>
   );

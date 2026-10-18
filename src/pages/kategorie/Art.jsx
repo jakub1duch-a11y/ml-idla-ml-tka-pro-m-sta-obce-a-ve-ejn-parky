@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -114,6 +115,7 @@ export default function Art() {
           <CategoryInquiryForm category="Art instalace" projectScope="private" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="autorské a umělecké instalace" />
       <B2BPortfolioNavigation current="Art instalace na míru" />
     </div>);
 

@@ -19,7 +19,7 @@ const categories = [
   tag: 'Eventy & festivaly',
   title: 'Mlžení pro festivaly a venkovní akce',
   desc: 'Y-ARMIST a mobilní mlžné rámy chladí davy návštěvníků na festivalech a sportovních areálech — vysoký výkon, snadná instalace.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png',
+  image: '/media/optimized/3063e3653_MlzitkoY-ARMISTTR60_3.webp',
   path: '/kategorie/eventy'
 },
 {
@@ -33,14 +33,14 @@ const categories = [
   tag: 'Koupaliště & aquaparky',
   title: 'Mlžné brány pro rekreační areály',
   desc: 'Designová mlžná brána GATE70 z nerezi AISI 316L ochlazuje vstupy koupališť a aquaparků až o −9 °C bez kapek na zemi.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.png',
+  image: '/media/optimized/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.webp',
   path: '/kategorie/koupaliste'
 },
 {
   tag: 'Pro architekty',
   title: 'Zakázkový design a CAD podklady',
   desc: 'Od skici po realizaci — mlžné sochy na míru s kompletní technickou dokumentací pro architektonické a urbanistické studie.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2dcd39f66_MRKEV_rozkres1.png',
+  image: '/media/optimized/2dcd39f66_MRKEV_rozkres1.webp',
   path: '/kategorie/architekti'
 }];
 

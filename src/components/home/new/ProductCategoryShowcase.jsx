@@ -35,7 +35,7 @@ const categoryCards = [
     description:
       'Architektonické průchozí prvky pro náměstí, parky, sportoviště a pobytové zóny. Geometrie brány se v animaci nemění.',
     image:
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png',
+      '/media/optimized/7687747c7_MlznabranaGATE70V.webp',
     href: '/mlzne-brany',
     icon: Building2,
   },

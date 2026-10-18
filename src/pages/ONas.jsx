@@ -4,12 +4,12 @@ import { ArrowRight, Droplets, Gauge, Hammer, Ruler, MapPin, Mail, Phone } from 
 import { setSEO } from '@/lib/seo';
 
 const IMAGES = {
-  workshop: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ee5759df9_foto-instalace-vyroba.png',
-  detail: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/87830d99f_detail.PNG',
-  logo: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/881a6dd25_aplikaceloganaproduktu.PNG',
-  fair: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG',
-  brand: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/046393468_brandmarch.PNG',
-  laser: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/55ad64b81_laserstitky.PNG',
+  workshop: '/media/optimized/ee5759df9_foto-instalace-vyroba.webp',
+  detail: '/media/optimized/87830d99f_detail.webp',
+  logo: '/media/optimized/881a6dd25_aplikaceloganaproduktu.webp',
+  fair: '/media/optimized/47ca0affa_veletrh.webp',
+  brand: '/media/optimized/046393468_brandmarch.webp',
+  laser: '/media/optimized/55ad64b81_laserstitky.webp',
 };
 
 const KNOW_HOW = [

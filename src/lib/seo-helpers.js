@@ -11,7 +11,7 @@ export function getOrganizationSchema() {
     '@type': 'Organization',
     name: 'Mlžidla.cz',
     url: 'https://mlzidla.cz',
-    logo: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a7bf1f951_favicon.png',
+    logo: '/media/optimized/a7bf1f951_favicon.webp',
     description: 'Český návrh a výroba nerezových mlžítek, mlžných bran a Smart Cooling řešení pro veřejný i soukromý prostor.',
     sameAs: [
       'https://www.instagram.com/mlzidla/',
@@ -82,7 +82,7 @@ export function getLocalBusinessSchema() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'Mlžidla.cz',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a7bf1f951_favicon.png',
+    image: '/media/optimized/a7bf1f951_favicon.webp',
     description: 'Nerezová mlžítka, mlžné brány a Smart Cooling řešení pro města, obce, parky a další venkovní prostory.',
     url: 'https://mlzidla.cz',
     telephone: '+420774700390',

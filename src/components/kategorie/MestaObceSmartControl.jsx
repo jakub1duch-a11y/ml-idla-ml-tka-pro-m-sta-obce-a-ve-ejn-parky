@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Wifi, Droplets, ShieldCheck, BatteryCharging, Smartphone, Cloud, Radio, Gauge, Clock3, Thermometer, Activity, MapPin, ExternalLink } from 'lucide-react';
 
-const VALVE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png';
+const VALVE_IMG = '/media/optimized/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.webp';
 const PANEL_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e1a4488cb_PEVEKO-SKPB-panel-JABLOSHOP-800x640.png';
 const PEVEKO_URL = 'https://www.peveko.cz/';
 const SUPLA_URL = 'https://supla.org/';

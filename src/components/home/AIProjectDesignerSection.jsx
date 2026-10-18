@@ -94,12 +94,12 @@ const productOptions = [
   {
     key: 'product-gate',
     label: 'GATE',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f47023cbe_MlnbrnaGATE70V.png',
+    image: '/media/optimized/f47023cbe_MlnbrnaGATE70V.webp',
   },
   {
     key: 'product-y-armist',
     label: 'Y-ARMIST',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/080a7e429_MlzitkoY-ARMISTTR60_2.png',
+    image: '/media/optimized/080a7e429_MlzitkoY-ARMISTTR60_2.webp',
   },
   {
     key: 'product-ostrev',
@@ -127,7 +127,7 @@ const railingVariants = [
 
 const variantsFor = (conceptKey) => conceptKey === 'zabradli' ? railingVariants : shapeVariants;
 
-const POLNA_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png';
+const POLNA_IMAGE = '/media/optimized/6a220ebf9_Reference-mstoPolna03.webp';
 
 export default function AIProjectDesignerSection() {
   const navigate = useNavigate();

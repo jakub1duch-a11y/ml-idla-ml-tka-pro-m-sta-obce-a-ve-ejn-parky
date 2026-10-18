@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const WATERMARK_CLASS = 'mlz-photo-watermark';
 const HOST_CLASS = 'mlz-photo-watermark-host';
-const WATERMARK_LOGO = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const WATERMARK_LOGO = '/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp';
 
 const shouldSkipImage = (img) => {
   if (!img || img.closest('[data-no-watermark="true"]')) return true;

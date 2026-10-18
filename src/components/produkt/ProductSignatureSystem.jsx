@@ -83,8 +83,8 @@ const FAMILY_VARIANTS = {
   'y-armist-tr60': {
     title: 'Varianty MLŽÍTKA Y-ARMIST',
     items: [
-      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png' },
-      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/93cd8ff63_MlzitkoY-ARMISTJ70_2.png' },
+      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60', image: '/media/optimized/3063e3653_MlzitkoY-ARMISTTR60_3.webp' },
+      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70', image: '/media/optimized/93cd8ff63_MlzitkoY-ARMISTJ70_2.webp' },
     ],
   },
   'y-armist-j70': { ref: 'y-armist-tr60' },
@@ -94,7 +94,7 @@ const FAMILY_VARIANTS = {
     description: 'Dvě architektonické varianty stejné průchozí mlžné brány.',
     items: [
       { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight', image: '/media/optimized/bec7f86a9_generated_image.webp' },
-      { label: 'GATE V', sub: 'lomená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png' },
+      { label: 'GATE V', sub: 'lomená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: '/media/optimized/7687747c7_MlznabranaGATE70V.webp' },
     ],
   },
   'mlzitko-mrak': {

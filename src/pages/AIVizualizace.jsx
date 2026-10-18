@@ -11,7 +11,7 @@ const MAX_UPLOAD_MB = 20;
 const OPTIMIZE_FROM_MB = 12;
 const MAX_QUOTE_FILES = 6;
 const MAX_QUOTE_FILE_MB = 25;
-const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const BRAND_LOGO_URL = '/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp';
 const BRAND_WEB = 'MLZIDLA.CZ';
 
 const createWatermarkedImageFile = async (imageUrl) => {

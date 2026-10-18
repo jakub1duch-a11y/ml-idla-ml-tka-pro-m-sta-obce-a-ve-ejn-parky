@@ -8,7 +8,7 @@ const MODELS = [
     name: 'GATE70-U',
     tag: 'Rovná brána',
     desc: 'Pravoúhlý tvar z kulaté nerezové trubky Ø70 mm. Nejčistší řešení pro vstupy, cyklostezky a průchozí zóny.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
+    image: '/media/optimized/17e1fc843_MlznabranaGATE70U.webp',
     path: '/gate70'
   },
   {
@@ -22,7 +22,7 @@ const MODELS = [
     name: 'LINEA CE70',
     tag: 'Obloukový systém',
     desc: 'Leštěný jeklový profil s plynulým obloukem — elegantní forma pro promenády, bazény a reprezentativní vstupy.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82914bed5_C-MlzitkoLINEA_CE70_couple1.png',
+    image: '/media/optimized/82914bed5_C-MlzitkoLINEA_CE70_couple1.webp',
     path: '/produkt/linea-el70'
   }
 ];

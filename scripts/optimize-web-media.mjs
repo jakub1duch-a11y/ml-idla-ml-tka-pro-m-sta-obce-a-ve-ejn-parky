@@ -72,11 +72,10 @@ async function processImage(url) {
   try {
     const before = await download(url, input);
     const meta = await sharp(input).metadata();
-    if (meta.hasAlpha) {
-      if (!manifest.skippedTransparent.some(x => x.url === url)) manifest.skippedTransparent.push({ url, width: meta.width, height: meta.height, format: meta.format });
-      return;
-    }
-    await sharp(input).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true }).webp({ quality: 88, effort: 5, smartSubsample: true }).toFile(output);
+    const pipeline = sharp(input).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true });
+    // Keep transparent product cut-outs and overlays intact. Lossless WebP supports alpha.
+    if (meta.hasAlpha) await pipeline.webp({ lossless: true, effort: 6 }).toFile(output);
+    else await pipeline.webp({ quality: 88, effort: 5, smartSubsample: true }).toFile(output);
     const stat = await fs.stat(output);
     map.set(url, `/media/optimized/${outputName}`);
     manifest.images = manifest.images.filter(x => x.url !== url);

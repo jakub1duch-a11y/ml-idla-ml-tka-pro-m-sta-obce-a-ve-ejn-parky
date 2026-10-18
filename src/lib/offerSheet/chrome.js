@@ -30,7 +30,7 @@ export function paintBackground(ctx) {
 }
 
 // Oficiální logo MLŽIDLA (stejný soubor jako v e-mailech). Zdrojový obrázek 1024×512 má bílé okraje, kreslí se ořezané na motiv.
-const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const LOGO_URL = '/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp';
 const LOGO_CROP = { x: 70, y: 165, w: 890, h: 180 };
 let logoImage = null;
 

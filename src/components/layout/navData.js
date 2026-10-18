@@ -4,7 +4,7 @@ import { Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Bab
 export const PRODUCT_LINKS = [
   { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/mlzidla-mlzitka#catalog', image: '/media/optimized/cfc837b23_image.webp', featured: true },
   { label: 'Mlžítka pro města', sub: 'Sloupová mlžítka do veřejného prostoru', path: '/kolekce/city', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
-  { label: 'Mlžné brány', sub: 'Průchozí zóny, vstupy a koupaliště', path: '/mlzne-brany', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png' },
+  { label: 'Mlžné brány', sub: 'Průchozí zóny, vstupy a koupaliště', path: '/mlzne-brany', image: '/media/optimized/17e1fc843_MlznabranaGATE70U.webp' },
   { label: 'LINEA', sub: 'Kulatá trubka nebo hranatý jekl', path: '/linea', image: '/media/optimized/512446aa1_file_00000000ada8822fab4c3e868219c559.webp' },
   { label: 'Mlžiště a mlhoviště', sub: 'Sestavy pro pobytové plochy', path: '/mlhoviste', image: '/media/optimized/61b270214_Sportovisteamlznehristemlhoviste.webp' },
   { label: 'Autorské instalace', sub: 'Mlžné skulptury na míru', path: '/kolekce/art', image: '/media/optimized/68953132b_IMG_3524.webp' },

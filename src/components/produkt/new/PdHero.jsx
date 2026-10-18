@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { BENDY_SLUGS } from '@/lib/newMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
 import { getLine, getFamily } from '@/lib/productFamilies';
 import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
@@ -62,7 +63,7 @@ export default function PdHero({ product }) {
       .filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 60)
       .then((items = []) => {
         if (!activeRequest) return;
-        setApprovedVisuals((items || []).filter((item) => item?.image_url));
+        setApprovedVisuals((items || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
       })
       .catch(() => { if (activeRequest) setApprovedVisuals([]); });
     return () => { activeRequest = false; };
@@ -74,6 +75,7 @@ export default function PdHero({ product }) {
       ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení prostoru` }]
       : [];
     const approvedItems = [...approvedVisuals]
+      .filter((item) => isProductMediaAllowed(product, item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
       .map((item) => ({
         type: 'image',
@@ -84,14 +86,14 @@ export default function PdHero({ product }) {
     const items = [
       ...approvedItems,
       ...(product.image_url ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
-      ...getCuratedProductMedia(product).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · vizualizace' : '') })),
+      ...getCuratedProductMedia(product).filter(item => isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · návrh umístění' : '') })),
       ...ownVideo,
       ...(product.gallery_urls || [])
-        .filter(Boolean)
+        .filter((url) => Boolean(url) && isProductMediaAllowed(product, url))
         .filter(isVideo)
         .map((url, index) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} – video ${index + 1}` })),
       ...(product.gallery_urls || [])
-        .filter(Boolean)
+        .filter((url) => Boolean(url) && isProductMediaAllowed(product, url))
         .filter((u) => !isVideo(u))
         .map((url, index) => ({ type: 'image', url, title: `${product.name} – fotografie ${index + 1}` })),
     ].filter(Boolean);

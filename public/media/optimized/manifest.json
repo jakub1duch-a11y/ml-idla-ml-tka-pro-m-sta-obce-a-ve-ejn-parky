@@ -2153,22 +2153,7 @@
       "source": "Product entity"
     }
   ],
-  "skippedTransparent": [
-    {
-      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/a01ebd4e8_volnytvar-motorkar-apli.png",
-      "width": 360,
-      "height": 540,
-      "format": "png",
-      "source": "Product entity"
-    },
-    {
-      "url": "https://media.base44.com/images/public/69f87b0204346ce73cee73b1/1e2e816a4_ker-mlzitko.png",
-      "width": 360,
-      "height": 540,
-      "format": "png",
-      "source": "Product entity"
-    }
-  ],
+  "skippedTransparent": [],
   "failed": [
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e1a4488cb_PEVEKO-SKPB-panel-JABLOSHOP-800x640.png",
@@ -2192,31 +2177,6 @@
     },
     {
       "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/87d7a4fe6_generated_image.png",
-      "type": "image",
-      "error": "HTTP 404"
-    },
-    {
-      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e1a4488cb_PEVEKO-SKPB-panel-JABLOSHOP-800x640.png",
-      "type": "image",
-      "error": "HTTP 404"
-    },
-    {
-      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae73692aa_generated_image.png",
-      "type": "image",
-      "error": "HTTP 404"
-    },
-    {
-      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2dc166259_generated_image.png",
-      "type": "image",
-      "error": "HTTP 404"
-    },
-    {
-      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/87d7a4fe6_generated_image.png",
-      "type": "image",
-      "error": "HTTP 404"
-    },
-    {
-      "url": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c5a4bb176_generated_image.png",
       "type": "image",
       "error": "HTTP 404"
     }

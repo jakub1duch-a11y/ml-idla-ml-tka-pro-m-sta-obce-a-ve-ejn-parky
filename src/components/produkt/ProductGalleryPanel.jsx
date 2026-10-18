@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageOff, Play, Video, ZoomIn } from 'lucide-react';
 import { trackProductLightboxOpen, trackProductMediaSelect } from '@/lib/ga4';
 
 export default function ProductGalleryPanel({ mediaItems, productName, onOpenLightbox, focusUrl }) {
   const [failedUrls, setFailedUrls] = useState(() => new Set());
-  const items = Array.isArray(mediaItems)
-    ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
-    : [];
+  const items = useMemo(() => (
+    Array.isArray(mediaItems)
+      ? mediaItems.map((item, originalIndex) => ({ ...item, originalIndex })).filter((item) => item?.url && !failedUrls.has(item.url))
+      : []
+  ), [mediaItems, failedUrls]);
   const [active, setActive] = useState(0);
   const [magnify, setMagnify] = useState({ visible: false, x: 50, y: 50 });
   const [hoverPreview, setHoverPreview] = useState(false);

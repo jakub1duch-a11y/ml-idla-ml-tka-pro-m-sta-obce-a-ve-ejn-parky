@@ -151,6 +151,7 @@ export default function ProduktDetail() {
           <PdDescription product={product} />
           <div id="galerie" className="scroll-mt-16"><PdScrollGallery product={product} /></div>
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
+          <PdScrollGallery product={product} />
           <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
           <PdStory product={product} />
           <PdAudienceSolutions product={product} />

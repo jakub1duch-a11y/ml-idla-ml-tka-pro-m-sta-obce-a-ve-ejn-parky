@@ -59,7 +59,7 @@ function ProductStage({ product, reduced }) {
       <p className="mpe-eyebrow">Osvěžení má svůj tvar</p>
       <h3>{product.name}</h3>
       {product.short_description && <p className="mpe-description">{product.short_description}</p>}
-      <p className="mpe-invitation">Představte si jemnou mlhu právě ve vašem prostoru.</p>
+      <p className="mpe-invitation">Prohlédněte si mlžítko v provozu.</p>
       <div className="mpe-actions">
         {product.slug && <Link className="mpe-primary" to={`/produkt/${encodeURIComponent(product.slug)}`}>
           Prohlédnout produkt <ArrowRight size={17} aria-hidden="true" />

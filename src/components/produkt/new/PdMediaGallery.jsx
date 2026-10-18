@@ -6,6 +6,7 @@ import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
@@ -149,8 +150,8 @@ export default function PdMediaGallery({ product }) {
       .then(([realizationItems, visualItems, mediaItems]) => {
         if (cancelled) return;
         setRealizations((realizationItems || []).filter((r) => matchesProduct(r, product)));
-        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url));
-        setAdminMedia((mediaItems || []).filter((item) => item?.file_url));
+        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+        setAdminMedia((mediaItems || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group));
       })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
@@ -162,16 +163,16 @@ export default function PdMediaGallery({ product }) {
     const curatedUrls = new Set(curated.map(item => item.url));
     const adminProductPhotos = adminMedia
       .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'technology'].includes(item.media_role))
-      .filter((item) => !isVideo(item.file_url))
+      .filter((item) => !isVideo(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
       .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — náhled v prostoru`, caption: item.media_role === 'realization' ? 'Náhled v prostoru' : 'Produktový náhled', title: spaceTitle(product.name, item), badge: item.media_role === 'reference' ? 'Reference' : 'Média' }));
 
     const productPhotos = clean([
       ...adminProductPhotos,
-      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktový náhled`, caption: item.caption || 'Produktový náhled', title: `${product.name} · produktový náhled`, badge: 'Fotografie' })),
+      ...curated.filter(item => item.kind === 'photo' && isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktový náhled`, caption: item.caption || 'Produktový náhled', title: `${product.name} · produktový náhled`, badge: 'Fotografie' })),
       studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: `${product.name} · studiový náhled`, badge: 'Studio' },
       product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? `${product.name} · reálné testování` : `${product.name} · produktový náhled`, badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
       ...(product.gallery_urls || [])
-        .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
+        .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product) && isProductMediaAllowed(product, url))
         .map((url) => ({
           type: 'image',
           url: mediaUrl(url),
@@ -192,6 +193,7 @@ export default function PdMediaGallery({ product }) {
     ])]);
 
     const approvedAdminVisuals = [...approvedVisualizations]
+      .filter((item) => isProductMediaAllowed(product, item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
       .map((item) => ({
         type: 'image',
@@ -203,7 +205,7 @@ export default function PdMediaGallery({ product }) {
         badge: 'Náhled v prostoru',
       }));
 
-    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · konkrétní prostor`, badge: 'Náhled v prostoru' })), ...realizations.flatMap((r) => [
+    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization' && isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · konkrétní prostor`, badge: 'Náhled v prostoru' })), ...realizations.flatMap((r) => [
       r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · ${r.location || 'konkrétní prostor'}`, meta: r.location, badge: 'Náhled v prostoru' },
       r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · ${r.location || 'konkrétní prostor'}`, meta: r.location, badge: 'Náhled v prostoru' },
     ])]);

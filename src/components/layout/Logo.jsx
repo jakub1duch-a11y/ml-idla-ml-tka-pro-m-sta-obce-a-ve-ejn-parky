@@ -99,8 +99,8 @@ export default function Logo({
         <span className="mlz-wordmark__symbol">
           <MistZMark size={size === "lg" ? "md" : "sm"} />
         </span>
-        <span className="mlz-wordmark__name">MLŽIDLA</span>
-        <sup className="z-wordmark__registered">®</sup>
+        <span className="mlz-wordmark__name">ML<span className="mlz-wordmark__accent">Ž</span>IDLA</span>
+        <sup className="mlz-wordmark__registered">®</sup>
       </span>
       {variant === "full" &&
       <span className="mlz-wordmark__caption" aria-hidden="true">

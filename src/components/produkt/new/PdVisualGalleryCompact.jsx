@@ -179,7 +179,9 @@ export default function PdVisualGalleryCompact({ product }) {
       alt: product.name + ' — pohled v prostoru'
     }));
 
-    return dedupe([...admin, ...approved, ...curated, ...productItems]).slice(0, 12);
+    const primaryProductItems = productItems.slice(0, 2);
+    const additionalProductItems = productItems.slice(2);
+    return dedupe([...primaryProductItems, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems]).slice(0, 12);
   }, [mediaFiles, approvedVisuals, product]);
 
   useEffect(() => { setActiveIndex((index) => clampIndex(index, items.length)); }, [items.length]);

@@ -26,7 +26,7 @@ export default function MobileStickyBar() {
         to="/poptavka"
         className="flex flex-1 items-center justify-center bg-[#0B5EA8] py-4 text-sm font-semibold uppercase tracking-wide text-white"
       >
-        Poptat
+        Nezávazně poptat
       </Link>
     </div>
   );

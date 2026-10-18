@@ -214,7 +214,7 @@ export default function PdHero({ product }) {
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-[-12%] bottom-[-12%] z-[3] h-[34%] opacity-60 blur-2xl" style={{ background: 'radial-gradient(ellipse at 28% 70%, rgba(255,255,255,.72), transparent 42%), radial-gradient(ellipse at 72% 58%, rgba(155,232,242,.6), transparent 38%)' }} />
 
           <div className="absolute left-5 top-5 z-20 rounded-full border border-white/18 bg-black/30 px-4 py-2 font-mono text-[10px] uppercase tracking-[.18em] text-white/78 backdrop-blur-md">
-            {hero?.type === 'video' ? 'Video produktu' : hero?.approvedAdmin ? 'Schválená vizualizace' : 'Produktový hero'}
+            {hero?.type === 'video' ? 'Video produktu' : hero?.approvedAdmin ? 'Pohled v prostoru' : 'Produktový pohled'}
           </div>
 
           {hero && (

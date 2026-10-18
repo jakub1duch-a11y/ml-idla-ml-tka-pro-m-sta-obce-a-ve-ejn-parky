@@ -2,7 +2,8 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { dispatchNotification, buildDedupKey } from '../../shared/notificationQueue.ts';
 
 const clean = (v: unknown, max = 2000) => String(v || '').trim().slice(0, max);
-const escapeHtml = (v: unknown) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[c] as string));
+const escapeSlack = (v: unknown, max = 2000) =>
+  clean(v, max).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] as string));
 
 // Existující ověřený Slack kanál (z notifySlackNewInquiry)
 const DEFAULT_SLACK_CHANNEL = 'C0BG53VBBV1'; // #all-mlidlacz
@@ -18,6 +19,7 @@ const EVENT_LABELS: Record<string, string> = {
   offer_viewed: 'Nabídka zobrazena klientem',
   extra_charge_response: 'Reakce na příplatek',
   extension_requested: 'Žádost o prodloužení platnosti',
+  document_published: 'Dokument publikován klientovi',
 };
 
 const RECOMMENDED_STEPS: Record<string, string> = {
@@ -31,26 +33,39 @@ const RECOMMENDED_STEPS: Record<string, string> = {
   extra_charge_response: 'Zpracovat schválený příplatek do objednávky nebo reagovat na odmítnutí.',
   extension_requested: 'Aktualizovat platnost nabídky a informovat klienta o novém termínu.',
   inquiry_status_change: 'Zkontrolovat změnu stavu a případně navázat na klienta.',
+  document_published: 'Zkontrolovat publikovaný dokument v detailu zakázky.',
+};
+
+const ADMIN_URLS: Record<string, string> = {
+  document_published: 'https://mlzidla.cz/admin?tab=orders',
+  offer_approved: 'https://mlzidla.cz/admin?tab=orders',
 };
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me().catch(() => null);
+    if (!user || user.role !== 'admin') {
+      return Response.json({ error: 'Forbidden' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+    }
+
     const body = await req.json().catch(() => ({}));
-    const eventType = clean(body.event_type);
-    const clientName = clean(body.client_name, 120);
-    const clientEmail = clean(body.client_email, 200);
-    const quoteNumber = clean(body.quote_number, 60);
-    const projectName = clean(body.project_name, 200);
+    const eventType = clean(body.event_type, 80);
+    if (!eventType || !Object.prototype.hasOwnProperty.call(EVENT_LABELS, eventType)) {
+      return Response.json({ error: 'invalid_event_type' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
+    }
+
+    const clientName = escapeSlack(body.client_name, 120);
+    const clientEmail = escapeSlack(body.client_email, 200);
+    const quoteNumber = escapeSlack(body.quote_number, 60);
+    const projectName = escapeSlack(body.project_name, 200);
     const totalPrice = Number(body.total_price) || 0;
-    const adminUrl = clean(body.admin_url, 500) || 'https://mlzidla.cz/admin?tab=poptavky';
-    const message = clean(body.message, 1000);
-    const reactionDeadline = clean(body.reaction_deadline, 60);
+    const adminUrl = ADMIN_URLS[eventType] || 'https://mlzidla.cz/admin?tab=poptavky';
+    const message = escapeSlack(body.message, 1000);
+    const reactionDeadline = escapeSlack(body.reaction_deadline, 60);
     const dryRun = Boolean(body.dry_run);
 
-    if (!eventType) return Response.json({ error: 'missing_event_type' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
-
-    const eventLabel = EVENT_LABELS[eventType] || eventType;
+    const eventLabel = EVENT_LABELS[eventType];
     const recommendedStep = RECOMMENDED_STEPS[eventType] || 'Zkontrolovat událost v administraci.';
 
     // Čas v Europe/Prague
@@ -64,7 +79,7 @@ export default async function(req) {
     // AI koncept doporučené odpovědi (pokud je dostupný)
     let aiDraft = '';
     try {
-      const aiResponse = await base44.integrations.Core.InvokeLLM({
+      const aiResponse = await base44.asServiceRole.integrations.Core.InvokeLLM({
         prompt: `Jsi obchodní asistent MLŽIDLA.cz. Na základě této události navrhni krátký KONCEPT odpovědi klientovi (max 2 věty, česky, profesionálně). Nevymýšlej ceny, termíny ani smluvní závazky.\n\nUdálost: ${eventLabel}\nKlient: ${clientName} (${clientEmail})\nProjekt: ${projectName}\nNabídka: ${quoteNumber}\nZpráva: ${message}\n\nVrať pouze text konceptu, bez vysvětlení.`,
         response_json_schema: { type: 'object', properties: { draft: { type: 'string' } }, required: ['draft'] },
       });

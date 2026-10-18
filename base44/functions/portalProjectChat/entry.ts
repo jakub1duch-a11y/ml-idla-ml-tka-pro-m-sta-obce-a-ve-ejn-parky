@@ -124,7 +124,7 @@ reply = odpověď klientovi,
 topic = velmi krátké téma konverzace,
 suggested_questions = 2 až 4 krátké navazující otázky relevantní k jeho zakázkám.`;
 
-    const response = await base44.integrations.Core.InvokeLLM({
+    const response = await base44.asServiceRole.integrations.Core.InvokeLLM({
       prompt,
       response_json_schema: {
         type: 'object',

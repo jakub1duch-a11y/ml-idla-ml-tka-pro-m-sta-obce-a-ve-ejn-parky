@@ -15,10 +15,10 @@ const sanitizeName = (value = '') => value
 const allowedMediaUrl = (raw) => {
   try {
     const url = new URL(raw);
-    return url.protocol === 'https:' && (
-      url.hostname === 'media.base44.com' ||
-      url.hostname.endsWith('.base44.com') ||
-      url.hostname.endsWith('.base44.app')
+    return (
+      url.protocol === 'https:' &&
+      url.hostname === 'media.base44.com' &&
+      url.pathname.startsWith('/images/')
     );
   } catch {
     return false;
@@ -84,9 +84,14 @@ async function uploadBlob(name, parentId, blob, mimeType, accessToken) {
   return res.json();
 }
 
-Deno.serve(async (req) => {
+export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me().catch(() => null);
+    if (!user || user.role !== 'admin') {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
     const body = await req.json().catch(() => ({}));
     const fileUrl = String(body.fileUrl || '');
     const productSlug = String(body.productSlug || '').trim();
@@ -137,15 +142,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    if (product && isImage) {
-      const gallery = Array.isArray(product.gallery_urls) ? product.gallery_urls : [];
-      if (!gallery.includes(fileUrl) && product.image_url !== fileUrl) {
-        await base44.asServiceRole.entities.Product.update(product.id, {
-          gallery_urls: [...gallery, fileUrl],
-        });
-      }
-    }
-
     return Response.json({
       success: true,
       archived: {
@@ -160,4 +156,4 @@ Deno.serve(async (req) => {
     console.error('archiveGeneratedMediaToDrive failed', error);
     return Response.json({ error: error.message || 'Archive failed' }, { status: 500 });
   }
-});
+}

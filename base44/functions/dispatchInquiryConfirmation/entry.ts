@@ -259,13 +259,12 @@ export default async function(req) {
         hour: '2-digit', minute: '2-digit',
       }).format(reactionDeadline);
 
-      await base44.functions.invoke('notifyAdminChannel', {
+      await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
         event_type: 'inquiry_created',
         client_name: inquiry.jmeno || '',
         client_email: customerEmail,
         project_name: inquiry.produkt || inquiry.installation_location || '',
         message: clean(inquiry.zprava, 500),
-        admin_url: `${BRAND.SITE_URL}/admin?tab=poptavky`,
         reaction_deadline: deadlineStr,
       });
     } catch (_) { /* admin notifikace je best-effort */ }

@@ -133,14 +133,13 @@ export default async function(req: Request): Promise<Response> {
 
     // ── Interní oznámení admin týmu ──
     try {
-      await base44.functions.invoke('notifyAdminChannel', {
+      await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
         event_type: 'document_published',
         client_name: inquiry?.jmeno || project?.client_name || '',
         client_email: clientEmail,
         project_name: projectName,
         document_title: doc.title,
         document_id: doc.id,
-        admin_url: `${BRAND.SITE_URL}/admin?tab=orders`,
       });
     } catch { /* best-effort */ }
 

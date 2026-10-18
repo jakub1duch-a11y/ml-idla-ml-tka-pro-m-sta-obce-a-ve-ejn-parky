@@ -115,14 +115,13 @@ export default async function(req) {
     if (clientInitiatedStatuses.includes(currentStatus) && oldStatus !== currentStatus) {
       const adminEventType = currentStatus === 'approved' ? 'offer_approved' : currentStatus === 'extension_requested' ? 'extension_requested' : 'offer_viewed';
       try {
-        await base44.functions.invoke('notifyAdminChannel', {
+        await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
           event_type: adminEventType,
           client_name: project.client_name,
           client_email: project.client_email,
           quote_number: project.quote_number || '',
           project_name: project.project_name || project.product_name || '',
           total_price: project.total_price,
-          admin_url: `${BRAND.SITE_URL}/admin?tab=poptavky`,
         });
       } catch (_) { /* admin notifikace je best-effort */ }
     }
@@ -130,14 +129,13 @@ export default async function(req) {
     // Admin notifikace pro novou nabídku (sent) — akce týmu, ale tým by měl vidět potvrzení
     if (currentStatus === 'sent' && result.status === 'sent') {
       try {
-        await base44.functions.invoke('notifyAdminChannel', {
+        await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
           event_type: 'quote_sent',
           client_name: project.client_name,
           client_email: project.client_email,
           quote_number: project.quote_number || '',
           project_name: project.project_name || project.product_name || '',
           total_price: project.total_price,
-          admin_url: `${BRAND.SITE_URL}/admin?tab=poptavky`,
         });
       } catch (_) { /* admin notifikace je best-effort */ }
     }

@@ -68,7 +68,7 @@ topic = velmi krátké téma konverzace,
 recommended_products = pouze názvy produktů, které opravdu vycházejí z katalogu,
 follow_up_questions = 2 až 4 krátké klikatelné pokračovací otázky.`;
 
-    const response = await base44.integrations.Core.InvokeLLM({
+    const response = await base44.asServiceRole.integrations.Core.InvokeLLM({
       prompt,
       response_json_schema: {
         type: 'object',

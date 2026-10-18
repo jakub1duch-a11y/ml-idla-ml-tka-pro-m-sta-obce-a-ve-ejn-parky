@@ -139,14 +139,13 @@ export default async function(req) {
 
     // Admin Slack notification
     try {
-      await base44.functions.invoke('notifyAdminChannel', {
+      await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
         event_type: 'quote_sent',
         client_name: project.client_name,
         client_email: project.client_email,
         quote_number: project.quote_number || '',
         project_name: project.project_name || project.product_name || '',
         total_price: project.total_price,
-        admin_url: 'https://mlzidla.cz/admin?tab=poptavky',
       });
     } catch (_) {}
 

@@ -8,11 +8,43 @@ const clean = (v: unknown, max = 2000) => String(v || '').trim().slice(0, max);
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const caller = await base44.auth.me().catch(() => null);
+    if (!caller) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'no-store' } });
+    }
+
     const body = await req.json().catch(() => ({}));
-    const email = clean(body.email || body.user_email);
-    const firstName = clean(body.first_name || body.user_name, 100);
-    const dryRun = Boolean(body.dry_run);
-    const previewOnly = Boolean(body.preview);
+    const isAdmin = caller.role === 'admin';
+    const dryRun = isAdmin && Boolean(body.dry_run);
+    const previewOnly = isAdmin && Boolean(body.preview);
+
+    let email = '';
+    let firstName = '';
+
+    if (!isAdmin) {
+      email = clean(caller.email, 200);
+      firstName = clean(caller.full_name, 100);
+    } else if (previewOnly || dryRun) {
+      email = clean(body.email || body.user_email || caller.email, 200);
+      firstName = clean(body.first_name || body.user_name || caller.full_name, 100);
+    } else {
+      const requestedUserId = clean(body.user_id, 100);
+      const requestedEmail = clean(body.email || body.user_email, 200);
+      let targetUser = null;
+      if (requestedUserId) {
+        targetUser = await base44.asServiceRole.entities.User.get(requestedUserId).catch(() => null);
+      }
+      if (!targetUser && requestedEmail) {
+        const found = await base44.asServiceRole.entities.User.filter({ email: requestedEmail }, { limit: 1 }).catch(() => ({ items: [] }));
+        const list = Array.isArray(found) ? found : (found?.items || []);
+        targetUser = list[0] || null;
+      }
+      if (!targetUser) {
+        return Response.json({ error: 'user_not_found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
+      }
+      email = clean(targetUser.email, 200);
+      firstName = clean(targetUser.full_name || body.first_name || body.user_name, 100);
+    }
 
     if (!email) return Response.json({ error: 'missing_email' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
 
@@ -112,11 +144,10 @@ ${categoryLinks ? `<div style="margin:18px 0;font-size:13px;color:#60777d">Proch
     // Pošli i admin notifikaci o nové registraci
     if (result.status === 'sent') {
       try {
-        await base44.functions.invoke('notifyAdminChannel', {
+        await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
           event_type: 'registration',
           client_name: firstName,
           client_email: email,
-          admin_url: `${BRAND.SITE_URL}/admin?tab=poptavky`,
         });
       } catch (_) { /* best-effort */ }
     }

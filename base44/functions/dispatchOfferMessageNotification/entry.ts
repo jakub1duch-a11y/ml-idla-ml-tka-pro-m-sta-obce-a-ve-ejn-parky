@@ -27,20 +27,22 @@ export default async function(req) {
     const message = await base44.asServiceRole.entities.OfferMessage.get(messageId).catch(() => null);
     if (!message) return Response.json({ error: 'not_found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
 
+    const project = await base44.asServiceRole.entities.ProjectOrder.get(message.project_order_id).catch(() => null);
+    if (!project) return Response.json({ ok: true, skipped: true, reason: 'project_not_found' }, { headers: { 'Cache-Control': 'no-store' } });
+
     // Zprávy od klienta → admin notifikace do chatu (notifikace klientovi se neposílá)
     if (message.sender_type === 'customer') {
       if (dryRun || previewOnly) {
         return Response.json({ ok: true, dry_run: dryRun, preview: previewOnly, route: 'admin_chat', client_name: project.client_name, client_email: project.client_email, quote_number: project.quote_number, message_preview: clean(message.message, 200) }, { headers: { 'Cache-Control': 'no-store' } });
       }
       try {
-        await base44.functions.invoke('notifyAdminChannel', {
+        await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
           event_type: 'client_message',
           client_name: project.client_name,
           client_email: project.client_email,
           quote_number: project.quote_number || '',
           project_name: project.project_name || project.product_name || '',
           message: clean(message.message, 500),
-          admin_url: `${BRAND.SITE_URL}/admin?tab=poptavky`,
         });
       } catch (_) { /* best-effort */ }
       return Response.json({ ok: true, route: 'admin_chat' }, { headers: { 'Cache-Control': 'no-store' } });
@@ -50,9 +52,6 @@ export default async function(req) {
     if (message.sender_type !== 'team') {
       return Response.json({ ok: true, skipped: true, reason: 'unknown_sender' }, { headers: { 'Cache-Control': 'no-store' } });
     }
-
-    const project = await base44.asServiceRole.entities.ProjectOrder.get(message.project_order_id).catch(() => null);
-    if (!project) return Response.json({ ok: true, skipped: true, reason: 'project_not_found' }, { headers: { 'Cache-Control': 'no-store' } });
 
     const categoryLabel = CATEGORY_LABELS[message.category] || 'Zpráva k projektu';
     const quoteNumber = project.quote_number || '';

@@ -127,7 +127,7 @@ MLŽIDLA® / HolmTec s.r.o. — interní notifikace AI nabídek`;
 
     // Also send Slack admin notification with concept + next step
     try {
-      await base44.functions.invoke('notifyAdminChannel', {
+      await base44.asServiceRole.functions.invoke('notifyAdminChannel', {
         event_type: 'inquiry_status_change',
         client_name: clientName,
         client_email: project.client_email,
@@ -135,7 +135,6 @@ MLŽIDLA® / HolmTec s.r.o. — interní notifikace AI nabídek`;
         project_name: project.project_name || productName,
         total_price: data.totalPrice,
         message: `AI vygenerovala nabídku ${quoteNumber}. Čeká na kontrolu a ruční odeslání. Koncept uložen v Gmailu pro ${reviewRecipients}.`,
-        admin_url: 'https://mlzidla.cz/admin?tab=poptavky',
       });
     } catch (_) { /* Slack best-effort */ }
 

@@ -6,10 +6,16 @@ const BASE_URL = 'https://mlzidla.cz';
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
-    const { event, data, payload_too_large } = await req.json();
+    const user = await base44.auth.me().catch(() => null);
+    if (!user || user.role !== 'admin') {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    const { event, data } = await req.json().catch(() => ({}));
     if (!event || event.entity_name !== 'BlogPost') return Response.json({ ok: false, reason: 'Not a BlogPost event' });
-    let post = data;
-    if (payload_too_large || !post) post = await base44.asServiceRole.entities.BlogPost.get(event.entity_id);
+    const postId = String(event.entity_id || data?.id || '').trim();
+    if (!postId) return Response.json({ ok: false, reason: 'Missing BlogPost ID' }, { status: 400 });
+    const post = await base44.asServiceRole.entities.BlogPost.get(postId);
     if (!post || !post.published || post.instagram_posted) return Response.json({ ok: false, reason: 'Post not published or already shared' });
     if (!post.image_url) return Response.json({ ok: false, reason: 'Post has no image' });
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');

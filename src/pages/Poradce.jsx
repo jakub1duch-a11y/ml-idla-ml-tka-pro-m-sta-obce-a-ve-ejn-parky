@@ -128,7 +128,7 @@ export default function Poradce() {
           </div>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">AI Projektant MLŽIDLA®</p>
           <h1 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-3">
-            Navrhneme mlžení pro váš prostor
+            Doporučíme vhodné mlžicí řešení
           </h1>
           <p className="text-slate-500 text-sm max-w-xl mx-auto">
             Popište místo, velikost a způsob využití. AI Projektant doporučí vhodnou kolekci, rozsah sestavy a připraví podklady pro přesné nacenění.

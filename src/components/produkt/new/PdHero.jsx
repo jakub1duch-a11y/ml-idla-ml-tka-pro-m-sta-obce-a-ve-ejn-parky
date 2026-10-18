@@ -63,7 +63,7 @@ export default function PdHero({ product }) {
       .filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 60)
       .then((items = []) => {
         if (!activeRequest) return;
-        setApprovedVisuals((items || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+        setApprovedVisuals((items || []).filter((item) => item?.image_url && (!isVideo(item.thumbnail_url || item.image_url)) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
       })
       .catch(() => { if (activeRequest) setApprovedVisuals([]); });
     return () => { activeRequest = false; };
@@ -75,7 +75,7 @@ export default function PdHero({ product }) {
       ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení prostoru` }]
       : [];
     const approvedItems = [...approvedVisuals]
-      .filter((item) => isProductMediaAllowed(product, item.image_url, item.title, item.product_name))
+      .filter((item) => !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
       .map((item) => ({
         type: 'image',

@@ -3,6 +3,20 @@ import { Clock3, CheckCircle2, Layers3, Wrench, CalendarDays } from 'lucide-reac
 import { base44 } from '@/api/base44Client';
 import WorkBriefingPanel from '@/components/admin/WorkBriefingPanel';
 
+const REACT_FRAMEWORKS = [
+  { name: 'Next.js', url: 'https://nextjs.org', description: 'The React Framework.', group: 'Hlavní seznam' },
+  { name: 'Remix', url: 'https://remix.run', description: 'Resilientní webové aplikace a routing přes React Router.', group: 'Hlavní seznam' },
+  { name: 'Astro', url: 'https://astro.build', description: 'Webový framework zaměřený na obsahové weby.', group: 'Hlavní seznam' },
+  { name: 'Gatsby', url: 'https://www.gatsbyjs.com', description: 'React framework s důrazem na výkon, škálovatelnost a bezpečnost.', group: 'Hlavní seznam' },
+  { name: 'Redwood', url: 'https://redwoodjs.com', description: 'Aplikační framework pro startupy.', group: 'Hlavní seznam' },
+  { name: 'Vike', url: 'https://vike.dev', description: 'Flexibilní Vite framework s podporou SSR.', group: 'Hlavní seznam' },
+  { name: 'vite-ssr-boost', url: 'https://github.com/Lomray-Software/vite-ssr-boost', description: 'SSR nebo SPA nad Vite a React Router.', group: 'Hlavní seznam' },
+  { name: 'after.js', url: 'https://github.com/jaredpalmer/after.js', description: 'Serverově renderovaný React s React Routerem.', group: 'Hlavní seznam' },
+  { name: 'Waku', url: 'https://github.com/dai-shi/waku', description: 'Minimalistický React framework.', group: 'Experimentální' },
+  { name: 'TanStack Start', url: 'https://tanstack.com/start/latest', description: 'Full-stack React framework postavený na TanStack Router.', group: 'Experimentální' },
+  { name: 'RakkasJS', url: 'https://github.com/rakkasjs/rakkasjs', description: 'Experimentální framework postavený na Vite.', group: 'Experimentální' },
+];
+
 const fmt = (value) => Number(value || 0).toLocaleString('cs-CZ', { maximumFractionDigits: 1 });
 const monthLabel = (month) => {
   if (!month) return '';

@@ -87,9 +87,12 @@ function StoryFrame({ item, index, total, productName, onOpen, active }) {
         {!imageFailed ? <img
           src={optimize(item.url)}
           alt={item.alt || (productName + ' — fotografie ' + (index + 1))}
-          className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.035] ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
+          className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.025] ${item.fit === 'contain' ? 'object-contain p-3 sm:p-8 lg:p-12' : 'object-cover'}`}
           style={{ objectPosition: item.focal || 'center center' }}
           loading={Math.abs(active - index) <= 1 ? 'eager' : 'lazy'}
+          fetchPriority={index === active ? 'high' : 'auto'}
+          decoding="async"
+          sizes="100vw"
           onLoad={() => setLoaded(true)}
           onError={() => setImageFailed(true)}
         /> : <span className="scroll-photo-image-error">Fotografie se nyní nepodařilo načíst.</span>}
@@ -304,7 +307,7 @@ export default function PdScrollGallery({ product }) {
   if (!items.length) return null;
 
   // Enough scroll room for each image transition, without a long empty tail below the gallery.
-  const storyHeight = Math.min(560, Math.max(155, items.length * 58 + 36));
+  const storyHeight = Math.min(760, Math.max(180, items.length * 82 + 30));
 
   return (
     <section className="relative bg-[#07131D] text-white">
@@ -313,10 +316,10 @@ export default function PdScrollGallery({ product }) {
         <div className="mt-3 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <h2 className="max-w-4xl font-heading text-3xl font-bold leading-[1.02] tracking-[-.04em] sm:text-4xl lg:text-6xl">
-              Produkt v prostoru. Jeden snímek za druhým.
+              {product.name}: fotografie, detaily a realizace.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-white/64 sm:text-base">
-              Prohlédněte si celý produkt, jeho detaily a umístění v prostoru. Posouvejte stránku nebo vyberte konkrétní snímek.
+              Prohlédněte si produkt zblízka, konstrukční detaily i schválené pohledy v prostoru. Na počítači procházejte příběhem pomocí scrollu, na telefonu přirozeně posouvejte fotografie.
             </p>
           </div>
           <div className="hidden items-center gap-2 rounded-full border border-white/12 bg-white/[.05] px-4 py-2 text-xs text-white/68 lg:flex">

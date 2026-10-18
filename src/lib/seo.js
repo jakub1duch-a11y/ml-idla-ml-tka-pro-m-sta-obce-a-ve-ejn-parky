@@ -199,10 +199,30 @@ const isPublicImage = (url) => (
 );
 
 function getProductSearchContext(product) {
-  const source = [product?.slug, product?.name, product?.short_description, product?.description]
-    .filter(Boolean)
-    .join(' ')
-    .toLowerCase();
+  // Include verified usage/location fields so product metadata reflects real project fit,
+  // not only the model name. This improves query matching without repeating keyword lists in visible copy.
+  const source = [
+    product?.slug, product?.name, product?.short_description, product?.description,
+    product?.category, product?.category_name, product?.location_context,
+    ...(Array.isArray(product?.use_cases) ? product.use_cases : []),
+    ...(Array.isArray(product?.target_audiences) ? product.target_audiences : []),
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  if (/(škol|skol|školk|skolk|mateřsk|matersk|dětsk|detsk|hřišt|hrist)/.test(source)) {
+    return {
+      primaryKeyword: 'mlžítko pro školy a školky',
+      useCase: 'pro školky, školy a dětská hřiště',
+      keywords: 'mlžítka pro školky, mlžítka pro školy, mlhoviště pro děti, mlžítko na dětské hřiště, ochlazení školního areálu, veřejné mlžení',
+    };
+  }
+
+  if (/(náměst|namest|obec|měst|mest|veřej|verej|promen|nádraž|nadraz|urban|city|park|sportovišt|sportovist)/.test(source)) {
+    return {
+      primaryKeyword: 'městské mlžítko',
+      useCase: 'pro města, obce, náměstí a parky',
+      keywords: 'mlžítka pro města, mlžítka pro obce, mlžítko na náměstí, městské mlžítko, mlžítka do parků, ochlazování veřejného prostoru',
+    };
+  }
 
   if (/(gate|brána|brana)/.test(source)) {
     return {
@@ -314,7 +334,7 @@ export function getProductSEO(product, reviewStats) {
   }
 
   return {
-    title: product.seo_title || (product.name + ' – nerezové mlžítko pro zahrady a města'),
+    title: product.seo_title || (product.name + ' – ' + search.primaryKeyword + ' ' + search.useCase),
     description,
     keywords: search.keywords + ', ' + product.name + ', HolmTec, MLŽIDLA.cz',
     image: images[0] || product.image_url,

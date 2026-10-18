@@ -151,7 +151,7 @@ export default function PdMediaGallery({ product }) {
         if (cancelled) return;
         setRealizations((realizationItems || []).filter((r) => matchesProduct(r, product)));
         setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url && !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
-        setAdminMedia((mediaItems || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group));
+        setAdminMedia((mediaItems || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
       })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };

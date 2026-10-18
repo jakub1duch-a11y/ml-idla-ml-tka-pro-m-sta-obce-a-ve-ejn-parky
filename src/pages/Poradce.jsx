@@ -205,7 +205,7 @@ export default function Poradce() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Popište váš prostor nebo potřeby..."
+              placeholder="Uveďte typ místa, požadovaný efekt a dostupný přívod vody…"
               disabled={loading || starting}
               className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none disabled:opacity-50"
             />

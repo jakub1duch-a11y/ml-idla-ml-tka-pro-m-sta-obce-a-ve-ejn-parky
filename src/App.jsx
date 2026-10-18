@@ -139,6 +139,7 @@ const AuthenticatedApp = () => {
         <Route path="/connect" element={<Connect />} />
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
+        <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzitko-mrak" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
@@ -149,7 +150,7 @@ const AuthenticatedApp = () => {
         <Route path="/klient" element={<CustomerPortal />} />
         <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
-        <Route path="/ai-vizualizace" element={<AIVizualizace />} />
+        <Route path="/ai-vizualizace" element={<Navigate to="/poptavka" replace />} />
         <Route path="/ar/bendy-single" element={<BendyARPrototype />} />
         <Route path="/ar/gate" element={<GateARPrototype />} />
         <Route path="/kalkulacka" element={<Kalkulacka />} />

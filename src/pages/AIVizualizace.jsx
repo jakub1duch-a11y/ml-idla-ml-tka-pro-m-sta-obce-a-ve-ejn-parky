@@ -408,11 +408,11 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         email: leadProfile?.email || '',
         telefon: leadProfile?.phone || '',
         firma: leadProfile?.company || '',
-        produkt: selectedProduct?.name || requestedConcept || 'AI návrh projektu',
+        produkt: selectedProduct?.name || requestedConcept || 'Návrh projektu',
         zprava: text,
         status: 'nova',
       });
-      trackInquirySubmitted('ai-vizualizace', selectedProduct?.name || requestedConcept || 'AI návrh projektu', created?.id || '');
+      trackInquirySubmitted('navrh-umisteni', selectedProduct?.name || requestedConcept || 'Návrh projektu', created?.id || '');
       if (leadProfile?.leadId) {
         try {
           await base44.entities.VisualizerLead.update(leadProfile.leadId, { inquiry_sent: true, last_visualization_url: resultUrl });

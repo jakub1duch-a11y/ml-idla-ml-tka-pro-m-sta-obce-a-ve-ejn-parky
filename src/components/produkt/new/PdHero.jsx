@@ -77,6 +77,7 @@ export default function PdHero({ product }) {
     const approvedItems = [...approvedVisuals]
       .filter((item) => !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .slice(0, 4)
       .map((item) => ({
         type: 'image',
         url: item.thumbnail_url || item.image_url,

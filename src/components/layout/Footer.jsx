@@ -28,7 +28,7 @@ const columns = [
   links: [
   ['Automatizace', '/smart-ovladani'],
   ['Jak funguje mlžení', '/jak-to-funguje'],
-  ['AI vizualizace', '/ai-vizualizace'],
+  ['Návrh ochlazovací zóny', '/poptavka'],
   ['Kalkulačka projektu', '/kalkulacka']]
 
 },

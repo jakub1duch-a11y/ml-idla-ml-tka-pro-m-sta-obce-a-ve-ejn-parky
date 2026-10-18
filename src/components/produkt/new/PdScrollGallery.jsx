@@ -7,6 +7,7 @@ import { base44 } from '@/api/base44Client';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import '@/styles/product-scroll-gallery.css';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
@@ -197,8 +198,8 @@ export default function PdScrollGallery({ product }) {
     catch(() => [])]
     ).then(([visuals, media]) => {
       if (cancelled) return;
-      setApprovedVisuals((visuals || []).filter((item) => item?.image_url));
-      setAdminMedia((media || []).filter((item) => item?.file_url));
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+      setAdminMedia((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group));
     });
     return () => {cancelled = true;};
   }, [product.slug]);
@@ -207,7 +208,7 @@ export default function PdScrollGallery({ product }) {
     const studio = getStudioMedia(product);
     const curated = getCuratedProductMedia(product);
 
-    const approved = approvedVisuals.map((item) => ({
+    const approved = approvedVisuals.filter((item) => isProductMediaAllowed(product, item.image_url, item.title, item.product_name)).map((item) => ({
       url: item.image_url,
       title: `${product.name} · ${(item.environment_label || item.space_name || item.environment || 'konkrétní prostor').toString().replace(/[_-]+/g, ' ')}`,
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · '),
@@ -216,8 +217,8 @@ export default function PdScrollGallery({ product }) {
     }));
 
     const admin = adminMedia.
-    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization'].includes(item.media_role)).
-    filter((item) => isImage(item.file_url)).
+    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role)).
+    filter((item) => isImage(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)).
     map((item) => ({
       url: item.file_url,
       title: `${product.name} — produktová fotografie`,
@@ -227,7 +228,7 @@ export default function PdScrollGallery({ product }) {
     }));
 
     const curatedItems = curated.
-    filter((item) => isImage(item.url)).
+    filter((item) => isImage(item.url) && isProductMediaAllowed(product, item.url, item.title)).
     map((item) => ({
       url: item.url,
       title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'vizualizace' : 'fotografie'}`,
@@ -252,7 +253,7 @@ export default function PdScrollGallery({ product }) {
     [];
 
     const gallery = (product.gallery_urls || []).
-    filter(isImage).
+    filter((url) => isImage(url) && isProductMediaAllowed(product, url)).
     map((url, index) => ({
       url,
       title: `${product.name} — fotografie ${index + 1}`,

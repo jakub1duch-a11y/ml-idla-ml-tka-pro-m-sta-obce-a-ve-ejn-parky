@@ -231,9 +231,9 @@ export default function PdScrollGallery({ product }) {
     filter((item) => isImage(item.url) && isProductMediaAllowed(product, item.url, item.title)).
     map((item) => ({
       url: item.url,
-      title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'vizualizace' : 'fotografie'}`,
-      caption: item.caption || (item.kind === 'visualization' ? 'Vizualizace umístění' : 'Produktová fotografie'),
-      badge: item.kind === 'visualization' ? 'Vizualizace' : 'Fotografie',
+      title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'pohled v prostoru' : 'fotografie'}`,
+      caption: item.caption || (item.kind === 'visualization' ? 'Pohled na umístění produktu v prostoru' : 'Produktová fotografie'),
+      badge: item.kind === 'visualization' ? 'V prostoru' : 'Fotografie',
       fit: 'cover'
     }));
 

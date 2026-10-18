@@ -110,7 +110,7 @@ export default function PdVisualGalleryCompact({ product }) {
     ]).then(([media, visuals]) => {
       if (!active) return;
       setMediaFiles((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
-      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
     }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
     return () => { active = false; };
   }, [product.slug, reduced]);

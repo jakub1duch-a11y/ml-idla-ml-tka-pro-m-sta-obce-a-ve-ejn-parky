@@ -270,7 +270,7 @@ export default function Mlzitko() {
       {/* CTA */}
       <div className="py-20 text-center max-w-3xl mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 mb-4">Váš prostor si zaslouží mlžítko</h2>
+          <h2 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 mb-4">Vyberte mlžítko podle způsobu použití</h2>
           <p className="text-slate-500 font-light leading-relaxed mb-8">
             Konzultace zdarma, 3D vizualizace do 48 h, odpovídáme do 24 h.
           </p>

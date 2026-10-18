@@ -25,7 +25,7 @@ export default function PdClosingCta({ product }) {
         <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-7 lg:px-10">
           <p className="font-mono uppercase tracking-[.18em] text-base text-[hsl(var(--background))]">Projektová konzultace</p>
           <h2 className="mt-4 font-heading text-3xl font-bold leading-tight tracking-[-.02em] text-white lg:text-5xl">
-            Získejte návrh a cenu pro váš prostor
+            Získejte návrh řešení a cenovou nabídku
           </h2>
           
 

@@ -117,7 +117,12 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
   const item = items[index];
   const dialogRef = useRef(null);
   const reduced = useReducedMotion();
-  useEffect(() => { const previous = document.activeElement; dialogRef.current?.querySelector('button')?.focus(); return () => previous?.focus(); }, []);
+  useEffect(() => {
+    const previous = document.activeElement;
+    const firstButton = dialogRef.current?.querySelector('button');
+    firstButton?.focus();
+    return () => { if (previous instanceof HTMLElement) previous.focus(); };
+  }, []);
 
   useEffect(() => {
     const before = document.body.style.overflow;

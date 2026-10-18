@@ -283,6 +283,7 @@ export function getProductSEO(product, reviewStats) {
     ? `${product.name}: ${detailText.slice(0, 105).replace(/\s+\S*$/, '')}. ${useCase}.`
     : `${product.name} – ${search.primaryKeyword} ${search.useCase}. Návrh, technické podklady a servis podle projektu.${materialText}`;
   const description = product.seo_description || fallbackDescription;
+  /** @type {Record<string, any>} */
   const productSchema = {
     '@type': 'Product',
     '@id': `${BASE_URL}${canonicalPath}#product`,

@@ -79,7 +79,7 @@ function normalizedAssetText(...values) {
 /** Reject files whose filename/title explicitly identifies a different product. */
 export function isProductMediaAllowed(product, ...mediaIdentity) {
   const slug = String(product?.slug || '').toLowerCase();
-  const url = mediaIdentity.find((value) => typeof value === 'string' && /^https?:\\/\\//i.test(value)) || '';
+  const url = mediaIdentity.find((value) => typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://'))) || '';
   const rawName = String(url).split('/').pop().split('?')[0].split('#')[0];
   let fileName = rawName;
   try { fileName = decodeURIComponent(rawName); } catch {}

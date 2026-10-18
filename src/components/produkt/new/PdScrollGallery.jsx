@@ -198,7 +198,7 @@ export default function PdScrollGallery({ product }) {
     catch(() => [])]
     ).then(([visuals, media]) => {
       if (cancelled) return;
-      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
       setAdminMedia((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
     });
     return () => {cancelled = true;};
@@ -208,8 +208,8 @@ export default function PdScrollGallery({ product }) {
     const studio = getStudioMedia(product);
     const curated = getCuratedProductMedia(product);
 
-    const approved = approvedVisuals.filter((item) => isProductMediaAllowed(product, item.image_url, item.title, item.product_name)).map((item) => ({
-      url: item.image_url,
+    const approved = approvedVisuals.filter((item) => isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)).map((item) => ({
+      url: item.thumbnail_url || item.image_url,
       title: `${product.name} · ${(item.environment_label || item.space_name || item.environment || 'konkrétní prostor').toString().replace(/[_-]+/g, ' ')}`,
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · '),
       badge: 'Náhled v prostoru',

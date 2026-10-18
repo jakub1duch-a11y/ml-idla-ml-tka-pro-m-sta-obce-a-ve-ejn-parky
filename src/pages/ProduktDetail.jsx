@@ -89,12 +89,18 @@ export default function ProduktDetail() {
   );
 
   if (notFound || !product) return (
-    <div className="flex min-h-screen items-center justify-center bg-white pt-28">
-      <div className="text-center">
-        <p className="mb-4 text-lg text-[#0D2F4F]/40">Produkt nenalezen.</p>
-        <Link to="/katalog-mlzitek" className="text-[#0B5EA8] hover:underline">← Zpět na katalog</Link>
+    <section className="flex min-h-[70svh] items-center justify-center bg-[radial-gradient(ellipse_at_top,#E8F8FC_0%,#FFFFFF_58%)] px-5 pb-20 pt-32">
+      <div className="w-full max-w-2xl rounded-[2rem] border border-[#DCEEF5] bg-white/90 p-7 text-center shadow-[0_24px_80px_rgba(13,47,79,.08)] sm:p-12">
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E7F8FC] text-[#0B5EA8]"><Droplets size={26} aria-hidden="true" /></span>
+        <p className="mt-6 font-mono text-xs font-bold uppercase tracking-[.18em] text-[#0B5EA8]">Produktový katalog MLŽIDLA®</p>
+        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[#0D2F4F] sm:text-4xl">Tento detail se nám nepodařilo načíst.</h1>
+        <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-[#35546B]">Produkt může mít aktualizovaný odkaz nebo právě upravujeme jeho podklady. Prohlédněte si aktuální katalog, případně nám pošlete nezávaznou poptávku — pomůžeme vám najít správnou variantu.</p>
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link to="/katalog-mlzitek" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#0B5EA8] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#084A86] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18B7E6] focus-visible:ring-offset-2">Prohlédnout katalog <ArrowRight size={16} className="ml-2" /></Link>
+          <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#B8D9E8] bg-white px-6 py-3 text-sm font-bold text-[#0D2F4F] transition hover:border-[#0B5EA8] hover:bg-[#F4FBFE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18B7E6] focus-visible:ring-offset-2">Nezávazně poptat řešení</Link>
+        </div>
       </div>
-    </div>
+    </section>
   );
 
   if (product.slug === 'brana-bendy' && viewMode === 'new') return <StebloGateDetail product={product} />;

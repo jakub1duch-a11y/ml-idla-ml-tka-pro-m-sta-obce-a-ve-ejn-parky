@@ -1,6 +1,5 @@
 import React from 'react';
-import { Clock, Thermometer, Smartphone, BarChart3, SlidersHorizontal, Smile, TreeDeciduous, Home, Paintbrush, Leaf, Coins, Truck, Package, Cloud } from 'lucide-react';
-import { Logo, Bg, ProductTitle, IconRow, fmtKc, CONTACT } from './OfferPageParts';
+import { Bg, ProductTitle } from './OfferPageParts';
 import OfferPlacementSheets from '@/components/offers/OfferPlacementSheets';
 import OfferSuplaSheet from '@/components/offers/OfferSuplaSheet';
 import OfferPricingSheet from '@/components/offers/OfferPricingSheet';

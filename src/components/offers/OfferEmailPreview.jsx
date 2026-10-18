@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Eye, Send, Loader2, AlertTriangle, CheckCircle2, Shield, FileText } from 'lucide-react';
+import { Mail, Eye, Send, Loader2, AlertTriangle, CheckCircle2, Shield } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 // Admin náhled klientského e-mailu nabídky + testovací odeslání + odeslání klientovi

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SPECS } from '@/components/gate70/gateConfig';
 
 /**
  * Inženýrské parametry — datově bohaté panely pro architekty a zástupce měst.

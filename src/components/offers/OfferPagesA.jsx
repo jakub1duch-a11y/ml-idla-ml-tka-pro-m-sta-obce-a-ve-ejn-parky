@@ -1,6 +1,6 @@
 import React from 'react';
-import { Clock, Thermometer, Smartphone, Droplets, ShieldCheck, Sparkles, Users, Leaf, Maximize2, Layers, Anchor, Sun } from 'lucide-react';
-import { Logo, Bg, ProductTitle, IconRow } from './OfferPageParts';
+import { Droplets, ShieldCheck, Sparkles, Users, Leaf } from 'lucide-react';
+import { ProductTitle } from './OfferPageParts';
 import OfferFlowPage from '@/components/offers/OfferFlowPage';
 
 const DEFAULT_BENEFITS = [

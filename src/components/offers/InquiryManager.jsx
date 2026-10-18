@@ -4,7 +4,6 @@ import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
 import OfferAICopilot from '@/components/offers/OfferAICopilot';
 import NabidkovySuperAgentChat from '@/components/offers/NabidkovySuperAgentChat';
-import OfferDocumentEditor from '@/components/offers/OfferDocumentEditor';
 import OfferVisualViewer from '@/components/offers/OfferVisualViewer';
 import OfferConceptPanel from '@/components/offers/OfferConceptPanel';
 import { SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';

@@ -208,7 +208,7 @@ export default function PdScrollGallery({ product }) {
     const studio = getStudioMedia(product);
     const curated = getCuratedProductMedia(product);
 
-    const approved = approvedVisuals.filter((item) => isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)).map((item) => ({
+    const approved = approvedVisuals.filter((item) => isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)).slice(0, 4).map((item) => ({
       url: item.thumbnail_url || item.image_url,
       title: `${product.name} · ${(item.environment_label || item.space_name || item.environment || 'konkrétní prostor').toString().replace(/[_-]+/g, ' ')}`,
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · '),
@@ -219,12 +219,13 @@ export default function PdScrollGallery({ product }) {
     const admin = adminMedia.
     filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role)).
     filter((item) => isImage(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)).
+    slice(0, 3).
     map((item) => ({
       url: item.file_url,
       title: `${product.name} — produktová fotografie`,
       caption: item.media_role === 'realization' ? 'Reálná realizace' : 'Produktový detail',
       badge: item.media_role === 'realization' ? 'Realizace' : 'Produkt',
-      fit: 'cover'
+      fit: item.media_role === 'realization' || item.media_role === 'reference' ? 'cover' : 'contain'
     }));
 
     const curatedItems = curated.
@@ -234,7 +235,7 @@ export default function PdScrollGallery({ product }) {
       title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'pohled v prostoru' : 'fotografie'}`,
       caption: item.caption || (item.kind === 'visualization' ? 'Pohled na umístění produktu v prostoru' : 'Produktová fotografie'),
       badge: item.kind === 'visualization' ? 'V prostoru' : 'Fotografie',
-      fit: 'cover'
+      fit: item.kind === 'visualization' ? 'cover' : 'contain'
     }));
 
     const hero = product.hero_visual_verified && isImage(product.hero_product_image_url) ?
@@ -249,7 +250,7 @@ export default function PdScrollGallery({ product }) {
     [];
 
     const base = product.image_url && isImage(product.image_url) ?
-    [{ url: product.image_url, title: product.name, caption: product.short_description || 'Produktový náhled', badge: 'Produkt', fit: 'cover' }] :
+    [{ url: product.image_url, title: product.name, caption: product.short_description || 'Produktový náhled', badge: 'Produkt', fit: 'contain' }] :
     [];
 
     const gallery = (product.gallery_urls || []).
@@ -259,14 +260,14 @@ export default function PdScrollGallery({ product }) {
       title: `${product.name} — fotografie ${index + 1}`,
       caption: 'Produktová fotografie',
       badge: 'Galerie',
-      fit: 'cover'
+      fit: /(realizace|park|namest|náměst|zahrad|promen|hotel|brno|polna|rezidenc|avenue|landscape|mest|měst)/i.test(url) ? 'cover' : 'contain'
     }));
 
     const studioItem = studio && isImage(studio) ?
     [{ url: studio, title: `${product.name} — studiový náhled`, caption: 'Studiové zobrazení produktu', badge: 'Studio', fit: 'contain' }] :
     [];
 
-    return dedupe([...approved, ...hero, ...base, ...curatedItems, ...admin, ...studioItem, ...gallery]).slice(0, 10);
+    return dedupe([...base, ...hero, ...approved, ...curatedItems, ...admin, ...studioItem, ...gallery]).slice(0, 10);
   }, [product, approvedVisuals, adminMedia]);
 
   useLayoutEffect(() => {

@@ -17,25 +17,56 @@ const clampIndex = (value, length) => Math.min(Math.max(value, 0), Math.max(0, l
 function Fullscreen({ items, index, onClose, onChange, productName, reduced }) {
   const item = items[index];
   const touchStart = useRef(null);
+  const dialogRef = useRef(null);
 
   useEffect(() => {
-    const previous = document.body.style.overflow;
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement;
     document.body.style.overflow = 'hidden';
+    dialogRef.current?.querySelector('button')?.focus({ preventScroll: true });
+
     const onKey = (event) => {
-      if (event.key === 'Escape') onClose();
-      if (event.key === 'ArrowLeft') onChange((index - 1 + items.length) % items.length);
-      if (event.key === 'ArrowRight') onChange((index + 1) % items.length);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key === 'ArrowLeft' && items.length > 1) {
+        event.preventDefault();
+        onChange((index - 1 + items.length) % items.length);
+      }
+      if (event.key === 'ArrowRight' && items.length > 1) {
+        event.preventDefault();
+        onChange((index + 1) % items.length);
+      }
+      if (event.key === 'Tab' && dialogRef.current) {
+        const controls = [...dialogRef.current.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+        if (!controls.length) {
+          event.preventDefault();
+          return;
+        }
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKey);
+      if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus({ preventScroll: true });
     };
   }, [index, items.length, onChange, onClose]);
 
   if (!item) return null;
   return (
-    <div className="pdpc-lightbox" role="dialog" aria-modal="true" aria-label={'Galerie produktu ' + productName}
+    <div ref={dialogRef} className="pdpc-lightbox" role="dialog" aria-modal="true" aria-label={'Galerie produktu ' + productName}
       onTouchStart={(event) => { touchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }}
       onTouchEnd={(event) => {
         if (!touchStart.current || items.length < 2) return;

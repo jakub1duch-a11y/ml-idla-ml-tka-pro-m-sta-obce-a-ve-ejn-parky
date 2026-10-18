@@ -38,7 +38,7 @@ export default function UrbanCoolingExperience() {
         <h2>Městské ochlazování pomocí <em>mlžítek a mlžných zón.</em></h2>
         <p>Česká nerezová mlžítka pro náměstí, parky, hřiště a další veřejná místa. Architektura, voda a automatizace v jednom čistém systému.</p>
         <div className="ucx-actions">
-          <a href="/ai-vizualizace" className="ucx-button">Ukázat můj prostor <ArrowRight size={17} /></a>
+          <a href="/poptavka" className="ucx-button">Poptat návrh pro můj prostor <ArrowRight size={17} /></a>
           <a href="#ucx-prostor">Prozkoumat řešení</a>
         </div>
       </motion.div>
@@ -109,10 +109,10 @@ export default function UrbanCoolingExperience() {
     <section className="ucx-final hidden">
       <div className="ucx-mist ucx-mist-c" />
       <motion.div {...reveal}>
-        <span className="ucx-kicker">Vizualizátor v prostoru</span>
-        <h2>Ukažte nám prostor. <em>Ukážeme vám MLŽIDLA v něm.</em></h2>
-        <p>Nahrajte fotografii místa a pokračujte k vizualizačnímu náhledu produktu a návrhu řešení.</p>
-        <a href="/ai-vizualizace" className="ucx-button">Vytvořit vizualizaci <ArrowRight size={17} /></a>
+        <span className="ucx-kicker">Další krok k projektu</span>
+        <h2>Popište nám místo. <em>Navrhneme další krok.</em></h2>
+        <p>Pošlete základní zadání prostoru. Společně upřesníme vhodné řešení, potřebné podklady a technické možnosti.</p>
+        <a href="/poptavka" className="ucx-button">Poptat návrh řešení <ArrowRight size={17} /></a>
       </motion.div>
     </section>
   </div>;

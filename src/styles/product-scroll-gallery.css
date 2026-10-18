@@ -11,3 +11,31 @@
   .scroll-photo-stage .scroll-photo-nav{display:none}
   .scroll-photo-stage .scroll-photo-skip{position:relative;right:auto;bottom:auto;justify-self:end;margin:4px 4px 0}
 }
+
+/* Mobile photo-story polish: image-first cards, real loading state, and scroll reveals. */
+.scroll-photo-stage .scroll-photo-main{opacity:0;transition:opacity .35s ease}
+.scroll-photo-stage .scroll-photo-main.is-loaded{opacity:1}
+.scroll-photo-stage .scroll-photo-loading{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(115deg,#102d40 10%,#18485a 32%,#12374b 52%,#0a2435 74%);background-size:240% 100%;animation:scroll-photo-shimmer 1.15s linear infinite;color:#8de8f4}
+.scroll-photo-loading-mark{display:grid;width:50px;height:50px;place-items:center;border:1px solid rgba(141,232,244,.42);border-radius:50%;font-size:35px;line-height:1;animation:scroll-photo-pulse 1.3s ease-in-out infinite}
+.scroll-photo-loading-bar{width:72px;height:3px;overflow:hidden;border-radius:4px;background:#ffffff25}
+.scroll-photo-loading-bar:after{content:"";display:block;width:34%;height:100%;border-radius:4px;background:#8de8f4;animation:scroll-photo-progress .9s ease-in-out infinite alternate}
+.scroll-photo-image-error{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:24px;color:white;background:#102d40;text-align:center}
+@keyframes scroll-photo-shimmer{to{background-position:-240% 0}}
+@keyframes scroll-photo-pulse{50%{transform:scale(1.08);opacity:.68}}
+@keyframes scroll-photo-progress{to{transform:translateX(190%)}}
+
+@media(max-width:767px){
+  .scroll-photo-stage .scroll-photo-frame.is-entering{opacity:0!important;transform:translate3d(0,24px,0) scale(.992)!important;transition:opacity .62s cubic-bezier(.22,1,.36,1),transform .68s cubic-bezier(.22,1,.36,1)!important}
+  .scroll-photo-stage .scroll-photo-frame.is-in-view{opacity:1!important;transform:translate3d(0,0,0) scale(1)!important;transition:opacity .62s cubic-bezier(.22,1,.36,1),transform .68s cubic-bezier(.22,1,.36,1)!important}
+  .scroll-photo-stage .scroll-photo-frame>button{background:#0b2335}
+  .scroll-photo-stage .scroll-photo-main{transform:scale(1.012);transition:opacity .35s ease,transform 1.25s cubic-bezier(.22,1,.36,1)}
+  .scroll-photo-stage .scroll-photo-frame.is-in-view .scroll-photo-main.is-loaded{transform:scale(1)}
+  .scroll-photo-stage .scroll-photo-frame>button>div:last-child{padding-right:18px;padding-left:20px}
+  .scroll-photo-stage article h3{font-size:clamp(25px,7vw,34px)}
+  .scroll-photo-stage .scroll-photo-skip{margin-top:5px}
+}
+@media(prefers-reduced-motion:reduce){
+  .scroll-photo-stage .scroll-photo-frame,.scroll-photo-stage .scroll-photo-main,.scroll-photo-stage .scroll-photo-loading,.scroll-photo-stage .scroll-photo-loading-mark,.scroll-photo-stage .scroll-photo-loading-bar:after{animation:none!important;transition:none!important}
+  .scroll-photo-stage .scroll-photo-frame{opacity:1!important;transform:none!important}
+  .scroll-photo-stage .scroll-photo-main{opacity:1!important;transform:none!important}
+}

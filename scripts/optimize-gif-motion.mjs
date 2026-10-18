@@ -1,8 +1,8 @@
+import { ffmpegPath } from './ffmpeg-path.mjs';
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-const ffmpegPath = 'ffmpeg';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist', 'media');
 const ui = join(root, 'ui');

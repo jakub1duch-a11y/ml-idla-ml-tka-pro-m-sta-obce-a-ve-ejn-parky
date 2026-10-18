@@ -216,14 +216,6 @@ function getProductSearchContext(product) {
     };
   }
 
-  if (/(náměst|namest|obec|měst|mest|veřej|verej|promen|nádraž|nadraz|urban|city|park|sportovišt|sportovist)/.test(source)) {
-    return {
-      primaryKeyword: 'městské mlžítko',
-      useCase: 'pro města, obce, náměstí a parky',
-      keywords: 'mlžítka pro města, mlžítka pro obce, mlžítko na náměstí, městské mlžítko, mlžítka do parků, ochlazování veřejného prostoru',
-    };
-  }
-
   if (/(gate|brána|brana)/.test(source)) {
     return {
       primaryKeyword: 'mlžná brána',
@@ -245,6 +237,14 @@ function getProductSearchContext(product) {
       primaryKeyword: 'mlhoviště',
       useCase: 'pro parky, školy a dětská hřiště',
       keywords: 'mlhoviště, mlžítko do parku, mlhoviště pro děti, mlžítko na hřiště, veřejné mlžení',
+    };
+  }
+
+  if (/(náměst|namest|obec|měst|mest|veřej|verej|promen|nádraž|nadraz|urban|city|park|sportovišt|sportovist)/.test(source)) {
+    return {
+      primaryKeyword: 'městské mlžítko',
+      useCase: 'pro města, obce, náměstí a parky',
+      keywords: 'mlžítka pro města, mlžítka pro obce, mlžítko na náměstí, městské mlžítko, mlžítka do parků, ochlazování veřejného prostoru',
     };
   }
 

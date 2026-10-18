@@ -24,7 +24,7 @@ const CITY_STEPS = [
 
 const GARDEN_TRUST = [
   { icon: ShieldCheck, title: 'Nerezové provedení', text: 'Čisté a odolné řešení navržené pro dlouhodobé venkovní použití.' },
-  { icon: Droplets, title: 'Jednoduché napojení', text: 'Podle zvoleného modelu navrhneme vhodné připojení a příslušenství pro váš prostor.' },
+  { icon: Droplets, title: 'Jednoduché napojení', text: 'Podle zvoleného modelu doporučíme připojení vody a potřebné příslušenství.' },
   { icon: Ruler, title: 'Pevně i dočasně', text: 'Řešení může být trvalé, nebo u vybraných modelů sezónní a snadno přemístitelné.' },
   { icon: Wrench, title: 'Servis a podpora', text: 'Pomůžeme s výběrem, instalací, zazimováním i následnou údržbou.' },
 ];

@@ -20,7 +20,7 @@ export default function PdConfigurator({ product }) {
 
   const configs = useMemo(
     () => getProductSpatialConfigurations(product).map(([title, sub, desc], i) => ({
-      title, sub, desc, count: countFromLabel(sub, i),
+      title, sub, desc, count: product?.slug === 'mlzitko-mrak' ? 1 : countFromLabel(sub, i),
     })),
     [product]
   );

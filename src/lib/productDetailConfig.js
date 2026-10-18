@@ -15,6 +15,25 @@ const DEFAULT_CONFIG = {
   useCases: ['Městský prostor', 'Parky a zeleň', 'Pobytové zóny', 'Komerční areály'],
 };
 
+// Produktové velikosti MRAK: malý 1 600 mm podle zadání (výrobně neověřeno), velký 2 400 mm podle kalkulace MRAK 13R 2424.
+// Nezveřejňujeme cenu ani počet trysek, dokud není potvrzen aktuální výrobní výkres.
+export const MRAK_VARIANTS = [
+  {
+    id: 'maly',
+    name: 'Malý',
+    height: '1 600 mm',
+    description: 'Kompaktní mlžný prvek do zahrad, škol a dětských zón.',
+    note: 'Návrhová výška 1 600 mm; výrobní provedení se potvrdí před nabídkou.',
+  },
+  {
+    id: 'velky',
+    name: 'Velký',
+    height: '2 400 mm',
+    description: 'Výrazná nerezová mlžná skulptura pro parky a větší mlžiště.',
+    note: 'Výška odpovídá kalkulaci MRAK 13R 2424; přesné osazení trysek k potvrzení.',
+  },
+];
+
 const CONFIG = {
   'teepee': {
     tagline: 'Mobilní mlžná zóna pro městské slavnosti, festivaly a eventy',
@@ -79,11 +98,11 @@ const CONFIG = {
     intro: 'STÉBLO® pracuje s lehkou organickou siluetou a umožňuje citlivé začlenění do zeleně, promenád i veřejného prostoru.',
     useCases: ['Parky', 'Zahrady', 'Promenády', 'Veřejná zeleň'],
   },
-  'mlzitko-mrak': [
-    ['Dětské hřiště', 'kompaktní provedení', 'Konfigurace pro dětské a školní areály.'],
-    ['Velký', 'větší mlžná zóna', 'Konfigurace pro mlžiště a větší pobytové plochy.'],
-    ['Parkový', 'otevřený prostor', 'Řešení určené pro parkové a promenádní prostředí.'],
-  ],
+  'mlzitko-mrak': {
+    tagline: 'Nerezová mlžná skulptura pro zahrady i veřejný prostor',
+    intro: 'Organická konstrukce z nerezové oceli vytváří jemnou mlhu a výrazný designový prvek. Vyberte si malou nebo velkou velikost podle prostředí.',
+    useCases: ['Školní zahrady', 'Dětská hřiště', 'Parky', 'Mlžiště', 'Rezidenční zahrady'],
+  },
   'mlzitko-lizatko': [
     ['Single', '1 kruhový prvek', 'Samostatné LOLLI jako jasný ochlazovací bod pro děti, rodiny a veřejný prostor.'],
     ['Duo', '2 stejné prvky', 'Dvojice kruhových mlžítek pro širší pobytovou nebo průchozí zónu.'],
@@ -135,9 +154,8 @@ const SPATIAL_CONFIGS = {
     ['Alej', 'více prvků v linii', 'Opakovaná řada stejného produktu v prostoru.'],
   ],
   'mlzitko-mrak': [
-    ['Dětské hřiště', 'kompaktní provedení', 'Konfigurace pro dětské a školní areály.'],
-    ['Velký', 'větší mlžná zóna', 'Konfigurace pro mlžiště a větší pobytové plochy.'],
-    ['Parkový', 'otevřený prostor', 'Řešení určené pro parkové a promenádní prostředí.'],
+    ['Malý · h 1 600 mm', '1 samostatný prvek', 'Výška dle zadání. Výrobní provedení se potvrdí před naceněním.'],
+    ['Velký · h 2 400 mm', '1 samostatný prvek', 'Kalkulovaný MRAK 13R 2424 pro větší mlžiště a parkové prostory.'],
   ],
   'mlzna-brana-gate': [
     ['Straight', 'rovná horní linie', 'Průchozí brána s rovnou horní geometrií.'],

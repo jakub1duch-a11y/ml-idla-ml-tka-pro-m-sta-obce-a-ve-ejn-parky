@@ -47,10 +47,8 @@ const PRODUCT_VARIANTS = {
     { label: 'Radius L', href: '/produkt/bendy-radius-l' },
   ],
   'mlzitko-mrak': [
-    { label: 'Obrys', href: '/produkt/mlzitko-mrak?variant=obrys' },
-    { label: 'Flow', href: '/produkt/mlzitko-mrak?variant=flow' },
-    { label: 'Organik', href: '/produkt/mlzitko-mrak?variant=organik' },
-    { label: 'Play', href: '/produkt/mlzitko-mrak?variant=play' },
+    { label: 'Malý · h 1 600 mm', href: '/produkt/mlzitko-mrak?variant=maly' },
+    { label: 'Velký · h 2 400 mm', href: '/produkt/mlzitko-mrak?variant=velky' },
   ],
   'mlzna-brana-gate': [
     { label: 'Straight', href: '/produkt/mlzna-brana-gate?variant=straight' },

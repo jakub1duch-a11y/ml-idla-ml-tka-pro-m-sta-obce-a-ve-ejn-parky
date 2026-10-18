@@ -80,7 +80,7 @@ export default function PdHero({ product }) {
       .map((item) => ({
         type: 'image',
         url: item.thumbnail_url || item.image_url,
-        title: `${product.name} – schválená vizualizace${item.configuration ? ` · ${item.configuration}` : ''}`,
+        title: `${product.name} – pohled v prostoru${item.configuration ? ` · ${item.configuration}` : ''}`,
         approvedAdmin: true,
       }));
     const items = [

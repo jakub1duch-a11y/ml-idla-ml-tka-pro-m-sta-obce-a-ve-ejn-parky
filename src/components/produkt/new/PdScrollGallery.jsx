@@ -199,7 +199,7 @@ export default function PdScrollGallery({ product }) {
     ).then(([visuals, media]) => {
       if (cancelled) return;
       setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
-      setAdminMedia((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group));
+      setAdminMedia((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
     });
     return () => {cancelled = true;};
   }, [product.slug]);

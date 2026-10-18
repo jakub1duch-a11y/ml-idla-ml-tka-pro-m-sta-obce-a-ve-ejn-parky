@@ -65,11 +65,15 @@ jobs:
           BASE44_API_KEY: ${{ secrets.BASE44_API_KEY }}
         run: npx --yes base44@0.1.7 whoami
 
+      - name: Build optimized production site and motion assets
+        if: steps.auth.outputs.configured == 'true'
+        run: npm run build
+
       - name: Deploy entities, functions and site to Base44
         if: steps.auth.outputs.configured == 'true'
         env:
           BASE44_API_KEY: ${{ secrets.BASE44_API_KEY }}
-        run: npx --yes base44@0.1.7 deploy --build -y
+        run: npx --yes base44@0.1.7 deploy -y
 
       - name: Deployment summary
         if: always()

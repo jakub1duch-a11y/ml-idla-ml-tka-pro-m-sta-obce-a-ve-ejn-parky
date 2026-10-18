@@ -15,10 +15,11 @@ The workflow uses the official Base44 CLI and expects one GitHub Actions reposit
 
 Use a Base44 workspace API key beginning with `b44k_`. Never commit the key to source control.
 
-Once the secret exists, a push to `main` that changes application files runs:
+Once the secret exists, a push to `main` that changes application files runs the production build (including optimized motion assets and pre-rendered SEO pages) and then deploys with the supported Base44 CLI command:
 
-`npx --yes base44@0.1.7 deploy --build -y`
+- `npm run build`
+- `npx --yes base44@0.1.7 deploy -y`
 
-This deploys Base44 resources and the built site to the existing Base44 application.
+Do not add the unsupported `--build` flag; build is run explicitly before deployment.
 
 Until the secret is configured, the workflow exits safely without deploying and reports that the bridge is waiting for the credential.

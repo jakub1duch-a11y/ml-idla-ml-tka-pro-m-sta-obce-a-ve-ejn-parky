@@ -400,7 +400,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         resultUrl ? `Koncepční náhled: ${resultUrl}` : '',
         sourceUrl ? `Fotografie prostoru: ${sourceUrl}` : '',
         uploadedDocs.length ? `Podklady k nezávazné nabídce:\n${uploadedDocs.join('\n')}` : '',
-        `Kontakt získán přes AI vizualizér; GDPR informace potvrzena: ${leadProfile?.gdprAcknowledgedAt || 'ano'}`,
+        `Kontakt získán přes návrhový formulář; GDPR informace potvrzena: ${leadProfile?.gdprAcknowledgedAt || 'ano'}`,
       ].filter(Boolean).join('\n\n');
 
       const created = await base44.entities.Poptavka.create({

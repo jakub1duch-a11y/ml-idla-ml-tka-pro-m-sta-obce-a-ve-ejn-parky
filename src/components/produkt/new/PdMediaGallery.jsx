@@ -150,7 +150,7 @@ export default function PdMediaGallery({ product }) {
       .then(([realizationItems, visualItems, mediaItems]) => {
         if (cancelled) return;
         setRealizations((realizationItems || []).filter((r) => matchesProduct(r, product)));
-        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url && isProductMediaAllowed(product, item.image_url, item.title, item.product_name)));
+        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url && !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
         setAdminMedia((mediaItems || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group));
       })
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -193,7 +193,7 @@ export default function PdMediaGallery({ product }) {
     ])]);
 
     const approvedAdminVisuals = [...approvedVisualizations]
-      .filter((item) => isProductMediaAllowed(product, item.image_url, item.title, item.product_name))
+      .filter((item) => !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
       .map((item) => ({
         type: 'image',

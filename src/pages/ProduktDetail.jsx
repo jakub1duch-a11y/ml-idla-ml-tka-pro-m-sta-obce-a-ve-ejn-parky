@@ -33,6 +33,7 @@ import PdCollectionContext from '@/components/produkt/new/PdCollectionContext';
 import PdFaq from '@/components/produkt/new/PdFaq';
 import PdScrollProgress from '@/components/produkt/new/PdScrollProgress';
 import PdTeepeeRental from '@/components/produkt/new/PdTeepeeRental';
+import YouTubeChannelVideos from '@/components/blog/YouTubeChannelVideos';
 import PdTeepeeStudio from '@/components/produkt/new/PdTeepeeStudio';
 import StebloGateDetail from '@/components/produkt/StebloGateDetail';
 import ProductPhotoSequence from '@/components/motion/ProductPhotoSequence';
@@ -150,6 +151,7 @@ export default function ProduktDetail() {
           <PdTeepeeStudio product={product} />
           <PdDescription product={product} />
           <div id="galerie" className="scroll-mt-16"><PdScrollGallery product={product} /></div>
+          <YouTubeChannelVideos product={product} compact />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <PdScrollGallery product={product} />
           <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
@@ -180,6 +182,7 @@ export default function ProduktDetail() {
           <PdDescription product={product} />
           <ProductPhotoSequence product={product} />
           <PdVisualGalleryCompact product={product} />
+          <YouTubeChannelVideos product={product} compact />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <div id="konfigurace" className="scroll-mt-28"><PdVariants product={product} /></div>
           <div id="chytre-rizeni" className="scroll-mt-28"><PdSmartControl product={product} /></div>
@@ -195,6 +198,7 @@ export default function ProduktDetail() {
           {product.slug === 'mlzitko-mrak' && <MrakVariantGallery />}
           <ProductMotionShowcase product={product} />
           <PdVisualGalleryCompact product={product} />
+          <YouTubeChannelVideos product={product} compact />
           <div id="parametry" className="scroll-mt-28"><PdSpecs product={product} /></div>
           <div id="vyhody" className="scroll-mt-28"><PdBenefits product={product} /></div>
           <div id="instalace" className="scroll-mt-28"><PdInstallationPrep product={product} /></div>

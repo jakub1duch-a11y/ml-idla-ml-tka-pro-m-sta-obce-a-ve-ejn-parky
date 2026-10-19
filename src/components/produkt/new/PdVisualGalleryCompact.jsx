@@ -94,14 +94,14 @@ function Fullscreen({ items, index, onClose, onChange, productName, reduced }) {
   );
 }
 
-function GalleryImage({ item, index, productName, onOpen }) {
+function GalleryImage({ item, index, productName, onOpen, onFailed }) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   useEffect(() => { setLoaded(false); setFailed(false); }, [item.url]);
   return (
     <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
       {!loaded && !failed && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
-      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => setFailed(true)} /> : <img src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />) :
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} />) :
         <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
     </button>
   );
@@ -110,6 +110,7 @@ function GalleryImage({ item, index, productName, onOpen }) {
 export default function PdVisualGalleryCompact({ product }) {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [approvedVisuals, setApprovedVisuals] = useState([]);
+  const [failedUrls, setFailedUrls] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightbox, setLightbox] = useState(null);
   const [autoPlay, setAutoPlay] = useState(false);
@@ -124,6 +125,7 @@ export default function PdVisualGalleryCompact({ product }) {
     let active = true;
     setMediaFiles([]);
     setApprovedVisuals([]);
+    setFailedUrls([]);
     setActiveIndex(0);
     setLightbox(null);
     setAutoPlay(!reduced);
@@ -205,8 +207,10 @@ export default function PdVisualGalleryCompact({ product }) {
 
     const primaryProductItems = productItems.slice(0, 2);
     const additionalProductItems = productItems.slice(2);
-    return dedupe([...primaryProductItems, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems]).slice(0, 12);
-  }, [mediaFiles, approvedVisuals, product]);
+    return dedupe([...primaryProductItems, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems])
+      .filter((item) => !failedUrls.includes(item.url))
+      .slice(0, 12);
+  }, [mediaFiles, approvedVisuals, product, failedUrls]);
 
   useEffect(() => { setActiveIndex((index) => clampIndex(index, items.length)); }, [items.length]);
 
@@ -281,7 +285,7 @@ export default function PdVisualGalleryCompact({ product }) {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={reduced ? { opacity: 0 } : { opacity: 0, x: -18, scale: 0.995 }}
                 transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}>
-                <GalleryImage item={item} index={index} productName={product.name} onOpen={() => setLightbox(index)} />
+                <GalleryImage item={item} index={index} productName={product.name} onOpen={() => setLightbox(index)} onFailed={(url) => setFailedUrls((current) => current.includes(url) ? current : [...current, url])} />
               </motion.div>
             </AnimatePresence>
             {items.length > 1 && <>

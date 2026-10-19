@@ -22,13 +22,6 @@ export default function ProduktDetail() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [mobileSection, setMobileSection] = useState('prehled');
-
-  const jumpTo = (id) => {
-    setMobileSection(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   useEffect(() => {
     if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
     setLoading(true);
@@ -67,7 +60,7 @@ export default function ProduktDetail() {
     </section>
   );
 
-  if (product.slug === 'brana-bendy' && viewMode === 'new') return <StebloGateDetail product={product} />;
+  if (product.slug === 'brana-bendy') return <StebloGateDetail product={product} />;
 
   return (
     <div className="product-detail-page min-h-screen bg-white text-[#07131D]">

@@ -140,17 +140,18 @@ export default function PdVisualGalleryCompact({ product }) {
 
   const items = useMemo(() => {
     const admin = mediaFiles
-      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role))
-      .filter((item) => isImage(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
+      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'video'].includes(item.media_role))
+      .filter((item) => (isImage(item.file_url) || VIDEO_RE.test(item.file_url || '')) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
       .map((item) => {
         const role = item.media_role;
         const label = role === 'realization' ? 'V prostoru' : role === 'render' ? 'Produkt' : role === 'detail' ? 'Detail' : role === 'reference' ? 'Použití' : role === 'hero' ? 'Hlavní pohled' : 'Galerie';
         return {
           url: item.file_url,
-          title: label === 'V prostoru' ? product.name + ' — v prostoru' : product.name + ' — ' + label.toLowerCase(),
-          caption: role === 'realization' ? 'Pohled na řešení v okolním prostoru' : role === 'render' ? 'Čistý pohled na konstrukci a proporce' : role === 'detail' ? 'Materiál, spoje a drobné konstrukční prvky' : role === 'reference' ? 'Jak produkt působí v prostředí' : 'Fotografie konkrétního produktu',
-          badge: label,
+          title: VIDEO_RE.test(item.file_url || '') ? product.name + ' — video produktu' : label === 'V prostoru' ? product.name + ' — v prostoru' : product.name + ' — ' + label.toLowerCase(),
+          caption: VIDEO_RE.test(item.file_url || '') ? 'Video produktu' : role === 'realization' ? 'Pohled na řešení v okolním prostoru' : role === 'render' ? 'Čistý pohled na konstrukci a proporce' : role === 'detail' ? 'Materiál, spoje a drobné konstrukční prvky' : role === 'reference' ? 'Jak produkt působí v prostředí' : 'Fotografie konkrétního produktu',
+          badge: VIDEO_RE.test(item.file_url || '') ? 'Video' : label,
           fit: ['realization', 'reference'].includes(role) ? 'cover' : 'contain',
+          poster: item.thumbnail_url || item.poster_url || undefined,
           alt: product.name + ' — ' + label.toLowerCase()
         };
       });
@@ -317,7 +318,7 @@ export default function PdVisualGalleryCompact({ product }) {
                 <button type="button" key={thumbnail.url} className="pdpc-thumbnail"
                   aria-label={'Zobrazit fotografii ' + (thumbIndex + 1) + ': ' + (thumbnail.title || product.name)}
                   aria-pressed={thumbIndex === index} onClick={() => { goTo(thumbIndex); setAutoPlay(false); }}>
-                  <span className="pdpc-thumbnail-img"><img src={optimize(thumbnail.url)} alt="" loading="lazy" decoding="async" /></span>
+                  <span className="pdpc-thumbnail-img">{VIDEO_RE.test(thumbnail.url) ? <video src={thumbnail.url} poster={thumbnail.poster} muted playsInline preload="metadata" aria-hidden="true" /> : <img src={optimize(thumbnail.url)} alt="" loading="lazy" decoding="async" />}</span>
                   <span className="pdpc-thumbnail-label">{thumbnail.badge || ('Pohled ' + (thumbIndex + 1))}</span>
                 </button>
               ))}

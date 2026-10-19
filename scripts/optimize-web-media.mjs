@@ -3,7 +3,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn } from 'node:child_process';
 import sharp from 'sharp';
-const ffmpegPath = 'ffmpeg';
+import { ffmpegPath } from './ffmpeg-path.mjs';
 
 const APP_ID = '6a3ee88c10959cd3588c4d68';
 const MODE = process.argv[2] || 'images'; // images | videos | report

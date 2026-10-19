@@ -9,7 +9,7 @@ import './PdVisualGalleryCompact.css';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)([?#]|$)/i;
 const TECH_RE = /(technick|schema|schéma|vykres|výkres|montaz|montáž|edraw)/i;
-const isImage = (url = '') => typeof url === 'string' && !!url.trim() && !VIDEO_RE.test(url) && !TECH_RE.test(url);
+const isImage = (url = '') => typeof url === 'string' && !!url.trim() && !VIDEO_RE.test(url) && !TECH_RE.test(url) && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url));
 const optimize = (url) => isImage(url) ? getOptimizedMediaUrl(url) : url;
 const dedupe = (items) => [...new Map(items.filter((item) => item && item.url).map((item) => [optimize(item.url.trim()), item])).values()];
 const clampIndex = (value, length) => Math.min(Math.max(value, 0), Math.max(0, length - 1));
@@ -168,7 +168,7 @@ export default function PdVisualGalleryCompact({ product }) {
       }));
 
     const productItems = [
-      product.hero_visual_verified && isImage(product.hero_product_image_url) && {
+      product.hero_visual_verified && isImage(product.hero_product_image_url) && isProductMediaAllowed(product, product.hero_product_image_url, product.name) && {
         url: product.hero_product_image_url,
         title: product.name + ' — produkt',
         caption: 'Referenční pohled na skutečný produkt',
@@ -176,7 +176,7 @@ export default function PdVisualGalleryCompact({ product }) {
         fit: 'contain',
         alt: product.name + ' — produktový pohled'
       },
-      isImage(product.image_url) && {
+      isImage(product.image_url) && isProductMediaAllowed(product, product.image_url, product.name) && {
         url: product.image_url,
         title: product.name + ' — hlavní fotografie',
         caption: 'Hlavní pohled na produkt',

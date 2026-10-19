@@ -32,7 +32,7 @@ export default function PdCompactHero({ product }) {
     product.image_url,
     ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []),
     ...getCuratedProductMedia(product).map((item) => item.url),
-  ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name))]) ;
+  ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name)))];
   const image = imageCandidates[imageIndex] || '';
   const intro = cleanText(product.short_description || product.description || '');
   const facts = [

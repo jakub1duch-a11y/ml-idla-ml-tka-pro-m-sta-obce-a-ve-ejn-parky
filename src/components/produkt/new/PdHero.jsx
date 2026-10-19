@@ -28,6 +28,10 @@ function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
 }
 
+function isImage(url) {
+  return typeof url === 'string' && !isVideo(url) && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url));
+}
+
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
 const isLineaProduct = (product) => product?.slug === 'linea-mlzitko';
 
@@ -85,7 +89,7 @@ export default function PdHero({ product }) {
         approvedAdmin: true,
       }));
     const items = [
-      ...(product.image_url ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
+      ...(product.image_url && isImage(product.image_url) && isProductMediaAllowed(product, product.image_url, product.name) ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
       ...approvedItems,
       ...getCuratedProductMedia(product).filter(item => isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · návrh umístění' : '') })),
       ...ownVideo,
@@ -95,8 +99,8 @@ export default function PdHero({ product }) {
         .map((url, index) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} – video ${index + 1}` })),
       ...(product.gallery_urls || [])
         .filter((url) => Boolean(url) && isProductMediaAllowed(product, url))
-        .filter((u) => !isVideo(u))
-        .map((url, index) => ({ type: 'image', url, title: `${product.name} – fotografie ${index + 1}` })),
+        .filter(isImage)
+        .map((url, index) => ({ type: 'image', url, title: `${product.name} – fotografie ${index + 1}` })), 
     ].filter(Boolean);
 
     return [...new Map(items.map((item) => [item.url, item])).values()];

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 /**
  * Technický wireframe detailu produktu.
@@ -7,7 +8,8 @@ import { motion } from 'framer-motion';
  * (ověřený studiový náhled), přes kterou jsou vedeny kóty a popisové odkazy.
  */
 export default function PdWireframe({ product }) {
-  const photo = product.hero_product_image_url || product.image_url;
+  const verifiedHero = product.hero_visual_verified && product.hero_product_image_url && isProductMediaAllowed(product, product.hero_product_image_url, product.name) ? product.hero_product_image_url : '';
+  const photo = verifiedHero || (product.image_url && isProductMediaAllowed(product, product.image_url, product.name) ? product.image_url : '');
   if (!photo) return null;
 
   const rows = [

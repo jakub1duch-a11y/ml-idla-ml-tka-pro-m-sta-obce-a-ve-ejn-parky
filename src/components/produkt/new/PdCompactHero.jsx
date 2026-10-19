@@ -3,6 +3,7 @@ import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-r
 import { Link, useSearchParams } from 'react-router-dom';
 import { MRAK_VARIANTS } from '@/lib/productDetailConfig';
 import { getFamily, getLine } from '@/lib/productFamilies';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 function cleanText(value = '') {
   return String(value).
@@ -23,9 +24,8 @@ export default function PdCompactHero({ product }) {
   };
   const family = getFamily(product);
   const line = getLine(product);
-  const image = product.hero_visual_verified && product.hero_product_image_url ?
-  product.hero_product_image_url :
-  product.image_url;
+  const verifiedHeroImage = product.hero_visual_verified && product.hero_product_image_url && isProductMediaAllowed(product, product.hero_product_image_url, product.name) ? product.hero_product_image_url : '';
+  const image = verifiedHeroImage || (product.image_url && isProductMediaAllowed(product, product.image_url, product.name) ? product.image_url : '');
   const intro = cleanText(product.short_description || product.description || '');
   const facts = [
   product.material && { icon: ShieldCheck, label: 'Materiál', value: product.material },

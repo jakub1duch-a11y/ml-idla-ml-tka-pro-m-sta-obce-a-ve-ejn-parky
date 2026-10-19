@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { MRAK_VARIANTS } from '@/lib/productDetailConfig';
 import { getFamily, getLine } from '@/lib/productFamilies';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
+import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 
 function cleanText(value = '') {
   return String(value).
@@ -24,8 +25,15 @@ export default function PdCompactHero({ product }) {
   };
   const family = getFamily(product);
   const line = getLine(product);
-  const verifiedHeroImage = product.hero_visual_verified && product.hero_product_image_url && isProductMediaAllowed(product, product.hero_product_image_url, product.name) ? product.hero_product_image_url : '';
-  const image = verifiedHeroImage || (product.image_url && isProductMediaAllowed(product, product.image_url, product.name) ? product.image_url : '');
+  const [imageIndex, setImageIndex] = useState(0);
+  useEffect(() => setImageIndex(0), [product.slug]);
+  const imageCandidates = [...new Set([
+    product.hero_visual_verified ? product.hero_product_image_url : '',
+    product.image_url,
+    ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []),
+    ...getCuratedProductMedia(product).map((item) => item.url),
+  ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name))]) ;
+  const image = imageCandidates[imageIndex] || '';
   const intro = cleanText(product.short_description || product.description || '');
   const facts = [
   product.material && { icon: ShieldCheck, label: 'Materiál', value: product.material },
@@ -112,10 +120,15 @@ export default function PdCompactHero({ product }) {
             src={image}
             alt={product.image_alt || `${product.name} — produkt`}
             className="absolute inset-0 h-full w-full object-contain object-center"
-            fetchPriority="high" /> :
+            fetchPriority={imageIndex === 0 ? 'high' : 'auto'}
+            onError={() => setImageIndex((current) => Math.min(current + 1, imageCandidates.length))} /> :
 
 
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)] px-6 text-center">
+            <Droplets size={28} className="text-[#0B8EC5]" aria-hidden="true" />
+            <p className="mt-3 text-sm font-semibold text-[#0A2342]">Produktové fotografie připravujeme</p>
+            <p className="mt-1 max-w-xs text-xs leading-5 text-[#5A6B78]">Technické informace a možnost poptávky zůstávají dostupné.</p>
+          </div>
           }
 
         </div>

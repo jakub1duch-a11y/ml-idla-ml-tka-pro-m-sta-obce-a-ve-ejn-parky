@@ -142,11 +142,11 @@ export default function PdVisualGalleryCompact({ product }) {
 
   const items = useMemo(() => {
     const admin = mediaFiles
-      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'video'].includes(item.media_role))
+      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'variant', 'video'].includes(item.media_role))
       .filter((item) => (isImage(item.file_url) || VIDEO_RE.test(item.file_url || '')) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
       .map((item) => {
         const role = item.media_role;
-        const label = role === 'realization' ? 'V prostoru' : role === 'render' ? 'Produkt' : role === 'detail' ? 'Detail' : role === 'reference' ? 'Použití' : role === 'hero' ? 'Hlavní pohled' : 'Galerie';
+        const label = role === 'realization' ? 'V prostoru' : role === 'render' ? 'Produkt' : role === 'detail' ? 'Detail' : role === 'reference' ? 'Použití' : role === 'variant' ? 'Varianta' : role === 'hero' ? 'Hlavní pohled' : 'Galerie';
         return {
           url: item.file_url,
           title: VIDEO_RE.test(item.file_url || '') ? product.name + ' — video produktu' : label === 'V prostoru' ? product.name + ' — v prostoru' : product.name + ' — ' + label.toLowerCase(),

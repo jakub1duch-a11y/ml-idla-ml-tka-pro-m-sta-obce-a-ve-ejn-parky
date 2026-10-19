@@ -12,7 +12,7 @@ import '@/styles/product-scroll-gallery.css';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const TECHNICAL_RE = /(technick|schema|schéma|vykres|výkres|montaz|montáž|instalac|edraw)/i;
-const isImage = (url) => typeof url === 'string' && url && !VIDEO_RE.test(url) && !TECHNICAL_RE.test(url);
+const isImage = (url) => typeof url === 'string' && url && !VIDEO_RE.test(url) && !TECHNICAL_RE.test(url) && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url));
 const optimize = (url) => isImage(url) ? getOptimizedMediaUrl(url) : url;
 
 gsap.registerPlugin(ScrollTrigger);
@@ -251,7 +251,7 @@ export default function PdScrollGallery({ product }) {
       fit: item.kind === 'visualization' ? 'cover' : 'contain'
     }));
 
-    const hero = product.hero_visual_verified && isImage(product.hero_product_image_url) ?
+    const hero = product.hero_visual_verified && isImage(product.hero_product_image_url) && isProductMediaAllowed(product, product.hero_product_image_url, product.name) ?
     [{
       url: product.hero_product_image_url,
       title: `${product.name} — produkt`,
@@ -262,7 +262,7 @@ export default function PdScrollGallery({ product }) {
     }] :
     [];
 
-    const base = product.image_url && isImage(product.image_url) ?
+    const base = product.image_url && isImage(product.image_url) && isProductMediaAllowed(product, product.image_url, product.name) ?
     [{ url: product.image_url, title: product.name, caption: product.short_description || 'Produktový náhled', badge: 'Produkt', fit: 'contain' }] :
     [];
 
@@ -339,7 +339,7 @@ export default function PdScrollGallery({ product }) {
         </div>
       </div>
 
-      {reduced ? <div className="scroll-photo-static">{items.map((item, index) => <button key={item.url} type="button" onClick={() => setLightbox(index)} aria-label={`Zvětšit fotografii ${index + 1}: ${product.name}`}><img src={optimize(item.url)} alt={item.alt || `${product.name} — fotografie ${index + 1}`} loading="lazy" /><span>{index + 1} / {items.length} · {item.title || product.name}</span></button>)}</div> : <div ref={sectionRef} className="scroll-photo-track" style={{ height: items.length > 1 ? `${storyHeight}svh` : '100svh' }}>
+      {reduced ? <div className="scroll-photo-static">{items.map((item, index) => <button key={item.url} type="button" onClick={() => setLightbox(index)} aria-label={`Zvětšit ${isVideo(item.url) ? 'video' : 'fotografii'} ${index + 1}: ${product.name}`}>{isVideo(item.url) ? <video src={item.url} poster={item.poster || product.image_url} muted playsInline preload="metadata" /> : <img src={optimize(item.url)} alt={item.alt || `${product.name} — fotografie ${index + 1}`} loading="lazy" onError={(event) => { event.currentTarget.style.visibility = 'hidden'; }} />}<span>{index + 1} / {items.length} · {item.title || product.name}</span></button>)}</div> : <div ref={sectionRef} className="scroll-photo-track" style={{ height: items.length > 1 ? `${storyHeight}svh` : '100svh' }}>
         <div ref={stageRef} className="scroll-photo-stage">
           {items.map((item, index) => <StoryFrame key={item.url} item={item} index={index} total={items.length} productName={product.name} onOpen={setLightbox} active={active} />)}
           <nav className="scroll-photo-nav" aria-label="Vybrat fotografii produktu">{items.map((item, index) => <button type="button" key={item.url} aria-current={active === index ? 'true' : undefined} aria-label={`Přejít na fotografii ${index + 1}`} onClick={() => { const node = sectionRef.current; if (!node) return; const max = node.offsetHeight - window.innerHeight; const progress = index === 0 ? 0 : (index + .6) / items.length; window.scrollTo({ top: window.scrollY + node.getBoundingClientRect().top + max * progress, behavior: 'smooth' }); }}>{index + 1}</button>)}</nav>

@@ -242,6 +242,7 @@ export default function PdScrollGallery({ product }) {
 
     const curatedItems = curated.
     filter((item) => isImage(item.url) && isProductMediaAllowed(product, item.url, item.title)).
+    // Curated assets must match the current product identity; ambiguous shared scenes are not used as a product master.
     map((item) => ({
       url: item.url,
       title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'pohled v prostoru' : 'fotografie'}`,
@@ -265,8 +266,8 @@ export default function PdScrollGallery({ product }) {
     [{ url: product.image_url, title: product.name, caption: product.short_description || 'Produktový náhled', badge: 'Produkt', fit: 'contain' }] :
     [];
 
-    const gallery = (product.gallery_urls || []).
-    filter((url) => (isImage(url) || isVideo(url)) && isProductMediaAllowed(product, url)).
+    const gallery = [...(product.gallery_urls || []), product.video_url].
+    filter((url) => typeof url === 'string' && (isImage(url) || isVideo(url)) && isProductMediaAllowed(product, url)).
     map((url, index) => ({
       url,
       title: `${product.name} — ${isVideo(url) ? 'video produktu' : `fotografie ${index + 1}`}`,

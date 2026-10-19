@@ -40,7 +40,7 @@ export default function ReviewsSection() {
         <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
         className="p-6 rounded-2xl bg-card_bg border border-white/10">
             <StarRow rating={r.rating} />
-            <p className="text-sm text-white/65 leading-relaxed font-light mt-4 mb-5">"{r.comment}"</p>
+            <p className="text-sm leading-relaxed font-light mt-4 mb-5 text-[#7b99b6]">"{r.comment}"</p>
             <div>
               <p className="text-sm text-white font-medium">{r.customer_name}</p>
               {(r.company || r.location) &&

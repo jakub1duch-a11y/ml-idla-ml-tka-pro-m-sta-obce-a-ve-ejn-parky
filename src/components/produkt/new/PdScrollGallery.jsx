@@ -21,6 +21,10 @@ function dedupe(items) {
   return [...new Map(items.filter((item) => item?.url).map((item) => [item.url, item])).values()];
 }
 
+function isVideo(url) {
+  return typeof url === 'string' && VIDEO_RE.test(url);
+}
+
 function StoryFrame({ item, index, total, productName, onOpen, active }) {
   const frameRef = useRef(null);
   const [inView, setInView] = useState(false);
@@ -82,9 +86,9 @@ function StoryFrame({ item, index, total, productName, onOpen, active }) {
         className="relative h-full w-full overflow-hidden bg-[#07131D] text-left"
         aria-label={`Otevřít fotografii ${index + 1} přes celou obrazovku`}
       >
-        {item.fit === 'contain' && <img src={optimize(item.url)} alt="" aria-hidden="true" className="scroll-photo-backdrop" loading="lazy" />}
+        {item.fit === 'contain' && !isVideo(item.url) && <img src={optimize(item.url)} alt="" aria-hidden="true" className="scroll-photo-backdrop" loading="lazy" />}
         {!loaded && !imageFailed && <span className="scroll-photo-loading" aria-hidden="true"><span className="scroll-photo-loading-mark">◌</span><span className="scroll-photo-loading-bar" /></span>}
-        {!imageFailed ? <img
+        {isVideo(item.url) ? <video src={item.url} poster={item.poster} className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full ${item.fit === 'contain' ? 'object-contain p-3 sm:p-8 lg:p-12' : 'object-cover'}`} muted playsInline loop preload="metadata" onLoadedData={() => setLoaded(true)} onError={() => setImageFailed(true)} /> : !imageFailed ? <img
           src={optimize(item.url)}
           alt={item.alt || (productName + ' — fotografie ' + (index + 1))}
           className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.025] ${item.fit === 'contain' ? 'object-contain p-3 sm:p-8 lg:p-12' : 'object-cover'}`}
@@ -95,7 +99,7 @@ function StoryFrame({ item, index, total, productName, onOpen, active }) {
           sizes="100vw"
           onLoad={() => setLoaded(true)}
           onError={() => setImageFailed(true)}
-        /> : <span className="scroll-photo-image-error">Fotografie se nyní nepodařilo načíst.</span>}
+        /> : <span className="scroll-photo-image-error">Médium se nyní nepodařilo načíst.</span>}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(3,12,20,.10)_0%,rgba(3,12,20,.05)_48%,rgba(3,12,20,.82)_100%)]" />
         <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-2 text-white backdrop-blur-md sm:left-6 sm:top-6">
           <span className="font-mono text-[9px] font-bold uppercase tracking-[.16em] text-cyan-200">{item.badge || 'Galerie'}</span>
@@ -153,7 +157,7 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
 
       <div className="relative flex h-full w-full max-w-7xl items-center justify-center">
         <AnimatePresence mode="wait">
-          <motion.img
+          {isVideo(item.url) ? <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="max-h-[86vh] w-full rounded-[1.5rem] object-contain" initial={{ opacity: 0, y: 18, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -12, scale: 0.985 }} transition={{ duration: reduced ? 0 : 0.28, ease: 'easeOut' }} /> : <motion.img
             key={item.url}
             src={optimize(item.url)}
             alt={item.alt || `${productName} — fotografie ${index + 1}`}
@@ -161,8 +165,7 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
             initial={{ opacity: 0, y: 18, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.985 }}
-            transition={{ duration: reduced ? 0 : 0.28, ease: 'easeOut' }} />
-          
+            transition={{ duration: reduced ? 0 : 0.28, ease: 'easeOut' }} />}
         </AnimatePresence>
 
         {items.length > 1 &&
@@ -225,15 +228,16 @@ export default function PdScrollGallery({ product }) {
     }));
 
     const admin = adminMedia.
-    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role)).
-    filter((item) => isImage(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)).
-    slice(0, 3).
+    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'video'].includes(item.media_role)).
+    filter((item) => isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)).
+    slice(0, 4).
     map((item) => ({
       url: item.file_url,
-      title: `${product.name} — produktová fotografie`,
-      caption: item.media_role === 'realization' ? 'Reálná realizace' : 'Produktový detail',
-      badge: item.media_role === 'realization' ? 'Realizace' : 'Produkt',
-      fit: item.media_role === 'realization' || item.media_role === 'reference' ? 'cover' : 'contain'
+      title: `${product.name} — ${isVideo(item.file_url) ? 'video produktu' : 'produktová fotografie'}`,
+      caption: isVideo(item.file_url) ? 'Video produktu' : item.media_role === 'realization' ? 'Reálná realizace' : item.media_role === 'detail' ? 'Konstrukční detail' : 'Produktový detail',
+      badge: isVideo(item.file_url) ? 'Video' : item.media_role === 'realization' ? 'Realizace' : item.media_role === 'detail' ? 'Detail' : 'Produkt',
+      fit: item.media_role === 'realization' || item.media_role === 'reference' ? 'cover' : 'contain',
+      poster: item.thumbnail_url || item.poster_url || undefined
     }));
 
     const curatedItems = curated.
@@ -262,12 +266,12 @@ export default function PdScrollGallery({ product }) {
     [];
 
     const gallery = (product.gallery_urls || []).
-    filter((url) => isImage(url) && isProductMediaAllowed(product, url)).
+    filter((url) => (isImage(url) || isVideo(url)) && isProductMediaAllowed(product, url)).
     map((url, index) => ({
       url,
-      title: `${product.name} — fotografie ${index + 1}`,
-      caption: 'Produktová fotografie',
-      badge: 'Galerie',
+      title: `${product.name} — ${isVideo(url) ? 'video produktu' : `fotografie ${index + 1}`}`,
+      caption: isVideo(url) ? 'Video produktu' : 'Produktová fotografie',
+      badge: isVideo(url) ? 'Video' : 'Galerie',
       fit: /(realizace|park|namest|náměst|zahrad|promen|hotel|brno|polna|rezidenc|avenue|landscape|mest|měst)/i.test(url) ? 'cover' : 'contain'
     }));
 

@@ -228,14 +228,14 @@ export default function PdScrollGallery({ product }) {
     }));
 
     const admin = adminMedia.
-    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'video'].includes(item.media_role)).
+    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'variant', 'video'].includes(item.media_role)).
     filter((item) => isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)).
     slice(0, 4).
     map((item) => ({
       url: item.file_url,
       title: `${product.name} — ${isVideo(item.file_url) ? 'video produktu' : 'produktová fotografie'}`,
-      caption: isVideo(item.file_url) ? 'Video produktu' : item.media_role === 'realization' ? 'Reálná realizace' : item.media_role === 'detail' ? 'Konstrukční detail' : 'Produktový detail',
-      badge: isVideo(item.file_url) ? 'Video' : item.media_role === 'realization' ? 'Realizace' : item.media_role === 'detail' ? 'Detail' : 'Produkt',
+      caption: isVideo(item.file_url) ? 'Video produktu' : item.media_role === 'realization' ? 'Reálná realizace' : item.media_role === 'detail' ? 'Konstrukční detail' : item.media_role === 'variant' ? 'Ověřená produktová varianta' : 'Produktový detail',
+      badge: isVideo(item.file_url) ? 'Video' : item.media_role === 'realization' ? 'Realizace' : item.media_role === 'detail' ? 'Detail' : item.media_role === 'variant' ? 'Varianta' : 'Produkt',
       fit: item.media_role === 'realization' || item.media_role === 'reference' ? 'cover' : 'contain',
       poster: item.thumbnail_url || item.poster_url || undefined
     }));

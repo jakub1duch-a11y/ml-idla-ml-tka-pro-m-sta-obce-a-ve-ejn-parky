@@ -78,12 +78,7 @@ function Fullscreen({ items, index, onClose, onChange, productName, reduced }) {
       <button type="button" onClick={onClose} aria-label="Zavřít galerii" className="pdpc-lightbox-close"><X size={20} /></button>
       <div className="pdpc-lightbox-stage">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.img key={item.url} src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))}
-            className="pdpc-lightbox-image"
-            initial={reduced ? false : { opacity: 0, scale: 0.99, x: 10 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.99, x: -10 }}
-            transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }} />
+          {VIDEO_RE.test(item.url) ? <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="pdpc-lightbox-image" initial={reduced ? false : { opacity: 0, scale: 0.99, x: 10 }} animate={{ opacity: 1, scale: 1, x: 0 }} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.99, x: -10 }} transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }} /> : <motion.img key={item.url} src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className="pdpc-lightbox-image" initial={reduced ? false : { opacity: 0, scale: 0.99, x: 10 }} animate={{ opacity: 1, scale: 1, x: 0 }} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.99, x: -10 }} transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }} />}
         </AnimatePresence>
         {items.length > 1 && <>
           <button type="button" onClick={() => onChange((index - 1 + items.length) % items.length)} aria-label="Předchozí fotografie" className="pdpc-lightbox-arrow is-left"><ChevronLeft size={22} /></button>
@@ -106,10 +101,7 @@ function GalleryImage({ item, index, productName, onOpen }) {
   return (
     <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
       {!loaded && !failed && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
-      {!failed ? <img src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))}
-        className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')}
-        loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'}
-        onLoad={() => setLoaded(true)} onError={() => setFailed(true)} /> :
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => setFailed(true)} /> : <img src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => setLoaded(true)} onError={() => setFailed(true)} />) :
         <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
     </button>
   );
@@ -191,13 +183,13 @@ export default function PdVisualGalleryCompact({ product }) {
         fit: 'contain',
         alt: product.name + ' — hlavní fotografie'
       },
-      ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []).filter((url) => isImage(url) && isProductMediaAllowed(product, url)).map((url, index) => ({
+      ...[...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []), product.video_url].filter((url) => typeof url === 'string' && (isImage(url) || VIDEO_RE.test(url)) && isProductMediaAllowed(product, url)).map((url, index) => ({
         url,
-        title: product.name + ' — fotografie ' + (index + 1),
-        caption: 'Produkt, detaily a provedení',
-        badge: 'Galerie',
+        title: product.name + ' — ' + (VIDEO_RE.test(url) ? 'video produktu' : 'fotografie ' + (index + 1)),
+        caption: VIDEO_RE.test(url) ? 'Video produktu' : 'Produkt, detaily a provedení',
+        badge: VIDEO_RE.test(url) ? 'Video' : 'Galerie',
         fit: 'contain',
-        alt: product.name + ' — fotografie ' + (index + 1)
+        alt: product.name + ' — ' + (VIDEO_RE.test(url) ? 'video produktu' : 'fotografie ' + (index + 1))
       }))
     ].filter(Boolean);
 

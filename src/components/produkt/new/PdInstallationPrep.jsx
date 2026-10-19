@@ -10,26 +10,27 @@ export default function PdInstallationPrep({ product }) {
     [product.gallery_urls]
   );
 
+  const isSeasonal = product.slug === 'teepee';
   const items = [
     {
       icon: ShieldCheck,
-      title: 'Nerezová konstrukce',
-      text: product.material || 'Materiál a povrch potvrzujeme podle konkrétního výrobku a projektu.',
+      title: 'Materiál a povrch',
+      text: product.material || 'Materiál, povrch a odolnost ověřujeme podle konkrétního výrobního provedení.',
     },
     {
       icon: Droplets,
-      title: 'Skryté vedení vody',
-      text: 'U pevné instalace vedeme přívod pod povrchem a napojujeme jej těsně nad skrytou patkou.',
+      title: 'Přívod vody',
+      text: isSeasonal ? 'Přívod vody a rychlost přípravy se řeší podle místa dočasného nasazení.' : 'Trasa přívodu vody a připojovací bod se navrhují podle místa instalace.',
     },
     {
       icon: Layers3,
-      title: 'Čisté kotvení',
-      text: 'U pevné instalace je patka ukotvena k navrženému nosnému základu pod finálním povrchem.',
+      title: isSeasonal ? 'Umístění a stabilita' : 'Kotvení podle místa',
+      text: isSeasonal ? 'Stabilní osazení se volí podle povrchu, provozu a podmínek konkrétní akce.' : 'Typ patky, kotvení a návaznost na povrch se potvrzují podle výrobku a projektové dokumentace.',
     },
     {
       icon: Wrench,
-      title: 'Trysky podle produktu',
-      text: 'Typ i počet trysek určujeme výhradně podle ověřené specifikace konkrétního produktu.',
+      title: 'Trysky a servis',
+      text: 'Typ, počet trysek i servisní přístup se řídí ověřenou specifikací konkrétního produktu.',
     },
   ];
 
@@ -42,16 +43,22 @@ export default function PdInstallationPrep({ product }) {
               Příprava a instalace
             </p>
             <h2 className="mt-3 font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">
-              Pevné kotvení. Čistý detail v prostoru.
+              {isSeasonal ? 'Připravené pro sezónní nasazení.' : 'Promyšlená instalace do konkrétního prostoru.'}
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-[#0D2F4F]/62 sm:text-base">
-            Animace ukazuje princip pevné instalace se skrytou patkou a přívodem vody. Řešení tohoto produktu potvrzujeme podle místa a projektové dokumentace. U sezónních modelů se způsob kotvení může lišit.
+            {isSeasonal ? 'U mobilního řešení se příprava, přívod vody a stabilní umístění plánují podle konkrétní akce a podmínek na místě.' : 'Způsob kotvení, přívod vody a servisní přístup se navrhují podle skutečné konstrukce produktu a podmínek místa. Neověřené instalační detaily nezobrazujeme jako garantované vlastnosti.'}
           </p>
         </div>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
-          <AnchorMotionPreview />
+          {isSeasonal ? (
+            <div className="flex min-h-64 flex-col justify-center rounded-[28px] border border-[#D8E8F0] bg-[linear-gradient(145deg,#F8FCFE,#EAF6F9)] p-7 sm:p-9">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#0B97E8]">Sezónní řešení</p>
+              <h3 className="mt-3 max-w-md font-heading text-2xl font-bold leading-tight text-[#0A2342] sm:text-3xl">Místo, přívod vody a provoz v jednom plánu.</h3>
+              <p className="mt-3 max-w-md text-sm leading-6 text-[#365366]">Před nasazením ověříme povrch, dostupnost vody, stabilní umístění a podmínky obsluhy.</p>
+            </div>
+          ) : <AnchorMotionPreview />}
           <div className="grid gap-3 sm:grid-cols-2">
           {items.map(({ icon: Icon, title, text }) => (
             <article key={title} className="rounded-3xl bg-[#F0F7FA] p-5 sm:p-6">

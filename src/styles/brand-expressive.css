@@ -1,0 +1,160 @@
+/* MLŽIDLA × HolmTec — expressive visual system
+   Brand roles: confidence (navy), action (cooling blue), atmosphere (mist cyan), nature (fresh green). */
+:root {
+  --mlz-deep-navy: #10213D;
+  --mlz-cooling-blue: #126BFA;
+  --mlz-mist-cyan: #A9E6F5;
+  --mlz-fresh-green: #56B987;
+  --mlz-ice-white: #F4F8FC;
+  --mlz-font-display: "Bricolage Grotesque", "Manrope", "Inter", sans-serif;
+  --mlz-font-ui: "Manrope", "Inter", sans-serif;
+  --mlz-font-reading: "Inter", system-ui, sans-serif;
+  --mlz-motion-fast: 180ms;
+  --mlz-motion-ui: 240ms;
+  --mlz-ease-expressive: cubic-bezier(.22, 1, .36, 1);
+}
+
+body {
+  font-family: var(--mlz-font-reading);
+}
+
+h1, h2, h3, h4, h5, h6,
+button, input, textarea, select {
+  font-family: var(--mlz-font-ui);
+}
+
+.hero-motion-surface {
+  background: var(--mlz-deep-navy) !important;
+  isolation: isolate;
+  --hero-mist-glow: rgba(169, 230, 245, .26);
+}
+
+.hero-motion-surface .hero-home-colorwash {
+  background:
+    linear-gradient(90deg, rgba(16, 33, 61, .94) 0%, rgba(16, 33, 61, .76) 42%, rgba(16, 33, 61, .28) 76%, rgba(16, 33, 61, .18) 100%),
+    linear-gradient(0deg, rgba(16, 33, 61, .92) 0%, transparent 56%, rgba(16, 33, 61, .2) 100%) !important;
+}
+
+.hero-motion-surface h1 {
+  font-family: var(--mlz-font-display) !important;
+  font-size: clamp(3.25rem, 7.2vw, 6.25rem) !important;
+  font-weight: 720 !important;
+  letter-spacing: -.055em !important;
+  line-height: .98 !important;
+  text-wrap: balance;
+  max-width: 11ch;
+  text-shadow: 0 3px 30px rgba(4, 18, 39, .18);
+}
+
+.hero-motion-surface .hero-headline-word {
+  display: block;
+}
+
+.hero-brand-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: .85rem;
+  padding: .5rem .8rem .5rem .5rem;
+  border: 1px solid rgba(169, 230, 245, .28);
+  border-radius: 999px;
+  background: rgba(16, 33, 61, .44);
+  color: #EAF9FD;
+  font: 700 .72rem/1.2 var(--mlz-font-ui);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.hero-brand-kicker__icon {
+  display: inline-grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: var(--mlz-deep-navy);
+  background: linear-gradient(145deg, #EAFBFF, var(--mlz-mist-cyan));
+  box-shadow: 0 0 24px rgba(169, 230, 245, .22);
+}
+
+.hero-motion-surface a[href="/poptavka"] {
+  background: var(--mlz-cooling-blue) !important;
+  color: #fff !important;
+  box-shadow: 0 16px 44px rgba(18, 107, 250, .32) !important;
+  transition: transform var(--mlz-motion-ui) var(--mlz-ease-expressive),
+              background-color var(--mlz-motion-ui) ease,
+              box-shadow var(--mlz-motion-ui) ease;
+}
+
+.hero-motion-surface a[href="/poptavka"]:hover {
+  background: #2F82FF !important;
+  box-shadow: 0 20px 52px rgba(18, 107, 250, .42) !important;
+  transform: translateY(-2px);
+}
+
+.hero-motion-surface a[href="/katalog-mlzitek"] {
+  border-color: rgba(244, 248, 252, .5) !important;
+  background: rgba(244, 248, 252, .09) !important;
+  transition: background-color var(--mlz-motion-ui) ease, border-color var(--mlz-motion-ui) ease;
+}
+
+.hero-motion-surface a[href="/katalog-mlzitek"]:hover {
+  border-color: rgba(169, 230, 245, .8) !important;
+  background: rgba(169, 230, 245, .14) !important;
+}
+
+.hero-motion-surface .ref-product-card {
+  border-color: rgba(169, 230, 245, .18);
+  background: linear-gradient(145deg, rgba(16, 33, 61, .96), rgba(9, 27, 51, .98));
+  transition: transform var(--mlz-motion-ui) var(--mlz-ease-expressive),
+              border-color var(--mlz-motion-ui) ease,
+              box-shadow var(--mlz-motion-ui) ease;
+}
+
+.hero-motion-surface .ref-product-card:hover {
+  border-color: rgba(169, 230, 245, .52);
+  box-shadow: 0 28px 72px rgba(3, 18, 42, .34);
+}
+
+.hero-motion-surface .ref-card-index,
+.hero-motion-surface .ref-product-card span:last-child {
+  color: var(--mlz-mist-cyan) !important;
+}
+
+.architecture-site {
+  --font-heading: var(--mlz-font-ui);
+  --font-body: var(--mlz-font-reading);
+}
+
+@media (min-width: 1024px) {
+  .hero-motion-surface h1 { max-width: 10ch; }
+}
+
+@media (max-width: 640px) {
+  .hero-motion-surface h1 {
+    font-size: clamp(2.75rem, 12vw, 4.25rem) !important;
+    max-width: 10ch;
+  }
+  .hero-brand-kicker {
+    font-size: .63rem;
+    letter-spacing: .08em;
+  }
+  .hero-motion-surface .hero-home-colorwash {
+    background:
+      linear-gradient(90deg, rgba(16, 33, 61, .82), rgba(16, 33, 61, .32)),
+      linear-gradient(0deg, rgba(16, 33, 61, .94) 0%, rgba(16, 33, 61, .08) 80%) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion-surface *,
+  .hero-motion-surface *::before,
+  .hero-motion-surface *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -191,7 +191,7 @@ export default function Footer() {
                         to={to}
                         className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white">
                         
-                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full">{label}</span>
+                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full uppercase">{label}</span>
                           <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0 group-hover:opacity-60" />
                         </Link>
                       )}

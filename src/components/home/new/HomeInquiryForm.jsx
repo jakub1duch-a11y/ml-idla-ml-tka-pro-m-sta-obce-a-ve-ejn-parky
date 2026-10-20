@@ -85,13 +85,13 @@ export default function HomeInquiryForm() {
           </div>
           <div>
             <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/60">Typ prostoru</label>
-            <select
-              value={form.typ_prostoru} onChange={(e) => setForm({ ...form, typ_prostoru: e.target.value })}
-              className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8] hidden">
-              
-              <option value="">Vyberte…</option>
-              {SPACE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
+            
+
+
+
+
+
+            
           </div>
           <div>
             <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/60">Zpráva *</label>

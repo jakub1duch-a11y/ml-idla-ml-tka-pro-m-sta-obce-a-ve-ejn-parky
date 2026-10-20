@@ -30,7 +30,7 @@ export default function WhatsAppContactWidget() {
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
       <Popover.Trigger asChild>
-        <button type="button" className="whatsapp-side-trigger" aria-label="Otevřít kontakt přes WhatsApp s Ing. Radkem Medunou">
+        <button type="button" className="whatsapp-side-trigger bg-[hsl(var(--destructive))]" aria-label="Otevřít kontakt přes WhatsApp s Ing. Radkem Medunou">
           <MessageCircle size={25} aria-hidden="true" /><span className="whatsapp-side-label">CHAT PODPO</span>
         </button>
       </Popover.Trigger>

@@ -197,7 +197,7 @@ export default function Podpora() {
               </div>
               <div>
                 <h2 className="font-heading font-light text-xl text-slate-900 tracking-tight">{section.title}</h2>
-                <p className="text-xs font-mono text-slate-400 mt-0.5">{section.items.length} otázek</p>
+                <p className="text-xs font-mono mt-0.5 text-[#131c28]">{section.items.length} otázek</p>
               </div>
             </div>
 

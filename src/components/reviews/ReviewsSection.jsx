@@ -42,7 +42,7 @@ export default function ReviewsSection() {
             <StarRow rating={r.rating} />
             <p className="text-sm leading-relaxed font-light mt-4 mb-5 text-[#7b99b6]">"{r.comment}"</p>
             <div>
-              <p className="text-white font-medium text-base">{r.customer_name}</p>
+              <p className="font-medium text-lg text-[hsl(var(--background))]">{r.customer_name}</p>
               {(r.company || r.location) &&
             <p className="text-xs text-white/30 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
             }

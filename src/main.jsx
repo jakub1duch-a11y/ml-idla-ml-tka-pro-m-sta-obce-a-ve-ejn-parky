@@ -6,6 +6,7 @@ import '@/styles/architecture-system.css'
 import '@/styles/mlzidla-atmosphere.css'
 import '@/styles/route-motion.css'
 import '@/styles/typography-enhanced.css'
+import '@/styles/brand-expressive.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <App />

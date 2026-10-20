@@ -5,14 +5,14 @@ import { trackFunnelStep } from '@/lib/ga4';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 
 const SPACE_TYPES = [
-  'Náměstí / centrum města',
-  'Park / promenáda',
-  'Sportoviště / koupaliště',
-  'ZOO / areál',
-  'Škola / MŠ',
-  'Domov seniorů',
-  'Jiný veřejný prostor',
-];
+'Náměstí / centrum města',
+'Park / promenáda',
+'Sportoviště / koupaliště',
+'ZOO / areál',
+'Škola / MŠ',
+'Domov seniorů',
+'Jiný veřejný prostor'];
+
 
 export default function HomeInquiryForm() {
   const [form, setForm] = useState({ jmeno: '', email: '', telefon: '', typ_prostoru: '', zprava: '' });
@@ -30,7 +30,7 @@ export default function HomeInquiryForm() {
         email: form.email,
         telefon: form.telefon,
         service_type: form.typ_prostoru,
-        zprava: form.zprava,
+        zprava: form.zprava
       });
       trackFunnelStep('home', 'inquiry_submit', 'Homepage form');
       setSent(true);
@@ -55,8 +55,8 @@ export default function HomeInquiryForm() {
           </Link>
           <p className="mt-3 text-xs text-[#0D2F4F]/50">Přihlaste se e-mailem použitým v právě odeslané poptávce.</p>
         </div>
-      </section>
-    );
+      </section>);
+
   }
 
   return (
@@ -72,23 +72,23 @@ export default function HomeInquiryForm() {
               <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/60">Jméno *</label>
               <input
                 required value={form.jmeno} onChange={(e) => setForm({ ...form, jmeno: e.target.value })}
-                className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]"
-              />
+                className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]" />
+              
             </div>
             <div>
               <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/60">E-mail nebo telefon *</label>
               <input
                 required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]"
-              />
+                className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]" />
+              
             </div>
           </div>
           <div>
             <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wide text-[#0D2F4F]/60">Typ prostoru</label>
             <select
               value={form.typ_prostoru} onChange={(e) => setForm({ ...form, typ_prostoru: e.target.value })}
-              className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]"
-            >
+              className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8] hidden">
+              
               <option value="">Vyberte…</option>
               {SPACE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
@@ -99,8 +99,8 @@ export default function HomeInquiryForm() {
               required value={form.zprava} onChange={(e) => setForm({ ...form, zprava: e.target.value })}
               rows={4}
               placeholder="Lokalita, přibližná plocha, co chcete zlepšit…"
-              className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]"
-            />
+              className="w-full border border-[#EAF5FB] bg-white px-4 py-3 text-sm text-[#0D2F4F] outline-none focus:border-[#0B5EA8]" />
+            
           </div>
           <label className="flex items-start gap-2.5 text-xs text-[#0D2F4F]/55">
             <input type="checkbox" required className="mt-0.5 accent-[#0B5EA8]" />
@@ -109,13 +109,13 @@ export default function HomeInquiryForm() {
           {error && <p className="text-sm text-red-600">{error}</p>}
           <button
             type="submit" disabled={sending}
-            className="inline-flex items-center gap-2 bg-[#0B5EA8] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#094d8a] disabled:opacity-50"
-          >
+            className="inline-flex items-center gap-2 bg-[#0B5EA8] px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#094d8a] disabled:opacity-50">
+            
             {sending ? <Loader2 size={16} className="animate-spin" /> : null}
             Odeslat poptávku
           </button>
         </form>
       </div>
-    </section>
-  );
+    </section>);
+
 }

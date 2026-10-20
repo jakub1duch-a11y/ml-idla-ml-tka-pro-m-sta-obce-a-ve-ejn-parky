@@ -15,7 +15,7 @@ export function MistZMark({ size = "md", className = "" }) {
       viewBox="0 0 64 92"
       fill="none"
       aria-hidden="true"
-      className={`${sizes[size] || sizes.md} shrink-0 overflow-visible ${className}`}>
+      className={`${sizes[size] || sizes.md} shrink-0 overflow-visible hidden ${className}`}>
       
       <defs>
         <linearGradient

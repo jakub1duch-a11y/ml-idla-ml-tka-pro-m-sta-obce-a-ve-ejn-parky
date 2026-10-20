@@ -38,7 +38,7 @@ export default function ReviewsSection() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {reviews.map((r, i) =>
         <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-        className="p-6 rounded-2xl bg-card_bg border border-white/10">
+        className="p-6 rounded-2xl border border-white/10 bg-[#89ae9c]">
             <StarRow rating={r.rating} />
             <p className="text-sm leading-relaxed font-light mt-4 mb-5 text-[#7b99b6]">"{r.comment}"</p>
             <div>

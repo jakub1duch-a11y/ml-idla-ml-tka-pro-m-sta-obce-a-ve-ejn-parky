@@ -158,3 +158,129 @@ button, input, textarea, select {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Material 3-inspired semantic type roles: expressive without sacrificing reading comfort. */
+.mlz-type-display {
+  font-family: var(--mlz-font-display);
+  font-size: clamp(2.75rem, 6.8vw, 6rem);
+  font-weight: 720;
+  letter-spacing: -.055em;
+  line-height: .98;
+  text-wrap: balance;
+}
+.mlz-type-headline {
+  font-family: var(--mlz-font-ui);
+  font-weight: 700;
+  letter-spacing: -.04em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.mlz-type-body {
+  font-family: var(--mlz-font-reading);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.mlz-type-label {
+  font-family: var(--mlz-font-ui);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  line-height: 1.3;
+}
+
+/* Vír osvěžení: a small technical motif for process, airflow and system explanations. */
+.mlz-vortex-icon {
+  position: relative;
+  display: inline-grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(18, 107, 250, .18);
+  border-radius: 50%;
+  color: var(--mlz-cooling-blue);
+  background: radial-gradient(circle at 35% 28%, #fff 0%, var(--mlz-ice-white) 55%, rgba(169, 230, 245, .55) 100%);
+}
+.mlz-vortex-icon::before,
+.mlz-vortex-icon::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(18, 107, 250, .3);
+  border-right-color: transparent;
+  border-radius: 50%;
+  transform: rotate(-28deg) scaleX(.78);
+  pointer-events: none;
+}
+.mlz-vortex-icon::after {
+  inset: 7px 2px 2px 7px;
+  border-color: rgba(86, 185, 135, .55);
+  border-top-color: transparent;
+  transform: rotate(32deg) scaleX(.82);
+}
+
+/* Accessible native switch pattern, ready for existing settings and preference forms.
+   Keep the native checkbox semantics; do not replace a functional form control with a decorative switch. */
+.mlz-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  color: var(--mlz-deep-navy);
+  font: 600 .9375rem/1.4 var(--mlz-font-ui);
+  cursor: pointer;
+}
+.mlz-switch input[type="checkbox"][role="switch"] {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  width: 3.25rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 2px solid #69788A;
+  border-radius: 999px;
+  background: #E2EAF1;
+  cursor: pointer;
+  transition: background-color var(--mlz-motion-ui) ease, border-color var(--mlz-motion-ui) ease;
+}
+.mlz-switch input[type="checkbox"][role="switch"]::before {
+  content: "";
+  position: absolute;
+  width: 1.125rem;
+  height: 1.125rem;
+  top: 50%;
+  left: .25rem;
+  border-radius: 50%;
+  background: #526174;
+  transform: translateY(-50%);
+  transition: transform var(--mlz-motion-ui) var(--mlz-ease-expressive), width var(--mlz-motion-fast) ease, background-color var(--mlz-motion-fast) ease;
+}
+.mlz-switch input[type="checkbox"][role="switch"]:checked {
+  border-color: var(--mlz-cooling-blue);
+  background: var(--mlz-cooling-blue);
+}
+.mlz-switch input[type="checkbox"][role="switch"]:checked::before {
+  width: 1.375rem;
+  background: #fff;
+  transform: translate(1.25rem, -50%);
+}
+.mlz-switch input[type="checkbox"][role="switch"]:focus-visible {
+  outline: 3px solid rgba(18, 107, 250, .4);
+  outline-offset: 3px;
+}
+.mlz-switch input[type="checkbox"][role="switch"]:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+}
+.mlz-switch:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: .65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mlz-switch input[type="checkbox"][role="switch"],
+  .mlz-switch input[type="checkbox"][role="switch"]::before {
+    transition-duration: .01ms !important;
+  }
+}

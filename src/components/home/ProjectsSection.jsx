@@ -36,7 +36,7 @@ const FALLBACK = [
   year: 2026,
   name: 'Designová mlžná socha AURA',
   description: 'Pro Prahu 1 jsme navrhli custom mlžnou sochu AURA jako dominantu náměstí. Průměr 160 cm, 8 trysek, ovládání přes Smart systém napojený na meteorologická data.',
-  image_url: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
+  image_url: '/media/optimized/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.webp',
   stats: [{ val: '−9 °C', label: 'pokles teploty' }, { val: '160 cm', label: 'průměr AURA' }, { val: 'Smart', label: 'automatické řízení' }]
 }];
 

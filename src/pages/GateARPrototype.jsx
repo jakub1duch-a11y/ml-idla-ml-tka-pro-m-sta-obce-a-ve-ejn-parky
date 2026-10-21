@@ -8,7 +8,7 @@ const PRODUCT = {
   slug: 'mlzna-brana-gate',
   name: 'BRÁNA GATE',
   arVersion: 'GATE-AR-BASE-v1',
-  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/4c13d4866_1000004418.png',
+  image: '/media/optimized/4c13d4866_1000004418.webp',
 };
 const DIAMETERS = [60, 76];
 const VARIANTS = ['U', 'V'];

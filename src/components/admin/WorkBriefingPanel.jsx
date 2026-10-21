@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Clock3, Sparkles, Bot, MessageSquareText, CheckCircle2, ListFilter, Wrench, Layers3 } from 'lucide-react';
+import { CheckCircle2, ListFilter, Wrench, Layers3 } from 'lucide-react';
 
 const fmt = (v) => Number(v || 0).toLocaleString('cs-CZ', { maximumFractionDigits: 1 });
 const currentMonth = new Date().toISOString().slice(0, 7);

@@ -6,8 +6,8 @@ import {
 } from 'lucide-react';
 import PdCostCalculator from '@/components/produkt/new/PdCostCalculator';
 
-const IMG_VALVE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.png';
-const IMG_PANEL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e1a4488cb_PEVEKO-SKPB-panel-Jabloshop-800x640.png';
+const IMG_VALVE = '/media/optimized/c53ea2fd4_chytra-ochrana-pred-vytopenim-a-unikem-vody-peveko-s-wi-fi-ovladanim-pres-internet-JABLOSHOP-800x640.webp';
+const IMG_PANEL = '/media/optimized/e1a4488cb_PEVEKO-SKPB-panel-Jabloshop-800x640.webp';
 
 const SUPLA_COMPONENTS = [
   {

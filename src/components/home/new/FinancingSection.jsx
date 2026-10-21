@@ -1,7 +1,3 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-
 const FUNDS = [
 { code: 'OPŽP', title: 'Operační program Životní prostředí', desc: 'Adaptace sídel na změnu klimatu — opatření pro veřejnou zeleň a prostranství.' },
 { code: 'NPŽP', title: 'Národní program Životního prostředí', desc: 'Podpora projektů zlepšujících mikroklima ve městech a obcích.' },

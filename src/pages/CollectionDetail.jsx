@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, Check, Building2, ShieldCheck, Wrench, FileText, MapPin, Ruler, Droplets } from 'lucide-react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
+import DetailPhotoStory from '@/components/motion/DetailPhotoStory';
 import CollectionHero from '@/components/kolekce/CollectionHero';
 import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
 import { COLLECTIONS } from '@/components/kolekce/collectionData';
@@ -23,7 +24,7 @@ const CITY_STEPS = [
 
 const GARDEN_TRUST = [
   { icon: ShieldCheck, title: 'Nerezové provedení', text: 'Čisté a odolné řešení navržené pro dlouhodobé venkovní použití.' },
-  { icon: Droplets, title: 'Jednoduché napojení', text: 'Podle zvoleného modelu navrhneme vhodné připojení a příslušenství pro váš prostor.' },
+  { icon: Droplets, title: 'Jednoduché napojení', text: 'Podle zvoleného modelu doporučíme připojení vody a potřebné příslušenství.' },
   { icon: Ruler, title: 'Pevně i dočasně', text: 'Řešení může být trvalé, nebo u vybraných modelů sezónní a snadno přemístitelné.' },
   { icon: Wrench, title: 'Servis a podpora', text: 'Pomůžeme s výběrem, instalací, zazimováním i následnou údržbou.' },
 ];
@@ -57,6 +58,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
       <CollectionHero collection={collection} />
 
       {(isCity || isGarden) && <UseCaseExperience variant={isGarden ? 'garden' : 'city'} />}
+      {isCity && <DetailPhotoStory variant="spaces" />}
 
       {(isCity || isGarden) && (
         <section className="border-b border-border bg-white">
@@ -144,3 +146,4 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
     </main>
   );
 }
+

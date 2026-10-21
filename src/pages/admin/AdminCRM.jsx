@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  Loader, TrendingUp, TrendingDown, DollarSign, Target, Users, Activity as ActivityIcon,
-  Phone, Mail, Calendar, FileText, CheckCircle, Clock, AlertCircle, ChevronRight,
-  Search, Plus, Filter, Building2, ArrowUpRight, Award, Briefcase,
+  Loader, Target, Users, Activity as ActivityIcon,
+  Calendar, Briefcase,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import CrmKpiBar from '@/components/admin/crm/CrmKpiBar';

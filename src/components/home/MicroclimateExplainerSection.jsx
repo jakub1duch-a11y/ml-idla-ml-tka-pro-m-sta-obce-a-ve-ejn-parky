@@ -40,7 +40,7 @@ export default function MicroclimateExplainerSection() {
                 href="/Poptavka"
                 className="inline-flex items-center rounded-xl border border-[#0E5C68]/25 bg-white px-5 py-3 text-sm font-semibold text-[#082430] transition hover:border-[#0E5C68]/50 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#58C7D6] focus:ring-offset-2"
               >
-                Navrhnout řešení pro váš prostor
+                Poptat návrh řešení
               </a>
             </div>
           </div>

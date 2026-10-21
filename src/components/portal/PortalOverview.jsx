@@ -1,0 +1,5 @@
+import React from 'react';
+import { FileText, ClipboardList, Package, ArrowRight } from 'lucide-react';
+export default function PortalOverview({totals,onSelect}) {
+  return <section aria-label="Souhrn účtu" className="grid gap-4 sm:grid-cols-3">{[[ClipboardList,'Historie poptávek',totals?.inquiries,'inquiries'],[FileText,'Nabídky k rozhodnutí',totals?.awaiting,'offers'],[Package,'Objednané systémy',totals?.purchased,'documents']].map(([Icon,label,value,key])=><button key={key} onClick={()=>onSelect(key)} className="rounded-lg border bg-card p-5 text-left hover:border-primary"><Icon size={22} strokeWidth={1.5} className="text-primary"/><span className="my-4 block text-3xl font-semibold">{value??'—'}</span><span className="flex items-center justify-between gap-3 text-sm text-muted-foreground">{label}<ArrowRight size={16}/></span></button>)}</section>;
+}

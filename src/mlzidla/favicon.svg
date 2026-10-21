@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 92" role="img" aria-label="MLŽIDLA">
-  <defs>
-    <linearGradient id="z" x1="12" y1="17" x2="55" y2="82" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A8F0FF"/><stop offset=".24" stop-color="#00B7FF"/><stop offset=".58" stop-color="#0878E8"/><stop offset=".82" stop-color="#00C6FF"/><stop offset="1" stop-color="#7DD3FC"/>
-    </linearGradient>
-    <linearGradient id="d" x1="22" y1="1" x2="42" y2="28" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#00C6FF"/><stop offset=".6" stop-color="#0097F5"/><stop offset="1" stop-color="#0A5ED7"/>
-    </linearGradient>
-  </defs>
-  <path d="M32 2S20.2 15.8 20.2 23.1C20.2 29.7 25.5 35 32 35s11.8-5.3 11.8-11.9C43.8 15.8 32 2 32 2Z" fill="url(#d)"/>
-  <ellipse cx="27.4" cy="18.4" rx="3.7" ry="7" fill="#fff" opacity=".5" transform="rotate(28 27.4 18.4)"/>
-  <path d="M13 39.5c0-2.8 2.2-5 5-5h34c0 7.2-2.9 12.8-8.2 17.7L27 67.8c-3.2 3-3.9 6.7-1.7 9.7C27 79.8 29.9 81 34 81h19.5l4.5 6H30.2c-8.5 0-14.4-2.8-17.4-7.8-3.8-6.3-1.6-14.2 5.8-20.8l18.2-16.2H18c-2.8 0-5-.5-5-2.7Z" fill="url(#z)"/>
-  <path d="M36.8 42.2H18c-2.8 0-5-2.1-5-4.8v-2.9h39c0 3.6-.8 6.8-2.5 9.7-4.2 2.2-9.3 2-12.7-2Z" fill="#8DEBFF" opacity=".58"/>
-  <path d="M20.8 58.7c5.8-4.9 12.4-9 18.7-14-5.7 7.7-12.4 15-17.8 21.6-3.8 4.7-4 9.7.1 14.5-8.2-3.6-8.5-13.7-1-22.1Z" fill="#fff" opacity=".2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MLŽIDLA.cz">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071A2F"/><stop offset="1" stop-color="#0B2A4A"/></linearGradient>
+<linearGradient id="z" x1="120" y1="120" x2="405" y2="430" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F5FF"/><stop offset=".2" stop-color="#00D8FF"/><stop offset=".52" stop-color="#086FF0"/><stop offset=".78" stop-color="#00C9FF"/><stop offset="1" stop-color="#8BEAFF"/></linearGradient>
+<linearGradient id="d" x1="210" y1="45" x2="305" y2="190" gradientUnits="userSpaceOnUse"><stop stop-color="#48EAFF"/><stop offset=".55" stop-color="#00A9F5"/><stop offset="1" stop-color="#075FE2"/></linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<g filter="url(#glow)">
+<path d="M256 54s-62 72-62 111c0 34 27.7 62 62 62s62-28 62-62c0-39-62-111-62-111Z" fill="url(#d)"/>
+<ellipse cx="231" cy="140" rx="16" ry="31" fill="#fff" opacity=".42" transform="rotate(28 231 140)"/>
+<path d="M144 239c0-15 12-27 27-27h184c0 39-16 69-45 96l-90 84c-17 16-21 36-9 52 9 12 25 19 47 19h105l24 32H237c-46 0-78-15-94-42-21-34-9-77 31-112l98-87H171c-15 0-27-3-27-15Z" fill="url(#z)"/>
+<path d="M272 254H171c-15 0-27-11-27-26v-16h211c0 20-4 37-14 53-23 12-50 11-69-11Z" fill="#9BEFFF" opacity=".5"/>
+</g>
 </svg>

@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -137,10 +138,10 @@ export default function Outdoor() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/b04eeb68d_MLZitko-oblsknazahradu.jpg',
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/cd64b3bdb_mrak-oblaknazahradu-mlzitka.png',
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/658e4144d_steblo-mlzitko.jpeg',
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/a982a794f_mlzitkosteblo.jpg'].
+            '/media/optimized/b04eeb68d_MLZitko-oblsknazahradu.webp',
+            '/media/optimized/cd64b3bdb_mrak-oblaknazahradu-mlzitka.webp',
+            '/media/optimized/658e4144d_steblo-mlzitko.webp',
+            '/media/optimized/a982a794f_mlzitkosteblo.webp'].
             map((src, i) =>
             <div key={src} className="aspect-square rounded-2xl overflow-hidden">
                 <img src={src} alt="Mlžítko v zahradě" className="w-full h-full object-cover" />
@@ -193,6 +194,7 @@ export default function Outdoor() {
           <CategoryInquiryForm category="Outdoor a zahrady" projectScope="private" analyticsSegment="residential" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="zahrady a terasy" />
       <B2BPortfolioNavigation current="Outdoor a zahrady" />
     </div>);
 

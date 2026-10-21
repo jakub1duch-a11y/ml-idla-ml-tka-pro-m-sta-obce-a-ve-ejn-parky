@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Loader, Mail, Phone, Building2, Package, MessageSquare, CheckCircle, Clock, AlertCircle,
-  FileText, Printer, Sparkles, Eye, Send, Inbox, FolderOpen, ArrowRight, X, Wand2, Image as ImageIcon,
+  FileText, Printer, Sparkles, Eye, Send, Inbox, FolderOpen, ArrowRight, Image as ImageIcon,
   Table2, ExternalLink,
 } from 'lucide-react';
 

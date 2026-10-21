@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, CheckCircle2, FolderOpen, Image, Loader, Save, ShieldCheck, Sparkles, Trash2, Video, Wand2, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { generateHiggsfieldProductMotion } from '@/lib/higgsfieldMotion';
 import {
   buildProductVisualizationGuard,
   CONFIGURATION_PRESETS,
@@ -10,6 +9,8 @@ import {
   getProductReferenceImages,
   VISUAL_ENVIRONMENTS,
 } from '@/lib/productVisualizationRules';
+import LockedVideoPanel from '@/components/admin/LockedVideoPanel';
+import useLockedVideo from '@/components/admin/useLockedVideo';
 
 const ASPECT_OPTIONS = [
   { value: '16:9', label: '16:9 · Na šířku' },
@@ -37,6 +38,12 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
   const [gallery, setGallery] = useState([]);
   const [loadingGallery, setLoadingGallery] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [heightMm, setHeightMm] = useState('');
+  const [diameterMm, setDiameterMm] = useState('');
+  const [seconds, setSeconds] = useState(6);
+  const [batchRunning, setBatchRunning] = useState(false);
+  const [batchProgress, setBatchProgress] = useState({ done: 0, total: 0, current: '', errors: [] });
+  const locked = useLockedVideo();
 
   const selectedProductObj = useMemo(
     () => products.find((p) => p.id === selectedProduct),
@@ -72,6 +79,21 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
     loadGallery();
   }, [selectedProductObj?.slug]);
 
+  const lockedPayload = () => ({
+    productSlug: selectedProductObj?.slug,
+    quantity,
+    seconds,
+    aspectRatio: aspect,
+    environmentPrompt: VISUAL_ENVIRONMENTS.find((item) => item.value === environment)?.prompt,
+    scene: prompt,
+    heightMm: Number(heightMm) || 0,
+    diameterMm: Number(diameterMm) || 0,
+  });
+
+  useEffect(() => {
+    if (mode === 'video' && selectedProductObj?.slug) locked.loadPlan(lockedPayload());
+  }, [mode, selectedProductObj?.slug]);
+
   const applyConfiguration = (value) => {
     setConfiguration(value);
     const preset = CONFIGURATION_PRESETS.find((item) => item.value === value);
@@ -105,19 +127,64 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
         if (!res?.url) throw new Error('Generátor nevrátil obrázek.');
         setResult({ type: 'image', url: res.url, fullPrompt, references, guard });
       } else {
-        const videoRes = await base44.integrations.Core.GenerateVideo({
-          prompt: `${fullPrompt} Kamera se pohybuje pomalu a klidně. Produkt po celou dobu zachovává stejnou geometrii a počet konstrukčních prvků.`,
-          aspect_ratio: aspect,
-          generate_audio: false,
-        });
-        if (!videoRes?.url) throw new Error('Generátor nevrátil video.');
-        setResult({ type: 'video', url: videoRes.url, fullPrompt, references, guard });
+        const video = await locked.generate(lockedPayload());
+        setResult({ type: 'video', url: video.url, fullPrompt: video.prompt, references: video.references, guard });
       }
     } catch (err) {
       setError(err?.response?.data?.error || err?.message || 'Generování selhalo.');
     } finally {
       setBusy(false);
     }
+  };
+
+  // Explicit admin action: create one review-only city/park concept for each product with a usable master photo.
+  // Outputs are never auto-approved or published to product pages.
+  const generateForAllProducts = async () => {
+    if (batchRunning) return;
+    const eligible = products.filter((product) => product?.slug && getMasterReference(product));
+    if (!eligible.length) {
+      setError('Žádný produkt nemá použitelnou hlavní referenční fotografii. Nejdříve doplňte MASTER fotografie v katalogu.');
+      return;
+    }
+    const confirmed = window.confirm(`Vytvořit jednu novou návrhovou vizualizaci pro ${eligible.length} produktů? Výstupy budou uloženy pouze jako „k ověření“, nebudou automaticky publikovány. Generování může trvat několik minut.`);
+    if (!confirmed) return;
+    setError('');
+    setBatchRunning(true);
+    setBatchProgress({ done: 0, total: eligible.length, current: '', errors: [] });
+    const errors = [];
+    for (let index = 0; index < eligible.length; index += 1) {
+      const product = eligible[index];
+      setBatchProgress({ done: index, total: eligible.length, current: product.name, errors: [...errors] });
+      try {
+        const options = { environment: 'mestsky_park', configuration: 'single', quantity: 1 };
+        const guard = buildProductVisualizationGuard(product, options);
+        const references = getProductReferenceImages(product, 5);
+        const fullPrompt = `Vytvoř jednu fotorealistickou architektonickou vizualizaci skutečného produktu MLŽIDLA® ${product.name} v českém městském parku.
+
+${guard.prompt}
+
+Záběr musí ukázat celý výrobek a zároveň čitelný detail nerezové konstrukce, trysek a kotvení, pokud je v referenci viditelné. Přidej jemnou průsvitnou vodní mlhu pouze z doložených trysek, přirozené osoby pro měřítko a kvalitní denní světlo. Zachovej přesnou geometrii MASTER fotografie; žádné nové části, text, logo ani vodoznak. Výstup je návrhový koncept a vyžaduje kontrolu člověkem.`;
+        const generated = await base44.integrations.Core.GenerateImage({ prompt: fullPrompt, existing_image_urls: references });
+        if (!generated?.url) throw new Error('Generátor nevrátil URL obrázku.');
+        await base44.entities.VisualizationAsset.create({
+          title: `${product.name} — městský park · návrh`, image_url: generated.url,
+          product_slug: product.slug, product_name: product.name, configuration: 'single', quantity: 1,
+          environment: 'mestsky_park', scene_description: 'Městský park — automaticky vytvořený návrhový koncept',
+          generation_prompt: fullPrompt, reference_image_urls: references,
+          material: product.material || '', profile_diameter_mm: undefined,
+          is_master_geometry_locked: true, approval_status: 'needs_review',
+          approved_for_presentation: false, is_primary_for_variant: false,
+          notes: guard.verified ? 'Hlavní reference označena jako ověřená; geometrie výsledku musí být porovnána s MASTER fotografií před schválením.' : 'MASTER reference není potvrzená; výstup je koncept a nesmí být použit v klientské prezentaci bez kontroly.'
+        });
+      } catch (err) {
+        errors.push(`${product.name}: ${err?.message || 'generování selhalo'}`);
+      }
+      setBatchProgress({ done: index + 1, total: eligible.length, current: product.name, errors: [...errors] });
+    }
+    setBatchRunning(false);
+    setBatchProgress((state) => ({ ...state, current: '', errors: [...errors] }));
+    if (selectedProductObj?.slug) await loadGallery();
+    setError(errors.length ? `Dávka dokončena s ${errors.length} chybami. Zkontrolujte seznam níže.` : 'Dávka dokončena. Všechny vytvořené vizualizace čekají na ruční kontrolu.');
   };
 
   const saveVisualization = async () => {
@@ -137,6 +204,7 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
         generation_prompt: result.fullPrompt,
         reference_image_urls: result.references,
         material: selectedProductObj.material || '',
+        profile_diameter_mm: Number(diameterMm) || undefined,
         is_master_geometry_locked: true,
         approval_status: 'needs_review',
         approved_for_presentation: false,
@@ -173,6 +241,13 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
           <h3 className="text-base font-semibold text-white">AI Vizualizační studio · PRODUCT LOCK</h3>
           <p className="mt-0.5 max-w-3xl text-xs leading-5 text-white/40">Měňte prostředí, světlo, mlhu, lidi, kompozici a počet identických kusů. Geometrie produktu je uzamčená hlavní produktovou fotografií.</p>
         </div>
+      </div>
+      <div className="mb-5 rounded-xl border border-cyan/15 bg-cyan/5 p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div><p className="text-sm font-semibold text-white">Vizuál pro každý produkt</p><p className="mt-1 max-w-2xl text-xs leading-5 text-white/45">Vytvoří jednu novou scénu městského parku pro každý produkt s dostupnou MASTER fotografií. Vše se ukládá jako „k ověření“ a nic se automaticky nezveřejní.</p></div>
+          <button type="button" onClick={generateForAllProducts} disabled={batchRunning || !products.length} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-cyan px-4 py-2.5 text-sm font-bold text-slate-950 disabled:opacity-40">{batchRunning ? <Loader size={15} className="animate-spin"/> : <Sparkles size={15}/>} {batchRunning ? `Generuji ${batchProgress.done}/${batchProgress.total}` : `Generovat pro všech ${products.filter((p) => p?.slug && getMasterReference(p)).length} produktů`}</button>
+        </div>
+        {(batchRunning || batchProgress.total > 0) && <div className="mt-3"><div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-cyan transition-all" style={{ width: `${batchProgress.total ? batchProgress.done / batchProgress.total * 100 : 0}%` }}/></div><p className="mt-2 text-[11px] text-white/45">{batchRunning ? `Právě: ${batchProgress.current}` : `Hotovo ${batchProgress.done} z ${batchProgress.total}`} · chyb: {batchProgress.errors.length}</p>{batchProgress.errors.length > 0 && <ul className="mt-2 max-h-28 overflow-auto text-[11px] text-rose-300">{batchProgress.errors.map((message) => <li key={message}>{message}</li>)}</ul>}</div>}
       </div>
 
       <div className="mb-4 flex gap-2">
@@ -228,11 +303,13 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
           <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} rows={3} placeholder="Volitelně doplňte styl prostoru, lidi, světlo, kompozici nebo atmosféru. Konstrukci produktu sem neměňte." className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-cyan/40"/>
         </div>
 
+        {mode === 'video' && <LockedVideoPanel plan={locked.plan} heightMm={heightMm} diameterMm={diameterMm} setHeightMm={setHeightMm} setDiameterMm={setDiameterMm} seconds={seconds} setSeconds={setSeconds} />}
+
         {mode === 'video' && <div><label className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-white/40">Poměr stran</label><div className="flex flex-wrap gap-2">{ASPECT_OPTIONS.map((opt) => <button key={opt.value} onClick={() => setAspect(opt.value)} className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-all ${aspect === opt.value ? 'border border-cyan/30 bg-cyan/20 text-cyan' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>{opt.label}</button>)}</div></div>}
 
         <button onClick={generate} disabled={busy || !selectedProductObj || !masterReference} className="inline-flex items-center gap-2 rounded-xl bg-cyan px-5 py-2.5 text-sm font-bold text-ink transition-all hover:bg-cyan/90 disabled:opacity-40">
           {busy ? <Loader size={15} className="animate-spin"/> : <Sparkles size={15}/>}
-          {busy ? 'Generuji s PRODUCT LOCK…' : mode === 'image' ? 'Generovat přesnou vizualizaci' : 'Generovat video'}
+          {busy ? (locked.status || 'Generuji s PRODUCT LOCK…') : mode === 'image' ? 'Generovat přesnou vizualizaci' : 'Generovat video s PRODUCT LOCK'}
         </button>
 
         {error && <div className="flex items-center gap-2 rounded-lg border border-rose-400/20 bg-rose-400/10 px-3 py-2 text-xs text-rose-400"><X size={12}/> {error}</div>}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Bot, Check, FileImage, FileText, ImagePlus, Loader2, Send, Sparkles, UploadCloud } from 'lucide-react';
+import { Bot, Check, FileImage, ImagePlus, Loader2, Send, Sparkles, UploadCloud } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { createOfferAttachmentName, SOBESLAV_OFFER_STANDARD } from '@/lib/offer-standard';
 import { getGeometryLock, getNegativeRules, getProductReferenceImages } from '@/lib/productVisualizationRules';

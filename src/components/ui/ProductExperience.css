@@ -38,5 +38,13 @@
 .mpe-thumbnails img{width:100%;height:80px;object-fit:contain}
 .mpe-thumbnails span{display:block;font-size:.7rem;line-height:1.4;font-weight:600;margin-top:8px}
 .mpe-empty{padding:24px;color:#536773}
+.mpe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px}
+.mpe-grid-card{overflow:hidden;border-radius:24px;background:#f4f8fa;box-shadow:0 10px 32px #07131d09}
+.mpe-grid-image{width:100%;height:260px;object-fit:contain;background:#eaf3f5}
+.mpe-grid-copy{padding:24px}
+.mpe-grid-copy h3{font-size:1.5rem;font-weight:600;color:#07131d;line-height:1.2}
+.mpe-grid-copy p{margin-top:12px;font-size:.9rem;line-height:1.7;color:#536773}
+.mpe-grid-link{display:inline-flex;align-items:center;gap:12px;min-height:44px;margin-top:16px;font-size:.85rem;font-weight:600;color:#075d70}
 @media(max-width:767px){.mpe-feature{grid-template-columns:minmax(0,1fr);border-radius:18px}.mpe-stage{min-height:300px}.mpe-media{height:330px;padding-top:52px}.mpe-media>img,.mpe-media>video{max-height:258px}.mpe-story{padding:28px 24px}.mpe .mpe-eyebrow{margin-bottom:14px}.mpe-actions{margin-top:22px}.mpe-thumbnails>button{flex-basis:120px}.mpe-navigation p{max-width:calc(100% - 116px)}}
 @media(prefers-reduced-motion:reduce){.mpe *,.mpe *::before,.mpe *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+

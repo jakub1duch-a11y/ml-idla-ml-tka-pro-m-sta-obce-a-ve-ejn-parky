@@ -1,7 +1,7 @@
 import React from 'react';
 import { Instagram, Facebook, Search, FileText, ExternalLink, Play, MoreHorizontal } from 'lucide-react';
 
-const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b2ec32a3_mlzidla_logo_bez_pozadi.png';
+const BRAND_LOGO_URL = '/media/optimized/4b2ec32a3_mlzidla_logo_bez_pozadi.webp';
 
 const META = {
   instagram: { label: 'Instagram', icon: Instagram, accent: 'text-fuchsia-300', aspect: 'aspect-[4/5]' },

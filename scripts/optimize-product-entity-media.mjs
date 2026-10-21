@@ -4,7 +4,7 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 import sharp from 'sharp';
-import ffmpegPath from 'ffmpeg-static';
+import { ffmpegPath } from './ffmpeg-path.mjs';
 
 const INPUT = path.resolve('scripts/product-media-input.json');
 const OUT_DIR = path.resolve('public/media/optimized');

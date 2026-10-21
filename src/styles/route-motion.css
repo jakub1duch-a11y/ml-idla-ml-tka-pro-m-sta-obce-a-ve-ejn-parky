@@ -1,0 +1,15 @@
+/* Velvette-inspired route entrance: restrained, fast and accessible. */
+.route-motion-enter {
+  animation: mlzidla-route-enter 260ms cubic-bezier(.22, 1, .36, 1) both;
+  transform-origin: 50% 0;
+}
+@keyframes mlzidla-route-enter {
+  from { opacity: .72; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-motion-enter { animation: none !important; }
+}
+@media (forced-colors: active) {
+  .route-motion-enter { animation: none !important; }
+}

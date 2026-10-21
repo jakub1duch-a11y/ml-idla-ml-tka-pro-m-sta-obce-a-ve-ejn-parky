@@ -2,6 +2,11 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { jsPDF } from 'npm:jspdf@4.0.0';
 import QRCode from 'npm:qrcode@1.5.4';
 import { findPricingForProduct, findSmartControlPricing, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
+import { buildOfferDocument } from '../../shared/offerPdfBuilder.ts';
+import { generateOfferVisualScenes } from '../../shared/offerVisualScenes.ts';
+import { fetchImageAsBase64 } from '../../shared/pdfHelpers.ts';
+import { SUPLA_OFFER } from '../../shared/suplaOfferLayout.ts';
+import { SUPLA_VISUALS } from '../../shared/suplaOfferVisuals.ts';
 
 const toBase64 = (bytes) => {
   let binary = '';
@@ -209,6 +214,21 @@ export default async function(req) {
     } = await req.json();
     if (!product?.name) return Response.json({ error: 'Product data required' }, { status: 400 });
 
+    if (documentType === 'offer') {
+      const smartPricing = { complete_supla_ex_vat: SUPLA_OFFER.base, service_shaft_ex_vat: SUPLA_OFFER.shaft, complete_supla_with_shaft_ex_vat: SUPLA_OFFER.withShaft, source: 'Schvalene volitelne varianty SUPLA' };
+      const scenes = await generateOfferVisualScenes(base44, { product, sourcePhotos: inquiry.attachment_urls || [], quantity: Number(quote.quantity || 1), goal: safe(inquiry.project_goal) });
+      const base = Number(quote.base_price || 0), installation = Number(quote.installation || 0);
+      const total = Number(quote.final_total || base + installation);
+      const lines = [{ label: product.name, quantity: Number(quote.quantity || 1), unit: 'ks', total: base }];
+      if (installation > 0) lines.push({ label: 'Instalace a uvedeni do provozu', quantity: 1, unit: 'set', total: installation });
+      const quoteNumber = requestedQuoteNumber || `MLZ-${Date.now()}`;
+      const c = { product, productName: product.name, clientName: inquiry.name || '', clientCompany: inquiry.company || '', goal: safe(aiContent.project_goal || inquiry.project_goal), solution: safe(aiContent.solution_summary || product.short_description), benefits: aiContent.benefits || [], lines, total, smart: false, productImg: scenes[0]?.img, quoteNum: quoteNumber, validUntil: dateCs(requestedValidUntil || Date.now() + 30 * 86400000), today: dateCs(Date.now()), imgs: scenes.map(s => s.img), scenes, supla: { standard_price_ex_vat: smartPricing.complete_supla_ex_vat } };
+      c.suplaVisuals = Object.fromEntries(await Promise.all(Object.entries(SUPLA_VISUALS).map(async ([key, url]) => [key, await fetchImageAsBase64(url)])));
+      c.brandLogo = await fetchImageAsBase64(LOGO_URL);
+      const offerDoc = new jsPDF({ unit: 'mm', format: 'a4' });
+      buildOfferDocument(offerDoc, c);
+      return Response.json({ page_count: offerDoc.getNumberOfPages(), final_total: total, smart_pricing: smartPricing, lines, filename: `${quoteNumber}-nabidka.pdf`, quote_number: quoteNumber, scenes: scenes.map(({ img, ...s }) => s), portal_url: 'https://mlzidla.cz/muj-projekt', pdf_base64: toBase64(new Uint8Array(offerDoc.output('arraybuffer'))) });
+    }
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     await loadFont(doc);
 

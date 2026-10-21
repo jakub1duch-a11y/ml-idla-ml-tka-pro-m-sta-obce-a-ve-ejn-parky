@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, FileText, Printer, Download, Plus, Trash2, Edit3, Check, X, Package, Mail, Phone, Globe, MapPin } from 'lucide-react';
+import { Shield, Printer, Download, Plus, Trash2, Edit3, Check, Package, Mail, Phone, Globe, MapPin } from 'lucide-react';
 
 const STATUS_LABELS = {
   nova_poptavka: { label: 'NOVÁ POPTÁVKA', color: 'text-slate-600 bg-slate-100 border-slate-300' },

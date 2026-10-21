@@ -1,12 +1,12 @@
 import React from 'react';
 
 const ITEMS = [
-  ['Katalog','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/937e9976c_katalog.PNG'],
-  ['Sociální sítě','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c777d2b8d_facebook-instagram.PNG'],
-  ['Veletržní stánek','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG'],
-  ['Oblečení týmu','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/046393468_brandmarch.PNG'],
-  ['Firemní složka','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d3908f8aa_firemnislozka.PNG'],
-  ['Označení produktu','https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/55ad64b81_laserstitky.PNG']
+  ['Katalog','/media/optimized/937e9976c_katalog.webp'],
+  ['Sociální sítě','/media/optimized/c777d2b8d_facebook-instagram.webp'],
+  ['Veletržní stánek','/media/optimized/47ca0affa_veletrh.webp'],
+  ['Oblečení týmu','/media/optimized/046393468_brandmarch.webp'],
+  ['Firemní složka','/media/optimized/d3908f8aa_firemnislozka.webp'],
+  ['Označení produktu','/media/optimized/55ad64b81_laserstitky.webp']
 ];
 
 export default function BrandApplicationGallery() {

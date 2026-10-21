@@ -128,7 +128,7 @@ export default function Poradce() {
           </div>
           <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">AI Projektant MLŽIDLA®</p>
           <h1 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-3">
-            Navrhneme mlžení pro váš prostor
+            Doporučíme vhodné mlžicí řešení
           </h1>
           <p className="text-slate-500 text-sm max-w-xl mx-auto">
             Popište místo, velikost a způsob využití. AI Projektant doporučí vhodnou kolekci, rozsah sestavy a připraví podklady pro přesné nacenění.
@@ -205,7 +205,7 @@ export default function Poradce() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Popište váš prostor nebo potřeby..."
+              placeholder="Uveďte typ místa, požadovaný efekt a dostupný přívod vody…"
               disabled={loading || starting}
               className="flex-1 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:border-slate-400 focus:outline-none disabled:opacity-50"
             />

@@ -23,11 +23,11 @@ export default function PdBenefits({ product }) {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#153863]">// Proč {product.name}</p>
             <h2 className="mt-3 max-w-2xl font-heading text-3xl font-bold leading-[1.02] tracking-[-.02em] text-[#0A1628] sm:text-4xl lg:text-5xl">
-              Konstrukce připravená pro dlouhou životnost
+              Co je důležité u tohoto řešení
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-6 text-[#5A6B78]">
-            Hlavní přínosy a technické parametry se přizpůsobují konkrétnímu produktu a způsobu instalace.
+            {detailConfig.intro || 'Hlavní přínosy vycházejí z popisu konkrétního produktu. Technické parametry uvádíme pouze z ověřených údajů.'}
           </p>
         </div>
 
@@ -45,6 +45,17 @@ export default function PdBenefits({ product }) {
                 <p>{text}</p>
               </article>
             ))}
+          </div>
+        )}
+
+        {detailConfig.useCases?.length > 0 && (
+          <div className="mt-6 rounded-3xl border border-[#D3E2E8] bg-white p-5 sm:p-6">
+            <p className="font-mono text-[9px] font-bold uppercase tracking-[.18em] text-[#0B97E8]">Vhodné prostředí</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {detailConfig.useCases.map((useCase) => (
+                <span key={useCase} className="rounded-full border border-[#D8E8ED] bg-[#F7FBFD] px-3 py-1.5 text-xs font-semibold text-[#0A2342]">{useCase}</span>
+              ))}
+            </div>
           </div>
         )}
 

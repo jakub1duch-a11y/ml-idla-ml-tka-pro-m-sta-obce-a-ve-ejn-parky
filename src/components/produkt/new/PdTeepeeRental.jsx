@@ -4,8 +4,8 @@ import { CalendarDays, MapPin, Wrench, PlayCircle, ArrowRight, Droplets, Truck, 
 import { TEEPEE_NOZZLE_URL } from '@/components/produkt/new/PdTeepeeStudio';
 
 const FALLBACKS = [
-  'https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/f0a31cb3f_08_teepee_brno_landscape.jpg',
-  'https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/ebbd577b1_07_teepee_brno_portrait.jpg',
+  '/media/optimized/f0a31cb3f_08_teepee_brno_landscape.webp',
+  '/media/optimized/ebbd577b1_07_teepee_brno_portrait.webp',
 ];
 
 export default function PdTeepeeRental({ product }) {

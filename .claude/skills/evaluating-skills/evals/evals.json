@@ -1,0 +1,38 @@
+{
+  "skill_name": "evaluating-skills",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a skill for cleaning customer CSV files. Give me a small evaluation plan before rollout.",
+      "expected_output": "A structured plan with at least three realistic test prompts, expected outputs, objective assertions, and a baseline run without the skill.",
+      "assertions": [
+        "Includes at least three varied test cases",
+        "Includes one edge case",
+        "Defines observable, non-brittle assertions",
+        "Specifies a no-skill or previous-version baseline"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My agent passed one test. Can we say the skill is reliable now?",
+      "expected_output": "Explains why one successful example is insufficient and recommends multiple varied prompts, isolated runs, baseline comparison, evidence-based grading, and human review.",
+      "assertions": [
+        "Does not claim reliability based on one test",
+        "Recommends a baseline comparison",
+        "Requires concrete evidence for PASS results",
+        "Includes human review for qualities that are hard to automate"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "A skill's benchmark shows 100% pass rate both with and without the skill, but it uses more tokens. What should I do?",
+      "expected_output": "Identifies that current tests may not demonstrate skill value, suggests revising weak assertions or cases, examining whether the skill adds measurable value, and weighing cost against benefit.",
+      "assertions": [
+        "Recognizes that equal pass rates do not show improvement",
+        "Recommends inspecting or replacing assertions that always pass",
+        "Considers token and runtime overhead",
+        "Does not recommend claiming success without evidence of added value"
+      ]
+    }
+  ]
+}

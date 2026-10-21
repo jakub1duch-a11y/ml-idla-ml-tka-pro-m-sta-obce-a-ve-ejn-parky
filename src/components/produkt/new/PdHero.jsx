@@ -10,7 +10,6 @@ import {
   FileText,
   Leaf,
   Play,
-  ScanLine,
   ShieldCheck,
   Sparkles,
   ThermometerSun,
@@ -19,6 +18,7 @@ import {
 } from 'lucide-react';
 import { BENDY_SLUGS } from '@/lib/newMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
 import { getLine, getFamily } from '@/lib/productFamilies';
 import TechnicalBlueprintBackground from '@/components/products/TechnicalBlueprintBackground';
@@ -28,12 +28,19 @@ function isVideo(url) {
   return typeof url === 'string' && /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(url);
 }
 
+function isImage(url) {
+  return typeof url === 'string' && !isVideo(url) && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url));
+}
+
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
 const isLineaProduct = (product) => product?.slug === 'linea-mlzitko';
 
+// Keep the product's real name as the primary heading so every detail page has a unique, descriptive H1.
 function getHeroTitle(product, detailConfig) {
+  const productName = String(product?.name || '').trim();
+  if (productName) return productName;
   if (detailConfig?.tagline) return detailConfig.tagline;
-  return 'Nerezové mlžítko pro prostor, kde chcete zůstat';
+  return 'Mlžítko pro veřejný prostor a zahradu';
 }
 
 function getHeroIntro(product, detailConfig) {
@@ -60,7 +67,7 @@ export default function PdHero({ product }) {
       .filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 60)
       .then((items = []) => {
         if (!activeRequest) return;
-        setApprovedVisuals((items || []).filter((item) => item?.image_url));
+        setApprovedVisuals((items || []).filter((item) => item?.image_url && (!isVideo(item.thumbnail_url || item.image_url)) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
       })
       .catch(() => { if (activeRequest) setApprovedVisuals([]); });
     return () => { activeRequest = false; };
@@ -72,26 +79,28 @@ export default function PdHero({ product }) {
       ? [{ type: 'video', url: resolvedVideo, poster: product.image_url, title: `${product.name} – ochlazení prostoru` }]
       : [];
     const approvedItems = [...approvedVisuals]
+      .filter((item) => !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .slice(0, 4)
       .map((item) => ({
         type: 'image',
         url: item.thumbnail_url || item.image_url,
-        title: `${product.name} – schválená vizualizace${item.configuration ? ` · ${item.configuration}` : ''}`,
+        title: `${product.name} – pohled v prostoru${item.configuration ? ` · ${item.configuration}` : ''}`,
         approvedAdmin: true,
       }));
     const items = [
+      ...(product.image_url && isImage(product.image_url) && isProductMediaAllowed(product, product.image_url, product.name) ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
       ...approvedItems,
-      ...(product.image_url ? [{ type: 'image', url: product.image_url, title: `${product.name} – hlavní fotografie` }] : []),
-      ...getCuratedProductMedia(product).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · vizualizace' : '') })),
+      ...getCuratedProductMedia(product).filter(item => isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: item.url, title: item.title + (item.kind === 'visualization' ? ' · návrh umístění' : '') })),
       ...ownVideo,
       ...(product.gallery_urls || [])
-        .filter(Boolean)
+        .filter((url) => Boolean(url) && isProductMediaAllowed(product, url))
         .filter(isVideo)
         .map((url, index) => ({ type: 'video', url, poster: product.image_url, title: `${product.name} – video ${index + 1}` })),
       ...(product.gallery_urls || [])
-        .filter(Boolean)
-        .filter((u) => !isVideo(u))
-        .map((url, index) => ({ type: 'image', url, title: `${product.name} – fotografie ${index + 1}` })),
+        .filter((url) => Boolean(url) && isProductMediaAllowed(product, url))
+        .filter(isImage)
+        .map((url, index) => ({ type: 'image', url, title: `${product.name} – fotografie ${index + 1}` })), 
     ].filter(Boolean);
 
     return [...new Map(items.map((item) => [item.url, item])).values()];
@@ -210,7 +219,7 @@ export default function PdHero({ product }) {
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-[-12%] bottom-[-12%] z-[3] h-[34%] opacity-60 blur-2xl" style={{ background: 'radial-gradient(ellipse at 28% 70%, rgba(255,255,255,.72), transparent 42%), radial-gradient(ellipse at 72% 58%, rgba(155,232,242,.6), transparent 38%)' }} />
 
           <div className="absolute left-5 top-5 z-20 rounded-full border border-white/18 bg-black/30 px-4 py-2 font-mono text-[10px] uppercase tracking-[.18em] text-white/78 backdrop-blur-md">
-            {hero?.type === 'video' ? 'Video produktu' : hero?.approvedAdmin ? 'Schválená vizualizace' : 'Produktový hero'}
+            {hero?.type === 'video' ? 'Video produktu' : hero?.approvedAdmin ? 'Pohled v prostoru' : 'Produktový pohled'}
           </div>
 
           {hero && (

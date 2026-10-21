@@ -7,6 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import RouteMotion from './components/RouteMotion';
 import AnalyticsRouteTracker from '@/components/common/AnalyticsRouteTracker';
 import GlobalPhotoWatermark from '@/components/GlobalPhotoWatermark';
 import Mlzitko from '@/pages/Mlzitko';
@@ -26,8 +27,10 @@ import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
+import RegisteredPortal from '@/components/portal/RegisteredPortal';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import '@/components/portal/googleAdsPortal';
 import Poradce from '@/pages/Poradce';
-import AIVizualizace from '@/pages/AIVizualizace';
 import Kalkulacka from '@/pages/Kalkulacka';
 import ONas from '@/pages/ONas';
 import Reference from '@/pages/Reference';
@@ -47,6 +50,7 @@ import Eventy from '@/pages/kategorie/Eventy';
 import Outdoor from '@/pages/kategorie/Outdoor';
 import Art from '@/pages/kategorie/Art';
 import Deti from '@/pages/kategorie/Deti';
+import UseCaseCategory from '@/pages/kategorie/UseCaseCategory';
 import Gdpr from '@/pages/Gdpr';
 import Admin from '@/pages/admin/Admin';
 import AdminLogin from '@/pages/admin/AdminLogin';
@@ -68,6 +72,7 @@ import Partnerstvi from '@/pages/Partnerstvi';
 import RedesignSpoluprace from '@/pages/RedesignSpoluprace';
 import ObchodniPodminky from '@/pages/ObchodniPodminky';
 import ObchodniNabidky from '@/pages/ObchodniNabidky';
+import ObrazoveNabidky from '@/pages/ObrazoveNabidky';
 import Pronajem from '@/pages/Pronajem';
 import Mlhoviste from '@/pages/Mlhoviste';
 import VodniMlha from '@/pages/VodniMlha';
@@ -135,15 +140,18 @@ const AuthenticatedApp = () => {
         <Route path="/connect" element={<Connect />} />
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
+        <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzitko-mrak" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/klientska-sekce" element={<CustomerPortal />} />
-        <Route path="/muj-projekt" element={<CustomerPortal />} />
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?next=%2Fmuj-projekt" replace />} />}>
+          <Route path="/muj-projekt" element={<RegisteredPortal />} />
+        </Route>
         <Route path="/klient" element={<CustomerPortal />} />
         <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
-        <Route path="/ai-vizualizace" element={<AIVizualizace />} />
+        <Route path="/ai-vizualizace" element={<Navigate to="/poptavka" replace />} />
         <Route path="/ar/bendy-single" element={<BendyARPrototype />} />
         <Route path="/ar/gate" element={<GateARPrototype />} />
         <Route path="/kalkulacka" element={<Kalkulacka />} />
@@ -157,6 +165,8 @@ const AuthenticatedApp = () => {
         <Route path="/reference/bendy-linea-rodinna-zahrada" element={<ReferenceDetail fixedId="6a9fdf2f153be3ee13d70207" />} />
         <Route path="/reference/mestska-mlzna-brana-gate" element={<ReferenceDetail fixedId="6a6b8d1d553d8991f46cd6a3" />} />
         <Route path="/reference/mesto-polna-mlzitko-mrkev" element={<ReferenceDetail fixedId="6a450e035aef0b45b2a8728f" />} />
+        <Route path="/reference/bendy-nemojov" element={<ReferenceDetail fixedId="6ac7164f1b394c252d836779" />} />
+        <Route path="/reference/teepee-nove-mesto-na-morave" element={<ReferenceDetail fixedId="6ac7164f1b394c252d83677a" />} />
         <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
@@ -172,6 +182,8 @@ const AuthenticatedApp = () => {
         <Route path="/mlzitka-pro-mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/mesta-obce" element={<Navigate to="/mlzitka-pro-mesta-obce" replace />} />
         <Route path="/kategorie/parky-hriste" element={<ParkyHriste />} />
+        <Route path="/parky" element={<Navigate to="/kategorie/parky-hriste" replace />} />
+        <Route path="/parky-a-hriste" element={<Navigate to="/kategorie/parky-hriste" replace />} />
         <Route path="/kategorie/koupaliste" element={<Koupaliste />} />
         <Route path="/kategorie/architekti" element={<Architekti />} />
         <Route path="/kategorie/komercni" element={<Komercni />} />
@@ -179,6 +191,7 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/outdoor-zahrady" element={<Outdoor />} />
         <Route path="/kategorie/art-instalace" element={<Art />} />
         <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
+        <Route path="/kategorie/:categorySlug" element={<UseCaseCategory />} />
         <Route path="/gdpr" element={<Gdpr />} />
         <Route path="/gate70" element={<Gate70 />} />
         <Route path="/faq" element={<Navigate to="/podpora" replace />} />
@@ -202,6 +215,7 @@ const AuthenticatedApp = () => {
         <Route path="/manualy" element={<Navigate to="/ke-stazeni" replace />} />
         <Route path="/obchodni-podminky" element={<ObchodniPodminky />} />
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
+        <Route path="/obrazove-nabidky" element={<ObrazoveNabidky />} />
         <Route path="/pronajem" element={<Pronajem />} />
         <Route path="/prezentace/mlzici-prostor-vysledky" element={<PrezentaceMlziciProstor />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
@@ -235,6 +249,7 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
+          <RouteMotion />
           <AnalyticsRouteTracker />
           <GlobalPhotoWatermark />
           <AuthenticatedApp />

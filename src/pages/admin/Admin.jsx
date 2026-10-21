@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles, PlugZap } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles, PlugZap, Bell, Send } from 'lucide-react';
 import AdminTeamChat from './AdminTeamChat';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 import InstallAppButton from '@/components/admin/team/InstallAppButton';
@@ -32,6 +32,8 @@ import { Bot } from 'lucide-react';
 import ProduktovyOptimalizatorChat from '@/components/admin/ProduktovyOptimalizatorChat';
 import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 import AdminMcpConnect from './AdminMcpConnect';
+import AdminNotifications from './AdminNotifications';
+import AdminOffers from './AdminOffers';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -53,18 +55,20 @@ const TABS = [
   { id: 'prospects', label: 'Prospecting', icon: Users },
   { id: 'crm', label: 'CRM Corporate', icon: BriefcaseBusiness },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
+  { id: 'offers', label: 'Odeslané nabídky', icon: Send },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
   { id: 'instagram', label: 'Instagram', icon: Instagram },
   { id: 'chatgpt', label: 'ChatGPT / MCP', icon: Bot },
+  { id: 'notifications', label: 'Notifikace', icon: Bell },
 ];
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
-  { label: 'Obchod', ids: ['poptavky', 'crm', 'prospects'] },
+  { label: 'Obchod', ids: ['poptavky', 'offers', 'crm', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
-  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal'] },
+  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal', 'notifications'] },
 ];
 
 export default function Admin() {
@@ -148,11 +152,13 @@ export default function Admin() {
     prospects: AdminProspects,
     crm: AdminCRM,
     poptavky: AdminPoptavky,
+    offers: AdminOffers,
     ar: AdminAR,
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,
     instagram: AdminInstagram,
     chatgpt: AdminMcpConnect,
+    notifications: AdminNotifications,
   }[activeTab];
 
   return (

@@ -57,7 +57,7 @@ const PORTFOLIO_EXAMPLES = [
   {
     title: 'Terasa restaurace na Praze 1',
     category: 'Profesionální fotografie',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6c64ac700_mlnprvek-mrak-mlzidla03.png',
+    image: '/media/optimized/6c64ac700_mlnprvek-mrak-mlzidla03.webp',
     stats: ['Studio setup', 'Retouchované', 'Použito v adv.']
   }
 ];

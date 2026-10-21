@@ -12,7 +12,7 @@ const rentalOrder = (product) => {
 };
 
 const EVENT_THUMBNAILS = {
-  'mlzna-brana-gate': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png',
+  'mlzna-brana-gate': '/media/optimized/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.webp',
   'brana-bendy': '/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp',
   'aura-duo': '/media/optimized/83e0506f1_generated_fd2118cd.webp',
   'aura-mlzitko': '/media/optimized/83e0506f1_generated_fd2118cd.webp',

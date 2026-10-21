@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, MapPin, Sparkles, ShieldCheck } from 'lucide-react';
+import { MapPin, Sparkles, ShieldCheck } from 'lucide-react';
 
 const PROOF = [
 { icon: Sparkles, title: 'Návrh mlžné zóny', text: 'Produkt, rozmístění a provozní scénář navrhujeme podle konkrétního prostoru.' },

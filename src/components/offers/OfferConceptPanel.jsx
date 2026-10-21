@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sparkles, Shield, CheckCircle2, Send, AlertTriangle, Loader2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import OfferConceptPresentation from './OfferConceptPresentation';
+import OfferEmailPreview from './OfferEmailPreview';
 
 const STATUS_FLOW = [
   { key: 'nova_poptavka', label: 'NOVÁ POPTÁVKA', step: 0 },
@@ -25,9 +26,27 @@ export default function OfferConceptPanel({ inquiry, onRefresh, onOrder }) {
   const [error, setError] = useState('');
   const [showPresentation, setShowPresentation] = useState(false);
   const [transitioning, setTransitioning] = useState('');
+  const [projectId, setProjectId] = useState(null);
+  const [projectOrder, setProjectOrder] = useState(null);
 
   const offerStatus = inquiry.offer_status || 'nova_poptavka';
   const currentStep = STATUS_FLOW.find((s) => s.key === offerStatus)?.step || 0;
+
+  // Load existing ProjectOrder for this inquiry
+  useEffect(() => {
+    if (!inquiry?.id) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const orders = await base44.entities.ProjectOrder.filter({ inquiry_id: inquiry.id }, { limit: 1 });
+        if (!cancelled && orders?.items?.[0]) {
+          setProjectId(orders.items[0].id);
+          setProjectOrder(orders.items[0]);
+        }
+      } catch (_) {}
+    })();
+    return () => { cancelled = true; };
+  }, [inquiry?.id]);
 
   const handleCreateConcept = async () => {
     setLoading(true);
@@ -42,6 +61,13 @@ export default function OfferConceptPanel({ inquiry, onRefresh, onOrder }) {
       if (data?.ok) {
         setConcept(data);
         setShowPresentation(true);
+        if (data.project_order_id) {
+          setProjectId(data.project_order_id);
+          try {
+            const order = await base44.entities.ProjectOrder.get(data.project_order_id);
+            setProjectOrder(order);
+          } catch (_) {}
+        }
         if (onRefresh) await onRefresh();
       } else {
         setError(data?.error || 'Nepodařilo se vytvořit koncept.');
@@ -217,6 +243,17 @@ export default function OfferConceptPanel({ inquiry, onRefresh, onOrder }) {
             <p className="text-sm text-muted-foreground">Načtěte koncept pomocí tlačítka „Vytvořit nabídku".</p>
           )}
         </div>
+      )}
+
+      {/* Client offer email preview — shown when project order exists and concept is ready */}
+      {projectId && offerStatus !== 'nova_poptavka' && (
+        <OfferEmailPreview
+          projectId={projectId}
+          quoteNumber={projectOrder?.quote_number || concept?.concept?.project_title || ''}
+          clientEmail={inquiry.email}
+          clientName={inquiry.jmeno || inquiry.name}
+          offerStatus={offerStatus}
+        />
       )}
     </div>
   );

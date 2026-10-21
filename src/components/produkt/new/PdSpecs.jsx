@@ -41,8 +41,7 @@ function MaterialQualityBadge({ material }) {
   return (
     <div
       className="relative overflow-hidden rounded-[28px] border border-[#B9DCE8] bg-[linear-gradient(145deg,#F9FEFF_0%,#EAF6F9_48%,#FFFFFF_100%)] p-5 shadow-[0_18px_55px_rgba(10,35,66,.08)] sm:p-6"
-      title="Designové označení materiálového standardu MLŽIDLA®; nejde o externí certifikační značku."
-      aria-label="MLŽIDLA material quality badge">
+      aria-label="Materiálové provedení produktu">
       
       <div className="absolute -right-10 -top-12 h-36 w-36 rounded-full border border-[#9ED9F0]/40" />
       <div className="absolute -right-3 top-3 h-20 w-20 rounded-full border border-[#9ED9F0]/35" />
@@ -52,8 +51,8 @@ function MaterialQualityBadge({ material }) {
           <ShieldCheck size={25} strokeWidth={1.55} className="text-[#0B5EA8]" />
         </div>
         <div className="min-w-0">
-          <p className="font-mono text-[9px] font-black uppercase tracking-[.22em] text-[#0B97E8]">Best quality</p>
-          <p className="mt-1 font-heading text-lg font-black uppercase leading-[.95] tracking-[-.025em] text-[#0A2342]">Stainless product material</p>
+          <p className="font-mono text-[9px] font-black uppercase tracking-[.22em] text-[#0B97E8]">Materiál produktu</p>
+          <p className="mt-1 font-heading text-lg font-black leading-[1.05] tracking-[-.025em] text-[#0A2342]">Konstrukční provedení</p>
           <p className="mt-3 text-xs font-semibold leading-5 text-[#0D2F4F]/62">{material}</p>
           
         </div>

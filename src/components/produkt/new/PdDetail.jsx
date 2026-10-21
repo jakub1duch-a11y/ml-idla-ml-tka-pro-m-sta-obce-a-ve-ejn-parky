@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 const isVideo = (u) => /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(u || '');
 
@@ -10,7 +11,7 @@ const isVideo = (u) => /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(u || '');
 export default function PdDetail({ product }) {
   // Preferujeme reálné fotografie realizací (.jpg) před rendery a studiovými náhledy.
   const photos = useMemo(() => {
-    const all = [...new Set([...(product.gallery_urls || []), product.image_url].filter(Boolean))].filter((u) => !isVideo(u));
+    const all = [...new Set([...(product.gallery_urls || []).filter((url) => isProductMediaAllowed(product, url)), product.image_url && isProductMediaAllowed(product, product.image_url, product.name) ? product.image_url : ''].filter(Boolean))].filter((u) => !isVideo(u) && /\.(avif|gif|jpe?g|png|webp)(\?|#|$)/i.test(u));
     const score = (u) => (/generated_image|studio|render/i.test(u) ? 0 : /\.(jpe?g)(\?|#|$)/i.test(u) ? 2 : 1);
     return all.sort((a, b) => score(b) - score(a));
   }, [product]);

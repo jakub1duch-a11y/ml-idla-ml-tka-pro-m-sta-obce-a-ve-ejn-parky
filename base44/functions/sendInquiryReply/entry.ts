@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { findSmartControlPricing } from '../../shared/pricingSheet.ts';
+import { createGmailDraft } from '../../shared/customerEmails.ts';
 
 const ALLOWED_SENDERS = ['meduna@holmtec.cz', 'info@mlzidla.cz'];
 const FIXED_BCC = ['jakub1duch@gmail.com', 'duch@holmtec.cz', 'meduna@holmtec.cz'];
@@ -143,21 +144,21 @@ export default async function(req) {
     const allAttachments = [...quoteAttachment, ...presentationAttachment, ...externalAttachments];
     const smartPricing = await findSmartControlPricing(base44);
     const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber, projectSummary, emailType, discountPercent, previousTotal, newTotal, visualizationItems, smartPricing });
-    const raw = buildMessage({ to: recipientEmail, bcc: bccRecipients, fromEmail: senderEmail, subject: messageSubject, text: message, html, attachments: allAttachments });
-
-    const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
     // HARD SAFETY RULE: Tato funkce NIKDY neposílá e-mail. Vždy pouze vytvoří Gmail koncept.
-    // Label_10 = Gmail štítek „Připravené nabídky“ na připojeném účtu.
-    const gmailResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/drafts', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: { raw: base64Url(raw), labelIds: ['Label_10'] } })
+    // Label_10 = Gmail štítek „Připravené nabídky“ na připojeném účtu (přidán až po vytvoření).
+    const draftResult = await createGmailDraft(base44, {
+      to: recipientEmail,
+      fromEmail: senderEmail,
+      subject: messageSubject,
+      text: message,
+      html,
+      bcc: bccRecipients,
+      labelIds: ['Label_10'],
     });
-    if (!gmailResponse.ok) {
-      const detail = await gmailResponse.text();
-      return Response.json({ error: `Gmail koncept se nepodařilo vytvořit: ${detail}` }, { status: 502 });
+    if (!draftResult.ok) {
+      return Response.json({ error: `Gmail koncept se nepodařilo vytvořit: ${draftResult.error}` }, { status: 502 });
     }
-    const gmailResult = await gmailResponse.json().catch(() => ({}));
+    const gmailResult = { id: draftResult.draft_id || '' };
 
     await base44.asServiceRole.entities[entityName].update(inquiryId, { status: inquiryType === 'contact' ? 'in_progress' : 'v_reseni' });
     return Response.json({

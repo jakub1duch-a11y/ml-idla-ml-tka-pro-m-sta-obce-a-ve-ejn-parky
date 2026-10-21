@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useAuth } from '@/lib/AuthContext';
 import { base44 } from '@/api/base44Client';
 import { Loader, AlertCircle, FileText, CheckCircle, Clock, Download, Share2, MessageSquare, X, Hash, Mail, ShieldCheck, Image, ArrowRight, ExternalLink, Plus, Paperclip, ReceiptText, Shapes, ShoppingBag, UploadCloud, KeyRound, Eye, EyeOff } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
@@ -23,6 +24,8 @@ const getFunctionErrorCode = (error) =>
   error?.response?.data?.error || error?.data?.error || error?.error || error?.message || '';
 
 export default function CustomerPortal() {
+  const { isAuthenticated } = useAuth();
+  const detailRequested = new URLSearchParams(window.location.search).get('view') === 'detail' || new URLSearchParams(window.location.search).has('quote');
   const [step, setStep] = useState('login');
   const [email, setEmail] = useState('');
   const [accessMode, setAccessMode] = useState('quote');
@@ -102,6 +105,7 @@ export default function CustomerPortal() {
   }, []);
 
   useEffect(() => {
+    if (isAuthenticated && !detailRequested) return;
     let active = true;
     base44.auth.isAuthenticated().then(async (authed) => {
       if (!active || !authed) return;
@@ -528,6 +532,8 @@ export default function CustomerPortal() {
     navigator.clipboard.writeText(url);
   };
 
+  if (isAuthenticated && !detailRequested) return <Navigate to="/muj-projekt" replace />;
+
   if (step === 'passwordSetup') {
     return (
       <div className="min-h-screen bg-[#eef3f4] pt-24 flex items-center justify-center px-4">
@@ -726,7 +732,7 @@ export default function CustomerPortal() {
               <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan-700">MLŽIDLA® / Klientská sekce</p><div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1"><h1 className="text-2xl font-light text-slate-950">Můj projekt</h1><span className="text-xs text-slate-400">{email}</span></div></div>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <a href="/" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">← Zpět na MLŽIDLA.cz</a>
+              <Link to="/muj-projekt" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-cyan-300 hover:text-cyan-800">← Přehled Můj projekt</Link>
               <a href="mailto:meduna@holmtec.cz" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-cyan-300">Kontakt na technika</a>
               <div className="flex flex-wrap items-center justify-end gap-2"><Link to="/" className="inline-flex min-h-11 items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-cyan-300 hover:text-[#0d2d38] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2">Zpět na MLŽIDLA.cz</Link><button type="button" onClick={() => { setStep('login'); setEmail(''); setOtp(''); setOtpSent(false); setInquiries([]); setProjects([]); setSessionToken(null); setResetPasswordRequested(false); setContactProfileReady(false); setContactProfileMessage(''); }} className="min-h-11 rounded-full bg-[#0d2d38] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#123c49] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2">Odhlásit se</button></div>
             </div>

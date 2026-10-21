@@ -11,7 +11,7 @@ const MAX_UPLOAD_MB = 20;
 const OPTIMIZE_FROM_MB = 12;
 const MAX_QUOTE_FILES = 6;
 const MAX_QUOTE_FILE_MB = 25;
-const BRAND_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const BRAND_LOGO_URL = '/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp';
 const BRAND_WEB = 'MLZIDLA.CZ';
 
 const createWatermarkedImageFile = async (imageUrl) => {
@@ -93,13 +93,21 @@ const optimizeLargePhoto = async (file) => {
 export default function AIVizualizace() {
   const [searchParams] = useSearchParams();
   const requestedSlug = searchParams.get('slug') || '';
+  const requestedMrakVariant = requestedSlug === 'mlzitko-mrak' ? searchParams.get('varianta') : null;
   const fastMode = Boolean(requestedSlug);
   const fileRef = useRef(null);
   const [file, setFile] = useState(null);
   const [sourceUrl, setSourceUrl] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [resultUrl, setResultUrl] = useState('');
-  const [description, setDescription] = useState(() => searchParams.get('zadani') || sessionStorage.getItem('mlzidla-ai-zadani') || '');
+  const [description, setDescription] = useState(() => {
+    const savedDescription = searchParams.get('zadani') || sessionStorage.getItem('mlzidla-ai-zadani') || '';
+    if (!['maly', 'velky'].includes(requestedMrakVariant)) return savedDescription;
+    const sizeNote = requestedMrakVariant === 'velky'
+      ? 'Vybraný produkt: MLŽNÝ MRAK VELKÝ, h 2 400 mm, model MRAK 13R 2424. Zachovej autentický organický nerezový tvar. Neodhaduj počet trysek.'
+      : 'Vybraný produkt: MLŽNÝ MRAK MALÝ, požadovaná výška h 1 600 mm; návrhová výška musí být výrobně schválena. Zachovej autentický organický nerezový tvar.';
+    return [sizeNote, savedDescription].filter(Boolean).join('\n\n');
+  });
   const requestedType = searchParams.get('typ') || '';
   const requestedConcept = searchParams.get('tvar') || '';
   const requestedProfile = searchParams.get('profil') || '';
@@ -135,8 +143,8 @@ export default function AIVizualizace() {
 
   useEffect(() => {
     setSEO({
-      title: 'AI vizualizace mlžítka v prostoru | MLŽIDLA®',
-      description: 'Nahrajte fotografii místa a vytvořte orientační AI vizualizaci reálného výrobku MLŽIDLA® přímo ve vašem prostoru.',
+      title: 'Návrh umístění mlžítka v prostoru | MLŽIDLA.cz',
+      description: 'Nahrajte fotografii místa a připravte orientační návrh umístění výrobku MLŽIDLA.cz. Výsledek slouží jako koncepční podklad, technické řešení potvrzuje náš tým.',
       canonicalPath: '/ai-vizualizace',
     });
   }, []);
@@ -383,16 +391,16 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         if (upload?.file_url) uploadedDocs.push(`${item.name}: ${upload.file_url}`);
       }
       const text = [
-        'AI vizualizace projektu MLŽIDLA® — žádost o nezávaznou cenovou nabídku',
+        'Návrh umístění produktu MLŽIDLA.cz — žádost o nezávaznou cenovou nabídku',
         description.trim() ? `Zadání: ${description.trim()}` : '',
         requestedType ? `Typ prostoru: ${requestedType}` : '',
         requestedConcept ? `Výchozí motiv: ${requestedConcept}` : '',
         selectedProduct ? `Vybraný reálný výrobek: ${selectedProduct.name}` : '',
         selectedProduct?.slug ? `Produkt: /produkt/${selectedProduct.slug}` : '',
-        resultUrl ? `AI vizualizace: ${resultUrl}` : '',
+        resultUrl ? `Koncepční náhled: ${resultUrl}` : '',
         sourceUrl ? `Fotografie prostoru: ${sourceUrl}` : '',
         uploadedDocs.length ? `Podklady k nezávazné nabídce:\n${uploadedDocs.join('\n')}` : '',
-        `Kontakt získán přes AI vizualizér; GDPR informace potvrzena: ${leadProfile?.gdprAcknowledgedAt || 'ano'}`,
+        `Kontakt získán přes návrhový formulář; GDPR informace potvrzena: ${leadProfile?.gdprAcknowledgedAt || 'ano'}`,
       ].filter(Boolean).join('\n\n');
 
       const created = await base44.entities.Poptavka.create({
@@ -400,11 +408,11 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         email: leadProfile?.email || '',
         telefon: leadProfile?.phone || '',
         firma: leadProfile?.company || '',
-        produkt: selectedProduct?.name || requestedConcept || 'AI návrh projektu',
+        produkt: selectedProduct?.name || requestedConcept || 'Návrh projektu',
         zprava: text,
         status: 'nova',
       });
-      trackInquirySubmitted('ai-vizualizace', selectedProduct?.name || requestedConcept || 'AI návrh projektu', created?.id || '');
+      trackInquirySubmitted('navrh-umisteni', selectedProduct?.name || requestedConcept || 'Návrh projektu', created?.id || '');
       if (leadProfile?.leadId) {
         try {
           await base44.entities.VisualizerLead.update(leadProfile.leadId, { inquiry_sent: true, last_visualization_url: resultUrl });
@@ -426,10 +434,10 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
         <div className="max-w-3xl mb-10 lg:mb-14">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[.05] px-3 py-1.5 mb-5">
             <WandSparkles size={14} className="text-teal-300" />
-            <span className="font-mono text-[10px] tracking-[.18em] uppercase text-white/65">AI vizualizace MLŽIDLA®</span>
+            <span className="font-mono text-[10px] tracking-[.18em] uppercase text-white/65">Návrh umístění produktu</span>
           </div>
           <h1 className="font-heading font-light text-4xl sm:text-5xl lg:text-6xl leading-[1.02] tracking-tight">{fastMode ? <>Vyfoťte místo.<br/><span className="text-white/45">BENDY se načte automaticky.</span></> : <>Uvidíte mlžítko přímo<br/><span className="text-white/45">ve vašem prostoru.</span></>}</h1>
-          <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-white/55">{fastMode ? 'Na mobilu otevřeme zadní kameru. Vyfoťte místo, kam chcete produkt umístit — po pořízení snímku se vizualizace spustí automaticky.' : 'Nahrajte fotografii náměstí, parku, školky, sportoviště nebo zahrady. AI zachová scénu a vytvoří orientační vizualizaci vhodného mlžicího prvku.'}</p>
+          <p className="mt-6 max-w-2xl text-base lg:text-lg leading-relaxed text-white/55">{fastMode ? 'Na mobilu otevřeme zadní kameru. Vyfoťte místo, kam chcete produkt umístit — po pořízení snímku se vizualizace spustí automaticky.' : 'Nahrajte fotografii náměstí, parku, školky, sportoviště nebo zahrady. Připravíme orientační koncepční náhled vhodného mlžicího prvku; technické parametry potvrdí náš tým.'}</p>
         </div>
 
         <div className="grid lg:grid-cols-[.86fr_1.14fr] gap-7 lg:gap-10 items-start">
@@ -490,28 +498,28 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
             {error && <p className="mt-4 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-100">{error}</p>}
 
             {!fastMode && <button type="button" onClick={generate} disabled={!canGenerate || loading || optimizing} className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-50 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">
-              {optimizing ? <><Loader size={16} className="animate-spin"/> Optimalizuji fotografii…</> : loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Vytvořit AI vizualizaci</>}
+              {optimizing ? <><Loader size={16} className="animate-spin"/> Optimalizuji fotografii…</> : loading ? <><Loader size={16} className="animate-spin"/> Vytvářím vizualizaci…</> : <><Sparkles size={16}/> Připravit koncepční náhled</>}
             </button>}
             {fastMode && (optimizing || loading) && <div className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[.05] px-6 py-3.5 text-sm text-white/70"><Loader size={16} className="animate-spin"/>{optimizing ? 'Připravuji fotografii…' : 'Vytvářím vizualizaci…'}</div>}
-            <p className="mt-4 text-[11px] leading-relaxed text-white/30">AI používá fotografii zákazníkova prostoru jako uzamčenou scénu a skutečné fotografie vybraného výrobku jako povinnou produktovou referenci. Vizualizace je stále koncepční; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
+            <p className="mt-4 text-[11px] leading-relaxed text-white/30">Náhled vychází z fotografie vašeho prostoru a referencí vybraného výrobku. Jde o koncepční podklad, nikoli výrobní dokumentaci; přesné rozměry, kotvení, trysky a napojení potvrzuje technický návrh HolmTec.</p>
           </div>
 
           <div className="rounded-[26px] border border-white/10 bg-white/[.04] p-4 sm:p-5 lg:p-6 min-h-[520px] flex flex-col">
             <div className="flex items-center justify-between gap-4 mb-4">
               <div>
                 <p className="font-mono text-[10px] tracking-[.16em] uppercase text-white/35">Výsledek</p>
-                <h2 className="mt-1 text-lg font-semibold tracking-tight">AI koncept realizace</h2>
+                <h2 className="mt-1 text-lg font-semibold tracking-tight">Koncepční návrh umístění</h2>
               </div>
               {resultUrl && <button type="button" onClick={generate} disabled={loading} className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-xs text-white/65 hover:bg-white/[.06]"><RefreshCw size={13}/> Nová varianta</button>}
             </div>
 
             <div className="relative flex-1 overflow-hidden rounded-2xl bg-black/20 border border-white/8 min-h-[420px] flex items-center justify-center">
               {resultUrl ? (
-                <img src={resultUrl} alt="AI vizualizace mlžítka v prostoru" className="w-full h-full object-contain" />
+                <img src={resultUrl} alt="Koncepční náhled mlžítka v prostoru" className="w-full h-full object-contain" />
               ) : loading ? (
                 <div className="text-center px-8">
                   <Loader size={28} className="animate-spin mx-auto text-teal-300"/>
-                  <p className="mt-4 text-sm text-white/65">AI komponuje mlžítko do fotografie…</p>
+                  <p className="mt-4 text-sm text-white/65">Připravuji náhled umístění mlžítka…</p>
                   <p className="mt-2 text-xs text-white/30">Uzamyká původní scénu a mění jen vložení produktu.</p>
                 </div>
               ) : (
@@ -553,7 +561,7 @@ ZÁKAZY: Bez reklamních textů, CTA a dalších grafických overlayů; bez změ
                       <button type="button" onClick={downloadVisualization} disabled={downloadBusy} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-5 py-3.5 text-sm font-semibold text-white/85 hover:bg-white/[.08] disabled:opacity-50">{downloadBusy ? <Loader size={15} className="animate-spin"/> : <Download size={15}/>} Stáhnout vizualizaci</button>
                       <button type="button" onClick={sendToQuote} disabled={quoteUploading || quoteSent} className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-400 px-5 py-3.5 text-sm font-bold text-slate-950 hover:bg-teal-300 transition-colors disabled:opacity-50">{quoteUploading ? <><Loader size={15} className="animate-spin"/> Odesílám…</> : quoteSent ? <><Check size={15}/> Odesláno</> : <>Odeslat k nezávazné nabídce <ArrowRight size={15}/></>}</button>
                     </div>
-                    {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci navrhnout řešení podle AI vizualizace prostoru.')}`} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat s AI Projektantem</Link>}
+                    {!fastMode && <Link to={`/poradce?zadani=${encodeURIComponent(description || 'Chci probrat návrh umístění mlžítka v prostoru.')}`} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/12 px-5 py-3.5 text-sm text-white/70 hover:bg-white/[.06]">Probrat návrh s technikem</Link>}
                   </>
                 ) : (
                   <div className="rounded-2xl border border-white/10 bg-black/15 p-4 text-center">

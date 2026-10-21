@@ -24,7 +24,7 @@ const categoryCards = [
     description:
       'Samostatné nerezové sloupové mlžítko pro promenády, terasy a městský prostor. Zobrazený produkt vychází z ověřené MASTER reference.',
     image:
-      'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg',
+      '/media/optimized/6af16b6a9_linea-rezidencni-mlzeni.webp',
     href: '/produkt/linea-mlzitko',
     icon: Droplets,
   },
@@ -35,7 +35,7 @@ const categoryCards = [
     description:
       'Architektonické průchozí prvky pro náměstí, parky, sportoviště a pobytové zóny. Geometrie brány se v animaci nemění.',
     image:
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png',
+      '/media/optimized/7687747c7_MlznabranaGATE70V.webp',
     href: '/mlzne-brany',
     icon: Building2,
   },
@@ -46,7 +46,7 @@ const categoryCards = [
     description:
       'Výrazné nerezové objekty, které propojují funkci mlžení s architekturou veřejného prostoru. Každý tvar vychází z konkrétní produktové reference.',
     image:
-      'https://base44.app/api/apps/6a96b2f0a9a77bed890bf313/files/mp/public/6a96b2f0a9a77bed890bf313/ebbd577b1_07_teepee_brno_portrait.jpg',
+      '/media/optimized/ebbd577b1_07_teepee_brno_portrait.webp',
     href: '/zakazkova-mlzitka',
     icon: Flower2,
   },

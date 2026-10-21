@@ -6,12 +6,12 @@ import { setSEO } from '@/lib/seo';
 const PAGE_DATA = {
   sloupky: {
     eyebrow: 'SLOUPKOVÁ MLŽÍTKA · VEŘEJNÝ PROSTOR',
-    title: 'Sloupková mlžítka. Čistá linie pro váš prostor.',
+    title: 'Sloupková mlžítka pro města, parky a promenády',
     description: 'Štíhlé nerezové mlžicí prvky pro promenády, parky, předprostory budov i odpočinkové zóny. Řadu, počet prvků a umístění navrhujeme podle konkrétního prostoru.',
-    image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
-    imageAlt: 'Sloupkové mlžítko LINEA ve veřejném prostoru',
+    image: '/media/categories/columns.webp',
+    imageAlt: 'Sloupková mlžítka LINEA v zahradním prostoru',
     canonicalPath: '/sloupkova-mlzitka',
-    seoTitle: 'Sloupková mlžítka pro města, parky a veřejný prostor',
+    seoTitle: 'Sloupková mlžítka pro města a parky',
     seoDescription: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.',
     serviceName: 'Sloupková mlžítka pro veřejný prostor',
     primaryCta: 'Navrhnout sloupkové mlžítko',
@@ -34,13 +34,13 @@ const PAGE_DATA = {
   },
   atelier: {
     eyebrow: 'ATELIÉROVÉ PRVKY · ZAKÁZKOVÁ VÝROBA',
-    title: 'Ateliérové prvky. Vodní mlha s vlastním výrazem.',
+    title: 'Zakázková mlžítka a mlžné instalace na míru',
     description: 'Designové tvary mlžítek pro veřejný prostor, zahrady, školy i instalace s vlastním charakterem. Od prvního záměru řešíme tvar, měřítko, umístění a chování mlhy jako jeden celek.',
-    image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
+    image: '/media/categories/sculptures.webp',
     imageAlt: 'Designový ateliérový mlžicí prvek',
     canonicalPath: '/atelierove-prvky',
-    seoTitle: 'Ateliérové prvky a zakázková mlžítka',
-    seoDescription: 'Designové ateliérové prvky a zakázková mlžítka pro města, parky, školy i soukromé prostory. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
+    seoTitle: 'Zakázková mlžítka a mlžné instalace',
+    seoDescription: 'Zakázková mlžítka a mlžné instalace pro města, parky, školy a zahrady. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
     serviceName: 'Ateliérové prvky a zakázková mlžítka',
     primaryCta: 'Probrat zakázkový návrh',
     strengths: [
@@ -144,7 +144,7 @@ export default function CategoryLanding({ variant }) {
         <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">KDE DÁVÁ ŘEŠENÍ SMYSL</p>
-            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Navrženo pro konkrétní způsob pobytu a pohybu.</h2>
+            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">{variant === 'atelier' ? 'Kde se zakázková mlžítka a mlžné instalace uplatní.' : 'Kde se sloupková mlžítka hodí: parky, promenády a náměstí.'}</h2>
           </div>
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">Nejprve řešíme charakter prostoru, pohyb lidí, dostupné napojení a běžný provoz. Až pak vzniká řešení, které může fungovat vizuálně i technicky.</p>
         </div>
@@ -163,7 +163,7 @@ export default function CategoryLanding({ variant }) {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[.9fr_1.1fr] lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-secondary">OD ZÁMĚRU K NÁVRHU</p>
-            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Od charakteru místa ke konkrétnímu řešení.</h2>
+            <h2 className="mt-4 font-heading text-4xl leading-tight text-foreground">Návrh mlžítek podle místa, pohybu lidí a provozu.</h2>
           </div>
           <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
             <p>{page.process}</p>
@@ -193,7 +193,7 @@ export default function CategoryLanding({ variant }) {
         <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-accent">PROJEKTOVÁ PODPORA</p>
-            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete místo, záměr nebo inspiraci. Připravíme další krok pro váš projekt.</h2>
+            <h2 className="mt-4 max-w-3xl font-heading text-4xl">Pošlete podklady pro návrh mlžítka nebo mlžné instalace na míru.</h2>
           </div>
           <Link to={`/poptavka?produkt=${encodeURIComponent(page.serviceName)}`} className="btn-metallic-mist inline-flex shrink-0 items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold">Získat návrh a cenu <ArrowRight size={16} /></Link>
         </div>

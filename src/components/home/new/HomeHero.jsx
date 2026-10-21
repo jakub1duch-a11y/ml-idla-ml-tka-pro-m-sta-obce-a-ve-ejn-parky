@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import HomeHeroMotion from '@/components/home/new/HomeHeroMotion';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
@@ -11,6 +12,8 @@ const benefits = [
 { icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
 { icon: ShieldCheck, text: 'Odolná nerezová konstrukce' }];
 
+// Primární H1 záměrně obsahuje hlavní produktové dotazy a zůstává přirozený pro návštěvníka.
+const headlineWords = ['Mlžítka pro', 'města, obce', 'i zahrady.'];
 
 const tiles = [
 {
@@ -28,16 +31,15 @@ const tiles = [
 {
   title: 'MLŽNÁ BRÁNA',
   text: 'Průchozí vodní mlha pro náměstí',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bec7f86a9_generated_image.png',
+  image: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
   link: '/mlzne-brany'
 },
 {
   title: 'BENDY',
   text: 'Organická linie pro pobytové zóny',
-  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg',
+  image: '/media/optimized/b47ae10f2_bendymlzitko.webp',
   link: '/produkt/mlzitko-bendy'
 }];
-
 
 export default function HomeHero() {
   const heroRef = useRef(null);
@@ -59,57 +61,74 @@ export default function HomeHero() {
             initial={{ scale: 1.04 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
-          {reduced ?
-            <img
-              src={VIDEO_ASSETS.heroCityPromo.poster}
-              alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
-              fetchPriority="high"
-              className="h-full w-full object-cover object-[58%_center] sm:object-center" /> :
-
-            <video
-              src={VIDEO_ASSETS.heroCityPromo.src}
-              poster={VIDEO_ASSETS.heroCityPromo.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-hidden="true"
-              className="h-full w-full object-cover object-[58%_center] sm:object-center" />
-            }
+          {/* Vždy vykresli lokální poster pod videem. Pokud externí video selže nebo ho prohlížeč zablokuje, hero nikdy nezůstane prázdné. */}
+          <img
+            data-hero-fallback
+            src={VIDEO_ASSETS.heroCityPromo.poster}
+            alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
+            fetchPriority="high"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
+            }}
+            className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
+          />
+          {!reduced && <video
+            src={VIDEO_ASSETS.heroCityPromo.src}
+            poster={VIDEO_ASSETS.heroCityPromo.poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            onError={(event) => { event.currentTarget.style.display = 'none'; }}
+            className="relative h-full w-full object-cover object-[58%_center] sm:object-center"
+          />}
         </motion.div>
-          
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(38,198,233,.20),transparent_34%),linear-gradient(90deg,rgba(0,0,0,.78)_0%,rgba(0,0,0,.48)_42%,rgba(0,0,0,.12)_100%)]" />
+
+        <div className="hero-home-colorwash absolute inset-0" />
+        <HomeHeroMotion />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
-            <p className="font-mono font-bold uppercase tracking-[.22em] text-[#26C6E9] text-base">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left">
-              Ochlazení, které patří do prostoru.
+            <div className="hero-brand-kicker"><span className="hero-brand-kicker__icon"><Droplets size={16} aria-hidden="true" /></span><span>Kapka úlevy · přirozené osvěžení</span></div>
+            <p className="font-mono text-sm font-bold uppercase tracking-[.22em] text-[#A9E6F5]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
+            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left" aria-label={headlineWords.join(' ')}>
+              {headlineWords.map((word, index) =>
+                <motion.span
+                  key={word}
+                  className="hero-headline-word"
+                  initial={reduced ? false : { opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: reduced ? 0 : .52, delay: reduced ? 0 : .12 + index * .075, ease: [0.22, 1, 0.36, 1] }}>
+                  {word}
+                </motion.span>
+                )}
             </h1>
-            <p className="mt-7 max-w-2xl leading-8 text-slate-200 text-lg sm:text-lg">
-              Designová mlžítka pro náměstí, parky, sportoviště i zahrady. Nerezová konstrukce, nízkotlaké řešení a chytré řízení podle skutečné konfigurace projektu.
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
+              Designová městská i zahradní mlžítka, mlžné brány a mlhoviště pro náměstí, parky, hřiště, sportoviště a terasy. Návrh i chytré řízení podle konkrétního místa.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white shadow-[0_22px_60px_rgba(24,183,230,.28)] transition hover:-translate-y-0.5 hover:bg-[#1098C8]">
-                Zobrazit produkty <ArrowRight size={17} />
+              <Link to="/poptavka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#06283A] shadow-[0_22px_60px_rgba(24,183,230,.32)] transition hover:-translate-y-0.5 hover:bg-[#69DDF4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#07131D]">
+                Navrhnout řešení <ArrowRight size={17} />
               </Link>
-              <a href="#home-product-gallery" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/22 bg-white/[.08] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:bg-white/14">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/28"><ArrowRight size={15} /></span>
-                Prohlédnout galerii
-              </a>
+              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/35 bg-white/[.10] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:border-white/60 hover:bg-white/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/35"><ArrowRight size={15} /></span>
+                Prohlédnout produkty
+              </Link>
             </div>
           </motion.div>
 
-          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border border-white/12 p-5 backdrop-blur-xl lg:block bg-[#000000]/[0.18]" aria-label="Hlavní přínosy mlžítek">
+          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border p-5 lg:block border-white/0 bg-[#000000]/[0.0] backdrop-blur-x0" aria-label="Hlavní přínosy mlžítek">
             <div className="space-y-4">
               {benefits.map(({ icon: Icon, text }) =>
-                <div key={text} className="grid items-center gap-4 border border-white/10 p-4 grid-cols-[54px_1fr] rounded-3xl bg-white/[.0\n]">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#26C6E9]/55 text-[hsl(var(--background))] bg-[hsl(var(--background))]">
+                <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border p-4 bg-white/[.0] border-white/0">
+                  <div className="flex h-11 w-11 items-center justify-center">
                     <Icon size={20} className="text-[hsl(var(--foreground))]" />
                   </div>
-                  <p className="leading-6 text-slate-200 text-xl [font-family:'Manrope',_'Inter',_sans-serif] font-light">{text}</p>
+                  <p className="text-xl leading-6 text-slate-200 [font-family:'Manrope',_'Inter',_sans-serif] font-bold">{text}</p>
                 </div>
                 )}
             </div>
@@ -123,7 +142,7 @@ export default function HomeHero() {
           {tiles.map((tile, index) =>
             <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
               <Link to={tile.link} className="ref-product-card group block h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
-                <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading="lazy" decoding="async" /></div>
+                <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp'; }} /></div>
                 <div className="border-t border-white/10 p-5">
                   <div className="mb-3 flex items-center justify-between"><span className="ref-card-index font-mono text-[10px] font-bold text-[#26C6E9]">{String(index + 1).padStart(2, "0")}</span><span className="text-[10px] font-bold uppercase tracking-[.18em] text-white/55">Produkt</span></div>
                   <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
@@ -140,5 +159,4 @@ export default function HomeHero() {
       </div>
     </section>
     </MotionConfig>);
-
 }

@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -106,9 +107,9 @@ export default function Deti() {
         <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Děti u mlžítka.</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/d851d598c_mlznehriste-mlzitkohvezda.jpg',
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/503ff73d9_mlznehriste-kopie.jpeg',
-            'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/03417fa65_mlznehriste.jpeg',
+            '/media/optimized/d851d598c_mlznehriste-mlzitkohvezda.webp',
+            '/media/optimized/503ff73d9_mlznehriste-kopie.webp',
+            '/media/optimized/03417fa65_mlznehriste.webp',
             'https://media.base44.com/images/public/69d723859ec0e3321c6b8bb6/94d1e1f92_Mlzitko-pro-deti-na-hadici-kvet-VDMA.webp',
           ].map((src, i) => (
             <motion.div key={src} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
@@ -158,6 +159,7 @@ export default function Deti() {
           <CategoryInquiryForm category="Školy, školky a děti" projectScope="urban" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="školy, školky a dětská hřiště" />
       <B2BPortfolioNavigation current="Školy a školky" />
     </div>
   );

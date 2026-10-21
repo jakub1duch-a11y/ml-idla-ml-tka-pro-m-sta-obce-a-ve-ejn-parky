@@ -22,7 +22,7 @@ export default function VideoMistCtaSlide({ product }) {
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start">
           <div>
             <p className="font-mono text-xs tracking-widest uppercase text-techblue mb-3">[Nezávazná poptávka]</p>
-            <h3 className="text-white text-2xl font-heading font-light mb-4">Váš prostor si zaslouží<br /><span className="italic text-techblue">vlastní {product.name}.</span></h3>
+            <h3 className="text-white text-2xl font-heading font-light mb-4"><span className="italic text-techblue">{product.name}</span><br />pro konkrétní typ instalace.</h3>
             <p className="text-white/50 text-sm">Konzultace zdarma · 3D vizualizace do 48 h · Odpovídáme do 24 h</p>
           </div>
           <div className="bg-white rounded-3xl overflow-hidden">

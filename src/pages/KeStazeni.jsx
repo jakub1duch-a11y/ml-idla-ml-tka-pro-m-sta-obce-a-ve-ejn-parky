@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 
 const STATIC_DOCS = [
+  { title: 'Předávací protokol mlžítka', desc: 'PDF formulář pro dodání bez instalace i s montáží, předvedení obsluhy, kontrolu dodávky, výhrady a podpisy.', category: 'Předání', icon: FileText, url: '/manualy/mlz-prot-01.pdf' },
+  { title: 'Příprava staveniště a výkopových prací', desc: 'Kontrolní PDF pro koordinaci sítí, vytyčení trasy, kontrolu před zakrytím a fotodokumentaci.', category: 'Stavba', icon: Wrench, url: '/manualy/mlz-tech-02.pdf' },
+  { title: 'Produktový list — šablona mlžícího systému', desc: 'Brandovaná šablona pro produktové informace, technické parametry, údržbu a schválenou galerii.', category: 'Produktový list', icon: FileText, url: '/manualy/mlz-prod-03.pdf' },
+  { title: 'Montáž a uvedení do provozu', desc: 'Kontrolní PDF pro odbornou montáž, funkční zkoušky, předvedení obsluhy a předání.', category: 'Montáž', icon: Wrench, url: '/manualy/mlz-mont-04.pdf' },
   { title: 'Produktový katalog 2026', desc: 'Kompletní přehled všech mlžítek, mlžných bran a mlhovišť HolmTec.', category: 'Katalog', icon: FileText, url: null },
   { title: 'Přípravné práce pro instalaci mlžítka', desc: 'Stavební příprava, výkopy, betonáž, rozvod vody a elektroinstalace pro chytrý ventil.', category: 'Instalace', icon: Wrench, url: null },
   { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat, průřezy a šachta nášlapného ventilu pro konkrétní projekt.', category: 'Výkres', icon: FileText, url: null },
@@ -18,6 +22,10 @@ const STATIC_DOCS = [
 ];
 
 const CATEGORY_COLORS = {
+  'Předání': 'text-cyan-700 bg-cyan-50 border-cyan-200',
+  'Stavba': 'text-orange-700 bg-orange-50 border-orange-200',
+  'Produktový list': 'text-blue-700 bg-blue-50 border-blue-200',
+  'Montáž': 'text-teal-700 bg-teal-50 border-teal-200',
   'Katalog': 'text-slate-600 bg-slate-100 border-slate-200',
   'Technický list': 'text-blue-600 bg-blue-50 border-blue-200',
   'Manuál': 'text-amber-600 bg-amber-50 border-amber-200',
@@ -34,8 +42,8 @@ export default function KeStazeni() {
 
   useEffect(() => {
     setSEO({
-      title: 'Technické podklady k mlžítkům — dokumentace na vyžádání',
-      description: 'Vyžádejte si technické podklady pro mlžítka, chytré mlžné brány, vodní mlhu na veřejná prostranství a rezidenční instalace se SUPLA řízením.',
+      title: 'Manuály a PDF ke stažení | MLŽIDLA.cz',
+      description: 'Veřejně dostupné PDF formuláře MLŽIDLA.cz: předávací protokol, příprava výkopů, montáž a produktový list mlžícího systému.',
       keywords: 'technické podklady mlžítka, mlžítka pro města, chytré mlžné brány, vodní mlha na veřejná prostranství, SUPLA ovládání mlžení',
       canonicalPath: '/ke-stazeni',
     });
@@ -53,17 +61,17 @@ export default function KeStazeni() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Dokumentace</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4">
-Technické podklady<br /><span className="text-slate-400 font-extralight">na vyžádání podle projektu</span>
+Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">volně k zobrazení a stažení</span>
           </h1>
           <p className="text-slate-500 text-lg font-light max-w-2xl">
-Podklady pro mlžítka, chytré mlžné brány, vodní mlhu na veřejná prostranství a SUPLA řízení připravujeme podle konkrétního produktu, místa instalace a účelu použití.
+Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, přípravu staveniště a tvorbu produktových listů. Dokumenty lze otevřít v prohlížeči, vytisknout nebo uložit pro konkrétní zakázku.
           </p>
         </motion.div>
 
         {/* Info banner */}
         <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-10 text-sm text-slate-500 font-light">
           <Info size={16} className="text-slate-400 mt-0.5 shrink-0" />
-          Projektové dokumenty, technické výkresy, ceníky a interní podklady neposkytujeme jako veřejně indexovatelné soubory. Pošleme je na vyžádání podle konkrétního produktu a účelu použití.
+          Tyto formuláře jsou veřejné pracovní šablony. Nenahrazují schválenou projektovou dokumentaci ani technický návod konkrétního výrobku. Rozměry, hloubky, kotvení a provozní hodnoty vždy ověřte podle aktuální dokumentace a podmínek místa. Projektové výkresy, individuální výpočty a interní podklady poskytujeme podle konkrétní zakázky.
         </div>
 
         {/* Static docs */}
@@ -94,10 +102,16 @@ Podklady pro mlžítka, chytré mlžné brány, vodní mlhu na veřejná prostra
                   </div>
                 </div>
                 {doc.url ? (
-                  <a href={doc.url} target="_blank" rel="noopener noreferrer"
-                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white text-xs rounded-full hover:bg-slate-800 transition-all">
-                    <Download size={13} /> Stáhnout
-                  </a>
+                  <div className="flex flex-shrink-0 flex-wrap items-center justify-end gap-2">
+                    <a href={doc.url} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2.5 text-xs text-slate-700 transition-all hover:border-slate-400 hover:bg-slate-50">
+                      <BookOpen size={13} /> Zobrazit PDF
+                    </a>
+                    <a href={doc.url} download
+                      className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2.5 text-xs text-white transition-all hover:bg-slate-800">
+                      <Download size={13} /> Stáhnout
+                    </a>
+                  </div>
                 ) : (
                   <a href={`mailto:obchod1@holmtec.cz?subject=Žádost o dokument: ${doc.title}`}
                     className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-slate-50 text-slate-600 text-xs rounded-full hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200">
@@ -112,7 +126,7 @@ Podklady pro mlžítka, chytré mlžné brány, vodní mlhu na veřejná prostra
         {/* Product datasheets */}
         <div>
           <div className="mb-6">
-            <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Produktové podklady na vyžádání</h2>
+            <h2 className="font-heading font-light text-xl text-slate-900 mb-1">Individuální produktové podklady</h2>
             <p className="text-sm text-slate-400 font-light">Produktové datasheets a cenové podklady připravujeme na vyžádání, aby se nezveřejňovaly neaktuální ceny ani interní technické dokumenty.</p>
           </div>
 

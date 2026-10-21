@@ -35,8 +35,11 @@ export default function Dekujeme() {
         <h1 className="font-heading font-light text-3xl lg:text-4xl text-slate-900 tracking-tight mb-4">
           Děkujeme za vaši {SOURCE_LABELS[zdroj] || 'poptávku'}!
         </h1>
-        <p className="text-slate-500 leading-relaxed mb-10">
-          Potvrzení jsme vám poslali také e-mailem. Náš technický tým projde zadání a ozve se s dalším postupem; v případě potřeby můžete kontaktovat Ing. Radka Medunu.
+        <p className="text-slate-500 leading-relaxed mb-4">
+          Děkujeme, vaši poptávku jsme přijali. Do 24 hodin se vám náš tým ozve s nezávaznou cenovou nabídkou nebo doplňujícími dotazy.
+        </p>
+        <p className="text-xs text-slate-400 leading-relaxed mb-10">
+          Potvrzení vám zašleme na uvedený e-mail. Pokud nedorazí, zkontrolujte prosím složku spam nebo nám napište.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">

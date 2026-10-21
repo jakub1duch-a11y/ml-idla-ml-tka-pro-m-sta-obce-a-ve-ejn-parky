@@ -1,39 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import { quoteForSpace } from '@/lib/spacePresentation';
 
 export default function UseCaseCard({ item, index, reduceMotion }) {
   const { icon: Icon, code, title, text, image } = item;
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 26 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: reduceMotion ? 0 : 0.5, delay: (index % 4) * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduceMotion ? undefined : { y: -6 }}
-      className="group relative flex min-h-[320px] flex-col justify-end overflow-hidden border border-[#D3E2E8] bg-[#0A1628] p-6 transition-shadow duration-300 hover:shadow-[0_22px_54px_rgba(10,22,40,.22)]"
-    >
-      <img
-        src={image}
-        alt={title}
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform ease-out group-hover:scale-[1.07]" style={{ transitionDuration: "900ms" }}
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,22,40,.10)_0%,rgba(10,22,40,.55)_52%,rgba(10,22,40,.92)_100%)] transition-opacity duration-500 group-hover:opacity-95" />
-
-      <div className="relative z-10">
-        <div className="flex items-center justify-between">
-          <motion.div
-            whileHover={reduceMotion ? undefined : { rotate: -6, scale: 1.08 }}
-            className="flex h-11 w-11 items-center justify-center border border-white/25 bg-white/12 text-white backdrop-blur-md"
-          >
-            <Icon size={20} strokeWidth={1.6} />
-          </motion.div>
-          <span className="font-mono text-[11px] tracking-[.16em] text-[#22D3EE]">// {code}</span>
-        </div>
-        <h3 className="mt-14 font-heading text-xl font-semibold tracking-[-.02em] text-white">{title}</h3>
-        <p className="mt-2 text-sm leading-6 text-white/75">{text}</p>
-        <div className="mt-5 h-px w-10 bg-[#22D3EE] transition-all duration-500 group-hover:w-24" />
-      </div>
-    </motion.article>
-  );
+  return <motion.article className="space-use-card" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .1 }} transition={{ duration: reduceMotion ? 0 : .45, delay: reduceMotion ? 0 : (index % 4) * .05 }}>
+    <img src={image} alt={`Ukázka mlžení v prostoru: ${title}`} width="720" height="960" loading="lazy" decoding="async" /><div className="space-use-shade" aria-hidden="true" /><div className="space-use-copy"><div className="space-use-icon"><Icon size={20} strokeWidth={1.6} aria-hidden="true" /><span>{code}</span></div><h3>{title}</h3><p>{text}</p><Link className="space-use-quote" to={quoteForSpace(title)}>Poptat podobné řešení <ArrowRight size={16} aria-hidden="true" /></Link></div>
+  </motion.article>;
 }

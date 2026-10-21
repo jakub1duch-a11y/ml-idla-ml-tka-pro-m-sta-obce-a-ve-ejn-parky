@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Droplets, Gauge, ShieldCheck, Timer, Thermometer } from 'lucide-react';
 
 const places = [
-['Náměstí & centra', 'Ochlazení pobytových míst v aktivním centru města.', '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp'],
+['Náměstí & centra', 'Ochlazení pobytových míst v aktivním centru města.', '/media/gates/gate-u.webp'],
 ['Parky & promenády', 'Jemná mlha jako součást zeleně a veřejného prostoru.', '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp'],
-['Sportoviště & hřiště', 'Interaktivní osvěžení pro aktivní místa a letní provoz.', '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp'],
-['Nádraží & uzly', 'Komfort v místech čekání a vysokého pohybu lidí.', '/media/optimized/5401e0933_dac8b98065c5472b16bc1910348915a1.webp']];
+['Sportoviště & hřiště', 'Interaktivní osvěžení pro aktivní místa a letní provoz.', '/media/optimized/401d9b665_generated_image.webp'],
+['Nádraží & uzly', 'Komfort v místech čekání a vysokého pohybu lidí.', '/media/optimized/2cc053413_generated_image.webp']];
 
 
 const facts = [
@@ -25,25 +25,26 @@ const reveal = {
 
 export default function UrbanCoolingExperience() {
   const heroRef = useRef(null);
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.045]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 90]);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.045]);
 
   return <div className="ucx">
     <section ref={heroRef} className="ucx-hero">
       <div className="ucx-mist ucx-mist-0" /><div className="ucx-mist ucx-mist-b" />
       <motion.div {...reveal} className="ucx-copy">
         <span className="ucx-kicker">MLŽIDLA® by HolmTec · městské ochlazování</span>
-        <h1>Chytré chlazení <em>prostoru.</em></h1>
+        <h2>Městské ochlazování pomocí <em>mlžítek a mlžných zón.</em></h2>
         <p>Česká nerezová mlžítka pro náměstí, parky, hřiště a další veřejná místa. Architektura, voda a automatizace v jednom čistém systému.</p>
         <div className="ucx-actions">
-          <a href="/ai-vizualizace" className="ucx-button">Ukázat můj prostor <ArrowRight size={17} /></a>
+          <a href="/poptavka" className="ucx-button">Poptat návrh pro můj prostor <ArrowRight size={17} /></a>
           <a href="#ucx-prostor">Prozkoumat řešení</a>
         </div>
       </motion.div>
 
       <motion.figure className="ucx-hero-media" style={{ y: mediaY, scale: mediaScale }}>
-        <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/01d287da0_1789937295981.png" alt="MLŽIDLA v městském parku" fetchPriority="high" decoding="async" />
+        <img src="/media/optimized/01d287da0_1789937295981.webp" alt="MLŽIDLA v městském parku" fetchPriority="high" decoding="async" />
         <span className="ucx-hero-glass">Městské ochlazování · nerez · vodní mlha</span>
       </motion.figure>
     </section>
@@ -51,7 +52,7 @@ export default function UrbanCoolingExperience() {
     <section id="ucx-prostor" className="ucx-places">
       <motion.div {...reveal} className="ucx-heading">
         <span className="ucx-kicker">Kde MLŽIDLA dávají smysl</span>
-        <h2>Ochlazení tam, kde se město <em>skutečně používá.</em></h2>
+        <h2>Ochlazování měst a veřejných prostor tam, kde se lidé <em>skutečně pohybují.</em></h2>
         <p>Řešení navrhujeme pro konkrétní prostor, pohyb lidí a provoz města.</p>
       </motion.div>
       <div className="ucx-grid">
@@ -108,10 +109,10 @@ export default function UrbanCoolingExperience() {
     <section className="ucx-final hidden">
       <div className="ucx-mist ucx-mist-c" />
       <motion.div {...reveal}>
-        <span className="ucx-kicker">Vizualizátor v prostoru</span>
-        <h2>Ukažte nám prostor. <em>Ukážeme vám MLŽIDLA v něm.</em></h2>
-        <p>Nahrajte fotografii místa a pokračujte k vizualizačnímu náhledu produktu a návrhu řešení.</p>
-        <a href="/ai-vizualizace" className="ucx-button">Vytvořit vizualizaci <ArrowRight size={17} /></a>
+        <span className="ucx-kicker">Další krok k projektu</span>
+        <h2>Popište nám místo. <em>Navrhneme další krok.</em></h2>
+        <p>Pošlete základní zadání prostoru. Společně upřesníme vhodné řešení, potřebné podklady a technické možnosti.</p>
+        <a href="/poptavka" className="ucx-button">Poptat návrh řešení <ArrowRight size={17} /></a>
       </motion.div>
     </section>
   </div>;

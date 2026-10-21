@@ -199,10 +199,22 @@ const isPublicImage = (url) => (
 );
 
 function getProductSearchContext(product) {
-  const source = [product?.slug, product?.name, product?.short_description, product?.description]
-    .filter(Boolean)
-    .join(' ')
-    .toLowerCase();
+  // Include verified usage/location fields so product metadata reflects real project fit,
+  // not only the model name. This improves query matching without repeating keyword lists in visible copy.
+  const source = [
+    product?.slug, product?.name, product?.short_description, product?.description,
+    product?.category, product?.category_name, product?.location_context,
+    ...(Array.isArray(product?.use_cases) ? product.use_cases : []),
+    ...(Array.isArray(product?.target_audiences) ? product.target_audiences : []),
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  if (/(škol|skol|školk|skolk|mateřsk|matersk|dětsk|detsk|hřišt|hrist)/.test(source)) {
+    return {
+      primaryKeyword: 'mlžítko pro školy a školky',
+      useCase: 'pro školky, školy a dětská hřiště',
+      keywords: 'mlžítka pro školky, mlžítka pro školy, mlhoviště pro děti, mlžítko na dětské hřiště, ochlazení školního areálu, veřejné mlžení',
+    };
+  }
 
   if (/(gate|brána|brana)/.test(source)) {
     return {
@@ -225,6 +237,14 @@ function getProductSearchContext(product) {
       primaryKeyword: 'mlhoviště',
       useCase: 'pro parky, školy a dětská hřiště',
       keywords: 'mlhoviště, mlžítko do parku, mlhoviště pro děti, mlžítko na hřiště, veřejné mlžení',
+    };
+  }
+
+  if (/(náměst|namest|obec|měst|mest|veřej|verej|promen|nádraž|nadraz|urban|city|park|sportovišt|sportovist)/.test(source)) {
+    return {
+      primaryKeyword: 'městské mlžítko',
+      useCase: 'pro města, obce, náměstí a parky',
+      keywords: 'mlžítka pro města, mlžítka pro obce, mlžítko na náměstí, městské mlžítko, mlžítka do parků, ochlazování veřejného prostoru',
     };
   }
 
@@ -253,9 +273,17 @@ export function getProductSEO(product, reviewStats) {
     product.power_supply && { '@type': 'PropertyValue', name: 'Napájení', value: product.power_supply },
   ].filter(Boolean);
 
-  const materialText = product.material ? ' V provedení ' + product.material + '.' : '';
-  const fallbackDescription = 'Designové nerezové mlžítko pro ochlazení zahrad, parků a veřejných prostor jemnou vodní mlhou.' + materialText;
+  const materialText = product.material ? ' Materiál: ' + product.material + '.' : '';
+  const detailText = String(product.short_description || product.description || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const useCase = search.useCase.charAt(0).toLocaleUpperCase('cs-CZ') + search.useCase.slice(1);
+  const fallbackDescription = detailText
+    ? `${product.name}: ${detailText.slice(0, 105).replace(/\s+\S*$/, '')}. ${useCase}.`
+    : `${product.name} – ${search.primaryKeyword} ${search.useCase}. Návrh, technické podklady a servis podle projektu.${materialText}`;
   const description = product.seo_description || fallbackDescription;
+  /** @type {Record<string, any>} */
   const productSchema = {
     '@type': 'Product',
     '@id': `${BASE_URL}${canonicalPath}#product`,
@@ -307,7 +335,7 @@ export function getProductSEO(product, reviewStats) {
   }
 
   return {
-    title: product.seo_title || (product.name + ' – nerezové mlžítko pro zahrady a města'),
+    title: product.seo_title || (product.name + ' – ' + search.primaryKeyword + ' ' + search.useCase),
     description,
     keywords: search.keywords + ', ' + product.name + ', HolmTec, MLŽIDLA.cz',
     image: images[0] || product.image_url,
@@ -461,116 +489,122 @@ export function getReferenceSEO(project) {
 
 export const SEO_PAGES = {
   home: {
-    title: 'Mlžítka a mlžné brány pro veřejný prostor',
-    description: 'Zakázková mlžítka, designové mlžné brány a chladicí systémy HolmTec z nerezové oceli AISI 316L. Efektivní ochlazení měst, parků, náměstí i zahrad.',
-    keywords: 'mlžné plastiky, mlžítka, mlzitka, mlžné brány, HolmTec, mlzidla, nerezové skulptury, vodní prvky, veřejné mlžení',
+    title: 'Nerezová mlžítka pro města, obce, parky i zahrady',
+    description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i zahrady. Výroba, pronájem, montáž, servis a chytré řízení podle místa.',
+    keywords: 'mlžítka, nerezová mlžítka, mlžítka pro města, mlžítka pro obce, mlhoviště, mlžiště, mlžné brány, městské ochlazování, vodní mlha, MLŽIDLA',
     canonicalPath: '/',
   },
   kolekce: {
-    title: 'Katalog mlžítek a mlžných bran',
-    description: 'Katalog nerezových mlžítek a mlžných bran pro města, obce, parky, sportoviště i zahrady. Fotografie, použití, parametry a poptávka.',
-    keywords: 'katalog mlžítek, katalog mlzitek, mlžítka pro města, mlžítka pro obce, mlžné brány, městská mlžítka, nerezová mlžítka',
+    title: 'Katalog mlžítek a mlžných systémů',
+    description: 'Katalog nerezových mlžítek, mlžných bran a mlhovišť pro města, parky, dětská hřiště i zahrady. Vyberte řešení a připravte podklady pro návrh.',
+    keywords: 'katalog mlžítek, nerezová mlžítka, městská mlžítka, mlhoviště, mlžiště, mlžné brány, vodní mlha, mlžicí systémy',
     canonicalPath: '/katalog-mlzitek',
   },
   mestskaKolekce: {
-    title: 'Městská mlžítka pro města, obce a veřejný prostor',
-    description: 'Nerezová městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, školy, hřiště a sportoviště. Projektová podpora, Smart řízení a servis.',
-    keywords: 'městská mlžítka, mlžítka pro města, mlžítka pro obce, ochlazování měst, městské ochlazování, mlžná zóna',
+    title: 'Městská mlžítka pro náměstí, parky a obce',
+    description: 'Městská mlžítka a mlžné brány pro náměstí, parky, školy a sportoviště. Návrh rozmístění, napojení vody, chytré řízení a sezónní servis.',
+    keywords: 'městská mlžítka, mlžítka pro města, mlžítka pro obce, ochlazování veřejného prostoru, městské ochlazování, mlžná zóna, mlžné brány',
     canonicalPath: '/mestske-mlzitka',
   },
+  mestskeOchlazovani: {
+    title: 'Městská mlžítka pro ochlazení měst',
+    description: 'Městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, pěší zóny a sportoviště. Návrh rozmístění, technické podklady, řízení i servis.',
+    keywords: 'městská mlžítka, mlžítka pro města, ochlazování měst, ochlazování veřejného prostoru, mlžné brány, mlžná zóna',
+    canonicalPath: '/mestske-ochlazovani-verejneho-prostoru',
+  },
   zahradniKolekce: {
-    title: 'Zahradní mlžítka pro zahrady, terasy a pergoly',
-    description: 'Designová nerezová zahradní mlžítka pro zahrady, terasy, pergoly a venkovní wellness. Nízkotlaké řešení na vodovodní řad a volitelné Smart ovládání.',
+    title: 'Zahradní mlžítka na terasu i do zahrady',
+    description: 'Designová zahradní mlžítka pro terasy, pergoly, zahrady a venkovní wellness. Vyberte nerezový prvek, ovládání a napojení podle svého prostoru.',
     keywords: 'zahradní mlžítko, mlžítka na zahradu, mlžítko na terasu, zahradní mlžení, vodní mlha na zahradu, vodní mlha na terasu',
     canonicalPath: '/zahradni-mlzitka',
   },
   zakazkovaKolekce: {
     title: 'Zakázková mlžítka a mlžné sochy na míru',
-    description: 'Zakázková nerezová mlžítka, mlžné sochy a atypické mlžné instalace podle identity místa, architektonického návrhu nebo vlastního tvaru.',
+    description: 'Navrhujeme zakázková mlžítka, mlžné sochy a atypické instalace pro města, parky i soukromé zahrady. Tvar a technické řešení přizpůsobíme konkrétnímu místu.',
     keywords: 'zakázkové mlžítko, mlžítko na míru, mlžná socha, designové mlžítko, atypické mlžítko, mlžná instalace',
     canonicalPath: '/zakazkova-mlzitka',
   },
   mlzitko: {
-    title: 'Mlžítko — designové nerezové mlžítko bez čerpadla',
-    description: 'Designová nerezová mlžítka a mlžné sochy pro města, zahrady a veřejný prostor. Nízkotlaké mlžení na vodovodní řad, Smart ovládání a výroba na míru.',
-    keywords: 'mlžítko, mlžítka, mlzitko, mlzitka, designové mlžítko, nerezové mlžítko',
+    title: 'Nerezová mlžítka: městská i zahradní',
+    description: 'Nerezová mlžítka pro města, obce, parky, hřiště, terasy i zahrady. Porovnejte typy, technické podklady, zakázkovou výrobu, montáž a servis.',
+    keywords: 'mlžítko, mlžítka, nerezové mlžítko, městská mlžítka, zahradní mlžítka, mlžítka pro města, mlžítka pro obce, designové mlžítko',
     canonicalPath: '/mlzitko',
   },
   mlhoviste: {
-    title: 'Mlžiště a mlhoviště pro města, parky a areály',
-    description: 'Navrhujeme mlžiště a mlhoviště pro náměstí, parky a areály. Nerezová mlžítka, napojení na vodovod bez čerpadla a volitelné chytré řízení SUPLA.',
-    keywords: 'mlžiště, mlziste, mlhoviště, mlhoviste, mlhoviště na zahradu, dětské mlhoviště, mobilní mlhoviště, mlžná zóna',
+    title: 'Mlhoviště a mlžiště: návrh mlžné zóny',
+    description: 'Mlhoviště a mlžiště pro města, parky, dětská hřiště i zahrady. Navrhujeme rozmístění mlžítek, přívod vody, řízení SUPLA a servis.',
+    keywords: 'mlhoviště, mlžiště, mlhoviště pro města, mlhoviště pro dětská hřiště, mlžná zóna, mlžítka do parku, mlhoviště na zahradu, návrh mlhoviště',
     canonicalPath: '/mlhoviste',
   },
   vodniMlha: {
-    title: 'Vodní mlha pro zahrady, terasy a veřejný prostor',
-    description: 'Vodní mlha pro ochlazení zahrad, teras, pergol, parků a veřejného prostoru. Princip, nízkotlaké mlžení, trysky, spotřeba a Smart řízení.',
-    keywords: 'vodní mlha, vodní mlha na zahradu, vodní mlha na terasu, mlha na zahradu, zahradní mlha, vodní mlha na pergolu',
+    title: 'Vodní mlha a venkovní mlžení: princip a použití',
+    description: 'Zjistěte, jak funguje venkovní mlžení, jakou roli hrají trysky, tlak vody, proudění vzduchu a provozní cykly. Praktický přehled pro návrh vodní mlhy na zahradě i při ochlazování městského prostoru.',
+    keywords: 'vodní mlha, venkovní mlžení, mlžicí trysky, nízkotlaké mlžení, vodní mlha na zahradu, ochlazování měst, princip mlžení',
     canonicalPath: '/vodni-mlha',
   },
   sloupkovaMlzitka: {
-    title: 'Sloupková mlžítka pro města, parky a veřejný prostor',
-    description: 'Nerezová sloupková mlžítka pro města, obce, parky, promenády a veřejné prostory. Návrh rozmístění, napojení i provozu podle konkrétní lokality.',
-    keywords: 'sloupková mlžítka, sloupkové mlžítko, mlžítko LINEA, nerezové mlžítko, mlžítka pro města',
+    title: 'Sloupková mlžítka LINEA pro města a parky',
+    description: 'Sloupková nerezová mlžítka pro náměstí, promenády, parky a veřejné budovy. Řada LINEA s návrhem, kotvením, napojením vody a údržbou.',
+    keywords: 'sloupková mlžítka, sloupkové mlžítko, mlžítko LINEA, nerezové sloupkové mlžítko, mlžítka pro města, mlžítka do parku',
     canonicalPath: '/sloupkova-mlzitka',
   },
   mlzneBrany: {
-    title: 'Mlžné brány a oblouky pro města a veřejný prostor',
-    description: 'Designové nerezové mlžné brány a oblouky pro města, parky, sportoviště a eventy. Zakázkové rozměry, projektová podpora a Smart řízení.',
-    keywords: 'mlžná brána, mlžné brány, mlžný oblouk, mlžící brána, ochlazovací brána',
+    title: 'Mlžné brány a mlžicí oblouky pro veřejný prostor',
+    description: 'Mlžné brány a oblouky pro náměstí, parky, promenády a sportoviště. Pomůžeme s výběrem tvaru, umístěním, napojením vody a provozem.',
+    keywords: 'mlžná brána, mlžné brány, mlžicí oblouk, mlžný oblouk, ochlazovací brána, mlžná brána pro města, mlžné brány do parku',
     canonicalPath: '/mlzne-brany',
   },
   atelierovePrvky: {
-    title: 'Ateliérové prvky a zakázková mlžítka',
-    description: 'Designové ateliérové prvky a zakázková mlžítka pro města, parky, školy i soukromé prostory. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
+    title: 'Zakázková mlžítka a mlžné instalace',
+    description: 'Zakázková mlžítka a mlžné instalace pro města, parky, školy a zahrady. Tvar, rozměr a umístění navrhujeme podle konkrétního záměru.',
     keywords: 'zakázková mlžítka, ateliérové prvky, designová mlžítka, mlžná instalace, mlžítko na míru',
     canonicalPath: '/atelierove-prvky',
   },
   jakToFunguje: {
-    title: 'Jak funguje vodní mlha a nízkotlaké mlžení',
-    description: 'Jak funguje vodní mlha, evaporace, trysky a nízkotlaké mlžení na běžný vodovodní řad. Vysvětlení tlaku, průtoku, spotřeby a podmínek pro účinné ochlazení.',
+    title: 'Jak funguje vodní mlha a mlžení',
+    description: 'Poznejte princip vodní mlhy, nízkotlakého mlžení a mlžicích trysek. Vysvětlujeme vliv tlaku, průtoku, počasí a návrhu na účinek i provoz systému.',
     keywords: 'jak funguje mlžení, vodní mlha, nízkotlaké mlžení, evaporace, mlžicí trysky, ochlazení vodní mlhou',
     canonicalPath: '/jak-to-funguje',
   },
   oNas: {
-    title: 'O nás — HolmTec, výrobce mlžných skulptur z Trutnova',
-    description: 'HolmTec je česká firma s kořeny v přesném strojírenství. Vyrábíme zakázkové mlžné plastiky a chladicí systémy z nerezové oceli AISI 316L pro města, parky a eventy.',
+    title: 'HolmTec: výrobce mlžítek a mlžných soch',
+    description: 'Poznejte HolmTec a výrobu mlžítek, mlžných bran a skulptur. Představujeme technický přístup a spolupráci při přípravě veřejných i rezidenčních projektů.',
     keywords: 'HolmTec, výrobce mlžných prvků, mlzidla.cz, mlžné skulptury výroba, zakázková výroba Trutnov, nerezová mlžítka',
     canonicalPath: '/o-nas',
   },
   reference: {
-    title: 'Reference — Realizované projekty mlžných plastik a mlhovišť',
-    description: 'Více než 120 úspěšných realizací mlžných prvků a systémů po celé ČR. Prohlédněte si referenční galerii projektů HolmTec pro města, obce a soukromé investory.',
+    title: 'Realizace mlžítek, mlžných bran a mlhovišť',
+    description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.',
     keywords: 'reference mlžná mlžítka, realizace mlhoviště, projekty mlžení veřejný prostor, instalace mlžných skulptur',
     canonicalPath: '/reference',
   },
   blog: {
-    title: 'Blog — Mlžné technologie, inspirace a urbanismus | HolmTec',
-    description: 'Články o technologiích, inspiraci a novinkách ze světa městského ochlazování. Témata jako evaporace, mikroklíma měst, srovnání s klimatizací a inovace HolmTec.',
+    title: 'Blog o mlžítkách, vodní mlze a ochlazování',
+    description: 'Články o mlžítkách, mlžných branách, vodní mlze, realizacích a městském ochlazování. Praktické informace pro obce, architekty i majitele zahrad.',
     keywords: 'blog mlžení, městské mikroklíma, evaporace veřejný prostor, chlazení měst, mlžné skulptury technologie',
     canonicalPath: '/blog',
   },
   poptavka: {
-    title: 'Nezávazná poptávka — Mlžné plastiky a chladicí systémy na míru',
-    description: 'Poptejte zakázkové mlžítko, bránu nebo ucelený chladicí systém. Konzultace zdarma, 3D vizualizace do 48 hodin, rychlá kalkulace. HolmTec — mlzidla.cz.',
+    title: 'Poptávka na mlžítko, bránu či mlhoviště',
+    description: 'Pošlete nezávaznou poptávku na městské nebo zahradní mlžítko, mlžnou bránu či mlhoviště. Pomůžeme upřesnit vhodné řešení podle místa, rozpočtu a provozu.',
     keywords: 'poptávka mlžná tělesa, nezávazná poptávka mlhoviště, kalkulace mlžení, mlžné skulptury cena',
     canonicalPath: '/poptavka',
   },
   kontakt: {
-    title: 'Kontakt — HolmTec mlžné skulptury a městská mlžítka',
-    description: 'Kontaktujte výrobce HolmTec: Trutnov, +420 774 700 390, obchod1@holmtec.cz. Projektová spolupráce, cenové nabídky, 3D vizualizace a výkresová dokumentace.',
+    title: 'Kontakt na výrobce mlžítek',
+    description: 'Kontaktujte HolmTec kvůli městskému nebo zahradnímu mlžítku, mlžné bráně či mlhovišti. Domluvíme technické podklady, nabídku a další postup projektu.',
     keywords: 'kontakt HolmTec, mlžítka kontakt, mlhoviště poptávka, HolmTec telefon, technická podpora mlžení',
     canonicalPath: '/kontakt',
   },
   podpora: {
-    title: 'Podpora & FAQ — Časté dotazy o mlžných systémech HolmTec',
-    description: 'Odpovědi na nejčastější dotazy ohledně provozu: stavební připravenost, zimní údržba, spotřeba vody, legislativní certifikáty a záruční podmínky.',
+    title: 'FAQ: údržba, instalace a provoz mlžítek',
+    description: 'Odpovědi na otázky k instalaci mlžítek, přívodu vody, spotřebě, údržbě, zazimování a chytrému řízení. Praktické podklady pro správce i provozovatele.',
     keywords: 'FAQ mlžná technika, údržba mlžítka, zazimování mlhoviště, instalace vodních prvků, certifikace pitná voda',
     canonicalPath: '/podpora',
   },
   mestOobce: {
-    title: 'Mlžítka pro města a obce – návrh a výroba',
-    description: 'Městská mlžítka, mlhoviště a mlžné brány pro náměstí, parky, školy a veřejný prostor. Vizualizace, zakázková výroba, Smart řízení, instalace a servis.',
+    title: 'Mlžítka pro města a obce: návrh a výroba',
+    description: 'Městská mlžítka, mlhoviště a mlžné brány pro náměstí, parky, školy a sportoviště. Návrh rozmístění, technické podklady, chytré řízení, instalace a servis.',
     keywords: 'mlžítka pro města, mlžítka pro obce, městská mlžítka, městské mlhoviště, ochlazování měst, ochlazení veřejného prostoru, mlžné brány, zakázková výroba',
     canonicalPath: '/mlzitka-pro-mesta-obce',
     jsonLd: {
@@ -627,20 +661,20 @@ export const SEO_PAGES = {
     },
   },
   parkyHriste: {
-    title: 'Mlhoviště pro parky a dětská hřiště — Bezpečné mlžení bez chemie',
-    description: 'Nerezové nízkotlaké mlžné systémy pro parky a dětská hřiště. Konstrukce z AISI 316L, provoz bez čerpadla a řešení navržené pro bezpečný a snadno udržovatelný veřejný prostor.',
+    title: 'Mlhoviště pro parky a dětská hřiště',
+    description: 'Mlžítka a mlhoviště pro parky, dětská hřiště a veřejná prostranství. Návrh zóny, umístění prvků a provozní řešení podle konkrétního místa.',
     keywords: 'mlhoviště dětské hřiště, parkové mlžení, herní vodní prvky, bezpečné ochlazení dětí',
     canonicalPath: '/kategorie/parky-hriste',
   },
   koupaliste: {
-    title: 'Mlhoviště pro koupaliště a aquaparky — Komfortní chladicí zóny',
-    description: 'Designové nízkotlaké mlžné systémy pro koupaliště, aquaparky a bazénové areály. Nerezové řešení bez čerpadla, napojené na běžný vodovodní řad, pro komfortní venkovní ochlazení.',
+    title: 'Mlžítka a mlhoviště pro koupaliště',
+    description: 'Mlžítka a mlhoviště pro koupaliště, aquaparky a venkovní bazénové areály. Návrh mlžicí zóny, přívodu vody a provozu podle konkrétního místa.',
     keywords: 'mlhoviště koupaliště, mlžení aquapark, chladicí zóna bazén, nízkotlaké mlžení koupaliště',
     canonicalPath: '/kategorie/koupaliste',
   },
   architekti: {
-    title: 'Mlžítka pro architekty | 2D/3D, BIM a technické podklady',
-    description: 'Projektové podklady pro architekty a krajináře: 2D/3D, BIM dle produktu, technické listy, vizualizace, reference a konzultace od studie po realizaci.',
+    title: 'Mlžítka pro architekty a krajináře',
+    description: 'Technické listy, 2D/3D výkresy a BIM dle konkrétního produktu. Podklady pro architekty a krajináře, vizualizace, reference a konzultace k projektu.',
     keywords: 'BIM modely mlžítka, DWG výkresy mlžná brána, podklady pro architekty, technická specifikace HolmTec, mlžítka pro krajináře',
     canonicalPath: '/kategorie/architekti',
     jsonLd: {
@@ -680,32 +714,32 @@ export const SEO_PAGES = {
     },
   },
   komercni: {
-    title: 'Mlžení pro komerční prostory — restaurace, obchodní centra, výrobní haly',
-    description: 'Mlžné systémy pro terasy restaurací, nákupní centra, showroomy a výrobní haly. Zvyšte komfort zákazníků i zaměstnanců, nerezová konstrukce s dlouhou životností.',
+    title: 'Mlžení pro restaurace, hotely a komerční areály',
+    description: 'Mlžítka a mlžné systémy pro terasy restaurací, hotely, showroomy a komerční areály. Návrh, nerezové provedení a řízení podle konkrétního provozu.',
     keywords: 'mlžení komerční prostory, mlžítka restaurace, mlžné terasy, ochlazení nákupní centrum, mlžení výrobní haly',
     canonicalPath: '/kategorie/komercni',
   },
   eventy: {
-    title: 'Mlžení pro eventy a festivaly — mobilní chladicí řešení na akce',
-    description: 'Mlžné prvky pro hudební festivaly, letní terasy, sportovní akce a veletrhy. Mobilní instalace k pronájmu i koupi, rychlé osvěžení návštěvníků kdekoli venku.',
+    title: 'Mlžení a mlžítka pro festivaly a eventy',
+    description: 'Mlžítka a mlžné brány pro festivaly, sportovní akce a venkovní eventy. Proberte nákup nebo pronájem, rozmístění a podmínky provozu pro vaši akci.',
     keywords: 'mlžení festival, mlžítka na akce, mobilní mlžení, chlazení eventy, pronájem mlžítek',
     canonicalPath: '/kategorie/eventy',
   },
   outdoor: {
-    title: 'Mlžítka na zahradu a terasu | MLŽIDLA.cz',
-    description: 'Designová mlžítka pro zahrady, terasy a venkovní wellness. Nerezové provedení, Smart ovládání, vizualizace a návrh vhodné konfigurace.',
+    title: 'Zahradní mlžítka pro terasy a wellness',
+    description: 'Designová mlžítka pro soukromé zahrady, terasy, pergoly a wellness. Vyberte vhodný tvar, napojení vody a volitelné chytré ovládání podle prostoru.',
     keywords: 'mlžítka zahrada, venkovní mlžení, zahradní mlžná skulptura, ochlazení terasy, outdoor mlžítka',
     canonicalPath: '/kategorie/outdoor-zahrady',
   },
   art: {
-    title: 'Mlžné umělecké instalace — Art & Design kolekce HolmTec',
-    description: 'Mlžná skulptura jako umělecké dílo. Site-specific instalace pro galerie, výstavy a veřejný prostor, kombinující design, technologii a smyslový zážitek.',
+    title: 'Zakázkové mlžné instalace a designové sochy',
+    description: 'Zakázkové mlžné instalace a designové skulptury pro galerie, výstavy a veřejný prostor. Návrh propojuje architekturu, vodní mlhu a charakter místa.',
     keywords: 'mlžné umělecké instalace, art instalace mlha, site-specific mlžítko, designová skulptura mlha',
     canonicalPath: '/kategorie/art-instalace',
   },
   deti: {
-    title: 'Mlhoviště pro školy, školky a dětská hřiště — bezpečné mlžení',
-    description: 'Nízkotlaká mlhoviště pro základní školy, mateřské školy a dětská hřiště. Nerez AISI 316L, jemné mlžení bez čerpadla a řešení navržené pro dětské a veřejné prostory.',
+    title: 'Mlhoviště pro školy, školky a dětská hřiště',
+    description: 'Mlhoviště a mlžítka pro mateřské školy, základní školy a dětská hřiště. Návrh mlžicí zóny a vhodného provozu podle věku uživatelů a charakteru areálu.',
     keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
     canonicalPath: '/kategorie/skoly-skolky-deti',
   },

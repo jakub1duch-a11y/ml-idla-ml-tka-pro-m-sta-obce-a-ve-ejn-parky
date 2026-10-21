@@ -3,6 +3,7 @@
   "scopes": [
     "https://www.googleapis.com/auth/gmail.send",
     "https://www.googleapis.com/auth/gmail.compose",
-    "email"
+    "email",
+    "https://www.googleapis.com/auth/gmail.readonly"
   ]
 }

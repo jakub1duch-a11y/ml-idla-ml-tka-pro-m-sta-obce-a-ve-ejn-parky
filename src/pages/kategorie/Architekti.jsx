@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
@@ -133,7 +134,7 @@ export default function Architekti() {
             </Link>
           </div>
           <div className="aspect-[4/3] overflow-hidden bg-[#EAF5FB]">
-            <img src="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/5c7fc888a_realizace-IMG_5035.jpg" alt="MRKEV Polná — zakázková mlžící mrkev" loading="lazy" className="h-full w-full object-cover" />
+            <img src="/media/optimized/5c7fc888a_realizace-IMG_5035.webp" alt="MRKEV Polná — zakázková mlžící mrkev" loading="lazy" className="h-full w-full object-cover" />
           </div>
         </div>
       </section>
@@ -186,6 +187,7 @@ export default function Architekti() {
         </div>
       </section>
 
+      <AllProductsCatalog categoryTitle="architekty a projektanty" />
       <B2BPortfolioNavigation current="Pro architekty" />
     </div>
   );

@@ -1,4 +1,5 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
@@ -11,8 +12,8 @@ import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const EVENT_SCENES = [
-  { title: 'Festivaly', kicker: 'Chill-out / vstupní zóna', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.png' },
-  { title: 'Veletrhy', kicker: 'Expozice / stánek', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/47ca0affa_veletrh.PNG' },
+  { title: 'Festivaly', kicker: 'Chill-out / vstupní zóna', image: '/media/optimized/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.webp' },
+  { title: 'Veletrhy', kicker: 'Expozice / stánek', image: '/media/optimized/47ca0affa_veletrh.webp' },
   { title: 'Firemní akce', kicker: 'Letní event / hospitality', image: '/media/optimized/83e0506f1_generated_fd2118cd.webp' },
   { title: 'Oslavy a rodinné dny', kicker: 'Pobytová zóna', image: '/media/optimized/4737b1d8d_5b1b2bcc1b140ee76c8402a1e6313b8f.webp' },
 ];
@@ -200,6 +201,7 @@ export default function Eventy() {
           <CategoryInquiryForm category="Eventy & festivaly" projectScope="event" />
         </div>
       </section>
+      <AllProductsCatalog categoryTitle="eventy a festivaly" />
       <B2BPortfolioNavigation current="Eventy & festivaly" />
     </div>
   );

@@ -1,19 +1,19 @@
 export const CURATED_PRODUCT_MEDIA = {
   "mlzitko-bendy": [
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+      "url": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
       "title": "BENDY a LINEA v zahradě",
       "kind": "photo"
     },
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg",
+      "url": "/media/optimized/eb80e8486_IMG_1789934399993.webp",
       "title": "BENDY ve městě",
       "kind": "visualization"
     }
   ],
   "linea-mlzitko": [
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg",
+      "url": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
       "title": "Sloupová LINEA s BENDY v zahradě",
       "kind": "photo"
     }
@@ -27,19 +27,19 @@ export const CURATED_PRODUCT_MEDIA = {
   ],
   "mlzitko-kvet-4": [
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.png",
+      "url": "/media/optimized/25683a407_file_0000000091fc8210b6b21eb1cdf55ece1.webp",
       "title": "KVĚT – návrh umístění na náměstí",
       "kind": "visualization"
     }
   ],
   "teepee": [
     {
-      "url": "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/06c42b5dc_Screenshot_20260920_171920.jpg",
+      "url": "/media/optimized/06c42b5dc_Screenshot_20260920_171920.webp",
       "title": "TEEPEE – městské využití",
       "kind": "visualization"
     }
   ]
 };
-export const CITY_COVER = "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/eb80e8486_IMG_1789934399993.jpg";
-export const GARDEN_COVER = "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e7593e68f_realizace-IMG_5072.jpg";
+export const CITY_COVER = "/media/optimized/eb80e8486_IMG_1789934399993.webp";
+export const GARDEN_COVER = "/media/optimized/e7593e68f_realizace-IMG_5072.webp";
 export const getCuratedProductMedia = (product) => CURATED_PRODUCT_MEDIA[product?.slug] || [];

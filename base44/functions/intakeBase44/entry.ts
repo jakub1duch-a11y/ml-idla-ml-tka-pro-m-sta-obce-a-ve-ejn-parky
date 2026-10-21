@@ -3,28 +3,16 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.46';
 const clean = (value: unknown) => String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
 
-// Simple shared-secret check for external intake.
-// External web forms send this in the X-Intake-Key header.
-const INTAKE_KEY = Deno.env.get('INTAKE_KEY') || 'mlzidla-intake-2026';
-
-Deno.serve(async (req: Request) => {
+export default async function(req: Request) {
   try {
     if (req.method !== 'POST') {
       return Response.json({ error: 'Method not allowed' }, { status: 405 });
     }
 
-    // Accept either X-Intake-Key header or Bearer token
-    const intakeKey = req.headers.get('x-intake-key') || '';
-    const bearer = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
-    const providedKey = intakeKey || bearer;
-
-    // Allow requests without key from the app itself (same-origin), require key from external
-    const origin = req.headers.get('origin') || '';
-    const referer = req.headers.get('referer') || '';
-    const isSameOrigin = origin.includes('base44.app') || referer.includes('base44.app');
-
-    if (!isSameOrigin && providedKey !== INTAKE_KEY) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me().catch(() => null);
+    if (!user || user.role !== 'admin') {
+      return Response.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     const body = await req.json().catch(() => ({}));
@@ -43,8 +31,6 @@ Deno.serve(async (req: Request) => {
     if (!isValidEmail(email)) {
       return Response.json({ error: 'Invalid email format' }, { status: 400 });
     }
-
-    const base44 = createClientFromRequest(req);
 
     // Create Poptavka record — RLS allows public create
     const poptavka = await base44.asServiceRole.entities.Poptavka.create({
@@ -83,4 +69,4 @@ Deno.serve(async (req: Request) => {
   } catch (error) {
     return Response.json({ error: error?.message || String(error) }, { status: 500 });
   }
-});
+}

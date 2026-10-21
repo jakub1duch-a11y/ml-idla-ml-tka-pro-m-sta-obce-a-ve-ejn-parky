@@ -6,6 +6,7 @@ import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const LINEA_HERO_VIDEO = '/media/products/linea/linea-urban-cooling-hero.mp4';
@@ -26,7 +27,7 @@ const mediaUrl = (url) => (url && !isVideo(url) ? getOptimizedMediaUrl(url) : ur
 const mediaCaption = (item) => item.caption || (
   item.badge === 'Studio' ? 'Studiový náhled produktu' :
   item.badge === 'Schváleno' ? 'Náhled mlžítka v prostoru' :
-  item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Vizualizace umístění' :
+  item.badge === 'Vizualizace' || item.badge === 'Návrh' ? 'Náhled umístění' :
   item.badge === 'Realizace' ? 'Fotografie z realizace' :
   item.badge === 'Video' || item.badge === 'Hero video' ? 'Video ukázka' :
   item.badge === 'Reálné testování' ? 'Reálné testování v zahradě' :
@@ -52,19 +53,34 @@ const isAllowedProductMedia = (url, product) => {
   return true;
 };
 
+function normalizeProductLabel(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('cs-CZ')
+    .replace(/®/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\b(mlzitko|mlzitka|mlzny|mlzna|mlzne|mlzici|produkt|product)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Realizaci propojujeme jen podle úplného názvu produktu nebo jeho slugu.
+// Hledání podřetězců a jednotlivých slov dříve míchalo fotografie různých
+// produktů (např. MRAK do galerie BENDY). Sestavy typu BENDY + LINEA
+// se nejprve rozdělí na konkrétní označení jednotlivých produktů.
 function matchesProduct(realization, product) {
-  const used = (realization.product_used || '').toLocaleLowerCase('cs-CZ');
-  const name = (product.name || '').toLocaleLowerCase('cs-CZ');
-  const slug = (product.slug || '').toLocaleLowerCase('cs-CZ');
-  if (isLineaProduct(product)) {
-    return used === 'linea' || used === 'linea®' || used === 'mlžítko linea' || used === slug;
-  }
-  const tokens = name
-    .replace(/mlžítko|mlžné|®|city|garden/gi, '')
-    .split(/\s+/)
-    .map((x) => x.trim())
-    .filter((x) => x.length > 2);
-  return Boolean(used && (used.includes(name) || name.includes(used) || used.includes(slug) || tokens.some((t) => used.includes(t))));
+  const usedLabels = String(realization?.product_used || '')
+    .split(/\s*(?:\+|,|;|\||\/|&)\s*/)
+    .map(normalizeProductLabel)
+    .filter(Boolean);
+  if (!usedLabels.length) return false;
+
+  const aliases = [product?.name, product?.slug, ...(Array.isArray(product?.aliases) ? product.aliases : [])]
+    .map(normalizeProductLabel)
+    .filter(Boolean);
+  const uniqueAliases = [...new Set(aliases)];
+  return usedLabels.some((used) => uniqueAliases.includes(used));
 }
 
 function MediaCard({ item, onOpen, productName }) {
@@ -134,8 +150,8 @@ export default function PdMediaGallery({ product }) {
       .then(([realizationItems, visualItems, mediaItems]) => {
         if (cancelled) return;
         setRealizations((realizationItems || []).filter((r) => matchesProduct(r, product)));
-        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url));
-        setAdminMedia((mediaItems || []).filter((item) => item?.file_url));
+        setApprovedVisualizations((visualItems || []).filter((item) => item?.image_url && !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
+        setAdminMedia((mediaItems || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
       })
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
@@ -146,17 +162,17 @@ export default function PdMediaGallery({ product }) {
     const curated = getCuratedProductMedia(product);
     const curatedUrls = new Set(curated.map(item => item.url));
     const adminProductPhotos = adminMedia
-      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'technology'].includes(item.media_role))
-      .filter((item) => !isVideo(item.file_url))
+      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role))
+      .filter((item) => !isVideo(item.file_url) && !isTechnicalMedia(item.file_url) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
       .map((item) => ({ type: 'image', url: mediaUrl(item.file_url), alt: `${product.name} — náhled v prostoru`, caption: item.media_role === 'realization' ? 'Náhled v prostoru' : 'Produktový náhled', title: spaceTitle(product.name, item), badge: item.media_role === 'reference' ? 'Reference' : 'Média' }));
 
     const productPhotos = clean([
       ...adminProductPhotos,
-      ...curated.filter(item => item.kind === 'photo').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktový náhled`, caption: item.caption || 'Produktový náhled', title: `${product.name} · produktový náhled`, badge: 'Fotografie' })),
+      ...curated.filter(item => item.kind === 'photo' && isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — produktový náhled`, caption: item.caption || 'Produktový náhled', title: `${product.name} · produktový náhled`, badge: 'Fotografie' })),
       studioMedia && { type: 'image', url: mediaUrl(studioMedia), alt: `${product.name} — studiový náhled produktu`, caption: 'Studiový náhled produktu', title: `${product.name} · studiový náhled`, badge: 'Studio' },
       product.image_url && { type: 'image', url: mediaUrl(product.image_url), alt: isGardenTest(product.image_url) ? `${product.name} — reálné testování v zahradě` : `${product.name} — produktový náhled`, caption: isGardenTest(product.image_url) ? 'Reálné testování v zahradě' : 'Produktový náhled', title: isGardenTest(product.image_url) ? `${product.name} · reálné testování` : `${product.name} · produktový náhled`, badge: isGardenTest(product.image_url) ? 'Reálné testování' : 'Produkt' },
       ...(product.gallery_urls || [])
-        .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product))
+        .filter((url) => url && !curatedUrls.has(url) && !isVideo(url) && isAllowedProductMedia(url, product) && isProductMediaAllowed(product, url))
         .map((url) => ({
           type: 'image',
           url: mediaUrl(url),
@@ -177,6 +193,7 @@ export default function PdMediaGallery({ product }) {
     ])]);
 
     const approvedAdminVisuals = [...approvedVisualizations]
+      .filter((item) => !isVideo(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name))
       .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
       .map((item) => ({
         type: 'image',
@@ -188,7 +205,7 @@ export default function PdMediaGallery({ product }) {
         badge: 'Náhled v prostoru',
       }));
 
-    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization').map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · konkrétní prostor`, badge: 'Náhled v prostoru' })), ...realizations.flatMap((r) => [
+    const visualizations = clean([...approvedAdminVisuals, ...curated.filter(item => item.kind === 'visualization' && isProductMediaAllowed(product, item.url, item.title)).map(item => ({ type: 'image', url: mediaUrl(item.url), alt: item.alt || `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · konkrétní prostor`, badge: 'Náhled v prostoru' })), ...realizations.flatMap((r) => [
       r.concept_image_url && { type: 'image', url: mediaUrl(r.concept_image_url), alt: `${product.name} — náhled v prostoru`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · ${r.location || 'konkrétní prostor'}`, meta: r.location, badge: 'Náhled v prostoru' },
       r.project_sheet_url && { type: 'image', url: mediaUrl(r.project_sheet_url), alt: `${product.name} — návrh umístění`, caption: 'Náhled mlžítka v prostoru', title: `${product.name} · ${r.location || 'konkrétní prostor'}`, meta: r.location, badge: 'Náhled v prostoru' },
     ])]);
@@ -220,7 +237,7 @@ export default function PdMediaGallery({ product }) {
   const tabs = [
     { id: 'photos', label: hasGardenTest ? 'Reálné testování v zahradě' : 'Fotografie a produktové náhledy', icon: Images, count: groups.photos.length },
     { id: 'realizations', label: 'Reálné realizace', icon: MapPin, count: groups.realizations.length },
-    { id: 'visualizations', label: 'Vizualizace umístění', icon: Sparkles, count: groups.visualizations.length },
+    { id: 'visualizations', label: 'Náhledy v prostoru', icon: Sparkles, count: groups.visualizations.length },
     { id: 'videos', label: 'Videa', icon: Video, count: groups.videos.length },
   ];
 
@@ -247,9 +264,9 @@ export default function PdMediaGallery({ product }) {
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-[#0B97E8] sm:text-[11px]">Produkt v detailu</p>
             <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">Vhodné pro zahrady, parky i veřejný prostor</h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — reálné fotografie a realizace držíme odděleně od návrhových vizualizací.</p>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#0D2F4F]/60 sm:text-base">Prohlédněte si {product.name} z více úhlů — reálné fotografie a realizace držíme odděleně od návrhů umístění.</p>
           </div>
-          <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">Technická schémata patří do sekce „Příprava a instalace“. Vizualizace umístění jsou vždy označené samostatně.</p>
+          <p className="max-w-md text-xs leading-6 text-[#0D2F4F]/45 lg:text-right">Technická schémata patří do sekce „Příprava a instalace“. Pohledy na umístění jsou označené samostatně.</p>
         </div>
 
         {featuredVideo && (

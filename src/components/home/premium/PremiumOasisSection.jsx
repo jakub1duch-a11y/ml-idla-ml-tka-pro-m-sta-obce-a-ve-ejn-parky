@@ -22,7 +22,7 @@ const ADVANTAGES = [
 "Vhodné pro vnitřní i venkovní použití"];
 
 
-const DEVICE_IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2b0adb03d_mlzitkaholmtec002.png';
+const DEVICE_IMG = '/media/optimized/2b0adb03d_mlzitkaholmtec002.webp';
 
 export default function PremiumOasisSection() {
   const gardenImage = useHomepageMedia('garden');

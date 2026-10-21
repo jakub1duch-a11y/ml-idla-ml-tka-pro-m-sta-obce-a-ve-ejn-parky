@@ -42,6 +42,13 @@ export default function ContentPlanForm({ onCreated }) {
   const [saving, setSaving] = useState(false);
   const [aiUsed, setAiUsed] = useState(false);
 
+  const isCreditLimitError = (err) => /limit of integrations|integration credits|upgrade your plan/i.test(String(err?.message || err || ''));
+
+  const buildFallbackCaption = (product, title) => {
+    const summary = product?.short_description || 'Architektonický mlžicí prvek z nerezové oceli pro kultivované ochlazení veřejného i soukromého prostoru.';
+    return `${title}\n\n${product?.name || 'MLŽIDLA®'} — ${summary}\n\nNavrhujeme řešení pro města, obce, parky, školy i současnou architekturu.\nVíce na mlzidla.cz\n\n#mlzidla #verejnyprostor #mestskeochlazovani #vodnimlha #architektura #nerez`;
+  };
+
   const generateCaption = async () => {
     if (!form.title || !selectedProduct) {
       setError('Nejprve vyber konkrétní produkt MLŽIDLA.');
@@ -57,6 +64,13 @@ export default function ContentPlanForm({ onCreated }) {
       const caption = typeof res === 'string' ? res : JSON.stringify(res, null, 2);
       setForm((f) => ({ ...f, caption }));
       setAiUsed(true);
+    } catch (err) {
+      if (isCreditLimitError(err)) {
+        setForm((f) => ({ ...f, caption: f.caption || buildFallbackCaption(selectedProduct, form.title) }));
+        setError('Měsíční limit integračních kreditů v pracovním prostoru je vyčerpán (10 364 / 10 000, obnova 26. 10. 2026 UTC). Předvyplnili jsme šablonový text z dat produktu; pro AI generování přejděte v nastavení pracovního prostoru do Plan and billing.');
+      } else {
+        setError(err?.message || 'Reklamní text se nepodařilo vygenerovat.');
+      }
     } finally {
       setGeneratingText(false);
     }
@@ -89,6 +103,13 @@ export default function ContentPlanForm({ onCreated }) {
         });
       } catch (archiveError) {
         console.warn('Automatická archivace marketingového vizuálu na MLŽIDLA Disk se nezdařila', archiveError);
+      }
+    } catch (err) {
+      if (isCreditLimitError(err)) {
+        setForm((f) => ({ ...f, image_url: f.image_url || selectedMaster }));
+        setError('Měsíční limit integračních kreditů v pracovním prostoru je vyčerpán (obnova 26. 10. 2026 UTC). Použili jsme ověřenou MASTER fotografii produktu; pro AI generování přejděte do Plan and billing.');
+      } else {
+        setError(err?.message || 'Vizuál se nepodařilo vygenerovat.');
       }
     } finally {
       setGeneratingImage(false);

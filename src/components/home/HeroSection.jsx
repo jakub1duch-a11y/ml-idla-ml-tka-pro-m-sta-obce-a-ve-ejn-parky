@@ -21,7 +21,7 @@ const defaultSlides = [
   name: 'AURA',
   subtitle: 'Kruh z mlhy.',
   desc: 'Kruhová skulptura z leštěné nerezové oceli s husté mlžením po celém obvodu. Dominanta náměstí, foyer hotelu nebo eventového prostoru.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.png',
+  image: '/media/optimized/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.webp',
   badge: 'Bestseller',
   cta: '/produkt/aura'
 },
@@ -31,7 +31,7 @@ const defaultSlides = [
   name: 'MRAK',
   subtitle: 'Nebe na zemi.',
   desc: 'Abstraktní oblak z nerezové oceli s hustým mlžením. Stává se dominantou každého prostoru — parku, terasy, foyer hotelu.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/72a6bb588_mlnprvek-mrak-mlzidla02.png',
+  image: '/media/optimized/72a6bb588_mlnprvek-mrak-mlzidla02.webp',
   badge: 'Urban',
   cta: '/produkt/mrak'
 },
@@ -51,7 +51,7 @@ const defaultSlides = [
   name: 'BENDY 60',
   subtitle: 'Elegantní chlad pro zahradu.',
   desc: 'Stylové zahradní mlžítko s elegantním ohnutým designem. Chladivá mlha pro terasy, zahrady a venkovní odpočívárny.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e7273f60a_bendy60-mlitkozahradn.png alt="Chladivá mlha pro terasy, zahrady a venkovní odpočívárny."',
+  image: '/media/optimized/e7273f60a_bendy60-mlitkozahradn.webp alt="Chladivá mlha pro terasy, zahrady a venkovní odpočívárny."',
   badge: 'Zahrada',
   cta: '/produkt/mlzitko-bendy'
 },
@@ -61,7 +61,7 @@ const defaultSlides = [
   name: 'MLŽIŠTĚ',
   subtitle: 'Radost pro děti.',
   desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
-  image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/62841e4f5_img-5153.jpeg alt="mlžné prvky pro školky"',
+  image: '/media/optimized/62841e4f5_img-5153.webp alt="mlžné prvky pro školky"',
   badge: 'Dětské mlžiště',
   cta: '/kategorie/skoly-skolky-deti'
 }];

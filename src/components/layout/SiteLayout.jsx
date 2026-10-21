@@ -7,22 +7,27 @@ import { getLocaleFromPath } from '@/lib/i18n';
 import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
 import ReturningVisitorEmailPopup from '@/components/common/ReturningVisitorEmailPopup';
-import MistingAdvisorWidget from '@/components/common/MistingAdvisorWidget';
+import WhatsAppContactWidget from '@/components/common/WhatsAppContactWidget';
+import useGlobalLenis from '@/hooks/useGlobalLenis';
+import ScrollMotionController from '@/components/common/ScrollMotionController';
+import 'lenis/dist/lenis.css';
 
 export default function SiteLayout() {
   const location = useLocation();
   const locale = getLocaleFromPath(location.pathname);
+  useGlobalLenis(location.pathname);
 
   return (
     <div className="architecture-site min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
+        <ScrollMotionController />
         <Outlet />
       </main>
       {locale === 'cs' ? <Footer /> : <LocalizedFooter locale={locale} />}
       {locale === 'cs' && <NotificationPrompt />}
       {locale === 'cs' && <ReturningVisitorEmailPopup />}
-      {locale === 'cs' && <MistingAdvisorWidget />}
+      {locale === 'cs' && <WhatsAppContactWidget />}
       <CookieConsent locale={locale} />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Mail, Phone, MapPin, Droplets, Gauge, ThermometerSun, ChevronDown } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Droplets, Gauge, ThermometerSun, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
@@ -28,7 +28,7 @@ const columns = [
   links: [
   ['Automatizace', '/smart-ovladani'],
   ['Jak funguje mlžení', '/jak-to-funguje'],
-  ['AI vizualizace', '/ai-vizualizace'],
+  ['Návrh ochlazovací zóny', '/poptavka'],
   ['Kalkulačka projektu', '/kalkulacka']]
 
 },
@@ -49,7 +49,7 @@ const columns = [
   ['Časté dotazy', '/faq'],
   ['O nás', '/o-nas'],
   ['Kontakt', '/kontakt'],
-  ['Připojit AI asistenta', '/connect']]
+  ['Spolupráce a partnerství', '/partnerstvi']]
 
 }];
 
@@ -97,18 +97,18 @@ export default function Footer() {
             </div>
 
             <div className="mt-7 grid gap-3 text-sm text-white/72 sm:grid-cols-3 lg:grid-cols-1">
-              <a href="tel:+420774700390" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Phone size={15} /></span>
-                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Telefon</span><span className="font-semibold text-white/86">+420 774 700 390</span></span>
-              </a>
-              <a href="mailto:obchod1@holmtec.cz" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><Mail size={15} /></span>
-                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">E-mail</span><span className="font-semibold text-white/86">obchod1@holmtec.cz</span></span>
-              </a>
-              <Link to="/kontakt" className="group flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 transition hover:border-cyan/35 hover:bg-white/[.06]">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan/12 text-cyan"><MapPin size={15} /></span>
-                <span><span className="block text-[10px] uppercase tracking-[.16em] text-white/42">Zázemí</span><span className="font-semibold text-white/86">Trutnov · HolmTec</span></span>
-              </Link>
+              
+
+
+              
+              
+
+
+              
+              
+
+
+              
             </div>
 
             <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
@@ -130,27 +130,27 @@ export default function Footer() {
 
               
 
-              <a
-                href="https://www.holmtec.cz"
-                target="_blank"
-                rel="noopener noreferrer"
-
-                aria-label="HolmTec.cz — česká výroba a kovovýroba, otevře se v novém okně">
-                
-                
+              
 
 
-                
-                <span className="min-w-0 flex-1">
-                  <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-[hsl(var(--background))]">Výroba a zázemí</span>
-                  <span className="mt-1 block font-semibold text-white text-lg uppercase no-underline">HolmTec.cz</span>
-                  <span className="mt-1 block leading-5 text-white/62 text-sm">Česká výroba, ohýbání nerezu a technické zázemí MLŽIDLA®</span>
-                </span>
-                <ArrowUpRight size={18} className="shrink-0 text-cyan transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
             </div>
 
-            <div className="mt-7 flex items-center gap-3">
+            <div className="flex items-center mt-0 gap-4">
               <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Instagram size={18} /></a>
               <a href="https://www.linkedin.com/company/holmtec/" target="_blank" rel="noreferrer" aria-label="LinkedIn HolmTec" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Linkedin size={18} /></a>
               <a href="https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
@@ -167,7 +167,7 @@ export default function Footer() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.42, delay: columnIndex * 0.05 }}
-                  className="border-t border-white/10 py-1 md:pt-4">
+                  className="border-t border-white/10 py-1 md:pt-">
                   
                   <button
                     type="button"
@@ -191,7 +191,7 @@ export default function Footer() {
                         to={to}
                         className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white">
                         
-                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full">{label}</span>
+                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full uppercase">{label}</span>
                           <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0 group-hover:opacity-60" />
                         </Link>
                       )}
@@ -203,28 +203,28 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="grid gap-3 border-b border-white/10 py-7 md:grid-cols-3">
-          {trustItems.map(({ icon: Icon, label, text }, index) =>
-          <motion.div
-            key={label}
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.42, delay: index * 0.06 }}
-            className="group rounded-2xl border border-white/10 bg-white/[.035] p-4 transition hover:-translate-y-0.5 hover:border-cyan/35 hover:bg-white/[.06]">
-            
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan/12 text-cyan transition group-hover:scale-105">
-                  <Icon size={18} />
-                </span>
-                <span>
-                  <span className="block text-sm font-bold text-white">{label}</span>
-                  <span className="mt-1 block text-xs leading-5 text-white/62">{text}</span>
-                </span>
-              </div>
-            </motion.div>
-          )}
-        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
           <div>
@@ -259,7 +259,7 @@ export default function Footer() {
         <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-3xl">
             <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
-            <p className="mt-1 text-white/58"><strong className="font-medium text-white/78">Provozovatel webu:</strong> HolmTec s.r.o. · MLŽIDLA.cz</p>
+            
             <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
             <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
             
@@ -273,13 +273,13 @@ export default function Footer() {
               aria-label="Zabezpečené připojení a kontrola odkazu"
               title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
               
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 bg-emerald-300/10 text-emerald-200">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 text-emerald-200">
                 <ShieldCheck size={13} strokeWidth={1.9} />
               </span>
               <span className="flex min-w-0 items-center gap-1.5">
                 <LockKeyhole size={11} className="shrink-0 text-white/62" aria-hidden="true" />
                 <span className="text-[10px] font-semibold tracking-[.02em] text-white/82">Zabezpečené připojení</span>
-                <span className="hidden text-[10px] text-white/52 sm:inline">· kontrola odkazu</span>
+                
               </span>
             </div>
 

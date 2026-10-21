@@ -24,7 +24,7 @@ export default function PdDescription({ product }) {
               // {product.name}
             </p>
             <h2 className="mt-4 font-heading text-2xl font-bold leading-tight tracking-[-.02em] text-[#0A1628] sm:text-3xl lg:text-[2.5rem]">
-              Reálné chlazení jemnou vodní mlhou
+              Vlastnosti a použití: {product.name}
             </h2>
           </div>
 

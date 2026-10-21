@@ -6,6 +6,7 @@ import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
 import BlogVideoShowcase from '@/components/blog/BlogVideoShowcase';
+import YouTubeChannelVideos from '@/components/blog/YouTubeChannelVideos';
 import BlogMagazinePortals from '@/components/blog/BlogMagazinePortals';
 import BlogVisualInspiration from '@/components/blog/BlogVisualInspiration';
 import BlogSocialSection from '@/components/blog/BlogSocialSection';
@@ -141,7 +142,7 @@ export default function Blog() {
           <div className="flex flex-col justify-between">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#0B6B7A]">MLŽIDLA® BLOG A NOVINKY</p>
-              <h1 className="mt-4 max-w-2xl font-heading text-5xl leading-[.95] tracking-[-.05em] text-[#081827] sm:text-6xl lg:text-7xl">Místa, kde se lépe dýchá.</h1>
+              <h1 className="mt-4 max-w-2xl font-heading text-5xl leading-[.95] tracking-[-.05em] text-[#081827] sm:text-6xl lg:text-7xl">Mlžítka, vodní mlha a ochlazování měst</h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-500">Novinky ze světa mlžítek, skutečné realizace, návrhová inspirace a praktické články pro města, architekty, sportoviště, školy i veřejný prostor.</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-2">
@@ -189,7 +190,7 @@ export default function Blog() {
       </section>
 
       {category === 'videa' ? (
-        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-7 lg:px-10"><BlogVideoShowcase /></div>
+        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-7 lg:px-10"><YouTubeChannelVideos /><BlogVideoShowcase /></div>
       ) : loading ? (
         <div className="flex justify-center py-24"><Loader size={26} className="animate-spin text-slate-300"/></div>
       ) : (
@@ -224,6 +225,7 @@ export default function Blog() {
             <div><p className="font-mono text-[10px] uppercase tracking-[.2em] text-[#0B6B7A]">Video a inspirace</p><h2 className="mt-2 font-heading text-3xl tracking-[-.035em] text-[#0A1628] sm:text-4xl">Mlžítka v pohybu.</h2></div>
             <Link to="/blog?sekce=videa" className="inline-flex items-center gap-2 text-sm font-semibold text-[#0B6B7A]">Všechna videa <ArrowRight size={14}/></Link>
           </div>
+          <YouTubeChannelVideos compact />
           <BlogVideoShowcase limit={6} />
         </section>
       )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { CheckCircle2, Download, ExternalLink, FileText, Loader2, RefreshCw, Sparkles } from 'lucide-react';
+import { Download, ExternalLink, FileText, Loader2, RefreshCw } from 'lucide-react';
 import KalkulatorRadekChat from '@/components/offers/KalkulatorRadekChat';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));

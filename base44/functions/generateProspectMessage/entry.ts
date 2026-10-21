@@ -68,7 +68,7 @@ Pravidla:
 Podpis, který se připojí:
 Ing. Radek Meduna · MLŽIDLA® / HolmTec · mlzidla.cz · +420 774 700 390`;
 
-    const llmResponse = await base44.integrations.Core.InvokeLLM({
+    const llmResponse = await base44.asServiceRole.integrations.Core.InvokeLLM({
       prompt,
       response_json_schema: {
         type: 'object',

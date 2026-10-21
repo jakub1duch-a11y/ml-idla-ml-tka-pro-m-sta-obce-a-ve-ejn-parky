@@ -36,7 +36,7 @@ export default function B2gHero() {
 
         <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.1 }} className="relative">
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e74e5233a_file_000000005214821096b8e88326082970.png"
+            src="/media/optimized/e74e5233a_file_000000005214821096b8e88326082970.webp"
             alt="Nerezové mlžítko LINEA chladí městskou promenádu v horkém dni"
             className="h-[300px] w-full object-cover shadow-[0_12px_32px_rgba(10,22,40,0.12)] sm:h-[400px] lg:h-[520px]"
             loading="eager" />

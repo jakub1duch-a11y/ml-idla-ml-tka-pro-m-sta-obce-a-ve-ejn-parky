@@ -47,7 +47,7 @@ function ProductStage({ product, reduced }) {
         aria-label={`${product.name} — video produktu`} /> :
         <ProductImage key={media} url={media} name={`${product.name} — fotografie ${view + 1}`} />}
       </motion.div>
-      {urls.length > 1 && <div className="mpe-photo-controls" aria-label={`Fotografie: ${product.name}`}>
+      {urls.length > 1 && <div className="mpe-photo-controls rounded-none" aria-label={`Fotografie: ${product.name}`}>
         {urls.map((url, index) => <button type="button" key={url}
         aria-label={`${isVideo(url) ? 'Video' : 'Fotografie'} ${index + 1} — ${product.name}`}
         aria-pressed={index === view} onClick={() => setView(index)}>
@@ -55,11 +55,11 @@ function ProductStage({ product, reduced }) {
         </button>)}
       </div>}
     </div>
-    <div className="mpe-story">
+    <div className="mpe-story rounded-none">
       <p className="mpe-eyebrow">Osvěžení má svůj tvar</p>
       <h3>{product.name}</h3>
       {product.short_description && <p className="mpe-description">{product.short_description}</p>}
-      <p className="mpe-invitation">Představte si jemnou mlhu právě ve vašem prostoru.</p>
+      <p className="mpe-invitation">Prohlédněte si mlžítko v provozu.</p>
       <div className="mpe-actions">
         {product.slug && <Link className="mpe-primary" to={`/produkt/${encodeURIComponent(product.slug)}`}>
           Prohlédnout produkt <ArrowRight size={17} aria-hidden="true" />
@@ -75,7 +75,7 @@ function ProductStage({ product, reduced }) {
 /** Uses the same filtered records as the card view; never invents product media or attributes. */
 export default function ProductExperience({ products = [], children }) {
   const [selected, setSelected] = useState(null);
-  const [mode, setMode] = useState('gallery');
+  const [mode, setMode] = useState('grid');
   const reduced = useReducedMotion();
   const regionId = useId();
   const index = Math.max(0, products.findIndex((product) => identity(product) === selected));
@@ -84,18 +84,25 @@ export default function ProductExperience({ products = [], children }) {
   const move = (step) => setSelected(identity(products[(index + step + products.length) % products.length]));
   return <div className="mpe" data-product-experience>
     <div className="mpe-toolbar">
-      <p>Objevte jednotlivé tvary</p>
-      {children && <div className="mpe-modes" aria-label="Zobrazení produktů">
+      <p>Všechny produkty ve vašem výběru</p>
+      <div className="mpe-modes" aria-label="Zobrazení produktů">
+        <button type="button" aria-pressed={mode === 'grid'} aria-controls={regionId} onClick={() => setMode('grid')}>
+          <LayoutGrid size={16} aria-hidden="true" /> Přehled produktů
+        </button>
         <button type="button" aria-pressed={mode === 'gallery'} aria-controls={regionId} onClick={() => setMode('gallery')}>
           <Images size={16} aria-hidden="true" /> Galerie
         </button>
-        <button type="button" aria-pressed={mode === 'grid'} aria-controls={regionId} onClick={() => setMode('grid')}>
-          <LayoutGrid size={16} aria-hidden="true" /> Přehled
-        </button>
-      </div>}
+      </div>
     </div>
     <div id={regionId}>
-      {mode === 'grid' ? children : <div role="region" aria-roledescription="karusel" aria-label="Galerie produktů">
+      {mode === 'grid' ? children || <div className="mpe-grid">
+        {products.map((item) => <article key={identity(item)} className="mpe-grid-card">
+          <ProductImage url={item.image_url} name={item.name} className="mpe-grid-image" />
+          <div className="mpe-grid-copy"><h3>{item.name}</h3>{item.short_description && <p>{item.short_description}</p>}
+            {item.slug && <Link to={`/produkt/${encodeURIComponent(item.slug)}`} className="mpe-grid-link">Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link>}
+          </div>
+        </article>)}
+      </div> : <div role="region" aria-roledescription="karusel" aria-label="Galerie produktů">
         <div className="mpe-feature">
           <ProductStage key={identity(product)} product={product} reduced={reduced} />
         </div>

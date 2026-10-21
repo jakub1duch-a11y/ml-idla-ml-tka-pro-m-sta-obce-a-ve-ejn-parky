@@ -57,7 +57,7 @@ export default function SmartSavingsSection() {
           <div className="bg-slate-50 border border-slate-200 rounded-3xl p-7 lg:p-8">
             <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-2">Nezávazně</p>
             <h3 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-2">Zanechte nám váš kontakt</h3>
-            <p className="text-sm text-slate-500 mb-6">Náš zkušený specialista se s vámi spojí a probere možnosti Smart systému pro váš prostor.</p>
+            <p className="text-sm text-slate-500 mb-6">Technik s vámi probere možnosti chytrého řízení mlžení, ovládání a nastavení provozu.</p>
             <SpecialistContactForm />
           </div>
         </div>

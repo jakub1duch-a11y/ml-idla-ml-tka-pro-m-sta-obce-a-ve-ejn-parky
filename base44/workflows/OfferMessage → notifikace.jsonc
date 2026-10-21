@@ -1,0 +1,40 @@
+{
+  "name": "OfferMessage \u2192 notifikace",
+  "description": "P\u0159i nov\u00e9 zpr\u00e1v\u011b od t\u00fdmu ode\u0161le klientovi e-mail. P\u0159i nov\u00e9 zpr\u00e1v\u011b od klienta ode\u0161le t\u00fdmu admin notifikaci do chatu.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "OfferMessage",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": null
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "offer_message_notification",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "dispatch_message_notification": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "dispatchOfferMessageNotification",
+            "args": {
+              "message_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Odeslat notifikaci zpr\u00e1vy",
+            "description": "Klient nebo t\u00fdm podle odes\u00edlatele"
+          }
+        }
+      }
+    ]
+  }
+}

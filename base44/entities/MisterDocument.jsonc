@@ -5,6 +5,10 @@
     "project_order_id": {
       "type": "string"
     },
+    "inquiry_id": {
+      "type": "string",
+      "description": "Vazba na zdrojovou popt\u00e1vku pro dokumenty v\u00e1zan\u00e9 na f\u00e1zi popt\u00e1vky"
+    },
     "client_email": {
       "type": "string"
     },
@@ -23,7 +27,7 @@
         "supla",
         "handover",
         "deposit",
-        "final_payment",
+        "final payment",
         "other"
       ]
     },
@@ -58,6 +62,15 @@
     "notes": {
       "type": "string",
       "maxLength": 2000
+    },
+    "checklist_data": {
+      "type": "string",
+      "description": "JSON s checklistem potvrzen\u00fdch a zb\u00fdvaj\u00edc\u00edch polo\u017eek",
+      "maxLength": 4000
+    },
+    "smart_module_included": {
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

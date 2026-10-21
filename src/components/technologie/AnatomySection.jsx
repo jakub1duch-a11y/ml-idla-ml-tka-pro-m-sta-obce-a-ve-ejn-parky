@@ -36,7 +36,7 @@ export default function AnatomySection() {
 
         <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
         className="rounded-2xl overflow-hidden border border-slate-200">
-          <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/eb03ffe38_file_00000000db9072469c9f2e9b61c49933.png"
+          <img src="/media/optimized/eb03ffe38_file_00000000db9072469c9f2e9b61c49933.webp"
 
           alt="Anatomie - Chladící mlžítko a mlžné systémy a prvky"
           className="w-full h-full object-cover aspect-[4/5]" />

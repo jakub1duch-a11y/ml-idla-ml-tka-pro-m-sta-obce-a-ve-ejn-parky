@@ -14,11 +14,11 @@
 // falling back to the SPA's catch-all index.html, so this works without any
 // server-side routing changes.
 //
-// NOTE: this currently only covers static routes (SEO_PAGES). Dynamic routes
-// (/produkt/:slug, /blog/:slug, /reference/:id) need DB access at build time
-// and are a follow-up.
+// Published product routes use a metadata snapshot so direct links work on
+// static hosts without a SPA rewrite. Product data is still loaded live by
+// the application. Blog and reference detail routes need separate snapshots.
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEO_PAGES } from '../src/lib/seo.js';
@@ -52,6 +52,8 @@ const LEGACY_REDIRECTS = {
   '/kolekce/art': '/zakazkova-mlzitka',
   '/mlzidla': '/mlzidla-mlzitka',
 };
+
+const productPages = JSON.parse(readFileSync(join(__dirname, '..', 'src', 'lib', 'product-page-meta.json'), 'utf-8'));
 
 const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
 
@@ -93,7 +95,7 @@ function renderPage(page) {
 }
 
 let count = 0;
-const pagesToRender = [...Object.values(SEO_PAGES), ...LOCALIZED_SEO_PAGES];
+const pagesToRender = [...Object.values(SEO_PAGES), ...LOCALIZED_SEO_PAGES, ...productPages.filter(page => /^\/produkt\/[\p{L}\p{N}-]+$/u.test(page.canonicalPath))];
 for (const page of pagesToRender) {
   if (!page.canonicalPath) continue;
 
@@ -135,4 +137,28 @@ for (const [fromPath, toPath] of Object.entries(LEGACY_REDIRECTS)) {
   redirectCount++;
 }
 
-console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s) and ${redirectCount} legacy redirect document(s).`);
+// Keep the sitemap in sync with all statically rendered canonical pages (including products/locales).
+// Merge the curated sitemap from public/ so established category/reference URLs are preserved.
+const sitemapPath = join(distDir, 'sitemap.xml');
+const existingSitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, 'utf-8') : '';
+const existingUrls = [...existingSitemap.matchAll(/<loc>\s*(https:\/\/mlzidla\.cz[^<]*)\s*<\/loc>/g)].map((match) => {
+  try { return new URL(match[1]).pathname; } catch { return null; }
+}).filter(Boolean);
+const excludedRedirectPaths = new Set(Object.keys(LEGACY_REDIRECTS).map((path) => path.replace(/\/+$/, '') || '/'));
+const canonicalPaths = new Set([
+  ...existingUrls,
+  ...pagesToRender.map((page) => page.canonicalPath).filter(Boolean),
+]);
+for (const path of excludedRedirectPaths) canonicalPaths.delete(path);
+const sitemapEntries = [...canonicalPaths]
+  .filter((path) => path.startsWith('/') && !path.includes('?') && !path.includes('#'))
+  .map((path) => {
+    const loc = new URL(path, BASE_URL).href;
+    const priority = path === '/' ? '1.0' : path.startsWith('/produkt/') ? '0.8' : '0.7';
+    return `  <url><loc>${loc.replace(/&/g, '&amp;')}</loc><changefreq>weekly</changefreq><priority>${priority}</priority></url>`;
+  })
+  .join('\n');
+writeFileSync(sitemapPath, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`);
+
+console.log(`[prerender-seo] wrote ${count} pre-rendered SEO page(s), ${redirectCount} legacy redirect document(s), and ${canonicalPaths.size} sitemap URL(s).`);
+

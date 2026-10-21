@@ -20,10 +20,10 @@ const FAMILY_VARIANTS = {
     eyebrow: 'STÉBLO® · samostatná produktová rodina',
     description: 'U STÉBLO® se nemění základní tvar výrobku. Varianty vznikají počtem a rozmístěním stejného prvku v prostoru.',
     items: [
-      { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/486dbd1bb_mlzitko-steblo-katalog2.png' },
-      { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/da36612c4_mlzitko-dve-stebla.png' },
-      { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/84aad697d_Steblogate03.png' },
-      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/8d9115025_BendyBack-to-Back00.png' },
+      { label: 'STÉBLO SINGLE', sub: '1 samostatný prvek', slug: 'mlzitko-steblo', image: '/media/optimized/486dbd1bb_mlzitko-steblo-katalog2.webp' },
+      { label: '2 STÉBLA', sub: '2 prvky · otevřený oblouk', slug: 'mlzitko-2-stebla', image: '/media/optimized/da36612c4_mlzitko-dve-stebla.webp' },
+      { label: 'STÉBLO GATE', sub: '2 prvky proti sobě', slug: 'brana-bendy', image: '/media/optimized/84aad697d_Steblogate03.webp' },
+      { label: 'STÉBLO BACK-TO-BACK', sub: '2 prvky · 360°', slug: 'bendy-back-to-back', image: '/media/optimized/8d9115025_BendyBack-to-Back00.webp' },
       { label: 'STÉBLO ALEJ', sub: 'více prvků v linii', slug: 'bendy-alej', image: '/media/optimized/f948bad15_generated_image.webp' },
     ],
   },
@@ -83,8 +83,8 @@ const FAMILY_VARIANTS = {
   'y-armist-tr60': {
     title: 'Varianty MLŽÍTKA Y-ARMIST',
     items: [
-      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png' },
-      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/93cd8ff63_MlzitkoY-ARMISTJ70_2.png' },
+      { label: 'TRUBKA', sub: 'TUBE · kulatý profil', slug: 'y-armist-tr60', image: '/media/optimized/3063e3653_MlzitkoY-ARMISTTR60_3.webp' },
+      { label: 'JEKL', sub: 'hranatý profil', slug: 'y-armist-j70', image: '/media/optimized/93cd8ff63_MlzitkoY-ARMISTJ70_2.webp' },
     ],
   },
   'y-armist-j70': { ref: 'y-armist-tr60' },
@@ -94,17 +94,16 @@ const FAMILY_VARIANTS = {
     description: 'Dvě architektonické varianty stejné průchozí mlžné brány.',
     items: [
       { label: 'GATE STRAIGHT', sub: 'rovná horní linie', slug: 'mlzna-brana-gate', variant: 'straight', image: '/media/optimized/bec7f86a9_generated_image.webp' },
-      { label: 'GATE V', sub: 'lomená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/7687747c7_MlznabranaGATE70V.png' },
+      { label: 'GATE V', sub: 'lomená varianta do V', slug: 'mlzna-brana-gate', variant: 'v', image: '/media/optimized/7687747c7_MlznabranaGATE70V.webp' },
     ],
   },
   'mlzitko-mrak': {
     title: 'Typ MLŽNÉHO MRAKU®',
     eyebrow: 'MRAK® · typ provedení',
-    description: 'Základ produktu zůstává stejný. Volíte typ provedení podle toho, kde má mlžný mrak fungovat — menší pro dětské hřiště, větší pro mlžiště a hřiště, nebo parkovou variantu pro otevřený prostor.',
+    description: 'Dvě velikosti organické nerezové skulptury. Malý h 1 600 mm je návrhové zadání, velký h 2 400 mm vychází z kalkulace MRAK 13R 2424.',
     items: [
-      { label: 'Dětské hřiště', sub: 'menší · pro dětské mlžení a školní areály', slug: 'mlzitko-mrak', variant: 'play', image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp' },
-      { label: 'Velký', sub: 'ideální pro mlžiště a hřiště', slug: 'mlzitko-mrak', variant: 'obrys', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
-      { label: 'Parkový', sub: 'parková promenáda a otevřený prostor', slug: 'mlzitko-mrak', variant: 'flow', image: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600' },
+      { label: 'MALÝ · h 1 600 mm', sub: 'návrhová výška · výrobní potvrzení nutné', slug: 'mlzitko-mrak', variant: 'maly', image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp' },
+      { label: 'VELKÝ · h 2 400 mm', sub: 'MRAK 13R 2424 · provedení dle kalkulace', slug: 'mlzitko-mrak', variant: 'velky', image: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600' },
     ],
   },
 };
@@ -156,7 +155,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
   const isMrak = product.slug === 'mlzitko-mrak';
   const mrakHref = (patch = {}) => {
     const next = new URLSearchParams(location.search);
-    if (!next.get('variant')) next.set('variant', 'obrys');
+    if (!next.get('variant')) next.set('variant', 'maly');
     Object.entries(patch).forEach(([key, value]) => next.set(key, value));
     return `/produkt/${product.slug}?${next.toString()}`;
   };
@@ -282,7 +281,7 @@ export default function ProductSignatureSystem({ product, showSignatures = true 
           <div className={`grid gap-3 ${variants.items.length <= 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 xl:grid-cols-5'}`}>
             {variants.items.map((item) => {
               const active = item.variant
-                ? currentVariant === item.variant || (product.slug === 'mlzitko-bendy' && !currentVariant && item.variant === 'single') || (isMrak && !currentVariant && item.variant === 'obrys')
+                ? currentVariant === item.variant || (product.slug === 'mlzitko-bendy' && !currentVariant && item.variant === 'single') || (isMrak && !currentVariant && item.variant === 'maly')
                 : item.slug === product.slug && !currentVariant;
               const href = isMrak && item.variant
                 ? mrakHref({ variant: item.variant })

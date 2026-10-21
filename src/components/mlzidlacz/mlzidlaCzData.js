@@ -16,7 +16,7 @@ export const PRODUCTS = [
       '/media/optimized/7016348c6_generated_image.webp',
       '/media/optimized/f436db8ab_generated_image.webp',
       '/media/optimized/0549d625f_generated_image.webp',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+      '/media/optimized/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.webp',
     ],
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 10 °C' },
@@ -46,11 +46,11 @@ export const PRODUCTS = [
     description: 'Architektonická mlžná brána z nerezové oceli — návštěvník jí doslova prochází skrz jemnou mlžnou stěnu.',
     description2: 'Vhodná pro vstupy na eventy, náměstí, obchodní centra i firemní areály.',
     longDescription: 'Mlžná brána vytváří dramatický vstupní zážitek — návštěvník prochází zdí jemné mlhy vytvořené řadou nerezových trysek po obvodu rámu. Čisté architektonické linie z broušené nerezové oceli zapadnou do moderního i historického prostředí. Systém je automaticky řízen časovým nebo pohybovým čidlem a lze jej doplnit o RGB podsvícení pro noční provoz.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
+    image: '/media/optimized/17e1fc843_MlznabranaGATE70U.webp',
     gallery: [
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
+      '/media/optimized/17e1fc843_MlznabranaGATE70U.webp',
       '/media/optimized/f6eb8b2ea_generated_image.webp',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+      '/media/optimized/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.webp',
       '/media/optimized/f436db8ab_generated_image.webp',
     ],
     quickSpecs: [
@@ -85,7 +85,7 @@ export const PRODUCTS = [
     gallery: [
       '/media/optimized/56eb29c84_generated_image.webp',
       '/media/optimized/f6eb8b2ea_generated_image.webp',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+      '/media/optimized/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.webp',
       '/media/optimized/0549d625f_generated_image.webp',
     ],
     quickSpecs: [
@@ -116,12 +116,12 @@ export const PRODUCTS = [
     description: 'Nerezová vysokotlaká tryska HT-LT rozptylující mikro-kapky 5–10 µm, které se odpaří dřív, než dopadnou.',
     description2: 'Základní stavební prvek každé mlžné instalace HolmTec.',
     longDescription: 'Tryska HT-LT je precizně obráběný nerezový komponent tvořící základ všech mlžných instalací HolmTec. Díky vysokému tlaku 70–100 bar rozptyluje vodu na mikro-kapky o velikosti 5–10 µm, které se odpaří dříve, než dopadnou na zem — výsledkem je suchá, příjemně chladivá mlha bez pocitu mokra. Tryska je vybavena systémem anti-drip proti odkapávání.',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+    image: '/media/optimized/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.webp',
     gallery: [
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.png',
+      '/media/optimized/6b51ec82a_19dca9db2_Social_Media_Video_Ads_A_close-up_captures_numerous_water_droplets_OIctonFe.webp',
       '/media/optimized/f436db8ab_generated_image.webp',
       '/media/optimized/0549d625f_generated_image.webp',
-      'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/17e1fc843_MlznabranaGATE70U.png',
+      '/media/optimized/17e1fc843_MlznabranaGATE70U.webp',
     ],
     quickSpecs: [
       { icon: Thermometer, label: 'Ochlazení', value: 'až o 6 °C' },

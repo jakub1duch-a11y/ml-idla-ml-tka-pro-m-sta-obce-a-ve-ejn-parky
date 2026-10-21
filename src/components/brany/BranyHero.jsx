@@ -25,7 +25,7 @@ export default function BranyHero() {
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.1 }}>
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ecaf9a72b_file_0000000075bc82108187190f4dd478c4.png"
+            src="/media/optimized/ecaf9a72b_file_0000000075bc82108187190f4dd478c4.webp"
             alt="Mlžná brána z nerezové oceli na vstupu k městskému koupališti"
             className="h-[300px] w-full object-cover shadow-[0_12px_32px_rgba(10,22,40,0.12)] sm:h-[420px] lg:h-[500px]"
             loading="eager" />

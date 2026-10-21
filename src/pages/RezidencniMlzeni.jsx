@@ -193,7 +193,7 @@ export default function RezidencniMlzeni() {
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(4,15,20,.9)_0%,rgba(4,15,20,.15)_65%,rgba(4,15,20,.28)_100%)]" />
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl items-end px-6 pb-14 lg:px-8 lg:pb-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={reveal} className="max-w-4xl text-white">
-            <SectionLabel>04 · Návrh pro váš prostor</SectionLabel>
+            <SectionLabel>04 · Návrh řešení a nabídka</SectionLabel>
             <h2 className="mt-5 font-heading text-5xl leading-[0.92] tracking-[-0.05em] sm:text-6xl lg:text-8xl">Pošlete fotografii.<br />My navrhneme mlhu.</h2>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/68 sm:text-lg">
               Stačí fotografie zahrady nebo terasy, přibližné rozměry a informace o přívodu vody. Připravíme vhodné rozmístění, vizuální náhled a doporučení dalšího postupu.

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus } from 'lucide-react';
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus, Droplets, Cpu, Wifi, TrainFront, Landmark, Hotel } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -10,7 +10,7 @@ import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
 
 const PRODUCT_LINKS = [
 { label: 'Všechny produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', image: '/media/optimized/cfc837b23_image.webp', featured: true },
-{ label: 'Mlžiště a mlhoviště', sub: 'Sestavy a zóny osvěžení', path: '/mlhoviste', image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp' },
+{ label: 'Mlžiště a mlhoviště', sub: 'Sestavy a zóny osvěžení', path: '/mlhoviste', image: '/media/categories/zones.webp' },
 { label: 'Městská kolekce', sub: 'Města a veřejný prostor', path: '/mestske-mlzitka', image: '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp' },
 { label: 'Zahradní kolekce', sub: 'Zahrady a terasy', path: '/rezidencni-mlzeni', image: '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp', crop: 'garden' },
 { label: 'Zakázková mlžítka', sub: 'Instalace na míru', path: '/zakazkova-mlzitka', image: '/media/optimized/68953132b_IMG_3524.webp' },
@@ -24,13 +24,23 @@ const USAGE_LINKS = [
 { icon: Building2, label: 'Města a obce', path: '/mlzitka-pro-mesta-obce', color: 'text-cyan' },
 { icon: Trees, label: 'Parky a hřiště', path: '/kategorie/parky-hriste', color: 'text-secondary' },
 { icon: Waves, label: 'Koupaliště a aquaparky', path: '/kategorie/koupaliste', color: 'text-secondary' },
+{ icon: TrainFront, label: 'Dopravní uzly a nádraží', path: '/kategorie/dopravni-uzly', color: 'text-secondary' },
+{ icon: Landmark, label: 'Veřejné instituce', path: '/kategorie/verejne-instituce', color: 'text-secondary' },
 { icon: Flower2, label: 'Rezidenční zahrady a terasy', path: '/rezidencni-mlzeni', color: 'text-accent' },
 { icon: Sparkles, label: 'Autorské instalace', path: '/kategorie/art-instalace', color: 'text-accent' },
 { icon: Baby, label: 'Školy a školky', path: '/kategorie/skoly-skolky-deti', color: 'text-secondary' },
 { icon: Palette, label: 'Pro architekty', path: '/kategorie/architekti', color: 'text-secondary' },
 { icon: Factory, label: 'Gastro, wellness a hotely', path: '/kategorie/komercni', color: 'text-accent' },
+{ icon: TrainFront, label: 'Sportoviště', path: '/kategorie/sportoviste', color: 'text-secondary' },
+{ icon: Hotel, label: 'Hotely a resorty', path: '/kategorie/hotely-resorty', color: 'text-accent' },
 { icon: Tent, label: 'Eventy a festivaly', path: '/kategorie/eventy', color: 'text-secondary' }];
 
+
+const TECHNOLOGY_LINKS = [
+  { icon: Cpu, label: 'Princip technologie', sub: 'Jak funguje mlžení a evaporace', path: '/jak-to-funguje' },
+  { icon: Droplets, label: 'Vodní mlha', sub: 'Princip, použití a návrh systému', path: '/vodni-mlha' },
+  { icon: Wifi, label: 'Automatizace', sub: 'Smart řízení a provozní scénáře', path: '/smart-ovladani' },
+];
 
 const INTERNATIONAL_NAV = {
   en: { products: 'Products', urban: 'Urban', technology: 'How it works', smart: 'Smart control', references: 'Projects', contact: 'Contact', quote: 'Get a quote' },
@@ -56,6 +66,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [technologyOpen, setTechnologyOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const location = useLocation();
   const locale = getLocaleFromPath(location.pathname);
@@ -63,6 +74,7 @@ export default function Header() {
   const homePath = ROUTE_MAP.home[locale];
   const inquiryPath = ROUTE_MAP.inquiry[locale];
   const timeoutRef = useRef(null);
+  const mobileTriggerRef = useRef(null);
   const lastScrollYRef = useRef(0);
 
   useEffect(() => {
@@ -76,18 +88,22 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setAccountOpen(false);}, [location]);
+  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setTechnologyOpen(false);setAccountOpen(false);}, [location]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
 
-  const openMega = () => { clearTimeout(timeoutRef.current); setMegaOpen(true); };
-  const closeMega = () => { timeoutRef.current = setTimeout(() => setMegaOpen(false), 150); };
-  const openInfo = () => { clearTimeout(timeoutRef.current); setInfoOpen(true); };
-  const closeInfo = () => { timeoutRef.current = setTimeout(() => setInfoOpen(false), 150); };
-  const toggleMobileMenu = () => { setMobileOpen((v) => !v); setMegaOpen(false); };
+  const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);};
+  const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
+  const openInfo = () => {clearTimeout(timeoutRef.current);setInfoOpen(true);};
+  const closeInfo = () => {timeoutRef.current = setTimeout(() => setInfoOpen(false), 150);};
+  const openTechnology = () => {clearTimeout(timeoutRef.current);setTechnologyOpen(true);};
+  const closeTechnology = () => {timeoutRef.current = setTimeout(() => setTechnologyOpen(false), 150);};
+  const toggleMobileMenu = () => {setMobileOpen((v) => !v);setMegaOpen(false);};
 
   return (
     <>
@@ -95,7 +111,7 @@ export default function Header() {
 
 
 
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-500 ease-out bg-[#000000]/[0.85] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-150 ease-out motion-reduce:transition-none bg-[#000000]/[0.9] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
@@ -117,11 +133,40 @@ export default function Header() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-white/10">Městská mlžítka</Link>
-            <Link to="/jak-to-funguje" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Jak fungují</Link>
+            <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-white/10 text-[hsl(var(--input))]">Městská mlžítka</Link>
+            <div className="relative" onMouseEnter={openTechnology} onMouseLeave={closeTechnology}>
+              <button
+                type="button"
+                onClick={() => setTechnologyOpen((value) => !value)}
+                aria-expanded={technologyOpen}
+                className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${technologyOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
+                Jak fungují <ChevronDown size={14} className={`transition-transform duration-200 ${technologyOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {technologyOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-1/2 top-full mt-1 w-80 -translate-x-1/2 rounded-2xl border border-white/15 bg-primary/95 p-3 text-white shadow-xl shadow-primary/30 backdrop-blur-2xl">
+                    <p className="px-3 pb-2 pt-1 font-mono text-[9px] uppercase tracking-[.16em] text-cyan-200/80">Technologie</p>
+                    {TECHNOLOGY_LINKS.map((link) => (
+                      <Link key={link.path} to={link.path} onClick={() => setTechnologyOpen(false)} className="group flex items-start gap-3 rounded-xl px-3 py-3 transition hover:bg-white/10">
+                        <link.icon size={17} className="mt-0.5 shrink-0 text-cyan-200 transition-colors group-hover:text-white" />
+                        <span>
+                          <strong className="block text-sm font-semibold text-white">{link.label}</strong>
+                          <span className="mt-0.5 block text-[11px] leading-4 text-white/55">{link.sub}</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
             <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
-            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all text-cyan-100 hover:text-white hover:bg-cyan-300/15">Blog a novinky</Link>
+            <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-cyan-300/15 text-[hsl(var(--input))]">Blog a novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
               <button className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
@@ -160,7 +205,7 @@ export default function Header() {
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2 rounded-none">
               <LanguageSwitcher />
               <div className="relative">
                 <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
@@ -174,18 +219,21 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to={inquiryPath}
-              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold rounded-none">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
               </Link>
             </div>
             
             <motion.button
               type="button"
+              ref={mobileTriggerRef}
               onClick={toggleMobileMenu}
               aria-label={mobileOpen ? 'Zavřít menu' : 'Otevřít menu'}
               aria-expanded={mobileOpen}
+              aria-haspopup="dialog"
+              aria-controls={mobileOpen ? 'mobile-site-menu' : undefined}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.94 }}
-              transition={{ type: 'spring', stiffness: 520, damping: 30 }}
+              transition={{ duration: 0.12, ease: 'easeOut' }}
               className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
               
               <motion.span
@@ -198,7 +246,7 @@ export default function Header() {
                   x: mobileOpen ? 0 : 0
                 }}
                 whileHover={!mobileOpen ? { x: 1.5 } : { rotate: 48 }}
-                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+                transition={{ duration: 0.12, ease: 'easeOut' }} />
               
               <motion.span
                 aria-hidden="true"
@@ -210,7 +258,7 @@ export default function Header() {
                   x: mobileOpen ? 0 : 3.5
                 }}
                 whileHover={!mobileOpen ? { width: 22, x: 0 } : { rotate: -48 }}
-                transition={{ type: 'spring', stiffness: 560, damping: 34, mass: 0.55 }} />
+                transition={{ duration: 0.12, ease: 'easeOut' }} />
               
               <motion.span
                 aria-hidden="true"
@@ -229,7 +277,9 @@ export default function Header() {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         productLinks={PRODUCT_LINKS}
+        triggerRef={mobileTriggerRef}
         locale={locale} />
+        
 
     </>);
 }

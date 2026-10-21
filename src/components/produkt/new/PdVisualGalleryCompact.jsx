@@ -1,185 +1,343 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Maximize2, Pause, Play, X, Droplets } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
+import './PdVisualGalleryCompact.css';
 
-const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
+const VIDEO_RE = /\.(mp4|webm|mov|m4v)([?#]|$)/i;
 const TECH_RE = /(technick|schema|schéma|vykres|výkres|montaz|montáž|edraw)/i;
-const isImage = (url = '') => Boolean(typeof url === 'string' && url && !VIDEO_RE.test(url) && !TECH_RE.test(url));
+const isImage = (url = '') => typeof url === 'string' && !!url.trim() && !VIDEO_RE.test(url) && !TECH_RE.test(url) && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url));
 const optimize = (url) => isImage(url) ? getOptimizedMediaUrl(url) : url;
+const dedupe = (items) => [...new Map(items.filter((item) => item && item.url).map((item) => [optimize(item.url.trim()), item])).values()];
+const clampIndex = (value, length) => Math.min(Math.max(value, 0), Math.max(0, length - 1));
 
-function dedupe(items) {
-  return [...new Map(items.filter((item) => item?.url).map((item) => [optimize(item.url.trim()), item])).values()];
-}
-
-function Fullscreen({ items, index, onClose, onChange, productName }) {
+function Fullscreen({ items, index, onClose, onChange, productName, reduced }) {
   const item = items[index];
+  const touchStart = useRef(null);
+  const dialogRef = useRef(null);
 
   useEffect(() => {
-    const previous = document.body.style.overflow;
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement;
     document.body.style.overflow = 'hidden';
+    dialogRef.current?.querySelector('button')?.focus({ preventScroll: true });
+
     const onKey = (event) => {
-      if (event.key === 'Escape') onClose();
-      if (event.key === 'ArrowLeft') onChange((index - 1 + items.length) % items.length);
-      if (event.key === 'ArrowRight') onChange((index + 1) % items.length);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key === 'ArrowLeft' && items.length > 1) {
+        event.preventDefault();
+        onChange((index - 1 + items.length) % items.length);
+      }
+      if (event.key === 'ArrowRight' && items.length > 1) {
+        event.preventDefault();
+        onChange((index + 1) % items.length);
+      }
+      if (event.key === 'Tab' && dialogRef.current) {
+        const controls = [...dialogRef.current.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+        if (!controls.length) {
+          event.preventDefault();
+          return;
+        }
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKey);
+      if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus({ preventScroll: true });
     };
   }, [index, items.length, onChange, onClose]);
 
+  if (!item) return null;
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020A11]/96 p-3 backdrop-blur-xl sm:p-6" role="dialog" aria-modal="true">
-      <button type="button" onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white">
-        <X size={20} />
-      </button>
-      <img src={optimize(item.url)} alt={item.alt || `${productName} — fotografie ${index + 1}`} className="max-h-[88vh] max-w-[94vw] rounded-[1.5rem] object-contain" />
-      {items.length > 1 && (
-        <>
-          <button type="button" onClick={() => onChange((index - 1 + items.length) % items.length)} aria-label="Předchozí fotografie" className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/92 text-[#07131D] sm:left-6">
-            <ChevronLeft size={22} />
-          </button>
-          <button type="button" onClick={() => onChange((index + 1) % items.length)} aria-label="Další fotografie" className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/92 text-[#07131D] sm:right-6">
-            <ChevronRight size={22} />
-          </button>
-        </>
-      )}
-      <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-2 text-sm text-white" aria-live="polite">{index + 1} / {items.length}</p>
+    <div ref={dialogRef} className="pdpc-lightbox" role="dialog" aria-modal="true" aria-label={'Galerie produktu ' + productName}
+      onTouchStart={(event) => { touchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }}
+      onTouchEnd={(event) => {
+        if (!touchStart.current || items.length < 2) return;
+        const dx = event.changedTouches[0].clientX - touchStart.current.x;
+        const dy = event.changedTouches[0].clientY - touchStart.current.y;
+        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.25) onChange((index + (dx < 0 ? 1 : -1) + items.length) % items.length);
+        touchStart.current = null;
+      }}>
+      <button type="button" onClick={onClose} aria-label="Zavřít galerii" className="pdpc-lightbox-close"><X size={20} /></button>
+      <div className="pdpc-lightbox-stage">
+        <AnimatePresence mode="wait" initial={false}>
+          {VIDEO_RE.test(item.url) ? <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="pdpc-lightbox-image" initial={reduced ? false : { opacity: 0, scale: 0.99, x: 10 }} animate={{ opacity: 1, scale: 1, x: 0 }} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.99, x: -10 }} transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }} /> : <motion.img key={item.url} src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className="pdpc-lightbox-image" initial={reduced ? false : { opacity: 0, scale: 0.99, x: 10 }} animate={{ opacity: 1, scale: 1, x: 0 }} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.99, x: -10 }} transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }} />}
+        </AnimatePresence>
+        {items.length > 1 && <>
+          <button type="button" onClick={() => onChange((index - 1 + items.length) % items.length)} aria-label="Předchozí fotografie" className="pdpc-lightbox-arrow is-left"><ChevronLeft size={22} /></button>
+          <button type="button" onClick={() => onChange((index + 1) % items.length)} aria-label="Další fotografie" className="pdpc-lightbox-arrow is-right"><ChevronRight size={22} /></button>
+        </>}
+        <div className="pdpc-lightbox-caption">
+          <span>{String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
+          <strong>{item.title || productName}</strong>
+          {item.caption && <small>{item.caption}</small>}
+        </div>
+      </div>
     </div>
+  );
+}
+
+function GalleryImage({ item, index, productName, onOpen, onFailed }) {
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => { setLoaded(false); setFailed(false); }, [item.url]);
+  return (
+    <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
+      {!loaded && !failed && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} />) :
+        <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
+    </button>
   );
 }
 
 export default function PdVisualGalleryCompact({ product }) {
   const [mediaFiles, setMediaFiles] = useState([]);
+  const [approvedVisuals, setApprovedVisuals] = useState([]);
+  const [failedUrls, setFailedUrls] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [lightbox, setLightbox] = useState(null);
+  const [autoPlay, setAutoPlay] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const galleryRef = useRef(null);
+  const swipe = useRef(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     let active = true;
     setMediaFiles([]);
+    setApprovedVisuals([]);
+    setFailedUrls([]);
+    setActiveIndex(0);
     setLightbox(null);
-    base44.entities.MediaFile
-      .filter({ product_slug: product.slug }, '-sort_order', 100)
-      .then((items = []) => { if (active) setMediaFiles(items || []); })
-      .catch(() => { if (active) setMediaFiles([]); });
+    setAutoPlay(!reduced);
+    Promise.all([
+      base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160).catch(() => []),
+      base44.entities.VisualizationAsset.filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 100).catch(() => []),
+    ]).then(([media, visuals]) => {
+      if (!active) return;
+      setMediaFiles((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
+    }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
     return () => { active = false; };
-  }, [product.slug]);
+  }, [product.slug, reduced]);
 
   const items = useMemo(() => {
     const admin = mediaFiles
-      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render'].includes(item.media_role))
-      .filter((item) => isImage(item.file_url))
-      .map((item) => ({
-        url: item.file_url,
-        title: item.media_role === 'realization' ? 'Reálná realizace' : item.media_role === 'render' ? 'Studiový render' : 'Produktový detail',
-        caption: item.media_role === 'realization' ? 'Produkt v reálném prostoru' : 'Detail produktu bez rušivého textu',
-        badge: item.media_role === 'realization' ? 'Realizace' : item.media_role === 'render' ? 'Studio' : 'Produkt',
-      }));
+      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'variant', 'video'].includes(item.media_role))
+      .filter((item) => (isImage(item.file_url) || VIDEO_RE.test(item.file_url || '')) && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group))
+      .map((item) => {
+        const role = item.media_role;
+        const label = role === 'realization' ? 'V prostoru' : role === 'render' ? 'Produkt' : role === 'detail' ? 'Detail' : role === 'reference' ? 'Použití' : role === 'variant' ? 'Varianta' : role === 'hero' ? 'Hlavní pohled' : 'Galerie';
+        return {
+          url: item.file_url,
+          title: VIDEO_RE.test(item.file_url || '') ? product.name + ' — video produktu' : label === 'V prostoru' ? product.name + ' — v prostoru' : product.name + ' — ' + label.toLowerCase(),
+          caption: VIDEO_RE.test(item.file_url || '') ? 'Video produktu' : role === 'realization' ? 'Pohled na řešení v okolním prostoru' : role === 'render' ? 'Čistý pohled na konstrukci a proporce' : role === 'detail' ? 'Materiál, spoje a drobné konstrukční prvky' : role === 'reference' ? 'Jak produkt působí v prostředí' : 'Fotografie konkrétního produktu',
+          badge: VIDEO_RE.test(item.file_url || '') ? 'Video' : label,
+          fit: ['realization', 'reference'].includes(role) ? 'cover' : 'contain',
+          poster: item.thumbnail_url || item.poster_url || undefined,
+          alt: product.name + ' — ' + label.toLowerCase()
+        };
+      });
 
     const curated = getCuratedProductMedia(product)
-      .filter((item) => isImage(item.url))
+      .filter((item) => isImage(item.url) && isProductMediaAllowed(product, item.url, item.title))
       .map((item) => ({
         url: item.url,
-        title: item.title || product.name,
-        caption: item.kind === 'visualization' ? 'Vizualizace umístění' : 'Produktová fotografie',
-        badge: item.kind === 'visualization' ? 'Vizualizace' : 'Fotografie',
+        title: item.title || (product.name + ' — fotografie'),
+        caption: item.caption || (item.kind === 'visualization' ? 'Pohled na produkt v prostředí' : 'Produktový detail'),
+        badge: item.kind === 'visualization' ? 'V prostoru' : 'Produkt',
+        fit: item.kind === 'visualization' ? 'cover' : 'contain',
+        alt: item.alt || (product.name + ' — ' + (item.title || 'fotografie produktu'))
       }));
 
     const productItems = [
-      product.hero_visual_verified && isImage(product.hero_product_image_url) && {
+      product.hero_visual_verified && isImage(product.hero_product_image_url) && isProductMediaAllowed(product, product.hero_product_image_url, product.name) && {
         url: product.hero_product_image_url,
-        title: 'Ověřený produktový vizuál',
-        caption: 'Referenční zobrazení skutečného produktu',
+        title: product.name + ' — produkt',
+        caption: 'Referenční pohled na skutečný produkt',
         badge: 'Produkt',
+        fit: 'contain',
+        alt: product.name + ' — produktový pohled'
       },
-      isImage(product.image_url) && {
+      isImage(product.image_url) && isProductMediaAllowed(product, product.image_url, product.name) && {
         url: product.image_url,
-        title: product.name,
-        caption: 'Hlavní produktová fotografie',
+        title: product.name + ' — hlavní fotografie',
+        caption: 'Hlavní pohled na produkt',
         badge: 'Produkt',
+        fit: 'contain',
+        alt: product.name + ' — hlavní fotografie'
       },
-      ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []).filter(isImage).map((url, index) => ({
+      ...[...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []), product.video_url].filter((url) => typeof url === 'string' && (isImage(url) || VIDEO_RE.test(url)) && isProductMediaAllowed(product, url)).map((url, index) => ({
         url,
-        title: index < 2 ? 'Produkt v detailu' : 'Produkt v prostoru',
-        caption: index < 2 ? 'Materiál, tvar a provedení' : 'Příklad použití a měřítka',
-        badge: index < 2 ? 'Detail' : 'Galerie',
-      })),
+        title: product.name + ' — ' + (VIDEO_RE.test(url) ? 'video produktu' : 'fotografie ' + (index + 1)),
+        caption: VIDEO_RE.test(url) ? 'Video produktu' : 'Produkt, detaily a provedení',
+        badge: VIDEO_RE.test(url) ? 'Video' : 'Galerie',
+        fit: 'contain',
+        alt: product.name + ' — ' + (VIDEO_RE.test(url) ? 'video produktu' : 'fotografie ' + (index + 1))
+      }))
     ].filter(Boolean);
 
-    return dedupe([...admin, ...curated, ...productItems]).slice(0, 8);
-  }, [mediaFiles, product]);
+    const approved = approvedVisuals.map((item) => ({
+      url: item.thumbnail_url || item.image_url,
+      title: item.title || (product.name + ' — pohled v prostoru'),
+      caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · ') || 'Umístění produktu v prostoru',
+      badge: 'V prostoru',
+      fit: 'cover',
+      alt: product.name + ' — pohled v prostoru'
+    }));
+
+    const primaryProductItems = productItems.slice(0, 2);
+    const additionalProductItems = productItems.slice(2);
+    return dedupe([...primaryProductItems, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems])
+      .filter((item) => !failedUrls.includes(item.url))
+      .slice(0, 12);
+  }, [mediaFiles, approvedVisuals, product, failedUrls]);
+
+  useEffect(() => { setActiveIndex((index) => clampIndex(index, items.length)); }, [items.length]);
+
+  const goTo = useCallback((index) => {
+    setActiveIndex(clampIndex(index, items.length));
+  }, [items.length]);
+
+  const move = useCallback((step) => {
+    if (items.length < 2) return;
+    setActiveIndex((current) => (current + step + items.length) % items.length);
+  }, [items.length]);
+
+  useEffect(() => {
+    const node = galleryRef.current;
+    if (!node || !('IntersectionObserver' in window)) {
+      setInView(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => setInView(entry.isIntersecting));
+    }, { threshold: 0.18 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [product.slug]);
+
+  useEffect(() => {
+    if (!autoPlay || !inView || reduced || hovered || focused || lightbox !== null || items.length < 2) return undefined;
+    const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % items.length), 3600);
+    return () => window.clearInterval(timer);
+  }, [autoPlay, inView, reduced, hovered, focused, lightbox, items.length]);
+
+  useEffect(() => {
+    const onVisibility = () => { if (document.hidden) setAutoPlay(false); };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
 
   if (!items.length) return null;
+  const index = clampIndex(activeIndex, items.length);
+  const item = items[index];
 
   return (
-    <section id="galerie" className="scroll-mt-24 !px-0 bg-white py-12 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-20">
-        <div className="grid gap-4 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
+    <section id="galerie" className="pdpc-section" aria-label={'Fotogalerie produktu ' + product.name}>
+      <div className="pdpc-container">
+        <motion.div className="pdpc-heading" initial={reduced ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }} transition={{ duration: reduced ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] }}>
           <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[.2em] text-[#0B8EC5]">Galerie produktu</p>
-            <h2 className="mt-3 max-w-3xl font-heading text-3xl font-black leading-[.98] tracking-[-.045em] text-[#07131D] sm:text-4xl lg:text-5xl">
-              Tvar. Detail. Reálný prostor.
-            </h2>
+            <p className="pdpc-eyebrow">Galerie produktu</p>
+            <h2>Tvar. Detail. Reálný prostor.</h2>
           </div>
-          <p className="max-w-xl text-sm leading-7 text-[#5A6B78] lg:justify-self-end">
-            Prohlédněte si produkt zblízka. Klepnutím fotografii zvětšíte na celý displej.
-          </p>
-        </div>
+          <p className="pdpc-intro">Velké fotografie, jemné přechody a rychlý přístup ke každému pohledu na konkrétní produkt.</p>
+        </motion.div>
 
-        <div className="mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-12 lg:auto-rows-[240px] xl:auto-rows-[280px] lg:gap-4 lg:overflow-visible lg:pb-0">
-          {items.slice(0, 3).map((item, index) => {
-            const desktop = index === 0
-              ? items.length === 1 ? 'lg:col-span-12 lg:row-span-2' : 'lg:col-span-7 lg:row-span-2'
-              : index === 1
-                ? items.length === 2 ? 'lg:col-span-5 lg:row-span-2' : 'lg:col-span-5 lg:row-span-1'
-                : index === 2
-                  ? 'lg:col-span-5 lg:row-span-1'
-                  : 'lg:hidden';
-            return (
-              <button
-                key={item.url}
-                type="button"
-                onClick={() => setLightbox(index)}
-                aria-label={`Zvětšit fotografii ${index + 1}: ${product.name}`}
-                className={`group relative aspect-[4/5] min-w-0 w-[86vw] shrink-0 snap-center overflow-hidden rounded-[1.5rem] bg-[#07131D] text-left sm:w-[64vw] lg:aspect-auto lg:w-full ${desktop}`}
-              >
-                <img src={optimize(item.url)} alt={`${product.name} — ${item.title}`} loading={index < 2 ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-700 motion-safe:group-hover:scale-[1.035] motion-reduce:transition-none" />
-                <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/18 bg-black/28 text-white backdrop-blur-md">
-                  <Maximize2 size={15} />
-                </span>
+        <motion.div ref={galleryRef} className="pdpc-gallery" data-reduced={reduced ? 'true' : 'false'}
+          data-autoplay={autoPlay && !reduced ? 'true' : 'false'}
+          onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+          onFocusCapture={() => setFocused(true)} onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+          }}
+          onTouchStart={(event) => { swipe.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }}
+          onTouchEnd={(event) => {
+            if (!swipe.current || items.length < 2) return;
+            const dx = event.changedTouches[0].clientX - swipe.current.x;
+            const dy = event.changedTouches[0].clientY - swipe.current.y;
+            if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy) * 1.2) move(dx < 0 ? 1 : -1);
+            swipe.current = null;
+          }}>
+          <div className="pdpc-main-frame">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={item.url} className="pdpc-slide"
+                initial={reduced ? false : { opacity: 0, x: 22, scale: 0.99 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={reduced ? { opacity: 0 } : { opacity: 0, x: -18, scale: 0.995 }}
+                transition={{ duration: reduced ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}>
+                <GalleryImage item={item} index={index} productName={product.name} onOpen={() => setLightbox(index)} onFailed={(url) => setFailedUrls((current) => current.includes(url) ? current : [...current, url])} />
+              </motion.div>
+            </AnimatePresence>
+            {items.length > 1 && <>
+              <button type="button" className="pdpc-arrow pdpc-arrow-left" aria-label="Předchozí fotografie" onClick={() => move(-1)}><ChevronLeft size={20} /></button>
+              <button type="button" className="pdpc-arrow pdpc-arrow-right" aria-label="Další fotografie" onClick={() => move(1)}><ChevronRight size={20} /></button>
+            </>}
+            <div className="pdpc-counter" aria-live="polite" aria-atomic="true">
+              {String(index + 1).padStart(2, '0')} <span>/</span> {String(items.length).padStart(2, '0')}
+            </div>
+            {items.length > 1 && autoPlay && !reduced && !hovered && !focused && <div key={item.url} className="pdpc-timer"><span /></div>}
+          </div>
 
+          <div className="pdpc-caption-row">
+            <div className="pdpc-caption">
+              <span>{item.badge || 'Produkt'}</span>
+              <strong>{item.title || product.name}</strong>
+              {item.caption && <p>{item.caption}</p>}
+            </div>
+            <div className="pdpc-controls">
+              {items.length > 1 && <button type="button" onClick={() => setAutoPlay((value) => !value)} aria-pressed={autoPlay && !reduced}
+                aria-label={autoPlay && !reduced ? 'Zastavit automatické přehrávání' : 'Spustit automatické přehrávání'} className="pdpc-play">
+                {autoPlay && !reduced ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
+                <span>{autoPlay && !reduced ? 'Pozastavit' : 'Přehrávat'}</span>
+              </button>}
+              <button type="button" className="pdpc-expand" onClick={() => setLightbox(index)} aria-label="Otevřít fotografii na celou obrazovku">
+                <Maximize2 size={15} aria-hidden="true" /><span>Zvětšit</span>
               </button>
-            );
-          })}
-        </div>
-
-        {items.length > 3 && (
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {items.slice(3).map((item, index) => {
-              const realIndex = index + 3;
-              return (
-                <button key={item.url} type="button" onClick={() => setLightbox(realIndex)} aria-label={`Zvětšit fotografii ${realIndex + 1}: ${product.name}`} className="group relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-[#07131D]">
-                  <img src={optimize(item.url)} alt={`${product.name} — další fotografie`} loading="lazy" className="h-full w-full object-cover transition duration-500 motion-safe:group-hover:scale-[1.04] motion-reduce:transition-none" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#07131D]/65 to-transparent" />
-                  <span className="absolute bottom-3 left-3 text-[10px] font-semibold text-white">{item.badge}</span>
-                </button>
-              );
-            })}
+            </div>
           </div>
-        )}
-      </div>
 
-      {lightbox !== null && items[lightbox] && (
-        <Fullscreen
-          items={items}
-          index={lightbox}
-          productName={product.name}
-          onClose={() => setLightbox(null)}
-          onChange={setLightbox}
-        />
-      )}
+          {items.length > 1 && <>
+            <div className="pdpc-thumbnail-track" role="group" aria-label={'Výběr fotografií produktu ' + product.name}>
+              {items.map((thumbnail, thumbIndex) => (
+                <button type="button" key={thumbnail.url} className="pdpc-thumbnail"
+                  aria-label={'Zobrazit fotografii ' + (thumbIndex + 1) + ': ' + (thumbnail.title || product.name)}
+                  aria-pressed={thumbIndex === index} onClick={() => { goTo(thumbIndex); setAutoPlay(false); }}>
+                  <span className="pdpc-thumbnail-img">{VIDEO_RE.test(thumbnail.url) ? <video src={thumbnail.url} poster={thumbnail.poster} muted playsInline preload="metadata" aria-hidden="true" /> : <img src={optimize(thumbnail.url)} alt="" loading="lazy" decoding="async" />}</span>
+                  <span className="pdpc-thumbnail-label">{thumbnail.badge || ('Pohled ' + (thumbIndex + 1))}</span>
+                </button>
+              ))}
+            </div>
+            <div className="pdpc-dots" role="group" aria-label="Rychlý výběr snímku">
+              {items.map((thumbnail, thumbIndex) => (
+                <button key={thumbnail.url} type="button" onClick={() => { goTo(thumbIndex); setAutoPlay(false); }}
+                  aria-label={'Přejít na fotografii ' + (thumbIndex + 1)} aria-pressed={thumbIndex === index} />
+              ))}
+            </div>
+          </>}
+        </motion.div>
+      </div>
+      {lightbox !== null && items[lightbox] && <Fullscreen items={items} index={lightbox} productName={product.name}
+        onClose={() => setLightbox(null)} onChange={(nextIndex) => setLightbox(clampIndex(nextIndex, items.length))} reduced={!!reduced} />}
     </section>
   );
 }

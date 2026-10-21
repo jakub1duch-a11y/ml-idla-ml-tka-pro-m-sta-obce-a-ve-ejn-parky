@@ -61,7 +61,7 @@ export default function Partnerstvi() {
       <div className="relative min-h-[80vh] flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/742398fb8_d2d38c7f9_Copilot_20260507_020118.png"
+            src="/media/optimized/742398fb8_d2d38c7f9_Copilot_20260507_020118.webp"
             alt="Mlžná brána HolmTec pro veřejné prostory"
             className="w-full h-full object-cover object-center"
           />

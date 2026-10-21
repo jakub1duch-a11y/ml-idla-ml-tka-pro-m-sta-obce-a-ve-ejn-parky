@@ -3,7 +3,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawn } from 'node:child_process';
 import sharp from 'sharp';
-import ffmpegPath from 'ffmpeg-static';
+import { ffmpegPath } from './ffmpeg-path.mjs';
 
 const APP_ID = '6a3ee88c10959cd3588c4d68';
 const MODE = process.argv[2] || 'images'; // images | videos | report
@@ -12,7 +12,8 @@ const SRC_DIR = path.resolve('src');
 const OUT_DIR = path.resolve('public/media/optimized');
 const MANIFEST_PATH = path.join(OUT_DIR, 'manifest.json');
 const TMP_DIR = await fs.mkdtemp(path.join(os.tmpdir(), 'mlzidla-media-'));
-const MEDIA_RE = new RegExp(`https://media\\.base44\\.com/(images|videos)/public/${APP_ID}/[^'\\\"\\s)]+`, 'g');
+const MEDIA_RE = /https:\/\/media\.base44\.com\/(images|videos)\/public\/[^/]+\/[^'\"\s)]+/g;
+const BASE44_API_IMAGE_RE = /https:\/\/base44\.app\/api\/apps\/[^/]+\/files\/mp\/public\/[^/]+\/[^'\"\s)]+\.(?:png|jpe?g|webp)(?:\?[^'\"\s)]*)?/gi;
 const TEXT_EXTS = new Set(['.js','.jsx','.ts','.tsx','.css','.html','.json','.md']);
 await fs.mkdir(OUT_DIR, { recursive: true });
 
@@ -55,8 +56,9 @@ const refs = new Set();
 for (const file of files) {
   const txt = await fs.readFile(file, 'utf8');
   for (const m of txt.matchAll(MEDIA_RE)) refs.add(m[0]);
+  for (const m of txt.matchAll(BASE44_API_IMAGE_RE)) refs.add(m[0]);
 }
-const images = [...refs].filter(u => u.includes('/images/'));
+const images = [...refs].filter(u => u.includes('/images/') || /\/files\/mp\/public\//i.test(u));
 const videos = [...refs].filter(u => u.includes('/videos/'));
 const map = new Map();
 const manifest = await loadManifest();
@@ -72,11 +74,10 @@ async function processImage(url) {
   try {
     const before = await download(url, input);
     const meta = await sharp(input).metadata();
-    if (meta.hasAlpha) {
-      if (!manifest.skippedTransparent.some(x => x.url === url)) manifest.skippedTransparent.push({ url, width: meta.width, height: meta.height, format: meta.format });
-      return;
-    }
-    await sharp(input).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true }).webp({ quality: 88, effort: 5, smartSubsample: true }).toFile(output);
+    const pipeline = sharp(input).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true });
+    // Keep transparent product cut-outs and overlays intact. Lossless WebP supports alpha.
+    if (meta.hasAlpha) await pipeline.webp({ lossless: true, effort: 6 }).toFile(output);
+    else await pipeline.webp({ quality: 88, effort: 5, smartSubsample: true }).toFile(output);
     const stat = await fs.stat(output);
     map.set(url, `/media/optimized/${outputName}`);
     manifest.images = manifest.images.filter(x => x.url !== url);
@@ -124,7 +125,8 @@ const remainingRefs = new Set();
 for (const file of files) {
   const txt = await fs.readFile(file, 'utf8');
   for (const m of txt.matchAll(MEDIA_RE)) remainingRefs.add(m[0]);
+  for (const m of txt.matchAll(BASE44_API_IMAGE_RE)) remainingRefs.add(m[0]);
 }
-const remainingImages = [...remainingRefs].filter(u => u.includes('/images/') && path.extname(new URL(u).pathname).toLowerCase() !== '.webp');
+const remainingImages = [...remainingRefs].filter(u => (u.includes('/images/') || /\/files\/mp\/public\//i.test(u)) && path.extname(new URL(u).pathname).toLowerCase() !== '.webp');
 const remainingVideos = [...remainingRefs].filter(u => u.includes('/videos/') && path.extname(new URL(u).pathname).toLowerCase() !== '.webm');
 console.log(JSON.stringify({ mode: MODE, convertedNow: map.size, changedFiles, totalConvertedImages: manifest.images.length, transparentKept: manifest.skippedTransparent.length, totalConvertedVideos: manifest.videos.length, failed: manifest.failed.length, remainingImages: remainingImages.length, remainingVideos: remainingVideos.length }, null, 2));

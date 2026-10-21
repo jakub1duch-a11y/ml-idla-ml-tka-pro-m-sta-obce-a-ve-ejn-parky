@@ -7,32 +7,32 @@ const featured = [
   {
     name: 'Vertigo',
     desc: 'Nerezová šroubovice pnoucí se do výšky 3m.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/17b6b7c94_generated_image.png',
+    image: '/media/optimized/17b6b7c94_generated_image.webp',
   },
   {
     name: 'GATE 80 — Vstupní mlžná brána',
     desc: 'Spektakulární vstupní brána s 8 tryskami.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/e03a84d77_L-Mltko_GATE_60_3R-1.png',
+    image: '/media/optimized/e03a84d77_L-Mltko_GATE_60_3R-1.webp',
   },
   {
     name: 'Mlžná brána - Rainbow GATE',
     desc: 'Barevný půlkruh s jemnou mlhou po obvodu — mlžiště nejen pro děti.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/7ee43ab21_generated_image.png',
+    image: '/media/optimized/7ee43ab21_generated_image.webp',
   },
   {
     name: 'Mlžný Slunečník',
     desc: 'Skládací nerezová konstrukce "MLŽÍTKO" pro eventy i soukromé akce.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/bf2ac4965_generated_image.png',
+    image: '/media/optimized/bf2ac4965_generated_image.webp',
   },
   {
     name: 'Icespot - Mlžný sloup',
     desc: 'Mlžný sloup je jemnou mlhou ideálně pro sedící osoby. Vandal-proof, celoroční instalace.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/b75d2a5bb_generated_image.png',
+    image: '/media/optimized/b75d2a5bb_generated_image.webp',
   },
   {
     name: 'mlžné brány MARATON',
     desc: 'Modulární tunel MARATON pro ochlazení velkých davů na akcích.',
-    image: 'https://media.base44.com/images/public/69f87b0204346ce73cee73b1/3a39f6017_generated_image.png',
+    image: '/media/optimized/3a39f6017_generated_image.webp',
   },
 ];
 
@@ -50,9 +50,12 @@ export default function FeaturedProducts() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((p, i) => (
             <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-              <Link to="/kolekce" className="group block bg-card_bg rounded-2xl overflow-hidden border border-white/10 hover:border-cyan/40 transition-all duration-300">
-                <div className="aspect-video overflow-hidden">
-                  <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <Link to="/kolekce" className="group block overflow-hidden rounded-[1.75rem] border border-white/10 bg-card_bg transition-all duration-300 hover:border-cyan/40">
+                <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(circle_at_72%_18%,#ffffff_0%,#e8f7f9_38%,#cee6eb_100%)]">
+                  <div aria-hidden className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(7,94,112,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(7,94,112,.1)_1px,transparent_1px)] [background-size:3rem_3rem]" />
+                  <img src={p.image} alt={p.name} className="relative z-10 h-full w-full object-contain p-5 transition-transform duration-500 group-hover:scale-[1.035]" />
+                  <img aria-hidden="true" alt="" src="/media/ui/product-studio-motion.gif" loading="lazy" className="pointer-events-none absolute inset-0 h-full w-full object-cover mix-blend-screen opacity-25" />
+                  <span className="absolute left-4 top-4 z-20 rounded-full border border-white/70 bg-white/75 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-[#075D70] shadow-sm backdrop-blur">Studio preview</span>
                 </div>
                 <div className="p-5">
                   <h3 className="font-normal text-white mb-1 group-hover:text-cyan transition-colors">{p.name}</h3>

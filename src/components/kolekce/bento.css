@@ -1,0 +1,92 @@
+/* Asymetrický Bento grid katalogu — MLŽIDLA® brand system */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .bento-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: minmax(150px, auto); }
+  .bento-lg { grid-column: span 6; grid-row: span 2; }
+  .bento-wide { grid-column: span 6; }
+  .bento-std { grid-column: span 3; }
+}
+@media (min-width: 1024px) {
+  .bento-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 140px; gap: 18px; }
+  .bento-lg { grid-column: span 6; grid-row: span 4; }
+  .bento-wide { grid-column: span 6; grid-row: span 2; }
+  .bento-std { grid-column: span 3; grid-row: span 3; }
+  .bento-tall { grid-column: span 3; grid-row: span 4; }
+}
+
+.bento-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 340px;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: 28px;
+  color: var(--brand-secondary);
+  transition: border-color .25s ease, transform .25s ease, box-shadow .35s ease;
+}
+.bento-card:hover {
+  border-color: var(--brand-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(10, 22, 40, .12);
+}
+.bento-card .bento-media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 72% 22%, #fff 0%, var(--brand-muted) 55%, #d4ebf1 100%);
+}
+.bento-card .bento-media img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.bento-card:hover .bento-media img { transform: scale(1.04); }
+.bento-card .bento-body { padding: 18px 22px 20px; }
+@media (max-width: 639px) {
+  .bento-card .bento-media { flex: none; aspect-ratio: 4 / 3; }
+  .bento-card.is-dark .bento-media { aspect-ratio: 1 / 1; }
+}
+.bento-eyebrow { font-family: var(--brand-font-body); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-cyan-dark); }
+.bento-title { font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-bold); font-size: 20px; line-height: 1.1; letter-spacing: var(--brand-font-heading-letter-spacing); color: var(--brand-secondary); margin: 8px 0 0; }
+.bento-desc { font-size: 13.5px; line-height: 1.5; color: var(--brand-muted-foreground); margin: 8px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.bento-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.bento-chip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-semibold); font-size: 11.5px; color: var(--brand-primary); background: var(--brand-muted); border: 1px solid var(--brand-border); border-radius: 999px; padding: 4px 10px; }
+.bento-cta { display: inline-flex; align-items: center; gap: 6px; font-family: var(--brand-font-heading); font-weight: var(--brand-font-weight-semibold); font-size: 13px; color: var(--brand-primary); transition: letter-spacing .2s ease, color .2s ease; }
+.bento-card:hover .bento-cta { color: var(--brand-cyan-dark); letter-spacing: .02em; }
+.bento-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+.bento-quote { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; background: var(--brand-accent); color: var(--brand-secondary); transition: background .2s ease, color .2s ease, transform .1s ease; }
+.bento-quote:hover { background: var(--brand-primary); color: var(--brand-on-primary); }
+.bento-quote:active { transform: translateY(1px); }
+.bento-menu { position: absolute; top: 14px; right: 14px; z-index: 5; }
+
+/* Velká tmavá dlaždice (hero produkt) */
+.bento-card.is-dark { background: var(--brand-secondary); border-color: transparent; color: var(--brand-on-primary); }
+.bento-card.is-dark .bento-media { background: radial-gradient(circle at 70% 25%, #1b4a66 0%, #0f2e48 55%, var(--brand-secondary) 100%); }
+.bento-card.is-dark .bento-eyebrow { color: var(--brand-accent); }
+.bento-card.is-dark .bento-title { color: var(--brand-on-primary); font-size: 30px; }
+.bento-card.is-dark .bento-desc { color: #B9CBD4; font-size: 14.5px; -webkit-line-clamp: 3; }
+.bento-card.is-dark .bento-chip { color: var(--brand-on-primary); background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .16); }
+.bento-card.is-dark .bento-cta { color: var(--brand-accent); }
+.bento-card.is-dark:hover .bento-cta { color: var(--brand-on-primary); }
+.bento-card.is-dark:hover { border-color: transparent; }
+
+/* Světlá tónovaná dlaždice */
+.bento-card.is-mist { background: var(--brand-muted); }
+
+/* Široká dlaždice: obrázek vlevo, text vpravo */
+@media (min-width: 640px) {
+  .bento-card.is-wide { flex-direction: row; }
+  .bento-card.is-wide .bento-media { flex: 1 1 52%; }
+  .bento-card.is-wide .bento-body { flex: 1 1 48%; display: flex; flex-direction: column; justify-content: center; padding: 24px 28px; }
+  .bento-card.is-wide .bento-title { font-size: 24px; }
+}
+@media (min-width: 1024px) { .bento-card { min-height: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-card, .bento-card .bento-media img { transition: none; }
+  .bento-card:hover { transform: none; }
+}

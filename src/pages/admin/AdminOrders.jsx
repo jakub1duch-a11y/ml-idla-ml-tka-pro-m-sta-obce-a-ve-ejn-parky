@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import {
-  Factory, ReceiptText, Search, RefreshCw, CheckCircle2, Clock3, PackageCheck,
+  Factory, ReceiptText, Search, RefreshCw, CheckCircle2, PackageCheck,
   AlertTriangle, CreditCard, CalendarDays, ExternalLink, Loader2, Filter,
 } from 'lucide-react';
 

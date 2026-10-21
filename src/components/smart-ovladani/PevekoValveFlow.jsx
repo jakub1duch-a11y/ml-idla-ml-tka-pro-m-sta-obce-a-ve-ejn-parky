@@ -1,83 +1,47 @@
-import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Droplets, Filter, Gauge, Smartphone, Waves, Wifi, Power, ShieldCheck } from 'lucide-react';
+import React from 'react';
+import useMotionPlayback from '@/components/motion/useMotionPlayback';
+import { motion } from 'framer-motion';
+import { Pause, Play } from 'lucide-react';
 
-const FLOW = [
-  { icon: Droplets, label: 'Přívod vody', note: 'vodovodní řád' },
-  { icon: Filter, label: 'Filtrace', note: 'ochrana trysek' },
-  { icon: Gauge, label: 'PEVEKO', note: 'ventilová zóna' },
-  { icon: Smartphone, label: 'SUPLA', note: 'povel / scénář' },
-  { icon: Waves, label: 'MLŽÍTKO', note: 'jemná mlha' },
-];
-
-export default function PevekoValveFlow() {
-  const [open, setOpen] = useState(true);
-  const reduced = useReducedMotion();
+export default function PevekoValveFlow({ theme = 'dark' }) {
+  const { ref, reduced, paused, setPaused, playing } = useMotionPlayback();
+  const extension = playing ? '.gif' : '-poster.webp';
+  const dark = theme === 'dark';
 
   return (
-    <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-[#071A2F] text-white shadow-xl">
-      <div className="flex flex-col gap-5 border-b border-white/10 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7">
-        <div>
-          <div className="flex items-center gap-2 text-cyan-300">
-            <Wifi size={15} />
-            <p className="font-mono text-[10px] uppercase tracking-[.18em]">PEVEKO + SUPLA · interaktivní princip</p>
-          </div>
-          <h3 className="mt-2 font-heading text-xl font-semibold sm:text-2xl">Od povelu v aplikaci k otevření vodní zóny.</h3>
+    <figure ref={ref} className="min-w-0">
+      <div className="relative isolate overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#09223a]/35 shadow-[0_24px_70px_rgba(0,0,0,.22)]">
+        <div className="pointer-events-none absolute inset-x-4 top-4 z-10 flex items-center justify-between gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-[#071a2f]/85 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.16em] text-white shadow-lg backdrop-blur-xl">
+            <motion.span animate={playing ? { opacity: [0.42, 1, 0.42], scale: [0.78, 1.25, 0.78] } : false} transition={{ duration: 1.45, repeat: Infinity }} className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(103,232,249,.95)]" />
+            Živá simulace
+          </span>
+          <span className="rounded-full bg-white/12 px-3 py-1.5 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-cyan-100 backdrop-blur">{playing ? 'Wi‑Fi / online' : 'Pozastaveno'}</span>
         </div>
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-pressed={open}
-          className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold transition ${open ? 'border-cyan-300/45 bg-cyan-300/12 text-cyan-100' : 'border-white/15 bg-white/[.06] text-white/75 hover:bg-white/[.1]'}`}
-        >
-          <Power size={15} /> {open ? 'Ventil otevřen' : 'Ventil zavřen'}
-        </button>
-      </div>
-
-      <div className="relative px-4 py-7 sm:px-7 sm:py-9">
-        <div className="pointer-events-none absolute left-[8%] right-[8%] top-[63px] hidden h-px bg-white/12 lg:block" aria-hidden="true" />
-        {open && !reduced && (
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute left-[8%] top-[59px] hidden h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,.8)] lg:block"
-            animate={{ left: ['8%', '91%'], opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
-          />
+        {playing && (
+          <>
+            <motion.div aria-hidden="true" initial={{ x: '-130%', opacity: 0 }} animate={{ x: '170%', opacity: [0, 0.58, 0] }} transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }} className="pointer-events-none absolute inset-y-0 z-[1] w-[28%] -skew-x-12 bg-gradient-to-r from-transparent via-cyan-100/30 to-transparent blur-sm" />
+            <motion.div aria-hidden="true" animate={{ opacity: [0.25, 0.8, 0.25], scaleX: [0.4, 1, 0.55] }} transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }} className="pointer-events-none absolute bottom-5 left-5 z-10 h-1 w-24 origin-left rounded-full bg-cyan-300/90 shadow-[0_0_18px_rgba(103,232,249,.9)]" />
+          </>
         )}
-
-        <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
-          {FLOW.map(({ icon: Icon, label, note }, index) => {
-            const isValve = label === 'PEVEKO';
-            const active = open || index < 2;
-            return (
-              <motion.div
-                key={label}
-                animate={reduced ? undefined : { opacity: active ? 1 : .52, y: active ? 0 : 2 }}
-                className={`relative min-h-[132px] rounded-2xl border p-4 ${isValve ? (open ? 'border-cyan-300/55 bg-cyan-300/12' : 'border-white/12 bg-white/[.04]') : 'border-white/10 bg-white/[.045]'}`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-cyan-300/12 text-cyan-200' : 'bg-white/[.05] text-white/45'}`}><Icon size={18} /></span>
-                  <span className="font-mono text-[9px] text-white/40">0{index + 1}</span>
-                </div>
-                <p className="mt-5 text-sm font-semibold text-white">{label}</p>
-                <p className="mt-1 text-xs leading-5 text-white/62">{note}</p>
-                {isValve && <span className={`mt-3 inline-flex rounded-full px-2 py-1 font-mono text-[9px] font-semibold ${open ? 'bg-emerald-300/12 text-emerald-200' : 'bg-white/[.06] text-white/50'}`}>{open ? 'OTEVŘENO' : 'ZAVŘENO'}</span>}
-              </motion.div>
-            );
-          })}
-        </div>
-
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[.035] p-4">
-            <div className="flex items-center gap-2 text-white/80"><Smartphone size={15} className="text-cyan-200"/><strong className="text-sm">SUPLA</strong></div>
-            <p className="mt-2 text-xs leading-5 text-white/62">U odpovídajícího PEVEKO modelu lze ventil přes Wi‑Fi připojit do systému SUPLA a vzdáleně otevřít nebo zavřít.</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[.035] p-4">
-            <div className="flex items-center gap-2 text-white/80"><ShieldCheck size={15} className="text-cyan-200"/><strong className="text-sm">Podle konkrétní sestavy</strong></div>
-            <p className="mt-2 text-xs leading-5 text-white/62">Záložní baterie, záplavová čidla, GSM nebo další dohledové funkce jsou variantní. Do projektu je uvádíme jen po ověření zvoleného modelu.</p>
-          </div>
+        <picture key={playing ? 'peveko-motion' : 'peveko-poster'} className="relative block">
+          <source media="(max-width: 639px)" srcSet={`/media/smart/mlzidla-peveko-wifi-flow-v1-mobile${extension}`} />
+          <img src={`/media/smart/mlzidla-peveko-wifi-flow-v1-desktop${extension}`} width="720" height="600" alt="Chytrý ventil PEVEKO s ilustračním povelem z mobilu přes SUPLA a Wi-Fi. Proudění vody se spustí a zastaví podle stavu ovládání." className="aspect-[3/4] h-auto w-full object-contain sm:aspect-[6/5]" loading="lazy" decoding="async" />
+        </picture>
+        <div className="pointer-events-none absolute bottom-4 right-4 z-10 rounded-xl border border-white/10 bg-[#071a2f]/78 px-3 py-2 shadow-lg backdrop-blur-xl">
+          <p className="font-mono text-[8px] font-bold uppercase tracking-[.16em] text-cyan-200">Signál → ventil → voda</p>
         </div>
       </div>
-    </div>
+      <figcaption className={`mt-3 flex flex-wrap items-center justify-between gap-3 px-2 text-xs leading-5 ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
+        <span className="inline-flex items-center gap-2"><span className={playing ? 'h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,.9)]' : 'h-2 w-2 rounded-full bg-slate-400'} />Princip řízení · ilustrační proudění vody</span>
+        {reduced === false && (
+          <button type="button" onClick={() => setPaused(value => !value)} aria-pressed={paused} className={`inline-flex min-h-11 items-center gap-2 rounded-full px-4 font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${dark ? 'bg-white/10 text-white hover:bg-white/15 focus-visible:ring-offset-[#071a2f]' : 'bg-white text-cyan-900 shadow-sm hover:bg-cyan-50'}`}>
+            {paused ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}
+            {paused ? 'Přehrát ukázku' : 'Zastavit ukázku'}
+          </button>
+        )}
+      </figcaption>
+    </figure>
   );
 }
+

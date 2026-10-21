@@ -1,122 +1,143 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { getStudioMedia } from '@/lib/studioMedia';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
+import '@/styles/product-scroll-gallery.css';
 
 const VIDEO_RE = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const TECHNICAL_RE = /(technick|schema|schéma|vykres|výkres|montaz|montáž|instalac|edraw)/i;
-const isImage = (url) => typeof url === 'string' && url && !VIDEO_RE.test(url) && !TECHNICAL_RE.test(url);
-const optimize = (url) => (isImage(url) ? getOptimizedMediaUrl(url) : url);
+const isImage = (url) => typeof url === 'string' && url && !VIDEO_RE.test(url) && !TECHNICAL_RE.test(url) && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url));
+const optimize = (url) => isImage(url) ? getOptimizedMediaUrl(url) : url;
+
+gsap.registerPlugin(ScrollTrigger);
 
 function dedupe(items) {
   return [...new Map(items.filter((item) => item?.url).map((item) => [item.url, item])).values()];
 }
 
-function StoryFrame({ item, index, total, progress, productName, onOpen }) {
-  const segment = 1 / Math.max(total, 1);
-  const enterStart = Math.max(0, index * segment - segment * 0.34);
-  const enterEnd = Math.min(0.98, index * segment + segment * 0.05);
-  const exitStart = Math.max(enterEnd + 0.01, (index + 1) * segment - segment * 0.20);
-  const exitEnd = Math.min(1, (index + 1) * segment);
-  const isFirst = index === 0;
-  const isLast = index === total - 1;
+function isVideo(url) {
+  return typeof url === 'string' && VIDEO_RE.test(url);
+}
 
-  const y = useTransform(
-    progress,
-    isFirst
-      ? [0, exitStart, exitEnd]
-      : isLast
-        ? [enterStart, enterEnd, 1]
-        : [enterStart, enterEnd, exitStart, exitEnd],
-    isFirst
-      ? ['0%', '0%', '-112%']
-      : isLast
-        ? ['112%', '0%', '0%']
-        : ['112%', '0%', '0%', '-112%'],
-  );
+function StoryFrame({ item, index, total, productName, onOpen, active }) {
+  const frameRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches);
 
-  const opacity = useTransform(
-    progress,
-    isFirst
-      ? [0, exitStart, exitEnd]
-      : isLast
-        ? [enterStart, enterEnd, 1]
-        : [enterStart, enterEnd, exitStart, exitEnd],
-    isFirst
-      ? [1, 1, 0]
-      : isLast
-        ? [0, 1, 1]
-        : [0, 1, 1, 0],
-  );
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(media.matches);
+    update();
+    if (media.addEventListener) media.addEventListener('change', update);
+    else media.addListener(update);
+    return () => {
+      if (media.removeEventListener) media.removeEventListener('change', update);
+      else media.removeListener(update);
+    };
+  }, []);
 
-  const scale = useTransform(
-    progress,
-    isFirst
-      ? [0, exitStart, exitEnd]
-      : isLast
-        ? [enterStart, enterEnd, 1]
-        : [enterStart, enterEnd, exitStart, exitEnd],
-    isFirst
-      ? [1, 1, 0.965]
-      : isLast
-        ? [1.04, 1, 1]
-        : [1.04, 1, 1, 0.965],
-  );
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) {
+      setInView(true);
+      return undefined;
+    }
+    const node = frameRef.current;
+    if (!node) {
+      setInView(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    setLoaded(false);
+    setImageFailed(false);
+  }, [item.url]);
 
   return (
-    <motion.article
-      style={{ y, opacity, scale }}
-      className="group absolute inset-0 will-change-transform"
+    <article
+      ref={frameRef}
+      className={'scroll-photo-frame group absolute inset-0 will-change-transform ' + (inView ? 'is-in-view' : 'is-entering')}
+      style={{ zIndex: index + 1 }}
+      aria-hidden={!(isMobile || active === index)}
     >
       <button
         type="button"
         onClick={() => onOpen(index)}
+        tabIndex={isMobile || active === index ? 0 : -1}
         className="relative h-full w-full overflow-hidden bg-[#07131D] text-left"
         aria-label={`Otevřít fotografii ${index + 1} přes celou obrazovku`}
       >
-        <motion.img
+        {item.fit === 'contain' && !isVideo(item.url) && <img src={optimize(item.url)} alt="" aria-hidden="true" className="scroll-photo-backdrop" loading="lazy" />}
+        {!loaded && !imageFailed && <span className="scroll-photo-loading" aria-hidden="true"><span className="scroll-photo-loading-mark">◌</span><span className="scroll-photo-loading-bar" /></span>}
+        {isVideo(item.url) ? <video src={item.url} poster={item.poster} className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full ${item.fit === 'contain' ? 'object-contain p-3 sm:p-8 lg:p-12' : 'object-cover'}`} muted playsInline loop preload="metadata" onLoadedData={() => setLoaded(true)} onError={() => setImageFailed(true)} /> : !imageFailed ? <img
           src={optimize(item.url)}
-          alt={item.alt || `${productName} — fotografie ${index + 1}`}
-          className={`h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.035] ${item.fit === 'contain' ? 'object-contain p-6 sm:p-10 lg:p-14' : 'object-cover'}`}
+          alt={item.alt || (productName + ' — fotografie ' + (index + 1))}
+          className={`scroll-photo-main ${loaded ? 'is-loaded' : ''} h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.025] ${item.fit === 'contain' ? 'object-contain p-3 sm:p-8 lg:p-12' : 'object-cover'}`}
           style={{ objectPosition: item.focal || 'center center' }}
-          loading={index < 2 ? 'eager' : 'lazy'}
-        />
-
+          loading={Math.abs(active - index) <= 1 ? 'eager' : 'lazy'}
+          fetchPriority={index === active ? 'high' : 'auto'}
+          decoding="async"
+          sizes="100vw"
+          onLoad={() => setLoaded(true)}
+          onError={() => setImageFailed(true)}
+        /> : <span className="scroll-photo-image-error">Médium se nyní nepodařilo načíst.</span>}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(3,12,20,.10)_0%,rgba(3,12,20,.05)_48%,rgba(3,12,20,.82)_100%)]" />
-
         <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-2 text-white backdrop-blur-md sm:left-6 sm:top-6">
           <span className="font-mono text-[9px] font-bold uppercase tracking-[.16em] text-cyan-200">{item.badge || 'Galerie'}</span>
         </div>
-
         <div className="pointer-events-none absolute right-4 top-4 hidden items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-2 text-white/80 backdrop-blur-md sm:flex sm:right-6 sm:top-6">
-          <Maximize2 size={13} />
-          <span className="text-[10px] font-semibold">Otevřít</span>
+          <Maximize2 size={13} /><span className="text-[10px] font-semibold">Otevřít</span>
         </div>
-
         <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-white sm:p-7 lg:p-10">
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-200">
-            {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-          </p>
-          <h3 className="mt-2 max-w-3xl font-heading text-2xl font-bold leading-[1.02] tracking-[-.035em] sm:text-3xl lg:text-5xl">
-            {item.title || productName}
-          </h3>
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-200">{String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</p>
+          <h3 className="mt-2 max-w-3xl font-heading text-2xl font-bold leading-[1.02] tracking-[-.035em] sm:text-3xl lg:text-5xl">{item.title || productName}</h3>
           {item.caption && <p className="mt-2 max-w-2xl text-sm leading-6 text-white/72 sm:text-base">{item.caption}</p>}
         </div>
       </button>
-    </motion.article>
+    </article>
   );
 }
 
 function FullscreenViewer({ items, index, productName, onClose, onChange }) {
   const item = items[index];
+  const dialogRef = useRef(null);
+  const reduced = useReducedMotion();
+  useEffect(() => {
+    const previous = document.activeElement;
+    const firstButton = dialogRef.current?.querySelector('button');
+    firstButton?.focus();
+    return () => { if (previous instanceof HTMLElement) previous.focus(); };
+  }, []);
 
   useEffect(() => {
     const before = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (event) => {
+      if (event.key === 'Tab') {
+        const nodes = [...dialogRef.current.querySelectorAll('button')];
+        const first = nodes[0], last = nodes.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
       if (event.key === 'Escape') onClose();
       if (event.key === 'ArrowLeft') onChange((index - 1 + items.length) % items.length);
       if (event.key === 'ArrowRight') onChange((index + 1) % items.length);
@@ -129,14 +150,14 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
   }, [index, items.length, onChange, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020A11]/96 p-3 backdrop-blur-xl sm:p-6" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020A11]/96 p-3 backdrop-blur-xl sm:p-6" ref={dialogRef} role="dialog" aria-modal="true" aria-label={`Fotografie produktu ${productName}`}>
       <button type="button" onClick={onClose} aria-label="Zavřít galerii" className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20">
         <X size={20} />
       </button>
 
       <div className="relative flex h-full w-full max-w-7xl items-center justify-center">
         <AnimatePresence mode="wait">
-          <motion.img
+          {isVideo(item.url) ? <motion.video key={item.url} src={item.url} poster={item.poster} controls autoPlay playsInline className="max-h-[86vh] w-full rounded-[1.5rem] object-contain" initial={{ opacity: 0, y: 18, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -12, scale: 0.985 }} transition={{ duration: reduced ? 0 : 0.28, ease: 'easeOut' }} /> : <motion.img
             key={item.url}
             src={optimize(item.url)}
             alt={item.alt || `${productName} — fotografie ${index + 1}`}
@@ -144,12 +165,11 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
             initial={{ opacity: 0, y: 18, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.985 }}
-            transition={{ duration: 0.28, ease: 'easeOut' }}
-          />
+            transition={{ duration: reduced ? 0 : 0.28, ease: 'easeOut' }} />}
         </AnimatePresence>
 
-        {items.length > 1 && (
-          <>
+        {items.length > 1 &&
+        <>
             <button type="button" onClick={() => onChange((index - 1 + items.length) % items.length)} aria-label="Předchozí fotografie" className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/92 text-[#07131D] shadow-xl sm:left-5">
               <ChevronLeft size={22} />
             </button>
@@ -157,19 +177,21 @@ function FullscreenViewer({ items, index, productName, onClose, onChange }) {
               <ChevronRight size={22} />
             </button>
           </>
-        )}
+        }
 
         <div className="pointer-events-none absolute bottom-4 left-1/2 w-[min(92vw,760px)] -translate-x-1/2 rounded-[1.25rem] border border-white/12 bg-black/42 px-4 py-3 text-white backdrop-blur-xl sm:bottom-6 sm:px-5">
           <p className="font-mono text-[9px] uppercase tracking-[.16em] text-cyan-200">{index + 1} / {items.length}</p>
           <p className="mt-1 truncate text-sm font-semibold sm:text-base">{item.title || productName}</p>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 export default function PdScrollGallery({ product }) {
   const sectionRef = useRef(null);
+  const stageRef = useRef(null);
+  const reduced = useReducedMotion();
   const [approvedVisuals, setApprovedVisuals] = useState([]);
   const [adminMedia, setAdminMedia] = useState([]);
   const [active, setActive] = useState(0);
@@ -177,105 +199,125 @@ export default function PdScrollGallery({ product }) {
 
   useEffect(() => {
     let cancelled = false;
+    setApprovedVisuals([]); setAdminMedia([]); setLightbox(null); setActive(0);
     Promise.all([
-      base44.entities.VisualizationAsset
-        .filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 40)
-        .catch(() => []),
-      base44.entities.MediaFile
-        .filter({ product_slug: product.slug }, '-sort_order', 100)
-        .catch(() => []),
-    ]).then(([visuals, media]) => {
+    base44.entities.VisualizationAsset.
+    filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 40).
+    catch(() => []),
+    base44.entities.MediaFile.
+    filter({ product_slug: product.slug }, '-sort_order', 100).
+    catch(() => [])]
+    ).then(([visuals, media]) => {
       if (cancelled) return;
-      setApprovedVisuals((visuals || []).filter((item) => item?.image_url));
-      setAdminMedia((media || []).filter((item) => item?.file_url));
+      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
+      setAdminMedia((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
     });
-    return () => { cancelled = true; };
+    return () => {cancelled = true;};
   }, [product.slug]);
 
   const items = useMemo(() => {
     const studio = getStudioMedia(product);
     const curated = getCuratedProductMedia(product);
 
-    const approved = approvedVisuals.map((item) => ({
+    const approved = approvedVisuals.filter((item) => isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)).slice(0, 4).map((item) => ({
       url: item.thumbnail_url || item.image_url,
       title: `${product.name} · ${(item.environment_label || item.space_name || item.environment || 'konkrétní prostor').toString().replace(/[_-]+/g, ' ')}`,
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · '),
       badge: 'Náhled v prostoru',
-      fit: 'cover',
+      fit: 'cover'
     }));
 
-    const admin = adminMedia
-      .filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization'].includes(item.media_role))
-      .filter((item) => isImage(item.file_url))
-      .map((item) => ({
-        url: item.file_url,
-        title: item.file_name || `${product.name} — produktová fotografie`,
-        caption: item.media_role === 'realization' ? 'Reálná realizace' : 'Produktový detail',
-        badge: item.media_role === 'realization' ? 'Realizace' : 'Produkt',
-        fit: 'cover',
-      }));
+    const admin = adminMedia.
+    filter((item) => ['hero', 'gallery', 'detail', 'reference', 'realization', 'render', 'variant', 'video'].includes(item.media_role)).
+    filter((item) => isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)).
+    slice(0, 4).
+    map((item) => ({
+      url: item.file_url,
+      title: `${product.name} — ${isVideo(item.file_url) ? 'video produktu' : 'produktová fotografie'}`,
+      caption: isVideo(item.file_url) ? 'Video produktu' : item.media_role === 'realization' ? 'Reálná realizace' : item.media_role === 'detail' ? 'Konstrukční detail' : item.media_role === 'variant' ? 'Ověřená produktová varianta' : 'Produktový detail',
+      badge: isVideo(item.file_url) ? 'Video' : item.media_role === 'realization' ? 'Realizace' : item.media_role === 'detail' ? 'Detail' : item.media_role === 'variant' ? 'Varianta' : 'Produkt',
+      fit: item.media_role === 'realization' || item.media_role === 'reference' ? 'cover' : 'contain',
+      poster: item.thumbnail_url || item.poster_url || undefined
+    }));
 
-    const curatedItems = curated
-      .filter((item) => isImage(item.url))
-      .map((item) => ({
-        url: item.url,
-        title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'vizualizace' : 'fotografie'}`,
-        caption: item.caption || (item.kind === 'visualization' ? 'Vizualizace umístění' : 'Produktová fotografie'),
-        badge: item.kind === 'visualization' ? 'Vizualizace' : 'Fotografie',
-        fit: 'cover',
-      }));
+    const curatedItems = curated.
+    filter((item) => isImage(item.url) && isProductMediaAllowed(product, item.url, item.title)).
+    // Curated assets must match the current product identity; ambiguous shared scenes are not used as a product master.
+    map((item) => ({
+      url: item.url,
+      title: item.title || `${product.name} — ${item.kind === 'visualization' ? 'pohled v prostoru' : 'fotografie'}`,
+      caption: item.caption || (item.kind === 'visualization' ? 'Pohled na umístění produktu v prostoru' : 'Produktová fotografie'),
+      badge: item.kind === 'visualization' ? 'V prostoru' : 'Fotografie',
+      fit: item.kind === 'visualization' ? 'cover' : 'contain'
+    }));
 
-    const hero = product.hero_visual_verified && isImage(product.hero_product_image_url)
-      ? [{
-          url: product.hero_product_image_url,
-          title: `${product.name} — produkt`,
-          caption: 'Schválený produktový vizuál',
-          badge: 'Produkt',
-          fit: 'contain',
-          focal: product.hero_focal_position || 'center center',
-        }]
-      : [];
+    const hero = product.hero_visual_verified && isImage(product.hero_product_image_url) && isProductMediaAllowed(product, product.hero_product_image_url, product.name) ?
+    [{
+      url: product.hero_product_image_url,
+      title: `${product.name} — produkt`,
+      caption: 'Schválený produktový vizuál',
+      badge: 'Produkt',
+      fit: 'contain',
+      focal: product.hero_focal_position || 'center center'
+    }] :
+    [];
 
-    const base = product.image_url && isImage(product.image_url)
-      ? [{ url: product.image_url, title: product.name, caption: product.short_description || 'Produktový náhled', badge: 'Produkt', fit: 'cover' }]
-      : [];
+    const base = product.image_url && isImage(product.image_url) && isProductMediaAllowed(product, product.image_url, product.name) ?
+    [{ url: product.image_url, title: product.name, caption: product.short_description || 'Produktový náhled', badge: 'Produkt', fit: 'contain' }] :
+    [];
 
-    const gallery = (product.gallery_urls || [])
-      .filter(isImage)
-      .map((url, index) => ({
-        url,
-        title: `${product.name} — fotografie ${index + 1}`,
-        caption: 'Produktová fotografie',
-        badge: 'Galerie',
-        fit: 'cover',
-      }));
+    const gallery = [...(product.gallery_urls || []), product.video_url].
+    filter((url) => typeof url === 'string' && (isImage(url) || isVideo(url)) && isProductMediaAllowed(product, url)).
+    map((url, index) => ({
+      url,
+      title: `${product.name} — ${isVideo(url) ? 'video produktu' : `fotografie ${index + 1}`}`,
+      caption: isVideo(url) ? 'Video produktu' : 'Produktová fotografie',
+      badge: isVideo(url) ? 'Video' : 'Galerie',
+      fit: /(realizace|park|namest|náměst|zahrad|promen|hotel|brno|polna|rezidenc|avenue|landscape|mest|měst)/i.test(url) ? 'cover' : 'contain'
+    }));
 
-    const studioItem = studio && isImage(studio)
-      ? [{ url: studio, title: `${product.name} — studiový náhled`, caption: 'Studiové zobrazení produktu', badge: 'Studio', fit: 'contain' }]
-      : [];
+    const studioItem = studio && isImage(studio) ?
+    [{ url: studio, title: `${product.name} — studiový náhled`, caption: 'Studiové zobrazení produktu', badge: 'Studio', fit: 'contain' }] :
+    [];
 
-    return dedupe([...approved, ...hero, ...base, ...curatedItems, ...admin, ...studioItem, ...gallery]).slice(0, 10);
+    return dedupe([...base, ...hero, ...approved, ...curatedItems, ...admin, ...studioItem, ...gallery]).slice(0, 10);
   }, [product, approvedVisuals, adminMedia]);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
+  useLayoutEffect(() => {
+    if (reduced || items.length < 2 || !sectionRef.current || !stageRef.current) return undefined;
+    const desktop = window.matchMedia('(min-width: 768px)').matches;
+    if (!desktop) return undefined;
 
-  useMotionValueEvent(scrollYProgress, 'change', (value) => {
-    if (!items.length) return;
-    const index = Math.min(items.length - 1, Math.floor(Math.min(0.9999, Math.max(0, value)) * items.length));
-    setActive(index);
-  });
+    const context = gsap.context(() => {
+      const frames = gsap.utils.toArray('.scroll-photo-frame', stageRef.current);
+      gsap.set(frames, { yPercent: (index) => index === 0 ? 0 : 100, autoAlpha: 1 });
 
-  const shellScale = useTransform(scrollYProgress, [0, 0.05, 0.88, 1], [0.965, 1, 1, 0.90]);
-  const shellOpacity = useTransform(scrollYProgress, [0, 0.04, 0.92, 1], [0.72, 1, 1, 0.58]);
-  const shellFilter = useTransform(scrollYProgress, [0, 0.06, 0.90, 1], ['blur(6px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']);
-  const shellRadius = useTransform(scrollYProgress, [0, 0.05, 0.90, 1], [28, 0, 0, 32]);
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.55,
+          invalidateOnRefresh: true,
+          onUpdate: (trigger) => {
+            const next = Math.min(items.length - 1, Math.round(trigger.progress * (items.length - 1)));
+            setActive((current) => current === next ? current : next);
+          },
+        },
+      });
+
+      frames.slice(1).forEach((frame) => {
+        timeline.to(frame, { yPercent: 0, duration: 1, ease: 'none' });
+      });
+    }, stageRef);
+
+    return () => context.revert();
+  }, [items.length, reduced]);
 
   if (!items.length) return null;
 
-  const storyHeight = Math.max(260, items.length * 96 + 92);
+  // Enough scroll room for each image transition, without a long empty tail below the gallery.
+  const storyHeight = Math.min(760, Math.max(180, items.length * 82 + 30));
 
   return (
     <section className="relative bg-[#07131D] text-white">
@@ -284,65 +326,41 @@ export default function PdScrollGallery({ product }) {
         <div className="mt-3 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <h2 className="max-w-4xl font-heading text-3xl font-bold leading-[1.02] tracking-[-.04em] sm:text-4xl lg:text-6xl">
-              Produkt v prostoru. Jeden snímek za druhým.
+              {product.name}: fotografie, detaily a realizace.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-white/64 sm:text-base">
-              Scrollujte dolů. Každá další fotografie vystoupí odspodu přes celou obrazovku. Kliknutím otevřete aktivní snímek bez rušivých popisků.
+              Prohlédněte si produkt zblízka, konstrukční detaily i schválené pohledy v prostoru. Na počítači procházejte příběhem pomocí scrollu, na telefonu přirozeně posouvejte fotografie.
             </p>
           </div>
           <div className="hidden items-center gap-2 rounded-full border border-white/12 bg-white/[.05] px-4 py-2 text-xs text-white/68 lg:flex">
             <ArrowDown size={14} className="text-cyan-300" />
-            Scroll gallery
+            Prohlédnout fotografie
           </div>
         </div>
       </div>
 
-      <div ref={sectionRef} className="relative" style={{ height: `${storyHeight}svh` }}>
-        <motion.div
-          style={{ scale: shellScale, opacity: shellOpacity, filter: shellFilter, borderRadius: shellRadius }}
-          className="sticky top-0 h-[100svh] overflow-hidden bg-[#07131D] shadow-[0_30px_100px_rgba(0,0,0,.35)] will-change-transform"
-        >
-          {items.map((item, index) => (
-            <StoryFrame
-              key={item.url}
-              item={item}
-              index={index}
-              total={items.length}
-              progress={scrollYProgress}
-              productName={product.name}
-              onOpen={setLightbox}
-            />
-          ))}
-
-          <div className="pointer-events-none absolute left-4 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-1.5 sm:left-6">
-            {items.map((item, index) => (
-              <span
-                key={item.url}
-                className={`block rounded-full transition-all duration-300 ${active === index ? 'h-8 w-1.5 bg-cyan-300' : 'h-1.5 w-1.5 bg-white/28'}`}
-              />
-            ))}
-          </div>
-
-          <div className="pointer-events-none absolute bottom-5 right-5 z-20 rounded-full border border-white/15 bg-black/32 px-3 py-2 font-mono text-[9px] uppercase tracking-[.16em] text-white/72 backdrop-blur-md sm:bottom-6 sm:right-6">
-            {active + 1} / {items.length}
-          </div>
-        </motion.div>
-      </div>
+      {reduced ? <div className="scroll-photo-static">{items.map((item, index) => <button key={item.url} type="button" onClick={() => setLightbox(index)} aria-label={`Zvětšit ${isVideo(item.url) ? 'video' : 'fotografii'} ${index + 1}: ${product.name}`}>{isVideo(item.url) ? <video src={item.url} poster={item.poster || product.image_url} muted playsInline preload="metadata" /> : <img src={optimize(item.url)} alt={item.alt || `${product.name} — fotografie ${index + 1}`} loading="lazy" onError={(event) => { event.currentTarget.style.visibility = 'hidden'; }} />}<span>{index + 1} / {items.length} · {item.title || product.name}</span></button>)}</div> : <div ref={sectionRef} className="scroll-photo-track" style={{ height: items.length > 1 ? `${storyHeight}svh` : '100svh' }}>
+        <div ref={stageRef} className="scroll-photo-stage">
+          {items.map((item, index) => <StoryFrame key={item.url} item={item} index={index} total={items.length} productName={product.name} onOpen={setLightbox} active={active} />)}
+          <nav className="scroll-photo-nav" aria-label="Vybrat fotografii produktu">{items.map((item, index) => <button type="button" key={item.url} aria-current={active === index ? 'true' : undefined} aria-label={`Přejít na fotografii ${index + 1}`} onClick={() => { const node = sectionRef.current; if (!node) return; const max = node.offsetHeight - window.innerHeight; const progress = index === 0 ? 0 : (index + .6) / items.length; window.scrollTo({ top: window.scrollY + node.getBoundingClientRect().top + max * progress, behavior: 'smooth' }); }}>{index + 1}</button>)}</nav>
+          <a className="scroll-photo-skip" href="#parametry">Přejít na parametry ↓</a>
+        </div>
+      </div>}
 
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 pb-14 pt-8 text-white/48 sm:px-6 lg:px-10 lg:pb-20">
-        <p className="text-xs leading-5 sm:text-sm">Po posledním snímku se galerie zmenší a zamlží, aby navázala na technickou část produktu.</p>
+        <p className="text-xs leading-5 sm:text-sm">Prohlédli jste si produkt. Níže najdete parametry, možnosti instalace a ovládání.</p>
         <ArrowDown size={16} className="shrink-0 text-cyan-300" />
       </div>
 
-      {lightbox !== null && (
-        <FullscreenViewer
-          items={items}
-          index={lightbox}
-          productName={product.name}
-          onClose={() => setLightbox(null)}
-          onChange={setLightbox}
-        />
-      )}
-    </section>
-  );
+      {lightbox !== null &&
+      <FullscreenViewer
+        items={items}
+        index={lightbox}
+        productName={product.name}
+        onClose={() => setLightbox(null)}
+        onChange={setLightbox} />
+
+      }
+    </section>);
+
 }

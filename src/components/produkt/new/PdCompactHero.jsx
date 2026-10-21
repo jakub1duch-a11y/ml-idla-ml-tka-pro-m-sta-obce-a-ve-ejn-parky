@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { MRAK_VARIANTS } from '@/lib/productDetailConfig';
 import { getFamily, getLine } from '@/lib/productFamilies';
+import { isProductMediaAllowed } from '@/lib/productMediaGuard';
+import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 
 function cleanText(value = '') {
   return String(value).
@@ -11,11 +14,26 @@ function cleanText(value = '') {
 }
 
 export default function PdCompactHero({ product }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isMrak = product.slug === 'mlzitko-mrak';
+  const selectedMrakVariant = searchParams.get('variant') === 'velky' ? 'velky' : 'maly';
+  const quoteVariant = isMrak ? `&varianta=${encodeURIComponent(selectedMrakVariant)}` : '';
+  const selectMrakVariant = (variantId) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('variant', variantId);
+    setSearchParams(params, { replace: true });
+  };
   const family = getFamily(product);
   const line = getLine(product);
-  const image = product.hero_visual_verified && product.hero_product_image_url ?
-  product.hero_product_image_url :
-  product.image_url;
+  const [imageIndex, setImageIndex] = useState(0);
+  useEffect(() => setImageIndex(0), [product.slug]);
+  const imageCandidates = [...new Set([
+    product.hero_visual_verified ? product.hero_product_image_url : '',
+    product.image_url,
+    ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []),
+    ...getCuratedProductMedia(product).map((item) => item.url),
+  ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name)))];
+  const image = imageCandidates[imageIndex] || '';
   const intro = cleanText(product.short_description || product.description || '');
   const facts = [
   product.material && { icon: ShieldCheck, label: 'Materiál', value: product.material },
@@ -41,6 +59,33 @@ export default function PdCompactHero({ product }) {
             {intro || 'Designové mlžítko pro konkrétní prostor. Přesné provedení a technické parametry se řídí ověřenými daty produktu.'}
           </p>
 
+          {isMrak && (
+            <div className="mt-7" aria-label="Výběr velikosti MLŽNÉHO MRAKU">
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.15em] text-[#0B8EC5]">Vyberte velikost · 2 varianty</p>
+              <div className="grid grid-cols-2 gap-3">
+                {MRAK_VARIANTS.map((variant) => {
+                  const selected = variant.id === selectedMrakVariant;
+                  return (
+                    <button
+                      key={variant.id}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => selectMrakVariant(variant.id)}
+                      className={`min-w-0 rounded-2xl border px-3 py-4 text-left transition-all sm:p-4 ${selected ? 'border-[#0B5EA8] bg-[#EAF7FD] shadow-[0_8px_30px_rgba(11,94,168,.10)]' : 'border-[#D8E8ED] bg-white hover:border-[#7CCBD8]'}`}
+                    >
+                      <span className="block text-xs font-bold uppercase tracking-[.11em] text-[#0A2342]">{variant.name}</span>
+                      <span className="mt-1 block font-heading text-xl font-black text-[#0B5EA8] sm:text-2xl">{variant.id === 'maly' ? 'Návrh' : 'Kalkulace'} {variant.height}</span>
+                      <span className="mt-2 block text-[11px] leading-5 text-[#5A6B78]">{variant.description}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-3 text-[11px] leading-5 text-[#6E7F8D]">
+                {MRAK_VARIANTS.find((variant) => variant.id === selectedMrakVariant)?.note} Konečný rozměr a konfiguraci potvrzujeme před naceněním.
+              </p>
+            </div>
+          )}
+
           {facts.length > 0 &&
           <div className="mt-6 grid grid-cols-3 gap-2">
               {facts.map(({ icon: Icon, label, value }) =>
@@ -55,13 +100,13 @@ export default function PdCompactHero({ product }) {
 
           <div className="mt-7 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             <Link
-              to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`}
+              to={`/poptavka?produkt=${encodeURIComponent(product.slug)}${quoteVariant}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#153863]">
               
               Návrh a cena <ArrowRight size={15} />
             </Link>
             <Link
-              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
+              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}${quoteVariant}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#CBE4EE] bg-white px-5 py-3 text-sm font-bold text-[#07131D] transition hover:-translate-y-0.5 hover:border-[#7CCBD8]">
               
               Vizualizovat v prostoru <ExternalLink size={14} />
@@ -75,10 +120,15 @@ export default function PdCompactHero({ product }) {
             src={image}
             alt={product.image_alt || `${product.name} — produkt`}
             className="absolute inset-0 h-full w-full object-contain object-center"
-            fetchPriority="high" /> :
+            fetchPriority={imageIndex === 0 ? 'high' : 'auto'}
+            onError={() => setImageIndex((current) => Math.min(current + 1, imageCandidates.length))} /> :
 
 
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)] px-6 text-center">
+            <Droplets size={28} className="text-[#0B8EC5]" aria-hidden="true" />
+            <p className="mt-3 text-sm font-semibold text-[#0A2342]">Produktové fotografie připravujeme</p>
+            <p className="mt-1 max-w-xs text-xs leading-5 text-[#5A6B78]">Technické informace a možnost poptávky zůstávají dostupné.</p>
+          </div>
           }
 
         </div>

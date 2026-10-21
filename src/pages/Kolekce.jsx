@@ -4,22 +4,18 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Loader, Search, X, Building2, Home, Dumbbell, School, UtensilsCrossed, SlidersHorizontal } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
-import { isArchived } from '@/lib/newMedia';
+import { preparePublicCatalogProducts } from '@/lib/publicCatalogProducts';
 import { getLine, getFamily, getFamilyById, sortByStructure } from '@/lib/productFamilies';
-import { mergePortalGateProducts } from '@/lib/portalGateProducts';
 import KolekceHero from '@/components/kolekce/KolekceHero';
 import ProductCategoryExplorer from '@/components/kolekce/ProductCategoryExplorer';
 import { useSearchParams } from 'react-router-dom';
 import FamilyNav from '@/components/kolekce/FamilyNav';
 import LineChips from '@/components/kolekce/LineChips';
-import CatalogProductCard from '@/components/kolekce/CatalogProductCard';
+import BentoCatalogGrid from '@/components/kolekce/BentoCatalogGrid';
 import GatesSlider from '@/components/kolekce/GatesSlider';
 import FeaturesBenefitsSection from '@/components/kolekce/FeaturesBenefitsSection';
 import LiveDemoSection from '@/components/kolekce/LiveDemoSection';
 import CatalogAudience from '@/components/kolekce/CatalogAudience';
-
-const HIDDEN_NAMES = ['SMART řízení mlžítek', 'Filtrační a jiné Moduly', 'Trysky M2 ', 'senzory'];
-const HIDDEN_SLUGS = ['garden-cooling-set'];
 
 const SPACE_FILTERS = [
 { value: 'all', label: 'Všechny prostory', icon: SlidersHorizontal },
@@ -64,8 +60,7 @@ export default function Kolekce() {
   useEffect(() => {
     base44.entities.Product.list('name', 200).
     then((list) => {
-      const visibleProducts = (list || []).filter((p) => !isArchived(p.slug) && !HIDDEN_NAMES.includes(p.name) && !HIDDEN_SLUGS.includes(p.slug));
-      setProducts(mergePortalGateProducts(visibleProducts));
+      setProducts(preparePublicCatalogProducts(list || []));
     }).
     catch(() => setLoadError(true)).
     finally(() => setLoading(false));
@@ -98,7 +93,7 @@ export default function Kolekce() {
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
             <h2 className="mt-3 max-w-4xl font-heading text-4xl font-black leading-[.98] tracking-[-.055em] text-[#07131D] sm:text-5xl">{selectedCategory ? selectedCategory.name : activeFamily ? activeFamily.title : 'Katalog mlžítek, mlžných bran a mlžných prvků'}</h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Katalog je členěný podle produktových řad a využití. Pro města a obce doporučujeme filtrovat podle typu veřejného prostoru; cenu připravujeme podle konfigurace, počtu prvků a rozsahu instalace.'}</p>
+            <p className="mt-3 text-[15px] leading-relaxed text-[#5A6B78]">{activeFamily ? activeFamily.description : 'Přehled funkčních produktů členěný podle produktových řad a využití. Pro města a obce doporučujeme filtrovat podle typu veřejného prostoru; cenu připravujeme podle konfigurace, počtu prvků a rozsahu instalace.'}</p>
           </div>
           {!loading && <span className="badge-brand-secondary shrink-0">{displayed.length} produktů</span>}
         </div>
@@ -136,9 +131,10 @@ export default function Kolekce() {
         <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-[#D3E2E8]" /></div> :
 
         <ProductExperience products={displayed}>
-<AnimatePresence mode="popLayout"><motion.div layout className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {displayed.map((p) => <CatalogProductCard key={p.id} product={p} />)}
-            {displayed.length === 0 && <p className="col-span-full py-16 text-center text-sm text-[#5A6B78]" role="status">{loadError ? 'Produkty se nepodařilo načíst. Obnovte stránku nebo nás kontaktujte s výběrem řešení.' : 'Žádné produkty neodpovídají výběru. Zkuste jiný výraz nebo zrušte filtry.'}</p>}
+<AnimatePresence mode="popLayout"><motion.div layout>
+            <BentoCatalogGrid products={displayed}>
+              {displayed.length === 0 && <p className="col-span-full py-16 text-center text-sm text-[#5A6B78]" role="status">{loadError ? 'Produkty se nepodařilo načíst. Obnovte stránku nebo nás kontaktujte s výběrem řešení.' : 'Žádné produkty neodpovídají výběru. Zkuste jiný výraz nebo zrušte filtry.'}</p>}
+            </BentoCatalogGrid>
           </motion.div></AnimatePresence>
 </ProductExperience>
         }

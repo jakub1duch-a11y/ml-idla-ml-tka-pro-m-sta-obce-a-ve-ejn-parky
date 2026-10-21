@@ -74,14 +74,14 @@ export default function PdCompactHero({ product }) {
                       className={`min-w-0 rounded-2xl border px-3 py-4 text-left transition-all sm:p-4 ${selected ? 'border-[#0B5EA8] bg-[#EAF7FD] shadow-[0_8px_30px_rgba(11,94,168,.10)]' : 'border-[#D8E8ED] bg-white hover:border-[#7CCBD8]'}`}
                     >
                       <span className="block text-xs font-bold uppercase tracking-[.11em] text-[#0A2342]">{variant.name}</span>
-                      <span className="mt-1 block font-heading text-xl font-black text-[#0B5EA8] sm:text-2xl">h {variant.height}</span>
+                      <span className="mt-1 block font-heading text-xl font-black text-[#0B5EA8] sm:text-2xl">{variant.id === 'maly' ? 'Návrh' : 'Kalkulace'} {variant.height}</span>
                       <span className="mt-2 block text-[11px] leading-5 text-[#5A6B78]">{variant.description}</span>
                     </button>
                   );
                 })}
               </div>
               <p className="mt-3 text-[11px] leading-5 text-[#6E7F8D]">
-                {MRAK_VARIANTS.find((variant) => variant.id === selectedMrakVariant)?.note}
+                {MRAK_VARIANTS.find((variant) => variant.id === selectedMrakVariant)?.note} Konečný rozměr a konfiguraci potvrzujeme před naceněním.
               </p>
             </div>
           )}

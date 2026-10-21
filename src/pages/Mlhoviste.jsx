@@ -286,7 +286,7 @@ export default function Mlhoviste() {
         <div className="mt-8 divide-y divide-slate-200">
           {FAQ.map(([q, a]) =>
           <details key={q} className="py-2">
-              <summary className="cursor-pointer py-4 pr-4 text-base font-semibold leading-7">
+              <summary className="cursor-pointer py-4 pr-4 text-base font-semibold leading-7 hidden">
                 {q}
               </summary>
               <p className="pb-5 text-base leading-7 text-slate-600">{a}</p>

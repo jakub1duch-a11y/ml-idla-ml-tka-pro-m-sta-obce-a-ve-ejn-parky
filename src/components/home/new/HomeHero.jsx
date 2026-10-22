@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '@/styles/home-hero-chamber.css';
+import HeroVideoSlider from './HeroVideoSlider';
 
 const HERO_BG_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/31f47cba8_generated_2ddf28f6.jpg';
 
@@ -53,6 +54,7 @@ const tiles = [
 export default function HomeHero() {
   return (
     <section className="alpska-hero-chamber" data-no-watermark="true" aria-label="MLŽIDLA.CZ hero">
+      <HeroVideoSlider />
       <div className="hero-top">
         <div className="hero-visual">
           <img

@@ -5,6 +5,7 @@ import HomeHero from '@/components/home/new/HomeHero';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
+import HomeVideoReel from '@/components/home/new/HomeVideoReel';
 import CooperationSteps from '@/components/home/new/CooperationSteps';
 import HomeInquiryForm from '@/components/home/new/HomeInquiryForm';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
@@ -30,6 +31,7 @@ export default function Home() {
         <HomeGsapMotion />
         <HomeHero />
         <UrbanCoolingExperience />
+        <HomeVideoReel />
         <ProductPhotoGallery />
         <ReferencesStrip />
         <ProKohoSection />

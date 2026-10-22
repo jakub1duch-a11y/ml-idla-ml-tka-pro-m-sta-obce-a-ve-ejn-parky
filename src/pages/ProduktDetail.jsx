@@ -8,6 +8,7 @@ import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import MrakVariantGallery from '@/components/produkt/new/MrakVariantGallery';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
+import PdMistVariants from '@/components/produkt/new/PdMistVariants';
 import PdRealGallery from '@/components/produkt/new/PdRealGallery';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
@@ -70,6 +71,7 @@ export default function ProduktDetail() {
       <PdFamilyNav product={product} />
       <PdVisualGalleryCompact product={product} />
       <PdRealGallery product={product} />
+      <PdMistVariants product={product} />
       <div id="parametry" className="scroll-mt-24"><PdSpecs product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>

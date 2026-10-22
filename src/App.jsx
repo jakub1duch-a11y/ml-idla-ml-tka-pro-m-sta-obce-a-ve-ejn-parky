@@ -29,6 +29,7 @@ import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
 import RegisteredPortal from '@/components/portal/RegisteredPortal';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import AdminOnlyRoute from '@/components/AdminOnlyRoute';
 import '@/components/portal/googleAdsPortal';
 import Poradce from '@/pages/Poradce';
 import Kalkulacka from '@/pages/Kalkulacka';
@@ -137,13 +138,15 @@ const AuthenticatedApp = () => {
         <Route path="/atelierove-prvky" element={<CategoryLanding variant="atelier" />} />
         <Route path="/rezidencni-mlzeni" element={<RezidencniMlzeni />} />
         <Route path="/kontakt" element={<Kontakt />} />
-        <Route path="/connect" element={<Connect />} />
+        <Route element={<AdminOnlyRoute />}>
+          <Route path="/connect" element={<Connect />} />
+          <Route path="/search-analytics" element={<SearchAnalytics />} />
+        </Route>
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
         <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzitko-mrak" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
-        <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/klientska-sekce" element={<CustomerPortal />} />
         <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?next=%2Fmuj-projekt" replace />} />}>
           <Route path="/muj-projekt" element={<RegisteredPortal />} />

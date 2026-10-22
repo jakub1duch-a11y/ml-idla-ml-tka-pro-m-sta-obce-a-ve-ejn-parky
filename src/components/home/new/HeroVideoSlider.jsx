@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 // Reálné záběry z Mlžného disku (optimalizované kopie), vybrané pro hero.
 const SLIDES = [
+  { src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/df01fb691_mlnprvkyproochlazenlidaprostorvhorkchdnech.mp4', label: 'Mlžné prvky', title: 'Ochlazení lidí i prostoru v horkých dnech', link: '/katalog-mlzitek' },
+  { src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/db759c18d_962396694_1792594684995221.mp4', label: 'Veřejný prostor', title: 'Kde chcete vytvořit příjemnější prostor?', link: '/poptavka' },
+  { src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/8ae55032a_108328020_1792550582614049.mp4', label: 'Mlžítka v provozu', title: 'Jemná mlha pro parky a náměstí', link: '/mestske-mlzitka' },
+  { src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/bb6831749_412991005_1792548139006050.mp4', label: 'Realizace', title: 'Osvěžení pro sport i komunitní místa', link: '/reference' },
   { src: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/e4438d3b0_bendy_linea_vert.mp4', label: 'BENDY + LINEA', title: 'Mlžný sloup v zahradě', link: '/produkt/mlzitko-bendy' },
   { src: '/media/optimized/eb7e87313_mlzidla-mlzitkaproparkyamesta03.webm', label: 'Městská instalace', title: 'Mlžítka v parku a na náměstí', link: '/mestske-mlzitka' },
   { src: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/78cf9a6c8_KolekceBendy_20260812_121335_0000.mp4', label: 'Realizace BENDY', title: 'Organická linie v pobytové zóně', link: '/produkt/mlzitko-bendy' },

@@ -8,6 +8,7 @@ import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import MrakVariantGallery from '@/components/produkt/new/MrakVariantGallery';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
+import PdRealGallery from '@/components/produkt/new/PdRealGallery';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
@@ -68,6 +69,7 @@ export default function ProduktDetail() {
       {product.slug === 'mlzitko-mrak' && <MrakVariantGallery />}
       <PdFamilyNav product={product} />
       <PdVisualGalleryCompact product={product} />
+      <PdRealGallery product={product} />
       <div id="parametry" className="scroll-mt-24"><PdSpecs product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
@@ -76,4 +78,3 @@ export default function ProduktDetail() {
     </div>
   );
 }
-

@@ -33,6 +33,13 @@ const PAGE_LINKS = [
 const SCENARIOS = [
   {
     id: 'square',
+    image: '/media/optimized/31478e4b3_bendymlzitko02.webp',
+    imageAlt: 'BENDY v městském prostoru — stávající podklad MLŽIDLA',
+    combination: [
+      ['BENDY', 'U posezení a pobytových míst.'],
+      ['GATE', 'Na přirozené pěší trase jako průchozí mlžná zóna.'],
+      ['LINEA', 'Bodové doplnění menšího místa pro zastavení.'],
+    ],
     label: 'Náměstí',
     icon: Building2,
     eyebrow: 'Centrum města',
@@ -52,6 +59,13 @@ const SCENARIOS = [
   },
   {
     id: 'park',
+    image: '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp',
+    imageAlt: 'Mlžítko v parkovém prostředí — stávající podklad MLŽIDLA',
+    combination: [
+      ['LINEA', 'Jednotlivé body u laviček a parkových křižovatek.'],
+      ['AURA', 'Výrazný kruhový prvek v otevřené odpočinkové zóně.'],
+      ['BENDY ALEJ', 'Opakování prvků podél vybrané parkové cesty.'],
+    ],
     label: 'Park',
     icon: Trees,
     eyebrow: 'Zeleň a promenáda',
@@ -71,6 +85,13 @@ const SCENARIOS = [
   },
   {
     id: 'school',
+    image: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp',
+    imageAlt: 'MRAK v prostředí školní zahrady — stávající podklad MLŽIDLA',
+    combination: [
+      ['MRAK', 'Hravý prvek v aktivní části pod dohledem obsluhy.'],
+      ['GATE', 'Průchozí osvěžení mezi zónami mimo hlavní volný průchod.'],
+      ['AURA', 'Samostatná pobytová zóna u klidového posezení.'],
+    ],
     label: 'Škola a hřiště',
     icon: School,
     eyebrow: 'Děti a aktivní zóna',
@@ -90,6 +111,13 @@ const SCENARIOS = [
   },
   {
     id: 'transit',
+    image: '/media/optimized/b47ae10f2_bendymlzitko.webp',
+    imageAlt: 'BENDY ve veřejném prostoru — podklad pro liniové řešení',
+    combination: [
+      ['BENDY ALEJ', 'Sekvence podél trasy s návazností na přirozený pohyb.'],
+      ['LINEA', 'Osvěžení u zastavení a menších pobytových míst.'],
+      ['GATE', 'Průchozí akcent v dostatečně široké části promenády.'],
+    ],
     label: 'Promenáda',
     icon: Route,
     eyebrow: 'Trasa a dopravní uzel',
@@ -286,10 +314,10 @@ export default function MunicipalProjectStudio() {
           <div className="max-w-3xl">
             <p className="font-mono text-[10px] uppercase tracking-[.22em] text-[#0b7c89]">Interaktivní návrhové studio</p>
             <h2 className="mt-4 font-heading text-4xl font-medium leading-[1.02] tracking-[-.045em] text-[#0b2d38] sm:text-5xl">
-              Prozkoumejte princip řešení podle typu veřejného prostoru.
+              Jedno místo. Promyšlená kombinace.
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[#536b73]">
-              Zvolte prostředí. Ukážeme typické rozmístění, vhodné produktové rodiny a podklady, které má smysl připravit před rozhodnutím města.
+              Zvolte prostředí a porovnejte kombinace mlžítek. U každé varianty najdete roli jednotlivých prvků, příklad prostoru a schéma rozmístění.
             </p>
           </div>
 
@@ -303,6 +331,16 @@ export default function MunicipalProjectStudio() {
                   type="button"
                   role="tab"
                   aria-selected={active}
+                  aria-controls="municipal-scenario-panel"
+                  id={`municipal-tab-${item.id}`}
+                  onKeyDown={(event) => {
+                    const directions = { ArrowRight: 1, ArrowLeft: -1 };
+                    if (!(event.key in directions)) return;
+                    event.preventDefault();
+                    const next = SCENARIOS[(SCENARIOS.indexOf(item) + directions[event.key] + SCENARIOS.length) % SCENARIOS.length];
+                    selectScenario(next.id);
+                    document.getElementById(`municipal-tab-${next.id}`)?.focus();
+                  }}
                   onClick={() => selectScenario(item.id)}
                   className={`inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-all ${active ? 'bg-[#0b2d38] text-white shadow-lg shadow-slate-900/15' : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0b7c89]/35 hover:text-[#0b5664]'}`}
                 >
@@ -312,8 +350,17 @@ export default function MunicipalProjectStudio() {
             })}
           </div>
 
-          <div className="mt-6 grid gap-6 lg:grid-cols-[1.08fr_.92fr]">
-            <PlanVisual scenario={scenario} />
+          <div id="municipal-scenario-panel" role="tabpanel" aria-labelledby={`municipal-tab-${activeId}`} className="mt-6 grid items-start gap-6 lg:grid-cols-[1.08fr_.92fr]">
+            <div className="space-y-5">
+              <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                <img key={scenario.image} src={scenario.image} alt={scenario.imageAlt} className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
+                <figcaption className="border-t border-slate-200 px-5 py-4 text-xs leading-6 text-slate-600">
+                  <span className="mb-1 block font-semibold text-[#0b2d38]">Náhled prostředí / {scenario.label}</span>
+                  Stávající obrazový podklad MLŽIDLA pro typ prostoru. Celou doporučenou kombinaci popisujeme vedle; přesné umístění připravíme z fotografie nebo výkresu vašeho místa.
+                </figcaption>
+              </figure>
+              <PlanVisual scenario={scenario} />
+            </div>
             <AnimatePresence mode="wait">
               <motion.div
                 key={scenario.id}
@@ -328,12 +375,21 @@ export default function MunicipalProjectStudio() {
                 <p className="mt-4 text-sm leading-6 text-slate-600">{scenario.description}</p>
 
                 <div className="mt-7">
-                  <p className="text-xs font-semibold uppercase tracking-[.14em] text-slate-400">Vhodné produktové rodiny</p>
+                  <p className="text-xs font-semibold uppercase tracking-[.14em] text-slate-600">Doporučená kombinace</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {scenario.products.map((product) => <span key={product} className="rounded-full bg-[#e8f6f8] px-3 py-2 text-xs font-bold text-[#0b5664]">{product}</span>)}
                   </div>
                 </div>
 
+                <ol className="mt-6 divide-y divide-slate-200 border-y border-slate-200" aria-label="Role prvků v kombinaci">
+                  {scenario.combination.map(([product, role], index) => (
+                    <li key={product} className="grid grid-cols-[24px_1fr] gap-3 py-5">
+                      <span className="pt-1 font-mono text-[10px] text-[#0b7c89]">0{index + 1}</span>
+                      <div><h4 className="text-sm font-semibold text-[#0b2d38]">{product}</h4><p className="mt-2 text-sm leading-6 text-slate-600">{role}</p></div>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-5 text-xs leading-6 text-slate-600">Počet prvků, rozestupy, napojení a režim mlžení stanovíme podle skutečného projektu. Senzory a vzdálené řízení jsou volitelné podle zvolené výbavy.</p>
                 <dl className="mt-7 space-y-3 border-t border-slate-100 pt-6">
                   {[
                     [Gauge, 'Charakter řešení', scenario.mode],
@@ -342,7 +398,7 @@ export default function MunicipalProjectStudio() {
                   ].map(([Icon, label, value]) => (
                     <div key={label} className="grid grid-cols-[34px_1fr] gap-3">
                       <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600"><Icon size={15} /></span>
-                      <div><dt className="text-[10px] uppercase tracking-[.12em] text-slate-400">{label}</dt><dd className="mt-1 text-sm font-medium text-slate-800">{value}</dd></div>
+                      <div><dt className="text-[10px] uppercase tracking-[.12em] text-slate-600">{label}</dt><dd className="mt-1 text-sm font-medium text-slate-800">{value}</dd></div>
                     </div>
                   ))}
                 </dl>

@@ -1,112 +1,27 @@
-import React, { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
-
-// Návrhové AI vizualizace. Podklady z /public/media/products/mrak/ se dodávají v balíčku
-// MLZNY_MRAK_nahledy_a_vizualizace.zip, ale nesmí se považovat za ověřené výrobní fotografie.
-const MRAK_SCENES = [
-  {
-    id: 'maly',
-    title: 'MALÝ',
-    size: 'h 1 600 mm',
-    note: 'Návrhová výška dle zadání – čeká na potvrzení výrobním výkresem.',
-    pictures: [
-      { src: '/media/products/mrak/mrak_maly_produkt.webp', fallback: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp', label: 'Náhled produktu' },
-      { src: '/media/products/mrak/mrak_maly_skolni_zahrada.webp', fallback: '/media/optimized/81c84ca33_Mrakmlzitko-skolnizahrada.webp', label: 'Školní zahrada' },
-      { src: '/media/products/mrak/mrak_maly_terasa.webp', fallback: '/media/optimized/7016348c6_generated_image.webp', label: 'Terasa a zahrada' },
-    ],
-  },
-  {
-    id: 'velky',
-    title: 'VELKÝ',
-    size: 'h 2 400 mm',
-    note: 'Výška dle kalkulace MRAK 13R 2424. Počet trysek a profil výrobně upřesnit.',
-    pictures: [
-      { src: '/media/products/mrak/mrak_velky_produkt.webp', fallback: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600', label: 'Náhled produktu' },
-      { src: '/media/products/mrak/mrak_velky_namesti.webp', fallback: 'https://drive.google.com/thumbnail?id=1XCICLc8JXvcM1pV9NTHygwNisYz1TS6F&sz=w1600', label: 'Městské náměstí' },
-      { src: '/media/products/mrak/mrak_velky_park.webp', fallback: 'https://drive.google.com/thumbnail?id=1UBgJ6_7XuIxeDOBz-4LU0Onzjd1hb1Kt&sz=w1600', label: 'Park a promenáda' },
-    ],
-  },
-];
-
-function Photo({ picture, alt, className }) {
-  const [src, setSrc] = useState(picture.src);
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      decoding="async"
-      onError={() => { if (src !== picture.fallback) setSrc(picture.fallback); }}
-      className={className}
-    />
-  );
-}
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { MRAK_MODELS, MRAK_DETAILS, calculateWaterCost, formatNumber, WATER_TARIFF } from '@/components/produkt/nozzles/nozzleData';
+import '@/components/produkt/nozzles/nozzleConfigurator.css';
 
 export default function MrakVariantGallery() {
-  const [searchParams] = useSearchParams();
-  const variant = searchParams.get('variant') === 'velky' ? 'velky' : 'maly';
-
-  return (
-    <section id="mrak-varianty-vizualizace" className="bg-white py-14 lg:py-20">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#0B8EC5]">MLŽNÝ MRAK · vizualizace variant</p>
-        <h2 className="mt-3 font-heading text-3xl font-bold tracking-[-.035em] text-[#07131D] sm:text-4xl">
-          Dvě velikosti. Mlha pro každý prostor.
-        </h2>
-        <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
-          Produktové náhledy a inspirace pro umístění ve školní zahradě, na terase,
-          náměstí a v parku. Vizualizace jsou ilustrační, nikoliv výrobní výkresy.
-        </p>
-
-        <div className="mt-9 grid gap-6 lg:grid-cols-2">
-          {MRAK_SCENES.map((scene) => {
-            const selected = variant === scene.id;
-            const next = new URLSearchParams(searchParams);
-            next.set('variant', scene.id);
-            return (
-              <article key={scene.id} className={`overflow-hidden rounded-[28px] border bg-[#F7FBFD] shadow-sm ${selected ? 'border-[#0B8EC5]' : 'border-[#DFEAF0]'}`}>
-                <div className="flex flex-wrap items-end justify-between gap-3 px-5 pb-5 pt-6 sm:px-7">
-                  <div>
-                    <p className="font-mono text-[10px] font-bold uppercase tracking-[.15em] text-[#0B8EC5]">{scene.title}</p>
-                    <h3 className="mt-1 font-heading text-2xl font-bold text-[#07131D]">{scene.size}</h3>
-                  </div>
-                  <Link
-                    to={`/produkt/mlzitko-mrak?${next.toString()}#prehled`}
-                    aria-current={selected ? 'page' : undefined}
-                    className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[#0B5EA8] px-4 py-2 text-xs font-bold text-[#0B5EA8] hover:bg-[#0B5EA8] hover:text-white"
-                  >
-                    {selected ? 'Vybraná varianta' : 'Vybrat variantu'} <ArrowUpRight size={14} />
-                  </Link>
-                </div>
-                <div className="px-4 pb-4 sm:px-5 sm:pb-5">
-                  <figure className="overflow-hidden rounded-[20px] border border-[#E2EDF2] bg-white">
-                    <Photo
-                      picture={scene.pictures[0]}
-                      alt={`MLŽNÝ MRAK ${scene.title} – ilustrační náhled nerezové skulptury`}
-                      className="h-[310px] w-full object-contain sm:h-[390px]"
-                    />
-                    <figcaption className="px-4 py-3 text-[11px] font-medium text-slate-600">Produktový náhled</figcaption>
-                  </figure>
-                  <div className="mt-3 grid grid-cols-2 gap-3">
-                    {scene.pictures.slice(1).map((picture) => (
-                      <figure key={picture.label} className="overflow-hidden rounded-[16px] border border-[#E2EDF2] bg-white">
-                        <Photo
-                          picture={picture}
-                          alt={`MLŽNÝ MRAK ${scene.title} – návrhová vizualizace: ${picture.label}`}
-                          className="aspect-[3/2] w-full object-cover"
-                        />
-                        <figcaption className="px-3 py-2.5 text-[11px] font-medium text-slate-600">{picture.label}</figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                  <p className="mt-3 px-1 text-[11px] leading-5 text-slate-500">{scene.note}</p>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
+  const [params, setParams] = useSearchParams();
+  const selected = MRAK_MODELS.find(m => m.id === params.get('variant')) || MRAK_MODELS[0];
+  const choose = (id) => { const next = new URLSearchParams(params); next.set('variant', id); setParams(next, { replace: true, preventScrollReset: true }); };
+  const details = [...(selected.scene ? [{ image: selected.scene, label: 'Návrh v prostoru' }] : []), ...MRAK_DETAILS];
+  return <section id="mrak-varianty-vizualizace" className="bg-card px-5 py-14 sm:px-10">
+    <div className="mx-auto max-w-7xl">
+      <p className="font-mono text-xs text-muted-foreground">MRAK · VÝBĚR PROVEDENÍ</p>
+      <h2 className="mt-3 font-heading">Dvě katalogové velikosti. Dva další návrhy.</h2>
+      <p className="mt-4 max-w-3xl text-muted-foreground">Zvolte tvar pro svůj prostor. Výběr se přenese do kalkulace níže i do poptávky; náhledy nejsou výrobní výkresy.</p>
+      <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">{MRAK_MODELS.map(m => <button key={m.id} type="button" onClick={() => choose(m.id)} aria-pressed={selected.id === m.id} className="nozzle-selection overflow-hidden text-left">
+        <img src={m.image} alt={`${m.name} · ilustrační produktový náhled`} width="1024" height="1024" loading="lazy" className="aspect-square w-full object-contain" />
+        <div className="p-4"><p className="text-xs text-muted-foreground">{selected.id === m.id ? 'Vybráno · ' : ''}{m.concept ? 'Designový návrh' : 'Katalogová varianta'}</p><h3 className="mt-2 font-heading text-xl">{m.name}</h3><p className="mt-2 text-sm">{m.dimensions}</p><p className="mt-2 text-sm font-semibold">{m.count} trysek · {formatNumber(calculateWaterCost(m.count, 6.4, WATER_TARIFF).cost)} Kč / 8 h*</p><p className="mt-3 text-sm text-muted-foreground">{m.description}</p></div>
+      </button>)}</div>
+      <p className="mt-4 text-xs text-muted-foreground">* Pouze voda, M2 při 2 bar, nepřetržitých 8 hodin. Historická sazba Trutnov 2024: 126,52 Kč/m³. V kalkulaci níže ji lze upravit. U MRAK 2424 je mezi textem a číselným sloupcem zdroje rozpor 8/9 trysek.</p>
+      <div className="mt-6 border border-border bg-muted p-5"><h3 className="font-heading text-xl">{selected.name}</h3><p className="mt-2 text-sm">{selected.note}</p></div>
+      <div className="mt-7 grid gap-4 sm:grid-cols-2">{details.map(d => <Dialog key={d.image}><DialogTrigger asChild><button type="button" className="border border-border bg-background text-left" aria-label={`Zvětšit: ${d.label}`}><img src={d.image} alt={`MRAK · ${d.label} · AI vizualizace`} loading="lazy" width="1536" height="1024" className="aspect-[3/2] w-full object-cover" /><span className="block p-4 text-sm">{d.label} · AI vizualizace</span></button></DialogTrigger><DialogContent className="max-w-4xl"><DialogTitle>{d.label}</DialogTitle><img src={d.image} alt={d.label} className="max-h-[75vh] w-full object-contain" /></DialogContent></Dialog>)}</div>
+      <p className="mt-3 text-xs text-muted-foreground">Detailové vizualizace ilustrují materiál, mlhu a princip patky řady MRAK, nikoli přesnou konstrukci každé varianty. Rozměry, typ kotvy a bezpečnost instalace musí potvrdit technický návrh.</p>
+    </div>
+  </section>;
 }

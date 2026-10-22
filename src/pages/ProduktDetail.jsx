@@ -17,6 +17,7 @@ import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import StebloGateDetail from '@/components/produkt/StebloGateDetail';
+import { getCatalogWaterLabel } from '@/components/produkt/nozzles/nozzleData';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -33,7 +34,7 @@ export default function ProduktDetail() {
         if (!results || results.length === 0) { setNotFound(true); return; }
         const p = results[0];
         if (isArchived(p.slug)) { setNotFound(true); return; }
-        setProduct(p);
+        setProduct({ ...p, water_consumption: getCatalogWaterLabel(p.slug) || p.water_consumption });
         trackProductView(p.name, p.slug, p.category_id);
         setSEO({ ...getProductSEO(p), robots: 'index, follow' });
       })

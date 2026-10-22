@@ -1,0 +1,510 @@
+.alpska-hero-chamber {
+  width: 100%;
+  min-height: 825px;
+  margin-top: 68px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  background: #EBF3F7;
+  color: #0C2233;
+  border: 1px solid #c7d9e2;
+  box-shadow: 0 18px 50px #0c22331a;
+  display: grid;
+  grid-template-rows: 1fr 246px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.alpska-hero-chamber .hero-top {
+  min-height: 0;
+  width: 100%;
+  max-width: 1540px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1.08fr 310px 1.35fr;
+  gap: 0;
+  padding: 48px 48px 26px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.alpska-hero-chamber .hero-copy {
+  padding: 34px 34px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.alpska-hero-chamber .kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  color: #0088B8;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.alpska-hero-chamber .drop {
+  width: 27px;
+  height: 27px;
+  border: 1px solid #a9c6d3;
+  display: grid;
+  place-items: center;
+  color: #0088B8;
+  clip-path: polygon(50% 0, 100% 45%, 88% 100%, 12% 100%, 0 45%);
+}
+
+.alpska-hero-chamber .micro {
+  font: 700 11px/1.5 monospace;
+  letter-spacing: 0.18em;
+  color: #638394;
+  margin: 34px 0 12px;
+}
+
+.architecture-site .alpska-hero-chamber h1,
+.alpska-hero-chamber h1 {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 48px !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.055em !important;
+  margin: 0 0 24px;
+  font-weight: 900 !important;
+  max-width: 450px;
+  color: #0C2233;
+}
+
+.alpska-hero-chamber .hero-copy > p:not(.micro) {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #405d6b;
+  margin: 0;
+  max-width: 420px;
+}
+
+.alpska-hero-chamber .actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+.alpska-hero-chamber .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-height: 48px;
+  padding: 0 18px;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+  border: 1px solid #0088B8;
+  background: #0088B8;
+  color: white;
+}
+
+.alpska-hero-chamber .btn:hover {
+  background: #0C2233;
+  border-color: #0C2233;
+  color: white;
+}
+
+.alpska-hero-chamber .btn:active {
+  transform: translateY(1px);
+}
+
+.alpska-hero-chamber .btn:focus-visible {
+  outline: 3px solid #0088B8;
+  outline-offset: 3px;
+}
+
+.alpska-hero-chamber .btn.secondary {
+  background: transparent;
+  color: #0C2233;
+  border-color: #99B8C9;
+}
+
+.alpska-hero-chamber .btn.secondary:hover {
+  background: #dceaf0;
+  border-color: #0088B8;
+  color: #0C2233;
+}
+
+.alpska-hero-chamber .arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.alpska-hero-chamber .benefits {
+  border-left: 1px solid #b4cad5;
+  border-right: 1px solid #b4cad5;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.alpska-hero-chamber .benefits::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 3px;
+  height: 58px;
+  background: #0088B8;
+}
+
+.alpska-hero-chamber .benefit {
+  background: #f7fbfc;
+  border: 1px solid #d7e5eb;
+  padding: 15px 13px;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 57px;
+  box-sizing: border-box;
+  box-shadow: 0 5px 16px #0c22330a;
+}
+
+.alpska-hero-chamber .bicon {
+  width: 31px;
+  height: 31px;
+  border: 1px solid #b9d0db;
+  display: grid;
+  place-items: center;
+  color: #0088B8;
+  font-size: 16px;
+}
+
+.alpska-hero-chamber .benefit p {
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 750;
+  margin: 0;
+  color: #274655;
+}
+
+.alpska-hero-chamber .cascade {
+  padding: 4px 0 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 13px 12px;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.alpska-hero-chamber .product {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #cbdde5;
+  box-shadow: 0 8px 20px #0c223310;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.alpska-hero-chamber .product:hover {
+  border-color: #0088B8;
+  box-shadow: 0 12px 25px #0c22331c;
+}
+
+.alpska-hero-chamber .product img {
+  width: 100%;
+  height: 112px;
+  object-fit: cover;
+  display: block;
+}
+
+.alpska-hero-chamber .product-body {
+  padding: 11px 13px 12px;
+}
+
+.alpska-hero-chamber .prod-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 700 10px monospace;
+  color: #0088B8;
+  letter-spacing: 0.1em;
+}
+
+.alpska-hero-chamber .prod-tag {
+  font: 800 9px Arial, sans-serif;
+  color: #7996a4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.architecture-site .alpska-hero-chamber .product h2,
+.alpska-hero-chamber .product h2 {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.04em !important;
+  margin: 8px 0 5px;
+  font-weight: 900 !important;
+  color: #0C2233;
+}
+
+.alpska-hero-chamber .product p {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #5c7480;
+  margin: 0;
+}
+
+.alpska-hero-chamber .detail {
+  margin-top: 9px;
+  color: #0088B8;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.alpska-hero-chamber .lower-wrap {
+  position: relative;
+  background: #0C2233;
+  width: 100%;
+}
+
+.alpska-hero-chamber .lower-wrap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: #345161;
+}
+
+.alpska-hero-chamber .lower {
+  position: relative;
+  width: 100%;
+  max-width: 1540px;
+  height: 100%;
+  margin-inline: auto;
+  padding: 0 48px 24px;
+  display: grid;
+  grid-template-columns: 180px repeat(4, 1fr);
+  gap: 12px;
+  align-items: end;
+  box-sizing: border-box;
+}
+
+.alpska-hero-chamber .lower-label {
+  align-self: center;
+  color: #99B8C9;
+  font: 700 10px monospace;
+  letter-spacing: 0.16em;
+}
+
+.alpska-hero-chamber .lower-label i {
+  display: block;
+  width: 34px;
+  height: 2px;
+  background: #0088B8;
+  margin-top: 12px;
+}
+
+.alpska-hero-chamber .tile {
+  display: block;
+  text-decoration: none;
+  height: 190px;
+  background: #112e40;
+  border: 1px solid #2c4857;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+  animation: alpska-breathe 5.2s ease-in-out infinite;
+}
+
+.alpska-hero-chamber .tile:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+.alpska-hero-chamber .tile:nth-child(4) {
+  animation-delay: 1.4s;
+}
+
+.alpska-hero-chamber .tile:nth-child(5) {
+  animation-delay: 2.1s;
+}
+
+.alpska-hero-chamber .tile:hover {
+  background: #173b50;
+  border-color: #0088B8;
+  box-shadow: 0 0 24px #0088b82a;
+}
+
+.alpska-hero-chamber .tile img {
+  display: block;
+  width: 100%;
+  height: 86px;
+  object-fit: cover;
+  opacity: 0.86;
+}
+
+.alpska-hero-chamber .tile-body {
+  padding: 9px 12px;
+}
+
+.alpska-hero-chamber .tile-index {
+  font: 700 10px monospace;
+  color: #43b6d4;
+  letter-spacing: 0.12em;
+}
+
+.alpska-hero-chamber .tile-type {
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #99b8c9;
+  font-weight: 800;
+  margin-left: 8px;
+  letter-spacing: 0.12em;
+}
+
+.architecture-site .alpska-hero-chamber .tile h3,
+.alpska-hero-chamber .tile h3 {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #f1f7f9;
+  margin: 6px 0 4px;
+  line-height: 1.1 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.alpska-hero-chamber .tile p {
+  font-size: 10px;
+  line-height: 1.35;
+  color: #b5c8d1;
+  margin: 0;
+}
+
+.alpska-hero-chamber .tile .detail {
+  margin-top: 7px;
+  color: #6dd0e7;
+  font-size: 8px;
+}
+
+.alpska-hero-chamber .hero-visual {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 410px;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.12;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 100%);
+}
+
+.alpska-hero-chamber .hero-visual img {
+  position: absolute;
+  width: 580px;
+  height: 410px;
+  object-fit: cover;
+  right: 0;
+  top: 0;
+  mix-blend-mode: multiply;
+}
+
+.alpska-hero-chamber .mist {
+  position: absolute;
+  right: 350px;
+  top: 215px;
+  width: 180px;
+  height: 100px;
+  background: radial-gradient(ellipse, #c2e4ee9c 0, transparent 70%);
+  filter: blur(15px);
+  animation: alpska-veil 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes alpska-veil {
+  0%, 100% {
+    transform: translate(0, 0) scale(0.92);
+    opacity: 0.48;
+  }
+  50% {
+    transform: translate(-16px, -8px) scale(1.15);
+    opacity: 0.82;
+  }
+}
+
+@keyframes alpska-breathe {
+  0%, 100% {
+    box-shadow: 0 8px 20px #0c223310;
+  }
+  50% {
+    box-shadow: 0 12px 26px #0088b81c;
+  }
+}
+
+@media (max-width: 1120px) {
+  .alpska-hero-chamber {
+    min-height: auto;
+    grid-template-rows: auto auto;
+  }
+  .alpska-hero-chamber .hero-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 36px 24px 28px;
+  }
+  .alpska-hero-chamber .hero-copy {
+    padding: 0;
+  }
+  .alpska-hero-chamber .benefits {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #b4cad5;
+    border-bottom: 1px solid #b4cad5;
+    padding: 20px 0;
+  }
+  .alpska-hero-chamber .benefits::before {
+    left: 0;
+    top: -1px;
+    width: 58px;
+    height: 3px;
+  }
+  .alpska-hero-chamber .cascade {
+    padding: 0;
+  }
+  .alpska-hero-chamber .lower {
+    grid-template-columns: 1fr 1fr;
+    padding: 24px;
+    gap: 12px;
+  }
+  .alpska-hero-chamber .lower-label {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .alpska-hero-chamber h1 {
+    font-size: 36px;
+  }
+  .alpska-hero-chamber .cascade,
+  .alpska-hero-chamber .lower {
+    grid-template-columns: 1fr;
+  }
+}

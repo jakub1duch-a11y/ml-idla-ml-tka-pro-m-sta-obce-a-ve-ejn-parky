@@ -1,162 +1,141 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
-import HomeHeroMotion from '@/components/home/new/HomeHeroMotion';
-import { VIDEO_ASSETS } from '@/lib/newMedia';
-import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
+import '@/styles/home-hero-chamber.css';
+
+const HERO_BG_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/31f47cba8_generated_2ddf28f6.jpg';
 
 const benefits = [
-{ icon: Wind, text: 'Cíleně osvěžuje pobytovou zónu' },
-{ icon: Droplets, text: 'Jemná mlha pro příjemnější pobyt' },
-{ icon: Gauge, text: 'Úsporný provoz a chytré řízení' },
-{ icon: ShieldCheck, text: 'Odolná nerezová konstrukce' }];
-
-// Primární H1 záměrně obsahuje hlavní produktové dotazy a zůstává přirozený pro návštěvníka.
-const headlineWords = ['Mlžítka pro', 'města, obce', 'i zahrady.'];
+  { symbol: '◌', text: 'Cíleně osvěžuje pobytovou zónu' },
+  { symbol: '≈', text: 'Jemná mlha pro příjemnější pobyt' },
+  { symbol: '⌁', text: 'Úsporný provoz a chytré řízení' },
+  { symbol: '◇', text: 'Odolná nerezová konstrukce' },
+];
 
 const tiles = [
-{
-  title: 'LINEA CE',
-  text: 'Nerezová linie s charakteristickým ohybem',
-  image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
-  link: '/produkt/linea-solo'
-},
-{
-  title: 'MRAK',
-  text: 'Hravé osvěžení pro děti a hřiště',
-  image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
-  link: '/produkt/mlzitko-mrak'
-},
-{
-  title: 'MLŽNÁ BRÁNA',
-  text: 'Průchozí vodní mlha pro náměstí',
-  image: '/media/optimized/a2d77392e_Mlnbranyaportaly.webp',
-  link: '/mlzne-brany'
-},
-{
-  title: 'BENDY',
-  text: 'Organická linie pro pobytové zóny',
-  image: '/media/optimized/b47ae10f2_bendymlzitko.webp',
-  link: '/produkt/mlzitko-bendy'
-}];
+  {
+    index: '01',
+    title: 'LINEA CE',
+    text: 'Nerezová linie s charakteristickým ohybem',
+    alt: 'Nerezové mlžítko LINEA CE',
+    tileAlt: 'LINEA CE',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/974a8f55c_generated_017c9687.jpg',
+    link: '/produkt/linea-solo',
+  },
+  {
+    index: '02',
+    title: 'MRAK',
+    text: 'Hravé osvěžení pro děti a hřiště',
+    alt: 'Mlžítko MRAK na dětském hřišti',
+    tileAlt: 'MRAK',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a02e88a84_generated_44e6876a.jpg',
+    link: '/produkt/mlzitko-mrak',
+  },
+  {
+    index: '03',
+    title: 'MLŽNÁ BRÁNA',
+    text: 'Průchozí vodní mlha pro náměstí',
+    alt: 'Mlžná brána na náměstí',
+    tileAlt: 'Mlžná brána',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b192a1cfe_generated_ff513b25.jpg',
+    link: '/mlzne-brany',
+  },
+  {
+    index: '04',
+    title: 'BENDY',
+    text: 'Organická linie pro pobytové zóny',
+    alt: 'Organické nerezové mlžítko v pobytové zóně',
+    tileAlt: 'BENDY',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/57f97ac19_generated_07f816aa.jpg',
+    link: '/produkt/mlzitko-bendy',
+  },
+];
 
 export default function HomeHero() {
-  const heroRef = useRef(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '8%']);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.045]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-5%']);
-
   return (
-    <MotionConfig reducedMotion="user">
-    <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
-      <div className="relative min-h-[82svh] overflow-hidden">
-        <HeroAtmosphere />
-        <motion.div
-            className="absolute inset-0 h-[108%] w-full"
-            style={{ y: mediaY, scale: mediaScale }}
-            data-home-parallax="7"
-            initial={{ scale: 1.04 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
-          {/* Vždy vykresli lokální poster pod videem. Pokud externí video selže nebo ho prohlížeč zablokuje, hero nikdy nezůstane prázdné. */}
+    <section className="alpska-hero-chamber" data-no-watermark="true" aria-label="MLŽIDLA.CZ hero">
+      <div className="hero-top">
+        <div className="hero-visual">
           <img
-            data-hero-fallback
-            src={VIDEO_ASSETS.heroCityPromo.poster}
+            src={HERO_BG_IMAGE}
             alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
             fetchPriority="high"
-            onError={(event) => {
-              event.currentTarget.onerror = null;
-              event.currentTarget.src = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
-            }}
-            className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
           />
-          {!reduced && <video
-            src={VIDEO_ASSETS.heroCityPromo.src}
-            poster={VIDEO_ASSETS.heroCityPromo.poster}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-            onError={(event) => { event.currentTarget.style.display = 'none'; }}
-            className="relative h-full w-full object-cover object-[58%_center] sm:object-center"
-          />}
-        </motion.div>
+        </div>
+        <div className="mist" />
 
-        <div className="hero-home-colorwash absolute inset-0" />
-        <HomeHeroMotion />
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
+        <div className="hero-copy">
+          <div className="kicker">
+            <span className="drop" aria-hidden="true">✦</span>
+            <span>Kapka úlevy · přirozené osvěžení</span>
+          </div>
+          <p className="micro">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
+          <h1>Mlžítka pro města, obce i zahrady.</h1>
+          <p>
+            Designová městská i zahradní mlžítka, mlžné brány a mlhoviště pro náměstí, parky, hřiště, sportoviště a terasy. Návrh i chytré řízení podle konkrétního místa.
+          </p>
+          <div className="actions">
+            <Link to="/poptavka" className="btn">
+              <span>Navrhnout řešení</span>
+              <span className="arrow" aria-hidden="true">→</span>
+            </Link>
+            <Link to="/katalog-mlzitek" className="btn secondary">
+              <span className="arrow" aria-hidden="true">↗</span>
+              <span>Prohlédnout produkty</span>
+            </Link>
+          </div>
+        </div>
 
-        <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
-          <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
-            <div className="hero-brand-kicker"><span className="hero-brand-kicker__icon"><Droplets size={16} aria-hidden="true" /></span><span>Kapka úlevy · přirozené osvěžení</span></div>
-            <p className="font-mono text-sm font-bold uppercase tracking-[.22em] text-[#A9E6F5]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left" aria-label={headlineWords.join(' ')}>
-              {headlineWords.map((word, index) =>
-                <motion.span
-                  key={word}
-                  className="hero-headline-word"
-                  initial={reduced ? false : { opacity: 0, y: 22 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: reduced ? 0 : .52, delay: reduced ? 0 : .12 + index * .075, ease: [0.22, 1, 0.36, 1] }}>
-                  {word}
-                </motion.span>
-                )}
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
-              Designová městská i zahradní mlžítka, mlžné brány a mlhoviště pro náměstí, parky, hřiště, sportoviště a terasy. Návrh i chytré řízení podle konkrétního místa.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Link to="/poptavka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#06283A] shadow-[0_22px_60px_rgba(24,183,230,.32)] transition hover:-translate-y-0.5 hover:bg-[#69DDF4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#07131D]">
-                Navrhnout řešení <ArrowRight size={17} />
-              </Link>
-              <Link to="/katalog-mlzitek" className="inline-flex min-h-14 items-center gap-3 rounded-2xl border border-white/35 bg-white/[.10] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-white backdrop-blur-md transition hover:border-white/60 hover:bg-white/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/35"><ArrowRight size={15} /></span>
-                Prohlédnout produkty
-              </Link>
+        <div className="benefits" aria-label="Hlavní přínosy mlžítek">
+          {benefits.map((item) => (
+            <div key={item.text} className="benefit">
+              <span className="bicon" aria-hidden="true">{item.symbol}</span>
+              <p>{item.text}</p>
             </div>
-          </motion.div>
+          ))}
+        </div>
 
-          <motion.aside data-home-pointer="10" initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.72, delay: 0.18, ease: [0.22, 1, 0.36, 1] }} className="ref-cursor-glow hidden rounded-[2rem] border p-5 lg:block border-white/0 bg-[#000000]/[0.0] backdrop-blur-x0" aria-label="Hlavní přínosy mlžítek">
-            <div className="space-y-4">
-              {benefits.map(({ icon: Icon, text }) =>
-                <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border p-4 bg-white/[.0] border-white/0">
-                  <div className="flex h-11 w-11 items-center justify-center">
-                    <Icon size={20} className="text-[hsl(var(--foreground))]" />
-                  </div>
-                  <p className="text-xl leading-6 text-slate-200 [font-family:'Manrope',_'Inter',_sans-serif] font-bold">{text}</p>
+        <div className="cascade">
+          {tiles.map((tile) => (
+            <Link key={tile.title} to={tile.link} className="product">
+              <img src={tile.image} alt={tile.alt} loading="eager" decoding="async" />
+              <div className="product-body">
+                <div className="prod-head">
+                  <span>{tile.index}</span>
+                  <span className="prod-tag">Produkt</span>
                 </div>
-                )}
-            </div>
-          </motion.aside>
+                <h2>{tile.title}</h2>
+                <p>{tile.text}</p>
+                <div className="detail">
+                  Detail produktu <span>→</span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
 
-      <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
-      <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-          {tiles.map((tile, index) =>
-            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
-              <Link to={tile.link} className="ref-product-card group block h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
-                <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp'; }} /></div>
-                <div className="border-t border-white/10 p-5">
-                  <div className="mb-3 flex items-center justify-between"><span className="ref-card-index font-mono text-[10px] font-bold text-[#26C6E9]">{String(index + 1).padStart(2, "0")}</span><span className="text-[10px] font-bold uppercase tracking-[.18em] text-white/55">Produkt</span></div>
-                  <h2 className="font-heading text-2xl font-bold tracking-[-.04em] text-white">{tile.title}</h2>
-                  <p className="mt-1 min-h-[40px] text-sm font-semibold leading-5 text-slate-200">{tile.text}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.14em] text-[#26C6E9] opacity-90 transition group-hover:translate-x-1">
-                    Detail produktu <ArrowRight size={14} />
-                  </span>
+      <div className="lower-wrap">
+        <div className="lower">
+          <div className="lower-label">
+            MLŽIDLA / 01
+            <i />
+          </div>
+          {tiles.map((tile) => (
+            <Link key={`lower-${tile.title}`} to={tile.link} className="tile">
+              <img src={tile.image} alt={tile.tileAlt} loading="lazy" decoding="async" />
+              <div className="tile-body">
+                <span className="tile-index">{tile.index}</span>
+                <span className="tile-type">Produkt</span>
+                <h3>{tile.title}</h3>
+                <p>{tile.text}</p>
+                <div className="detail">
+                  Detail produktu <span>→</span>
                 </div>
-              </Link>
-            </motion.div>
-            )}
+              </div>
+            </Link>
+          ))}
         </div>
-        <p className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[.16em] text-white/40 sm:hidden">Přejeďte pro další produkty</p>
       </div>
     </section>
-    </MotionConfig>);
+  );
 }

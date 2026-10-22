@@ -91,7 +91,7 @@ export default function SmartOvladani() {
       <SmartAppConsumptionSection />
       <div id="smart-senzory" className="scroll-mt-32"><SmartSensorsSection /></div>
       <SmartValveMediaSection />
-      <SmartOfferSection />
+      <div id="smart-varianty" className="scroll-mt-32"><SmartOfferSection /></div>
       <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Kalkulačka provozu</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Spočítejte orientační spotřebu vody.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Spočítejte orientační provoz vody podle počtu trysek, průtoku a denní doby provozu. Automatizace pak pomáhá omezit zbytečné spuštění systému podle nastavených podmínek.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>
       <ContextLinks eyebrow="Související obsah" title="Automatizace je jedna část celého řešení." items={[
         { path: '/jak-to-funguje', kicker: 'Princip', title: 'Jak mlžítka fungují', text: 'Technický princip mlžení, napojení a provozní souvislosti.' },

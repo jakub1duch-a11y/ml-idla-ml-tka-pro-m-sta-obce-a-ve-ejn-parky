@@ -62,6 +62,7 @@ export default function SmartOvladani() {
   return (
     <div className="architecture-site smart-control-page min-h-screen bg-[#f5fafc]">
       <div id="smart-prehled" className="scroll-mt-28"><SmartHero /></div>
+design/smart-control-refresh-2026-10-07
       <SmartControlCabinetSection />
       <div className="sticky top-16 z-30 mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-10">
         <div className="mx-auto max-w-5xl rounded-[20px] border border-slate-200/80 bg-white/90 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">

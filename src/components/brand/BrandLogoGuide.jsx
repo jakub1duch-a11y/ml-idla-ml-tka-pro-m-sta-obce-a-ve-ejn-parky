@@ -1,15 +1,15 @@
 import React from 'react';
 import Logo from '@/components/layout/Logo';
 
-// Schválené digitální varianty nového logotypu MLŽIDLA®.
+// Digitální varianty logotypu MLŽIDLA.cz s ikonou mlžné brány ve tvaru M.
 export default function BrandLogoGuide() {
   return (
     <div className="mt-16">
       <div className="max-w-2xl">
         <p className="font-mono text-xs uppercase tracking-[.16em] text-secondary">Logo</p>
-        <h3 className="mt-3 text-3xl">Kapka, tekuté Ž a jasný podpis značky.</h3>
+        <h3 className="mt-3 text-3xl">Mlžná brána ve tvaru M a jasný podpis značky.</h3>
         <p className="mt-3 text-muted-foreground">
-          V hlavičce používáme jednoduchý wordmark. V patičce, prezentacích a vybraných detailech může být rozšířen o „Jemná atraktivní mlha“, „Pro lepší klima“ a rukopisný podpis „Architektura, která dýchá.“
+          V hlavičce, patičce i mobilním menu používáme jednotný wordmark MLŽIDLA.cz s vektorovou ikonou mlžné brány. Rozšířená varianta může nést popis „Architektura vodní mlhy“.
         </p>
       </div>
 
@@ -21,7 +21,7 @@ export default function BrandLogoGuide() {
           <div className="p-6">
             <p className="font-mono text-[10px] uppercase tracking-[.15em] text-secondary">01 · Primární světlá varianta</p>
             <h4 className="mt-2 text-xl">Wordmark pro světlé plochy</h4>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Web, nabídky, tisk a značení. Tmavý text + modré tekuté Ž.</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Web, nabídky, tisk a značení. Tmavý text + modro-tyrkysový symbol mlžné brány a zvýrazněné Ž.</p>
           </div>
         </article>
 

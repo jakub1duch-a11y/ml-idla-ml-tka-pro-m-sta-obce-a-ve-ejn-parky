@@ -1,112 +1,75 @@
-import React, { useId } from "react";
+import React from "react";
 
-// Nový MLŽIDLA® symbol: kapka + tekuté písmeno Ž. SVG zůstává ostré na mobilu i Retina displejích.
+// MLŽIDLA.cz — minimalistická mlžná brána ve tvaru M.
+// Čisté vektorové SVG; symbol je samostatný a nemění geometrii žádného produktu.
 export function MistZMark({ size = "md", className = "" }) {
-  const svgId = useId().replace(/:/g, "");
   const sizes = {
     xs: "h-7 w-[22px]",
     sm: "h-9 w-[28px]",
     md: "h-11 w-[35px]",
-    lg: "h-14 w-[44px]"
+    lg: "h-14 w-[44px]",
   };
 
-  return null;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  return (
+    <svg
+      aria-hidden="true"
+      className={`block shrink-0 ${sizes[size] || sizes.md} ${className}`}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="mlzidla-gate-gradient" x1="5" y1="42" x2="42" y2="5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#0878E8" />
+          <stop offset="0.55" stopColor="#00B9F2" />
+          <stop offset="1" stopColor="#8BE9F8" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M7 41V23C7 13.6 14.6 6 24 6C33.4 6 41 13.6 41 23V41"
+        stroke="url(#mlzidla-gate-gradient)"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M13 40V25L24 34L35 25V40"
+        stroke="url(#mlzidla-gate-gradient)"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M18 16.5H30" stroke="#67E8F9" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="24" cy="12.5" r="1.7" fill="#8BE9F8" />
+    </svg>
+  );
 }
 
-// One readable wordmark across header, footer and the mobile menu.
+// One responsive wordmark shared by the header, footer and mobile navigation.
 export default function Logo({
   size = "md",
   variant = "simple",
   tone = "dark",
-  className = ""
+  className = "",
 }) {
   return (
     <span
       role="img"
-      aria-label="MLŽIDLA"
-      className={`mlz-wordmark mlz-wordmark--${size} ${tone === "light" ? "mlz-wordmark--ink" : "mlz-wordmark--white"} ${className}`}>
-      
+      aria-label="MLŽIDLA.cz — venkovní mlžicí systémy"
+      className={`mlz-wordmark mlz-wordmark--${size} ${tone === "light" ? "mlz-wordmark--ink" : "mlz-wordmark--white"} ${className}`}
+    >
       <span className="mlz-wordmark__line" aria-hidden="true">
         <span className="mlz-wordmark__symbol">
-          <MistZMark size={size === "lg" ? "md" : "sm"} />
+          <MistZMark size={size === "lg" ? "md" : size === "xs" ? "xs" : "sm"} />
         </span>
-        <span className="mlz-wordmark__name">ML<span className="mlz-wordmark__accent">Ž</span>IDLA</span>
-        <sup className="mlz-wordmark__registered">®</sup>
+        <span className="mlz-wordmark__name">
+          ML<span className="mlz-wordmark__accent">Ž</span>IDLA<span className="mlz-wordmark__domain">.cz</span>
+        </span>
       </span>
-      {variant === "full" &&
-      <span className="mlz-wordmark__caption" aria-hidden="true">
+      {variant === "full" && (
+        <span className="mlz-wordmark__caption" aria-hidden="true">
           Architektura vodní mlhy
         </span>
-      }
-    </span>);
-
+      )}
+    </span>
+  );
 }

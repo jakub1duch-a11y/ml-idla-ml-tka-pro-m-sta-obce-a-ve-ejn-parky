@@ -97,6 +97,15 @@
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 1px 5px rgb(0 185 242 / 18%));
 }
+.mlz-wordmark__domain {
+  margin-left: 0.08em;
+  color: currentColor;
+  font-size: 0.56em;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  opacity: 0.82;
+  vertical-align: baseline;
+}
 .mlz-wordmark__registered {
   align-self: flex-start;
   margin-top: 0.2rem;

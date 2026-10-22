@@ -112,6 +112,10 @@
     {
       "function_name": "generateOfferScene",
       "description": "Vygeneruje fotorealistickou vizualizaci produktu v r\u016fzn\u00e9m prostoru (ChatGPT obrazov\u00fd model) podle origin\u00e1ln\u00ed hlavn\u00ed fotografie produktu na webu mlzidla.cz a ulo\u017e\u00ed ji ke kontrole. Vstup: project_order_id, variant_key (all products in base44 and catalog mlzidla.cz), environment_key (ms-zahrada, prirodni-zahrada, n\u00e1m\u011bst\u00ed, terasa, mestsky-park, skolni-dvur). Do nab\u00eddky p\u0159id\u00e1vat vytvo\u0159en\u00e9 schv\u00e1len\u00e9 vizualizace danych produkt\u016f"
+    },
+    {
+      "function_name": "generateImageOffer",
+      "description": "Vygeneruje obr\u00e1zkovou nab\u00eddku (AI vizu\u00e1ln\u00ed strany v designu ML\u017dIDLA.cz) a PDF ve stejn\u00e9m vzhledu. Vstup: project_order_id. Vrac\u00ed images, pdf_url a pages."
     }
   ],
   "context_files": [],

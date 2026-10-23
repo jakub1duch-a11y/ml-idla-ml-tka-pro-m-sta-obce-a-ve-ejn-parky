@@ -6,50 +6,50 @@ import HeroVideoSlider from './HeroVideoSlider';
 const HERO_BG_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/31f47cba8_generated_2ddf28f6.jpg';
 
 const benefits = [
-  { symbol: '◌', text: 'Cíleně osvěžuje pobytovou zónu' },
-  { symbol: '≈', text: 'Jemná mlha pro příjemnější pobyt' },
-  { symbol: '⌁', text: 'Úsporný provoz a chytré řízení' },
-  { symbol: '◇', text: 'Odolná nerezová konstrukce' },
-];
+{ symbol: '◌', text: 'Cíleně osvěžuje pobytovou zónu' },
+{ symbol: '≈', text: 'Jemná mlha pro příjemnější pobyt' },
+{ symbol: '⌁', text: 'Úsporný provoz a chytré řízení' },
+{ symbol: '◇', text: 'Odolná nerezová konstrukce' }];
+
 
 const tiles = [
-  {
-    index: '01',
-    title: 'LINEA CE',
-    text: 'Nerezová linie s charakteristickým ohybem',
-    alt: 'Nerezové mlžítko LINEA CE',
-    tileAlt: 'LINEA CE',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/974a8f55c_generated_017c9687.jpg',
-    link: '/produkt/linea-solo',
-  },
-  {
-    index: '02',
-    title: 'MRAK',
-    text: 'Hravé osvěžení pro děti a hřiště',
-    alt: 'Mlžítko MRAK na dětském hřišti',
-    tileAlt: 'MRAK',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a02e88a84_generated_44e6876a.jpg',
-    link: '/produkt/mlzitko-mrak',
-  },
-  {
-    index: '03',
-    title: 'MLŽNÁ BRÁNA',
-    text: 'Průchozí vodní mlha pro náměstí',
-    alt: 'Mlžná brána na náměstí',
-    tileAlt: 'Mlžná brána',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b192a1cfe_generated_ff513b25.jpg',
-    link: '/mlzne-brany',
-  },
-  {
-    index: '04',
-    title: 'BENDY',
-    text: 'Organická linie pro pobytové zóny',
-    alt: 'Organické nerezové mlžítko v pobytové zóně',
-    tileAlt: 'BENDY',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/57f97ac19_generated_07f816aa.jpg',
-    link: '/produkt/mlzitko-bendy',
-  },
-];
+{
+  index: '01',
+  title: 'LINEA CE',
+  text: 'Nerezová linie s charakteristickým ohybem',
+  alt: 'Nerezové mlžítko LINEA CE',
+  tileAlt: 'LINEA CE',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/974a8f55c_generated_017c9687.jpg',
+  link: '/produkt/linea-solo'
+},
+{
+  index: '02',
+  title: 'MRAK',
+  text: 'Hravé osvěžení pro děti a hřiště',
+  alt: 'Mlžítko MRAK na dětském hřišti',
+  tileAlt: 'MRAK',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a02e88a84_generated_44e6876a.jpg',
+  link: '/produkt/mlzitko-mrak'
+},
+{
+  index: '03',
+  title: 'MLŽNÁ BRÁNA',
+  text: 'Průchozí vodní mlha pro náměstí',
+  alt: 'Mlžná brána na náměstí',
+  tileAlt: 'Mlžná brána',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b192a1cfe_generated_ff513b25.jpg',
+  link: '/mlzne-brany'
+},
+{
+  index: '04',
+  title: 'BENDY',
+  text: 'Organická linie pro pobytové zóny',
+  alt: 'Organické nerezové mlžítko v pobytové zóně',
+  tileAlt: 'BENDY',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/57f97ac19_generated_07f816aa.jpg',
+  link: '/produkt/mlzitko-bendy'
+}];
+
 
 export default function HomeHero() {
   return (
@@ -60,8 +60,8 @@ export default function HomeHero() {
           <img
             src={HERO_BG_IMAGE}
             alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
-            fetchPriority="high"
-          />
+            fetchPriority="high" />
+          
         </div>
         <div className="mist" />
 
@@ -88,17 +88,17 @@ export default function HomeHero() {
         </div>
 
         <div className="benefits" aria-label="Hlavní přínosy mlžítek">
-          {benefits.map((item) => (
-            <div key={item.text} className="benefit">
+          {benefits.map((item) =>
+          <div key={item.text} className="benefit">
               <span className="bicon" aria-hidden="true">{item.symbol}</span>
               <p>{item.text}</p>
             </div>
-          ))}
+          )}
         </div>
 
         <div className="cascade">
-          {tiles.map((tile) => (
-            <Link key={tile.title} to={tile.link} className="product">
+          {tiles.map((tile) =>
+          <Link key={tile.title} to={tile.link} className="product">
               <img src={tile.image} alt={tile.alt} loading="eager" decoding="async" />
               <div className="product-body">
                 <div className="prod-head">
@@ -112,18 +112,18 @@ export default function HomeHero() {
                 </div>
               </div>
             </Link>
-          ))}
+          )}
         </div>
       </div>
 
-      <div className="lower-wrap">
-        <div className="lower">
+      <div className="lower-wrap hidden">
+        <div className="lower hidden">
           <div className="lower-label">
             MLŽIDLA / 01
             <i />
           </div>
-          {tiles.map((tile) => (
-            <Link key={`lower-${tile.title}`} to={tile.link} className="tile">
+          {tiles.map((tile) =>
+          <Link key={`lower-${tile.title}`} to={tile.link} className="tile">
               <img src={tile.image} alt={tile.tileAlt} loading="lazy" decoding="async" />
               <div className="tile-body">
                 <span className="tile-index">{tile.index}</span>
@@ -135,9 +135,9 @@ export default function HomeHero() {
                 </div>
               </div>
             </Link>
-          ))}
+          )}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

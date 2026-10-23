@@ -1,4 +1,5 @@
 import React from 'react';
+import { BRAND_LOGO_URL } from '@/components/layout/Logo';
 
 export const CONTACT = { name: 'Ing. Radek Meduna', email: 'meduna@holmtec.cz', phone: '+420 774 700 390', site: 'mlzidla.cz' };
 
@@ -7,8 +8,7 @@ export const fmtKc = (v) => `${new Intl.NumberFormat('cs-CZ', { maximumFractionD
 export function Logo() {
   return (
     <div className="op-logo">
-      <div className="op-logo-word">MLŽIDLA.cz<sup>®</sup></div>
-      <div className="op-logo-by">by HolmTec</div>
+      <img src={BRAND_LOGO_URL} alt="MLŽIDLA" style={{height:"12cqw",width:"auto",objectFit:"contain"}} />
     </div>
   );
 }

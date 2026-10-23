@@ -30,8 +30,8 @@ export function paintBackground(ctx) {
 }
 
 // Oficiální logo MLŽIDLA (stejný soubor jako v e-mailech). Zdrojový obrázek 1024×512 má bílé okraje, kreslí se ořezané na motiv.
-const LOGO_URL = '/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp';
-const LOGO_CROP = { x: 70, y: 165, w: 890, h: 180 };
+const LOGO_URL = '/media/brand/mlzidla-approved-20261023.svg';
+const LOGO_CROP = { x: 0, y: 0, w: 550, h: 365 };
 let logoImage = null;
 
 export async function loadLogo() {
@@ -41,7 +41,7 @@ export async function loadLogo() {
 
 function logo(ctx, x, y) {
   if (!logoImage) return;
-  const h = 84;
+  const h = 90;
   const w = (LOGO_CROP.w / LOGO_CROP.h) * h;
   ctx.drawImage(logoImage, LOGO_CROP.x, LOGO_CROP.y, LOGO_CROP.w, LOGO_CROP.h, x, y, w, h);
 }

@@ -25,6 +25,7 @@ import Kontakt from '@/pages/Kontakt';
 import Connect from '@/pages/Connect';
 import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
+import MrakVariantDetail from '@/pages/MrakVariantDetail';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
 import RegisteredPortal from '@/components/portal/RegisteredPortal';
@@ -145,6 +146,7 @@ const AuthenticatedApp = () => {
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
         <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzitko-mrak" replace />} />
+        <Route path="/produkt/mlzitko-mrak/varianta/:variantId" element={<MrakVariantDetail />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
         <Route path="/klientska-sekce" element={<CustomerPortal />} />

@@ -20,6 +20,22 @@
     },
     "do": [
       {
+        "prepare_email": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "prepareAdminInquiryNotices",
+            "args": {
+              "action": "email_context",
+              "notice_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "deliver",
+          "x-base44": {
+            "title": "P\u0159ipravit kontakty a ak\u010dn\u00ed odkazy"
+          }
+        }
+      },
+      {
         "deliver": {
           "call": "send_email",
           "with": {
@@ -27,15 +43,20 @@
             "to": "${ .trigger.data.recipient }",
             "description": "Intern\u00ed shrnut\u00ed nov\u00e9 webov\u00e9 popt\u00e1vky",
             "variables": {
-              "inquiry_id": "${ .trigger.data.inquiry_id }",
-              "customer_name": "${ .trigger.data.customer_name }",
-              "customer_email": "${ .trigger.data.customer_email }",
-              "customer_phone": "${ .trigger.data.customer_phone }",
-              "company": "${ .trigger.data.company }",
-              "product": "${ .trigger.data.product }",
-              "message": "${ .trigger.data.message }",
-              "source": "${ .trigger.data.source }",
-              "received_at": "${ .trigger.data.received_at }"
+              "id_poptavky": "${ .prepare_email.id_poptavky }",
+              "datum_cas": "${ .prepare_email.datum_cas }",
+              "jmeno": "${ .prepare_email.jmeno }",
+              "firma": "${ .prepare_email.firma }",
+              "email": "${ .prepare_email.email }",
+              "telefon": "${ .prepare_email.telefon }",
+              "sluzba": "${ .prepare_email.sluzba }",
+              "zprava": "${ .prepare_email.zprava }",
+              "mailto_url": "${ .prepare_email.mailto_url }",
+              "tel_url": "${ .prepare_email.tel_url }",
+              "chatgpt_url": "${ .prepare_email.chatgpt_url }",
+              "admin_url": "${ .prepare_email.admin_url }",
+              "print_url": "${ .prepare_email.print_url }",
+              "master_sheet_url": "${ .prepare_email.master_sheet_url }"
             }
           },
           "then": "mark_sent",

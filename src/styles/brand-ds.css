@@ -1,0 +1,21 @@
+/* Brand design system components — ported 1:1 from the brand kit. */
+.ds-btn-primary{display:inline-flex;align-items:center;gap:8px;font-family:var(--brand-font-heading);font-weight:var(--brand-font-weight-semibold);letter-spacing:0.02em;text-transform:uppercase;font-size:14px;color:var(--brand-secondary);background:var(--brand-accent);border:none;border-radius:var(--brand-radius-sm);padding:14px 26px;white-space:nowrap;cursor:pointer;transition:background .2s ease,transform .1s ease;}
+.ds-btn-primary:hover{background:var(--brand-primary);color:var(--brand-on-primary);}
+.ds-btn-primary:active{transform:translateY(1px);}
+.ds-btn-outline{display:inline-flex;align-items:center;gap:8px;font-family:var(--brand-font-heading);font-weight:var(--brand-font-weight-semibold);letter-spacing:0.01em;font-size:14px;color:var(--brand-text);background:transparent;border:1px solid var(--brand-border);border-radius:var(--brand-radius-sm);padding:13px 25px;white-space:nowrap;cursor:pointer;transition:border-color .2s ease,color .2s ease;}
+.ds-btn-outline:hover{border-color:var(--brand-primary);color:var(--brand-primary);}
+.ds-btn-outline:active{transform:translateY(1px);}
+
+/* Cards · Produkt — media area uses a white studio background (brand rule 9). */
+.ds-card-prod{display:block;font-family:var(--brand-font-body);background:var(--brand-surface);border:1px solid var(--brand-border);border-radius:var(--brand-radius-lg);overflow:hidden;transition:border-color .2s,transform .2s}
+.ds-card-prod:hover{border-color:var(--brand-primary);transform:translateY(-2px)}
+.ds-card-prod .media{aspect-ratio:4/5;background:#FFFFFF;display:flex;align-items:center;justify-content:center;padding:18px;border-bottom:1px solid var(--brand-border)}
+.ds-card-prod .media img{max-width:100%;max-height:100%;object-fit:contain}
+.ds-card-prod .body{padding:22px}
+.ds-card-prod .eyebrow{font-family:var(--brand-font-body);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-primary)}
+.ds-card-prod h3{font-family:var(--brand-font-heading);font-weight:var(--brand-font-weight-bold);font-size:20px;color:var(--brand-text);margin:8px 0 6px;letter-spacing:var(--brand-font-heading-letter-spacing)}
+.ds-card-prod p{font-size:13.5px;color:var(--brand-muted-foreground);margin:0 0 16px}
+.ds-card-prod .cta{display:inline-block;font-size:13px;font-weight:var(--brand-font-weight-semibold);color:var(--brand-on-primary);background:var(--brand-primary);padding:9px 16px;border-radius:var(--brand-radius-sm)}
+
+/* Brand logo image */
+.mlz-brand-logo{display:block;flex-shrink:0;object-fit:contain}

@@ -1,5 +1,7 @@
 import React from "react";
 
+export const BRAND_LOGO_URL = "https://media.base44.com/images/public/workspaces/69e196078d391db6f171eedc/brands/503432ce4_brand_upload_logo.jpg";
+
 // MLŽIDLA.cz — minimalistická mlžná brána ve tvaru M.
 // Čisté vektorové SVG; symbol je samostatný a nemění geometrii žádného produktu.
 export function MistZMark({ size = "md", className = "" }) {
@@ -59,7 +61,11 @@ export default function Logo({
     >
       <span className="mlz-wordmark__line" aria-hidden="true">
         <span className="mlz-wordmark__symbol">
-          <MistZMark size={size === "lg" ? "md" : size === "xs" ? "xs" : "sm"} />
+          <img
+            src={BRAND_LOGO_URL}
+            alt=""
+            className={`mlz-brand-logo ${size === "lg" ? "h-12 w-12" : size === "xs" ? "h-7 w-7" : "h-9 w-9"}`}
+          />
         </span>
         <span className="mlz-wordmark__name">
           ML<span className="mlz-wordmark__accent">Ž</span>IDLA<span className="mlz-wordmark__domain">.cz</span>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
+import StudioProductStrip from '@/components/home/new/StudioProductStrip';
 import ReferencesStrip from '@/components/home/new/ReferencesStrip';
 import ProKohoSection from '@/components/home/new/ProKohoSection';
 import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
@@ -30,6 +31,7 @@ export default function Home() {
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
         <HomeHero />
+        <StudioProductStrip />
         <UrbanCoolingExperience />
         <HomeVideoReel />
         <ProductPhotoGallery />

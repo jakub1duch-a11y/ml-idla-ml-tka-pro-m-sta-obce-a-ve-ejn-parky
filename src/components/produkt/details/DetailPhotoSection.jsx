@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import DetailTechnicalPanel from '@/components/produkt/details/DetailTechnicalPanel';
 
 export default function DetailPhotoSection({ item, children }) {
   return <section id={`${item.prefix || 'bendy'}-${item.id}`} className="scroll-mt-24 border-t border-border bg-card">
@@ -15,6 +16,7 @@ export default function DetailPhotoSection({ item, children }) {
         <span className="font-mono text-xs font-semibold text-primary">AI VIZUALIZACE</span><p className="text-xs text-muted-foreground">{item.note}</p>
       </figcaption>
     </figure>
+    <DetailTechnicalPanel technical={item.technical} />
     {children}
   </section>;
 }

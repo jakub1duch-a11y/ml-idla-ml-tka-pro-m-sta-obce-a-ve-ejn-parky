@@ -1,0 +1,40 @@
+{
+  "name": "Popt\u00e1vka \u2192 intern\u00ed upozorn\u011bn\u00ed administr\u00e1tor\u016fm",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "Poptavka"
+    }
+  },
+  "description": "P\u0159iprav\u00ed ozn\u00e1men\u00ed ka\u017ed\u00e9 nov\u00e9 popt\u00e1vky pro v\u0161echny aktu\u00e1ln\u00ed administr\u00e1tory. Nem\u011bn\u00ed z\u00e1kaznick\u00e1 potvrzen\u00ed ani koncepty odpov\u011bd\u00ed.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "poptavka_admin_email_notification",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "queue_notices": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "prepareAdminInquiryNotices",
+            "args": {
+              "entity_name": "Poptavka",
+              "inquiry_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "P\u0159ipravit e-maily administr\u00e1tor\u016fm"
+          }
+        }
+      }
+    ]
+  }
+}

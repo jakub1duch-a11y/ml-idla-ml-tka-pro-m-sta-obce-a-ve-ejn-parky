@@ -1,0 +1,65 @@
+{
+  "name": "Popt\u00e1vka \u2192 doru\u010den\u00ed administr\u00e1torovi",
+  "description": "Ode\u0161le intern\u00ed e-mail evidovan\u00e9mu administr\u00e1torovi. Ozna\u010den\u00ed p\u0159edm\u011btu umo\u017e\u0148uje filtrov\u00e1n\u00ed v Gmailu a sledov\u00e1n\u00ed v ChatGPT.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "AdminInquiryNotice",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.status == \"pending\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "admin_inquiry_email_delivery",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "deliver": {
+          "call": "send_email",
+          "with": {
+            "template_name": "AdminInquiryAlert",
+            "to": "${ .trigger.data.recipient }",
+            "description": "Intern\u00ed shrnut\u00ed nov\u00e9 webov\u00e9 popt\u00e1vky",
+            "variables": {
+              "inquiry_id": "${ .trigger.data.inquiry_id }",
+              "customer_name": "${ .trigger.data.customer_name }",
+              "customer_email": "${ .trigger.data.customer_email }",
+              "customer_phone": "${ .trigger.data.customer_phone }",
+              "company": "${ .trigger.data.company }",
+              "product": "${ .trigger.data.product }",
+              "message": "${ .trigger.data.message }",
+              "source": "${ .trigger.data.source }",
+              "received_at": "${ .trigger.data.received_at }"
+            }
+          },
+          "then": "mark_sent",
+          "x-base44": {
+            "title": "Odeslat shrnut\u00ed administr\u00e1torovi"
+          }
+        }
+      },
+      {
+        "mark_sent": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "prepareAdminInquiryNotices",
+            "args": {
+              "action": "mark_sent",
+              "notice_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Zaznamenat doru\u010den\u00ed"
+          }
+        }
+      }
+    ]
+  }
+}

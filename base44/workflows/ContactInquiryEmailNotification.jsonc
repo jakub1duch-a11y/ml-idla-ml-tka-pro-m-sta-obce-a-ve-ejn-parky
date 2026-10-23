@@ -1,5 +1,5 @@
 {
-  "name": "Kontakt \u2192 e-mail t\u00fdmu",
+  "description": "Ode\u0161le novou zpr\u00e1vu z kontaktn\u00edch a produktov\u00fdch formul\u00e1\u0159\u016f intern\u00edmu t\u00fdmu.",
   "trigger": {
     "condition": null,
     "config": {
@@ -10,31 +10,31 @@
       "entity_name": "ContactInquiry"
     }
   },
-  "description": "P\u0159iprav\u00ed ozn\u00e1men\u00ed nov\u00e9ho kontaktu pro v\u0161echny aktu\u00e1ln\u00ed administr\u00e1tory, bez odpov\u011bdi z\u00e1kazn\u00edkovi.",
   "definition": {
     "document": {
       "dsl": "1.0.0",
       "name": "contact_inquiry_email_notification",
-      "version": "2.0",
+      "version": "1.0",
       "namespace": "base44"
     },
     "do": [
       {
-        "queue_notices": {
+        "send_email": {
           "call": "invoke_backend_function",
           "with": {
-            "function_name": "prepareAdminInquiryNotices",
+            "function_name": "sendContactInquiryNotification",
             "args": {
-              "entity_name": "ContactInquiry",
               "inquiry_id": "${ .trigger.entity_id }"
             }
           },
           "then": "end",
           "x-base44": {
-            "title": "P\u0159ipravit e-maily administr\u00e1tor\u016fm"
+            "title": "Odeslat e-mail t\u00fdmu",
+            "description": "Nov\u00e1 kontaktn\u00ed zpr\u00e1va"
           }
         }
       }
     ]
-  }
+  },
+  "name": "Kontakt \u2192 e-mail t\u00fdmu"
 }

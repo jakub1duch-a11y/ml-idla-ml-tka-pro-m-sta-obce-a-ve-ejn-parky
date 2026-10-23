@@ -14,8 +14,24 @@ const DEFAULT_CONFIG = {
   useCases: ['Městský prostor', 'Parky a zeleň', 'Pobytové zóny', 'Komerční areály'],
 };
 
-// Sdílený výběr čtyř variant, včetně zdrojů a označení návrhů.
-export { MRAK_MODELS as MRAK_VARIANTS } from '@/components/produkt/nozzles/nozzleData';
+// Produktové velikosti MRAK: malý 1 600 mm podle zadání (výrobně neověřeno), velký 2 400 mm podle kalkulace MRAK 13R 2424.
+// Nezveřejňujeme cenu ani počet trysek, dokud není potvrzen aktuální výrobní výkres.
+export const MRAK_VARIANTS = [
+  {
+    id: 'maly',
+    name: 'Malý',
+    height: '1 600 mm',
+    description: 'Kompaktní mlžný prvek do zahrad, škol a dětských zón.',
+    note: 'Návrhová výška 1 600 mm; výrobní provedení se potvrdí před nabídkou.',
+  },
+  {
+    id: 'velky',
+    name: 'Velký',
+    height: '2 400 mm',
+    description: 'Výrazná nerezová mlžná skulptura pro parky a větší mlžiště.',
+    note: 'Výška odpovídá kalkulaci MRAK 13R 2424; přesné osazení trysek k potvrzení.',
+  },
+];
 
 const CONFIG = {
   'teepee': {
@@ -104,7 +120,7 @@ const CONFIG = {
     intro: 'MRAK je organicky tvarovaný mlžný prvek pro školní zahrady, dětská hřiště, parky a rezidenční zahrady. Volbu velikosti i konečné výrobní provedení potvrzujeme před naceněním.',
     benefits: [
       ['Výrazný prostorový prvek', 'Organická forma propojuje funkci mlžení s vizuálním akcentem v prostoru.'],
-      ['Čtyři varianty vzhledu', 'Katalogové MRAK 1414 a 2424 doplňují návrhy Dětský a 1414 Design. Návrhové údaje jsou označené a ověřují se před výrobou.'],
+      ['Dvě návrhové velikosti', 'K dispozici jsou malá a velká varianta; jejich konečné rozměry a osazení se ověřují před výrobou.'],
       ['Pro pobytové zóny', 'Hodí se k návrhu školních zahrad, dětských hřišť, parků a dalších pobytových míst.'],
       ['Technické potvrzení před nabídkou', 'Počet a rozmístění trysek, napojení a další parametry se potvrdí v konkrétní konfiguraci.'],
     ],
@@ -133,7 +149,7 @@ const CONFIG = {
   },
   'ostrev-mlzitko': {
     tagline: 'Organické stromové mlžítko se sedmi rameny',
-    intro: 'Ostrev — mlžný strom je vícearmenný mlžný prvek pro větší veřejné a pobytové prostory. Konkrétní osazení, provozní parametry a rozmístění se potvrzují podle výrobní specifikace a projektu.',
+    intro: 'OSTŘEV je vícearmenný mlžný prvek pro větší veřejné a pobytové prostory. Konkrétní osazení, provozní parametry a rozmístění se potvrzují podle výrobní specifikace a projektu.',
     benefits: [
       ['Vícearmenná forma', 'Rozvětvená silueta vytváří výrazný prostorový prvek pro větší plochy.'],
       ['Návrh pro větší zóny', 'Rozmístění se plánuje podle velikosti prostoru, pěších tras a pobytových míst.'],
@@ -173,10 +189,8 @@ const SPATIAL_CONFIGS = {
     ['Alej', 'více prvků v linii', 'Opakovaná řada stejného produktu v prostoru.'],
   ],
   'mlzitko-mrak': [
-    ['MRAK 10R 1414', '1 400 × 1 400 mm', '5 trysek dle katalogu produktů 2026.'],
-    ['MRAK 13R 2424', '2 400 × 2 400 mm', '9 trysek dle sloupce katalogu; odlišný slovní popis je třeba ověřit.'],
-    ['MRAK Dětský', 'návrh ≈ 1 300 × 550 mm', '4 viditelné trysky; rozměry a bezpečnost k posouzení.'],
-    ['MRAK 1414 Design', 'návrh ≈ 1 400 × 1 400 mm', 'Alternativní vzhled, návrhové osazení 5 trysek.'],
+    ['Malý · h 1 600 mm', '1 samostatný prvek', 'Výška dle zadání. Výrobní provedení se potvrdí před naceněním.'],
+    ['Velký · h 2 400 mm', '1 samostatný prvek', 'Kalkulovaný MRAK 13R 2424 pro větší mlžiště a parkové prostory.'],
   ],
   'mlzna-brana-gate': [
     ['Straight', 'rovná horní linie', 'Průchozí brána s rovnou horní geometrií.'],

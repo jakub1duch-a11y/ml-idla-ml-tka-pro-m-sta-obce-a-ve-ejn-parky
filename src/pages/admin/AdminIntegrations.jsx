@@ -4,7 +4,6 @@ import {
   ShieldCheck, Sparkles, Unplug
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import GmailChatGptGuide from '@/components/admin/GmailChatGptGuide';
 
 const STATUS_META = {
   active: { label: 'aktivní', tone: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-300', Icon: CheckCircle2 },
@@ -118,8 +117,6 @@ export default function AdminIntegrations() {
         <Stat label="Chráněné zápisy" value={counts.protectedWrites} tone="text-cyan" />
         <Stat label="AI / design vrstvy" value={providers.filter((item) => item.active !== false).length} tone="text-violet-300" />
       </div>
-
-      <GmailChatGptGuide />
 
       <section className="rounded-3xl border border-amber-400/20 bg-amber-400/[.06] p-5">
         <div className="flex items-center gap-2 text-amber-300"><ShieldCheck size={16} /><p className="font-mono text-[10px] uppercase tracking-widest">Bezpečný provoz</p></div>

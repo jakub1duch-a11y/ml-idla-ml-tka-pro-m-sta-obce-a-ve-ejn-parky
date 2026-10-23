@@ -93,30 +93,10 @@ export default function AdminPoptavky() {
         offer_status: 'nova_poptavka',
       })),
     ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime());
-    const params = new URLSearchParams(window.location.search);
-    const targetId = params.get('inquiry');
-    const targetEntity = params.get('entity');
-    let target = normalized.find(item => item.id === targetId && item.entity === targetEntity);
-    if (targetId && ['Poptavka', 'ContactInquiry'].includes(targetEntity) && !target) {
-      const record = await base44.entities[targetEntity].get(targetId);
-      if (record) {
-        target = { id: record.id, entity: targetEntity, source: targetEntity === 'Poptavka' ? 'Poptávka' : 'Kontakt', name: record.jmeno || record.name, email: record.email, phone: record.telefon || '', company: record.firma || '', product: record.produkt || record.product_id, message: record.zprava || record.message, status: record.status, created_date: record.created_date, offer_status: record.offer_status || 'nova_poptavka' };
-        normalized.unshift(target);
-      }
-    }
     setItems(normalized);
     setProjectOrders(orders || []);
     setProducts(prods || []);
     setLoading(false);
-    if (target) {
-      setView('list');
-      setExpanded(target.id);
-      if (params.get('print') === '1') {
-        params.delete('print');
-        window.history.replaceState(null, '', `${window.location.pathname}?${params}`);
-        printA4(target);
-      }
-    }
   };
 
   useEffect(() => { load(); }, []);

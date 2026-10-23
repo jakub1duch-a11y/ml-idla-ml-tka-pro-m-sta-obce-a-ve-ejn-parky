@@ -8,7 +8,7 @@ async function photoPanel(ctx, v) {
   const gw = (W - 200 - (imgs.length - 1) * 20) / Math.max(imgs.length, 1);
   imgs.forEach((img, i) => drawContain(ctx, img, 100 + i * (gw + 20), 415, gw, 600));
   if (v.recommended) pill(ctx, 'DOPORUČENÉ ŘEŠENÍ', 94, 409, { bg: C.navy, color: C.white });
-  pill(ctx, 'PRODUKTOVÝ NÁHLED · PŘESNOU VARIANTU POTVRZUJE DOKUMENTACE', 94, 985, { bg: 'rgba(255,255,255,0.94)' });
+  pill(ctx, 'ORIGINÁLNÍ FOTOGRAFIE · KONSTRUKCE BEZ AI ÚPRAV', 94, 985, { bg: 'rgba(255,255,255,0.94)' });
 }
 
 function specs(ctx, v) {

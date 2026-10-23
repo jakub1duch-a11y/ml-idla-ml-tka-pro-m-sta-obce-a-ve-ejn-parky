@@ -16,8 +16,7 @@ function cleanText(value = '') {
 export default function PdCompactHero({ product }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const isMrak = product.slug === 'mlzitko-mrak';
-  const selectedMrakVariant = MRAK_VARIANTS.some(v => v.id === searchParams.get('variant')) ? searchParams.get('variant') : 'maly';
-  const mrakModel = isMrak ? MRAK_VARIANTS.find(v => v.id === selectedMrakVariant) : null;
+  const selectedMrakVariant = searchParams.get('variant') === 'velky' ? 'velky' : 'maly';
   const quoteVariant = isMrak ? `&varianta=${encodeURIComponent(selectedMrakVariant)}` : '';
   const selectMrakVariant = (variantId) => {
     const params = new URLSearchParams(searchParams);
@@ -27,14 +26,14 @@ export default function PdCompactHero({ product }) {
   const family = getFamily(product);
   const line = getLine(product);
   const [imageIndex, setImageIndex] = useState(0);
-  useEffect(() => setImageIndex(0), [product.slug, selectedMrakVariant]);
+  useEffect(() => setImageIndex(0), [product.slug]);
   const imageCandidates = [...new Set([
     product.hero_visual_verified ? product.hero_product_image_url : '',
     product.image_url,
     ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []),
     ...getCuratedProductMedia(product).map((item) => item.url),
   ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name)))];
-  const image = mrakModel?.image || imageCandidates[imageIndex] || '';
+  const image = imageCandidates[imageIndex] || '';
   const intro = cleanText(product.short_description || product.description || '');
   const facts = [
   product.material && { icon: ShieldCheck, label: 'Materiál', value: product.material },
@@ -62,7 +61,7 @@ export default function PdCompactHero({ product }) {
 
           {isMrak && (
             <div className="mt-7" aria-label="Výběr velikosti MLŽNÉHO MRAKU">
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.15em] text-[#0B8EC5]">Vyberte provedení · 4 varianty</p>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.15em] text-[#0B8EC5]">Vyberte velikost · 2 varianty</p>
               <div className="grid grid-cols-2 gap-3">
                 {MRAK_VARIANTS.map((variant) => {
                   const selected = variant.id === selectedMrakVariant;
@@ -75,7 +74,7 @@ export default function PdCompactHero({ product }) {
                       className={`min-w-0 rounded-2xl border px-3 py-4 text-left transition-all sm:p-4 ${selected ? 'border-[#0B5EA8] bg-[#EAF7FD] shadow-[0_8px_30px_rgba(11,94,168,.10)]' : 'border-[#D8E8ED] bg-white hover:border-[#7CCBD8]'}`}
                     >
                       <span className="block text-xs font-bold uppercase tracking-[.11em] text-[#0A2342]">{variant.name}</span>
-                      <span className="mt-1 block font-heading text-xl font-black text-[#0B5EA8] sm:text-2xl">{variant.concept ? 'Návrh ' : ''}{variant.height}</span>
+                      <span className="mt-1 block font-heading text-xl font-black text-[#0B5EA8] sm:text-2xl">{variant.id === 'maly' ? 'Návrh' : 'Kalkulace'} {variant.height}</span>
                       <span className="mt-2 block text-[11px] leading-5 text-[#5A6B78]">{variant.description}</span>
                     </button>
                   );

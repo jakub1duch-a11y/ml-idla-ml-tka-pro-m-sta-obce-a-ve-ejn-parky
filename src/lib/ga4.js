@@ -257,7 +257,7 @@ async function emit(eventName, properties = {}) {
 function sendToGoogleAds({ transactionId = '', value = 1 } = {}) {
   if (!GOOGLE_ADS_CONVERSION_LABEL) return;
   safeGtag('event', 'conversion', {
-    send_to: 'AW-18399688870/HiIQCMXhxuQcEKbx08VE',
+    send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_CONVERSION_LABEL}`,
     value,
     currency: 'CZK',
     ...(transactionId ? { transaction_id: transactionId } : {}),

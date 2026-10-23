@@ -52,9 +52,7 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
     const originals = (prepared?.quote?.scenes || []).filter(s => s.geometry_preserved && s.generated_by_ai === false);
     const scenes = originals.length ? originals : sceneAssets;
     const viz = scenes.map(s => s.url);
-    const exactVariant = prepared?.projectOrder?.product_name || productName;
-    const studio = /13R|2424|velký/i.test(exactVariant) && product?.slug === 'mlzitko-mrak' ? 'https://drive.google.com/thumbnail?id=1RP6yr15BgBmrm3YOqalADi9ISSHXFs0a&sz=w1600' : product?.studio_image_url || '';
-    const gallery = [studio].filter(Boolean);
+    const gallery = [product?.image_url, ...(product?.gallery_urls || [])].filter(Boolean);
     const total = Number(prepared?.projectOrder?.total_price || prepared?.quote?.final_total || 0);
     const clientName = selected?.name || selected?.jmeno || '—';
     const clientCompany = selected?.firma || selected?.company || '';
@@ -62,7 +60,7 @@ export default function OfferVisualViewer({ prepared, selected, selectedProduct,
       product, productName, viz, gallery, total, clientName, clientCompany, scenes,
       sourcePhotos: selected?.attachment_urls || [], suplaPrice: prepared?.quote?.smart_pricing?.complete_supla_ex_vat || 0,
       forWhom: clientCompany || clientName,
-      pick: () => gallery[0] || '',
+      pick: (i) => viz[i] || viz[0] || gallery[0] || '',
       benefits: content.benefits.filter(Boolean), goal: content.project_goal, solution: content.solution_summary,
       lines: prepared?.quote?.lines?.length ? prepared.quote.lines : lines.length ? lines : [{ label: productName, quantity: 1, unit: 'ks', total }],
       smart: prepared?.projectOrder?.smart_control_included !== false,

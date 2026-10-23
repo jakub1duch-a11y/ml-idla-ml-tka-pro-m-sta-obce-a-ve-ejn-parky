@@ -6,7 +6,6 @@ import { trackInquirySubmitted } from '@/lib/ga4';
 import { setSEO } from '@/lib/seo';
 import InquiryHero from '@/components/premium/InquiryHero';
 import InquiryTrust from '@/components/premium/InquiryTrust';
-import { MRAK_MODELS } from '@/components/produkt/nozzles/nozzleData';
 import GoogleContactBox from '@/components/forms/GoogleContactBox';
 
 const baseProducts = ['Návrh projektu', 'Městská mlžítka', 'Zahradní mlžítka', 'Zakázkové řešení', 'Chytré řízení', 'Ještě nevím'];
@@ -24,8 +23,11 @@ export default function Poptavka() {
   const arSession = searchParams.get('ar_session') || '';
   const initialProduct = searchParams.get('produkt') || '';
   const mrakVariantId = initialProduct === 'mlzitko-mrak' ? searchParams.get('varianta') : null;
-  const mrakVariant = MRAK_MODELS.find(v => v.id === mrakVariantId);
-  const mrakVariantName = mrakVariant ? `${mrakVariant.name} · ${mrakVariant.dimensions}${mrakVariant.concept ? ' (návrh)' : ''}` : '';
+  const mrakVariantName = mrakVariantId === 'velky'
+    ? 'MLŽNÝ MRAK — Velký, h 2 400 mm (MRAK 13R 2424)'
+    : mrakVariantId === 'maly'
+      ? 'MLŽNÝ MRAK — Malý, h 1 600 mm (návrhové provedení)'
+      : '';
   const products = initialProduct && !baseProducts.includes(initialProduct) ? [initialProduct, ...baseProducts] : baseProducts;
   const [form, setForm] = useState(() => ({
     jmeno: searchParams.get('jmeno') || '',

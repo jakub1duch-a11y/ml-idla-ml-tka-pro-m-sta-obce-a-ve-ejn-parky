@@ -8,8 +8,6 @@ import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import MrakVariantGallery from '@/components/produkt/new/MrakVariantGallery';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
-import PdMistVariants from '@/components/produkt/new/PdMistVariants';
-import PdRealGallery from '@/components/produkt/new/PdRealGallery';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
@@ -17,10 +15,6 @@ import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import StebloGateDetail from '@/components/produkt/StebloGateDetail';
-import { getCatalogWaterLabel } from '@/components/produkt/nozzles/nozzleData';
-import BendyDetailSections from '@/components/produkt/details/BendyDetailSections';
-import ProductDetailSections from '@/components/produkt/details/ProductDetailSections';
-import PdTechnicalDrawing from '@/components/produkt/new/PdTechnicalDrawing';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -37,7 +31,7 @@ export default function ProduktDetail() {
         if (!results || results.length === 0) { setNotFound(true); return; }
         const p = results[0];
         if (isArchived(p.slug)) { setNotFound(true); return; }
-        setProduct({ ...p, water_consumption: getCatalogWaterLabel(p.slug) || p.water_consumption });
+        setProduct(p);
         trackProductView(p.name, p.slug, p.category_id);
         setSEO({ ...getProductSEO(p), robots: 'index, follow' });
       })
@@ -74,11 +68,6 @@ export default function ProduktDetail() {
       {product.slug === 'mlzitko-mrak' && <MrakVariantGallery />}
       <PdFamilyNav product={product} />
       <PdVisualGalleryCompact product={product} />
-      <PdRealGallery product={product} />
-      <PdMistVariants product={product} />
-      <BendyDetailSections product={product} />
-      <ProductDetailSections product={product} />
-      <PdTechnicalDrawing product={product} />
       <div id="parametry" className="scroll-mt-24"><PdSpecs product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
@@ -87,3 +76,4 @@ export default function ProduktDetail() {
     </div>
   );
 }
+

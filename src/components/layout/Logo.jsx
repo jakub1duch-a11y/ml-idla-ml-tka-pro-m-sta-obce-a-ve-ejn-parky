@@ -1,6 +1,6 @@
 import React from "react";
 
-export const BRAND_LOGO_URL = "https://media.base44.com/images/public/workspaces/69e196078d391db6f171eedc/brands/503432ce4_brand_upload_logo.jpg";
+export const BRAND_LOGO_URL = "/media/brand/mlzidla-approved-20261023.svg";
 
 // MLŽIDLA.cz — minimalistická mlžná brána ve tvaru M.
 // Čisté vektorové SVG; symbol je samostatný a nemění geometrii žádného produktu.
@@ -59,7 +59,7 @@ export default function Logo({
       aria-label="MLŽIDLA.cz — venkovní mlžicí systémy"
       className={`mlz-wordmark mlz-wordmark--${size} ${tone === "light" ? "mlz-wordmark--ink" : "mlz-wordmark--white"} ${className}`}
     >
-      <span className="mlz-wordmark__line" aria-hidden="true">
+      <span className="mlz-wordmark__line" aria-hidden="true" style={{ display: "none" }}>
         <span className="mlz-wordmark__symbol">
           <img
             src={BRAND_LOGO_URL}
@@ -71,6 +71,7 @@ export default function Logo({
           ML<span className="mlz-wordmark__accent">Ž</span>IDLA<span className="mlz-wordmark__domain">.cz</span>
         </span>
       </span>
+      <img src={BRAND_LOGO_URL} alt="" style={{ height: size === "lg" ? 72 : size === "xs" ? 36 : 56, width: "auto", objectFit: "contain", background: "#fff", borderRadius: 6, padding: 3 }} />
       {variant === "full" && (
         <span className="mlz-wordmark__caption" aria-hidden="true">
           Architektura vodní mlhy

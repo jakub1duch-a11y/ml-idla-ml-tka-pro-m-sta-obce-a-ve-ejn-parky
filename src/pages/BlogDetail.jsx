@@ -13,6 +13,7 @@ import ShareButtons from '@/components/blog/ShareButtons';
 import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
 import BlogNewsletterInline from '@/components/blog/BlogNewsletterInline';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
+import BlogSocialSection from '@/components/blog/BlogSocialSection';
 import LeadMagnetPopup from '@/components/blog/LeadMagnetPopup';
 import ArticleProductSlider from '@/components/blog/ArticleProductSlider';
 import ArticleLinkMap from '@/components/blog/ArticleLinkMap';
@@ -383,6 +384,7 @@ export default function BlogDetail() {
 
       {/* Instagram follow section */}
       <InstagramFeedSection />
+      <BlogSocialSection />
 
       {/* FAQ je poslední obsahová sekce detailu článku / novinky. */}
       {faqItems.length > 0 && (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Droplets, Gauge, ThermometerSun, ChevronDown } from 'lucide-react';
+import { Instagram, Facebook, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Droplets, Gauge, ThermometerSun, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import Logo from '@/components/layout/Logo';
@@ -152,8 +152,9 @@ export default function Footer() {
 
             <div className="flex items-center mt-0 gap-4">
               <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Instagram size={18} /></a>
+              <a href="https://www.facebook.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Facebook MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Facebook size={18} /></a>
               <a href="https://www.linkedin.com/company/holmtec/" target="_blank" rel="noreferrer" aria-label="LinkedIn HolmTec" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Linkedin size={18} /></a>
-              <a href="https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
+              <a href="https://www.youtube.com/@mlzidla" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
             </div>
           </div>
 

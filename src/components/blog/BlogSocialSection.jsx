@@ -3,9 +3,9 @@ import { Instagram, Linkedin, Youtube, Facebook, ArrowUpRight } from 'lucide-rea
 
 const SOCIALS = [
   { label: 'Instagram', handle: '@mlzidla', href: 'https://www.instagram.com/mlzidla/', icon: Instagram, text: 'Nové vizualizace, krátká videa a detail mlhy v provozu.' },
-  { label: 'Facebook', handle: 'HolmTec', href: 'https://www.facebook.com/holmtec/', icon: Facebook, text: 'Realizace, městské projekty, události a aktuality.' },
+  { label: 'Facebook', handle: 'Mlžidla', href: 'https://www.facebook.com/mlzidla/', icon: Facebook, text: 'Realizace, městské projekty, události a aktuality.' },
   { label: 'LinkedIn', handle: 'HolmTec', href: 'https://www.linkedin.com/company/holmtec/', icon: Linkedin, text: 'Pro architekty, města, partnery a profesionální projektovou praxi.' },
-  { label: 'YouTube', handle: 'MLŽIDLA®', href: 'https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA', icon: Youtube, text: 'Delší videa, ukázky instalací a produktové sekvence.' },
+  { label: 'YouTube', handle: 'MLŽIDLA®', href: 'https://www.youtube.com/@mlzidla', icon: Youtube, text: 'Delší videa, ukázky instalací a produktové sekvence.' },
 ];
 
 export default function BlogSocialSection() {

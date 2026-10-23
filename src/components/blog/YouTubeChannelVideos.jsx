@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CHANNEL_URL = 'https://www.youtube.com/@mlzidlacz';
+const CHANNEL_URL = 'https://www.youtube.com/@mlzidla';
 const UPLOADS_PLAYLIST = 'UUeoTnyULIx5fW-71fhkG1uA';
 
 export default function YouTubeChannelVideos({ product, compact = false }) {

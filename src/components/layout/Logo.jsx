@@ -72,7 +72,6 @@ export default function Logo({
         </span>
       </span>
       <img src={BRAND_LOGO_URL} alt="" style={{ height: size === "lg" ? 72 : size === "xs" ? 36 : 56, width: "auto", objectFit: "contain", background: "#fff", borderRadius: 6, padding: 3 }} />
-      <img src={BRAND_LOGO_URL} alt="" style={{height:size === "lg" ? 72 : size === "xs" ? 36 : 56,width:"auto",objectFit:"contain",background:"white",borderRadius:6,padding:3}} />
       {variant === "full" && (
         <span className="mlz-wordmark__caption" aria-hidden="true">
           Architektura vodní mlhy

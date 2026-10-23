@@ -19,6 +19,7 @@ import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import StebloGateDetail from '@/components/produkt/StebloGateDetail';
 import { getCatalogWaterLabel } from '@/components/produkt/nozzles/nozzleData';
 import BendyDetailSections from '@/components/produkt/details/BendyDetailSections';
+import ProductDetailSections from '@/components/produkt/details/ProductDetailSections';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -75,6 +76,7 @@ export default function ProduktDetail() {
       <PdRealGallery product={product} />
       <PdMistVariants product={product} />
       <BendyDetailSections product={product} />
+      <ProductDetailSections product={product} />
       <div id="parametry" className="scroll-mt-24"><PdSpecs product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>

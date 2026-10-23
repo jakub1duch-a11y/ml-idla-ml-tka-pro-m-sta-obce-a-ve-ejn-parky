@@ -79,13 +79,13 @@ const BENDY = {
 };
 
 const OSTREV = {
-  eyebrow: 'Městské mlžení OSTŘEV',
+  eyebrow: 'Městské mlžení Ostrev — mlžný strom',
   headline: 'Skulpturální mlžný prvek, který v parku vypadá jako strom.',
-  intro: 'OSTŘEV rozvádí mlhu do několika větví z trubek do Ø70 mm, takže mlžný oblak je širší a jemnější. Nerezová socha, která ochlazuje pobytové plochy parků, promenád a školních areálů.',
-  hero: { url: IMG.ostrevHero, alt: 'Skulpturální nerezové mlžítko OSTŘEV chladí lidi v městském parku', caption: 'Pobytová mlžná zóna', captionNote: 'Široký mlžný oblak nad lavičkami — chlazení tam, kde lidé skutečně sedí.' },
+  intro: 'Ostrev — mlžný strom rozvádí mlhu do několika větví z trubek do Ø70 mm, takže mlžný oblak je širší a jemnější. Nerezová socha, která ochlazuje pobytové plochy parků, promenád a školních areálů.',
+  hero: { url: IMG.ostrevHero, alt: 'Skulpturální nerezové mlžítko Ostrev — mlžný strom chladí lidi v městském parku', caption: 'Pobytová mlžná zóna', captionNote: 'Široký mlžný oblak nad lavičkami — chlazení tam, kde lidé skutečně sedí.' },
   cards: [
-    { icon: 'droplets', title: 'Detail větvení', desc: 'Každá větev nese vlastní trysky. Mlha se rozprostře do většího objemu vzduchu a klesá pomaleji.', image: IMG.nozzleDetail, alt: 'Detail nerezové mlžící trysky na větvi mlžítka OSTŘEV' },
-    { icon: 'users', title: 'Lidé pod OSTŘEVEM', desc: 'Přirozené místo k zastavení: rodiny, děti i senioři zůstávají v mlžné zóně delší dobu než u průchozích prvků.', image: IMG.ostrevHero, alt: 'Lidé odpočívají v mlžné zóně pod mlžítkem OSTŘEV' },
+    { icon: 'droplets', title: 'Detail větvení', desc: 'Každá větev nese vlastní trysky. Mlha se rozprostře do většího objemu vzduchu a klesá pomaleji.', image: IMG.nozzleDetail, alt: 'Detail nerezové mlžící trysky na větvi mlžítka Ostrev — mlžný strom' },
+    { icon: 'users', title: 'Lidé pod mlžným stromem', desc: 'Přirozené místo k zastavení: rodiny, děti i senioři zůstávají v mlžné zóně delší dobu než u průchozích prvků.', image: IMG.ostrevHero, alt: 'Lidé odpočívají v mlžné zóně pod mlžítkem Ostrev — mlžný strom' },
     { icon: 'wrench', title: 'Instalace a napojení', desc: 'Zemní patka, přívod vody v šachtě a volitelné smart řízení podle teploty a času. Vše podle dokumentace místa.', image: IMG.install, alt: 'Instalace nerezového mlžného prvku se skrytým kotvením' }
   ]
 };

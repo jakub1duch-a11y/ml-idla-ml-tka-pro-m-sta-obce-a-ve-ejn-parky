@@ -28,7 +28,7 @@ const models = {
   'linea-mlzitko': [['LINEA TR 50', 4], ['LINEA TR 60', 4], ['LINEA TR 76', 3], ['LINEA JA 70', 3]],
   'teepee': [['TEEPEE 50', 6], ['TEEPEE 60', 10]],
   'mlzitko-steblo': [['STÉBLO', 5]],
-  'ostrev-city': [['OSTREV', 7]],
+  'ostrev-city': [['Ostrev — mlžný strom', 7]],
   'mlzitko-lizatko': [['LÍZÁTKO', 5]],
   'mlzitko-kapr': [['KAPR', 4]],
   'mlzitko-mrkev': [['MRKEV', 8]],

@@ -116,28 +116,28 @@ export default function HomeHero() {
         </div>
       </div>
 
-      <div className="lower-wrap hidden">
-        <div className="lower hidden">
-          <div className="lower-label">
-            MLŽIDLA / 01
-            <i />
-          </div>
-          {tiles.map((tile) =>
-          <Link key={`lower-${tile.title}`} to={tile.link} className="tile">
-              <img src={tile.image} alt={tile.tileAlt} loading="lazy" decoding="async" />
-              <div className="tile-body">
-                <span className="tile-index">{tile.index}</span>
-                <span className="tile-type">Produkt</span>
-                <h3>{tile.title}</h3>
-                <p>{tile.text}</p>
-                <div className="detail">
-                  Detail produktu <span>→</span>
-                </div>
-              </div>
-            </Link>
-          )}
-        </div>
-      </div>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
     </section>);
 
 }

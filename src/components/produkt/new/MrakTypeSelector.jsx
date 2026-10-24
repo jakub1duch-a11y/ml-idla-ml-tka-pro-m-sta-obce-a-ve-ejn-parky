@@ -10,7 +10,7 @@ export const MRAK_TYPES = [
     title: 'MRAK 1414',
     size: 'cca 1 400 × 1 400 mm',
     text: 'Kompaktní tvar mraku pro školní a mateřské zahrady, terasy, zoo a menší pobytová místa. Méně trysek, nižší spotřeba vody, snadné umístění.',
-    studio: IMG + 'c97e83191_generated_image.png',
+    studio: IMG + 'dc68064bf_3ba1e6151_generated_image.png',
     details: [
       { src: IMG + '836979b40_generated_image.png', label: 'Tryska · kužel jemné mlhy' },
       { src: IMG + '8c1d5acee_generated_image.png', label: 'Zahrada MŠ · vizualizace' },
@@ -21,7 +21,7 @@ export const MRAK_TYPES = [
     title: 'MRAK 2424',
     size: 'cca 2 400 × 2 400 mm',
     text: 'Velký tvar mraku (MRAK 13R 2424) pro náměstí, parky a promenády. Více smyček a trysek, mohutnější mlžný oblak pro větší počet lidí.',
-    studio: IMG + '399817aa6_generated_image.png',
+    studio: IMG + 'cf5ed1891_ef3414919_generated_image.webp',
     details: [
       { src: IMG + '42b2a1523_generated_image.png', label: 'Řada trysek · mlžné kužele' },
       { src: IMG + 'c3bec7830_generated_image.png', label: 'Alej v parku · vizualizace' },

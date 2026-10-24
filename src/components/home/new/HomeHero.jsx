@@ -4,6 +4,7 @@ import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import HomeHeroMotion from '@/components/home/new/HomeHeroMotion';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
+import HeroVideoPlaylist from '@/components/home/new/HeroVideoPlaylist';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
@@ -73,16 +74,8 @@ export default function HomeHero() {
             }}
             className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
           />
-          {!reduced && <video
-            src={VIDEO_ASSETS.heroCityPromo.src}
+          {!reduced && <HeroVideoPlaylist
             poster={VIDEO_ASSETS.heroCityPromo.poster}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-            onError={(event) => { event.currentTarget.style.display = 'none'; }}
             className="relative h-full w-full object-cover object-[58%_center] sm:object-center"
           />}
         </motion.div>

@@ -28,7 +28,7 @@ const tiles = [
   title: 'MRAK',
   text: 'Hravé osvěžení pro děti a hřiště',
   image: '/media/optimized/db-4098079e74-84805a215_mlnprvek-mrak-mlzidla02.webp',
-  link: '/produkt/mlzitko-mrak'
+  link: '/produkt/mlzny-mrak-1414'
 },
 {
   title: 'MLŽNÁ BRÁNA',

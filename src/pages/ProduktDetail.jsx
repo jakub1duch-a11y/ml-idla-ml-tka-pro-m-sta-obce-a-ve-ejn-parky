@@ -14,6 +14,7 @@ import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
+import PdSectionNav from '@/components/produkt/new/PdSectionNav';
 import StebloGateDetail from '@/components/produkt/StebloGateDetail';
 
 export default function ProduktDetail() {
@@ -67,7 +68,8 @@ export default function ProduktDetail() {
       <PdCompactHero product={product} />
       {product.slug.startsWith('mlzny-mrak-') && <MrakTypeSelector slug={product.slug} />}
       <PdFamilyNav product={product} />
-      <PdVisualGalleryCompact product={product} />
+      <PdSectionNav product={product} />
+      <div id="galerie" className="scroll-mt-24"><PdVisualGalleryCompact product={product} /></div>
       <div id="parametry" className="scroll-mt-24"><PdSpecs product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>

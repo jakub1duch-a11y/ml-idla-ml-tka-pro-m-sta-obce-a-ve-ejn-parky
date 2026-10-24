@@ -6,6 +6,7 @@ import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import HomeHeroMotion from '@/components/home/new/HomeHeroMotion';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 import HeroVideoPlaylist, { HERO_SLIDES } from '@/components/home/new/HeroVideoPlaylist';
+import TileSliderArrows from '@/components/home/new/TileSliderArrows';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
@@ -45,6 +46,7 @@ const tiles = [
 
 export default function HomeHero() {
   const heroRef = useRef(null);
+  const trackRef = useRef(null);
   const [slide, setSlide] = useState(0);
   const motionOff = useReducedMotion();
   // Úsporný režim dat / pomalé připojení: místo videí jen rychlý poster.
@@ -89,7 +91,7 @@ export default function HomeHero() {
 
         <div className="hero-home-colorwash absolute inset-0" />
         <HomeHeroMotion />
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#07131D] via-[#07131D]/70 to-transparent sm:h-44 sm:via-transparent" />
         {!reduced && <HeroSliderControls index={slide} setIndex={setSlide} />}
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 pb-24 pt-20 sm:py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
@@ -138,10 +140,11 @@ export default function HomeHero() {
       </div>
 
       <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
-      <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
+      <div className="relative z-20 mx-auto -mt-16 max-w-[1540px] px-4 pb-10 sm:mt-0 sm:px-8 lg:px-12 xl:px-20">
+        <TileSliderArrows trackRef={trackRef} />
+        <div ref={trackRef} className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
           {tiles.map((tile, index) =>
-            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-0" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.46, delay: index * 0.05 }}>
+            <motion.div key={tile.title} className="min-w-[82vw] snap-center sm:min-w-[46%] lg:min-w-0" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} whileTap={{ scale: 0.985 }} transition={{ duration: 0.28, delay: index * 0.04 }}>
               <Link to={tile.link} className="ref-product-card group block h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0B2034] shadow-[0_22px_70px_rgba(7,19,29,.26)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#26C6E9]">
                 <div className="ref-card-media aspect-[16/11] overflow-hidden bg-[#10283A]"><img src={tile.image} alt={`${tile.title} — produkt MLŽIDLA.CZ`} className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.045]" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp'; }} /></div>
                 <div className="border-t border-white/10 p-5">

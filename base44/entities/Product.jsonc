@@ -69,6 +69,35 @@
       "type": "number",
       "description": "Orienta\u010dn\u00ed cena od (K\u010d) \u2014 pou\u017eije se ve structured data (Offer/price)"
     },
+    "variants": {
+      "type": "array",
+      "description": "Varianty produktu dle Kompletn\u00edho katalogu produktov\u00fdch list\u016f ML\u017dIDLA.cz 2026",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "dimensions": {
+            "type": "string",
+            "description": "V x \u0160 mm"
+          },
+          "nozzles": {
+            "type": "string"
+          },
+          "price_ex_vat": {
+            "type": "number",
+            "description": "Z\u00e1kladn\u00ed cena bez DPH; pr\u00e1zdn\u00e9 = na popt\u00e1vku"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
     "featured": {
       "type": "boolean",
       "description": "Whether product is featured",

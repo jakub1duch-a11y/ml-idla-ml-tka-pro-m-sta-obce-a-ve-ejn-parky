@@ -89,19 +89,13 @@ export default function Logo({
   tone = "dark",
   className = ""
 }) {
+  const heights = { xs: "h-6", sm: "h-7", md: "h-8", lg: "h-11" };
+  const src = tone === "light"
+    ? "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c3e649a6f_mlzidla-cz-logo.png"
+    : "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/3a15a0e79_mlzidla-cz-logo-white.png";
   return (
-    <span
-      role="img"
-      aria-label="MLŽIDLA"
-      className={`mlz-wordmark mlz-wordmark--${size} ${tone === "light" ? "mlz-wordmark--ink" : "mlz-wordmark--white"} ${className}`}>
-      
-      <span className="mlz-wordmark__line" aria-hidden="true">
-        <span className="mlz-wordmark__symbol">
-          <MistZMark size={size === "lg" ? "md" : "sm"} />
-        </span>
-        <span className="mlz-wordmark__name">ML<span className="mlz-wordmark__accent">Ž</span>IDLA</span>
-        <sup className="mlz-wordmark__registered">®</sup>
-      </span>
+    <span className={`inline-flex flex-col ${className}`}>
+      <img src={src} alt="MLŽIDLA.cz" className={`${heights[size] || heights.md} w-auto`} />
       {variant === "full" &&
       <span className="mlz-wordmark__caption" aria-hidden="true">
           Architektura vodní mlhy

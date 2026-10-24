@@ -293,7 +293,7 @@ const MEDIA_MAP = {
   "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/2dcd39f66_MRKEV_rozkres1.png": "/media/optimized/2dcd39f66_MRKEV_rozkres1.webp",
   "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3063e3653_MlzitkoY-ARMISTTR60_3.png": "/media/optimized/3063e3653_MlzitkoY-ARMISTTR60_3.webp",
   "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/31478e4b3_bendymlzitko02.jpeg": "/media/optimized/31478e4b3_bendymlzitko02.webp",
-  "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png": "/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp",
+  "https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c3e649a6f_mlzidla-cz-logo.png": "/media/optimized/314f4a3ac_mlzidla_logo_bez_pozadi.webp",
   "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3865c06a7_ana.jpg": "/media/optimized/3865c06a7_ana.webp",
   "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.jpg": "/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp",
   "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3f715c287_copilot_image_1782505642436.jpg": "/media/optimized/3f715c287_copilot_image_1782505642436.webp",

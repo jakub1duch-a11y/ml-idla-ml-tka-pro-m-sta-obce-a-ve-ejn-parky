@@ -1,4 +1,5 @@
 import React from 'react';
+import PdVariantsTable from '@/components/produkt/new/PdVariantsTable';
 import { Droplets, Gauge, Ruler, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 
 function plainText(value = '') {
@@ -122,6 +123,8 @@ export default function PdSpecs({ product }) {
             Technické parametry tohoto produktu zatím nejsou v ověřených produktových datech kompletní. Do nabídky se doplní až po potvrzení konkrétní konfigurace.
           </div>
         }
+
+        <PdVariantsTable variants={product.variants} />
 
         <div className="mt-6 rounded-[24px] border border-[#CBE4EE] bg-[#EAF7FD]/75 px-5 py-4 text-xs leading-6 text-[#0D2F4F]/60 sm:px-6">
           Přesné kotvení, počet a typ trysek, napojení vody, řízení a další projektové detaily se potvrzují podle místa instalace a schváleného technického návrhu.

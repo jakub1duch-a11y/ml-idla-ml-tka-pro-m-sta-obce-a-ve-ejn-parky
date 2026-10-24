@@ -2,7 +2,7 @@
 // Jednotná grafika: hlavička s logem, světlý základ, modré akcenty, inline vizualizace,
 // odkaz na Můj projekt, přílohy, postup spolupráce, platnost, patička.
 
-const LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png';
+const LOGO_URL = 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c3e649a6f_mlzidla-cz-logo.png';
 const HOLMTEC_LOGO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/holmtec_logo_bez_pozadi.png';
 const SITE_URL = 'https://mlzidla.cz';
 const CONTACT_EMAIL = 'meduna@holmtec.cz';

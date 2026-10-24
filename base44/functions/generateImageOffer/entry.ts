@@ -43,7 +43,7 @@ export default async function(req) {
     ctx.suplaVisuals = Object.fromEntries(visualEntries);
     ctx.suplaImage = ctx.suplaVisuals.valve;
     [ctx.brandLogo, ctx.productImg] = await Promise.all([
-      fetchImageAsBase64('https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/314f4a3ac_mlzidla_logo_bez_pozadi.png'),
+      fetchImageAsBase64('https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/c3e649a6f_mlzidla-cz-logo.png'),
       Promise.resolve(ctx.scenes?.[0]?.img || null),
     ]);
     if (visualEntries.some(([, img]) => !img)) throw new Error('Nelze nacist vizualizace automatizace SUPLA.');

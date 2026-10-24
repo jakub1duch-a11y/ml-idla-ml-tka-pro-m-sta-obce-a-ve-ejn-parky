@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
-import ReferencesStrip from '@/components/home/new/ReferencesStrip';
-import ProKohoSection from '@/components/home/new/ProKohoSection';
-import ProductPhotoGallery from '@/components/home/new/ProductPhotoGallery';
-import CooperationSteps from '@/components/home/new/CooperationSteps';
-import HomeInquiryForm from '@/components/home/new/HomeInquiryForm';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
-import UrbanCoolingExperience from '@/components/home/new/UrbanCoolingExperience';
 import '@/styles/urban-cooling-experience.css';
 import '@/styles/reference-motion.css';
+
+// Sekce pod hero se načítají až po prvním vykreslení → rychlejší první zobrazení.
+const UrbanCoolingExperience = lazy(() => import('@/components/home/new/UrbanCoolingExperience'));
+const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
+const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip'));
+const ProKohoSection = lazy(() => import('@/components/home/new/ProKohoSection'));
+const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSteps'));
+const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
 
 export default function Home() {
   useEffect(() => {
@@ -29,12 +31,14 @@ export default function Home() {
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
         <HomeHero />
-        <UrbanCoolingExperience />
-        <ProductPhotoGallery />
-        <ReferencesStrip />
-        <ProKohoSection />
-        <CooperationSteps />
-        <HomeInquiryForm />
+        <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
+          <UrbanCoolingExperience />
+          <ProductPhotoGallery />
+          <ReferencesStrip />
+          <ProKohoSection />
+          <CooperationSteps />
+          <HomeInquiryForm />
+        </Suspense>
         <MobileStickyBar />
       </MotionConfig>
     </div>

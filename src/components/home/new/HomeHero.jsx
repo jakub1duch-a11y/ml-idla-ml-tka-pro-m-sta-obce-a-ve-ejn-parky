@@ -46,7 +46,10 @@ const tiles = [
 export default function HomeHero() {
   const heroRef = useRef(null);
   const [slide, setSlide] = useState(0);
-  const reduced = useReducedMotion();
+  const motionOff = useReducedMotion();
+  // Úsporný režim dat / pomalé připojení: místo videí jen rychlý poster.
+  const lite = typeof navigator !== 'undefined' && (navigator.connection?.saveData || /2g/.test(navigator.connection?.effectiveType || ''));
+  const reduced = motionOff || lite;
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '8%']);
   const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.045]);

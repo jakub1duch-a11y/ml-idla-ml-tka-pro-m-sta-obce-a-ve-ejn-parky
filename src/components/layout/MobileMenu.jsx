@@ -65,9 +65,9 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
           <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
             <div className="mx-auto max-w-xl">
               <p className="mb-4 font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#4B6979]">{locale === 'cs' ? 'Najděte své řešení' : copy.products}</p>
-              <nav aria-label={locale === 'cs' ? 'Hlavní navigace' : 'Main navigation'} className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <nav aria-label={locale === 'cs' ? 'Hlavní navigace' : 'Main navigation'} className="grid grid-cols-2 gap-2.5">
                 {links.map(({ label, sub, path, icon: Icon }, index) => (
-                  <Link key={path} to={path} onClick={onClose} className={`group flex min-h-[96px] flex-col rounded-[1.3rem] p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087C91] ${index === 0 ? 'bg-[#082C3F] text-white shadow-lg shadow-slate-900/10' : 'bg-white text-[#16374B] hover:bg-[#E8F3F5]'}`}>
+                  <Link key={path} to={path} onClick={onClose} className={`group flex min-h-[96px] flex-col rounded-[1.3rem] p-4 active:scale-[.98] transition-transform ${index === 0 ? 'col-span-2' : ''} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087C91] ${index === 0 ? 'bg-[#082C3F] text-white shadow-lg shadow-slate-900/10' : 'bg-white text-[#16374B] hover:bg-[#E8F3F5]'}`}>
                     <span className="mb-2 flex items-center justify-between"><Icon size={20} aria-hidden="true" /><ArrowRight size={15} aria-hidden="true" className="opacity-60" /></span>
                     <strong className="text-[14px] leading-5">{label}</strong>
                     {sub && <span className={`mt-1 text-[11px] leading-4 ${index === 0 ? 'text-[#C6E1E9]' : 'text-[#557080]'}`}>{sub}</span>}
@@ -110,7 +110,7 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
                   {collectionsOpen && <div id="mobile-collections" className="space-y-1 px-1 pb-1">{collections.map((item) => <Link key={item.path} to={item.path} onClick={onClose} className="flex min-h-11 items-center justify-between rounded-xl bg-[#F0F7FA] px-3 text-sm text-[#235568]">{item.label}<ArrowRight size={14} /></Link>)}</div>}
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <Link to="/smart-ovladani" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-[#DDEFF2] px-4 text-xs font-semibold">Smart řízení <Cpu size={15} /></Link>
+                  <Link to="/pronajem" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-[#DDEFF2] px-4 text-xs font-semibold">Pronájem <Droplets size={15} /></Link>
                   <Link to="/kalkulacka" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-[#DDEFF2] px-4 text-xs font-semibold">Kalkulace provozu <Calculator size={15} /></Link>
                 </div>
                 <Link to="/klientska-sekce" onClick={onClose} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#235568]"><LogIn size={17} /> Klientská sekce</Link>

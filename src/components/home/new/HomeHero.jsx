@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import HeroSliderControls from '@/components/home/new/HeroSliderControls';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import HomeHeroMotion from '@/components/home/new/HomeHeroMotion';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
-import HeroVideoPlaylist from '@/components/home/new/HeroVideoPlaylist';
+import HeroVideoPlaylist, { HERO_SLIDES } from '@/components/home/new/HeroVideoPlaylist';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
 const benefits = [
@@ -44,6 +45,7 @@ const tiles = [
 
 export default function HomeHero() {
   const heroRef = useRef(null);
+  const [slide, setSlide] = useState(0);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '8%']);
@@ -75,6 +77,8 @@ export default function HomeHero() {
             className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
           />
           {!reduced && <HeroVideoPlaylist
+            index={slide}
+            onNext={() => setSlide((i) => (i + 1) % HERO_SLIDES.length)}
             poster={VIDEO_ASSETS.heroCityPromo.poster}
             className="relative h-full w-full object-cover object-[58%_center] sm:object-center"
           />}
@@ -83,6 +87,7 @@ export default function HomeHero() {
         <div className="hero-home-colorwash absolute inset-0" />
         <HomeHeroMotion />
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
+        {!reduced && <HeroSliderControls index={slide} setIndex={setSlide} />}
 
         <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>

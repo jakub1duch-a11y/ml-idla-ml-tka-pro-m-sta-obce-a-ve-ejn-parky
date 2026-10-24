@@ -80,7 +80,7 @@ export default function HomeHero() {
             index={slide}
             onNext={() => setSlide((i) => (i + 1) % HERO_SLIDES.length)}
             poster={VIDEO_ASSETS.heroCityPromo.poster}
-            className="relative h-full w-full object-cover object-[58%_center] sm:object-center"
+            className="h-full w-full object-cover object-[58%_center] sm:object-center"
           />}
         </motion.div>
 
@@ -89,7 +89,7 @@ export default function HomeHero() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07131D] to-transparent" />
         {!reduced && <HeroSliderControls index={slide} setIndex={setSlide} />}
 
-        <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
+        <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 pb-24 pt-20 sm:py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
             <div className="hero-brand-kicker"><span className="hero-brand-kicker__icon"><Droplets size={16} aria-hidden="true" /></span><span>Kapka úlevy · přirozené osvěžení</span></div>
             <p className="font-mono text-sm font-bold uppercase tracking-[.22em] text-[#A9E6F5]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const V = 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/';
 const F = 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/';
@@ -13,10 +13,26 @@ export const HERO_SLIDES = [
   { src: F + '05e74ca17_aura-mlzitko-video-03.mp4', label: 'AURA · AI animace' },
 ];
 
+// Dvojitý buffer: aktuální video hraje, další se mezitím přednačítá → plynulý přechod bez černé pauzy.
 export default function HeroVideoPlaylist({ index, onNext, poster, className }) {
-  const slide = HERO_SLIDES[index];
+  const refs = useRef({});
+  const next = (index + 1) % HERO_SLIDES.length;
+  useEffect(() => {
+    const v = refs.current[HERO_SLIDES[index].src];
+    if (v) { v.currentTime = 0; v.play().catch(() => {}); }
+  }, [index]);
   return (
-    <video key={slide.src} src={slide.src} poster={poster} autoPlay muted playsInline preload="auto"
-      aria-hidden="true" onEnded={onNext} onError={onNext} className={`${className} animate-in fade-in duration-700`} />
+    <>
+      {[index, next].map((i) => {
+        const s = HERO_SLIDES[i];
+        const active = i === index;
+        return (
+          <video key={s.src} ref={(el) => { refs.current[s.src] = el; }} src={s.src} poster={poster}
+            autoPlay={active} muted playsInline preload="auto" aria-hidden="true"
+            onEnded={active ? onNext : undefined} onError={active ? onNext : undefined}
+            className={`${className} absolute inset-0 transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`} />
+        );
+      })}
+    </>
   );
 }

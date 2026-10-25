@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronLeft, ChevronRight, Droplets, Banknote, ThermometerSnowflake, CloudFog, Gauge } from 'lucide-react';
+import { ArrowRight, Droplets, Banknote, ThermometerSnowflake, CloudFog, Gauge } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackHeroInteraction } from '@/lib/ga4';
 
@@ -62,43 +62,13 @@ const defaultSlides = [
 {
   slug: 'ostrev-mlzny-strom',
   tag: 'Video produktu',
-  name: 'OSTŘEV',
+  name: 'OSTREV',replace_all:true
   subtitle: 'Mlžný strom pro veřejný prostor.',
   desc: 'Tvarovaný nerezový prvek s integrovaným mlžením. Video představuje produkt v provozu.',
   image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   video: '/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm',
-  badge: 'Produkt OSTŘEV',
+  badge: 'Produkt OSTREV'
   cta: '/produkt/ostev-mlzny-strom'
-},
-{
-  slug: 'aura',
-  tag: 'Mlžná socha',
-  name: 'AURA',
-  subtitle: 'Kruh z mlhy.',
-  desc: 'Kruhová skulptura z leštěné nerezové oceli s husté mlžením po celém obvodu. Dominanta náměstí, foyer hotelu nebo eventového prostoru.',
-  image: '/media/optimized/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.webp',
-  badge: 'Bestseller',
-  cta: '/produkt/aura'
-},
-{
-  slug: 'mrak',
-  tag: 'Mlžná socha',
-  name: 'MRAK',
-  subtitle: 'Nebe na zemi.',
-  desc: 'Abstraktní oblak z nerezové oceli s hustým mlžením. Stává se dominantou každého prostoru — parku, terasy, foyer hotelu.',
-  image: '/media/optimized/72a6bb588_mlnprvek-mrak-mlzidla02.webp',
-  badge: 'Urban',
-  cta: '/produkt/mrak'
-},
-{
-  slug: 'ostrev-mlzitko',
-  tag: 'Detail trysky',
-  name: 'OSTREV',
-  subtitle: 'Precizní mlžení.',
-  desc: 'Trysky z AISI 316L rozprašují kapičky 10–50 μm, které se okamžitě odpaří. Žádné mokré chodníky, jen příjemný chlad.',
-  image: '/media/optimized/3f715c287_copilot_image_1782505642436.webp',
-  badge: 'Technologie',
-  cta: '/produkt/ostrev-mlzitko'
 },
 {
   slug: 'mlzitko-bendy',
@@ -134,24 +104,11 @@ export default function HeroSection() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
 
-  const goTo = useCallback((idx) => {
-    setDirection(idx > current ? 1 : -1);
-    setCurrent(idx);
-    trackHeroInteraction(slides[idx].name, false);
-  }, [current]);
-
   const next = useCallback(() => {
     setDirection(1);
     const nextIdx = (current + 1) % slides.length;
     setCurrent(nextIdx);
     trackHeroInteraction(slides[nextIdx].name, false);
-  }, [current]);
-
-  const prev = useCallback(() => {
-    setDirection(-1);
-    const prevIdx = (current - 1 + slides.length) % slides.length;
-    setCurrent(prevIdx);
-    trackHeroInteraction(slides[prevIdx].name, false);
   }, [current]);
 
   useEffect(() => {

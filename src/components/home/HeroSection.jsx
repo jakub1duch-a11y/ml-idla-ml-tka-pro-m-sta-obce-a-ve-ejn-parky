@@ -6,23 +6,23 @@ import { trackHeroInteraction } from '@/lib/ga4';
 
 const defaultSlides = [
 {
-  slug: 'mrkev-polna',
-  tag: 'Realizace · Polná',
-  name: 'MRKEV',
-  subtitle: 'Mlžítko, které patří k městu.',
-  desc: 'Zakázková nerezová mlžná socha inspirovaná znakem města Polná. Skutečná realizace ve veřejném prostoru.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/596fefdec_MlnsochaMRKEV-mstoPoln.jpg',
-  badge: 'Město Polná',
-  cta: '/reference/mesto-polna-mlzitko-mrkev'
+  slug: 'gate-realizace',
+  tag: 'Video z realizace',
+  name: 'MLŽNÁ BRÁNA GATE',
+  subtitle: 'Projděte se osvěžující mlhou.',
+  desc: 'Skutečné mlžné řešení pro veřejný prostor. Prohlédněte si bránu v pohybu a ověřte si její účinek.',
+  image: '/media/optimized/60dab9091_mlnbrnaGATE70V2.webp',
+  video: '/media/optimized/0d9a4e147_mlznabranaGATE70-video.webm',
+  badge: 'MLŽIDLA · realizace',
+  cta: '/reference/mestska-mlzna-brana-gate'
 },
 {
-  slug: 'mrkev-polna-video',
-  tag: 'Video realizace · Polná',
+  slug: 'mrkev-polna',
+  tag: 'Fotografie skutečné realizace',
   name: 'MRKEV',
-  subtitle: 'Skutečná realizace pro město Polná.',
-  desc: 'Zakázková mlžná socha inspirovaná znakem města. Video pochází z podkladů realizace MRKEV.',
-  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png',
-  video: 'https://drive.google.com/uc?export=download&id=1l6li-NrQUQgFTW0S5s44a3A8FZMymnyV',
+  subtitle: 'Městský symbol, který osvěžuje.',
+  desc: 'Zakázková nerezová mlžná socha inspirovaná znakem města Polná. Skutečná realizace ve veřejném prostoru.',
+  image: '/media/optimized/596fefdec_MlnsochaMRKEV-mstoPoln.webp',
   badge: 'Město Polná',
   cta: '/reference/mesto-polna-mlzitko-mrkev'
 },
@@ -38,34 +38,36 @@ const defaultSlides = [
   cta: '/reference'
 },
 {
-  slug: 'zoo-praha',
-  tag: 'Fotografie realizace · ZOO Praha',
-  name: 'MLŽÍTKA PRO ZOO PRAHA',
-  subtitle: 'Ověřené řešení pro návštěvnický provoz.',
-  desc: 'Fotografie z realizace nerezových mlžících prvků v areálu pražské zoologické zahrady.',
-  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/3824f85eb_1000005519.jpg',
-  badge: 'ZOO Praha',
-  cta: '/reference/mlzitka-pro-zoo-praha'
+  slug: 'aura',
+  tag: 'Produktové video',
+  name: 'AURA',
+  subtitle: 'Kruh z mlhy. Výrazný prvek prostoru.',
+  desc: 'Kruhové mlžítko z nerezové oceli. Video ukazuje skutečný produkt a jeho mlžný efekt.',
+  image: '/media/optimized/91ce94feb_MlzitkoAURA.webp',
+  video: '/media/optimized/feff82d99_Aura-mlzitko-video-01.webm',
+  badge: 'Produkt AURA',
+  cta: '/produkt/aura'
 },
 {
-  slug: 'gate-realizace',
-  tag: 'Video realizace · GATE',
-  name: 'MLŽNÁ BRÁNA GATE',
-  subtitle: 'Průchozí mlžení ve veřejném prostoru.',
-  desc: 'Video z podkladů mlžné brány GATE uložených v mediální knihovně MLŽIDLA.',
-  image: '/media/optimized/60dab9091_mlnbrnaGATE70V2.webp',
-  video: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/4d05eca71_mlzidla-gate-hero-faststart.mp4',
-  badge: 'GATE · realizace',
-  cta: '/reference/mestska-mlzna-brana-gate'
+  slug: 'mrak',
+  tag: 'Produktové video',
+  name: 'MRAK',
+  subtitle: 'Ochlazení, které se stane dominantou.',
+  desc: 'Sochařsky pojaté mlžítko pro parky, náměstí a odpočinkové zóny. Prohlédněte si produkt ve videu.',
+  image: '/media/optimized/72a6bb588_mlnprvek-mrak-mlzidla02.webp',
+  video: '/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm',
+  badge: 'Produkt MRAK',
+  cta: '/produkt/mrak'
 },
 {
-  slug: 'ostev-mlzny-strom',
-  tag: 'Mlžná socha',
-  name: 'OSTREV',
-  subtitle: 'Mlžný strom.',
-  desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
+  slug: 'ostrev-mlzny-strom',
+  tag: 'Video produktu',
+  name: 'OSTŘEV',
+  subtitle: 'Mlžný strom pro veřejný prostor.',
+  desc: 'Tvarovaný nerezový prvek s integrovaným mlžením. Video představuje produkt v provozu.',
   image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
-  badge: 'Nový produkt',
+  video: '/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm',
+  badge: 'Produkt OSTŘEV',
   cta: '/produkt/ostev-mlzny-strom'
 },
 {
@@ -207,13 +209,7 @@ export default function HeroSection() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Dots */}
-          <div className="flex gap-2 mt-10">
-            {slides.map((s, i) =>
-            <button key={s.slug} onClick={() => goTo(i)} aria-label={s.name}
-            className={`h-1.5 rounded-full transition-all ${i === current ? 'w-8 bg-white' : 'w-1.5 bg-white/30 hover:bg-white/50'}`} />
-            )}
-          </div>
+          {/* Navigace Hero je záměrně skrytá; snímky se střídají automaticky. */}
         </div>
 
         {/* Feature icons strip */}
@@ -234,15 +230,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Arrows */}
-      <button onClick={prev} aria-label="Předchozí"
-      className="hidden sm:flex absolute left-3 lg:left-8 top-1/2 -translate-y-1/2 w-9 h-9 lg:w-11 lg:h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 items-center justify-center text-white hover:bg-white/20 transition-all">
-        <ChevronLeft size={18} />
-      </button>
-      <button onClick={next} aria-label="Další"
-      className="hidden sm:flex absolute right-3 lg:right-8 top-1/2 -translate-y-1/2 w-9 h-9 lg:w-11 lg:h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 items-center justify-center text-white hover:bg-white/20 transition-all">
-        <ChevronRight size={18} />
-      </button>
+      {/* Navigační šipky Hero jsou skryté pro čistou prezentační plochu. */}
     </section>);
 
 }

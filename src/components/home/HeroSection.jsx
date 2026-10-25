@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, Droplets, Banknote, ThermometerSnowflake, CloudFog, Gauge } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackHeroInteraction } from '@/lib/ga4';
-import { VIDEO_ASSETS } from '@/lib/newMedia';
 
 const defaultSlides = [
 {

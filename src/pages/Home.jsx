@@ -14,6 +14,7 @@ const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip
 const ProKohoSection = lazy(() => import('@/components/home/new/ProKohoSection'));
 const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSteps'));
 const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
+const HomeNews = lazy(() => import('@/components/home/new/HomeNews'));
 
 export default function Home() {
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function Home() {
           <ProKohoSection />
           <CooperationSteps />
           <HomeInquiryForm />
+          <HomeNews />
         </Suspense>
         <MobileStickyBar />
       </MotionConfig>

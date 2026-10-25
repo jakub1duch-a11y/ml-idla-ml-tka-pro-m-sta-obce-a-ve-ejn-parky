@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight, Ruler, Droplets, Layers } from 'lucide-react';
 
-const fmt = (n) => (typeof n === 'number' ? `${n.toLocaleString('cs-CZ')} Kč` : 'Na poptávku');
 
 // Varianty jako odkazové záložky: každá má vlastní adresu (?varianta=…) s kompletním detailem.
 export default function PdVariantsTable({ variants }) {
@@ -41,10 +40,9 @@ export default function PdVariantsTable({ variants }) {
           </dl>
         </div>
         <div className="lg:text-right">
-          <p className="font-heading text-3xl font-bold text-[#0A2342]">{fmt(sel.price_ex_vat)}</p>
-          {typeof sel.price_ex_vat === 'number' && <p className="text-xs font-semibold text-[#0D2F4F]/50">bez DPH</p>}
-          <Link to={`/poptavka?varianta=${encodeURIComponent(sel.name)}`} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0A2342] px-5 text-sm font-bold text-white transition hover:bg-[#0B97E8]">
-            Poptat {sel.name} <ArrowRight size={15} />
+          <p className="text-sm font-semibold text-[#0D2F4F]/60">Cena dle konfigurace</p>
+          <Link to={`/poptavka?varianta=${encodeURIComponent(sel.name)}`} className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0A2342] px-5 text-sm font-bold text-white transition hover:bg-[#0B97E8]">
+            Žádost o cenu <ArrowRight size={15} />
           </Link>
         </div>
       </div>

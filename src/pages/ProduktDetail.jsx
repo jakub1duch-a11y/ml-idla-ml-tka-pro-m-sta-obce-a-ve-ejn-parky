@@ -15,7 +15,6 @@ import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdSectionNav from '@/components/produkt/new/PdSectionNav';
-import StebloGateDetail from '@/components/produkt/StebloGateDetail';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -61,7 +60,6 @@ export default function ProduktDetail() {
     </section>
   );
 
-  if (product.slug === 'brana-bendy') return <StebloGateDetail product={product} />;
 
   return (
     <div className="product-detail-page min-h-screen bg-white text-[#07131D]">

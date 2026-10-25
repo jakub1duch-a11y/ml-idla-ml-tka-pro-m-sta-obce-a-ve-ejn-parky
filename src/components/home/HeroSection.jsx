@@ -3,8 +3,30 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, Droplets, Banknote, ThermometerSnowflake, CloudFog, Gauge } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackHeroInteraction } from '@/lib/ga4';
+import { VIDEO_ASSETS } from '@/lib/newMedia';
 
 const defaultSlides = [
+{
+  slug: 'mrkev-polna',
+  tag: 'Realizace · Polná',
+  name: 'MRKEV',
+  subtitle: 'Mlžítko, které patří k městu.',
+  desc: 'Zakázková nerezová mlžná socha inspirovaná znakem města Polná. Skutečná realizace ve veřejném prostoru.',
+  image: '/media/optimized/596fefdec_MlnsochaMRKEV-mstoPoln.webp',
+  badge: 'Město Polná',
+  cta: '/reference'
+},
+{
+  slug: 'bendy-jicin',
+  tag: 'Realizace · Jičín',
+  name: 'BENDY',
+  subtitle: 'Osvěžení na Valdštejnově náměstí.',
+  desc: 'Skutečná realizace městského mlžítka BENDY v Jičíně. Podívejte se na video přímo z realizace.',
+  image: '/media/optimized/774e88bcb_v2_jicin_bendy.webp',
+  video: VIDEO_ASSETS.heroJicin.src,
+  badge: 'Jičín · Valdštejnovo náměstí',
+  cta: '/reference'
+},
 {
   slug: 'ostev-mlzny-strom',
   tag: 'Mlžná socha',
@@ -122,7 +144,11 @@ export default function HeroSection() {
         exit={{ opacity: 0, scale: 1.02 }}
         transition={{ duration: 1, ease: 'easeOut' }}
         className="absolute inset-0">
-          <img src={slide.image} alt={slide.name} className="w-full h-full object-cover" loading={current === 0 ? 'eager' : 'lazy'} decoding="async" />
+          {slide.video ? (
+            <video src={slide.video} poster={slide.image} className="w-full h-full object-cover" autoPlay muted loop playsInline preload="metadata" aria-label={`Video realizace ${slide.name} v ${slide.tag.includes('Jičín') ? 'Jičíně' : slide.tag}`} />
+          ) : (
+            <img src={slide.image} alt={`${slide.name} — ${slide.tag}`} className="w-full h-full object-cover" loading={current === 0 ? 'eager' : 'lazy'} decoding="async" />
+          )}
         </motion.div>
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />

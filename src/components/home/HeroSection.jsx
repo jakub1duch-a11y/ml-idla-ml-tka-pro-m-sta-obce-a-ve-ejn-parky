@@ -156,9 +156,9 @@ export default function HeroSection() {
 
   useEffect(() => {
     // Video snímky dostanou čas na zhlédnutí; statické produktové snímky se střídají rychleji.
-    const timer = setTimeout(next, slide.video ? 18000 : 6000);
+    const timer = setTimeout(next, slides[current].video ? 18000 : 6000);
     return () => clearTimeout(timer);
-  }, [next, slide.video]);
+  }, [next, current, slides]);
 
   const slide = slides[current];
 

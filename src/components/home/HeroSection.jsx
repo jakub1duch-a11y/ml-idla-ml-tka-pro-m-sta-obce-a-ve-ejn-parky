@@ -12,9 +12,20 @@ const defaultSlides = [
   name: 'MRKEV',
   subtitle: 'Mlžítko, které patří k městu.',
   desc: 'Zakázková nerezová mlžná socha inspirovaná znakem města Polná. Skutečná realizace ve veřejném prostoru.',
-  image: '/media/optimized/596fefdec_MlnsochaMRKEV-mstoPoln.webp',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/596fefdec_MlnsochaMRKEV-mstoPoln.jpg',
   badge: 'Město Polná',
-  cta: '/reference'
+  cta: '/reference/mesto-polna-mlzitko-mrkev'
+},
+{
+  slug: 'mrkev-polna-video',
+  tag: 'Video realizace · Polná',
+  name: 'MRKEV',
+  subtitle: 'Skutečná realizace pro město Polná.',
+  desc: 'Zakázková mlžná socha inspirovaná znakem města. Video pochází z podkladů realizace MRKEV.',
+  image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6a220ebf9_Reference-mstoPolna03.png',
+  video: 'https://drive.google.com/uc?export=download&id=1l6li-NrQUQgFTW0S5s44a3A8FZMymnyV',
+  badge: 'Město Polná',
+  cta: '/reference/mesto-polna-mlzitko-mrkev'
 },
 {
   slug: 'bendy-jicin',
@@ -23,42 +34,30 @@ const defaultSlides = [
   subtitle: 'Osvěžení na Valdštejnově náměstí.',
   desc: 'Skutečná realizace městského mlžítka BENDY v Jičíně. Podívejte se na video přímo z realizace.',
   image: '/media/optimized/774e88bcb_v2_jicin_bendy.webp',
-  video: VIDEO_ASSETS.heroJicin.src,
+  video: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/52aaab936_MLzitko-bendy-jicin.mp4',
   badge: 'Jičín · Valdštejnovo náměstí',
   cta: '/reference'
 },
 {
-  slug: 'hero-city-promo',
-  tag: 'Městské ochlazování',
-  name: 'MLŽIDLA PRO MĚSTA',
-  subtitle: 'Chytře navržené ochlazení veřejného prostoru.',
-  desc: 'Podívejte se na možnosti venkovního mlžení pro náměstí, parky, promenády a veřejné areály.',
-  image: VIDEO_ASSETS.heroCityPromo.poster,
-  video: VIDEO_ASSETS.heroCityPromo.src,
-  badge: 'Městské projekty',
-  cta: '/mlzitka-pro-mesta-obce'
+  slug: 'zoo-praha',
+  tag: 'Fotografie realizace · ZOO Praha',
+  name: 'MLŽÍTKA PRO ZOO PRAHA',
+  subtitle: 'Ověřené řešení pro návštěvnický provoz.',
+  desc: 'Fotografie z realizace nerezových mlžících prvků v areálu pražské zoologické zahrady.',
+  image: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/3824f85eb_1000005519.jpg',
+  badge: 'ZOO Praha',
+  cta: '/reference/mlzitka-pro-zoo-praha'
 },
 {
-  slug: 'montaz-mlzidla-2026',
-  tag: 'Výroba a montáž',
-  name: 'OD NÁVRHU K REALIZACI',
-  subtitle: 'Mlžicí systémy pro skutečný provoz.',
-  desc: 'Ukázka práce a realizací MLŽIDLA — od technického řešení po instalaci v prostoru.',
-  image: VIDEO_ASSETS.montage2026.poster,
-  video: VIDEO_ASSETS.montage2026.src,
-  badge: 'Montáž MLŽIDLA 2026',
-  cta: '/reference'
-},
-{
-  slug: 'realizace-mlzidla-klip',
-  tag: 'Z realizací',
-  name: 'OCHLAZENÍ V PRAXI',
-  subtitle: 'Venkovní mlžení pro místa, kde lidé tráví čas.',
-  desc: 'Krátká ukázka realizací a využití mlžicích prvků ve veřejném prostoru.',
-  image: VIDEO_ASSETS.realizaceKlip.poster,
-  video: VIDEO_ASSETS.realizaceKlip.src,
-  badge: 'Realizace MLŽIDLA',
-  cta: '/reference'
+  slug: 'gate-realizace',
+  tag: 'Video realizace · GATE',
+  name: 'MLŽNÁ BRÁNA GATE',
+  subtitle: 'Průchozí mlžení ve veřejném prostoru.',
+  desc: 'Video z podkladů mlžné brány GATE uložených v mediální knihovně MLŽIDLA.',
+  image: '/media/optimized/60dab9091_mlnbrnaGATE70V2.webp',
+  video: 'https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/4d05eca71_mlzidla-gate-hero-faststart.mp4',
+  badge: 'GATE · realizace',
+  cta: '/reference/mestska-mlzna-brana-gate'
 },
 {
   slug: 'ostev-mlzny-strom',

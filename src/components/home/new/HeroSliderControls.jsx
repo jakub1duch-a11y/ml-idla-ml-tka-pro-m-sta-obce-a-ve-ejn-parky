@@ -1,21 +1,26 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { HERO_SLIDES } from '@/components/home/new/HeroVideoPlaylist';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { HERO_SLIDES } from '@/components/home/new/heroSlides';
 
-export default function HeroSliderControls({ index, setIndex }) {
-  const n = HERO_SLIDES.length;
-  const go = (d) => setIndex((i) => (i + d + n) % n);
+export default function HeroSliderControls({ index, onSelect, running, status, onToggle, videoEnabled }) {
+  const slide = HERO_SLIDES[index];
+  const paused = !running || status === 'blocked';
+  const state = status === 'blocked' ? 'Klepnutím spusťte video' : status === 'error' ? 'Náhled · video není dostupné' : slide.type === 'video' && !videoEnabled ? 'Náhled · úsporný režim' : status === 'loading' ? 'Načítání videa…' : slide.kind;
   return (
-    <div className="absolute bottom-6 right-5 z-30 flex items-center gap-3 rounded-full border border-white/20 bg-black/30 px-3 py-2 backdrop-blur-md sm:right-8 lg:right-12">
-      <button type="button" onClick={() => go(-1)} aria-label="Předchozí video" className="flex h-8 w-8 items-center justify-center rounded-full text-white hover:bg-white/15"><ChevronLeft size={16} /></button>
-      <div className="flex gap-1.5">
-        {HERO_SLIDES.map((s, i) => (
-          <button key={s.src} type="button" onClick={() => setIndex(i)} aria-label={s.label} aria-current={i === index}
-            className={`h-1.5 rounded-full transition-all ${i === index ? 'w-6 bg-[#26C6E9]' : 'w-1.5 bg-white/50'}`} />
-        ))}
+    <div className="hero-slider-controls" aria-label="Ovládání hlavního slideru">
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-xs font-semibold sm:text-sm">{slide.label}</p>
+        <p className="truncate text-[11px] text-muted-foreground">{state}</p>
       </div>
-      <button type="button" onClick={() => go(1)} aria-label="Další video" className="flex h-8 w-8 items-center justify-center rounded-full text-white hover:bg-white/15"><ChevronRight size={16} /></button>
-      <span className="hidden pr-1 text-[10px] font-bold uppercase tracking-[.14em] text-white/70 md:inline">{HERO_SLIDES[index].label}</span>
+      <div className="hero-slider-pagination hidden items-center xl:flex">
+        {HERO_SLIDES.map((item, i) => <button key={item.id} type="button" className="hero-slider-button" onClick={() => onSelect(i)} aria-label={`Záběr ${i + 1}: ${item.label}`} aria-current={i === index ? 'true' : undefined}><span className="hero-slider-dot" /></button>)}
+      </div>
+      <div className="flex shrink-0 items-center gap-1.5">
+        <span className="mr-1 font-mono text-[11px] tabular-nums" aria-label={`Záběr ${index + 1} z ${HERO_SLIDES.length}`}>{index + 1}/{HERO_SLIDES.length}</span>
+        <button type="button" className="hero-slider-button" onClick={() => onSelect(index - 1)} aria-label="Předchozí záběr"><ChevronLeft size={18} /></button>
+        <button type="button" className="hero-slider-button" onClick={onToggle} aria-label={paused ? 'Spustit přehrávání' : 'Pozastavit přehrávání'}>{paused ? <Play size={17} /> : <Pause size={17} />}</button>
+        <button type="button" className="hero-slider-button" onClick={() => onSelect(index + 1)} aria-label="Další záběr"><ChevronRight size={18} /></button>
+      </div>
     </div>
   );
 }

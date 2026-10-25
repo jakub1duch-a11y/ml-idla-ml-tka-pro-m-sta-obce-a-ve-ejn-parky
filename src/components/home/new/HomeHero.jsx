@@ -1,11 +1,9 @@
-import React, { useRef, useState } from 'react';
-import HeroSliderControls from '@/components/home/new/HeroSliderControls';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
+import { motion, MotionConfig, useReducedMotion } from 'framer-motion';
 import HomeHeroMotion from '@/components/home/new/HomeHeroMotion';
-import { VIDEO_ASSETS } from '@/lib/newMedia';
-import HeroVideoPlaylist, { HERO_SLIDES } from '@/components/home/new/HeroVideoPlaylist';
+import HeroMediaSlider from '@/components/home/new/HeroMediaSlider';
+import '@/components/ui/HeroAtmosphere.css';
 import TileSliderArrows from '@/components/home/new/TileSliderArrows';
 import { ArrowRight, Wind, Droplets, Gauge, ShieldCheck } from 'lucide-react';
 
@@ -45,57 +43,17 @@ const tiles = [
 }];
 
 export default function HomeHero() {
-  const heroRef = useRef(null);
   const trackRef = useRef(null);
-  const [slide, setSlide] = useState(0);
-  const motionOff = useReducedMotion();
-  // Úsporný režim dat / pomalé připojení: místo videí jen rychlý poster.
-  const lite = typeof navigator !== 'undefined' && (navigator.connection?.saveData || /2g/.test(navigator.connection?.effectiveType || ''));
-  const reduced = motionOff || lite;
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '8%']);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.045]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-5%']);
+  const reduced = useReducedMotion();
 
   return (
     <MotionConfig reducedMotion="user">
-    <section ref={heroRef} className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-[#07131D] text-white" aria-label="MLŽIDLA.CZ hero">
-      <div className="relative min-h-[82svh] overflow-hidden">
-        <HeroAtmosphere />
-        <motion.div
-            className="absolute inset-0 h-[108%] w-full"
-            style={{ y: mediaY, scale: mediaScale }}
-            data-home-parallax="7"
-            initial={{ scale: 1.04 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}>
-          {/* Vždy vykresli lokální poster pod videem. Pokud externí video selže nebo ho prohlížeč zablokuje, hero nikdy nezůstane prázdné. */}
-          <img
-            data-hero-fallback
-            src={VIDEO_ASSETS.heroCityPromo.poster}
-            alt="Mlžítka ve veřejném prostoru s jemnou vodní mlhou"
-            fetchPriority="high"
-            onError={(event) => {
-              event.currentTarget.onerror = null;
-              event.currentTarget.src = '/media/optimized/da0942c09_mlzidla-mlzitka-pro-mesta-obce.webp';
-            }}
-            className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
-          />
-          {!reduced && <HeroVideoPlaylist
-            index={slide}
-            onNext={() => setSlide((i) => (i + 1) % HERO_SLIDES.length)}
-            poster={VIDEO_ASSETS.heroCityPromo.poster}
-            className="h-full w-full object-cover object-[58%_center] sm:object-center"
-          />}
-        </motion.div>
+    <section className="hero-motion-surface ref-editorial-surface relative overflow-hidden bg-secondary text-secondary-foreground" aria-label="MLŽIDLA.CZ hero">
+      <HeroMediaSlider>
+        {!reduced && <div className="pointer-events-none hidden lg:block"><HomeHeroMotion /></div>}
 
-        <div className="hero-home-colorwash absolute inset-0" />
-        <HomeHeroMotion />
-        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#07131D] via-[#07131D]/70 to-transparent sm:h-44 sm:via-transparent" />
-        {!reduced && <HeroSliderControls index={slide} setIndex={setSlide} />}
-
-        <div className="relative z-10 mx-auto grid min-h-[82svh] max-w-[1540px] items-center gap-10 px-5 pb-24 pt-20 sm:py-24 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 xl:px-20">
-          <motion.div className="max-w-3xl" style={{ y: copyY }} data-home-reveal initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}>
+        <div className="home-hero-copy relative z-10 mx-auto grid max-w-[1540px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_360px] lg:px-12 xl:px-20">
+          <motion.div className="max-w-3xl" initial={reduced ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
             <div className="hero-brand-kicker"><span className="hero-brand-kicker__icon"><Droplets size={16} aria-hidden="true" /></span><span>Kapka úlevy · přirozené osvěžení</span></div>
             <p className="font-mono text-sm font-bold uppercase tracking-[.22em] text-[#A9E6F5]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
             <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left" aria-label={headlineWords.join(' ')}>
@@ -110,10 +68,10 @@ export default function HomeHero() {
                 </motion.span>
                 )}
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
+            <p className="hero-intro mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-lg">
               Designová městská i zahradní mlžítka, mlžné brány a mlhoviště pro náměstí, parky, hřiště, sportoviště a terasy. Návrh i chytré řízení podle konkrétního místa.
             </p>
-            <div className="mt-9 flex flex-wrap gap-4">
+            <div className="hero-actions mt-9 flex flex-wrap gap-4">
               <Link to="/poptavka" className="inline-flex min-h-14 items-center gap-3 rounded-2xl bg-[#18B7E6] px-6 py-4 text-sm font-extrabold uppercase tracking-[.04em] text-[#06283A] shadow-[0_22px_60px_rgba(24,183,230,.32)] transition hover:-translate-y-0.5 hover:bg-[#69DDF4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#07131D]">
                 Navrhnout řešení <ArrowRight size={17} />
               </Link>
@@ -129,7 +87,7 @@ export default function HomeHero() {
               {benefits.map(({ icon: Icon, text }) =>
                 <div key={text} className="grid grid-cols-[54px_1fr] items-center gap-4 rounded-3xl border p-4 bg-white/[.0] border-white/0">
                   <div className="flex h-11 w-11 items-center justify-center">
-                    <Icon size={20} className="text-[hsl(var(--foreground))]" />
+                    <Icon size={20} className="text-accent" />
                   </div>
                   <p className="text-xl leading-6 text-slate-200 [font-family:'Manrope',_'Inter',_sans-serif] font-bold">{text}</p>
                 </div>
@@ -137,10 +95,10 @@ export default function HomeHero() {
             </div>
           </motion.aside>
         </div>
-      </div>
+      </HeroMediaSlider>
 
       <div className="ref-float-rail"><span>MLŽIDLA / 01</span><i /></div>
-      <div className="relative z-20 mx-auto -mt-16 max-w-[1540px] px-4 pb-10 sm:mt-0 sm:px-8 lg:px-12 xl:px-20">
+      <div className="relative z-20 mx-auto max-w-[1540px] px-4 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <TileSliderArrows trackRef={trackRef} />
         <div ref={trackRef} className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
           {tiles.map((tile, index) =>

@@ -34,11 +34,15 @@ export default function PdSectionNav({ product }) {
   }, [product.slug]);
 
   const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(id);
+    if (!target) return;
+    const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-header-height')) || 68;
+    const navigation = document.querySelector('[data-product-section-nav]')?.offsetHeight || 54;
+    window.scrollTo({ top: window.scrollY + target.getBoundingClientRect().top - header - navigation - 16, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
 
   return (
-    <div className="sticky top-16 z-40 border-y border-[#D8E8ED] bg-white/95 backdrop-blur-xl">
+    <div data-product-section-nav className="sticky top-[var(--site-header-height)] z-40 border-y border-[#D8E8ED] bg-white/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-10">
         <div className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <nav className="flex min-w-max items-center" aria-label="Navigace detailu produktu">

@@ -1,4 +1,8 @@
 /* MLŽIDLA® mobile-first premium refinement — hard-coded Base44 override. */
+@media (max-width: 1023px) {
+  .product-detail-page,
+  .reference-detail-page { padding-top: var(--site-header-height); }
+}
 @media (max-width: 767px) {
   :root { --mobile-gutter: 18px; --mobile-section: 72px; }
   html { scroll-padding-top: 72px; }

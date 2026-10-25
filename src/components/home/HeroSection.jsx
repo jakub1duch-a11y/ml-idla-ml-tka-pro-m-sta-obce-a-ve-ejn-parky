@@ -62,12 +62,12 @@ const defaultSlides = [
 {
   slug: 'ostrev-mlzny-strom',
   tag: 'Video produktu',
-  name: 'OSTREV',replace_all:true
+  name: 'OSTREV',
   subtitle: 'Mlžný strom pro veřejný prostor.',
   desc: 'Tvarovaný nerezový prvek s integrovaným mlžením. Video představuje produkt v provozu.',
   image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   video: '/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm',
-  badge: 'Produkt OSTREV'
+  badge: 'Produkt OSTREV',
   cta: '/produkt/ostev-mlzny-strom'
 },
 {

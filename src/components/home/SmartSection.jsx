@@ -37,7 +37,7 @@ export default function SmartSection() {
                     <f.icon size={18} className="mt-0.5 flex-shrink-0 text-[hsl(var(--background))]" />
                   </motion.div>
                   <div>
-                    <p className="text-base font-semibold leading-tight text-[hsl(var(--card))] [font-family:'Plus_Jakarta_Sans',_sans-serif] sm:text-lg">{f.label}</p>
+                    <p className="text-base font-semibold leading-tight text-[hsl(var(--card))] font-body sm:text-lg">{f.label}</p>
                     <p className="text-xs text-[#dedede]">{f.sub}</p>
                   </div>
                 </motion.div>

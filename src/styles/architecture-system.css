@@ -1,53 +1,8 @@
-/* Shared public-site typography. Scoped so administration and editors retain their UI scale. */
+/* Public-site layout helpers. Typography is owned by typography-enhanced.css. */
 .architecture-site {
-  --font-heading: "Manrope", "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --arch-h1: clamp(2rem, 1.25rem + 3.1vw, 4.5rem);
-  --arch-h2: clamp(1.6rem, 1.15rem + 1.8vw, 3rem);
-  --arch-h3: clamp(1.2rem, 1.05rem + 0.6vw, 1.65rem);
   font-family: var(--font-body);
-  line-height: 1.65;
+  line-height: var(--font-body-line-height);
   -webkit-font-smoothing: antialiased;
-}
-/* Resolve old per-page utility overrides into one deliberate editorial scale. */
-.architecture-site h1 {
-  font-family: var(--font-heading) !important;
-  font-size: var(--arch-h1) !important;
-  font-weight: 600 !important;
-  line-height: 1.12 !important;
-  letter-spacing: -0.035em !important;
-  text-wrap: balance;
-}
-.architecture-site h2 {
-  font-family: var(--font-heading) !important;
-  font-size: var(--arch-h2) !important;
-  font-weight: 600 !important;
-  line-height: 1.18 !important;
-  letter-spacing: -0.025em !important;
-  text-wrap: balance;
-}
-.architecture-site :is(article, nav, header, footer, [role="dialog"]) h2,
-.architecture-site .mist-field-page article h2 {
-  font-size: var(--arch-h3) !important;
-  line-height: 1.3 !important;
-}
-.architecture-site h3 {
-  font-family: var(--font-heading) !important;
-  font-size: var(--arch-h3) !important;
-  line-height: 1.3 !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.015em !important;
-  text-wrap: balance;
-}
-.architecture-site :is(h4, h5, h6) {
-  font-family: var(--font-heading);
-  line-height: 1.4;
-}
-.architecture-site p {
-  text-wrap: pretty;
-}
-.architecture-site :is(input, textarea, select, button) {
-  font-family: inherit;
 }
 .architecture-site
   :is(a, button, summary, input, textarea, select):focus-visible {
@@ -100,15 +55,11 @@
 .mlz-wordmark__registered {
   align-self: flex-start;
   margin-top: 0.2rem;
-  font:
-    500 0.55rem/1.4 "Inter",
-    sans-serif;
+  font: 500 0.55rem/1.4 var(--font-body);
 }
 .mlz-wordmark__caption {
   margin-top: 0.55rem;
-  font:
-    500 0.65rem/1.5 "Inter",
-    sans-serif;
+  font: 500 0.75rem/1.5 var(--font-body);
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -123,9 +74,7 @@
   .architecture-site :is(input, textarea, select) {
     font-size: 1rem;
   }
-  .architecture-site main p {
-    line-height: 1.7;
-  }
+
   .architecture-site main :is(h1, h2, h3) {
     overflow-wrap: anywhere;
   }

@@ -6,22 +6,15 @@
   --mlz-mist-cyan: #A9E6F5;
   --mlz-fresh-green: #56B987;
   --mlz-ice-white: #F4F8FC;
-  --mlz-font-display: "Bricolage Grotesque", "Manrope", "Inter", sans-serif;
-  --mlz-font-ui: "Manrope", "Inter", sans-serif;
-  --mlz-font-reading: "Inter", system-ui, sans-serif;
+  --mlz-font-display: var(--brand-font-heading);
+  --mlz-font-ui: var(--brand-font-body);
+  --mlz-font-reading: var(--brand-font-body);
   --mlz-motion-fast: 180ms;
   --mlz-motion-ui: 240ms;
   --mlz-ease-expressive: cubic-bezier(.22, 1, .36, 1);
 }
 
-body {
-  font-family: var(--mlz-font-reading);
-}
-
-h1, h2, h3, h4, h5, h6,
-button, input, textarea, select {
-  font-family: var(--mlz-font-ui);
-}
+/* Font roles and metrics are centralized in typography-enhanced.css. */
 
 .hero-motion-surface {
   background: var(--mlz-deep-navy) !important;
@@ -36,11 +29,7 @@ button, input, textarea, select {
 }
 
 .hero-motion-surface h1 {
-  font-family: var(--mlz-font-display) !important;
-  font-size: clamp(3.25rem, 7.2vw, 6.25rem) !important;
-  font-weight: 720 !important;
-  letter-spacing: -.055em !important;
-  line-height: .98 !important;
+  font-family: var(--font-display);
   text-wrap: balance;
   max-width: 11ch;
   text-shadow: 0 3px 30px rgba(4, 18, 39, .18);
@@ -123,10 +112,7 @@ button, input, textarea, select {
   color: var(--mlz-mist-cyan) !important;
 }
 
-.architecture-site {
-  --font-heading: var(--mlz-font-ui);
-  --font-body: var(--mlz-font-reading);
-}
+
 
 @media (min-width: 1024px) {
   .hero-motion-surface h1 { max-width: 10ch; }
@@ -134,8 +120,7 @@ button, input, textarea, select {
 
 @media (max-width: 640px) {
   .hero-motion-surface h1 {
-    font-size: clamp(2.75rem, 12vw, 4.25rem) !important;
-    max-width: 10ch;
+    max-width: 100%;
   }
   .hero-brand-kicker {
     font-size: .63rem;
@@ -163,23 +148,23 @@ button, input, textarea, select {
 /* Material 3-inspired semantic type roles: expressive without sacrificing reading comfort. */
 .mlz-type-display {
   font-family: var(--mlz-font-display);
-  font-size: clamp(2.75rem, 6.8vw, 6rem);
-  font-weight: 720;
-  letter-spacing: -.055em;
-  line-height: .98;
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: var(--font-heading-letter-spacing);
+  line-height: var(--font-heading-line-height);
   text-wrap: balance;
 }
 .mlz-type-headline {
-  font-family: var(--mlz-font-ui);
-  font-weight: 700;
-  letter-spacing: -.04em;
-  line-height: 1.08;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: var(--font-heading-letter-spacing);
+  line-height: var(--font-heading-line-height);
   text-wrap: balance;
 }
 .mlz-type-body {
-  font-family: var(--mlz-font-reading);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--font-body-line-height);
 }
 .mlz-type-label {
   font-family: var(--mlz-font-ui);

@@ -40,7 +40,7 @@ export default function SmartManagementSection() {
                     <span className="absolute right-0.5 top-0.5 w-3.5 h-3.5 rounded-full bg-white" />
                   </span>
                 </div>
-                <p className="text-slate-500 leading-relaxed [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-sm">{t.text}</p>
+                <p className="text-slate-500 leading-relaxed font-body text-sm">{t.text}</p>
               </div>
             </motion.div>
           )}

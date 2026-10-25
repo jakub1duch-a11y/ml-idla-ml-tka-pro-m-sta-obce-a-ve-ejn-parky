@@ -236,7 +236,7 @@ export default function PrezentaceMlziciProstor() {
           map((s) =>
           <div key={s.label} className="border border-[#D3E2E8] bg-white p-5">
               <s.icon size={24} className="text-[#22D3EE] mb-3" />
-              <p className="text-xl tracking-[-.02em] mb-1 [font-family:'Manrope',_'Inter',_sans-serif] font-semibold">{s.value}</p>
+              <p className="text-xl tracking-[-.02em] mb-1 font-heading font-semibold">{s.value}</p>
               <p className="text-xs text-[#5A6B78] leading-relaxed mb-2">{s.label}</p>
               <p className="text-[10px] font-mono uppercase tracking-wider text-[hsl(var(--card-foreground))]">{s.sub}</p>
             </div>

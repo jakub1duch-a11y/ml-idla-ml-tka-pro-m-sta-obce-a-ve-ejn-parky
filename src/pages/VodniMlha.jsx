@@ -62,7 +62,7 @@ function MistPrincipleGraphic() {
           </ellipse>
         </g>
 
-        <g fontFamily="Inter, sans-serif" fontSize="18" fill="#143d4e">
+        <g className="font-body" fontSize="18" fill="#143d4e">
           <text x="44" y="172" fontWeight="700">Voda</text>
           <text x="270" y="300" fontWeight="700">Mlžicí tryska</text>
           <text x="514" y="90" fontWeight="700">Jemné kapky</text>

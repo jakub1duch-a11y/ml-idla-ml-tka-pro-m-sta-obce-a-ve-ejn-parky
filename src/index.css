@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@600;800&display=swap');
 @import url('./styles/brand-components.css');
 @import url('./styles/brand-logo-system.css');
 @import url('./styles/mobile-premium.css');
@@ -56,10 +55,30 @@
     --ring: 197 100% 50%;
     --radius: 14px;
     --site-header-height: 68px;
-    --font-heading: 'Manrope', 'Inter', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --font-reading: 'Inter', sans-serif;
+    --font-heading: 'Space Grotesk', Arial, sans-serif;
+    --font-display: 'Space Grotesk', Arial, sans-serif;
+    --font-body: 'Albert Sans', Arial, sans-serif;
+    --font-reading: 'Albert Sans', Arial, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.3rem + 0.75vw, 1.875rem);
+    --text-3xl: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+    --text-4xl: clamp(1.875rem, 1.25rem + 2.2vw, 3rem);
+    --text-5xl: clamp(2.25rem, 1.5rem + 3.2vw, 4.5rem);
+    --text-6xl: clamp(2.5rem, 1.7rem + 3.6vw, 5rem);
+    --text-display: clamp(2.375rem, 1.6rem + 3.7vw, 5.25rem);
+    --text-card-heading: clamp(1.25rem, 1.15rem + 0.45vw, 1.625rem);
+    --leading-tight: var(--font-heading-line-height);
+    --leading-snug: 1.3;
+    --leading-normal: var(--font-body-line-height);
+    --leading-relaxed: var(--font-body-line-height);
+    --tracking-tight: var(--font-heading-letter-spacing);
+    --tracking-normal: 0;
+    --tracking-wide: 0.025em;
     --font-heading-line-height: 1.1;
     --font-heading-letter-spacing: -0.01em;
     --font-body-line-height: 1.55;
@@ -79,9 +98,9 @@
     --brand-destructive: #C2410C;
     --brand-cyan-dark: #007ACB;
     --brand-stainless-strong: #94A3B8; /* brushed stainless reference */
-    --brand-font-heading: 'Manrope', 'Inter', sans-serif;
-    --brand-font-body: 'Inter', sans-serif;
-    --brand-font-script: 'Caveat', cursive;
+    --brand-font-heading: 'Space Grotesk', Arial, sans-serif;
+    --brand-font-body: 'Albert Sans', Arial, sans-serif;
+    --brand-font-script: var(--brand-font-heading);
     --brand-font-heading-line-height: 1.1;
     --brand-font-heading-letter-spacing: -0.01em;
     --brand-font-body-line-height: 1.55;
@@ -132,10 +151,10 @@
   .pulselab-theme {
     --background: 216 33% 97%;
     --brand-white: 216 33% 97%;
-    --font-heading: 'Manrope', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-body: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-reading: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Inter', monospace;
+    --font-heading: var(--brand-font-heading);
+    --font-body: var(--brand-font-body);
+    --font-reading: var(--brand-font-body);
+    --font-mono: 'JetBrains Mono', monospace;
     font-family: var(--font-body);
   }
 }
@@ -218,7 +237,7 @@
   --card: 192 22% 7%; --card-foreground: 180 23% 95%;
   --muted: 192 22% 10%; --muted-foreground: 191 15% 70%;
   --accent: 172 80% 62%; --border: 191 20% 19%;
-  --font-heading: 'Unbounded', sans-serif; --font-body: 'Manrope', sans-serif;
+  --font-heading: 'Space Grotesk', Arial, sans-serif; --font-body: 'Albert Sans', Arial, sans-serif;
   --gate-ink: #080d0f; --gate-panel: #10191c; --gate-border: #26373c;
   --gate-text: #edf5f5; --gate-muted: #a7bdc2; --gate-accent: #4becd8;
   --gate-heat: #e98054;

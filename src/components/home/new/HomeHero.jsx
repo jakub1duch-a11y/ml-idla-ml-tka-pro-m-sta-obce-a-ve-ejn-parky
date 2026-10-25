@@ -56,7 +56,7 @@ export default function HomeHero() {
           <motion.div className="max-w-3xl" initial={reduced ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
             <div className="hero-brand-kicker"><span className="hero-brand-kicker__icon"><Droplets size={16} aria-hidden="true" /></span><span>Kapka úlevy · přirozené osvěžení</span></div>
             <p className="font-mono text-sm font-bold uppercase tracking-[.22em] text-[#A9E6F5]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
-            <h1 className="mt-5 max-w-[11ch] font-semibold leading-[.94] tracking-[-.055em] text-white [font-family:'Manrope',_'Inter',_sans-serif] text-[clamp(2.85rem,13vw,4.6rem)] sm:mt-6 sm:max-w-[10ch] sm:text-6xl lg:text-7xl text-left" aria-label={headlineWords.join(' ')}>
+            <h1 className="mt-5 font-display font-bold text-white sm:mt-6 text-left" aria-label={headlineWords.join(' ')}>
               {headlineWords.map((word, index) =>
                 <motion.span
                   key={word}
@@ -89,7 +89,7 @@ export default function HomeHero() {
                   <div className="flex h-11 w-11 items-center justify-center">
                     <Icon size={20} className="text-accent" />
                   </div>
-                  <p className="text-xl leading-6 text-slate-200 [font-family:'Manrope',_'Inter',_sans-serif] font-bold">{text}</p>
+                  <p className="text-xl text-slate-200 font-heading font-semibold">{text}</p>
                 </div>
                 )}
             </div>

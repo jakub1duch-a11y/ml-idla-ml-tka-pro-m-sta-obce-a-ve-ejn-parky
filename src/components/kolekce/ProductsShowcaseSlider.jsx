@@ -16,11 +16,11 @@ function SlideCard({ product, index }) {
       <div className="w-full h-full flex items-center justify-center text-white/20 text-4xl">📷</div>
       }
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
-      <span className="absolute top-4 right-4 text-[hsl(var(--background))] text-3xl [font-family:'Inter',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-light">
+      <span className="absolute top-4 right-4 text-[hsl(var(--background))] text-3xl font-body font-light">
         {String(index + 1).padStart(2, '0')}
       </span>
       <div className="absolute bottom-0 left-0 right-0 p-5">
-        <h3 className="text-xl text-white mb-2 leading-snug tracking-bold [font-family:'Plus_Jakarta_Sans',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-semibold">{product.name}</h3>
+        <h3 className="text-xl text-white mb-2 leading-snug tracking-bold font-heading font-semibold">{product.name}</h3>
         <p className="font-light line-clamp-2 mb-4 text-sm text-white/80">{product.short_description}</p>
         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:gap-2.5 transition-all">
           Detail produktu <ArrowRight size={12} />

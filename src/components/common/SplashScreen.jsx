@@ -19,7 +19,7 @@ export default function SplashScreen({ show }) {
             className="flex flex-col items-center gap-4"
           >
             <MistNozzleIcon className="scale-[2.4]" color="#ffffff" accent="#40a2d4" />
-            <p className="text-white text-2xl tracking-[0.2em] uppercase" style={{ fontFamily: "'Urbanist', sans-serif", fontWeight: 600 }}>
+            <p className="text-white text-2xl tracking-[0.2em] uppercase font-heading font-semibold">
               mlžidla<span style={{ color: '#40a2d4' }}>.cz</span>
             </p>
           </motion.div>

@@ -72,6 +72,7 @@ module.exports = {
       },
       fontFamily: {
         heading: ['var(--font-heading)'],
+        display: ['var(--font-display)'],
         body: ['var(--font-body)'],
         reading: ['var(--font-reading)'],
         mono: ['var(--font-mono)'],

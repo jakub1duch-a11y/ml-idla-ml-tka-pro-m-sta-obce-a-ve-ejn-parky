@@ -28,6 +28,39 @@ const defaultSlides = [
   cta: '/reference'
 },
 {
+  slug: 'hero-city-promo',
+  tag: 'Městské ochlazování',
+  name: 'MLŽIDLA PRO MĚSTA',
+  subtitle: 'Chytře navržené ochlazení veřejného prostoru.',
+  desc: 'Podívejte se na možnosti venkovního mlžení pro náměstí, parky, promenády a veřejné areály.',
+  image: VIDEO_ASSETS.heroCityPromo.poster,
+  video: VIDEO_ASSETS.heroCityPromo.src,
+  badge: 'Městské projekty',
+  cta: '/mlzitka-pro-mesta-obce'
+},
+{
+  slug: 'montaz-mlzidla-2026',
+  tag: 'Výroba a montáž',
+  name: 'OD NÁVRHU K REALIZACI',
+  subtitle: 'Mlžicí systémy pro skutečný provoz.',
+  desc: 'Ukázka práce a realizací MLŽIDLA — od technického řešení po instalaci v prostoru.',
+  image: VIDEO_ASSETS.montage2026.poster,
+  video: VIDEO_ASSETS.montage2026.src,
+  badge: 'Montáž MLŽIDLA 2026',
+  cta: '/reference'
+},
+{
+  slug: 'realizace-mlzidla-klip',
+  tag: 'Z realizací',
+  name: 'OCHLAZENÍ V PRAXI',
+  subtitle: 'Venkovní mlžení pro místa, kde lidé tráví čas.',
+  desc: 'Krátká ukázka realizací a využití mlžicích prvků ve veřejném prostoru.',
+  image: VIDEO_ASSETS.realizaceKlip.poster,
+  video: VIDEO_ASSETS.realizaceKlip.src,
+  badge: 'Realizace MLŽIDLA',
+  cta: '/reference'
+},
+{
   slug: 'ostev-mlzny-strom',
   tag: 'Mlžná socha',
   name: 'OSTEV',
@@ -122,9 +155,10 @@ export default function HeroSection() {
   }, [current]);
 
   useEffect(() => {
-    const timer = setInterval(next, 6000);
-    return () => clearInterval(timer);
-  }, [next]);
+    // Video snímky dostanou čas na zhlédnutí; statické produktové snímky se střídají rychleji.
+    const timer = setTimeout(next, slide.video ? 18000 : 6000);
+    return () => clearTimeout(timer);
+  }, [next, slide.video]);
 
   const slide = slides[current];
 
@@ -136,7 +170,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-[92vh] min-h-[620px] w-full overflow-hidden bg-slate-900">
-      {/* Full-bleed photo */}
+      {/* Hero sekvence: fotografie realizací a videa; každé video používá vlastní poster */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div key={slide.image} custom={direction}
         initial={{ opacity: 0, scale: 1.08 }}

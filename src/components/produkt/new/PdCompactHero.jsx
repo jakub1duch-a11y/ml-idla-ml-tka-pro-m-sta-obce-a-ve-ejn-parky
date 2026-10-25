@@ -43,7 +43,7 @@ export default function PdCompactHero({ product }) {
 
   return (
     <section id="prehled" className="scroll-mt-28 bg-[#F7FBFD] !px-0">
-      <div className="mx-auto grid max-w-[1500px] gap-7 px-5 pb-10 pt-8 sm:px-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-stretch lg:px-12 lg:pb-14 lg:pt-12 xl:px-20">
+      <div className="mx-auto grid max-w-[1500px] gap-5 px-4 pb-8 pt-4 sm:gap-7 sm:px-8 sm:pt-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-stretch lg:px-12 lg:pb-14 lg:pt-12 xl:px-20">
         <div className="min-w-0 flex flex-col justify-center">
           <div className="flex flex-wrap items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[.17em] text-[#0B8EC5]">
             <span>{family.label}</span>
@@ -51,11 +51,11 @@ export default function PdCompactHero({ product }) {
             <span>{line.label}</span>
           </div>
 
-          <h1 className="mt-4 max-w-[12ch] font-heading break-words text-[clamp(2.25rem,6vw,5rem)] font-black leading-[1.02] tracking-[-.06em] text-[#07131D]">
+          <h1 className="mt-3 max-w-[14ch] font-heading break-words text-[clamp(2rem,9vw,5rem)] sm:mt-4 sm:max-w-[12ch] font-black leading-[1.02] tracking-[-.06em] text-[#07131D]">
             {product.name}
           </h1>
 
-          <p className="mt-5 max-w-xl text-sm leading-7 text-[#5A6B78] sm:text-base">
+          <p className="mt-3 max-w-xl text-sm leading-6 text-[#5A6B78] line-clamp-4 sm:mt-5 sm:line-clamp-none sm:text-base sm:leading-7">
             {intro || 'Designové mlžítko pro konkrétní prostor. Přesné provedení a technické parametry se řídí ověřenými daty produktu.'}
           </p>
 
@@ -98,7 +98,7 @@ export default function PdCompactHero({ product }) {
             </div>
           }
 
-          <div className="mt-7 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-7 sm:flex sm:flex-wrap [&>a]:px-3 sm:[&>a]:px-5">
             <Link
               to={`/poptavka?produkt=${encodeURIComponent(product.slug)}${quoteVariant}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#153863]">
@@ -114,7 +114,7 @@ export default function PdCompactHero({ product }) {
           </div>
         </div>
 
-        <div className="relative min-w-0 aspect-[4/5] lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
+        <div className="relative order-first min-w-0 aspect-[4/3] sm:aspect-[4/5] lg:order-none lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
           {image ?
           <img
             src={image}

@@ -4,7 +4,7 @@ import { ArrowRight, Ruler, Droplets, Layers } from 'lucide-react';
 
 
 // Varianty jako odkazové záložky: každá má vlastní adresu (?varianta=…) s kompletním detailem.
-export default function PdVariantsTable({ variants }) {
+export default function PdVariantsTable({ variants, productSlug }) {
   const [params, setParams] = useSearchParams();
   const fromUrl = variants?.findIndex((v) => v.name === params.get('varianta'));
   const [active, setActive] = useState(fromUrl > -1 ? fromUrl : 0);
@@ -41,7 +41,7 @@ export default function PdVariantsTable({ variants }) {
         </div>
         <div className="lg:text-right">
           <p className="text-sm font-semibold text-[#0D2F4F]/60">Cena dle konfigurace</p>
-          <Link to={`/poptavka?varianta=${encodeURIComponent(sel.name)}`} className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0A2342] px-5 text-sm font-bold text-white transition hover:bg-[#0B97E8]">
+          <Link to={`/poptavka?produkt=${encodeURIComponent(productSlug || '')}&varianta=${encodeURIComponent(sel.name)}`} className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0A2342] px-5 text-sm font-bold text-white transition hover:bg-[#0B97E8]">
             Žádost o cenu <ArrowRight size={15} />
           </Link>
         </div>

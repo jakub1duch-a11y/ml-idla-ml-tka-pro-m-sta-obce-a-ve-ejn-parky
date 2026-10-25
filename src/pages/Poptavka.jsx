@@ -27,7 +27,7 @@ export default function Poptavka() {
     ? 'MLŽNÝ MRAK — Velký, h 2 400 mm (MRAK 13R 2424)'
     : mrakVariantId === 'maly'
       ? 'MLŽNÝ MRAK — Malý, h 1 600 mm (návrhové provedení)'
-      : '';
+      : (searchParams.get('varianta') || '');
   const products = initialProduct && !baseProducts.includes(initialProduct) ? [initialProduct, ...baseProducts] : baseProducts;
   const [form, setForm] = useState(() => ({
     jmeno: searchParams.get('jmeno') || '',

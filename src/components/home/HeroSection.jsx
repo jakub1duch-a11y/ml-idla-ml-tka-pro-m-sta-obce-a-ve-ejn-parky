@@ -61,7 +61,7 @@ const defaultSlides = [
 {
   slug: 'ostev-mlzny-strom',
   tag: 'Mlžná socha',
-  name: 'OSTEV',
+  name: 'OSTREV',
   subtitle: 'Mlžný strom.',
   desc: 'Skulptura ve tvaru stromu s integrovaným mlžením. Pro náměstí, eventy a městské prostory. Zakázková výroba z AISI 316L.',
   image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
@@ -91,10 +91,10 @@ const defaultSlides = [
 {
   slug: 'ostrev-mlzitko',
   tag: 'Detail trysky',
-  name: 'OSTEV',
+  name: 'OSTREV',
   subtitle: 'Precizní mlžení.',
   desc: 'Trysky z AISI 316L rozprašují kapičky 10–50 μm, které se okamžitě odpaří. Žádné mokré chodníky, jen příjemný chlad.',
-  image: '/media/optimized/3f715c287_copilot_image_1782505642436.webp alt="Precizní mlžení mlžítka -OSTREPrecizní mlžení"',
+  image: '/media/optimized/3f715c287_copilot_image_1782505642436.webp',
   badge: 'Technologie',
   cta: '/produkt/ostrev-mlzitko'
 },
@@ -104,7 +104,7 @@ const defaultSlides = [
   name: 'BENDY 60',
   subtitle: 'Elegantní chlad pro zahradu.',
   desc: 'Stylové zahradní mlžítko s elegantním ohnutým designem. Chladivá mlha pro terasy, zahrady a venkovní odpočívárny.',
-  image: '/media/optimized/e7273f60a_bendy60-mlitkozahradn.webp alt="Chladivá mlha pro terasy, zahrady a venkovní odpočívárny."',
+  image: '/media/optimized/e7273f60a_bendy60-mlitkozahradn.webp',
   badge: 'Zahrada',
   cta: '/produkt/mlzitko-bendy'
 },
@@ -114,7 +114,7 @@ const defaultSlides = [
   name: 'MLŽIŠTĚ',
   subtitle: 'Radost pro děti.',
   desc: 'Interaktivní mlžné prvky pro dětská hřiště a mateřské školy. Bezpečné materiály, potravinářská nerez, bez chemie.',
-  image: '/media/optimized/62841e4f5_img-5153.webp alt="mlžné prvky pro školky"',
+  image: '/media/optimized/62841e4f5_img-5153.webp',
   badge: 'Dětské mlžiště',
   cta: '/kategorie/skoly-skolky-deti'
 }];

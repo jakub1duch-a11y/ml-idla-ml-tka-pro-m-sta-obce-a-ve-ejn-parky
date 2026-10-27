@@ -3,7 +3,6 @@ import { useReducedMotion } from 'framer-motion';
 import HeroVideoPlaylist from '@/components/home/new/HeroVideoPlaylist';
 import { HERO_SLIDES } from '@/components/home/new/heroSlides';
 import useHeroVisibility from '@/components/home/new/useHeroVisibility';
-import { playHeroVideo } from '@/components/home/new/useHeroVideo';
 import '@/components/home/new/HeroMediaSlider.css';
 
 export default function HeroMediaSlider({ children }) {
@@ -13,7 +12,7 @@ export default function HeroMediaSlider({ children }) {
   const lite = navigator.connection?.saveData || /2g/.test(navigator.connection?.effectiveType || '');
   const restricted = (reduced ?? window.matchMedia('(prefers-reduced-motion: reduce)').matches) || lite;
   const [index, setIndex] = useState(0), [status, setStatus] = useState('loading');
-  const [paused] = useState(() => restricted);
+  const paused = restricted;
   const slide = HERO_SLIDES[index], videoEnabled = !restricted;
   const running = active && !paused && videoEnabled;
   const select = useCallback((i) => setIndex((i + HERO_SLIDES.length) % HERO_SLIDES.length), []);

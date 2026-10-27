@@ -54,7 +54,6 @@ export default function HomeHero() {
 
         <div className="home-hero-copy relative z-10 mx-auto grid max-w-[1540px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_360px] lg:px-12 xl:px-20">
           <motion.div className="max-w-3xl" initial={reduced ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-            <div className="hero-brand-kicker"><span className="hero-brand-kicker__icon"><Droplets size={16} aria-hidden="true" /></span><span>Kapka úlevy · přirozené osvěžení</span></div>
             <p className="font-mono text-sm font-bold uppercase tracking-[.22em] text-[#A9E6F5]">MLŽENÍ, KTERÉ DÁVÁ SMYSL</p>
             <h1 className="mt-5 font-display font-bold text-white sm:mt-6 text-left" aria-label={headlineWords.join(' ')}>
               {headlineWords.map((word, index) =>

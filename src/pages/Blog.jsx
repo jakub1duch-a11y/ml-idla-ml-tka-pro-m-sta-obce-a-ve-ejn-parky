@@ -172,6 +172,8 @@ export default function Blog() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-7xl px-5 py-10 sm:px-7 lg:px-10"><Link to="/blog/zazimovani-mlzitek" className="group grid overflow-hidden rounded-[28px] border border-cyan-100 bg-[#EAF5F7] md:grid-cols-[.9fr_1.1fr]"><div className="flex flex-col justify-center p-7 sm:p-10"><span className="text-xs font-bold uppercase tracking-[.18em] text-cyan-800">Aktuálně · servis a údržba</span><h2 className="mt-4 font-heading text-3xl font-bold leading-tight text-[#0A1628] sm:text-4xl">Zazimování mlžítek: připravte své mlžítko na zimu</h2><p className="mt-4 leading-7 text-slate-600">Jak bezpečně vypustit vodu, profouknout rozvody a ochránit technologii před mrazem. Odborný servis nebo vlastní údržba podle manuálu.</p><span className="mt-6 inline-flex items-center gap-2 font-semibold text-cyan-800">Přečíst článek <ArrowRight size={17}/></span></div><img className="h-full max-h-[450px] w-full object-cover" src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/3df724e89_mlzidla_zazimovani_bez_mlhy.jpg" alt="Zazimování mlžítka Mrak 1414 – ilustrační vizualizace"/></Link></section>
+
       <BlogMagazinePortals />
 
       <section className="sticky top-[68px] z-30 border-y border-slate-200 bg-white/92 backdrop-blur-xl">

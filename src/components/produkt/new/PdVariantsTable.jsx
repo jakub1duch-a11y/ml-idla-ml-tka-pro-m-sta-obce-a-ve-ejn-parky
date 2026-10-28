@@ -46,7 +46,7 @@ export default function PdVariantsTable({ variants, productSlug }) {
           </Link>
         </div>
       </div>
-      <p className="border-t border-[#E7F0F4] bg-[#F7FBFD] px-5 py-3 text-[11px] text-[#0D2F4F]/60 sm:px-6">Provozní tlak 2–8 bar, mikrokapky 10–30 µm, nerez AISI 304 / 316L. Finální provedení potvrzuje výrobní výkres.</p>
+      <p className="border-t border-[#E7F0F4] bg-[#F7FBFD] px-5 py-3 text-[11px] text-[#0D2F4F]/60 sm:px-6">Parametry platí pro zvolené provedení. Finální rozměry, materiál a osazení trysek potvrzuje výrobní výkres.</p>
     </section>
   );
 }

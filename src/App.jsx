@@ -10,6 +10,7 @@ import ScrollToTop from './components/ScrollToTop';
 import RouteMotion from './components/RouteMotion';
 import AnalyticsRouteTracker from '@/components/common/AnalyticsRouteTracker';
 import GlobalPhotoWatermark from '@/components/GlobalPhotoWatermark';
+import BrandLoadingContent from '@/components/common/BrandLoadingContent';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
 import MlzidlaProdukt from '@/pages/MlzidlaProdukt';
@@ -100,8 +101,8 @@ const AuthenticatedApp = () => {
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-white">
-        <div className="w-6 h-6 border-2 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
+      <div className="fixed inset-0 flex items-center justify-center bg-secondary">
+        <BrandLoadingContent />
       </div>
     );
   }

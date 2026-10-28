@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
 import { ArrowRight, Building2, Calculator, ChevronDown, Cpu, Droplets, Grid2X2, Images, LifeBuoy, LogIn, Newspaper, Trees, Wifi, X } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
+import ProductMenuGroups from '@/components/layout/ProductMenuGroups';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { ROUTE_MAP } from '@/lib/i18n';
 import '@/styles/contact-and-navigation.css';
@@ -31,9 +32,9 @@ const TECHNOLOGY_CHILDREN = [
 ];
 
 export default function MobileMenu({ open, onClose, productLinks = [], locale = 'cs', triggerRef }) {
-  const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const [collectionsOpen, setCollectionsOpen] = useState(true);
   const [technologyOpen, setTechnologyOpen] = useState(true);
-  useEffect(() => { if (!open) { setCollectionsOpen(false); setTechnologyOpen(true); } }, [open]);
+  useEffect(() => { if (!open) { setCollectionsOpen(true); setTechnologyOpen(true); } }, [open]);
   const collections = productLinks.filter((item) => !item.featured && !item.textOnly);
   const copy = INTERNATIONAL_MOBILE_COPY[locale] || INTERNATIONAL_MOBILE_COPY.en;
   const links = locale === 'cs' ? PRIMARY_LINKS : [
@@ -51,9 +52,9 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
   return (
     <Dialog.Root open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
       <Dialog.Portal>
-        <Dialog.Overlay className="mobile-nav-overlay fixed inset-0 z-[70] bg-[#041622]/50 lg:hidden" />
+        <Dialog.Overlay className="mobile-nav-overlay fixed inset-0 z-[70] bg-[#041622]/50 xl:hidden" />
         <Dialog.Content id="mobile-site-menu" aria-modal="true" onCloseAutoFocus={(event) => { event.preventDefault(); triggerRef?.current?.focus(); }}
-          className="mobile-nav-panel fixed inset-0 z-[80] flex h-[100dvh] flex-col bg-[#F4F8FA] text-[#16374B] focus:outline-none lg:hidden">
+          className="mobile-nav-panel fixed inset-0 z-[80] flex h-[100dvh] flex-col bg-[#F4F8FA] text-[#16374B] focus:outline-none xl:hidden">
           <Dialog.Title className="sr-only">{locale === 'cs' ? 'Hlavní navigace MLŽIDLA' : 'MLŽIDLA navigation'}</Dialog.Title>
           <Dialog.Description className="sr-only">{locale === 'cs' ? 'Katalog, řešení podle prostoru, reference a kontakt.' : 'Products, projects, technology and contact.'}</Dialog.Description>
           <div className="flex h-[68px] shrink-0 items-center justify-between bg-[#082C3F] px-5 text-white">
@@ -65,6 +66,10 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
           <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
             <div className="mx-auto max-w-xl">
               <p className="mb-4 font-mono text-[10px] font-semibold uppercase tracking-[.18em] text-[#4B6979]">{locale === 'cs' ? 'Najděte své řešení' : copy.products}</p>
+              {locale === 'cs' && <section className="mb-5 rounded-lg border border-border bg-card p-4 text-card-foreground">
+                <button type="button" onClick={() => setCollectionsOpen((value) => !value)} aria-expanded={collectionsOpen} aria-controls="mobile-product-models" className="flex min-h-11 w-full items-center justify-between text-left font-heading text-lg font-semibold text-primary">Produkty <ChevronDown size={18} aria-hidden="true" /></button>
+                {collectionsOpen && <div id="mobile-product-models" className="mt-3"><ProductMenuGroups onNavigate={onClose} /></div>}
+              </section>}
               <nav aria-label={locale === 'cs' ? 'Hlavní navigace' : 'Main navigation'} className="grid grid-cols-2 gap-2.5">
                 {links.map(({ label, sub, path, icon: Icon }, index) => (
                   <Link key={path} to={path} onClick={onClose} className={`group flex min-h-[96px] flex-col rounded-[1.3rem] p-4 active:scale-[.98] transition-transform ${index === 0 ? 'col-span-2' : ''} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#087C91] ${index === 0 ? 'bg-[#082C3F] text-white shadow-lg shadow-slate-900/10' : 'bg-white text-[#16374B] hover:bg-[#E8F3F5]'}`}>
@@ -103,11 +108,8 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
               )}
               {locale === 'cs' && <>
                 <div className="mt-4 rounded-[1.3rem] bg-white p-1">
-                  <button type="button" onClick={() => setCollectionsOpen((value) => !value)} aria-expanded={collectionsOpen} aria-controls="mobile-collections"
-                    className="flex min-h-12 w-full items-center justify-between rounded-2xl px-4 text-sm font-semibold hover:bg-[#F0F7FA]">
-                    Kolekce podle prostoru <ChevronDown size={18} className={`transition-transform motion-reduce:transition-none duration-150 ${collectionsOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  {collectionsOpen && <div id="mobile-collections" className="space-y-1 px-1 pb-1">{collections.map((item) => <Link key={item.path} to={item.path} onClick={onClose} className="flex min-h-11 items-center justify-between rounded-xl bg-[#F0F7FA] px-3 text-sm text-[#235568]">{item.label}<ArrowRight size={14} /></Link>)}</div>}
+                  <h3 className="px-4 py-3 font-heading text-base">Kolekce podle prostoru</h3>
+                  <div className="space-y-1 px-1 pb-1">{collections.map((item) => <Link key={item.path} to={item.path} onClick={onClose} className="flex min-h-11 items-center justify-between rounded-xl bg-[#F0F7FA] px-3 text-sm text-[#235568]">{item.label}<ArrowRight size={14} /></Link>)}</div>
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <Link to="/pronajem" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-[#DDEFF2] px-4 text-xs font-semibold">Pronájem <Droplets size={15} /></Link>

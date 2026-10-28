@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MistNozzleIcon from '@/components/layout/MistNozzleIcon';
+import BrandLoadingContent from '@/components/common/BrandLoadingContent';
 
 export default function SplashScreen({ show }) {
   return (
@@ -18,10 +18,7 @@ export default function SplashScreen({ show }) {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="flex flex-col items-center gap-4"
           >
-            <MistNozzleIcon className="scale-[2.4]" color="#ffffff" accent="#40a2d4" />
-            <p className="text-white text-2xl tracking-[0.2em] uppercase font-heading font-semibold">
-              mlžidla<span style={{ color: '#40a2d4' }}>.cz</span>
-            </p>
+            <BrandLoadingContent />
           </motion.div>
         </motion.div>
       )}

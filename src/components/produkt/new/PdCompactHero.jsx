@@ -55,7 +55,7 @@ export default function PdCompactHero({ product }) {
             {product.name}
           </h1>
 
-          <p className="mt-3 max-w-xl text-sm leading-6 text-[#5A6B78] line-clamp-4 sm:mt-5 sm:line-clamp-none sm:text-base sm:leading-7">
+          <p className="mt-3 max-w-xl text-sm leading-6 text-[#5A6B78] sm:mt-5 sm:text-base sm:leading-7">
             {intro || 'Designové mlžítko pro konkrétní prostor. Přesné provedení a technické parametry se řídí ověřenými daty produktu.'}
           </p>
 
@@ -114,7 +114,7 @@ export default function PdCompactHero({ product }) {
           </div>
         </div>
 
-        <div className="relative order-first min-w-0 aspect-[4/3] sm:aspect-[4/5] lg:order-none lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
+        <div className="relative min-w-0 aspect-[4/3] lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
           {image ?
           <img
             src={image}

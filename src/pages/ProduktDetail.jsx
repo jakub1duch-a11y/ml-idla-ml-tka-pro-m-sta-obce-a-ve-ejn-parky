@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Loader, Droplets, ArrowRight } from 'lucide-react';
+import { Droplets, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
@@ -15,6 +15,8 @@ import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdSectionNav from '@/components/produkt/new/PdSectionNav';
+import PdDescription from '@/components/produkt/new/PdDescription';
+import BrandLoadingContent from '@/components/common/BrandLoadingContent';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -40,8 +42,8 @@ export default function ProduktDetail() {
   }, [slug, navigate]);
 
   if (loading) return (
-    <div className="flex min-h-screen items-center justify-center bg-white">
-      <Loader className="animate-spin text-[#0B5EA8]/40" size={28} />
+    <div className="flex min-h-screen items-center justify-center bg-secondary">
+      <BrandLoadingContent />
     </div>
   );
 
@@ -62,13 +64,14 @@ export default function ProduktDetail() {
 
 
   return (
-    <div className="product-detail-page min-h-screen bg-white text-[#07131D]">
+    <div className="product-detail-page min-h-screen bg-background text-foreground pt-[var(--site-header-height)]">
       <PdCompactHero product={product} />
       {product.slug.startsWith('mlzny-mrak-') && <MrakTypeSelector slug={product.slug} />}
       <PdFamilyNav product={product} />
       <PdSectionNav product={product} />
-      <div id="galerie" className="scroll-mt-24"><PdVisualGalleryCompact product={product} /></div>
-      <div id="parametry" className="scroll-mt-24"><PdSpecs product={product} /></div>
+      <PdDescription product={product} />
+      <div id="parametry" className="scroll-mt-36"><PdSpecs product={product} /></div>
+      <div id="galerie" className="scroll-mt-36"><PdVisualGalleryCompact product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
       <div id="reference" className="scroll-mt-24"><PdReferences product={product} /></div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
 import MegaCatalogMenu from '@/components/layout/MegaCatalogMenu';
+import UsageMenu from '@/components/layout/UsageMenu';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { getLocaleFromPath, ROUTE_MAP } from '@/lib/i18n';
 
@@ -65,6 +66,7 @@ export default function Header() {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [usageOpen, setUsageOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const [technologyOpen, setTechnologyOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
@@ -88,20 +90,27 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setInfoOpen(false);setTechnologyOpen(false);setAccountOpen(false);}, [location]);
+  useEffect(() => {setMobileOpen(false);setMegaOpen(false);setUsageOpen(false);setInfoOpen(false);setTechnologyOpen(false);setAccountOpen(false);}, [location]);
+  useEffect(() => {
+    const closeOnEscape = (event) => { if (event.key === 'Escape') { setMegaOpen(false); setUsageOpen(false); setInfoOpen(false); setTechnologyOpen(false); setAccountOpen(false); } };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => { document.removeEventListener('keydown', closeOnEscape); clearTimeout(timeoutRef.current); };
+  }, []);
 
   useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 1024px)');
+    const desktop = window.matchMedia('(min-width: 1280px)');
     const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
     desktop.addEventListener('change', closeOnDesktop);
     return () => desktop.removeEventListener('change', closeOnDesktop);
   }, []);
 
-  const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);};
+  const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);setUsageOpen(false);setTechnologyOpen(false);setInfoOpen(false);};
+  const openUsage = () => {clearTimeout(timeoutRef.current);setUsageOpen(true);setMegaOpen(false);setTechnologyOpen(false);setInfoOpen(false);};
+  const closeUsage = () => {timeoutRef.current = setTimeout(() => setUsageOpen(false), 150);};
   const closeMega = () => {timeoutRef.current = setTimeout(() => setMegaOpen(false), 150);};
-  const openInfo = () => {clearTimeout(timeoutRef.current);setInfoOpen(true);};
+  const openInfo = () => {clearTimeout(timeoutRef.current);setInfoOpen(true);setMegaOpen(false);setUsageOpen(false);setTechnologyOpen(false);};
   const closeInfo = () => {timeoutRef.current = setTimeout(() => setInfoOpen(false), 150);};
-  const openTechnology = () => {clearTimeout(timeoutRef.current);setTechnologyOpen(true);};
+  const openTechnology = () => {clearTimeout(timeoutRef.current);setTechnologyOpen(true);setMegaOpen(false);setUsageOpen(false);setInfoOpen(false);};
   const closeTechnology = () => {timeoutRef.current = setTimeout(() => setTechnologyOpen(false), 150);};
   const toggleMobileMenu = () => {setMobileOpen((v) => !v);setMegaOpen(false);};
 
@@ -111,7 +120,7 @@ export default function Header() {
 
 
 
-      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-150 ease-out motion-reduce:transition-none bg-[#000000]/[0.9] ${headerVisible || mobileOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-150 ease-out motion-reduce:transition-none bg-[#000000]/[0.9] ${headerVisible || mobileOpen || megaOpen || usageOpen || technologyOpen || infoOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
         <div className="mx-auto flex h-[var(--site-header-height)] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
@@ -120,20 +129,24 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — centered elegant style */}
-          {locale === 'cs' ? <nav className="hidden lg:flex min-w-0 items-center gap-0 flex-1 justify-center mx-auto whitespace-nowrap">
+          {locale === 'cs' ? <nav className="hidden xl:flex min-w-0 items-center gap-0 flex-1 justify-center mx-auto whitespace-nowrap">
             {/* Produkty megamenu */}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
               <button
                 type="button"
-                onClick={() => setMegaOpen((value) => !value)}
+                onClick={() => { if (megaOpen) setMegaOpen(false); else openMega(); }}
                 aria-expanded={megaOpen}
+                aria-controls="desktop-products-menu"
                 className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${megaOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
                 
                 Produkty
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <Link to="/mestske-mlzitka" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-white/10 text-[hsl(var(--input))]">Městská mlžítka</Link>
+            <div className="relative" onMouseEnter={openUsage} onMouseLeave={closeUsage}>
+              <button type="button" onClick={() => { if (usageOpen) setUsageOpen(false); else openUsage(); }} aria-expanded={usageOpen} aria-controls="desktop-usage-menu" className="flex min-h-11 items-center gap-1 rounded-full px-3.5 text-[13px] font-medium text-white/85 hover:bg-white/10 hover:text-white">Použití <ChevronDown size={14} aria-hidden="true" /></button>
+              {usageOpen && <UsageMenu links={USAGE_LINKS} onNavigate={() => setUsageOpen(false)} />}
+            </div>
             <div className="relative" onMouseEnter={openTechnology} onMouseLeave={closeTechnology}>
               <button
                 type="button"
@@ -168,7 +181,7 @@ export default function Header() {
             <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
             <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-cyan-300/15 text-[hsl(var(--input))]">Blog a novinky</Link>
             <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
-              <button className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
+              <button type="button" onClick={() => setInfoOpen((value) => !value)} aria-expanded={infoOpen} className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
                 Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
@@ -194,7 +207,7 @@ export default function Header() {
               </AnimatePresence>
             </div>
             <Link to="/kontakt" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Kontakt</Link>
-          </nav> : <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center mx-auto">
+          </nav> : <nav className="hidden xl:flex items-center gap-0.5 flex-1 justify-center mx-auto">
             <Link to={ROUTE_MAP.catalog[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.products}</Link>
             <Link to={ROUTE_MAP.city[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.urban}</Link>
             <Link to={ROUTE_MAP.technology[locale]} className="px-3.5 py-2.5 rounded-full text-sm font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">{internationalCopy.technology}</Link>
@@ -205,7 +218,7 @@ export default function Header() {
 
           {/* CTA right + mobile toggle */}
           <div className="flex items-center gap-2 lg:gap-3 ml-auto">
-            <div className="hidden lg:flex items-center gap-2 rounded-none">
+            <div className="hidden xl:flex items-center gap-2 rounded-none">
               <LanguageSwitcher />
               <div className="relative">
                 <button type="button" onClick={() => setAccountOpen((value) => !value)} aria-label="Přihlášení a klientská sekce" aria-expanded={accountOpen} className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-300/12 text-cyan-100 transition hover:bg-cyan-300/18 hover:text-white">
@@ -234,7 +247,7 @@ export default function Header() {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.94 }}
               transition={{ duration: 0.12, ease: 'easeOut' }}
-              className="group relative lg:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
+              className="group relative xl:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
               
               <motion.span
                 aria-hidden="true"

@@ -4,16 +4,18 @@ import { ArrowRight } from 'lucide-react';
 
 const ITEMS = [
   ['prehled', 'Přehled'],
+  ['popis', 'Popis produktu'],
+  ['parametry', 'Technické parametry'],
+  ['varianty', 'Varianty'],
   ['galerie', 'Galerie'],
-  ['parametry', 'Parametry'],
   ['vyhody', 'Výhody'],
-  ['konfigurace', 'Konfigurace'],
   ['instalace', 'Instalace'],
   ['reference', 'Reference'],
 ];
 
 export default function PdSectionNav({ product }) {
   const [active, setActive] = useState('prehled');
+  const items = ITEMS.filter(([id]) => id !== 'varianty' || product.variants?.length);
 
   useEffect(() => {
     const sections = ITEMS.map(([id]) => document.getElementById(id)).filter(Boolean);
@@ -36,7 +38,7 @@ export default function PdSectionNav({ product }) {
   const scrollTo = (id) => {
     const target = document.getElementById(id);
     if (!target) return;
-    const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-header-height')) || 68;
+    const header = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue('--site-header-height')) || 68;
     const navigation = document.querySelector('[data-product-section-nav]')?.offsetHeight || 54;
     window.scrollTo({ top: window.scrollY + target.getBoundingClientRect().top - header - navigation - 16, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
@@ -46,11 +48,12 @@ export default function PdSectionNav({ product }) {
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-10">
         <div className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <nav className="flex min-w-max items-center" aria-label="Navigace detailu produktu">
-            {ITEMS.map(([id, label]) => (
+            {items.map(([id, label]) => (
               <button
                 key={id}
                 type="button"
-                onClick={() => scrollTo(id)}
+                onClick={() => { setActive(id); scrollTo(id); }}
+                aria-current={active === id ? 'location' : undefined}
                 className={`relative min-h-[54px] px-3 text-xs font-semibold transition-colors sm:px-4 ${active === id ? 'text-[#0A1628]' : 'text-[#5A6B78] hover:text-[#0A1628]'}`}
               >
                 {label}

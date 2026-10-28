@@ -8,15 +8,15 @@ const COLUMNS = [
   id: 'gate-u',
   name: 'GATE70-U',
   tag: 'Rovná varianta',
-  detailLink: '/gate70',
-  demoLink: '/gate70#video'
+  detailLink: '/produkt/mlzna-brana-gate',
+  demoLink: '/produkt/mlzna-brana-gate#galerie'
 },
 {
   id: 'gate-v',
   name: 'GATE70-V',
   tag: 'Lomený oblouk',
-  detailLink: '/gate70',
-  demoLink: '/gate70#video'
+  detailLink: '/produkt/mlzna-brana-gate',
+  demoLink: '/produkt/mlzna-brana-gate#galerie'
 },
 {
   id: 'linea',

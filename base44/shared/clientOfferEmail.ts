@@ -8,7 +8,7 @@ const SITE_URL = 'https://mlzidla.cz';
 const CONTACT_EMAIL = 'meduna@holmtec.cz';
 const INFO_EMAIL = 'info@mlzidla.cz';
 const CONTACT_PHONE = '+420 774 700 390';
-const PORTAL_URL = `${SITE_URL}/muj-projekt`;
+const PORTAL_URL = `${SITE_URL}/klientska-sekce`;
 
 const ACCENT_BLUE = '#0B5FFF';
 const ACCENT_CYAN = '#00A8E8';
@@ -47,7 +47,7 @@ export interface BuiltEmail {
 
 const COOPERATION_STEPS = [
   { num: '1', title: 'Nabídka', desc: 'Připravili jsme pro vás cenovou nabídku s vizualizacemi.' },
-  { num: '2', title: 'Potvrzení', desc: 'Potvrďte zájem v sekci Můj projekt nebo e-mailem.' },
+  { num: '2', title: 'Potvrzení', desc: 'Potvrďte zájem v klientské sekci nebo e-mailem.' },
   { num: '3', title: 'Výrobní záloha 50 %', desc: 'Po potvrzení vystavíme daňový doklad na 50 % výrobní zálohy.' },
   { num: '4', title: 'Výroba', desc: 'Zahájíme výrobu vašeho řešení na míru (typicky 2–4 týdny).' },
   { num: '5', title: 'Dodání / instalace', desc: 'Doručíme a případně nainstalujeme řešení na vašem místě.' },
@@ -77,7 +77,7 @@ function buildAttachmentsBlock(attachments: Array<{ name: string; url?: string }
           <div style="width:36px;height:36px;border-radius:8px;background:${BG_LIGHT};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:${ACCENT_BLUE};flex-shrink:0">${escapeHtml((a.name.match(/\.(\w{2,4})$/)?.[1] || 'PDF').toUpperCase())}</div>
           <div style="flex:1">
             <div style="font-size:13px;font-weight:600;color:${TEXT_DARK}">${escapeHtml(a.name)}</div>
-            ${a.url ? `<a href="${escapeHtml(a.url)}" style="font-size:11px;color:${ACCENT_CYAN};text-decoration:none">Stáhnout</a>` : '<span style="font-size:11px;color:' + TEXT_MUTED + '">Dostupné v sekci Můj projekt</span>'}
+            ${a.url ? `<a href="${escapeHtml(a.url)}" style="font-size:11px;color:${ACCENT_CYAN};text-decoration:none">Stáhnout</a>` : '<span style="font-size:11px;color:' + TEXT_MUTED + '">Dostupné v klientské sekci</span>'}
           </div>
         </div>
       </td>
@@ -187,7 +187,7 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
   <tr><td style="padding:32px 36px 8px">
     <h1 style="margin:0 0 12px;font-size:24px;font-weight:700;color:${TEXT_DARK};font-family:'Manrope','Inter',sans-serif">Cenová nabídka${data.quoteNumber ? ` ${escapeHtml(data.quoteNumber)}` : ''}</h1>
     <p style="margin:0 0 20px;font-size:15px;line-height:1.7;color:${TEXT_MUTED}">Dobrý den ${escapeHtml(firstName)},</p>
-    <p style="margin:0 0 20px;font-size:14px;line-height:1.7;color:${TEXT_DARK}">děkujeme za vaši poptávku. Na základě vašeho zadání jsme připravili cenovou nabídku na <strong>${escapeHtml(data.productName)}</strong>${data.quantity > 1 ? ` (${data.quantity} ks)` : ''}${data.location ? ` pro lokalitu <strong>${escapeHtml(data.location)}</strong>` : ''}. Vizualizace a kompletní podklady najdete níže a v klientské sekci Můj projekt.</p>
+    <p style="margin:0 0 20px;font-size:14px;line-height:1.7;color:${TEXT_DARK}">děkujeme za vaši poptávku. Na základě vašeho zadání jsme připravili cenovou nabídku na <strong>${escapeHtml(data.productName)}</strong>${data.quantity > 1 ? ` (${data.quantity} ks)` : ''}${data.location ? ` pro lokalitu <strong>${escapeHtml(data.location)}</strong>` : ''}. Vizualizace a kompletní podklady najdete níže a v klientské sekci.</p>
     ${inquirySummaryBlock}
 
     <!-- Summary table -->
@@ -203,7 +203,7 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
 
     <!-- CTA button -->
     <div style="margin:28px 0;text-align:center">
-      <a href="${escapeHtml(data.portalUrl)}" style="display:inline-block;padding:14px 36px;border-radius:999px;background:linear-gradient(135deg,${ACCENT_BLUE},${ACCENT_CYAN});color:#fff;text-decoration:none;font-weight:700;font-size:14px;font-family:'Manrope','Inter',sans-serif">Zobrazit nabídku v Můj projekt</a>
+      <a href="${escapeHtml(data.portalUrl)}" style="display:inline-block;padding:14px 36px;border-radius:999px;background:linear-gradient(135deg,${ACCENT_BLUE},${ACCENT_CYAN});color:#fff;text-decoration:none;font-weight:700;font-size:14px;font-family:'Manrope','Inter',sans-serif">Zobrazit nabídku v klientské sekci</a>
       <p style="margin:10px 0 0;font-size:11px;color:${TEXT_MUTED}">Odkaz na vaši soukromou sekci, kde najdete všechny podklady a můžete nabídku potvrdit.</p>
     </div>
 
@@ -249,7 +249,7 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
     '',
     `PLATNOST NABÍDKY: ${data.validUntil ? formatDate(data.validUntil) : '30 dnů od odeslání'}`,
     '',
-    `Nabídku najdete také v sekci Můj projekt: ${data.portalUrl}`,
+    `Nabídku najdete také v klientské sekci: ${data.portalUrl}`,
     '',
     'PŘÍLOHY:',
     ...data.attachments.map(a => `- ${a.name}${a.url ? ` (${a.url})` : ''}`),

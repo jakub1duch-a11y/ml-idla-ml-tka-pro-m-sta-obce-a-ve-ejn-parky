@@ -7,7 +7,7 @@ export default function GateLiveDemoCard() {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="max-w-7xl mx-auto px-6 lg:px-8 mb-10 sm:mb-16">
-      <Link to="/gate70" className="group relative block rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all min-h-[280px]">
+      <Link to="/produkt/mlzna-brana-gate" className="group relative block rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all min-h-[280px]">
         <video
           src="/media/optimized/42cf4b972_Efektmlhy-mlznabrana-zivynahled.webm"
           autoPlay muted loop playsInline

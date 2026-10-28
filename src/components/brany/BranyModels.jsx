@@ -9,21 +9,21 @@ const MODELS = [
     tag: 'Rovná brána',
     desc: 'Pravoúhlý tvar z kulaté nerezové trubky Ø70 mm. Nejčistší řešení pro vstupy, cyklostezky a průchozí zóny.',
     image: '/media/optimized/17e1fc843_MlznabranaGATE70U.webp',
-    path: '/gate70'
+    path: '/produkt/mlzna-brana-gate'
   },
   {
     name: 'GATE70-V',
     tag: 'Lomený oblouk',
     desc: 'Oblouková varianta pro náměstí a parky, kde má brána fungovat i jako architektonická dominanta.',
     image: '/media/optimized/effe6c584_file_0000000022a0821096a8f7e02e1adbff.webp',
-    path: '/gate70'
+    path: '/produkt/mlzna-brana-gate'
   },
   {
     name: 'LINEA CE70',
     tag: 'Obloukový systém',
     desc: 'Leštěný jeklový profil s plynulým obloukem — elegantní forma pro promenády, bazény a reprezentativní vstupy.',
     image: '/media/optimized/82914bed5_C-MlzitkoLINEA_CE70_couple1.webp',
-    path: '/produkt/linea-el70'
+    path: '/produkt/linea-CE-gate'
   }
 ];
 

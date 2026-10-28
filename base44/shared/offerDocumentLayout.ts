@@ -125,11 +125,11 @@ export function drawRecapPage(doc, c) {
   doc.setFontSize(10); const height = doc.splitTextToSize(pt(terms), 182).length * 4.8 + 10;
   if (y + height > 190) { doc.addPage(); y = header(doc, c, 'Podminky a dalsi postup'); }
   text(doc, terms, 14, y + 6, 182, 10, false, MUTE);
-  const url = 'https://mlzidla.cz/muj-projekt';
+  const url = 'https://mlzidla.cz/klientska-sekce';
   doc.setFillColor(SOFT); doc.rect(14, 211, 182, 55, 'F');
-  text(doc, 'Muj projekt', 20, 222, 126, 16, true, GREEN);
+  text(doc, 'Klientska sekce', 20, 222, 126, 16, true, GREEN);
   text(doc, 'Sprava nabidky online a potvrzeni objednavky.', 20, 232, 126, 10);
-  text(doc, 'mlzidla.cz/muj-projekt', 20, 244, 125, 11, true, GREEN);
+  text(doc, 'mlzidla.cz/klientska-sekce', 20, 244, 125, 11, true, GREEN);
   doc.link(20, 237, 125, 11, { url });
   text(doc, 'Prihlaste se uctem spojeneho klienta.', 20, 255, 126, 8, false, MUTE);
   const qr = QRCode.create(url, { errorCorrectionLevel: 'M' }), size = qr.modules.size, cell = 39 / (size + 8);

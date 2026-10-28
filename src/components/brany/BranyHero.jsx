@@ -18,7 +18,7 @@ export default function BranyHero() {
             <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 bg-accent px-7 py-4 text-sm font-bold uppercase tracking-[.02em] text-accent-foreground transition-colors hover:bg-primary hover:text-primary-foreground">
               Poptat mlžnou bránu <ArrowRight size={16} />
             </Link>
-            <Link to="/gate70" className="inline-flex min-h-12 items-center justify-center border border-border px-7 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary">
+            <Link to="/produkt/mlzna-brana-gate" className="inline-flex min-h-12 items-center justify-center border border-border px-7 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary">
               Detail modelu GATE70
             </Link>
           </div>

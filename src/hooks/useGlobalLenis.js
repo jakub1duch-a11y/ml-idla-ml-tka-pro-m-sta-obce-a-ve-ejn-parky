@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 
 // Globální plynulý scroll. Načítá se asynchronně (mimo kritickou cestu),
-// vypíná se při prefers-reduced-motion a na /gate70, která má vlastní instanci.
+// vypíná se při prefers-reduced-motion.
 export default function useGlobalLenis(pathname) {
   useEffect(() => {
-    if (pathname.startsWith('/gate70')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let lenis;
     let raf = 0;

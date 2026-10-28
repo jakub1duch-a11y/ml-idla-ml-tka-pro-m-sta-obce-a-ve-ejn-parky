@@ -33,7 +33,7 @@ export function buildGateCatalog(records = []) {
       ...view,
       id: `${product.slug}${view.variant ? `-${view.variant}` : ''}`,
       slug: product.slug,
-      detailUrl: view.variant ? `/gate70?varianta=${view.variant}` : `/produkt/${encodeURIComponent(product.slug)}`,
+      detailUrl: `/produkt/${encodeURIComponent(product.slug)}`,
       quoteUrl: `/poptavka?produkt=${encodeURIComponent(view.name)}`,
     }));
   }).sort((a, b) => {
@@ -41,4 +41,3 @@ export function buildGateCatalog(records = []) {
     return order.indexOf(a.group) - order.indexOf(b.group) || a.name.localeCompare(b.name, 'cs');
   });
 }
-

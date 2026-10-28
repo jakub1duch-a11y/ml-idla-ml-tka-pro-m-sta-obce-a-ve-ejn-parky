@@ -28,8 +28,7 @@ import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
-import RegisteredPortal from '@/components/portal/RegisteredPortal';
-import ProtectedRoute from '@/components/ProtectedRoute';
+
 import '@/components/portal/googleAdsPortal';
 import Poradce from '@/pages/Poradce';
 import Kalkulacka from '@/pages/Kalkulacka';
@@ -59,7 +58,7 @@ import Admin from '@/pages/admin/Admin';
 import AdminLogin from '@/pages/admin/AdminLogin';
 import AdminLogout from '@/pages/admin/AdminLogout';
 import AdminForgotPassword from '@/pages/admin/AdminForgotPassword';
-import Gate70 from '@/pages/Gate70';
+
 import Technologie from '@/pages/Technologie';
 import Vyhody from '@/pages/Vyhody';
 import KeStazeni from '@/pages/KeStazeni';
@@ -145,13 +144,12 @@ const AuthenticatedApp = () => {
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
         <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzny-mrak-1414" replace />} />
         <Route path="/produkt/mlzitko-mrak" element={<Navigate to="/produkt/mlzny-mrak-1414" replace />} />
+        <Route path="/produkt/gate70" element={<Navigate to="/produkt/mlzna-brana-gate" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
-        <Route path="/produkt2/:slug" element={<Navigate to="/katalog-mlzitek" replace />} />
+        <Route path="/produkt2/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />
         <Route path="/klientska-sekce" element={<CustomerPortal />} />
-        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?next=%2Fmuj-projekt" replace />} />}>
-          <Route path="/muj-projekt" element={<RegisteredPortal />} />
-        </Route>
+        <Route path="/muj-projekt" element={<Navigate to="/kontakt" replace />} />
         <Route path="/klient" element={<CustomerPortal />} />
         <Route path="/klient-prihlaseni" element={<CustomerPortal />} />
         <Route path="/poradce" element={<Poradce />} />
@@ -199,7 +197,7 @@ const AuthenticatedApp = () => {
         <Route path="/kategorie/skoly-skolky-deti" element={<Deti />} />
         <Route path="/kategorie/:categorySlug" element={<UseCaseCategory />} />
         <Route path="/gdpr" element={<Gdpr />} />
-        <Route path="/gate70" element={<Gate70 />} />
+        <Route path="/gate70" element={<Navigate to="/produkt/mlzna-brana-gate" replace />} />
         <Route path="/faq" element={<Navigate to="/podpora" replace />} />
         <Route path="/technologie" element={<Navigate to="/jak-to-funguje" replace />} />
         <Route path="/vyhody" element={<Vyhody />} />

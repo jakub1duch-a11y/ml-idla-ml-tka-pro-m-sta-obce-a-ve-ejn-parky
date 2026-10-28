@@ -256,8 +256,8 @@ export default function ReturningVisitorEmailPopup() {
                     <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500">
                       Budeme respektovat váš výběr a zasílat pouze vámi zvolená témata.
                     </p>
-                    <Link to="/muj-projekt#email-preferences" className="mt-5 text-sm font-semibold text-cyan-800 underline underline-offset-4">
-                      Otevřít Můj projekt
+                    <Link to="/kontakt" className="mt-5 text-sm font-semibold text-cyan-800 underline underline-offset-4">
+                      Kontaktovat tým
                     </Link>
                   </div>
                 ) : !isAuthenticated ? (

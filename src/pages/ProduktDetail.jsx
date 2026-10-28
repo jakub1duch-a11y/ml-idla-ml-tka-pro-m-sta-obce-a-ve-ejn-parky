@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Droplets, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
@@ -20,12 +20,10 @@ import BrandLoadingContent from '@/components/common/BrandLoadingContent';
 
 export default function ProduktDetail() {
   const { slug } = useParams();
-  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   useEffect(() => {
-    if (slug === 'gate70') { navigate('/gate70', { replace: true }); return; }
     setLoading(true);
     setNotFound(false);
     base44.entities.Product.filter({ slug })
@@ -39,7 +37,7 @@ export default function ProduktDetail() {
       })
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
-  }, [slug, navigate]);
+  }, [slug]);
 
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center bg-secondary">

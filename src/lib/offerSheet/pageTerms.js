@@ -11,7 +11,7 @@ const INCLUDED = [
   ['file', 'Dokumentace', 'Provozní a údržbový manuál a doporučení pro zahájení sezóny a spuštění mlžítka.'],
 ];
 const SEPARATE = ['Doprava a montáž', 'Výkopy a stavební připravenost', 'Přívod vody k místu instalace', 'SUPLA chytré řízení (volitelně)'];
-const STEPS = [['Výběr varianty', 'Zvolte hlavní řešení nebo jednu z variant k porovnání.'], ['Ověření místa', 'Technik potvrdí umístění, kotvení a přívod vody.'], ['Potvrzení objednávky', 'Objednávku potvrdíte v portálu Můj projekt.']];
+const STEPS = [['Výběr varianty', 'Zvolte hlavní řešení nebo jednu z variant k porovnání.'], ['Ověření místa', 'Technik potvrdí umístění, kotvení a přívod vody.'], ['Potvrzení objednávky', 'Objednávku potvrďte přímo s naším obchodníkem.']];
 
 function qr(ctx, url, x, y, size) {
   const m = QRCode.create(url, { errorCorrectionLevel: 'M' }).modules;
@@ -43,8 +43,8 @@ function contact(ctx, d) {
   text(ctx, 'HolmTec s.r.o. · MLŽIDLA.cz', 110, 1460, { size: 18, color: C.silver });
   text(ctx, '+420 774 700 390', 110, 1512, { weight: 700, size: 24, color: C.white });
   text(ctx, 'meduna@holmtec.cz · mlzidla.cz', 110, 1546, { size: 18, color: C.silver });
-  qr(ctx, 'https://mlzidla.cz/muj-projekt', W - 280, 1362, 170);
-  text(ctx, 'Můj projekt', W - 195, 1560, { weight: 600, size: 13, color: C.silver, align: 'center' });
+  qr(ctx, 'https://mlzidla.cz/kontakt', W - 280, 1362, 170);
+  text(ctx, 'Kontakt', W - 195, 1560, { weight: 600, size: 13, color: C.silver, align: 'center' });
 }
 
 export async function drawTerms(ctx, d, meta) {

@@ -43,8 +43,8 @@ export default function KeStazeni() {
 
   useEffect(() => {
     setSEO({
-      title: 'Manuály a PDF ke stažení | MLŽIDLA.cz',
-      description: 'Veřejně dostupné PDF formuláře MLŽIDLA.cz: předávací protokol, příprava výkopů, montáž a produktový list mlžícího systému.',
+      title: 'Technické podklady na vyžádání | MLŽIDLA.cz',
+      description: 'Technické listy, výkresy, manuály a montážní dokumentaci MLŽIDLA.cz získáte na vyžádání přes formulář podle vašeho projektu.',
       keywords: 'technické podklady mlžítka, mlžítka pro města, chytré mlžné brány, vodní mlha na veřejná prostranství, SUPLA ovládání mlžení',
       canonicalPath: '/ke-stazeni',
     });
@@ -62,17 +62,17 @@ export default function KeStazeni() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Dokumentace</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4">
-Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">volně k zobrazení a stažení</span>
+Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">na vyžádání přes formulář</span>
           </h1>
           <p className="text-slate-500 text-lg font-light max-w-2xl">
-Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, přípravu staveniště a tvorbu produktových listů. Dokumenty lze otevřít v prohlížeči, vytisknout nebo uložit pro konkrétní zakázku.
+Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho projektu připravíme odpovídající technické listy, výkresy, návody nebo montážní podklady.
           </p>
         </motion.div>
 
         {/* Info banner */}
         <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-10 text-sm text-slate-500 font-light">
           <Info size={16} className="text-slate-400 mt-0.5 shrink-0" />
-          Tyto formuláře jsou veřejné pracovní šablony. Nenahrazují schválenou projektovou dokumentaci ani technický návod konkrétního výrobku. Rozměry, hloubky, kotvení a provozní hodnoty vždy ověřte podle aktuální dokumentace a podmínek místa. Projektové výkresy, individuální výpočty a interní podklady poskytujeme podle konkrétní zakázky.
+          Technické podklady nezobrazujeme k přímému stažení. Vyžádejte si je přes formulář a uveďte produkt, místo instalace a účel použití. Rozměry, kotvení a provozní hodnoty vždy potvrzujeme podle aktuální dokumentace konkrétního projektu.
         </div>
 
         {/* Static docs */}
@@ -102,23 +102,10 @@ Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, příp
                     <p className="text-slate-400 text-xs font-light truncate">{doc.desc}</p>
                   </div>
                 </div>
-                {doc.url ? (
-                  <div className="flex flex-shrink-0 flex-wrap items-center justify-end gap-2">
-                    <a href={doc.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2.5 text-xs text-slate-700 transition-all hover:border-slate-400 hover:bg-slate-50">
-                      <BookOpen size={13} /> Zobrazit PDF
-                    </a>
-                    <a href={doc.url} download
-                      className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2.5 text-xs text-white transition-all hover:bg-slate-800">
-                      <Download size={13} /> Stáhnout
-                    </a>
-                  </div>
-                ) : (
-                  <a href={`mailto:obchod1@holmtec.cz?subject=Žádost o dokument: ${doc.title}`}
-                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-slate-50 text-slate-600 text-xs rounded-full hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200">
-                    <Download size={13} /> Vyžádat
-                  </a>
-                )}
+                <Link to={`/poptavka?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`}
+                  className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-muted text-primary text-xs rounded-full hover:bg-muted/80 transition-all border border-border">
+                  <FileText size={13} /> Vyžádat
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -151,10 +138,10 @@ Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, příp
                       <p className="text-slate-400 text-xs font-light truncate">{product.short_description}</p>
                     )}
                   </div>
-                  <a href={`mailto:obchod1@holmtec.cz?subject=${encodeURIComponent(`Žádost o produktový datasheet — ${product.name}`)}`}
-                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 text-xs font-mono rounded-full hover:bg-slate-100 transition-all">
-                    <Download size={12} /> Vyžádat
-                  </a>
+                  <Link to={`/poptavka?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o technické podklady k produktu ${product.name}.` })}`}
+                    className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-muted border border-border text-primary text-xs font-mono rounded-full hover:bg-muted/80 transition-all">
+                    <FileText size={12} /> Vyžádat
+                  </Link>
                 </motion.div>
               ))}
             </div>
@@ -171,9 +158,9 @@ Stáhněte si praktické PDF šablony pro předání mlžítka, montáž, příp
             <Link to="/partnerstvi" className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm rounded-full hover:bg-slate-100 transition-all">
               Partnerství <ChevronRight size={14} />
             </Link>
-            <a href="mailto:obchod1@holmtec.cz" className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">
-              <Mail size={14} /> E-mail
-            </a>
+            <Link to={`/poptavka?${new URLSearchParams({ zprava: 'Žádám o projektovou dokumentaci na míru.' })}`} className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">
+              <Mail size={14} /> Vyplnit formulář
+            </Link>
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function PdSpecs({ product }) {
           </div>
         ) : <p className="rounded-lg border border-border bg-card p-6 text-muted-foreground">Technické parametry připravujeme. Konkrétní hodnoty potvrdíme při návrhu řešení.</p>}
         <PdVariantsTable variants={product.variants} productSlug={product.slug} />
-        <PdDocuments urls={product.documents_urls} />
+        <PdDocuments product={product} />
         <p className="mt-7 border-l-2 border-primary pl-4 text-sm text-muted-foreground">Kotvení, přívod vody, filtrace a případné řízení se upřesňují podle konkrétního místa a zvolené konfigurace. Chybějící údaje potvrdíme v technickém návrhu.</p>
       </div>
     </section>

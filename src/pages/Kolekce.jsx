@@ -80,15 +80,16 @@ export default function Kolekce() {
   const activeFamily = family ? getFamilyById(family) : null;
   const hasFilter = selectedCategory || family || line || space !== 'all' || search.trim();
   const clear = () => {setFamily(null);setLine(null);setSpace('all');setSearch('');setSearchParams({});};
-  const selectFamily = (id) => {setFamily(id);setLine(null);};
+  const selectFamily = (id) => {
+    setFamily(id);
+    setLine(null);
+    document.getElementById('catalog')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  };
 
   return (
     <div className="catalog-premium min-h-screen overflow-x-clip bg-white">
       {selectedCategory ? <section className="relative overflow-hidden bg-slate-950 px-5 pb-16 pt-32 text-white lg:px-10"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 md:items-center"><div><p className="text-xs uppercase tracking-widest text-cyan-300">Kategorie produktů</p><h1 className="mt-4 font-heading text-4xl sm:text-5xl">{selectedCategory.name}</h1><p className="mt-5 max-w-xl leading-7 text-slate-200">{selectedCategory.description}</p><a href="#catalog" className="mt-7 inline-flex min-h-11 items-center rounded-full bg-cyan-300 px-6 font-semibold text-slate-950">Prohlédnout produkty</a></div>{selectedCategory.image_url && <div className="aspect-[4/3] max-h-[440px] overflow-hidden rounded-2xl bg-slate-900"><img src={selectedCategory.image_url} alt={selectedCategory.name} className="h-full w-full object-cover object-center" /></div>}</div></section> : <KolekceHero />}
-      {!selectedCategory && <ProductCategoryExplorer />}
-      <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
-
-      <div id="catalog" className="catalog-pattern relative mx-auto max-w-[1500px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+      <div id="catalog" className="catalog-pattern relative mx-auto max-w-[1500px] scroll-mt-24 px-5 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
         <div className="mb-10 flex flex-col gap-6 border-b border-[#DCE9ED] pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[.18em] text-[#153863]">{activeFamily ? `// ${activeFamily.code} ${activeFamily.label}` : '// Kompletní katalog'}</p>
@@ -140,6 +141,8 @@ export default function Kolekce() {
         }
       </div>
 
+      <FamilyNav activeFamily={family} onSelect={selectFamily} counts={familyCounts} />
+      {!selectedCategory && <ProductCategoryExplorer />}
       <GatesSlider />
       <FeaturesBenefitsSection />
       <LiveDemoSection />

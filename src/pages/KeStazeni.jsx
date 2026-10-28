@@ -13,8 +13,8 @@ const STATIC_DOCS = [
   { title: 'Produktový list — šablona mlžícího systému', desc: 'Brandovaná šablona pro produktové informace, technické parametry, údržbu a schválenou galerii.', category: 'Produktový list', icon: FileText, url: '/manualy/mlz-prod-03.pdf' },
   { title: 'Montáž a uvedení do provozu', desc: 'Kontrolní PDF pro odbornou montáž, funkční zkoušky, předvedení obsluhy a předání.', category: 'Montáž', icon: Wrench, url: '/manualy/mlz-mont-04.pdf' },
   { title: 'Produktový katalog 2026', desc: 'Kompletní přehled všech mlžítek, mlžných bran a mlhovišť HolmTec.', category: 'Katalog', icon: FileText, url: null },
-  { title: 'Přípravné práce pro instalaci mlžítka', desc: 'Stavební příprava, výkopy, betonáž, rozvod vody a elektroinstalace pro chytrý ventil.', category: 'Instalace', icon: Wrench, url: null },
-  { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat, průřezy a šachta nášlapného ventilu pro konkrétní projekt.', category: 'Výkres', icon: FileText, url: null },
+  { title: 'Přípravné práce pro instalaci mlžítka', desc: 'Stavební příprava, výkopy, betonáž, rozvod vody a elektroinstalace pro chytrý ventil.', category: 'Instalace', icon: Wrench, url: 'https://drive.google.com/file/d/1FGQqZoYKZsbOTxtfrxX7yVTkALH9NuQo/view' },
+  { title: 'Detaily ocelového mlžítka', desc: 'Technické výkresy pat, průřezy a šachta nášlapného ventilu pro konkrétní projekt.', category: 'Výkres', icon: FileText, url: 'https://drive.google.com/file/d/1Nucoono-rP4BGyw9-ly5SY1PrjNL5hac/view' },
   { title: 'Manuál údržby mlžící trysky typ M', desc: 'Servisní postup demontáže a čištění trysky připravíme podle použité konfigurace.', category: 'Manuál', icon: Wrench, url: null },
   { title: 'Chytré ovládání — produktový prospekt', desc: 'Funkce Smart App, Supla Cloud, senzory, automatizace a plánování cyklů mlžení.', category: 'Smart', icon: BookOpen, url: null },
   { title: 'Technický list — Mlžítka', desc: 'Rozměry, materiálové provedení, spotřeba vody a tlakové parametry.', category: 'Technický list', icon: FileText, url: null },
@@ -43,8 +43,8 @@ export default function KeStazeni() {
 
   useEffect(() => {
     setSEO({
-      title: 'Technické podklady na vyžádání | MLŽIDLA.cz',
-      description: 'Technické listy, výkresy, manuály a montážní dokumentaci MLŽIDLA.cz získáte na vyžádání přes formulář podle vašeho projektu.',
+      title: 'Manuály, návody a technické dokumenty | MLŽIDLA.cz',
+      description: 'Stáhněte si návody k obsluze, údržbě, montáži a zazimování mlžítek MLŽIDLA.cz. Projektové výkresy poskytujeme na vyžádání.',
       keywords: 'technické podklady mlžítka, mlžítka pro města, chytré mlžné brány, vodní mlha na veřejná prostranství, SUPLA ovládání mlžení',
       canonicalPath: '/ke-stazeni',
     });
@@ -62,17 +62,17 @@ export default function KeStazeni() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
           <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Dokumentace</p>
           <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4">
-Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">na vyžádání přes formulář</span>
+Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">pro vaše mlžítko</span>
           </h1>
           <p className="text-slate-500 text-lg font-light max-w-2xl">
-Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho projektu připravíme odpovídající technické listy, výkresy, návody nebo montážní podklady.
+Stáhněte si dostupné návody a provozní dokumentaci. Výkresy a individuální technické podklady vám připravíme podle konkrétního projektu.
           </p>
         </motion.div>
 
         {/* Info banner */}
         <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-10 text-sm text-slate-500 font-light">
           <Info size={16} className="text-slate-400 mt-0.5 shrink-0" />
-          Technické podklady nezobrazujeme k přímému stažení. Vyžádejte si je přes formulář a uveďte produkt, místo instalace a účel použití. Rozměry, kotvení a provozní hodnoty vždy potvrzujeme podle aktuální dokumentace konkrétního projektu.
+          Veřejné návody lze otevřít přímo. Projektové výkresy a individuální parametry poskytujeme na vyžádání. Rozměry, kotvení a provozní hodnoty ověřte vždy podle dokumentace konkrétní instalace.
         </div>
 
         {/* Static docs */}
@@ -89,7 +89,7 @@ Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho pr
           <div className="space-y-3">
             {filteredDocs.map((doc, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                className="flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 hover:shadow-sm transition-all group">
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 hover:border-slate-300 hover:shadow-sm transition-all group">
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-200">
                     <doc.icon size={18} className="text-slate-500" />
@@ -99,13 +99,10 @@ Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho pr
                       {doc.category}
                     </span>
                     <h3 className="text-slate-900 font-medium text-sm">{doc.title}</h3>
-                    <p className="text-slate-400 text-xs font-light truncate">{doc.desc}</p>
+                    <p className="text-slate-500 text-xs font-light leading-relaxed line-clamp-3 sm:line-clamp-2">{doc.desc}</p>
                   </div>
                 </div>
-                <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`}
-                  className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-muted text-primary text-xs rounded-full hover:bg-muted/80 transition-all border border-border">
-                  <FileText size={13} /> Vyžádat
-                </Link>
+                {doc.url ? <a href={doc.url} target="_blank" rel="noopener noreferrer" aria-label={`Otevřít dokument ${doc.title}`} className="w-full sm:w-auto justify-center flex-shrink-0 flex items-center gap-2 px-5 py-3 min-h-11 bg-slate-900 text-white text-sm rounded-full hover:bg-slate-700 transition-all"><Download size={16} /> Otevřít PDF</a> : <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`} className="w-full sm:w-auto justify-center flex-shrink-0 flex items-center gap-2 px-5 py-3 min-h-11 bg-slate-100 text-slate-800 text-sm rounded-full hover:bg-slate-200 transition-all border border-slate-200"><FileText size={16} /> Vyžádat</Link>}
               </motion.div>
             ))}
           </div>
@@ -154,11 +151,11 @@ Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho pr
             <p className="text-sm font-medium text-slate-900 mb-1">Potřebujete projektovou dokumentaci na míru?</p>
             <p className="text-xs text-slate-400 font-light">Výkresy DWG, 3D modely, certifikáty, BIM podklady — připravíme dle vaší specifikace.</p>
           </div>
-          <div className="flex gap-3 flex-shrink-0">
-            <Link to="/partnerstvi" className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm rounded-full hover:bg-slate-100 transition-all">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Link to="/partnerstvi" className="flex justify-center items-center gap-2 px-5 py-3 bg-white border border-slate-200 text-slate-700 text-sm rounded-full hover:bg-slate-100 transition-all">
               Partnerství <ChevronRight size={14} />
             </Link>
-            <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: 'Žádám o projektovou dokumentaci na míru.' })}`} className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">
+            <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: 'Žádám o projektovou dokumentaci na míru.' })}`} className="btn-metallic-mist justify-center px-5 py-3 text-sm font-bold">
               <Mail size={14} /> Vyplnit formulář
             </Link>
           </div>

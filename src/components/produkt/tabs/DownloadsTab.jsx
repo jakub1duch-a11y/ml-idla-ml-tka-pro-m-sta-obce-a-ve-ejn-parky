@@ -49,7 +49,7 @@ export default function DownloadsTab({ product }) {
                 {SHARED_DOCS.map((f, i) => {
                   const Icon = f.icon;
                   return (
-                    <motion.a key={f.title} href={`/poptavka?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o podklady: ${f.subject}. Produkt: ${product.name}.` })}`} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .04 }} whileHover={{ y: -3 }} className="group rounded-[22px] border border-slate-200 bg-white p-5 transition-all hover:border-[#0b4860]/20 hover:shadow-[0_14px_34px_rgba(11,72,96,.06)]">
+                    <motion.a key={f.title} href={`/zadost-o-podklady?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o podklady: ${f.subject}. Produkt: ${product.name}.` })}`} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .04 }} whileHover={{ y: -3 }} className="group rounded-[22px] border border-slate-200 bg-white p-5 transition-all hover:border-[#0b4860]/20 hover:shadow-[0_14px_34px_rgba(11,72,96,.06)]">
                       <div className="flex items-center justify-between"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-[#0b4860]"><Icon size={18}/></span><ArrowUpRight size={15} className="text-slate-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"/></div>
                       <h4 className="mt-4 text-sm font-semibold text-slate-950">{f.title}</h4><p className="mt-1.5 text-xs leading-relaxed text-slate-500">{f.desc}</p>
                     </motion.a>
@@ -63,7 +63,7 @@ export default function DownloadsTab({ product }) {
             <div className="border-b border-white/10 p-6 sm:p-7"><p className="font-mono text-[9px] uppercase tracking-[.2em] text-cyan-300">Projektové podklady na vyžádání</p><h3 className="mt-3 font-heading text-2xl font-light">Potřebujete podklady pro konkrétní projekt?</h3><p className="mt-3 text-sm leading-6 text-white/55">Napište nám produkt, lokalitu a fázi projektu. Pošleme pouze podklady, které máme pro daný produkt a instalaci skutečně k dispozici.</p></div>
             <div className="space-y-2 p-4 sm:p-5">
               {emailFiles.map((f) => (
-                <a key={f.title} href={`/poptavka?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o podklady: ${f.subject}. Produkt: ${product.name}.` })}`} className="group flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[.04] p-4 transition-all hover:border-cyan-300/25 hover:bg-white/[.07]">
+                <a key={f.title} href={`${f.title === 'Individuální cenová nabídka' ? '/poptavka' : '/zadost-o-podklady'}?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o podklady: ${f.subject}. Produkt: ${product.name}.` })}`} className="group flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[.04] p-4 transition-all hover:border-cyan-300/25 hover:bg-white/[.07]">
                   <div className="flex min-w-0 items-start gap-3"><Mail size={17} className="mt-0.5 shrink-0 text-cyan-300"/><div><p className="text-sm font-semibold text-white">{f.title}</p><p className="mt-1 text-[11px] leading-relaxed text-white/45">{f.desc}</p></div></div>
                   <ArrowUpRight size={15} className="shrink-0 text-white/25 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-300"/>
                 </a>

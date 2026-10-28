@@ -31,7 +31,7 @@ export default function GateOffer({ children }) {
           <h3>Začněme<br />vaším prostorem.</h3>
           <p>Uveďte místo, přibližné rozměry, dostupnost vody a požadované řízení. Zkontrolujeme technickou proveditelnost a rozsah dodávky.</p>
           <a className="gate-inline-link" href="tel:+420774700390">+420 774 700 390</a><br />
-          <a className="gate-inline-link" href={`/poptavka?${new URLSearchParams({ produkt: 'gate70', zprava: 'Žádám o technický list GATE70.' })}`}>Vyžádat technické podklady ↗</a>
+          <a className="gate-inline-link" href={`/zadost-o-podklady?${new URLSearchParams({ produkt: 'gate70', zprava: 'Žádám o technický list GATE70.' })}`}>Vyžádat technické podklady ↗</a>
         </div>
         {children}
       </div>

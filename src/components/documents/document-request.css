@@ -1,0 +1,4 @@
+.document-request-submit {font-family:var(--brand-font-heading);font-weight:var(--brand-font-weight-semibold);letter-spacing:0.02em;text-transform:uppercase;font-size:14px;color:var(--brand-secondary);background:var(--brand-accent);border:none;border-radius:var(--brand-radius-sm);padding:14px 26px;white-space:nowrap;cursor:pointer;transition:background .2s ease,transform .1s ease;}
+.document-request-submit:hover {background:var(--brand-primary);color:var(--brand-on-primary);}
+.document-request-submit:active {transform:translateY(1px);}
+.document-request-submit:disabled {opacity:.6;cursor:wait;}

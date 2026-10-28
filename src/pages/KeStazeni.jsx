@@ -102,7 +102,7 @@ Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho pr
                     <p className="text-slate-400 text-xs font-light truncate">{doc.desc}</p>
                   </div>
                 </div>
-                <Link to={`/poptavka?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`}
+                <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`}
                   className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-muted text-primary text-xs rounded-full hover:bg-muted/80 transition-all border border-border">
                   <FileText size={13} /> Vyžádat
                 </Link>
@@ -138,7 +138,7 @@ Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho pr
                       <p className="text-slate-400 text-xs font-light truncate">{product.short_description}</p>
                     )}
                   </div>
-                  <Link to={`/poptavka?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o technické podklady k produktu ${product.name}.` })}`}
+                  <Link to={`/zadost-o-podklady?${new URLSearchParams({ produkt: product.slug, zprava: `Žádám o technické podklady k produktu ${product.name}.` })}`}
                     className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 bg-muted border border-border text-primary text-xs font-mono rounded-full hover:bg-muted/80 transition-all">
                     <FileText size={12} /> Vyžádat
                   </Link>
@@ -158,7 +158,7 @@ Vyberte požadovaný dokument a vyplňte formulář. Podle produktu a vašeho pr
             <Link to="/partnerstvi" className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm rounded-full hover:bg-slate-100 transition-all">
               Partnerství <ChevronRight size={14} />
             </Link>
-            <Link to={`/poptavka?${new URLSearchParams({ zprava: 'Žádám o projektovou dokumentaci na míru.' })}`} className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">
+            <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: 'Žádám o projektovou dokumentaci na míru.' })}`} className="btn-metallic-mist px-5 py-2.5 text-sm font-bold">
               <Mail size={14} /> Vyplnit formulář
             </Link>
           </div>

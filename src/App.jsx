@@ -40,6 +40,7 @@ import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
 import ZazimovaniMlzitekClanek from '@/pages/ZazimovaniMlzitekClanek';
 import Poptavka from '@/pages/Poptavka';
+import ZadostOPodklady from '@/pages/ZadostOPodklady';
 import Dekujeme from '@/pages/Dekujeme';
 import CustomPageView from '@/pages/CustomPageView';
 import Podpora from '@/pages/Podpora';
@@ -175,6 +176,7 @@ const AuthenticatedApp = () => {
         <Route path="/blog/zazimovani-mlzitek" element={<ZazimovaniMlzitekClanek />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
+        <Route path="/zadost-o-podklady" element={<ZadostOPodklady />} />
         <Route path="/ppc/mlzitka-pro-mesta-obce" element={<PpcLanding variant="mesta" />} />
         <Route path="/ppc/mlzitka-namesti-parky" element={<PpcLanding variant="parky" />} />
         <Route path="/ppc/chytra-mlzitka" element={<PpcLanding variant="smart" />} />

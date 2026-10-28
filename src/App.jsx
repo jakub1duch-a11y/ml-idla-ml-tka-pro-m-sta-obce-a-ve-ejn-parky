@@ -38,6 +38,7 @@ import Reference from '@/pages/Reference';
 import ReferenceDetail from '@/pages/ReferenceDetail';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
+import ZazimovaniMlzitekClanek from '@/pages/ZazimovaniMlzitekClanek';
 import Poptavka from '@/pages/Poptavka';
 import Dekujeme from '@/pages/Dekujeme';
 import CustomPageView from '@/pages/CustomPageView';
@@ -171,6 +172,7 @@ const AuthenticatedApp = () => {
         <Route path="/reference/teepee-nove-mesto-na-morave" element={<ReferenceDetail fixedId="6ac7164f1b394c252d83677a" />} />
         <Route path="/reference/:id" element={<ReferenceDetail />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/zazimovani-mlzitek" element={<ZazimovaniMlzitekClanek />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/poptavka" element={<Poptavka />} />
         <Route path="/ppc/mlzitka-pro-mesta-obce" element={<PpcLanding variant="mesta" />} />

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import MistVideoShowcase from '@/components/common/MistVideoShowcase';
 
 const STATIC_DOCS = [
-  { title: 'Grafický manuál údržby a zazimování MLŽIDLA.cz', desc: 'Šestistránková obrazová příručka: pravidelná kontrola, čištění trysek, zazimování, jarní spuštění a servis. PDF A4.', category: 'Manuál', icon: BookOpen, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/05a5a0f9c_MLZIDLA_manual_udrzby_graficka_brozura_FINAL.pdf' },
+  { title: 'Návod k obsluze, údržbě a zazimování mlžítek', desc: 'Šestistránková obrazová příručka: pravidelná kontrola, čištění trysek, zazimování, jarní spuštění a servis. PDF A4.', category: 'Manuál', icon: BookOpen, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/05a5a0f9c_MLZIDLA_manual_udrzby_graficka_brozura_FINAL.pdf' },
   { title: 'Předávací protokol mlžítka', desc: 'PDF formulář pro dodání bez instalace i s montáží, předvedení obsluhy, kontrolu dodávky, výhrady a podpisy.', category: 'Předání', icon: FileText, url: '/manualy/mlz-prot-01.pdf' },
   { title: 'Příprava staveniště a výkopových prací', desc: 'Kontrolní PDF pro koordinaci sítí, vytyčení trasy, kontrolu před zakrytím a fotodokumentaci.', category: 'Stavba', icon: Wrench, url: '/manualy/mlz-tech-02.pdf' },
   { title: 'Produktový list — šablona mlžícího systému', desc: 'Brandovaná šablona pro produktové informace, technické parametry, údržbu a schválenou galerii.', category: 'Produktový list', icon: FileText, url: '/manualy/mlz-prod-03.pdf' },

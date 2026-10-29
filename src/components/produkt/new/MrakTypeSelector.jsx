@@ -23,7 +23,7 @@ export const MRAK_TYPES = [
     text: 'Velký tvar mraku (MRAK 13R 2424) pro náměstí, parky a promenády. Více smyček a trysek, mohutnější mlžný oblak pro větší počet lidí.',
     studio: IMG + 'cf5ed1891_ef3414919_generated_image.webp',
     details: [
-      { src: IMG + '42b2a1523_generated_image.png', label: 'Řada trysek · mlžné kužele' },
+      { src: IMG + '836979b40_generated_image.png', label: 'Tryska · kužel jemné mlhy' },
       { src: IMG + 'c3bec7830_generated_image.png', label: 'Alej v parku · vizualizace' },
     ],
   },

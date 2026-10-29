@@ -56,6 +56,29 @@ Deno.serve(async (req) => {
       privacy_contact_consent_at: confirmedAt,
     });
 
+    const notifyBody = [
+      `Nová poptávka z webu MLŽIDLA.cz`,
+      `Jméno: ${jmeno}`,
+      `E-mail: ${email}`,
+      `Telefon: ${clean(body.telefon, 60)}`,
+      `Firma: ${clean(body.firma, 160)}`,
+      `Produkt: ${clean(body.produkt, 200)}`,
+      `Místo: ${clean(body.installation_location, 200)}`,
+      '',
+      zprava,
+      '',
+      `Admin: https://mlzidla.cz/admin`,
+    ].join('\n');
+    await Promise.allSettled(['meduna@holmtec.cz', 'jakub1duch@gmail.com'].map((to) =>
+      base44.asServiceRole.integrations.Core.SendEmail({
+        to,
+        subject: `Nová poptávka: ${jmeno}${body.produkt ? ' · ' + clean(body.produkt, 80) : ''}`,
+        text: notifyBody,
+        category: 'transactional',
+        from_name: 'MLŽIDLA.cz poptávky',
+      })
+    ));
+
     return Response.json({ ok: true, inquiry: created }, {
       headers: {
         'Cache-Control': 'no-store',

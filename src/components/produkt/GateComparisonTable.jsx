@@ -8,6 +8,7 @@ const COLUMNS = [
   id: 'gate-u',
   name: 'GATE70-U',
   tag: 'Rovná varianta',
+  image: '/assets/images/gate70-u-preview.svg',
   detailLink: '/produkt/mlzna-brana-gate',
   demoLink: '/produkt/mlzna-brana-gate#galerie'
 },
@@ -15,6 +16,7 @@ const COLUMNS = [
   id: 'gate-v',
   name: 'GATE70-V',
   tag: 'Lomený oblouk',
+  image: '/assets/images/gate70-v-preview.svg',
   detailLink: '/produkt/mlzna-brana-gate',
   demoLink: '/produkt/mlzna-brana-gate#galerie'
 },
@@ -89,6 +91,7 @@ export default function GateComparisonTable() {
           {COLUMNS.map((col, i) =>
           <motion.div key={col.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
           className="p-5 rounded-2xl bg-white border border-slate-200 flex flex-col">
+              {col.image && <img src={col.image} alt={`Schématický náhled ${col.name}`} loading="lazy" className="mb-4 aspect-[3/2] w-full rounded-xl bg-sky-50 object-contain" />}
               <span className="text-sm font-bold text-slate-900">{col.name}</span>
               <span className="text-xs text-slate-400 font-mono tracking-widest uppercase mb-4">{col.tag}</span>
               <div className="mt-auto flex flex-wrap gap-2">

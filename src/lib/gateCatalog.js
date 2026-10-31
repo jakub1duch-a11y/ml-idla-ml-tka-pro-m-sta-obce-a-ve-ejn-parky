@@ -37,7 +37,7 @@ export function buildGateCatalog(records = []) {
         image: variant.image_url || product.image_url,
         text: variant.description || 'Rozměry a profil podle vybraného provedení. Přesnou konfiguraci potvrzujeme v nabídce.',
         detailUrl: `/produkt/${encodeURIComponent(product.slug)}?varianta=${encodeURIComponent(variant.name)}`,
-        quoteUrl: `/poptavka?produkt=${encodeURIComponent(variant.name)}`,
+        quoteUrl: `/poptavka?produkt=${encodeURIComponent(product.slug)}&varianta=${encodeURIComponent(variant.name)}`,
       }));
     }
 

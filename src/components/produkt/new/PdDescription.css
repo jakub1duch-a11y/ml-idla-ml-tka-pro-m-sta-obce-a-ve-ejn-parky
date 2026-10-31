@@ -39,7 +39,7 @@
 .product-detail-page .pd-desc-title {
   position: relative;
   margin: clamp(10px, 1.4vw, 16px) 0 0;
-  font-family: 'Manrope', var(--font-heading) !important;
+  font-family: var(--font-heading) !important;
   font-weight: 800 !important;
   font-size: clamp(2rem, 4.4vw, 3.4rem) !important;
   line-height: 0.98 !important;

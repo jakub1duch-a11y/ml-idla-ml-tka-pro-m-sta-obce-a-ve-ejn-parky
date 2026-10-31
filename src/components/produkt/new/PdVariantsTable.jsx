@@ -3,6 +3,15 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight, Ruler, Droplets, Layers } from 'lucide-react';
 
 // Variant selector for gate products: image previews, grounded dimensions and quote CTA.
+const GATE_VARIANT_IMAGES = [
+  [/BRÁNA\s*60[_\s-]*2115/i, '/assets/images/gate-variant-60-2115.svg'],
+  [/BRÁNA\s*60[_\s-]*2130/i, '/assets/images/gate-variant-60-2130.svg'],
+  [/BRÁNA\s*76[_\s-]*2130/i, '/assets/images/gate-variant-76-2130.svg'],
+  [/BRANKA\s*OBLOUK[_\s-]*42[_\s-]*1815/i, '/assets/images/gate-variant-42-1815.svg'],
+  [/BRANKA\s*RADIUS[_\s-]*42[_\s-]*1825/i, '/assets/images/gate-variant-42-1825.svg'],
+];
+const getVariantImage = (variant) => GATE_VARIANT_IMAGES.find(([pattern]) => pattern.test(variant.name || ''))?.[1] || variant.image_url;
+
 export default function PdVariantsTable({ variants, productSlug }) {
   const [params, setParams] = useSearchParams();
   const fromUrl = variants?.findIndex((v) => v.name === params.get('varianta'));
@@ -36,8 +45,8 @@ export default function PdVariantsTable({ variants, productSlug }) {
               aria-pressed={index === active}
               className={`group min-w-0 overflow-hidden rounded-2xl border text-left transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B97E8] focus-visible:ring-offset-2 ${index === active ? 'border-[#0756A5] bg-[#F1F8FD] shadow-[0_8px_24px_rgba(7,86,165,.12)]' : 'border-[#D8E8F0] bg-white hover:border-[#78BDE8]'}`}
             >
-              {variant.image_url ? (
-                <img src={variant.image_url} alt={`${variant.name} – náhled mlžné brány`} loading="lazy" className="aspect-[1.5/1] w-full object-cover" />
+              {getVariantImage(variant) ? (
+                <img src={getVariantImage(variant)} alt={`${variant.name} – náhled mlžné brány`} loading="lazy" className="aspect-[1.5/1] w-full object-cover" />
               ) : (
                 <div className="flex aspect-[1.5/1] items-center justify-center bg-[#F4FAFD] text-sm text-[#52708C]">Náhled připravujeme</div>
               )}
@@ -52,7 +61,7 @@ export default function PdVariantsTable({ variants, productSlug }) {
 
       <div key={sel.name} className="grid min-w-0 gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,.95fr)] lg:items-start">
         <div className="min-w-0 overflow-hidden rounded-2xl bg-[#F4FAFD]">
-          {sel.image_url && <img src={sel.image_url} alt={`${sel.name} – detailní náhled`} className="aspect-[1.5/1] w-full object-cover" />}
+          {getVariantImage(sel) && <img src={getVariantImage(sel)} alt={`${sel.name} – detailní náhled`} className="aspect-[1.5/1] w-full object-cover" />}
         </div>
         <div className="min-w-0">
           <h3 className="font-heading text-2xl font-bold text-[#0A2342]">{sel.name}</h3>

@@ -8,7 +8,7 @@ const RULES = {
   'mlzitko-bendy': { label: 'BENDY', configs: ['single','duo','back-to-back','alej','portal'] },
   'mlzitko-steblo': { label: 'STÉBLO', configs: ['single','duo','back-to-back','alej','portal'] },
   'linea-mlzitko': { label: 'LINEA', configs: ['single','duo','alej','portal'] },
-  'linea-solo': { label: 'LINEA CE', configs: ['single','duo','portal'] },
+  'Linea-ce': { label: 'LINEA CE', configs: ['single','duo','portal'] },
   'linea-gate': { label: 'LINEA CE GATE', configs: ['portal'] },
   'mlzna-brana-gate': { label: 'GATE', configs: ['portal'] },
   'brana-bendy': { label: 'STÉBLO GATE', configs: ['portal'] },

@@ -3,9 +3,9 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight, Ruler, Droplets, Layers } from 'lucide-react';
 
 // Variant selector uses the actual image URL stored with each verified product variant.
-const getVariantImage = (variant) => variant?.image_url || '';
+const getVariantImage = (variant, fallbackImage) => variant?.image_url || fallbackImage || '';
 
-export default function PdVariantsTable({ variants, productSlug }) {
+export default function PdVariantsTable({ variants, productSlug, fallbackImage }) {
   const [params, setParams] = useSearchParams();
   const fromUrl = variants?.findIndex((variant) => variant.name === params.get('varianta'));
   const [active, setActive] = useState(fromUrl > -1 ? fromUrl : 0);
@@ -43,8 +43,8 @@ export default function PdVariantsTable({ variants, productSlug }) {
               aria-pressed={index === active}
               className={`group min-w-0 overflow-hidden rounded-2xl border text-left transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B97E8] focus-visible:ring-offset-2 ${index === active ? 'border-[#0756A5] bg-[#F1F8FD] shadow-[0_8px_24px_rgba(7,86,165,.12)]' : 'border-[#D8E8F0] bg-white hover:border-[#78BDE8]'}`}
             >
-              {getVariantImage(variant) ? (
-                <img src={getVariantImage(variant)} alt={`${variant.name} – produktový náhled`} loading="lazy" className="aspect-[1.5/1] w-full bg-[#F4FAFD] object-contain p-2" />
+              {getVariantImage(variant, fallbackImage) ? (
+                <img src={getVariantImage(variant, fallbackImage)} alt={`${variant.name} – produktový náhled`} loading="lazy" className="aspect-[1.5/1] w-full bg-[#F4FAFD] object-contain p-2" />
               ) : (
                 <div className="flex aspect-[1.5/1] items-center justify-center bg-[#F4FAFD] text-sm text-[#52708C]">Náhled připravujeme</div>
               )}
@@ -59,8 +59,8 @@ export default function PdVariantsTable({ variants, productSlug }) {
 
       <div key={selected.name} className="grid min-w-0 gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,.95fr)] lg:items-start">
         <div className="min-w-0 overflow-hidden rounded-2xl bg-[#F4FAFD]">
-          {getVariantImage(selected) ? (
-            <img src={getVariantImage(selected)} alt={`${selected.name} – detailní produktový náhled`} className="aspect-[1.5/1] w-full object-contain p-3" />
+          {getVariantImage(selected, fallbackImage) ? (
+            <img src={getVariantImage(selected, fallbackImage)} alt={`${selected.name} – detailní produktový náhled`} className="aspect-[1.5/1] w-full object-contain p-3" />
           ) : (
             <div className="flex aspect-[1.5/1] items-center justify-center text-sm text-[#52708C]">Náhled připravujeme</div>
           )}

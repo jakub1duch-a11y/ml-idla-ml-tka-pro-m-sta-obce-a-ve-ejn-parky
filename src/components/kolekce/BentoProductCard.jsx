@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Gauge, Droplets, ShieldCheck } from 'lucide-r
 import { GATE_MEDIA } from '@/lib/gateMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import ProductViewMenu from '@/components/produkt/ProductViewMenu';
+import MrakSizeBadge from '@/components/produkt/MrakSizeBadge';
 import { getLine, getFamily } from '@/lib/productFamilies';
 import './bento.css';
 
@@ -29,7 +30,7 @@ export default function BentoProductCard({ product, size = 'std', onProductClick
 
   return (
     <article className={`bento-card group ${VARIANT_CLASS[size] || VARIANT_CLASS.std}`}>
-      <Link to={`/produkt/${product.slug}`} onClick={open} className="bento-media block" aria-label={product.name}>
+      <Link to={`/produkt/${product.slug}`} onClick={open} className="bento-media relative block" aria-label={product.name}>
         {GATE_MEDIA[product.slug]
           ? <img src={GATE_MEDIA[product.slug]} alt={product.name} loading="lazy" decoding="async" />
           : <ProductHoverImage product={product} className="h-full w-full" fullBleed cleanPreview />}

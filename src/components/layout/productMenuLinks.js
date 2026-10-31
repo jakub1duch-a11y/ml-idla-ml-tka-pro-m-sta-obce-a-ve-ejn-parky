@@ -10,7 +10,7 @@ export const PRODUCT_MENU_GROUPS = [
   ] },
   { title: 'LINEA – sloupová kolekce', links: [
     { label: 'LINEA – rovný sloup', path: '/produkt/linea-mlzitko' },
-    { label: 'LINEA CE – zakřivený sloup', path: '/produkt/linea-ce' },
+    { label: 'LINEA CE – zakřivený sloup', path: '/produkt/Linea-ce' },
     { label: 'LINEA CE GATE – mlžná brána', path: '/produkt/linea-CE-gate' },
     { label: 'LINEA AVENUE – sestava', path: '/produkt/linea-avenue' },
   ] },

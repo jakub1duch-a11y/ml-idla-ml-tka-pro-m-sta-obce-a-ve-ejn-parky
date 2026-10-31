@@ -21,7 +21,7 @@ const tiles = [
   title: 'LINEA CE',
   text: 'Nerezová linie s charakteristickým ohybem',
   image: '/media/optimized/fc2d57e81_C-MlzitkoLINEA_CE70_single1.webp',
-  link: '/produkt/linea-solo'
+  link: '/produkt/Linea-ce'
 },
 {
   title: 'MRAK',

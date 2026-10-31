@@ -12,7 +12,7 @@ async function photoPanel(ctx, v) {
 }
 
 function specs(ctx, v) {
-  text(ctx, 'Technické parametry', 70, 1108, { weight: 800, size: 28, family: 'Manrope', color: C.navy });
+  text(ctx, 'Technické parametry', 70, 1108, { weight: 800, size: 28, family: 'Montserrat', color: C.navy });
   const has = (re) => v.spec.some(([k]) => re.test(k));
   const extra = [['Materiál', !has(/materi/i) && v.material], ['Pracovní tlak', !has(/tlak/i) && v.pressure], ['Spotřeba vody', v.water]];
   [...v.spec, ...extra].filter(([, val]) => val).slice(0, 6).forEach(([k, val], i) => {
@@ -27,9 +27,9 @@ function priceBlock(ctx, v) {
   roundRect(ctx, 70, 1468, W - 140, 148, 22, C.ink);
   ctx.fillStyle = C.cyan; ctx.fillRect(110, 1494, 56, 4);
   if (v.price > 0) {
-    text(ctx, money(v.price), 110, 1556, { weight: 800, size: 50, family: 'Manrope', color: C.white });
+    text(ctx, money(v.price), 110, 1556, { weight: 800, size: 50, family: 'Montserrat', color: C.white });
     text(ctx, `bez DPH  ·  s DPH ${money(v.price * 1.21)}`, 110, 1594, { weight: 500, size: 18, color: C.silver });
-  } else text(ctx, 'Cena po ověření rozsahu', 110, 1566, { weight: 800, size: 34, family: 'Manrope', color: C.white });
+  } else text(ctx, 'Cena po ověření rozsahu', 110, 1566, { weight: 800, size: 34, family: 'Montserrat', color: C.white });
   text(ctx, v.recommended ? 'HLAVNÍ ŘEŠENÍ' : 'VARIANTA K POROVNÁNÍ · NESČÍTÁ SE', 650, 1512, { weight: 700, size: 13, color: C.cyan, spacing: 2 });
   wrap(ctx, v.priceNote || 'Doprava, montáž a stavební práce nejsou zahrnuty. SUPLA chytré řízení je volitelné.', 650, 1544, 480, 24, { size: 16, color: C.silver }, 3);
 }
@@ -37,7 +37,7 @@ function priceBlock(ctx, v) {
 export async function drawProduct(ctx, d, v, meta) {
   header(ctx, meta);
   text(ctx, v.eyebrow, 70, 222, { weight: 700, size: 15, color: C.deep, spacing: 3 });
-  fitText(ctx, v.title, 70, 292, W - 140, { weight: 800, size: 60, family: 'Manrope', color: C.navy, spacing: -1 });
+  fitText(ctx, v.title, 70, 292, W - 140, { weight: 800, size: 60, family: 'Montserrat', color: C.navy, spacing: -1 });
   text(ctx, v.subtitle, 70, 342, { weight: 500, size: 24, color: C.deep });
   await photoPanel(ctx, v);
   specs(ctx, v);

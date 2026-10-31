@@ -17,6 +17,17 @@ export const MRAK_TYPES = [
     ],
   },
   {
+    slug: 'mlzny-mrak-1480',
+    title: 'MRAK 1480',
+    size: '1 400 × 800 mm · stěna 3 mm',
+    text: 'Užší tvar podle dodané předlohy. Nerezová trubka se stěnou 3 mm; osazení trysek a kotvení upřesní návrh. AI vizualizace, nikoli fotografie realizace.',
+    studio: IMG + '74108bfea_generated_image.png',
+    details: [
+      { src: IMG + 'b1510033a_4c31ec850_generated_image.png', label: 'Tvarová předloha · AI vizualizace' },
+      { src: IMG + '61a0a790b_5779ea552_generated_image.png', label: 'Pohled v prostředí · AI vizualizace' },
+    ],
+  },
+  {
     slug: 'mlzny-mrak-2424',
     title: 'MRAK 2424',
     size: 'cca 2 400 × 2 400 mm',
@@ -54,7 +65,7 @@ export default function MrakTypeSelector({ slug }) {
                 </div>
                 <p className="px-6 pt-3 text-sm leading-6 text-slate-600">{t.text}</p>
                 <div className="p-4 sm:p-5">
-                  <img src={t.studio} alt={`${t.title} – studiová fotografie`} loading="lazy" className="h-[320px] w-full rounded-[20px] border border-[#E2EDF2] bg-white object-contain sm:h-[380px]" />
+                  <img src={t.studio} alt={`${t.title} – ilustrační studiový náhled`} loading="lazy" className="h-[320px] w-full rounded-[20px] border border-[#E2EDF2] bg-white object-contain sm:h-[380px]" />
                   <div className="mt-3 grid grid-cols-2 gap-3">
                     {t.details.map((d) => (
                       <figure key={d.src} className="overflow-hidden rounded-[16px] border border-[#E2EDF2] bg-white">

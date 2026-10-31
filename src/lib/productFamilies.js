@@ -9,7 +9,7 @@ export const LINES = {
   lineaCe: { label: 'LINEA CE', family: 'prime', slugs: ['linea-solo'], tagline: 'Samostatný produkt LINEA CE.' },
   yarmist: { label: 'Y‑ARMIST', family: 'prime', slugs: ['y-armist-tr60', 'y-armist-j70', 'ostrev-mlzitko'], tagline: 'Vícearmenné mlžítko pro parky a školy.' },
   ostrev: { label: 'OSTŘEV', family: 'prime', slugs: ['ostrev-city', 'mlzny-sloupost-ostrev'], tagline: 'Mlžný sloup s rozevřenými rameny.' },
-  mrak: { label: 'MRAK', family: 'prime', slugs: ['mlzitko-mrak'], tagline: 'Mlžný oblak nad hlavou.' },
+  mrak: { label: 'MRAK', family: 'prime', slugs: ['mlzitko-mrak', 'mlzny-mrak-1414', 'mlzny-mrak-1480', 'mlzny-mrak-2424'], tagline: 'Mlžný oblak nad hlavou.' },
   teepee: { label: 'TEEPEE', family: 'prime', slugs: ['teepee'], tagline: 'Samostojící mlžiště pro eventy a slavnosti.' },
   spirala: { label: 'SPIRÁLA', family: 'prime', slugs: ['mlzna-spirála'], tagline: 'Skulpturální spirála mlhy.' },
   lizatko: { label: 'LÍZÁTKO', family: 'prime', slugs: ['mlzitko-lizatko'], tagline: 'Kruhové halo pro školky a hřiště.' },

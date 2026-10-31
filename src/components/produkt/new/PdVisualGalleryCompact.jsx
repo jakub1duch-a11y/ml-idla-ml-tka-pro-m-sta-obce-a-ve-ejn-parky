@@ -14,6 +14,11 @@ const optimize = (url) => isImage(url) ? getOptimizedMediaUrl(url) : url;
 const dedupe = (items) => [...new Map(items.filter((item) => item && item.url).map((item) => [optimize(item.url.trim()), item])).values()];
 const clampIndex = (value, length) => Math.min(Math.max(value, 0), Math.max(0, length - 1));
 
+// Cache of already decoded images — keeps rendered slides instant, without a loading flash.
+const loadedImages = new Set();
+const isCached = (url) => Boolean(url) && loadedImages.has(optimize(url));
+const isReady = (item) => !item || !isImage(item.url) || isCached(item.url);
+
 function Fullscreen({ items, index, onClose, onChange, productName, reduced }) {
   const item = items[index];
   const touchStart = useRef(null);
@@ -95,13 +100,22 @@ function Fullscreen({ items, index, onClose, onChange, productName, reduced }) {
 }
 
 function GalleryImage({ item, index, productName, onOpen, onFailed }) {
-  const [loaded, setLoaded] = useState(false);
+  const src = optimize(item.url);
+  const cached = loadedImages.has(src);
+  const [loaded, setLoaded] = useState(cached);
   const [failed, setFailed] = useState(false);
-  useEffect(() => { setLoaded(false); setFailed(false); }, [item.url]);
+  useEffect(() => { setLoaded(loadedImages.has(src)); setFailed(false); }, [src]);
+  // Never leave the viewer on a spinner: reveal the image progressively after a short wait.
+  useEffect(() => {
+    if (loaded || failed) return undefined;
+    const timer = window.setTimeout(() => setLoaded(true), 5000);
+    return () => window.clearTimeout(timer);
+  }, [loaded, failed, src]);
+  const shown = loaded || cached;
   return (
     <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
-      {!loaded && !failed && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
-      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={optimize(item.url)} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (loaded ? ' is-loaded' : '')} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} />) :
+      {!shown && !failed && !VIDEO_RE.test(item.url) && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
         <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
     </button>
   );
@@ -214,6 +228,25 @@ export default function PdVisualGalleryCompact({ product }) {
 
   useEffect(() => { setActiveIndex((index) => clampIndex(index, items.length)); }, [items.length]);
 
+  // Preload every gallery image once, so switching slides (or autoplay) never waits on a network request.
+  const [cacheVersion, setCacheVersion] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    const pending = items.filter((item) => isImage(item.url) && !loadedImages.has(optimize(item.url)));
+    if (!pending.length) return undefined;
+    pending.forEach((item) => {
+      const src = optimize(item.url);
+      const image = new Image();
+      image.decoding = 'async';
+      image.onload = () => {
+        loadedImages.add(src);
+        if (!cancelled) setCacheVersion((value) => value + 1);
+      };
+      image.src = src;
+    });
+    return () => { cancelled = true; };
+  }, [items]);
+
   const goTo = useCallback((index) => {
     setActiveIndex(clampIndex(index, items.length));
   }, [items.length]);
@@ -238,9 +271,12 @@ export default function PdVisualGalleryCompact({ product }) {
 
   useEffect(() => {
     if (!autoPlay || !inView || reduced || hovered || focused || lightbox !== null || items.length < 2) return undefined;
-    const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % items.length), 3600);
+    const timer = window.setInterval(() => setActiveIndex((current) => {
+      const next = (current + 1) % items.length;
+      return isReady(items[next]) ? next : current;
+    }), 3600);
     return () => window.clearInterval(timer);
-  }, [autoPlay, inView, reduced, hovered, focused, lightbox, items.length]);
+  }, [autoPlay, inView, reduced, hovered, focused, lightbox, items]);
 
   useEffect(() => {
     const onVisibility = () => { if (document.hidden) setAutoPlay(false); };
@@ -265,6 +301,7 @@ export default function PdVisualGalleryCompact({ product }) {
         </motion.div>
 
         <motion.div ref={galleryRef} className="pdpc-gallery" data-reduced={reduced ? 'true' : 'false'}
+          data-cache-version={cacheVersion}
           data-autoplay={autoPlay && !reduced ? 'true' : 'false'}
           onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
           onFocusCapture={() => setFocused(true)} onBlurCapture={(event) => {

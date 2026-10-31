@@ -48,7 +48,7 @@ export default function PdCompactHero({ product }) {
   return (
     <section id="prehled" className="scroll-mt-28 bg-[#F7FBFD] !px-0">
       <div className="mx-auto grid max-w-[1500px] gap-5 px-4 pb-8 pt-4 sm:gap-7 sm:px-8 sm:pt-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-stretch lg:px-12 lg:pb-14 lg:pt-12 xl:px-20">
-        <div className="min-w-0 flex flex-col justify-center">
+        <div className="order-2 min-w-0 flex flex-col justify-center lg:order-1">
           <div className="flex flex-wrap items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-[.17em] text-[#0B8EC5]">
             <span>{family.label}</span>
             <span className="text-[#A4B4BC]">·</span>
@@ -95,7 +95,7 @@ export default function PdCompactHero({ product }) {
           </div>
         </div>
 
-        <div className="relative min-w-0 aspect-[4/3] lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
+        <div className="relative order-1 min-w-0 aspect-[4/3] lg:order-2 lg:aspect-auto lg:min-h-[520px] overflow-hidden rounded-[2rem] border border-[#D8E8ED] bg-[radial-gradient(circle_at_70%_18%,#FFFFFF_0%,#EDF8FA_44%,#DCEFF3_100%)]">
           {image ?
           <img
             src={image}

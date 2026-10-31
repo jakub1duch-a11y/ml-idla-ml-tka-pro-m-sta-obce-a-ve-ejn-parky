@@ -3,7 +3,7 @@ export const W = 1240, H = 1754, SCALE = 1.5;
 export const C = { navy: '#0B2A4A', ink: '#071A2F', blue: '#0878E8', cyan: '#00B7FF', deep: '#007ACB', soft: '#EEF7FC', mute: '#607789', line: '#D6EAF3', silver: '#B8C6CE', white: '#FFFFFF' };
 export const money = (v) => `${new Intl.NumberFormat('cs-CZ').format(Math.round(v)).replace(/\s/g, ' ')} Kč`;
 
-const FONTS = ['300 46px Manrope', '800 60px Manrope', '400 20px Inter', '500 20px Inter', '600 16px Inter', '700 20px Inter'];
+const FONTS = ['300 46px Montserrat', '800 60px Montserrat', '400 20px Inter', '500 20px Inter', '600 16px Inter', '700 20px Inter'];
 export const loadFonts = () => Promise.all(FONTS.map((f) => document.fonts.load(f)));
 
 export const loadImage = (src) => new Promise((resolve, reject) => {
@@ -82,7 +82,7 @@ export function pill(ctx, label, x, y, { bg = C.white, color = C.navy, size = 13
 }
 
 export function sectionTitle(ctx, label, x, y, size = 32) {
-  text(ctx, label, x, y, { weight: 800, size, family: 'Manrope', color: C.navy, spacing: -0.3 });
+  text(ctx, label, x, y, { weight: 800, size, family: 'Montserrat', color: C.navy, spacing: -0.3 });
   ctx.fillStyle = C.blue;
   ctx.fillRect(x, y + 16, 48, 4);
 }

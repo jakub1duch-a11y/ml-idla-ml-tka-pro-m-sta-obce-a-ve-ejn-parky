@@ -1,0 +1,71 @@
+/* MLŽIDLA.CZ – produktový hero design systém, typografie z vizuálů.
+   Editovatelné HTML, bez textů vypálených do produktových fotografií. */
+.mlz-product-hero {
+  --hero-cyan: #0b9df3;
+  --hero-ink: #07131d;
+  --hero-heading: 'Space Grotesk', 'Albert Sans', Arial, sans-serif;
+  --hero-body: 'Albert Sans', Arial, sans-serif;
+  padding-top: var(--site-header-height, 80px);
+  background: var(--hero-ink);
+  color: #fff;
+  isolation: isolate;
+}
+.mlz-product-hero__frame {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  min-height: clamp(630px, 56vw, 900px);
+  margin-inline: auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.mlz-product-hero__media { position: absolute; inset: 0 0 0 37%; overflow: hidden; }
+.mlz-product-hero__media picture,
+.mlz-product-hero__media img { display: block; width: 100%; height: 100%; }
+.mlz-product-hero__media img { object-fit: cover; object-position: center 45%; }
+.mlz-product-hero__frame::before {
+  content: ''; pointer-events: none; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(90deg, #07131d 0%, rgba(7,19,29,.97) 27%, rgba(7,19,29,.78) 41%, rgba(7,19,29,.15) 63%, transparent 90%);
+}
+.mlz-product-hero__copy { position: relative; z-index: 2; box-sizing: border-box; width: min(47%, 700px); padding: 48px clamp(22px, 5vw, 104px); }
+.mlz-product-hero__eyebrow { margin: 0 0 16px; font-family: var(--hero-body); font-size: clamp(14px, 1.4vw, 21px); line-height: 1.35; font-weight: 500; letter-spacing: .23em; text-transform: uppercase; }
+.mlz-product-hero__title { margin: 0; font-family: var(--hero-heading); font-size: clamp(46px, 5vw, 86px); line-height: 1.06; font-weight: 800; letter-spacing: -.055em; color: #fff; text-wrap: balance; }
+.mlz-product-hero__rule { display: block; width: 108px; height: 6px; margin: 26px 0 25px; border-radius: 6px; background: var(--hero-cyan); }
+.mlz-product-hero__description { max-width: 525px; margin: 0; font-family: var(--hero-body); font-size: clamp(19px, 1.8vw, 29px); font-weight: 500; line-height: 1.43; color: #f5faff; }
+.mlz-product-hero__benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 31px 0 35px; }
+.mlz-product-hero__benefit { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0; text-align: center; font-family: var(--hero-body); font-size: clamp(12px, 1.2vw, 16px); line-height: 1.35; }
+.mlz-product-hero__icon { width: 61px; height: 61px; display: grid; place-items: center; border: 2px solid var(--hero-cyan); color: #7fd9ff; border-radius: 999px; }
+.mlz-product-hero__cta { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 62px; max-width: 100%; padding: 15px 29px; border-radius: 999px; background: linear-gradient(105deg, #009af5, #0c86ed); box-shadow: 0 8px 32px rgba(0,0,0,.2); color: white; font-family: var(--hero-body); font-size: clamp(15px,1.4vw,20px); font-weight: 750; text-align: center; transition: filter .2s ease, transform .2s ease; }
+.mlz-product-hero__cta:hover { filter: brightness(1.11); transform: translateY(-2px); }
+.mlz-product-hero__cta:focus-visible,
+.mlz-product-hero__nav button:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+.mlz-product-hero__nav { max-width: 1920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 62px; padding: 7px clamp(20px, 5vw, 90px); background: #07131d; border-top: 1px solid rgba(255,255,255,.14); }
+.mlz-product-hero__dots { display: flex; align-items: center; gap: 12px; }
+.mlz-product-hero__dots button { display: block; width: 13px; height: 13px; border-radius: 999px; background: rgba(255,255,255,.35); }
+.mlz-product-hero__dots button.is-active { background: var(--hero-cyan); width: 30px; }
+.mlz-product-hero__counter { margin-left: 10px; font-family: var(--hero-body); font-size: 12px; letter-spacing: .1em; color: #b7e9fc; }
+.mlz-product-hero__arrows { display: flex; gap: 8px; }
+.mlz-product-hero__arrows button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; background: rgba(255,255,255,.06); color: white; }
+@media (max-width: 1100px) and (min-width: 640px) {
+ .mlz-product-hero__copy { width: 57%; padding-inline: 30px; }
+ .mlz-product-hero__frame::before { background: linear-gradient(90deg,#07131d 0%,rgba(7,19,29,.88) 38%,transparent 85%); }
+}
+@media (max-width: 639px) {
+ .mlz-product-hero__frame { display: flex; flex-direction: column; min-height: 0; }
+ .mlz-product-hero__media { position: relative; inset: auto; flex: none; width: 100%; height: clamp(320px, 53svh, 590px); }
+ .mlz-product-hero__media img { object-fit: cover; object-position: center 42%; }
+ .mlz-product-hero__frame::before { inset: 0 0 auto; height: clamp(320px, 53svh, 590px); background: linear-gradient(0deg, #07131d 0%, transparent 25%); }
+ .mlz-product-hero__copy { width: 100%; min-height: 440px; margin-top: -6px; padding: 10px 24px 34px; text-align: center; }
+ .mlz-product-hero__eyebrow { margin-bottom: 8px; font-size: 14px; letter-spacing: .25em; }
+ .mlz-product-hero__title { font-size: clamp(41px, 11vw, 58px); letter-spacing: -.055em; line-height: 1.05; }
+ .mlz-product-hero__rule { margin: 17px auto 17px; width: 83px; height: 5px; }
+ .mlz-product-hero__description { font-size: clamp(16px, 4.4vw, 20px); line-height: 1.45; }
+ .mlz-product-hero__benefits { gap: 8px; margin: 23px 0 24px; }
+ .mlz-product-hero__benefit { font-size: clamp(11px, 3vw, 14px); gap: 7px; }
+ .mlz-product-hero__icon { width: 48px; height: 48px; }
+ .mlz-product-hero__icon svg { width: 22px; }
+ .mlz-product-hero__cta { min-height: 57px; width: 100%; font-size: 17px; padding: 13px 12px; }
+ .mlz-product-hero__nav { padding: 8px 20px; min-height: 60px; }
+}
+@media (prefers-reduced-motion: reduce) { .mlz-product-hero__cta { transition: none; } }

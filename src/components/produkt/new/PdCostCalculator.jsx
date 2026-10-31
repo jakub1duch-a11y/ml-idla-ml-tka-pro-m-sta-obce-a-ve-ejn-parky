@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Calculator } from 'lucide-react';
+import { WATER_PRICE_CZK_M3 } from '@/lib/waterCost';
 
-const FLOW_PER_NOZZLE_LH = 12;   // l/h na trysku při 4 bar
-const WATER_PRICE_CZK_M3 = 33;   // Kč/m³ — průměr ČR
+const FLOW_PER_NOZZLE_LH = 12;   // l/h na trysku M2 (rozsah 6,4–17,7 l/h)
 const SEASON_DAYS = 90;
 
 const fmt = (n) => new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 }).format(Math.round(n));

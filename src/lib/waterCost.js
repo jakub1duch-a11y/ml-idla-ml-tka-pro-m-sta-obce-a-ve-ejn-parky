@@ -4,7 +4,7 @@ export const WATER_PRICE_CZK_M3 = 129.11;
 const format = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 2 });
 
 function eightHourWaterStats(consumption) {
-  const flow = String(consumption ?? '').trim().match(/^(\d+(?:[.,]\d+)?)(?:\s*[-–—]\s*(\d+(?:[.,]\d+)?))?\s*l\s*\/\s*(hod|min|h)\b(?:\s*\([^()]*\)|\s+dle\s+[^0-9]+)?$/i);
+  const flow = String(consumption ?? '').match(/(\d+(?:[.,]\d+)?)(?:\s*[-–—]\s*(\d+(?:[.,]\d+)?))?\s*l\s*\/\s*(hod|min|h)\b/i);
   if (!flow) return null;
 
   const minimum = Number(flow[1].replace(',', '.'));

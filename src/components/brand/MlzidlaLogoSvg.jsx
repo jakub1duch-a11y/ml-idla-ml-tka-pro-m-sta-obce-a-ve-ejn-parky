@@ -21,8 +21,8 @@ export default function MlzidlaLogoSvg({ variant = 'horizontal', className = '',
         <path d="M0 100V52C0 23.3 26.9 0 60 0s60 23.3 60 52v48H96V52c0-16.6-16.1-30-36-30S24 35.4 24 52v48H0Z" />
         <path d="M60 46c-6 9-11 15.5-11 21.5a11 11 0 0 0 22 0C71 61.5 66 55 60 46Z" />
       </g>
-      <text x="142" y={slogan ? 58 : 72} fontFamily="Manrope, Inter, Arial, sans-serif" fontWeight="800" fontSize={slogan ? 50 : 58} letterSpacing="-1">MLŽIDLA.CZ</text>
-      {slogan && <text x="144" y="94" fontFamily="Manrope, Inter, Arial, sans-serif" fontWeight="600" fontSize="25" letterSpacing="1.5">PRO PŘÍJEMNĚJŠÍ ŽIVOT</text>}
+      <text x="142" y={slogan ? 58 : 72} fontFamily="Montserrat, Arial, sans-serif" fontWeight="800" fontSize={slogan ? 50 : 58} letterSpacing="-1">MLŽIDLA.CZ</text>
+      {slogan && <text x="144" y="94" fontFamily="Montserrat, Arial, sans-serif" fontWeight="600" fontSize="25" letterSpacing="1.5">PRO PŘÍJEMNĚJŠÍ ŽIVOT</text>}
     </svg>
   );
 }

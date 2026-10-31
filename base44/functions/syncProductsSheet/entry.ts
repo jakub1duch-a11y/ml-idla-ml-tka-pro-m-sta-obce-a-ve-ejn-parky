@@ -58,7 +58,7 @@ export default async function(req) {
         video_url: video || '',
         material: material || '',
         pressure: pressure || '',
-        micron_size: micron || '',
+        micron_size: '50–100 μm',
         water_consumption: water || '',
         coverage_area: coverage || '',
         power_supply: power || '',

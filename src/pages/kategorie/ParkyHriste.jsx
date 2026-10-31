@@ -83,7 +83,7 @@ export default function ParkyHriste() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="mb-8 p-6 rounded-2xl bg-slate-50 border border-slate-200">
           <p className="text-slate-900 font-medium text-sm mb-2">✓ Bezpečnost pro děti</p>
-          <p className="text-slate-600 text-sm leading-relaxed">Veškeré naše produkty pro dětská hřiště jsou vyrobeny z potravinářské nerezové oceli AISI 304/316L bez chemických přísad. Mikrotrysky rozptylují kapičky 10–50 μm, které se okamžitě odpařují — žádné mokré povrchy ani louže. Splňujeme normy pro dětská hřiště.</p>
+          <p className="text-slate-600 text-sm leading-relaxed">Veškeré naše produkty pro dětská hřiště jsou vyrobeny z potravinářské nerezové oceli AISI 304/316L bez chemických přísad. Mikrotrysky rozptylují kapičky 50–100 μm, které se okamžitě odpařují — žádné mokré povrchy ani louže. Splňujeme normy pro dětská hřiště.</p>
         </div>
 
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Doporučené produkty</p>

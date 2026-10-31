@@ -39,7 +39,7 @@ export const PHOTOS = [
 
 // Technické parametry pro datové panely
 export const SPECS = [
-  { code: '01', label: 'TLAK', value: '70', unit: 'bar', note: 'Vysokotlaké mlžení pro mikro-kapky 5–10 μm. Jemná mlha, která se okamžitě odpařuje.' },
+  { code: '01', label: 'TLAK', value: '70', unit: 'bar', note: 'Vysokotlaké mlžení pro mikro-kapky 50–100 μm. Jemná mlha, která se okamžitě odpařuje.' },
   { code: '02', label: 'SPOTŘEBA', value: '0.12', unit: 'l/h', note: 'Spotřeba vody na jednu trysku při 70 bar. Úspora až 70 % oproti postřikovačům.' },
   { code: '03', label: 'KAPKA', value: '5–10', unit: 'μm', note: 'Mikro-kapky vodního aerosolu. Suché mlžení — bez zvlhčování povrchů.' },
   { code: '04', label: 'DOSAH', value: '3–5', unit: 'm', note: 'Chladicí dosah ochlazovací zóny od brány. Záleží na proudění vzduchu.' },

@@ -542,7 +542,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         technical_specification: {
           product: product.name,
           material: clean(product.material) || (customMode ? clean(customSpec?.material) : 'Nerez AISI 316L (doporučeno pro venkovní instalace)'),
-          technology: 'Nízkotlaké mlžení (2–6 bar) — bezpečné pro pobytové zóny, jemná mlha 5–50 μm',
+          technology: 'Nízkotlaké mlžení (2–6 bar) — bezpečné pro pobytové zóny, jemná mlha 50–100 μm',
           smart_control: smartControlPrice > 0 ? `SUPLA IoT — chytrý ventil, vodoměr, teplotní senzor, dálkové ovládání, časové plány (${new Intl.NumberFormat('cs-CZ').format(smartControlPrice)} Kč bez DPH)` : 'SUPLA IoT — dálkové ovládání, teplotní automatika, časové plány (cena na vyžádání)',
           scope_of_delivery: customMode ? (customSpec?.manufacture_steps || []).map(clean).filter(Boolean) : ['Mlžítko (nerez konstrukce + trysky)', 'Přívodní potrubí', 'Redukční ventil + filtr 5μm', 'Smart řídicí jednotka SUPLA', 'Senzory (teplota, vlhkost)', 'Projektová dokumentace', 'Certifikát materiálu'],
         },

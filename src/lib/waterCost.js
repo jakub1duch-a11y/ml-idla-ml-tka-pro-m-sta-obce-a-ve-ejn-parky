@@ -3,7 +3,7 @@ export const WATER_PRICE_CZK_M3 = 129.11;
 
 const format = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 2 });
 
-export function eightHourWaterCost(consumption) {
+function eightHourWaterStats(consumption) {
   const flow = String(consumption ?? '').trim().match(/^(\d+(?:[.,]\d+)?)(?:\s*[-–—]\s*(\d+(?:[.,]\d+)?))?\s*l\s*\/\s*(hod|min|h)\b(?:\s*\([^()]*\)|\s+dle\s+[^0-9]+)?$/i);
   if (!flow) return null;
 
@@ -12,6 +12,15 @@ export function eightHourWaterCost(consumption) {
   if (maximum < minimum) return null;
 
   const hoursToUnit = flow[3].toLowerCase() === 'min' ? 60 : 1;
-  const cost = (rate) => format.format(rate * hoursToUnit * 8 / 1000 * WATER_PRICE_CZK_M3);
-  return minimum === maximum ? cost(minimum) : `${cost(minimum)}–${cost(maximum)}`;
+  const litres = (rate) => rate * hoursToUnit * 8;
+  const range = (convert) => minimum === maximum ? format.format(convert(minimum)) : `${format.format(convert(minimum))}–${format.format(convert(maximum))}`;
+  return { litres: range(litres), cost: range((rate) => litres(rate) / 1000 * WATER_PRICE_CZK_M3) };
+}
+
+export function eightHourWaterCost(consumption) {
+  return eightHourWaterStats(consumption)?.cost || null;
+}
+
+export function eightHourWaterConsumption(consumption) {
+  return eightHourWaterStats(consumption)?.litres || null;
 }

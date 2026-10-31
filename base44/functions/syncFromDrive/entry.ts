@@ -132,7 +132,7 @@ Deno.serve(async (req) => {
           gallery_urls: galleryUrls,
           material: parsedInfo.material || '',
           pressure: parsedInfo.pressure || '',
-          micron_size: parsedInfo.micron_size || '',
+          micron_size: '50–100 μm',
           water_consumption: parsedInfo.water_consumption || '',
           coverage_area: parsedInfo.coverage_area || '',
           power_supply: parsedInfo.power_supply || '',

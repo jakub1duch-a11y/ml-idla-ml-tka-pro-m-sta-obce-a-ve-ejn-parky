@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const BENEFITS = [
   'Ochlazení okolního vzduchu až o 9 °C bez pocitu mokra',
-  'Mikro-kapky 5–10 μm se odpaří dřív, než dopadnou na zem',
+  'Mikro-kapky 50–100 μm se odpaří dřív, než dopadnou na zem',
   'Nerezová ocel AISI 316L — bez koroze, celoroční provoz',
   'Volitelné Wi-Fi Smart řízení, senzory a časovače',
 ];

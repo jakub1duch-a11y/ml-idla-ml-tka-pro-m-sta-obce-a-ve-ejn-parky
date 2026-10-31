@@ -17,9 +17,9 @@ export default function GateEngineering({ product, loading, error }) {
   const savings = continuous > 0 ? Math.round((1 - daily / continuous) * 100) : 0;
 
   const facts = [
-    ['01 / TLAK', product?.pressure || '70 bar', 'Vysokotlaké mlžení pro mikro-kapky 5–10 μm. Jemná mlha, která se okamžitě odpařuje.'],
+    ['01 / TLAK', product?.pressure || '70 bar', 'Vysokotlaké mlžení pro mikro-kapky 50–100 μm. Jemná mlha, která se okamžitě odpařuje.'],
     ['02 / SPOTŘEBA', product?.water_consumption || '0.12 l/h', 'Spotřeba vody na jednu trysku při 70 bar. Úspora až 70 % oproti postřikovačům.'],
-    ['03 / KAPKA', product?.micron_size || '5–10 μm', 'Mikro-kapky vodního aerosolu. Suché mlžení — bez zvlhčování povrchů.'],
+    ['03 / KAPKA', product?.micron_size || '50–100 μm', 'Mikro-kapky vodního aerosolu. Suché mlžení — bez zvlhčování povrchů.'],
     ['04 / DOSAH', '3–5 m', 'Chladicí dosah ochlazovací zóny od brány. Záleží na proudění vzduchu.'],
   ];
 

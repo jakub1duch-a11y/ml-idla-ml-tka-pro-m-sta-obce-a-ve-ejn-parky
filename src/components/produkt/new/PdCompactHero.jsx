@@ -6,7 +6,7 @@ import { getFamily, getLine } from '@/lib/productFamilies';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 
-import { eightHourWaterCost, WATER_PRICE_CZK_M3 } from '@/lib/waterCost';
+import { eightHourWaterCost, eightHourWaterConsumption, WATER_PRICE_CZK_M3 } from '@/lib/waterCost';
 
 function cleanText(value = '') {
   return String(value).
@@ -38,6 +38,7 @@ export default function PdCompactHero({ product }) {
   const image = imageCandidates[imageIndex] || '';
   const intro = cleanText(product.short_description || product.description || '');
   const cost = eightHourWaterCost(product.water_consumption);
+  const litres = eightHourWaterConsumption(product.water_consumption);
   const facts = [
     { icon: ShieldCheck, label: 'Materiál', value: product.material || 'Upřesníme v nabídce' },
     { icon: Gauge, label: 'Tlak', value: product.pressure || 'Upřesníme v nabídce' },
@@ -72,7 +73,7 @@ export default function PdCompactHero({ product }) {
                   <p className="mt-2 font-mono text-[8px] font-bold uppercase tracking-[.16em] text-slate-600">{label}</p>
                   <p className="mt-1 break-words text-[12px] font-semibold leading-5 text-[#0A2342]">{value}</p>
                   {label === 'Voda' && <p className="mt-1 text-xs leading-5 text-slate-700">
-                    {cost ? <>Za 8 h mlžení cca <strong>{cost} Kč</strong> při sazbě {WATER_PRICE_CZK_M3.toLocaleString('cs-CZ')} Kč/m³ (vodné a stočné).</> : 'Cenu za 8 h mlžení upřesníme podle průtoku.'}
+                    {cost ? <>Za 8 h nepřetržitého mlžení <strong>{litres} l vody</strong>, cca <strong>{cost} Kč</strong> při modelové sazbě {WATER_PRICE_CZK_M3.toLocaleString('cs-CZ')} Kč/m³ (vodné a stočné). Pouze voda, bez servisu a případné spotřeby řízení; průtok závisí na tlaku.</> : 'Cenu za 8 h mlžení upřesníme podle průtoku.'}
                   </p>}
                 </div>
             )}

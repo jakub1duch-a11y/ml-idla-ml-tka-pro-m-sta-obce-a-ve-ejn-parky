@@ -216,7 +216,7 @@ export default function Partnerstvi() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
               { label: 'Provozní tlak', value: '3–5 bar', sub: 'optimální rozsah' },
-              { label: 'Průměr kapky', value: '10–50 μm', sub: 'evaporuje před dopadem' },
+              { label: 'Průměr kapky', value: '50–100 μm', sub: 'evaporuje před dopadem' },
               { label: 'Materiál', value: 'AISI 316L', sub: 'potravinářský nerez' },
               { label: 'Ochlazení', value: 'až −9 °C', sub: 'okolního vzduchu' },
             ].map((s, i) => (

@@ -38,7 +38,7 @@ export default function GateExperience({ renderForm }) {
   useEffect(() => {
     setSEO({
       title: 'GATE70 | Vysokotlaká mlžná brána pro městský prostor',
-      description: 'GATE70 U a V. Architektonická nerezová brána, vysokotlaké mlžení 70 bar, mikro-kapky 5–10 μm. Interaktivní 3D model a návrh pro váš veřejný prostor.',
+      description: 'GATE70 U a V. Architektonická nerezová brána, vysokotlaké mlžení 70 bar, mikro-kapky 50–100 μm. Interaktivní 3D model a návrh pro váš veřejný prostor.',
       canonicalPath: '/gate70',
       image: PHOTOS[0].url,
       type: 'product',

@@ -11,7 +11,7 @@ const EXPERT_CONTEXT = `ODBORNÝ ZDROJ — MLŽIDLA Cooling Cities (česká verz
 MLŽIDLA® / HolmTec s.r.o. navrhuje, vyrábí a instaluje nerezová mlžítka a mlžné systémy pro ochlazování veřejných prostor, měst, obcí, parků, koupališť, eventů a komerčních objektů.
 
 KLÍČOVÉ TECHNOLOGICKÉ PRINCIPY:
-1. NÍZKOTLAKÉ MLŽENÍ: Systémy pracují s provozním tlakem 2–6 bar (nízkotlaké), což je bezpečné pro veřejný prostor, nepoškozuje kůži, šetří vodu a tvoří jemnou mlhu (mikronové kapky 5–50 μm). Vysokotlaké systémy (60–100 bar) jsou pro veřejnost nebezpečné a nepoužívají se v pobytových zónách.
+1. NÍZKOTLAKÉ MLŽENÍ: Systémy pracují s provozním tlakem 2–6 bar (nízkotlaké), což je bezpečné pro veřejný prostor, nepoškozuje kůži, šetří vodu a tvoří jemnou mlhu (mikronové kapky 50–100 μm). Vysokotlaké systémy (60–100 bar) jsou pro veřejnost nebezpečné a nepoužívají se v pobytových zónách.
 2. MATERIÁL AISI 316L: Pro venkovní veřejné instalace se standardně doporučuje nerez AISI 316L (1.4404) — odolný vůči korozi, chlorované vodě (koupaliště), soli (pobřeží) a atmosférickým vlivům. AISI 304 (1.4301) je dostupný pro vnitřní/klimaticky mírné aplikace. U každé nabídky pro město/obec/veřejný prostor preferuj AISI 316L.
 3. SMART ŘÍZENÍ: SUPLA IoT platform — teplotní automatika (aktivace > 25°C), časové plány, interaktivní sepnutí senzorem, monitoring spotřeby vody (ENBRA + LIW-01), integrace s API počasí. Smart řízení umožňuje dálkový přehled, úsporný provoz a predikci údržby.
 4. KONSTRUKČNÍ PRINCIP: Minimalistické čisté linie z broušeného nerezu. Trysky osazeny přímo do konstrukce. Připojení vody skryté a servisovatelné. Patka/kotvení řešeno bezpečně a nenápadně. Standardní profily: jekl 70×70×3, trubky Ø76,1×3; Ø60,3×3,6; Ø52×3; Ø42,4×3,6.

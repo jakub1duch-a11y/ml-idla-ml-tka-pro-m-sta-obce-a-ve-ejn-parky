@@ -31,7 +31,7 @@ const FEATURES = [
   {
     icon: MistCloudIcon,
     title: 'Jemná mikro-mlha',
-    desc: 'Suchá mlha o velikosti kapek 10–50 μm se odpaří dřív, než dopadne — oblečení zůstává suché.',
+    desc: 'Suchá mlha o velikosti kapek 50–100 μm se odpaří dřív, než dopadne — oblečení zůstává suché.',
   },
   {
     icon: NozzleIcon,

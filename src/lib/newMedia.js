@@ -45,6 +45,8 @@ const HIDDEN_PRODUCT_SLUGS = new Set([
   'bendy-field',
   'mlzitko-bendy-field',
   'mlzitko-mrak',
+  'brana-bendy',
+  'linea-ce-gate',
 ]);
 
 export const isArchived = (slug) => {

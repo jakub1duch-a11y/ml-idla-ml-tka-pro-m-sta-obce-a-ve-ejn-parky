@@ -44,6 +44,9 @@ const SHARED_MEDIA_ALLOWLIST = Object.freeze({
   'ae23c1a50_329b2a1b-647c-405b-9f8b-3cac3dddbada.jpg': [],
   '1ba9cfa93_4cb1155f-000e-4eec-98ee-90cb6d38ba0d.jpg': [],
   'd790e0f10_img_4406.jpg': [],
+  // Studio náhledy dodané pro konkrétní produkt (název souboru neodpovídá produktu).
+  'bb73ffc27_lizatko.png': ['mlzitko-kruh'],
+  '968a42ce1_mrak2.jpg': ['mlzitko-kvet-4'],
   // General BENDY photos are kept on the main BENDY card, not copied to size variants.
   'ae3874c7c_img_5068.jpg': ['mlzitko-bendy'],
   '0b1d07bb3_img_5072.jpg': ['mlzitko-bendy'],

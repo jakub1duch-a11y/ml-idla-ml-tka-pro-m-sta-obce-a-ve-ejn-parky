@@ -19,7 +19,7 @@ const SLIDES = [
     id: 'mrak-1414',
     title: 'MLŽNÝ MRAK 1414',
     desktop: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/c17688a2a_mrak1414_hero_desktop.webp',
-    mobile: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/f153e7fbe_mrak1414_hero_mobile.webp',
+    mobile: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e97159a13_mrak1414_mobile_aligned_final.webp',
     link: '/produkt/mlzny-mrak-1414',
     alt: 'MLŽNÝ MRAK 1414 – organicky ohýbaná nerezová mlžná socha mezi květinami v zahradě',
     width: 1672,

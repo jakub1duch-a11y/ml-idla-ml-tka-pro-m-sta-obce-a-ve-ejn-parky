@@ -4,7 +4,7 @@ import { ArrowRight, Pause, Play } from 'lucide-react';
 import '@/styles/catalog-video-hero.css';
 
 const VIDEO = '/media/reference-videos/mrak-zahrada-hero.mp4';
-const POSTER = '/media/catalog/misting-hero-poster.webp';
+const POSTER = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bfa8ae002_mlznymrak.jpg';
 
 export default function KolekceHero() {
   const sectionRef = useRef(null);
@@ -17,7 +17,7 @@ export default function KolekceHero() {
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setDesired(!reduced.matches && !navigator.connection?.saveData);
+    setDesired(false);
     const onReduced = () => { if (reduced.matches) setDesired(false); };
     const onVisibility = () => setTabVisible(!document.hidden);
     reduced.addEventListener('change', onReduced);
@@ -36,7 +36,7 @@ export default function KolekceHero() {
 
   return <section ref={sectionRef} className="catalog-video-hero" aria-labelledby="catalog-hero-title">
     <div className="catalog-video-hero-media">
-      <picture><source media="(max-width: 767px)" srcSet="/media/catalog/misting-hero-poster-mobile.webp" />
+      <picture><source media="(max-width: 767px)" srcSet={POSTER} />
         <img src={POSTER} alt="Nerezový tvarový mlžicí prvek v zahradě s jemnou vodní mlhou" width="1280" height="720" fetchPriority="high" decoding="async" />
       </picture>
       {!failed && <video ref={videoRef} src={desired && visible ? VIDEO : undefined} poster={POSTER} muted loop playsInline preload="none"

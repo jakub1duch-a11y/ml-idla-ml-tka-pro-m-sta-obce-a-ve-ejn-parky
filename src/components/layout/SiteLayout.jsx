@@ -6,7 +6,6 @@ import LocalizedFooter from './LocalizedFooter';
 import { getLocaleFromPath } from '@/lib/i18n';
 import NotificationPrompt from '@/components/common/NotificationPrompt';
 import CookieConsent from '@/components/common/CookieConsent';
-import ReturningVisitorEmailPopup from '@/components/common/ReturningVisitorEmailPopup';
 import WhatsAppContactWidget from '@/components/common/WhatsAppContactWidget';
 import useGlobalLenis from '@/hooks/useGlobalLenis';
 import ScrollMotionController from '@/components/common/ScrollMotionController';
@@ -26,7 +25,6 @@ export default function SiteLayout() {
       </main>
       {locale === 'cs' ? <Footer /> : <LocalizedFooter locale={locale} />}
       {locale === 'cs' && <NotificationPrompt />}
-      {locale === 'cs' && <ReturningVisitorEmailPopup />}
       {locale === 'cs' && <WhatsAppContactWidget />}
       <CookieConsent locale={locale} />
     </div>

@@ -13,7 +13,7 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const dest = safeReturnTo(new URLSearchParams(window.location.search).get("returnTo")) || "/admin";
+  const dest = new URLSearchParams(window.location.search).has("returnTo") ? safeReturnTo() : "/admin";
 
   const handleGoogle = () => {
     setError("");

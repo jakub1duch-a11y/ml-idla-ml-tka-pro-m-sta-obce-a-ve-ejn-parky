@@ -15,8 +15,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const resolvedNext = safeReturnTo("next");
-  const nextUrl = resolvedNext === "/" ? "/klientska-sekce" : resolvedNext;
+  const params = new URLSearchParams(window.location.search);
+  const nextUrl = params.has("returnTo") ? safeReturnTo() : params.has("next") ? safeReturnTo("next") : "/klientska-sekce";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ export default function Login() {
       footer={
         <>
           Ještě nemáte účet?{" "}
-          <Link to="/register" className="text-primary font-medium hover:underline">
+          <Link to={`/register?next=${encodeURIComponent(nextUrl)}`} className="text-primary font-medium hover:underline">
             Vytvořit účet
           </Link>
         </>

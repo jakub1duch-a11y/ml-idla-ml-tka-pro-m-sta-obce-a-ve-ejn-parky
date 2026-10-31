@@ -2,51 +2,78 @@ import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight, Ruler, Droplets, Layers } from 'lucide-react';
 
-
-// Varianty jako odkazové záložky: každá má vlastní adresu (?varianta=…) s kompletním detailem.
+// Variant selector for gate products: image previews, grounded dimensions and quote CTA.
 export default function PdVariantsTable({ variants, productSlug }) {
   const [params, setParams] = useSearchParams();
   const fromUrl = variants?.findIndex((v) => v.name === params.get('varianta'));
   const [active, setActive] = useState(fromUrl > -1 ? fromUrl : 0);
-  useEffect(() => { if (fromUrl > -1) setActive(fromUrl); }, [fromUrl]);
+
+  useEffect(() => {
+    if (fromUrl > -1) setActive(fromUrl);
+  }, [fromUrl]);
+
   if (!variants?.length) return null;
+
   const sel = variants[active] || variants[0];
-  const pick = (i) => { setActive(i); const p = new URLSearchParams(params); p.set('varianta', variants[i].name); setParams(p, { replace: true, preventScrollReset: true }); };
+  const pick = (index) => {
+    setActive(index);
+    const next = new URLSearchParams(params);
+    next.set('varianta', variants[index].name);
+    setParams(next, { replace: true, preventScrollReset: true });
+  };
 
   return (
-    <section id="varianty" className="mt-8 scroll-mt-28 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white">
-      <div className="border-b border-[#E7F0F4] px-5 pt-5 sm:px-6">
-        <p className="font-mono text-[9px] font-bold uppercase tracking-[.18em] text-[#0B97E8]">Varianty produktu</p>
-        <nav aria-label="Varianty" className="mt-3 grid min-w-0 grid-cols-1 gap-2 pb-4 md:grid-cols-2 xl:grid-cols-3">
-          {variants.map((v, i) => (
-            <a key={v.name} href={`?varianta=${encodeURIComponent(v.name)}#varianty`} onClick={(e) => { e.preventDefault(); pick(i); }}
-              aria-current={i === active ? 'page' : undefined}
-              className={`flex min-h-12 min-w-0 items-center justify-center whitespace-normal break-words text-center [overflow-wrap:anywhere] rounded-full border px-4 py-2 text-sm font-bold transition ${i === active ? 'border-[#0A2342] bg-[#0A2342] text-white' : 'border-[#D8E8F0] text-[#0A2342] hover:border-[#0B97E8] hover:text-[#0B97E8]'}`}>
-              {v.name}
-            </a>
+    <section id="varianty" className="mt-8 scroll-mt-28 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white shadow-[0_18px_55px_rgba(10,35,66,.06)]">
+      <div className="border-b border-[#E7F0F4] px-5 pt-5 sm:px-6 sm:pt-6">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#0B97E8]">Varianty produktu</p>
+        <h2 className="mt-2 font-heading text-xl font-bold text-[#0A2342] sm:text-2xl">Vyberte provedení mlžné brány</h2>
+        <div className="mt-5 grid min-w-0 grid-cols-1 gap-3 pb-5 sm:grid-cols-2 xl:grid-cols-3">
+          {variants.map((variant, index) => (
+            <button
+              key={variant.name}
+              type="button"
+              onClick={() => pick(index)}
+              aria-pressed={index === active}
+              className={`group min-w-0 overflow-hidden rounded-2xl border text-left transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B97E8] focus-visible:ring-offset-2 ${index === active ? 'border-[#0756A5] bg-[#F1F8FD] shadow-[0_8px_24px_rgba(7,86,165,.12)]' : 'border-[#D8E8F0] bg-white hover:border-[#78BDE8]'}`}
+            >
+              {variant.image_url ? (
+                <img src={variant.image_url} alt={`${variant.name} – náhled mlžné brány`} loading="lazy" className="aspect-[1.5/1] w-full object-cover" />
+              ) : (
+                <div className="flex aspect-[1.5/1] items-center justify-center bg-[#F4FAFD] text-sm text-[#52708C]">Náhled připravujeme</div>
+              )}
+              <span className="block px-4 py-3">
+                <span className="block text-sm font-extrabold leading-snug text-[#0A2342]">{variant.name}</span>
+                <span className="mt-1 block text-xs text-[#526A83]">{variant.dimensions ? `Šířka ${variant.dimensions.split(' × ')[0]} × výška ${variant.dimensions.split(' × ')[1]} mm` : 'Rozměr dle konfigurace'}</span>
+              </span>
+            </button>
           ))}
-        </nav>
+        </div>
       </div>
-      <div key={sel.name} className="grid min-w-0 gap-6 p-4 sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end [&>*]:min-w-0 [&_h3]:break-words [&_dd]:break-words [&_dd]:[overflow-wrap:anywhere]">
-        <div>
+
+      <div key={sel.name} className="grid min-w-0 gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(280px,.95fr)] lg:items-start">
+        <div className="min-w-0 overflow-hidden rounded-2xl bg-[#F4FAFD]">
+          {sel.image_url && <img src={sel.image_url} alt={`${sel.name} – detailní náhled`} className="aspect-[1.5/1] w-full object-cover" />}
+        </div>
+        <div className="min-w-0">
           <h3 className="font-heading text-2xl font-bold text-[#0A2342]">{sel.name}</h3>
-          <dl className="mt-4 grid min-w-0 grid-cols-1 gap-3 lg:grid-cols-3">
-            {[[Layers, 'Profil', sel.profile], [Ruler, 'Rozměr V × Š', sel.dimensions && `${sel.dimensions} mm`], [Droplets, 'Trysky', sel.nozzles]].map(([Icon, label, val]) => (
-              <div key={label} className="rounded-2xl bg-[#F4FAFD] p-4">
-                <dt className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[.12em] text-[#0D2F4F]/55"><Icon size={14} className="text-[#0B97E8]" />{label}</dt>
-                <dd className="mt-1 font-heading text-base font-bold text-[#0A2342]">{val || '–'}</dd>
+          {sel.description && <p className="mt-3 text-sm leading-6 text-[#526A83]">{sel.description}</p>}
+          <dl className="mt-5 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+            {[[Layers, 'Profil', sel.profile], [Ruler, 'Šířka × výška', sel.dimensions && `${sel.dimensions} mm`], [Droplets, 'Trysky', sel.nozzles]].map(([Icon, label, value]) => (
+              <div key={label} className="min-w-0 rounded-2xl bg-[#F4FAFD] p-4">
+                <dt className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[.12em] text-[#0D2F4F]/55"><Icon size={14} className="shrink-0 text-[#0B97E8]" />{label}</dt>
+                <dd className="mt-1 break-words font-heading text-base font-bold text-[#0A2342]">{value || 'Na upřesnění'}</dd>
               </div>
             ))}
           </dl>
-        </div>
-        <div className="lg:text-right">
-          <p className="text-sm font-semibold text-[#0D2F4F]/60">Cena dle konfigurace</p>
-          <Link to={`/poptavka?produkt=${encodeURIComponent(productSlug || '')}&varianta=${encodeURIComponent(sel.name)}`} className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0A2342] px-5 text-sm font-bold text-white transition hover:bg-[#0B97E8]">
-            Žádost o cenu <ArrowRight size={15} />
-          </Link>
+          <div className="mt-5 rounded-2xl border border-[#D8E8F0] p-4">
+            <p className="text-sm leading-6 text-[#526A83]">Cena se připravuje podle vybraného provedení a požadovaného řešení.</p>
+            <Link to={`/poptavka?produkt=${encodeURIComponent(productSlug || '')}&varianta=${encodeURIComponent(sel.name)}`} className="mt-3 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#0A2342] px-5 text-sm font-bold text-white transition hover:bg-[#0B97E8] sm:w-auto">
+              Zjistit cenu <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </div>
-      <p className="border-t border-[#E7F0F4] bg-[#F7FBFD] px-5 py-3 text-[11px] text-[#0D2F4F]/60 sm:px-6">Parametry platí pro zvolené provedení. Finální rozměry, materiál a osazení trysek potvrzuje výrobní výkres.</p>
+      <p className="border-t border-[#E7F0F4] bg-[#F7FBFD] px-5 py-3 text-[11px] leading-5 text-[#0D2F4F]/60 sm:px-6">Uvedené rozměry a profily vycházejí z produktového přehledu. Konečné provedení a osazení trysek se potvrzuje v nabídce a výrobní dokumentaci.</p>
     </section>
   );
 }

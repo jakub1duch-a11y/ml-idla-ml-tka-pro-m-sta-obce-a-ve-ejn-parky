@@ -11,8 +11,8 @@ export const GATE_GROUPS = [
 const PRESENTATION = {
   'brana-bendy': [{ name: 'STÉBLO GATE®', group: 'gate', caption: 'Průchod mezi dvěma stébly', image: '/media/gates/steblo-gate-1.webp', text: 'Dvě stejná mlžítka STÉBLO proti sobě vytvářejí lehký průchod jemnou mlhou pro parky, promenády a veřejné prostory.' }],
   'mlzna-brana-gate': [
-    { variant: 'U', name: 'GATE70-U', group: 'gate', caption: 'Pravoúhlá mlžná brána', image: '/media/gates/gate-u.webp', text: 'Čistá pravoúhlá linie pro vstupy do areálů, náměstí a moderní veřejný prostor.' },
-    { variant: 'V', name: 'GATE70-V', group: 'gate', caption: 'Mlžná brána s lomeným obloukem', image: '/media/gates/gate-v.webp', text: 'Jemně lomený oblouk vytváří průchod mlhou na promenádách, v parcích a pobytových zónách.' },
+    { variant: 'U', name: 'GATE70-U', group: 'gate', caption: 'Pravoúhlá mlžná brána', image: '/assets/images/gate70-u-preview.svg', text: 'Čistá pravoúhlá linie pro vstupy do areálů, náměstí a moderní veřejný prostor.' },
+    { variant: 'V', name: 'GATE70-V', group: 'gate', caption: 'Mlžná brána s lomeným obloukem', image: '/assets/images/gate70-v-preview.svg', text: 'Jemně lomený oblouk vytváří průchod mlhou na promenádách, v parcích a pobytových zónách.' },
   ],
   'linea-gate': [{ name: 'LINEA CE GATE®', group: 'portal', caption: 'Vstupní portál ze dvou linií', image: '/media/gates/linea-gate.webp', text: 'Dvojice zakřivených nerezových prvků vymezuje otevřenou cestu jemnou mlhou.' }],
   'mlzitko-kruh': [{ name: 'KRUH', group: 'portal', caption: 'Kruhový mlžný portál', image: '/media/gates/kruh.webp', text: 'Výrazný kruhový průchod pro parky, promenády a předprostory veřejných budov.' }],

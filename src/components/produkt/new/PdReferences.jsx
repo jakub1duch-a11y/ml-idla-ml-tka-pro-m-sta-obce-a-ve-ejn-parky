@@ -6,6 +6,8 @@ import { isArchived } from '@/lib/newMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import MrakSizeBadge from '@/components/produkt/MrakSizeBadge';
 
+const isMrakProduct = (product) => /(?:^|[-_])mrak(?:[-_]|$)/i.test(product?.slug || '') || /mlžn[ýá]\s+mrak/i.test(product?.name || '');
+
 export default function PdReferences({ product }) {
   const [refs, setRefs] = useState([]);
   const [similar, setSimilar] = useState([]);
@@ -19,7 +21,8 @@ export default function PdReferences({ product }) {
       const refsList = (allRefs || []).filter((r) => {
         const used = (r.product_used || '').toLowerCase();
         const name = (product.name || '').toLowerCase();
-        return used.includes(name) || name.includes(used);
+        if (isMrakProduct(product)) return /mrak/i.test(used);
+        return Boolean(used && name) && (used.includes(name) || name.includes(used));
       }).slice(0, 3);
       setRefs(refsList);
 
@@ -37,8 +40,8 @@ export default function PdReferences({ product }) {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {refs.length > 0 && (
           <div className="mb-16">
-            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Reference s tímto produktem</p>
-            <h2 className="mt-4 font-heading text-2xl leading-tight text-[#0D2F4F] lg:text-3xl">Realizace, kde se {product.name} používá.</h2>
+            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">{isMrakProduct(product) ? 'Reference kolekce MRAK' : 'Reference s tímto produktem'}</p>
+            <h2 className="mt-4 font-heading text-2xl leading-tight text-[#0D2F4F] lg:text-3xl">{isMrakProduct(product) ? 'Realizace, kde se kolekce mlžných mraků používá.' : `Realizace, kde se ${product.name} používá.`}</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {refs.map((r) => (
                 <Link key={r.id} to={`/reference/${r.id}`} className="product-motion-card group block overflow-hidden rounded-[1.5rem] border border-[#EAF5FB] bg-white transition-all hover:-translate-y-1 hover:border-[#22D3EE]/50">

@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Droplets, ChevronDown, Clock3, Gauge, WalletCards, Sparkles } from 'lucide-react';
 
+import { WATER_PRICE_CZK_M3 as WATER_PRICE } from '@/lib/waterCost';
+
 const PRODUCTS = [
 { id: 'volavka', name: 'MLŽÍTKO VOLAVKA', flow: 40.5, range: '27–54 l/h', pressure: '2–8 bar' },
 { id: 'brana-bendy', name: 'STÉBLO GATE', flow: 35, range: '30–40 l/h', pressure: '2–8 bar' },
@@ -15,7 +17,7 @@ const PRODUCTS = [
 { id: 'ostrev', name: 'MLŽÍTKO OSTREV', flow: 18.5, range: '18,5 l/h', pressure: '2–8 bar' }];
 
 
-const WATER_PRICE = 129.11; // orientační voda + stočné Kč/m³
+
 const SMART_SAVING = 0.25;
 const money = (v) => new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 }).format(v);
 const number = (v, d = 1) => new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: d }).format(v);

@@ -12,7 +12,7 @@ export function summaryCard(ctx, d, main) {
   g.addColorStop(0, C.cyan); g.addColorStop(1, C.blue);
   ctx.beginPath(); ctx.arc(128, top + 70, 34, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill();
   drawIcon(ctx, 'file', 111, top + 53, 34, C.white);
-  text(ctx, 'Shrnutí poptávky', 192, top + 58, { weight: 800, size: 26, family: 'Manrope', color: C.navy });
+  text(ctx, 'Shrnutí poptávky', 192, top + 58, { weight: 800, size: 26, family: 'Montserrat', color: C.navy });
   const others = d.variants.length - 1;
   wrap(ctx, `${d.summary} Nabízíme hlavní řešení ${main.title} a ${others} ${variantsWord(others)} k porovnání.`, 192, top + 96, 940, 27, { size: 18.5, color: C.ink }, 4);
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 
 const FONTS = [
-  { name: 'Space Grotesk', role: 'Hlavní nadpisy, titulky a značková tlačítka', detail: '600–700 · geometrický charakter · řádkování 1,1 · prostrkání −0,01 em', sample: 'Ochlazení, které patří k architektuře.', className: 'font-heading text-4xl font-semibold' },
-  { name: 'Albert Sans', role: 'Odstavce, navigace, formuláře a popisky', detail: '400–600 · běžný text 16–18 px · řádkování 1,55 · česká diakritika', sample: 'Mlžný systém navrhujeme jako přirozenou součást konkrétního místa.', className: 'font-body text-xl' }
+  { name: 'Montserrat', role: 'Hlavní nadpisy, titulky a značková tlačítka', detail: '700–900 · geometrické tvary · řádkování 1,1 · prostrkání −0,025 em', sample: 'Ochlazení, které patří k architektuře.', className: 'font-heading text-4xl font-semibold' },
+  { name: 'Inter', role: 'Odstavce, navigace, formuláře a popisky', detail: '400–600 · běžný text 16–18 px · řádkování 1,55 · česká diakritika', sample: 'Mlžný systém navrhujeme jako přirozenou součást konkrétního místa.', className: 'font-body text-xl' }
 ];
 
 export default function BrandTypographyGuide() {

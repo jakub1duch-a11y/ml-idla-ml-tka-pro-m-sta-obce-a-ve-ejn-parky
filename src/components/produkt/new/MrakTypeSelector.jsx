@@ -60,7 +60,7 @@ export default function MrakTypeSelector({ slug }) {
         <p className="font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#0B8EC5]">MLŽNÝ MRAK · volba tvaru</p>
         <h2 className="mt-3 font-heading text-3xl font-bold tracking-[-.035em] text-[#07131D] sm:text-4xl">Vyberte tvar mraku pro váš prostor.</h2>
         <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">Rozměry jsou návrhové, finální provedení potvrzuje výrobní výkres. Vizualizace jsou ilustrační.</p>
-        <div className="mt-7 grid min-w-0 grid-cols-1 items-start gap-5 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-7 grid min-w-0 grid-cols-1 items-stretch gap-5 md:grid-cols-2">
           {MRAK_TYPES.map((variant) => (
             <MrakVariantCard key={variant.slug} variant={variant} selected={variant.slug === slug} />
           ))}

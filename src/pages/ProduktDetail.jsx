@@ -6,7 +6,7 @@ import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
-import MrakTypeSelector from '@/components/produkt/new/MrakTypeSelector';
+import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
@@ -64,7 +64,6 @@ export default function ProduktDetail() {
   return (
     <div className="product-detail-page min-h-screen bg-background text-foreground pt-[var(--site-header-height)]">
       <PdCompactHero product={product} />
-      {product.slug.startsWith('mlzny-mrak-') && <MrakTypeSelector slug={product.slug} />}
       <PdFamilyNav product={product} />
       <PdSectionNav product={product} />
       <PdDescription product={product} />
@@ -74,6 +73,7 @@ export default function ProduktDetail() {
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
       <div id="reference" className="scroll-mt-24"><PdReferences product={product} /></div>
       <PdClosingCta product={product} />
+      <PdProductSuggestions product={product} />
     </div>
   );
 }

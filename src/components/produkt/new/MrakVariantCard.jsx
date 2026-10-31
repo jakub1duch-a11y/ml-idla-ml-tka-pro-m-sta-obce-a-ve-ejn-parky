@@ -4,7 +4,7 @@ import { ArrowUpRight, Check } from 'lucide-react';
 
 export default function MrakVariantCard({ variant, selected }) {
   return (
-    <article className={`min-w-0 overflow-hidden rounded-[28px] border bg-card ${selected ? 'border-primary shadow-md' : 'border-border'}`}>
+    <article className={`flex h-full min-w-0 flex-col overflow-hidden rounded-[28px] border bg-card ${selected ? 'border-primary shadow-md' : 'border-border'}`}>
       <div className="min-w-0 p-4 sm:p-6">
         <h3 className="font-heading text-xl font-bold text-foreground sm:text-2xl">{variant.title}</h3>
         <p className="mt-2 break-words font-mono text-base font-semibold text-primary sm:text-lg">{variant.size}</p>
@@ -17,7 +17,7 @@ export default function MrakVariantCard({ variant, selected }) {
           <Link to={`/produkt/${variant.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground sm:w-auto">Zobrazit {variant.title}<ArrowUpRight size={16} className="shrink-0" /></Link>
         )}
       </div>
-      <div className="min-w-0 px-4 pb-4 sm:px-5 sm:pb-5">
+      <div className="mt-auto min-w-0 px-4 pb-4 sm:px-5 sm:pb-5">
         <img src={variant.studio} alt={`${variant.title} – ilustrační studiový náhled`} loading="lazy" className="aspect-square w-full max-w-full rounded-2xl border border-border bg-card object-contain sm:aspect-[4/3]" />
         <div className="mt-3 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
           {variant.details.map((detail) => (

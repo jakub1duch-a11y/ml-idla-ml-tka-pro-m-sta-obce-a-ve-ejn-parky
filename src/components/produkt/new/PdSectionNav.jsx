@@ -6,16 +6,16 @@ const ITEMS = [
   ['prehled', 'Přehled'],
   ['popis', 'Popis produktu'],
   ['parametry', 'Technické parametry'],
-  ['varianty', 'Varianty'],
   ['galerie', 'Galerie'],
   ['vyhody', 'Výhody'],
   ['instalace', 'Instalace'],
   ['reference', 'Reference'],
+  ['varianty', 'Varianty'],
 ];
 
 export default function PdSectionNav({ product }) {
   const [active, setActive] = useState('prehled');
-  const items = ITEMS.filter(([id]) => id !== 'varianty' || product.variants?.length);
+  const items = ITEMS.filter(([id]) => id !== 'varianty' || product.variants?.length || product.slug === 'mlzitko-mrak' || product.slug.startsWith('mlzny-mrak-'));
 
   useEffect(() => {
     const sections = ITEMS.map(([id]) => document.getElementById(id)).filter(Boolean);

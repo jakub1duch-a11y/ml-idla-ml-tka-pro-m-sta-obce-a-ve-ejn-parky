@@ -1,6 +1,5 @@
 import React from 'react';
 import { Gauge, Ruler } from 'lucide-react';
-import PdVariantsTable from '@/components/produkt/new/PdVariantsTable';
 import PdSpecTable from '@/components/produkt/new/PdSpecTable';
 import PdDocuments from '@/components/produkt/new/PdDocuments';
 
@@ -29,7 +28,6 @@ export default function PdSpecs({ product }) {
             <PdSpecTable title="Voda, mlžení a napájení" rows={operation} icon={Gauge} />
           </div>
         ) : <p className="rounded-lg border border-border bg-card p-6 text-muted-foreground">Technické parametry připravujeme. Konkrétní hodnoty potvrdíme při návrhu řešení.</p>}
-        <PdVariantsTable variants={product.variants} productSlug={product.slug} />
         <PdDocuments product={product} />
         <p className="mt-7 border-l-2 border-primary pl-4 text-sm text-muted-foreground">Kotvení, přívod vody, filtrace a případné řízení se upřesňují podle konkrétního místa a zvolené konfigurace. Chybějící údaje potvrdíme v technickém návrhu.</p>
       </div>

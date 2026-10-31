@@ -59,32 +59,7 @@ export default function PdCompactHero({ product }) {
             {intro || 'Designové mlžítko pro konkrétní prostor. Přesné provedení a technické parametry se řídí ověřenými daty produktu.'}
           </p>
 
-          {isMrak && (
-            <div className="mt-7" aria-label="Výběr velikosti MLŽNÉHO MRAKU">
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.15em] text-[#0B8EC5]">Vyberte velikost · 2 varianty</p>
-              <div className="grid grid-cols-2 gap-3">
-                {MRAK_VARIANTS.map((variant) => {
-                  const selected = variant.id === selectedMrakVariant;
-                  return (
-                    <button
-                      key={variant.id}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => selectMrakVariant(variant.id)}
-                      className={`min-w-0 rounded-2xl border px-3 py-4 text-left transition-all sm:p-4 ${selected ? 'border-[#0B5EA8] bg-[#EAF7FD] shadow-[0_8px_30px_rgba(11,94,168,.10)]' : 'border-[#D8E8ED] bg-white hover:border-[#7CCBD8]'}`}
-                    >
-                      <span className="block text-xs font-bold uppercase tracking-[.11em] text-[#0A2342]">{variant.name}</span>
-                      <span className="mt-1 block font-heading text-xl font-black text-[#0B5EA8] sm:text-2xl">{variant.id === 'maly' ? 'Návrh' : 'Kalkulace'} {variant.height}</span>
-                      <span className="mt-2 block text-[11px] leading-5 text-[#5A6B78]">{variant.description}</span>
-                    </button>
-                  );
-                })}
-              </div>
-              <p className="mt-3 text-[11px] leading-5 text-[#6E7F8D]">
-                {MRAK_VARIANTS.find((variant) => variant.id === selectedMrakVariant)?.note} Konečný rozměr a konfiguraci potvrzujeme před naceněním.
-              </p>
-            </div>
-          )}
+
 
           {facts.length > 0 &&
           <div className="mt-6 grid grid-cols-3 gap-2">

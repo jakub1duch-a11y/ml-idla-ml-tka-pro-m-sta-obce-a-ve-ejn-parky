@@ -11,7 +11,7 @@ export default function PdProductSuggestions({ product }) {
       {product.slug === 'mlzitko-mrak' && <PdMrakSizeSelector />}
       {product.variants?.length > 0 && (
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-7 lg:px-10">
-          <PdVariantsTable variants={product.variants} productSlug={product.slug} />
+          <PdVariantsTable variants={product.variants} productSlug={product.slug} fallbackImage={product.image_url} />
         </div>
       )}
       {isMrak && <MrakTypeSelector slug={product.slug} />}

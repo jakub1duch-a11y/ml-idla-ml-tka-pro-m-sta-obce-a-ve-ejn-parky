@@ -20,6 +20,8 @@ export const CONFIGURATION_PRESETS = [
   { value: 'gate', label: 'BRÁNA · 2 ks proti sobě', quantity: 2 },
 ];
 
+// Závazné názvosloví: produkt se jmenuje Ostrev (bez diakritiky).
+// Tento zápis platí pro web, katalogy, nabídky i AI zadání.
 const COMMON_NEGATIVE = [
   'neměnit počet ramen, trubek, trysek, ohybů ani jejich polohu',
   'nepřidávat nové konstrukční části, dekorace, hadice, kabely ani podpěry',
@@ -35,7 +37,7 @@ const familyLock = (product = {}) => {
   if (key.includes('linea ce') || key.includes('linea-solo')) return 'LINEA CE LOCK: zachovej přesný charakteristický zakřivený C-profil a jeho proporce podle MASTER reference. Žádný další zlom, druhé rameno ani změna směru zakřivení.';
   if (key.includes('linea')) return 'LINEA LOCK: zachovej přesně konkrétní variantu LINEA z MASTER fotografie — čistou vertikální nebo variantně definovanou geometrii. Nemíchej JA, CE, LE, kruhový a hranatý profil.';
   if (key.includes('gate') || key.includes('brána') || key.includes('brana')) return 'GATE LOCK: zachovej přesnou geometrii průchozí brány a oba její boky/oblouky podle MASTER reference. Neměň šířku průchodu, počet nosných prvků ani tvar horní části mimo perspektivní transformaci.';
-  if (key.includes('y-armist') || key.includes('ostřev') || key.includes('ostrev')) return 'Y-ARMIST / OSTŘEV LOCK: počet ramen a jejich prostorové rozložení musí přesně odpovídat MASTER fotografii. Nepřidávej ani neubírej ramena a neměň jejich napojení.';
+  if (key.includes('y-armist') || key.includes('ostrev')) return 'Y-ARMIST / Ostrev LOCK: počet ramen a jejich prostorové rozložení musí přesně odpovídat MASTER fotografii. Nepřidávej ani neubírej ramena a neměň jejich napojení.';
   if (key.includes('teepee')) return 'TEEPEE LOCK: zachovej přesnou sestavu, počet nosných nerezových prvků, jejich sklon, spojení a půdorys podle MASTER fotografie. Nepřidávej další vzpěry ani dekorativní konstrukci.';
   if (key.includes('aura')) return 'AURA LOCK: silueta, oblouk/rádius, výška, zakončení a poloha trysek musí odpovídat MASTER fotografii. Neměň produkt na jinou variantu AURA ani na podobný obloukový výrobek.';
   if (key.includes('mrak')) return 'MRAK LOCK: organická silueta a počet jednotlivých konstrukčních částí musí přesně odpovídat MASTER fotografii. Nevymýšlej jiné kontury mraku ani další smyčky.';
@@ -88,7 +90,7 @@ export function buildProductVisualizationGuard(product = {}, options = {}) {
     quantity,
     environment,
     configuration,
-    prompt: `PRODUCT MASTER — ABSOLUTNÍ PRIORITA: První produktová reference je MASTER fotografie skutečného výrobku ${product.name || 'MLŽIDLA'}. Produkt nesmí být redesignován. ${getGeometryLock(product)}
+    prompt: `PRODUCT MASTER — ABSOLUTNÍ PRIORITA: První produktová reference je MASTER fotografie skutečného výrobku ${product.name || 'MLŽIDLA'}. Produkt nesmí být redesignován. Název produktu Ostrev piš vždy bez diakritiky. ${getGeometryLock(product)}
 
 KONFIGURACE: ${configuration.label}. Zobraz přesně ${quantity} identických kusů stejného produktu. SINGLE/DUO/TRIO/ALEJ/BRÁNA mění pouze počet kusů, jejich rozmístění a natočení v prostoru; nikdy geometrii jednotlivého kusu.
 

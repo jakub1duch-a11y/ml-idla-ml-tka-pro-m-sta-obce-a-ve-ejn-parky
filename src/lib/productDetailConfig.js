@@ -149,7 +149,7 @@ const CONFIG = {
   },
   'ostrev-mlzitko': {
     tagline: 'Organické stromové mlžítko se sedmi rameny',
-    intro: 'OSTŘEV je vícearmenný mlžný prvek pro větší veřejné a pobytové prostory. Konkrétní osazení, provozní parametry a rozmístění se potvrzují podle výrobní specifikace a projektu.',
+    intro: 'Ostrev je vícearmenný mlžný prvek pro větší veřejné a pobytové prostory. Konkrétní osazení, provozní parametry a rozmístění se potvrzují podle výrobní specifikace a projektu.',
     benefits: [
       ['Vícearmenná forma', 'Rozvětvená silueta vytváří výrazný prostorový prvek pro větší plochy.'],
       ['Návrh pro větší zóny', 'Rozmístění se plánuje podle velikosti prostoru, pěších tras a pobytových míst.'],

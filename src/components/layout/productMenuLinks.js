@@ -23,7 +23,7 @@ export const PRODUCT_MENU_GROUPS = [
   ] },
   { title: 'Další modely a doplňky', links: [
     { label: 'BENDY', path: '/produkt/mlzitko-bendy' },
-    { label: 'OSTŘEV', path: '/produkt/ostrev-city' },
+    { label: 'Ostrev', path: '/produkt/ostrev-city' },
     { label: 'Y-ARMIST', path: '/produkt/y-armist-tr60' },
     { label: 'TEEPEE', path: '/produkt/teepee' },
     { label: 'MLŽNÁ TRYSKA', path: '/produkt/mlzici-tryska' },

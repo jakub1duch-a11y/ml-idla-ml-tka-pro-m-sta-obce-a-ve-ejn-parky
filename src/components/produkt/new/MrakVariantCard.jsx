@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Check } from 'lucide-react';
+import MrakSizeBadge from '@/components/produkt/MrakSizeBadge';
 
 export default function MrakVariantCard({ variant, selected }) {
   return (
@@ -18,7 +19,7 @@ export default function MrakVariantCard({ variant, selected }) {
         )}
       </div>
       <div className="mt-auto min-w-0 px-4 pb-4 sm:px-5 sm:pb-5">
-        <img src={variant.studio} alt={`${variant.title} – ilustrační studiový náhled`} loading="lazy" className="aspect-square w-full max-w-full rounded-2xl border border-border bg-card object-contain sm:aspect-[4/3]" />
+        <div className="relative"><span className="absolute left-3 top-3 z-10"><MrakSizeBadge slug={variant.slug} /></span><img src={variant.studio} alt={`${variant.title} – ilustrační studiový náhled`} loading="lazy" className="aspect-square w-full max-w-full rounded-2xl border border-border bg-card object-contain sm:aspect-[4/3]" /></div>
         <div className="mt-3 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
           {variant.details.map((detail) => (
             <figure key={detail.src} className="min-w-0 overflow-hidden rounded-2xl border border-border bg-card">

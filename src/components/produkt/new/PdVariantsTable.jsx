@@ -17,11 +17,11 @@ export default function PdVariantsTable({ variants, productSlug }) {
     <section id="varianty" className="mt-8 scroll-mt-28 overflow-hidden rounded-[28px] border border-[#D8E8F0] bg-white">
       <div className="border-b border-[#E7F0F4] px-5 pt-5 sm:px-6">
         <p className="font-mono text-[9px] font-bold uppercase tracking-[.18em] text-[#0B97E8]">Varianty produktu</p>
-        <nav aria-label="Varianty" className="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:-mx-6 sm:px-6">
+        <nav aria-label="Varianty" className={productSlug?.includes('mrak') ? 'mt-3 grid min-w-0 grid-cols-1 gap-2 pb-4 sm:flex sm:flex-wrap' : '-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:-mx-6 sm:px-6'}>
           {variants.map((v, i) => (
             <a key={v.name} href={`?varianta=${encodeURIComponent(v.name)}#varianty`} onClick={(e) => { e.preventDefault(); pick(i); }}
               aria-current={i === active ? 'page' : undefined}
-              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition ${i === active ? 'border-[#0A2342] bg-[#0A2342] text-white' : 'border-[#D8E8F0] text-[#0A2342] hover:border-[#0B97E8] hover:text-[#0B97E8]'}`}>
+              className={`${productSlug?.includes('mrak') ? 'min-w-0 min-h-11 break-words text-center' : 'shrink-0'} rounded-full border px-4 py-2 text-sm font-bold transition ${i === active ? 'border-[#0A2342] bg-[#0A2342] text-white' : 'border-[#D8E8F0] text-[#0A2342] hover:border-[#0B97E8] hover:text-[#0B97E8]'}`}>
               {v.name}
             </a>
           ))}

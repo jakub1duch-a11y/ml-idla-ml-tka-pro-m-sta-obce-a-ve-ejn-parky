@@ -3,8 +3,8 @@
 .mlz-product-hero {
   --hero-cyan: #0b9df3;
   --hero-ink: #07131d;
-  --hero-heading: 'Space Grotesk', 'Albert Sans', Arial, sans-serif;
-  --hero-body: 'Albert Sans', Arial, sans-serif;
+  --hero-heading: var(--font-heading, 'Montserrat', Arial, sans-serif);
+  --hero-body: var(--font-body, 'Inter', Arial, sans-serif);
   padding-top: var(--site-header-height, 80px);
   background: var(--hero-ink);
   color: #fff;

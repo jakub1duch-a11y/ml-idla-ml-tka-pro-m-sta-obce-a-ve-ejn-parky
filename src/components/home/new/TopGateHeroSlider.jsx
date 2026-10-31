@@ -6,7 +6,8 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 const TOP_SLIDES = [
   {
     id: 'steblo-gate',
-    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ae6746b6d_file_000000001a708210be4a24812343624e.png',
+    image: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/82880da57_file_000000006f7c81f4ab9a3c310afbbc4a.png',
+    mobileImage: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a73d25761_steblo-gate-mobile-hero.webp',
     alt: 'STÉBLO GATE® – dvě zakřivená nerezová mlžítka vytvářejí průchozí mlžnou bránu na náměstí',
     title: 'STÉBLO GATE®',
     link: '/produkt/brana-bendy',
@@ -38,11 +39,14 @@ export default function TopGateHeroSlider() {
       onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
       <div className="relative mx-auto w-full max-w-[1920px]">
-        <Link to={slide.link} className="block w-full focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-400"
+        <Link to={slide.link} className="block aspect-[900/1550] w-full bg-[#07131d] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-400 sm:aspect-video"
           aria-label={`Prohlédnout produkt ${slide.title}`}>
-          <img key={slide.id} src={slide.image} alt={slide.alt} fetchPriority={index === 0 ? 'high' : 'auto'}
-            loading={index === 0 ? 'eager' : 'lazy'} decoding="async"
-            className="block aspect-video w-full object-contain bg-[#07131d] sm:max-h-[min(83svh,920px)]" />
+          <picture key={slide.id} className="block h-full w-full">
+            {slide.mobileImage && <source media="(max-width: 639px)" srcSet={slide.mobileImage} type="image/webp" />}
+            <img src={slide.image} alt={slide.alt} fetchPriority={index === 0 ? 'high' : 'auto'}
+              loading={index === 0 ? 'eager' : 'lazy'} decoding="async"
+              className="block h-full w-full object-contain bg-[#07131d]" />
+          </picture>
         </Link>
         {!slide.embeddedCopy && (
           <div className="pointer-events-none absolute bottom-14 left-5 right-5 rounded-2xl bg-[#07131d]/80 p-4 text-white backdrop-blur-sm sm:bottom-20 sm:left-10 sm:right-auto sm:max-w-md sm:p-6">

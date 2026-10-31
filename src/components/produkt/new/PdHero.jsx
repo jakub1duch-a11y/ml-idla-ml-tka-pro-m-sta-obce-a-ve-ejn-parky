@@ -170,7 +170,7 @@ export default function PdHero({ product }) {
               Vizualizovat v mém prostoru <ExternalLink size={15} />
             </Link>
             <Link to={`/zadost-o-podklady?produkt=${encodeURIComponent(product.slug)}`} className="product-sweep inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/[.12] px-6 py-4 text-sm font-bold text-white/[.78] transition hover:-translate-y-0.5 hover:border-[#22D3EE]/60 hover:text-white">
-              Technické podklady <FileText size={15} />
+              Vyžádat technické podklady <FileText size={15} />
             </Link>
           </div>
         </div>

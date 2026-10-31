@@ -1,5 +1,5 @@
-.whatsapp-side-trigger{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:56px;padding:18px 10px;background:linear-gradient(155deg,#0c4858,#082c3f);color:#d9fff0;border-radius:22px 0 0 22px;box-shadow:0 8px 30px rgba(5,32,45,.2);transition:background 120ms,box-shadow 120ms}
-.whatsapp-side-trigger:hover{background:#105963;box-shadow:0 8px 35px rgba(5,32,45,.3)}
+.whatsapp-side-trigger{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:56px;padding:18px 10px;background:#25d366;color:#ffffff;border-radius:22px 0 0 22px;box-shadow:0 8px 30px rgba(5,32,45,.2);transition:background 120ms,box-shadow 120ms}
+.whatsapp-side-trigger:hover{background:#1ebe5d;box-shadow:0 8px 35px rgba(5,32,45,.3)}
 .whatsapp-side-trigger:focus-visible{outline:3px solid #28bc83;outline-offset:3px}
 .whatsapp-side-label{writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:700;letter-spacing:.06em}
 .whatsapp-contact-panel[data-state=open]{animation:contact-open 160ms cubic-bezier(.2,.8,.2,1)}
@@ -14,5 +14,5 @@
 @keyframes nav-close{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-5px)}}
 @keyframes nav-overlay-open{from{opacity:0}to{opacity:1}}
 @keyframes nav-overlay-close{from{opacity:1}to{opacity:0}}
-@media(max-width:1023px){.whatsapp-side-trigger{top:auto;bottom:calc(7.5rem + env(safe-area-inset-bottom));right:12px;transform:none;width:52px;height:52px;padding:0;border-radius:50%;background:#167c49}.whatsapp-side-label{display:none}}
+@media(max-width:1023px){.whatsapp-side-trigger{top:auto;bottom:calc(7.5rem + env(safe-area-inset-bottom));right:12px;transform:none;width:52px;height:52px;padding:0;border-radius:50%;background:#25d366}.whatsapp-side-label{display:none}}
 @media(prefers-reduced-motion:reduce){.mobile-nav-panel,.mobile-nav-overlay,.whatsapp-contact-panel{animation-duration:.01ms!important}.whatsapp-side-trigger{transition:none}}

@@ -303,7 +303,7 @@ export default function Footer() {
         aria-hidden="true">
         
         <div className="mx-auto max-w-[1600px] overflow-hidden">
-          <div className="flex select-none items-end justify-center whitespace-nowrap font-heading text-[18vw] font-extrabold leading-[0.72] tracking-[-0.075em] text-white/[.055] sm:text-[15vw] lg:text-[12vw]">
+          <div className="flex select-none items-end justify-center whitespace-nowrap font-heading text-[16vw] font-extrabold leading-[0.72] tracking-[-0.075em] text-white/[.055] sm:text-[13.5vw] lg:text-[10.5vw]">
             <span className="text-cyan/[.12]">MLŽ</span><span>IDLA</span><sup className="ml-1 self-start pt-[1.8vw] text-[2.2vw] tracking-normal text-white/[.09]">®</sup>
           </div>
         </div>

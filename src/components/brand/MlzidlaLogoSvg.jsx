@@ -15,7 +15,7 @@ export default function MlzidlaLogoSvg({ variant = 'horizontal', className = '',
   if (variant === 'icon') return <MlzidlaIcon className={className} />;
   const slogan = variant === 'slogan';
   return (
-    <svg viewBox={`0 0 ${slogan ? 520 : 470} 100`} className={className} fill="currentColor" role="img" aria-label={title}>
+    <svg viewBox={`0 0 ${slogan ? 580 : 500} 100`} className={className} fill="currentColor" role="img" aria-label={title}>
       <title>{title}</title>
       <g transform="translate(0 0)">
         <path d="M0 100V52C0 23.3 26.9 0 60 0s60 23.3 60 52v48H96V52c0-16.6-16.1-30-36-30S24 35.4 24 52v48H0Z" />

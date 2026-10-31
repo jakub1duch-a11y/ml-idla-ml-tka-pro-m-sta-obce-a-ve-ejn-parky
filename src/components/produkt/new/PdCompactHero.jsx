@@ -6,6 +6,8 @@ import { getFamily, getLine } from '@/lib/productFamilies';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 
+import { eightHourWaterCost, WATER_PRICE_CZK_M3 } from '@/lib/waterCost';
+
 function cleanText(value = '') {
   return String(value).
   replace(/<[^>]*>/g, ' ').
@@ -35,11 +37,12 @@ export default function PdCompactHero({ product }) {
   ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name)))];
   const image = imageCandidates[imageIndex] || '';
   const intro = cleanText(product.short_description || product.description || '');
+  const cost = eightHourWaterCost(product.water_consumption);
   const facts = [
-  product.material && { icon: ShieldCheck, label: 'Materiál', value: product.material },
-  product.pressure && { icon: Gauge, label: 'Tlak', value: product.pressure },
-  product.water_consumption && { icon: Droplets, label: 'Voda', value: product.water_consumption }].
-  filter(Boolean).slice(0, 3);
+    { icon: ShieldCheck, label: 'Materiál', value: product.material || 'Upřesníme v nabídce' },
+    { icon: Gauge, label: 'Tlak', value: product.pressure || 'Upřesníme v nabídce' },
+    { icon: Droplets, label: 'Voda', value: product.water_consumption || 'Průtok upřesníme v nabídce' },
+  ];
 
   return (
     <section id="prehled" className="scroll-mt-28 bg-[#F7FBFD] !px-0">
@@ -61,17 +64,19 @@ export default function PdCompactHero({ product }) {
 
 
 
-          {facts.length > 0 &&
-          <div className="mt-6 grid grid-cols-3 gap-2">
+          
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {facts.map(({ icon: Icon, label, value }) =>
-            <div key={label} className="rounded-[18px] border border-[#D8E8ED] min-w-0 bg-white p-2.5 sm:p-3.5">
+            <div key={label} className="min-w-0 rounded-[18px] border border-[#D8E8ED] bg-white p-2.5 last:col-span-2 sm:p-3.5 sm:last:col-span-1">
                   <Icon size={16} strokeWidth={1.6} className="text-[#0B8EC5]" />
                   <p className="mt-2 font-mono text-[8px] font-bold uppercase tracking-[.16em] text-slate-600">{label}</p>
                   <p className="mt-1 break-words text-[12px] font-semibold leading-5 text-[#0A2342]">{value}</p>
+                  {label === 'Voda' && <p className="mt-1 text-xs leading-5 text-slate-700">
+                    {cost ? <>Za 8 h mlžení cca <strong>{cost} Kč</strong> při sazbě {WATER_PRICE_CZK_M3.toLocaleString('cs-CZ')} Kč/m³ (vodné a stočné).</> : 'Cenu za 8 h mlžení upřesníme podle průtoku.'}
+                  </p>}
                 </div>
             )}
             </div>
-          }
 
           <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-7 sm:flex sm:flex-wrap [&>a]:px-3 sm:[&>a]:px-5">
             <Link

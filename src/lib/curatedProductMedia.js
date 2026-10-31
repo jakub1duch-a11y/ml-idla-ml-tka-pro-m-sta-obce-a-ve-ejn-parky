@@ -15,6 +15,7 @@ export const CURATED_PRODUCT_MEDIA = {
     }
   ],
   "linea-mlzitko": [
+    detailPhotos["linea-mlzitko"],
     {
       "url": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
       "title": "Sloupová LINEA s BENDY v zahradě",

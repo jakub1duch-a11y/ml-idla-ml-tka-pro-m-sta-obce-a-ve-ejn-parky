@@ -1,5 +1,8 @@
+import detailPhotos from '../../data/product-detail-photos.json';
+
 export const CURATED_PRODUCT_MEDIA = {
   "mlzitko-bendy": [
+    detailPhotos["mlzitko-bendy"],
     {
       "url": "/media/optimized/e7593e68f_realizace-IMG_5072.webp",
       "title": "BENDY a LINEA v zahradě",

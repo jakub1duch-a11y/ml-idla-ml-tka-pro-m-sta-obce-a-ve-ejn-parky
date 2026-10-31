@@ -145,6 +145,8 @@ const AuthenticatedApp = () => {
         <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzny-mrak-1414" replace />} />
         <Route path="/produkt/mlzitko-mrak" element={<Navigate to="/produkt/mlzny-mrak-1414" replace />} />
         <Route path="/produkt/gate70" element={<Navigate to="/produkt/mlzna-brana-gate" replace />} />
+        <Route path="/produkt/linea-solo" element={<Navigate to="/produkt/Linea-ce" replace />} />
+        <Route caseSensitive path="/produkt/linea-ce" element={<Navigate to="/produkt/Linea-ce" replace />} />
         <Route path="/produkt/:slug" element={<ProduktDetail />} />
         <Route path="/produkt2/:slug" element={<ProduktDetail />} />
         <Route path="/search-analytics" element={<SearchAnalytics />} />

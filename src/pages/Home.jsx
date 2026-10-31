@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import HomeHero from '@/components/home/new/HomeHero';
+import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import '@/styles/urban-cooling-experience.css';
@@ -31,6 +32,7 @@ export default function Home() {
     <div className="home-atmosphere">
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
+        <TopGateHeroSlider />
         <HomeHero />
         <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
           <UrbanCoolingExperience />

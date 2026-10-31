@@ -204,8 +204,15 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
             animate={reduced ? undefined : { x: ['-160%', '430%'], opacity: [0, 0.55, 0] }}
             transition={reduced ? undefined : { duration: 3.8, ease: 'easeInOut', repeat: Infinity, repeatDelay: 2.4 }}
           />
-          <span className="pointer-events-none absolute left-3 top-3 z-30 rounded-full border border-white/70 bg-white/75 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[.14em] text-[#075D70] shadow-sm backdrop-blur-md">Studio preview</span>
+
         </>
+      )}
+
+      {/* Product-specific caption instead of generic Studio preview; clean catalog cards already show the product title below the image. */}
+      {!cleanPreview && product?.name && (
+        <span className="pointer-events-none absolute bottom-3 left-3 z-30 max-w-[75%] truncate rounded-full border border-white/70 bg-white/85 px-3 py-1.5 text-[11px] font-semibold text-[#153863] shadow-sm backdrop-blur-md" title={product.name}>
+          {product.name}
+        </span>
       )}
 
       {/* View type badge */}

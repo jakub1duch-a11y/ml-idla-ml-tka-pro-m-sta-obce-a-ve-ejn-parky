@@ -37,7 +37,7 @@
 }
 .mlz-wordmark__name {
   display: inline-block;
-  font-family: "Manrope", "Inter", sans-serif;
+  font-family: var(--font-heading, "Montserrat", Arial, sans-serif);
   font-size: 1.75rem;
   font-weight: 750;
   letter-spacing: -0.045em;

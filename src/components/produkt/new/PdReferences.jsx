@@ -4,6 +4,7 @@ import { ArrowRight, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
+import MrakSizeBadge from '@/components/produkt/MrakSizeBadge';
 
 export default function PdReferences({ product }) {
   const [refs, setRefs] = useState([]);
@@ -61,11 +62,14 @@ export default function PdReferences({ product }) {
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((p) => (
                 <Link key={p.id} to={`/produkt/${p.slug}`} className="product-motion-card group block overflow-hidden rounded-[1.5rem] border border-[#EAF5FB] bg-white transition-all hover:-translate-y-1 hover:border-[#22D3EE]/50">
-                  <ProductHoverImage
+                  <div className="relative">
+                    <span className="pointer-events-none absolute left-3 top-3 z-40"><MrakSizeBadge slug={p.slug} /></span>
+                    <ProductHoverImage
                     product={p}
                     alt={p.name + ' – produktový náhled'}
                     className="aspect-[4/3] bg-[#EAF5FB]"
                   />
+                  </div>
                   <div className="flex items-center justify-between p-4">
                     <div>
                       <h3 className="font-heading text-sm font-semibold text-[#0D2F4F]">{p.name}</h3>

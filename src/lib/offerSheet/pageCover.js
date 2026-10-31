@@ -14,8 +14,8 @@ export async function drawCover(ctx, d) {
   header(ctx, { tagline: true });
   const main = d.variants.find((v) => v.recommended) || d.variants[0];
   const second = d.variants.find((v) => v !== main);
-  text(ctx, 'OBCHODNÍ NABÍDKA', 70, 290, { weight: 300, size: 46, family: 'Manrope', color: C.navy });
-  let y = wrap(ctx, main.title, 70, 366, 590, 74, { weight: 800, size: 70, family: 'Manrope', color: C.navy, spacing: -1 }, 2);
+  text(ctx, 'OBCHODNÍ NABÍDKA', 70, 290, { weight: 300, size: 46, family: 'Montserrat', color: C.navy });
+  let y = wrap(ctx, main.title, 70, 366, 590, 74, { weight: 800, size: 70, family: 'Montserrat', color: C.navy, spacing: -1 }, 2);
   y = wrap(ctx, d.intro, 70, y - 14, 580, 30, { size: 22, color: C.mute }, 2);
   ctx.fillStyle = C.blue;
   ctx.fillRect(70, y + 4, 64, 3);

@@ -7,7 +7,7 @@ const DISCLAIMER = 'Vizualizace je ilustrační – vytvořila ji AI podle origi
 export async function drawScene(ctx, d, scene, v, meta) {
   header(ctx, meta);
   text(ctx, 'VIZUALIZACE V PROSTORU', 70, 222, { weight: 700, size: 15, color: C.deep, spacing: 3 });
-  fitText(ctx, scene.envLabel, 70, 290, W - 140, { weight: 800, size: 54, family: 'Manrope', color: C.navy, spacing: -1 });
+  fitText(ctx, scene.envLabel, 70, 290, W - 140, { weight: 800, size: 54, family: 'Montserrat', color: C.navy, spacing: -1 });
   text(ctx, [v.title, scene.angleLabel].filter(Boolean).join(' · '), 70, 340, { weight: 500, size: 24, color: C.deep });
   drawCover(ctx, await loadImage(scene.url), 70, 380, W - 140, 825, 24);
   pill(ctx, 'ILUSTRAČNÍ AI VIZUALIZACE', 94, 404, { bg: 'rgba(255,255,255,0.92)' });
@@ -17,7 +17,7 @@ export async function drawScene(ctx, d, scene, v, meta) {
   text(ctx, 'Originální konstrukce', 195, 1546, { weight: 700, size: 15, color: C.navy, align: 'center' });
   text(ctx, 'rozhoduje pro výrobu', 195, 1566, { size: 13.5, color: C.mute, align: 'center' });
 
-  text(ctx, 'Umístění v prostoru', 360, 1278, { weight: 800, size: 26, family: 'Manrope', color: C.navy });
+  text(ctx, 'Umístění v prostoru', 360, 1278, { weight: 800, size: 26, family: 'Montserrat', color: C.navy });
   wrap(ctx, scene.note, 360, 1318, 810, 29, { size: 20, color: C.navy }, 3);
   roundRect(ctx, 360, 1430, 810, 150, 16, 'rgba(0,183,255,0.08)');
   wrap(ctx, DISCLAIMER, 384, 1466, 770, 24, { size: 15.5, color: C.mute }, 5);

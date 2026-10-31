@@ -5,6 +5,18 @@ const IMG = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/';
 
 export const MRAK_TYPES = [
   {
+    slug: 'mlzny-mrak-1413',
+    title: 'MRAK 1413',
+    size: '1 400 × 1 300 mm',
+    wall: '3 mm',
+    text: 'Organicky tvarovaný nerezový mrak s 5 mlžicími tryskami. Studiový náhled a dodané snímky v prostředí najdete v galerii této varianty.',
+    studio: IMG + '1eb08641b_63249829_1792550648424291.jpg',
+    details: [
+      { src: IMG + 'c672cbe7e_619763258_1793297364176067.jpg', label: 'MRAK 1413 · v prostředí' },
+      { src: IMG + 'b40910ae9_392114721_1793296371647105.jpg', label: 'MRAK 1413 · v zeleni' },
+    ],
+  },
+  {
     slug: 'mlzny-mrak-1414',
     title: 'MRAK 1414',
     size: 'cca 1 400 × 1 400 mm',

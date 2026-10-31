@@ -17,6 +17,7 @@ const PRODUCT_MEDIA_TAGS = Object.freeze({
   'linea-avenue': ['linea', 'avenue'],
   'linea-CE-gate': ['linea', 'gate'],
   'mlzitko-mrak': ['mrak'],
+  'mlzny-mrak-1413': ['mrak'],
   'mlzny-mrak-1414': ['mrak'],
   'mlzny-mrak-1480': ['mrak'],
   'mlzny-mrak-2424': ['mrak'],

@@ -1,6 +1,7 @@
 // Oddělené geometrie kolekce LINEA; původní URL zachovány.
 export const PRODUCT_MENU_GROUPS = [
   { title: 'MRAK a STÉBLO', links: [
+    { label: 'MLŽNÝ MRAK 1413', path: '/produkt/mlzny-mrak-1413' },
     { label: 'MLŽNÝ MRAK 1414', path: '/produkt/mlzny-mrak-1414' },
     { label: 'MLŽNÝ MRAK 1480', path: '/produkt/mlzny-mrak-1480' },
     { label: 'MLŽNÝ MRAK 2424', path: '/produkt/mlzny-mrak-2424' },

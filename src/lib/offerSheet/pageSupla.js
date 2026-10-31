@@ -16,7 +16,7 @@ function functions(ctx) {
     const x = 70 + i * 224;
     roundRect(ctx, x, 890, 208, 150, 16, C.soft);
     ctx.beginPath(); ctx.arc(x + 36, 930, 18, 0, Math.PI * 2); ctx.fillStyle = C.blue; ctx.fill();
-    text(ctx, String(i + 1), x + 36, 937, { weight: 800, size: 17, family: 'Manrope', color: C.white, align: 'center' });
+    text(ctx, String(i + 1), x + 36, 937, { weight: 800, size: 17, family: 'Montserrat', color: C.white, align: 'center' });
     fitText(ctx, label, x + 16, 984, 180, { weight: 700, size: 17, color: C.navy });
     wrap(ctx, body, x + 16, 1008, 180, 20, { size: 14, color: C.mute }, 2);
   });
@@ -28,7 +28,7 @@ async function boxPanel(ctx) {
   drawContain(ctx, box, 82, 1082, 336, 356);
   drawCover(ctx, service, 450, 1070, 280, 182, 20);
   drawCover(ctx, await loadImage(SUPLA_ASSETS.boxTerrace), 450, 1268, 280, 182, 20);
-  text(ctx, 'Rozvaděč s řízením', 760, 1108, { weight: 800, size: 25, family: 'Manrope', color: C.navy });
+  text(ctx, 'Rozvaděč s řízením', 760, 1108, { weight: 800, size: 25, family: 'Montserrat', color: C.navy });
   const items = ['Nerezový rozvaděč MLŽIDLA', 'Řídicí jednotka SUPLA / Wi-Fi', 'Ventil, filtrace a manometr', 'Box v zemi nebo na sloupku'];
   items.forEach((t, i) => {
     ctx.beginPath(); ctx.arc(772, 1148 + i * 44, 5, 0, Math.PI * 2); ctx.fillStyle = C.cyan; ctx.fill();
@@ -41,16 +41,16 @@ function priceCard(ctx, x, w, label, price, note, dark) {
   roundRect(ctx, x, 1478, w, 140, 20, dark ? C.ink : C.soft, dark ? null : C.line);
   text(ctx, label, x + 28, 1514, { weight: 700, size: 13, color: dark ? C.cyan : C.deep, spacing: 2 });
   if (price > 0) {
-    text(ctx, money(price), x + 28, 1566, { weight: 800, size: 40, family: 'Manrope', color: dark ? C.white : C.navy });
+    text(ctx, money(price), x + 28, 1566, { weight: 800, size: 40, family: 'Montserrat', color: dark ? C.white : C.navy });
     text(ctx, `bez DPH · s DPH ${money(price * 1.21)}`, x + 28, 1596, { size: 16, color: dark ? C.silver : C.mute });
-  } else text(ctx, 'Cena po ověření', x + 28, 1570, { weight: 800, size: 28, family: 'Manrope', color: dark ? C.white : C.navy });
+  } else text(ctx, 'Cena po ověření', x + 28, 1570, { weight: 800, size: 28, family: 'Montserrat', color: dark ? C.white : C.navy });
   if (note) text(ctx, note, x + w - 28, 1514, { size: 13, color: dark ? C.silver : C.mute, align: 'right' });
 }
 
 export async function drawSupla(ctx, d, meta) {
   header(ctx, meta);
   text(ctx, 'VOLITELNÉ CHYTRÉ ŘÍZENÍ', 70, 222, { weight: 700, size: 15, color: C.deep, spacing: 3 });
-  fitText(ctx, 'Mlžení řízené z mobilu', 70, 292, W - 140, { weight: 800, size: 58, family: 'Manrope', color: C.navy, spacing: -1 });
+  fitText(ctx, 'Mlžení řízené z mobilu', 70, 292, W - 140, { weight: 800, size: 58, family: 'Montserrat', color: C.navy, spacing: -1 });
   text(ctx, 'Komfortní ovládání, automatizace a přehledný provoz se SUPLA.', 70, 342, { weight: 500, size: 24, color: C.deep });
   hero(await loadImage(SUPLA_ASSETS.phone))(ctx);
   functions(ctx);

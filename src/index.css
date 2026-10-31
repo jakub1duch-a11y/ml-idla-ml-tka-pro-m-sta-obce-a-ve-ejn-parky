@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import url('./styles/brand-components.css');
 @import url('./styles/brand-logo-system.css');
 @import url('./styles/mobile-premium.css');
@@ -55,10 +55,10 @@
     --ring: 197 100% 50%;
     --radius: 14px;
     --site-header-height: 68px;
-    --font-heading: 'Space Grotesk', Arial, sans-serif;
-    --font-display: 'Space Grotesk', Arial, sans-serif;
-    --font-body: 'Albert Sans', Arial, sans-serif;
-    --font-reading: 'Albert Sans', Arial, sans-serif;
+    --font-heading: 'Montserrat', Arial, sans-serif;
+    --font-display: 'Montserrat', Arial, sans-serif;
+    --font-body: 'Inter', Arial, sans-serif;
+    --font-reading: 'Inter', Arial, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;
@@ -80,7 +80,7 @@
     --tracking-normal: 0;
     --tracking-wide: 0.025em;
     --font-heading-line-height: 1.1;
-    --font-heading-letter-spacing: -0.01em;
+    --font-heading-letter-spacing: -0.025em;
     --font-body-line-height: 1.55;
     --brand-white: 203 67% 98%;
   }
@@ -98,11 +98,11 @@
     --brand-destructive: #C2410C;
     --brand-cyan-dark: #007ACB;
     --brand-stainless-strong: #94A3B8; /* brushed stainless reference */
-    --brand-font-heading: 'Space Grotesk', Arial, sans-serif;
-    --brand-font-body: 'Albert Sans', Arial, sans-serif;
+    --brand-font-heading: 'Montserrat', Arial, sans-serif;
+    --brand-font-body: 'Inter', Arial, sans-serif;
     --brand-font-script: var(--brand-font-heading);
     --brand-font-heading-line-height: 1.1;
-    --brand-font-heading-letter-spacing: -0.01em;
+    --brand-font-heading-letter-spacing: -0.025em;
     --brand-font-body-line-height: 1.55;
     --brand-font-weight-regular: 400;
     --brand-font-weight-medium: 500;
@@ -237,7 +237,7 @@
   --card: 192 22% 7%; --card-foreground: 180 23% 95%;
   --muted: 192 22% 10%; --muted-foreground: 191 15% 70%;
   --accent: 172 80% 62%; --border: 191 20% 19%;
-  --font-heading: 'Space Grotesk', Arial, sans-serif; --font-body: 'Albert Sans', Arial, sans-serif;
+  --font-heading: 'Montserrat', Arial, sans-serif; --font-body: 'Inter', Arial, sans-serif;
   --gate-ink: #080d0f; --gate-panel: #10191c; --gate-border: #26373c;
   --gate-text: #edf5f5; --gate-muted: #a7bdc2; --gate-accent: #4becd8;
   --gate-heat: #e98054;

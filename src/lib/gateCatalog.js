@@ -11,7 +11,7 @@ export const GATE_GROUPS = [
 ];
 
 const PRESENTATION = {
-  'linea-CE-gate': { group: 'portal', caption: 'Vstupní portál ze dvou zakřivených sloupů', text: 'Dva stejné sloupy LINEA CE 70 stojí proti sobě. Každý má pět trysek; rozteč průchodu se přizpůsobí místu.' },
+  'linea-CE-gate': { group: 'gate', caption: 'Mlžná brána ze dvou zakřivených sloupů', text: 'Dva stejné sloupy LINEA CE 70 stojí proti sobě. Každý má pět trysek; rozteč průchodu se přizpůsobí místu.' },
   'brana-bendy': { group: 'gate', caption: 'Průchozí brána ze dvou prvků STÉBLO', text: 'Dvě stejná mlžítka STÉBLO proti sobě vytvářejí průchod jemnou mlhou pro parky, promenády a veřejné prostory.' },
   'mlzna-brana-gate': { group: 'gate', caption: 'Rozměrové a tvarové varianty BRÁNA GATE', text: 'Pět doložených provedení s různou výškou, šířkou a profilem. Vyberte konkrétní variantu a zjistěte cenu.' },
   'bendy-alej': { group: 'arrangement', caption: 'Opakované prvky podél pěší trasy', text: 'STÉBLO ALEJ® skládá opakované prvky STÉBLO do mlžné trasy. Počet prvků a rozteče se volí podle délky a využití prostoru.' },

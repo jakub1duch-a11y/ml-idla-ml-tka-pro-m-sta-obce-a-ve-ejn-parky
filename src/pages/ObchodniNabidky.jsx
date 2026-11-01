@@ -33,9 +33,8 @@ export default function ObchodniNabidky() {
     const checkAccess = async () => {
       try {
         const user = await base44.auth.me();
-        const allowedEmails = ['jakub1duch@gmail.com', 'jakubjednaduch@gmail.com', 'meduna@holmtec.cz', 'kjuvideo@email.cz'];
-        const emailAllowed = user?.email && (user.email.toLowerCase().endsWith('@mlzidla.cz') || allowedEmails.includes(user.email.toLowerCase()));
-        if (user?.role === 'admin' && emailAllowed) setAuthorized(true);
+        // Stejná kontrola role jako v administraci; data dále chrání RLS.
+        if (user?.role === 'admin') setAuthorized(true);
         else window.location.replace('/admin-login?returnTo=/obchodni-nabidky');
       } catch (_error) { window.location.replace('/admin-login?returnTo=/obchodni-nabidky'); }
     };

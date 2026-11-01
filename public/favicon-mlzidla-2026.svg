@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+<title id="title">MLŽIDLA.cz – mlžná brána a kapka</title>
+<rect width="128" height="128" rx="25" fill="#071A2F"/>
+<g fill="#FFFFFF" transform="translate(16 24) scale(.8)">
+<path d="M0 100V52C0 23.3 26.9 0 60 0s60 23.3 60 52v48H96V52c0-16.6-16.1-30-36-30S24 35.4 24 52v48H0Z"/>
+<path d="M60 46c-6 9-11 15.5-11 21.5a11 11 0 0 0 22 0C71 61.5 66 55 60 46Z"/>
+</g>
+</svg>

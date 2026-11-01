@@ -33,8 +33,9 @@ export const PRODUCT_HERO_SLIDES = [
     title: 'MLŽÍTKO KRUH',
     description: 'Designové mlžítko pro příjemné osvěžení veřejného prostoru.',
     benefits: ['Ochlazuje okolí', 'Osvěžuje lidi', 'Zvýrazňuje prostor'],
-    image: MEDIA + 'c657064ba_kruh_desktop.webp',
-    mobileImage: MEDIA + 'ef61f1ba6_kruh_mobile.webp',
+    image: MEDIA + 'bb98ea004_kruh_gate_hero_desktop.webp',
+    tabletImage: MEDIA + 'a14239929_kruh_gate_hero_tablet.webp',
+    mobileImage: MEDIA + 'e81ee6d1d_kruh_gate_hero_mobile.webp',
     link: '/produkt/mlzitko-kruh',
   },
 ];
@@ -70,12 +71,12 @@ export default function TopGateHeroSlider() {
         <div className="mlz-product-hero__media" aria-hidden="true">
           <picture>
             <source media="(max-width: 639px)" srcSet={slide.mobileImage} type="image/webp" />
+            {slide.tabletImage && <source media="(max-width: 1100px)" srcSet={slide.tabletImage} type="image/webp" />}
             <img src={slide.image} alt="" loading={index === 0 ? 'eager' : 'lazy'}
               fetchPriority={index === 0 ? 'high' : 'auto'} decoding="async" />
           </picture>
         </div>
         <div className="mlz-product-hero__copy">
-          <div className="mlz-product-hero__brand" aria-label="MLŽIDLA.CZ"><span className="mlz-product-hero__brand-mark" aria-hidden="true"><i /></span><span>MLŽIDLA.CZ</span></div>
           <p className="mlz-product-hero__eyebrow">{slide.category}</p>
           <h2 className="mlz-product-hero__title">{slide.title}</h2>
           <span className="mlz-product-hero__rule" aria-hidden="true" />

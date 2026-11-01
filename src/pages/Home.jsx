@@ -5,6 +5,7 @@ import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import '@/styles/reference-motion.css';
+import '@/styles/home-clean-layout.css';
 
 // Sekce pod hero se načítají až po prvním vykreslení → rychlejší první zobrazení.
 const HomeOverview = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeOverview })));
@@ -27,7 +28,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="home-atmosphere">
+    <div className="home-atmosphere home-clean">
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
         <TopGateHeroSlider />

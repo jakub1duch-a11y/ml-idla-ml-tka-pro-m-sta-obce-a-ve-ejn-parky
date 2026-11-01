@@ -74,7 +74,7 @@ export default function TopGateHeroSlider() {
           </picture>
         </div>
         <div className="mlz-product-hero__copy">
-          {slide.id === 'gate' && <div className="mlz-product-hero__brand" aria-label="MLŽIDLA.CZ"><span className="mlz-product-hero__brand-mark" aria-hidden="true"><i /></span><span>MLŽIDLA.CZ</span></div>}
+          <div className="mlz-product-hero__brand" aria-label="MLŽIDLA.CZ"><span className="mlz-product-hero__brand-mark" aria-hidden="true"><i /></span><span>MLŽIDLA.CZ</span></div>
           <p className="mlz-product-hero__eyebrow">{slide.category}</p>
           <h2 className="mlz-product-hero__title">{slide.title}</h2>
           <span className="mlz-product-hero__rule" aria-hidden="true" />

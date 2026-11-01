@@ -1,22 +1,20 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
-import HomeHero from '@/components/home/new/HomeHero';
 import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
-import '@/styles/urban-cooling-experience.css';
 import '@/styles/reference-motion.css';
-import '@/styles/home-hero-transition.css';
+import '@/styles/home-clean-layout.css';
 
 // Sekce pod hero se načítají až po prvním vykreslení → rychlejší první zobrazení.
-const UrbanCoolingExperience = lazy(() => import('@/components/home/new/UrbanCoolingExperience'));
+const HomeOverview = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeOverview })));
+const HomeTechnology = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeTechnology })));
+const HomeHolmTec = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeHolmTec })));
 const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
 const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip'));
-const ProKohoSection = lazy(() => import('@/components/home/new/ProKohoSection'));
 const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSteps'));
 const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
-const HomeNews = lazy(() => import('@/components/home/new/HomeNews'));
 
 export default function Home() {
   useEffect(() => {
@@ -30,20 +28,18 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="home-atmosphere">
+    <div className="home-atmosphere home-clean">
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
         <TopGateHeroSlider />
-        <div className="home-hero-transition" aria-hidden="true" />
-        <HomeHero />
         <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
-          <UrbanCoolingExperience />
+          <HomeOverview />
           <ProductPhotoGallery />
+          <HomeTechnology />
           <ReferencesStrip />
-          <ProKohoSection />
+          <HomeHolmTec />
           <CooperationSteps />
           <HomeInquiryForm />
-          <HomeNews />
         </Suspense>
         <MobileStickyBar />
       </MotionConfig>

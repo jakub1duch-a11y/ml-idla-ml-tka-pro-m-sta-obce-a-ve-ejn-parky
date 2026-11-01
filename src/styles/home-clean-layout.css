@@ -1,0 +1,20 @@
+/* Homepage only: eliminate ambient wallpaper behind clean editorial sections. */
+.home-atmosphere.home-clean {
+  background: #ffffff;
+}
+.home-atmosphere.home-clean::before,
+.home-atmosphere.home-clean::after {
+  content: none;
+  display: none;
+}
+.home-clean > section,
+.home-clean > div:not(.mobile-sticky-bar) {
+  position: relative;
+}
+.home-clean #home-product-gallery {
+  background: #0b263b;
+}
+@media (max-width: 640px) {
+  .home-clean section h1,
+  .home-clean section h2 { overflow-wrap: break-word; }
+}

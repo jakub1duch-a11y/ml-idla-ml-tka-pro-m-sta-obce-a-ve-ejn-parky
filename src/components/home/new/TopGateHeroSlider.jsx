@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Snowflake, Droplets, Leaf } from 'lucide-react';
+import { ArrowRight, Snowflake, Droplets, Leaf } from 'lucide-react';
 import './TopGateHeroSlider.css';
 
 // Jediná editovatelná šablona pro všechny produktové hero slidy.
@@ -44,12 +44,13 @@ export default function TopGateHeroSlider() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const start = useRef(null);
-  const select = useCallback((i) => setIndex((i + PRODUCT_HERO_SLIDES.length) % PRODUCT_HERO_SLIDES.length), []);
+  const [manualSelection, setManualSelection] = useState(false);
+  const select = useCallback((i) => { setManualSelection(true); setIndex((i + PRODUCT_HERO_SLIDES.length) % PRODUCT_HERO_SLIDES.length); }, []);
   useEffect(() => {
-    if (paused || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    if (paused || manualSelection || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
     const timer = window.setInterval(() => setIndex((i) => (i + 1) % PRODUCT_HERO_SLIDES.length), 9000);
     return () => window.clearInterval(timer);
-  }, [paused]);
+  }, [paused, manualSelection]);
   const slide = PRODUCT_HERO_SLIDES[index];
   return (
     <section className="mlz-product-hero" aria-label="Produktová prezentace MLŽIDLA.cz" aria-roledescription="karusel"
@@ -91,20 +92,21 @@ export default function TopGateHeroSlider() {
           <Link to={slide.link} className="mlz-product-hero__cta">Prohlédnout produkt <ArrowRight size={20} aria-hidden="true" /></Link>
         </div>
       </div>
-      <nav className="mlz-product-hero__nav" aria-label="Výběr produktů">
-        <div className="mlz-product-hero__dots">
+      <nav className="mlz-product-hero__nav" aria-label="Prohlédnout mlžítka">
+        <span className="mlz-product-hero__nav-label">Prohlédněte si mlžítka</span>
+        <div className="mlz-product-hero__products" role="group" aria-label="Vybrat produkt k zobrazení">
           {PRODUCT_HERO_SLIDES.map((item, i) =>
-            <button type="button" key={item.id} aria-label={`Zobrazit slide ${i + 1}: ${item.category} ${item.title}`}
-              aria-current={i === index ? 'true' : undefined}
+            <button type="button" key={item.id}
+              aria-label={`Zobrazit produkt ${item.title}`}
+              aria-pressed={i === index}
               onClick={() => select(i)}
-              className={i === index ? 'is-active' : ''} />
+              className={`mlz-product-hero__product ${i === index ? 'is-active' : ''}`}>
+              <span className="mlz-product-hero__product-thumb" aria-hidden="true"><img src={item.image} alt="" loading="lazy" /></span>
+              <span className="mlz-product-hero__product-text"><span className="mlz-product-hero__product-number">{String(i + 1).padStart(2, '0')}</span><span className="mlz-product-hero__product-name">{item.title === '1414' ? 'MRAK 1414' : item.title}</span></span>
+            </button>
           )}
-          <span className="mlz-product-hero__counter">{String(index + 1).padStart(2, '0')} / {String(PRODUCT_HERO_SLIDES.length).padStart(2, '0')}</span>
         </div>
-        <div className="mlz-product-hero__arrows">
-          <button type="button" aria-label="Předchozí slide" onClick={() => select(index - 1)}><ArrowLeft size={20} /></button>
-          <button type="button" aria-label="Další slide" onClick={() => select(index + 1)}><ArrowRight size={20} /></button>
-        </div>
+        <span className="mlz-product-hero__counter" aria-label={`Produkt ${index + 1} ze ${PRODUCT_HERO_SLIDES.length}`}>{String(index + 1).padStart(2, '0')} / {String(PRODUCT_HERO_SLIDES.length).padStart(2, '0')}</span>
       </nav>
     </section>
   );

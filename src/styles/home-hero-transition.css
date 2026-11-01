@@ -1,0 +1,37 @@
+/* MLŽIDLA.cz – klidná návaznost fullscreen hero na další obsah.
+   Samotný produktový slider zůstává 100svh, bez zásahu do fotek či typografie. */
+.home-hero-transition {
+  position: relative;
+  height: clamp(38px, 5.5vw, 86px);
+  background: linear-gradient(180deg, #07131d 0%, #081a29 52%, #071a2f 100%);
+  isolation: isolate;
+}
+.home-hero-transition::before {
+  content: "";
+  position: absolute;
+  top: clamp(14px, 2vw, 30px);
+  left: 50%;
+  width: min(74%, 900px);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(147, 206, 231, .2), transparent);
+}
+/* Pod prvním fullscreen sliderem se již nesmí znovu připočítat výška sticky hlavičky. */
+.home-atmosphere .home-media-slider .home-hero-copy {
+  padding-top: clamp(70px, 8vw, 126px);
+  padding-bottom: clamp(82px, 8vw, 128px);
+}
+@media (max-width: 1023px) {
+  .home-hero-transition { height: clamp(26px, 5svh, 46px); }
+  .home-hero-transition::before { top: 12px; width: 78%; }
+  .home-atmosphere .home-media-slider {
+    padding-top: 0;
+  }
+  .home-atmosphere .home-media-slider .home-hero-copy {
+    padding-top: clamp(42px, 6svh, 72px);
+    padding-bottom: clamp(46px, 6svh, 76px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-transition { scroll-behavior: auto; }
+}

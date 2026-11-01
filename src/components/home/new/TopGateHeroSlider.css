@@ -164,3 +164,98 @@
   .mlz-product-hero__brand { margin-bottom: 10px; }
   .mlz-product-hero__frame--gate .mlz-product-hero__title { font-size: 38px; }
 }
+
+/* V5 – The entire slider occupies exactly one visible viewport.
+   Header is fixed and overlays the document: reserve its height INSIDE
+   the 100svh section, then split the remaining area between slide and controls.
+   No minimum pixel height may force the next section below the fold. */
+.mlz-product-hero {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  padding-top: var(--site-header-height, 68px);
+  overflow: hidden;
+}
+.mlz-product-hero__frame {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  width: 100%;
+}
+.mlz-product-hero__nav {
+  box-sizing: border-box;
+  flex: 0 0 var(--hero-nav-height, 60px);
+  min-height: 0;
+  width: 100%;
+}
+@media (max-width: 639px) {
+  .mlz-product-hero__frame {
+    min-height: 0;
+    height: auto;
+    flex: 1 1 0;
+    justify-content: flex-end;
+  }
+  .mlz-product-hero__media { inset: 0; height: 100%; }
+  .mlz-product-hero__copy,
+  .mlz-product-hero__frame--gate .mlz-product-hero__copy {
+    box-sizing: border-box;
+    flex: 0 1 auto;
+    max-height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding: clamp(8px, 1.4svh, 15px) 21px clamp(8px, 1.8svh, 26px);
+  }
+  .mlz-product-hero__brand {
+    margin-bottom: clamp(5px, 1.4svh, 15px);
+  }
+  .mlz-product-hero__eyebrow,
+  .mlz-product-hero__frame--gate .mlz-product-hero__eyebrow {
+    margin-bottom: clamp(4px, 1svh, 8px);
+  }
+  .mlz-product-hero__title,
+  .mlz-product-hero__frame--gate .mlz-product-hero__title {
+    font-size: clamp(29px, min(9.5vw, 5svh), 48px);
+    line-height: 1.02;
+  }
+  .mlz-product-hero__rule {
+    margin: clamp(6px, 1.35svh, 17px) auto;
+  }
+  .mlz-product-hero__description,
+  .mlz-product-hero__frame--gate .mlz-product-hero__description {
+    font-size: clamp(12px, 2.05svh, 17px);
+    line-height: 1.36;
+  }
+  .mlz-product-hero__benefits,
+  .mlz-product-hero__frame--gate .mlz-product-hero__benefits {
+    margin: clamp(8px, 1.8svh, 20px) auto clamp(9px, 1.8svh, 24px);
+  }
+  .mlz-product-hero__icon {
+    width: clamp(35px, 6svh, 48px);
+    height: clamp(35px, 6svh, 48px);
+  }
+  .mlz-product-hero__cta,
+  .mlz-product-hero__frame--gate .mlz-product-hero__cta {
+    min-height: 44px;
+    padding: 8px 12px;
+    font-size: clamp(12px, 1.9svh, 17px);
+  }
+}
+@media (max-height: 650px) and (min-width: 640px) {
+  .mlz-product-hero__frame--gate .mlz-product-hero__copy {
+    padding-block: 10px;
+  }
+  .mlz-product-hero__brand { margin-bottom: 9px; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__title { font-size: clamp(32px, 5vw, 54px); }
+  .mlz-product-hero__frame--gate .mlz-product-hero__benefits { margin-block: 10px; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__cta { min-height: 44px; }
+}
+@media (max-width: 380px) {
+  .mlz-product-hero__frame { min-height: 0; }
+}

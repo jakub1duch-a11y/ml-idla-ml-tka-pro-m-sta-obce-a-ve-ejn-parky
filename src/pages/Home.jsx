@@ -7,6 +7,7 @@ import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import '@/styles/urban-cooling-experience.css';
 import '@/styles/reference-motion.css';
+import '@/styles/home-hero-transition.css';
 
 // Sekce pod hero se načítají až po prvním vykreslení → rychlejší první zobrazení.
 const UrbanCoolingExperience = lazy(() => import('@/components/home/new/UrbanCoolingExperience'));
@@ -33,6 +34,7 @@ export default function Home() {
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
         <TopGateHeroSlider />
+        <div className="home-hero-transition" aria-hidden="true" />
         <HomeHero />
         <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
           <UrbanCoolingExperience />

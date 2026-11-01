@@ -5,10 +5,10 @@ import { ArrowRight, Droplets, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wr
 // Přehledné informace o výrobcích, funkci a výrobě.
 // Záměrně bez dalšího obrazového slideru, pohybujících se kulis a duplicitního loga.
 const benefits = [
-  { icon: Sun, title: 'Osvěžení v horkých dnech', text: 'Vodní mlha pomáhá zpříjemnit pobyt v letním počasí.' },
-  { icon: Droplets, title: 'Jemná vodní mlha', text: 'Mlžení přizpůsobujeme prostoru a potřebám jeho návštěvníků.' },
-  { icon: Sparkles, title: 'Design pro konkrétní místo', text: 'Nerezové prvky propojují funkci, architekturu a veřejný prostor.' },
-  { icon: SlidersHorizontal, title: 'Chytré řízení', text: 'Podle řešení lze nastavit časy, provozní režimy a automatizaci.' },
+  { icon: Sun, title: 'Osvěžení', text: 'Příjemné ochlazení v horkých dnech.' },
+  { icon: ShieldCheck, title: 'Nerezová výroba', text: 'Odolné konstrukce z nerezové oceli.' },
+  { icon: Sparkles, title: 'Design na míru', text: 'Originální řešení pro každý prostor.' },
+  { icon: SlidersHorizontal, title: 'Chytré řízení', text: 'Promyšlený provoz a automatizace.' },
 ];
 const facts = [
   { name: 'Konstrukce', value: 'Nerezová ocel' },
@@ -19,39 +19,36 @@ const facts = [
 
 export function HomeOverview() {
   return (
-    <>
-      <section className="bg-white py-20 text-[#0D2F4F] sm:py-24 lg:py-32" aria-labelledby="home-about-title">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-20 lg:px-10">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[.2em] text-[#087EAA]">Mlžidla.cz · česká výroba HolmTec</p>
-            <h1 id="home-about-title" className="mt-5 max-w-2xl font-heading text-[clamp(2.15rem,4.2vw,4.15rem)] font-bold leading-[1.12] tracking-[-.045em]">Designová mlžítka, která mění veřejný prostor.</h1>
-            <p className="mt-7 max-w-xl text-lg leading-8 text-[#39556B]">Navrhujeme a vyrábíme nerezová mlžítka, mlžné brány a originální mlžné sochy. Spojujeme přesné zpracování nerezu, moderní design a promyšlené řízení vodní mlhy.</p>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#526B7D]">Pro města, obce, parky, školy, sportoviště i soukromé prostory. Každé řešení přizpůsobujeme místu a způsobu využití.</p>
-            <div className="mt-9 flex flex-wrap items-center gap-5">
-              <Link to="/katalog-mlzitek" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[#0D2F4F] px-6 text-sm font-semibold text-white transition hover:bg-[#14517C]">Prohlédnout mlžítka <ArrowRight size={18} /></Link>
-              <Link to="/poptavka" className="inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-[#0A6795] hover:underline">Poptat řešení <ArrowRight size={17} /></Link>
+    <section className="bg-white text-[#0D2F4F]" aria-labelledby="home-about-title">
+      <div className="mx-auto max-w-7xl px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-20 lg:px-10 lg:pb-24 lg:pt-24">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.03fr_.97fr] lg:gap-16">
+          <div className="max-w-[610px]">
+            <p className="text-xs font-bold uppercase tracking-[.1em] text-[#076EDC]">MLŽIDLA.CZ · česká výroba HolmTec</p>
+            <h1 id="home-about-title" className="mt-5 font-heading text-[clamp(2.2rem,4.35vw,4.45rem)] font-extrabold leading-[1.09] tracking-[-.048em]">Designová mlžítka, která mění veřejný prostor.</h1>
+            <p className="mt-7 max-w-[580px] text-base leading-8 text-[#39556B] sm:text-lg">Navrhujeme a vyrábíme nerezová mlžítka, mlžné brány a originální mlžné instalace na míru pro města, parky, školy, sportovní areály i soukromé prostory.</p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link to="/katalog-mlzitek" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#086EF2] px-6 text-sm font-bold text-white transition-colors hover:bg-[#095DC6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#086EF2]">Prohlédnout mlžítka <ArrowRight size={18} /></Link>
+              <Link to="/poptavka" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#9FAFBE] bg-white px-6 text-sm font-bold text-[#0D2F4F] transition-colors hover:border-[#086EF2] hover:text-[#086EF2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#086EF2]">Poptat řešení</Link>
             </div>
           </div>
-          <figure className="overflow-hidden rounded-[28px] bg-[#EAF2F6] shadow-[0_18px_60px_rgba(10,35,66,.08)]">
-            <img className="aspect-[5/4] w-full object-cover" src="/media/optimized/e7593e68f_realizace-IMG_5072.webp" alt="Nerezová designová mlžítka Mlžidla.cz od výrobce HolmTec" loading="lazy" decoding="async" />
-            <figcaption className="border-t border-[#D7E5EC] bg-[#F4F8FB] px-6 py-4 text-xs font-medium text-[#4F6A7B]">Mlžidla.cz · návrh a výroba HolmTec, Trutnov</figcaption>
+          <figure className="m-0 overflow-hidden rounded-[26px] bg-[#EAF2F6]">
+            <picture>
+              <source media="(max-width: 639px)" srcSet="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4b88f291b_hero_steblo_gate_mobile_20261101.webp" type="image/webp" />
+              <source media="(max-width: 1023px)" srcSet="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b8e5c344d_hero_steblo_gate_tablet_20261101.webp" type="image/webp" />
+              <img className="block aspect-[5/4] w-full object-cover object-[28%_center] sm:aspect-[4/3] lg:aspect-[5/4]" src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9f27dc9cf_hero_steblo_gate_desktop_20261101.webp" alt="Mlžná brána STÉBLO GATE výrobce Mlžidla.cz – HolmTec v parku" loading="lazy" decoding="async" />
+            </picture>
           </figure>
         </div>
-      </section>
-      <section className="bg-[#F4F8FB] py-20 text-[#0D2F4F] sm:py-24" aria-labelledby="home-benefits-title">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <p className="text-xs font-semibold uppercase tracking-[.2em] text-[#087EAA]">Proč mlžítka</p>
-          <h2 id="home-benefits-title" className="mt-4 max-w-2xl font-heading text-3xl font-bold tracking-[-.04em] sm:text-4xl">Osvěžení, design a pohodlí v jednom.</h2>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {benefits.map(({ icon: Icon, title, text }) => <article key={title} className="rounded-2xl border border-[#E1EAF0] bg-white p-7">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E8F5FB] text-[#087EAA]"><Icon size={23} strokeWidth={1.8} aria-hidden="true" /></div>
-              <h3 className="mt-6 font-heading text-lg font-bold leading-snug">{title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[#526B7D]">{text}</p>
-            </article>)}
-          </div>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-5" aria-label="Hlavní přednosti našich mlžítek">
+          {benefits.map(({ icon: Icon, title, text }) => (
+            <article key={title} className="flex items-start gap-4 rounded-[20px] border border-[#E5EBF1] bg-[#FAFCFE] p-5 shadow-[0_5px_22px_rgba(10,35,66,.035)] sm:flex-col sm:gap-3 sm:p-6">
+              <Icon className="mt-0.5 shrink-0 text-[#086EF2]" size={30} strokeWidth={1.7} aria-hidden="true" />
+              <div><h2 className="font-heading text-base font-bold leading-snug sm:text-lg">{title}</h2><p className="mt-1 text-sm leading-6 text-[#526B7D]">{text}</p></div>
+            </article>
+          ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 

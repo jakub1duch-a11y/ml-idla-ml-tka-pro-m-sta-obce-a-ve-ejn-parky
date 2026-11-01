@@ -13,9 +13,9 @@ export const PRODUCT_HERO_SLIDES = [
     title: 'STÉBLO GATE®',
     description: 'Designová mlžná brána pro příjemné ochlazení veřejného prostoru.',
     benefits: ['Ochlazuje okolí', 'Osvěžuje lidi', 'Zvyšuje komfort'],
-    image: MEDIA + '078ec6bcb_steblo_gate_hero_desktop_new.webp',
-    tabletImage: MEDIA + '43221ccce_steblo_gate_hero_tablet_new.webp',
-    mobileImage: MEDIA + '504f6f116_steblo_gate_hero_mobile_new.webp',
+    image: MEDIA + '9f27dc9cf_hero_steblo_gate_desktop_20261101.webp',
+    tabletImage: MEDIA + 'b8e5c344d_hero_steblo_gate_tablet_20261101.webp',
+    mobileImage: MEDIA + '4b88f291b_hero_steblo_gate_mobile_20261101.webp',
     link: '/produkt/brana-bendy',
   },
   {

@@ -69,3 +69,98 @@
  .mlz-product-hero__nav { padding: 8px 20px; min-height: 60px; }
 }
 @media (prefers-reduced-motion: reduce) { .mlz-product-hero__cta { transition: none; } }
+
+
+/* V4 – Full viewport hero. One full-bleed image plus editable content.
+   Available height = visible viewport minus sticky header and carousel navigation. */
+.mlz-product-hero {
+  padding-top: 0;
+  --hero-nav-height: 60px;
+  --hero-header-height: var(--site-header-height, 68px);
+}
+.mlz-product-hero__frame {
+  width: 100%;
+  max-width: none;
+  min-height: max(590px, calc(100vh - var(--hero-header-height) - var(--hero-nav-height)));
+  min-height: max(590px, calc(100svh - var(--hero-header-height) - var(--hero-nav-height)));
+  height: auto;
+}
+.mlz-product-hero__media { inset: 0; }
+.mlz-product-hero__media img { object-fit: cover; object-position: center center; }
+.mlz-product-hero__frame--gate::before { background: none; }
+.mlz-product-hero__frame--gate .mlz-product-hero__copy {
+  width: clamp(340px, 29vw, 550px);
+  margin-left: 53%;
+  padding: clamp(20px, 3vh, 58px) 0;
+  align-self: center;
+}
+.mlz-product-hero__frame--gate .mlz-product-hero__title {
+  max-width: 450px;
+  font-size: clamp(44px, 5.25vw, 84px);
+  line-height: .98;
+  letter-spacing: -.045em;
+  overflow-wrap: normal;
+}
+.mlz-product-hero__frame--gate .mlz-product-hero__eyebrow { margin-bottom: clamp(10px, 2vh, 20px); }
+.mlz-product-hero__frame--gate .mlz-product-hero__description { max-width: 420px; font-size: clamp(16px, 1.6vw, 25px); line-height: 1.4; }
+.mlz-product-hero__frame--gate .mlz-product-hero__benefits { max-width: 405px; gap: 9px; margin-block: clamp(19px, 3vh, 36px); }
+.mlz-product-hero__frame--gate .mlz-product-hero__benefit { font-size: clamp(11px, 1.15vw, 15px); }
+.mlz-product-hero__frame--gate .mlz-product-hero__cta { min-height: 54px; padding: 13px 26px; }
+.mlz-product-hero__brand {
+  display: flex; align-items: center; gap: 15px;
+  margin-bottom: clamp(17px, 3vh, 42px);
+  font: 800 clamp(17px, 2vw, 31px)/1 'Montserrat', sans-serif;
+  letter-spacing: -.04em; white-space: nowrap;
+}
+.mlz-product-hero__brand-mark {
+  display: grid; place-items: center;
+  width: clamp(38px, 4vw, 62px); height: clamp(39px, 4vw, 62px);
+  flex: none; border: clamp(6px, .7vw, 11px) solid #fff;
+  border-bottom: 0; border-radius: 50% 50% 0 0;
+}
+.mlz-product-hero__brand-mark i {
+  display: block; width: 11px; height: 17px;
+  margin-top: 9px; border-radius: 60% 60% 65% 65%;
+  background: #13a5ff; transform: rotate(8deg);
+}
+.mlz-product-hero__nav { min-height: var(--hero-nav-height); box-sizing: border-box; }
+@media (max-width: 1100px) and (min-width: 640px) {
+ .mlz-product-hero__frame--gate .mlz-product-hero__copy { margin-left: 52%; width: 43%; }
+ .mlz-product-hero__frame--gate .mlz-product-hero__title { font-size: clamp(34px, 4.5vw, 64px); }
+ .mlz-product-hero__frame--gate .mlz-product-hero__brand { font-size: 17px; gap: 8px; }
+}
+@media (max-width: 639px) {
+  .mlz-product-hero__frame {
+    min-height: max(745px, calc(100svh - var(--hero-header-height) - var(--hero-nav-height)));
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .mlz-product-hero__media { position: absolute; inset: 0; height: 100%; }
+  .mlz-product-hero__media img { object-fit: cover; object-position: center top; }
+  .mlz-product-hero__frame::before {
+    position: absolute; inset: 0; height: auto; z-index: 1;
+    background: linear-gradient(180deg, rgba(7,19,29,0) 0%, rgba(7,19,29,.05) 35%, rgba(7,19,29,.92) 52%, #07131d 100%);
+  }
+  .mlz-product-hero__frame--gate::before { background: linear-gradient(180deg, rgba(7,19,29,.05) 0%, rgba(7,19,29,.1) 38%, #07131d 54%, #07131d 100%); }
+  .mlz-product-hero__frame--gate .mlz-product-hero__media img { object-position: center 8%; }
+  .mlz-product-hero__copy,
+  .mlz-product-hero__frame--gate .mlz-product-hero__copy {
+    width: 100%; margin: 0; padding: 15px 21px 26px;
+    min-height: 0; text-align: center; align-self: end;
+  }
+  .mlz-product-hero__brand {
+    justify-content: center; margin-bottom: 15px;
+    font-size: clamp(17px, 5vw, 23px); gap: 10px;
+  }
+  .mlz-product-hero__brand-mark { width: 36px; height: 36px; border-width: 6px; }
+  .mlz-product-hero__brand-mark i { width: 8px; height: 12px; margin-top: 5px; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__title { max-width: none; font-size: clamp(39px, 10.3vw, 56px); line-height: 1.02; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__eyebrow { font-size: 12px; margin-bottom: 8px; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__description { font-size: clamp(15px, 4vw, 18px); max-width: 440px; margin-inline: auto; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__benefits { max-width: 380px; margin: 20px auto 24px; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__cta { width: min(100%, 410px); }
+}
+@media (max-width: 380px) {
+  .mlz-product-hero__frame { min-height: 785px; }
+  .mlz-product-hero__brand { margin-bottom: 10px; }
+  .mlz-product-hero__frame--gate .mlz-product-hero__title { font-size: 38px; }
+}

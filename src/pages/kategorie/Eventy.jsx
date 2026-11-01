@@ -81,7 +81,7 @@ export default function Eventy() {
               <Link to="/poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
                 Poptávka pronájmu <ArrowRight size={15} />
               </Link>
-              <Link to="/mobilni-mlzitka-prodej" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/60 text-white text-sm font-semibold rounded-full hover:bg-white/10 transition-all">Prodej mobilních mlžítek <ArrowRight size={15} /></Link>
+              <Link to="/mobilni-mlzitka" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/60 text-white text-sm font-semibold rounded-full hover:bg-white/10 transition-all">Mobilní mlžítka · výroba a pronájem <ArrowRight size={15} /></Link>
               <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
                 <Phone size={14} /> +420 774 700 390
               </a>

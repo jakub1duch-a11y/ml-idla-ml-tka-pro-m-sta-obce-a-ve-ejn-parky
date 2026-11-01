@@ -13,7 +13,7 @@ export const PRODUCT_HERO_SLIDES = [
     title: 'STÉBLO GATE®',
     description: 'Designová mlžná brána pro příjemné ochlazení veřejného prostoru.',
     benefits: ['Ochlazuje okolí', 'Osvěžuje lidi', 'Zvyšuje komfort'],
-    image: MEDIA + '5b5742118_gate_desktop.webp',
+    image: MEDIA + '97309aaf2_steblo_gate_clean_live_overlay.webp',
     mobileImage: MEDIA + 'b6b10dbad_gate_mobile.webp',
     link: '/produkt/brana-bendy',
   },
@@ -65,7 +65,7 @@ export default function TopGateHeroSlider() {
         start.current = null;
       }}
     >
-      <div className="mlz-product-hero__frame" key={slide.id}>
+      <div className={`mlz-product-hero__frame mlz-product-hero__frame--${slide.id}`} key={slide.id}>
         <div className="mlz-product-hero__media" aria-hidden="true">
           <picture>
             <source media="(max-width: 639px)" srcSet={slide.mobileImage} type="image/webp" />
@@ -74,6 +74,7 @@ export default function TopGateHeroSlider() {
           </picture>
         </div>
         <div className="mlz-product-hero__copy">
+          {slide.id === 'gate' && <div className="mlz-product-hero__brand" aria-label="MLŽIDLA.CZ"><span className="mlz-product-hero__brand-mark" aria-hidden="true"><i /></span><span>MLŽIDLA.CZ</span></div>}
           <p className="mlz-product-hero__eyebrow">{slide.category}</p>
           <h2 className="mlz-product-hero__title">{slide.title}</h2>
           <span className="mlz-product-hero__rule" aria-hidden="true" />

@@ -224,7 +224,8 @@ const AuthenticatedApp = () => {
         <Route path="/obchodni-nabidky" element={<ObchodniNabidky />} />
         <Route path="/obrazove-nabidky" element={<ObrazoveNabidky />} />
         <Route path="/pronajem" element={<Pronajem />} />
-        <Route path="/mobilni-mlzitka-prodej" element={<MobilniMlzitkaProdej />} />
+        <Route path="/mobilni-mlzitka" element={<MobilniMlzitkaProdej />} />
+        <Route path="/mobilni-mlzitka-prodej" element={<Navigate to="/mobilni-mlzitka" replace />} />
         <Route path="/prezentace/mlzici-prostor-vysledky" element={<PrezentaceMlziciProstor />} />
         <Route path="/mlzitko" element={<Mlzitko />} />
         <Route path="/linea" element={<Linea />} />

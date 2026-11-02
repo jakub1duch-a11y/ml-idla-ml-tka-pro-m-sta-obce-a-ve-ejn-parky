@@ -112,11 +112,18 @@ export default function AdminMobileSalesHub() {
     && Number(selectedProfile?.unit_price_ex_vat) > 1
     ? Number(selectedProfile.unit_price_ex_vat) : null;
 
+  const pendingInquiries = useMemo(() => inquiries.filter((item) => {
+    const newStatus = ['nova', 'new', 'nova_poptavka', ''].includes(item.status || '');
+    const alreadyLinked = orders.some((order) => order.inquiry_id === item.id
+      && order.inquiry_type === item.sourceType && order.status !== 'rejected');
+    return newStatus && !alreadyLinked;
+  }), [inquiries, orders]);
+
   const counts = useMemo(() => ({
-    newInquiries: inquiries.filter((item) => ['nova', 'nova_poptavka', ''].includes(item.status || '')).length,
+    newInquiries: pendingInquiries.length,
     drafts: orders.filter((item) => DRAFT_STATUSES.includes(item.status)).length,
     active: orders.filter((item) => ACTIVE_STATUSES.includes(item.status)).length,
-  }), [inquiries, orders]);
+  }), [pendingInquiries, orders]);
 
   const visible = useMemo(() => orders.filter((item) => {
     const matchesStatus = filter === 'all' || (filter === 'drafts'
@@ -386,6 +393,38 @@ export default function AdminMobileSalesHub() {
         </div>
       </form>
     </section>}
+
+    <section className="space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-lg font-semibold">Nové poptávky k vyřízení</h2>
+        <span className="text-xs text-white/45">{pendingInquiries.length} bez navázané nabídky</span>
+      </div>
+      {loading && <p className="text-sm text-white/50">Načítání poptávek…</p>}
+      {!loading && pendingInquiries.length === 0 && (
+        <p className="rounded-xl border border-white/10 p-4 text-sm text-white/55">Žádná nová poptávka bez nabídky.</p>
+      )}
+      <div className="grid gap-3 md:grid-cols-2">
+        {pendingInquiries.slice(0, 6).map((item) => (
+          <article key={item.sourceType + ':' + item.id}
+            className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-white">{item.jmeno || item.name || 'Nová poptávka'}</p>
+                <p className="mt-1 break-all text-xs text-white/55">{item.email}</p>
+              </div>
+              <span className="shrink-0 text-xs text-white/35">{dateLabel(item.created_date)}</span>
+            </div>
+            <p className="mt-2 line-clamp-2 text-sm text-white/60">{item.zprava || item.message || 'Bez popisu'}</p>
+            <button type="button" onClick={() => startFromInquiry(item)}
+              className={BUTTON + ' mt-3 border border-cyan/35 text-cyan'}>
+              <FilePlus2 size={15} /> Vytvořit nabídku z poptávky
+            </button>
+          </article>
+        ))}
+      </div>
+      {pendingInquiries.length > 6 && <button type="button" onClick={() => navigate('/admin?tab=poptavky')}
+        className="text-sm text-cyan hover:underline">Zobrazit všechny poptávky</button>}
+    </section>
 
     <section className="space-y-3">
       <div className="flex flex-wrap items-end justify-between gap-2">

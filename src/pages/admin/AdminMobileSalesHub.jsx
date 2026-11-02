@@ -225,7 +225,7 @@ export default function AdminMobileSalesHub() {
     <header className="flex flex-wrap items-start justify-between gap-3">
       <div>
         <p className="text-xs font-semibold uppercase tracking-[.14em] text-cyan">MLŽIDLA / týmová aplikace</p>
-        <h1 className="mt-1 text-2xl font-semibold sm:text-3xl">Mobilní obchodní centrum</h1>
+        <h1 className="mt-1 text-2xl font-semibold sm:text-3xl">Obchodní centrum MLŽIDLA</h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">
           Poptávky a pracovní nabídky všech administrátorů na jednom místě.
           Koncepty se automaticky neodesílají.

@@ -38,7 +38,7 @@ import AdminMobileSalesHub from './AdminMobileSalesHub';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
-  { id: 'mobile-sales', label: 'Mobilní obchod', icon: BriefcaseBusiness },
+  { id: 'mobile-sales', label: 'Obchodní centrum', icon: BriefcaseBusiness },
   { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
   { id: 'chat', label: 'Týmový chat', icon: MessagesSquare },
   { id: 'development', label: 'Vývoj systému', icon: Activity },
@@ -192,7 +192,7 @@ export default function Admin() {
           <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />
           <button onClick={() => changeTab('mobile-sales')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
-            <BriefcaseBusiness size={16} /> Mobilní obchodní centrum
+            <BriefcaseBusiness size={16} /> Obchodní centrum
           </button>
           <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">

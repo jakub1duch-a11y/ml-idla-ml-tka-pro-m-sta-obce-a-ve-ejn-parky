@@ -166,7 +166,7 @@ export default function AdminMobileSalesHub() {
         draft.inquiry_type = linkedInquiry.sourceType;
       }
       if (amount != null) draft.total_price = amount;
-      await base44.entities.ProjectOrder.create(draft);
+      const created = await base44.entities.ProjectOrder.create(draft);
       setCreating(false);
       setForm(defaultForm);
       setFilter('drafts');

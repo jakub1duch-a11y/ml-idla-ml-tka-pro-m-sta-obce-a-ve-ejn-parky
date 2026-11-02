@@ -28,6 +28,7 @@ import ProduktDetail from '@/pages/ProduktDetail';
 import ProduktDetail2 from '@/pages/ProduktDetail2';
 import SearchAnalytics from '@/pages/SearchAnalytics';
 import CustomerPortal from '@/pages/CustomerPortal';
+import AppStart from '@/pages/AppStart';
 
 import '@/components/portal/googleAdsPortal';
 import Poradce from '@/pages/Poradce';
@@ -238,6 +239,7 @@ const AuthenticatedApp = () => {
       </Route>
       <Route path="/mlzidla" element={<Navigate to="/katalog-mlzitek" replace />} />
       <Route path="/mlzidla/produkt/:id" element={<Navigate to="/katalog-mlzitek" replace />} />
+      <Route path="/aplikace" element={<AppStart />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

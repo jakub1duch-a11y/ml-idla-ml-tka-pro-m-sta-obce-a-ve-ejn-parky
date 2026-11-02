@@ -167,10 +167,38 @@ export default function AdminMobileSalesHub() {
       }
       if (amount != null) draft.total_price = amount;
       const created = await base44.entities.ProjectOrder.create(draft);
+      // Vazba na produkt je samostatný záznam — ostatní admini jej uvidí v nabídce.
+      let variantWarning = false;
+      if (selectedProduct && created?.id) {
+        try {
+          await base44.entities.OfferVariant.create({
+            inquiry_id: linkedInquiry?.id || 'manual-' + created.id,
+            ...(linkedInquiry ? { inquiry_type: linkedInquiry.sourceType } : {}),
+            project_order_id: created.id,
+            label: selectedProduct.name,
+            product_id: selectedProduct.id,
+            product_slug: selectedProduct.slug || '',
+            product_name: selectedProduct.name,
+            quantity: Math.max(1, Number(form.quantity || 1)),
+            price_status: verifiedUnitPrice == null ? 'manual_required' : 'catalog',
+            ...(verifiedUnitPrice == null ? {} : {
+              unit_price: verifiedUnitPrice,
+              total_price: amount,
+            }),
+            recommended: true,
+            sort_order: 0,
+          });
+        } catch (variantError) {
+          console.warn('Offer variant could not be attached', variantError);
+          variantWarning = true;
+        }
+      }
       setCreating(false);
       setForm(defaultForm);
       setFilter('drafts');
-      setNotice('Koncept nabídky je uložený pro celý administrátorský tým. Nebyl odeslán zákazníkovi.');
+      setNotice(variantWarning
+        ? 'Koncept byl uložen, ale produktovou položku se nepodařilo připojit. Ověřte ji v Sales Hubu. Nic nebylo odesláno.'
+        : 'Koncept a produktová položka jsou uloženy pro celý tým. Zákazníkovi nebylo nic odesláno.');
       await loadData();
     } catch (requestError) {
       setError(requestError?.message || 'Koncept se nepodařilo uložit.');

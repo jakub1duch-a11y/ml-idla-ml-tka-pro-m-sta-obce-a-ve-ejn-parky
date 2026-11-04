@@ -1,0 +1,97 @@
+{
+  "name": "CrmContact",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "google_sheet",
+        "gmail",
+        "base44",
+        "manual"
+      ],
+      "default": "google_sheet"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "replied",
+        "needs_action",
+        "follow_up",
+        "declined",
+        "closed"
+      ],
+      "default": "new"
+    },
+    "last_contacted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_inbound_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_outbound_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_subject": {
+      "type": "string"
+    },
+    "action_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "next_step": {
+      "type": "string"
+    },
+    "thread_url": {
+      "type": "string"
+    },
+    "sheet_name": {
+      "type": "string"
+    },
+    "sheet_row": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

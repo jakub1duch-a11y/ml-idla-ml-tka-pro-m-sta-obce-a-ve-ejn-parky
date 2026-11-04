@@ -1,0 +1,96 @@
+{
+  "name": "EmailMessage",
+  "type": "object",
+  "properties": {
+    "gmail_message_id": {
+      "type": "string"
+    },
+    "gmail_thread_id": {
+      "type": "string"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "inbound",
+        "outbound"
+      ],
+      "default": "inbound"
+    },
+    "from_email": {
+      "type": "string"
+    },
+    "to_email": {
+      "type": "string"
+    },
+    "cc": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "snippet": {
+      "type": "string"
+    },
+    "body_text": {
+      "type": "string"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "gmail_url": {
+      "type": "string"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "action_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "action_summary": {
+      "type": "string"
+    },
+    "sync_source": {
+      "type": "string",
+      "default": "gmail"
+    },
+    "synced_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "gmail_message_id",
+    "gmail_thread_id",
+    "direction"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

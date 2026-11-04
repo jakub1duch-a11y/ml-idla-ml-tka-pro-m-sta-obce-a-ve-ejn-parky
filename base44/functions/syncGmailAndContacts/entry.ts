@@ -22,11 +22,11 @@ function flattenBody(payload) {
   return (payload.parts || []).map(flattenBody).filter(Boolean).join('\n');
 }
 function htmlToText(value) {
-  return String(value || '').replace(/<style[\\s\\S]*?<\\/style>/gi, ' ').replace(/<script[\\s\\S]*?<\\/script>/gi, ' ').replace(/<br\\s*\\/?>(?=.)/gi, '\\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\\s{2,}/g, ' ').trim();
+  return String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
 }
 function parseAddress(value) {
   const text = String(value || '');
-  const email = text.match(/<([^>]+)>/)?.[1] || text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i)?.[0] || '';
+  const email = text.match(/<([^>]+)>/)?.[1] || text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || '';
   const name = text.replace(/<[^>]+>/g, '').replace(email, '').replace(/["']/g, '').trim();
   return { email: email.toLowerCase(), name };
 }
@@ -41,8 +41,7 @@ async function googleGet(url, accessToken) {
   return response.json();
 }
 async function readSheet(accessToken, sheetName) {
-  const range = sheetName + '!A1:W2000';
-  const data = await googleGet('https://sheets.googleapis.com/v4/spreadsheets/' + SPREADSHEET_ID + '/values/' + encodeURIComponent(range), accessToken);
+  const data = await googleGet('https://sheets.googleapis.com/v4/spreadsheets/' + SPREADSHEET_ID + '/values/' + encodeURIComponent(sheetName + '!A1:W2000'), accessToken);
   return data.values || [];
 }
 function findHeader(headers, patterns) {

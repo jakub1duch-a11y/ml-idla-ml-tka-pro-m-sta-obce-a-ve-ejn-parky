@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 
 const SPREADSHEET_ID = '1m-NObbjCYDYG6Sg3B-2g-TcLZkkqGzejDFfCKjqQyUE';
-const CONTACT_SHEETS = ['Eventy', 'ZOO a botanické zahrady', 'Domovy seniorů', 'Školy a školky', 'Koupaliště', 'Developeři', 'Architekti a projektanti'];
+const CONTACT_SHEETS = ['Eventy a festivaly', 'ZOO botanické a safari ČR SK', 'Školy školky a koupaliště', 'Architekti a projektanti', 'Města a veřejná správa', 'Developeři a investoři', 'Hotely a gastro', 'Umělci a veřejné instalace', 'Domovy seniorů', 'Lázeňské areály', 'Nemocnice a léčebny', 'Technické služby a zeleň'];
 const ACCOUNT_EMAIL = 'meduna@holmtec.cz';
 
 function headerValue(headers, name) {

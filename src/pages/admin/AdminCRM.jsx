@@ -222,8 +222,6 @@ export default function AdminCRM() {
         </div>
       </div>
 
-      <EmailSyncPanel onComplete={() => window.location.reload()} />
-
       {/* Overview */}
       {view === 'overview' && (
         <>

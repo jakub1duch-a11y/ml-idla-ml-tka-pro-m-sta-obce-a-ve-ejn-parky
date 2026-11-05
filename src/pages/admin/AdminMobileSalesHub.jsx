@@ -91,9 +91,10 @@ export default function AdminMobileSalesHub() {
     }
   }, []);
 
-  const loadData = useCallback(async () => {
-    setLoading(true);
-    setError('');
+  const loadData = useCallback(async (options = {}) => {
+    const silent = options?.silent === true;
+    if (!silent) setLoading(true);
+    if (!silent) setError('');
     try {
       const [orderResult, productResult, profileResult, inquiryResult, contactResult] = await Promise.allSettled([
         base44.entities.ProjectOrder.list('-created_date', 300),
@@ -122,10 +123,39 @@ export default function AdminMobileSalesHub() {
       }
     } catch (requestError) {
       setError(requestError?.message || 'Data se nepodařilo načíst.');
-    } finally { setLoading(false); }
+    } finally { if (!silent) setLoading(false); }
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
+
+  // Base44 je jediný zdroj dat. Nové webové poptávky a nabídky
+  // načítáme živě, bez exportu a duplicitní evidence.
+  useEffect(() => {
+    let scheduledRefresh;
+    const scheduleRefresh = () => {
+      if (document.visibilityState === 'hidden') return;
+      window.clearTimeout(scheduledRefresh);
+      scheduledRefresh = window.setTimeout(() => loadData({ silent: true }), 400);
+    };
+    const unsubscribers = [];
+    for (const entityName of ['Poptavka', 'ContactInquiry', 'ProjectOrder']) {
+      try {
+        const unsubscribe = base44.entities[entityName].subscribe(scheduleRefresh);
+        if (typeof unsubscribe === 'function') unsubscribers.push(unsubscribe);
+      } catch (error) {
+        console.warn('Realtime synchronizace není dostupná:', entityName, error);
+      }
+    }
+    // Záloha při výpadku realtime spojení a obnovení po návratu na kartu.
+    const poller = window.setInterval(scheduleRefresh, 60000);
+    document.addEventListener('visibilitychange', scheduleRefresh);
+    return () => {
+      window.clearTimeout(scheduledRefresh);
+      window.clearInterval(poller);
+      document.removeEventListener('visibilitychange', scheduleRefresh);
+      unsubscribers.forEach((unsubscribe) => unsubscribe());
+    };
+  }, [loadData]);
   useEffect(() => { loadWebStats(); }, [loadWebStats]);
 
   const selectedProduct = useMemo(() => products.find((item) => item.id === form.product_id), [products, form.product_id]);

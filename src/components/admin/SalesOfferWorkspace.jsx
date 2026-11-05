@@ -23,6 +23,9 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
   const [message, setMessage] = useState('');
   const [canvaUrl, setCanvaUrl] = useState('');
   const [savingCanva, setSavingCanva] = useState(false);
+  const [exportKind, setExportKind] = useState('pdf');
+  const [exportUrl, setExportUrl] = useState('');
+  const [savingExport, setSavingExport] = useState(false);
   const [preview, setPreview] = useState(null);
   const [previewLoading, setPreviewLoading] = useState(false);
 
@@ -82,6 +85,33 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
       await refresh();
     } catch (e) { setError(e?.message || 'Odkaz na Canvu se nepodařilo uložit.'); }
     finally { setSavingCanva(false); }
+  };
+
+  const saveExport = async () => {
+    const safe = validHttps(exportUrl);
+    if (!safe) { setError('Zadejte platný HTTPS odkaz na exportované PDF nebo WebP.'); return; }
+    const isPdf = exportKind === 'pdf';
+    if (assets.some(a => a.file_url === safe)) { setError('Tento export už je u nabídky připojený.'); return; }
+    setSavingExport(true); setError(''); setMessage('');
+    try {
+      await base44.entities.OfferAsset.create({
+        inquiry_id: order.inquiry_id || 'manual-' + order.id,
+        ...(order.inquiry_type ? { inquiry_type: order.inquiry_type } : {}),
+        project_order_id: order.id,
+        file_url: safe,
+        file_name: (order.quote_number || 'MLZIDLA') + (isPdf ? '_nabidka.pdf' : '_nabidka.webp'),
+        file_type: isPdf ? 'application/pdf' : 'image/webp',
+        asset_type: isPdf ? 'quote_pdf' : 'other',
+        title: isPdf ? 'Kompletní nabídka PDF' : 'Obrazová nabídka WebP',
+        description: 'Přiložený schválený export grafické nabídky; před odesláním ověřit obsah a QR.',
+        selected_for_offer: true,
+        generated_by_ai: false,
+        sort_order: 2,
+      });
+      setExportUrl(''); setMessage('Export nabídky byl připojen k zakázce. Žádný e-mail nebyl odeslán.');
+      await refresh();
+    } catch (e) { setError(e?.message || 'Uložení exportu selhalo.'); }
+    finally { setSavingExport(false); }
   };
 
   const loadEmail = async () => {
@@ -147,7 +177,19 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
           </button>
         </div>
         {validHttps(linkedCanvaAsset?.file_url) && <a href={linkedCanvaAsset.file_url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-xs text-cyan underline">Upravit návrh v Canvě <ExternalLink size={12}/></a>}
-        <p className="mt-3 text-xs text-white/45">Připojení Canva návrhu slouží k evidenci upravitelného zdroje. PDF/WebP z něj je potřeba vyexportovat a uložit jako přílohu; samotný odkaz není finální nabídka.</p>
+        <div className="mt-4 border-t border-white/10 pt-3">
+          <label className="block text-xs text-white/70">Připojit hotový export obrazové nabídky</label>
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+            <select value={exportKind} onChange={e => setExportKind(e.target.value)} className="rounded-lg border border-white/20 bg-[#0b1d27] px-2 py-2 text-sm" aria-label="Typ exportu">
+              <option value="pdf">PDF</option><option value="webp">WebP</option>
+            </select>
+            <input type="url" value={exportUrl} onChange={e => setExportUrl(e.target.value)}
+              placeholder="Odkaz na exportovaný soubor na Google Disku" aria-label="Odkaz na hotový export"
+              className="min-w-0 flex-1 rounded-lg border border-white/20 bg-[#0b1d27] px-3 py-2 text-sm text-white"/>
+            <button onClick={saveExport} disabled={savingExport} type="button" className={button}><Save size={14}/> Připojit export</button>
+          </div>
+        </div>
+        <p className="mt-3 text-xs text-white/45">Canva návrh je upravitelný zdroj. Hotové PDF a WebP uložte na Disk a sem připojte jejich odkazy. Tato akce soubory negeneruje ani neodesílá.</p>
       </div>
     </div>
 

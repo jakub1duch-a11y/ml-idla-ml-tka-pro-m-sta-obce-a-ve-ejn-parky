@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { CheckCircle2, ExternalLink, Eye, FileText, ReceiptText, Search, Send, Sparkles, Upload, X } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { withSignature } from '@/components/offers/messageSignature';
@@ -35,7 +36,13 @@ const SMART_SCENARIO_PRESETS = [
 ];
 
 export default function InquiryManager({ inquiries, products, offerProfiles = [], mediaFiles, projectOrders = [], onSent }) {
-  const [selectedId, setSelectedId] = useState(inquiries[0]?.key || '');
+  const [searchParams] = useSearchParams();
+  const requestedInquiry = searchParams.get('inquiry') || '';
+  const [selectedId, setSelectedId] = useState(() => inquiries.find(item => item.key === requestedInquiry)?.key || inquiries[0]?.key || '');
+  useEffect(() => {
+    if (requestedInquiry && inquiries.some(item => item.key === requestedInquiry)) setSelectedId(requestedInquiry);
+    else if (!selectedId && inquiries[0]?.key) setSelectedId(inquiries[0].key);
+  }, [requestedInquiry, inquiries, selectedId]);
   const [productId, setProductId] = useState('');
   const [basePrice, setBasePrice] = useState(0);
   const [installation, setInstallation] = useState(0);

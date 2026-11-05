@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import WorkBriefingPanel from '@/components/admin/WorkBriefingPanel';
+import GmailConversationsPanel from '@/components/admin/GmailConversationsPanel';
 
 const PRODUCT_NAME_CACHE = {};
 
@@ -121,6 +122,7 @@ export default function AdminDashboard() {
       )}
 
       <WorkBriefingPanel />
+      <GmailConversationsPanel />
 
       <section className="rounded-2xl border border-cyan/20 bg-gradient-to-br from-cyan/10 via-white/[.025] to-violet-400/[.04] p-5 sm:p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">

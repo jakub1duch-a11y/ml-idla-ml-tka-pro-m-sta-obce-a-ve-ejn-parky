@@ -436,7 +436,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         project_name: `${productForOffer.name} — ${selected.firma || selected.company || selected.name}`,
         client_name: selected.name, client_email: selected.email, client_phone: selected.telefon || selected.phone || '', client_company: selected.firma || selected.company || '',
         description: String(clientContent.project_goal || selected.message || '').slice(0, 2000), product_id: productForOffer.id, product_slug: productForOffer.slug, product_name: productForOffer.name,
-        quote_number: quoteNumber, quote_pdf_url: quoteDriveUrl, presentation_url: presentation?.presentation_url || '', presentation_pdf_url: presentation?.presentation_pdf_url || '', notebook_source_url: notebookSourceUrl,
+        quote_number: quoteNumber, quote_pdf_url: quoteDriveUrl, quote_drive_file_url: quoteDriveUrl, presentation_url: presentation?.presentation_url || '', presentation_pdf_url: presentation?.presentation_pdf_url || '', notebook_source_url: notebookSourceUrl,
         drive_case_folder_id: presentation?.drive_case_folder_id || quoteDriveCaseFolderId, drive_case_folder_url: presentation?.drive_case_folder_url || quoteDriveCaseFolderUrl,
         presentation_variant: audienceForOffer, issued_at: issuedAt.toISOString(), valid_until: validUntil.toISOString(), ar_url: arUrl, smart_control_included: false,
         status: 'draft', total_price: finalTotalForOffer, sender_email: senderEmail, bcc_recipients: BCC,

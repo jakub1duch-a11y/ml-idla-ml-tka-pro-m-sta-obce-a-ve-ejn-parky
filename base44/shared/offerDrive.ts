@@ -73,6 +73,27 @@ export async function uploadBytes(accessToken: string, folderId: string, bytes: 
   return { id: file.id as string, name: file.name as string, url: file.webViewLink || `https://drive.google.com/file/d/${file.id}/view` };
 }
 
+/**
+ * Uloží novou verzi stejnojmenného souboru do existující složky.
+ * Opakovaná synchronizace zachová Drive ID a historii verzí místo vytváření duplicit.
+ */
+export async function upsertBytes(accessToken: string, folderId: string, bytes: Uint8Array, filename: string, mimeType = 'application/pdf') {
+  const cleanName = safeName(filename, 'soubor');
+  const escaped = cleanName.replace(/'/g, "\\'");
+  const q = encodeURIComponent(`name='${escaped}' and '${folderId}' in parents and trashed=false`);
+  const existing = await driveJson(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,webViewLink)&pageSize=20&corpora=drive&driveId=${MLZNY_DRIVE_ID}&includeItemsFromAllDrives=true&supportsAllDrives=true`, accessToken);
+  const match = existing.files?.[0];
+  if (!match?.id) return uploadBytes(accessToken, folderId, bytes, cleanName, mimeType);
+  const response = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${encodeURIComponent(match.id)}?uploadType=media&supportsAllDrives=true&fields=id,name,webViewLink`, {
+    method: 'PATCH',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': mimeType },
+    body: bytes,
+  });
+  if (!response.ok) throw new Error(`Drive update ${response.status}: ${await response.text()}`);
+  const file = await response.json();
+  return { id: file.id as string, name: file.name as string, url: file.webViewLink || match.webViewLink || `https://drive.google.com/file/d/${file.id}/view`, updated: true };
+}
+
 export async function moveCaseToClosedOrders(accessToken: string, caseFolderId: string) {
   const metadata = await driveJson(`https://www.googleapis.com/drive/v3/files/${caseFolderId}?fields=parents&supportsAllDrives=true`, accessToken);
   const currentParents = (metadata.parents || []).join(',');

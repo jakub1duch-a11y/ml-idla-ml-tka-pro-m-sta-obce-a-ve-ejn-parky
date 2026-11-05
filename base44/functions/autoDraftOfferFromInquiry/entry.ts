@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
-import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, findSmartControlPricing, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
+import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, findVolumePricing, findSmartControlPricing } from '../../shared/pricingSheet.ts';
 
 const AUDIENCES = ['city_public', 'residential', 'wellness_hospitality', 'architecture_design', 'custom'];
 
@@ -188,6 +188,9 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : 'manual_required';
     }
 
+    // Souhrnné ceny 2/3 ks jsou v aktuálním katalogu; nikdy nepoužívat staré cenové kopie.
+    const volumePricing = !customMode && unitPrice > 0 ? await findVolumePricing(base44, pricing.sheet_key) : {};
+
     // ── FÁZE 3: Načtení cen smart řízení SUPLA z tabulky Kalkulace 2026 ──
     const smartPricing = await findSmartControlPricing(base44);
     const smartControlPrice = Number(smartPricing.complete_supla_ex_vat) || 0;
@@ -275,7 +278,9 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
             items.push({ ...line, quantity: Number(line.quantity || 0) * quantity, total: Number(line.total || 0) * quantity, source: customPricing.source });
           }
         } else {
-          items.push({ label: product.name, quantity, unit: 'ks', unit_price: unitPrice, total: unitPrice * quantity, source: pricingSource === 'mlzny_disk' ? pricing.source : 'Product.price_from' });
+          const total = !customMode && (quantity === 2 || quantity === 3) && Number(volumePricing[quantity]) > 0
+            ? Number(volumePricing[quantity]) : unitPrice * quantity;
+          items.push({ label: product.name, quantity, unit: 'ks', unit_price: total / quantity, total, source: pricing.source });
         }
       }
       // 2. Smart řízení SUPLA (chytrý ventil + vodoměr + senzory)
@@ -283,7 +288,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
         items.push({ label: 'Smart řízení SUPLA (chytrý ventil PEVEKO + vodoměr LIW-01 + senzor THW-01)', quantity: 1, unit: 'set', unit_price: smartControlPrice, total: smartControlPrice, source: smartPricing.source });
       }
       // 3. Technologie vodní mlhy (redukční ventil + filtr + hadice + fitinky)
-      items.push({ label: 'Technologie vodní mlhy (redukční ventil, filtr 5μm, hadice, fitinky)', quantity: 1, unit: 'set', unit_price: techBoxPrice, total: techBoxPrice, source: 'odhad' });
+      if (techBoxPrice > 0) items.push({ label: 'Technologie vodní mlhy (redukční ventil, filtr 5μm, hadice, fitinky)', quantity: 1, unit: 'set', unit_price: techBoxPrice, total: techBoxPrice, source: 'ověřená cena' });
       return items;
     };
     const calcVariantTotal = (quantity: number) => {

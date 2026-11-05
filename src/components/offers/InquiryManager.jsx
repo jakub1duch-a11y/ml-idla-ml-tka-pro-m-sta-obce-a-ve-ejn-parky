@@ -338,7 +338,7 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           Date.parse(b.updated_date || b.created_date || 0) - Date.parse(a.updated_date || a.created_date || 0)).slice(0, 4);
       } catch (technicalDataError) { console.warn('Approved visualization data unavailable', technicalDataError); }
       // Automatická nabídka smí použít pouze vizualizaci schválenou pro prezentaci.
-      const visualizationUrl = visualizationOverride || visualizationOverrides[0] || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || '';
+      const visualizationUrl = visualizationOverride || visualizationOverrides[0] || approvedVisualizationAssets[0]?.image_url || '';
       if (options.auto && !visualizationUrl) {
         throw new Error('Kompletní automatická nabídka vyžaduje alespoň jednu projektovou vizualizaci. Vizualizaci se nepodařilo vytvořit — spusťte vytvoření nabídky znovu.');
       }

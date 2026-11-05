@@ -8,6 +8,7 @@ const MASTER_CANVA_URL = 'https://www.canva.com/d/irLIi_qRKLPfptC';
 const MONEY = (n) => new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(Number(n) || 0);
 const button = 'inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/20 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-white/10';
 const validHttps = (value) => { try { const u = new URL(String(value || '')); return u.protocol === 'https:' ? u.href : ''; } catch { return ''; } };
+const validDriveLink = (value) => { const url = validHttps(value); return url && new URL(url).hostname === 'drive.google.com' ? url : ''; };
 const flatten = (data) => Array.isArray(data) ? data : Array.isArray(data?.items) ? data.items : [];
 
 function PdfLink({ href, label }) {
@@ -19,6 +20,7 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
   const [loading, setLoading] = useState(true);
   const [variants, setVariants] = useState([]);
   const [assets, setAssets] = useState([]);
+  const [freshOrder, setFreshOrder] = useState(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [canvaUrl, setCanvaUrl] = useState('');
@@ -33,10 +35,12 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
     if (!order?.id) return;
     setLoading(true); setError('');
     try {
-      const [v, a] = await Promise.all([
+      const [v, a, current] = await Promise.all([
         base44.entities.OfferVariant.filter({ project_order_id: order.id }),
         base44.entities.OfferAsset.filter({ project_order_id: order.id }),
+        base44.entities.ProjectOrder.get(order.id),
       ]);
+      setFreshOrder(current);
       const nextAssets = flatten(a);
       setVariants(flatten(v).sort((one, two) => Number(one.sort_order || 0) - Number(two.sort_order || 0)));
       setAssets(nextAssets);
@@ -48,10 +52,13 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
   };
 
   useEffect(() => {
-    setPreview(null); setMessage(''); setCanvaUrl(''); setAssets([]); setVariants([]);
+    setPreview(null); setMessage(''); setCanvaUrl(''); setAssets([]); setVariants([]); setFreshOrder(null);
     refresh();
   }, [order?.id]);
 
+  const displayedOrder = freshOrder?.id === order?.id ? freshOrder : order;
+  const archivedPdf = validDriveLink(displayedOrder?.quote_drive_file_url) || validDriveLink(displayedOrder?.quote_pdf_url);
+  const archivedFolder = validDriveLink(displayedOrder?.drive_case_folder_url);
   const linkedCanvaAsset = assets.find(x => x.description === 'canva_design' && validHttps(x.file_url));
   const imageAssets = useMemo(() => assets.filter(a => (a.file_type || '').startsWith('image/') && validHttps(a.file_url))
     .filter(a => a.selected_for_offer === true || a.asset_type === 'product_reference').slice(0, 8), [assets]);
@@ -162,8 +169,10 @@ export default function SalesOfferWorkspace({ order, product, onClose }) {
           <PdfLink href={order.presentation_pdf_url} label="Obrázková prezentace PDF"/>
           <PdfLink href={order.inquiry_pdf_url} label="Původní poptávka PDF"/>
           {documentAssets.map((doc) => <PdfLink key={doc.id} href={doc.file_url} label={doc.title || doc.file_name || 'Další PDF'}/>)}
-          {validHttps(order.drive_case_folder_url) && <PdfLink href={order.drive_case_folder_url} label="Složka na Disku"/>}
+          {archivedPdf && <PdfLink href={archivedPdf} label="PDF na Mlžném disku"/>}
+          {archivedFolder && <PdfLink href={archivedFolder} label="Složka zakázky na Mlžném disku"/>}
         </div>
+        {!loading && !archivedPdf && <p className="mt-3 text-xs text-amber-200">PDF zatím není propojené s archivem na Mlžném disku. Zkontrolujte vytvoření a uložení nabídky.</p>}
         <a href={MASTER_CANVA_URL} target="_blank" rel="noopener noreferrer" className={button + ' mt-3'}>
           Otevřít hlavní Canva šablonu <ExternalLink size={14}/>
         </a>

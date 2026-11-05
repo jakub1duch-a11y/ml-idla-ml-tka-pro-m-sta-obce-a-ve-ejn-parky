@@ -310,9 +310,32 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
           : productForOffer.slug === 'mlzna-brana-gate'
             ? 'https://mlzidla.cz/ar/gate'
             : `https://mlzidla.cz/produkt/${productForOffer.slug}`;
+      // On every regeneration fetch the CURRENT, presentation-approved media from Base44.
+      // A product-family match must not mix different MRAK silhouettes.
       let approvedVisualizationAssets = [];
       try {
-        approvedVisualizationAssets = (await base44.entities.VisualizationAsset.filter({ source_inquiry_id: selected.id, approved_for_presentation: true })) || [];
+        const response = await base44.entities.VisualizationAsset.filter(
+          { approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 500,
+        );
+        const all = Array.isArray(response) ? response : response?.items || [];
+        const slug = String(productForOffer.slug || '').toLowerCase();
+        const mrakVariant = `${slug} ${productForOffer.name || ''}`.match(/(?:^|\\D)(1413|1414|1480|2424)(?:\\D|$)/)?.[1] || '';
+        const placeText = `${selected.message || ''} ${selected.firma || selected.company || ''}`.toLowerCase();
+        const environment = /mateřsk|skolk|škol|\\bmš\\b/.test(placeText) ? 'skola_skolka'
+          : audienceForOffer === 'residential' ? 'rezidencni_zahrada'
+          : audienceForOffer === 'city_public' ? 'mestsky_park' : '';
+        const score = (visual) =>
+          (visual.source_inquiry_id === selected.id ? 1000 : 0) +
+          (visual.product_slug === slug ? 200 : 0) +
+          (environment && visual.environment === environment ? 100 : 0) +
+          (visual.is_primary_for_variant ? 20 : 0);
+        approvedVisualizationAssets = all.filter((visual) => {
+          if (!visual.image_url || visual.approval_status !== 'approved' || visual.approved_for_presentation !== true) return false;
+          if (String(visual.product_slug).toLowerCase() === slug) return true;
+          return slug.includes('mrak') && mrakVariant && visual.product_slug === 'mlzitko-mrak' &&
+            new RegExp(`(?:^|\\D)${mrakVariant}(?:\\D|$)`).test(String(visual.title || visual.product_name || ''));
+        }).sort((a, b) => score(b) - score(a) ||
+          Date.parse(b.updated_date || b.created_date || 0) - Date.parse(a.updated_date || a.created_date || 0)).slice(0, 4);
       } catch (technicalDataError) { console.warn('Approved visualization data unavailable', technicalDataError); }
       // Automatická nabídka smí použít pouze vizualizaci schválenou pro prezentaci.
       const visualizationUrl = visualizationOverride || visualizationOverrides[0] || approvedVisualizationAssets.find((item) => item.is_primary_for_variant)?.image_url || approvedVisualizationAssets[0]?.image_url || '';

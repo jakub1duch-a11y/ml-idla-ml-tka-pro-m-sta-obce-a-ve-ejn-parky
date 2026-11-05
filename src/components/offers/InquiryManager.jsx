@@ -319,9 +319,9 @@ export default function InquiryManager({ inquiries, products, offerProfiles = []
         );
         const all = Array.isArray(response) ? response : response?.items || [];
         const slug = String(productForOffer.slug || '').toLowerCase();
-        const mrakVariant = `${slug} ${productForOffer.name || ''}`.match(/(?:^|\\D)(1413|1414|1480|2424)(?:\\D|$)/)?.[1] || '';
+        const mrakVariant = `${slug} ${productForOffer.name || ''}`.match(/(?:^|\D)(1413|1414|1480|2424)(?:\D|$)/)?.[1] || '';
         const placeText = `${selected.message || ''} ${selected.firma || selected.company || ''}`.toLowerCase();
-        const environment = /mateřsk|skolk|škol|\\bmš\\b/.test(placeText) ? 'skola_skolka'
+        const environment = /mateřsk|skolk|škol|\bmš\b/.test(placeText) ? 'skola_skolka'
           : audienceForOffer === 'residential' ? 'rezidencni_zahrada'
           : audienceForOffer === 'city_public' ? 'mestsky_park' : '';
         const score = (visual) =>

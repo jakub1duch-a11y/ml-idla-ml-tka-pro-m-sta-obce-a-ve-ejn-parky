@@ -5,6 +5,7 @@ import {
   Package, RefreshCw, Search, ShieldCheck, UserRound, X,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import SalesOfferWorkspace from '@/components/admin/SalesOfferWorkspace';
 
 const DRAFT_STATUSES = ['draft', 'draft_ready_for_review', 'pending_approval'];
 const ACTIVE_STATUSES = ['sent', 'viewed', 'extension_requested', 'approved', 'in_production', 'ready'];
@@ -67,6 +68,7 @@ export default function AdminMobileSalesHub() {
   const [form, setForm] = useState(defaultForm);
   const [editing, setEditing] = useState(null);
   const [editForm, setEditForm] = useState({});
+  const [openedOrder, setOpenedOrder] = useState(null);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -467,13 +469,19 @@ export default function AdminMobileSalesHub() {
               <button className={BUTTON + ' border border-cyan/30 text-cyan'} onClick={() => openEditor(order)}>
                 <FileText size={16}/> Upravit koncept
               </button>}
-            <button className={BUTTON + ' border border-white/15 text-white/75'} onClick={() => navigate('/obchodni-nabidky')}>
-              Úplná nabídka <ArrowRight size={15}/>
+            <button className={BUTTON + ' border border-white/15 text-white/75'} onClick={() => setOpenedOrder(order)}>
+              Detail · PDF · Canva · náhled e-mailu <ArrowRight size={15}/>
             </button>
+            {order.inquiry_id && <button className={BUTTON + ' border border-white/15 text-white/75'}
+              onClick={() => navigate('/obchodni-nabidky?inquiry=' + encodeURIComponent((order.inquiry_type === 'contact' ? 'c-' : 'p-') + order.inquiry_id))}>
+              Tvorba nabídky <FilePlus2 size={15}/>
+            </button>}
           </div>
         </article>)}
       </div>
     </section>
+    {openedOrder && <SalesOfferWorkspace key={openedOrder.id} order={openedOrder}
+      product={products.find((item) => item.id === openedOrder.product_id)} onClose={() => setOpenedOrder(null)} />}
     <section className="rounded-xl border border-white/10 p-4 text-xs leading-5 text-white/50">
       <p className="flex items-center gap-2 text-white/75"><ShieldCheck size={17}/> Pouze pro přihlášené administrátory</p>
       <p className="mt-2">Interní data chrání oprávnění Base44. Zde lze připravit a předat koncept;

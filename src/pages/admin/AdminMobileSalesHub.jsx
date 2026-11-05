@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowRight, CheckCircle2, ClipboardList, FilePlus2, FileText, Loader2,
@@ -69,6 +69,7 @@ export default function AdminMobileSalesHub() {
   const [editing, setEditing] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [openedOrder, setOpenedOrder] = useState(null);
+  const workspaceRef = useRef(null);
   const [webStats, setWebStats] = useState(null);
   const [webStatsError, setWebStatsError] = useState('');
   const [webStatsLoading, setWebStatsLoading] = useState(true);
@@ -157,6 +158,11 @@ export default function AdminMobileSalesHub() {
     };
   }, [loadData]);
   useEffect(() => { loadWebStats(); }, [loadWebStats]);
+  useEffect(() => {
+    if (!openedOrder?.id) return;
+    const frame = window.requestAnimationFrame(() => workspaceRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [openedOrder?.id]);
 
   const selectedProduct = useMemo(() => products.find((item) => item.id === form.product_id), [products, form.product_id]);
   const selectedProfile = useMemo(() => profiles.find((profile) =>
@@ -213,6 +219,23 @@ export default function AdminMobileSalesHub() {
     setError('');
     setNotice('');
     try {
+      // Před založením znovu ověřit vazbu na poptávku; stejný formulář
+      // může mít otevřený i další administrátor.
+      if (linkedInquiry) {
+        const existing = flattenRecords(await base44.entities.ProjectOrder.filter({
+          inquiry_id: linkedInquiry.id,
+          inquiry_type: linkedInquiry.sourceType,
+        })).find((item) => item.status !== 'rejected');
+        if (existing) {
+          setCreating(false);
+          setForm(defaultForm);
+          setOpenedOrder(existing);
+          setFilter('all');
+          setNotice('K této poptávce již existuje nabídka. Otevřel se její detail, nová duplicitní nabídka nevznikla.');
+          await loadData();
+          return;
+        }
+      }
       const draft = {
         project_name: project, client_name: name, client_email: email,
         client_phone: form.client_phone.trim(), client_company: form.client_company.trim(),
@@ -257,6 +280,7 @@ export default function AdminMobileSalesHub() {
       setCreating(false);
       setForm(defaultForm);
       setFilter('drafts');
+      setOpenedOrder(created);
       setNotice(variantWarning
         ? 'Koncept byl uložen, ale produktovou položku se nepodařilo připojit. Ověřte ji v Sales Hubu. Nic nebylo odesláno.'
         : 'Koncept a produktová položka jsou uloženy pro celý tým. Zákazníkovi nebylo nic odesláno.');
@@ -557,8 +581,8 @@ export default function AdminMobileSalesHub() {
         </article>)}
       </div>
     </section>
-    {openedOrder && <SalesOfferWorkspace key={openedOrder.id} order={openedOrder}
-      product={products.find((item) => item.id === openedOrder.product_id)} onClose={() => setOpenedOrder(null)} />}
+    {openedOrder && <div ref={workspaceRef}><SalesOfferWorkspace key={openedOrder.id} order={openedOrder}
+      product={products.find((item) => item.id === openedOrder.product_id)} onClose={() => setOpenedOrder(null)} /></div>}
     <section className="rounded-xl border border-white/10 p-4 text-xs leading-5 text-white/50">
       <p className="flex items-center gap-2 text-white/75"><ShieldCheck size={17}/> Pouze pro přihlášené administrátory</p>
       <p className="mt-2">Interní data chrání oprávnění Base44. Zde lze připravit a předat koncept;

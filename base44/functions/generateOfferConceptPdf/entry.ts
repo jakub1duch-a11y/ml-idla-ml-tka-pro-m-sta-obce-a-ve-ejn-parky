@@ -2,7 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { jsPDF } from 'npm:jspdf@4.2.1';
 import { clean } from '../../shared/suplaPricing.ts';
 import { ensureOfferCaseFolders, upsertBytes } from '../../shared/offerDrive.ts';
-import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
+import { ensureSheet, ensureHeaders, upsertRowByKey } from '../../shared/googleSheets.ts';
 import { toBase64 } from '../../shared/pdfHelpers.ts';
 import { loadOfferCtx } from '../../shared/offerPdfContext.ts';
 import { buildOfferDocument } from '../../shared/offerPdfBuilder.ts';
@@ -54,20 +54,23 @@ export default async function(req: Request): Promise<Response> {
         drive_case_folder_id: driveFolderId,
         drive_case_folder_url: driveFolderUrl,
       });
-    } catch (e) { console.warn('Drive upload failed', e); }
+    } catch (e) {
+      console.error('Drive upload failed', e);
+      return Response.json({ ok: false, error: 'Archivace PDF na Mlžný disk selhala. Nabídka není plně synchronizovaná.' }, { status: 502 });
+    }
 
     let sheetSynced = false;
     try {
       const { accessToken: st } = await base44.asServiceRole.connectors.getConnection('googlesheets');
       await ensureSheet(st, OFFERS_SPREADSHEET_ID, OFFERS_SHEET);
       await ensureHeaders(st, OFFERS_SPREADSHEET_ID, OFFERS_SHEET, OFFER_HEADERS);
-      await appendRow(st, OFFERS_SPREADSHEET_ID, OFFERS_SHEET, OFFER_HEADERS.length, [
+      await upsertRowByKey(st, OFFERS_SPREADSHEET_ID, OFFERS_SHEET, OFFER_HEADERS.length, [
         new Date().toLocaleString('cs-CZ', { timeZone: 'Europe/Prague' }), quoteNum,
         clean(order.client_name) || '—', clean(order.client_email) || '', clean(order.client_company) || '',
         clean(order.project_name) || 'Návrh řešení', clean(order.product_name) || '',
         Math.round(baseTotal), Math.round(baseTotal * 0.21), Math.round(baseTotal * 1.21),
         'Koncept', pdfUrl || '', driveUrl || '', order.id || '',
-      ]);
+      ], 'N', order.id);
       sheetSynced = true;
     } catch (e) { console.warn('Sheets sync failed', e); }
 

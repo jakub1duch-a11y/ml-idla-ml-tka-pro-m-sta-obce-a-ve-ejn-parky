@@ -178,6 +178,33 @@ export async function findPricingForProduct(base44: any, product: any, inquiryTe
   }
 }
 
+// Množstevní ceny jsou souhrnná cena za 2 nebo 3 kusy (ne jednotková cena).
+// Číst pouze při přípravě dané varianty; při výpadku se nesmí vymýšlet sleva.
+export async function findVolumePricing(base44: any, productKey: string): Promise<Record<number, number>> {
+  const result: Record<number, number> = {};
+  if (!clean(productKey)) return result;
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+    if (!accessToken) return result;
+    const range = encodeURIComponent("'💧 Katalog produktů 2026'!A2:K42");
+    const response = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${PRICING_SPREADSHEET_ID}/values/${range}?majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`,
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
+    if (!response.ok) return result;
+    const data = await response.json();
+    const rows = Array.isArray(data?.values) ? data.values : [];
+    if (normalize(rows?.[0]?.[0]) !== 'PRODUKT') return result;
+    const entry = rows.slice(1).find((row: unknown[]) => normalize(row?.[0]) === normalize(productKey));
+    if (!entry) return result;
+    const two = parseMoney(entry[9]); // J = Cena za 2 ks (celkem)
+    const three = parseMoney(entry[10]); // K = Cena za 3 ks (celkem)
+    if (two > 0) result[2] = two;
+    if (three > 0) result[3] = three;
+  } catch (_) { /* Neověřená množstevní sleva se nesmí dosazovat */ }
+  return result;
+}
+
 export type SmartControlPricing = {
   source: string;
   component_wifi_valve_ex_vat: number;

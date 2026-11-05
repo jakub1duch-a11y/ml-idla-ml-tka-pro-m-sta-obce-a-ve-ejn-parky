@@ -52,7 +52,7 @@ export async function loadOfferCtx(base44: any, order: any, inquiryId?: string, 
   const sourcePhotos = [...attachmentPhotos, ...assets.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean);
   if (!product) { const master = assets.find(a => a.asset_type === 'product_reference'); ctx.product = { name: ctx.productName, image_url: master?.file_url || '' }; }
   const placeText = `${order.project_name || ''} ${order.description || ''} ${inquiry?.zprava || inquiry?.message || ''}`.toLowerCase();
-  const environment = /mateřsk|skolk|škol|\\bmš\\b/.test(placeText) ? 'skola_skolka'
+  const environment = /mateřsk|skolk|škol|\bmš\b/.test(placeText) ? 'skola_skolka'
     : /senior|domov důchod/.test(placeText) ? 'mestsky_park'
     : order.presentation_variant === 'residential' ? 'rezidencni_zahrada'
     : order.presentation_variant === 'city_public' ? 'mestsky_park' : '';

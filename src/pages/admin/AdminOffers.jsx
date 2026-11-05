@@ -57,7 +57,7 @@ export default function AdminOffers() {
     setLoading(true);
     const { items } = await base44.entities.ProjectOrder.filter(
       { status: { $in: SENT_STATUSES } },
-      { sort: '-issued_at', limit: 200, fields: ['id', 'quote_number', 'client_name', 'client_email', 'client_company', 'client_phone', 'product_name', 'project_name', 'status', 'issued_at', 'valid_until', 'total_price', 'quote_pdf_url', 'drive_case_folder_url', 'last_customer_action_at', 'approved_at', 'customer_message', 'sender_email'] },
+      { sort: '-issued_at', limit: 200, fields: ['id', 'quote_number', 'client_name', 'client_email', 'client_company', 'client_phone', 'product_name', 'project_name', 'status', 'issued_at', 'valid_until', 'total_price', 'quote_pdf_url', 'quote_drive_file_url', 'drive_case_folder_url', 'last_customer_action_at', 'approved_at', 'customer_message', 'sender_email'] },
     );
     setOrders(items);
     setLoading(false);
@@ -166,6 +166,7 @@ export default function AdminOffers() {
                     <p className="text-lg font-semibold text-white">{money(o.total_price)}</p>
                     <div className="flex flex-wrap lg:justify-end gap-2">
                       {o.quote_pdf_url && <a href={o.quote_pdf_url} target="_blank" rel="noreferrer" className="h-9 px-3 rounded-lg border border-white/10 text-xs text-white/60 hover:text-white flex items-center gap-1.5"><FileText size={13} /> PDF <ExternalLink size={11} /></a>}
+                      {o.quote_drive_file_url && o.quote_drive_file_url !== o.quote_pdf_url && <a href={o.quote_drive_file_url} target="_blank" rel="noreferrer" className="h-9 px-3 rounded-lg border border-white/10 text-xs text-white/60 hover:text-white flex items-center gap-1.5"><FileText size={13} /> Archiv PDF <ExternalLink size={11} /></a>}
                       {o.drive_case_folder_url && <a href={o.drive_case_folder_url} target="_blank" rel="noreferrer" className="h-9 px-3 rounded-lg border border-white/10 text-xs text-white/60 hover:text-white flex items-center gap-1.5"><FolderOpen size={13} /> Disk <ExternalLink size={11} /></a>}
                       {o.client_email && <a href={`mailto:${o.client_email}?subject=Re: Nabídka ${o.quote_number || ''}`} className="h-9 px-3 rounded-lg bg-cyan text-[#08232b] text-xs font-bold flex items-center gap-1.5"><Mail size={13} /> Kontaktovat</a>}
                     </div>

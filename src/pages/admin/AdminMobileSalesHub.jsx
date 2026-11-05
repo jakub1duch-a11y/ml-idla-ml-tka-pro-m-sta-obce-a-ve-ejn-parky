@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowRight, CheckCircle2, ClipboardList, FilePlus2, FileText, Loader2,
-  Package, RefreshCw, Search, ShieldCheck, UserRound, X,
+  Package, RefreshCw, Search, ShieldCheck, UserRound, X, BarChart3,
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import SalesOfferWorkspace from '@/components/admin/SalesOfferWorkspace';
@@ -69,6 +69,27 @@ export default function AdminMobileSalesHub() {
   const [editing, setEditing] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [openedOrder, setOpenedOrder] = useState(null);
+  const [webStats, setWebStats] = useState(null);
+  const [webStatsError, setWebStatsError] = useState('');
+  const [webStatsLoading, setWebStatsLoading] = useState(true);
+
+  const loadWebStats = useCallback(async () => {
+    setWebStatsLoading(true);
+    setWebStatsError('');
+    try {
+      // Reporting remains server-side and admin-only; never expose GA4 tokens in the browser.
+      const response = await base44.functions.invoke('marketingIntelligence', { sendEmail: false });
+      if (response?.data?.error || !response?.data?.ga4) {
+        throw new Error(response?.data?.error || 'GA4 momentálně nevrací data.');
+      }
+      setWebStats(response.data);
+    } catch (requestError) {
+      setWebStats(null);
+      setWebStatsError(requestError?.message || 'Analytiku se nepodařilo načíst.');
+    } finally {
+      setWebStatsLoading(false);
+    }
+  }, []);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -105,6 +126,7 @@ export default function AdminMobileSalesHub() {
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
+  useEffect(() => { loadWebStats(); }, [loadWebStats]);
 
   const selectedProduct = useMemo(() => products.find((item) => item.id === form.product_id), [products, form.product_id]);
   const selectedProfile = useMemo(() => profiles.find((profile) =>
@@ -280,6 +302,31 @@ export default function AdminMobileSalesHub() {
       <Metric icon={FileText} label="Koncepty" value={counts.drafts} />
       <Metric icon={CheckCircle2} label="Aktivní nabídky" value={counts.active} />
     </div>
+
+    <section aria-label="Analytika webu mlzidla.cz" className="rounded-2xl border border-cyan/20 bg-[#102633] p-4 sm:p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[.18em] text-cyan">WEB · GOOGLE ANALYTICS 4</p>
+          <h2 className="mt-1 flex items-center gap-2 text-lg font-semibold"><BarChart3 size={19} className="text-cyan"/> Analytika mlzidla.cz</h2>
+          <p className="mt-1 text-xs text-white/45">Návštěvnost z GA4 · skutečné poptávky z Base44</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={loadWebStats} disabled={webStatsLoading}
+            className={BUTTON + ' border border-white/15 text-white/75 disabled:opacity-50'}><RefreshCw size={15} className={webStatsLoading ? 'animate-spin' : ''}/> Obnovit</button>
+          <button type="button" onClick={() => navigate('/admin?tab=analytics')}
+            className={BUTTON + ' border border-cyan/30 bg-cyan/10 text-cyan'}>Podrobná analytika <ArrowRight size={14}/></button>
+        </div>
+      </div>
+      {webStatsLoading && <p className="mt-4 text-sm text-white/55" role="status">Načítám údaje z Google Analytics…</p>}
+      {!webStatsLoading && webStatsError && <p className="mt-4 rounded-lg border border-amber-400/25 bg-amber-400/10 px-3 py-2 text-sm text-amber-100" role="alert">GA4 není dostupné: {webStatsError}</p>}
+      {!webStatsLoading && webStats && <div className="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        <Metric icon={BarChart3} label="Návštěvy dnes · GA4" value={webStats.ga4?.today?.sessions == null ? '—' : Number(webStats.ga4.today.sessions).toLocaleString('cs-CZ')}/>
+        <Metric icon={BarChart3} label="Návštěvy tento měsíc · GA4" value={webStats.ga4?.month?.sessions == null ? '—' : Number(webStats.ga4.month.sessions).toLocaleString('cs-CZ')}/>
+        <Metric icon={UserRound} label="Aktivní uživatelé · GA4" value={webStats.ga4?.month?.users == null ? '—' : Number(webStats.ga4.month.users).toLocaleString('cs-CZ')}/>
+        <Metric icon={ClipboardList} label="Poptávky dnes · Base44" value={webStats.leads?.today == null ? '—' : Number(webStats.leads.today).toLocaleString('cs-CZ')}/>
+      </div>}
+      {!webStatsLoading && webStats?.ga4?.sources?.length > 0 && <p className="mt-3 text-xs text-white/50">Nejvýznamnější zdroj za 28 dní: <span className="font-medium text-white/75">{webStats.ga4.sources[0].sourceMedium || 'neuveden'}</span> ({Number(webStats.ga4.sources[0].sessions || 0).toLocaleString('cs-CZ')} návštěv).</p>}
+    </section>
 
     <div className="grid gap-2 sm:grid-cols-3">
       <button type="button" onClick={() => startFromInquiry(null)}

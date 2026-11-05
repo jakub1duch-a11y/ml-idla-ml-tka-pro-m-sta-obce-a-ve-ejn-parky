@@ -2,7 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 
 const MAILBOX = 'meduna@holmtec.cz';
 const GMAIL = 'https://gmail.googleapis.com/gmail/v1/users/me';
-const QUERY = '-in:trash -in:spam {label:Mlžítka mlzidla.cz mlžidla mlžítka mlžítko mlžení "mlžné brány" "mlžné sochy" "misting gates"}';
+const QUERY = '-in:trash -in:spam {label:"00 · MLŽIDLA.cz" label:"1_HT/MLŽIDLA.cz" label:Mlžítka mlzidla.cz mlžidla mlžítka mlžítko mlžení "mlžné brány" "mlžné sochy" "misting gates"}';
 const ALLOWED_LABELS = new Set([
   'Label_131', // 00 · MLŽIDLA.cz
   'Label_7352671006992589160', // Mlžítka

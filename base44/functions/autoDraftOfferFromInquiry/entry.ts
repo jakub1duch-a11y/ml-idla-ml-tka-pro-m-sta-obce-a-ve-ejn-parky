@@ -432,7 +432,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         title: visual.approvedVisual?.title || `AI vizualizace — ${visual.label}`,
         description: `${sourcePhoto?.file_url ? `Ultrarealistická varianta ${visual.label} vytvořená podle textu poptávky a fotografie prostoru.` : `Ultrarealistická konceptuální varianta ${visual.label} vytvořená podle textu poptávky.`}${analysis?.people_context ? ` Uživatelé prostoru: ${clean(analysis.people_context)}` : ''}`.slice(0, 1000),
         selected_for_offer: Boolean(visual.approvedVisual),
-        generated_by_ai: !visual.approvedVisual,
+        generated_by_ai: true,
       });
       visualAssets.push(asset);
 

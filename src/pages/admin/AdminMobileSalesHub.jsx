@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import SalesOfferWorkspace from '@/components/admin/SalesOfferWorkspace';
+import GmailConversationsPanel from '@/components/admin/GmailConversationsPanel';
 
 const DRAFT_STATUSES = ['draft', 'draft_ready_for_review', 'pending_approval'];
 const ACTIVE_STATUSES = ['sent', 'viewed', 'extension_requested', 'approved', 'in_production', 'ready'];
@@ -356,6 +357,8 @@ export default function AdminMobileSalesHub() {
       <Metric icon={FileText} label="Koncepty" value={counts.drafts} />
       <Metric icon={CheckCircle2} label="Aktivní nabídky" value={counts.active} />
     </div>
+
+    <GmailConversationsPanel />
 
     <section aria-label="Analytika webu mlzidla.cz" className="rounded-2xl border border-cyan/20 bg-[#102633] p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">

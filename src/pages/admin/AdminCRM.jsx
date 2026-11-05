@@ -10,7 +10,6 @@ import CrmClientDirectory from '@/components/admin/crm/CrmClientDirectory';
 import CrmRevenueChart from '@/components/admin/crm/CrmRevenueChart';
 import CrmActivityFeed from '@/components/admin/crm/CrmActivityFeed';
 import EmailSyncPanel from '@/components/admin/EmailSyncPanel';
-import EmailSyncPanel from '@/components/admin/EmailSyncPanel';
 
 const money = (v) => new Intl.NumberFormat('cs-CZ').format(Number(v || 0));
 

@@ -78,7 +78,14 @@ export type PricingResult = {
   matched: boolean;
   sheet_key: string;
   sheet_spec: string;
-  offer_price_// Jediný zdroj prodejních cen produktů je aktuální řádek 2 listu „📋 Kusovník“.
+  offer_price_ex_vat: number;
+  vat_amount: number;
+  total_inc_vat: number;
+  source: string;
+  note?: string;
+};
+
+// Jediný zdroj prodejních cen produktů je aktuální řádek 2 listu „📋 Kusovník“.
 // Položky bez ceny nelze automaticky nacenit; nikdy nepřebírat Product.price_from.
 export async function findPricingForProduct(base44: any, product: any, inquiryText = ''): Promise<PricingResult> {
   const source = `Google Sheets: Kalkulace mlžítka 2026 / ${PRICING_SHEET_NAME}`;

@@ -182,31 +182,10 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
     } else {
       pricing = await findPricingForProduct(base44, product, inquiry.zprava || '');
       const sheetUnitPrice = pricing.matched ? Number(pricing.offer_price_ex_vat || 0) : 0;
-      let offerProfile: any = null;
-      try {
-        const profiles = await base44.asServiceRole.entities.ProductOfferProfile.filter({ product_id: product.id });
-        offerProfile = profiles?.[0] || null;
-      } catch (_) {}
-      const profileUnitPrice = offerProfile?.offer_ready && ['ready', 'conditional'].includes(String(offerProfile?.pricing_status || ''))
-        ? Number(offerProfile?.unit_price_ex_vat || 0)
-        : 0;
-      const catalogFallbackPrice = validatedCatalogFallback(product);
-      unitPrice = sheetUnitPrice || profileUnitPrice || catalogFallbackPrice;
-      pricingSource = sheetUnitPrice > 0
-        ? 'mlzny_disk'
-        : profileUnitPrice > 0
-          ? (offerProfile?.pricing_mode === 'component_sum' ? 'component_sum' : offerProfile?.pricing_mode === 'per_module' ? 'per_module' : 'catalog')
-          : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
-      if (!sheetUnitPrice && profileUnitPrice > 0) {
-        pricing = {
-          matched: true,
-          sheet_key: offerProfile?.pricing_key || '',
-          sheet_spec: offerProfile?.price_note || '',
-          offer_price_ex_vat: profileUnitPrice,
-          source: offerProfile?.pricing_source || 'ProductOfferProfile',
-          note: offerProfile?.pricing_status === 'conditional' ? 'Cena je podmíněná potvrzením rozsahu projektu.' : '',
-        };
-      }
+      // Ceník produktu je pouze živý sešit Kalkulace mlžítka 2026.
+      // Staré ProductOfferProfile a Product.price_from se jako fallback nesmějí použít.
+      unitPrice = sheetUnitPrice;
+      pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : 'manual_required';
     }
 
     // ── FÁZE 3: Načtení cen smart řízení SUPLA z tabulky Kalkulace 2026 ──
@@ -214,7 +193,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
     const smartControlPrice = Number(smartPricing.complete_supla_ex_vat) || 0;
     const smartControlPriceIncVat = Number(smartPricing.complete_supla_inc_vat) || 0;
     // Odhad technologie vodní mlhy (redukční ventil, filtr, přívod) — orientační sazba
-    const techBoxPrice = 8000; // orientační cena bez DPH pro redukční ventil + filtr + hadice + fitinky
+    const techBoxPrice = 0; // příslušenství bez samostatné ověřené položky v kalkulaci nelze automaticky nacenit
 
     const isBendy = !customMode && /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
     const sourcePhoto = (earlyAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)

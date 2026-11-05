@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowRight, CheckCircle2, ClipboardList, FilePlus2, FileText, Loader2,
   Package, RefreshCw, Search, ShieldCheck, UserRound, X, BarChart3,
@@ -55,6 +55,7 @@ function Metric({ icon: Icon, label, value }) {
 
 export default function AdminMobileSalesHub() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -64,7 +65,7 @@ export default function AdminMobileSalesHub() {
   const [profiles, setProfiles] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('drafts');
+  const [filter, setFilter] = useState(() => searchParams.get('view') === 'pdf' ? 'pdf' : 'drafts');
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(defaultForm);
   const [editing, setEditing] = useState(null);
@@ -187,9 +188,11 @@ export default function AdminMobileSalesHub() {
   }), [pendingInquiries, orders]);
 
   const visible = useMemo(() => orders.filter((item) => {
-    const matchesStatus = filter === 'all' || (filter === 'drafts'
-      ? DRAFT_STATUSES.includes(item.status)
-      : ACTIVE_STATUSES.includes(item.status));
+    const matchesStatus = filter === 'all' || (filter === 'pdf'
+      ? Boolean(item.inquiry_pdf_url)
+      : filter === 'drafts'
+        ? DRAFT_STATUSES.includes(item.status)
+        : ACTIVE_STATUSES.includes(item.status));
     const haystack = [item.client_name, item.client_company, item.project_name,
       item.product_name, item.quote_number, item.client_email].join(' ').toLocaleLowerCase('cs-CZ');
     return matchesStatus && haystack.includes(search.toLocaleLowerCase('cs-CZ').trim());
@@ -544,14 +547,14 @@ export default function AdminMobileSalesHub() {
       </label>
       <div className="flex gap-2 overflow-x-auto pb-1">
         {[
-          ['drafts','Rozpracované'], ['active','Aktivní'], ['all','Všechny'],
+          ['drafts','Rozpracované'], ['active','Aktivní'], ['all','Všechny'], ['pdf','PDF poptávky'],
         ].map(([key,label]) => <button key={key} onClick={() => setFilter(key)}
           className={BUTTON + (filter === key ? ' bg-cyan text-[#09202c]' : ' border border-white/15 text-white/70')}>
           {label}</button>)}
       </div>
       {loading && <p className="flex items-center gap-2 text-sm text-white/60"><Loader2 size={16} className="animate-spin"/> Načítání dat…</p>}
       {!loading && visible.length === 0 && <div className="rounded-xl border border-white/10 p-6 text-center text-sm text-white/55">
-        V tomto pohledu nejsou žádné nabídky.
+        {filter === 'pdf' ? 'Zatím nejsou k obchodním případům dostupná PDF poptávek.' : 'V tomto pohledu nejsou žádné nabídky.'}
       </div>}
       <div className="grid gap-3 lg:grid-cols-2">
         {visible.map((order) => <article key={order.id}
@@ -576,6 +579,12 @@ export default function AdminMobileSalesHub() {
             <button className={BUTTON + ' border border-white/15 text-white/75'} onClick={() => setOpenedOrder(order)}>
               Detail · PDF · Canva · náhled e-mailu <ArrowRight size={15}/>
             </button>
+            {order.inquiry_pdf_url && /^https:\/\//i.test(order.inquiry_pdf_url) && <a href={order.inquiry_pdf_url} target="_blank" rel="noopener noreferrer" className={BUTTON + ' border border-emerald-400/30 text-emerald-200'}>
+              <FileText size={16}/> Otevřít PDF poptávky
+            </a>}
+            {order.drive_case_folder_url && /^https:\/\//i.test(order.drive_case_folder_url) && <a href={order.drive_case_folder_url} target="_blank" rel="noopener noreferrer" className={BUTTON + ' border border-white/15 text-white/75'}>
+              Složka na Mlžném disku <ArrowRight size={15}/>
+            </a>}
             {order.inquiry_id && <button className={BUTTON + ' border border-white/15 text-white/75'}
               onClick={() => navigate('/obchodni-nabidky?inquiry=' + encodeURIComponent((order.inquiry_type === 'contact' ? 'c-' : 'p-') + order.inquiry_id))}>
               Tvorba nabídky <FilePlus2 size={15}/>

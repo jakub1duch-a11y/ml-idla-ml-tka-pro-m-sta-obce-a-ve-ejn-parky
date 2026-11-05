@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { jsPDF } from 'npm:jspdf@4.2.1';
 import { clean } from '../../shared/suplaPricing.ts';
-import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
+import { ensureOfferCaseFolders, upsertBytes } from '../../shared/offerDrive.ts';
 import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
 import { toBase64 } from '../../shared/pdfHelpers.ts';
 import { loadOfferCtx } from '../../shared/offerPdfContext.ts';
@@ -40,13 +40,20 @@ export default async function(req: Request): Promise<Response> {
       if (pdfUrl) await base44.asServiceRole.entities.ProjectOrder.update(order.id, { quote_pdf_url: pdfUrl });
     } catch (e) { console.warn('PDF upload failed', e); }
 
-    let driveUrl = '', driveFolderUrl = '';
+    let driveUrl = '', driveFolderUrl = '', driveFolderId = '';
     try {
       const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
-      const folders = await ensureOfferCaseFolders(accessToken, { quoteNumber: quoteNum, clientName: order.client_name || order.client_email || 'klient', issuedAt: new Date().toISOString() });
-      const uploaded = await uploadBytes(accessToken, folders.offerFolderId, new Uint8Array(pdfBytes), `Koncept_${quoteNum}.pdf`, 'application/pdf');
+      const folders = await ensureOfferCaseFolders(accessToken, { quoteNumber: quoteNum, clientName: order.client_name || order.client_email || 'klient', issuedAt: order.issued_at || new Date().toISOString() });
+      const uploaded = await upsertBytes(accessToken, folders.offerFolderId, new Uint8Array(pdfBytes), `Koncept_${quoteNum}.pdf`, 'application/pdf');
       driveUrl = uploaded.url;
+      driveFolderId = folders.caseFolderId;
       driveFolderUrl = `https://drive.google.com/drive/folders/${folders.caseFolderId}`;
+      // Odkazy patří k jedinému projektu, nikoli jen do jednorázové odpovědi funkce.
+      await base44.asServiceRole.entities.ProjectOrder.update(order.id, {
+        quote_drive_file_url: driveUrl,
+        drive_case_folder_id: driveFolderId,
+        drive_case_folder_url: driveFolderUrl,
+      });
     } catch (e) { console.warn('Drive upload failed', e); }
 
     let sheetSynced = false;

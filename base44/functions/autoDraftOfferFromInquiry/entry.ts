@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, findSmartControlPricing, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
+import { listApprovedProductVisuals } from '../../shared/offerProductReferences.ts';
 
 const AUDIENCES = ['city_public', 'residential', 'wellness_hospitality', 'architecture_design', 'custom'];
 
@@ -318,9 +319,28 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       return { label, quantity, unit_price: unitPrice, price: totalPrice, line_items: buildLineItems(quantity) };
     });
 
+    // Prefer already-approved, current product visuals from the Base44 administration.
+    // Match the exact product/variant and quantity; if unavailable, keep new renders under review.
+    const contextText = `${inquiry.zprava || ''} ${inquiry.firma || ''} ${analysis?.space_analysis || ''}`.toLowerCase();
+    const requestedEnvironment = /mateřsk|skolk|škol|\bmš\b/.test(contextText) ? 'skola_skolka'
+      : /senior|domov důchod/.test(contextText) ? 'mestsky_park'
+      : analysis?.audience_variant === 'residential' ? 'rezidencni_zahrada'
+      : analysis?.audience_variant === 'city_public' ? 'mestsky_park' : '';
+    const approvedLibrary = customMode ? [] : await listApprovedProductVisuals(base44, product, {
+      inquiryId, environment: requestedEnvironment,
+    });
+    const usedApprovedIds = new Set<string>();
     const generatedVisualizations: any[] = [];
     for (let variantIndex = 0; variantIndex < variantSpecs.length; variantIndex += 1) {
       const variant = variantSpecs[variantIndex];
+      const approvedVisual = approvedLibrary.find((item: any) => !usedApprovedIds.has(item.id) &&
+        Number(item.quantity || 1) === variant.quantity &&
+        (!item.configuration || item.configuration === (variant.quantity === 1 ? 'single' : variant.quantity === 2 ? 'duo' : variant.quantity === 3 ? 'trio' : item.configuration)));
+      if (approvedVisual) {
+        usedApprovedIds.add(approvedVisual.id);
+        generatedVisualizations.push({ url: approvedVisual.image_url, label: variant.label, quantity: variant.quantity, approvedVisual });
+        continue;
+      }
       try {
         const mistVariants = [
           'Téměř bezvětří: jemná mlha zůstává krátce kompaktní u trysek a potom se měkce rozpouští do okolního vzduchu.',
@@ -408,16 +428,16 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
         file_url: visual.url,
         file_name: `${product.slug || 'mlzitko'}-${inquiryId.slice(-6)}-varianta-${i + 1}-${Date.now()}.webp`,
         file_type: 'image/webp',
-        asset_type: 'generated_visualization',
-        title: `AI vizualizace — ${visual.label}`,
+        asset_type: visual.approvedVisual ? 'product_reference' : 'generated_visualization',
+        title: visual.approvedVisual?.title || `AI vizualizace — ${visual.label}`,
         description: `${sourcePhoto?.file_url ? `Ultrarealistická varianta ${visual.label} vytvořená podle textu poptávky a fotografie prostoru.` : `Ultrarealistická konceptuální varianta ${visual.label} vytvořená podle textu poptávky.`}${analysis?.people_context ? ` Uživatelé prostoru: ${clean(analysis.people_context)}` : ''}`.slice(0, 1000),
-        selected_for_offer: true,
-        generated_by_ai: true,
+        selected_for_offer: Boolean(visual.approvedVisual),
+        generated_by_ai: !visual.approvedVisual,
       });
       visualAssets.push(asset);
 
       try {
-        const visualizationAsset = await base44.asServiceRole.entities.VisualizationAsset.create({
+        const visualizationAsset = visual.approvedVisual || await base44.asServiceRole.entities.VisualizationAsset.create({
           title: `AI vizualizace — ${visual.label}`,
           image_url: visual.url,
           product_slug: product.slug || '',
@@ -458,7 +478,7 @@ Architektonický styl: klidný, prémiový, realistický, český veřejný nebo
           primary_visualization_id: visualizationAsset.id,
           presentation_title: visual.label || variant.label,
           presentation_text: solutionSummary,
-          status: 'needs_review',
+          status: visual.approvedVisual ? 'approved' : 'needs_review',
           sort_order: i,
         });
         offerVariants.push(offerVariant);

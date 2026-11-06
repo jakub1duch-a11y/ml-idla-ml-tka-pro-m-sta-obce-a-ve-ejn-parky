@@ -30,3 +30,14 @@
 }
 @media (max-width: 479px) { .home-hero-copy .hero-actions { display: grid; grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .hero-media-frame > video { transition: none; } }
+
+/* Samostatný odkaz na produkt prezentovaný v hero snímku. */
+.home-media-slider__product-cta { position:absolute; z-index:25; right:clamp(22px,5vw,88px); bottom:clamp(150px,16vh,220px); display:inline-flex; align-items:center; gap:12px; max-width:calc(100% - 32px); min-height:48px; padding:13px 21px; background:#16a8df; color:#fff; font-weight:750; font-size:14px; border-radius:999px; box-shadow:0 12px 35px rgba(0,0,0,.27); transition:background .2s, transform .2s; }
+.home-media-slider__product-cta:hover { background:#087baf; transform:translateY(-2px); }
+.home-media-slider__product-cta:focus-visible { outline:3px solid white; outline-offset:3px; }
+@media(max-width:1023px) {
+  .home-media-slider__product-cta { top:calc(var(--site-header-height) + 10px); bottom:auto; right:12px; padding:9px 12px; min-height:40px; font-size:11px; max-width:75%; }
+}
+@media(max-width:479px) {
+  .home-media-slider__product-cta { top:calc(var(--site-header-height) + 8px); right:8px; font-size:10px; padding:8px 10px; }
+}

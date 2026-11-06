@@ -8,11 +8,17 @@ function GateProductCard({ product }) {
   const [failedImage, setFailedImage] = useState(null);
   return <article className="gate-product-card" data-product={product.id}>
     <Link to={product.detailUrl} className="gate-card-image" aria-label={`Prohlédnout ${product.name}`}>
-      {product.image && failedImage !== product.image ? <img src={product.image} alt={`${product.name} — ${product.caption}`} width="960" height="640" loading="lazy" decoding="async" onError={() => setFailedImage(product.image)} /> : <span className="gate-image-fallback"><ImageOff size={32} aria-hidden="true" /><span>{product.name}</span></span>}
+      {product.image && failedImage !== product.image ? <img src={product.image} alt={product.imageAlt || `${product.name} — ${product.caption}`} width="960" height="640" loading="lazy" decoding="async" onError={() => setFailedImage(product.image)} /> : <span className="gate-image-fallback"><ImageOff size={32} aria-hidden="true" /><span>{product.name}</span></span>}
       <span className="gate-card-tag">{product.group === 'standalone' ? 'Samostatný prvek' : product.group === 'portal' ? 'Vstupní portál' : product.group === 'arrangement' ? 'Mlžná sestava' : 'Mlžná brána'}</span>
     </Link>
     <div className="gate-card-body"><p className="gate-eyebrow">{product.caption}</p><h3><Link to={product.detailUrl}>{product.name}</Link></h3><p className="gate-card-description">{product.text}</p>
-      <div className="gate-card-actions"><Link to={product.detailUrl}>Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link><Link to={product.quoteUrl} aria-label={`Poptat ${product.name}`} className="bg-[hsl(var(--card))] rounded-none">Zjistit cenu</Link></div>
+      {product.constructionNote && <p className="gate-card-construction">{product.constructionNote}</p>}
+      {product.technical?.length > 0 && <dl className="gate-card-specs" aria-label={`Technické údaje – ${product.name}`}>
+        {product.technical.map(({ label, value }) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+      </dl>}
+      {product.waterNote && <p className="gate-card-water">{product.waterNote}</p>}
+      {product.waterCost8h && <p className="gate-card-water-cost"><strong>Voda za 8 hodin: {product.waterCost8h}</strong><span>{product.waterCostNote}</span></p>}
+      <div className="gate-card-actions"><Link to={product.detailUrl}>Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link><Link to={product.quoteUrl} aria-label={`Poptat ${product.name}`} className="bg-[hsl(var(--card))] rounded-none">Poptat variantu</Link></div>
     </div>
   </article>;
 }
@@ -21,7 +27,7 @@ export default function GateProductOverview({ products, loading, error, onRetry,
   const [filter, setFilter] = useState('all');
   const visible = filter === 'all' ? products : products.filter((p) => p.group === filter);
   return <section id={id} className="gate-shell gate-section" aria-labelledby={`${id}-title`}>
-    <div className="gate-section-heading"><div><p className="gate-eyebrow">Kompletní přehled produktů</p><MotionHeading id={`${id}-title`}>Vyberte si svůj průchod mlhou.</MotionHeading></div><p>Mlžné brány GATE, LINEA CE GATE®, STÉBLO GATE®, vstupní portály i další sestavy STÉBLO®. Prohlédněte si jednotlivá provedení a vyberte řešení pro své místo.</p></div>
+    <div className="gate-section-heading"><div><p className="gate-eyebrow">Kompletní přehled produktů</p><MotionHeading id={`${id}-title`}>Vyberte si svůj průchod mlhou.</MotionHeading></div><p>Pět rozměrových a tvarových variant BRÁNY GATE, doplňkové průchozí sestavy i samostatné portály. Každé provedení má vlastní náhled a technické údaje. Vyberte podle skutečné geometrie a místa instalace.</p></div>
     <div className="gate-filters" role="group" aria-label="Filtrovat produkty">{GATE_GROUPS.map(({ id, label }) => <button type="button" key={id} aria-pressed={filter === id} onClick={() => setFilter(id)}>{label}<span>{id === 'all' ? products.length : products.filter((p) => p.group === id).length}</span></button>)}</div>
     {loading ? <div role="status" className="gate-feedback">Načítáme nabídku produktů…</div> : error ? <div role="alert" className="gate-feedback"><p>Nabídku se nepodařilo načíst. Zkuste to prosím znovu.</p><button type="button" onClick={onRetry}><RefreshCw size={17} aria-hidden="true" /> Načíst znovu</button></div> : <>
       <p className="gate-result-count" role="status" aria-live="polite">{visible.length} z {products.length} produktů a variant</p>

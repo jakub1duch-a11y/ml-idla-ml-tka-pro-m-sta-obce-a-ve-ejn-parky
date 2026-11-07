@@ -23,8 +23,10 @@ const rows=r=>Array.isArray(r)?r:Array.isArray(r?.items)?r.items:[];
 
 export default function CanvaOfferWorkflow({item,order}) {
  const [assets,setAssets]=useState([]),[loading,setLoading]=useState(false),[busy,setBusy]=useState(''),[message,setMessage]=useState(''),[draftId,setDraftId]=useState('');
- const refresh=async()=>{if(!item?.id)return;setLoading(true);try{setAssets(rows(await base44.entities.OfferAsset.filter({inquiry_id:item.id})));}catch(e){setMessage('Přílohy nelze načíst: '+(e?.message||'chyba'));}finally{setLoading(false);}};
- useEffect(()=>{setMessage('');setDraftId('');void refresh();},[item?.id]);
+ const [canvaUrl,setCanvaUrl]=useState(''),[suplaUrl,setSuplaUrl]=useState(''),[linked,setLinked]=useState(false);
+ const refresh=async()=>{if(!item?.id)return;setLoading(true);try{setAssets(rows(await base44.entities.OfferAsset.filter({inquiry_id:item.id})).filter(x=>!order?.id || x.project_order_id===order.id));}catch(e){setMessage('Přílohy nelze načíst: '+(e?.message||'chyba'));}finally{setLoading(false);}};
+ useEffect(()=>{setMessage('');setDraftId('');void refresh();},[item?.id,order?.id]);
+ useEffect(()=>{setCanvaUrl(order?.canva_design_url||'');setSuplaUrl(order?.canva_supla_design_url||'');setLinked(order?.canva_sync_status==='linked');},[order?.id,order?.canva_design_url,order?.canva_supla_design_url,order?.canva_sync_status]);
  const checks=useMemo(()=>REQUIRED.map(x=>({...x,asset:assets.find(y=>x.valid(y)&&y.selected_for_offer)})),[assets]);
  const ready=checks.every(x=>Boolean(x.asset)),product=order?.product_name||item?.product||'';
  const matchedDesign=PRODUCT_DESIGNS.find(x=>x[1].test(product));
@@ -48,12 +50,24 @@ export default function CanvaOfferWorkflow({item,order}) {
    setMessage('Soubor byl uložen do nabídky: '+type.title);await refresh();
   }catch(e){setMessage('Nahrání selhalo: '+(e?.message||'chyba'));}finally{setBusy('');}
  };
+ const linkDesigns=async()=>{
+  if(!order?.id||busy)return;
+  setBusy('link');setMessage('');
+  try{
+    const response=await base44.functions.invoke('linkCanvaOffer',{project_order_id:order.id,canva_design_url:canvaUrl.trim(),canva_supla_design_url:suplaUrl.trim()});
+    const data=response?.data||response;
+    if(!data?.ok)throw Error(data?.error||'Odkazy nelze uložit.');
+    setLinked(data.canva_sync_status==='linked');
+    setMessage('Canva odkazy propojeny s nabídkou '+(data.quote_number||'')+'. Export do Base44 vyžaduje import souborů nebo budoucí OAuth.');
+  }catch(e){setMessage('Propojení se nezdařilo: '+(e?.message||'chyba'));}
+  finally{setBusy('');}
+ };
  const createDraft=async()=>{
   if(!ready||!order||!item?.email||busy)return;
   setBusy('draft');setMessage('');setDraftId('');
   try{
    const response=await base44.functions.invoke('sendInquiryReply',{
-    inquiry_type:item.entity==='ContactInquiry'?'contact':'poptavka',inquiry_id:item.id,sender_email:'meduna@holmtec.cz',email_type:'offer',
+    inquiry_type:item.entity==='ContactInquiry'?'contact':'poptavka',inquiry_id:item.id,project_order_id:order.id,sender_email:'meduna@holmtec.cz',email_type:'offer',
     quote_number:ref,quote_pdf_url:order.quote_pdf_url||checks[0]?.asset?.file_url||'',
     valid_until:order.valid_until||'',subject:'Návrh řešení a cenová nabídka '+ref+' | MLŽIDLA.cz',
     message:['Dobrý den,','navazujeme na Vaši poptávku. Přikládáme připravenou obrázkovou nabídku pro '+(product||'Váš projekt')+'.',
@@ -77,6 +91,13 @@ export default function CanvaOfferWorkflow({item,order}) {
    <a href={TEMPLATE} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Vytvořit nabídku z Canva šablony</a>
    {matchedDesign&&<a href={matchedDesign[2]} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Produktový list: {matchedDesign[0]}</a>}
    <a href={SUPLA} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Samostatný list SUPLA v Canvě</a>
+  </div>
+  <div className="mt-4 rounded-xl border border-cyan/20 bg-white/5 p-3">
+   <p className="text-xs font-semibold text-white">Propojit Canva návrhy s nabídkou {order?.quote_number||'—'}</p>
+   <p className="mt-1 text-xs text-white/45">V Canvě vytvořte kopii šablony pro zákazníka a vložte odkazy na jeho editovatelné návrhy. Záznam se uloží u konkrétní nabídky v CRM.</p>
+   <label className="mt-3 block text-xs text-white/75">Odkaz na Canva nabídku<input value={canvaUrl} onChange={e=>{setCanvaUrl(e.target.value);setLinked(false);}} placeholder="https://www.canva.com/design/..." className="mt-1 w-full rounded-lg border border-white/15 bg-[#102734] px-3 py-2 text-xs text-white outline-none" /></label>
+   <label className="mt-2 block text-xs text-white/75">Odkaz na samostatný Canva list SUPLA<input value={suplaUrl} onChange={e=>{setSuplaUrl(e.target.value);setLinked(false);}} placeholder="https://www.canva.com/design/..." className="mt-1 w-full rounded-lg border border-white/15 bg-[#102734] px-3 py-2 text-xs text-white outline-none" /></label>
+   <div className="mt-3 flex items-center justify-between gap-2"><span className={'text-xs '+(linked?'text-emerald-300':'text-amber-300')}>{linked?'Propojeno s CRM':'Dosud nespárováno'}</span><button type="button" onClick={linkDesigns} disabled={!order?.id||!canvaUrl.trim()||!suplaUrl.trim()||Boolean(busy)} className="rounded-lg bg-cyan-300 px-3 py-2 text-xs font-semibold text-slate-950 disabled:opacity-35">Uložit propojení</button></div>
   </div>
   <p className="mt-3 text-xs text-white/45">Po úpravě v Canvě vyexportujte PDF a obrázek. Tyto soubory vložte níže. Bez tří povinných příloh nelze dokončit koncept.</p>
   <div className="mt-4 space-y-3">{checks.map(x=>{

@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
+import { createInquiryNotification } from '../../shared/inquiryNotification.ts';
 
 const clean = (value: unknown, max: number) => String(value || '').trim().slice(0, max);
 const emailValue = (value: unknown) => clean(value, 254).toLowerCase();
@@ -56,30 +57,33 @@ Deno.serve(async (req) => {
       privacy_contact_consent_at: confirmedAt,
     });
 
-    const notifyBody = [
-      `Nová poptávka z webu MLŽIDLA.cz`,
-      `Jméno: ${jmeno}`,
-      `E-mail: ${email}`,
-      `Telefon: ${clean(body.telefon, 60)}`,
-      `Firma: ${clean(body.firma, 160)}`,
-      `Produkt: ${clean(body.produkt, 200)}`,
-      `Místo: ${clean(body.installation_location, 200)}`,
-      '',
-      zprava,
-      '',
-      `Admin: https://mlzidla.cz/admin`,
-    ].join('\n');
-    await Promise.allSettled(['meduna@holmtec.cz', 'jakub1duch@gmail.com'].map((to) =>
-      base44.asServiceRole.integrations.Core.SendEmail({
-        to,
+    const notice = createInquiryNotification({
+      inquiryId: created.id,
+      entity: 'poptavka',
+      name: jmeno,
+      company: clean(body.firma, 160),
+      email,
+      phone: clean(body.telefon, 60),
+      product: clean(body.produkt, 200),
+      place: clean(body.installation_location, 200),
+      message: zprava,
+    });
+    let notificationSent = false;
+    try {
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        to: 'meduna@holmtec.cz',
         subject: `Nová poptávka: ${jmeno}${body.produkt ? ' · ' + clean(body.produkt, 80) : ''}`,
-        text: notifyBody,
+        body: notice.html,
         category: 'transactional',
         from_name: 'MLŽIDLA.cz poptávky',
-      })
-    ));
+      });
+      notificationSent = true;
+    } catch (notificationError) {
+      // Zápis poptávky se při chybě interní notifikace nesmí ztratit.
+      console.error('admin_inquiry_notification_failed', created.id, notificationError);
+    }
 
-    return Response.json({ ok: true, inquiry: created }, {
+    return Response.json({ ok: true, inquiry: created, admin_notification_sent: notificationSent }, {
       headers: {
         'Cache-Control': 'no-store',
         'Pragma': 'no-cache',

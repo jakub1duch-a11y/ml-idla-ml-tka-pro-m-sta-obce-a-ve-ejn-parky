@@ -140,7 +140,7 @@ export default async function(req) {
     }
 
     // Do klientského konceptu se smějí dostat pouze vizualizace výslovně schválené obchodníkem.
-    const visualizationItems = (attachments || []).filter((file) => (
+    const visualizationItems = files.filter((file) => (
       file?.asset_type === 'generated_visualization'
       && file?.file_url
       && (file?.approval_status === 'approved' || file?.approved_for_presentation === true)
@@ -169,6 +169,8 @@ export default async function(req) {
     const quoteAttachment = quotePdfBase64 ? [{ filename: quoteFilename || 'nabidka-mlzidla.pdf', content: Uint8Array.from(atob(quotePdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const presentationAttachment = presentationPdfBase64 ? [{ filename: presentationFilename || 'prezentace-mlzidla.pdf', content: Uint8Array.from(atob(presentationPdfBase64), (character) => character.charCodeAt(0)), contentType: 'application/pdf' }] : [];
     const allAttachments = [...quoteAttachment, ...presentationAttachment, ...externalAttachments];
+    const sizeTotal = allAttachments.reduce((total, file) => total + file.content.byteLength, 0);
+    if (sizeTotal > 22_000_000) return Response.json({ error: 'Celková velikost příloh je příliš velká (22 MB). Zmenšete PDF nebo vizualizace.' }, { status: 413 });
     const smartPricing = await findSmartControlPricing(base44);
     const html = buildHtml({ message, portalUrl, presentationUrl, quotePdfUrl, validUntil: validUntil ? new Date(validUntil).toLocaleDateString('cs-CZ') : '', quoteNumber, projectSummary, emailType, discountPercent, previousTotal, newTotal, visualizationItems, canvaPreviewItems: canvaPreview ? [canvaPreview] : [], smartPricing });
     // HARD SAFETY RULE: Tato funkce NIKDY neposílá e-mail. Vždy pouze vytvoří Gmail koncept.

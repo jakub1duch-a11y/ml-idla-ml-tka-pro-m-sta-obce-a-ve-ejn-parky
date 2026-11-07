@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { MRAK_VARIANTS } from '@/lib/productDetailConfig';
 import { getFamily, getLine } from '@/lib/productFamilies';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';

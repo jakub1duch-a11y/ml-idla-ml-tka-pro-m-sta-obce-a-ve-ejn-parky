@@ -6,11 +6,12 @@ const ITEMS = [
   ['prehled', 'Přehled'],
   ['popis', 'Popis produktu'],
   ['parametry', 'Technické parametry'],
+  ['varianty', 'Varianty'],
   ['galerie', 'Galerie'],
   ['vyhody', 'Výhody'],
   ['instalace', 'Instalace'],
   ['reference', 'Reference'],
-  ['varianty', 'Varianty'],
+  ['chytre-rizeni', 'SUPLA'],
 ];
 
 export default function PdSectionNav({ product }) {

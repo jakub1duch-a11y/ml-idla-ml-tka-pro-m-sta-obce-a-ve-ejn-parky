@@ -158,6 +158,13 @@ export function mimeToBase64Url(bytes: Uint8Array): string {
 export async function createGmailDraft(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; labelIds?: string[]; attachments?: Array<{ filename: string; content: Uint8Array; contentType?: string }> }): Promise<{ ok: boolean; draft_id?: string; error?: string }> {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+    // Přísná kontrola skutečné schránky. Base44 může mít k Gmailu jiný účet než chat.
+    const profileRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/profile', { headers: { Authorization: `Bearer ${accessToken}` } });
+    if (!profileRes.ok) return { ok: false, error: `Gmail účet nelze ověřit (${profileRes.status}).` };
+    const profile = await profileRes.json();
+    if (String(profile.emailAddress || '').toLowerCase() !== 'meduna@holmtec.cz') {
+      return { ok: false, error: `K Base44 je připojena jiná schránka (${profile.emailAddress || 'nezjištěno'}). Pro obchodní koncepty je povolen výhradně meduna@holmtec.cz.` };
+    }
     const raw = buildMimeMessage({ to: opts.to, fromEmail: opts.fromEmail, subject: opts.subject, text: opts.text, html: opts.html, bcc: opts.bcc, attachments: opts.attachments || [] });
     const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/drafts', {
       method: 'POST',

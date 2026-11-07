@@ -7,7 +7,68 @@ const SOURCES = {
   'y-armist-tr60': { folder: '1OtbstfDyf0yWodTet3asJfYPg-odzfNn', files: ['17fq2ZQLEuUjUrjoBzUifs7kcdFvXfqTz', '1YFQNuQL1NX3B8vIa0N60-RW83V-RzPTx', '1_mM5cMKHuUWSn0G4XOjEdgsXI8oekAxt'] },
   'y-armist-j70': { folder: '1OtbstfDyf0yWodTet3asJfYPg-odzfNn', files: ['13EsB-_vBL6QVoLRUG8TIYgqXVuVcEV_v', '1L5tweFHDdejBarr69_gS8GBT1Cb4JjTf', '1axlLHd0nett_LkN-Z5pDsvwXvZX3sCKB'] },
 };
-export async function loadOriginalProductScenes(base44, product) {
+// Always resolve offer imagery from the current Base44 administration at generation time.
+// Only images explicitly approved for client presentations are eligible.
+export async function listApprovedProductVisuals(base44, product, options = {}) {
+  const slug = String(product?.slug || '').toLowerCase();
+  if (!slug) return [];
+  const isMrak = slug.includes('mrak');
+  const requestedVariant = `${slug} ${product?.name || ''}`.match(/(?:^|\D)(1413|1414|1480|2424)(?:\D|$)/)?.[1] || '';
+  let response;
+  try {
+    response = await base44.asServiceRole.entities.VisualizationAsset.filter(
+      { approval_status: 'approved', approved_for_presentation: true },
+      { sort: '-updated_date', limit: 500 },
+    );
+  } catch (error) {
+    console.warn('Approved Base44 visuals unavailable', error);
+    return [];
+  }
+  const rows = Array.isArray(response) ? response : (response?.items || []);
+  const matching = rows.filter((item) => {
+    if (!item?.image_url || item.approval_status !== 'approved' || item.approved_for_presentation !== true) return false;
+    const assetSlug = String(item.product_slug || '').toLowerCase();
+    if (assetSlug === slug) return true;
+    // The older MRAK family uses a generic slug; prevent mixing the 1413, 1414, 1480 and 2424 geometries.
+    if (isMrak && requestedVariant && assetSlug === 'mlzitko-mrak') {
+      const label = String(item.title || item.product_name || '');
+      return new RegExp(`(?:^|\\D)${requestedVariant}(?:\\D|$)`).test(label);
+    }
+    return false;
+  });
+  const inquiryId = String(options.inquiryId || '');
+  const environment = String(options.environment || '');
+  return matching.sort((a, b) => {
+    const score = (item) =>
+      (inquiryId && item.source_inquiry_id === inquiryId ? 1000 : 0) +
+      (String(item.product_slug).toLowerCase() === slug ? 200 : 0) +
+      (environment && item.environment === environment ? 100 : 0) +
+      (item.is_primary_for_variant ? 20 : 0);
+    return score(b) - score(a) ||
+      Date.parse(b.updated_date || b.created_date || 0) - Date.parse(a.updated_date || a.created_date || 0);
+  });
+}
+
+export async function loadOriginalProductScenes(base44, product, options = {}) {
+  const approved = await listApprovedProductVisuals(base44, product, options);
+  const scenes = [];
+  for (const visual of approved.slice(0, 6)) {
+    if (scenes.length >= 3) break;
+    const img = await fetchImageAsBase64(visual.image_url);
+    if (!img) continue;
+    scenes.push({
+      url: visual.image_url,
+      title: visual.title || product.name,
+      source: 'base44_approved_visual',
+      source_visualization_id: visual.id,
+      geometry_preserved: false,
+      generated_by_ai: true,
+      caption: 'Vizualizace schválená v administraci MLŽIDLA.cz; finální geometrii potvrzuje výrobní dokumentace.',
+      sort_order: scenes.length,
+      img,
+    });
+  }
+  if (scenes.length) return scenes;
   const source = SOURCES[product.slug];
   if (source) {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');

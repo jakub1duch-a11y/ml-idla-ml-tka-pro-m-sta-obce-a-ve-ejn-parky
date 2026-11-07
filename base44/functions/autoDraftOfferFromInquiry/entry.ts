@@ -266,7 +266,12 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
         ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. U každého samostatného BENDY zobraz maximálně 2 malé reálné kovové trysky, pouze pokud jejich poloha odpovídá referenčním fotografiím skutečného produktu. Pokud je poloha trysek na referenci čitelná, kopíruj ji přesně. Nevymýšlej další trysky. Jemná mlha musí vycházet fyzicky pouze z otvorů těchto trysek a ve směru jejich skutečné orientace; žádná mlha nesmí vznikat z povrchu trubky, spojů, patky ani z volného prostoru. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
         : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej. Zachovej počet nosných trubek/profilů, typ ohybů, spoje, patku nebo kotvení a skutečné umístění trysek. Nevytvářej hybrid více různých výrobků.`;
 
-    const requestedQuantity = Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
+    // The confirmed quantity from the website configurator is authoritative.
+    // Do not let an LLM reinterpret a structured multi-unit request.
+    const structuredQuantity = inquiryType === 'poptavka' && sourceRecord?.request_type === 'multi_unit_avenue'
+      && Number.isInteger(Number(sourceRecord.quantity)) && Number(sourceRecord.quantity) >= 2 && Number(sourceRecord.quantity) <= 20
+      ? Number(sourceRecord.quantity) : null;
+    const requestedQuantity = structuredQuantity ?? Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
     const requestedVariants = Array.isArray(analysis?.requested_variants) ? analysis.requested_variants.map(clean).filter(Boolean).slice(0, 4) : [];
     const requestedQuantities = Array.isArray(analysis?.requested_quantities)
       ? analysis.requested_quantities.map((value) => Math.max(1, Math.min(100, Number(value || 1)))).filter((value, index, all) => all.indexOf(value) === index).slice(0, 4)
@@ -280,7 +285,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       const match = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
       return match ? Math.max(1, Math.min(100, Number(match[1]))) : null;
     }).filter(Boolean) as number[];
-    const allRequestedQuantities = [...requestedQuantities, ...quantityVariantsFromLabels]
+    const allRequestedQuantities = [...(structuredQuantity ? [structuredQuantity] : requestedQuantities), ...(structuredQuantity ? [] : quantityVariantsFromLabels)]
       .filter((value, index, all) => all.indexOf(value) === index);
     const variantLabels = requestedVariants.length
       ? requestedVariants

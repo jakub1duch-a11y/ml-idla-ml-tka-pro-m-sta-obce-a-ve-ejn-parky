@@ -66,18 +66,22 @@ export default function AdminIntegrations() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState('');
+  const [canvaStatus, setCanvaStatus] = useState(null);
 
   const load = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
     else setLoading(true);
     setError('');
-    const [integrationResult, providerResult] = await Promise.allSettled([
+    const [integrationResult, providerResult, canvaResult] = await Promise.allSettled([
       base44.entities.SuperAgentIntegration.list('sort_order', 100),
       base44.entities.AIProviderConfig.list('priority', 50),
+      base44.functions.invoke('getCanvaOfferIntegrationStatus', {}),
     ]);
     if (integrationResult.status === 'fulfilled') setIntegrations(integrationResult.value || []);
     else setError('Nepodařilo se načíst registr konektorů.');
     if (providerResult.status === 'fulfilled') setProviders(providerResult.value || []);
+    if (canvaResult.status === 'fulfilled') setCanvaStatus(canvaResult.value?.data || canvaResult.value);
+    else setCanvaStatus(null);
     if (isRefresh) setRefreshing(false);
     else setLoading(false);
   }, []);
@@ -125,6 +129,21 @@ export default function AdminIntegrations() {
           <p>Publikace na LinkedIn a Instagram, změny CRM, kalendáře a externích úkolů vyžadují ruční schválení.</p>
           <p>Ceny, technické parametry a geometrie produktů se nesmí domýšlet; používají se schválené zdroje a MASTER reference.</p>
         </div>
+      </section>
+
+      <section className="rounded-3xl border border-cyan/20 bg-cyan/[.035] p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2"><Link2 size={17} className="text-cyan"/><h3 className="text-sm font-semibold text-white">Canva ↔ Base44 ↔ Gmail ↔ CRM</h3></div>
+          <span className={'rounded-full border px-3 py-1 text-xs '+(canvaStatus?.oauth_connected?'border-emerald-400/40 text-emerald-300':'border-amber-400/30 text-amber-300')}>{canvaStatus?.oauth_connected?'Autorizováno':'Čeká na Canva OAuth'}</span>
+        </div>
+        <p className="mt-3 text-xs leading-6 text-white/60">Do obchodní nabídky je možné ukládat odkazy na editovatelné návrhy Canva a párovat jejich exporty s konkrétní zakázkou. Automatické vyplnění a export z Canvy zatím nejsou zapnuté.</p>
+        {canvaStatus?.next_action && <p className="mt-2 text-xs text-amber-200">{canvaStatus.next_action}</p>}
+        <div className="mt-4 flex flex-wrap gap-3 text-xs">
+          <a target="_blank" rel="noreferrer" href="https://www.canva.dev/" className="rounded-xl border border-cyan/20 px-4 py-2 text-cyan hover:bg-white/5">Canva Developer Portal</a>
+          <a target="_blank" rel="noreferrer" href="https://www.canva.dev/docs/apps/rest-apis/authentication/" className="rounded-xl border border-white/10 px-4 py-2 text-white/70 hover:bg-white/5">OAuth a oprávnění</a>
+          <a target="_blank" rel="noreferrer" href="/admin?tab=poptavky" className="rounded-xl border border-white/10 px-4 py-2 text-white/70 hover:bg-white/5">Otevřít nabídky</a>
+        </div>
+        <p className="mt-3 text-xs text-white/35">Klientské tajné klíče ukládat pouze do Base44 Secrets, nikdy do zdrojových souborů ani do chatu. Přímý konektor Canva v katalogu Base44 není.</p>
       </section>
 
       <section>

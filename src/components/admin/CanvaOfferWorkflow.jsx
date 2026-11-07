@@ -33,6 +33,7 @@ export default function CanvaOfferWorkflow({item,order}) {
  const ref=order?.quote_number||('P-'+String(item?.id||'').slice(0,8).toUpperCase());
  const upload=async(type,file)=>{
   if(!file||!item)return;
+  if(!order?.id){setMessage('Nejdříve založte koncept nabídky, aby se přílohy přiřadily ke správné zakázce.');return;}
   const pdf=file.type==='application/pdf'||/\.pdf$/i.test(file.name),img=/^image\/(png|jpeg|webp)$/.test(file.type);
   if((type.key==='preview'&&!img)||(type.key!=='preview'&&!pdf)){setMessage('Nevhodný formát: '+file.name);return;}
   if(file.size>19000000){setMessage('Soubor přesahuje 19 MB.');return;}
@@ -40,14 +41,24 @@ export default function CanvaOfferWorkflow({item,order}) {
   try{
    const uploaded=await base44.integrations.Core.UploadFile({file}),url=uploaded?.file_url||uploaded?.url;
    if(!url)throw Error('Nahrání souboru nevrátilo URL.');
-   const previous=assets.find(a=>type.valid(a)&&a.selected_for_offer);
+   let archived=null,archiveError='';
+   try{
+     const response=await base44.functions.invoke('archiveCanvaOfferAsset',{
+       project_order_id:order.id,asset_key:type.key,file_url:url,file_uri:uploaded?.file_uri||'',mime_type:file.type||(type.key==='preview'?'image/png':'application/pdf')
+     });
+     archived=response?.data||response;
+     if(!archived?.ok)throw Error(archived?.error||'Archivace nebyla potvrzena.');
+   }catch(e){archiveError=e?.message||'Archivace na Mlžný disk selhala.';}
+   const previous=assets.find(x=>type.valid(x)&&x.selected_for_offer);
    const obj={inquiry_id:item.id,inquiry_type:item.entity==='ContactInquiry'?'contact':'poptavka',
-    project_order_id:order?.id||'',file_url:url,file_name:type.label.replace(/\s+/g,'_')+'-'+ref+(type.key==='preview'?'.'+(file.name.split('.').pop()||'webp'):'.pdf'),
-    file_type:type.key==='preview'?(file.type||'image/webp'):'application/pdf',asset_type:'other',title:type.label,
-    description:'Canva export: '+file.name+'. Před použitím zkontrolovat cenu z Kalkulace 2026.',
+    project_order_id:order.id,file_url:archived?.file_url||url,
+    file_name:archived?.file_name||(type.label.replace(/\s+/g,'_')+'-'+ref+(type.key==='preview'?'.'+(file.name.split('.').pop()||'webp'):'.pdf')),
+    file_type:archived?.file_type||(type.key==='preview'?(file.type||'image/webp'):'application/pdf'),asset_type:'other',title:type.label,
+    description:'Canva export: '+file.name+'. Před použitím zkontrolovat cenu z Kalkulace 2026.'+(archived?.ok?' Archiv Mlžný disk.':' Archiv Drive nedokončen.'),
     selected_for_offer:true,generated_by_ai:false};
    if(previous?.id)await base44.entities.OfferAsset.update(previous.id,obj);else await base44.entities.OfferAsset.create(obj);
-   setMessage('Soubor byl uložen do nabídky: '+type.title);await refresh();
+   setMessage(archived?.ok?('Canva export spárován s nabídkou a uložen na Mlžný disk: '+type.title):('Soubor uložen pouze v Base44: '+type.title+'. Mlžný disk: '+archiveError));
+   await refresh();
   }catch(e){setMessage('Nahrání selhalo: '+(e?.message||'chyba'));}finally{setBusy('');}
  };
  const linkDesigns=async()=>{

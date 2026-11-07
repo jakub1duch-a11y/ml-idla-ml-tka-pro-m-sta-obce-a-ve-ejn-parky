@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Loader, Mail, Phone, Building2, Package, MessageSquare, CheckCircle, Clock, AlertCircle,
   FileText, Printer, Sparkles, Eye, Send, Inbox, FolderOpen, ArrowRight, Image as ImageIcon,
-  Table2, ExternalLink,
+  Table2, ExternalLink, Search,
 } from 'lucide-react';
 
 const CLIENTS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1EvZ7JRpOHQoBZRG-ZJhC_x8fxm2_D8aj4pfZTv7iEto/edit';
@@ -10,6 +10,7 @@ import { base44 } from '@/api/base44Client';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
 import TeamThread from '@/components/admin/team/TeamThread';
 import InquiryAiReply from '@/components/admin/InquiryAiReply';
+import InquiryDetailPanel from '@/components/admin/InquiryDetailPanel';
 
 const BUCKETS = {
   nove: { label: 'Nové', color: 'text-cyan border-cyan/30 bg-cyan/10', icon: AlertCircle, match: (s) => s === 'nova' || s === 'new' },
@@ -58,6 +59,10 @@ export default function AdminPoptavky() {
   const [items, setItems] = useState([]);
   const [projectOrders, setProjectOrders] = useState([]);
   const [products, setProducts] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [query, setQuery] = useState('');
+  const [selectedInquiry, setSelectedInquiry] = useState(null);
+  const [actionError, setActionError] = useState('');
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [expanded, setExpanded] = useState(null);
@@ -68,34 +73,36 @@ export default function AdminPoptavky() {
 
   const load = async () => {
     setLoading(true);
-    const [poptavky, inquiries, advisorLeads, orders, prods] = await Promise.all([
+    const [poptavky, inquiries, advisorLeads, orders, prods, crmActivities] = await Promise.all([
       base44.entities.Poptavka.list('-created_date'),
       base44.entities.ContactInquiry.list('-created_date'),
       base44.entities.WebAdvisorLead.list('-created_date'),
       base44.entities.ProjectOrder.list('-created_date', 200),
       base44.entities.Product.list(),
+      base44.entities.CrmActivity.list('-created_date', 400).catch(() => []),
     ]);
     const normalized = [
       ...poptavky.map((p) => ({
         id: p.id, entity: 'Poptavka', source: p.service_type === 'ai_misting_advisor' ? 'AI poradce 24/7' : 'Poptávka', name: p.jmeno, email: p.email, phone: p.telefon,
         company: p.firma, product: p.produkt, message: p.zprava, status: p.status, created_date: p.created_date,
-        offer_status: p.offer_status || 'nova_poptavka',
+        offer_status: p.offer_status || 'nova_poptavka', raw: p,
       })),
       ...inquiries.map((item) => ({
         id: item.id, entity: 'ContactInquiry', source: 'Kontakt', name: item.name, email: item.email, phone: '',
         company: '', product: item.product_id, message: item.message, status: item.status, created_date: item.created_date,
-        offer_status: 'nova_poptavka',
+        offer_status: 'nova_poptavka', raw: item,
       })),
       ...(advisorLeads || []).filter((lead) => !lead.inquiry_id).map((lead) => ({
         id: lead.id, entity: 'WebAdvisorLead', source: 'AI chat 24/7', name: lead.name, email: lead.email || '', phone: lead.phone,
         company: '', product: (lead.recommended_products || []).join(', ') || lead.topic || 'Poradenství k mlžítku',
         message: [lead.summary, lead.transcript].filter(Boolean).join('\n\n'), status: lead.status || 'new', created_date: lead.created_date,
-        offer_status: 'nova_poptavka',
+        offer_status: 'nova_poptavka', raw: lead,
       })),
     ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime());
     setItems(normalized);
     setProjectOrders(orders || []);
     setProducts(prods || []);
+    setActivities(crmActivities || []);
     setLoading(false);
   };
 
@@ -126,7 +133,12 @@ export default function AdminPoptavky() {
     return { total, draftOffers, approvedOffers, sentOffers, newInquiries };
   }, [items]);
 
-  const visible = filter === 'all' ? items : items.filter((i) => getBucket(i.status) === filter);
+  const visible = items.filter((i) => {
+    if (filter !== 'all' && getBucket(i.status) !== filter) return false;
+    const term = query.trim().toLocaleLowerCase('cs-CZ');
+    return !term || [i.name, i.email, i.phone, i.company, i.product, i.message].some((x) => String(x || '').toLocaleLowerCase('cs-CZ').includes(term));
+  });
+  const currentInquiry = items.find((i) => i.id === selectedInquiry?.id && i.entity === selectedInquiry?.entity) || null;
 
   // Offer board: group items by offer_status
   const boardColumns = useMemo(() => {
@@ -162,12 +174,15 @@ export default function AdminPoptavky() {
 
   const prepareConcept = async (item) => {
     setPreparingConcept(item.id);
+    setActionError('');
     try {
       const inquiryType = item.entity === 'ContactInquiry' ? 'contact' : 'poptavka';
       await base44.functions.invoke('prepareOfferConcept', { inquiry_id: item.id, inquiry_type: inquiryType });
       await load();
     } catch (e) {
       console.error('Concept preparation failed', e);
+      setActionError('Koncept se nepodařilo připravit: ' + (e?.message || 'neznámá chyba'));
+      alert('Příprava konceptu selhala. ' + (e?.message || 'Zkontrolujte workflow.'));
     } finally {
       setPreparingConcept(null);
     }
@@ -175,6 +190,7 @@ export default function AdminPoptavky() {
 
   const downloadConceptPdf = async (item) => {
     setGeneratingPdf(item.id);
+    setActionError('');
     try {
       const inquiryType = item.entity === 'ContactInquiry' ? 'contact' : 'poptavka';
       const response = await base44.functions.invoke('generateOfferConceptPdf', { inquiry_id: item.id, inquiry_type: inquiryType });
@@ -191,6 +207,8 @@ export default function AdminPoptavky() {
       }
     } catch (e) {
       console.error('PDF generation failed', e);
+      setActionError('PDF nabídky se nepodařilo vytvořit: ' + (e?.message || 'neznámá chyba'));
+      alert('Generování PDF nabídky selhalo.');
     } finally {
       setGeneratingPdf(null);
     }
@@ -219,7 +237,7 @@ export default function AdminPoptavky() {
           <p className="text-[10px] text-white/25 italic">Bez nabídky</p>
         )}
         <div className="flex gap-1 mt-2">
-          <button onClick={() => setExpanded(item.id)} className="text-[10px] text-cyan hover:underline">Detail</button>
+          <button onClick={() => setSelectedInquiry(item)} className="text-[10px] text-cyan hover:underline">Karta poptávky</button>
           <button onClick={() => printA4(item)} className="text-[10px] text-white/40 hover:text-white ml-auto">Tisk A4</button>
         </div>
       </div>
@@ -260,6 +278,18 @@ export default function AdminPoptavky() {
           </div>
         </div>
       )}
+
+      <InquiryDetailPanel
+        item={currentInquiry}
+        onClose={() => { setSelectedInquiry(null); setActionError(''); }}
+        orders={currentInquiry ? (ordersByInquiry[currentInquiry.id] || []) : []}
+        activities={activities}
+        onPrepareOffer={prepareConcept}
+        onGenerateOfferPdf={downloadConceptPdf}
+        preparingOffer={preparingConcept === currentInquiry?.id}
+        generatingOfferPdf={generatingPdf === currentInquiry?.id}
+        error={actionError}
+      />
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3 print:hidden">
@@ -311,7 +341,7 @@ export default function AdminPoptavky() {
                   const StatusIcon = bucket.icon;
                   const offer = getOfferInfo(item);
                   return (
-                    <button key={`${item.entity}-${item.id}`} onClick={() => setExpanded(item.id)}
+                    <button key={`${item.entity}-${item.id}`} onClick={() => setSelectedInquiry(item)}
                       className="w-full flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/3 hover:bg-white/5 hover:border-white/10 transition-all text-left">
                       <div className="flex-1 min-w-0">
                         <p className="text-white text-sm font-medium truncate">{item.name}</p>
@@ -388,7 +418,7 @@ export default function AdminPoptavky() {
         <>
           <div className="flex items-center justify-between mb-4 flex-wrap gap-3 print:hidden">
             <h3 className="text-white text-sm font-medium">Seznam poptávek ({items.length})</h3>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {['all', ...Object.keys(BUCKETS)].map((s) => (
                 <button key={s} onClick={() => setFilter(s)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${filter === s ? 'bg-cyan text-ink' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>
@@ -397,6 +427,12 @@ export default function AdminPoptavky() {
               ))}
             </div>
           </div>
+
+          <label className="mb-4 flex max-w-xl items-center gap-3 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white/50 print:hidden">
+            <Search size={17} className="shrink-0 text-cyan" />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Hledat klienta, firmu, e-mail, produkt nebo zprávu…" aria-label="Hledat v poptávkách" className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/40" />
+            <span className="shrink-0 text-xs font-mono">{visible.length}</span>
+          </label>
 
           {loading ? (
             <div className="flex justify-center py-20"><Loader size={24} className="animate-spin text-cyan/40" /></div>
@@ -461,6 +497,8 @@ export default function AdminPoptavky() {
                             <p className="leading-relaxed">{item.message}</p>
                           </div>
                         )}
+
+                        <button onClick={() => setSelectedInquiry(item)} className="inline-flex items-center gap-2 rounded-lg bg-cyan px-4 py-2 text-xs font-semibold text-ink hover:bg-cyan/90"><FileText size={14} /> Otevřít kartu poptávky · tisk / PDF / nabídka</button>
 
                         {/* Offer info */}
                         {offer.hasOffer && (

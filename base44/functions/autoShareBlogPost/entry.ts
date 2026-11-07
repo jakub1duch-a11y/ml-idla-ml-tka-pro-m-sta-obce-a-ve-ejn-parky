@@ -17,6 +17,8 @@ export default async function(req) {
     if (!postId) return Response.json({ ok: false, reason: 'Missing BlogPost ID' }, { status: 400 });
     const post = await base44.asServiceRole.entities.BlogPost.get(postId);
     if (!post || !post.published || post.instagram_posted) return Response.json({ ok: false, reason: 'Post not published or already shared' });
+    // Marketing agent creates its own approved social draft. Auto-share would create a duplicate.
+    if (String(post.slug || '').startsWith('marketing-')) return Response.json({ ok: false, reason: 'Marketing article: Instagram publication requires separate review' });
     if (!post.image_url) return Response.json({ ok: false, reason: 'Post has no image' });
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
     const link = `${BASE_URL}/blog/${post.slug || post.id}`;

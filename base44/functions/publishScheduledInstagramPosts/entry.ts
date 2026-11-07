@@ -21,6 +21,7 @@ export default async function(req) {
     let publishedCount = 0;
     for (const post of duePosts) {
       try {
+        if (post.post_format && post.post_format !== 'feed') throw new Error('Naplánované Stories a Reels vyžadují ruční potvrzení formátu a média.');
         if (!post.image_url) throw new Error('Chybí obrázek');
         await publishInstagramImage(accessToken, post.image_url, post.caption || '');
         await base44.asServiceRole.entities.MarketingPost.update(post.id, { status: 'published' });

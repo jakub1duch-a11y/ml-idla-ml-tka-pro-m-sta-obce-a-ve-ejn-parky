@@ -4,7 +4,16 @@ import {base44} from '@/api/base44Client';
 
 const TEMPLATE='https://www.canva.com/design?create=true&template=EAHZVIjydfU';
 const SUPLA='https://www.canva.com/d/7kyHgos8ffmyKgX';
-const MRAK='https://www.canva.com/d/mODH-WpmRDPkbsx';
+const PRODUCT_DESIGNS=[
+ ['MRAK',/mrak/i,'https://www.canva.com/d/mODH-WpmRDPkbsx'],
+ ['LINEA CE GATE',/linea.*(ce.*gate|gate)/i,'https://www.canva.com/d/GzNifrXYM7AXUCN'],
+ ['LINEA CE 70',/linea.*ce/i,'https://www.canva.com/d/0NiClhAgRijVWDL'],
+ ['LINEA TR60',/linea/i,'https://www.canva.com/d/AKDkRcF3s0ZatrT'],
+ ['VOLAVKA GRACILIS',/volavka.*gracilis/i,'https://www.canva.com/d/tCQudENG1rF4CdS'],
+ ['VOLAVKA GIGANTEA',/volavka/i,'https://www.canva.com/d/CMSxlP9Iqj87umY'],
+ ['BENDY_60',/bendy/i,'https://www.canva.com/d/t5xJNIgEgEUrs0x'],
+ ['AURA 700',/aura/i,'https://www.canva.com/d/xV4WrFEIzJU8NqU']
+];
 const REQUIRED=[
  {key:'offer',title:'Obrazová nabídka z Canvy',desc:'PDF s produktem a cenovým přehledem.',accept:'application/pdf,.pdf',label:'CANVA OBRAZOVA NABIDKA',icon:FileText,valid:x=>/canva/i.test(x?.title||'')&&/obrazova nabidka/i.test(x?.title||'')},
  {key:'preview',title:'Náhled z Canvy',desc:'WebP, JPG nebo PNG vložený do zprávy.',accept:'image/png,image/jpeg,image/webp',label:'CANVA NAHLED',icon:ImageIcon,valid:x=>/canva/i.test(x?.title||'')&&/nahled/i.test(x?.title||'')},
@@ -17,7 +26,8 @@ export default function CanvaOfferWorkflow({item,order}) {
  const refresh=async()=>{if(!item?.id)return;setLoading(true);try{setAssets(rows(await base44.entities.OfferAsset.filter({inquiry_id:item.id})));}catch(e){setMessage('Přílohy nelze načíst: '+(e?.message||'chyba'));}finally{setLoading(false);}};
  useEffect(()=>{setMessage('');setDraftId('');void refresh();},[item?.id]);
  const checks=useMemo(()=>REQUIRED.map(x=>({...x,asset:assets.find(y=>x.valid(y)&&y.selected_for_offer)})),[assets]);
- const ready=checks.every(x=>Boolean(x.asset)),product=item?.product||order?.product_name||'';
+ const ready=checks.every(x=>Boolean(x.asset)),product=order?.product_name||item?.product||'';
+ const matchedDesign=PRODUCT_DESIGNS.find(x=>x[1].test(product));
  const ref=order?.quote_number||('P-'+String(item?.id||'').slice(0,8).toUpperCase());
  const upload=async(type,file)=>{
   if(!file||!item)return;
@@ -65,7 +75,7 @@ export default function CanvaOfferWorkflow({item,order}) {
   <p className="mt-2 text-xs leading-5 text-white/60">Základem je šablona Mlžidla 2026. SUPLA list je povinný, ale řízení v ceně není automaticky. Cenu ověřit v Kalkulaci 2026.</p>
   <div className="mt-3 grid gap-2">
    <a href={TEMPLATE} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Vytvořit nabídku z Canva šablony</a>
-   {/mrak/i.test(product)&&<a href={MRAK} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Produktové listy MRAK</a>}
+   {matchedDesign&&<a href={matchedDesign[2]} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Produktový list: {matchedDesign[0]}</a>}
    <a href={SUPLA} target="_blank" rel="noreferrer" className="text-sm text-cyan-200 hover:underline"><ExternalLink size={13} className="mr-1 inline"/>Samostatný list SUPLA v Canvě</a>
   </div>
   <p className="mt-3 text-xs text-white/45">Po úpravě v Canvě vyexportujte PDF a obrázek. Tyto soubory vložte níže. Bez tří povinných příloh nelze dokončit koncept.</p>

@@ -92,6 +92,7 @@ export default async function(req) {
     const {
       inquiry_type: inquiryType,
       inquiry_id: inquiryId,
+      project_order_id: projectOrderId,
       subject,
       message: draftMessage,
       sender_email: requestedSender,
@@ -120,12 +121,19 @@ export default async function(req) {
     try { inquiry = await base44.asServiceRole.entities[entityName].get(inquiryId); } catch (_) { return Response.json({ error: 'Inquiry recipient not found' }, { status: 404 }); }
     if (!inquiry?.email) return Response.json({ error: 'Inquiry recipient not found' }, { status: 404 });
 
+    if (emailType === 'offer' && !projectOrderId) return Response.json({ error: 'project_order_id_required_for_offer', message: 'Klientský návrh musí být přiřazen ke konkrétní obchodní nabídce.' }, { status: 400 });
+    if (projectOrderId) {
+      const linkedOrder = await base44.asServiceRole.entities.ProjectOrder.get(projectOrderId).catch(() => null);
+      if (!linkedOrder || linkedOrder.inquiry_id !== inquiryId || linkedOrder.inquiry_type !== (inquiryType === 'contact' ? 'contact' : 'poptavka')) {
+        return Response.json({ error: 'offer_inquiry_mismatch', message: 'Nabídka a poptávka nepatří ke stejnému zákaznickému případu.' }, { status: 409 });
+      }
+    }
     const recipientEmail = inquiry.email;
     const messageSubject = subject;
     const bccRecipients = FIXED_BCC;
     const assetsResponse = await base44.asServiceRole.entities.OfferAsset.filter({ inquiry_id: inquiryId }).catch(() => []);
     const assetsStored = Array.isArray(assetsResponse) ? assetsResponse : assetsResponse?.items || [];
-    const files = [...assetsStored.filter((x) => x.selected_for_offer === true), ...(Array.isArray(attachments) ? attachments : [])]
+    const files = [...assetsStored.filter((x) => x.selected_for_offer === true && (!projectOrderId || x.project_order_id === projectOrderId)), ...(Array.isArray(attachments) ? attachments.filter((x) => !projectOrderId || x.project_order_id === projectOrderId) : [])]
       .filter((x) => x?.file_url && x?.file_name)
       .filter((x, index, list) => list.findIndex((other) => other.file_url === x.file_url) === index);
     const nameOf = (x) => `${x.file_name || ''} ${x.title || ''} ${x.description || ''} ${x.source_provider || ''}`.toLowerCase();
@@ -146,7 +154,8 @@ export default async function(req) {
       && (file?.approval_status === 'approved' || file?.approved_for_presentation === true)
       && file?.approved_for_presentation !== false
     )).slice(0, 3);
-    const prioritizedAttachmentInputs = [suplaPdf, canvaPdf, canvaPreview, ...visualizationItems, ...files]
+    const attachmentFiles = files.filter((file) => file.asset_type !== 'generated_visualization' || visualizationItems.some((approved) => approved.file_url === file.file_url));
+    const prioritizedAttachmentInputs = [suplaPdf, canvaPdf, canvaPreview, ...visualizationItems, ...attachmentFiles]
       .filter(Boolean).filter((file, index, list) => list.findIndex((other) => other.file_url === file.file_url) === index).slice(0, 12);
     const externalAttachments = await Promise.all(prioritizedAttachmentInputs.map(async (file) => {
       const driveId = /^https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/.exec(file.file_url);

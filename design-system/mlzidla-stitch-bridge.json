@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "MLŽIDLA.cz – Stitch design bridge",
+  "status": "prepared-not-connected",
+  "sourceOfTruth": {
+    "app": "Base44: Mlžidla & mlžítka pro města, obce a veřejné parky",
+    "appId": "6a3ee88c10959cd3588c4d68",
+    "brandUrl": "https://mlzidla.cz/brand-identity",
+    "cssTokens": "src/index.css",
+    "logoCss": "src/styles/brand-logo-system.css",
+    "reactLogo": "src/components/brand/MlzidlaLogoSvg.jsx",
+    "logoAssets": {
+      "lightBackground": "/brand/mlzidla-logo-dark-master.png",
+      "darkBackground": "/brand/mlzidla-logo-horizontal-master.png",
+      "tagline": "/brand/mlzidla-logo-tagline-master.png",
+      "monochrome": "/brand/mlzidla-logo-mono.svg"
+    }
+  },
+  "tokens": {
+    "color": {
+      "primary": "#0B2A4A",
+      "dark": "#071A2F",
+      "accent": "#00B7FF",
+      "background": "#F5FAFD",
+      "surface": "#FFFFFF",
+      "muted": "#EAF6FC",
+      "border": "#D6EAF3",
+      "text": "#071A2F",
+      "mutedText": "#607789",
+      "stainlessReference": "#94A3B8"
+    },
+    "font": {
+      "heading": "Montserrat, Arial, sans-serif",
+      "body": "Inter, Arial, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "radius": {
+      "sm": "10px",
+      "md": "16px",
+      "lg": "24px"
+    },
+    "shadow": {
+      "card": "0 4px 12px rgba(10,22,40,0.08)",
+      "raised": "0 12px 32px rgba(10,22,40,0.12)"
+    },
+    "motion": {
+      "durationFastMs": 180,
+      "durationNormalMs": 360,
+      "durationRevealMs": 620,
+      "respectReducedMotion": true
+    }
+  },
+  "targets": {
+    "publicWeb": [
+      "product-detail",
+      "product-cards",
+      "misting-variants",
+      "contact-cta",
+      "references",
+      "gallery"
+    ],
+    "salesCenter": [
+      "dashboard",
+      "contacts",
+      "offers",
+      "email-replies",
+      "drafts",
+      "map",
+      "activity-log"
+    ]
+  },
+  "sync": {
+    "designProducer": "Google Stitch",
+    "mechanism": "MCP/agent -> reviewed GitHub branch/PR -> Base44 (after explicit approval)",
+    "reverseSyncConfirmed": false,
+    "githubBase442WaySyncVerifiedForThisApp": false,
+    "stitchProjectId": null,
+    "stitchCredentialsLocation": "Secret manager only; never commit",
+    "automatedImportEnabled": false,
+    "autoMergeEnabled": false,
+    "autoPublishEnabled": false
+  }
+}

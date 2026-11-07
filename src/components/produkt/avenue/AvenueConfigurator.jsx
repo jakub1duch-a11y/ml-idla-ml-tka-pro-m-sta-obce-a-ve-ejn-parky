@@ -4,7 +4,7 @@ import { ArrowRight, Droplets, Ruler, SlidersHorizontal } from 'lucide-react';
 
 const CONFIGS = {
   'linea-avenue': { name: 'LINEA AVENUE', nozzles: 4, singular: 'LINEA' },
-  'bendy-alej': { name: 'BENDY ALEJ', nozzles: null, singular: 'BENDY' },
+  'bendy-alej': { name: 'STÉBLO ALEJ', nozzles: null, singular: 'STÉBLO' },
 };
 const LAYOUTS = [
   { id: 'single', label: 'Jednostranná řada' },

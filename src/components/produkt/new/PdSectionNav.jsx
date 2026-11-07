@@ -11,6 +11,7 @@ const ITEMS = [
   ['vyhody', 'Výhody'],
   ['instalace', 'Instalace'],
   ['reference', 'Reference'],
+  ['faq', 'Otázky'],
   ['chytre-rizeni', 'SUPLA'],
 ];
 

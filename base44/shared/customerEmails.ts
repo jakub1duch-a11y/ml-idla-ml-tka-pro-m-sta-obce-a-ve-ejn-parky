@@ -155,10 +155,10 @@ export function mimeToBase64Url(bytes: Uint8Array): string {
   return base64Url(bytes);
 }
 
-export async function createGmailDraft(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; labelIds?: string[] }): Promise<{ ok: boolean; draft_id?: string; error?: string }> {
+export async function createGmailDraft(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; labelIds?: string[]; attachments?: Array<{ filename: string; content: Uint8Array; contentType?: string }> }): Promise<{ ok: boolean; draft_id?: string; error?: string }> {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-    const raw = buildMimeMessage({ to: opts.to, fromEmail: opts.fromEmail, subject: opts.subject, text: opts.text, html: opts.html, bcc: opts.bcc });
+    const raw = buildMimeMessage({ to: opts.to, fromEmail: opts.fromEmail, subject: opts.subject, text: opts.text, html: opts.html, bcc: opts.bcc, attachments: opts.attachments || [] });
     const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/drafts', {
       method: 'POST',
       headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },

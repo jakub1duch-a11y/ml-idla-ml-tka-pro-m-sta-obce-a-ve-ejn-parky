@@ -66,23 +66,50 @@ export default function VisualizationAssetLibrary() {
     }
   };
 
+  // The public website reads MediaFile, never the admin-only VisualizationAsset entity.
+  // Keep a narrowly scoped public mirror in sync with the approval gate.
+  const syncPublishedVisual = async (item) => {
+    if (!item.product_slug || !item.image_url) return;
+    const copies = await base44.entities.MediaFile.filter({ file_url: item.image_url, product_slug: item.product_slug }).catch(() => []);
+    const linked = (copies || []).filter((row) =>
+      row.visualization_source_id === item.id ||
+      (!row.visualization_source_id && row.media_role === 'render' && row.file_type === 'image/visualization')
+    );
+    const publish = item.approval_status === 'approved' && item.approved_for_presentation === true;
+    if (!publish) {
+      await Promise.all(linked.map((row) => base44.entities.MediaFile.delete(row.id)));
+      return;
+    }
+
+    const isVideo = /\.(mp4|webm|mov|m4v)([?#]|$)/i.test(item.image_url);
+    const publicData = {
+      file_url: item.image_url,
+      file_name: item.title || `${item.product_name || item.product_slug} — schválená vizualizace`,
+      file_type: isVideo ? 'video/mp4' : 'image/visualization',
+      product_slug: item.product_slug,
+      media_group: item.product_name || 'VIZUALIZACE',
+      media_role: isVideo ? 'video' : 'render',
+      sort_order: Number(item.sort_order) || 0,
+      visualization_source_id: item.id,
+      visualization_environment: item.environment || '',
+      visualization_configuration: item.configuration || '',
+      visualization_is_primary: Boolean(item.is_primary_for_variant),
+    };
+
+    if (linked.length) {
+      await Promise.all(linked.map((row) => base44.entities.MediaFile.update(row.id, publicData)));
+    } else {
+      await base44.entities.MediaFile.create(publicData);
+    }
+  };
+
   const approve = async (item) => {
     setBusyId(item.id);
     try {
-      await base44.entities.VisualizationAsset.update(item.id, { approval_status: 'approved', approved_for_presentation: true });
-      const existing = await base44.entities.MediaFile.filter({ file_url: item.image_url }).catch(() => []);
-      if (!existing?.length) {
-        await base44.entities.MediaFile.create({
-          file_url: item.image_url,
-          file_name: item.title || `${item.product_name || item.product_slug || 'MLŽIDLA'} — schválená vizualizace`,
-          file_type: 'image/visualization',
-          product_slug: item.product_slug || '',
-          media_group: item.product_name || 'VIZUALIZACE',
-          media_role: 'render',
-          sort_order: Date.now(),
-        });
-      }
-      setItems((current) => current.map((row) => row.id === item.id ? { ...row, approval_status: 'approved', approved_for_presentation: true } : row));
+      const updated = { ...item, approval_status: 'approved', approved_for_presentation: true };
+      await base44.entities.VisualizationAsset.update(item.id, { approval_status: updated.approval_status, approved_for_presentation: true });
+      await syncPublishedVisual(updated);
+      setItems((current) => current.map((row) => row.id === item.id ? updated : row));
     } finally {
       setBusyId('');
     }
@@ -91,35 +118,24 @@ export default function VisualizationAssetLibrary() {
   const reject = async (item) => {
     setBusyId(item.id);
     try {
+      const updated = { ...item, approval_status: 'rejected', approved_for_presentation: false, is_primary_for_variant: false };
       await base44.entities.VisualizationAsset.update(item.id, { approval_status: 'rejected', approved_for_presentation: false, is_primary_for_variant: false });
-      const publicCopies = await base44.entities.MediaFile.filter({ file_url: item.image_url }).catch(() => []);
-      await Promise.all((publicCopies || []).filter((row) => row.media_role === 'render').map((row) => base44.entities.MediaFile.delete(row.id)));
-      setItems((current) => current.map((row) => row.id === item.id ? { ...row, approval_status: 'rejected', approved_for_presentation: false, is_primary_for_variant: false } : row));
+      await syncPublishedVisual(updated);
+      setItems((current) => current.map((row) => row.id === item.id ? updated : row));
     } finally {
       setBusyId('');
     }
   };
+
   const toggleWeb = async (item) => {
+    if (item.approval_status !== 'approved') return; // drafts must never reach the public site
     const next = !item.approved_for_presentation;
     setBusyId(item.id);
     try {
+      const updated = { ...item, approved_for_presentation: next };
       await base44.entities.VisualizationAsset.update(item.id, { approved_for_presentation: next });
-      const publicCopies = await base44.entities.MediaFile.filter({ file_url: item.image_url }).catch(() => []);
-      if (next && !publicCopies?.length) {
-        await base44.entities.MediaFile.create({
-          file_url: item.image_url,
-          file_name: item.title || `${item.product_name || item.product_slug || 'MLŽIDLA'} — schválená vizualizace`,
-          file_type: 'image/visualization',
-          product_slug: item.product_slug || '',
-          media_group: item.product_name || 'VIZUALIZACE',
-          media_role: 'render',
-          sort_order: Date.now(),
-        });
-      }
-      if (!next) {
-        await Promise.all((publicCopies || []).filter((row) => row.media_role === 'render').map((row) => base44.entities.MediaFile.delete(row.id)));
-      }
-      setItems((current) => current.map((row) => row.id === item.id ? { ...row, approved_for_presentation: next } : row));
+      await syncPublishedVisual(updated);
+      setItems((current) => current.map((row) => row.id === item.id ? updated : row));
     } finally {
       setBusyId('');
     }
@@ -128,16 +144,16 @@ export default function VisualizationAssetLibrary() {
     const next = !item.is_primary_for_variant;
     setBusyId(item.id);
     try {
-      if (next) {
-        const siblings = items.filter((row) =>
-          row.id !== item.id &&
-          row.product_slug === item.product_slug &&
-          row.configuration === item.configuration &&
-          row.is_primary_for_variant
-        );
-        await Promise.all(siblings.map((row) => base44.entities.VisualizationAsset.update(row.id, { is_primary_for_variant: false })));
-      }
+      const siblings = next ? items.filter((row) =>
+        row.id !== item.id && row.product_slug === item.product_slug &&
+        row.configuration === item.configuration && row.is_primary_for_variant
+      ) : [];
+      await Promise.all(siblings.map(async (row) => {
+        await base44.entities.VisualizationAsset.update(row.id, { is_primary_for_variant: false });
+        await syncPublishedVisual({ ...row, is_primary_for_variant: false });
+      }));
       await base44.entities.VisualizationAsset.update(item.id, { is_primary_for_variant: next });
+      await syncPublishedVisual({ ...item, is_primary_for_variant: next });
       setItems((current) => current.map((row) => {
         if (row.id === item.id) return { ...row, is_primary_for_variant: next };
         if (next && row.product_slug === item.product_slug && row.configuration === item.configuration) {

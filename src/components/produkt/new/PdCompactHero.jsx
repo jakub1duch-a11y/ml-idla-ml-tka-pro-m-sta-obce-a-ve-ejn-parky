@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { MRAK_VARIANTS } from '@/lib/productDetailConfig';
 import { getFamily, getLine } from '@/lib/productFamilies';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
+import { base44 } from '@/api/base44Client';
 
 import { eightHourWaterCost, eightHourWaterConsumption, WATER_PRICE_CZK_M3 } from '@/lib/waterCost';
 
@@ -28,10 +28,28 @@ export default function PdCompactHero({ product }) {
   const family = getFamily(product);
   const line = getLine(product);
   const [imageIndex, setImageIndex] = useState(0);
+  const [approvedMedia, setApprovedMedia] = useState([]);
   useEffect(() => setImageIndex(0), [product.slug]);
+  useEffect(() => {
+    let active = true;
+    setApprovedMedia([]);
+    base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160)
+      .then((rows = []) => {
+        if (!active) return;
+        setApprovedMedia((rows || [])
+          .filter((row) => row.product_slug === product.slug && row.media_role === 'render' &&
+            typeof row.file_url === 'string' &&
+            (/\.(avif|gif|jpe?g|png|webp)([?#]|$)/i.test(row.file_url) || /drive\.google\.com\/thumbnail/i.test(row.file_url)) &&
+            isProductMediaAllowed(product, row.file_url, row.file_name, row.media_group))
+          .sort((a, b) => Number(Boolean(b.visualization_is_primary)) - Number(Boolean(a.visualization_is_primary)))
+        );
+      }).catch(() => { if (active) setApprovedMedia([]); });
+    return () => { active = false; };
+  }, [product.slug]);
   const imageCandidates = [...new Set([
     product.hero_visual_verified ? product.hero_product_image_url : '',
     product.image_url,
+    ...approvedMedia.map((media) => media.file_url),
     ...(Array.isArray(product.gallery_urls) ? product.gallery_urls : []),
     ...getCuratedProductMedia(product).map((item) => item.url),
   ].filter((url) => typeof url === 'string' && (/\.(avif|gif|jpe?g|png|svg|webp)(\?|#|$)/i.test(url) || /drive\.google\.com\/thumbnail/i.test(url)) && isProductMediaAllowed(product, url, product.name)))];
@@ -112,6 +130,18 @@ export default function PdCompactHero({ product }) {
           </div>
           }
 
+          {imageCandidates.length > 1 && (
+            <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 overflow-x-auto rounded-2xl border border-white/65 bg-white/90 p-2 shadow-[0_8px_30px_rgba(10,35,66,.08)] backdrop-blur-xl sm:bottom-5 sm:left-5 sm:right-auto">
+              {imageCandidates.slice(0, 5).map((candidate, index) => (
+                <button key={candidate} type="button" onClick={() => setImageIndex(index)}
+                  aria-label={`Zobrazit produktový snímek ${index + 1}`}
+                  aria-pressed={imageIndex === index}
+                  className={`h-12 w-14 shrink-0 overflow-hidden rounded-lg border-2 bg-[#ECF7FA] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007EA3] ${imageIndex === index ? 'border-[#0B8EC5]' : 'border-transparent hover:border-[#A3D9E7]'}`}>
+                  <img src={candidate} alt="" className="h-full w-full object-cover" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>);

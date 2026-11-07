@@ -92,6 +92,7 @@ export default function Poptavka() {
     try {
       const response = await base44.functions.invoke('submitPoptavka', {
         ...form,
+        ...(assembly ? { quantity: Math.min(20, Math.max(2, Number(assembly.pocet) || 2)), installation_location: assembly.lokalita.slice(0, 200), request_type: 'multi_unit_avenue' } : {}),
         use_google_contact: useGoogleContact,
         google_contact_email: googleContact.email,
         google_contact_name: googleContact.name,

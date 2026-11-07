@@ -144,16 +144,16 @@ export default function VisualizationAssetLibrary() {
     const next = !item.is_primary_for_variant;
     setBusyId(item.id);
     try {
-      if (next) {
-        const siblings = items.filter((row) =>
-          row.id !== item.id &&
-          row.product_slug === item.product_slug &&
-          row.configuration === item.configuration &&
-          row.is_primary_for_variant
-        );
-        await Promise.all(siblings.map((row) => base44.entities.VisualizationAsset.update(row.id, { is_primary_for_variant: false })));
-      }
+      const siblings = next ? items.filter((row) =>
+        row.id !== item.id && row.product_slug === item.product_slug &&
+        row.configuration === item.configuration && row.is_primary_for_variant
+      ) : [];
+      await Promise.all(siblings.map(async (row) => {
+        await base44.entities.VisualizationAsset.update(row.id, { is_primary_for_variant: false });
+        await syncPublishedVisual({ ...row, is_primary_for_variant: false });
+      }));
       await base44.entities.VisualizationAsset.update(item.id, { is_primary_for_variant: next });
+      await syncPublishedVisual({ ...item, is_primary_for_variant: next });
       setItems((current) => current.map((row) => {
         if (row.id === item.id) return { ...row, is_primary_for_variant: next };
         if (next && row.product_slug === item.product_slug && row.configuration === item.configuration) {

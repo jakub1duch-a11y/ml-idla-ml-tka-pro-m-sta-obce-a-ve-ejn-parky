@@ -81,7 +81,7 @@ export default function VisualizationAssetLibrary() {
       return;
     }
 
-    const isVideo = /\\.(mp4|webm|mov|m4v)([?#]|$)/i.test(item.image_url);
+    const isVideo = /\.(mp4|webm|mov|m4v)([?#]|$)/i.test(item.image_url);
     const publicData = {
       file_url: item.image_url,
       file_name: item.title || `${item.product_name || item.product_slug} — schválená vizualizace`,

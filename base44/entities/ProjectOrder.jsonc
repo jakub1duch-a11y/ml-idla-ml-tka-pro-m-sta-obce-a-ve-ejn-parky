@@ -47,6 +47,25 @@
     "quote_pdf_url": {
       "type": "string"
     },
+    "canva_design_url": {
+      "type": "string",
+      "description": "Editovateln\u00fd Canva n\u00e1vrh nab\u00eddky, v\u00e1zan\u00fd k \u010d\u00edslu t\u00e9to zak\u00e1zky"
+    },
+    "canva_supla_design_url": {
+      "type": "string",
+      "description": "Editovateln\u00fd samostatn\u00fd produktov\u00fd list SUPLA v Canv\u011b"
+    },
+    "canva_sync_status": {
+      "type": "string",
+      "enum": [
+        "not_linked",
+        "linked",
+        "assets_incomplete",
+        "ready_for_draft",
+        "waiting_oauth"
+      ],
+      "default": "not_linked"
+    },
     "inquiry_pdf_url": {
       "type": "string"
     },

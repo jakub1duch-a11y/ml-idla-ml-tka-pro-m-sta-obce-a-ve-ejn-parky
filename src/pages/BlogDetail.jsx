@@ -92,7 +92,8 @@ export default function BlogDetail() {
       const all = await base44.entities.BlogPost.list().catch(() => []);
       const found = (all || []).find((p) => p.slug === slug || p.id === slug);
 
-      if (!found) {setNotFound(true);return;}
+      // Draft records are editor-only; a guessed URL must not expose unpublished articles.
+      if (!found || !found.published) {setNotFound(true);return;}
 
       setPost(found);
       trackBlogPostView(found.title, found.slug || found.id, found.category);
@@ -140,6 +141,9 @@ export default function BlogDetail() {
 
 
   const cleanContent = cleanArticleContent(post.content);
+  const videoLink = (post.related_links || []).find((item) =>
+    /^Video realizace/i.test(item?.label || '') && /^https:\/\//i.test(item?.url || '') && /\.(mp4|webm)(\?|$)/i.test(item.url)
+  );
   const readingTime = estimateReadingTime(post.content);
   const hasImage = Boolean(post.image_url);
   const faqItems = getBlogFaqItems(post);
@@ -265,6 +269,25 @@ export default function BlogDetail() {
         }
           </div>
         </div>
+
+        {videoLink && (
+          <section aria-labelledby="article-real-video-heading" className="my-10 overflow-hidden rounded-3xl border border-slate-200 bg-[#061f2b] text-white shadow-xl">
+            <div className="grid gap-7 p-5 sm:p-8 lg:grid-cols-[minmax(0,400px)_1fr] lg:items-center lg:gap-10">
+              <div className="mx-auto w-full max-w-[400px] overflow-hidden rounded-2xl border border-white/15 bg-black">
+                <video controls playsInline preload="metadata" poster={post.image_url} src={videoLink.url} className="aspect-[9/16] w-full object-contain" aria-label={`Skutečné video realizace: ${post.title}`}>
+                  Váš prohlížeč nepodporuje přehrávání tohoto videa.
+                </video>
+              </div>
+              <div>
+                <p className="font-mono text-[11px] font-semibold uppercase tracking-[.2em] text-cyan-300">Skutečná realizace · video</p>
+                <h2 id="article-real-video-heading" className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">Podívejte se, jak mlžné sochy fungují mezi návštěvníky.</h2>
+                <p className="mt-5 max-w-lg text-base leading-7 text-white/70">Autentické záběry ze ZOO Praha. Žádné generované mlžné konstrukce ani upravovaná geometrie — skutečná instalace a skutečný provoz.</p>
+                <p className="mt-4 max-w-lg text-sm leading-6 text-white/55">Video spustíte tlačítkem Přehrát. Článek můžete sdílet pomocí tlačítek níže nebo zkopírováním odkazu.</p>
+                <a href="/poptavka" className="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-cyan-300 px-6 text-sm font-bold text-slate-950 hover:bg-cyan-200">Poptat podobné řešení <ArrowRight size={16} className="ml-2" /></a>
+              </div>
+            </div>
+          </section>
+        )}
 
         {Array.isArray(post.content_images) && post.content_images.some((item) => item?.url) && (
           <section className="mx-auto my-10 max-w-5xl" aria-labelledby="article-gallery-heading">

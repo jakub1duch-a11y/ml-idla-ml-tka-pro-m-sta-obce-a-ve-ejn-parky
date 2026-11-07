@@ -57,11 +57,15 @@ function matchesTopic(post, topic) {
 }
 
 function ArticleCard({ post, views = 0, large = false }) {
+  const hasVideo = (post.related_links || []).some((item) => /^Video realizace/i.test(item?.label || ''));
   return (
     <Link to={`/blog/${post.slug || post.id}`} className="group block h-full overflow-hidden rounded-[24px] border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-xl">
       <div className={`overflow-hidden bg-slate-100 ${large ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
         {post.image_url ? (
-          <img src={post.image_url} alt={post.image_alt || post.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" loading={large ? 'eager' : 'lazy'} />
+          <div className="relative h-full w-full">
+            <img src={post.image_url} alt={post.image_alt || post.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" loading={large ? 'eager' : 'lazy'} />
+            {hasVideo && <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-[#061f2b]/90 px-4 py-2 text-xs font-semibold text-white shadow-lg"><PlayCircle size={18} /> Přehrát video</span>}
+          </div>
         ) : (
           <div className="flex h-full items-center justify-center bg-[#EAF3F5] text-[#0B6B7A]"><Sparkles size={28}/></div>
         )}
@@ -120,7 +124,7 @@ export default function Blog() {
   }, []);
 
   const visible = useMemo(() => posts.filter((post) => {
-    const categoryOk = category === 'all' || category === 'videa' || post.category === category;
+    const categoryOk = category === 'all' || post.category === category || (category === 'videa' && (post.related_links || []).some((item) => /^Video realizace/i.test(item?.label || '')));
     return categoryOk && matchesTopic(post, topic);
   }), [posts, category, topic]);
 

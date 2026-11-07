@@ -72,8 +72,8 @@ export default function VisualizationAssetLibrary() {
     if (!item.product_slug || !item.image_url) return;
     const copies = await base44.entities.MediaFile.filter({ file_url: item.image_url, product_slug: item.product_slug }).catch(() => []);
     const linked = (copies || []).filter((row) =>
-      ['render', 'video'].includes(row.media_role) &&
-      (!row.visualization_source_id || row.visualization_source_id === item.id)
+      row.visualization_source_id === item.id ||
+      (!row.visualization_source_id && row.media_role === 'render' && row.file_type === 'image/visualization')
     );
     const publish = item.approval_status === 'approved' && item.approved_for_presentation === true;
     if (!publish) {

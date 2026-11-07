@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Download, Printer, Sparkles, FileText, X, Mail, Phone, Building2, MapPin, MessageSquare, ExternalLink, FolderOpen, Clock } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import CanvaOfferWorkflow from '@/components/admin/CanvaOfferWorkflow';
 
 const date = value => {
   if (!value) return 'Neuvedeno';
@@ -102,6 +103,7 @@ export default function InquiryDetailPanel({ item, onClose, orders = [], activit
               <p className="mt-3 text-xs text-white/45">Nabídka se připraví pouze jako koncept. Žádný e-mail se neposílá automaticky.</p>
               {error && <p role="alert" className="mt-2 rounded bg-red-400/10 p-2 text-xs text-red-200">{error}</p>}
             </section>
+            <CanvaOfferWorkflow item={item} order={latest} />
             <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-white"><Clock size={15}/>Historie v CRM</h3>
               {relatedActivities.length === 0 ? <p className="text-xs leading-5 text-white/50">Zatím bez propojených aktivit. Zprávy z Gmailu se objeví až po synchronizaci do CRM.</p> : relatedActivities.slice(0,15).map((a,i) =>

@@ -99,6 +99,9 @@ export function buildMarketingVisualizationPrompt({
   })
   const validation = validateProductForVisualization(product)
   const referenceReady = validation.ok && getMarketingReferences(product).length > 0
+  if (!referenceReady) {
+    throw new Error(`Produktová vizualizace zablokována: chybí jednoznačně ověřený MASTER v administraci MLŽIDLA.cz / MLŽNÉM DISKU. ${validation.errors.join(' ')} Doplňte schválený zdroj před generováním.`)
+  }
 
   return [
     'MLŽIDLA MARKETING GENERATION SKILL',

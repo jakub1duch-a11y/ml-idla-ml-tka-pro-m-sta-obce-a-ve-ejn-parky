@@ -128,7 +128,7 @@ const utf8Base64 = (value: string) => toBase64(new TextEncoder().encode(value));
 const encodeHeader = (value: string) => `=?UTF-8?B?${utf8Base64(value)}?=`;
 const safeFilename = (value: string) => String(value || 'priloha').replace(/["\\\r\n]/g, '_');
 
-export function buildMimeMessage(opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; attachments?: Array<{ filename: string; content: Uint8Array; contentType?: string }> }): Uint8Array {
+export function buildMimeMessage(opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; attachments?: Array<{ filename: string; content: Uint8Array; contentType?: string; contentId?: string; disposition?: 'inline'|'attachment' }> }): Uint8Array {
   const outer = `mlzidla-${crypto.randomUUID()}`;
   const alt = `alternative-${crypto.randomUUID()}`;
   const lines = [
@@ -145,7 +145,7 @@ export function buildMimeMessage(opts: { to: string; fromEmail: string; subject:
     `--${alt}--`,
   ];
   (opts.attachments || []).forEach((a) => {
-    lines.push(`--${outer}`, `Content-Type: ${a.contentType || 'application/octet-stream'}; name="${safeFilename(a.filename)}"`, 'Content-Transfer-Encoding: base64', `Content-Disposition: attachment; filename="${safeFilename(a.filename)}"`, '', toBase64(a.content));
+    lines.push(`--${outer}`, `Content-Type: ${a.contentType || 'application/octet-stream'}; name="${safeFilename(a.filename)}"`, 'Content-Transfer-Encoding: base64', `Content-Disposition: ${a.disposition === 'inline' ? 'inline' : 'attachment'}; filename="${safeFilename(a.filename)}"`, ...(a.contentId ? [`Content-ID: <${a.contentId.replace(/[^a-zA-Z0-9-]/g, '')}>`] : []), '', toBase64(a.content));
   });
   lines.push(`--${outer}--`, '');
   return new TextEncoder().encode(lines.join('\r\n'));
@@ -155,7 +155,7 @@ export function mimeToBase64Url(bytes: Uint8Array): string {
   return base64Url(bytes);
 }
 
-export async function createGmailDraft(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; labelIds?: string[]; attachments?: Array<{ filename: string; content: Uint8Array; contentType?: string }> }): Promise<{ ok: boolean; draft_id?: string; error?: string }> {
+export async function createGmailDraft(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[]; labelIds?: string[]; attachments?: Array<{ filename: string; content: Uint8Array; contentType?: string; contentId?: string; disposition?: 'inline'|'attachment' }> }): Promise<{ ok: boolean; draft_id?: string; error?: string }> {
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
     // Přísná kontrola skutečné schránky. Base44 může mít k Gmailu jiný účet než chat.

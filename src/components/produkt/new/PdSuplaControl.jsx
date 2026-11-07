@@ -77,7 +77,7 @@ export default function PdSuplaControl({ product }) {
                   <button type="button" onClick={() => setDemoActive((value) => !value)} aria-pressed={demoActive}
                     aria-label={demoActive ? 'Vypnout ilustrační mlžení' : 'Zapnout ilustrační mlžení'}
                     className={`relative h-9 w-[62px] shrink-0 rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007EA3] ${demoActive ? 'bg-[#087E9D]' : 'bg-[#B8CBD4]'}`}>
-                    <span className={`absolute top-[5px] h-[26px] w-[26px] rounded-full bg-white shadow-md transition-transform ${demoActive ? 'translate-x-[7px]' : 'translate-x-[-20px]'}`} aria-hidden="true" />
+                    <span className={`absolute left-[5px] top-[5px] h-[26px] w-[26px] rounded-full bg-white shadow-md transition-transform ${demoActive ? 'translate-x-[26px]' : 'translate-x-0'}`} aria-hidden="true" />
                   </button>
                 </div>
                 <div className="mt-5 rounded-2xl bg-[#F0FAFC] p-5">

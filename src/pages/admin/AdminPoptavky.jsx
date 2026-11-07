@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import {
   Loader, Mail, Phone, Building2, Package, MessageSquare, CheckCircle, Clock, AlertCircle,
   FileText, Printer, Sparkles, Eye, Send, Inbox, FolderOpen, ArrowRight, Image as ImageIcon,
@@ -70,6 +70,7 @@ export default function AdminPoptavky() {
   const [printingItem, setPrintingItem] = useState(null);
   const [preparingConcept, setPreparingConcept] = useState(null);
   const [generatingPdf, setGeneratingPdf] = useState(null);
+  const handledNotificationLink = useRef(false);
 
   const load = async () => {
     setLoading(true);
@@ -107,6 +108,20 @@ export default function AdminPoptavky() {
   };
 
   useEffect(() => { load(); }, []);
+  useEffect(() => {
+    if (handledNotificationLink.current || !items.length) return;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('inquiry');
+    if (!id) return;
+    const entity = params.get('entity') === 'contact' ? 'ContactInquiry' : 'Poptavka';
+    const record = items.find((x) => x.id === id && x.entity === entity);
+    if (!record) return;
+    handledNotificationLink.current = true;
+    setSelectedInquiry(record);
+    setView('list');
+    // Přímý odkaz z notifikace bezpečně otevře jen administrátorskou kartu.
+    // Tisk, stažení a přípravu konceptu provádí obchodník příslušným tlačítkem.
+  }, [items]);
 
   const setStatus = async (item, status) => {
     await base44.entities[item.entity].update(item.id, { status });

@@ -28,6 +28,34 @@ export default function Poptavka() {
     : mrakVariantId === 'maly'
       ? 'MLŽNÝ MRAK — Malý, h 1 600 mm (návrhové provedení)'
       : (searchParams.get('varianta') || '');
+  const assembly = searchParams.get('sestava') === '1' ? {
+    pocet: searchParams.get('pocet') || '',
+    roztec: searchParams.get('roztec') || '',
+    rozmisteni: searchParams.get('rozmisteni') || '',
+    prostor: searchParams.get('prostor') || '',
+    delka: searchParams.get('delka') || '',
+    sirka: searchParams.get('sirka') || '',
+    lokalita: searchParams.get('lokalita') || '',
+    supla: searchParams.get('supla') || '',
+    trysky: searchParams.get('trysky_na_kus') || '',
+    prutok: searchParams.get('prutok_l_h_tryska') || '',
+    cenaVody: searchParams.get('cena_vody_m3') || '',
+  } : null;
+  const assemblyDescription = assembly ? [
+    'Konfigurace víceprvkové sestavy (orientační návrh):',
+    `Počet mlžítek: ${assembly.pocet}`,
+    `Rozteč: ${assembly.roztec} m`,
+    `Rozmístění: ${assembly.rozmisteni}`,
+    `Typ prostoru: ${assembly.prostor}`,
+    assembly.delka ? `Délka prostoru: ${assembly.delka} m` : '',
+    assembly.sirka ? `Šířka prostoru: ${assembly.sirka} m` : '',
+    assembly.lokalita ? `Lokalita: ${assembly.lokalita}` : '',
+    `Řízení SUPLA: ${assembly.supla}`,
+    assembly.trysky ? `Trysky na prvek: ${assembly.trysky}` : 'Počet trysek na prvek: k ověření',
+    assembly.prutok ? `Průtok trysky: ${assembly.prutok} l/h (zadaný zákazníkem)` : '',
+    assembly.cenaVody ? `Cena vody: ${assembly.cenaVody} Kč/m³ (zadaná zákazníkem)` : '',
+    'Konečné technické řešení a cenu je nutné potvrdit.',
+  ].filter(Boolean).join('\n') : '';
   const products = initialProduct && !baseProducts.includes(initialProduct) ? [initialProduct, ...baseProducts] : baseProducts;
   const [form, setForm] = useState(() => ({
     jmeno: searchParams.get('jmeno') || '',
@@ -74,6 +102,7 @@ export default function Poptavka() {
         zprava: [
           form.zprava,
           mrakVariantName ? `Vybraná varianta: ${mrakVariantName}` : '',
+          assemblyDescription,
           arSession ? `AR session: ${arSession}` : '',
         ].filter(Boolean).join('\n\n'),
       });
@@ -143,6 +172,7 @@ export default function Poptavka() {
               <label className="mt-7 block font-mono text-xs uppercase tracking-wider text-slate-500">Typ projektu
                 <select value={form.produkt} onChange={change('produkt')} className={input}>{products.map((item) => <option key={item}>{item}</option>)}</select>
               </label>
+              {assembly && <div className="mt-3 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm text-[#0D2F4F]"><strong>Konfigurace sestavy převzata z produktu.</strong><pre className="mt-2 whitespace-pre-wrap font-sans text-xs">{assemblyDescription}</pre></div>}
               {mrakVariantName && (
                 <div className="mt-3 rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-xs leading-5 text-teal-900">
                   Vybraná varianta: <strong>{mrakVariantName}</strong>. Rozměry a výrobní parametry potvrdíme před nabídkou.

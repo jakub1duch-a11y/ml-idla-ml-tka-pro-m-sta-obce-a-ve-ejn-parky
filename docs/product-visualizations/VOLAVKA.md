@@ -69,3 +69,14 @@ Generátor musí nabízet přepínač **Pohled kamery**:
 
 ### Uživatelské ovládání
 V záložce **Produkty → Vizualizace produktu**: vybrat produkt a variantu → kategorii prostředí → **Pohled kamery** (oči / dron 45° / dron 80° / kolmo shora) → vytvořit návrh → porovnat s referencemi → schválit a uložit do galerie. Umožnit i dávku všech čtyř pohledů pro jednu scénu.
+
+
+## Výchozí generování ve dvojicích a fotografické momentky
+- **Výchozí dávka: 2 samostatné obrázky** na jedno zadání, pokud to obrazový generátor podporuje; uživatel může zvolit další varianty.
+- První obrázek: **celkový pohled** na produkt a okolí (např. úroveň očí nebo dron 45°).
+- Druhý obrázek: **odlišná kompozice nebo momentka** téže instalace (např. lidé v přirozeném pohybu, detail mlhy, jiný úhel kamery nebo dron 80°).
+- Volby stylu: **architektonická vizualizace**, **fotorealistická momentka**, **dronový záběr**, **detail produktu**.
+- Zachovat stejné provedení produktu, rozměry, orientaci a umístění v obou obrázcích; změny scény musí být fyzikálně uvěřitelné.
+- Přednostně využít již existující **schválené produktové fotografie a vizualizace v Base44** jako reference; nesmazat ani nepřepisovat původní soubory.
+- Obě varianty ukládat jako **neschválené návrhy** s možností samostatného výběru a schválení; teprve schválené varianty zařadit do galerie a nabídnout Marketingu.
+- Pokud generátor neumí nativně dvě varianty v jedné dávce, vytvořit dva samostatné úkoly se stejnou sadou geometrických referencí.

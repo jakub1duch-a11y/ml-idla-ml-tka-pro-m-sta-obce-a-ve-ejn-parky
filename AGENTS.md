@@ -6,6 +6,17 @@ This is a Base44 app repository. Treat it as user-owned application code, keep c
 
 Start with `README.md` for local setup, environment variables, and publish workflow.
 
+## MLŽIDLA × Superpowers — závazné workflow
+
+- Před změnou architektury používat Superpowers: brainstorming → schválená specifikace → writing-plans → TDD → verification-before-completion → PR review.
+- Vždy samostatná pracovní větev, bez merge do main bez náhledu a schválení správcem. Žádné neprověřené změny ostrých dat.
+- Obchodní Google konektory musí prokazatelně používat `meduna@holmtec.cz`; nesprávný nebo neověřený účet zablokuje archivaci a synchronizaci.
+- Veřejná nabídková cena pochází z `Kalkulace mlžítka 2026`, sloupec H dané varianty; partner/interní ceny jsou neveřejné a bez fallbacku do veřejného výstupu.
+- Canva: originální editovatelná brand šablona a samostatný list SUPLA; přesná geometrie podle lidsky ověřeného MASTER pro konkrétní variantu.
+- E-mail připravovat jako koncept ke kontrole, bez automatického odeslání.
+- Dokud ChatGPT Sites neposkytne ověřené API, nepovažovat exportní nebo ruční import za živou synchronizaci.
+- Pro přehled aktuálních blokací číst `docs/MLZIDLA_CANVA_SITES_INTEGRATION_STATUS.md`.
+
 ## Base44 References
 
 - CLI overview: https://docs.base44.com/developers/references/cli/get-started/overview.md

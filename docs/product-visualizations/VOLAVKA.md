@@ -80,3 +80,15 @@ V záložce **Produkty → Vizualizace produktu**: vybrat produkt a variantu →
 - Přednostně využít již existující **schválené produktové fotografie a vizualizace v Base44** jako reference; nesmazat ani nepřepisovat původní soubory.
 - Obě varianty ukládat jako **neschválené návrhy** s možností samostatného výběru a schválení; teprve schválené varianty zařadit do galerie a nabídnout Marketingu.
 - Pokud generátor neumí nativně dvě varianty v jedné dávce, vytvořit dva samostatné úkoly se stejnou sadou geometrických referencí.
+
+
+## Schválení → synchronizace s Mlžným diskem
+**Ověřená kořenová složka Google Drive:** `Mlžný disk` (ID `1eVnUbhtyVv7trdGtJpjNfaACh3ht8QXq`). Existuje také `02_BRAND_A_MEDIA` (ID `1SejWt7RWWQeNZfj9NU1etv65aq--w_BK`), ale cílové produktové podsložky je nutné zmapovat před zápisem. Nevytvářet duplicitní strom bez kontroly.
+
+- U každého z obou obrázků samostatně zaznamenat `approval_status`, `approved_by`, `approved_at`, `product_id`, `variant_id`, `visualization_id`.
+- Po **schválení pro workflow** zařadit synchronizační úlohu pro nahrání do existující produktové složky na Mlžném disku; pokud složka neexistuje, řízeně ji vytvořit pod ověřeným produktovým kořenem.
+- Nahrát originální soubor bez přepsání; idempotentní klíč `visualization_id + asset_version` zabrání opakovanému uploadu.
+- Uložit `drive_file_id`, `drive_url`, `sync_status`, `sync_error` a čas synchronizace zpět k vizualizaci v Base44.
+- **Schválení pro workflow není totéž jako publikace na webu**; samostatný přepínač `publish_to_web` a samostatná kontrola před publikací.
+- Marketing a obchodní nabídky čerpají schválené soubory z jednoho zdroje, ne z kopií v různých galeriích.
+- Při selhání synchronizace zobrazit stav „Čeká na nahrání“ a nabídnout bezpečné opakování; nikdy netvrdit, že soubor je na disku, dokud to nepotvrdí Google Drive.

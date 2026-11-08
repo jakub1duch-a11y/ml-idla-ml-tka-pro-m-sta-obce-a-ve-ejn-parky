@@ -49,3 +49,23 @@ Gigantea je o **600 mm vyšší**; při stejném měřítku scény je její vý�
 - Potvrzení technických hodnot v aktuálním katalogu před automatickým vynucováním.
 
 **Bez schválené fotografie nebo 3D podkladu nelze samotným textovým promptem garantovat geometricky přesný výstup.**
+
+
+## Kamerové pohledy – včetně dronu
+Generátor musí nabízet přepínač **Pohled kamery**:
+- **Úroveň očí** – realistický pohled chodce, srovnání s výškou člověka.
+- **Šikmo shora / dron 45°** – viditelná konstrukce i okolní prostor.
+- **Dron téměř kolmo shora (cca 75–85°)** – půdorysné uspořádání a umístění ve scéně.
+- **Kolmo shora / top-down 90°** – ortografický nebo perspektivní půdorysný záběr podle dostupných 3D podkladů.
+
+### Závazné podmínky pro dronové vizualizace
+- Volba kamery mění **pouze úhel pohledu**, nikoliv fyzický tvar, výšku nebo proporce produktu.
+- Horní pohled nesmí být pouhým překlopením čelní fotografie; potřebuje skutečnou geometrii z více pohledů nebo 3D/CAD model.
+- Při dronovém záběru dodržet půdorysnou orientaci ohybů, trubek, trysek a kotev; žádné domyšlené smyčky.
+- **Gigantea 2400 mm a Gracilis 1800 mm** mají odlišnou skutečnou výšku. V čistě kolmém pohledu nelze výškový rozdíl spolehlivě vyčíst z obrazu; pro porovnání obou variant nabídnout současně šikmý záběr nebo kótu výšky.
+- Zachovat realistické měřítko vůči dlažbě, lavičkám, lidem a dalším známým prvkům.
+- Výstupy bez ověřeného horního pohledu či 3D modelu označit **ilustrační pohled – geometrie neověřena**.
+- Uložit s vizualizací metadata: `product_variant`, `camera_view`, `camera_angle_deg`, `reference_assets`, `geometry_verified`, `scene_category`, `approval_status`.
+
+### Uživatelské ovládání
+V záložce **Produkty → Vizualizace produktu**: vybrat produkt a variantu → kategorii prostředí → **Pohled kamery** (oči / dron 45° / dron 80° / kolmo shora) → vytvořit návrh → porovnat s referencemi → schválit a uložit do galerie. Umožnit i dávku všech čtyř pohledů pro jednu scénu.

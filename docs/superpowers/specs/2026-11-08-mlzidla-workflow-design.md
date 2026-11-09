@@ -7,7 +7,7 @@
 - Obchodní identita: `meduna@holmtec.cz` (Drive, Sheets, Gmail). Spojení pod jiným účtem je chyba, nikoli náhradní cesta.
 - Cenový veřejný zdroj: [Kalkulace mlžítka 2026](https://docs.google.com/spreadsheets/d/1kyxH-ihr6YC5xnu8Ef5X4jbR81VVaJtDO1UVWK5d_S8/edit), list `💧 Katalog produktů 2026`, sloupec A produkt, H katalogová cena bez DPH. I–K obsahují partnerské/cenové slevy a nesmějí do veřejných dat.
 - Starší tabulka `Mlžítko` není sama o sobě ekvivalentní novému ceníku 2026. Při neshodě nahrávání a odeslání blokovat, nikoli hádat.
-- Vstup vizualizace musí být MASTER konkrétní varianty a lidsky ověřená geometrie, počet trysek, kotvení; nezkreslovat AI.
+- Vstup vizualizace musí být MASTER konkrétní varianty a lidsky ověřená geometrie, počet trysek, kotvení; nezkreslovat AI. U produktu s více variantami nestačí obecný MASTER celého produktu, každá varianta potřebuje vlastní schválení.
 - Nabídka musí mít produktový list a samostatný list SUPLA, včetně případného šachtového rozvaděče a zcela transparentní ceny bez/s DPH (neodhadovat neověřenou cenu).
 - Využívat existující Canva originální brand šablonu `EAHZTN-hiGc` a předložené obrazové listy; žádné duplicitní regenerování hotových listů.
 - Výstupy archivovat po produktu/variantě v `01_PRODUKTOVY_KATALOG` (Drive folder `1KJqen97HpD9yAmo7yMBpaFZI8iqk0mdE`) a pro zákazníka v jeho nabídce, s odkazy v CRM.

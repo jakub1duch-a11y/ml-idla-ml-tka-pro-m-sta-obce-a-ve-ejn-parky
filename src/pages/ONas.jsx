@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, ArrowUpRight, ArrowDown, Droplets, Wrench, Ruler,
+  ArrowRight, ArrowUpRight, ArrowDown, Wrench, Ruler,
   MapPin, Mail, Phone, Layers3, Waves, Settings2, ShieldCheck,
-  ScanLine, MoveUpRight, Factory,
+  ScanLine, Factory,
 } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import '@/styles/about-premium.css';

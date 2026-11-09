@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createBrandOfferPacket } from '../base44/shared/brandOfferPacket.mjs';
 
 const product = {
@@ -17,6 +18,13 @@ const product = {
 };
 
 const verifiedPrice = { variant: 'AURA 700', price_ex_vat: 26580, needs_review: false, source: 'current-sheets-public' };
+
+test('Product variant schema supports a separate approved MASTER per variant', () => {
+  const schema = JSON.parse(readFileSync(new URL('../base44/entities/Product.jsonc', import.meta.url), 'utf8'));
+  const fields = schema.properties.variants.items.properties;
+  assert.equal(fields.visual_master_verified.type, 'boolean');
+  assert.equal(fields.visual_master_reference_url.type, 'string');
+});
 
 test('packet uses exact variant, public price, verified master and mandatory SUPLA sheet', () => {
   const packet = createBrandOfferPacket({ product, variant: 'AURA 700', price: verifiedPrice });

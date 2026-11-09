@@ -45,6 +45,15 @@
 - [ ] Při nesouladu vrátit chybu bez side effects.
 - [ ] Ověřit testy a build.
 
+### Task 5: Ověřený podklad pro produktový list v Canvě (9. 11. 2026)
+**Files:** `base44/shared/brandOfferPacket.mjs`, `base44/shared/brandOfferWorkflow.mjs`, `base44/functions/getBrandOfferPreflight/entry.ts`, `base44/entities/Product.jsonc`, `src/components/admin/marketing/BrandOfferPreflight.jsx`, `src/pages/admin/AdminMarketing.jsx`, `tests/brandOfferPacket.test.mjs`, `tests/brandOfferWorkflow.test.mjs`.
+- [x] RED → GREEN: přesná varianta, veřejná cena z A:H, unikátní MASTER pro vícero variant, bez partnerských údajů.
+- [x] RED → GREEN: nesprávný Google účet a selhání Google Sheets blokují celý postup.
+- [x] Admin-only read-only endpoint a formulář v Marketing Hubu; SUPLA vždy samostatný list, bez dosazování neověřené ceny.
+- [x] Ověřeno 18 automatických testů, ESLint a build.
+- [ ] Provozní otestování po dokončení OAuth jako meduna@holmtec.cz; vizuální kontrola v preview.
+- [ ] Napojení na vytvoření Canva designu / PDF / archivaci / koncept Gmail až po potvrzení datových polí a oprávnění.
+
 ### Task 4: Handoff and release gate
 **Files:** `docs/MLZIDLA_CANVA_SITES_INTEGRATION_STATUS.md`.
 - [ ] Zapsat potvrzené účty, zdrojové folder ID, cenu, média, SUPLA a stav Canva.

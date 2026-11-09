@@ -9,7 +9,7 @@ const product = {
   visual_master_verified: true,
   visual_master_reference_url: 'https://media.base44.com/images/aura-original.jpg',
   variants: [
-    { name: 'AURA 700', profile: 'TR42x2', dimensions: '2200 × 700', nozzles: '5', price_ex_vat: 26580 },
+    { name: 'AURA 700', profile: 'TR42x2', dimensions: '2200 × 700', nozzles: '5', price_ex_vat: 26580, visual_master_verified:true, visual_master_reference_url:'https://media.base44.com/images/aura-700-original.jpg' },
     { name: 'AURA 900', profile: 'TR42x2', dimensions: '2200 × 900', nozzles: '6', price_ex_vat: 29036 },
   ],
   partner_price: 21300,
@@ -23,7 +23,7 @@ test('packet uses exact variant, public price, verified master and mandatory SUP
   assert.equal(packet.ready_for_canva, true);
   assert.equal(packet.product.variant, 'AURA 700');
   assert.equal(packet.product.price_ex_vat, 26580);
-  assert.equal(packet.product.image_url, product.visual_master_reference_url);
+  assert.equal(packet.product.image_url, product.variants[0].visual_master_reference_url);
   assert.equal(packet.supla.required_sheet, true);
   assert.equal(packet.supla.price_ex_vat, null);
   assert.equal(packet.supla.shaft_switchboard_required_to_define, true);
@@ -35,7 +35,7 @@ test('packet uses exact variant, public price, verified master and mandatory SUP
 
 test('unverified master blocks Canva and never falls back to gallery image', () => {
   const packet = createBrandOfferPacket({
-    product: {...product, visual_master_verified:false, visual_master_reference_url:'', image_url:'https://example.com/ai.jpg'},
+    product: {...product, visual_master_verified:false, visual_master_reference_url:'', image_url:'https://example.com/ai.jpg', variants:product.variants.map(v=>({...v, visual_master_verified:false, visual_master_reference_url:''}))},
     variant: 'AURA 700', price: verifiedPrice
   });
   assert.equal(packet.ready_for_canva, false);
@@ -57,6 +57,16 @@ test('ambiguous or unknown product variant blocks output even if price object ex
   assert.equal(packet.ready_for_canva, false);
   assert.equal(packet.product.price_ex_vat, null);
   assert.equal(packet.product.image_url, null);
+});
+
+test('multi-variant product-level verified master cannot replace missing variant MASTER', () => {
+  const packet = createBrandOfferPacket({
+    product: {...product, variants: product.variants.map(v=>({name:v.name,price_ex_vat:v.price_ex_vat}))},
+    variant:'AURA 700', price:verifiedPrice,
+  });
+  assert.equal(packet.ready_for_canva,false);
+  assert.equal(packet.product.image_url,null);
+  assert.ok(packet.blockers.some(x=>/MASTER/.test(x)));
 });
 
 test('different priced variant cannot be silently substituted', () => {

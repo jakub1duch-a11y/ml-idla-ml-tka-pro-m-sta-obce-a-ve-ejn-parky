@@ -1,4 +1,5 @@
 ---
+name: review-skills
 description: "Review and analyze a skill against best practices for length, intent scope, and trigger patterns"
 ---
 # Review Skills
@@ -8,11 +9,11 @@ Review and analyze a skill against best practices for length, intent scope, and 
 ## Prerequisites
 
 Before analyzing, read these resources to understand skill writing principles:
-1. `./references/skill-creator/SKILL.md` - Core principles, anatomy, and progressive disclosure
+1. `../skill-creator/SKILL.md` - Core principles, anatomy, and progressive disclosure
 2. `references/spec.md` - **Complete Agent Skills specification** (required for compliance checks)
 3. `references/validate.md` - **Validation checklist** (used in Step 2)
-4. `./references/skill-creator/references/workflows.md` - Workflow patterns (if relevant)
-5. `./references/skill-creator/references/output-patterns.md` - Output patterns (if relevant)
+4. `../skill-creator/references/workflows.md` - Workflow patterns (if relevant)
+5. `../skill-creator/references/output-patterns.md` - Output patterns (if relevant)
 
 ### Reference Examples from Anthropic (REQUIRED)
 

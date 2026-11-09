@@ -1,7 +1,8 @@
 ---
 name: mlzidla-scrollcraft-astra
 description: Navrhovat a upravovat web MLŽIDLA.cz podle principů Astra/Scrollcraft: vrstvená prostorová kompozice, scroll-depth, řízená typografie, motion graphics, reference-first design, vysoká čitelnost, přehledná navigace a obchodní filtr Pain–Person–Promise. Použít při redesignu homepage, hero sekcí, produktových landing pages, smart řízení, realizací, footeru, mobilní navigace a kampaní.
-version: 1.1
+metadata:
+  version: "1.1"
 ---
 
 # MLŽIDLA Scrollcraft / Astra

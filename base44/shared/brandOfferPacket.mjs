@@ -22,8 +22,14 @@ export function createBrandOfferPacket({ product, variant, price }) {
   const samePricedVariant = exactVariant && key(price?.variant) === key(exactVariant.name);
   const priced = Boolean(samePricedVariant && price?.needs_review === false &&
     typeof price.price_ex_vat === 'number' && Number.isFinite(price.price_ex_vat) && price.price_ex_vat > 0);
-  const media = Boolean(exactVariant && product?.visual_master_verified === true &&
-    validHttps(product?.visual_master_reference_url));
+  // A product-level MASTER can represent only a single-variant product.
+  // Multi-variant products must carry separately approved variant-specific MASTER references.
+  const variantMasterUrl = exactVariant?.visual_master_verified === true &&
+    validHttps(exactVariant?.visual_master_reference_url) ? exactVariant.visual_master_reference_url : null;
+  const singleVariantMasterUrl = list.length === 1 && product?.visual_master_verified === true &&
+    validHttps(product?.visual_master_reference_url) ? product.visual_master_reference_url : null;
+  const masterUrl = exactVariant ? (variantMasterUrl || singleVariantMasterUrl) : null;
+  const media = Boolean(masterUrl);
   const blockers = [];
   if (!exactVariant) blockers.push('Není ověřena jednoznačná varianta produktu.');
   if (!priced) blockers.push('Chybí přesně spárovaná veřejná cena z aktuální kalkulace.');
@@ -43,7 +49,7 @@ export function createBrandOfferPacket({ product, variant, price }) {
       profile: exactVariant ? String(exactVariant.profile || '') : '',
       dimensions: exactVariant ? String(exactVariant.dimensions || '') : '',
       nozzles: exactVariant ? String(exactVariant.nozzles || '') : '',
-      image_url: media ? String(product.visual_master_reference_url) : null,
+      image_url: media ? String(masterUrl) : null,
       price_ex_vat: amount,
       vat_percent: 21,
       price_inc_vat: amount === null ? null : Math.round(amount * 1.21 * 100) / 100,

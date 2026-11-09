@@ -28,6 +28,16 @@
 - Bezpečnostní stop před přenosem PDF do Drive (`saveQuoteToDriveAuto`) a před importem Gmail + Google Sheets do CRM (`syncGmailAndContacts`).
 - Žádný kód na `main`, žádné automatické publikování webu a žádné automatické odeslání nabídky zákazníkovi.
 
+## Doplněno 9. 11. 2026 — kontrola produktového podkladu Canva
+
+- Nové serverově ověřované rozhraní `getBrandOfferPreflight`: pouze pro admina, pouze čte `Kalkulace mlžítka 2026` (A:H), ověřuje připojený Google Sheets účet a odmítá fallback na starší ceník.
+- Nový panel v Marketing Hubu umožňuje vybrat produkt a přesnou variantu; zobrazuje ověřenou veřejnou cenu a blokace, otevírá původní Canva brand šablonu a katalog na Drive.
+- Pole `Product.variants[].visual_master_reference_url` a `visual_master_verified` umožňují schvalovat MASTER pro jednotlivé varianty; obecná fotografie vícero variant nestačí.
+- SUPLA je vždy povinný samostatný list. Cena SUPLA ani šachtového rozvaděče se bez ověřeného zdroje nevyplňuje.
+- Stále se **nevytváří Canva design ani PDF automaticky**, neukládá se do Drive a neodesílá Gmail; to vyžaduje dokončení OAuth, specifické Canva datové položky a cílové API Sites.
+- V Canvě je existující katalog 13 produktových listů `DAHaNPd1ouk`; některé stránky mají textové místo reálných fotografií a část cen „na dotaz“, proto jej automaticky nepublikovat ani nehromadně nepoužívat jako hotový.
+- Kontroly 9. 11.: `node --test tests/*.test.mjs` **18/18 PASS**, ESLint dotčené UI **PASS**, `npm run build` **PASS** (bez ffmpeg motion kroku).
+
 ## Další milníky
 
 1. Dokončit OAuth Google Sheets, přepojit Base44 Google Drive na obchodní účet a ověřit identitu Gmail. Pouhé připojení v ChatGPT nestačí.

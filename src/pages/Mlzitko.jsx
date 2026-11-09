@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Droplets, Gauge, Thermometer, Layers, Waves, Wrench, Wifi, CheckCircle2, Download, FileText } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import MistScrollStory from '@/components/motion/MistScrollStory';
 
 const TECH_SPECS = [
   { label: 'Materiál', value: 'Nerezová ocel AISI 316L', icon: Layers },
@@ -119,6 +120,9 @@ export default function Mlzitko() {
           </div>
         </div>
       </div>
+
+      {/* Prémiová scrollová prezentace skutečných produktů a jejich použití. */}
+      <MistScrollStory />
 
       {/* ABOUT SECTION */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">

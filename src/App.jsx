@@ -9,7 +9,6 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import RouteMotion from './components/RouteMotion';
 import AnalyticsRouteTracker from '@/components/common/AnalyticsRouteTracker';
-import GlobalPhotoWatermark from '@/components/GlobalPhotoWatermark';
 import BrandLoadingContent from '@/components/common/BrandLoadingContent';
 import Mlzitko from '@/pages/Mlzitko';
 import Mlzidla from '@/pages/Mlzidla';
@@ -18,7 +17,7 @@ import MestskeOchlazovani from '@/pages/MestskeOchlazovani';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
-import Home from '@/pages/Home';
+import Home from '@/pages/Home2026';
 import Kolekce from '@/pages/Kolekce';
 import CollectionDetail from '@/pages/CollectionDetail';
 import BrandIdentity from '@/pages/BrandIdentity';
@@ -262,7 +261,6 @@ function App() {
           <ScrollToTop />
           <RouteMotion />
           <AnalyticsRouteTracker />
-          <GlobalPhotoWatermark />
           <AuthenticatedApp />
         </Router>
         <Toaster />

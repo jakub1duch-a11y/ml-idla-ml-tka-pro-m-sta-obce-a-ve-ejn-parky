@@ -143,14 +143,28 @@ export default function PdVisualGalleryCompact({ product }) {
     setActiveIndex(0);
     setLightbox(null);
     setAutoPlay(!reduced);
-    Promise.all([
-      base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160).catch(() => []),
-      base44.entities.VisualizationAsset.filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 100).catch(() => []),
-    ]).then(([media, visuals]) => {
-      if (!active) return;
-      setMediaFiles((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
-      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
-    }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
+    // Public gallery reads only the safe MediaFile mirror from Marketing → Vizualizace produktů.
+    // VisualizationAsset itself is admin-only and must never be requested by public visitors.
+    base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160)
+      .then((media) => {
+        if (!active) return;
+        const publicMedia = (media || []).filter((item) =>
+          item?.product_slug === product.slug && item?.file_url &&
+          isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)
+        );
+        setMediaFiles(publicMedia);
+        setApprovedVisuals(publicMedia.filter((item) => item.media_role === 'render' && isImage(item.file_url))
+          .map((item) => ({
+            image_url: item.file_url,
+            thumbnail_url: item.file_url,
+            title: item.file_name || `${product.name} — vizualizace v prostoru`,
+            product_slug: item.product_slug,
+            product_name: product.name,
+            environment: item.visualization_environment || '',
+            configuration: item.visualization_configuration || '',
+            is_primary_for_variant: Boolean(item.visualization_is_primary),
+          })));
+      }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
     return () => { active = false; };
   }, [product.slug, reduced]);
 
@@ -210,13 +224,15 @@ export default function PdVisualGalleryCompact({ product }) {
       }))
     ].filter(Boolean);
 
-    const approved = approvedVisuals.map((item) => ({
+    const approved = [...approvedVisuals]
+      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .map((item) => ({
       url: item.thumbnail_url || item.image_url,
       title: item.title || (product.name + ' — pohled v prostoru'),
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · ') || 'Umístění produktu v prostoru',
-      badge: 'V prostoru',
+      badge: 'Vizualizace',
       fit: 'cover',
-      alt: product.name + ' — pohled v prostoru'
+      alt: product.name + ' — schválená vizualizace v prostoru'
     }));
 
     const primaryProductItems = productItems.slice(0, 2);

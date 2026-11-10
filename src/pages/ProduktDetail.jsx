@@ -11,8 +11,11 @@ import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryComp
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
+import PdSuplaControl from '@/components/produkt/new/PdSuplaControl';
+import PdFaq from '@/components/produkt/new/PdFaq';
 import PdReferences from '@/components/produkt/new/PdReferences';
 import PdClosingCta from '@/components/produkt/new/PdClosingCta';
+import AvenueConfigurator from '@/components/produkt/avenue/AvenueConfigurator';
 import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdSectionNav from '@/components/produkt/new/PdSectionNav';
 import PdDescription from '@/components/produkt/new/PdDescription';
@@ -68,10 +71,13 @@ export default function ProduktDetail() {
       <PdSectionNav product={product} />
       <PdDescription product={product} />
       <div id="parametry" className="scroll-mt-36"><PdSpecs product={product} /></div>
+      <AvenueConfigurator product={product} />
       <div id="galerie" className="scroll-mt-36"><PdVisualGalleryCompact product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
       <div id="reference" className="scroll-mt-24"><PdReferences product={product} /></div>
+      <PdFaq product={product} />
+      <PdSuplaControl product={product} />
       <PdClosingCta product={product} />
       <PdProductSuggestions product={product} />
     </div>

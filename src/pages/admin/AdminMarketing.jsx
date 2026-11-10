@@ -8,6 +8,7 @@ import AiSuggestionsTab from '@/components/admin/marketing/AiSuggestionsTab';
 import InstagramConnectCard from '@/components/admin/marketing/InstagramConnectCard';
 import MarketingBriefingTab from '@/components/admin/marketing/MarketingBriefingTab';
 import MarketingConnectorHealth from '@/components/admin/marketing/MarketingConnectorHealth';
+import MarketingNewsAgentPanel from '@/components/admin/marketing/MarketingNewsAgentPanel';
 import ThumbnailDirectorTab from '@/components/admin/marketing/ThumbnailDirectorTab';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
 import { MARKETING_CHANNELS, MARKETING_GENERATION_SKILL } from '@/lib/mlzidlaMarketingGenerationSkill';
@@ -39,6 +40,7 @@ export default function AdminMarketing(){
     </section>
 
     <MarketingConnectorHealth />
+    <MarketingNewsAgentPanel onCreated={loadPosts} />
 
     <section className="rounded-2xl border border-cyan/15 bg-cyan/5 p-4">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">

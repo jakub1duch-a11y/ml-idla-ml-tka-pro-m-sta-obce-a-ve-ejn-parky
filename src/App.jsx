@@ -17,7 +17,7 @@ import MestskeOchlazovani from '@/pages/MestskeOchlazovani';
 
 
 import SiteLayout from '@/components/layout/SiteLayout';
-import Home from '@/pages/Home';
+import Home from '@/pages/Home2026';
 import Kolekce from '@/pages/Kolekce';
 import CollectionDetail from '@/pages/CollectionDetail';
 import BrandIdentity from '@/pages/BrandIdentity';

@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, ArrowRight, Building2, Factory, Flower2, School, Trees, Wifi, Waves, Check, Droplets, Wrench, Clock3, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowDown, ArrowRight, Building2, Factory, School, Trees, Wifi, Waves, Check, Droplets, Wrench, Clock3, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import '@/styles/home-2026-redesign.css';

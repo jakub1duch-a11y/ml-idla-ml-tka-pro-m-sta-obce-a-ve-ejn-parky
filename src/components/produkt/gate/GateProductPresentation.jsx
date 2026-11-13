@@ -11,11 +11,16 @@ const gateVariants = (product) => Array.isArray(product?.variants)
 const toVariantId = (name = '') => String(name).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
+export function getSelectedGateVariant(product, params) {
+  const options = gateVariants(product);
+  const raw = params.get('varianta') || params.get('variant');
+  return options.find((item) => toVariantId(item.name) === raw || item.name === raw) || options[0] || null;
+}
+
 function useGateSelection(product) {
   const [params, setParams] = useSearchParams();
   const options = gateVariants(product);
-  const raw = params.get('varianta') || params.get('variant');
-  const selected = options.find((item) => toVariantId(item.name) === raw || item.name === raw) || options[0] || null;
+  const selected = getSelectedGateVariant(product, params);
   const choose = (name) => {
     const next = new URLSearchParams(params);
     next.set('varianta', toVariantId(name));
@@ -115,7 +120,7 @@ export function GateVariants({ product }) {
           <div>
             <p className="text-xs font-bold uppercase tracking-[.18em] text-[#008AA6]">Varianty produktu</p>
             <h2 id="gate-variants-title" className="mt-3 font-heading text-3xl font-bold tracking-tight text-[#2B3A42] sm:text-4xl lg:text-5xl">
-              Pět tvarů. Jedno řešení pro váš prostor.
+              Pět provedení. Řešení pro váš prostor.
             </h2>
           </div>
           <p className="max-w-lg text-sm leading-7 text-slate-600 sm:text-base">

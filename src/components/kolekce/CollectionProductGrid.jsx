@@ -51,8 +51,11 @@ const PRODUCT_VARIANTS = {
     { label: 'Velký · h 2 400 mm', href: '/produkt/mlzitko-mrak?variant=velky' },
   ],
   'mlzna-brana-gate': [
-    { label: 'Straight', href: '/produkt/mlzna-brana-gate?variant=straight' },
-    { label: 'V', href: '/produkt/mlzna-brana-gate?variant=v' },
+    { label: 'GATE 60_2115', href: '/produkt/mlzna-brana-gate?varianta=brana-gate-60-2115' },
+    { label: 'GATE 60_2130', href: '/produkt/mlzna-brana-gate?varianta=brana-gate-60-2130' },
+    { label: 'GATE 76_2130', href: '/produkt/mlzna-brana-gate?varianta=brana-gate-76-2130' },
+    { label: 'OBLOUK 42_1815', href: '/produkt/mlzna-brana-gate?varianta=brana-oblouk-42-1815' },
+    { label: 'RADIUS 42_1825', href: '/produkt/mlzna-brana-gate?varianta=brana-radius-42-1825' },
   ],
 };
 

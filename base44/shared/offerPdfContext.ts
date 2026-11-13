@@ -51,7 +51,15 @@ export async function loadOfferCtx(base44: any, order: any, inquiryId?: string, 
   const attachmentPhotos = (inquiry?.attachment_urls || []).filter((url, i) => /\.(png|jpe?g|webp)(?:$|\?)/i.test(inquiry?.attachment_names?.[i] || url));
   const sourcePhotos = [...attachmentPhotos, ...assets.filter(a => a.asset_type === 'source_photo').map(a => a.file_url)].filter(Boolean);
   if (!product) { const master = assets.find(a => a.asset_type === 'product_reference'); ctx.product = { name: ctx.productName, image_url: master?.file_url || '' }; }
-  ctx.scenes = await loadOriginalProductScenes(base44, ctx.product);
+  const placeText = `${order.project_name || ''} ${order.description || ''} ${inquiry?.zprava || inquiry?.message || ''}`.toLowerCase();
+  const environment = /mateřsk|skolk|škol|\bmš\b/.test(placeText) ? 'skola_skolka'
+    : /senior|domov důchod/.test(placeText) ? 'mestsky_park'
+    : order.presentation_variant === 'residential' ? 'rezidencni_zahrada'
+    : order.presentation_variant === 'city_public' ? 'mestsky_park' : '';
+  ctx.scenes = await loadOriginalProductScenes(base44, ctx.product, {
+    inquiryId: order.inquiry_id || inquiryId,
+    environment,
+  });
   ctx.productImg = ctx.scenes[0]?.img;
   ctx.imgs = ctx.scenes.map(s => s.img);
   return { ctx, vizUrls, productUrls, total, quoteNum, sourcePhotos };

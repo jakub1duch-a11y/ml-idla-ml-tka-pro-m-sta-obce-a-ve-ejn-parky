@@ -52,7 +52,9 @@ const LEGACY_REDIRECTS = {
   '/kolekce/city': '/mestske-mlzitka',
   '/kolekce/garden': '/zahradni-mlzitka',
   '/kolekce/art': '/zakazkova-mlzitka',
-  '/mlzidla': '/mlzidla-mlzitka',
+  '/mlzidla': '/katalog-mlzitek',
+  '/mlzidla-mlzitka': '/katalog-mlzitek',
+  '/ai-vizualizace': '/poptavka',
 };
 
 const productPages = JSON.parse(readFileSync(join(__dirname, '..', 'src', 'lib', 'product-page-meta.json'), 'utf-8'));
@@ -151,7 +153,10 @@ const canonicalPaths = new Set([
   ...existingUrls,
   ...pagesToRender.map((page) => page.canonicalPath).filter(Boolean),
 ]);
+// Exclude alias paths and canonicalize the legacy MRAK product URL.
 for (const path of excludedRedirectPaths) canonicalPaths.delete(path);
+canonicalPaths.delete('/produkt/mlzitko-mrak');
+canonicalPaths.add('/produkt/mlzny-mrak-1414');
 const sitemapEntries = [...canonicalPaths]
   .filter((path) => path.startsWith('/') && !path.includes('?') && !path.includes('#'))
   .map((path) => {

@@ -27,7 +27,7 @@ export default function PdDescription({ product }) {
               <span className="pd-desc-studio-badge">Studiový náhled</span>
               <img
                 src={studio}
-                alt={product.image_alt || `${product.name} — studiový náhled produktu`}
+                alt={product.slug === 'mlzna-brana-gate' ? 'BRÁNA GATE — katalogový náhled produktu, provedení dle výběru varianty' : (product.image_alt || `${product.name} — studiový náhled produktu`)}
                 width={1200}
                 height={900}
                 loading="eager"

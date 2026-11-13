@@ -34,6 +34,7 @@ import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 import AdminMcpConnect from './AdminMcpConnect';
 import AdminNotifications from './AdminNotifications';
 import AdminOffers from './AdminOffers';
+import AdminSalesHub from './AdminSalesHub';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -56,6 +57,7 @@ const TABS = [
   { id: 'crm', label: 'CRM Corporate', icon: BriefcaseBusiness },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
   { id: 'offers', label: 'Odeslané nabídky', icon: Send },
+  { id: 'sales-hub', label: 'Obchodní centrum', icon: BriefcaseBusiness },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
@@ -66,7 +68,7 @@ const TABS = [
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
-  { label: 'Obchod', ids: ['poptavky', 'offers', 'crm', 'prospects'] },
+  { label: 'Obchod', ids: ['sales-hub', 'poptavky', 'offers', 'crm', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
   { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal', 'notifications'] },
 ];
@@ -148,6 +150,7 @@ export default function Admin() {
     crm: AdminCRM,
     poptavky: AdminPoptavky,
     offers: AdminOffers,
+    'sales-hub': AdminSalesHub,
     ar: AdminAR,
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,

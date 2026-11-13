@@ -1,0 +1,63 @@
+{
+  "brand": "MLŽIDLA.cz",
+  "version": "2026-11-13",
+  "status": "draft-review",
+  "source_app": "6a3ee88c10959cd3588c4d68",
+  "source_repo": "jakub1duch-a11y/ml-idla-ml-tka-pro-m-sta-obce-a-ve-ejn-parky",
+  "logo": {
+    "light": "https://drive.google.com/file/d/1v1PxpaYagnMrloteK0HEp5HVTmZ4CLW_/view",
+    "dark": "https://drive.google.com/file/d/1AysJbtO5FCTzmped8xn39yxyaiaCvehF/view"
+  },
+  "palette": {
+    "primary": "#0B2A4A",
+    "secondary": "#071A2F",
+    "accent": "#00B7FF",
+    "accentDark": "#007ACB",
+    "background": "#F5FAFD",
+    "mist": "#EAF6FC",
+    "white": "#FFFFFF",
+    "mutedText": "#607789",
+    "border": "#D6EAF3"
+  },
+  "fonts": {
+    "heading": "Montserrat",
+    "body": "Inter"
+  },
+  "canva": {
+    "brand_manual": {
+      "designId": "DAHa1istefo",
+      "url": "https://www.canva.com/d/YyuDG_ybjvXax_k",
+      "pages": 13
+    },
+    "product_aura": {
+      "designId": "DAHa1vu2JnQ",
+      "url": "https://www.canva.com/d/S-7j5jd9dS2yW_G",
+      "pages": 2
+    },
+    "social": {
+      "designId": "DAHa1iXtooA",
+      "url": "https://www.canva.com/d/tUHUOwQBEu2EZ31",
+      "pages": 4
+    },
+    "manuals": {
+      "designId": "DAHa1qJULec",
+      "url": "https://www.canva.com/d/RACeQU6WN4TCIs2",
+      "pages": 3
+    },
+    "folder": "https://www.canva.com/folder/FAHa1kQKo3Q"
+  },
+  "source_priority": [
+    "Base44 current Product entity",
+    "Mlzny disk confirmed originals",
+    "Current pricing calculation",
+    "Approved Canva design layout only"
+  ],
+  "product_rules": {
+    "sheets_per_product": 2,
+    "variant_price_vat": "ex VAT",
+    "unknown_price": "Na poptávku",
+    "geometry": "must preserve master",
+    "visualization_label": "Vizualizace — ilustrativní"
+  },
+  "production_deployment": "not_authorized"
+}

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
 import HeroVideoPlaylist from '@/components/home/new/HeroVideoPlaylist';
 import { HERO_SLIDES } from '@/components/home/new/heroSlides';
@@ -35,6 +36,8 @@ export default function HeroMediaSlider({ children }) {
   };
   return <div className="home-media-slider" role="region" aria-roledescription="karusel" aria-label="Videa a fotografie MLŽIDLA.CZ" onKeyDown={(e) => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); select(index + (e.key === 'ArrowRight' ? 1 : -1)); } }}>
     <div ref={mediaRef} className="home-media-slider__media" onTouchStart={(e) => { touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }} onTouchEnd={swipe} onTouchCancel={() => { touch.current = null; }}><HeroVideoPlaylist key={slide.id} slide={slide} running={running} videoEnabled={videoEnabled} videoRef={videoRef} onStatus={setStatus} onNext={next} /></div>
-    <div className="hero-media-shade" />{children}
+    <div className="hero-media-shade" />
+    {slide.cta && <Link to={slide.cta} className="home-media-slider__product-cta" aria-label={slide.ctaLabel || slide.label}>{slide.ctaLabel || 'Detail produktu'} <span aria-hidden="true">→</span></Link>}
+    {children}
   </div>;
 }

@@ -7,9 +7,9 @@ export default function BrandLogoGuide() {
     <div className="mt-16">
       <div className="max-w-2xl">
         <p className="font-mono text-xs uppercase tracking-[.16em] text-secondary">Logo</p>
-        <h3 className="mt-3 text-3xl">Kapka, tekuté Ž a jasný podpis značky.</h3>
+        <h3 className="mt-3 text-3xl">Oblouk, kapka a jasný podpis značky.</h3>
         <p className="mt-3 text-muted-foreground">
-          V hlavičce používáme jednoduchý wordmark. V patičce, prezentacích a vybraných detailech může být rozšířen o „Jemná atraktivní mlha“, „Pro lepší klima“ a rukopisný podpis „Architektura, která dýchá.“
+          V hlavičce používáme původní logo s obloukem a kapkou. Na nabídky a produktové listy navazuje samostatná verze s textem „Mlžítka HolmTec“. Inverzní, tiskové a profilové varianty jsou ve verzované sadě na webu i v Canvě.
         </p>
       </div>
 
@@ -21,7 +21,7 @@ export default function BrandLogoGuide() {
           <div className="p-6">
             <p className="font-mono text-[10px] uppercase tracking-[.15em] text-secondary">01 · Primární světlá varianta</p>
             <h4 className="mt-2 text-xl">Wordmark pro světlé plochy</h4>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Web, nabídky, tisk a značení. Tmavý text + modré tekuté Ž.</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Web, nabídky, tisk a značení. Tmavý logotyp s obloukem a kapkou.</p>
           </div>
         </article>
 
@@ -43,7 +43,7 @@ export default function BrandLogoGuide() {
 
       <div className="mt-4 grid gap-4 rounded-2xl border border-border bg-muted p-6 sm:grid-cols-3">
         <div><p className="font-semibold">Ochranná zóna</p><p className="mt-2 text-sm text-muted-foreground">Alespoň výška kapky ze všech stran.</p></div>
-        <div><p className="font-semibold">Malé velikosti</p><p className="mt-2 text-sm text-muted-foreground">Pod 120 px používat pouze jednoduchý wordmark nebo samotný symbol Ž.</p></div>
+        <div><p className="font-semibold">Malé velikosti</p><p className="mt-2 text-sm text-muted-foreground">Pod 120 px používat jednoduchý wordmark nebo samotný symbol oblouku s kapkou.</p></div>
         <div><p className="font-semibold">Pohyb</p><p className="mt-2 text-sm text-muted-foreground">Pouze jemný pohyb kapky a světelný nádech. Bez blikání a agresivních efektů.</p></div>
       </div>
     </div>

@@ -34,6 +34,7 @@ import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 import AdminMcpConnect from './AdminMcpConnect';
 import AdminNotifications from './AdminNotifications';
 import AdminOffers from './AdminOffers';
+import Logo from '@/components/layout/Logo';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
@@ -160,15 +161,18 @@ export default function Admin() {
     <div className="min-h-screen bg-ink flex flex-col md:flex-row">
       <AdminMobileNav tabs={TABS} activeTab={activeTab} onChange={changeTab} />
       {/* Sidebar */}
-      <div className="hidden w-64 bg-[#0d1117] border-r border-white/8 md:flex flex-col shrink-0">
+      <div className="hidden w-72 bg-[#081B33] border-r border-white/10 md:flex flex-col shrink-0 shadow-[16px_0_42px_rgba(0,0,0,.12)]">
         <div className="px-5 py-6 border-b border-white/8">
-          <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-1">Admin</p>
+          <div className="mb-5 border-b border-white/10 pb-5">
+            <Logo size="sm" tone="dark" />
+          </div>
+          <p className="mb-1 font-mono text-[10px] uppercase tracking-[.16em] text-[#8CE5F3]">Administrace · HolmTec</p>
           <p className="text-white text-sm font-medium truncate">{user.full_name || user.email}</p>
         </div>
         <nav className="flex-1 overflow-y-auto p-3">
           {TAB_GROUPS.map((group) => (
             <div key={group.label} className="mb-4 last:mb-0">
-              <p className="mb-1.5 px-3 font-mono text-[9px] uppercase tracking-[.16em] text-white/20">{group.label}</p>
+              <p className="mb-1.5 px-3 font-mono text-[9px] uppercase tracking-[.16em] text-white/55">{group.label}</p>
               <div className="space-y-1">
                 {group.ids.map((tabId) => TABS.find((item) => item.id === tabId)).filter(Boolean).map((tab) => {
                   const Icon = tab.icon;
@@ -199,7 +203,14 @@ export default function Admin() {
       </div>
 
       {/* Main */}
-      <div className="flex-1 min-w-0 overflow-auto">
+      <div className="flex-1 min-w-0 overflow-auto bg-[#F8F9FA]">
+        <div className="hidden items-center justify-between gap-5 border-b border-[#E6EBEF] bg-white px-7 py-5 md:flex">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#008BA8]">MLŽIDLA.cz · správa obsahu</p>
+            <h1 className="mt-1 font-heading text-2xl font-bold text-[#2B3A42]">{TABS.find((tab) => tab.id === activeTab)?.label || 'Administrace'}</h1>
+          </div>
+          <span className="rounded-full border border-[#B5E4EC] bg-[#E8F7FA] px-4 py-2 text-xs font-semibold text-[#0B657C]">Správní rozhraní</span>
+        </div>
         <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
           <ActiveComponent />
         </motion.div>

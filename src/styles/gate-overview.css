@@ -4,3 +4,24 @@
 @media(max-width:639px){.gate-shell,.gate-planning .premium-shell{width:calc(100% - 2rem)}.gate-section,.gate-planning .premium-section{padding-block:48px}.gate-hero{min-height:540px}.gate-hero-content{padding-block:60px}.gate-hero::after{background:linear-gradient(90deg,rgba(5,29,43,.93),rgba(5,29,43,.7))}.gate-hero-actions{flex-direction:column;align-items:stretch}.gate-hero .gate-button{font-size:13px;padding-inline:14px}.gate-product-grid{grid-template-columns:1fr;gap:20px}.gate-card-image{aspect-ratio:4/3}.gate-card-body{padding:22px}.gate-filters{gap:7px}.gate-filters button{font-size:12px;padding:12px 13px;gap:7px}.gate-selection-content{grid-template-columns:1fr;gap:28px}.gate-space-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gate-space-buttons button{border-radius:16px;text-align:left;align-items:flex-start;font-size:12px;padding:14px 12px}.gate-space-buttons svg{flex-shrink:0}.gate-features{grid-template-columns:1fr;gap:12px}.gate-features article{padding:24px}.gate-features h3{margin-top:16px}.gate-project>.gate-shell{align-items:flex-start;flex-direction:column}.gate-project{padding-block:48px}}
 @media(prefers-reduced-motion:reduce){.gate-page *, .gate-page *::before,.gate-page *::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.gate-product-card:hover .gate-card-image img{transform:none}}
 
+/* Variant-specific technical panels: compact, readable and touch-friendly. */
+.gate-card-construction{margin-top:14px;padding:12px 14px;border-left:3px solid #0b8196;background:#e8f4f5;color:#244a5a;font-size:13px;line-height:1.65}
+.gate-card-specs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 16px;margin-top:18px;padding:17px;border:1px solid #d6e7eb;border-radius:16px;background:#fff}
+.gate-card-specs>div{min-width:0}
+.gate-card-specs dt{font-size:11px;font-weight:650;letter-spacing:.02em;color:#5c7785;margin-bottom:5px}
+.gate-card-specs dd{font-size:13px;font-weight:700;line-height:1.45;overflow-wrap:anywhere;color:#143a4a}
+.gate-card-water{margin-top:12px;color:#526c79;font-size:12px;line-height:1.65}
+.gate-card-water-cost{margin-top:10px;padding-top:11px;border-top:1px solid #d6e7eb;font-size:12px;line-height:1.55;color:#234e5d}
+.gate-card-water-cost strong,.gate-card-water-cost span{display:block}
+.gate-card-water-cost span{color:#617c89;margin-top:4px;font-size:11px}
+.gate-card-actions{flex-wrap:wrap}
+.gate-card-actions a{white-space:normal}
+.gate-card-image img{padding:14px;object-position:center center}
+@media(max-width:639px){
+  .gate-card-specs{gap:10px 12px;padding:14px}
+  .gate-card-body h3{font-size:clamp(20px,6vw,25px)}
+  .gate-card-actions{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+  .gate-card-actions a{justify-content:center;text-align:center;padding:10px 8px;font-size:12px}
+  .gate-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;padding-bottom:10px;scrollbar-width:thin}
+  .gate-filters button{flex-shrink:0;white-space:nowrap}
+}

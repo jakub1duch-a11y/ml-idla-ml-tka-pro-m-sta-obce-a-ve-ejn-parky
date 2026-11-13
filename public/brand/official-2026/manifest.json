@@ -1,0 +1,34 @@
+{
+  "brand": "MLŽIDLA.cz",
+  "version": "2026-11-14",
+  "status": "pull-request-review",
+  "source": "User supplied cropped original; SVG symbol from existing Base44 web",
+  "primary_color": "#053949",
+  "deep_ink": "#071A2F",
+  "cyan": "#00B7FF",
+  "fonts": [
+    "Montserrat",
+    "Inter"
+  ],
+  "assets": {
+    "primary": "logo-primary.svg",
+    "inverse": "logo-inverse.svg",
+    "monochrome": "logo-mono.svg",
+    "HolmTec": "logo-holmtec.svg",
+    "tagline": "logo-tagline.svg",
+    "symbol": "symbol-primary.svg",
+    "symbolInverse": "symbol-inverse.svg",
+    "symbolCyan": "symbol-cyan.svg",
+    "avatar": "social-avatar.svg",
+    "favicon": "favicon.svg",
+    "watermark": "watermark.svg"
+  },
+  "canva": "https://www.canva.com/folder/FAHa1qOC90E",
+  "drive": "https://drive.google.com/drive/folders/1OjzgBfHAZe2ov4-l_TUfeZXSArGC2fnL",
+  "workflow": "docs/workflow/MLZIDLA_BRAND_WORKFLOW_2026.md",
+  "rules": [
+    "Nedochází k automatickému odesílání nabídek.",
+    "Logo má neměnnou geometrii.",
+    "Ceny a vizualizace produktů ověřit proti zdrojům."
+  ]
+}

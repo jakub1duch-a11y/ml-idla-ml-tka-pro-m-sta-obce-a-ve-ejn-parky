@@ -9,6 +9,7 @@ import '@/styles/home-clean-layout.css';
 
 // Sekce pod hero se načítají až po prvním vykreslení → rychlejší první zobrazení.
 const HomeOverview = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeOverview })));
+const MistScrollStory = lazy(() => import('@/components/motion/MistScrollStory'));
 const HomeTechnology = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeTechnology })));
 const HomeHolmTec = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeHolmTec })));
 const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
@@ -34,6 +35,7 @@ export default function Home() {
         <TopGateHeroSlider />
         <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
           <HomeOverview />
+          <MistScrollStory />
           <ProductPhotoGallery />
           <HomeTechnology />
           <ReferencesStrip />

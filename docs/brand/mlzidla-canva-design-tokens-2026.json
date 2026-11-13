@@ -1,0 +1,41 @@
+{
+  "brand": "MLŽIDLA.cz | Mlžítka HolmTec",
+  "status": "working-guide-2026",
+  "source": [
+    "src/index.css",
+    "src/styles/brand-logo-system.css",
+    "src/components/brand/BrandColorPalette.jsx",
+    "src/components/brand/BrandTypographyGuide.jsx"
+  ],
+  "palette": {
+    "deepInk": "#071A2F",
+    "oceanBlue": "#0878E8",
+    "freshCyan": "#00B7FF",
+    "mistBlue": "#7DD3FC",
+    "iceWhite": "#F5FAFD",
+    "logoNavy": "#07182B",
+    "logoCyan": "#00C9F2"
+  },
+  "typography": {
+    "heading": "Montserrat",
+    "body": "Inter",
+    "technical": "JetBrains Mono"
+  },
+  "media": {
+    "product": "A4_two_pages_per_product_family",
+    "post": "4:5_1080x1350",
+    "stories": "9:16_1080x1920",
+    "heroDesktop": "16:9_1920x1080"
+  },
+  "logos": {
+    "lightBackground": "/brand/mlzidla-logo-dark-master.png",
+    "darkBackground": "/brand/mlzidla-logo-horizontal-master.png",
+    "monochrome": "/brand/mlzidla-logo-mono.svg"
+  },
+  "rules": [
+    "Use actual product photos or mark visualizations",
+    "No mixing of product geometry or variants",
+    "Verify dimensions and prices before public release",
+    "No edits to production without approval"
+  ]
+}

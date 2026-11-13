@@ -1,10 +1,8 @@
-import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
-import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Building2, CheckCircle, Loader } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
@@ -18,6 +16,7 @@ import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import { trackFunnelStep } from '@/lib/ga4';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 import MunicipalProjectStudio, { MunicipalCustomProduction, MunicipalPageNav } from '@/components/kategorie/MunicipalProjectStudio';
+import PremiumSegmentHero from '@/components/kategorie/PremiumSegmentHero';
 
 const BENEFITS = [
 'Pocitové ochlazení v horkých dnech typicky v řádu několika stupňů podle podmínek',
@@ -60,37 +59,18 @@ export default function MestaObce() {
     <div className="min-h-screen bg-white pt-0">
 
       {/* Hero */}
-      <MotionConfig reducedMotion="user">
-<section className="hero-motion-surface hero-category relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <HeroAtmosphere />
-        <HeroBackgroundVideo src={VIDEO_ASSETS.heroJicin.src} poster={VIDEO_ASSETS.heroJicin.poster} className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute bg-gradient-to-t from-slate-900 via-slate-900/20 to-slate-900/60 inset-0" />
-        <div className="relative h-full flex items-end">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                <Building2 size={18} className="text-white" />
-              </div>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Městská mlžítka · návrh · výroba · servis</p>
-            </div>
-            <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Městská mlžítka pro města a obce,<br /><span style={{ fontStyle: 'italic' }}>navržená pro konkrétní místo.</span>
-            </h1>
-            <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Návrh, vizualizace, zakázkové zpracování a česká výroba nerezových mlžítek pro náměstí, parky, školy, sportoviště i dopravní uzly. Od prvního záměru po Smart řízení, instalaci a servis.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" onClick={() => trackFunnelStep('cities', 'consultation_click', 'hero')} className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Připravit městský návrh <ArrowRight size={15} />
-              </a>
-              <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
-                Zavolat (+420774700390)
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-</MotionConfig>
+            <PremiumSegmentHero
+        eyebrow="Města a obce / veřejný prostor"
+        title="Městské ochlazování navržené pro konkrétní místo."
+        description="Nerezová designová mlžítka pro náměstí, parky a pěší zóny. Připravíme vizualizaci, návrh rozmístění, stavební připravenost a variantu ovládání podle charakteru prostoru."
+        image={VIDEO_ASSETS.heroJicin.poster}
+        imageAlt="Městské mlžítko MLŽIDLA.cz ve veřejném prostoru"
+        imageCaption="Fotografie z produktových podkladů MLŽIDLA.cz. Další instalace navrhujeme individuálně."
+        highlights={['Návrh a vizualizace', 'Výroba HolmTec', 'Chytré řízení dle projektu']}
+        primary={{ label: 'Připravit městský záměr', to: '#poptavka' }}
+        secondary={{ label: 'Technické podklady', to: '/ke-stazeni' }}
+        onPrimaryClick={() => trackFunnelStep('cities', 'consultation_click', 'hero')}
+      />
 
       <MunicipalPageNav />
 

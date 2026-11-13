@@ -1,30 +1,29 @@
-import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
-import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
 import ProductExperience from '@/components/ui/ProductExperience';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig } from 'framer-motion';
-import { ArrowRight, Baby, Loader, ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Loader, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { sortByStructure } from '@/lib/productFamilies';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
+import PremiumSegmentHero from '@/components/kategorie/PremiumSegmentHero';
 
 const USE_CASES = [
-  { emoji: '🏫', title: 'Základní školy', desc: 'Ochlazení školních dvorů a venkovních areálů během horkých dnů, bezpečné pro provoz o přestávkách.' },
-  { emoji: '🧸', title: 'Mateřské školky', desc: 'Jemná mlha bez tlakového rizika, potravinářská nerez a materiály certifikované pro dětské prostory.' },
-  { emoji: '🛝', title: 'Dětská hřiště', desc: 'Interaktivní mlžné prvky, které dětem přinášejí radost a rodičům klid — bez chemie, bez rizika uklouznutí.' },
+  { emoji: '🏫', title: 'Základní školy', desc: 'Ochlazení školních dvorů a venkovních areálů během horkých dnů, s režimem řízeným správcem areálu.' },
+  { emoji: '🧸', title: 'Mateřské školky', desc: 'Jemná mlha v kontrolované pobytové zóně s vhodným povrchem a přístupem k vodě.' },
+  { emoji: '🛝', title: 'Dětská hřiště', desc: 'Designová mlžítka pro pobytové plochy v sousedství hřiště; nejde o herní zařízení.' },
   { emoji: '🎠', title: 'Zábavní centra', desc: 'Mlžné instalace jako atrakce v dětských zábavních a volnočasových centrech.' },
 ];
 
 const SAFETY = [
-  'Potravinářská nerezová ocel AISI 316L',
-  'Nízkotlaká mlha bez rizika uklouznutí',
-  'Žádná chemie ani přísady ve vodě',
-  'Certifikované materiály pro veřejné prostory',
+  'Použitý nerezový materiál ověřujeme podle výrobní dokumentace',
+  'Mokrý povrch může klouzat; zohledníme umístění a odvodnění',
+  'Kvalita vody, filtrace a pravidelná údržba podle konfigurace',
+  'Designové mlžítko není herní prvek podle ČSN EN 1176',
 ];
 
 export default function Deti() {
@@ -40,45 +39,24 @@ export default function Deti() {
 
   return (
     <div className="min-h-screen bg-white">
-      <MotionConfig reducedMotion="user">
-<section className="hero-motion-surface hero-category relative h-[80vh] min-h-[560px] w-full overflow-hidden bg-slate-900">
-        <HeroAtmosphere />
-        <HeroBackgroundVideo src="/media/optimized/e557b652c_generated_video.webm" poster="/media/hero-posters/deti.webp" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/20" />
-        <div className="relative h-full flex items-end">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 w-full">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                <Baby size={18} className="text-white" />
-              </div>
-              <p className="text-xs font-mono tracking-widest uppercase text-white/70">Školy, školky a děti</p>
-            </div>
-            <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Bezpečný chlad<br /><span style={{ fontStyle: 'italic' }}>pro dětskou radost.</span>
-            </h1>
-            <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Pro školy, školky a dětská hřiště navrhujeme mlžné systémy, které jsou bezpečné, jemné a bez chemie. Ochlazení až o 9 °C bez rizika uklouznutí — děti si mlhu užijí, rodiče i pedagogové budou mít klid.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
-                Probrat záměr <ArrowRight size={15} />
-              </a>
-              <a href="tel:+420774700390" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/30 text-white text-sm rounded-full hover:bg-white/10 transition-all">
-                Zavolat (+420774700390)
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-</MotionConfig>
+            <PremiumSegmentHero
+        eyebrow="Školy / mateřské školy / veřejné zahrady"
+        title="Příjemnější léto na školním dvoře."
+        description="Designová nerezová mlžítka pro školní zahrady a odpočinková místa. Výběr modelu a umístění řešíme s ohledem na věkovou skupinu, povrch, provozní dohled a přívod vody."
+        image="/media/hero-posters/deti.webp"
+        imageAlt="Ilustrační prostředí s vodní mlhou pro školní areál"
+        highlights={['Návrh pro konkrétní školu', 'Dohled a provozní režim', 'Péče o vodní systém']}
+        primary={{ label: 'Probrat školní projekt', to: '#poptavka' }}
+        secondary={{ label: 'Prohlédnout mlžítka', to: '/katalog-mlzitek' }}
+      />
 
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-4">Bezpečnost na prvním místě</p>
+              <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-4">Odpovědné umístění a provoz</p>
               <h2 className="text-slate-900 text-3xl mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-                Navrženo pro<br /><span style={{ fontStyle: 'italic' }}>ty nejmenší.</span>
+                Mlžení navržené<br /><span>pro konkrétní školu.</span>
               </h2>
               <ul className="space-y-3">
                 {SAFETY.map(s => (

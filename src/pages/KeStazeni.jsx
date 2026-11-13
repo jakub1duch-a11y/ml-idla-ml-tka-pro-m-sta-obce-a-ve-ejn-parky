@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import { Link } from 'react-router-dom';
 import MistVideoShowcase from '@/components/common/MistVideoShowcase';
+import PremiumSegmentHero from '@/components/kategorie/PremiumSegmentHero';
 
 const STATIC_DOCS = [
   { title: 'Návod k obsluze, údržbě a zazimování mlžítek', desc: 'Šestistránková obrazová příručka: pravidelná kontrola, čištění trysek, zazimování, jarní spuštění a servis. PDF A4.', category: 'Manuál', icon: BookOpen, url: 'https://media.base44.com/files/public/6a3ee88c10959cd3588c4d68/05a5a0f9c_MLZIDLA_manual_udrzby_graficka_brozura_FINAL.pdf' },
@@ -19,7 +20,7 @@ const STATIC_DOCS = [
   { title: 'Chytré ovládání — produktový prospekt', desc: 'Funkce Smart App, Supla Cloud, senzory, automatizace a plánování cyklů mlžení.', category: 'Smart', icon: BookOpen, url: null },
   { title: 'Technický list — Mlžítka', desc: 'Rozměry, materiálové provedení, spotřeba vody a tlakové parametry.', category: 'Technický list', icon: FileText, url: null },
 
-  { title: 'Certifikát AISI 316L', desc: 'Materiálový certifikát pro potravinářský nerez AISI 316L.', category: 'Certifikát', icon: Shield, url: null },
+  { title: 'Materiálové atesty podle použité oceli', desc: 'Atest materiálu poskytujeme podle potvrzeného výrobního provedení konkrétního produktu.', category: 'Certifikát', icon: Shield, url: null },
 ];
 
 const CATEGORY_COLORS = {
@@ -55,33 +56,34 @@ export default function KeStazeni() {
   const categories = ['vse', ...new Set(STATIC_DOCS.map(d => d.category))];
 
   return (
-    <div className="min-h-screen bg-white pt-28 pb-24">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
-          <p className="text-xs font-mono text-slate-400 tracking-widest uppercase mb-3">Dokumentace</p>
-          <h1 className="font-heading font-light text-4xl lg:text-6xl text-slate-900 tracking-tight mb-4">
-Manuály a dokumenty<br /><span className="text-slate-400 font-extralight">pro vaše mlžítko</span>
-          </h1>
-          <p className="text-slate-500 text-lg font-light max-w-2xl">
-Stáhněte si dostupné návody a provozní dokumentaci. Výkresy a individuální technické podklady vám připravíme podle konkrétního projektu.
-          </p>
-        </motion.div>
+    <div className="min-h-screen bg-[#F8F9FA] pb-24">
+      <PremiumSegmentHero
+        eyebrow="Dokumenty / technické podklady / servis"
+        title="Technické podklady přehledně na jednom místě."
+        description="Návody k obsluze, stavební příprava, údržba a produktová dokumentace. Dostupné soubory lze otevřít přímo; projektové výkresy a specifické parametry připravujeme na vyžádání."
+        image="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/6b2343180_lineasloupovemlzitko.png"
+        imageAlt="Produktové vyobrazení nerezového sloupového mlžítka LINEA"
+        imageCaption="Produktová fotografie LINEA. Rozměry, kotvení a materiál řešíme podle konkrétní varianty."
+        highlights={['Montážní podklady', 'Návody a údržba', 'Projektové detaily']}
+        primary={{ label: 'Prohlédnout dokumenty', to: '#dokumenty' }}
+        secondary={{ label: 'Vyžádat výkresy', to: '/zadost-o-podklady' }}
+        compact
+      />
+      <div id="dokumenty" className="mx-auto max-w-6xl scroll-mt-24 px-5 pt-14 sm:px-8 lg:px-10">
 
         {/* Info banner */}
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-10 text-sm text-slate-500 font-light">
-          <Info size={16} className="text-slate-400 mt-0.5 shrink-0" />
+        <div className="flex items-start gap-3 rounded-2xl border border-[#B5E4EC] bg-[#E8F7FA] p-5 text-sm leading-6 text-[#2B3A42] mb-10">
+          <Info size={16} className="text-[#008BA8] mt-0.5 shrink-0" />
           Veřejné návody lze otevřít přímo. Projektové výkresy a individuální parametry poskytujeme na vyžádání. Rozměry, kotvení a provozní hodnoty ověřte vždy podle dokumentace konkrétní instalace.
         </div>
 
         {/* Static docs */}
         <div className="mb-14">
           <div className="flex items-center gap-3 flex-wrap mb-6">
-            <h2 className="font-heading font-light text-xl text-slate-900 mr-2">Dostupné typy podkladů</h2>
+            <h2 className="font-heading font-bold text-2xl text-[#2B3A42] mr-2">Dostupné typy podkladů</h2>
             {categories.map((c) => (
               <button key={c} onClick={() => setFilter(c)}
-                className={`px-3 py-1 rounded-full text-xs font-mono transition-all ${filter === c ? 'bg-slate-900 text-white' : 'text-slate-500 border border-slate-200 hover:border-slate-300'}`}>
+                className={`min-h-10 px-4 py-2 rounded-full text-xs font-semibold transition-all ${filter === c ? 'bg-[#2B3A42] text-white' : 'bg-white text-[#2B3A42] border border-[#E6EBEF] hover:border-[#00B4D8]'}`}>
                 {c === 'vse' ? 'Vše' : c}
               </button>
             ))}
@@ -89,7 +91,7 @@ Stáhněte si dostupné návody a provozní dokumentaci. Výkresy a individuáln
           <div className="space-y-3">
             {filteredDocs.map((doc, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 hover:border-slate-300 hover:shadow-sm transition-all group">
+                className="group flex flex-col justify-between gap-4 rounded-2xl border border-[#E6EBEF] bg-white p-5 shadow-[0_12px_32px_rgba(43,58,66,.04)] transition-all hover:border-[#00B4D8] hover:shadow-lg sm:flex-row sm:items-center sm:p-6">
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-200">
                     <doc.icon size={18} className="text-slate-500" />
@@ -98,11 +100,11 @@ Stáhněte si dostupné návody a provozní dokumentaci. Výkresy a individuáln
                     <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest border mb-1 ${CATEGORY_COLORS[doc.category] || 'text-slate-400 bg-slate-50 border-slate-200'}`}>
                       {doc.category}
                     </span>
-                    <h3 className="text-slate-900 font-medium text-sm">{doc.title}</h3>
+                    <h3 className="font-heading font-semibold text-sm text-[#2B3A42]">{doc.title}</h3>
                     <p className="text-slate-500 text-xs font-light leading-relaxed line-clamp-3 sm:line-clamp-2">{doc.desc}</p>
                   </div>
                 </div>
-                {doc.url ? <a href={doc.url} target="_blank" rel="noopener noreferrer" aria-label={`Otevřít dokument ${doc.title}`} className="w-full sm:w-auto justify-center flex-shrink-0 flex items-center gap-2 px-5 py-3 min-h-11 bg-slate-900 text-white text-sm rounded-full hover:bg-slate-700 transition-all"><Download size={16} /> Otevřít PDF</a> : <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`} className="w-full sm:w-auto justify-center flex-shrink-0 flex items-center gap-2 px-5 py-3 min-h-11 bg-slate-100 text-slate-800 text-sm rounded-full hover:bg-slate-200 transition-all border border-slate-200"><FileText size={16} /> Vyžádat</Link>}
+                {doc.url ? <a href={doc.url} target="_blank" rel="noopener noreferrer" aria-label={`Otevřít dokument ${doc.title}`} className="w-full sm:w-auto justify-center flex-shrink-0 flex items-center gap-2 px-5 py-3 min-h-11 bg-[#2B3A42] text-white text-sm rounded-xl hover:bg-[#0E6074] transition-all"><Download size={16} /> Otevřít PDF</a> : <Link to={`/zadost-o-podklady?${new URLSearchParams({ zprava: `Žádám o dokument: ${doc.title}.` })}`} className="w-full sm:w-auto justify-center flex-shrink-0 flex items-center gap-2 px-5 py-3 min-h-11 bg-slate-100 text-slate-800 text-sm rounded-full hover:bg-slate-200 transition-all border border-slate-200"><FileText size={16} /> Vyžádat</Link>}
               </motion.div>
             ))}
           </div>

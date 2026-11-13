@@ -1,17 +1,17 @@
-import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { isArchived } from '@/lib/newMedia';
 import ProductExperience from '@/components/ui/ProductExperience';
 import { Link } from 'react-router-dom';
-import { motion, MotionConfig } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Download, Box, Ruler, Layers, Mail } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 import SegmentReferenceShowcase from '@/components/kategorie/SegmentReferenceShowcase';
 import { trackFunnelStep } from '@/lib/ga4';
+import PremiumSegmentHero from '@/components/kategorie/PremiumSegmentHero';
 
 const GEOMETRIES = [
   { title: 'BENDY', desc: 'Organický ohýbaný tvar — od kompaktního solitéru po alej. Výška 1 800–2 000 mm.', tag: 'Ohýbání trubek' },
@@ -50,30 +50,18 @@ export default function Architekti() {
   return (
     <div className="min-h-screen bg-white pt-20">
       {/* Hero */}
-      <MotionConfig reducedMotion="user">
-<section className="hero-motion-surface bg-[#0D2F4F] py-20 text-white lg:py-28">
-        <HeroAtmosphere />
-        <div className="hero-content relative mx-auto max-w-7xl px-6 lg:px-10">
-          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#7FC4E8]">Podklady pro projektanty</p>
-          <h1 className="mt-5 max-w-4xl font-heading text-4xl leading-[1.08] lg:text-5xl xl:text-6xl">
-            Nástroj pro návrh veřejného prostoru s mlhou.
-          </h1>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/65 lg:text-lg">
-            Katalog geometrií, technické listy, kotvení a zakázkové tvary. Vše, co potřebujete od studie po realizační dokumentaci.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/ke-stazeni" onClick={() => trackFunnelStep('architects', 'downloads_click', 'hero')}
-              className="inline-flex items-center gap-2 bg-[#0B5EA8] px-7 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#094d8a]">
-              Stáhnout podklady <Download size={16} />
-            </Link>
-            <Link to="/ai-vizualizace" onClick={() => trackFunnelStep('architects', 'visualizer_click', 'hero')}
-              className="inline-flex items-center gap-2 border border-white/30 px-7 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-white/10">
-              Vizualizace do projektu
-            </Link>
-          </div>
-        </div>
-      </section>
-</MotionConfig>
+            <PremiumSegmentHero
+        eyebrow="Architekti / projektanti / urbanismus"
+        title="Vodní mlha jako součást architektury."
+        description="Produktové geometrie, vizualizace do studie a technické podklady pro návrh veřejného prostoru. Konkrétní rozměry, kotvení a přípojky připravujeme podle vybrané varianty."
+        image="https://base44.app/api/apps/6a3ee88c10959cd3588c4d68/files/mp/public/6a3ee88c10959cd3588c4d68/6af16b6a9_linea---rezidencni-mlzeni.jpg"
+        imageAlt="Produktová vizualizace nerezového mlžítka LINEA v architektonickém prostředí"
+        highlights={['Geometrie výrobků', 'Kotvení a stavební detaily', 'Vizualizace pro studii']}
+        primary={{ label: 'Technické podklady', to: '/ke-stazeni' }}
+        secondary={{ label: 'Vizualizace do projektu', to: '/ai-vizualizace' }}
+        onPrimaryClick={() => trackFunnelStep('architects', 'downloads_click', 'hero')}
+        onSecondaryClick={() => trackFunnelStep('architects', 'visualizer_click', 'hero')}
+      />
 
       {/* Katalog geometrií */}
       <section className="bg-white py-16 lg:py-24">
@@ -127,7 +115,7 @@ export default function Architekti() {
               Geometrie navržená na míru projektu.
             </h2>
             <p className="mt-5 max-w-lg text-sm leading-relaxed text-[#0D2F4F]/60">
-              Pro Město Polná jsme navrhli a vyrobili mlžící mrkev — unikátní tvar, který vznikl ohýbáním nerezové trubky a TIG svařováním v naší dílně v Trutnově. Každou geometrii dokážeme přizpůsobit autorskému konceptu i identitě místa.
+              Pro konkrétní veřejné prostory připravujeme také zakázkové tvary, například stylizovanou MRKEV. Geometrii a výrobu vždy ověříme podle výrobního návrhu. Každou geometrii dokážeme přizpůsobit autorskému konceptu i identitě místa.
             </p>
             <Link to="/reference/mesto-polna-mlzitko-mrkev" className="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-[#0B5EA8] transition-colors hover:text-[#0D2F4F]">
               Zobrazit realizaci MRKEV Polná <span aria-hidden="true">→</span>

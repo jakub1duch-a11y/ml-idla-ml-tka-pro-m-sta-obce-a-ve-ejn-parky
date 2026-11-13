@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
+import { assertBusinessAccount, getVerifiedGoogleAccount } from '../../shared/businessWorkflowGuard.mjs';
 
 const SPREADSHEET_ID = '1m-NObbjCYDYG6Sg3B-2g-TcLZkkqGzejDFfCKjqQyUE';
 const CONTACT_SHEETS = ['Eventy a festivaly', 'ZOO botanické a safari ČR SK', 'Školy školky a koupaliště', 'Architekti a projektanti', 'Města a veřejná správa', 'Developeři a investoři', 'Hotely a gastro', 'Umělci a veřejné instalace', 'Domovy seniorů', 'Lázeňské areály', 'Nemocnice a léčebny', 'Technické služby a zeleň'];
@@ -127,6 +128,13 @@ Deno.serve(async (req) => {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
     const { accessToken: sheetsToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
     const { accessToken: gmailToken } = await base44.asServiceRole.connectors.getConnection('gmail');
+    // Do not import someone else's contacts or email into MLŽIDLA CRM.
+    const [sheetsEmail, gmailEmail] = await Promise.all([
+      getVerifiedGoogleAccount(sheetsToken, 'googlesheets'),
+      getVerifiedGoogleAccount(gmailToken, 'gmail'),
+    ]);
+    assertBusinessAccount(sheetsEmail, 'googlesheets');
+    assertBusinessAccount(gmailEmail, 'gmail');
     run = await base44.asServiceRole.entities.SyncRun.create({ source: 'combined', status: 'running', started_at: started.toISOString() });
     const contactsResult = await syncContacts(base44, sheetsToken);
     const gmailResult = await syncGmail(base44, gmailToken);

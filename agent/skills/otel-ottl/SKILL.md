@@ -1,4 +1,5 @@
 ---
+name: otel-ottl
 description: "OpenTelemetry Transformation Language (OTTL) expert. Use when writing or debugging OTTL expressions for any OpenTelemetry Collector component that supports OTTL (processors, connectors, receivers, exporters). Triggers on tasks involving telemetry transformation, filtering, attribute manipulation, data redaction, sampling policies, routing, or Collector configuration. Covers syntax, contexts, functions, error handling, and performance."
 metadata: {"author":"dash0","version":"1.0.0"}
 ---

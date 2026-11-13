@@ -203,13 +203,13 @@ export default function Admin() {
       </div>
 
       {/* Main */}
-      <div className="flex-1 min-w-0 overflow-auto bg-[#F8F9FA]">
-        <div className="hidden items-center justify-between gap-5 border-b border-[#E6EBEF] bg-white px-7 py-5 md:flex">
+      <div className="flex-1 min-w-0 overflow-auto bg-ink">
+        <div className="hidden items-center justify-between gap-5 border-b border-white/10 bg-[#102A42] px-7 py-5 md:flex">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#008BA8]">MLŽIDLA.cz · správa obsahu</p>
-            <h1 className="mt-1 font-heading text-2xl font-bold text-[#2B3A42]">{TABS.find((tab) => tab.id === activeTab)?.label || 'Administrace'}</h1>
+            <h1 className="mt-1 font-heading text-2xl font-bold text-white">{TABS.find((tab) => tab.id === activeTab)?.label || 'Administrace'}</h1>
           </div>
-          <span className="rounded-full border border-[#B5E4EC] bg-[#E8F7FA] px-4 py-2 text-xs font-semibold text-[#0B657C]">Správní rozhraní</span>
+          <span className="rounded-full border border-[#00B4D8]/35 bg-[#00B4D8]/10 px-4 py-2 text-xs font-semibold text-[#8CE5F3]">Správní rozhraní</span>
         </div>
         <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
           <ActiveComponent />

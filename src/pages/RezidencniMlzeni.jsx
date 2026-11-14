@@ -26,11 +26,7 @@ export default function RezidencniMlzeni() {
   const mistOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [0.8, 0.35, 0]);
 
   useEffect(() => {
-    setSEO({
-      title: 'Rezidenční mlžení pro zahrady a terasy | MLŽIDLA.cz',
-      description: 'Prémiové rezidenční mlžení pro zahrady, terasy a venkovní relaxační zóny. Nízkotlaké řešení bez čerpadla, chytré řízení a návrh na míru.',
-      canonicalPath: '/rezidencni-mlzeni',
-    });
+    setSEO(SEO_PAGES.rezidencniMlzeni);
   }, []);
 
   return (

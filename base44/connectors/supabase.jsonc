@@ -1,0 +1,23 @@
+{
+  "type": "supabase",
+  "scopes": [
+    "projects:read",
+    "projects:write",
+    "organizations:read",
+    "database:read",
+    "database:write",
+    "rest:read",
+    "rest:write",
+    "auth:read",
+    "auth:write",
+    "storage:read",
+    "edge_functions:read",
+    "edge_functions:write",
+    "environment:read",
+    "environment:write",
+    "domains:read",
+    "domains:write",
+    "secrets:read",
+    "secrets:write"
+  ]
+}

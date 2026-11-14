@@ -55,22 +55,26 @@
   ],
   "context_files": [],
   "app_user_connector_configs": [],
-  "selected_skill_names": [],
+  "selected_skill_names": [
+    "dovednost",
+    "brand-voice"
+  ],
   "selected_workspace_skill_ids": [
     "6a641673856a990e1aee8e81",
     "6a640ce1a65c43bcf07a4a38",
-    "6af1a3b34520312a500f7a4e"
+    "6af1a3b34520312a500f7a4e",
+    "6a63f7cece0d3ea9f9a8706b"
   ],
   "model": "claude-sonnet-5",
   "memory_config": {
-    "enabled": false,
+    "enabled": true,
     "scope": "user",
     "include_other_conversation_context": false,
-    "instructions": ""
+    "instructions": null
   },
-  "whatsapp_greeting": null,
-  "telegram_greeting": null,
-  "line_greeting": null,
+  "whatsapp_greeting": "",
+  "telegram_greeting": "",
+  "line_greeting": "",
   "voice_config": {
     "voice_id": null
   },

@@ -5,6 +5,7 @@ export async function generateHiggsfieldProductMotion({
   prompt = '',
   duration = 5,
   resolution = '720p',
+  aspectRatio = '16:9',
 }) {
   if (!productSlug) throw new Error('productSlug is required');
 
@@ -13,7 +14,12 @@ export async function generateHiggsfieldProductMotion({
     prompt,
     duration,
     resolution,
+    aspectRatio,
   });
 
-  return response?.data || response;
+  const data = response?.data || response;
+  if (data?.error || !data?.success || !data?.url) {
+    throw new Error(data?.error || 'Higgsfield nevrátil platné video.');
+  }
+  return data;
 }

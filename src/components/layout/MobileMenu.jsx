@@ -17,18 +17,18 @@ const INTERNATIONAL_MOBILE_COPY = {
 };
 
 const PRIMARY_LINKS = [
-  { label: 'Produkty', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', icon: Grid2X2 },
+  { label: 'Katalog mlžítek', sub: 'Kompletní katalog MLŽIDLA®', path: '/katalog-mlzitek', icon: Grid2X2 },
   { label: 'Pro města a obce', sub: 'Návrh, výroba a podklady pro veřejný prostor', path: '/mlzitka-pro-mesta-obce', icon: Building2 },
-  { label: 'Realizace', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
+  { label: 'Reference', sub: 'Hotové projekty a reference', path: '/reference', icon: Images },
   { label: 'Blog a novinky', sub: 'Novinky, realizace, inspirace a video', path: '/blog', icon: Newspaper },
-  { label: 'Podpora', sub: 'FAQ, servis a technické informace', path: '/podpora', icon: LifeBuoy },
+  { label: 'Podpora a FAQ', sub: 'FAQ, servis a technické informace', path: '/podpora', icon: LifeBuoy },
 ];
 
 
 const TECHNOLOGY_CHILDREN = [
   { label: 'Princip technologie', sub: 'Jak funguje mlžení a evaporace', path: '/jak-to-funguje', icon: Cpu },
   { label: 'Vodní mlha', sub: 'Princip, použití a návrh systému', path: '/vodni-mlha', icon: Droplets },
-  { label: 'Smart řízení', sub: 'Automatizace a provozní scénáře', path: '/smart-ovladani', icon: Wifi },
+  { label: 'Automatizace SUPLA', sub: 'Řízení a provozní scénáře', path: '/smart-ovladani', icon: Wifi },
 ];
 
 export default function MobileMenu({ open, onClose, productLinks = [], locale = 'cs', triggerRef }) {

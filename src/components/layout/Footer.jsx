@@ -269,7 +269,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
             <div
-              className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[.05] px-3 py-1.5 text-left"
+              className="inline-flex items-center gap-2 rounded-full border bg-white/[.00 px-3 py-1.5 text-left border-white/4"
               aria-label="Zabezpečené připojení a kontrola odkazu"
               title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
               

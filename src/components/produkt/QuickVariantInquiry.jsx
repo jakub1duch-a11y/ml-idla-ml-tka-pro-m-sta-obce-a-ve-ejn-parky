@@ -85,7 +85,7 @@ export default function QuickVariantInquiry({ product, variants = [], onSubmit }
           <label className="text-sm">Město (nepovinné)<input name="city" maxLength={150} className="mt-1 w-full rounded-lg border p-3" /></label>
           <label className="text-sm">Místo instalace (nepovinné)<input name="installationSite" maxLength={250} className="mt-1 w-full rounded-lg border p-3" /></label>
           <label className="text-sm">Co nám chcete doplnit? (nepovinné)<textarea name="note" rows={3} maxLength={3000} className="mt-1 w-full rounded-lg border p-3" /></label>
-          <label className="text-sm">Fotografie prostoru (nepovinné)<input name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple className="mt-1 block w-full text-sm" /></label>
+          <p className="text-xs text-slate-600">Fotografie prostoru bude možné přiložit po dokončení zabezpečeného nahrávání souborů.</p>
           <p className="text-xs text-slate-600">Údaje použijeme pro vyřízení poptávky. Podrobnosti najdete v zásadách ochrany osobních údajů.</p>
           {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
           <button disabled={busy} type="submit" className="rounded-full bg-[#0B5EA8] px-6 py-3 font-bold text-white disabled:opacity-60">{busy ? 'Odesílání…' : 'Odeslat nezávaznou poptávku'}</button>

@@ -133,6 +133,10 @@ export default function Poptavka() {
   return (
     <div className="bg-background">
       <InquiryHero />
+      <section className="mx-auto max-w-7xl px-6 pt-10 lg:px-8" aria-labelledby="poptavka-mlzitka">
+        <h2 id="poptavka-mlzitka" className="font-heading text-2xl text-slate-950 mb-3">Poptávka městského mlžítka, mlhoviště nebo mlžné brány</h2>
+        <p className="max-w-4xl text-slate-600 leading-relaxed">Připravíme nezávazný návrh nerezového mlžítka pro města a obce, parky, školy, veřejná prostranství i soukromé zahrady. Poptat můžete samostatné zahradní mlžítko, sestavu mlžítek, mlhoviště nebo průchozí mlžnou bránu. Uveďte místo instalace, přibližné rozměry a dostupnost vody; podle potřeby navrhneme také řízení provozu a požadavky na instalaci. Technické provedení a cenu potvrdíme podle konkrétního zadání.</p>
+      </section>
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
           <aside>

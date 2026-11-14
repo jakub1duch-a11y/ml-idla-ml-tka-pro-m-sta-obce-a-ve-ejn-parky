@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import {
   Send, Eye, CheckCircle, Clock, XCircle, RefreshCw, Search, ExternalLink,
-  FileText, FolderOpen, Mail, Phone, Building2, Calendar, AlertTriangle, Loader2, Euro, Link2, Sparkles, ShieldCheck, Edit3,
+  FileText, FolderOpen, Mail, Phone, Building2, Calendar, AlertTriangle, Loader2, Euro, Link2, Sparkles, ShieldCheck,
 } from 'lucide-react';
 
 const STATUS_CFG = {
@@ -20,7 +20,6 @@ const STATUS_CFG = {
   rejected:            { label: 'Zamítnuto',          cls: 'text-red-400 border-red-400/30 bg-red-400/10',    icon: XCircle },
 };
 
-const SENT_STATUSES = Object.keys(STATUS_CFG);
 const FILTERS = [
   { key: 'all', label: 'Vše' },
   { key: 'drafts', label: 'Rozpracované / AI koncepty' },

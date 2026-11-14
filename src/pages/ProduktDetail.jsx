@@ -4,7 +4,6 @@ import { Droplets, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
-import { Link } from 'react-router-dom';
 import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions';

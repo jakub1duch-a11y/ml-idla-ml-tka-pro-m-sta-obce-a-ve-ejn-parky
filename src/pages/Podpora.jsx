@@ -39,6 +39,10 @@ const FAQ_SECTIONS = [
   title: 'Údržba a servis mlžidel',
   items: [
   {
+    q: 'Jak předcházet vodnímu kameni v tryskách?',
+    a: 'Mechanická filtrace zachycuje částice, zatímco změkčovač omezuje tvrdost vody. Vhodnost úpravy posuzujeme podle zdroje vody, tvrdosti a konkrétní instalace. Podrobnosti najdete na stránce Úprava vody.'
+  },
+  {
     q: 'Jak často je potřeba mlžítka servisovat?',
     a: 'Doporučujeme základní kontrolu minimálně jednou ročně, ideálně před hlavní sezónou. Servis zahrnuje kontrolu a čištění trysek, filtrů, přívodu vody, ventilů a případného chytrého řízení. U veřejných instalací lze nastavit pravidelný servisní režim.'
   },
@@ -181,6 +185,7 @@ export default function Podpora() {
 
       {/* FAQ Sections */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-24 space-y-16">
+        <div className="mx-auto mb-8 max-w-5xl rounded-2xl border border-cyan-900/15 bg-[#eef8fb] p-6"><h2 className="text-xl font-semibold">Úprava vody a ochrana trysek</h2><p className="mt-2 text-slate-600">Filtrace a změkčování vody pomáhají omezit zanášení nízkotlakých mlžítek.</p><Link to="/uprava-vody" className="mt-3 inline-block font-semibold text-[#0b4860] underline underline-offset-4">Přejít na průvodce úpravou vody →</Link></div>
         {FAQ_SECTIONS.map((section, si) =>
         <motion.section
           key={section.id}

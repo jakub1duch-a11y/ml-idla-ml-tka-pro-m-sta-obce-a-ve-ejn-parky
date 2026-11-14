@@ -137,6 +137,15 @@ export default function AdminAnalytics() {
       <div className="flex flex-wrap gap-2"><button onClick={load} className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs text-white/60 hover:text-white"><RefreshCw size={13}/>Obnovit</button><button onClick={sendNow} disabled={sending} className="inline-flex items-center gap-2 rounded-full bg-cyan px-4 py-2 text-xs font-bold text-slate-950 disabled:opacity-50">{sending ? <Loader size={13} className="animate-spin"/> : <Zap size={13}/>}Odeslat report nyní</button></div>
     </div>
 
+    <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Mapa měření návštěv a videí">
+      <h3 className="text-sm font-semibold text-white">Měření stránek, produktů a videí</h3>
+      <div className="mt-3 grid gap-3 text-xs text-white/60 md:grid-cols-3">
+        <p><strong className="text-white/85">Stránky a segmenty</strong><span className="mt-1 block">page_view, section_view, scroll_depth a funnel_step pro města, školy a další segmenty.</span></p>
+        <p><strong className="text-white/85">Mlžítka a poptávky</strong><span className="mt-1 block">view_item, select_item, product_media_select a generate_lead. Poptávky porovnávejte s databází Base44.</span></p>
+        <p><strong className="text-white/85">Produktová videa</strong><span className="mt-1 block">video_start, video_progress (25/50/75 %) a video_complete. Jde o události přehrávání, nikoli záznam obrazovky návštěvníka.</span></p>
+      </div>
+      <p className="mt-3 text-xs text-amber-200/80">GA4 neukazuje identitu jednotlivých návštěvníků ani videozáznam jejich relací. Záznam obrazovky vyžaduje zvláštní službu, souhlas a maskování osobních údajů. Události se odesílají až po souhlasu s analytikou.</p>
+    </section>
     {error && <div className="rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-xs text-amber-200">{error}</div>}
     <section className="rounded-xl border border-white/10 bg-white/3 p-4" aria-label="Stav propojení GA4">
       <div className="flex flex-wrap items-center justify-between gap-3">

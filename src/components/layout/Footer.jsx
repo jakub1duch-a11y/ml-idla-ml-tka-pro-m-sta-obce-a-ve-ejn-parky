@@ -226,35 +226,35 @@ export default function Footer() {
 
         
 
-        <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center hidden">
-          <div>
-            <p className="max-w-2xl font-heading text-2xl leading-tight text-white sm:text-3xl">
-              Chcete navrhnout mlžítka pro konkrétní místo?
-            </p>
-            <p className="mt-2 text-sm text-white/66">Pošleme vám inspiraci, technické novinky a praktické ukázky použití pro města, sportoviště i zahrady.</p>
-          </div>
+        
 
-          <form onSubmit={subscribe} className="flex w-full max-w-md md:w-[360px]">
-            {subscribed ?
-            <p className="py-3 text-sm font-medium text-cyan">Děkujeme za váš zájem.</p> :
 
-            <>
-                <input
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                aria-label="E-mail pro newsletter"
-                type="email"
-                placeholder="Váš e-mail"
-                className="min-w-0 flex-1 rounded-l-xl border border-r-0 border-white/12 bg-white/[.07] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25" />
-              
-                <button className="rounded-r-xl bg-cyan px-4 text-slate-950 transition-colors hover:bg-cyan/90" aria-label="Přihlásit k odběru">
-                  <ArrowRight size={18} />
-                </button>
-              </>
-            }
-          </form>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-3xl">

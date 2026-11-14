@@ -1,185 +1,81 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Circle, Square, ArrowRight, PlayCircle, Building2, Shapes, Component, Layers, Droplets, Gauge, Ruler, Zap } from 'lucide-react';
+import { ArrowRight, Droplets, Ruler } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
-const COLUMNS = [
-{
-  id: 'gate-u',
-  name: 'GATE70-U',
-  tag: 'Rovná varianta',
-  detailLink: '/produkt/mlzna-brana-gate',
-  demoLink: '/produkt/mlzna-brana-gate#galerie'
-},
-{
-  id: 'gate-v',
-  name: 'GATE70-V',
-  tag: 'Lomený oblouk',
-  detailLink: '/produkt/mlzna-brana-gate',
-  demoLink: '/produkt/mlzna-brana-gate#galerie'
-},
-{
-  id: 'linea',
-  name: "IRIS BR\xC1NA",
-  tag: "SA design",
-  detailLink: '/produkt/linea-el70',
-  demoLink: '/produkt/linea-el70?tab=video'
-}];
-
-
-const CONSTRUCTION = [
-{
-  icon: Circle,
-  title: 'GATE70 — kulatá trubka',
-  desc: 'Konstrukce svařovaná z kulatých nerezových trubek TR76×3 mm (AISI 316L) — čistý, minimalistický profil vhodný pro rovné i obloukové tvary bez viditelných spojů.'
-},
-{
-  icon: Square,
-  title: 'LINEA CE70 — jeklový profil',
-  desc: 'Konstrukce z uzavřeného hranatého (jeklového) nerezového profilu AISI 316L, leštěného do vysokého lesku — dodává obloukovému designu ostřejší, architektonický výraz.'
-}];
-
-
-const ROWS = [
-{ label: 'Design / tvar', icon: Shapes, gateU: 'Rovný, pravoúhlý tvar', gateV: 'Lomený organický oblouk', linea: 'Plynulý obloukový design' },
-{ label: 'Konstrukční profil', icon: Component, gateU: 'Kulatá trubka Ø76 mm', gateV: 'Kulatá trubka Ø76 mm', linea: 'Hranatý (jeklový) profil' },
-{ label: 'Materiál', icon: Layers, gateU: 'AISI 316L, broušený/kartáčovaný', gateV: 'AISI 316L, broušený/kartáčovaný', linea: 'AISI 316L, leštěný nerez' },
-{ label: 'Spotřeba vody', icon: Droplets, gateU: '15–25 l/h', gateV: '15–25 l/h', linea: '≈ 30 l/h (0,5 l/min)' },
-{ label: 'Tlak mlžení', icon: Gauge, gateU: '3–7 bar', gateV: '3–7 bar', linea: '4–7 bar' },
-{ label: 'Rozměry', icon: Ruler, gateU: '2 × 2,2 m (upravitelné)', gateV: '2 × 2,2 m (upravitelné)', linea: 'Výška 0,7 m (upravitelné)' },
-{ label: 'Napájení / řízení', icon: Zap, gateU: '12 V, Wi-Fi Smart, senzory', gateV: '12 V, Wi-Fi Smart, senzory', linea: 'Vodovodní řad, volitelně Wi-Fi + LED' }];
-
-
-const COLUMN_KEYS = ['gateU', 'gateV', 'linea'];
+const variantSlug = (name = '') => String(name).normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 export default function GateComparisonTable() {
+  const [variants, setVariants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    let mounted = true;
+    base44.entities.Product.filter({ slug: 'mlzna-brana-gate' })
+      .then((products = []) => {
+        const product = products.find((item) => item.slug === 'mlzna-brana-gate');
+        if (mounted) setVariants(Array.isArray(product?.variants) ? product.variants.filter((item) => item?.name) : []);
+      })
+      .catch(() => { if (mounted) setVariants([]); })
+      .finally(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
+  }, []);
+
   return (
-    <section className="border-y border-slate-200 bg-slate-50 mx-auto">
-      <div className="max-w-6xl lg:px-10 mx-auto">
-        
-
-
-
-
-
-
-
-
-
-        
-
-        {/* Construction material callout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-          {CONSTRUCTION.map((c, i) =>
-          <motion.div key={c.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-          className="p-5 rounded-2xl bg-white border border-slate-200 flex gap-4 hidden">
-              <div className="w-10 h-10 shrink-0 rounded-xl bg-slate-100 flex items-center justify-center">
-                <c.icon size={18} className="text-slate-900" />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-slate-900 mb-1">{c.title}</h4>
-                <p className="text-xs text-slate-500 leading-relaxed">{c.desc}</p>
-              </div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Quick-view / live demo per model */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-          {COLUMNS.map((col, i) =>
-          <motion.div key={col.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-          className="p-5 rounded-2xl bg-white border border-slate-200 flex flex-col">
-              <span className="text-sm font-bold text-slate-900">{col.name}</span>
-              <span className="text-xs text-slate-400 font-mono tracking-widest uppercase mb-4">{col.tag}</span>
-              <div className="mt-auto flex flex-wrap gap-2">
-                <Link to={col.detailLink}
-              className="items-center gap-1.5 px-3.5 py-2 rounded-full bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-all btn-metallic-mist">
-                  Zobrazit detail <ArrowRight size={12} />
-                </Link>
-                <Link to={col.demoLink}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-slate-200 text-slate-700 text-xs font-medium hover:bg-slate-50 transition-all">
-                  <PlayCircle size={13} /> Živá ukázka
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Comparison table — desktop */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="hidden lg:block rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm mb-10">
-          <div className="grid grid-cols-4 bg-gradient-to-r from-slate-900 to-slate-700">
-            <div className="px-4 py-4">
-              <span className="font-mono tracking-widest uppercase text-sm text-[hsl(var(--background))]">PARAMETR</span>
-            </div>
-            {COLUMNS.map((col) =>
-            <div key={col.id} className="px-4 py-4 border-l border-white/10">
-                <span className="text-sm font-bold text-white tracking-tight">{col.name}</span>
-              </div>
-            )}
+    <section aria-labelledby="gate-compare-title" className="border-y border-[#E6EBEF] bg-[#F8F9FA] py-16 lg:py-24">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <p className="text-xs font-bold uppercase tracking-[.18em] text-[#008AA6]">Katalog mlžných bran</p>
+        <h2 id="gate-compare-title" className="mt-3 max-w-3xl font-heading text-3xl font-bold tracking-tight text-[#2B3A42] sm:text-4xl">
+          Porovnejte skutečně evidovaná provedení GATE.
+        </h2>
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
+          Výběr podle tvaru, profilu a rozměrů. Technické údaje přebíráme z aktuálního katalogu Base44, nikoliv ze starších reklamních listů.
+        </p>
+        {loading && <p role="status" className="mt-8 text-sm text-slate-500">Načítám katalogové varianty…</p>}
+        {!loading && !variants.length && (
+          <div className="mt-8 rounded-2xl border border-[#D6E7EA] bg-white p-6 text-slate-600">
+            Katalogové podrobnosti se nyní nepodařilo načíst. <Link className="font-semibold text-[#008AA6] underline" to="/produkt/mlzna-brana-gate">Otevřít produkt GATE</Link>.
           </div>
-
-          {ROWS.map((row, i) =>
-          <div key={row.label} className={`grid grid-cols-4 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
-              <div className="px-4 py-4 flex items-center gap-2">
-                <row.icon size={14} className="text-slate-400 shrink-0" />
-                <span className="text-xs font-mono text-slate-400 tracking-widest uppercase">{row.label}</span>
-              </div>
-              {COLUMN_KEYS.map((key) => {
-              const differs = row[key] !== row.gateU;
-              return (
-                <div key={key} className={`px-4 py-4 border-l border-slate-100 flex items-center ${differs ? 'bg-sky-50/60' : ''}`}>
-                    <span className={`text-sm font-medium leading-snug ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</span>
-                  </div>);
-
-            })}
-            </div>
-          )}
-        </motion.div>
-
-        {/* Comparison — mobile stacked cards */}
-        <div className="lg:hidden space-y-4 mb-10">
-          {COLUMNS.map((col, ci) =>
-          <motion.div key={col.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: ci * 0.06 }}
-          className="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm">
-              <div className="px-4 py-3.5 bg-gradient-to-r from-slate-900 to-slate-700 flex items-baseline gap-2">
-                <span className="text-sm font-bold text-white tracking-tight">{col.name}</span>
-                <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">{col.tag}</span>
-              </div>
-              {ROWS.map((row, i) => {
-              const key = COLUMN_KEYS[ci];
-              const differs = row[key] !== row.gateU;
-              return (
-                <div key={row.label} className={`flex items-start gap-3 px-4 py-3 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'} ${differs ? 'border-l-2 border-sky-400' : ''}`}>
-                    <row.icon size={14} className="text-slate-400 shrink-0 mt-0.5" />
-                    <div className="min-w-0">
-                      <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase mb-0.5">{row.label}</p>
-                      <p className={`text-sm font-medium leading-snug ${differs ? 'text-sky-700' : 'text-slate-900'}`}>{row[key]}</p>
-                    </div>
-                  </div>);
-
-            })}
-            </motion.div>
-          )}
+        )}
+        <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {variants.map((variant, index) => {
+            const url = `/produkt/mlzna-brana-gate?varianta=${variantSlug(variant.name)}`;
+            return (
+              <article key={variant.name} className="flex min-w-0 flex-col overflow-hidden rounded-[1.5rem] border border-[#E6EBEF] bg-white shadow-[0_10px_35px_rgba(43,58,66,.05)]">
+                <div className="flex aspect-[5/4] items-center justify-center bg-[#EFF5F7] p-4">
+                  {variant.image_url
+                    ? <img src={variant.image_url} alt={`Produktový náhled ${variant.name}`} className="h-full w-full object-contain" loading="lazy" decoding="async" />
+                    : <span className="text-sm text-slate-500">Fotografie varianty se připravuje</span>}
+                </div>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <span className="text-[10px] font-bold uppercase tracking-[.18em] text-[#008AA6]">GATE · 0{index + 1}</span>
+                  <h3 className="mt-2 font-heading text-xl font-bold text-[#2B3A42]">{variant.name}</h3>
+                  <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-[#E6EBEF] pt-4 text-sm text-slate-700">
+                    <div><dt className="text-xs text-slate-500">Profil</dt><dd className="mt-1 font-semibold">{variant.profile || 'Dle projektu'}</dd></div>
+                    <div><dt className="text-xs text-slate-500">Rozměry</dt><dd className="mt-1 font-semibold">{variant.dimensions ? `${variant.dimensions} mm` : 'Dle projektu'}</dd></div>
+                    <div className="col-span-2 flex items-center gap-2"><Droplets size={16} className="text-[#008AA6]" aria-hidden="true" /><dt>Počet trysek</dt><dd className="font-semibold">{variant.nozzles || 'Dle projektu'}</dd></div>
+                  </dl>
+                  <Link to={url} className="mt-auto inline-flex min-h-12 items-center justify-between gap-3 pt-5 text-sm font-bold text-[#008AA6]">
+                    Zobrazit provedení <ArrowRight size={17} aria-hidden="true" />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
-
-        {/* Urban / parks offer callout */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="rounded-2xl bg-slate-900 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center">
-              <Building2 size={20} className="text-white" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white mb-1">Nabídka pro městské prostory a parky</p>
-              <p className="text-xs text-white/50 leading-relaxed max-w-md">Obě brány jsou navrženy pro náměstí, parky, vjezdy i veřejné instalace — připravíme vám nezávaznou nabídku na míru vašeho projektu.</p>
-            </div>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-[#081B33] px-6 py-7 text-white sm:px-8">
+          <div>
+            <p className="font-heading text-xl font-bold">Další tvar brány: LINEA CE GATE</p>
+            <p className="mt-1 text-sm leading-6 text-white/70">Samostatná produktová řada s vlastní geometrií a katalogovým listem.</p>
           </div>
-          <Link to="/poptavka" className="items-center gap-2 px-6 py-3 bg-white text-slate-900 text-sm font-bold rounded-full hover:bg-white/90 transition-all whitespace-nowrap btn-metallic-mist">Nezávazná nabídka
-
+          <Link to="/produkt/linea-CE-gate" className="inline-flex min-h-12 items-center gap-3 rounded-xl bg-[#00B4D8] px-6 py-3 text-sm font-bold text-[#081B33]">
+            Detail LINEA CE GATE <ArrowRight size={17} aria-hidden="true" />
           </Link>
-        </motion.div>
+        </div>
+        <p className="mt-6 flex items-start gap-2 text-xs leading-6 text-slate-500"><Ruler size={16} className="mt-1 shrink-0" aria-hidden="true" />
+          Výrobní geometrie, materiál, kotvení, filtrace a skutečný průtok musí být potvrzeny podle konkrétního výrobního provedení. Vizualizace jsou ilustrační.
+        </p>
       </div>
-    </section>);
-
+    </section>
+  );
 }

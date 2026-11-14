@@ -34,6 +34,8 @@ export default function AdminAnalytics() {
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
   const [configuringAds, setConfiguringAds] = useState(false);
+  const [property, setProperty] = useState(null);
+  const [propertyError, setPropertyError] = useState('');
 
   const load = async () => {
     setLoading(true); setError('');
@@ -41,6 +43,14 @@ export default function AdminAnalytics() {
       const response = await base44.functions.invoke('marketingIntelligence', { sendEmail: false });
       if (response?.data?.error) throw new Error(response.data.error);
       setData(response.data);
+      try {
+        const config = await base44.functions.invoke('getPublicAnalyticsConfig', {});
+        if (config?.data?.error) throw new Error(config.data.error);
+        setProperty(config?.data || null);
+        setPropertyError('');
+      } catch (configError) {
+        setPropertyError(configError?.message || 'Nepodařilo se ověřit GA4 stream.');
+      }
     } catch (e) {
       setError(e?.message || 'Analytická data se nepodařilo načíst.');
     } finally { setLoading(false); }
@@ -83,6 +93,11 @@ export default function AdminAnalytics() {
   const googleAds = data?.googleAds || {};
   const adsCurrency = ads?.account?.currency || 'CZK';
   const eventCount = (name) => fmt(ga?.eventMap?.[name]?.eventCount || 0);
+  const trend = Array.isArray(ga.trend) ? ga.trend : [];
+  const maxSessions = Math.max(1, ...trend.map((item) => Number(item.sessions) || 0));
+  const propertyMatch = Boolean(property?.propertyId && ga.propertyId && property.propertyId === ga.propertyId);
+  const gaUnavailable = !ga.available;
+
   const funnelRows = [
     {
       title: 'Města a obce · 28 dní',
@@ -123,6 +138,32 @@ export default function AdminAnalytics() {
     </div>
 
     {error && <div className="rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-xs text-amber-200">{error}</div>}
+    <section className="rounded-xl border border-white/10 bg-white/3 p-4" aria-label="Stav propojení GA4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div><p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Ověření existující služby GA4</p>
+          <p className="mt-1 text-sm text-white/80">{propertyMatch ? 'Ověřeno: webový stream a datová služba odpovídají stejné GA4 property' : 'Ověření streamu a datové služby není dokončeno'}</p>
+        </div>
+        <StatusBadge ok={propertyMatch}>{propertyMatch ? 'GA4 ověřeno' : 'vyžaduje kontrolu'}</StatusBadge>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/50">
+        <span>Property ID: {property?.propertyId || ga.propertyId || 'nezjištěno'}</span>
+        <span>Measurement ID: {property?.measurementId || 'nezjištěno'}</span>
+        <span>Stream: {property?.defaultUri || 'nezjištěno'}</span>
+      </div>
+      {propertyError && <p className="mt-2 text-xs text-amber-300">{propertyError}</p>}
+      {gaUnavailable && <p className="mt-2 text-xs text-amber-300">GA4 data nejsou dostupná. Nulové hodnoty nepovažujte za skutečnou návštěvnost.</p>}
+    </section>
+    <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Vývoj návštěvnosti za sedm dní">
+      <div className="flex items-center justify-between gap-2"><h3 className="text-sm font-semibold text-white">Návštěvnost · posledních 7 dní</h3><span className="text-xs text-white/40">GA4 sessions</span></div>
+      {trend.length ? <div className="mt-5 flex h-40 items-end gap-2" role="img" aria-label={trend.map((day) => `${day.date}: ${fmt(day.sessions)} návštěv`).join(', ')}>
+        {trend.map((day) => <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
+          <span className="text-[10px] text-white/50">{fmt(day.sessions)}</span>
+          <div className="w-full max-w-14 rounded-t bg-cyan/75" style={{height: `${Math.max(3, (Number(day.sessions) || 0) / maxSessions * 105)}px`}}/>
+          <span className="truncate text-[10px] text-white/40">{String(day.date || '').slice(4, 6)}.{String(day.date || '').slice(6, 8)}</span>
+        </div>)}
+      </div> : <p className="mt-4 text-sm text-white/40">Vývoj návštěvnosti zatím není k dispozici.</p>}
+    </section>
+
 
     <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
       <MetricCard icon={Users} label="Návštěvy dnes" value={fmt(ga.today?.sessions)} note={`včera ${fmt(ga.yesterday?.sessions)}`}/>

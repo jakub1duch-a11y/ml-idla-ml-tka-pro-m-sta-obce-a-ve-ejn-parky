@@ -49,18 +49,27 @@ function StatCard({ icon: Icon, label, value, cls }) {
 
 export default function AdminOffers() {
   const [orders, setOrders] = useState([]);
+  const [assets, setAssets] = useState([]);
+  const [expanded, setExpanded] = useState('');
+  const [loadError, setLoadError] = useState('');
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all');
 
   const load = async () => {
-    setLoading(true);
-    const { items } = await base44.entities.ProjectOrder.filter(
-      { status: { $in: SENT_STATUSES } },
-      { sort: '-issued_at', limit: 200, fields: ['id', 'quote_number', 'client_name', 'client_email', 'client_company', 'client_phone', 'product_name', 'project_name', 'status', 'issued_at', 'valid_until', 'total_price', 'quote_pdf_url', 'drive_case_folder_url', 'last_customer_action_at', 'approved_at', 'customer_message', 'sender_email'] },
-    );
-    setOrders(items);
-    setLoading(false);
+    setLoading(true); setLoadError('');
+    try {
+      const [result, files] = await Promise.all([
+        base44.entities.ProjectOrder.filter(
+          { status: { $in: SENT_STATUSES } },
+          { sort: '-issued_at', limit: 200, fields: ['id', 'inquiry_id', 'quote_number', 'client_name', 'client_email', 'client_company', 'client_phone', 'product_name', 'project_name', 'status', 'issued_at', 'valid_until', 'total_price', 'quote_pdf_url', 'drive_case_folder_url', 'last_customer_action_at', 'approved_at', 'customer_message', 'sender_email'] },
+        ),
+        base44.entities.OfferAsset.list('-created_date', 500),
+      ]);
+      setOrders(Array.isArray(result) ? result : (result?.items || []));
+      setAssets(Array.isArray(files) ? files : []);
+    } catch(e) {setLoadError(e?.message || 'Nabídky se nepodařilo načíst.');}
+    finally {setLoading(false);}
   };
 
   useEffect(() => { load(); }, []);
@@ -120,6 +129,7 @@ export default function AdminOffers() {
         </div>
       </div>
 
+      {loadError && <p role="alert" className="mb-4 text-sm text-amber-300">{loadError}</p>}
       {loading ? (
         <div className="py-16 flex justify-center"><Loader2 className="animate-spin text-cyan" /></div>
       ) : visible.length === 0 ? (
@@ -127,6 +137,7 @@ export default function AdminOffers() {
       ) : (
         <div className="space-y-3">
           {visible.map((o) => {
+            const linked = assets.filter(a => a.project_order_id === o.id || (o.inquiry_id && a.inquiry_id === o.inquiry_id));
             const cfg = STATUS_CFG[o.status] || { label: o.status, cls: 'text-white/50 border-white/10 bg-white/5', icon: AlertTriangle };
             const StatusIcon = cfg.icon;
             const dl = daysLeft(o.valid_until);
@@ -170,6 +181,28 @@ export default function AdminOffers() {
                       {o.client_email && <a href={`mailto:${o.client_email}?subject=Re: Nabídka ${o.quote_number || ''}`} className="h-9 px-3 rounded-lg bg-cyan text-[#08232b] text-xs font-bold flex items-center gap-1.5"><Mail size={13} /> Kontaktovat</a>}
                     </div>
                   </div>
+                </div>
+                <div className="mt-4 border-t border-white/10 pt-3">
+                  <button onClick={() => setExpanded(expanded === o.id ? '' : o.id)} className="text-xs text-cyan hover:underline">{expanded === o.id ? 'Skrýt detail' : 'Detail nabídky a komunikace'}</button>
+                  {expanded === o.id && <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                    <div className="rounded-xl bg-black/15 border border-white/10 p-4 space-y-2">
+                      <h4 className="font-semibold text-sm text-white">Dokumenty a Canva ({linked.length})</h4>
+                      {linked.length ? linked.map(f => <a key={f.id} href={f.file_url} target="_blank" rel="noopener noreferrer" className="block text-xs text-cyan hover:underline">{f.title || f.file_name || f.asset_type || 'Soubor'} ↗</a>) : <p className="text-xs text-white/40">K nabídce nejsou přiřazeny soubory v evidenci OfferAsset.</p>}
+                      {o.quote_pdf_url && <a className="block text-xs text-cyan" target="_blank" rel="noopener noreferrer" href={o.quote_pdf_url}>Otevřít cenovou nabídku PDF ↗</a>}
+                      <p className="text-xs text-white/40">Úprava v Canvě vyžaduje skutečný odkaz na design a oprávnění k editaci.</p>
+                    </div>
+                    <div className="rounded-xl bg-black/15 border border-white/10 p-4 space-y-3">
+                      <h4 className="font-semibold text-sm text-white">Zákazník a e-mail</h4>
+                      <p className="text-xs text-white/60">{o.client_name} · {o.client_company || 'bez firmy'}</p>
+                      <p className="text-xs text-white/60">Odesílatel: {o.sender_email || 'neevidován'}</p>
+                      <div className="flex gap-2 flex-wrap">
+                        {o.client_email && <a target="_blank" rel="noopener noreferrer" href={'https://mail.google.com/mail/u/0/#search/'+encodeURIComponent('from:('+o.client_email+') OR to:('+o.client_email+')')} className="text-xs border border-white/20 rounded-lg px-3 py-2 text-white/80">Vyhledat komunikaci v Gmailu ↗</a>}
+                        {o.client_email && <a target="_blank" rel="noopener noreferrer" href={'https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(o.client_email)+'&su='+encodeURIComponent('Re: Nabídka '+(o.quote_number||'MLŽIDLA.cz'))} className="text-xs border border-cyan/30 rounded-lg px-3 py-2 text-cyan">Nový koncept Gmail ↗</a>}
+                        {o.inquiry_id && <a href="/admin?tab=poptavky" className="text-xs border border-white/20 rounded-lg px-3 py-2 text-white/80">Přejít na poptávky</a>}
+                      </div>
+                      <p className="text-xs text-white/40">Historie zpráv z tabulky se zobrazí až po spolehlivém párování Gmail ID a záznamů CRM.</p>
+                    </div>
+                  </div>}
                 </div>
               </article>
             );

@@ -1,22 +1,35 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Gauge, Hammer, Ruler, MapPin, Mail, Phone } from 'lucide-react';
+import {
+  ArrowRight, ArrowUpRight, ArrowDown, Wrench, Ruler,
+  MapPin, Mail, Phone, Layers3, Waves, Settings2, ShieldCheck,
+  ScanLine, Factory,
+} from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import '@/styles/about-premium.css';
 
-const IMAGES = {
-  workshop: '/media/optimized/ee5759df9_foto-instalace-vyroba.webp',
+const MEDIA = {
+  hero: '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp',
+  craft: '/media/optimized/ee5759df9_foto-instalace-vyroba.webp',
   detail: '/media/optimized/87830d99f_detail.webp',
-  logo: '/media/optimized/881a6dd25_aplikaceloganaproduktu.webp',
+  stamped: '/media/optimized/881a6dd25_aplikaceloganaproduktu.webp',
+  laser: '/media/optimized/55ad64b81_laserstitky.webp',
   fair: '/media/optimized/47ca0affa_veletrh.webp',
   brand: '/media/optimized/046393468_brandmarch.webp',
-  laser: '/media/optimized/55ad64b81_laserstitky.webp',
 };
 
-const KNOW_HOW = [
-  { icon: Gauge, title: 'Bez vysokotlakého čerpadla', text: 'Nízkotlaký provoz využívá běžný tlak vodovodního řadu 2–8 bar bez samostatné vysokotlaké technologie.' },
-  { icon: Droplets, title: 'Evaporace, ne déšť', text: 'Jemná mlha se za slunečného počasí odpaří dříve, než dopadne na zem.' },
-  { icon: Hammer, title: 'Precizní nerez', text: 'Každá konstrukce je svařovaná v naší dílně, nikoli montovaná z katalogových dílů.' },
-  { icon: Ruler, title: 'Výroba na míru', text: 'Rozměr, tvar, kotvení i design přizpůsobíme vašemu prostoru.' },
+const PILLARS = [
+  { number: '01', icon: Ruler, title: 'Tvar s technickou logikou', text: 'Tvarujeme nerezové trubky s ohledem na geometrii, návaznosti ohybů, kotvení a skutečné možnosti výroby.' },
+  { number: '02', icon: Waves, title: 'Mlha, která patří do prostoru', text: 'Mlžítko navrhujeme jako architektonický prvek. Jemné vodní mlžení doplňuje pobytová místa, nikoli je ovládá.' },
+  { number: '03', icon: Settings2, title: 'Technologie podle projektu', text: 'Volíme vhodné trysky, filtraci, přívod vody i způsob spínání. U vybraných sestav doplňujeme chytré řízení SUPLA.' },
+  { number: '04', icon: ShieldCheck, title: 'Péče i po instalaci', text: 'Myslíme na dostupnost technologií, údržbu, provozní kontrolu a sezonní zazimování.' },
+];
+
+const PROCESS = [
+  { number: '01', title: 'Poznáme místo', text: 'Architektura, účel prostoru, voda, elektro, orientační rozměry a způsob používání.' },
+  { number: '02', title: 'Navrhneme řešení', text: 'Vybereme katalogový tvar nebo připravíme individuální koncept a technickou specifikaci.' },
+  { number: '03', title: 'Vyrobíme v Trutnově', text: 'Ohýbání nerezových profilů, svařování, povrchové dokončení a kontrola detailů.' },
+  { number: '04', title: 'Oživíme a pečujeme', text: 'Montáž, nastavení mlžení a domluva na následné servisní péči.' },
 ];
 
 const COMPANY = {
@@ -28,143 +41,199 @@ const COMPANY = {
   phone: '+420 774 700 390',
 };
 
+function Eyebrow({ children, light = false, index }) {
+  return (
+    <p className={'about-eyebrow ' + (light ? 'about-eyebrow--light' : '')}>
+      {index && <span aria-hidden="true">{index}</span>}{children}
+    </p>
+  );
+}
+
+function Action({ to, children, variant = 'primary', external = false }) {
+  const className = 'about-action about-action--' + variant;
+  if (external) return <a className={className} href={to} target="_blank" rel="noopener noreferrer">{children}<ArrowUpRight size={17} aria-hidden="true" /></a>;
+  return <Link to={to} className={className}>{children}<ArrowRight size={17} aria-hidden="true" /></Link>;
+}
+
 export default function ONas() {
   useEffect(() => {
     setSEO({
-      title: 'O nás — HolmTec s.r.o. | MLŽIDLA.cz',
-      description: 'Česká výroba nerezových mlžících soch v Trutnově. Ohýbání trubek, TIG svařování a saténový brus — od návrhu po realizaci.',
+      title: 'Česká výroba mlžítek a mlžných prvků | HolmTec',
+      description: 'Česká výroba nerezových mlžítek, mlžných bran a designových mlžných prvků v Trutnově. Poznejte výrobní zázemí HolmTec, návrh, ohýbání trubek a servis.',
       robots: 'index, follow',
     });
   }, []);
 
   return (
-    <main className="min-h-screen bg-white pt-20 text-[#0D2F4F]">
-      {/* Hero */}
-      <section className="relative min-h-[600px] overflow-hidden bg-[#0D2F4F]">
-        <img src="/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp" alt="Mlžítko v provozu ve veřejném prostoru" className="absolute inset-0 h-full w-full object-cover opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0D2F4F] via-[#0D2F4F]/90 to-[#0D2F4F]/30" />
-        <div className="relative mx-auto flex min-h-[600px] max-w-7xl items-end px-6 pb-20 lg:px-10 lg:pb-24">
-          <div className="max-w-3xl">
-            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#7FC4E8]">O značce MLŽIDLA</p>
-            <h1 className="mt-5 font-heading text-5xl text-white lg:text-7xl">
-              Průmyslová přesnost.<br /><span className="text-[#7FC4E8]">Osvěžení na míru.</span>
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/72">
-              Přinášíme 20 let zkušeností s nerezí do městských prostranství, veřejných budov a veřejného prostoru. Každý systém navrhneme, vyrobíme, nainstalujeme a dlouhodobě servisujeme.
-            </p>
-            <Link to="/poptavka" className="mt-9 inline-flex items-center gap-2 bg-[#0B5EA8] px-7 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#094d8a]">
-              Popsat projekt <ArrowRight size={16} />
-            </Link>
+    <main id="main-content" className="about-page bg-white text-[#10213D]">
+      <section className="about-hero relative isolate overflow-hidden text-white" aria-labelledby="about-title">
+        <img src={MEDIA.hero} alt="Mlžící prvek MLŽIDLA v městském veřejném prostoru" className="about-hero__image" fetchPriority="high" />
+        <div className="about-hero__shade" aria-hidden="true" />
+        <div className="about-hero__mesh" aria-hidden="true" />
+        <div className="about-hero__glow" aria-hidden="true" />
+        <div className="about-hero__content relative z-10 mx-auto flex w-full max-w-[1440px] flex-col justify-end px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24">
+          <Eyebrow light>MLŽIDLA.cz <span className="about-bullet" aria-hidden="true" /> VÝROBNÍ ZÁZEMÍ HOLMTEC</Eyebrow>
+          <h1 id="about-title" className="about-hero__heading mt-7 max-w-5xl font-heading font-bold leading-[0.99] tracking-[-.055em]">
+            Česká výroba mlžítek.<br />
+            <span className="about-hero__heading-accent">Do života města.</span>
+          </h1>
+          <p className="mt-8 max-w-xl text-[1.06rem] leading-relaxed text-white/85 sm:text-xl">
+            Designové mlžné sochy, za kterými stojí skutečná česká výroba. Spojujeme řemeslo HolmTec s promyšleným ochlazováním veřejného prostoru.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Action to="/poptavka">Navrhnout řešení</Action>
+            <Action to="/reference" variant="outline">Naše realizace</Action>
           </div>
+          <a href="#nas-pribeh" className="about-scroll-link mt-12 inline-flex w-fit items-center gap-3 text-sm text-white/80 transition hover:text-white">
+            <span className="about-scroll-link__icon"><ArrowDown size={15} aria-hidden="true" /></span> Poznejte náš příběh
+          </a>
+        </div>
+        <div className="about-hero__caption absolute bottom-6 right-8 z-10 hidden text-right text-xs uppercase tracking-[.2em] text-white/70 lg:block">
+          <span className="block text-white">MLŽIDLA × HOLMTEC</span>
+          Navrženo a vyráběno v Česku
         </div>
       </section>
 
-      {/* Výroba */}
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-2 lg:px-10 lg:py-28">
-        <div>
-          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Naše výroba</p>
-          <h2 className="mt-4 font-heading text-4xl text-[#0D2F4F] lg:text-5xl">Nevznikli jsme v marketingu. Vznikli jsme v dílně.</h2>
-          <div className="mt-7 space-y-5 text-base leading-relaxed text-[#0D2F4F]/65">
-            <p>Firma HolmTec s.r.o. začínala výrobou chladicích systémů a jejich prototypů. Roky zakázkové výroby nás naučily jedno řemeslo dokonale: precizní ohýbání trubek a tyčí.</p>
-            <p>Tuto dovednost jsme rozšířili o TIG svařování nerezové ocel a saténový brus povrchu. Když jsme spojili obě zkušenosti, vznikl přirozený krok k vlastnímu produktu: česká mlžítka postavená na vlastním know-how, ne na přeprodeji hotové technologie.</p>
-            <p>Každý produkt ohýbáme, svařujeme a brousíme v naší dílně v Trutnově. Od surové trubky po finální saténový povrch — vše pod jednou střechou.</p>
+      <div className="about-proof-strip" aria-label="Základní principy značky">
+        <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-6 px-6 py-7 sm:px-10 lg:grid-cols-4 lg:px-16">
+          {[['01', 'České výrobní zázemí'], ['02', 'Nerez a přesné ohýbání'], ['03', 'Design pro konkrétní místo'], ['04', 'Technologie a servis']].map(([n, title]) => (
+            <div className="about-proof" key={n}><span>{n} /</span><strong>{title}</strong></div>
+          ))}
+        </div>
+      </div>
+
+      <section id="nas-pribeh" className="about-story mx-auto grid max-w-[1440px] items-center gap-12 px-6 py-24 sm:px-10 lg:grid-cols-[.92fr_1.08fr] lg:gap-20 lg:px-16 lg:py-32" aria-labelledby="about-story-heading">
+        <div className="about-story__text">
+          <Eyebrow index="01">PŮVOD ZNAČKY</Eyebrow>
+          <h2 id="about-story-heading" className="about-heading mt-5">Nejdřív řemeslo.<br /><em>Potom vlastní tvar.</em></h2>
+          <div className="mt-8 max-w-[59ch] space-y-5 text-base leading-[1.85] text-slate-600">
+            <p><strong className="font-semibold text-[#10213D]">MLŽIDLA.cz vyrůstají z výrobního zázemí společnosti HolmTec.</strong> Zkušenost s přesným ohýbáním trubek, zakázkovými díly a zpracováním nerezu nám umožňuje navrhovat mlžítka také jako sochařské objekty.</p>
+            <p>Nekreslíme jen atraktivní siluetu. Přemýšlíme, jak ji vyrobit, ukotvit, připojit k vodě a dlouhodobě udržovat. Právě proto stojí design a technické řešení od začátku vedle sebe.</p>
+          </div>
+          <div className="about-signature mt-9 flex items-center gap-4 border-t border-[#dbe8ee] pt-6">
+            <span className="about-signature__icon"><Factory size={25} aria-hidden="true" /></span>
+            <div><strong className="block text-sm text-[#10213D]">HolmTec s.r.o. · Trutnov</strong><span className="text-xs uppercase tracking-widest text-slate-500">Vývoj • vlastní výroba • technické zázemí</span></div>
           </div>
         </div>
-        <img src={IMAGES.detail} alt="Detail nerezového zpracování" className="h-full min-h-[420px] w-full object-cover" />
-      </section>
-
-      {/* Know-how */}
-      <section className="bg-[#0D2F4F] py-20 text-white lg:py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#7FC4E8]">Naše know-how</p>
-          <h2 className="mt-4 max-w-3xl font-heading text-4xl lg:text-5xl">Rozumíme materiálu i technologii do posledního detailu.</h2>
-          <div className="mt-12 grid gap-px bg-white/10 md:grid-cols-2 lg:grid-cols-4">
-            {KNOW_HOW.map((item) => (
-              <div key={item.title} className="bg-[#0D2F4F] p-7">
-                <item.icon className="text-[#7FC4E8]" size={22} />
-                <h3 className="mt-6 font-heading text-xl">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">{item.text}</p>
-              </div>
-            ))}
+        <div className="about-story__visual relative">
+          <div className="about-story__photo-wrap">
+            <img src={MEDIA.craft} alt="Výroba a instalace nerezového mlžítka" loading="lazy" decoding="async" className="about-story__main-photo" />
           </div>
-        </div>
-      </section>
-
-      {/* Firma */}
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div>
-            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Identifikace firmy</p>
-            <h2 className="mt-4 font-heading text-4xl text-[#0D2F4F]">HolmTec s.r.o.</h2>
-            <div className="mt-8 space-y-4 text-sm leading-relaxed text-[#0D2F4F]/70">
-              <div className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-[#0B5EA8]" />
-                <span>{COMPANY.address}</span>
-              </div>
-              <div className="flex gap-6 pl-7 text-xs text-[#0D2F4F]/50">
-                <span>IČ: {COMPANY.ico}</span>
-                <span>DIČ: {COMPANY.dic}</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <Mail size={18} className="mt-0.5 shrink-0 text-[#0B5EA8]" />
-                <a href={`mailto:${COMPANY.email}`} className="hover:text-[#0B5EA8]">{COMPANY.email}</a>
-              </div>
-              <div className="flex items-start gap-3">
-                <Phone size={18} className="mt-0.5 shrink-0 text-[#0B5EA8]" />
-                <a href={`tel:${COMPANY.phone.replace(/\s/g, '')}`} className="hover:text-[#0B5EA8]">{COMPANY.phone}</a>
-              </div>
-            </div>
-
-            <div className="mt-9 rounded-2xl border border-[#D6EAF3] bg-[#F5FAFD] p-5">
-              <p className="font-mono text-[10px] uppercase tracking-[.16em] text-[#0878E8]">Web a digitální prezentace</p>
-              <p className="mt-3 text-sm font-semibold text-[#071A2F]">Provozovatel webu: HolmTec s.r.o. · MLŽIDLA.cz</p>
-              <p className="mt-2 text-sm leading-6 text-[#071A2F]/65"><strong className="font-semibold text-[#071A2F]/80">Tvůrce / autor designu: Jakub Duch</strong> — web design, webové prezentace, e-shopy, terminály pro firemní správu a OpenAI agents.</p>
-            </div>
+          <div className="about-story__detail-photo">
+            <img src={MEDIA.detail} alt="Detail opracování nerezového povrchu" loading="lazy" decoding="async" />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <img src={IMAGES.logo} alt="Logo na nerezovém produktu" className="aspect-square w-full object-cover" />
-            <img src={IMAGES.laser} alt="Laserové označení produktu" className="aspect-square w-full object-cover" />
-            <img src={IMAGES.fair} alt="Prezentace značky MLŽIDLA" className="aspect-square w-full object-cover" />
-            <img src={IMAGES.brand} alt="Tým MLŽIDLA" className="aspect-square w-full object-cover" />
-          </div>
+          <div className="about-story__floating-label"><span>OD NÁVRHU</span><strong>K REÁLNÉMU VÝROBKU</strong><ScanLine size={22} aria-hidden="true" /></div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#f7f8f6] py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#0B5EA8]">Jak pracujeme</p>
-            <h2 className="mt-4 font-heading text-4xl leading-tight text-[#0D2F4F] lg:text-5xl">Jeden tým od návrhu až po servis.</h2>
-            <p className="mt-6 text-lg leading-8 text-slate-600">Technický návrh, výroba, instalace i následná péče na sebe navazují. Díky tomu se při předávání mezi jednotlivými fázemi neztrácí důležité informace o projektu.</p>
+      <section className="about-principles bg-[#F2F7F9] py-24 lg:py-32" aria-labelledby="about-principles-heading">
+        <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
+          <div className="grid gap-6 lg:grid-cols-[1fr_.7fr] lg:items-end">
+            <div><Eyebrow index="02">CO JE V NAŠEM DNA</Eyebrow><h2 id="about-principles-heading" className="about-heading mt-5">Krása, která<br /><em>musí fungovat.</em></h2></div>
+            <p className="max-w-md text-base leading-8 text-slate-600 lg:justify-self-end">Veřejný prostor si žádá víc než hezký objekt. Mlžítko musí přirozeně zapadnout, obstát v provozu a být technicky smysluplné.</p>
           </div>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              ['01','Návrh a specifikace','Řešíme prostor, způsob využití, přívod vody, rozmístění prvků a vhodný způsob řízení.'],
-              ['02','Výroba','Nerezové prvky připravujeme s důrazem na geometrii, povrch a servisovatelnost celé sestavy.'],
-              ['03','Instalace a spuštění','Systém osadíme, nastavíme a ověříme v reálném provozu včetně trysek a ovládání.'],
-              ['04','Servis a péče','Na instalaci navazuje předsezónní kontrola, údržba a podle potřeby také zazimování.'],
-            ].map(([n,title,text]) => (
-              <article key={n} className="bg-white p-7 lg:p-8">
-                <span className="font-mono text-sm tracking-widest text-[#0B5EA8]">{n}</span>
-                <h3 className="mt-6 font-heading text-xl font-semibold text-[#0D2F4F]">{title}</h3>
-                <p className="mt-4 text-sm leading-7 text-slate-600">{text}</p>
+          <div className="about-pillars mt-14 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {PILLARS.map((item) => (
+              <article className="about-pillar group" key={item.number}>
+                <div className="flex items-start justify-between"><span className="about-pillar__number">{item.number} / 04</span><item.icon size={27} strokeWidth={1.5} className="text-[#1379c4]" aria-hidden="true" /></div>
+                <h3 className="mt-16 font-heading text-2xl font-semibold leading-snug tracking-[-.03em] text-[#10213D]">{item.title}</h3>
+                <p className="mt-5 text-sm leading-7 text-slate-600">{item.text}</p>
               </article>
             ))}
           </div>
-          <div className="mt-8 text-center"><Link to="/servis-udrzba" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#0D2F4F]/25 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#0D2F4F] transition hover:border-[#0D2F4F]">Jak zajišťujeme servis <ArrowRight size={16} className="ml-2" /></Link></div>
         </div>
       </section>
 
-      <section className="border-y border-[#EAF5FB] bg-[#EAF5FB] py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-10">
-          <div>
-            <p className="font-mono text-[11px] tracking-[.18em] uppercase text-[#0B5EA8]">Od návrhu po realizaci</p>
-            <h2 className="mt-4 max-w-3xl font-heading text-3xl text-[#0D2F4F] lg:text-4xl">Proberme technické řešení vašeho prostoru.</h2>
+      <section className="about-material relative overflow-hidden bg-[#10213D] text-white" aria-labelledby="about-material-heading">
+        <div className="absolute inset-0 opacity-30" style={{ background: 'radial-gradient(circle at 82% 35%, #2A91CA 0%, transparent 55%)' }} aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-[1440px] gap-14 px-6 py-24 sm:px-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-24 lg:px-16 lg:py-32">
+          <div className="about-material__media relative">
+            <img src={MEDIA.stamped} alt="Značení na nerezovém výrobku MLŽIDLA" loading="lazy" decoding="async" className="aspect-[5/4] w-full object-cover" />
+            <div className="absolute -bottom-5 -right-3 w-[43%] overflow-hidden border-[7px] border-[#10213D] sm:-right-7">
+              <img src={MEDIA.laser} alt="Detail laserového označení nerezového dílu" loading="lazy" decoding="async" className="aspect-square w-full object-cover" />
+            </div>
+            <span className="about-material__corner" aria-hidden="true">M / H</span>
           </div>
-          <Link to="/poptavka" className="inline-flex h-fit items-center gap-2 bg-[#0B5EA8] px-7 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#094d8a]">
-            Popsat projekt <ArrowRight size={16} />
-          </Link>
+          <div>
+            <Eyebrow light index="03">MATERIÁL A TECHNOLOGIE</Eyebrow>
+            <h2 id="about-material-heading" className="about-heading about-heading--light mt-5">Nerez není<br /><em>jen povrch.</em></h2>
+            <p className="mt-8 max-w-[55ch] text-base leading-[1.9] text-white/78">Je to možnost vytvořit čistou, pevnou a dlouhodobě udržovatelnou konstrukci. Ohýbání, svařování, povrchové dokončení i napojení technologií řešíme jako jeden celek.</p>
+            <div className="mt-9 grid gap-px border-y border-white/15 sm:grid-cols-3">
+              {[['01', 'Tvarování'], ['02', 'Dokončení'], ['03', 'Instalace']].map(([n, title]) => (
+                <div className="border-white/15 py-5 sm:border-r sm:pr-5 sm:last:border-r-0 sm:not-first:pl-5" key={n}><span className="block font-mono text-xs text-[#83D6F0]">{n}</span><strong className="mt-2 block font-heading text-lg">{title}</strong></div>
+              ))}
+            </div>
+            <a href="https://holmtec.cz" target="_blank" rel="noopener noreferrer" className="about-text-link mt-10 inline-flex items-center gap-2 text-sm font-semibold text-[#9DE2F5] hover:text-white">
+              Poznat výrobní zázemí HolmTec <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-process mx-auto max-w-[1440px] px-6 py-24 sm:px-10 lg:px-16 lg:py-32" aria-labelledby="about-process-heading">
+        <div className="grid gap-7 lg:grid-cols-[1.05fr_.7fr] lg:items-end">
+          <div><Eyebrow index="04">JAK SPOLUPRACUJEME</Eyebrow><h2 id="about-process-heading" className="about-heading mt-5">Od první skici<br /><em>do veřejného prostoru.</em></h2></div>
+          <p className="max-w-md leading-8 text-slate-600 lg:justify-self-end">Jedna návazná cesta od zadání až ke spuštění. U každého projektu přizpůsobujeme rozsah spolupráce reálným podmínkám místa.</p>
+        </div>
+        <ol className="about-timeline mt-14 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {PROCESS.map((item) => (
+            <li key={item.number} className="about-timeline__step">
+              <span className="about-timeline__number">{item.number}</span>
+              <div className="about-timeline__rule" aria-hidden="true" />
+              <h3 className="mt-7 font-heading text-xl font-semibold">{item.title}</h3>
+              <p className="mt-4 max-w-xs text-sm leading-7 text-slate-600">{item.text}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-12 flex flex-wrap gap-3">
+          <Action to="/katalog-mlzitek" variant="navy">Prohlédnout produkty</Action>
+          <Action to="/servis-udrzba" variant="subtle">Servis a údržba</Action>
+        </div>
+      </section>
+
+      <section className="about-bridge relative overflow-hidden bg-[#E8F7FC] py-20 lg:py-28" aria-labelledby="about-bridge-heading">
+        <div className="about-bridge__orb" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-[1440px] gap-10 px-6 sm:px-10 lg:grid-cols-[1fr_.8fr] lg:items-center lg:px-16">
+          <div>
+            <Eyebrow index="05">DVA SVĚTY. JEDEN ZÁMĚR.</Eyebrow>
+            <h2 id="about-bridge-heading" className="about-heading mt-5"><span>HolmTec</span><span className="about-bridge__cross"> × </span><span>MLŽIDLA.cz</span></h2>
+            <p className="mt-7 max-w-xl text-base leading-8 text-slate-700">HolmTec přináší znalost materiálu a výroby. MLŽIDLA tuto zkušenost mění v objekty pro města, školy, parky, architekty i soukromé zahrady. Dva pohledy, které se ve výsledku doplňují.</p>
+          </div>
+          <div className="about-bridge__panel">
+            <span className="mb-6 inline-block font-mono text-xs uppercase tracking-[.2em] text-[#3A7B9E]">ZNAČKA A REALIZACE</span>
+            <div className="space-y-5">
+              <div className="flex items-center gap-4"><Layers3 size={27} className="text-[#1175B3]" aria-hidden="true" /><div><strong className="block">MLŽIDLA.cz</strong><span className="text-sm text-slate-600">Designové mlžné sochy a ochlazování prostoru</span></div></div>
+              <div className="h-px bg-[#C6DFEB]" aria-hidden="true" />
+              <div className="flex items-center gap-4"><Wrench size={27} className="text-[#1175B3]" aria-hidden="true" /><div><strong className="block">HolmTec</strong><span className="text-sm text-slate-600">Technické zázemí, přesné ohýbání a výroba</span></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-contact mx-auto grid max-w-[1440px] gap-12 px-6 py-24 sm:px-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-20 lg:px-16 lg:py-28" aria-labelledby="about-contact-heading">
+        <div>
+          <Eyebrow index="06">KDE NÁS NAJDETE</Eyebrow>
+          <h2 id="about-contact-heading" className="about-heading mt-5">Za každým návrhem<br /><em>je konkrétní dílna.</em></h2>
+          <p className="mt-6 max-w-md leading-8 text-slate-600">Naše výrobní zázemí najdete v Trutnově. Rádi s vámi probereme řešení pro konkrétní místo, od jednoho mlžítka po sestavu prvků.</p>
+          <div className="mt-9"><Action to="/kontakt" variant="navy">Spojit se s námi</Action></div>
+        </div>
+        <div className="about-contact__panel">
+          <div className="flex items-center gap-3"><span className="about-contact__mark">H</span><div><span className="block font-mono text-xs uppercase tracking-widest text-[#4C7895]">Provozovatel a výrobce</span><strong className="font-heading text-2xl font-semibold">{COMPANY.name}</strong></div></div>
+          <div className="mt-9 grid gap-5 text-sm text-slate-700 sm:grid-cols-2">
+            <div className="flex items-start gap-3"><MapPin size={19} className="mt-0.5 shrink-0 text-[#147FB9]" aria-hidden="true" /><span>{COMPANY.address}</span></div>
+            <div className="flex items-start gap-3"><Mail size={19} className="mt-0.5 shrink-0 text-[#147FB9]" aria-hidden="true" /><a href="mailto:obchod1@holmtec.cz" className="break-all underline-offset-4 hover:underline">{COMPANY.email}</a></div>
+            <div className="flex items-start gap-3"><Phone size={19} className="mt-0.5 shrink-0 text-[#147FB9]" aria-hidden="true" /><a href="tel:+420774700390" className="hover:underline">{COMPANY.phone}</a></div>
+            <div className="flex items-start gap-3"><ShieldCheck size={19} className="mt-0.5 shrink-0 text-[#147FB9]" aria-hidden="true" /><span>IČO {COMPANY.ico}<br />DIČ {COMPANY.dic}</span></div>
+          </div>
+          <div className="mt-9 border-t border-[#D6E8EE] pt-5 text-xs leading-6 text-slate-500">Webová prezentace a digitální design: Jakub Duch. Produktové řešení a výrobní zázemí: HolmTec s.r.o.</div>
+        </div>
+      </section>
+
+      <section className="about-final-cta relative isolate overflow-hidden bg-[#0D2F4F] py-24 text-white lg:py-32" aria-labelledby="about-cta-heading">
+        <div className="about-final-cta__glow" aria-hidden="true" />
+        <div className="relative mx-auto flex max-w-[1440px] flex-col items-start gap-10 px-6 sm:px-10 lg:flex-row lg:items-end lg:justify-between lg:px-16">
+          <div><Eyebrow light>PŘÍŠTÍ PROJEKT</Eyebrow><h2 id="about-cta-heading" className="mt-5 max-w-3xl font-heading text-4xl font-bold leading-[1.07] tracking-[-.045em] sm:text-5xl lg:text-6xl">Místo, které dává<br /><span className="text-[#9DE2F5]">prostor osvěžení.</span></h2><p className="mt-6 max-w-xl text-base leading-8 text-white/80">Pošlete nám představu prostoru. Pomůžeme najít tvar i technické řešení, které do něj bude patřit.</p></div>
+          <Action to="/poptavka">Poptat vlastní řešení</Action>
         </div>
       </section>
     </main>

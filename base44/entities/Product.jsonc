@@ -88,6 +88,15 @@
           "nozzles": {
             "type": "string"
           },
+          "visual_master_reference_url": {
+            "type": "string",
+            "description": "MASTER fotografie konkr\u00e9tn\u00ed varianty, potvrzen\u00e1 podle skute\u010dn\u00e9ho tvaru."
+          },
+          "visual_master_verified": {
+            "type": "boolean",
+            "default": false,
+            "description": "True jen po ru\u010dn\u00ed kontrole geometrie konkr\u00e9tn\u00ed varianty; nezd\u011bdit ze sourozeneck\u00e9 varianty."
+          },
           "price_ex_vat": {
             "type": "number",
             "description": "Z\u00e1kladn\u00ed cena bez DPH; pr\u00e1zdn\u00e9 = na popt\u00e1vku"

@@ -4,6 +4,7 @@ import {
   ShieldCheck, Sparkles, Unplug
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import AdminGitlabMergeRequests from '@/components/admin/AdminGitlabMergeRequests';
 
 const STATUS_META = {
   active: { label: 'aktivní', tone: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-300', Icon: CheckCircle2 },
@@ -145,6 +146,8 @@ export default function AdminIntegrations() {
         </div>
         <p className="mt-3 text-xs text-white/35">Klientské tajné klíče ukládat pouze do Base44 Secrets, nikdy do zdrojových souborů ani do chatu. Přímý konektor Canva v katalogu Base44 není.</p>
       </section>
+
+      <AdminGitlabMergeRequests />
 
       <section>
         <div className="mb-4 flex items-center justify-between gap-3">

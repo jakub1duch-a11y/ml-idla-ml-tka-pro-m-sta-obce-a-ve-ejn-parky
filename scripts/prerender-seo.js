@@ -93,6 +93,28 @@ function renderPage(page) {
   const alternateTags = alternates.map(({ hreflang, path }) => `    <link rel="alternate" hreflang="${escapeAttr(hreflang)}" href="${BASE_URL}${escapeAttr(path)}" />`).join('\n');
   if (alternateTags) html = html.replace('</head>', `${alternateTags}\n  </head>`);
 
+  // Include verified route-specific JSON-LD in the HTML response so crawlers
+  // can parse it without executing JavaScript. Client SEO updates this ID.
+  if (page.jsonLd) {
+    const structuredData = JSON.stringify(page.jsonLd).replace(/</g, '\\u003c');
+    html = html.replace('</head>', `    <script type="application/ld+json" id="json-ld-seo">${structuredData}</script>\n  </head>`);
+  }
+
+  // Make the main contact and inquiry copy readable in the initial HTML.
+  // React replaces this static content when the interactive page mounts.
+  const staticContent = {
+    '/kontakt': '<main aria-label="Kontakt MLŽIDLA.cz"><h1>Kontakt na výrobce mlžítek a mlžných bran</h1><p>HolmTec v Trutnově připravuje nerezová městská mlžítka, mlhoviště, zahradní mlžítka a mlžné brány pro náměstí, parky, školy, terasy a soukromé zahrady. Konzultujeme rozměry prostoru, přívod vody, umístění, ovládání a servis.</p><p>Telefon: +420 774 700 390. E-mail: obchod1@holmtec.cz.</p></main>',
+    '/poptavka': '<main aria-label="Poptávka MLŽIDLA.cz"><h1>Nezávazná poptávka mlžítka, mlhoviště nebo mlžné brány</h1><p>Navrhujeme nerezová městská a zahradní mlžítka, mlhoviště, sestavy mlžítek a průchozí mlžné brány pro obce, parky, školy, veřejná prostranství a zahrady.</p><p>Pro poptávku připravte místo instalace, přibližné rozměry a informace o dostupnosti vody. Podle konkrétního zadání navrhneme technické řešení, řízení provozu a cenu.</p></main>',
+    '/mlhoviste': '<main aria-label="Mlžiště a mlhoviště"><h1>Mlžiště a mlhoviště: venkovní mlžítka pro ochlazení prostoru</h1><p>Mlžiště neboli mlhoviště tvoří jedno nebo více mlžítek, která vytvářejí jemnou vodní mlhu. MLŽIDLA navrhujeme pro náměstí, parky, školy, promenády a další veřejné plochy. Počet mlžítek, rozestupy, přívod vody a způsob řízení závisí na místě instalace.</p><h2>Jak navrhnout mlžiště</h2><p>Pro návrh mlhoviště posuzujeme velikost plochy, pohyb návštěvníků, dostupný tlak a průtok vody, směr větru, kotvení a servisní přístup. Nízkotlaké varianty mohou pracovat bez vysokotlakého čerpadla.</p><p><a href="/poptavka">Poptat mlžiště nebo mlhoviště</a></p></main>',
+    '/mlzitka-pro-sportoviste': '<main><h1>Mlžítka pro sportoviště a venkovní sportovní areály</h1><p>Nerezová mlžítka pro venkovní sportoviště, běžecké areály a odpočinkové zóny. Navrhujeme umístění mimo kolizní trasy, přívod vody, provozní režim a údržbu.</p><p><a href="/poptavka">Poptat mlžítko pro sportoviště</a></p></main>',
+    '/mlzitka-mestsky-mobiliar': '<main><h1>Mlžítka jako součást městského mobiliáře</h1><p>Designová nerezová mlžítka, mlžné brány a mlžné prvky pro náměstí, parky a promenády. Řešíme tvar, kotvení, vodu a návaznost na veřejný prostor.</p><p><a href="/poptavka">Poptat městský mlžný prvek</a></p></main>',
+    '/mestske-mlzitka': '<main aria-label="Městská kolekce mlžítek"><h1>Městská mlžítka pro náměstí, parky a obce</h1><p>Nerezová městská mlžítka MLŽIDLA jsou určena pro návrhy venkovního ochlazování ve veřejném prostoru. Samostatné mlžítko, mlžná brána nebo sestava mlžítek může doplnit park, náměstí, pěší zónu či školní areál.</p><h2>Výběr městského mlžítka</h2><p>Pro městská mlžítka řešíme rozměry, umístění, napojení vody, kotvení, provozní cykly a případné chytré řízení. Konkrétní variantu a technické parametry ověřujeme podle projektu.</p><p><a href="/poptavka">Poptat městská mlžítka</a></p></main>',
+    '/rezidencni-mlzeni': '<main aria-label="Zahradní kolekce mlžítek"><h1>Zahradní mlžítka a mlžítko na terasu</h1><p>Zahradní kolekce MLŽIDLA zahrnuje nerezová mlžítka pro soukromé zahrady, terasy, pergoly a venkovní odpočinkové zóny. Zahradní mlžítko vytváří jemnou vodní mlhu a může být součástí výsadby nebo zahradní architektury.</p><h2>Jak vybrat zahradní mlžítko</h2><p>Při návrhu řešíme velikost terasy či zahrady, umístění mlžítka, dostupnost vody, vhodný provozní režim a volitelné ovládání. Výběr konkrétního modelu přizpůsobíme prostoru.</p><p><a href="/poptavka">Poptat zahradní mlžítko</a></p></main>',
+    '/zakazkova-mlzitka': '<main aria-label="Zakázková mlžítka"><h1>Zakázková mlžítka a mlžné sochy na míru</h1><p>Zakázková mlžítka MLŽIDLA vznikají podle požadavků konkrétního místa. Navrhujeme nerezové mlžítko, mlžnou sochu nebo sestavu mlžítek pro města, parky, školy, zahrady a architektonické instalace.</p><h2>Návrh mlžítka na míru</h2><p>Z fotografie, skici nebo půdorysu připravíme návrh tvaru a umístění. Před výrobou ověřujeme geometrii, materiál, kotvení, vodní připojení a možnosti údržby.</p><p><a href="/poptavka">Poptat zakázkové mlžítko</a></p></main>',
+    '/pronajem': '<main aria-label="Pronájem mlžítek GO"><h1>Pronájem mobilních mlžítek MLŽIDLA GO</h1><p>Mobilní mlžítka a mlžné brány GO lze poptat pro festivaly, firemní akce, sportovní události a letní programy. Pronájem mlžítka zahrnuje návrh vhodného počtu a rozmístění podle místa, termínu a provozních podmínek.</p><h2>Mlžítko na akci: co připravit</h2><p>Pro pronájem mlžítek potřebujeme znát datum akce, místo instalace, předpokládaný počet návštěvníků a dostupnost vody. Podle konkrétního prostoru posoudíme stabilitu mobilní sestavy, vedení hadic a technické zajištění.</p><p><a href="/poptavka">Poptat pronájem mlžítek</a></p></main>',
+  }[page.canonicalPath];
+  if (staticContent) html = html.replace('<div id="root"></div>', `<div id="root">${staticContent}</div>`);
+
   return html;
 }
 

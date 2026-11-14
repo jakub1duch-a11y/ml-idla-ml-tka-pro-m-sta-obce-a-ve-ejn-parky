@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,7 +6,7 @@ import { A11y, Keyboard, Mousewheel, Navigation, Pagination } from 'swiper/modul
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, MoveHorizontal, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 const MEDIA = [
   {
@@ -176,6 +176,9 @@ export default function ProductPhotoGallery() {
   const [approvedVisuals, setApprovedVisuals] = useState([]);
   const [adminMedia, setAdminMedia] = useState([]);
   const [activeSwiper, setActiveSwiper] = useState(null);
+  const sectionRef = useRef(null);
+  const hintPlayed = useRef(false);
+  const userInteracted = useRef(false);
   const [sliderState, setSliderState] = useState({ isBeginning: true, isEnd: false, index: 0 });
   const syncSwiper = (swiper) => setSliderState({ isBeginning: swiper.isBeginning, isEnd: swiper.isEnd, index: swiper.activeIndex });
 
@@ -222,13 +225,41 @@ export default function ProductPhotoGallery() {
   }, [approvedVisuals, adminMedia]);
 
   const items = allItems.filter((item) => filter === 'Vše' || item.tag === filter);
-  return <section id="home-product-gallery" className="relative overflow-hidden bg-[#071a2b] py-20 text-white sm:py-24 lg:py-28" aria-labelledby="media-gallery-title">
+
+  // A single, gentle slide-forward-and-back demonstration shows that the gallery
+  // is interactive. It only runs on first scroll into view, never on reduced
+  // motion, and stops if a visitor begins interacting with the slider.
+  useEffect(() => {
+    if (reduced || !activeSwiper || items.length < 2 || hintPlayed.current || !sectionRef.current) return;
+    const timers = [];
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || hintPlayed.current || userInteracted.current) return;
+      hintPlayed.current = true;
+      observer.disconnect();
+      if (!activeSwiper.isBeginning || activeSwiper.isEnd) return;
+      timers.push(window.setTimeout(() => {
+        if (userInteracted.current || activeSwiper.destroyed) return;
+        activeSwiper.slideNext(650);
+        timers.push(window.setTimeout(() => {
+          if (!userInteracted.current && !activeSwiper.destroyed) activeSwiper.slidePrev(700);
+        }, 1100));
+      }, 600));
+    }, { threshold: 0.24 });
+    observer.observe(sectionRef.current);
+    return () => { observer.disconnect(); timers.forEach(window.clearTimeout); };
+  }, [activeSwiper, reduced, items.length]);
+
+  return <section ref={sectionRef} id="home-product-gallery" className="relative overflow-hidden bg-[#071a2b] py-20 text-white sm:py-24 lg:py-28" aria-labelledby="media-gallery-title">
     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(34,211,238,.11),transparent_30%),radial-gradient(circle_at_88%_82%,rgba(14,116,144,.12),transparent_32%)]" />
     <div className="relative mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
       <div className="max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-300">Inspirace a produkty</p>
         <h2 id="media-gallery-title" className="mt-3 max-w-3xl font-heading text-3xl font-semibold tracking-[-.04em] sm:text-5xl">Mlžítka v prostoru. Inspirace pro vaše místo.</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Od městského náměstí po zahradní terasu. Prohlédněte si fotografie, vizualizace a videa mlžítek, vyberte prostředí a objevte řešení pro své místo.</p>
+        <div className="mt-6 inline-flex min-h-11 items-center gap-3 rounded-full border border-cyan-200/35 bg-cyan-200/10 px-4 py-2 text-sm font-semibold text-cyan-100" aria-label="Galerii můžete posouvat vodorovně nebo pomocí šipek">
+          <motion.span aria-hidden="true" animate={reduced ? undefined : { x: [0, 9, -5, 0] }} transition={{ duration: 1.7, repeat: 2, ease: 'easeInOut' }} className="flex items-center"><MoveHorizontal size={21} /></motion.span>
+          Posuňte galerii do stran <span className="text-cyan-200" aria-hidden="true">→</span>
+        </div>
       </div>
 
       <div className="my-9 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Filtrovat média">
@@ -250,6 +281,8 @@ export default function ProductPhotoGallery() {
             spaceBetween={16}
             onSwiper={(swiper) => { setActiveSwiper(swiper); syncSwiper(swiper); }}
             onSlideChange={syncSwiper}
+            onTouchStart={() => { userInteracted.current = true; }}
+            onSliderFirstMove={() => { userInteracted.current = true; }}
             onResize={syncSwiper}
             pagination={{ clickable: true, dynamicBullets: true }}
             speed={reduced ? 0 : 550}
@@ -292,10 +325,10 @@ export default function ProductPhotoGallery() {
           {items.length > 1 && <div className="mt-2 flex items-center justify-between gap-4">
             <p className="text-xs text-slate-300">{Math.min(sliderState.index + 1, items.length)} / {items.length} náhledů<span className="hidden sm:inline"> · posuňte pro další inspiraci</span></p>
             <div className="flex shrink-0 gap-2">
-              <button type="button" onClick={() => activeSwiper?.slidePrev()} disabled={sliderState.isBeginning} aria-label="Předchozí náhled" className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white shadow-lg transition disabled:cursor-default disabled:opacity-30 hover:bg-cyan-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+              <button type="button" onClick={() => { userInteracted.current = true; activeSwiper?.slidePrev(); }} disabled={sliderState.isBeginning} aria-label="Předchozí náhled" className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white shadow-lg transition disabled:cursor-default disabled:opacity-30 hover:bg-cyan-200 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
                 <ChevronLeft size={23} aria-hidden="true" />
               </button>
-              <button type="button" onClick={() => activeSwiper?.slideNext()} disabled={sliderState.isEnd} aria-label="Další náhled" className="flex h-12 items-center justify-center gap-2 rounded-full bg-cyan-200 px-5 text-sm font-semibold text-slate-950 shadow-lg transition disabled:cursor-default disabled:opacity-30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
+              <button type="button" onClick={() => { userInteracted.current = true; activeSwiper?.slideNext(); }} disabled={sliderState.isEnd} aria-label="Další náhled" className="flex h-12 items-center justify-center gap-2 rounded-full bg-cyan-200 px-5 text-sm font-semibold text-slate-950 shadow-lg transition disabled:cursor-default disabled:opacity-30 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
                 Další <ChevronRight size={23} aria-hidden="true" />
               </button>
             </div>

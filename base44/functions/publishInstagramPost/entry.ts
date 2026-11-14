@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
-import { publishInstagramImage, publishInstagramVideo } from '../../shared/instagram.ts';
+import { publishInstagramImage, publishInstagramVideo, publishInstagramStory } from '../../shared/instagram.ts';
 
 export default async function(req) {
   try {
@@ -15,9 +15,12 @@ export default async function(req) {
     if (!post.image_url && !post.video_url) return Response.json({ error: 'Příspěvek musí mít obrázek nebo video' }, { status: 400 });
     if (post.status === 'published') return Response.json({ success: true, alreadyPublished: true });
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('instagram');
-    const published = post.video_url
-      ? await publishInstagramVideo(accessToken, post.video_url, post.caption || '')
-      : await publishInstagramImage(accessToken, post.image_url, post.caption || '');
+    if (post.post_format === 'carousel') return Response.json({ error: 'Carousel zatím vyžaduje ruční přípravu a schválení.' }, { status: 400 });
+    const published = post.post_format === 'story'
+      ? await publishInstagramStory(accessToken, post.video_url || post.image_url, Boolean(post.video_url))
+      : post.video_url
+        ? await publishInstagramVideo(accessToken, post.video_url, post.caption || '')
+        : await publishInstagramImage(accessToken, post.image_url, post.caption || '');
     await base44.asServiceRole.entities.MarketingPost.update(postId, { status: 'published', published_at: new Date().toISOString(), publish_error: '' });
     return Response.json({ success: true, media_id: published.id });
   } catch (error) {

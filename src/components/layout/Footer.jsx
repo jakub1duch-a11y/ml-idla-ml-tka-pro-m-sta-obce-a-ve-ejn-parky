@@ -191,7 +191,7 @@ export default function Footer() {
                         to={to}
                         className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white">
                         
-                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full uppercase">{label}</span>
+                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full normal-case">{label}</span>
                           <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0 group-hover:opacity-60" />
                         </Link>
                       )}
@@ -226,35 +226,35 @@ export default function Footer() {
 
         
 
-        <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
-          <div>
-            <p className="max-w-2xl font-heading text-2xl leading-tight text-white sm:text-3xl">
-              Chcete navrhnout mlžítka pro konkrétní místo?
-            </p>
-            <p className="mt-2 text-sm text-white/66">Pošleme vám inspiraci, technické novinky a praktické ukázky použití pro města, sportoviště i zahrady.</p>
-          </div>
+        
 
-          <form onSubmit={subscribe} className="flex w-full max-w-md md:w-[360px]">
-            {subscribed ?
-            <p className="py-3 text-sm font-medium text-cyan">Děkujeme za váš zájem.</p> :
 
-            <>
-                <input
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                aria-label="E-mail pro newsletter"
-                type="email"
-                placeholder="Váš e-mail"
-                className="min-w-0 flex-1 rounded-l-xl border border-r-0 border-white/12 bg-white/[.07] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-white/25" />
-              
-                <button className="rounded-r-xl bg-cyan px-4 text-slate-950 transition-colors hover:bg-cyan/90" aria-label="Přihlásit k odběru">
-                  <ArrowRight size={18} />
-                </button>
-              </>
-            }
-          </form>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-3xl">
@@ -269,7 +269,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
             <div
-              className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[.05] px-3 py-1.5 text-left"
+              className="inline-flex items-center gap-2 rounded-full border bg-white/[.00 px-3 py-1.5 text-left border-white/4"
               aria-label="Zabezpečené připojení a kontrola odkazu"
               title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
               

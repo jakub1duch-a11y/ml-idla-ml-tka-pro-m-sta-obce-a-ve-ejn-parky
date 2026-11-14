@@ -58,7 +58,12 @@ export function validateProductForVisualization(product = {}) {
     || '';
 
   const errors = [];
-  if (!driveSource) errors.push('Produkt nemá přesně definovaný Drive MASTER zdroj.');
+  // Product admin can directly certify a specific MASTER asset even when its
+  // Drive folder has not yet been indexed in EXACT_PRODUCT_DRIVE_SOURCES.
+  // Never infer approval from the hero or generic image fields alone.
+  if (!driveSource && (!product.slug || !masterUrl || !product.visual_master_verified)) {
+    errors.push('Produkt nemá přesně definovaný Drive MASTER zdroj ani ověřenou MASTER referenci v administraci.');
+  }
   if (!masterUrl) errors.push('Produkt nemá schválenou MASTER referenci.');
   if (!product.visual_master_verified) errors.push('MASTER reference není lidsky ověřená.');
 
@@ -67,6 +72,7 @@ export function validateProductForVisualization(product = {}) {
     errors,
     driveSource,
     masterUrl,
+    sourceType: driveSource ? 'drive_registry_and_admin' : 'verified_admin_product_master',
     policyVersion: DRIVE_MASTER_POLICY_VERSION,
   };
 }

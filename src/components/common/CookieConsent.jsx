@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cookie, X } from 'lucide-react';
+import { Cookie, Settings } from 'lucide-react';
 
 const STORAGE_KEY = 'cookie_consent';
 
@@ -16,15 +16,20 @@ const COPY = {
 
 export default function CookieConsent({ locale = 'cs' }) {
   const [visible, setVisible] = useState(false);
+  const [preferences, setPreferences] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem(STORAGE_KEY)) setVisible(true);
+    if (!['accepted', 'essential'].includes(localStorage.getItem(STORAGE_KEY))) setVisible(true);
+    const reopen = () => { setPreferences(true); setVisible(true); };
+    window.addEventListener('mlzidla:open-cookie-settings', reopen);
+    return () => window.removeEventListener('mlzidla:open-cookie-settings', reopen);
   }, []);
 
   const choose = (value) => {
     localStorage.setItem(STORAGE_KEY, value);
     window.dispatchEvent(new CustomEvent('mlzidla:cookie-consent', { detail: { value } }));
     setVisible(false);
+    setPreferences(false);
   };
 
   const copy = COPY[locale] || COPY.cs;
@@ -38,8 +43,8 @@ export default function CookieConsent({ locale = 'cs' }) {
         exit={{ opacity: 0, y: 40 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:right-4 sm:max-w-sm z-[60] bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl border border-white/10 shadow-2xl shadow-black/30 p-5">
-        <button onClick={() => choose('dismissed')} aria-label={copy.close} className="absolute top-3 right-3 text-white/40 hover:text-white transition-colors">
-          <X size={16} />
+        <button onClick={() => setPreferences((v) => !v)} aria-label="Nastavení cookies" className="absolute top-3 right-3 text-white/70 hover:text-white transition-colors">
+          <Settings size={16} />
         </button>
         <div className="flex items-start gap-3 mb-4 pr-5">
           <div className="w-9 h-9 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center shrink-0">
@@ -50,6 +55,7 @@ export default function CookieConsent({ locale = 'cs' }) {
             <Link to="/gdpr" className="text-cyan hover:underline">{copy.details}</Link>.
           </p>
         </div>
+        {preferences && <p className="mb-4 text-xs leading-relaxed text-white/75">Nezbytné ukládání zajišťuje fungování webu. Analytika (Google Analytics) a marketingové měření (Google Ads, Meta) se aktivují pouze po přijetí všech cookies. Volbu lze kdykoliv změnit na stránce GDPR.</p>}
         <div className="flex items-center gap-2">
           <button onClick={() => choose('essential')}
             className="flex-1 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-medium transition-colors">

@@ -7,10 +7,12 @@
   --mlzidla-navy: #07182b;
   --mlzidla-cyan: #00c9f2;
   --mlzidla-white: #ffffff;
-  --mlzidla-logo-dark: url('/brand/mlzidla-logo-dark-master.png');
-  --mlzidla-logo-light: url('/brand/mlzidla-logo-horizontal-master.png');
-  --mlzidla-logo-tagline: url('/brand/mlzidla-logo-tagline-master.png');
-  --mlzidla-logo-mono: url('/brand/mlzidla-logo-mono.svg');
+  --mlzidla-logo-dark: url('/brand/official-2026/logo-primary.svg');
+  --mlzidla-logo-light: url('/brand/official-2026/logo-inverse.svg');
+  --mlzidla-logo-tagline: url('/brand/official-2026/logo-tagline.svg');
+  --mlzidla-logo-mono: url('/brand/official-2026/logo-mono.svg');
+  --mlzidla-logo-holmtec: url('/brand/official-2026/logo-holmtec.svg');
+  --mlzidla-symbol: url('/brand/official-2026/symbol-primary.svg');
 }
 
 .mlzidla-logo {

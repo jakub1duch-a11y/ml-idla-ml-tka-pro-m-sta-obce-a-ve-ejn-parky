@@ -1,0 +1,23 @@
+name: MLŽIDLA – kontrola loga
+on:
+  pull_request:
+    paths:
+      - 'public/brand/official-2026/**'
+      - 'src/components/brand/MlzidlaLogoSvg.jsx'
+      - 'src/components/layout/Logo.jsx'
+      - 'src/styles/brand-logo-system.css'
+      - 'index.html'
+      - 'scripts/check-brand-assets.mjs'
+      - '.github/workflows/mlzidla-brand-check.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check official logo paths and SVG files
+        run: node scripts/check-brand-assets.mjs

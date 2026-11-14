@@ -93,6 +93,13 @@ function renderPage(page) {
   const alternateTags = alternates.map(({ hreflang, path }) => `    <link rel="alternate" hreflang="${escapeAttr(hreflang)}" href="${BASE_URL}${escapeAttr(path)}" />`).join('\n');
   if (alternateTags) html = html.replace('</head>', `${alternateTags}\n  </head>`);
 
+  // Include verified route-specific JSON-LD in the HTML response so crawlers
+  // can parse it without executing JavaScript. Client SEO updates this ID.
+  if (page.jsonLd) {
+    const structuredData = JSON.stringify(page.jsonLd).replace(/</g, '\\u003c');
+    html = html.replace('</head>', `    <script type="application/ld+json" id="json-ld-seo">${structuredData}</script>\n  </head>`);
+  }
+
   return html;
 }
 

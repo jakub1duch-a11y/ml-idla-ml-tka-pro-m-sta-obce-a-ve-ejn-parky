@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getMediaVariants } from '@/lib/mediaVariantResolver';
 
 /**
  * Optimized Image Component with:
@@ -28,6 +29,7 @@ export function ImageOptimized({
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const objectFit = fit === 'contain' ? 'contain' : 'cover';
+  const media = getMediaVariants(src);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export function ImageOptimized({
   }
 
   return (
-    <div className="relative overflow-hidden" style={{ width, height, aspectRatio }}>
+    <div className={`relative overflow-hidden ${className}`} style={{ width, height, aspectRatio }}>
       {/* Loading placeholder */}
       {placeholder && !isLoaded && (
         <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted-foreground/10 animate-pulse" />
@@ -69,15 +71,15 @@ export function ImageOptimized({
 
       {/* Picture element for WebP support */}
       <picture className="block w-full h-full">
-        {avifSrcSet && <source srcSet={avifSrcSet} type="image/avif" sizes={sizes} />}
-        {webpSrcSet && <source srcSet={webpSrcSet} type="image/webp" sizes={sizes} />}
-        {srcSet && <source srcSet={srcSet} />}
+        {(avifSrcSet || media?.avif) && <source srcSet={avifSrcSet || media?.avif} type="image/avif" sizes={sizes || '100vw'} />}
+        {(webpSrcSet || media?.webp) && <source srcSet={webpSrcSet || media?.webp} type="image/webp" sizes={sizes || '100vw'} />}
+        {(srcSet || media?.jpeg) && <source srcSet={srcSet || media?.jpeg} type="image/jpeg" sizes={sizes || '100vw'} />}
         <img
           src={src}
           alt={alt}
-          width={width}
-          height={height}
-          sizes={sizes}
+          width={width || media?.width}
+          height={height || media?.height}
+          sizes={sizes || '100vw'}
           loading={loading}
           fetchPriority={fetchPriority}
           style={{ objectFit, objectPosition: position }}

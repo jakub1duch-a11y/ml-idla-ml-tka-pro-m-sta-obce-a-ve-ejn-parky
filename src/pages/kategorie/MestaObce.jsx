@@ -19,6 +19,8 @@ import { trackFunnelStep } from '@/lib/ga4';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 import MunicipalProjectStudio, { MunicipalCustomProduction, MunicipalPageNav } from '@/components/kategorie/MunicipalProjectStudio';
 
+const RELATED_SEO_LINKS = [['Mlžítka pro sportoviště', '/mlzitka-pro-sportoviste'], ['Mlžítka jako městský mobiliář', '/mlzitka-mestsky-mobiliar'], ['Ochlazování veřejného prostoru', '/mestske-ochlazovani-verejneho-prostoru']];
+
 const BENEFITS = [
 'Pocitové ochlazení v horkých dnech typicky v řádu několika stupňů podle podmínek',
 'Jemná vodní mlha bez chemických přísad',
@@ -58,6 +60,8 @@ export default function MestaObce() {
 
   return (
     <div className="min-h-screen bg-white pt-0">
+
+      <nav aria-label="Související řešení pro města" className="mx-auto flex max-w-7xl flex-wrap gap-3 px-6 py-4">{RELATED_SEO_LINKS.map(([label, url]) => <Link key={url} to={url} className="rounded-full border border-slate-200 px-4 py-2 text-sm text-slate-700 hover:border-cyan-500">{label}</Link>)}</nav>
 
       {/* Hero */}
       <MotionConfig reducedMotion="user">

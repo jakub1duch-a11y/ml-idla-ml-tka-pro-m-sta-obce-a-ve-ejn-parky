@@ -31,6 +31,10 @@ const CLIENT_VISIBLE_STATUSES = ['sent', 'in_production', 'ready', 'delivered', 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const caller = await base44.auth.me().catch(() => null);
+    if (caller?.role !== 'admin') {
+      return Response.json({ error: 'Forbidden' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+    }
     const body = await req.json().catch(() => ({}));
     const projectId = clean(body.project_id || body.entity_id);
     const newStatus = clean(body.status || body.new_status);

@@ -14,17 +14,17 @@ import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigatio
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const USE_CASES = [
-  { emoji: '🏫', title: 'Základní školy', desc: 'Ochlazení školních dvorů a venkovních areálů během horkých dnů, bezpečné pro provoz o přestávkách.' },
-  { emoji: '🧸', title: 'Mateřské školky', desc: 'Jemná mlha bez tlakového rizika, potravinářská nerez a materiály certifikované pro dětské prostory.' },
-  { emoji: '🛝', title: 'Dětská hřiště', desc: 'Interaktivní mlžné prvky, které dětem přinášejí radost a rodičům klid — bez chemie, bez rizika uklouznutí.' },
+  { emoji: '🏫', title: 'Základní školy', desc: 'Osvěžení školních dvorů a venkovních areálů. Provozní režim a dohled stanovíme podle konkrétní školy.' },
+  { emoji: '🧸', title: 'Mateřské školky', desc: 'Jemná vodní mlha pro školní zahrady. Materiál, tlak vody a hygienické podmínky ověřujeme podle konkrétní sestavy.' },
+  { emoji: '🛝', title: 'Dětská hřiště', desc: 'Mlžné prvky pro pobytové zóny u hřišť. Umístění navrhujeme s ohledem na dohled, povrchy a pohyb dětí.' },
   { emoji: '🎠', title: 'Zábavní centra', desc: 'Mlžné instalace jako atrakce v dětských zábavních a volnočasových centrech.' },
 ];
 
 const SAFETY = [
-  'Potravinářská nerezová ocel AISI 316L',
-  'Nízkotlaká mlha bez rizika uklouznutí',
-  'Žádná chemie ani přísady ve vodě',
-  'Certifikované materiály pro veřejné prostory',
+  'Materiál a povrch podle konkrétního produktu a technického listu',
+  'Posouzení rizika mokrých povrchů a uklouznutí v místě instalace',
+  'Kontrola kvality vody a hygienického provozního režimu',
+  'Mlžítko není herní prvek a nesplňuje ČSN EN 1176',
 ];
 
 export default function Deti() {
@@ -54,10 +54,10 @@ export default function Deti() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Školy, školky a děti</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Bezpečný chlad<br /><span style={{ fontStyle: 'italic' }}>pro dětskou radost.</span>
+              Mlžítka pro školky a školy<br /><span style={{ fontStyle: 'italic' }}>do venkovních prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Pro školy, školky a dětská hřiště navrhujeme mlžné systémy, které jsou bezpečné, jemné a bez chemie. Ochlazení až o 9 °C bez rizika uklouznutí — děti si mlhu užijí, rodiče i pedagogové budou mít klid.
+              Navrhujeme nerezová mlžítka a mlžné prvky pro mateřské školy, školní zahrady a pobytové zóny. Řešíme umístění, napojení vody, řízení provozu i údržbu. Mlžítka nejsou herními prvky; bezpečnost a hygienu posuzujeme podle konkrétní instalace.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -78,7 +78,7 @@ export default function Deti() {
             <div>
               <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-4">Bezpečnost na prvním místě</p>
               <h2 className="text-slate-900 text-3xl mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-                Navrženo pro<br /><span style={{ fontStyle: 'italic' }}>ty nejmenší.</span>
+                Mlžné prvky pro<br /><span style={{ fontStyle: 'italic' }}>školní zahrady.</span>
               </h2>
               <ul className="space-y-3">
                 {SAFETY.map(s => (

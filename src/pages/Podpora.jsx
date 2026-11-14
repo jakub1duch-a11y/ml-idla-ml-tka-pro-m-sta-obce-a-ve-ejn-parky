@@ -7,6 +7,17 @@ import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 const FAQ_SECTIONS = [
 {
+  id: 'vyroba',
+  icon: Package,
+  title: 'Česká výroba mlžítek a mlžných prvků',
+  items: [
+    { q: 'Kdo vyrábí mlžítka MLŽIDLA.cz?', a: 'Za značkou MLŽIDLA.cz stojí česká firma HolmTec s výrobním zázemím v Trutnově. Vyrábíme nerezové konstrukce mlžítek a mlžných prvků a připravujeme jejich technické řešení podle konkrétního projektu.' },
+    { q: 'Vyrábíte mlžítka a mlžné prvky v České republice?', a: 'Ano, nerezové konstrukce mlžítek vyrábíme v Trutnově. Jednotlivé součásti, například trysky nebo ovládací technika, mohou pocházet od specializovaných dodavatelů.' },
+    { q: 'Lze objednat mlžítko nebo mlžnou sochu na míru?', a: 'Ano. Podle prostoru navrhneme tvar, rozměry, kotvení, napojení vody a vhodný způsob řízení. Před výrobou ověřujeme technické možnosti konkrétního návrhu.' },
+  ],
+},
+
+{
   id: 'instalace',
   icon: Package,
   title: 'Instalace mlžítek',

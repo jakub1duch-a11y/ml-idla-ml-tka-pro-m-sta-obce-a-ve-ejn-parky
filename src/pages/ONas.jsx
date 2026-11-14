@@ -58,8 +58,8 @@ function Action({ to, children, variant = 'primary', external = false }) {
 export default function ONas() {
   useEffect(() => {
     setSEO({
-      title: 'O nás | MLŽIDLA.cz × HolmTec — česká výroba mlžných soch',
-      description: 'Od nerezové trubky k architektonickému mlžení. Poznejte výrobní zázemí HolmTec v Trutnově, design MLŽIDLA.cz, technologii a průběh spolupráce.',
+      title: 'Česká výroba mlžítek a mlžných prvků | HolmTec',
+      description: 'Česká výroba nerezových mlžítek, mlžných bran a designových mlžných prvků v Trutnově. Poznejte výrobní zázemí HolmTec, návrh, ohýbání trubek a servis.',
       robots: 'index, follow',
     });
   }, []);
@@ -74,7 +74,7 @@ export default function ONas() {
         <div className="about-hero__content relative z-10 mx-auto flex w-full max-w-[1440px] flex-col justify-end px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pb-24">
           <Eyebrow light>MLŽIDLA.cz <span className="about-bullet" aria-hidden="true" /> VÝROBNÍ ZÁZEMÍ HOLMTEC</Eyebrow>
           <h1 id="about-title" className="about-hero__heading mt-7 max-w-5xl font-heading font-bold leading-[0.99] tracking-[-.055em]">
-            Z nerezové trubky.<br />
+            Česká výroba mlžítek.<br />
             <span className="about-hero__heading-accent">Do života města.</span>
           </h1>
           <p className="mt-8 max-w-xl text-[1.06rem] leading-relaxed text-white/85 sm:text-xl">

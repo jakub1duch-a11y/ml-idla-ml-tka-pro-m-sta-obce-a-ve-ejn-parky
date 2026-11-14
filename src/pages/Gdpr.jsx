@@ -7,7 +7,7 @@ const SECTIONS = [
   {
     id: 'spravce',
     title: 'Správce osobních údajů',
-    content: `Správcem osobních údajů je společnost HolmTec s.r.o., se sídlem Trutnov, Česká republika, IČO: [27486893], zapsaná v obchodním rejstříku vedeném u Krajského soudu.
+    content: `Správcem osobních údajů je společnost HolmTec s.r.o., se sídlem Trutnov, Česká republika, IČO: 27486893, zapsaná v obchodním rejstříku vedeném u Krajského soudu.
 
 Kontaktní údaje správce:
 • E-mail: obchod1@holmtec.cz
@@ -34,7 +34,7 @@ Dále automaticky shromažďujeme technická data prostřednictvím souborů coo
 
 1. Odpověď na poptávku nebo dotaz (čl. 6 odst. 1 písm. b GDPR — plnění smlouvy nebo kroky před uzavřením smlouvy)
 2. Zasílání obchodních sdělení — pouze se souhlasem (čl. 6 odst. 1 písm. a GDPR)
-3. Sledování návštěvnosti webu pomocí Google Analytics 4 — anonymizovaně (oprávněný zájem)
+3. Analytika a marketingové měření (Google Analytics, Google Ads, Meta) — pouze na základě souhlasu (čl. 6 odst. 1 písm. a GDPR)
 4. Plnění zákonných povinností (čl. 6 odst. 1 písm. c GDPR)`,
   },
   {
@@ -87,10 +87,10 @@ NEZBYTNÉ COOKIES (nelze odmítnout):
 
 ANALYTICKÉ COOKIES (se souhlasem):
 • Google Analytics 4 — sledování návštěvnosti (anonymizovaná IP)
-• Google Ads — měření konverzí z reklam
+• Google Ads a Meta — měření konverzí a marketingových kampaní
 • Platnost: 14 měsíců
 
-Souhlas s analytickými cookies můžete kdykoliv odvolat vymazáním cookies v nastavení prohlížeče nebo kontaktováním správce.`,
+Volbu cookies lze kdykoliv změnit tlačítkem Nastavení cookies na této stránce. Nezbytné cookies nejsou používány k reklamnímu cílení. Marketingové měření (Google Ads a Meta) se spouští až po souhlasu.`,
   },
   {
     id: 'bezpecnost',
@@ -107,7 +107,7 @@ Souhlas s analytickými cookies můžete kdykoliv odvolat vymazáním cookies v 
     title: 'Změny zásad ochrany osobních údajů',
     content: `Tyto zásady ochrany osobních údajů mohou být průběžně aktualizovány v souladu s platnou legislativou nebo změnami v našich službách.
 
-Datum poslední aktualizace: 30. 6. 2026
+Datum poslední aktualizace: 14. 11. 2026
 
 Doporučujeme tuto stránku pravidelně navštěvovat. V případě podstatných změn vás budeme informovat e-mailem (pokud nám jej máte poskytnuto) nebo prominentním upozorněním na webu.`,
   },
@@ -158,6 +158,7 @@ export default function Gdpr() {
           <p className="text-slate-400 text-xs font-mono mt-4">Poslední aktualizace: 30. 6. 2026</p>
         </motion.div>
 
+        <button type="button" onClick={() => window.dispatchEvent(new Event('mlzidla:open-cookie-settings'))} className="mb-8 rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold hover:bg-slate-50">Nastavení cookies a změna souhlasu</button>
         <div className="space-y-2">
           {SECTIONS.map((s, i) => (
             <motion.div key={s.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>

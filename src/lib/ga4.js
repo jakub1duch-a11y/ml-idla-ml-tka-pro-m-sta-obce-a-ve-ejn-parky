@@ -62,6 +62,7 @@ function installGlobalListeners() {
     const value = consentEvent.detail?.value || 'essential';
     updateGoogleConsent(value);
     updateMetaConsent(value);
+    if (value === 'accepted') void initGoogleAnalytics();
   });
 
   const startedForms = new WeakSet();
@@ -216,6 +217,11 @@ function loadScript(id) {
 
 export function initGoogleAnalytics() {
   if (typeof window === 'undefined') return Promise.resolve(false);
+  // Do not request analytics configuration or load third-party scripts before consent.
+  if (localStorage.getItem(CONSENT_STORAGE_KEY) !== 'accepted') {
+    installGlobalListeners();
+    return Promise.resolve(false);
+  }
   if (initPromise) return initPromise;
 
   initPromise = (async () => {

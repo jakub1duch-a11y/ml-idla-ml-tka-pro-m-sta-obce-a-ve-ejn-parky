@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink, FileText, Mail, Palette, ShieldCheck, Users, ClipboardCheck, BookOpen, MessageSquareText } from 'lucide-react';
 import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
+import OfferWorkflowInbox from '@/components/admin/OfferWorkflowInbox';
 import AdminNewsletterCampaigns from '@/components/admin/AdminNewsletterCampaigns';
 
 const shortcuts = [
@@ -37,6 +38,7 @@ export default function AdminSalesHub() {
           ].map(({title,description,href,Icon}) => <a key={title} href={href} className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-[#008ea5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#008ea5]"><Icon className="mb-3 text-[#008ea5]" size={23}/><h2 className="font-semibold text-[#102b3a]">{title}</h2><p className="mt-2 text-sm text-slate-600">{description}</p></a>)}
         </div>
         <details className="rounded-2xl border border-slate-200 bg-white p-5"><summary className="cursor-pointer font-semibold text-[#102b3a]"><BookOpen className="mr-2 inline text-[#008ea5]" size={18}/> Manuál obchodního workflow</summary><div className="mt-4 space-y-2 text-sm text-slate-700"><p><strong>1. Kontakt:</strong> Ověřit firmu a e-mail, vyhledat duplicity a poslední komunikaci.</p><p><strong>2. Oslovení:</strong> Všeobecná nabídka s QR, obrázkem v těle, PDF a podpisem. Bez individuální ceny.</p><p><strong>3. Poptávka:</strong> Spárovat formulář nebo Gmail s kontaktem a zjistit produkt, místo a přílohy.</p><p><strong>4. Nabídka:</strong> Ověřit cenu v kalkulaci, připravit Canva PDF a vhodné řešení SUPLA.</p><p><strong>5. Koncept:</strong> Zkontrolovat adresáta, text, přílohy, duplicity a vazbu na obchodní případ.</p><p><strong>6. Odeslání:</strong> Až po schválení. Stav odeslání ověřit podle skutečné zprávy v Gmailu.</p><p><strong>7. Následná komunikace:</strong> Evidovat odpověď, další krok a platnost nabídky. Neověřený stav neoznačovat jako potvrzený.</p></div></details>
+        <OfferWorkflowInbox />
         <AdminBusinessSyncPanel />
         <AdminNewsletterCampaigns />
         <iframe title="MLŽIDLA Sales Hub – obchodní případy a nabídky" src="/obchodni-nabidky" className="h-[calc(100vh-250px)] min-h-[750px] w-full rounded-2xl border border-slate-200 bg-white shadow-sm" />

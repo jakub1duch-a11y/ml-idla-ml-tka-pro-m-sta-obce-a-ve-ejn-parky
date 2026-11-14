@@ -21,15 +21,16 @@ export default function CollectionHero({ collection }) {
         ) : (
           <img
             src={collection.image || COLLECTION_FALLBACK}
-            alt={collection.name}
-            className="h-full w-full object-cover object-center"
+            alt={collection.heroAlt || collection.name}
+            className="h-full w-full object-cover"
+            style={{ objectPosition: collection.heroPosition || 'center' }}
             loading="eager"
             fetchPriority="high"
-            onError={(event) => { event.currentTarget.src = COLLECTION_FALLBACK; }}
+            onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = COLLECTION_FALLBACK; }}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/74 to-primary/12" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/35 via-transparent to-primary/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061d31]/95 via-[#061d31]/80 to-[#061d31]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#061d31]/50 via-transparent to-[#061d31]/10" />
       </div>
 
       <div className="relative mx-auto flex min-h-[620px] max-w-7xl items-center px-6 py-20 lg:min-h-[680px] lg:px-10">
@@ -47,6 +48,7 @@ export default function CollectionHero({ collection }) {
             </Link>
           </div>
 
+          {isCity && collection.heroCaption && <p className="mt-7 text-xs tracking-wide text-white/65">{collection.heroCaption}</p>}
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/70">
             {isCity && <span className="inline-flex items-center gap-2"><ShieldCheck size={16} className="text-accent" /> Návrh · výroba · instalace · servis</span>}
             {isGarden && <span className="inline-flex items-center gap-2"><ShieldCheck size={16} className="text-accent" /> Český návrh a výroba · nerez · servis</span>}

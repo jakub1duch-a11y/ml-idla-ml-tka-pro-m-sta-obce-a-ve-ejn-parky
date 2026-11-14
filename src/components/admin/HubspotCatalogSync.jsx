@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AlertTriangle, CheckCircle2, ExternalLink, Package, RefreshCw, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const HUBSPOT_PORTAL_ID = 149778217;
+const HUBSPOT_PORTAL_ID = 149032244;
 const HUBSPOT_PRODUCTS_URL = `https://app-eu1.hubspot.com/contacts/${HUBSPOT_PORTAL_ID}/objects/0-7`;
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1m-NObbjCYDYG6Sg3B-2g-TcLZkkqGzejDFfCKjqQyUE/edit';
 
@@ -29,7 +29,7 @@ export default function HubspotCatalogSync() {
     } catch (err) {
       const code = err?.response?.data?.error || err?.message || 'hubspot_sync_unavailable';
       setError(code === 'hubspot_wrong_portal'
-        ? 'HubSpot je připojený k jinému účtu. Import byl bezpečně zablokován. Správný portál HolmTec: 149778217.'
+        ? 'HubSpot je připojený k jinému účtu. Import byl bezpečně zablokován. Správný portál HolmTec: 149032244.'
         : code === 'hubspot_oauth_missing'
           ? 'Chybí autorizace HubSpot v konektoru Base44.'
           : code === 'hubspot_portal_unverified'

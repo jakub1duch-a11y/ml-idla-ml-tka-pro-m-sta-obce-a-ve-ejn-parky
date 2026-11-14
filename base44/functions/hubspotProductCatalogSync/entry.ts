@@ -2,7 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.61';
 
 // MLŽIDLA.cz → HubSpot: only the user's confirmed HolmTec portal.
 // Never trust the portal ID supplied by a frontend caller.
-const EXPECTED_PORTAL_ID = 149778217;
+const EXPECTED_PORTAL_ID = 149032244;
 const HEADER = { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' };
 const clean = (value, max = 500) => String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
 const normalize = (value) => clean(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();

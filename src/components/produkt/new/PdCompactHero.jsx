@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Droplets, ExternalLink, Gauge, ShieldCheck } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getFamily, getLine } from '@/lib/productFamilies';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
@@ -16,15 +16,6 @@ function cleanText(value = '') {
 }
 
 export default function PdCompactHero({ product }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const isMrak = product.slug === 'mlzitko-mrak';
-  const selectedMrakVariant = searchParams.get('variant') === 'velky' ? 'velky' : 'maly';
-  const quoteVariant = isMrak ? `&varianta=${encodeURIComponent(selectedMrakVariant)}` : '';
-  const selectMrakVariant = (variantId) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('variant', variantId);
-    setSearchParams(params, { replace: true });
-  };
   const family = getFamily(product);
   const line = getLine(product);
   const [imageIndex, setImageIndex] = useState(0);
@@ -99,13 +90,13 @@ export default function PdCompactHero({ product }) {
 
           <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-7 sm:flex sm:flex-wrap [&>a]:px-3 sm:[&>a]:px-5">
             <Link
-              to={`/poptavka?produkt=${encodeURIComponent(product.slug)}${quoteVariant}`}
+              to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#07131D] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#153863]">
               
               Návrh a cena <ArrowRight size={15} />
             </Link>
             <Link
-              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}${quoteVariant}`}
+              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#CBE4EE] bg-white px-5 py-3 text-sm font-bold text-[#07131D] transition hover:-translate-y-0.5 hover:border-[#7CCBD8]">
               
               Vizualizovat v prostoru <ExternalLink size={14} />

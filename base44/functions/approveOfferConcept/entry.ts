@@ -19,6 +19,21 @@ Deno.serve(async (req: Request) => {
     if (!user || user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
+    // Human-only approval: admin role alone is not sufficient.
+    const isOwner = String(user.email || '').toLowerCase() === 'meduna@holmtec.cz';
+    if (body.action === 'approve_run') {
+      if (!isOwner) return Response.json({ error: 'Only designated owner can approve offers' }, { status: 403 });
+      const runId = clean(body.run_id);
+      if (!runId || body.confirm_approval !== true) return Response.json({ error: 'Explicit approval confirmation and run_id required' }, { status: 400 });
+      const run = await base44.asServiceRole.entities.OfferAgentRun.get(runId);
+      if (!run) return Response.json({ error: 'Run not found' }, { status: 404 });
+      if (run.run_status !== 'pending_approval' || !run.qa_passed || !Array.isArray(run.pricing_sources) || !run.pricing_sources.length) return Response.json({ error: 'QA, verified pricing sources and pending approval are required' }, { status: 409 });
+      const updatedRun = await base44.asServiceRole.entities.OfferAgentRun.update(runId, {
+        run_status: 'approved', approved_by: user.email, approved_at: new Date().toISOString(),
+        approval_required: false, send_allowed: true,
+      });
+      return Response.json({ ok: true, run_id: runId, approved_by: user.email, updated_run: updatedRun, sent: false });
+    }
     const inquiryId = body.inquiry_id;
     const inquiryType = body.inquiry_type === 'contact' ? 'contact' : 'poptavka';
     const targetStatus = body.target_status;
@@ -53,6 +68,8 @@ Deno.serve(async (req: Request) => {
         error: `Invalid transition: ${currentStatus} → ${targetStatus}. Allowed: ${allowed.join(', ') || 'none'}`,
       }, { status: 400 });
     }
+
+    if (targetStatus === 'schvaleno' && !isOwner) return Response.json({ error: 'Only designated owner can approve offers' }, { status: 403 });
 
     // ── Safety gate: odeslano requires explicit confirmation ──
     if (targetStatus === 'odeslano') {

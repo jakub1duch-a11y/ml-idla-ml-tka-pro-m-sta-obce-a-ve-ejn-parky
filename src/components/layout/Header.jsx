@@ -54,7 +54,7 @@ const INTERNATIONAL_NAV = {
 const INFO_LINKS = [
 { icon: Building2, label: 'O společnosti', path: '/o-nas' },
 { icon: Calculator, label: 'Kalkulačka provozních nákladů', path: '/kalkulacka' },
-{ icon: HelpCircle, label: 'Nejčastější dotazy', path: '/podpora' },
+{ icon: HelpCircle, label: 'FAQ – časté dotazy', path: '/faq' },
 { icon: ShieldCheck, label: 'Výhody a benefity', path: '/vyhody' },
 { icon: Wrench, label: 'Servis a údržba', path: '/servis-udrzba' },
 { icon: ShieldCheck, label: 'Ochrana zdraví', path: '/ochrana-zdravi' },
@@ -153,7 +153,7 @@ export default function Header() {
                 onClick={() => setTechnologyOpen((value) => !value)}
                 aria-expanded={technologyOpen}
                 className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${technologyOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
-                Jak fungují <ChevronDown size={14} className={`transition-transform duration-200 ${technologyOpen ? 'rotate-180' : ''}`} />
+                Technologie <ChevronDown size={14} className={`transition-transform duration-200 ${technologyOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {technologyOpen && (
@@ -184,7 +184,7 @@ export default function Header() {
               <button type="button" onClick={() => setInfoOpen((value) => !value)} aria-expanded={infoOpen} className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
-                Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
+                Podpora a firma <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {infoOpen &&

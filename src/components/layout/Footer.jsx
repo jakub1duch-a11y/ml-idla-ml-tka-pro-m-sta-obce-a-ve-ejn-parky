@@ -18,9 +18,9 @@ const columns = [
   links: [
   ['Městská mlžítka', '/mestske-mlzitka'],
   ['Mlžiště a mlhoviště', '/mlhoviste'],
-  ['Zahradní mlžítka', '/zahradni-mlzitka'],
+  ['Zahradní mlžítka', '/rezidencni-mlzeni'],
   ['Zakázková výroba', '/zakazkova-mlzitka'],
-  ['Kompletní katalog', '/katalog-mlzitek']]
+  ['Všechna mlžítka', '/katalog-mlzitek']]
 
 },
 {
@@ -28,7 +28,8 @@ const columns = [
   links: [
   ['Automatizace', '/smart-ovladani'],
   ['Jak funguje mlžení', '/jak-to-funguje'],
-  ['Návrh ochlazovací zóny', '/poptavka'],
+  ['Vodní mlha', '/vodni-mlha'],
+  ['Nezávazná poptávka', '/poptavka'],
   ['Kalkulačka projektu', '/kalkulacka']]
 
 },
@@ -38,7 +39,7 @@ const columns = [
   ['Reference', '/reference'],
   ['Města a obce', '/mlzitka-pro-mesta-obce'],
   ['Parky a hřiště', '/kategorie/parky-hriste'],
-  ['Blog & novinky', '/blog']]
+  ['Blog a novinky', '/blog']]
 
 },
 {
@@ -46,8 +47,8 @@ const columns = [
   links: [
   ['Ke stažení', '/ke-stazeni'],
   ['Servis a údržba', '/servis-udrzba'],
-  ['Časté dotazy', '/faq'],
-  ['O nás', '/o-nas'],
+  ['FAQ – časté dotazy', '/faq'],
+  ['O společnosti HolmTec', '/o-nas'],
   ['Kontakt', '/kontakt'],
   ['Spolupráce a partnerství', '/partnerstvi']]
 
@@ -167,7 +168,7 @@ export default function Footer() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.42, delay: columnIndex * 0.05 }}
-                  className="border-t border-white/10 py-1 md:pt-">
+                  className="border-t border-white/10 py-1 md:border-t-0 md:pt-0">
                   
                   <button
                     type="button"
@@ -269,7 +270,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-start gap-3 sm:items-end">
             <div
-              className="inline-flex items-center gap-2 rounded-full border bg-white/[.00 px-3 py-1.5 text-left border-white/4"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[.04] px-3 py-1.5 text-left"
               aria-label="Zabezpečené připojení a kontrola odkazu"
               title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
               
@@ -286,7 +287,7 @@ export default function Footer() {
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               <Link to="/obchodni-podminky" className="transition-colors hover:text-white/75">Obchodní podmínky</Link>
               <Link to="/gdpr" className="transition-colors hover:text-white/75">GDPR</Link>
-              <Link to="/ke-stazeni" className="transition-colors hover:text-white/75">Ke stažení</Link>
+              <Link to="/faq" className="transition-colors hover:text-white/75">FAQ</Link>
               <Link to="/podpora" className="transition-colors hover:text-white/75">Podpora</Link>
               <Link to="/partnerstvi" className="transition-colors hover:text-white/75">Partnerství</Link>
             </div>

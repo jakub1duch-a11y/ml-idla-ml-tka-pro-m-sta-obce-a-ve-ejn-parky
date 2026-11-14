@@ -76,7 +76,9 @@ export default async function(req: Request) {
       new Date(y.created_date || 0).getTime() - new Date(x.created_date || 0).getTime())[0];
     const checked = Boolean(latest?.qa_passed && Array.isArray(latest?.pricing_sources)
       && latest.pricing_sources.length && ['pending_approval', 'approved'].includes(latest.run_status));
-    const addressedTo = checked ? clientEmail : BUSINESS_EMAIL;
+    const humanApproved = Boolean(latest?.run_status === 'approved'
+      && String(latest?.approved_by || '').trim().toLowerCase() === BUSINESS_EMAIL
+      && latest?.approved_at && latest?.send_allowed === true);
 
     // Unverified offers go to an INTERNAL draft only, never pre-addressed to the client.
     const emailData = checked ? data : { ...data, totalPrice: undefined, smartControlIncluded: false };
@@ -93,12 +95,13 @@ export default async function(req: Request) {
         pdfWarning = fetched.warning;
       } catch { pdfWarning = 'Přílohu PDF nebylo možné bezpečně ověřit.'; }
     } else pdfWarning = 'Cenová nabídka zatím nemá export PDF.';
-    const sendable = checked && Boolean(pdf);
+    const sendable = checked && humanApproved && Boolean(pdf);
 
     // Even if QA passed, missing PDF keeps draft addressed only to the owner.
     const recipient = sendable ? clientEmail : BUSINESS_EMAIL;
     const reviewNote = !checked
       ? 'INTERNÍ NÁVRH: není ověřené QA a zdroje cen. Před odesláním doplňte skutečné ceny, produkt, Canva list a přílohy.'
+      : !humanApproved ? 'INTERNÍ NÁVRH: čeká na výhradní schválení vlastníkem meduna@holmtec.cz. Není určen k odeslání klientovi.'
       : !pdf ? 'INTERNÍ NÁVRH: přiložené PDF chybí nebo není ověřené. Tento koncept není určen k odeslání klientovi.' : '';
     const subject = (sendable ? '' : '[INTERNÍ KONTROLA] ') + email.subject;
     const title = reviewNote ? '<p style="padding:12px;background:#fff3cd;color:#614b00;font-weight:bold">' + escapeHtml(reviewNote) + '</p>' : '';

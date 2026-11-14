@@ -57,7 +57,8 @@
   "app_user_connector_configs": [],
   "selected_skill_names": [
     "dovednost",
-    "brand-voice"
+    "brand-voice",
+    "pricing-and-plans"
   ],
   "selected_workspace_skill_ids": [
     "6a641673856a990e1aee8e81",

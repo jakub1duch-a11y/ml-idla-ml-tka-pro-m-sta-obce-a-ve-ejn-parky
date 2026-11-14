@@ -42,9 +42,8 @@ export const BENDY_SLUGS = ['mlzitko-bendy', 'bendy-60', 'bendy-alej', 'bendy-ar
 
 // Skryj produkty s archivovaným nebo staženým slugem
 const HIDDEN_PRODUCT_SLUGS = new Set([
+  // Historical duplicate only. Current Base44 catalog records must remain visible.
   'bendy-field',
-  'mlzitko-bendy-field',
-  'mlzitko-mrak',
 ]);
 
 export const isArchived = (slug) => {

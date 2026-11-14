@@ -55,7 +55,9 @@
   ],
   "context_files": [],
   "app_user_connector_configs": [],
-  "selected_skill_names": [],
+  "selected_skill_names": [
+    "dovednost"
+  ],
   "selected_workspace_skill_ids": [
     "6a641673856a990e1aee8e81",
     "6a640ce1a65c43bcf07a4a38",

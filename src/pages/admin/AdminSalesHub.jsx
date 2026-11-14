@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExternalLink, FileText, Mail, Palette, ShieldCheck } from 'lucide-react';
+import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
 
 const shortcuts = [
   { label: 'Odeslané nabídky', href: '/admin?tab=offers', Icon: FileText },
@@ -23,7 +24,8 @@ export default function AdminSalesHub() {
         </div>
         <p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><ShieldCheck size={14}/> Koncepty a nabídky vyžadují kontrolu před odesláním. Integrace Canva → Gmail není tímto rozhraním automaticky potvrzena.</p>
       </header>
-      <div className="p-3 lg:p-6">
+      <div className="space-y-5 p-3 lg:p-6">
+        <AdminBusinessSyncPanel />
         <iframe title="MLŽIDLA Sales Hub – obchodní případy a nabídky" src="/obchodni-nabidky" className="h-[calc(100vh-250px)] min-h-[750px] w-full rounded-2xl border border-slate-200 bg-white shadow-sm" />
       </div>
     </section>

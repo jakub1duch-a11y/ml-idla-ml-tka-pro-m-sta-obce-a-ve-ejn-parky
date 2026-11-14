@@ -4,6 +4,7 @@ import {
   ShieldCheck, Sparkles, Unplug
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import AdminGitlabMergeRequests from '@/components/admin/AdminGitlabMergeRequests';
 
 const STATUS_META = {
   active: { label: 'aktivní', tone: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-300', Icon: CheckCircle2 },
@@ -126,6 +127,8 @@ export default function AdminIntegrations() {
           <p>Ceny, technické parametry a geometrie produktů se nesmí domýšlet; používají se schválené zdroje a MASTER reference.</p>
         </div>
       </section>
+
+      <AdminGitlabMergeRequests />
 
       <section>
         <div className="mb-4 flex items-center justify-between gap-3">

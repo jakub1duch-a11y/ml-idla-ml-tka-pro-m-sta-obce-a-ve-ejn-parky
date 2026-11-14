@@ -6,7 +6,7 @@ const fmt = (value = 0) => Math.round(Number(value) || 0).toLocaleString('cs-CZ'
 const pct = (value = 0) => `${Number(value || 0).toFixed(1).replace('.', ',')} %`;
 const money = (value = 0, currency = 'CZK') => {
   try { return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency, maximumFractionDigits: 0 }).format(Number(value) || 0); }
-  catch (_) { return `${fmt(value)} ${currency}`; }
+  catch { return `${fmt(value)} ${currency}`; }
 };
 
 function StatusBadge({ ok, children }) {

@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
+import HomeFaqTeaser from '@/components/home/HomeFaqTeaser';
 import { Link } from 'react-router-dom';
 import { ArrowDown, ArrowRight, Building2, Factory, School, Trees, Wifi, Waves, Check, Droplets, Wrench, Clock3, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
 import { MotionConfig } from 'framer-motion';
@@ -125,6 +126,7 @@ export default function Home2026() {
     <HomeSmart />
     <Suspense fallback={null}><ReferencesStrip /><HomeHolmTec /><CooperationSteps /></Suspense>
     <HomeFinalCTA />
+    <HomeFaqTeaser />
     <Suspense fallback={null}><HomeInquiryForm /><MobileStickyBar /></Suspense>
   </MotionConfig></div>;
 }

@@ -1,0 +1,19 @@
+name: MLŽIDLA – kontrola produktových odkazů
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/check-product-links.mjs'
+      - '.github/workflows/product-links-check.yml'
+  workflow_dispatch:
+
+jobs:
+  verify-product-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate product links against current Base44 catalog snapshot
+        run: node scripts/check-product-links.mjs

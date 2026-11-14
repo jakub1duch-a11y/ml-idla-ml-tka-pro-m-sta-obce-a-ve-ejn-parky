@@ -4,17 +4,30 @@ import PdSpecTable from '@/components/produkt/new/PdSpecTable';
 import PdDocuments from '@/components/produkt/new/PdDocuments';
 
 export default function PdSpecs({ product }) {
-  const construction = [
-    product.material && { label: 'Materiál', value: product.material, icon: Layers3 },
-    product.coverage_area && { label: 'Plocha pokrytí / dosah', value: product.coverage_area, icon: Ruler },
-  ].filter(Boolean);
-  const operation = [
-    product.pressure && { label: 'Provozní tlak', value: product.pressure, icon: Gauge },
-    product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets },
-    product.micron_size && { label: 'Velikost kapek', value: product.micron_size, icon: Waves },
-    product.power_supply && { label: 'Napájení / řízení', value: product.power_supply, icon: PlugZap },
-  ].filter(Boolean);
+  const isGate = product.slug === 'mlzna-brana-gate';
   const variants = Array.isArray(product.variants) ? product.variants.filter((item) => item?.name) : [];
+  const gateProfiles = [...new Set(variants.map((item) => item.profile).filter(Boolean))];
+  const construction = isGate
+    ? [
+        gateProfiles.length && { label: 'Profily katalogových variant', value: gateProfiles.join(' · '), icon: Layers3 },
+        { label: 'Rozměry a provedení', value: 'Liší se podle zvolené varianty GATE (viz výběr výše)', icon: Ruler },
+      ].filter(Boolean)
+    : [
+        product.material && { label: 'Materiál', value: product.material, icon: Layers3 },
+        product.coverage_area && { label: 'Plocha pokrytí / dosah', value: product.coverage_area, icon: Ruler },
+      ].filter(Boolean);
+  const operation = isGate
+    ? [
+        product.pressure && { label: 'Katalogový provozní tlak', value: product.pressure, icon: Gauge },
+        { label: 'Mlžicí trysky', value: 'Počet dle vybrané katalogové varianty; upřesníme typ a průtok', icon: Droplets },
+        { label: 'Ovládání', value: 'Vhodné řešení zvolíme dle požadavků na provoz; není automaticky součástí konstrukce', icon: PlugZap },
+      ].filter(Boolean)
+    : [
+        product.pressure && { label: 'Provozní tlak', value: product.pressure, icon: Gauge },
+        product.water_consumption && { label: 'Spotřeba vody', value: product.water_consumption, icon: Droplets },
+        product.micron_size && { label: 'Velikost kapek', value: product.micron_size, icon: Waves },
+        product.power_supply && { label: 'Napájení / řízení', value: product.power_supply, icon: PlugZap },
+      ].filter(Boolean);
   return (
     <section className="bg-[#F6FBFD] py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
@@ -29,7 +42,7 @@ export default function PdSpecs({ product }) {
             <PdSpecTable title="Voda, mlžení a napájení" rows={operation} icon={Gauge} />
           </div>
         ) : <p className="rounded-lg border border-border bg-card p-6 text-muted-foreground">Technické parametry připravujeme. Konkrétní hodnoty potvrdíme při návrhu řešení.</p>}
-        {variants.length > 0 && (
+        {variants.length > 0 && !isGate && (
           <div id="varianty" className="mt-8 scroll-mt-36 overflow-hidden rounded-[1.75rem] border border-[#D8E8ED] bg-white shadow-[0_16px_48px_rgba(7,26,47,.055)]">
             <div className="flex items-center gap-3 border-b border-[#E6F0F3] p-5 sm:p-6">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E4F6FA] text-[#087E9D]"><Scan size={21} aria-hidden="true" /></span>

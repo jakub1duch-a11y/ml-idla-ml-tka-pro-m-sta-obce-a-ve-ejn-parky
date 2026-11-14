@@ -142,8 +142,14 @@ const AuthenticatedApp = () => {
         <Route path="/connect" element={<Connect />} />
         <Route path="/vyvoj-systemu" element={<Navigate to="/admin?tab=development" replace />} />
         <Route path="/produkt/tepee-vodni-mlha" element={<Navigate to="/produkt/teepee" replace />} />
-        <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzny-mrak-1414" replace />} />
-        <Route path="/produkt/mlzitko-mrak" element={<Navigate to="/produkt/mlzny-mrak-1414" replace />} />
+        <Route path="/produkt/mrak" element={<Navigate to="/produkt/mlzitko-mrak" replace />} />
+        <Route path="/produkt/bendy-field" element={<Navigate to="/produkt/mlzitko-bendy-field" replace />} />
+        <Route path="/produkt/brana-bendy" element={<Navigate to="/produkt/mlzna-brana-steblo" replace />} />
+        <Route path="/produkt/steblo-gate" element={<Navigate to="/produkt/mlzna-brana-steblo" replace />} />
+        <Route path="/produkt/linea-gate" element={<Navigate to="/produkt/linea-CE-gate" replace />} />
+        <Route path="/produkt/linea-el70" element={<Navigate to="/produkt/linea-CE-gate" replace />} />
+        <Route path="/produkt/aura" element={<Navigate to="/produkt/aura-mlzitko" replace />} />
+        <Route path="/produkt/ostev-mlzny-strom" element={<Navigate to="/produkt/ostrev-city" replace />} />
         <Route path="/produkt/gate70" element={<Navigate to="/produkt/mlzna-brana-gate" replace />} />
         <Route path="/produkt/linea-solo" element={<Navigate to="/produkt/Linea-ce" replace />} />
         <Route caseSensitive path="/produkt/linea-ce" element={<Navigate to="/produkt/Linea-ce" replace />} />

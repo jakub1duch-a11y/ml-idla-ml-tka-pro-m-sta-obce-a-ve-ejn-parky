@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { getSelectedGateVariant } from '@/components/produkt/gate/GateProductPresentation';
 import { ArrowRight } from 'lucide-react';
 import { VIDEO_ASSETS } from '@/lib/newMedia';
 
 export default function PdClosingCta({ product }) {
   const [showBar, setShowBar] = useState(false);
+  const [searchParams] = useSearchParams();
+  const gateVariant = product.slug === 'mlzna-brana-gate' ? getSelectedGateVariant(product, searchParams) : null;
+  const selectedSuffix = gateVariant ? `&varianta=${encodeURIComponent(gateVariant.name)}` : '';
 
   useEffect(() => {
     const onScroll = () => setShowBar(window.scrollY > 600);
@@ -33,7 +37,7 @@ export default function PdClosingCta({ product }) {
           <p className="mt-5 font-medium text-base text-[hsl(var(--ring))]">Stačí poslat fotografii, adresu nebo projektovou situaci.</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              to={`/poptavka?produkt=${product.slug}`}
+              to={`/poptavka?produkt=${encodeURIComponent(product.slug)}${selectedSuffix}`}
               className="btn-brand-primary-dark">
               
               Získat návrh a cenu <ArrowRight size={16} />

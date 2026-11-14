@@ -15,7 +15,7 @@ const MobileStickyBar = lazy(() => import('@/components/home/new/MobileStickyBar
 const HERO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9ac50487d_mlzidla_homepage_hero_20261110.webp';
 const MEDIA = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/';
 const collections = [
-  { index: '01', kicker: 'MLŽNÉ BRÁNY', name: 'STÉBLO GATE®', description: 'Vzdušná mlžná brána, která promění průchod v příjemný zážitek.', image: MEDIA + '9f27dc9cf_hero_steblo_gate_desktop_20261101.webp', path: '/produkt/brana-bendy', className: 'gate' },
+  { index: '01', kicker: 'MLŽNÉ BRÁNY', name: 'STÉBLO GATE®', description: 'Vzdušná mlžná brána, která promění průchod v příjemný zážitek.', image: MEDIA + '9f27dc9cf_hero_steblo_gate_desktop_20261101.webp', path: '/produkt/mlzna-brana-steblo', className: 'gate' },
   { index: '02', kicker: 'MLŽNÉ SOCHY', name: 'MRAK 1414', description: 'Výrazná nerezová plastika pro osvěžení a atmosféru veřejného prostoru.', image: MEDIA + 'e88fa9954_mrak_desktop.webp', path: '/produkt/mlzny-mrak-1414', className: 'mrak' },
   { index: '03', kicker: 'ARCHITEKTONICKÉ PRVKY', name: 'KRUH', description: 'Čistá geometrie a jemná vodní mlha pro náměstí i zahrady.', image: MEDIA + 'bb98ea004_kruh_gate_hero_desktop.webp', path: '/produkt/mlzitko-kruh', className: 'kruh' },
 ];

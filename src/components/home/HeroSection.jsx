@@ -46,7 +46,7 @@ const defaultSlides = [
   image: '/media/optimized/91ce94feb_MlzitkoAURA.webp',
   video: '/media/optimized/feff82d99_Aura-mlzitko-video-01.webm',
   badge: 'Produkt AURA',
-  cta: '/produkt/aura'
+  cta: '/produkt/aura-mlzitko'
 },
 {
   slug: 'mrak',
@@ -57,7 +57,7 @@ const defaultSlides = [
   image: '/media/optimized/72a6bb588_mlnprvek-mrak-mlzidla02.webp',
   video: '/media/optimized/da5bb1cbb_mlzitko-mrak-oblak.webm',
   badge: 'Produkt MRAK',
-  cta: '/produkt/mrak'
+  cta: '/produkt/mlzitko-mrak'
 },
 {
   slug: 'ostrev-mlzny-strom',
@@ -68,7 +68,7 @@ const defaultSlides = [
   image: '/media/optimized/84af07a7b_0d4b710a-7605-463b-835a-71e89991f12d.webp',
   video: '/media/optimized/30dac59df_Mlzitkaostev-zivaukazkamlznystrom.webm',
   badge: 'Produkt OSTREV',
-  cta: '/produkt/ostev-mlzny-strom'
+  cta: '/produkt/ostrev-city'
 },
 {
   slug: 'mlzitko-bendy',

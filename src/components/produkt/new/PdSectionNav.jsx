@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { getSelectedGateVariant } from '@/components/produkt/gate/GateProductPresentation';
 import { ArrowRight } from 'lucide-react';
 
 const ITEMS = [
@@ -17,7 +18,13 @@ const ITEMS = [
 
 export default function PdSectionNav({ product }) {
   const [active, setActive] = useState('prehled');
-  const items = ITEMS.filter(([id]) => id !== 'varianty' || product.variants?.length || product.slug === 'mlzitko-mrak' || product.slug.startsWith('mlzny-mrak-'));
+  const [searchParams] = useSearchParams();
+  const gateVariant = product.slug === 'mlzna-brana-gate' ? getSelectedGateVariant(product, searchParams) : null;
+  const gateQuery = gateVariant ? `&varianta=${encodeURIComponent(gateVariant.name)}` : '';
+  const navigationItems = product.slug === 'mlzna-brana-gate'
+    ? [ITEMS[0], ITEMS[3], ...ITEMS.slice(1, 3), ...ITEMS.slice(4)]
+    : ITEMS;
+  const items = navigationItems.filter(([id]) => id !== 'varianty' || product.variants?.length || product.slug === 'mlzitko-mrak' || product.slug.startsWith('mlzny-mrak-'));
 
   useEffect(() => {
     const sections = ITEMS.map(([id]) => document.getElementById(id)).filter(Boolean);
@@ -65,7 +72,7 @@ export default function PdSectionNav({ product }) {
           </nav>
         </div>
         <Link
-          to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`}
+          to={`/poptavka?produkt=${encodeURIComponent(product.slug)}${gateQuery}`}
           className="hidden min-h-[40px] shrink-0 items-center gap-2 bg-[#0A1628] px-4 text-xs font-semibold text-white transition hover:bg-[#153863] sm:inline-flex"
         >
           Poptat <ArrowRight size={14} />

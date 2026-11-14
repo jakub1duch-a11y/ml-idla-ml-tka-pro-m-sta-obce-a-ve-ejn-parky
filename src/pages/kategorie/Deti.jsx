@@ -151,13 +151,26 @@ export default function Deti() {
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme řešení pro vaši školu či hřiště.</h3>
-            <p className="text-slate-500 text-sm mb-6">Konzultace a návrh zdarma · Odpovídáme do 24 h</p>
+            <p className="text-slate-500 text-sm mb-6">Popište místo instalace, požadovaný termín a možnosti napojení vody. Navrhneme další postup.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>
           </div>
           <CategoryInquiryForm category="Školy, školky a děti" projectScope="urban" />
         </div>
+      </section>
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20" aria-labelledby="skoly-faq-title">
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-3">Provoz a údržba</p>
+        <h2 id="skoly-faq-title" className="text-3xl font-bold text-slate-900 mb-6">Časté dotazy k mlžítkům pro školy a školky</h2>
+        <div className="divide-y divide-slate-200 border-y border-slate-200">
+          {[
+            ['Co je potřeba připravit před instalací?', 'Prověříme přívod vody, vhodné umístění, kotvení, odvodnění okolí a přístup pro servis. Konkrétní řešení závisí na zvoleném modelu a místě.'],
+            ['Jak se řeší hygiena a bezpečnost?', 'Je potřeba stanovit provozní režim, kontrolu kvality vody a dohled nad prostorem. Mlžítko není herní prvek a nesplňuje ČSN EN 1176.'],
+            ['Jak probíhá údržba a zazimování?', 'Rozsah údržby závisí na filtraci, kvalitě vody a provozu. Před mrazy je nutné systém odstavit a zazimovat podle pokynů pro konkrétní instalaci.'],
+            ['Lze mlžení automaticky ovládat?', 'Podle konfigurace lze doplnit časové řízení nebo chytré ovládání SUPLA. Vhodné nastavení stanovíme s provozovatelem školy.']
+          ].map(([question, answer]) => <details key={question} className="py-5 group"><summary className="cursor-pointer font-semibold text-slate-900">{question}</summary><p className="mt-3 text-slate-600 leading-relaxed max-w-3xl">{answer}</p></details>)}
+        </div>
+        <Link to="/podpora" className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-slate-900 underline underline-offset-4">Další informace o provozu a údržbě <ArrowRight size={15} /></Link>
       </section>
       <AllProductsCatalog categoryTitle="školy, školky a dětská hřiště" />
       <B2BPortfolioNavigation current="Školy a školky" />

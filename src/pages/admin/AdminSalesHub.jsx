@@ -2,6 +2,7 @@ import React from 'react';
 import { ExternalLink, FileText, Mail, Palette, ShieldCheck, Users, ClipboardCheck, BookOpen, MessageSquareText } from 'lucide-react';
 import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
 import OfferWorkflowInbox from '@/components/admin/OfferWorkflowInbox';
+import HubspotCatalogSync from '@/components/admin/HubspotCatalogSync';
 import AdminNewsletterCampaigns from '@/components/admin/AdminNewsletterCampaigns';
 
 const shortcuts = [
@@ -41,6 +42,7 @@ export default function AdminSalesHub() {
         <details className="rounded-2xl border border-slate-200 bg-white p-5"><summary className="cursor-pointer font-semibold text-[#102b3a]"><BookOpen className="mr-2 inline text-[#008ea5]" size={18}/> Manuál obchodního workflow</summary><div className="mt-4 space-y-2 text-sm text-slate-700"><p><strong>1. HubSpot CRM:</strong> Ověřit portál HolmTec 149778217, firmu a e-mail, vyhledat duplicity a poslední komunikaci. Google Sheets je doplňková obchodní evidence.</p><p><strong>2. Oslovení:</strong> Všeobecná nabídka s QR, obrázkem v těle, PDF a podpisem. Bez individuální ceny.</p><p><strong>3. Poptávka:</strong> Spárovat formulář nebo Gmail s kontaktem a zjistit produkt, místo a přílohy.</p><p><strong>4. Výběr agenta:</strong> Pro konkrétní případ samostatně zvolit Base44 preflight nebo předání do ChatGPT. Gemini zůstává vypnutý.</p><p><strong>5. Nabídka:</strong> Ověřit cenu v kalkulaci, připravit Canva PDF a vhodné řešení SUPLA.</p><p><strong>5. Koncept:</strong> Zkontrolovat adresáta, text, přílohy, duplicity a vazbu na obchodní případ.</p><p><strong>6. Odeslání:</strong> Až po schválení. Stav odeslání ověřit podle skutečné zprávy v Gmailu.</p><p><strong>7. Následná komunikace:</strong> Evidovat odpověď, další krok a platnost nabídky. Neověřený stav neoznačovat jako potvrzený.</p></div></details>
         <OfferWorkflowInbox />
         <AdminBusinessSyncPanel />
+        <HubspotCatalogSync />
         <AdminNewsletterCampaigns />
         <iframe title="MLŽIDLA Sales Hub – obchodní případy a nabídky" src="/obchodni-nabidky" className="h-[calc(100vh-250px)] min-h-[750px] w-full rounded-2xl border border-slate-200 bg-white shadow-sm" />
       </div>

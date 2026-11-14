@@ -9,6 +9,7 @@ export default function QuickVariantInquiry({ product, variants = [], onSubmit }
   const [selection, setSelection] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
   const fields = Array.from(new Set(variants.flatMap(v => Object.keys(v.differences || {}))));
@@ -33,7 +34,7 @@ export default function QuickVariantInquiry({ product, variants = [], onSubmit }
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = oldOverflow; previous?.focus?.(); };
   }, [selection, busy]);
 
-  const open = (value, event) => { triggerRef.current = event.currentTarget; setSelection(value); setError(''); };
+  const open = (value, event) => { triggerRef.current = event.currentTarget; setSelection(value); setSuccess(false); setError(''); };
   async function submit(e) {
     e.preventDefault();
     if (busy) return;
@@ -59,6 +60,7 @@ export default function QuickVariantInquiry({ product, variants = [], onSubmit }
         sourceUrl: window.location.href, photos,
       });
       setSelection(null);
+      setSuccess(true);
     } catch (err) { setError('Poptávku se nepodařilo odeslat. Zkuste to prosím znovu.'); }
     finally { setBusy(false); }
   }
@@ -76,6 +78,7 @@ export default function QuickVariantInquiry({ product, variants = [], onSubmit }
       </table>
     </div>
     {variants.length > 1 && <button type="button" onClick={e => open('all',e)} className="mt-4 rounded-full border border-[#0B5EA8] px-5 py-3 font-semibold text-[#0B5EA8]">Poptat cenu všech variant</button>}
+    {success && <p role="status" className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Děkujeme, poptávka byla odeslána.</p>}
     {selection && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-3" onMouseDown={e => { if (e.target === e.currentTarget) close(); }}>
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="quick-inquiry-title" className="max-h-[95vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4"><h2 id="quick-inquiry-title" className="text-xl font-bold">Zjistit cenu: {product.name}</h2><button type="button" onClick={close} aria-label="Zavřít formulář" className="p-2">✕</button></div>

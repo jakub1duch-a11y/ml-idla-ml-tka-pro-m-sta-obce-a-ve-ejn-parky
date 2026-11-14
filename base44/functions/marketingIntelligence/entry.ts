@@ -15,7 +15,7 @@ async function resolveGa4Property(accessToken: string) {
     const streams = await streamsResponse.json().catch(() => ({}));
     const matchesSite = (streams.dataStreams || []).some((stream: any) =>
       stream.type === 'WEB_DATA_STREAM' &&
-      String(stream.webStreamData?.defaultUri || '').toLowerCase().includes(SITE_HOST)
+      (() => { try { const hostname = new URL(String(stream.webStreamData?.defaultUri || '')).hostname.toLowerCase(); return hostname === SITE_HOST || hostname === 'www.' + SITE_HOST; } catch { return false; } })()
     );
     if (matchesSite) return property.property;
   }
@@ -206,20 +206,21 @@ async function getGa4(base44: any) {
   const yesterdayEventMap = Object.fromEntries(yesterdayEventRows.map((r: any) => [r.eventName, r]));
 
   return {
+    available: true, property_id: propertyId, site_host: SITE_HOST,
     today: toSummary(todayRaw),
     yesterday: toSummary(yesterdayRaw),
     dayBefore: toSummary(dayBeforeRaw),
     month: toSummary(monthRaw),
     sources: rows(sourcesRaw, ['sourceMedium'], ['sessions', 'engagedSessions', 'activeUsers']),
-    pages: rows(pagesRaw, ['pagePath'], ['views', 'activeUsers', 'avgSessionDuration']),
+    pages: rows(pagesRaw, ['pagePath'], ['screenPageViews', 'activeUsers', 'averageSessionDuration']).map((r: any) => ({ ...r, views: r.screenPageViews, avgSessionDuration: r.averageSessionDuration })),
     devices: rows(devicesRaw, ['deviceCategory'], ['sessions', 'activeUsers', 'engagementRate']),
     events: eventRows,
     eventMap,
     yesterdaySources: rows(yesterdaySourcesRaw, ['sourceMedium'], ['sessions', 'engagedSessions', 'activeUsers']),
-    yesterdayPages: rows(yesterdayPagesRaw, ['pagePath'], ['views', 'activeUsers', 'avgSessionDuration']),
+    yesterdayPages: rows(yesterdayPagesRaw, ['pagePath'], ['screenPageViews', 'activeUsers', 'averageSessionDuration']).map((r: any) => ({ ...r, views: r.screenPageViews, avgSessionDuration: r.averageSessionDuration })),
     yesterdayEvents: yesterdayEventRows,
     yesterdayEventMap,
-    trend: rows(trendRaw, ['date'], ['sessions', 'activeUsers', 'views']),
+    trend: rows(trendRaw, ['date'], ['sessions', 'activeUsers', 'screenPageViews']).map((r: any) => ({...r, views: r.screenPageViews})),
   };
 }
 
@@ -391,26 +392,11 @@ async function getGoogleAdsSetup(base44: any) {
     let generateLead = keyEvents.find((item: any) => item.eventName === 'generate_lead') || null;
     let keyEventCreated = false;
 
-    // Self-healing setup: once analytics.edit is authorized, every analytics/report run
-    // makes sure the primary lead event exists as a GA4 Key event.
-    if (!generateLead) {
-      try {
-        generateLead = await fetchJson(`https://analyticsadmin.googleapis.com/v1beta/${propertyId}/keyEvents`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ eventName: 'generate_lead', countingMethod: 'ONCE_PER_EVENT' }),
-        });
-        keyEventCreated = true;
-        keyEvents = [...keyEvents, generateLead];
-      } catch (setupError) {
-        console.warn('GA4 generate_lead Key event auto-setup skipped:', setupError?.message || setupError);
-      }
-    }
-
+    // Read-only diagnostics: GA4 key-event creation requires an explicit, separate admin action.
     return {
       available: true,
       generateLeadKeyEvent: Boolean(generateLead),
-      keyEventCreated,
+      keyEventCreated: false,
       googleAdsLinked: googleAdsLinks.length > 0,
       googleAdsLinks: googleAdsLinks.map((item: any) => ({ customerId: item.customerId, adsPersonalizationEnabled: item.adsPersonalizationEnabled })),
     };
@@ -542,7 +528,9 @@ export default async function(req: Request) {
       });
     }
 
-    const sendEmail = Boolean(body.sendEmail);
+    // No outbound report without a separate, explicitly approved workflow.
+    if (body.sendEmail === true) return Response.json({ error: 'Automatické odesílání analytických reportů je vypnuto. Použijte kontrolovaný koncept v Gmailu.' }, { status: 403 });
+    const sendEmail = false;
 
     const [ga4, leads, search, instagram, facebook, metaAds, googleAds] = await Promise.all([
       getGa4(base44),

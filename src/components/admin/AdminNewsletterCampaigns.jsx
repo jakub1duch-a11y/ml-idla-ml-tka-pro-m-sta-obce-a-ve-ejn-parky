@@ -71,7 +71,7 @@ export default function AdminNewsletterCampaigns(){
     }catch{setError('Koncept se nepodařilo uložit. Zkontrolujte oprávnění administrátora.');}
     finally{setSaving(false);}
   };
-  const useTemplate=(t)=>{setForm({title:t.title,subject:t.subject,preheader:t.preheader,body_text:t.body,topic:t.topic,notes:'',status:'draft'});setError('');setNotice('');};
+  const applyTemplate=(t)=>{setForm({title:t.title,subject:t.subject,preheader:t.preheader,body_text:t.body,topic:t.topic,notes:'',status:'draft'});setError('');setNotice('');};
   const field='mt-1 w-full min-h-11 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#008ea5]';
   return <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6" aria-labelledby="newsletter-admin-title">
     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -90,7 +90,7 @@ export default function AdminNewsletterCampaigns(){
     <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
       <div className="space-y-4">
         <div><h3 className="text-sm font-bold text-[#102b3a]">Nový koncept</h3><p className="mt-1 text-xs text-slate-500">Vyberte šablonu, upravte text a uložte jako koncept bez rozeslání.</p></div>
-        <div className="flex flex-wrap gap-2">{TEMPLATES.map(t=><button key={t.id} type="button" onClick={()=>useTemplate(t)} className="min-h-11 rounded-lg border border-[#008ea5]/30 bg-[#f0fbfc] px-3 text-xs font-semibold text-[#007b92] hover:bg-[#e1f4f7]">{t.title}</button>)}</div>
+        <div className="flex flex-wrap gap-2">{TEMPLATES.map(t=><button key={t.id} type="button" onClick={()=>applyTemplate(t)} className="min-h-11 rounded-lg border border-[#008ea5]/30 bg-[#f0fbfc] px-3 text-xs font-semibold text-[#007b92] hover:bg-[#e1f4f7]">{t.title}</button>)}</div>
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="text-xs font-semibold text-slate-700">Interní název<input value={form.title} onChange={e=>setForm(f=>({...f,title:e.target.value}))} maxLength={160} className={field}/></label>
           <label className="text-xs font-semibold text-slate-700">Téma pro souhlas<select value={form.topic} onChange={e=>setForm(f=>({...f,topic:e.target.value}))} className={field}>{TOPICS.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}</select></label>

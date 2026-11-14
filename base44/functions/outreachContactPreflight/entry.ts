@@ -65,7 +65,7 @@ function mailMime(to: string, subject: string, body: string, preview: any, photo
     `--${alt}`,'Content-Type: text/plain; charset=UTF-8','Content-Transfer-Encoding: base64','',lines(b64text(body)),'',
     `--${alt}`,'Content-Type: text/html; charset=UTF-8','Content-Transfer-Encoding: base64','',lines(b64text(html)),'',
     `--${alt}--`,'',`--${related}`,
-    `Content-Type: ${preview.mime}; name="preview.jpg"`,'Content-Disposition: inline; filename="preview.jpg"','Content-ID: <mlzidla-preview>','Content-Transfer-Encoding: base64','',lines(b64(photo)),'',
+    `Content-Type: ${preview.mime}; name="preview.${preview.mime === 'image/png' ? 'png' : 'jpg'}"`,'Content-Disposition: inline; filename="preview.jpg"','Content-ID: <mlzidla-preview>','Content-Transfer-Encoding: base64','',lines(b64(photo)),'',
     `--${related}--`,'',`--${mixed}`,'Content-Type: application/pdf; name="mlzidla-nabidka.pdf"','Content-Disposition: attachment; filename="mlzidla-nabidka.pdf"','Content-Transfer-Encoding: base64','',lines(b64(pdfBytes)),'',`--${mixed}--`,'');
   return b64url(bodyMime);
 }
@@ -102,7 +102,7 @@ export default async function(req: Request) {
     if(contact.status!=='new')blockers.push('CRM kontakt již není ve stavu Nový.');
     if(suppressed.some((r:unknown[])=>emailKey(r[0])===email))blockers.push('Kontakt je v seznamu NEOSLOVOVAT.');
     const firm=clean(row[0],200).toLocaleLowerCase('cs-CZ');
-    if(other.some((r:unknown[],idx:number)=>idx+2!==Number(contact.sheet_row)&&clean(r[0],200).toLocaleLowerCase('cs-CZ')===firm&&firm&&/osloveno|odesláno|odeslano|odpově|pozastaveno/i.test(clean(r[8],160))))blockers.push('Jiný kontakt stejné organizace již byl osloven.');
+    if(other.some((r:unknown[],idx:number)=>idx+2!==Number(contact.sheet_row)&&clean(r[0],200).toLocaleLowerCase('cs-CZ')===firm&&firm&&/^(osloveno|odpově|odpoved|pozastaveno|follow-up)/i.test(clean(r[8],160))))blockers.push('Jiný kontakt stejné organizace již byl osloven.');
     const qs=['in:sent','in:drafts','in:inbox'].map(s=>`${s} ${s==='in:inbox'?'from':'to'}:${email}`);
     const matched=await Promise.all(qs.map(q=>apiJSON(`https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=1&q=${encodeURIComponent(q)}`,gmailConnection.accessToken)));
     if(matched[0]?.messages?.length)blockers.push('Gmail SENT obsahuje předchozí odeslání tomuto příjemci.');

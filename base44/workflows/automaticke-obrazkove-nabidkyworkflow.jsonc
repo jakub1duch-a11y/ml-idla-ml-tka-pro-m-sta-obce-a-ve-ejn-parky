@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "workflow_id": "mlzidla-automaticke-obrazkove-nabidky",
+  "version": "2026-11-14.1",
+  "name": "Automatick\u00e9 obr\u00e1zkov\u00e9 nab\u00eddky ML\u017dIDLA.cz",
+  "description": "Intern\u00ed, podm\u00edn\u011bn\u00fd workflow od p\u0159ijat\u00e9 popt\u00e1vky k profesion\u00e1ln\u00ed cenov\u00e9 nab\u00eddce Canva a Gmail konceptu; \u017e\u00e1dn\u00e9 automatick\u00e9 odesl\u00e1n\u00ed.",
+  "state": "configuration_only_not_enabled",
+  "target_superagent": {
+    "agent_id": "6a96b327ae001b0b50847f1b",
+    "task_id": "6addc9cb422627dcc96c4b38",
+    "task_url": "https://app.base44.com/superagent/6a96b327ae001b0b50847f1b/tasks/6addc9cb422627dcc96c4b38?step=trigger",
+    "model_preference": "Fable 5.2 (only if selectable and available; never assert configured)",
+    "status": "message_quota_exceeded_not_synced"
+  },
+  "security": {
+    "business_only": true,
+    "customer_data_private": true,
+    "allowed_mailbox": "meduna@holmtec.cz",
+    "default_send_email": false,
+    "default_publish_offer": false,
+    "default_update_production": false,
+    "credentials": "Use authorized OAuth/MCP connectors; never embed tokens in JSON",
+    "approval_required_before_sending": true
+  },
+  "sources": {
+    "inquiries": [
+      "Base44 form inquiries/ProjectOrder (read allowed records only)",
+      "Gmail INBOX messages from meduna@holmtec.cz; reply threads and attachments"
+    ],
+    "pricing": {
+      "authority": "Google Sheet Kalkulace ml\u017e\u00edtka 2026, catalog and BOM",
+      "spreadsheet_id": "1kyxH-ihr6YC5xnu8Ef5X4jbR81VVaJtDO1UVWK5d_S8",
+      "catalog_tab": "\ud83d\udca7 Katalog produkt\u016f 2026",
+      "additional_reference_csv_id": "1T5GK-T7uT5Ooy6ALH9WtIo0S88Q7yvGQ",
+      "rule": "Verify exact variant and units in live source on EVERY run; archived CSV is reference only; no price from memory",
+      "on_unavailable": "needs_price_review"
+    },
+    "products": {
+      "authority": [
+        "Base44 Product/ProductOfferProfile/OfferAsset and verified media records",
+        "ML\u017dN\u00dd DISK: product masters, technical drawings and approved product leaves"
+      ],
+      "visual_rule": "Approved product slug + exact version + validated master geometry. Never substitute another model, alter tubes/nozzles, or treat AI visualization as real photo."
+    },
+    "company_crm": {
+      "sheet_id": "1m-NObbjCYDYG6Sg3B-2g-TcLZkkqGzejDFfCKjqQyUE",
+      "base44_entities": [
+        "CrmContact",
+        "EmailMessage",
+        "ProjectOrder",
+        "OfferAgentRun",
+        "OfferAsset",
+        "OfferVariant",
+        "SyncRun"
+      ]
+    },
+    "drive": {
+      "shared_drive_id": "0ACRsWxU90i5aUk9PVA",
+      "workflow_folder_id": "1WdEakL7O80-ZEgx-9zqeF39HvsC-v3s3",
+      "product_leaf_folder_id": "1J56ies8pJ54TnwVZ_UO_Vp8Z7zhQ0qN3"
+    },
+    "canva": {
+      "template_search_names": [
+        "Ml\u017eidla TP",
+        "ML\u017dIDLA | Hlavn\u00ed \u0161ablona nab\u00eddek z webu | 2026",
+        "Workflow nab\u00eddek HolmTec ML\u017dIDLA.cz"
+      ],
+      "known_base_design_id": "DAHZTe0Zohg",
+      "brand_master_design_id": "DAHa1istefo",
+      "catalog_v5_design_id": "DAHa1b0hdsw",
+      "rule": "Copy approved template. Keep logo, navy/cyan/white palette, typography and editable layers. PDF export with source design edit link. No fabricated images, claims or specs."
+    }
+  },
+  "trigger": {
+    "type": "new_or_materially_updated_inquiry",
+    "conditions": [
+      "Valid customer request",
+      "Request not already handled using same source id + thread + product variants",
+      "No marketing cold outreach here; cold outreach uses separate approved generic template"
+    ],
+    "dedupe_key": "normalized_email|gmail_thread_id|project_id|sorted_product_slug_variant|latest_message_id",
+    "mode": "manual_or_authorized_scheduler_only"
+  },
+  "steps": [
+    {
+      "id": "01_intake",
+      "action": "Read inquiry and attachments; identify client, organization, segment, locality, place, usage, timeline, requested products, quantities, email thread.",
+      "output": "inquiry_record",
+      "on_missing": "needs_information"
+    },
+    {
+      "id": "02_match",
+      "action": "Match EXACT product slug and variant in Product/OfferAsset/approved visuals; compare client references; avoid geometrical substitutions.",
+      "output": "validated_variants",
+      "on_missing": "needs_product_review"
+    },
+    {
+      "id": "03_price",
+      "action": "Read LIVE catalog and BOM in authority Sheet. Record source spreadsheet, tab, row, timestamp, CZK/EUR currency, quantity tier, prices, tax rate and calculation version. Mark ambiguous prices as UNVERIFIED; no invented prices. Private customer show incl. VAT, public institutions excl. VAT with both totals in final table.",
+      "output": "priced_items",
+      "on_missing": "needs_price_review"
+    },
+    {
+      "id": "04_technical",
+      "action": "Compose product, installation, pumps/filtration if required, optional water softener, control variant, SUPLA only when relevant; explicitly separate included and optional items.",
+      "output": "technical_solution"
+    },
+    {
+      "id": "05_design",
+      "action": "Copy approved Canva template; prepare client-specific branded pages with valid images, exact technical claims and itemized price table. Include quote cover, situational visuals, variants, technical solution, control, scope, terms, totals VAT, validity, contact/signature.",
+      "output": "canva_design_id + edit_url"
+    },
+    {
+      "id": "06_export",
+      "action": "Export PDF and email-compatible JPG/PNG preview, verify exported files match latest version and are available by id/url, keep provenance.",
+      "output": "pdf_asset + preview_asset",
+      "on_missing": "needs_attachment_review"
+    },
+    {
+      "id": "07_quality_gate",
+      "action": "Review product variant, technical values, customer, contact email, price source, arithmetic, VAT, currency, image geometry, Canva render, PDF count, links, and duplicate drafts.",
+      "output": "approved_for_draft",
+      "failure_state": "blocked_manual_review"
+    },
+    {
+      "id": "08_gmail_draft",
+      "action": "Create or update ONLY last matching draft in same mailbox and conversation; attach Canva PDF and optional product datasheet, embed JPG/PNG preview beneath message; never send. Keep friendly personalized Czech/Slovak if appropriate.",
+      "output": "draft_id + gmail_thread_id",
+      "prerequisite": "quality_gate_passed",
+      "send": false
+    },
+    {
+      "id": "09_audit",
+      "action": "Write redacted processing record: source ids, result, assets links, validation date, approvals needed and errors; do not store OAuth credentials.",
+      "output": "OfferAgentRun/SyncRun",
+      "privacy": "internal"
+    }
+  ],
+  "offer_pages_order": [
+    "Osloven\u00ed a d\u016fvody \u0159e\u0161en\u00ed",
+    "Vizualizace produktu v m\u00edst\u011b z\u00e1kazn\u00edka nebo schv\u00e1len\u00e9 referen\u010dn\u00ed prost\u0159ed\u00ed",
+    "Produkty, varianty, rozm\u011bry, materi\u00e1ly",
+    "Technick\u00e9 \u0159e\u0161en\u00ed a polo\u017ekov\u00e9 ceny",
+    "Chytr\u00e9 \u0159\u00edzen\u00ed SUPLA/senzory/rozvad\u011b\u010d pokud odpov\u00edd\u00e1 zad\u00e1n\u00ed",
+    "Dodac\u00ed podm\u00ednky a stavebn\u00ed p\u0159ipravenost",
+    "Cenov\u00e1 tabulka bez DPH/DPH/v\u010detn\u011b DPH",
+    "Zpracovatel, kontakty, platnost, podpis"
+  ],
+  "pricing_rules": {
+    "tax_rate": "Read applicable VAT rate from confirmed quote context; don't hard-code in absence of evidence",
+    "rounding_czk": "round published client amounts as agreed, default 50 CZK only when source policy confirms",
+    "multi_quantity": "Use approved exact quantity tier (1, 2, 3 pieces); never calculate unverified tier discounts",
+    "foreign_currency": "Use verified rate on quote date; record source and timestamp"
+  },
+  "state_machine": [
+    "new",
+    "needs_information",
+    "product_verified",
+    "needs_product_review",
+    "price_verified",
+    "needs_price_review",
+    "canva_draft_ready",
+    "needs_attachment_review",
+    "blocked_manual_review",
+    "gmail_draft_ready",
+    "human_approved",
+    "sent_manually"
+  ],
+  "hard_stops": [
+    "No valid exact product or master media",
+    "No live pricing confirmation or mismatched variant",
+    "Missing PDF or unverified preview attachment",
+    "Missing valid recipient or consent-based outreach context",
+    "Duplicate existing draft in same Gmail thread",
+    "Google Sheets OAuth expired / missing access",
+    "Canva OAuth/token or export unavailable",
+    "Mail account not verified as meduna@holmtec.cz"
+  ],
+  "manual_follow_up": {
+    "approval": "User checks Gmail concept and Canva PDF; user sends manually.",
+    "no_auto_send": true
+  }
+}

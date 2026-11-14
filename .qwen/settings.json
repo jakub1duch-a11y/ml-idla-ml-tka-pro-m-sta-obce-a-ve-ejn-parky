@@ -1,6 +1,26 @@
 {
   "context": {
-    "fileName": "QWEN.md"
+    "fileName": "QWEN.md",
+    "fileFiltering": {
+      "respectGitIgnore": true,
+      "respectQwenIgnore": true
+    }
+  },
+  "tools": {
+    "approvalMode": "default"
+  },
+  "permissions": {
+    "ask": [
+      "Bash(git push *)",
+      "Bash(git merge *)",
+      "Bash(git reset *)",
+      "Bash(npm publish *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Read(.env)",
+      "Read(.env.*)"
+    ]
   },
   "mcp": {
     "allowed": []

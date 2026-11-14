@@ -15,3 +15,17 @@ export function preparePublicCatalogProducts(records = []) {
   const visible = records.filter(isPublicCatalogProduct);
   return sortByStructure((mergePortalGateProducts(visible) || []).filter(isPublicCatalogProduct));
 }
+// Non-destructive editorial diagnostics. Keep product visibility and ordering
+// independent from missing photos or optional metadata.
+export function auditPublicCatalogProducts(records = []) {
+  const issues = [];
+  const seen = new Set();
+  for (const product of Array.isArray(records) ? records : []) {
+    if (!isPublicCatalogProduct(product)) continue;
+    const slug = normalize(product.slug);
+    if (seen.has(slug)) issues.push({ slug: product.slug, code: 'duplicate_slug' });
+    seen.add(slug);
+    if (!String(product.name || '').trim()) issues.push({ slug: product.slug, code: 'missing_name' });
+  }
+  return issues;
+}

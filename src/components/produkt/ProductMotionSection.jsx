@@ -1,33 +1,33 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Droplets, Gauge, Sparkles } from 'lucide-react';
-
-const FALLBACK_VIDEO = '/media/optimized/bc59d4ed7_4419E385-9A17-4EF1-AA75-90C2B12ACDE3.webm';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Volume2, VolumeX } from 'lucide-react';
 
 export default function ProductMotionSection({ product }) {
-  const reduceMotion = useReducedMotion();
-  const videoUrl = product?.motion_video_url || product?.video_url || FALLBACK_VIDEO;
-  const poster = product?.image_url || product?.gallery_urls?.[0];
-
+  const video = useRef(null);
+  const [muted, setMuted] = useState(true);
+  const [failed, setFailed] = useState(false);
+  const url = product?.motion_video_url || product?.video_url;
+  useEffect(() => {
+    const element = video.current;
+    if (!element || !('IntersectionObserver' in window)) return undefined;
+    const observer = new IntersectionObserver(([entry]) => { if (!entry.isIntersecting) element.pause(); });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [url, failed]);
+  if (!url || failed) return null;
   return (
-    <section className="border-t border-slate-200 bg-slate-950 py-16 text-white sm:py-20">
-      <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-6 lg:grid-cols-[.74fr_1.26fr] lg:gap-14 lg:px-10">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[.06] px-3 py-1.5">
-            <Sparkles size={13} className="text-cyan-300" />
-            <span className="font-mono text-[9px] uppercase tracking-[.18em] text-white/65">Product motion</span>
-          </div>
-          <h2 className="mt-5 font-heading text-3xl font-medium leading-tight tracking-[-.035em] sm:text-4xl">{product?.name} v detailu pohybu.</h2>
-          <p className="mt-4 max-w-xl text-sm leading-7 text-white/60 sm:text-base">Krátký filmový loop ukazuje povrch nerezi, osazení trysek a charakter jemného mlžení bez rušivých titulků. Je navržený pro rychlý autoplay na desktopu i mobilu.</p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[.05] px-3 py-2 text-xs text-white/72"><Droplets size={13} className="text-cyan-300"/>Jemná mlha</span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[.05] px-3 py-2 text-xs text-white/72"><Gauge size={13} className="text-cyan-300"/>Nízkotlaký provoz</span>
-          </div>
+    <section id="mlzeni-v-pohybu" className="bg-[#071A2A] py-16 text-white sm:py-20">
+      <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-7 lg:grid-cols-[.75fr_1.25fr] lg:px-10">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-widest text-cyan-200">Prohlédněte si produkt</p>
+          <h2 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl">{product.name} v pohybu</h2>
+          <p className="mt-4 leading-7 text-white/80">Pusťte si video a prohlédněte si provedení produktu. Zvuk záznamu můžete zapnout podle potřeby.</p>
+          <Link to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`} className="mt-6 inline-flex min-h-12 items-center rounded-xl bg-cyan-100 px-5 py-3 font-semibold text-[#071A2A]">Poptat tento produkt</Link>
         </div>
-
-        <motion.div initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden rounded-[28px] border border-white/12 bg-black shadow-2xl shadow-black/30">
-          <video src={videoUrl} poster={poster} autoPlay={!reduceMotion} muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
-        </motion.div>
+        <div className="min-w-0">
+          <video ref={video} src={url} poster={product.image_url} controls muted={muted} playsInline preload="none" onError={() => setFailed(true)} onVolumeChange={() => setMuted(video.current?.muted ?? true)} aria-label={`Video produktu ${product.name}`} className="aspect-video w-full rounded-2xl bg-black object-contain" />
+          <button type="button" onClick={() => { if(video.current) { video.current.muted = !muted; setMuted(!muted); } }} aria-pressed={!muted} className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/30 px-4 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-200">{muted ? <VolumeX size={18} /> : <Volume2 size={18} />}{muted ? 'Zapnout zvuk' : 'Vypnout zvuk'}</button>
+        </div>
       </div>
     </section>
   );

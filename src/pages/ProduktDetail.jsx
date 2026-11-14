@@ -77,7 +77,7 @@ export default function ProduktDetail() {
         'Zdroj: ' + payload.sourceUrl,
       ].filter(Boolean).join('\\n'),
     });
-    if (response?.data?.error || response?.error) throw new Error('submit_failed');
+    if (response?.data?.error || response?.error || response?.data?.success === false || response?.success === false || !((response?.data?.inquiry?.id) || (response?.inquiry?.id))) throw new Error('submit_not_confirmed');
     trackInquirySubmitted('quick_variant_inquiry', product.slug, response?.data?.inquiry?.id || '');
   };
   if (loading) return (

@@ -75,7 +75,16 @@ export default function ProduktDetail() {
       <div id="galerie" className="scroll-mt-36"><PdVisualGalleryCompact product={product} /></div>
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
-      <div id="reference" className="scroll-mt-24"><PdReferences product={product} /></div>
+      <div id="reference" className="scroll-mt-24">
+        <PdReferences product={product} />
+        {/mrak/i.test(`${product.slug || ''} ${product.name || ''}`) && (
+          <div className="mx-auto max-w-7xl px-5 pb-8 sm:px-8 lg:px-10">
+            <Link to="/reference/mlzitko-mrak-soukroma-zahrada" className="inline-flex items-center gap-2 rounded-full border border-[#C9DFD5] bg-[#F3FAF6] px-4 py-2 text-xs font-semibold text-[#236A4E] transition-colors hover:bg-[#E1F3E9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#236A4E]">
+              Skutečná realizace · MRAK 1414 v soukromé zahradě <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        )}
+      </div>
       <PdFaq product={product} />
       <PdSuplaControl product={product} />
       <PdClosingCta product={product} />

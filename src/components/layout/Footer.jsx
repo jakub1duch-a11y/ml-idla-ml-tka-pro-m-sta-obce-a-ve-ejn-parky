@@ -226,7 +226,7 @@ export default function Footer() {
 
         
 
-        <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="grid gap-7 border-b border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center hidden">
           <div>
             <p className="max-w-2xl font-heading text-2xl leading-tight text-white sm:text-3xl">
               Chcete navrhnout mlžítka pro konkrétní místo?

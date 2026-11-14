@@ -507,8 +507,8 @@ export const SEO_PAGES = {
     canonicalPath: '/mestske-mlzitka',
   },
   mestskeOchlazovani: {
-    title: 'Městská mlžítka pro ochlazení měst',
-    description: 'Městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, pěší zóny a sportoviště. Návrh rozmístění, technické podklady, řízení i servis.',
+    title: 'Ochlazování měst a obcí: mlžné zóny a prvky',
+    description: 'Jak řešit ochlazování měst a obcí? Mlžné zóny, brány a nerezová mlžítka pro náměstí, parky a sportoviště. Návrh, řízení provozu a servis.',
     keywords: 'městská mlžítka, mlžítka pro města, ochlazování měst, ochlazování veřejného prostoru, mlžné brány, mlžná zóna',
     canonicalPath: '/mestske-ochlazovani-verejneho-prostoru',
   },
@@ -748,9 +748,9 @@ export const SEO_PAGES = {
     canonicalPath: '/kategorie/art-instalace',
   },
   deti: {
-    title: 'Mlhoviště pro školy, školky a dětská hřiště',
-    description: 'Mlhoviště a mlžítka pro mateřské školy, základní školy a dětská hřiště. Návrh mlžicí zóny a vhodného provozu podle věku uživatelů a charakteru areálu.',
-    keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
+    title: 'Mlžítka pro školky, školy a školní zahrady',
+    description: 'Nerezová mlžítka pro mateřské a základní školy, školní zahrady a pobytové zóny. Návrh umístění, přívodu vody, bezpečného provozního režimu a údržby.',
+    keywords: 'mlžítka pro školky, mlžítka pro školy, mlhoviště pro děti, ochlazení školní zahrady, mlžné prvky pro školky',
     canonicalPath: '/kategorie/skoly-skolky-deti',
   },
 };

@@ -18,8 +18,8 @@ const FAQ = [
 export default function MestskeOchlazovani() {
   useEffect(() => {
     setSEO({
-      title: 'Městská mlžítka pro ochlazení měst | MLŽIDLA.cz',
-      description: 'Městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky a sportoviště. Návrh rozmístění, technické podklady, chytré řízení, instalace i servis.',
+      title: 'Ochlazování měst a obcí: mlžné zóny a prvky',
+      description: 'Jak řešit ochlazování měst a obcí? Mlžné zóny, brány a nerezová mlžítka pro náměstí, parky a sportoviště. Návrh, řízení provozu a servis.',
       canonicalPath: '/mestske-ochlazovani-verejneho-prostoru',
       keywords: 'městská mlžítka, mlžítka pro města, ochlazování měst, ochlazování veřejného prostoru, mlžné brány, mlžná zóna',
     });

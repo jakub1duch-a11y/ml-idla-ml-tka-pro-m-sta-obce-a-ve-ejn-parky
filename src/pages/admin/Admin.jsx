@@ -72,7 +72,7 @@ const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
   { label: 'Obchod', ids: ['approvals', 'sales-hub', 'poptavky', 'offers', 'crm', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
-  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal', 'notifications'] },
+  { label: 'Data & systém', ids: ['analytics', 'integrations', 'chatgpt', 'notifications', 'product-analytics', 'reference-analytics'] },
 ];
 
 export default function Admin() {

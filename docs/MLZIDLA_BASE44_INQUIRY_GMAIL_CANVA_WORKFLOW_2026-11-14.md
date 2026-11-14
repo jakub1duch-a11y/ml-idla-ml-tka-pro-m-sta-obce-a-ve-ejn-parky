@@ -4,6 +4,20 @@ Stav: **vývojová větev, read-only preflight**. Nezaměňovat s aktivním work
 Zdroje: [Creating workflows](https://docs.base44.com/Building-your-app/Creating-workflows), [Building a presentation](https://docs.base44.com/Building-your-app/building-a-presentation#presenting-from-the-editor), [Base Code](https://base44.com/base-code).
 Aplikace: `6a3ee88c10959cd3588c4d68`, workflow engine `workflows`, frontend React/Vite.
 
+## Aktualizace architektury: HubSpot jako primární CRM
+
+**Hlavní CRM je HubSpot HolmTec, portál 149778217**. Base44 je klientská a produktová administrace, čte/kontroluje webové poptávky, PDF a galerie. Google Sheets zůstává pracovním registrem leadů a podkladem pro oslovení, nikoliv druhou autoritou stavů obchodních případů. Před zápisem do HubSpotu je povinná serverová kontrola portálu, e-mailového klíče kontaktu a idempotence případu. Zatím implementován pouze read-only lookup kontaktu; write-sync Deal/Company je samostatná etapa.
+
+### Oddělené spouštěče v administraci
+
+- **„Ověřit případ v HubSpotu“**: backend `hubspotOfferCaseGateway` načte danou `Poptavka` / `ContactInquiry` / `EmailMessage`, ověří OAuth portál a vyhledá kontakt podle e-mailu. Při jiném portálu vrátí blokaci. Neukládá nové obchodní případy.
+- **„Spustit Base44 kontrolu“**: pro webovou poptávku spouští stávající `offerWorkflowPreflight`. Zatím jde o **kontrolu připravenosti**, nikoliv automatickou produkci PDF.
+- **„Předat do ChatGPT chatu“**: zkopíruje individualizované zadání a otevře ChatGPT. **Jde o uživatelské předání, nikoliv programové API/MCP volání.** Kontext včetně e-mailu zůstane v clipboardu a nepřenáší se v URL.
+- **Přímé ChatGPT API / MCP spuštění**: samostatný autentizovaný backend endpoint a návratový callback do HubSpotu navrhnout až po ověření API klíče, scopes a identifikátoru běhu. Před použitím produkčních údajů zajistit souhlas, práva a audit. Nepředstírat, že samotné otevření chatu volá API.
+- **Gemini**: odložený poskytovatel. Nemá aktivní tlačítko ani běh.
+
+Všechny cesty budou používat společnou strukturu podkladů, cenu a geometrickou kontrolu. Výsledky providerů musejí mít oddělené identifikátory běhu a nesmí zakládat duplicitní nabídky. Až po ověření cen a příloh smí vzniknout Gmail **koncept**, nikdy automaticky odeslaná zpráva.
+
 ## Cíl a rozhodnutí
 
 1. **Web Poptavka.created / ContactInquiry.created** → zaznamenat případ, spárovat kontakt a původní zdroj (ID, e-mail, firma, přesná varianta). Workflow nesmí zacyklit aktualizacemi stejné entity.
@@ -30,7 +44,8 @@ Aplikace: `6a3ee88c10959cd3588c4d68`, workflow engine `workflows`, frontend Reac
 ## Implementováno v této větvi
 
 - `base44/functions/offerPipelineIntakePreflight/entry.ts` — pouze administrátorská kontrola nových `Poptavka`, `ContactInquiry` a importovaných obchodních odpovědí `EmailMessage`, doporučené kroky, neověřené ceny/MASTER označené jako blokace.
-- `src/components/admin/OfferWorkflowInbox.jsx` — kontrolní panel v administraci / Obchodní centrum.
+- `src/components/admin/OfferWorkflowInbox.jsx` — kontrolní panel v administraci / Obchodní centrum s odlišnými tlačítky HubSpot, Base44 a ChatGPT.
+- `base44/functions/hubspotOfferCaseGateway/entry.ts` — serverově vázaná kontrola identifikátoru portálu 149778217 a čtení odpovídajícího kontaktu HubSpot, bez zápisu.
 - Dosavadní `prepareOfferConcept`, `autoDraftOfferFromInquiry`, `generateOfferPresentation`, `sendInquiryReply` mají vlastní logiku, která před automatickým propojením vyžaduje audit zastaralých orientačních cen a kontroly přístupu. Nevolat je slepě z event triggeru.
 
 ## Dokončení před aktivací

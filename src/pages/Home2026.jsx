@@ -7,7 +7,6 @@ import '@/styles/home-2026-redesign.css';
 
 const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
 const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip'));
-const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSteps'));
 const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
 const HomeHolmTec = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeHolmTec })));
 const MobileStickyBar = lazy(() => import('@/components/home/new/MobileStickyBar'));
@@ -123,7 +122,7 @@ export default function Home2026() {
     <HomeSpaces />
     <Suspense fallback={<div className="ml-home26-loading" aria-hidden="true" />}><ProductPhotoGallery /></Suspense>
     <HomeSmart />
-    <Suspense fallback={null}><ReferencesStrip /><HomeHolmTec /><CooperationSteps /></Suspense>
+    <Suspense fallback={null}><ReferencesStrip /><HomeHolmTec /></Suspense>
     <HomeFinalCTA />
     <Suspense fallback={null}><HomeInquiryForm /><MobileStickyBar /></Suspense>
   </MotionConfig></div>;

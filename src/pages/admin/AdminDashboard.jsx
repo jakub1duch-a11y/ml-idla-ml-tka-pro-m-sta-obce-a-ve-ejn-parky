@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import WorkBriefingPanel from '@/components/admin/WorkBriefingPanel';
+import OperationsOverview from '@/components/admin/OperationsOverview';
 
 const PRODUCT_NAME_CACHE = {};
 
@@ -111,7 +112,8 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-8 max-w-[1600px] mx-auto">
+      <OperationsOverview />
       <h2 className="text-white text-lg font-medium">Přehled</h2>
 
       {analyticsUnavailable && (

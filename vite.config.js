@@ -23,6 +23,6 @@ export default defineConfig({
     dedupe: ['react', 'react-dom', 'scheduler'],
   },
   build: {
-    sourcemap: true,
+    sourcemap: false,
   },
 });

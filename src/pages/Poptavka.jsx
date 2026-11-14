@@ -24,9 +24,9 @@ export default function Poptavka() {
   const initialProduct = searchParams.get('produkt') || '';
   const mrakVariantId = initialProduct === 'mlzitko-mrak' ? searchParams.get('varianta') : null;
   const mrakVariantName = mrakVariantId === 'velky'
-    ? 'MLŽNÝ MRAK — Velký, h 2 400 mm (MRAK 13R 2424)'
+    ? 'MRAK 13R 2424 (2 400 × 2 400 mm; dle katalogu)'
     : mrakVariantId === 'maly'
-      ? 'MLŽNÝ MRAK — Malý, h 1 600 mm (návrhové provedení)'
+      ? 'MRAK 10R 1414 (1 400 × 1 400 mm; dle katalogu)'
       : (searchParams.get('varianta') || '');
   const assembly = searchParams.get('sestava') === '1' ? {
     pocet: searchParams.get('pocet') || '',

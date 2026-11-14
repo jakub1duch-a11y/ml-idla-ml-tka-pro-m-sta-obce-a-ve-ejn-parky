@@ -1,11 +1,14 @@
 import React from 'react';
-import { ExternalLink, FileText, Mail, Palette, ShieldCheck } from 'lucide-react';
+import { ExternalLink, FileText, Mail, Palette, ShieldCheck, Users, ClipboardCheck, BookOpen, MessageSquareText } from 'lucide-react';
 import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
 import AdminNewsletterCampaigns from '@/components/admin/AdminNewsletterCampaigns';
 
 const shortcuts = [
   { label: 'Odeslané nabídky', href: '/admin?tab=offers', Icon: FileText },
   { label: 'Poptávky', href: '/admin?tab=poptavky', Icon: Mail },
+  { label: 'AI nabídky · přehled', href: '/admin?tab=offers', Icon: FileText },
+  { label: 'Kontakty a CRM', href: '/admin?tab=crm', Icon: Users },
+  { label: 'Gmail koncepty', href: 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts', Icon: Mail, external: true },
   { label: 'Canva · katalog', href: 'https://www.canva.com/design/DAHa1B5S2eg/BjtW1avef1aLLSQWNpueRg/edit', Icon: Palette, external: true },
 ];
 export default function AdminSalesHub() {
@@ -26,6 +29,14 @@ export default function AdminSalesHub() {
         <p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><ShieldCheck size={14}/> Koncepty a nabídky vyžadují kontrolu před odesláním. Integrace Canva → Gmail není tímto rozhraním automaticky potvrzena.</p>
       </header>
       <div className="space-y-5 p-3 lg:p-6">
+        <div className="grid gap-3 md:grid-cols-3">
+          {[
+            { title: 'AI nabídky a platnost', description: 'Otevřít evidované nabídky, stav odeslání a dobu do expirace.', href: '/admin?tab=offers', Icon: FileText },
+            { title: 'Koncepty Gmail', description: 'Kontrola adresáta, předmětu, textu a PDF příloh před ručním odesláním.', href: 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts', Icon: ClipboardCheck },
+            { title: 'Kontakty a komunikace', description: 'Historie oslovení, odpovědí, webových poptávek a následných kroků.', href: '/admin?tab=crm', Icon: MessageSquareText },
+          ].map(({title,description,href,Icon}) => <a key={title} href={href} className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-[#008ea5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#008ea5]"><Icon className="mb-3 text-[#008ea5]" size={23}/><h2 className="font-semibold text-[#102b3a]">{title}</h2><p className="mt-2 text-sm text-slate-600">{description}</p></a>)}
+        </div>
+        <details className="rounded-2xl border border-slate-200 bg-white p-5"><summary className="cursor-pointer font-semibold text-[#102b3a]"><BookOpen className="mr-2 inline text-[#008ea5]" size={18}/> Manuál obchodního workflow</summary><div className="mt-4 space-y-2 text-sm text-slate-700"><p><strong>1. Kontakt:</strong> Ověřit firmu a e-mail, vyhledat duplicity a poslední komunikaci.</p><p><strong>2. Oslovení:</strong> Všeobecná nabídka s QR, obrázkem v těle, PDF a podpisem. Bez individuální ceny.</p><p><strong>3. Poptávka:</strong> Spárovat formulář nebo Gmail s kontaktem a zjistit produkt, místo a přílohy.</p><p><strong>4. Nabídka:</strong> Ověřit cenu v kalkulaci, připravit Canva PDF a vhodné řešení SUPLA.</p><p><strong>5. Koncept:</strong> Zkontrolovat adresáta, text, přílohy, duplicity a vazbu na obchodní případ.</p><p><strong>6. Odeslání:</strong> Až po schválení. Stav odeslání ověřit podle skutečné zprávy v Gmailu.</p><p><strong>7. Následná komunikace:</strong> Evidovat odpověď, další krok a platnost nabídky. Neověřený stav neoznačovat jako potvrzený.</p></div></details>
         <AdminBusinessSyncPanel />
         <AdminNewsletterCampaigns />
         <iframe title="MLŽIDLA Sales Hub – obchodní případy a nabídky" src="/obchodni-nabidky" className="h-[calc(100vh-250px)] min-h-[750px] w-full rounded-2xl border border-slate-200 bg-white shadow-sm" />

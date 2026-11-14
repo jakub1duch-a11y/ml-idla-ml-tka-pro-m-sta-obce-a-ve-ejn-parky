@@ -612,6 +612,16 @@ export const SEO_PAGES = {
     keywords: 'FAQ mlžná technika, údržba mlžítka, zazimování mlhoviště, instalace vodních prvků, certifikace pitná voda',
     canonicalPath: '/podpora',
   },
+  sportoviste: {
+    title: 'Mlžítka pro sportoviště a venkovní areály',
+    description: 'Nerezová mlžítka pro sportoviště, běžecké areály, hřiště a odpočinkové zóny. Návrh umístění, napojení vody, ovládání a sezónního provozu.',
+    canonicalPath: '/mlzitka-pro-sportoviste',
+  },
+  mestskyMobiliar: {
+    title: 'Mlžítka jako součást městského mobiliáře',
+    description: 'Designová nerezová mlžítka a mlžné prvky pro městský mobiliář, náměstí, parky a promenády. Návrh tvaru, kotvení, přívodu vody a údržby.',
+    canonicalPath: '/mlzitka-mestsky-mobiliar',
+  },
   mestOobce: {
     title: 'Mlžítka pro města a obce: návrh a výroba',
     description: 'Městská mlžítka, mlhoviště a mlžné brány pro náměstí, parky, školy a sportoviště. Návrh rozmístění, technické podklady, chytré řízení, instalace a servis.',

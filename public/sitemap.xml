@@ -45,4 +45,6 @@
   <url><loc>https://mlzidla.cz/reference/bendy-jicinske-namesti</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/reference/mestska-mlzna-brana-gate</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mlzidla.cz/reference/mesto-polna-mlzitko-mrkev</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mlzidla.cz/mlzitka-pro-sportoviste</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mlzidla.cz/mlzitka-mestsky-mobiliar</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

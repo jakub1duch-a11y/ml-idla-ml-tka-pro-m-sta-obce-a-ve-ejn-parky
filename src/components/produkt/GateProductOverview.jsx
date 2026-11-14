@@ -12,7 +12,7 @@ function GateProductCard({ product }) {
       <span className="gate-card-tag">{product.group === 'standalone' ? 'Samostatný prvek' : product.group === 'portal' ? 'Vstupní portál' : product.group === 'arrangement' ? 'Mlžná sestava' : 'Mlžná brána'}</span>
     </Link>
     <div className="gate-card-body"><p className="gate-eyebrow">{product.caption}</p><h3><Link to={product.detailUrl}>{product.name}</Link></h3><p className="gate-card-description">{product.text}</p>
-      <div className="gate-card-actions"><Link to={product.detailUrl}>Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link><Link to={product.quoteUrl} aria-label={`Poptat ${product.name}`} className="bg-[hsl(var(--card))] rounded-none">Zjistit cenu</Link></div>
+      <div className="gate-card-actions"><Link to={product.detailUrl}>Detail produktu <ArrowRight size={17} aria-hidden="true" /></Link><Link to={product.quoteUrl} aria-label={`Poptat konkrétní variantu ${product.name}`} className="bg-[hsl(var(--card))] rounded-none">Poptat tuto variantu</Link></div>
     </div>
   </article>;
 }

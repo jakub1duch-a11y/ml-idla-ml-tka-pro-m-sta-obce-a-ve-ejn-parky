@@ -43,3 +43,9 @@ Verze: 2026-11-14. Platí pro veřejný web, administraci, nabídky a jejich zdr
 - [ ] Alt, srcSet/sizes, rozměry, lazy/eager a dostupné URL
 - [ ] SEO, interní odkazy, mobil a desktop
 - [ ] Build, automatické testy, preview, schválení
+
+## Automatický export tří formátů (2026-11-14)
+- `node scripts/build-media-variants.mjs` zpracuje místní schválené zdroje `public/media/optimized` a `public/assets` do `public/media/variants`.
+- Vytváří AVIF, WebP a JPEG (JPEG má bílé pozadí, proto průhledné produkty preferují AVIF/WebP). Varianty šířek 480 a 960 px se generují jen při dostatečném rozlišení originálu; originál zůstává zálohou.
+- `src/lib/mediaVariantsManifest.json` obsahuje skutečné cesty a rozměry; `ImageOptimized.jsx` vybírá správný formát podle prohlížeče. U ostatních obrázků zůstává původní zdroj.
+- Vzdálené obrázky z Base44 CMS, Drive a dynamických záznamů nelze považovat za optimalizované, dokud nebyly získány, schváleny a exportovány. Neslepovat automaticky fotografie různých produktů.

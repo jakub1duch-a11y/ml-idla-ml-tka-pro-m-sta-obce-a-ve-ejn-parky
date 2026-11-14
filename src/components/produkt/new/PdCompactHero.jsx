@@ -6,6 +6,7 @@ import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { base44 } from '@/api/base44Client';
 import { responsiveProductSrcSet } from '@/lib/responsiveProductMedia';
+import ImageOptimized from '@/components/ImageOptimized';
 
 import { eightHourWaterCost, eightHourWaterConsumption, WATER_PRICE_CZK_M3 } from '@/lib/waterCost';
 

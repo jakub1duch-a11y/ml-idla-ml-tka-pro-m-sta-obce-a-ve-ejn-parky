@@ -1,0 +1,7 @@
+{
+  "type": "gitlab",
+  "scopes": [
+    "read_user",
+    "api"
+  ]
+}

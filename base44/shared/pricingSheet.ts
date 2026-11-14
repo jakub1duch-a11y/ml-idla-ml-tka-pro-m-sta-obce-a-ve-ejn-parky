@@ -1,6 +1,7 @@
-export const PRICING_SPREADSHEET_ID = '1krevQXk1GnSDjT3f5bDCL2nPjgb_u9-_D2YXwIBBhjI';
-export const PRICING_SHEET_NAME = 'Kalkulace 2026';
-export const PRICING_RANGE = `'${PRICING_SHEET_NAME}'!A8:AJ220`;
+export const PRICING_SPREADSHEET_ID = '1kyxH-ihr6YC5xnu8Ef5X4jbR81VVaJtDO1UVWK5d_S8';
+export const PRICING_SHEET_NAME = '📋 Kusovník';
+export const PRICING_RANGE = `'${PRICING_SHEET_NAME}'!A1:AK3`;
+export const PRICING_SOURCE_URL = `https://docs.google.com/spreadsheets/d/${PRICING_SPREADSHEET_ID}/edit`;
 
 const clean = (value: unknown) => String(value || '').replace(/\s+/g, ' ').trim();
 const normalize = (value: unknown) => clean(value)
@@ -84,82 +85,124 @@ export type PricingResult = {
   note?: string;
 };
 
+// Jediný zdroj prodejních cen produktů je aktuální řádek 2 listu „📋 Kusovník“.
+// Položky bez ceny nelze automaticky nacenit; nikdy nepřebírat Product.price_from.
 export async function findPricingForProduct(base44: any, product: any, inquiryText = ''): Promise<PricingResult> {
+  const source = `Google Sheets: Kalkulace mlžítka 2026 / ${PRICING_SHEET_NAME}`;
+  const noMatch = (note: string): PricingResult => ({
+    matched: false, sheet_key: '', sheet_spec: '', offer_price_ex_vat: 0,
+    vat_amount: 0, total_inc_vat: 0, source, note,
+  });
+
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+    if (!accessToken) return noMatch('Google Sheets není připojen; cena musí být ověřena ručně.');
     const range = encodeURIComponent(PRICING_RANGE);
-    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${PRICING_SPREADSHEET_ID}/values/${range}?majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+    const response = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${PRICING_SPREADSHEET_ID}/values/${range}?majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`,
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
     if (!response.ok) throw new Error(`Google Sheets ${response.status}: ${await response.text()}`);
     const payload = await response.json();
-    const rows: any[][] = Array.isArray(payload?.values) ? payload.values : [];
-    const entries: any[] = [];
-
-    for (let i = 0; i < rows.length - 1; i += 1) {
-      const row = rows[i] || [];
-      const next = rows[i + 1] || [];
-      const key = clean(row[0]);
-      if (!key || normalize(next[4]) !== 'CENA ZA POL') continue;
-      entries.push({
-        key,
-        normalizedKey: normalize(key),
-        spec: clean(row[2]),
-        offerPriceExVat: parseMoney(next[31]), // AF — Nabídková cena bez DPH
-        vatAmount: parseMoney(next[32]),      // AG — DPH
-        totalIncVat: parseMoney(next[33]),    // AH — CELKEM vč. DPH
-      });
+    const rows: unknown[][] = Array.isArray(payload?.values) ? payload.values : [];
+    const [names = [], prices = [], catalogFlags = []] = rows;
+    if (!names?.length || normalize(names[0]) !== 'PRODUKT' || normalize(prices[0]) !== 'AKTUALNI CENA KS') {
+      return noMatch('Neočekávané záhlaví aktuálního kusovníku. Automatické nacenění zastaveno.');
     }
+    const entries = names.slice(1).map((name, idx) => ({
+      key: clean(name), normalizedKey: normalize(name), price: parseMoney(prices[idx + 1]),
+      catalog: String(catalogFlags[idx + 1] || '').trim() === '1',
+    })).filter(entry => entry.key);
+    const productName = normalize(product?.name);
+    const slug = slugKey(product?.slug);
+    const context = normalize(`${product?.name || ''} ${inquiryText}`);
+    let target = entries.find(entry => entry.normalizedKey === productName);
 
-    const aliases = rankAliases(product, inquiryText);
-    let candidates = entries.filter((entry) => aliases.includes(entry.normalizedKey));
-
-    if (!candidates.length) {
-      const productName = normalize(product?.name);
-      candidates = entries.filter((entry) => productName && (productName.includes(entry.normalizedKey) || entry.normalizedKey.includes(productName)));
-    }
-
-    if (candidates.length > 1 && /MRAK/.test(normalize(product?.name))) {
-      const wantsTall = /2500|2[,. ]?5\s*M|H\s*2500/.test(normalize(inquiryText));
-      const wanted = candidates.find((entry) => wantsTall ? /2500/.test(entry.spec) : /1600/.test(entry.spec));
-      if (wanted) candidates = [wanted];
-    }
-
-    const chosen = candidates.find((entry) => entry.offerPriceExVat > 0) || candidates[0];
-    if (!chosen || !(chosen.offerPriceExVat > 0)) {
-      return {
-        matched: false,
-        sheet_key: chosen?.key || '',
-        sheet_spec: chosen?.spec || '',
-        offer_price_ex_vat: 0,
-        vat_amount: 0,
-        total_inc_vat: 0,
-        source: `Google Sheets: Mlžítko / ${PRICING_SHEET_NAME}`,
-        note: chosen ? 'Řádek byl nalezen, ale nabídková cena bez DPH není vyplněná.' : 'Pro produkt nebyl nalezen jednoznačný řádek ceníku.',
+    if (!target) {
+      const knownAliases: Record<string, string> = {
+        'MLZITKO-BENDY': 'BENDY_60',
+        'BENDY-SINGLE': 'BENDY_60',
+        'BENDY-ARC': 'BENDY_76',
+        'AURA-MLZITKO': 'AURA 700',
+        'AURA-GARDEN-SINGLE': 'AURA 700',
+        'AURA-CITY-SINGLE': 'AURA 900',
+        'MLZITKO-LIZATKO': 'LÍZÁTKO',
+        'MLZNA-SPIRALA': 'SPIRÁLA',
+        'OSTREV-MLZITKO': 'OSTREV',
+        'OSTREV-CITY-S': 'OSTREV',
+        'OSTREV-CITY-M': 'OSTREV',
+        'OSTREV-CITY-L': 'OSTREV',
+        'Y-ARMIST-TR60': 'Y-ARMIST TR60',
+        'Y-ARMIST-J70': 'Y-ARMIST HR70',
+        'LINEA-SOLO': 'LINEA Ce 70',
       };
+      let key = knownAliases[slug] || '';
+      if (/MRAK/.test(context)) {
+        key = /\b1414\b|\b10R\b/.test(context) ? 'MRAK 10R 1414'
+          : /\b2424\b|\b13R\b/.test(context) ? 'MRAK 13R 2424' : '';
+      } else if (/LINEA/.test(context)) {
+        key = /\bCE\s*70\b/.test(context) ? 'LINEA Ce 70'
+          : /\bLE\s*70\b/.test(context) ? 'LINEA Le 70'
+          : /\bJA\s*70\b/.test(context) ? 'LINEA JA 70'
+          : /\bTR\s*50\b/.test(context) ? 'LINEA TR 50'
+          : /\bTR\s*60\b/.test(context) ? 'LINEA TR 60'
+          : /\bTR\s*76\b/.test(context) ? 'LINEA TR 76' : key;
+      } else if (/BRANA/.test(context)) {
+        key = /76/.test(context) && /2130/.test(context) ? 'BRÁNA 76_2130'
+          : /2115/.test(context) ? 'BRÁNA 60_2115'
+          : /2130/.test(context) ? 'BRÁNA 60_2130' : '';
+      } else if (/VOLAVKA/.test(context)) {
+        key = /GRACILIS/.test(context) ? 'VOLAVKA Gracilis'
+          : /GIGANTEA/.test(context) ? 'VOLAVKA Gigantea' : '';
+      } else if (/TEEPEE/.test(context)) {
+        key = /\b50\b/.test(context) ? 'TEEPEE_50' : /\b60\b/.test(context) ? 'TEEPEE_60' : '';
+      } else if (/BENDY/.test(context) && /\b76\b/.test(context)) {
+        key = 'BENDY_76';
+      } else if (/AURA/.test(context) && /\b900\b/.test(context)) {
+        key = 'AURA 900';
+      }
+      if (key) target = entries.find(entry => entry.normalizedKey === normalize(key));
     }
 
+    if (!target) return noMatch(`Produkt nebo jeho varianta ${clean(product?.name)} neodpovídá jednoznačně aktuálnímu kusovníku; nutné ruční ověření.`);
+    if (!(target.price > 0)) return noMatch(`Položka ${target.key} nemá v řádku 2 ověřenou prodejní cenu.`);
+    const vat = Math.round(target.price * 0.21);
     return {
-      matched: true,
-      sheet_key: chosen.key,
-      sheet_spec: chosen.spec,
-      offer_price_ex_vat: chosen.offerPriceExVat,
-      vat_amount: chosen.vatAmount,
-      total_inc_vat: chosen.totalIncVat,
-      source: `Google Sheets: Mlžítko / ${PRICING_SHEET_NAME} / ${chosen.key}`,
+      matched: true, sheet_key: target.key, sheet_spec: '',
+      offer_price_ex_vat: target.price, vat_amount: vat, total_inc_vat: target.price + vat,
+      source: `${source} / ${target.key}`,
+      note: target.catalog ? '' : 'Interní produkt: není označen k publikování. Před odesláním nabídky vyžaduje schválení.',
     };
   } catch (error) {
-    return {
-      matched: false,
-      sheet_key: '',
-      sheet_spec: '',
-      offer_price_ex_vat: 0,
-      vat_amount: 0,
-      total_inc_vat: 0,
-      source: `Google Sheets: Mlžítko / ${PRICING_SHEET_NAME}`,
-      note: error?.message || String(error),
-    };
+    return noMatch(error instanceof Error ? error.message : String(error));
   }
+}
+
+// Množstevní ceny jsou souhrnná cena za 2 nebo 3 kusy (ne jednotková cena).
+// Číst pouze při přípravě dané varianty; při výpadku se nesmí vymýšlet sleva.
+export async function findVolumePricing(base44: any, productKey: string): Promise<Record<number, number>> {
+  const result: Record<number, number> = {};
+  if (!clean(productKey)) return result;
+  try {
+    const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+    if (!accessToken) return result;
+    const range = encodeURIComponent("'💧 Katalog produktů 2026'!A2:K42");
+    const response = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${PRICING_SPREADSHEET_ID}/values/${range}?majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE`,
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
+    if (!response.ok) return result;
+    const data = await response.json();
+    const rows = Array.isArray(data?.values) ? data.values : [];
+    if (normalize(rows?.[0]?.[0]) !== 'PRODUKT') return result;
+    const entry = rows.slice(1).find((row: unknown[]) => normalize(row?.[0]) === normalize(productKey));
+    if (!entry) return result;
+    const two = parseMoney(entry[9]); // J = Cena za 2 ks (celkem)
+    const three = parseMoney(entry[10]); // K = Cena za 3 ks (celkem)
+    if (two > 0) result[2] = two;
+    if (three > 0) result[3] = three;
+  } catch (_) { /* Neověřená množstevní sleva se nesmí dosazovat */ }
+  return result;
 }
 
 export type SmartControlPricing = {
@@ -349,8 +392,7 @@ export async function estimateCustomConceptPricing(base44: any, costPlan: Custom
   }
 }
 
-export function validatedCatalogFallback(product: any) {
-  const value = Number(product?.price_from || 0);
-  // Hodnoty 0/1 Kč v katalogu jsou placeholdery, ne obchodní cena.
-  return value >= 1000 ? value : 0;
+export function validatedCatalogFallback(_product: any) {
+  // Staré Product.price_from ani cache nejsou povolené jako fallback do obchodní nabídky.
+  return 0;
 }

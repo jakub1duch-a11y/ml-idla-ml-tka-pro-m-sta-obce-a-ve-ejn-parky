@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ArrowUpRight, GitMerge, GitPullRequest, RefreshCw, Search, ShieldCheck, AlertCircle, Clock3 } from 'lucide-react';
+import { ArrowUpRight, GitPullRequest, RefreshCw, Search, ShieldCheck, AlertCircle, Clock3 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const SCOPES = [

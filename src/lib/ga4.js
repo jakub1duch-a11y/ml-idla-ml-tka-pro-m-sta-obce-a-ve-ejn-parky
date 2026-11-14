@@ -164,6 +164,23 @@ function installGlobalListeners() {
       page_path: window.location.pathname,
     });
   }, { capture: true });
+  const videoMilestones = new WeakMap();
+  document.addEventListener('timeupdate', (event) => {
+    const video = event.target;
+    if (!(video instanceof HTMLVideoElement) || !Number.isFinite(video.duration) || video.duration <= 0) return;
+    const progress = Math.floor((video.currentTime / video.duration) * 100);
+    let milestones = videoMilestones.get(video);
+    if (!milestones) { milestones = new Set(); videoMilestones.set(video, milestones); }
+    for (const milestone of [25, 50, 75]) {
+      if (progress < milestone || milestones.has(milestone)) continue;
+      milestones.add(milestone);
+      void emit('video_progress', {
+        video_src: (video.currentSrc || video.getAttribute('src') || '').split('/').pop()?.split('?')[0] || 'video',
+        video_percent: milestone,
+        page_path: window.location.pathname,
+      });
+    }
+  }, { capture: true });
   document.addEventListener('ended', (event) => {
     const video = event.target;
     if (!(video instanceof HTMLVideoElement)) return;

@@ -47,8 +47,12 @@ export default async function(req) {
     const project = await base44.asServiceRole.entities.ProjectOrder.get(projectId).catch(() => null);
     if (!project) return Response.json({ error: 'not_found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
 
-    // Urči aktuální stav — buď z payloadu nebo z entity
-    const currentStatus = newStatus || project.status;
+    // Zdroj pravdy je uložený ProjectOrder, nikoliv stav dodaný v HTTP požadavku.
+    // Zpožděný či podvržený payload nesmí rozeslat nepravdivé oznámení.
+    const currentStatus = clean(project.status);
+    if (newStatus && newStatus !== currentStatus) {
+      return Response.json({ error: 'status_mismatch' }, { status: 409, headers: { 'Cache-Control': 'no-store' } });
+    }
 
     // Nespouštět na interní stavy nebo pokud se stav nezměnil
     if (!CLIENT_VISIBLE_STATUSES.includes(currentStatus)) {

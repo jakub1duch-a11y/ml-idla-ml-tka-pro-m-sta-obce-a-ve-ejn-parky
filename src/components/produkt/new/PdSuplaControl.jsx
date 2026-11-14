@@ -20,20 +20,20 @@ export default function PdSuplaControl({ product }) {
 
   return (
     <section id="chytre-rizeni" aria-labelledby="pd-supla-title" className="scroll-mt-36 overflow-hidden bg-[#071A2A] py-16 text-white sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16">
-          <div>
+      <div className="mx-auto w-full max-w-7xl px-5 sm:px-7 lg:px-10">
+        <div className="grid min-w-0 gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16">
+          <div className="min-w-0 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#74DAEA]/25 bg-[#74DAEA]/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.15em] text-[#91E5F1]">
               <Wifi size={15} aria-hidden="true" /> Volitelný doplněk · chytré řízení
             </div>
-            <h2 id="pd-supla-title" className="mt-6 max-w-xl font-heading text-[clamp(2.1rem,5vw,3.7rem)] font-bold leading-[1.04] tracking-[-.045em]">
+            <h2 id="pd-supla-title" className="mx-auto mt-6 max-w-xl font-heading lg:mx-0 text-[clamp(2.1rem,5vw,3.7rem)] font-bold leading-[1.04] tracking-[-.045em]">
               SUPLA. Mlžení pod kontrolou.
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/80">
+            <p className="mx-auto mt-5 max-w-xl text-base lg:mx-0 leading-7 text-white/80">
               Pro {productName} lze podle zvoleného technického řešení navrhnout dálkové a automatické spínání mlžení. Z mobilu nastavíte provozní čas, případně scénář podle údajů z osazených čidel.
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <div className="mt-8 grid gap-3 text-left sm:grid-cols-2">
               {[
                 ['Ovládání z mobilu', 'Ruční zapnutí a vypnutí přes podporovaný SUPLA modul.'],
                 ['Časové scénáře', 'Mlžení běží jen v nastavených obdobích.'],
@@ -59,7 +59,7 @@ export default function PdSuplaControl({ product }) {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative mx-auto w-full min-w-0 max-w-xl">
             <div aria-hidden="true" className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(circle_at_50%_40%,rgba(71,210,232,.19),transparent_65%)]" />
             <div className="relative rounded-[2rem] border border-white/15 bg-[linear-gradient(145deg,#153B4A,#0A1F30)] p-5 shadow-[0_35px_100px_rgba(0,0,0,.28)] sm:p-7">
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -68,7 +68,7 @@ export default function PdSuplaControl({ product }) {
                 <span className="rounded-full border border-white/15 px-3 py-1.5 text-[10px] font-medium text-white/65">Ilustrace · bez připojení</span>
               </div>
 
-              <div className="mt-6 rounded-[1.7rem] border border-white/20 bg-white p-5 text-[#0A2837] shadow-xl sm:p-6">
+              <div className="mt-6 min-w-0 rounded-[1.7rem] border border-white/20 bg-white p-3 text-[#0A2837] shadow-xl sm:p-6">
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-3">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#E8F7FA] text-[#087EA0]"><Smartphone size={22} aria-hidden="true" /></span>
@@ -80,8 +80,8 @@ export default function PdSuplaControl({ product }) {
                     <span className={`absolute left-[5px] top-[5px] h-[26px] w-[26px] rounded-full bg-white shadow-md transition-transform ${demoActive ? 'translate-x-[26px]' : 'translate-x-0'}`} aria-hidden="true" />
                   </button>
                 </div>
-                <div className="mt-5 rounded-2xl bg-[#F0FAFC] p-5">
-                  <div className="flex items-center justify-between">
+                <div className="mt-5 rounded-2xl bg-[#F0FAFC] p-3 sm:p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="text-sm font-semibold text-[#244758]">Ukázkový stav</span>
                     <span className={`inline-flex items-center gap-2 text-xs font-bold ${demoActive ? 'text-[#087D99]' : 'text-[#617987]'}`}>
                       <span className={`h-2 w-2 rounded-full ${demoActive ? 'bg-[#04B5CB] motion-safe:animate-pulse' : 'bg-[#93AAB3]'}`} />

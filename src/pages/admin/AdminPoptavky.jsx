@@ -57,6 +57,7 @@ function StatCard({ icon: Icon, label, value, color }) {
 export default function AdminPoptavky() {
   const [items, setItems] = useState([]);
   const [projectOrders, setProjectOrders] = useState([]);
+  const [offerAssets, setOfferAssets] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -68,12 +69,13 @@ export default function AdminPoptavky() {
 
   const load = async () => {
     setLoading(true);
-    const [poptavky, inquiries, advisorLeads, orders, prods] = await Promise.all([
+    const [poptavky, inquiries, advisorLeads, orders, prods, assets] = await Promise.all([
       base44.entities.Poptavka.list('-created_date'),
       base44.entities.ContactInquiry.list('-created_date'),
       base44.entities.WebAdvisorLead.list('-created_date'),
       base44.entities.ProjectOrder.list('-created_date', 200),
       base44.entities.Product.list(),
+      base44.entities.OfferAsset.list('-created_date', 500),
     ]);
     const normalized = [
       ...poptavky.map((p) => ({
@@ -95,6 +97,7 @@ export default function AdminPoptavky() {
     ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime());
     setItems(normalized);
     setProjectOrders(orders || []);
+    setOfferAssets(assets || []);
     setProducts(prods || []);
     setLoading(false);
   };
@@ -310,6 +313,9 @@ export default function AdminPoptavky() {
                   const bucket = BUCKETS[getBucket(item.status)];
                   const StatusIcon = bucket.icon;
                   const offer = getOfferInfo(item);
+                const linkedAssets = offerAssets.filter(a => a.inquiry_id === item.id || (a.project_order_id && offer.orders.some(o => o.id === a.project_order_id)));
+                const canvaAssets = linkedAssets.filter(a => /canva\.com/i.test(a.file_url || ''));
+                const pdfAssets = linkedAssets.filter(a => ['quote_pdf','presentation_pdf'].includes(a.asset_type));
                   return (
                     <button key={`${item.entity}-${item.id}`} onClick={() => setExpanded(item.id)}
                       className="w-full flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/3 hover:bg-white/5 hover:border-white/10 transition-all text-left">
@@ -409,6 +415,9 @@ export default function AdminPoptavky() {
                 const StatusIcon = bucket.icon;
                 const isOpen = expanded === item.id;
                 const offer = getOfferInfo(item);
+                const linkedAssets = offerAssets.filter(a => a.inquiry_id === item.id || (a.project_order_id && offer.orders.some(o => o.id === a.project_order_id)));
+                const canvaAssets = linkedAssets.filter(a => /canva\.com/i.test(a.file_url || ''));
+                const pdfAssets = linkedAssets.filter(a => ['quote_pdf','presentation_pdf'].includes(a.asset_type));
                 return (
                   <div key={`${item.entity}-${item.id}`} className="rounded-xl border border-white/8 bg-white/3 overflow-hidden">
                     <button onClick={() => setExpanded(isOpen ? null : item.id)}
@@ -477,6 +486,13 @@ export default function AdminPoptavky() {
                           </div>
                         )}
 
+                        <div className="rounded-xl border border-white/10 bg-[#111b27] p-4 space-y-3">
+                          <h3 className="text-sm font-semibold text-white">Nabídky v Canvě a soubory ({linkedAssets.length})</h3>
+                          {canvaAssets.length ? canvaAssets.map(asset => <div key={asset.id} className="flex flex-wrap items-center gap-2 text-xs"><span className="text-white/65 mr-auto">{asset.title || asset.file_name}</span><a href={asset.file_url} target="_blank" rel="noopener noreferrer" className="inline-flex gap-1 items-center rounded-lg border border-cyan/30 text-cyan px-3 py-2"><ExternalLink size={12}/> Otevřít / upravit v Canvě</a></div>) : <p className="text-xs text-white/40">Zatím není přiřazen odkaz na Canva návrh. Odkaz na editaci vyžaduje oprávnění k designu.</p>}
+                          {pdfAssets.map(asset => <a key={asset.id} href={asset.file_url} target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 items-center text-xs text-white/75 hover:text-cyan mr-3"><FileText size={13}/>{asset.title || asset.file_name}</a>)}
+                          {item.email && <a href={'https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(item.email)+'&su='+encodeURIComponent('Nabídka MLŽIDLA.cz – '+(item.product||'Vaše poptávka'))} target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 items-center rounded-lg border border-white/20 text-white/80 px-3 py-2 text-xs"><Mail size={13}/> Otevřít koncept v Gmailu</a>}
+                          <p className="text-xs text-white/35">Gmail otevře editor nové zprávy; koncept ani přílohy se automaticky neukládají.</p>
+                        </div>
                         <div className="flex gap-2 flex-wrap pt-1">
                           <p className="text-xs text-white/25 font-mono mr-2 self-center">Stav:</p>
                           {STATUS_OPTIONS[item.entity].map((opt) => (

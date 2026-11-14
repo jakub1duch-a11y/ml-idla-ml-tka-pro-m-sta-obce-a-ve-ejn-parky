@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Maximize2, Pause, Play, X, Droplets } from '
 import { base44 } from '@/api/base44Client';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { responsiveProductSrcSet } from '@/lib/responsiveProductMedia';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import './PdVisualGalleryCompact.css';
 
@@ -115,7 +116,7 @@ function GalleryImage({ item, index, productName, onOpen, onFailed }) {
   return (
     <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
       {!shown && !failed && !VIDEO_RE.test(item.url) && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
-      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} srcSet={responsiveProductSrcSet(src)} sizes="(max-width: 900px) 100vw, 75vw" width={1200} height={900} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
         <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
     </button>
   );

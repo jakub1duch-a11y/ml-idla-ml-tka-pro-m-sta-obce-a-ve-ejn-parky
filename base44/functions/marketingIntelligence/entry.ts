@@ -206,6 +206,8 @@ async function getGa4(base44: any) {
   const yesterdayEventMap = Object.fromEntries(yesterdayEventRows.map((r: any) => [r.eventName, r]));
 
   return {
+    propertyId,
+    available: true,
     today: toSummary(todayRaw),
     yesterday: toSummary(yesterdayRaw),
     dayBefore: toSummary(dayBeforeRaw),

@@ -11,6 +11,7 @@ const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSte
 const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
 const HomeHolmTec = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeHolmTec })));
 const MobileStickyBar = lazy(() => import('@/components/home/new/MobileStickyBar'));
+const MistSceneSelector = lazy(() => import('@/components/home/new/MistSceneSelector'));
 
 const HERO_URL = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/9ac50487d_mlzidla_homepage_hero_20261110.webp';
 const MEDIA = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/';
@@ -117,6 +118,7 @@ export default function Home2026() {
   return <div className="ml-home26"><MotionConfig reducedMotion="user">
     <HomeHero />
     <HomeIntro />
+    <Suspense fallback={null}><MistSceneSelector /></Suspense>
     <HomeCollections />
     <HomeSpaces />
     <Suspense fallback={<div className="ml-home26-loading" aria-hidden="true" />}><ProductPhotoGallery /></Suspense>

@@ -1,0 +1,708 @@
+{
+  "generatedAt": "2026-11-14T12:12:36.570Z",
+  "scope": "Static source files and local public images; remote CMS/Drive media and runtime behavior not verified",
+  "counts": {
+    "sourceFiles": 728,
+    "imageFiles": 410,
+    "jsxImages": 321,
+    "missingAltCandidates": 0,
+    "missingDimensionsCandidates": 79,
+    "largeFiles": 37,
+    "oversizedImages": 0,
+    "animatedImages": 16
+  },
+  "largestImages": [
+    {
+      "file": "public/media/smart/mlzidla-cabinet-open-close.gif",
+      "bytes": 2869766,
+      "width": 640,
+      "height": 512
+    },
+    {
+      "file": "public/media/smart/mlzidla-smart-fade-v2-desktop.gif",
+      "bytes": 2263936,
+      "width": 800,
+      "height": 600
+    },
+    {
+      "file": "public/media/smart/mlzidla-smart-fade-v2-mobile.gif",
+      "bytes": 2027266,
+      "width": 480,
+      "height": 640
+    },
+    {
+      "file": "public/media/optimized/82914bed5_C-MlzitkoLINEA_CE70_couple1.webp",
+      "bytes": 1339842,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/ba9888b92_C-MlzitkoLINEA_CE70_double.webp",
+      "bytes": 1339842,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/74c60312a_C-MlzitkoLINEA_CE70_single-1.webp",
+      "bytes": 1234996,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/91c5002dc_C-MlzitkoLINEA_CE70_single2.webp",
+      "bytes": 1234996,
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/a73ab7232_Mltko-Bendy60-edited1.webp",
+      "bytes": 1154324,
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/d8051fd30_WIFI_SMART_mlitka.webp",
+      "bytes": 1135222,
+      "width": 1376,
+      "height": 768
+    },
+    {
+      "file": "public/media/optimized/b68df5d31_Gemini_Generated_Image_5gclad5gclad5gcl.webp",
+      "bytes": 975738,
+      "width": 765,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/6a116eb0b_mlnbranaGATE70U-mlzitkapromesta.webp",
+      "bytes": 927708,
+      "width": 765,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/72a6bb588_mlnprvek-mrak-mlzidla02.webp",
+      "bytes": 927306,
+      "width": 1024,
+      "height": 576
+    },
+    {
+      "file": "public/media/optimized/838f908c3_Mltkospirla-mlzidla.webp",
+      "bytes": 914904,
+      "width": 683,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/e7273f60a_bendy60-mlitkozahradn.webp",
+      "bytes": 899492,
+      "width": 1024,
+      "height": 576
+    },
+    {
+      "file": "public/media/optimized/c3535394a_mlzitko-MRKEV_render.webp",
+      "bytes": 880098,
+      "width": 683,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/96ec1f8e9_mlnprvek-mrak-mlzidla04.webp",
+      "bytes": 877102,
+      "width": 1024,
+      "height": 576
+    },
+    {
+      "file": "public/media/optimized/eb03ffe38_file_00000000db9072469c9f2e9b61c49933.webp",
+      "bytes": 873186,
+      "width": 1024,
+      "height": 576
+    },
+    {
+      "file": "public/media/optimized/6c64ac700_mlnprvek-mrak-mlzidla03.webp",
+      "bytes": 870444,
+      "width": 1024,
+      "height": 576
+    },
+    {
+      "file": "public/media/optimized/742398fb8_d2d38c7f9_Copilot_20260507_020118.webp",
+      "bytes": 858448,
+      "width": 1024,
+      "height": 683
+    },
+    {
+      "file": "public/media/optimized/9c4797da7_01D04E88-89AB-44FB-9989-C97F3B40E100.webp",
+      "bytes": 844022,
+      "width": 683,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/4333988f4_MlnbrnaGATE76V.webp",
+      "bytes": 824262,
+      "width": 687,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/60dab9091_mlnbrnaGATE70V2.webp",
+      "bytes": 824262,
+      "width": 687,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/58e5e3931_MestskabranaGATE.webp",
+      "bytes": 810436,
+      "width": 1024,
+      "height": 680
+    },
+    {
+      "file": "public/media/optimized/6a220ebf9_Reference-mstoPolna03.webp",
+      "bytes": 803194,
+      "width": 1024,
+      "height": 572
+    },
+    {
+      "file": "public/media/optimized/1668eda70_MlzitkoY-ARMISTTR60_1.webp",
+      "bytes": 802112,
+      "width": 685,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/aa26eeb6a_Mltko_GATE_70U.webp",
+      "bytes": 801846,
+      "width": 1024,
+      "height": 559
+    },
+    {
+      "file": "public/media/optimized/e6fb189c0_MlznabranaGate76.webp",
+      "bytes": 801846,
+      "width": 1024,
+      "height": 559
+    },
+    {
+      "file": "public/media/optimized/e8e65d772_L-Mltko_GATE_60U.webp",
+      "bytes": 801846,
+      "width": 1024,
+      "height": 559
+    },
+    {
+      "file": "public/media/optimized/56f93a8b2_MlzitkoY-ARMISTTR60.webp",
+      "bytes": 801576,
+      "width": 685,
+      "height": 1024
+    },
+    {
+      "file": "public/media/optimized/2b0adb03d_mlzitkaholmtec002.webp",
+      "bytes": 798756,
+      "width": 1024,
+      "height": 576
+    }
+  ],
+  "findings": [
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/AIVizualizace.jsx",
+      "line": 420
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/GateARPrototype.jsx",
+      "line": 116
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/GateARPrototype.jsx",
+      "line": 157
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/Home2026.jsx",
+      "line": 33
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/Home2026.jsx",
+      "line": 78
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/ONas.jsx",
+      "line": 70
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/ONas.jsx",
+      "line": 120
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/ONas.jsx",
+      "line": 123
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/Partnerstvi.jsx",
+      "line": 257
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/Reference.jsx",
+      "line": 86
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/ZazimovaniMlzitekClanek.jsx",
+      "line": 19
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/ZazimovaniMlzitekClanek.jsx",
+      "line": 26
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/admin/AdminBlog.jsx",
+      "line": 131
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/admin/AdminProductAnalytics.jsx",
+      "line": 47
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/admin/AdminReferenceAnalytics.jsx",
+      "line": 166
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/admin/AdminReferences.jsx",
+      "line": 129
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/pages/admin/AdminReferences.jsx",
+      "line": 175
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/MfaMethodSetup.jsx",
+      "line": 136
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/LockedVideoPanel.jsx",
+      "line": 25
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/VisualizationStudio.jsx",
+      "line": 349
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/brand/BrandVisualResult.jsx",
+      "line": 8
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/marketing/ContentPlanForm.jsx",
+      "line": 189
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/marketing/MarketingNewsAgentPanel.jsx",
+      "line": 57
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/marketing/MarketingPostPreview.jsx",
+      "line": 42
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/marketing/MarketingPostPreview.jsx",
+      "line": 44
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/marketing/RealizaceInstagramShare.jsx",
+      "line": 63
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/marketing/ThumbnailDirectorTab.jsx",
+      "line": 363
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/team/AdminCallDock.jsx",
+      "line": 66
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/admin/team/TeamThread.jsx",
+      "line": 94
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/brand/BrandShowcase.jsx",
+      "line": 26
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/brany/BranyHero.jsx",
+      "line": 27
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/gate70/GateAtlas.jsx",
+      "line": 29
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/gate70/GateAtlas.jsx",
+      "line": 49
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/gate70/GateCore.jsx",
+      "line": 88
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/b2g/B2gHero.jsx",
+      "line": 38
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/b2g/CityGatesSection.jsx",
+      "line": 18
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/new/MistSceneSelector.jsx",
+      "line": 45
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/new/ProductCategoryShowcase.jsx",
+      "line": 208
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/new/TopGateHeroSlider.jsx",
+      "line": 76
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/new/TopGateHeroSlider.jsx",
+      "line": 106
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/new/UrbanCoolingExperience.jsx",
+      "line": 47
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/new/UrbanCoolingExperience.jsx",
+      "line": 66
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/home/premium/PremiumOasisSection.jsx",
+      "line": 38
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/kolekce/BentoProductCard.jsx",
+      "line": 35
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/layout/MegaCollectionCard.jsx",
+      "line": 12
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/linea/LineaGallery.jsx",
+      "line": 21
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/linea/LineaHero.jsx",
+      "line": 32
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/motion/ProductMotionShowcase.jsx",
+      "line": 29
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/motion/ProductPhotoSequence.jsx",
+      "line": 24
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/InquiryManager.jsx",
+      "line": 980
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferAICopilot.jsx",
+      "line": 318
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferConceptPresentation.jsx",
+      "line": 263
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferDocumentEditor.jsx",
+      "line": 255
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferPageParts.jsx",
+      "line": 18
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferPagesA.jsx",
+      "line": 18
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferPagesA.jsx",
+      "line": 27
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferPlacementSheets.jsx",
+      "line": 7
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferPortalContact.jsx",
+      "line": 8
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferPricingSheet.jsx",
+      "line": 11
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferSuplaSheet.jsx",
+      "line": 12
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferSuplaSheet.jsx",
+      "line": 16
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferSuplaVariant.jsx",
+      "line": 10
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/offers/OfferVariantTechnicalPanel.jsx",
+      "line": 99
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/portal/PortalProjectDocuments.jsx",
+      "line": 69
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/AnchoringGallery.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/OazaSignatureSection.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductGalleryPanel.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductHero.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductMotionSection.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/ProductTechnicalDetailSection.jsx",
+      "line": 23
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/ProductTechnicalDetailSection.jsx",
+      "line": 27
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductTechnicalDetailSection.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/ProductUseCaseGallery.jsx",
+      "line": 25
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductUseCaseGallery.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductVariantsSection.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/ProductVisualShowcase.jsx",
+      "line": 23
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/ProductVisualShowcase.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/MrakVariantCard.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/MrakVariantGallery.jsx",
+      "line": 35
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/MrakVariantGallery.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdArPromo.jsx",
+      "line": 72
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdArPromo.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdBendyUsageGrid.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdClosingCta.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdCollectionContext.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdDetail.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdHero.jsx",
+      "line": 305
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdHero.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdMediaGallery.jsx",
+      "line": 412
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdMediaGallery.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdReferences.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdScrollGallery.jsx",
+      "line": 89
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdScrollGallery.jsx",
+      "line": 160
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdScrollGallery.jsx",
+      "line": 342
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdScrollGallery.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdTeepeeRental.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/new/PdTeepeeStudio.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdVisualGalleryCompact.jsx",
+      "line": 87
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/produkt/new/PdVisualGalleryCompact.jsx",
+      "line": 379
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/tabs/OProduktuTab.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/tabs/SpecsTab.jsx"
+    },
+    {
+      "type": "review_product_cover",
+      "file": "src/components/produkt/tabs/ZivaUkazkaTab.jsx"
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/spoluprace/SpoluHero.jsx",
+      "line": 9
+    },
+    {
+      "type": "layout_shift_candidate",
+      "file": "src/components/ui/ProductExperience.jsx",
+      "line": 15
+    },
+    {
+      "type": "metadata_error",
+      "file": "public/media/smart/mlzidla-control-cabinet-transparent.png",
+      "error": "Input file contains unsupported image format"
+    },
+    {
+      "type": "metadata_error",
+      "file": "public/media/smart/mlzidla-smart-cabinet-fade.gif",
+      "error": "Input file has corrupt header: gifload: Invalid frame data"
+    },
+    {
+      "type": "metadata_error",
+      "file": "public/media/smart/mlzidla-smart-components-transparent.png",
+      "error": "Input file contains unsupported image format"
+    }
+  ]
+}

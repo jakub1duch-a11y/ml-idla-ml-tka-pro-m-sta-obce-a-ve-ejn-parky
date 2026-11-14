@@ -122,6 +122,7 @@ export default function ServisUdrzba() {
           <Link to="/kontakt" className="btn-metallic-mist mt-8 inline-flex min-h-12 items-center justify-center gap-2 px-8 py-3.5 text-sm font-bold">Domluvit servis <ArrowRight size={16}/></Link>
         </div>
       </section>
+      <section className="mx-auto max-w-7xl px-5 pb-16"><div className="rounded-3xl bg-[#eef8fb] p-8"><h2 className="text-2xl font-semibold">Filtrace a změkčování vody</h2><p className="mt-3 max-w-3xl text-slate-600">Při údržbě kontrolujeme také kvalitu vstupní vody a možné zanášení trysek vodním kamenem.</p><Link to="/uprava-vody" className="mt-4 inline-block font-semibold text-[#0b4860] underline underline-offset-4">Více o úpravě vody →</Link></div></section>
     </main>
   );
 }

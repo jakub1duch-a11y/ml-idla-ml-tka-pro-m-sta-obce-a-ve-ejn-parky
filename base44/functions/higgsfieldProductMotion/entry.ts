@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'productSlug is required.' }, { status: 400 });
     }
 
-    const products = await base44.asServiceRole.entities.Product.filter({ slug: productSlug }, { limit: 1 });
+    const products = await base44.asServiceRole.entities.Product.filter({ slug: productSlug });
     // Base44 SDK versions can return either an array or a paginated { items } wrapper.
     const product = (Array.isArray(products) ? products : products?.items || [])?.[0] || null;
     if (!product) {
@@ -120,7 +120,7 @@ Deno.serve(async (req) => {
       },
     );
 
-    const videoUrl = result?.video?.url || result?.data?.video?.url || null;
+    const videoUrl = result?.video?.url || result?.data?.video?.url || result?.output?.video?.url || result?.output?.video_url || result?.video_url || result?.url || (Array.isArray(result?.videos) ? result.videos[0]?.url : null) || null;
     if (!videoUrl || !HTTPS_URL.test(videoUrl)) {
       console.error('Higgsfield returned no valid video URL.');
       return Response.json({ error: 'Higgsfield did not return a usable video URL.' }, { status: 502 });

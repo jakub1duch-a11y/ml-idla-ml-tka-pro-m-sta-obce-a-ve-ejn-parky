@@ -205,8 +205,17 @@ async function getGa4(base44: any) {
   const yesterdayEventRows = rows(yesterdayEventsRaw, ['eventName'], ['eventCount', 'totalUsers']);
   const yesterdayEventMap = Object.fromEntries(yesterdayEventRows.map((r: any) => [r.eventName, r]));
 
+  let accountEmail = '';
+  try {
+    const accountResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${accessToken}` }, signal: AbortSignal.timeout(10000),
+    });
+    if (accountResponse.ok) accountEmail = String((await accountResponse.json())?.email || '').trim().toLowerCase();
+  } catch { /* Diagnostics only; missing account must not fabricate identity. */ }
   return {
     available: true, property_id: propertyId, site_host: SITE_HOST,
+    account_email: accountEmail || null,
+    account_matches_business: accountEmail ? accountEmail === 'meduna@holmtec.cz' : null,
     today: toSummary(todayRaw),
     yesterday: toSummary(yesterdayRaw),
     dayBefore: toSummary(dayBeforeRaw),
@@ -533,7 +542,12 @@ export default async function(req: Request) {
     const sendEmail = false;
 
     const [ga4, leads, search, instagram, facebook, metaAds, googleAds] = await Promise.all([
-      getGa4(base44),
+      getGa4(base44).catch((error) => ({
+        available: false, error: String(error?.message || 'GA4 nelze načíst.').slice(0, 300),
+        today: { sessions: 0 }, yesterday: { sessions: 0 }, dayBefore: { sessions: 0 },
+        month: { sessions: 0 }, sources: [], pages: [], devices: [], events: [],
+        eventMap: {}, yesterdaySources: [], yesterdayPages: [], yesterdayEventMap: {}, trend: [],
+      })),
       getDatabaseLeads(base44),
       getSearchConsole(base44),
       getInstagram(base44),
@@ -542,8 +556,10 @@ export default async function(req: Request) {
       getGoogleAdsSetup(base44),
     ]);
     const data: any = { ga4, leads, search, instagram, facebook, metaAds, googleAds };
-    data.intelligence = buildRecommendations(data);
-    const html = reportHtml(data);
+    data.intelligence = ga4.available === false
+      ? { wins: [], recommendations: ['GA4 není ověřené: ' + ga4.error], dbConversion: null, yesterdayConversion: null, trafficChange: null }
+      : buildRecommendations(data);
+    const html = sendEmail ? reportHtml(data) : '';
     let emailResults: any[] = [];
     if (sendEmail) emailResults = await sendReportEmail(base44, html);
 

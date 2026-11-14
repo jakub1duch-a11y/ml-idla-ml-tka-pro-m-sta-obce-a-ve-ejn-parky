@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CalendarDays, PartyPopper, ShieldCheck, ArrowRight, BadgeCheck, Droplets, Wrench } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { setSEO } from '@/lib/seo';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 import RentalProductGrid from '@/components/pronajem/RentalProductGrid';
 import RentalInquiryForm from '@/components/pronajem/RentalInquiryForm';
 

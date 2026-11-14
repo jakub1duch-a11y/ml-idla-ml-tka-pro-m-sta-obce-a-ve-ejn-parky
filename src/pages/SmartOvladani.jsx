@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { setSEO } from '@/lib/seo';
 import SmartHero from '@/components/smart-ovladani/SmartHero';
 import SmartBenefits from '@/components/smart-ovladani/SmartBenefits';
-import SmartAppConsumptionSection from '@/components/smart-ovladani/SmartAppConsumptionSection';
+const SmartAppConsumptionSection = lazy(() => import('@/components/smart-ovladani/SmartAppConsumptionSection'));
 import SmartSensorsSection from '@/components/smart-ovladani/SmartSensorsSection';
 import SmartAutomationFlow from '@/components/smart-ovladani/SmartAutomationFlow';
 import SmartCTA from '@/components/smart-ovladani/SmartCTA';
 import SmartOfferSection from '@/components/smart-ovladani/SmartOfferSection';
 import SmartValveMediaSection from '@/components/smart-ovladani/SmartValveMediaSection';
 import SmartCoolingConcept from '@/components/smart-ovladani/SmartCoolingConcept';
-import SmartCoolingCityUseCases from '@/components/smart-ovladani/SmartCoolingCityUseCases';
+const SmartCoolingCityUseCases = lazy(() => import('@/components/smart-ovladani/SmartCoolingCityUseCases'));
 import SmartControlCabinetSection from '@/components/smart-ovladani/SmartControlCabinetSection';
-import MlzeniKalkulator from '@/components/poradce/MlzeniKalkulator';
+const MlzeniKalkulator = lazy(() => import('@/components/poradce/MlzeniKalkulator'));
 import ContextLinks from '@/components/common/ContextLinks';
 
 const SMART_OVERVIEW = [
@@ -25,21 +25,24 @@ export default function SmartOvladani() {
   const [mobileSection, setMobileSection] = useState('prehled');
   const jumpTo = (id) => {
     setMobileSection(id);
-    document.getElementById(`smart-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(`smart-${id}`);
+    if (!target) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
   };
 
   useEffect(() => {
     setSEO({
-      title: 'Automatizace MLŽIDLA® — chytré řízení městského ochlazování | mlzidla.cz',
-      description: 'Automatizace MLŽIDLA® propojuje designová mlžítka, chytré ventily, senzory, provozní scénáře a data. Řízené ochlazování pro města, parky, náměstí a sportoviště.',
-      keywords: 'smart cooling, chytré městské ochlazování, smart city mlžítka, automatizace mlžení, chytré senzory mlžítka, řízení mlžného systému, PEVEKO ventil',
+      title: 'Chytré řízení mlžítek a mlžných soch SUPLA | MLŽIDLA.cz',
+      description: 'Chytré ovládání mlžítek, mlžných soch a mlžných bran: časové programy, ventily SUPLA, teplotní čidla a volitelné zóny. Varianty a nezávazná poptávka.',
+      keywords: 'chytré řízení mlžítek, automatizace mlžení, SUPLA mlžítka, ovládání mlžných soch, mlžné brány, senzory teploty, smart cooling, časové řízení mlžení',
       canonicalPath: '/smart-ovladani',
       jsonLd: {
         '@context': 'https://schema.org',
         '@graph': [
           {
             '@type': 'Service',
-            name: 'Automatizace MLŽIDLA® — chytré městské ochlazování',
+            name: 'Chytré řízení mlžítek a mlžných soch SUPLA',
             provider: { '@type': 'Organization', name: 'HolmTec' },
             areaServed: 'CZ',
             serviceType: 'Řízené ochlazování veřejného prostoru pomocí mlžných systémů, senzorů a automatizace',
@@ -62,14 +65,13 @@ export default function SmartOvladani() {
   return (
     <div className="architecture-site smart-control-page min-h-screen bg-[#f5fafc]">
       <div id="smart-prehled" className="scroll-mt-28"><SmartHero /></div>
-design/smart-control-refresh-2026-10-07
       <SmartControlCabinetSection />
-      <div className="sticky top-16 z-30 mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-10">
+      <div className="sticky top-16 z-30 mx-auto max-w-7xl px-3 py-2 sm:px-6 lg:px-10">
         <div className="mx-auto max-w-5xl rounded-[20px] border border-slate-200/80 bg-white/90 p-1.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
-          <nav className="flex gap-1" aria-label="Navigace automatizace">
+          <nav className="grid grid-cols-4 gap-1" aria-label="Navigace automatizace">
             {[['prehled','Přehled'],['automatizace','Automatizace'],['senzory','Senzory'],['varianty','Varianty']].map(([id,label]) => (
               <button type="button" key={id} aria-pressed={mobileSection === id} onClick={() => jumpTo(id)}
-                className={`min-h-11 flex-1 rounded-[14px] px-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:px-3 sm:text-xs ${mobileSection === id ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}>
+                className={`min-h-11 min-w-0 rounded-[14px] px-1 text-[10px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:px-3 sm:text-xs ${mobileSection === id ? 'bg-slate-950 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}`}>
                 {label}
               </button>
             ))}
@@ -88,14 +90,14 @@ design/smart-control-refresh-2026-10-07
         </div>
       </section>
       <SmartCoolingConcept />
-      <SmartCoolingCityUseCases />
+      <Suspense fallback={<div className="min-h-48 bg-white" aria-hidden="true" />}><SmartCoolingCityUseCases /></Suspense>
       <div id="smart-automatizace" className="scroll-mt-32"><SmartAutomationFlow /></div>
       <SmartBenefits />
-      <SmartAppConsumptionSection />
+      <Suspense fallback={<div className="min-h-48 bg-white" aria-hidden="true" />}><SmartAppConsumptionSection /></Suspense>
       <div id="smart-senzory" className="scroll-mt-32"><SmartSensorsSection /></div>
       <SmartValveMediaSection />
-      <SmartOfferSection />
-      <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Kalkulačka provozu</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Spočítejte orientační spotřebu vody.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Spočítejte orientační provoz vody podle počtu trysek, průtoku a denní doby provozu. Automatizace pak pomáhá omezit zbytečné spuštění systému podle nastavených podmínek.</p><div className="mt-10"><MlzeniKalkulator /></div></div></section>
+      <div id="smart-varianty" className="scroll-mt-32"><SmartOfferSection /></div>
+      <section className="bg-primary py-20 lg:py-24"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-accent">Kalkulačka provozu</p><h2 className="mt-4 max-w-3xl font-heading text-3xl leading-[1.08] tracking-[-.02em] text-primary-foreground sm:text-4xl lg:text-5xl">Spočítejte orientační spotřebu vody.</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">Spočítejte orientační provoz vody podle počtu trysek, průtoku a denní doby provozu. Automatizace pak pomáhá omezit zbytečné spuštění systému podle nastavených podmínek.</p><div className="mt-10"><Suspense fallback={<p className="text-sm text-white/70">Načítání kalkulačky…</p>}><MlzeniKalkulator /></Suspense></div></div></section>
       <ContextLinks eyebrow="Související obsah" title="Automatizace je jedna část celého řešení." items={[
         { path: '/jak-to-funguje', kicker: 'Princip', title: 'Jak mlžítka fungují', text: 'Technický princip mlžení, napojení a provozní souvislosti.' },
         { path: '/mestske-mlzitka', kicker: 'Produkty', title: 'Městská mlžítka', text: 'Vyberte konkrétní systém, který lze doplnit o automatizaci.' },

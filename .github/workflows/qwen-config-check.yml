@@ -1,0 +1,35 @@
+name: Qwen configuration check
+
+on:
+  pull_request:
+    paths:
+      - 'QWEN.md'
+      - '.qwen/**'
+      - 'docs/QWEN_CODE_SETUP.md'
+      - '.github/workflows/qwen-config-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate settings JSON and skills frontmatter
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          path = pathlib.Path('.qwen/settings.json')
+          settings = json.loads(path.read_text(encoding='utf-8'))
+          assert settings['context']['fileName'] == 'QWEN.md'
+          assert settings['tools']['approvalMode'] == 'default'
+          assert settings['mcp']['allowed'] == []
+          for path in pathlib.Path('.qwen/skills').glob('*/SKILL.md'):
+              txt = path.read_text(encoding='utf-8')
+              assert txt.startswith('---\n'), f'{path}: YAML frontmatter missing'
+              assert '\n---\n' in txt[4:], f'{path}: frontmatter terminator missing'
+              assert 'name:' in txt and 'description:' in txt, f'{path}: missing metadata'
+          print('Qwen config: OK')
+          PY

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Droplets, Gauge, Leaf, ShieldCheck, Smartphone, Sparkles, Wind } from 'lucide-react';
-import { setSEO } from '@/lib/seo';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const HERO_IMAGE = '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp';
 const DETAIL_IMAGE = '/media/optimized/cfc837b23_image.webp';

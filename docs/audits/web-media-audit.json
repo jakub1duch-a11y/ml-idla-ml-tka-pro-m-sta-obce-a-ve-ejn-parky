@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-14T12:10:37.866Z",
+  "generatedAt": "2026-11-14T12:12:36.570Z",
   "scope": "Static source files and local public images; remote CMS/Drive media and runtime behavior not verified",
   "counts": {
-    "sourceFiles": 727,
-    "imageFiles": 366,
+    "sourceFiles": 728,
+    "imageFiles": 410,
     "jsxImages": 321,
     "missingAltCandidates": 0,
-    "missingDimensionsCandidates": 80,
+    "missingDimensionsCandidates": 79,
     "largeFiles": 37,
     "oversizedImages": 0,
     "animatedImages": 16
@@ -606,10 +606,6 @@
     },
     {
       "type": "review_product_cover",
-      "file": "src/components/produkt/new/PdCompactHero.jsx"
-    },
-    {
-      "type": "review_product_cover",
       "file": "src/components/produkt/new/PdDetail.jsx"
     },
     {
@@ -664,17 +660,12 @@
     {
       "type": "layout_shift_candidate",
       "file": "src/components/produkt/new/PdVisualGalleryCompact.jsx",
-      "line": 86
+      "line": 87
     },
     {
       "type": "layout_shift_candidate",
       "file": "src/components/produkt/new/PdVisualGalleryCompact.jsx",
-      "line": 118
-    },
-    {
-      "type": "layout_shift_candidate",
-      "file": "src/components/produkt/new/PdVisualGalleryCompact.jsx",
-      "line": 378
+      "line": 379
     },
     {
       "type": "review_product_cover",

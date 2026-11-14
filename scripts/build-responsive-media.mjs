@@ -14,7 +14,7 @@ for(const item of audit.largestImages){
   await sharp(input).rotate().resize({width,withoutEnlargement:true}).webp({quality:78,effort:4}).toFile(dest);
   variants.push({width,url:'/'+dest.replace(/^public\//,'')});
  }
- if(variants.length)out['/'+input.replace(/^public\//,'')]=variants;
+ if(variants.length)out['/'+input.replace(/^public\//,'')]={originalWidth:item.width,variants};
 }
 await fs.mkdir('src/lib',{recursive:true});
 await fs.writeFile('src/lib/responsiveMediaManifest.json',JSON.stringify(out,null,2)+'\n');

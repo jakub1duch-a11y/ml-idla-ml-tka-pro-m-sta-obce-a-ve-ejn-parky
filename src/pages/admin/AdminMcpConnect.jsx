@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Bot, Check, Copy, ShieldCheck, RefreshCw, ExternalLink, Cpu } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
+import { base44 } from '@/api/base44Client';
 
 const STEPS = [
   'V ChatGPT otevřete Apps a zapněte Developer mode. ChatGPT upozorňuje, že vývojářský režim umožňuje připojit neověřené aplikace — připojujte jen servery, kterým důvěřujete.',
@@ -11,6 +12,9 @@ const STEPS = [
 
 export default function AdminMcpConnect() {
   const [copied, setCopied] = useState(false);
+  const [health, setHealth] = useState(null);
+  const [healthError, setHealthError] = useState('');
+  const [checking, setChecking] = useState(false);
   const serverUrl = useMemo(
     () => (typeof window === 'undefined' ? '' : new URL('/api/mcp', window.location.origin).toString()),
     []
@@ -19,6 +23,18 @@ export default function AdminMcpConnect() {
   useEffect(() => {
     setSEO({ title: 'ChatGPT / MCP — Administrace MLŽIDLA®', robots: 'noindex, nofollow' });
   }, []);
+
+  const checkConnections = async () => {
+    setChecking(true);
+    setHealthError('');
+    try {
+      const result = await base44.functions.invoke('getMarketingConnectorHealth', {});
+      const data = result?.data || result;
+      if (!data?.ok) throw new Error(data?.error || 'Kontrola konektorů selhala.');
+      setHealth(data);
+    } catch (e) { setHealthError(e?.message || 'Nebylo možné ověřit konektory.'); }
+    finally {setChecking(false);}
+  };
 
   const copy = async () => {
     await navigator.clipboard.writeText(serverUrl);
@@ -40,8 +56,7 @@ export default function AdminMcpConnect() {
         </div>
 
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/55">
-          MCP (Model Context Protocol) umožňuje ChatGPT pracovat s daty aplikace přímo v konverzaci —
-          produkty, reference, poptávky a další nástroje. Stačí zkopírovat adresu serveru a vložit ji do ChatGPT.
+          MCP (Model Context Protocol) zpřístupňuje ověřeným AI klientům vybrané informace o produktech, poptávkách a obchodním workflow. Přístup se schvaluje přes OAuth. Oprávnění pro zápisy a AI agenty jsou ve vývojové konfiguraci omezená; samotná URL nezajišťuje propojení všech dalších konektorů.
         </p>
 
         {/* Adresa serveru */}
@@ -65,8 +80,32 @@ export default function AdminMcpConnect() {
           </div>
           <p className="mt-3 flex items-center gap-1.5 text-xs text-white/40">
             <ShieldCheck size={13} className="text-cyan/70" />
-            Server je chráněn OAuth — ChatGPT vás přesměruje na přihlášení do administrace a stránku souhlasu.
+            Konfigurace Base44 vyžaduje OAuth; funkčnost přihlášení v ChatGPT a Gemini CLI je nutné ověřit po nasazení. Změny MCP nástrojů ve vývojové větvi ještě nejsou aktivní v produkci.
           </p>
+        </div>
+
+        <section className="mt-6 rounded-2xl border border-white/10 bg-white/[.025] p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div><h2 className="text-sm font-semibold text-white">Ověření obchodních konektorů</h2><p className="mt-1 text-xs text-white/50">Stav se zjišťuje ze serveru Base44, nikoli z pouhé existence tlačítka v administraci.</p></div>
+            <button onClick={checkConnections} disabled={checking} type="button" className="flex items-center gap-2 rounded-lg border border-cyan/30 px-4 py-2 text-xs text-cyan disabled:opacity-50">
+              <RefreshCw size={13} className={checking ? 'animate-spin' : ''}/> {checking ? 'Kontroluji…' : 'Prověřit účty a oprávnění'}
+            </button>
+          </div>
+          {healthError && <p role="alert" className="mt-3 text-xs text-rose-300">{healthError}</p>}
+          {health && <div className="mt-4 space-y-2" aria-live="polite">
+            <p className={'text-sm ' + (health.ready_for_business_workflow ? 'text-emerald-300' : 'text-amber-300')}>
+              {health.ready_for_business_workflow ? 'Obchodní Google účty ověřeny.' : 'Obchodní synchronizace blokována – neověřená identita nebo oprávnění.'}
+            </p>
+            {(health.connectors || []).filter(x => ['googledrive','googlesheets','gmail','googletasks'].includes(x.type)).map(x =>
+              <div key={x.type} className="flex flex-wrap items-center justify-between gap-2 text-xs text-white/65 border-t border-white/10 pt-2">
+                <span>{x.label || x.type} · {x.account || 'účet neověřen'}</span>
+                <span className={x.ready ? 'text-emerald-300' : 'text-amber-300'}>{x.ready ? 'ověřeno' : 'vyžaduje kontrolu'}</span>
+              </div>)}
+            {(health.missing_requirements || []).map((message,i) => <p key={i} className="text-xs text-amber-300">{message}</p>)}
+          </div>}
+        </section>
+        <div className="mt-5 rounded-xl border border-cyan/15 bg-cyan/5 p-4 text-xs leading-5 text-white/60">
+          <strong className="text-cyan">Přístup ChatGPT / Gemini CLI:</strong> vybrané produkty, poptávky, kontakty, nabídky a úkoly pouze pro čtení. Vytváření Gmail konceptů, schvalování nabídek a synchronizace HubSpotu jsou samostatné serverové operace s vlastní kontrolou oprávnění, nikoliv volné MCP zápisy.
         </div>
 
         {/* Kroky pro ChatGPT */}
@@ -110,8 +149,7 @@ export default function AdminMcpConnect() {
             <Cpu size={14} className="text-cyan/70" /> Další AI klienti
           </p>
           <p className="mt-3 text-sm leading-relaxed text-white/55">
-            Stejnou adresu serveru lze použít i v Claude, Cursor, Gemini CLI nebo jiném klientovi s podporou MCP.
-            Kompletní návod pro všechny klienty najdete na veřejné stránce{' '}
+            Gemini CLI používá v souboru ~/.gemini/settings.json položku mcpServers.mlzidla.httpUrl s uvedenou adresou. Po spuštění Gemini použijte /mcp a případně /mcp auth mlzidla. Stejně lze připojit i jiné klienty s podporou OAuth a streamable HTTP MCP. Skutečné načtení nástrojů je nutné otestovat. Návod najdete na stránce{' '}
             <a href="/connect" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-cyan hover:underline">
               /connect <ExternalLink size={12} />
             </a>.

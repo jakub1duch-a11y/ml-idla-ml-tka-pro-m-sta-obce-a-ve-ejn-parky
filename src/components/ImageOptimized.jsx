@@ -13,15 +13,21 @@ export function ImageOptimized({
   alt,
   srcSet,
   webpSrcSet,
+  avifSrcSet,
   sizes,
   width,
   height,
   className = '',
   loading = 'lazy',
   placeholder = true,
+  fit = 'cover',
+  position = 'center',
+  aspectRatio,
+  fetchPriority,
   onLoad,
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const objectFit = fit === 'contain' ? 'contain' : 'cover';
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -45,7 +51,7 @@ export function ImageOptimized({
     return (
       <div
         className={`bg-muted flex items-center justify-center ${className}`}
-        style={{ width, height }}
+        style={{ width, height, aspectRatio }}
         role="img"
         aria-label={alt}
       >
@@ -55,15 +61,16 @@ export function ImageOptimized({
   }
 
   return (
-    <div className="relative overflow-hidden" style={{ width, height }}>
+    <div className="relative overflow-hidden" style={{ width, height, aspectRatio }}>
       {/* Loading placeholder */}
       {placeholder && !isLoaded && (
         <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted-foreground/10 animate-pulse" />
       )}
 
       {/* Picture element for WebP support */}
-      <picture className={className}>
-        {webpSrcSet && <source srcSet={webpSrcSet} type="image/webp" />}
+      <picture className="block w-full h-full">
+        {avifSrcSet && <source srcSet={avifSrcSet} type="image/avif" sizes={sizes} />}
+        {webpSrcSet && <source srcSet={webpSrcSet} type="image/webp" sizes={sizes} />}
         {srcSet && <source srcSet={srcSet} />}
         <img
           src={src}
@@ -72,7 +79,9 @@ export function ImageOptimized({
           height={height}
           sizes={sizes}
           loading={loading}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          fetchPriority={fetchPriority}
+          style={{ objectFit, objectPosition: position }}
+          className={`w-full h-full transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           onLoad={handleLoad}

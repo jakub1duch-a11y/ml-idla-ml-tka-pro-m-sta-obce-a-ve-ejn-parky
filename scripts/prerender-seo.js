@@ -100,6 +100,14 @@ function renderPage(page) {
     html = html.replace('</head>', `    <script type="application/ld+json" id="json-ld-seo">${structuredData}</script>\n  </head>`);
   }
 
+  // Make the main contact and inquiry copy readable in the initial HTML.
+  // React replaces this static content when the interactive page mounts.
+  const staticContent = {
+    '/kontakt': '<main aria-label="Kontakt MLŽIDLA.cz"><h1>Kontakt na výrobce mlžítek a mlžných bran</h1><p>HolmTec v Trutnově připravuje nerezová městská mlžítka, mlhoviště, zahradní mlžítka a mlžné brány pro náměstí, parky, školy, terasy a soukromé zahrady. Konzultujeme rozměry prostoru, přívod vody, umístění, ovládání a servis.</p><p>Telefon: +420 774 700 390. E-mail: obchod1@holmtec.cz.</p></main>',
+    '/poptavka': '<main aria-label="Poptávka MLŽIDLA.cz"><h1>Nezávazná poptávka mlžítka, mlhoviště nebo mlžné brány</h1><p>Navrhujeme nerezová městská a zahradní mlžítka, mlhoviště, sestavy mlžítek a průchozí mlžné brány pro obce, parky, školy, veřejná prostranství a zahrady.</p><p>Pro poptávku připravte místo instalace, přibližné rozměry a informace o dostupnosti vody. Podle konkrétního zadání navrhneme technické řešení, řízení provozu a cenu.</p></main>',
+  }[page.canonicalPath];
+  if (staticContent) html = html.replace('<div id="root"></div>', `<div id="root">${staticContent}</div>`);
+
   return html;
 }
 

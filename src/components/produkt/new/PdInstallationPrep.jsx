@@ -30,8 +30,8 @@ export default function PdInstallationPrep({ product }) {
     },
     {
       icon: Wrench,
-      title: 'Trysky a servis',
-      text: 'Typ, počet trysek i servisní přístup se řídí ověřenou specifikací konkrétního produktu.',
+      title: 'Přístup pro údržbu',
+      text: 'Při návrhu ponecháme přístup k ventilu a připojení vody, aby běžná údržba nevyžadovala rozebírání okolního povrchu.',
     },
   ];
 

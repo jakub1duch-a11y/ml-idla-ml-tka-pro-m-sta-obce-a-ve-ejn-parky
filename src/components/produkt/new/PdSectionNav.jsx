@@ -11,8 +11,8 @@ const ITEMS = [
   ['vyhody', 'Výhody'],
   ['instalace', 'Instalace'],
   ['chytre-rizeni', 'Doplňky · SUPLA'],
-  ['reference', 'Reference'],
   ['faq', 'Otázky'],
+  ['reference', 'Reference'],
 ];
 
 export default function PdSectionNav({ product }) {

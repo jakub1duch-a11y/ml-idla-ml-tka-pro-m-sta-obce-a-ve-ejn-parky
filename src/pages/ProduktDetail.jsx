@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Droplets, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { trackProductView } from '@/lib/ga4';
+import { trackProductView, trackInquirySubmitted } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
@@ -21,6 +21,18 @@ import PdFamilyNav from '@/components/produkt/new/PdFamilyNav';
 import PdSectionNav from '@/components/produkt/new/PdSectionNav';
 import PdDescription from '@/components/produkt/new/PdDescription';
 import BrandLoadingContent from '@/components/common/BrandLoadingContent';
+import QuickVariantInquiry from '@/components/produkt/QuickVariantInquiry';
+
+function verifiedVariants(product) {
+  // Do not infer variants from marketing text or create undocumented technical data.
+  const rows = Array.isArray(product.variants) ? product.variants : [];
+  return rows.filter(v => v && (v.id || v.slug) && v.name).map(v => ({
+    id: String(v.id || v.slug),
+    name: String(v.name),
+    differences: v.differences && typeof v.differences === 'object' && !Array.isArray(v.differences) ? v.differences : {},
+    technicalSheetUrl: typeof v.technical_sheet_url === 'string' && /^https:\/\//.test(v.technical_sheet_url) ? v.technical_sheet_url : null,
+  }));
+}
 
 export default function ProduktDetail() {
   const { slug } = useParams();
@@ -43,6 +55,31 @@ export default function ProduktDetail() {
       .finally(() => setLoading(false));
   }, [slug]);
 
+  const submitQuickInquiry = async (payload) => {
+    // The existing backend accepts contact details and a message. Do not silently
+    // discard attachments: block until a verified private upload endpoint exists.
+    if (payload.photos?.length) throw new Error('photo_upload_not_configured');
+    const response = await base44.functions.invoke('submitPoptavka', {
+      jmeno: [payload.firstName, payload.lastName].filter(Boolean).join(' '),
+      email: payload.email,
+      telefon: payload.phone,
+      firma: '',
+      produkt: product.name,
+      service_type: product.slug,
+      zprava: [
+        'Rychlá poptávka z detailu produktu',
+        'Produkt: ' + product.name + ' (' + product.slug + ')',
+        'Výběr: ' + (payload.selectionMode === 'all' ? 'všechny varianty' : 'jedna varianta'),
+        'ID variant: ' + payload.variantIds.join(', '),
+        payload.city && 'Město: ' + payload.city,
+        payload.installationSite && 'Místo instalace: ' + payload.installationSite,
+        payload.note && 'Poznámka: ' + payload.note,
+        'Zdroj: ' + payload.sourceUrl,
+      ].filter(Boolean).join('\\n'),
+    });
+    if (response?.data?.error || response?.error) throw new Error('submit_failed');
+    trackInquirySubmitted('quick_variant_inquiry', product.slug, response?.data?.inquiry?.id || '');
+  };
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center bg-secondary">
       <BrandLoadingContent />
@@ -68,6 +105,7 @@ export default function ProduktDetail() {
   return (
     <div className="product-detail-page min-h-screen bg-background text-foreground pt-[var(--site-header-height)]">
       <PdCompactHero product={product} />
+      <QuickVariantInquiry product={product} variants={verifiedVariants(product)} onSubmit={submitQuickInquiry} />
       <PdFamilyNav product={product} />
       <PdSectionNav product={product} />
       <PdDescription product={product} />

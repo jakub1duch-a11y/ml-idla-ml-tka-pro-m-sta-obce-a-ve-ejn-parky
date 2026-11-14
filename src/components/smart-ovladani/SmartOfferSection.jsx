@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, Clock3, Thermometer, Smartphone, Network, ShieldCheck, Wrench, CloudSun, MapPin, Radio, Droplets } from 'lucide-react';
 
-const PACKAGES = [
+export const SMART_PACKAGES = [
   {
     name: 'START',
     label: 'Základní automatizace',
@@ -56,16 +56,16 @@ const FAQ = [
 
 export default function SmartOfferSection() {
   return <>
-    <section id="varianty" className="scroll-mt-24 bg-white py-20 lg:py-28">
+    <section id="varianty" aria-labelledby="smart-packages-title" className="scroll-mt-32 bg-white py-14 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="max-w-3xl">
           <p className="font-mono text-[11px] uppercase tracking-[.18em] text-secondary">Varianty řešení</p>
-          <h2 className="mt-4 font-heading text-3xl leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">Od jednoduchého časovače po správu několika lokalit.</h2>
-          <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">Neplatíte za funkce, které nepotřebujete. Úroveň řízení navrhneme podle velikosti instalace, způsobu využití a požadavků správce.</p>
+          <h2 id="smart-packages-title" className="mt-4 font-heading text-3xl leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">Vyberte variantu řízení pro své mlžítko.</h2>
+          <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">Pro zahradní mlžítko často stačí časové ovládání ventilu. Pro městské mlžné sochy, brány a více zón doporučujeme řízení podle času a teploty. Konkrétní výbavu SUPLA a kompatibilitu ověříme podle projektu.</p>
         </div>
 
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {PACKAGES.map((p, i) => <motion.article key={p.name} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .07 }} className={`relative rounded-3xl border p-7 sm:p-8 ${p.featured ? 'border-secondary bg-slate-950 text-white shadow-xl' : 'border-slate-200 bg-white text-slate-900'}`}>
+          {SMART_PACKAGES.map((p, i) => <motion.article key={p.name} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .07 }} className={`relative rounded-3xl border p-7 sm:p-8 ${p.featured ? 'border-secondary bg-slate-950 text-white shadow-xl' : 'border-slate-200 bg-white text-slate-900'}`}>
             {p.featured && <span className="absolute right-5 top-5 rounded-full bg-accent px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">Doporučeno</span>}
             <p.icon size={32} strokeWidth={1.5} className={p.featured ? 'text-accent' : 'text-secondary'} />
             <p className={`mt-7 font-mono text-[11px] uppercase tracking-[.18em] ${p.featured ? 'text-white/50' : 'text-slate-400'}`}>{p.label}</p>
@@ -74,10 +74,10 @@ export default function SmartOfferSection() {
             <div className={`my-6 h-px ${p.featured ? 'bg-white/10' : 'bg-slate-200'}`} />
             <ul className="space-y-3">{p.features.map(f => <li key={f} className={`flex items-start gap-3 text-sm ${p.featured ? 'text-white/80' : 'text-slate-700'}`}><Check size={16} className={`mt-0.5 shrink-0 ${p.featured ? 'text-accent' : 'text-secondary'}`} />{f}</li>)}</ul>
             <p className={`mt-7 text-xs leading-relaxed ${p.featured ? 'text-white/45' : 'text-slate-500'}`}><strong className={p.featured ? 'text-white/70' : 'text-slate-700'}>Vhodné pro:</strong> {p.use}</p>
-            <Link to={`/poptavka?produkt=${encodeURIComponent(`Smart Cooling ${p.name}`)}`} className={`mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-all ${p.featured ? 'bg-white text-slate-950 hover:bg-white/90' : 'border border-slate-300 text-slate-900 hover:border-slate-500'}`}>Navrhnout {p.name} <ArrowRight size={15} /></Link>
+            <Link to={`/poptavka?produkt=${encodeURIComponent(`Chytré řízení mlžítek – ${p.name}`)}&zprava=${encodeURIComponent(`Poptávám variantu ${p.name}. Prosím o návrh řízení SUPLA, potřebných ventilů, senzorů a rozsahu dodávky. Místo instalace, počet mlžítek a dostupné připojení upřesním.`)}`} className={`mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-all ${p.featured ? 'bg-white text-slate-950 hover:bg-white/90' : 'border border-slate-300 text-slate-900 hover:border-slate-500'}`}>Poptat {p.name} <ArrowRight size={15} /></Link>
           </motion.article>)}
         </div>
-        <p className="mt-6 text-center text-xs text-slate-400">Cena a přesný rozsah se stanovují podle počtu zón, senzorů, způsobu připojení a požadované automatizace.</p>
+        <p className="mt-6 text-center text-xs text-slate-400">Uvedené varianty představují návrhové úrovně, nikoli pevné sestavy s garantovanými funkcemi. Cena, dostupnost vzdáleného ovládání, počet zón a rozsah dodávky závisí na konkrétních komponentech a připojení. Připojení vody, elektrické jištění a hygienický provoz se řeší samostatně.</p>
       </div>
     </section>
 

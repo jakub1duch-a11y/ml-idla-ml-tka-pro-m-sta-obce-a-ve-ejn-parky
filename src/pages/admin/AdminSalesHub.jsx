@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink, FileText, Mail, Palette, ShieldCheck } from 'lucide-react';
 import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
+import AdminNewsletterCampaigns from '@/components/admin/AdminNewsletterCampaigns';
 
 const shortcuts = [
   { label: 'Odeslané nabídky', href: '/admin?tab=offers', Icon: FileText },
@@ -26,6 +27,7 @@ export default function AdminSalesHub() {
       </header>
       <div className="space-y-5 p-3 lg:p-6">
         <AdminBusinessSyncPanel />
+        <AdminNewsletterCampaigns />
         <iframe title="MLŽIDLA Sales Hub – obchodní případy a nabídky" src="/obchodni-nabidky" className="h-[calc(100vh-250px)] min-h-[750px] w-full rounded-2xl border border-slate-200 bg-white shadow-sm" />
       </div>
     </section>

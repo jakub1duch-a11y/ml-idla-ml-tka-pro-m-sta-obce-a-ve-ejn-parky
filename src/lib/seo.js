@@ -530,6 +530,16 @@ export const SEO_PAGES = {
     keywords: 'mlžítko, mlžítka, nerezové mlžítko, městská mlžítka, zahradní mlžítka, mlžítka pro města, mlžítka pro obce, designové mlžítko',
     canonicalPath: '/mlzitko',
   },
+  rezidencniMlzeni: {
+    title: 'Zahradní mlžítka a rezidenční mlžení pro terasy',
+    description: 'Zahradní mlžítka MLŽIDLA pro terasy, pergoly a soukromé zahrady. Nerezové mlžítko, vodní mlha, návrh umístění a ovládání podle prostoru.',
+    canonicalPath: '/rezidencni-mlzeni',
+  },
+  pronajem: {
+    title: 'Pronájem mlžítek GO pro festivaly a letní akce',
+    description: 'Pronájem mobilních mlžítek, mlžných bran a sestav MLŽIDLA GO pro festivaly, firemní akce a venkovní události. Poptávka podle místa a termínu.',
+    canonicalPath: '/pronajem',
+  },
   mlhoviste: {
     title: 'Mlhoviště a mlžiště: návrh mlžné zóny',
     description: 'Mlhoviště a mlžiště pro města, parky, dětská hřiště i zahrady. Navrhujeme rozmístění mlžítek, přívod vody, řízení SUPLA a servis.',

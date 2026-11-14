@@ -49,3 +49,11 @@ npx skills add base44/skills
 - For Figma webdesign, animated sections, blur/focus transitions, scroll-triggered content, sliders, interactive media, 3D/Spline concepts, prototyping or Figma-to-Base44 conversion, also read and apply `skills/mlzidla-figma-motion-design/SKILL.md`.
 - Keep both MLŽIDLA design skills synchronized for agent runtimes in `.claude/skills/`, `.agents/skills/` and `agent/skills/` whenever their rules change.
 - In the Base44 cloud sandbox, do NOT run project-level `base44 deploy`, `site deploy`, entity push, function deploy, or similar CLI deployment commands. Sandbox writes auto-commit and the platform ships/syncs them automatically. After changes, run the production build and relevant targeted checks, allow the auto-commit to land, and create/verify a checkpoint when appropriate.
+## Mobilní obrázky a synchronizace MLŽIDLA (2026-11-14)
+
+- Ve všech webových, Canva a e-mailových fotoblocích zajisti responzivní zobrazení: max-width:100%, height:auto; v e-mailu inline styly a kontejner do 600 px. Mobilní obrázky pod sebou bez deformace produktu.
+- Ověř šířky 320, 375 a 430 px, desktop, čitelnost CTA a alternativní texty.
+- Při úpravě Gmail konceptů zachovej vložené CID obrázky a přílohy; pokud je API neumí bezpečně zachovat, nepřepisuj koncept destruktivně.
+- Potvrzené změny synchronizuj pouze přes ověřené konektory Base44, Obchodní centrum, Sheets/Drive, Gmail, HubSpot a Canva, s mapováním ID, auditním logem, idempotencí a řešením konfliktů. Dokumentace sama není funkční synchronizace.
+- Bez schválení správce neposílej e-maily, neprováděj merge ani produkční nasazení.
+

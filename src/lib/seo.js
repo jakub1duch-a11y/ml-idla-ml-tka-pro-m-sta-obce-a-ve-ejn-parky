@@ -489,8 +489,8 @@ export function getReferenceSEO(project) {
 
 export const SEO_PAGES = {
   home: {
-    title: 'Nerezová mlžítka pro města, obce, parky i zahrady',
-    description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i zahrady. Výroba, pronájem, montáž, servis a chytré řízení podle místa.',
+    title: 'Česká výroba mlžítek pro města, obce a parky',
+    description: 'Česká výroba nerezových mlžítek a mlžných prvků HolmTec. Mlžné brány, mlhoviště a ochlazování měst, obcí, škol i sportovišť. Návrh a servis.',
     keywords: 'mlžítka, nerezová mlžítka, mlžítka pro města, mlžítka pro obce, mlhoviště, mlžiště, mlžné brány, městské ochlazování, vodní mlha, MLŽIDLA',
     canonicalPath: '/',
   },
@@ -577,9 +577,9 @@ export const SEO_PAGES = {
     canonicalPath: '/jak-to-funguje',
   },
   oNas: {
-    title: 'HolmTec: výrobce mlžítek a mlžných soch',
-    description: 'Poznejte HolmTec a výrobu mlžítek, mlžných bran a skulptur. Představujeme technický přístup a spolupráci při přípravě veřejných i rezidenčních projektů.',
-    keywords: 'HolmTec, výrobce mlžných prvků, mlzidla.cz, mlžné skulptury výroba, zakázková výroba Trutnov, nerezová mlžítka',
+    title: 'Česká výroba mlžítek a mlžných prvků | HolmTec',
+    description: 'Česká výroba nerezových mlžítek, mlžných bran a designových mlžných prvků v Trutnově. Poznejte výrobní zázemí HolmTec, návrh, ohýbání trubek a servis.',
+    keywords: 'česká výroba mlžítek, výrobce mlžítek, mlžné prvky česká výroba, HolmTec, nerezová mlžítka, mlžné brány Trutnov',
     canonicalPath: '/o-nas',
   },
   reference: {

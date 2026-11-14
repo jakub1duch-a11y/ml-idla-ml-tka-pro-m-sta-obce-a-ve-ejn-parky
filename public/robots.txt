@@ -29,4 +29,7 @@ Disallow: /prezentace/
 Disallow: /ar/
 Disallow: /brand-identity
 
+# Googlebot a Google-Extended nejsou blokovány; veřejné stránky mohou
+# být vyhledávány a zpracovávány podle pravidel vyhledávače.
+# Přístup k neveřejným datům musí být chráněn autorizací na serveru.
 Sitemap: https://mlzidla.cz/sitemap.xml

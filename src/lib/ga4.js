@@ -62,7 +62,13 @@ function installGlobalListeners() {
     const value = consentEvent.detail?.value || 'essential';
     updateGoogleConsent(value);
     updateMetaConsent(value);
-    if (value === 'accepted') void initGoogleAnalytics();
+    if (value === 'accepted') {
+      // Initial route tracking may have run before consent was granted.
+      // Record the current page only after analytics becomes available.
+      void initGoogleAnalytics().then((ready) => {
+        if (ready) trackPageView(`${window.location.pathname}${window.location.search}`, document.title);
+      });
+    }
   });
 
   const startedForms = new WeakSet();

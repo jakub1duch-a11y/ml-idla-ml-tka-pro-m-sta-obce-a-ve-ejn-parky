@@ -8,7 +8,8 @@ const shortcuts = [
   { label: 'Odeslané nabídky', href: '/admin?tab=offers', Icon: FileText },
   { label: 'Poptávky', href: '/admin?tab=poptavky', Icon: Mail },
   { label: 'AI nabídky · přehled', href: '/admin?tab=offers', Icon: FileText },
-  { label: 'Kontakty a CRM', href: '/admin?tab=crm', Icon: Users },
+  { label: 'HubSpot CRM · obchodní případy', href: 'https://app-eu1.hubspot.com/contacts/149778217/objects/0-3', Icon: Users, external: true },
+  { label: 'Lokální evidence Base44', href: '/admin?tab=crm', Icon: Users },
   { label: 'Gmail koncepty', href: 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts', Icon: Mail, external: true },
   { label: 'Canva · katalog', href: 'https://www.canva.com/design/DAHa1B5S2eg/BjtW1avef1aLLSQWNpueRg/edit', Icon: Palette, external: true },
 ];
@@ -20,14 +21,14 @@ export default function AdminSalesHub() {
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[.18em] text-[#008ea5]">MLŽIDLA.cz / CRM</p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#102b3a]">Obchodní centrum</h1>
-            <p className="mt-1 text-sm text-slate-600">Poptávky, cenové nabídky a obchodní případy přímo v administraci.</p>
+            <p className="mt-1 text-sm text-slate-600">HubSpot je hlavní CRM. Base44 spravuje produkty, poptávky a podklady nabídek; ChatGPT a Base44 mají samostatná spouštěcí tlačítka.</p>
           </div>
           <a href="/obchodni-nabidky" className="inline-flex items-center gap-2 rounded-xl bg-[#102b3a] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#19475b]"><ExternalLink size={16}/> Otevřít na celou stránku</a>
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
           {shortcuts.map(({label,href,Icon,external}) => <a key={label} href={href} target={external?'_blank':undefined} rel={external?'noopener noreferrer':undefined} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#102b3a] hover:border-[#008ea5]"><Icon size={15}/>{label}</a>)}
         </div>
-        <p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><ShieldCheck size={14}/> Koncepty a nabídky vyžadují kontrolu před odesláním. Integrace Canva → Gmail není tímto rozhraním automaticky potvrzena.</p>
+        <p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><ShieldCheck size={14}/> HubSpot: primární evidence zákazníků a obchodních případů. Přímý zápis a synchronizace vyžadují ověření portálu 149778217. Nabídky a Gmail koncepty musí projít kontrolou; Canva → Gmail není potvrzena jako automatická integrace.</p>
       </header>
       <div className="space-y-5 p-3 lg:p-6">
         <div className="grid gap-3 md:grid-cols-3">
@@ -37,7 +38,7 @@ export default function AdminSalesHub() {
             { title: 'Kontakty a komunikace', description: 'Historie oslovení, odpovědí, webových poptávek a následných kroků.', href: '/admin?tab=crm', Icon: MessageSquareText },
           ].map(({title,description,href,Icon}) => <a key={title} href={href} className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-[#008ea5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#008ea5]"><Icon className="mb-3 text-[#008ea5]" size={23}/><h2 className="font-semibold text-[#102b3a]">{title}</h2><p className="mt-2 text-sm text-slate-600">{description}</p></a>)}
         </div>
-        <details className="rounded-2xl border border-slate-200 bg-white p-5"><summary className="cursor-pointer font-semibold text-[#102b3a]"><BookOpen className="mr-2 inline text-[#008ea5]" size={18}/> Manuál obchodního workflow</summary><div className="mt-4 space-y-2 text-sm text-slate-700"><p><strong>1. Kontakt:</strong> Ověřit firmu a e-mail, vyhledat duplicity a poslední komunikaci.</p><p><strong>2. Oslovení:</strong> Všeobecná nabídka s QR, obrázkem v těle, PDF a podpisem. Bez individuální ceny.</p><p><strong>3. Poptávka:</strong> Spárovat formulář nebo Gmail s kontaktem a zjistit produkt, místo a přílohy.</p><p><strong>4. Nabídka:</strong> Ověřit cenu v kalkulaci, připravit Canva PDF a vhodné řešení SUPLA.</p><p><strong>5. Koncept:</strong> Zkontrolovat adresáta, text, přílohy, duplicity a vazbu na obchodní případ.</p><p><strong>6. Odeslání:</strong> Až po schválení. Stav odeslání ověřit podle skutečné zprávy v Gmailu.</p><p><strong>7. Následná komunikace:</strong> Evidovat odpověď, další krok a platnost nabídky. Neověřený stav neoznačovat jako potvrzený.</p></div></details>
+        <details className="rounded-2xl border border-slate-200 bg-white p-5"><summary className="cursor-pointer font-semibold text-[#102b3a]"><BookOpen className="mr-2 inline text-[#008ea5]" size={18}/> Manuál obchodního workflow</summary><div className="mt-4 space-y-2 text-sm text-slate-700"><p><strong>1. HubSpot CRM:</strong> Ověřit portál HolmTec 149778217, firmu a e-mail, vyhledat duplicity a poslední komunikaci. Google Sheets je doplňková obchodní evidence.</p><p><strong>2. Oslovení:</strong> Všeobecná nabídka s QR, obrázkem v těle, PDF a podpisem. Bez individuální ceny.</p><p><strong>3. Poptávka:</strong> Spárovat formulář nebo Gmail s kontaktem a zjistit produkt, místo a přílohy.</p><p><strong>4. Výběr agenta:</strong> Pro konkrétní případ samostatně zvolit Base44 preflight nebo předání do ChatGPT. Gemini zůstává vypnutý.</p><p><strong>5. Nabídka:</strong> Ověřit cenu v kalkulaci, připravit Canva PDF a vhodné řešení SUPLA.</p><p><strong>5. Koncept:</strong> Zkontrolovat adresáta, text, přílohy, duplicity a vazbu na obchodní případ.</p><p><strong>6. Odeslání:</strong> Až po schválení. Stav odeslání ověřit podle skutečné zprávy v Gmailu.</p><p><strong>7. Následná komunikace:</strong> Evidovat odpověď, další krok a platnost nabídky. Neověřený stav neoznačovat jako potvrzený.</p></div></details>
         <OfferWorkflowInbox />
         <AdminBusinessSyncPanel />
         <AdminNewsletterCampaigns />

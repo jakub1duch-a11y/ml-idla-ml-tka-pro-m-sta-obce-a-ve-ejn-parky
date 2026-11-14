@@ -42,6 +42,7 @@ import ZadostOPodklady from '@/pages/ZadostOPodklady';
 import Dekujeme from '@/pages/Dekujeme';
 import CustomPageView from '@/pages/CustomPageView';
 import Podpora from '@/pages/Podpora';
+import UpravaVody from '@/pages/UpravaVody';
 import MestaObce from '@/pages/kategorie/MestaObce';
 import ParkyHriste from '@/pages/kategorie/ParkyHriste';
 import Koupaliste from '@/pages/kategorie/Koupaliste';
@@ -184,6 +185,7 @@ const AuthenticatedApp = () => {
         <Route path="/dekujeme" element={<Dekujeme />} />
         <Route path="/p/:slug" element={<CustomPageView />} />
         <Route path="/podpora" element={<Podpora />} />
+        <Route path="/uprava-vody" element={<UpravaVody />} />
         <Route path="/mestske-ochlazovani-verejneho-prostoru" element={<MestskeOchlazovani />} />
         <Route path="/mlzitka-pro-mesta-obce" element={<MestaObce />} />
         <Route path="/kategorie/mesta-obce" element={<Navigate to="/mlzitka-pro-mesta-obce" replace />} />

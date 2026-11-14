@@ -4,6 +4,7 @@ import { Droplets, ArrowRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
+import { Link } from 'react-router-dom';
 import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions';
@@ -77,6 +78,7 @@ export default function ProduktDetail() {
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
       <div id="reference" className="scroll-mt-24"><PdReferences product={product} /></div>
       <PdFaq product={product} />
+      <section className="mx-auto max-w-7xl px-5 py-10"><div className="rounded-3xl border border-cyan-900/15 bg-[#eef8fb] p-7 md:p-10"><h2 className="text-2xl font-semibold">Filtrace a úprava vody pro mlžítko</h2><p className="mt-3 max-w-3xl text-slate-600">Kvalita vstupní vody ovlivňuje zanášení trysek a nároky na údržbu. Podle tvrdosti vody lze doplnit vhodnou filtraci nebo změkčovač.</p><Link to="/uprava-vody" className="mt-5 inline-flex font-semibold text-[#0b4860] underline underline-offset-4">Jak upravovat vodu pro nízkotlaká mlžítka →</Link></div></section>
       <PdSuplaControl product={product} />
       <PdClosingCta product={product} />
       <PdProductSuggestions product={product} />

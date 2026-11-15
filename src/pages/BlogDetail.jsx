@@ -9,7 +9,7 @@ import { setSEO, getBlogPostSEO, getBlogFaqItems } from '@/lib/seo';
 import { trackBlogPostView } from '@/lib/ga4';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import ArticleSafetyNotice from '@/components/blog/ArticleSafetyNotice';
-import ShareButtons from '@/components/blog/ShareButtons';
+import BlogArticleEngagement from '@/components/blog/BlogArticleEngagement';
 import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
 import BlogNewsletterInline from '@/components/blog/BlogNewsletterInline';
 import InstagramFeedSection from '@/components/home/InstagramFeedSection';
@@ -235,13 +235,11 @@ export default function BlogDetail() {
         )}
 
         {/* Share */}
-        <div className="pt-4">
-          <ShareButtons title={post.title} />
-        </div>
+        <BlogArticleEngagement postId={post.id} title={post.title} />
 
         {/* Content and article sidebar */}
         <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
-          <BlogArticleSidebar related={related} category={post.category} />
+          <BlogArticleSidebar related={related} category={post.category} postId={post.id} title={post.title} />
           <div id="article-content" className="lg:col-span-8 lg:col-start-4">
         {post.content ?
         <motion.div

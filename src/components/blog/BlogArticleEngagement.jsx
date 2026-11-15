@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, MessageCircle, Send, Share2, Check, MapPinned } from 'lucide-react';
+import { Heart, MessageCircle, MapPinned } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ShareButtons from './ShareButtons';
 

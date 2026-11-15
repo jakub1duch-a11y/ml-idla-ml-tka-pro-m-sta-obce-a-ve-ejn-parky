@@ -51,7 +51,7 @@ export default async function(req) {
     if(!project.quote_pdf_url||!source(project.quote_pdf_url))blockers.push('Chybí ověřitelné cenové PDF.');
     if(!project.quote_number||!Number(project.total_price)||Number(project.total_price)<=0)blockers.push('Číslo nabídky nebo ověřená cena chybí.');
     if(!project.valid_until||Date.parse(project.valid_until)<Date.now()||Number.isNaN(Date.parse(project.valid_until)))blockers.push('Není potvrzena aktuální platnost nabídky.');
-    if(['sent','viewed','in_production','delivered'].includes(project.status))blockers.push('Nabídka již byla odeslána.');
+    if(!['draft','draft_ready_for_review','pending_approval'].includes(project.status))blockers.push('Nabídka není v režimu konceptu k odeslání.');
     const inquiry=project.inquiry_type==='poptavka'&&project.inquiry_id?await base44.asServiceRole.entities.Poptavka.get(project.inquiry_id).catch(()=>null):null;
     const runs=arr(await base44.asServiceRole.entities.OfferAgentRun.filter({project_order_id:id}).catch(()=>[]));
     if(inquiry?.offer_status!=='schvaleno'&&!runs.some(r=>r.run_status==='approved'&&r.qa_passed===true&&r.approved_by))blockers.push('Chybí schválení nabídky v administraci.');

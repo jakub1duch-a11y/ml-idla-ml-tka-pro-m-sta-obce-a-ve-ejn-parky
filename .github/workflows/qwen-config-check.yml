@@ -6,6 +6,8 @@ on:
       - 'QWEN.md'
       - '.qwen/**'
       - 'docs/QWEN_CODE_SETUP.md'
+      - 'docs/QWEN_WORKFLOW_MLZIDLA.md'
+      - 'scripts/setup-qwen-mlzidla.ps1'
       - '.github/workflows/qwen-config-check.yml'
   workflow_dispatch:
 
@@ -26,6 +28,9 @@ jobs:
           assert settings['context']['fileName'] == 'QWEN.md'
           assert settings['tools']['approvalMode'] == 'default'
           assert settings['mcp']['allowed'] == []
+          assert settings['mcpServers'] == {}
+          assert pathlib.Path('docs/QWEN_WORKFLOW_MLZIDLA.md').is_file()
+          assert pathlib.Path('scripts/setup-qwen-mlzidla.ps1').is_file()
           for path in pathlib.Path('.qwen/skills').glob('*/SKILL.md'):
               txt = path.read_text(encoding='utf-8')
               assert txt.startswith('---\n'), f'{path}: YAML frontmatter missing'

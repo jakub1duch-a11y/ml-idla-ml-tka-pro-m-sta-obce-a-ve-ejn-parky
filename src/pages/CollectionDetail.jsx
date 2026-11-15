@@ -8,6 +8,7 @@ import CollectionProductGrid from '@/components/kolekce/CollectionProductGrid';
 import { COLLECTIONS } from '@/components/kolekce/collectionData';
 import ContextLinks from '@/components/common/ContextLinks';
 import UseCaseExperience from '@/components/kolekce/UseCaseExperience';
+import StebloSpaceFeature from '@/components/products/StebloSpaceFeature';
 
 const CITY_TRUST = [
   { icon: Building2, title: 'Český návrh a výroba', text: 'Jeden partner pro návrh, výrobu, instalaci i následný servis.' },
@@ -59,6 +60,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
 
       {(isCity || isGarden) && <UseCaseExperience variant={isGarden ? 'garden' : 'city'} />}
       {isCity && <DetailPhotoStory variant="spaces" />}
+      {isCity && <StebloSpaceFeature context="city" />}
 
       {(isCity || isGarden) && (
         <section className="border-b border-border bg-white">

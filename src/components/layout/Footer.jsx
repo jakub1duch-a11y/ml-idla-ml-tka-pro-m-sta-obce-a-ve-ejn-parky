@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, ChevronDown, Instagram, Linkedin, Youtube, MapPin, Phone, Mail, ShieldCheck, Building2, Code2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown, Instagram, Linkedin, Youtube, MapPin, Phone, Mail, ShieldCheck, Code2 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 

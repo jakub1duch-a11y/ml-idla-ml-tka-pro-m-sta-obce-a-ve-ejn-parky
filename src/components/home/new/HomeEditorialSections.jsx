@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
+import { ArrowRight, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
 
 // Přehledné informace o výrobcích, funkci a výrobě.
 // Záměrně bez dalšího obrazového slideru, pohybujících se kulis a duplicitního loga.

@@ -22,7 +22,7 @@ export default async function (req) {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
-    const businessTypes = ['googledrive', 'googlesheets', 'gmail'];
+    const businessTypes = ['googledrive', 'googledocs', 'googlesheets', 'gmail'];
     const connectors = await Promise.all(CONNECTORS.map(async (connector) => {
       if (businessTypes.includes(connector.type)) {
         const result = await getBusinessConnectorStatus(base44, connector.type);

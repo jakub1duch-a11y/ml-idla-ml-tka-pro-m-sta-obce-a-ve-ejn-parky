@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bg, ProductTitle } from './OfferPageParts';
+import { Bg, ProductTitle, Logo } from './OfferPageParts';
 import OfferPlacementSheets from '@/components/offers/OfferPlacementSheets';
 import OfferSuplaSheet from '@/components/offers/OfferSuplaSheet';
 import OfferPricingSheet from '@/components/offers/OfferPricingSheet';
@@ -13,6 +13,7 @@ export function DarkHeroPage({ c }) {
   return (
     <div className="offer-page op-dark">
       {c.pick(1) && <Bg src={c.pick(1)} style={{ opacity: .85 }} />}
+      <div className="op-abs" style={{left:'5cqw',top:'5cqw',zIndex:6,width:'28cqw',background:'rgba(255,255,255,.96)',padding:'1.3cqw 2cqw',borderRadius:'1cqw'}}><Logo /></div>
       <div className="op-abs" style={{ left: 0, right: 0, bottom: '6%', textAlign: 'center', color: '#fff', background: 'rgba(17,22,19,.88)', padding: '3cqw' }}>
         <div className="op-h2" style={{ fontSize: '6cqw', color: '#fff' }}><ProductTitle name={c.productName} /></div>
         <div className="op-rule" style={{ margin: '1.4cqw auto 0' }} />
@@ -25,6 +26,7 @@ export function PhotoHeroPage({ c }) {
   return (
     <div className="offer-page">
       <Bg src={c.pick(2)} />
+      <div className="op-abs" style={{right:'5cqw',top:'5cqw',zIndex:6,width:'28cqw',background:'rgba(255,255,255,.96)',padding:'1.3cqw 2cqw',borderRadius:'1cqw'}}><Logo /></div>
       <div className="op-abs" style={{ inset: '0 0 60% 0', background: 'linear-gradient(180deg,rgba(251,252,248,.98),rgba(251,252,248,.92),transparent)' }} />
       <div className="op-abs" style={{ left: '7cqw', top: '10cqw', zIndex: 3 }}>
         <div className="op-h1" style={{ fontSize: '7.4cqw' }}><ProductTitle name={c.productName} /></div>

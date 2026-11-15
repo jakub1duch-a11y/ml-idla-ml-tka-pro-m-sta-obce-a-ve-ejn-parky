@@ -13,6 +13,23 @@ export const MLZ_BRAND = Object.freeze({
   typography: Object.freeze({ heading: 'Montserrat', body: 'Inter' }),
   logoRule: 'Every client-facing page must include the original approved logo asset; never type, trace, recolor or regenerate it.',
 });
+// Explicitly selected by the business owner on 2026-11-15.
+// Canva confirms the template exists, but its Autofill dataset is EMPTY.
+// Never claim autofill, PDF export, attachment or email draft without proof.
+export const MLZ_DEFAULT_CANVA_OFFER_TEMPLATE = Object.freeze({
+  id: 'EAHbBX1hTpE',
+  title: 'Mlžítka HolmTec',
+  url: 'https://www.canva.com/brand/brand-templates/EAHbBX1hTpE',
+  createUrl: 'https://www.canva.com/design?create=true&template=EAHbBX1hTpE',
+  appliesTo: Object.freeze(['product_no_price', 'product_with_price', 'project_offer']),
+  canvaAutofillFieldsVerified: false,
+  datasetStatus: 'empty',
+  copyRequiredPerInquiry: true,
+  pdfExportRequiresVisualQA: true,
+  clientSendRequiresHumanApproval: true,
+  gmailDraftOnly: true,
+});
+
 export const MLZ_CANVA_WORKING_TEMPLATES = Object.freeze({
   product_no_price: {
     designId: 'DAHa8bhukf8',
@@ -46,6 +63,11 @@ export const MLZ_WORKFLOW_BINDINGS = Object.freeze({
   sourceOfInquiry: 'Base44 Poptavka / ContactInquiry',
   priceMaster: 'Schválená aktuální kalkulace 2026 na MLŽNÉM DISKU',
   destinationAfterApproval: 'Google Drive projektová složka → HubSpot Deal link → Gmail koncept',
+  defaultCanvaTemplateId: MLZ_DEFAULT_CANVA_OFFER_TEMPLATE.id,
+  defaultCanvaTemplateUrl: MLZ_DEFAULT_CANVA_OFFER_TEMPLATE.url,
+  canvaAutofillReady: false,
+  gmailMode: 'draft_only',
+  requireVerifiedPdfBeforeDraftAttachment: true,
   autoSend: false,
 });
 export const MLZ_OFFER_AUTOFILL_FIELDS = Object.freeze([

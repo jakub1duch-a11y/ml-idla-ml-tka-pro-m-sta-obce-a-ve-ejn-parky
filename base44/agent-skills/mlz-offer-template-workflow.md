@@ -26,6 +26,13 @@ status: working-draft-until-verified
 - SITE STORY: situační plán a označené body A/B, fotorealistická vizualizace bez falešné geometrie, přínosy, instalace; pro města, architekty a větší areály.
 - SMART CONTROL: reálné komponenty a jen ověřené schéma SUPLA, senzory, ventil, případně šachta, režimy řízení; volitelný samostatný list.
 
+## Výchozí šablona přikázaná správcem (15. 11. 2026)
+- Primární grafický základ pro **všechny nové produktové listy s cenou a individuální nabídky**: Canva Brand Template **Mlžítka HolmTec**, ID `EAHbBX1hTpE`, https://www.canva.com/brand/brand-templates/EAHbBX1hTpE .
+- Ověřeno v připojené Canvě: šablona existuje, avšak `get_brand_template_dataset` vrací `{}`. Nemá vyplnitelná Autofill pole. Vytvářet kopii pro konkrétní poptávku, doplnit vizualizaci, skutečné fotografie, položkové ceny z aktuální kalkulace a před exportem ručně zkontrolovat všechny stránky.
+- Napojuj pouze na správný HubSpot Deal podle ID poptávky; exportované ověřené PDF, revizi a vizualizace archivuj na firemní Mlžný disk až po ověření konektorů.
+- Gmail pouze `meduna@holmtec.cz`, navázat na správný kontakt a existující vlákno, uložit **koncept** s ověřenou přílohou. Není-li PDF, neoznačuj koncept za nabídku s přílohou. Bez schválení nic neposílat.
+- Níže uvedené starší pracovní návrhy jsou pouze alternativy, nemají přednost před novou výchozí šablonou.
+
 ## Interní Canva pracovní zdroje – nejsou finální klientské šablony
 - Brand Kit `kAGJuqUZsdc`, Brand Master `DAHa8YIy0GA`.
 - Bez ceny: `DAHa8bhukf8` → https://www.canva.com/d/mT4z_0LYe0G3j7u

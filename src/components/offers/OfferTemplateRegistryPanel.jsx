@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ExternalLink, ShieldCheck, AlertTriangle, FileText } from 'lucide-react';
-import { MLZ_BRAND, MLZ_CANVA_WORKING_TEMPLATES, MLZ_WORKFLOW_BINDINGS } from '@/lib/mlz-brand-offer-templates';
+import { MLZ_BRAND, MLZ_CANVA_WORKING_TEMPLATES, MLZ_DEFAULT_CANVA_OFFER_TEMPLATE, MLZ_WORKFLOW_BINDINGS } from '@/lib/mlz-brand-offer-templates';
 import { checkOfferTemplateReadiness, OFFER_TEMPLATE_KINDS } from '@/lib/offer-template-system';
 import ProductSheetTemplate from '@/components/offers/ProductSheetTemplate';
 
@@ -31,6 +31,20 @@ export default function OfferTemplateRegistryPanel({ prepared, selected, selecte
       </div>
       <span className="rounded-full bg-amber-50 px-3 py-1 text-[10px] font-semibold text-amber-800">Pracovní verze · ruční schválení</span>
     </div>
+    <div className="mt-4 rounded-xl border border-[#A9D9E6] bg-[#EFF9FC] p-3 sm:p-4">
+      <p className="text-[10px] font-bold uppercase tracking-[.12em] text-[#08799D]">Výchozí schválená Canva brand šablona</p>
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="font-bold text-[#082F42]">{MLZ_DEFAULT_CANVA_OFFER_TEMPLATE.title}</p>
+          <p className="mt-1 text-xs leading-5 text-[#486B7D]">Pro produktové listy s cenou, projektové nabídky a vizualizace. U každé poptávky vytvořit samostatnou kopii.</p>
+        </div>
+        <a href={MLZ_DEFAULT_CANVA_OFFER_TEMPLATE.url} target="_blank" rel="noopener noreferrer"
+           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#07576A] px-4 py-2 text-xs font-bold text-white hover:bg-[#06465A]">
+          Otevřít výchozí šablonu <ExternalLink size={14} aria-hidden="true"/>
+        </a>
+      </div>
+      <p className="mt-3 text-xs font-semibold text-[#8A5500]">Canva Autofill: nedostupný (šablona nemá datová pole). PDF, ceny a Gmail koncept vyžadují ověřený export a kontrolu.</p>
+    </div>
     <div className="mt-4 grid gap-2 sm:grid-cols-3">
       {Object.entries(MLZ_CANVA_WORKING_TEMPLATES).map(([key,item])=><button key={key} type="button" onClick={()=>setKind(key)}
         className={`rounded-xl border px-3 py-3 text-left text-xs font-semibold transition ${kind === key ? 'border-[#007789] bg-[#e9f7fa] text-[#07465a]' : 'border-slate-200 bg-white text-slate-600 hover:border-cyan-200'}`}>
@@ -40,7 +54,7 @@ export default function OfferTemplateRegistryPanel({ prepared, selected, selecte
     <div className="mt-4 flex flex-wrap items-center gap-3">
       <a href={template.url} target="_blank" rel="noopener noreferrer"
          className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#07576a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#063f4e]">
-        Otevřít pracovní šablonu v Canvě <ExternalLink size={14}/>
+        Otevřít alternativní pracovní návrh v Canvě <ExternalLink size={14}/>
       </a>
       <button type="button" onClick={() => setShowPreview(!showPreview)} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#97cad5] px-4 py-2 text-xs font-semibold text-[#07576a]">{showPreview ? 'Skrýt náhled A4' : 'Zobrazit nový návrh A4'}</button>
       <span className="text-[11px] text-slate-500">HubSpot portál {MLZ_WORKFLOW_BINDINGS.expectedHubspotPortalId} · firemní účet {MLZ_WORKFLOW_BINDINGS.expectedWorkspaceEmail}</span>

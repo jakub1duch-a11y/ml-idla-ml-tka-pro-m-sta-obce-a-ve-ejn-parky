@@ -35,3 +35,8 @@ Stav: pracovní specifikace k revizi v PR #123. Žádná automatická publikace 
 - Canva brand šablony neposkytují pojmenovaná Autofill pole.
 - HubSpot pipeline existuje, avšak koncový proces Base44 → HubSpot Deal → Canva PDF → Gmail draft není end-to-end ověřen.
 - PR #123 opravuje staré ID portálu v importu produktů; do merge jen po kontrole náhledu a potvrzení.
+
+## Aktualizace 15. 11. 2026 – závazný výchozí Canva design
+- Správce určil brand šablonu `EAHbBX1hTpE` („Mlžítka HolmTec“), https://www.canva.com/brand/brand-templates/EAHbBX1hTpE, pro produktové listy s cenou i individuální nabídky včetně vizualizací.
+- Existence šablony ověřena v Canva. Dataset je prázdný `{}` – nelze tvrdit, že je funkční automatické Autofill, PDF export nebo Gmail přiložení.
+- Pro každou klientskou poptávku vytvořit vlastní designovou kopii, naplnit ověřenými parametry, cenami z aktuální kalkulace, fotkami a vizualizacemi. Po kontrole PDF připojit ke správnému HubSpot Dealu a pouze do Gmail konceptu v účtu meduna@holmtec.cz. Automatické odesílání zakázáno.

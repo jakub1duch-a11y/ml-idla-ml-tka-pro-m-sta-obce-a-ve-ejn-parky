@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { ExternalLink, ShieldCheck, AlertTriangle, FileText } from 'lucide-react';
 import { MLZ_BRAND, MLZ_CANVA_WORKING_TEMPLATES, MLZ_WORKFLOW_BINDINGS } from '@/lib/mlz-brand-offer-templates';
 import { checkOfferTemplateReadiness, OFFER_TEMPLATE_KINDS } from '@/lib/offer-template-system';
+import ProductSheetTemplate from '@/components/offers/ProductSheetTemplate';
 
 /** Preview and links only. Canva Autofill and PDFs require their own verified backend preflight. */
 export default function OfferTemplateRegistryPanel({ prepared, selected, selectedProduct }) {
   const [kind, setKind] = useState(OFFER_TEMPLATE_KINDS.PROJECT_OFFER);
+  const [showPreview, setShowPreview] = useState(false);
   const name = selectedProduct?.name || selectedProduct?.nazev || '';
   const verification = checkOfferTemplateReadiness({
     kind,
@@ -40,8 +42,10 @@ export default function OfferTemplateRegistryPanel({ prepared, selected, selecte
          className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#07576a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#063f4e]">
         Otevřít pracovní šablonu v Canvě <ExternalLink size={14}/>
       </a>
+      <button type="button" onClick={() => setShowPreview(!showPreview)} className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#97cad5] px-4 py-2 text-xs font-semibold text-[#07576a]">{showPreview ? 'Skrýt náhled A4' : 'Zobrazit nový návrh A4'}</button>
       <span className="text-[11px] text-slate-500">HubSpot portál {MLZ_WORKFLOW_BINDINGS.expectedHubspotPortalId} · firemní účet {MLZ_WORKFLOW_BINDINGS.expectedWorkspaceEmail}</span>
     </div>
+    {showPreview && <div className="mt-5 rounded-2xl bg-slate-100 p-3 sm:p-5"><ProductSheetTemplate kind={kind} product={selectedProduct || {}} clientName={selected?.firma || selected?.company || selected?.name || ''} siteName={selected?.mesto || selected?.city || ''} projectSummary={selected?.zprava || selected?.message || ''} catalogImageUrl={selectedProduct?.image_url || ''} siteImageUrl={prepared?.visualizationUrls?.[0] || ''} visualizationApproved={false} geometryRevision={selectedProduct?.visual_master_verified ? selectedProduct?.visual_master_revision || 'MASTER approved' : ''} /></div>}
     {verification.blockers.length ? <div className="mt-4 flex gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-900">
       <AlertTriangle size={17} className="mt-0.5 shrink-0"/><div><strong>Podklady pro finální export nejsou kompletní.</strong><p>Aktuální cenu, revizi, geometrii, schválení loga na všech stranách a Canva Autofill je nutné ověřit.</p></div>
     </div> : <p className="mt-3 flex items-center gap-2 text-xs text-emerald-700"><ShieldCheck size={15}/> Základní produktová data splnila kontrolu. Finální export vyžaduje další schválení.</p>}

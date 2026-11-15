@@ -4,6 +4,7 @@ import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
 import AdminCrmAgentWorkspace from '@/components/admin/AdminCrmAgentWorkspace';
 import OfferWorkflowInbox from '@/components/admin/OfferWorkflowInbox';
 import HubspotCatalogSync from '@/components/admin/HubspotCatalogSync';
+import AdminBrandDocuments from '@/components/admin/AdminBrandDocuments';
 import AdminNewsletterCampaigns from '@/components/admin/AdminNewsletterCampaigns';
 import OutreachContactQueue from '@/components/admin/OutreachContactQueue';
 
@@ -47,6 +48,7 @@ export default function AdminSalesHub() {
         <OfferWorkflowInbox />
         <AdminBusinessSyncPanel />
         <HubspotCatalogSync />
+        <AdminBrandDocuments />
         <AdminNewsletterCampaigns />
         <iframe title="MLŽIDLA Sales Hub – obchodní případy a nabídky" src="/obchodni-nabidky" className="h-[calc(100vh-250px)] min-h-[750px] w-full rounded-2xl border border-slate-200 bg-white shadow-sm" />
       </div>

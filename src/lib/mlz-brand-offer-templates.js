@@ -3,7 +3,9 @@
 // All Canva copies are WORKING DRAFTS until logo placements and price/data fields are reviewed.
 export const MLZ_BRAND = Object.freeze({
   label: 'MLŽIDLA® by HolmTec',
-  logoMaster: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/151fce34e_Logo_full.png',
+  logoMaster: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/4ad6dc249_MLZIDLA_logo_original_tight.png',
+  logoOriginal: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/151fce34e_Logo_full.png',
+  logoCanvaAssetId: 'MAHa8en15Zg',
   canvaLogoAssetId: 'MAHa8SMqpOU',
   canvaBrandKitId: 'kAGJuqUZsdc',
   canvaBrandMasterId: 'DAHa8YIy0GA',

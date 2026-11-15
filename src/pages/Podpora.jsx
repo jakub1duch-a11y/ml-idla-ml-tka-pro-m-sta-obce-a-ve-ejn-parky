@@ -180,18 +180,7 @@ export default function Podpora() {
         </motion.div>
 
         {/* Category anchors */}
-        <div className="flex flex-wrap gap-3 mt-8">
-          {FAQ_SECTIONS.map((s) => null
 
-
-
-
-
-
-
-
-          )}
-        </div>
       </div>
 
       {/* FAQ Sections */}
@@ -255,6 +244,24 @@ export default function Podpora() {
             </div>
           </div>
         </motion.section>
+
+        <section aria-labelledby="polna-reference-title" className="overflow-hidden rounded-[1.75rem] border border-[#CFE3EC] bg-[#F1F8FB] p-5 sm:p-8 lg:p-10">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,.9fr)] lg:items-center">
+            <div className="min-w-0">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[.17em] text-[#087DA5]">Skutečná realizace · město Polná</p>
+              <h2 id="polna-reference-title" className="mt-3 font-heading text-2xl font-bold tracking-tight text-[#09293F] sm:text-3xl">Mlžítko MRKEV v Polné</h2>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-[#405C70]">Zakázková nerezová mlžná socha inspirovaná místní identitou města. Podívejte se na skutečnou realizaci a dostupnou videoreportáž z provozu. Nejde o převzatou zákaznickou recenzi.</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to="/reference/mesto-polna-mlzitko-mrkev" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#072B43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#075A80]">Realizace a video <ArrowRight size={16}/></Link>
+                <Link to="/poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#9CCBDB] bg-white px-5 py-3 text-sm font-semibold text-[#0A405C] transition hover:border-[#007DA9]">Navrhnout do prostoru <ArrowRight size={16}/></Link>
+              </div>
+            </div>
+            <Link to="/reference/mesto-polna-mlzitko-mrkev" aria-label="Zobrazit realizaci MRKEV Polná" className="group relative block aspect-[16/10] overflow-hidden rounded-2xl bg-[#D9E9F0]">
+              <img src="/media/optimized/5c7fc888a_realizace-IMG_5035.webp" loading="lazy" alt="Skutečná realizace mlžítka MRKEV ve městě Polná" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.035]"/>
+              <span className="absolute bottom-3 left-3 rounded-full bg-[#052C43]/90 px-3 py-2 text-xs font-bold text-white">Prohlédnout realizaci a video</span>
+            </Link>
+          </div>
+        </section>
 
         <ReviewsSection />
 

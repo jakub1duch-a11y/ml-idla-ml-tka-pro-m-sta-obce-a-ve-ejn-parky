@@ -19,7 +19,7 @@ export default function ReviewsSection() {
   const avg = reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length;
 
   return (
-    <section id="recenze" className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+    <section id="recenze" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
       <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
         <div>
           <p className="text-xs font-mono tracking-widest uppercase mb-3 text-[hsl(var(--card-foreground))]">Recenze</p>
@@ -35,16 +35,16 @@ export default function ReviewsSection() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {reviews.map((r, i) =>
         <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-        className="p-6 rounded-2xl border border-white/10 bg-[#89ae9c]">
+        className="h-full rounded-2xl border border-[#D5E6EC] bg-white p-5 shadow-[0_12px_38px_rgba(7,31,49,.045)] transition-all duration-300 hover:-translate-y-1 hover:border-[#88C9E2] hover:shadow-[0_16px_42px_rgba(7,31,49,.09)] sm:p-6">
             <StarRow rating={r.rating} />
-            <p className="text-sm leading-relaxed font-light mt-4 mb-5 text-[#7b99b6]">"{r.comment}"</p>
+            <p className="text-sm leading-relaxed font-light mt-4 mb-5 text-[#405A6D]">"{r.comment}"</p>
             <div>
-              <p className="font-medium text-lg text-[hsl(var(--background))]">{r.customer_name}</p>
+              <p className="font-medium text-lg text-[#092D43]">{r.customer_name}</p>
               {(r.company || r.location) &&
-            <p className="text-xs text-white/30 mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
+            <p className="text-xs text-[#5B7282] mt-0.5">{[r.company, r.location].filter(Boolean).join(' · ')}</p>
             }
             </div>
           </motion.div>

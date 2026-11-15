@@ -7,7 +7,8 @@ const isEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 async function hub(token,method,path,body) {
   const res=await fetch('https://api.hubapi.com'+path,{method,headers:{Authorization:'Bearer '+token,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined,redirect:'error',signal:AbortSignal.timeout(15000)});
   if(!res.ok)throw new Error('hubspot_http_'+res.status);
-  return await res.json();
+  if(res.status===204)return {};
+  const text=await res.text();return text?JSON.parse(text):{};
 }
 async function match(token,kind,property,value) {
   const result=await hub(token,'POST','/crm/v3/objects/'+kind+'/search',{filterGroups:[{filters:[{propertyName:property,operator:'EQ',value}]}],properties:[property],limit:2});

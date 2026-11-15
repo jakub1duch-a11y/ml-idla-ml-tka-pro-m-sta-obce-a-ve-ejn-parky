@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -17,6 +17,17 @@ const ITEMS = [
 
 export default function PdSectionNav({ product }) {
   const [active, setActive] = useState('prehled');
+  const navRef = useRef(null);
+  useEffect(() => {
+    const nav = navRef.current;
+    const page = nav?.closest('.product-detail-page');
+    if (!nav || !page) return undefined;
+    const measure = () => page.style.setProperty('--product-nav-height', `${nav.offsetHeight}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(nav);
+    return () => { observer.disconnect(); page.style.removeProperty('--product-nav-height'); };
+  }, []);
   const items = ITEMS.filter(([id]) => id !== 'varianty' || product.variants?.length || product.slug === 'mlzitko-mrak' || product.slug.startsWith('mlzny-mrak-'));
 
   useEffect(() => {
@@ -46,7 +57,7 @@ export default function PdSectionNav({ product }) {
   };
 
   return (
-    <div data-product-section-nav className="sticky top-[var(--site-header-height)] z-40 border-y border-[#D8E8ED] bg-white/95 backdrop-blur-xl">
+    <div ref={navRef} data-product-section-nav className="sticky top-[var(--site-header-height)] z-40 border-y border-[#D8E8ED] bg-white/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-10">
         <div className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <nav className="flex min-w-max items-center" aria-label="Navigace detailu produktu">

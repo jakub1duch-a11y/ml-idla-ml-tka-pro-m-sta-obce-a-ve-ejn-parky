@@ -33,7 +33,7 @@
 
 /* Vyšší specificita než vynucená globální typografie webu (.architecture-site … !important) */
 .product-detail-page .pd-desc {
-  padding-inline: clamp(18px, 5vw, 72px);
+  padding: clamp(48px, 6vw, 88px) clamp(20px, 5vw, 72px);
 }
 
 .product-detail-page .pd-desc-title {
@@ -42,7 +42,7 @@
   font-family: var(--font-heading) !important;
   font-weight: 800 !important;
   font-size: clamp(2rem, 4.4vw, 3.4rem) !important;
-  line-height: 0.98 !important;
+  line-height: 1.12 !important;
   letter-spacing: -0.042em !important;
   color: #07131d;
   text-wrap: balance;
@@ -115,3 +115,18 @@
     max-width: none;
   }
 }
+/* Keep anchored headings below both sticky bars, including direct hash links. */
+.architecture-site .product-detail-page :is(section[id], div[id]) {
+  scroll-margin-top: calc(var(--site-header-height, 68px) + var(--product-nav-height, 56px) + 24px);
+}
+.product-detail-page #konfigurator-aleje {
+  padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 72px);
+}
+.product-detail-page #avenue-title { line-height: 1.15; overflow-wrap: break-word; }
+
+.pd-desc-motion-toggle {
+  position: absolute; bottom: 12px; right: 12px; min-height: 44px;
+  padding: 10px 14px; border: 1px solid #bfd6df; border-radius: 24px;
+  background: #fffffff2; color: #244758; font-size: 12px; font-weight: 600;
+}
+.pd-desc-motion-toggle:focus-visible { outline: 2px solid #087e9d; outline-offset: 3px; }

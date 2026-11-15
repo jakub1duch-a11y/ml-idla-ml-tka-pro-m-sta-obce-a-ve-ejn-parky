@@ -12,6 +12,16 @@ Qwen Code je AI agent běžící v lokálním terminálu. Tento repozitář obsa
 6. Spusťte `qwen` a dokončete přihlášení. V terminálu lze přihlášení změnit příkazem `/auth`.
 7. Ověřte projektové instrukce pomocí `/memory` a dostupné MCP servery přes `/mcp`.
 
+### Jednorázové nastavení na Windows (PowerShell)
+
+Po stažení pracovní větve s konfigurací můžete spustit připravený skript v kořeni projektu:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup-qwen-mlzidla.ps1
+```
+
+Skript před instalací ověří Node.js 22+, Git, repozitář i projektové soubory. Potom nainstaluje Qwen Code CLI a závislosti přes `npm ci`. **Skript je potřeba nejprve zkontrolovat a spustit ručně.** Nedotýká se produkce. Po instalaci otevřete `qwen`; v něm ověřte přihlášení, paměť, dovednosti a MCP.
+
 ## Každodenní pracovní postup
 ```bash
 git checkout main

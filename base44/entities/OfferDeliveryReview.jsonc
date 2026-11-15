@@ -1,0 +1,95 @@
+{
+  "type": "object",
+  "properties": {
+    "project_order_id": {
+      "type": "string"
+    },
+    "inquiry_id": {
+      "type": "string"
+    },
+    "recipient": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_review",
+        "approved",
+        "gmail_draft",
+        "failed"
+      ]
+    },
+    "expected_pdf_url": {
+      "type": "string"
+    },
+    "gmail_draft_id": {
+      "type": "string"
+    },
+    "gmail_message_id": {
+      "type": "string"
+    },
+    "hubspot_portal_id": {
+      "type": "string"
+    },
+    "hubspot_contact_id": {
+      "type": "string"
+    },
+    "canva_design_url": {
+      "type": "string"
+    },
+    "last_preview_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "last_error": {
+      "type": "string"
+    },
+    "created_via": {
+      "type": "string"
+    },
+    "approval_checklist": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "project_order_id",
+    "status",
+    "recipient"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "name": "OfferDeliveryReview"
+}

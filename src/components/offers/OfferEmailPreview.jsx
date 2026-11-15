@@ -16,6 +16,8 @@ export default function OfferEmailPreview({ projectId, quoteNumber, clientEmail 
   const [loading,setLoading]=useState('');
   const [error,setError]=useState('');
   const [draft,setDraft]=useState(null);
+  const [crm,setCrm]=useState(null);
+  const [crmResult,setCrmResult]=useState(null);
   const fetchPreview=async()=>{
     if(!projectId)return;
     setLoading('preview');setError('');setDraft(null);
@@ -24,6 +26,27 @@ export default function OfferEmailPreview({ projectId, quoteNumber, clientEmail 
       if(!response?.data?.ok)throw new Error(response?.data?.error||'Náhled nelze načíst.');
       setPreview(response.data);setChecks([]);
     }catch(e){setError(e?.response?.data?.error||e?.message||'Náhled nelze načíst.');}
+    finally{setLoading('');}
+  };
+  const checkCRM=async()=>{
+    setLoading('crm');setError('');
+    try{
+      const r=await base44.functions.invoke('syncHubspotOfferCase',{project_id:projectId,action:'preview'});
+      if(!r?.data?.ok)throw new Error(r?.data?.error||'Kontrola CRM selhala.');
+      setCrm(r.data);setCrmResult(null);
+    }catch(e){setError(e?.response?.data?.error||e.message||'Nelze ověřit HubSpot.');}
+    finally{setLoading('');}
+  };
+  const syncCRM=async()=>{
+    if(!crm||loading)return;
+    if(!window.confirm('Propojit potvrzenou poptávku '+crm.email+' s HubSpotem '+crm.portal_id+'? Nové kontakty a obchodní případ se vytvoří jen pokud zatím neexistují.'))return;
+    setLoading('crm_sync');setError('');
+    try{
+      const r=await base44.functions.invoke('syncHubspotOfferCase',{project_id:projectId,action:'sync',
+        confirm_sync:true,expected_email:crm.email,expected_project_id:projectId,expected_portal_id:149778217});
+      if(!r?.data?.ok)throw new Error(r?.data?.error||'Synchronizace CRM se nezdařila.');
+      setCrmResult(r.data);setCrm(null);
+    }catch(e){setError(e?.response?.data?.error||e.message||'Synchronizace nebyla potvrzena.');}
     finally{setLoading('');}
   };
   const createDraft=async()=>{
@@ -50,12 +73,24 @@ export default function OfferEmailPreview({ projectId, quoteNumber, clientEmail 
       </div>
       <div className="flex flex-wrap gap-2">
         <a href={CANVA_TEMPLATE} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-semibold hover:border-[#008ea5]"><FileText size={14}/> Canva šablona <ExternalLink size={12}/></a>
+        <button type="button" onClick={checkCRM} disabled={!!loading} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold disabled:opacity-50">HubSpot · ověřit CRM</button>
         <button type="button" onClick={fetchPreview} disabled={!!loading} className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-[#102b3a] px-3 text-xs font-semibold text-white disabled:opacity-50">{loading==='preview'?<Loader2 size={14} className="animate-spin"/>:<Eye size={14}/>} {loading==='preview'?'Načítám…':'Zkontrolovat doručený vzhled'}</button>
       </div>
     </div>
     <div className="mt-3 flex items-start gap-2 rounded-xl border border-cyan-100 bg-[#f3fafc] p-3 text-xs leading-5 text-[#19475b]">
       <ShieldCheck size={16} className="mt-0.5 shrink-0"/><p>Náhled nic neodesílá. Gmail koncept vznikne pouze po schválení a po ověření firemního účtu, HubSpot kontaktu a fyzického PDF.</p>
     </div>
+    {crm&&<div className="mt-4 rounded-xl border border-[#cde5ec] bg-[#f5fafc] p-4">
+      <p className="text-xs font-bold">HubSpot · kontrola propojení poptávky</p>
+      <p className="mt-1 text-xs text-slate-600">{crm.email} · Portál {crm.portal_id}</p>
+      <ul className="mt-2 list-inside list-disc space-y-1 text-xs text-slate-700">{(crm.actions||[]).map((v,i)=><li key={i}>{v}</li>)}</ul>
+      <button type="button" onClick={syncCRM} disabled={!!loading} className="mt-3 min-h-10 rounded-lg bg-[#102b3a] px-4 text-xs font-semibold text-white disabled:opacity-40">{loading==='crm_sync'?'Propojuji…':'Potvrdit synchronizaci do HubSpotu'}</button>
+    </div>}
+    {crmResult&&<p role="status" className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-900">
+      CRM záznamy ověřeny: kontakt {crmResult.contact_id}, Deal {crmResult.deal_id}.
+      {crmResult.associated===false&&' Propojení asociací vyžaduje kontrolu.'}
+      <a className="ml-2 font-semibold underline" target="_blank" rel="noopener noreferrer" href={crmResult.deal_url}>Otevřít Deal</a>
+    </p>}
     {error&&<p role="alert" className="mt-3 flex items-start gap-2 rounded-lg bg-rose-50 p-3 text-xs text-rose-800"><AlertTriangle size={15}/>{error}</p>}
     {draft&&<div role="status" className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900"><CheckCircle2 className="mr-2 inline" size={17}/>Gmail koncept vytvořen pro {draft.recipient}. {draft.attachments?.length||0} PDF příloh. Zpráva nebyla odeslána. {draft.audit_saved===false&&'Zkontrolujte auditní záznam v administraci.'}<a href="https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts" target="_blank" rel="noopener noreferrer" className="mt-2 block font-semibold underline">Otevřít Gmail koncepty <ExternalLink size={12} className="inline"/></a></div>}
     {preview&&<>
